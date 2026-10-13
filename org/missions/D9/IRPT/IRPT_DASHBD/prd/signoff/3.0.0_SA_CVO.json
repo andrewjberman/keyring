@@ -1,12 +1,12 @@
 {
   "prd": "IRPT_DASHBD_PRD.md",
-  "prd_version": "v0.11",
-  "prd_pin": "1d8d958dfaf326a9887cd92f431955b38264ab18",
+  "prd_version": "v0.14",
+  "prd_pin": "6d694ed9a55587a4406bf52dcc819334953ab0b8",
   "half": "ratified-text",
-  "half_hash": "000f0e1c0a679b39da78606c381485278a94200a6edd57de9aba6a6e2bea1394",
-  "endpoint_hash": "d40a8647f3f0b10d9d3593d630b35b0c29e3036fb016f8609a9f75a0c180b574",
+  "half_hash": "1bd09826f4b3609209f9e5089881bd0ba43beb3b54dd86ae924ec5089a671ed9",
+  "endpoint_hash": "f9577df4772af94942ea123e87ed6c9c7b462f6e3a49ff54d7189889668f2f35",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_DASHBD_PRD_v0.11_RATIFIED_TEXT_REVIEW_20261011.md@30f0cede3edd3640937c20fc3b953bb9ee0a070b",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_DASHBD_PRD_v0.14_RATIFIED_TEXT_REVIEW_20261013.md@8399376889",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-11T23:33:46Z"
+  "signed_at": "2026-10-13T19:15:47Z"
 }

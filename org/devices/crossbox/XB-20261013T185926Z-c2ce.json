@@ -10,12 +10,16 @@
  "subject": "Pivot direction (SITEZ): Andrew's voice memos in full, findings, rulings, outcomes and first acts",
  "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_SITEZ_20261013.md",
  "opened_at": "2026-10-13T18:59:26Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-13T19:07:27Z",
+  "bus_message_id": "99d295fc-7c3c-4d24-bb7a-433b15ba57e2"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-13T19:10:48Z",
+  "by": "0.0.0_AB_MSTR~Z",
+  "bus_message_id": "67459b00-5a5a-400a-8e86-3d26540b022b"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,

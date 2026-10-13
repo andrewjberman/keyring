@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-13T14:31:20Z",
+ "written_at": "2026-10-13T19:09:05Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1477,7 +1477,7 @@
    "source": "org/missions/D9/COMM/COMM_ASSIST/surprise-channel/remediations/REMEDIATION_v2.Z.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-11T03:05:19Z",
    "kind": "act",
    "context": "FWD-4 (client mail naming Andrew reaches his phone) is APPLIED and has never been exercised. Its internal branch needs one mail from an Opal mailbox other than Andrew's. No seat can send: 0.0.3_BG_BBGTerminal holds the opalbloomberg session but declined under its seat hold (msg 33123).",
@@ -1498,7 +1498,14 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-13T19:09:05Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_SITEZ_288F_058E_DUPLICATES_OF_LAPTOP_COMM_ASSIST_ROWS_20261013.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
   },
   {
    "id": "sitez-20261011T044822Z-0dd7",
@@ -1671,7 +1678,7 @@
    "source": "org/missions/D9/COMM/COMM_ASSIST/decompositions/COMM_ASSIST_DECOMP.round15.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-12T21:00:24Z",
    "kind": "act",
    "context": "FWD-3 (a channel @mention reaches your phone) is APPLIED and its poll is healthy, but no real @mention has arrived since the 10-11 18:49Z gateway release. D2's done-when needs one. It gates the round-15 close.",
@@ -1692,7 +1699,14 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-13T19:09:04Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_SITEZ_288F_058E_DUPLICATES_OF_LAPTOP_COMM_ASSIST_ROWS_20261013.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
   },
   {
    "id": "sitez-20261013T021451Z-39fc",

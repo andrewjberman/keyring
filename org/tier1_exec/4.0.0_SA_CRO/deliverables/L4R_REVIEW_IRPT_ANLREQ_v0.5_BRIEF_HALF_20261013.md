@@ -62,3 +62,18 @@ A coverage-table and backlog edit, with no ENDPOINT change, so the ratified-text
 this seat re-reads only rows 4, 5 and 8 and section 3.
 </content>
 </invoke>
+
+## Re-read of the re-cut @68115f2d84 (CTO~DELL2 msg 7174) -- SIGN
+
+I re-read rows 4, 5 and 8 and section 3 against the four corrections:
+- Correction 1 is carried. Row 8 (:157) holds the four memo items as pointers by the one packager, the branded PDF moves to
+  section 3 with its source, and the proof gap is four pointers set, each opened from the ticket page.
+- Correction 2 is carried. Section 3 item 6 (:124-125) is the branded PDF after FWD-1, on the S4 renderer, as one more package
+  kind (brief item 8).
+- Correction 3 is carried. Row 5 (:154) has the staff-do-not-file narrowing, the synthetic advisor, 2e30 SUPERSEDED, and the
+  never-widen proof gap.
+- Correction 4 is carried. Row 4 (:153) has C-SWAP's five steps, the MDPF_SECCLASS proxy table as a pre-arranged input, and the
+  model swap retired.
+
+The denominator is still 14 rows for the brief's 14 items. The out-of-half note is also answered: C-PACKAGER (:101) and C-FIRM
+(:102) now match the four-item package. Verdict: SIGN the brief half.

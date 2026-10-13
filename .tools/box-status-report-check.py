@@ -11,7 +11,9 @@ Andrew-direct 2026-10-13 ~12:3xZ (ANDREW_DIRECT_20261013_123xZ_BOX_STATUS_REPORT
 """
 from __future__ import annotations
 
+import importlib.util
 import json
+import os
 import re
 import sys
 
@@ -30,7 +32,23 @@ PROJECT_KEYS = ["project", "macro", "placement", "status_register", "repos", "cl
                 "footprint", "if_parked_this_week", "cro_rec", "cro_rec_why"]
 STATUS_KEYS = ["round", "dep_stage", "fwd_realized", "last_l10_utc", "open_orders", "last_commit_utc"]
 FOOTPRINT_KEYS = ["commits_7d", "seats", "aws_resources_owned", "scheduled_jobs", "open_deploy_ledgers", "standing_holds"]
-BOXES = {"laptop", "sitez", "dell1", "dell2"}
+
+
+def _register_boxes() -> set:
+    """The box names the device register holds (lib/devices.py names(), NFRA_CTLPLN FWD-2): a box is added once, in
+    org/devices/DEVICES.json. Fail-closed: an unreadable register REFUSES (exit 2); it never falls back to a list."""
+    spec = importlib.util.spec_from_file_location(
+        "opal_devices_for_report", os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "lib", "devices.py"))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    try:
+        return set(mod.names())
+    except mod.RegisterError as exc:
+        print("REFUSED: %s" % exc, file=sys.stderr)
+        sys.exit(2)
+
+
+BOXES = _register_boxes()
 REPOS = {"ajb_workspace", "portal", "opal_ai", "mcportal", "aws-infra"}
 CLIENT = {"yes", "indirect", "no"}
 REC_RE = re.compile(r"^(KEEP|PARK|CLOSE|MERGE_INTO:[A-Z0-9_]+)$")
