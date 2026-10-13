@@ -47,7 +47,7 @@ Leg G is the issuer's; the entry is HELD on it. The order is left `in_progress`.
 
 The next scheduled fires: 23:00Z fallback Mon-Sat tonight (2026-10-12 is a Monday), else 04:00Z.
 
-## First post-ship fire (23:00:11Z, read back ~01:45Z 2026-10-13)
+## First post-ship fire (23:00:11Z, read back ~01:30Z 2026-10-13)
 
 Reported in `deliverables/E91_FIRST_FIRE_REPORT_20261013.md`. C_06 wall 186.0 s (baseline 15.5 s), peak 6,349 MB
 (baseline 6,767 MB); chain log upload +2 m 23 s over the baseline on the same basis, STOP threshold +30 m: not
