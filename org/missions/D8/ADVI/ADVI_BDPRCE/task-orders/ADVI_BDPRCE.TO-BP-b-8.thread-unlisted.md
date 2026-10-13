@@ -102,7 +102,7 @@ the sources checked, the tie, candidate counts at each condition, AC1, AC2 and t
 **ISSUER NOTES:** round-1 analysis item 3; closes `W4-S9` and the tie of `W4-S5` for the exemplar; FWD-1's grade is the CTO's on the issuer's re-open. STAGED at the cut: un-parks when `BP-b-1`, `BP-b-3` and `BP-b-4` are merged and PASS; its worktree is cut from that HEAD.
 The module is imported by a read-only order: nothing is deployed and no writer imports it.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <workstream>THREAD2</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-b-8</to_id>
