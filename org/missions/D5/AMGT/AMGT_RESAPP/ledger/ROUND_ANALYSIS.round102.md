@@ -44,3 +44,38 @@
 None.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-13 ~18:2xZ) -- SUPERSEDES section 2: round 103 is re-pointed to V1 (cluster direction O1; PRD v0.42 FWD-40, FWD-41)
+
+**Authority:** crossbox XB-20261013T180327Z-ba46 (ACKED 18:09Z), `org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_DELL1_20261013.md` O1 and O2,
+on Andrew's AMGT memo ("We need to close at least a functional V1"). Overrules the dell1 CRO's PARK. The PRD addendum is ADDENDUM F, v0.42, with the ratified half re-owed to
+the CVO. If round 103 is already issued, `2.0.0_SA_COO~R1` amends its own orders to this list and states which gate limb graded the amendment.
+
+### ENRICHMENT LIST (round 103, replacing section 2)
+
+1. **THE SECURITY ANALYSIS FEATURE PROMOTE (FWD-40).**
+   - Cut a feature branch from the last PROD release (portal PROD `15c9754975`) carrying ONLY the Security Analysis commits, plus the shared files they need, each
+     shared file named with its other readers.
+   - Never the live DEV whole. Never `AdvisorBookFeePanel` or the `/portfolios` change.
+   - Proof: typecheck, lint and the Security Analysis suite green on the branch; a `bun run dev --port 5174` build walked on three names; a receipt naming every page
+     changed and its class.
+   - `1.0.0_SA_CTO~DELL1` approves it as Opal-internal, and the portal release seat promotes it.
+   - **Known:** the Model tab's raw-code labels (e7f2 breakdown, "Not ready") must be fixed or reverted on the branch before the promote.
+2. **THE 93-NAME CENSUS AND THE PER-SECURITY PULL CENSUS (FWD-40 (a) and (c)):** read from the PROD-served payload, with the 93 printed against the 95 and the 105.
+3. **THE COLD START UNDER 3 s (FWD-40 (b); disarms W402-S1).** This replaces section 2 item 1's targets:
+   - the first request of a trading day under 3 s;
+   - whichever is cheaper and meets it: the feed phase reads only the requested security's rows, or one instance is kept warm;
+   - byte-equal under a pair, as section 2 item 1 said;
+   - the negative arm is the current build's 20 s.
+4. **THE AI FILL (FWD-41)** as a separate `~lane` workstream of this project, with a disjoint write surface, seated on a freed dell1 COO seat
+   (`2.0.0_SA_COO~G1` is freed first). Reuse `ceo_search.py`, `analyze.py`, `judge.py`, the FWD-17 roster and harvest news, on the Anthropic path with web search,
+   cited and marked machine-written.
+5. **Cleared from the round:**
+   - section 2 items 2 (the steady-state window) and 3 (the admission-table tool) are DEFERRED, since V1 comes first;
+   - close the stale qq-2 order (round 92, worker gone);
+   - the scanner-currency slice is NOT a V1 gate (it stays on the DEMQUE form);
+   - bj-5 (total return on the price axis) is merged and stands.
+6. **Ownership:** site Z's failing `amgt-induction-daily` (rc 4 on 2026-10-13, no owner) is this project's. A read of why it fails rides this round; a site Z change
+   needs `1.0.0_SA_CTO~Z`'s half.
+
+-- 1.0.0_SA_CTO~DELL1
