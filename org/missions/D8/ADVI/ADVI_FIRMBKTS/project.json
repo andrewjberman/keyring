@@ -67,6 +67,32 @@
   "threads": [],
   "placement_ref": "1.0.0_SA_CTO L3 2026-10-09 ~19:5xZ",
   "placement_ruling": "1.0.0_SA_CTO L3, 2026-10-09: LAPTOP -> DELL1. dell1 has a free COO slot (0.0.0_AB_MSTR msg relaying 1.0.0_SA_CTO~DELL1 msg 3085; LGIC_CANON closed @f20404361c). ADVI_FIRMBKTS (PRD v1.3 ADMITTED, both halves SIGNED) gates LGIC_CANON steps 10/16 and MDPF_CANON's per-firm gold, both on dell1 -- placing it there keeps that dependency inside one box (Andrew ~19:1xZ: no cross-box dependencies after a migration). Rights and lanes it needs on dell1: the firm-bucket read/write grants its PRD names; dell1's CTO lists any missing in its first analysis.",
-  "last_updated": "2026-10-13T08:06:59Z",
-  "round": 7
+  "last_updated": "2026-10-13T18:2xZ (1.0.0_SA_CTO~DELL1): PRD v1.5 adds FWD-9; andrew_acts carries DEC-12/13/14 (cluster direction O10)",
+  "round": 7,
+  "andrew_acts": [
+    {
+      "id": "DEC-12",
+      "act": "Turn on CloudTrail write data events for opal-data-bd, opal-data-inf and opal-data-cot (billed), so FWD-6's 45-day no-write proof can see gold/, bronze/, silver/, code/ and state/",
+      "rec": "yes (the PRD's own recommendation)",
+      "source": "prd/ADVI_FIRMBKTS_PRD.md DEC-12"
+    },
+    {
+      "id": "DEC-13-door6",
+      "act": "opal-data-inf/gold/meta/pipeline-complete.json (Inflection's done-marker, watched by mdpf-feeder-accelerator): name a successor in the new home, or retire it with its watcher",
+      "rec": "retire it with its watcher, after the box CTO confirms no other live consumer",
+      "source": "prd/ADVI_FIRMBKTS_PRD.md DEC-13"
+    },
+    {
+      "id": "DEC-13-b2",
+      "act": "opal-data-inf/orion/jwt/current.json (the self-refreshing Orion login token): keep it in place with opal-data-inf open for that one object, or move it",
+      "rec": "keep it in place",
+      "source": "prd/ADVI_FIRMBKTS_PRD.md DEC-13"
+    },
+    {
+      "id": "DEC-14",
+      "act": "mockadv (a test tenant mapped to 49 Financial's bucket): retire the alias or keep it following 49 Financial",
+      "rec": "retire, after a consumer census reads zero live use, in one change with a rollback",
+      "source": "prd/ADVI_FIRMBKTS_PRD.md DEC-14 and L10 ADDENDUM v1.5"
+    }
+  ]
 }
