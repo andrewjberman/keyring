@@ -10,12 +10,16 @@
  "subject": "AMGT_HARVST HVST-bz-7: read whether wsj and barrons each end a completed cycle (read only)",
  "body_path": "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-bz-7.wsj-and-barrons-each-end-a-completed-cycle.md",
  "opened_at": "2026-10-13T12:34:29Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-13T12:35:49Z",
   "bus_message_id": "3ebf17cf-73bf-4b37-829d-2e4335e12d98"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-13T21:25:51Z",
+  "by": "0.7.0_AE_CloudOps~ZW",
+  "bus_message_id": "5d7741d9-f71f-4778-9c82-42e518ae6b0b"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
