@@ -31810,3 +31810,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The builder's own reader refuses the full served snapshot (200 parts against a 64-part selected-read cap), so the count needed a full walk of the parts in memory. That walk uses the same read_exact and account-group checks, but it is not the reader the serving entry points run, and those entry points refuse a full-firm call today."
 }
 ```
+
+## IRPT_BCKEND-D2-S137 -- DISPOSITION after the round-180 drain: account_id is live end to end on the builder side
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S137",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T15:38:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISPOSITION after the round-180 drain: the served 49F snapshot built on the new package carries account_id on 7639 of 7640 ACCOUNT nodes, all in the landed directory; W364-S1 and S2 ruled.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer re-run in the merged tree: IB180-1 AC1, AC2, AC3 PASS (merge ce0bb315af); round-close-check MAY-CLOSE (orders=1).",
+      "IB180-1 record (read): positive snapshot (written 2026-10-13T14:20:49Z, inside the 14:15Z build's window): 7640 ACCOUNT nodes, 7639 with account_id, 7639 in the directory population (7694), 1 without (reason no_candidate); negative arm (the latest served snapshot before the release, written 2026-10-12T14:20:43Z): 7634 nodes, 0 with account_id."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "RESULT: the account_id member is live end to end on the builder side: 7639 of 7640 (99.99%) 49F ACCOUNT nodes carry it, every one in the landed directory, the one without has no directory candidate; the pre-release snapshot carried none; the node total grew 7634 to 7640 between the two builds (new accounts; not examined). RULED: W364-S2 (publication.py caps selected part reads at 64 and refuses a full-firm read of the 200-part served publication): by design, not a hazard: the serving entry points read only the selected accounts' parts, the cap bounds a per-request read, and the count needed a full in-memory walk by an operator script that runs the same read_exact and account-group checks; ARMED withdrawn to INERT by this ruling. OBSERVATION W364-S1 (carried to the CTO): the builder's own directory read finds the landed directory in the bucket its firm_bucket_map names (opal-data-bd, investor-reporting/directory/latest.json, population 7694) while the canonical address() of the same directory names opal-data-49financial, where no object exists; the account_id counts stand on the builder's read path; whether the directory-search function reads the canonical home or the builder's one is the first thing the directory-search apply's step 0 must establish, because its reach count depends on it. STILL ARMED: W361-S1, W348-S2."
+}
+```
