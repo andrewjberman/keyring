@@ -29335,3 +29335,130 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
  "notes": "Not a criterion of this order. Recorded so the suite state after the edit is on the channel."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W341-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~341",
+  "surfaced_at": "2026-10-12T23:40:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The IB-pr-489 walk with --firm Inflection stopped at FIRM_OPTION_ABSENT: no Firm option reads exactly Inflection. The control shows Global (All), 49 Financial, Cottonwood Capital Advisors and Inflection Wealth Management. No client was walked, so the Performance tab was not reached and no sel_ reference was produced. The walker disarmed at 23:38:53Z.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".claude/skills/ui-walk/walk.mjs@1c49f8cc6e:408 (throws FIRM_OPTION_ABSENT when no Firm option reads exactly the label; lists the labels the control shows)",
+      "tmp/ui-walk/20261012T233816Z/ in worktree wk-IRPT_BCKEND-341 (walk log at 23:38:48 ERROR FIRM_OPTION_ABSENT; 23:38:53 DISARM row status=disabled; netlog holds no /api/ performance path)",
+      "ui_walker_account.py status at 2026-10-12 after the walk: status=disabled role=admin userType=Dev armed=no armedBy=none"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-IB-pr-489 step 3: run node walk.mjs --route /investor-reporting --firm \"Inflection\" --first-client --performance-state; the Firm label Inflection selects one firm option, and the walk then reaches a client's Performance tab.",
+  "world_is": "The Firm control has no option whose visible label is exactly Inflection. The nearest label is Inflection Wealth Management. The walker threw FIRM_OPTION_ABSENT before any client search, so no client was walked, the Performance tab was not reached, and the net log holds 0 performance API request paths. The process still exited 0, as the first order's note predicted. The walker was disarmed by its own finally block; status reads disabled and armed=no."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W341-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~341",
+  "surfaced_at": "2026-10-12T23:50:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The IB-pr-489 walk with --firm 'Inflection Wealth Management' and --first-client selected the Firm option (no FIRM_OPTION_ABSENT), but the empty client search listed no client to walk. No client was walked, the Performance tab was not reached, the net log holds 0 performance request paths and no sel_ reference was written. The walker disarmed itself at 23:50:41Z; status reads disabled and armed=no.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tmp/ui-walk/20261012T234939Z/findings.json in worktree wk-IRPT_BCKEND-341 (check walker:first-client-absent: the empty client search listed no client to walk; counts carry no performance step)",
+      "tmp/ui-walk/20261012T234939Z/netlog.tsv in worktree wk-IRPT_BCKEND-341 (POST /api/scoped/investor-reporting/directory/resolve answered 200 three times; no performance request path; the walk log at 23:50:37 says no --client given)",
+      ".claude/skills/ui-walk/walk.mjs@d84df45bc0 (--first-client walks the first client the empty search lists)",
+      "ui_walker_account.py status at 2026-10-12T23:51 after the walk: status=disabled role=admin userType=Dev armed=no armedBy=none"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-IB-pr-489 step 3 and refusal clause: the walk with --firm 'Inflection Wealth Management' --first-client --performance-state reaches a client listed under that firm and its Performance tab.",
+  "world_is": "The Firm option was selected and the page shows the label Inflection Wealth Management. The empty client search then listed no client, so the walker recorded walker:first-client-absent and walked no client. The Performance tab was not reached, 0 performance request paths were logged, and no reference file was written. Why the empty search listed no client is not established by this walk."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W341-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~341",
+  "surfaced_at": "2026-10-13T00:11:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The IB-pr-489 walk with --firm 'Inflection Wealth Management' --first-client --performance-state, on the amendment 2 walker, listed 0 options for the empty search and 100 options for the first letter a, walked the first listed client, and recorded performance state ceiling at 45009 ms (no answer body, no refusal). The net log holds 4 GET performance request paths answered 200, carrying 2 distinct sel_ references. By the walker's own measure the Performance tab was not reached, so the refusal clause applies: no reference was written. The walker disarmed at 00:07:36Z; status reads disabled armed=no.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".claude/skills/ui-walk/walk.mjs@028cd41072 (--first-client letter fallback over a e i o n r s t; firstListedClient waits up to SEARCH_ANSWER_CEILING_MS per letter)",
+      "tmp/ui-walk/20261013T000334Z/performance-state.json in worktree wk-IRPT_BCKEND-341 (state ceiling, waited_ms 45009, ceiling_ms 45000)",
+      "tmp/ui-walk/20261013T000334Z/netlog.tsv in worktree wk-IRPT_BCKEND-341 (4 GET /api/scoped/investor-reporting/performance/ paths, all status 200; 2 distinct sel_ values, not recorded in this row)",
+      "walk log of 00:04:33 in the walker's terminal output: FIRST-CLIENT empty search 0 option(s) listed; FIRST-CLIENT letter a 100 option(s) listed",
+      "ui_walker_account.py status after the walk: status=disabled role=admin userType=Dev armed=no armedBy=none"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-IB-pr-489 step 4 and refusal clause: a walk that reaches the Performance tab yields one sel_ reference from the performance request path; a Performance tab not reached is a refusal (STOP, disarm, file a row, report).",
+  "world_is": "The walker's detector reads no answer body and no refusal on the Performance tab within 45 s, while the network log holds 4 performance answers with status 200. The two sources disagree and this walk does not establish which is right (the detector's selector may not match the served tab, or the answers may not be the tab's own). The performance paths carry 2 distinct sel_ references, so the order's 'one reference' is not a single value. The walk record reads performance_tab_reached false and performance_request_paths 4."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W341-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~341",
+  "surfaced_at": "2026-10-13T00:11:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The walker's terminal output leaks a fragment of the walked client's name. Each STEP line prints a screenshot path whose slug is the step label cut to 60 characters, and the step label carries the first listed client's name; the --first-client redaction in log() matches only the full name string, so the slug passes through. The walk of 00:04:00 to 00:05:57 printed such fragments on the terminal. The walker contract says a client name is never printed, so any further --first-client run leaks the same way until the slug is covered by the redaction.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".claude/skills/ui-walk/walk.mjs@028cd41072:116 (log() redacts only String(x).includes(firstName), the full name)",
+      ".claude/skills/ui-walk/walk.mjs@028cd41072:138-140 (shot() builds shots/NNN-<label>.png, label cut to 60 characters after the name is in the label)",
+      "tmp/ui-walk/20261013T000334Z/shots/ in worktree wk-IRPT_BCKEND-341 (file names carry the name prefix; the folder stays local and gitignored)"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-IB-pr-489 bounds and step 3: client data stays local and no client name is ever printed; the walker's --first-client redaction keeps the first client's name out of the terminal.",
+  "world_is": "The redaction holds for the full name but not for the slug the walker derives from it. Shot paths and STEP lines on the terminal carry a name fragment. The shot files stay under tmp/ui-walk (gitignored), so the leak is to the terminal and to the walker's log only. The walk record and the proof are written without any name; this row carries none."
+}
+```
+
+## IRPT_BCKEND-D2-S115 -- DISARM EVIDENCE for IRPT_BCKEND-D2-W341-S7: the walker's name redaction now covers the screenshot slug
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S115",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T00:23:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARM EVIDENCE for row IRPT_BCKEND-D2-W341-S7, filed by its disarm owner: the --first-client redaction in ui-walk walk.mjs now applies to the log, the shot file name and the check label, by the full name and by each word of it of 3 or more characters, so the fragment that reached one worker's terminal is not printed by a further run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read by this seat: the diff of walk.mjs merged at 66439bd6a8: redactFirst(s) replaces the first client's name and each whitespace- or comma-separated word of it of 3+ characters (case-insensitive, longest first) by 'first-client'; log() maps every argument through it once the name is set; shot(page, label0) and checks(page, label0) build their label from redactFirst(label0) before the screenshot file name is made.",
+      "the leak itself: one worker session (0.9.0_WK_IRPT_BCKEND~341) saw a name fragment on its own terminal during the walk of 00:04Z to 00:06Z; the worker reports it did not reproduce it; nothing was committed (the walk record and the proof carry no name; the shot files sit under the gitignored tmp/ui-walk of that worktree and go with its removal).",
+      "the only --first-client walk of this round is finished and the walker account reads status=disabled armed=no (the worker disarmed an orphaned arm at its last session)."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "The redaction is by code read plus the worker's three IB169-1 criteria (node --check, flag parsing, SKILL.md and FIRM_OPTION_ABSENT); none of them runs a walk, so the redaction is NOT exercised on a live page. It is written so that any text leaving the walker for a file name or a terminal line passes through one function. No further --first-client walk is planned; a later one rides on this fix. Not measured: a live run of the fixed walker."
+}
+```
