@@ -843,3 +843,180 @@ gateway queue (one release in flight at a time).
 **Does not claim:** the 10 s bar holds for every future history size inside the window. The window still grows with the
 producers' write rate, roughly 840 to 1,200 records a day across 4 boxes, so about 2,000 in 48 h. AC3 measures it once,
 on the served release.
+
+# WORKSTREAM GW, ROUND 1 -- FWD-20: THE GATEWAY BREAKDOWN, AND THE DEEP-LINK FIX (L5, v7)
+
+```json
+{
+ "project": "NFRA_MCPORTAL",
+ "decomp_version": "v7",
+ "step": 5,
+ "workstream": "GW",
+ "round": 1,
+ "input": "PRD v0.7 addendum (FWD-20) @cdb5ff66b1, ratified-text half signed @3318b66cd0; 1.0.0_SA_CTO~Z msgs 33511, 33519 (the deep-link ruling, row Z-S41 @4160a7a9db), 33592",
+ "prd_ref": "org/missions/D6/NFRA/NFRA_MCPORTAL/prd/NFRA_MCPORTAL_PRD.md@cdb5ff66b1 (v0.7: FWD-20; C2, C4, C15, C16 apply unchanged)",
+ "author": "2.0.0_SA_COO~MP",
+ "cells": 6,
+ "chains": 4,
+ "join_cells": 2,
+ "frozen": true
+}
+```
+
+**Author:** `2.0.0_SA_COO~MP`, re-seated 2026-10-13. **Authority:** the v0.7 addendum makes FWD-20 the FIRST outcome cut
+(Andrew-direct ~20:5xZ 2026-10-12, record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261012_205xZ_SITEZ_PORTFOLIO_SEVEN_PROJECT_RULINGS.md`). It
+is cut ahead of every other open order; the four staged close runs (MP-x-5, MP-q-1, MP-v-2, MP-c-2) do not gate it. The
+deep-link cell rides this issuance on the CTO's ruling (msg 33519). Every order carries `<workstream>GW</workstream>`
+beside `<round>1</round>`, so GATE (x) keys this issuance apart from CP2 and C17. Every section above stays frozen.
+
+## GW.0 WHAT IS MEASURED BEFORE THE CUT (issuer, 2026-10-13 ~09:3xZ)
+
+1. **The map exists as code, not as a page** (`4.0.0_SA_CRO` census
+   `org/tier1_exec/4.0.0_SA_CRO/deliverables/GATEWAY_CHANNEL_MAP_20261008.md`, read whole). The sources C15 names are all
+   in the gateway app: the integration specs (`app/integrations/*/integration.py`, `IntegrationSpec` in
+   `app/integrations/base.py:56`), the registry (`app/integrations/registry.py`: `_ACTIVE_BY_TOOL`,
+   `classification_for_tool`, `catalog_ref_for_tool`), the tool class table (`app/data_entitlement.py` `classify`,
+   `TOOL_CLASSES`, `DATA_GRANT_TOOLS`), `app/destructive_ops.py` (`classify`, `write_class`), the Graph scope map
+   (`app/graph_scope_map.py`), the catalog (`app/refs/DATA_CATALOG.yaml`, rows carrying `read_tool`), and the live server's
+   registered tool list (`app/tools.py:99`, `mcp`).
+2. **Who may call what is decided by a chain, not by one store.** Per call, in order: the kill switch and the blocklist
+   (`app/blocklist.py`); `data_entitlement.tool_denial` (a profiled principal is confined to its grant on the data-grant
+   family only); `identity_scope.check(email, tool)` (a scoped identity is confined to its allowlist); the tier
+   (`tier.resolve_tier`) through `guard.enforce` and `entitlements.is_entitled` on a write class, and
+   `guard.enforce_min_tier` on an integration's `min_tier`. So "who is entitled to a channel today" is a function of the
+   env rosters (`MASTER_ADMIN_EMAILS`/`_PRINCIPALS`, `WRITE_CAPABLE_EMAILS`/`_PRINCIPALS`), the scope allowlist, the
+   blocklist, and the grant store.
+3. **The grant store cannot be listed by the gateway today.** `opal-gateway-role` holds `dynamodb:GetItem` only on
+   `gateway-access-state-table` (`infra/aws/terraform/opal-gateway/schwab_access_state.tf:88-113`). The writer's changes
+   table (which the gateway may Scan) holds 1 row and names none of the store's principals. Measured by the issuer
+   (keys only, values redacted): the table holds 1,453 rows; POLICY partition 17 rows over 5 keys: ONE real principal
+   (`principal_profile` + 4 `data_entitlement` revisions + 4 `operator_audit`), three `probe-og-i1-*` test keys, and one
+   `EMAILDENY` row. So listing "who holds a grant" needs ONE new read action: `dynamodb:Scan` on that table, cell MP-z-4.
+4. **The deep-link defect** (row Z-S41): the served `server.py` routes the bundle only at `/` and `/assets/{path}`; the
+   bundle's `BrowserRouter` routes `/mcp-server`, `/mcp-server/recent-changes`, `/control-plane`, `/open-calls` and the
+   placeholder pages (mcportal `bc37107` `src/App.tsx:21-30`, `src/shell/pages.ts`), so a direct load 404s.
+5. **Live ref:** gateway `185dc04888` (EC2_MANIFEST `services.opal-gateway`), mcportal `bc37107`. The trunk carries other
+   projects' unreleased gateway changes, so the release (MP-z-5) cuts on the LIVE ref at its act, as MP-n-1 did.
+
+## GW.1 THE CELLS -- 6
+
+| Cell | Serves | Builds / runs | Assignee | Write surface | Risk |
+|---|---|---|---|---|---|
+| `MP-z-1` | FWD-20 (all three parts), C15, C16 | `GET /api/admin/gateway/breakdown` per GW.3, generated in-process from the gateway's own definitions and decision chain; the grant-store read per GW.3 holders | worker `~13` | `app/admin_gateway_breakdown.py`, `tests/test_admin_gateway_breakdown.py` (both new) | WORLD (live only through MP-z-5) |
+| `MP-z-2` | FWD-20 on the page (S16) + the route list for MP-z-3 | mcportal: the Gateway page `/gateway` (sidebar after Open Calls), its client function and tests; `public/routes.json` per GW.4 with a test that it equals the app's routes | worker `~14` | mcportal `src/pages/gateway/**` (new), `src/api/admin.ts`, `src/api/admin.test.ts`, `src/App.tsx`, `src/shell/pages.ts`, `src/shell/sidebar.test.ts`, `public/routes.json` (new) | WORLD (via MP-z-5) |
+| `MP-z-3` | Z-S41 (deep links) | in `app/server.py`: one owner-gated handler serving `index.html` for each path in the bundle's `routes.json` (GW.4); an unknown path still 404s; tests | worker `~15` | `app/server.py`, `tests/test_dashboard_deep_links.py` (new) | WORLD (via MP-z-5) |
+| `MP-z-4` | FWD-20 part 3 hop (the list read) | `gateway-access-state-principal-scan-policy`: `dynamodb:Scan` on `gateway-access-state-table` ONLY; never-widen pair (CTO `1.0.0_SA_CTO~Z` + COO `2.0.0_SA_COO~MP`) signed against the applier's ASK before the apply; `safe-apply`; NEVER-2; simulation read-back | `0.7.0_AE_CloudOps~MP` | `infra/aws/terraform/opal-gateway/access_state_principal_scan.tf` (new), ledger paths | WORLD |
+| `MP-z-5` | FWD-20 + Z-S41 live | the gateway release on the LIVE ref: MP-z-1's module + its route line in `app/admin_api.py` (step 0, the CP2.10 precedent) + MP-z-3's `server.py` change + the MP-z-2 bundle; never-widen pair; NEVER-2; manifest; on-host read-back | `0.7.0_AE_CloudOps~MP` | `infra/aws/ec2/opal-gateway/app/admin_api.py`, `infra/aws/ec2/EC2_MANIFEST.json`, ledger paths | WORLD |
+| `MP-z-6` | FWD-20 DONE WHEN | the close run: Andrew reads the page (G-SEE3); the worker checks ONE channel's tool list against the deployed code and ONE person's entitlements against the grant store, and opens `/control-plane` by direct load; carries the JUDGMENT criterion | worker `~16` | its deliverables only | WORLD |
+
+**The hookup belongs to no cell** (report 2 C10): the `app/admin_api.py` route line
+`Route("/gateway/breakdown", admin_gateway_breakdown.breakdown, methods=["GET"])` plus its import is MP-z-5's step 0, as
+CP2.10 ruled (the file is lane CLOUD_OPS_OR_ETL).
+
+## GW.2 READ-ONLY SURFACES (no cell edits them)
+
+`app/admin_api.py` (except MP-z-5 step 0), `app/owner_gate.py`, `app/admin_grants.py`, `app/access_state.py`,
+`app/data_entitlement.py`, `app/tier.py`, `app/guard.py`, `app/entitlements.py`, `app/identity_scope.py`,
+`app/blocklist.py`, `app/destructive_ops.py`, `app/graph_scope_map.py`, `app/integrations/**`, `app/tools.py`,
+`app/refs/DATA_CATALOG.yaml`, `app/config.py`. C16's ratings file does not exist yet (FWD-19 is not cut); MP-z-1 reads
+`app/refs/channel_ratings.json` IF PRESENT and creates nothing.
+
+## GW.3 THE CONTRACT -- `GET /api/admin/gateway/breakdown` (fixed here so MP-z-1 and MP-z-2 run in parallel)
+
+Behind `owner_gate.owner_only`. The body, exactly:
+
+```
+{ "read_at": "<ISO Z>",
+  "kill_switch": true | false,
+  "channels": [
+    { "id": "m365" | "<integration spec id>",
+      "name": "Microsoft 365" | "<spec.display_name>",
+      "kind": "native" | "integration",
+      "auth": "delegated" | "<spec.auth_kind value>",
+      "min_tier": "<spec.min_tier>" | "per tool",
+      "rating": {"value": "<R0..R4>" | "unrated", "reason": "<text>" | null},
+      "tools": [ { "name": "<tool>",
+                   "access": "read" | "write",
+                   "write_class": "<destructive_ops.write_class>" | null,
+                   "data_class": "<data_entitlement.classify>" | "unclassified",
+                   "graph_scopes": ["<scope>"] | null,
+                   "indexes": ["<catalog id>"] } ],
+      "indexes": ["<catalog id>"],
+      "holders": [ { "who": "<email or display>", "how": "<basis>", "tools": ["<tool>"] } ],
+      "holders_basis": "<one line>" } ],
+  "grant_store": {"status": "read" | "unreadable", "principals": <int> | null, "reason": "<text>" | null} }
+```
+
+- **Channels** = every tool on the live server (`mcp`'s registered list, UNFILTERED by principal), each placed in exactly
+  one channel: a tool an active integration owns (`registry._ACTIVE_BY_TOOL`) goes to that integration's channel; every
+  other tool goes to `m365` (native). No hand-kept list. A tool `data_entitlement.classify` does not know reads
+  `data_class: "unclassified"`.
+- **Indexes** of a tool: `registry.catalog_ref_for_tool(tool)` when not None, plus the id of every catalog row whose
+  `read_tool` equals the tool; a channel's `indexes` is the sorted union over its tools. None reads `[]` and the page
+  prints "none".
+- **Rating**: from `app/refs/channel_ratings.json` (`{"channels": {"<id>": {"value", "reason"}}}`) when the file and the
+  channel's entry exist; otherwise `{"value": "unrated", "reason": null}`. Never a default level.
+- **Holders**: computed by CALLING the gateway's own chain (GW.0 item 2), never a re-typed rule. Candidates: every
+  address in `MASTER_ADMIN_EMAILS` and `WRITE_CAPABLE_EMAILS`, every scoped identity `identity_scope` knows (seed +
+  overlay), every principal with a `principal_profile` in the grant store (MP-z-4's Scan, projected to `pk`/`sk`, then
+  each read through the EXISTING `data_entitlement.current_access`), and ONE population row, `who`: "every signed-in Opal
+  Microsoft user", evaluated as an unprofiled, unscoped, unblocked address at tier `read_only`. A candidate holds a tool
+  when none of the chain's checks denies it; a holder row lists only the channel's tools it holds; a candidate holding
+  none of a channel's tools is not listed there. A blocklisted candidate holds nothing. With the kill switch on, every
+  channel's `holders` is `[]` and `holders_basis` says so. A channel with no holder has `holders: []` and the page prints
+  "no one".
+- **`grant_store`**: a Scan refused or failing gives `status: "unreadable"` with the reason, and the holders rows that
+  depend on it are omitted with `holders_basis` naming the gap. It is never a 200 that reads as "no grants".
+
+## GW.4 THE ROUTE LIST -- `routes.json` (fixed here so MP-z-2 and MP-z-3 run in parallel)
+
+mcportal ships `public/routes.json` (Vite copies it to the bundle root): `{"version": 1, "paths": ["/", ...]}`, every
+path the app's `<Routes>` serves, `/gateway` included, sorted. A mcportal test fails if it differs from the paths in
+`src/App.tsx` and `src/shell/pages.ts`. The gateway reads `<DASHBOARD_BUNDLE_DIR>/routes.json` at request time and serves
+`index.html` behind the owner gate for an EXACT path in `paths`; every other path answers 404 as today; a missing or
+unreadable `routes.json` serves `/` only (fail closed); `/assets/{path}`, `/api/admin`, `/mcp` and every other existing
+route keep their endpoint.
+
+## GW.5 DEPENDENCY EDGES AND CHAINS
+
+```
+chain B   MP-z-1 --\
+chain P   MP-z-2 ---+--> MP-z-5 --> MP-z-6     the release ships the handler, the deep-link route and the bundle
+chain D   MP-z-3 ---+
+chain W   MP-z-4 --/                           holders need the Scan grant applied before the release's read-back
+joins     MP-z-5 (z-1, z-2, z-3 drained + z-4 applied + G-REL3)    MP-z-6 (z-5 drained + G-SEE3)
+```
+
+**Fan-out:** `N = 3 of M = 4 chains, cap 8`: workers `~13` (MP-z-1), `~14` (MP-z-2), `~15` (MP-z-3). Chain W is the
+applier seat `0.7.0_AE_CloudOps~MP`; it takes its GO by message because it is a seat, not a worker. MP-z-5 and MP-z-6 are
+issued STAGED (row Z-S19).
+
+## GW.6 GATES
+
+- **MP-z-1, MP-z-2, MP-z-3:** none. They start at the issuance.
+- **MP-z-4:** none to build the policy and write the ASK. The apply waits on the never-widen pair signed against the ASK.
+- **G-REL3 (MP-z-5):** the three build cells drained; MP-z-4 applied; the gateway queue free (one release in flight at
+  a time; NFRA_OPLGTW's `2.0.0_SA_COO~O` holds the other releases); the never-widen pair signed against the release ASK.
+  Holder: the issuer.
+- **G-SEE3 (MP-z-6):** MP-z-5 drained. The issuer cards Andrew ONCE: open `https://mcp.opalinvest.dev/gateway` and read
+  it. Holder: Andrew.
+
+## GW.7 RULE 24 RECORD (the new value sets)
+
+- **`kind`** {native, integration} over "a tool on the live server": MECE by construction (an active integration owns
+  it, or it is native); one axis (who registered it).
+- **`access`** {read, write}: write iff `destructive_ops.write_class(tool)` is not None; MECE over the classified set; a
+  tool `destructive_ops` cannot classify is fail-closed there and reads as that module says.
+- **`rating.value`**: C16's R0..R4 plus "unrated" (the PRD's own token).
+- **`grant_store.status`** {read, unreadable}: a Scan returns or it does not.
+- **Token census:** "unrated", "unclassified", "no one", "read", "write" are the PRD's or the code's own words; none is new.
+
+## GW.8 WHAT THIS CUT DOES NOT CLAIM
+
+1. No cell has run. The live channel count, tool count and holder rows are read by MP-z-1's tests against the real
+   registry and by MP-z-5's on-host read.
+2. **REST route families** (OTP, mail, Teams, `/ms/*`, `/graph/*`) are not channels under GW.3: FWD-20's ACCEPT names
+   MCP channels, tools and indexes. They stay on the CRO census until a later round adds them.
+3. **Ratings** stay "unrated" everywhere until FWD-19 lands C16's file.
+4. **The population row** stands for every tenant user who can sign in; the page cannot name them, and says so.
