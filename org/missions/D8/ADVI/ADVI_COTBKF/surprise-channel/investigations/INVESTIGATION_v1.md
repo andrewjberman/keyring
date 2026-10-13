@@ -7725,3 +7725,49 @@ round.** Never edit an existing row.
   "world_is": "The defects stay OPEN for the round-81 analysis; the cause is NOT established (no build over store step equals a split ratio). NOT re-measured by this seat at this turn: whether any reader is attached to the minted table, and whether any rebuild of the early partitions is scheduled; the disarm rests on the S131 ruling being in force, not on a fresh census."
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W160-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~160",
+  "surfaced_at": "2026-10-13T17:02:15Z",
+  "one_line": "The custodian transactions carry placeholder Cost_Date values: 2 rows at 1901-01-01 and 389 rows before 2000-01-01, so a Cost_Date minimum reads 1901; the record bound in CB-cc-3 uses Trade_Date (earliest 2013-04-03), which has no such values.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ajb_workspace/.scratch/advi_cotbkf/tx_cache trade_year=2013..2026 parquet (14 files, 1,416,497 rows): Cost_Date rows equal to 1901-01-01 = 2; before 2000-01-01 = 389; Trade_Date minimum 2013-04-03 with 0 rows before 2012-01-01 (scratch scripts .scratch/earliest_client.py and .scratch/acct_first.py at worktree branch wk-ADVI_COTBKF-160, not committed)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~160/DATE_BOUNDS.json (earliest_client_record.source)"
+    ]
+  },
+  "spec_asserts": "The earliest client record is the first date on the firm's plane (Andrew's backfill law, record @82c7c92449 on box/dell1); a placeholder value in a date column is not a record date.",
+  "world_is": "Cost_Date holds 1901-01-01 on 2 rows and dates before 2000 on 389 rows; Trade_Date holds none of these. No bound in CB-cc-3 is moved by the Cost_Date values, and no S3 object or record was changed.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W160-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~160",
+  "surfaced_at": "2026-10-13T17:02:15Z",
+  "one_line": "The order's proof block asks the worker to flip the task order's status to complete and commit it with the instance; the task-orders file is outside this order's <paths> grant, so the flip is not made here and the order stays issued in the tree.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-cc-3.date-bound-reread.md line 8 (<status>issued) and lines 70-73 (<paths>: deliverables folder and the channel file only)",
+      "the same order, WORKER FACE proof block: flip the task order's status per its proof block when done"
+    ]
+  },
+  "spec_asserts": "A worker's write surface is exactly the <paths> its order names; a path the order needs and lacks is a BLOCKING row, never an override.",
+  "world_is": "The task-orders folder is not in this order's grant. The order file stays at status issued in this commit; its proof instance and deliverables are committed on wk-ADVI_COTBKF-160 for the flip to be made by an actor granted that path.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
