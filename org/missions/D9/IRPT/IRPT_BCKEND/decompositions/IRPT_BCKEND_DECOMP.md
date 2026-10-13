@@ -3661,3 +3661,17 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r180/p180_cells.py`, dry-run at the b
 | `IB-pr-514` | READ-ONLY, counts only: the latest served 49F snapshot built on the new package: ACCOUNT nodes total, with `account_id`, in the directory population, without by reason; the pre-release snapshot as the negative arm | FWD-3 | SERVED (a read of a client-bearing served snapshot, counts only) | none (IB-pr-512 done) | P180-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one read with no sibling cell. One worker spawn (slot ~364).
+
+## 173. ROUND 181, WORKSTREAM ~P (2026-10-13 ~16:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's RE 7037 = "round 181 = the directory-search apply, step 0 reads which home it reads; no home moves")
+
+Round 180 item 1 passed (7639 of 7640 49F ACCOUNT nodes carry `account_id`, all in the landed directory; row S137). Item 2 is the `irpt-directory-search` apply under its signed pair. **The pair is not signed and its digest is stale:** the packet `NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-499.md` (both halves UNSIGNED) names the live zip at CodeSha256 `TefVhmG...` (2026-10-12T14:06Z), but IRPT_ANLREQ's status-rule release (ledger `irpt-status-rule-all-eight-20261013`, `last_deployed_commit` `1b88b22dea`) redeployed `irpt-directory-search` at 2026-10-13T12:34:28Z; the live CodeSha256 is now `tvrsQ+w820jp...` (the source map row records it); a second deploy ledger, `irpt-status-rule-exercise-20261013` (0.7.0_AE_CloudOps~AQ2, 6 legs), names the function too. An apply by the old packet's digest gate would STOP, and the sequencing law (an act naming a function another OPEN ledger names waits for it to read CLOSED) holds it behind AQ2.
+
+CUT now: `IB-pr-515` (a BUILD-ONLY re-census of the candidate against the CURRENT live, step 0 per the CTO's RE 7037 on the directory home, the open ledgers, the replay and reach, and a refreshed packet). NOT cut now, with the reason and the condition: the APPLY itself (both halves of the refreshed pair signed at the packet's bytes, the open ledger(s) CLOSED and step 0 matching: an unmet dependency inside the round; owner me); the repair of the no-op report validator in the ycharts generate composition (row W352-S1).
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r181/p181_cells.py`, dry-run at the base: IB181-1 AC1, AC2, AC3 FAIL (no record); synthetic records in a path the run created itself (live sha256 taken from the source map) pass all three; path removed.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-515` | `irpt-directory-search` candidate rebuilt and censused against its CURRENT live, step 0 (which directory home the function reads, against the builder's), the open deploy ledgers naming it, the replay and reach, and the refreshed never-widen packet | FWD-3 | SERVED (reads the live function and the landed directories; builds only) | none (round 171's candidate and arms are the prior art) | P181-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one rebuild with no sibling cell. One worker spawn (slot ~365).
