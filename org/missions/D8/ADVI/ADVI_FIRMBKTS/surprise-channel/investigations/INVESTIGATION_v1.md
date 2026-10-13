@@ -6921,3 +6921,78 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "FB-j-3 stays open for the 23:00Z fallback or an S3-triggered BD chain. A watcher now waits for a gold_incremental or gold/logs .log object newer than the deploy, not for runner state. The 49f chain's own end-of-run WARN lines (if any) are not FB-j-3's measurement."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W24-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~24",
+  "surfaced_at": "2026-10-11T12:25:21Z",
+  "one_line": "The worker worktree already carries a portal submodule pointer drift before any edit, so the FB-g-1 write-surface check AC3 reads portal as OUTSIDE the five allowed paths and FAILs.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AC3 (r4_scope.py with --allow for the three cell files, the deliverables folder and the channel) expects ROUND 4 SCOPE: OK, a control that passes only for a change confined to the allowed paths; the order names no portal change.",
+  "world_is": "At HEAD f33c93ce43 the gitlink records portal at c96efe1714784162c4134450da33ce6fd6226b60 while the portal checkout is at 8ed372cb72659b96a5cfb4000a20b8ae315b9be7. The first git status of this worktree, before my first edit, already showed ' M portal'. git diff --name-only HEAD lists portal, so r4_scope printed 'CHANGED portal <-- OUTSIDE' and read 'FAIL 4 changed, 1 outside, 0 required missing'. The three cell files and the channel were the only other changes and all were allowed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C /c/dev/wk-firmbkts-24 ls-tree HEAD portal -> 160000 commit c96efe1714784162c4134450da33ce6fd6226b60 portal",
+      "git -C /c/dev/wk-firmbkts-24/portal rev-parse HEAD -> 8ed372cb72659b96a5cfb4000a20b8ae315b9be7; git status --short listed ' M portal' before any edit",
+      "python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_scope.py --root /c/dev/wk-firmbkts-24 (AC3 invocation), output 'CHANGED portal   <-- OUTSIDE' and 'ROUND 4 SCOPE: FAIL 4 changed, 1 outside, 0 required missing'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not this worker's to revert: portal sits outside the write grant, and a checkout or submodule update would touch a path the order does not name. Left as found. AC3 is recorded FAIL and the order stays open. The gitlink and the portal checkout disagree at the cut; the integrator or the issuer reads which side is authoritative."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W24-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~24",
+  "surfaced_at": "2026-10-11T12:25:21Z",
+  "one_line": "The order's bound 3 says ASCII only for the cell's files, but index.mjs already carries one non-ASCII em dash in a comment at base, outside the cell's edit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Bounds section 2 item 3: ASCII only; LF endings. If something cannot be met within your paths, file a surprise row and stop.",
+  "world_is": "index.mjs at base HEAD carries one non-ASCII character, an em dash in the comment on line 123 (line 124 after the import line added by this cell). The cell's own edits (one import line, one key line) and the two new files are pure ASCII with LF endings. The comment is not touched because it lies outside the cell's change.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:infra/aws/lambda-edge/auth-validator-edge/index.mjs | LC_ALL=C grep -n -P '[^\\x00-\\x7F]' -> line 123 (the em dash in the comment about FIRM_BUCKET_MAP values)",
+      "the same pattern on the worktree file before my edits -> line 123; after the edits -> line 124, the same comment"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded so the issuer decides whether bound 3 reads per changed line or per file. The fix, if wanted, is a one-character change to an unrelated comment and is not this cell's to make."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W24-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~24",
+  "surfaced_at": "2026-10-11T12:28:09Z",
+  "one_line": "The commit-time naming gate refuses the cell's hand-typed ownership-map key templates and firm and bucket literals, and its suggested key form differs from the key the producers' seam writes.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL1",
+  "spec_asserts": "Order FB-g-1 section 1a: ownershipMapKey returns advi/<firm>/platinum/<firm>/ownership_map.json for the canonical layout and platinum/<firm>/ownership_map.json for the legacy key, and the spec names the firms and buckets literally. Section 2 bounds the write surface to the three cell files and names no registry row and no naming exception.",
+  "world_is": "safe-commit naming limb (LGIC_ENFORCE, ENFORCE mode) refused the cell commit with 18 graded refusals: ownership_key.mjs line 20 advi/{x}/platinum/{x}/ownership_map.json is NEW and OUT-OF-PATTERN as S3Key with suggestion ownership-map.json, line 22 platinum/{x}/ownership_map.json likewise, and the firm names are NEW hand-kept carriers. The registry row blackdiamond-platinum-49financial-ownership-map says address() refuses this key shape because it has no partition. The seam view lib/platinum_dest_view.py maps the 49financial class to advi/49financial/platinum/49financial/{tail} with the tail ownership_map.json, so the gate's hyphen form is not the key the seam writes. The code commit is BLOCKED and nothing is committed under the three code paths.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh --author 0.9.0_WK_ADVI_FIRMBKTS~24 -F .scratch/msg_fbg1_code.txt -- three code paths and the channel: rc=1, 'ERROR: BLOCKED -- the naming limb refused', '[naming-gate] NAMING-GATE: REFUSE 18 graded'",
+      "infra/logic/registry/legacy_addresses.json lines 77-84: key blackdiamond-platinum-49financial-ownership-map, template platinum/49financial/ownership_map.json, note that address() refuses it because the key has no partition",
+      "data/black_diamond/scripts/gold/lib/platinum_dest_view.py line 11: ('platinum/49financial/', 'opal-data-49financial', 'advi/49financial/platinum/49financial/{tail}')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not this worker's to resolve: a registry row or a naming ruling is outside the write grant and a hand-typed workaround is the refused shape. Disarm is a CTO ruling on the canonical ownership-map name and whether a registry row admits it. Until then the code commit stays BLOCKED and AC-level proof records the state."
+}
+```
