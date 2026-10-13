@@ -19,15 +19,17 @@
 
 ## WORKER FACE
 
+**AMENDMENT 1 (issuer, 2026-10-12T23:5xZ, ruling on your row W341-S4, which was right):** the Firm control's option for this firm reads `Inflection Wealth Management`, not `Inflection`; every `--firm` use below carries that exact label, and the record's `firm_label` is that string. Your inherited walk record and proof from the first attempt are replaced by this run.
+
 **Cell `IB-pr-489` (inlined):** the deployed `irpt-performance-adapter` computes a performance answer only for Inflection (orion); no selection reference for an Inflection client exists. Walk ONE Inflection client's Performance tab with the walker as extended by `IB-pr-488` (your own earlier commit on this worktree: `--firm` and `--first-client`), and keep the selection reference the page itself creates. **Start only if `IB169-1-AC1`..`AC3` all passed in your report for `IB-pr-488`; otherwise STOP and report.**
 
 **Steps:**
 1. Read `C:\dev\ajb_workspace\.claude\skills\ui-walk\SKILL.md` (the safety model and the invocation block) in your worktree's copy. The walk is read-only, signs in as the dormant UI walker service account on the LOCAL dev build, and never leaves `localhost`.
 2. The local dev build on port 5174 must answer: `curl -s -o /dev/null -w "%{http_code}" http://localhost:5174/`. If it does not, start it in the background from the main tree: `cd /c/dev/ajb_workspace/portal && bun run dev:live --port 5174` (resolve `bun` through the profile; port 5174 only), wait until the curl reads 200 (bounded at 3 minutes), and record the process id you started. You stop that process, and only that one, at the end.
-3. From YOUR worktree root run the walk (it arms the account, walks, and disarms; allow it up to 10 minutes, run it in the background and poll its log): `node .claude/skills/ui-walk/walk.mjs --base http://localhost:5174 --route /investor-reporting --firm "Inflection" --first-client --performance-state --max-minutes 12`. The walk writes `tmp/ui-walk/<stamp>/` in your worktree (gitignored). **Client data stays local: never print a client name, never commit or message a screenshot or the findings.**
+3. From YOUR worktree root run the walk (it arms the account, walks, and disarms; allow it up to 10 minutes, run it in the background and poll its log): `node .claude/skills/ui-walk/walk.mjs --base http://localhost:5174 --route /investor-reporting --firm "Inflection Wealth Management" --first-client --performance-state --max-minutes 12`. The walk writes `tmp/ui-walk/<stamp>/` in your worktree (gitignored). **Client data stays local: never print a client name, never commit or message a screenshot or the findings.**
 4. From the walk's network log in that folder (method, status and path only), read the PERFORMANCE request path and take the one `sel_` + 64 hex reference in it. Write that single reference as ONE line to `C:\Users\Test\AppData\Local\Temp\claude\C--dev-ajb-workspace\f0005e69-69e0-455c-b522-7be87d97fcdc\scratchpad\inflection_sel_ref.txt` (a path outside any git tree; do not copy it anywhere else; never put it in the record, the report or a commit).
 5. Confirm the walker is dormant: `python .claude/skills/ui-walk/ui_walker_account.py status` must read `status=disabled armed=no`. If it reads active (the walk died), run `disarm <armedBy from status>` at once and say so in the report.
-6. Write `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~341/IB169-2_walk_record.json` with EXACTLY these keys: `firm_label` (the string `Inflection`), `performance_tab_reached` (true if the Performance tab loaded an answer), `performance_request_paths` (the number of performance request paths in the net log), `walker_disarmed` (true), `walk_stamp` (the folder's stamp `YYYYMMDDTHHMMSSZ`), `reference_file_written` (true). Nothing else: no client name, no account, no figure.
+6. Write `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~341/IB169-2_walk_record.json` with EXACTLY these keys: `firm_label` (the string `Inflection Wealth Management`, the label the Firm control shows), `performance_tab_reached` (true if the Performance tab loaded an answer), `performance_request_paths` (the number of performance request paths in the net log), `walker_disarmed` (true), `walk_stamp` (the folder's stamp `YYYYMMDDTHHMMSSZ`), `reference_file_written` (true). Nothing else: no client name, no account, no figure.
 
 **Criteria (run each under `timeout 120`, record the output and exit code verbatim):**
 
@@ -37,7 +39,7 @@
 
 <expected_criteria>IB169-2-AC1, IB169-2-AC2, IB169-2-AC3</expected_criteria>
 
-What the checks grade: AC1 the scratch file holds exactly one `sel_` + 64 hex line; AC2 the walker account reads dormant (disabled, armed=no); AC3 the walk record carries exactly the six whitelisted keys with the stated values.
+What the checks grade: AC1 the scratch file holds exactly one `sel_` + 64 hex line; AC2 the walker account reads dormant (disabled, armed=no); AC3 the walk record carries exactly the six whitelisted keys with the stated values (`firm_label` begins with `Inflection`).
 
 ## BOUNDS
 
