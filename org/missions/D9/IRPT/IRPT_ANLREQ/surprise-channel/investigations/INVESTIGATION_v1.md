@@ -9057,3 +9057,90 @@
   "class": "OBSERVATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W92-S1 -- (AR-y-271 J2) the portal path in the grant is not carried by this worktree: the portal submodule is an empty gitlink
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W92-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~92",
+  "surfaced_at": "2026-10-13T19:52:11Z",
+  "one_line": "PREMISE: the grant names portal/src/pages/TicketCenter/analysisRequest.ts, but this worktree's portal entry is an uninitialised gitlink (an empty directory), so the portal half of J2 cannot be built or diffed here; the hop was read from the base portal repository at origin/DEV by git show only, and the submodule was not initialised.",
+  "spec_asserts": "TO-AR-y-271 <paths> names portal/src/pages/TicketCenter/analysisRequest.ts as a file of this worktree's grant, and the worker's first act requires the worktree to carry the paths the order names (a missing path is a BLOCKING row).",
+  "world_is": "git ls-files -s portal in C:/dev/wk-irpt-anlreq-92 gives 160000 53506d4903aeabac675d87b7fe208fc9945c8ce7 (a gitlink); ls -la of the portal directory shows no entries; the file does not exist in the worktree. The base portal repository C:/dev/ajb_workspace/portal (branch DEV) has origin/DEV at 4d601023 and the file there (514 lines; fileAndRequestAnalysis at :304). Read there by git show only. The submodule was NOT initialised, nothing was copied or edited in the portal, and no portal commit was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -s portal in C:/dev/wk-irpt-anlreq-92 (160000 53506d4903aeabac675d87b7fe208fc9945c8ce7); the portal directory is empty (ls -la)",
+      "git -C C:/dev/ajb_workspace/portal show origin/DEV:src/pages/TicketCenter/analysisRequest.ts (read at DEV 4d601023)"
+    ]
+  },
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W92-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~92",
+  "surfaced_at": "2026-10-13T19:52:11Z",
+  "one_line": "PREMISE CONTRADICTED (AR-y-271 J2): a partner-firm advisor's Analysis Request is refused at CREATE (403, lambda_function.py:1148-1150) before any request id exists, so the loss is earlier than REPORT; no request-id fix can reach that advisor's ticket until the CTO rules on who may create an analysis_request.",
+  "spec_asserts": "AR-y-271 premise: a partner-firm human reaches the ticket and the request id is lost at REPORT (lambda_function.py:1390, route table :17); the SUBMIT-FORM path or a named service records it (CTO rule). FWD-1: one Analysis Request, filed by the advisor, reaches the ticket with its four attachments. FWD-4: a failed hop shows on the ticket.",
+  "world_is": "principal class client-human is not in MATRIX CREATE (lambda_function.py:168 = SVC_TICKET_FORM, SVC_ANALYST_INTAKE, SVC_COMMENTARY, INTERNAL); create_ticket refuses it at :1148-1150. The portal's createTicket posts to /api/scoped/tickets (tickets.ts:142-143 at origin/DEV 4d601023) for every filer, and fileAnalysisRequest uploads the file first (analysisRequest.ts:156) and creates the ticket second (:183-189), so a partner-firm filing leaves an upload with no ticket and shows a refusal. The SUBMIT-FORM path (lambda_function.py:1102-1142, body allowlist :182) takes ticket_type, title and description only, so it cannot carry the answers or the input_id. Pinned by test_authz_matrix.py:218-220 (D7F-5: client direct write -> 403) and test_analysis_request.py:170-171 ('a client cannot create') and :131-133 (submit path refuses answers and attachment). Measured: the ticket_center test folder at HEAD 4b1e07dabc: 206 passed, 43 subtests passed, rc 0. NOT measured: whether the upload door keeps an input after a later refusal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py :166-168, :1145-1150 (worktree HEAD 4b1e07dabc)",
+      "portal origin/DEV 4d601023: src/api/endpoints/tickets.ts:142-143 (createTicket to /api/scoped/tickets); src/pages/TicketCenter/analysisRequest.ts:156 and :183-189",
+      "infra/aws/lambda/ticket_center/tests/test_authz_matrix.py:218-220; tests/test_analysis_request.py:131-133 and :170-171; the folder run 206 passed, 43 subtests, rc 0"
+    ]
+  },
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W92-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~92",
+  "surfaced_at": "2026-10-13T19:52:11Z",
+  "one_line": "The route table says REPORT admits the ticket's assignee only (lambda_function.py:17), but report_ticket admits the ticket's creator as well (:1383-1386, :1406-1417, the one-step filing); the creator clause is reachable only by an internal creator because MATRIX REPORT is INTERNAL (:174).",
+  "spec_asserts": "Route table header (lambda_function.py:17): 'REPORT internal humans; the ticket's assignee only; records the report reference'. Premise of AR-y-271: REPORT is the route a partner-firm advisor must not need.",
+  "world_is": "report_ticket (:1381-1392) first authorizes REPORT (MATRIX :174 INTERNAL only; CLIENT refused 403 at :1391-1392). Past that gate it takes two callers: the assignee on an in_progress ticket (:1401-1405) or the creator on a non-completed analysis_request with an attachment and no report_ref (:1406-1417, :1439-1441). The header comment and the function disagree; the function is the one that runs. Consequence for J2: opening REPORT to a partner-firm creator would be a widening (option iii, rejected); the creator clause is an internal-only one-step filing path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py :17, :174, :1381-1417 (worktree HEAD 4b1e07dabc)"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W92-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~92",
+  "surfaced_at": "2026-10-13T19:52:11Z",
+  "one_line": "The packager's PACKAGE write stores its report pointer under package.report_ref (a string), while the commentary drafter's gate reads the top-level report_ref.request_id; the two named writes never meet on one attribute, so a named-service record of the request id (option ii) must pick one field first.",
+  "spec_asserts": "AR-y-271 option (ii): a NAMED service records the request id after the analysis is accepted; the existing candidates are the packager's principal (AR-y-272 lane) and the drafter's principal.",
+  "world_is": "package_ticket (lambda_function.py:1462-1534) admits only svc-irpt-packager (:1468-1470) and writes package = {report_ref, pdf_ref, original_ref, commentary_ref, attached_at, attached_by} (:1512, :1521-1523). commentary_draft_ticket (:1537-1595) reads the top-level report_ref.request_id (:1569) and conditions on it (:1587); the top-level report_ref is written only by REPORT (:1434-1449) or by CREATE with the svc-commentary field report_request_id (:644-649, field declared at :122). The packager's post-acceptance write therefore does not satisfy the drafter's gate. Lane of the packager: AR-y-272 (0.9.0_WK_IRPT_ANLREQ~93), outside this grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py :122, :644-649, :1468-1470, :1512, :1521-1523, :1565-1569, :1587 (worktree HEAD 4b1e07dabc)"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
