@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~74</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -87,3 +87,5 @@ lane: the files named in <paths> and the worker's deliverables.
 
 - Cut on Andrew's own upload test (rows `D2-S77`, `D2-S78`, msg 7105) as workstream `YR` round 18. Base: `AR242-y-AC1` FAIL as expected (no record).
 - Any portal candidate goes to `1.0.0_SA_CTO`'s review lane through the issuer; the worker lands nothing.
+
+<!-- ISSUER NOTE 2026-10-13 (2.0.0_SA_COO~Y2): status flipped to complete after AMENDMENT 1. The worker instance AR242-y-AC1 is recorded FAIL on a checker read-path defect (r21 against r22, row W74-S1), and stays FAIL there; the trunk checker, run by the issuer on the amended record attached at deliverables/2.0.0_SA_COO~Y2/r22/PORTAL_FILE_NAME_CANDIDATE_AMEND1.json (@7ff2ede6ac, because the lane gate refuses the continuation serial ~78 under ~74, row W78-S3), prints Y242-PORTAL-OK: 6 of 6 tests pass and 5 of 6 fail on the DEV tip without the change. One pin of the worker instance was fixed by the issuer under the audited author override (@95cd92861d). The CVO decides whether that re-grade is right. -->
