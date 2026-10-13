@@ -47,7 +47,7 @@ exactly: [COO half](file:///C:/dev/ajb_workspace/org/missions/D8/MDPF/MDPF_DEMQU
    `test_a_gained_split_or_a_restated_overlap_bar_is_held_restatement_and_the_name_keeps_its_files`,
    `test_a_gap_beyond_five_days_pulls_from_the_stored_max_and_appends_only`,
    `test_the_receipt_lists_names_appended_without_a_relock_and_a_failed_lock_check_makes_the_name_held`.
-   Existing tests keep passing (the order is amended below: SIX named tests); a test that pins "a stored name is re-pulled over its whole range" changes that assertion and nothing else.
+   Existing tests keep passing (the order is amended below: SEVEN named tests); a test that pins "a stored name is re-pulled over its whole range" changes that assertion and nothing else.
 
 ### ACCEPTANCE
 
@@ -79,6 +79,15 @@ first nightly run would crash AFTER writing the appended names and after `write_
   refused write) is NOT registered, so the unresolved list is left as the full path left it. Add `unresolved_path` to the stub-night test and print the receipt from that run.
 - **SIXTH named test**, in `test_demque_incremental_wiring.py`: `test_a_held_name_never_breaks_the_unresolved_fold_and_only_a_rejected_relock_opens_a_row` (run with `unresolved_path` set; one gained-split name leaves the list untouched, one relock-rejected name opens a `REJECTED:LOW_TRADE_AGREEMENT` row, the run returns normally). `dq_t58_tests.py` lists it and is placed on your branch.
 - Re-run the folder and both checks; the 50-name report needs no re-pull (this change touches no Yahoo path). Regenerate the proof instance, validate it, flip the status in the same commit.
+
+
+### AMENDED 2026-10-13 ~23:5xZ (issuer; no gate limb graded it) -- ruling on row D1-W50-S6 (ARMED): BOTH identity checks run, either one holds the name
+
+Your third pass (commits `2472fdb13b`, `362d75e8fa`) is inherited state; the unresolved-fold fix is right (`UNRESOLVED_ROWS 2`, no crash). **S6 is a real gap, and the amended order said it: "The appended-window check stays."** Your S2 change replaced the window check with the combined one, but the combined check dilutes a mismatch: 20 agreeing trades out of 21 give LOCKED, so
+a mismatch confined to the NEW days would be written. Pair A condition 2 names the appended window explicitly. **Fix:** run BOTH, in this order, before any write: (1) the appended-window check, `lock.check` over the appended rows with the trades that fall inside the appended window (run it when at least one trade falls inside the window, as before; no trade in the window = nothing to prove there);
+(2) the combined-history check, as in your second pass. A state other than LOCKED from EITHER holds the name: `HELD_RESTATEMENT` with reason `relock: <state> on the appended window` or `on the combined history`; an identity rejection registers in `locks` with the real lock row (the third-pass rule is unchanged).
+Add a SEVENTH named test: `test_a_window_only_trade_mismatch_holds_the_name_even_when_the_combined_relock_passes` (synthetic data: 20 agreeing trades in the stored history, one mismatching trade inside the appended window; the combined check reads LOCKED, the window check REJECTED, the name is held and its files are untouched).
+`dq_t58_tests.py` lists it and is placed on your branch. Re-run both acceptance checks and the folder; the 50-name report needs no re-pull. Regenerate the proof, validate it, flip the status in the same commit. The issuer disarms S6 after the merge.
 
 ## BOUNDS
 
