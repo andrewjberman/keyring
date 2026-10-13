@@ -6,8 +6,9 @@ L8 and L9 by `3.0.0_SA_CVO~L` (laptop), on `2.0.0_SA_COO~C` msg 108917, packet
 `deliverables/2.0.0_SA_COO~C/L8_PACKET_ROUND12_PART1.md` (blob 585d49130c93). All 33 round-12 orders complete.
 
 - **L9: CTab3-AC2 PASS** (C-S40). C-S38's NOT MET on CTaa2-AC2 is cured.
-- **L8: 18 round-12 rows dispositioned.** 13 dismissed with reason (C-S41..C-S43); 5 GRADUATE (C-S44, rows in
-  `remediations/REMEDIATION_v6.md`), one of them ARMED (S9122).
+- **L8: 18 round-12 rows dispositioned.** 13 dismissed with reason (C-S41..C-S43); 5 GRADUATE (C-S44), one ARMED (S9122).
+- **Two earlier ARMED rows** the CTO filed after the round-11 close, S9119 and S9120, GRADUATE ARMED (C-S45).
+- `remediations/REMEDIATION_v6.md` holds the 7 graduated rows, three ARMED: the round's L10 slug.
 
 ```json
 [
