@@ -29725,3 +29725,160 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "W345-S3 is STILL ARMED. Why it cannot be disarmed now: the temp file, if any, is written on the host that runs the live builder (an SSM-run gold runner), not on this box; this seat has no read of that host's temp directory and has not measured whether files exist there; the cure is a code change (the retained capture removes its file after use, or reads in memory) in gold-runner code outside every Lambda, which is a build cell. Owner of the hazard until then: 2.0.0_SA_COO~P2. The cell is cut at the round that follows 170's L10 (the issuer's own decomposition; no served value moves). Until then the rule for any seat: do not call retained_capture or build_49f_meshed from a worker or a laptop; the count cell avoided it by fetching in memory."
 }
 ```
+
+## IRPT_BCKEND-D2-W344-S1 -- the HoldingsSnapshot docs copy is staged and pinned by two Lambdas; both pins are stale after this edit
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W344-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~344",
+  "surfaced_at": "2026-10-13T02:22:00Z",
+  "one_line": "TO-IB-pr-493 edits docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json (with its two byte-identical copies). Two Lambdas stage that docs copy and pin its sha256 in infra/aws/lambda/ci/lambda-source-map.json: irpt-ycharts-generate (function key line 3990; docs-copy row lines 4316-4319, pin 3f29017cfc, sha256 0236991c...) and irpt-holdings (function key line 5029; docs-copy row lines 5119-5122, pin 4cc72587d6, sha256 fde5dd41...). Both pins are stale after this edit. lambda-source-map.json is not edited (not in the order's paths).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json@5743c86349 lines 3990 and 4316-4319 (irpt-ycharts-generate) and lines 5029 and 5119-5122 (irpt-holdings), read by Grep and sed at the worktree",
+      "sha256 of docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json at base 5743c86349 = 7c221b13df63e06e10595529db98831d3d529be1ade5530320ae2cca301984a6; after this edit = 5d9e7fe165e2326fc4d56ae0bad1836138a65e7154dd41ecc8223b52e35cc738"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-pr-493 hazard: editing the docs copy leaves the staged pins stale. File ONE BLOCKING row naming the functions and pins; do not edit lambda-source-map.json; nothing is deployed from this order.",
+  "world_is": "Confirmed: both functions stage contracts/HoldingsSnapshot.schema.json from the docs copy and pin its sha256 (irpt-ycharts-generate at line 4319, irpt-holdings at line 5122). Both pins now mismatch the edited copy. Nothing deployed; the served contract is unchanged.",
+  "notes": "The later order that applies the member to the served contract must re-pin both functions under a never-widen pair."
+}
+```
+
+## IRPT_BCKEND-D2-W344-S2 -- raw_keys.json declares the 49F account holdings key as the smartx allocation map; the live 49F node is minted from Schwab dim_balance
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W344-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~344",
+  "surfaced_at": "2026-10-13T02:22:30Z",
+  "one_line": "infra/aws/lambda/investor-reporting/_ids/raw_keys.json, firms.49financial.account.holdings_source (line 11) names smartx fact_allocation_account_map.account_number with citation holdings_snapshot.py:352-353. The live 49F ACCOUNT node id is minted by holdings_49f.py:339 from the Schwab dim_balance.account_id (the custody key as read). The declared holdings_source therefore does not describe the 49F custody node's key. This order added a new node_account_id_member key stating the live rule and left holdings_source unchanged (not in the order's grant to correct).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2 (decides whether a later order corrects holdings_source; the declared key is read by whoever mints or audits 49F account ids from this file)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_49f.py@5743c86349:339 account_id = hs.opaque_id(\"account\", firm_id, raw_account), with raw_account drawn from balance (dim_balance) at :331",
+      "infra/aws/lambda/investor-reporting/_ids/raw_keys.json@5743c86349 line 11 holdings_source and line 12 holdings_citation (holdings_snapshot.py:352-353)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The 49F raw_keys account entry declares the holdings key for the 49F account node; the TO premise says the live builder mints the node id from dim_balance.account_id.",
+  "world_is": "The builder reads dim_balance.account_id (holdings_49f.py:339). raw_keys.json holdings_source still names the smartx allocation map. The two statements disagree; the premise of the TO is what the code shows.",
+  "notes": "Digests and line numbers only; no client name or account id."
+}
+```
+
+## IRPT_BCKEND-D2-W344-S3 -- the order does not say what to do when both account-id candidates are in the directory's set
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W344-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~344",
+  "surfaced_at": "2026-10-13T02:23:00Z",
+  "one_line": "TO-IB-pr-493 says the member is 'the candidate that IS in dir_ids' and defines the omitted case only for None or no candidate. When BOTH candidates (the node's own key and its _pad10 form) are in dir_ids and differ, the order is silent. The builder (holdings_49f._directory_account_member) omits the member in that case, returns status ambiguous, and counts it under account_id_member_omitted; the census cannot separate ambiguous from no-candidate.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_49f.py in the worktree: _directory_account_member returns (None, ambiguous) when len(hits) > 1",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-493.account-node-carries-the-directory-account-id.md, cell IB-pr-493 item 2 (silent on two hits)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The member is the one candidate that is in dir_ids; omitted and counted when none is; never invent an id.",
+  "world_is": "Two distinct directory ids for one custody account is not in the order's cases. The builder refuses to choose and omits. Whether such a case exists in live data was not measured (the live builder was not run).",
+  "notes": "A later order may split the census key if the CTO wants the ambiguous case counted apart."
+}
+```
+
+## IRPT_BCKEND-D2-W344-S4 -- the HoldingsSnapshot schema header says GENERATED, NOT AUTHORED; the new property was hand-added to three copies
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W344-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~344",
+  "surfaced_at": "2026-10-13T02:23:30Z",
+  "one_line": "The schema's description says it is generated from the PRD CONTRACTS table and that every property description quotes its table item verbatim (checked by the IB-s-18 battery, arm a, in both directions). TO-IB-pr-493 asked for a hand-added account_id property with an unquoted description, in three byte-identical copies. The IB-s-18 battery was not run by this worker; a regeneration from the PRD would drop the property.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/HoldingsSnapshot.schema.json lines 4-5 (title and description: GENERATED, NOT AUTHORED)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_s_18.py lines 6-10 (arm a, forward and backward quote checks)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-pr-493 item 3: add account_id (type string, additive, optional) to the node properties; the three copies stay byte-identical; additionalProperties false stays.",
+  "world_is": "Done as specified. The new description carries no double-quoted text, so the battery's backward quote check has nothing to resolve. The PRD CONTRACTS row was not edited, so the generator source and the schema now differ by this one property.",
+  "notes": "The CTO or the issuer decides whether the property is added to the PRD CONTRACTS row before the next generation."
+}
+```
+
+## IRPT_BCKEND-D2-W344-S5 -- running the gold test folder executes test_rearm_trigger_live, which makes live read-only AWS calls
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W344-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~344",
+  "surfaced_at": "2026-10-13T02:24:00Z",
+  "one_line": "data/assets/scripts/gold/investor_reporting/tests/test_holdings_rearm_trigger.py::test_rearm_trigger_live calls boto3 scheduler get_schedule and S3 head_object and get_object (read-only; no write verb in it). A plain pytest of the tests folder collects and runs it. The worker ran the folder once under timeout 120 (outside the order's no-AWS bound): 1 failed, 400 passed. The failing assertion was not read; the test was not re-run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/tests/test_holdings_rearm_trigger.py lines 97-117 (boto3 scheduler and s3 clients) and 166-170 (the live test)",
+      "pytest run of data/assets/scripts/gold/investor_reporting/tests in the worktree, 400 passed and 1 failed in 29.79s"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-pr-493 bounds: no AWS call and no run of the live builder. A build-only worker runs the named checks, not the whole folder.",
+  "world_is": "The folder's default run performs live reads. The worker did not know this before the run; the bound was broken by the run, not by any edit. No write was made by the test.",
+  "notes": "Surfaced so that later workers scope their pytest runs to named files."
+}
+```
+
+## IRPT_BCKEND-D2-W344-S6 -- the contract test folder shows four failures outside the file the order's AC3 names
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W344-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~344",
+  "surfaced_at": "2026-10-13T02:24:30Z",
+  "one_line": "TO-IB-pr-493 AC3 reads 'existing contract tests still pass' and grades one file (test_holdings_classification_members.py, 24 passed). A run of the whole infra/aws/lambda/investor-reporting/_contracts/tests folder in the worktree gives 4 failed, 122 passed: test_seam_paired.py::test_the_consumer_fixture_source_is_named_and_non_empty, ::test_the_operation_map_covers_the_consumers_own_denominator, ::test_every_declared_route_has_a_response_contract_whose_refs_resolve, and ::test_control_a_known_good_document_conforms_and_a_known_bad_one_does_not[analysis-request-original]. None of the four names a HoldingsSnapshot file; the base state was not measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest run of infra/aws/lambda/investor-reporting/_contracts/tests in the worktree: 4 failed, 122 passed in 4.74s",
+      "infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py: the failing names concern analysis-request routes and the operation map; the file mentions HoldingsSnapshot only in the route table (line 105) and CORE_ELEVEN (line 670)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-pr-493 AC3: the existing contract tests still pass.",
+  "world_is": "The named file passes. Four tests in a sibling file fail in the worktree; whether they fail at base was not measured by this worker.",
+  "notes": "Recorded for the issuer; not graded by this order's criteria."
+}
+```
