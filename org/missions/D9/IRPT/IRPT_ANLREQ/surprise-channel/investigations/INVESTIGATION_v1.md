@@ -7601,3 +7601,114 @@
   "world_is": "REPORTED by Andrew with two screenshots at this seat, 2026-10-13: (1) after uploading the holdings file the in-page 'Holdings file' input still reads 'Choose File No file chosen' and the status line reads only 'Needs correction.'; no file name appears anywhere on the page, and the only sign of the upload is the correction text below. (2) Andrew's words, verbatim: 'there is no point in picking a \"price data for share quantities\" as the answer is always \"now\", which will translate into market close of the prior trading day.' READ by me in the DEV checkout, not reproduced and not run on PROD: the in-page input (ProspectComposer.tsx:419-422) is a bare native file input with no name shown once the page re-renders; the Price date field (:434-437) is a date input defaulting to today with no stated rule. Whether the date is read by the serving path or ignored is NOT read by this seat: the owner reads it before removing the field. Both points go to 2.0.0_SA_COO~Y2 with S77."
 }
 ```
+
+## IRPT_ANLREQ-D2-W76-S1 -- the portal submodule is an empty gitlink in this worktree, so the composer read was taken from the pinned DEV commit by object read
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W76-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~76",
+  "surfaced_at": "2026-10-13T17:30:53Z",
+  "one_line": "TO-AR-y-244 reads ProspectComposer.tsx at portal DEV cf52fdbf, but the worktree's portal entry is an empty submodule gitlink at 53506d49, so no portal file is on disk for the read; the read was made with git show on cf52fdbf in the base portal repository.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-irpt-anlreq-76 ls-tree HEAD portal -> 160000 commit 53506d49 (the worktree pin; the directory is empty)",
+      "git -C C:/dev/ajb_workspace/portal cat-file -t cf52fdbf -> commit (the DEV pin the cell names)",
+      "git -C C:/dev/ajb_workspace/portal show cf52fdbf:src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx read at lines 472-503; no file was written into the portal tree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-244 cell: read the proxy row at ProspectComposer.tsx :472-503 at portal DEV cf52fdbf, and the worktree is the place the read is made.",
+  "world_is": "The worktree carries no portal files; the pinned DEV commit is present only in the base portal repository. The read is a git object read of that commit, which is a read of the same bytes the cell names."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W76-S2 -- the y244-read check reads r21/ for the record, while the cell and the order name r22/, so AC1 cannot pass on the spec path
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W76-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~76",
+  "surfaced_at": "2026-10-13T17:30:53Z",
+  "one_line": "ar21_checks.py sets D to deliverables/0.9.0_WK_IRPT_ANLREQ~%s/r21/ (line 25) and its y244-read branch loads D % '76' + PROXY_SUGGESTION_READ.json (line 307), so the check fails on the record at r22/ that the cell names; the check is outside this grant and was not edited.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: timeout 120 python C:/dev/wk-irpt-anlreq-76/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py y244-read --root C:/dev/wk-irpt-anlreq-76 -> 'FAIL: no org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~76/r21/PROXY_SUGGESTION_READ.json' then 'Y244-READ-FAIL' rc=1",
+      "the record is written at the spec path r22/PROXY_SUGGESTION_READ.json (valid JSON, read by the file read in this worktree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-244 face step 5 and AC1: the record is written at r22/PROXY_SUGGESTION_READ.json and AC1 is the y244-read invocation of ar21_checks.py, which grades that record.",
+  "world_is": "The check grades r21/, so the spec path and the graded path differ by one folder. Either the record moves to r21/ or the check's D moves to r22/; both are outside this order's grant, so the order stays open on AC1 until the issuer amends it."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W76-S3 -- the ycharts_search gateway tool the cell names is not defined anywhere in this worktree's searched folders
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W76-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~76",
+  "surfaced_at": "2026-10-13T17:30:53Z",
+  "one_line": "AR-y-244 names the YCharts search the gateway exposes (ycharts_search) as the first source to look at; no definition, caller or reference to it was found in the searched folders of this worktree, so that option is recorded UNPROVEN.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find --files 'ycharts_search' org/mcp -> DENOMINATOR 0 hit(s) across 156 file(s) scanned in scope [corpus=all]",
+      "Grep ycharts_search over org/modules -> no files; over infra/aws/lambda/investor-reporting -> no files",
+      "comp-which 'where is the ycharts_search gateway tool defined' -> NO CURATED RULE MATCHED; the fuzzy candidates were comp-system, comp-find, comp-pydeps"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-244 cell: the YCharts search the gateway exposes (ycharts_search) is the first option to read in the estate.",
+  "world_is": "The tool's definition is not in the folders searched here. Its contract, whether a server path can reach it, and its cost are not read; the record marks it UNPROVEN HERE."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W76-S4 -- the estate's similar-exposure advisory (the swap kind) is built but refuses every call, because no production caller passes the search capability
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W76-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~76",
+  "surfaced_at": "2026-10-13T17:30:53Z",
+  "one_line": "The swap advisory (resolution_kimi.py:53-56, 159-165) asks for up to three ETF alternatives with similar exposure, but returns KIMI_WEB_SEARCH_UNVERIFIED unless a search capability with a QA receipt is passed, and resident_session.kimi_advisory (:133-137) passes none; verified_suggestions (security_resolution.py:242) has no caller outside the tests.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "resolution_kimi.py:159-165: if kind is swap and the search_capability is not a dict with verified true, a qa_receipt_sha256 and request_fields, the call returns failure KIMI_WEB_SEARCH_UNVERIFIED with no attempt",
+      "ycharts/session/resident_session.py:137 return KimiAdvisory(send=..., telemetry=journal_telemetry) -- no search_capability argument; Grep of search_capability outside tests returns only resolution_kimi.py lines 141-162",
+      "Grep of verified_suggestions over infra/aws/lambda/investor-reporting returns only its definition at security_resolution.py:242"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-244 step 3: look first at what the estate already has for a similar security, before any new service is recommended.",
+  "world_is": "The estate has the similarity advisory and its verify step as code, but it is not reachable from production code. Enabling it needs a provider QA receipt and a wiring change, not a new service; the CTO rules on that."
+}
+]
+```
