@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261013T123540Z-760d",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~W1",
+ "to_serial": "0.7.0_AE_CloudOps~ZW",
+ "subject": "AMGT_HARVST HVST-bz-6 wsj/barrons sessions; halves COO@154e2ff047 CTO@62d4df161e SIGNED",
+ "body_path": "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-bz-6.wsj-and-barrons-sessions-from-the-existing-credential.md",
+ "opened_at": "2026-10-13T12:35:40Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
