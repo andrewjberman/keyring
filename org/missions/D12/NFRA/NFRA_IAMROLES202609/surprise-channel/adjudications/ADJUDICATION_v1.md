@@ -1532,3 +1532,94 @@ COMPLETION_REPORT.round9.
 ```
 
 -- 3.0.0_SA_CVO~Z
+
+---
+
+## ROUND 9 -- z-2 L9 and the round's L8 (C-S50 to C-S52); the project closes
+
+**By:** `3.0.0_SA_CVO~Z`, 2026-10-13 ~07:1xZ, on 0.7.0_AE_CloudOps~IR msg 33574 and `1.0.0_SA_CTO~Z` msg 33510 (Andrew: wind down,
+no round 10). The issuer `2.0.0_SA_COO~ZI` has ended, so this compile reads the channel and the orders directly.
+The slug is `remediations/REMEDIATION_v9.Z.md`.
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S50",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-13T07:10Z",
+    "one_line": "L9 grade, TO-IAM-z-2 AC4 (judgment): PASS, bounded -- the reader left the repo before the grant (2026-10-11 23:40Z vs 2026-10-12 04:29Z), and no live path remains: no role that runs a canonical Schwab build holds any Allow reaching opal-data-schwab (303 roles swept). Bounded because the S3-STAGED builder copies still carry the dead read (Z-S44, graduated).",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-z-2 AC4: did the reader leave before the grant, and does any path remain by which a claimant's bytes reach the canonical Schwab build?",
+    "world_is": "ORDER: TO-IAM-z-5 removed latest_rps_date()'s read @04edcf72e9 (2026-10-11T19:40:16-04:00); CloudTrail on bd-exporter-ec2-role shows the only delete, DeleteRolePolicy at 2026-10-12T04:29:22Z. grep -c 'Bucket=SRC_BUCKET' on build_canonical_daily.py at HEAD = 0. THE GRANT, live: 16 inline policies, schwab-bucket-access absent; 0 Allows reaching opal-data-schwab across the 16 inline and 2 attached (bd-securities-access, AmazonSSMManagedInstanceCore). ACCOUNT-WIDE (get-account-authorization-details, 303 roles, 79 customer-managed policies): 6 roles hold an identity Allow that would reach a claimant's opal-data-schwab, all by wildcard: AWSServiceRoleForResourceExplorer, AWSServiceRoleForTrustedAdvisor, opal-drift-producer-codebuild-role (ReadOnlyAccess), opal-news-lambda-role (AmazonS3ReadOnlyAccess), partners-lambda-role (opal-data-*), security-sweep-dedicated-role. None runs a canonical Schwab build. REAL RUNS on the narrowed role: gold/.checkpoints/2026-10-12/ 29 of 29 keys at or after S_00 2026-10-12T23:03:07Z (D_00f 2026-10-13T01:12:07Z), and gold/.checkpoints/2026-10-13/ 29 of 29 at or after S_00 04:03:46Z (D_00f 06:14:23Z), perf_report 06:14:24Z; both read by this seat. BOUND: the runner executes the S3-staged copies, and s3://opal-data-bd/code/canonical/schwab/build_canonical_daily.py (LastModified 2026-06-29, 2 'Bucket=SRC_BUCKET' reads) and code/canonical-schwab-runner/s8_gate.py (2026-06-29, SRC_BUCKET='opal-data-schwab') still read the name. That runner has written nothing under canonical/schwab/ since 2026-07-24 and has 0 run logs, and none of the 6 roles is a canonical role, so the path is latent, not live. CARRIED: cloudops-dell1-agent-user wrote two PutRolePolicy on the role on 2026-10-11 (13:44Z, 15:58Z), a second writer during the round; neither reaches the name.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cloudtrail lookup-events ResourceName=bd-exporter-ec2-role since 2026-10-11, writes: DeleteRolePolicy 2026-10-12T04:29:22Z; PutRolePolicy x2 2026-10-11 by cloudops-dell1-agent-user",
+        "iam get-account-authorization-details (303 roles): fnmatch of every S3-read Allow against opal-data-schwab -> 6 roles, all wildcard",
+        "s3api list-objects-v2 opal-data-bd gold/.checkpoints/2026-10-12/ and 2026-10-13/: 29 and 29 keys, all at or after their S_00",
+        "s3 cp s3://opal-data-bd/code/canonical/schwab/build_canonical_daily.py: md5 883960c6097d (HEAD d441869da69c), 2 Bucket=SRC_BUCKET; head-object code/canonical-schwab-runner/s8_gate.py 2026-06-29",
+        "git log 04edcf72e9 (TO-IAM-z-5)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a defect: TO-IAM-z-2 AC4 PASS, bounded; the bound graduates as Z-S44."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S51",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-13T07:10Z",
+    "one_line": "Round 9 L8: Z-S45, Z-S48 and Z-S52 DISMISSED -- the FRED NoSuchBucket failure and the frozen yield curve are cured by z-6, and the three retired bd scripts carrying opal-data-schwab constants have no executing role that reaches the name.",
+    "class": "OBSERVATION",
+    "spec_asserts": "The L8 compile dispositions every undispositioned row of the round.",
+    "world_is": "Z-S45 and Z-S48: TO-IAM-z-6 retired the raw write to opal-market-update. The served s3://opal-data-portal-v2/json/macro/yield_curve_fred.json has a new version at 2026-10-11T23:00:58Z (the predecessor dates from 2026-08-05), and the current fred-data-ingestion code contains no put_object (C-S49's grade and this seat's re-read). Z-S52: convert_schwab_uln_to_silver.py, rps_ingestion.py and sync_schwab_onedrive_to_s3.py are retired, deprecated or unscheduled. No role in the account other than the six wildcard holders named at C-S50 can read a claimant's opal-data-schwab, and none of those runs these scripts.",
+    "adjudicates": [
+      "NFRA_IAMROLES202609-Z-S45",
+      "NFRA_IAMROLES202609-Z-S48",
+      "NFRA_IAMROLES202609-Z-S52"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ADJUDICATION_v1 Z-C-S49 (TO-IAM-z-6 grade) and this seat's s3api list-object-versions read of the served key",
+        "C-S50's 303-role sweep",
+        "investigation rows Z-S45, Z-S48, Z-S52"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Cured by z-6, or no executing role reaches the name."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S52",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-13T07:10Z",
+    "one_line": "Round 9 L8: Z-S44, Z-S46, Z-S47, Z-S49, Z-S50 and Z-S51 GRADUATE to REMEDIATION_v9.Z with owners that outlive the close -- staged builder copies, a smartx chain configured to a dead bucket, a CLI per-page count trap, a dead secret ARN, and a run-date data_as_of.",
+    "class": "OBSERVATION",
+    "spec_asserts": "A standing defect leaves the round as an owned remediation row; the project closes, so no owner may be the ended issuer.",
+    "world_is": "Z-S44: the S3-staged canonical copies still read opal-data-schwab (measured at C-S50). Z-S46 and Z-S51: both ends of the smartx chain are configured to opal-data-smartx-v2, which is NoSuchBucket. z-1 removed the write grants, so a claimant receives nothing, but the chain cannot work. Z-S47: --query is applied per page on paginated log reads, so a first-line count under-reports. Z-S49: FredIngestionLambdaRole grants GetSecretValue on a secret that returns ResourceNotFoundException. Z-S50: yield_curve_fred.json's data_as_of is the run date, not the data date. Each row in the slug names a surviving owner.",
+    "adjudicates": [
+      "NFRA_IAMROLES202609-Z-S44",
+      "NFRA_IAMROLES202609-Z-S46",
+      "NFRA_IAMROLES202609-Z-S47",
+      "NFRA_IAMROLES202609-Z-S49",
+      "NFRA_IAMROLES202609-Z-S50",
+      "NFRA_IAMROLES202609-Z-S51"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "investigation rows Z-S44, Z-S46, Z-S47, Z-S49, Z-S50, Z-S51",
+        "C-S50 (the staged copies)"
+      ]
+    },
+    "disposition": "GRADUATED"
+  }
+]
+```
+
+-- 3.0.0_SA_CVO~Z
