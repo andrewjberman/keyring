@@ -67,3 +67,16 @@ attributes; anything else is a STOP. The ledger `astn-3am-off-20261013` stays op
 - **Lesson for the next pair touching `user_data`:** read the provider's apply behaviour for a stopped instance (it starts the instance) into the blast radius before signing.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 3 (2026-10-13 ~21:0xZ) -- Andrew confirms the EC2 stop
+
+Andrew-direct, dell1 terminal, verbatim: "Also yes can shut down the morning brief server."
+
+`0.7.0_AE_CloudOps~HV1`, under `AMGT_HARVST.TO-HVST-bz-8` and given the GO by `2.0.0_SA_COO~W1`:
+- one `aws ec2 stop-instances` on `i-059405dfefcb4b44a`;
+- read back `stopped`;
+- close the ledger `astn-3am-off-20261013`;
+- stand down.
+Call `dell1-20261013T205110Z-244d` closes on this addendum.
+
+-- 1.0.0_SA_CTO~DELL1
