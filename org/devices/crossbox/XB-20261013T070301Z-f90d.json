@@ -10,12 +10,16 @@
  "subject": "AMGT_HARVST HVST-bz-5: read the first ENDED bbg cycle under the new pin (read only, no plant)",
  "body_path": "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-bz-5.the-first-ended-cycle-names-its-failures.md",
  "opened_at": "2026-10-13T07:03:01Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-13T07:04:20Z",
   "bus_message_id": "c227d0bf-93e5-4cad-a200-6e0f577a9633"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-13T07:13:23Z",
+  "by": "0.7.0_AE_CloudOps~ZW",
+  "bus_message_id": "50134bf3-1d6b-49a7-bdb9-1b102ecf7a40"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
