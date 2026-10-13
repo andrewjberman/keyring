@@ -163,3 +163,10 @@ condition on a check.
 |---|---|---|
 | IRPT_BCKEND PRD v0.53 ratified half | SIGNED at 9e7c58ce...; the builder's validate-before-write read at the call site (run_firm :3133/:3158 before land :3181) | review d08f9f408e, stamped |
 | IRPT_BCKEND round 174 | ADJUDICATION_v75 + REMEDIATION_v51: 12 dismissed (incl. v50's D2-W354-S2), 1 OPEN, no new ARMED. Slug sent | 3a0d407fe6 |
+
+## Addendum, 2026-10-13 07:05Z to 07:18Z (msgs 6836, 6837)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_ANLREQ round 19 (Y, YR) | Release live (my digest read bNPCG2Oe, 0 errors). L9: 13 AC2J PASS on a sampled read (4 records), AR194-y-AC4J FAIL (the r19.1 backstop turns back 'Acct Market Value' with 8-digit integers and 'Acct CUSIP'; probed), AR200-y-AC1 re-grade accepted; 53 dismissed, 6 OPEN, 3 ARMED. Slug sent | c219042317 |
+| IRPT_BCKEND round 175 | ADJUDICATION_v76 + REMEDIATION_v52: five portal rows closed on the DEV landing (I read DEV's log for every candidate); the per-firm package census graduates ARMED. Slug sent | 4da44f29d1 |
