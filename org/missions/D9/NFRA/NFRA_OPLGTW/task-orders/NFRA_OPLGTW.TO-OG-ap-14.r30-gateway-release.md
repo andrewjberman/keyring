@@ -11,7 +11,7 @@
 <issued_by>2.0.0_SA_COO~O</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
-comp-schedule: RUN-BY-ISSUER at the cut -- the gateway queue is NFRA_MCPORTAL MP-z-5 (applier 0.7.0_AE_CloudOps~MQ, GO @81e079ba4b), then THIS release; NFRA_MCPINDEX MX-r-11 and MCPORTAL MP-n-4 follow it. Phase B1 starts only after MP-z-5's ledger is CLOSED and its sentinel gone. B2 window 11:00Z-23:00Z. No cron, alarm or monitor is created.
+comp-schedule: RUN-BY-ISSUER at the cut, amended A1 -- the gateway queue is NFRA_MCPORTAL MP-z-5 (LIVE @64b3e54658, ledger closed 21:44:07Z), then NFRA_MCPINDEX MX-r-11 (2 files, no tool), then THIS release; MCPORTAL MP-n-4 follows. Phase B1 starts only after MP-z-5's ledger is CLOSED and its sentinel gone. B2 window 11:00Z-23:00Z. No cron, alarm or monitor is created.
 comp-iam: RUN-BY-ISSUER -- every API call the four cells' code makes, read at the cut: pf-1 and bd-2 are in-process decisions (no AWS or Graph call); bd-2's tier read is app/tier.py resolve_tier over the deploy-time rosters (no call); tg-1 reads the sender's UPN and tenant from the Graph message payload the Teams routes already fetch (no new Graph scope, no AWS call); sh-1 calls Graph GET /shares/{id}/driveItem and /children under the signed-in user's own delegated token (Files.ReadWrite.All already consented, app/config.py:64). The release changes no role, policy or Graph consent.
 comp-adversary: DECLARED-NOT-APPLICABLE -- the act is 1.0.0_SA_CTO~Z's ruling org/missions/D9/NFRA/NFRA_OPLGTW/ledger/CTO_RULING_R37_ONE_RELEASE_PF1_TG1_BD2_SH1_20261013.md @8f236865cc and round-36 analysis R1 @713305ee56 (row Z-S101).
 EGRESS CLASS, declared: NONE beyond Opal's own AWS (SSM reads of the gateway host).
@@ -33,7 +33,8 @@ box/sitez also carries other gateway work that is NOT live and is NOT in this re
 
 ### PHASE B1 -- re-cut, prove, ask. NO deploy
 
-1. **Precondition.** NFRA_MCPORTAL's MP-z-5 ledger is CLOSED at HEAD and its sentinel is gone. Read
+1. **Precondition (A1).** NFRA_MCPORTAL's MP-z-5 ledger `nfra-mcportal-gw-release` AND NFRA_MCPINDEX's MX-r-11 release
+   ledger are both CLOSED at HEAD, and their sentinels are gone (MX-r-11 takes the slot before this release). Read
    `infra/aws/ec2/EC2_MANIFEST.json` `services.opal-gateway.deployed_commit` at HEAD: that is the LIVE ref. Confirm it
    with ONE SSM md5 read of the host against that commit, walking `app/`, `deploy/` and `dashboard/`. A mismatch is a STOP.
    Confirm ONE gateway release in flight across all worktrees (`git worktree list --porcelain`, then each tree's
@@ -145,6 +146,11 @@ commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing
   - ap14.AC1 arms on synthetic records: one cell commit as the release gives 0 stray lines and markers 3 of 4; the live
     ref -> trunk HEAD gives 1495 stray lines. Both read FAIL, which shows the check discriminates.
   - ap14.AC2 base FAIL as expected (records absent; rb.AC2 FAIL because runbook 7.2 does not name today's live ref).
+
+- A1 (issuer, 2026-10-13 ~21:4xZ): the gateway slot after MP-z-5 goes to NFRA_MCPINDEX MX-r-11 (2.0.0_SA_COO~MI msg
+  33805; reply 20261013T214631Z): two files, no tool, already drained, ready now, while this release has not yet built.
+  Phase B1's precondition now names MX-r-11's ledger as well; the live ref is read at the act, so the base moves with it.
+  Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>

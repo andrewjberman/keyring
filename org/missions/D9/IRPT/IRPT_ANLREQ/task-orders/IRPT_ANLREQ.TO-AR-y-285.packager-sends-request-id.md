@@ -42,13 +42,17 @@ You are `0.9.0_WK_IRPT_ANLREQ~109`.
 
 ### ACCEPTANCE
 
-<criterion id="AR285-y-AC1" cell_refs="AR-y-285"><invocation>python C:/dev/wk-irpt-anlreq-109/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py y285-pkg-sender --root C:/dev/wk-irpt-anlreq-109</invocation><expect>Y285-PKG-OK</expect></criterion>
+<criterion id="AR285-y-AC1" cell_refs="AR-y-285"><invocation>python C:/dev/wk-irpt-anlreq-109/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py y285-pkg-sender --root C:/dev/wk-irpt-anlreq-109</invocation><expect>Y285-PKG-SENDER-OK</expect></criterion>
 `AR285-y-AC1`: the record shows the payload before and after (seven members), where the module is packaged, and a new test file with at least 6 passing tests whose case (a) fails at HEAD, with the existing packager tests edited only where they pinned the five-member payload.
 
 <criterion id="AR285-y-AC2J" cell_refs="AR-y-285" judgment="true"/>
 `AR285-y-AC2J` (judgment, graded at L9, never by you): the request id and revision are sent as the interface says, the already-attached idempotence still reads the four pointers only, a conflicting request id is a named refusal, no map or recipe was edited, and nothing was released.
 
 <expected_criteria>AR285-y-AC1 AR285-y-AC2J</expected_criteria>
+
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-13 ~21:5xZ, after the first report of `AR-y-284`'s worker; two defects of the issuer's order text, the worker was right).** (1) The criterion's expected token is `Y285-PKG-SENDER-OK` (the checker prints its whole check name; the order text said `Y285-PKG-OK`). (2) The record folder is `r23/` (the checker reads `deliverables/0.9.0_WK_IRPT_ANLREQ~<n>/r23/PACKAGER_REQUEST_ID.json`), not `r26/`. A record already written to both folders is fine. Gate limb that graded this amendment: none stated (the issuer amends its own order's text).
+
+**AMENDMENT 2 (issuer `2.0.0_SA_COO~Y2`, 2026-10-13 ~22:0xZ, after the worker's BLOCKING row `IRPT_ANLREQ-D2-W109-S1`; the stop was right).** Two existing tests outside the first grant pin the five-member PACKAGE payload: `ycharts/research/tests/test_opal_packager.py` (:155) and `ycharts/research/tests/test_packager_own_store.py` (:70). `<paths>` now names both. Edit ONLY the assertion or fixture that pins the five-member payload to the seven-member payload (the two new members are `request_id` and `request_revision`); keep every other assertion and word; list each edit in the record (`test_edits`: file, test name, before text, after text). Then commit, re-run the trunk checker (it prints `Y285-PKG-SENDER-OK`) and the proof-of-spec check, and report once. Do not flip `<status>`. Row `W109-S2` (released before `AR-y-284`, every attach gets a 400) is the issuer's: the release orders the ticket service leg first. Gate limb that graded this amendment: none stated (the issuer amends its own pending order's grant).
 
 ## BOUNDS
 
@@ -58,6 +62,8 @@ You are `0.9.0_WK_IRPT_ANLREQ~109`.
 <paths>
 infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py
 infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_packager_request_id.py
+infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_packager.py
+infra/aws/lambda/investor-reporting/ycharts/research/tests/test_packager_own_store.py
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
