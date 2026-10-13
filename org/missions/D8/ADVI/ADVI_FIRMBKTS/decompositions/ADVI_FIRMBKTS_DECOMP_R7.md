@@ -103,3 +103,29 @@ figures for wording, PII and accuracy; ONLY THEN `FB-j-7` (citing that sample) a
 **Ordering (the CTO's):** `FB-j-7` (the regeneration pair and the first-chain read) and `FB-j-4` (the trigger) do not move until `FB-j-10`'s
 bullets are non-empty and read by the CTO; `FB-j-7`'s pair cites that sample. `FB-j-7`'s un-park condition "`FB-j-6`'s record read" is
 superseded by "`FB-j-10`'s record read and its sample read by the CTO against the figures".
+
+## Amendment 3 (2.0.0_SA_COO~B1, 2026-10-13 ~10:5xZ): cells `FB-j-11`, `FB-j-12`, `FB-j-13` added by the CTO's sample read (`ledger/CTO_SAMPLE_READ_FB_J_10_EXEC_SUMMARIES_20261013.md`)
+
+`FB-j-10` (complete): the second apply works, 39 bullets for ten advisors, 0 drops, listing identical. The CTO read the sample: four slots read
+well; `top_nna_mover` is broken (one placeholder `rel_id "0"` pools $9.6M under two advisors, raw relationship ids are printed, a client display name
+leaked past the PII guard); one bullet (IQLT -69.2 percent) is implausible. His rulings for the regeneration pair: (a) `top_nna_mover` disabled by
+config, the product fix to the CRO's exec-summary brief; (b) the guard learns client display names; (c) IQLT traced to its cost basis and price
+before serve; (d) Andrew is offered the sample before `FB-j-4`. Cells are now 13, chains 5 and 1 join.
+
+| cell | item | serves | owned files | depends on | slot, class | risk | at the cut |
+|---|---|---|---|---|---|---|---|
+| `FB-j-11` the slot switch (`top_nna_mover` OFF by config), the client-name guard, and the Terraform carrier `disabled_slots` | 2 | FWD-5 | `infra/aws/lambda/exec-summary-generator/{lambda_function.py,tests/test_slot_switch_guard.py}`, `infra/aws/terraform/exec-summary/{variables.tf,main.tf}` | `FB-j-9` (same file, merged) | ~74 worker | WORLD (path floor) | pending |
+| `FB-j-12` the IQLT -69.2 percent traced to its cost basis and price (read-only) | 2 | FWD-5 | `deliverables/0.9.0_WK_ADVI_FIRMBKTS~75/` | -- | ~75 worker | LOCAL | pending |
+| `FB-j-13` the third apply (code plus ONE environment key, switch ON) and a second ten-advisor dry run, texts beside figures | 2 | FWD-5 | `deliverables/0.7.0_AE_CloudOps~FB1/SLOT_SWITCH_SAMPLE.json` and the artifact and figure files | `FB-j-11`, the addendum 2 | `0.7.0_AE_CloudOps~FB1` seat order | WORLD | parked |
+
+`FB-j-7` (the join) now also waits on: `FB-j-11` merged and deployed (via `FB-j-13`), `FB-j-12`'s classification read by the CTO (a data defect holds the
+affected bullets), the second sample read by the CTO and offered to Andrew, and the regeneration pair signed citing it. `FB-j-4` waits on `FB-j-7`'s pair.
+
+## Amendment 4 (2.0.0_SA_COO~B1, 2026-10-13 ~11:0xZ): cell `FB-j-14` added by the CTO's order (msg 4747, ADDENDA 4-5 of his FB-j-6 half)
+
+The `FB-j-10` sample files (`DRYRUN10_ARTIFACTS.json`, `DRYRUN10_FIGURES.json`) hold raw relationship ids and are already on `origin/box/dell1`. The CTO
+ruled: scrub forward, hash relationship ids at write time from now on, no history rewrite (Andrew's word; he recommends against it). Cells are now 14.
+
+| cell | item | serves | owned files | depends on | slot, class | risk | at the cut |
+|---|---|---|---|---|---|---|---|
+| `FB-j-14` the ten-advisor sample files hold no raw relationship id (hashed forward) | 2 | (privacy hygiene of the sample) | `deliverables/0.7.0_AE_CloudOps~FB1/DRYRUN10_ARTIFACTS.json`, `DRYRUN10_FIGURES.json` | -- | `0.7.0_AE_CloudOps~FB1` seat order | LOCAL | pending |
