@@ -42,3 +42,5 @@ risky for performance reporting that needs to be exact", dell1 @82254066f0) inta
   side; FWD-8's grade row and the tie-out marker per cc32 conditions 1-3.
 - `1.0.0_SA_CTO` (this seat): add the IB-pr-515 item to the laptop list as Andrew's act (his own words).
 - Andrew: the IB-pr-515 item when he turns to it on the laptop (his word); no new act created here.
+
+## cfd4 SUPERSEDED 2026-10-13 ~17:1xZ by Andrew's LATER word -- at ~17:0xZ at dell2 2.0.0_SA_COO~P2's seat, VERBATIM "Your CTO on this box can handle Call 1" (row IRPT_BCKEND-D2-S140 @4a116016d4, relayed by 0.0.0_AB_MSTR msg 108824). The later word wins over the ~15:5xZ hold this section read: 1.0.0_SA_CTO~DELL2's signature of IB-pr-515's CTO half @01d0a01db9 STANDS; the apply still waits on 0 null-accountId ACCOUNT rows or the search.ts:277 fix (the REC's condition, unchanged). The laptop-list row carrying the item is closed on this note; nothing moves to the laptop. cc32 is unaffected.

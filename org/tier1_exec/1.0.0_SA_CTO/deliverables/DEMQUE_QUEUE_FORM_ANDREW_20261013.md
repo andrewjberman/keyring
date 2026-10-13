@@ -151,6 +151,33 @@ distributions (dividends, interest), not price alone. Yahoo is admitted only thr
 - **The 8 mutual funds Yahoo rejected in the Cottonwood 15-fund fill are NOT in CARD-A's 606:** ABNFX, AGTHX, BALCX, MEIIX, NFFFX, PRILX, VEIRX, VGHAX. They have no
   price source until a Bloomberg request is filed for them under B1.
 
+### Andrew, ~17:2xZ: "Go with your rec." This seat reads it as covering all five open recommendations
+
+> Go with your rec.
+
+1. **A1 MODELS PULL** (`integrations/bloomberg/pipeline/tplus1/src/market_indices_data_pull.ipynb` and `model_portfolio_regression_analysis.ipynb`, the first leg of the 7:00 am ET
+   job): **APPROVED with the incremental change.**
+   - Card: it feeds the dashboard's market data and models. Its 152 market and macro series (daily price and total return; monthly valuations back to 1989-12-31) and the
+     model portfolios' ETFs and benchmarks (6 years) are re-pulled in full every day today.
+   - Change:
+     - keep each series' history stored once;
+     - daily pull = the last 5 trading days;
+     - monthly series = the latest month-end plus month-to-date only;
+     - valuation fields at month-end only;
+     - model ETFs on the same 5-day rule.
+   - Add a real meter: today the run logs as rows-unreadable.
+2. **B1 COTTONWOOD DEPTH: option (c)**, the dates money moved plus month-ends (daily after 2026-04-22, where Black Diamond has data). Floor: max(first held date, 2012-01-01).
+3. **$1.00 MONEY MARKET FUNDS SKIP BLOOMBERG:** each of the 227 cash equivalents is checked against its fund type. A fund whose price is fixed at $1.00 is priced at $1.00 with
+   that reason on the value, and is not pulled. UNREAD types are pulled.
+4. **THE COTTONWOOD PRICE BASIS:**
+   - 595 securities use `PX_LAST` plus the client's own recorded income (11,154 dated rows, `2.0.0_SA_COO~Q1` @54a77c0e82);
+   - the 11 long-held Fixed Income names with no income rows also get `TOT_RETURN_INDEX_GROSS_DVDS` (2,492 cells, 0.9 day).
+5. **THE 8 MUTUAL FUNDS YAHOO REJECTED JOIN B1:** ABNFX, AGTHX, BALCX, MEIIX, NFFFX, PRILX, VEIRX, VGHAX. Bloomberg from their first held date (the 15-fund fill starts
+   2020-07-06), at the same depth (c), on the same basis.
+- **Also ruled (not part of the form): restart 2.0.0_SA_COO~W1 and 2.0.0_SA_COO~V1; the three CloudOps seats stay down.**
+
+**B1 total at this depth: about 13 days of the daily allowance** (12 for the 606, plus under 1 for the 11 bonds' total-return field, plus the 8 funds), less the $1.00 funds.
+
 ## STANDING RULE, Andrew: INCREMENTAL MODE = THE LAST 5 TRADING DAYS, on every surface
 
 Once a need's backfill is complete, every daily pull asks for **the last 5 trading days** (from `lib/trading_calendar.py`), not a single day and not a long window. That
@@ -172,3 +199,5 @@ standing window. It applies to every surface (A through E) after its backfill is
 | Z6 | INCREMENTAL MODE everywhere: once a need's backfill is complete, daily pulls ask for the last 5 trading days | every site Z daily pull (the ETF pull's history top-up, rival funds, research, the models pull) | the standing rule, Andrew 2026-10-13 |
 | Z2 | `DEPTH_START_DAYS` 372 becomes 365 (non-client need: 365 days before the need; the trading calendar resolves the first business day) | `integrations/bloomberg/pipeline/etf_daily_pull.py` | backfill law ADDENDUM 2 item 4 |
 | Z7 | Client-history porting test (Yahoo adjusted close against Bloomberg total-return index, 5 intervals, 10 bps, at most 10 cells per security), drawn through the queue under surface B | the DEMQUE drawer (the request is filed by `2.0.0_SA_COO~Q1`) | Surface B, Andrew 2026-10-13 (the test is pending his confirmation) |
+| Z8 | The models pull goes incremental: last 5 trading days daily, the latest month-end plus month-to-date for monthly series, valuations at month-end only, with stored history | `integrations/bloomberg/pipeline/tplus1/src/market_indices_data_pull.ipynb`, `model_portfolio_regression_analysis.ipynb` (both copies: `tplus1` and `tzero`) | A1, Andrew 2026-10-13 |
+| Z9 | The models pull gets a real meter (rows read from the run, not rows-unreadable) | `data/mdpf/scripts/demque/bbgtml_meter.py`, `integrations/bloomberg/pipeline/tplus1/tools/run_daily_pull.py` | A1, Andrew 2026-10-13 |

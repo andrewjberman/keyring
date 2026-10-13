@@ -7725,3 +7725,222 @@ round.** Never edit an existing row.
   "world_is": "The defects stay OPEN for the round-81 analysis; the cause is NOT established (no build over store step equals a split ratio). NOT re-measured by this seat at this turn: whether any reader is attached to the minted table, and whether any rebuild of the early partitions is scheduled; the disarm rests on the S131 ruling being in force, not on a fresh census."
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W160-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~160",
+  "surfaced_at": "2026-10-13T17:02:15Z",
+  "one_line": "The custodian transactions carry placeholder Cost_Date values: 2 rows at 1901-01-01 and 389 rows before 2000-01-01, so a Cost_Date minimum reads 1901; the record bound in CB-cc-3 uses Trade_Date (earliest 2013-04-03), which has no such values.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ajb_workspace/.scratch/advi_cotbkf/tx_cache trade_year=2013..2026 parquet (14 files, 1,416,497 rows): Cost_Date rows equal to 1901-01-01 = 2; before 2000-01-01 = 389; Trade_Date minimum 2013-04-03 with 0 rows before 2012-01-01 (scratch scripts .scratch/earliest_client.py and .scratch/acct_first.py at worktree branch wk-ADVI_COTBKF-160, not committed)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~160/DATE_BOUNDS.json (earliest_client_record.source)"
+    ]
+  },
+  "spec_asserts": "The earliest client record is the first date on the firm's plane (Andrew's backfill law, record @82c7c92449 on box/dell1); a placeholder value in a date column is not a record date.",
+  "world_is": "Cost_Date holds 1901-01-01 on 2 rows and dates before 2000 on 389 rows; Trade_Date holds none of these. No bound in CB-cc-3 is moved by the Cost_Date values, and no S3 object or record was changed.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W160-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~160",
+  "surfaced_at": "2026-10-13T17:02:15Z",
+  "one_line": "The order's proof block asks the worker to flip the task order's status to complete and commit it with the instance; the task-orders file is outside this order's <paths> grant, so the flip is not made here and the order stays issued in the tree.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-cc-3.date-bound-reread.md line 8 (<status>issued) and lines 70-73 (<paths>: deliverables folder and the channel file only)",
+      "the same order, WORKER FACE proof block: flip the task order's status per its proof block when done"
+    ]
+  },
+  "spec_asserts": "A worker's write surface is exactly the <paths> its order names; a path the order needs and lacks is a BLOCKING row, never an override.",
+  "world_is": "The task-orders folder is not in this order's grant. The order file stays at status issued in this commit; its proof instance and deliverables are committed on wk-ADVI_COTBKF-160 for the flip to be made by an actor granted that path.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W159-S1 -- Store object holds two asset_names under one ticker (SCCO, APH)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W159-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~159",
+  "surfaced_at": "2026-10-13T17:10:04Z",
+  "one_line": "The price store holds more than one asset_name under one ticker: SCCO on 1027 dates (the 3.875% 04/23/2025 bond row at the equity's price) and APH on 70 dates (CL A and NEW CL A, differing on 2026-04-14); a read keyed by ticker alone takes two rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-cot/silver/prices/canonical_prices.parquet version 76.rgWIXYdLNsXSwrXvyuEmaEtfr9y98 (97443387 bytes), get-object into the worktree .scratch; counts from that read",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~159/STAGE_READ.json (not_established; securities SCCO and APH drift)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~153/STORE_WRITER.md section 1 (the version listing)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-cc-2 item 2 reads the store row for each security on its day: one store value per stage per day, from the columns date, asset_name, ticker, price, source.",
+  "world_is": "The live store carries two asset_names per ticker on some days: SCCO on 1027 dates (SOUTHERN COPPER CORP 3.875% 04/23/2025 at the equity's price on all 1027) and APH on 70 dates (AMPHENOL CORP CL A and NEW CL A, equal on 69, differing on 2026-04-14). The stage read matched by the equity asset_name. Not read: whether any consumer keys by ticker alone."
+}
+```
+
+## ADVI_COTBKF-D2-W159-S2 -- No chosen day falls in the served window; served_row absent for all five
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W159-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~159",
+  "surfaced_at": "2026-10-13T17:10:04Z",
+  "one_line": "None of the five chosen days falls in the served holdings window 2026-04-22 to 2026-06-07, so served_row is absent for all five; the HON partitions on 9 window days were read as a supplementary to find a served value.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-cc-2.stage-read.md (served_row: the served holdings partition for a day in 2026-04-22 to 2026-06-07)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~145/NO_SNAPSHOT_BRANCH.json (first_snapshot_date 2026-06-08; 47 partitions 2026-04-22 to 2026-06-07)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~159/STAGE_READ.json (securities served_row; securities HON drift.served_window_supplementary)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-cc-2 reads served_row on each security's chosen day: the served holdings partition for a day in 2026-04-22 to 2026-06-07, otherwise the minted prefixes.",
+  "world_is": "No chosen day (2014-04-22, 2020-05-28, 2025-04-21, 2026-02-04, 2026-02-17) lies in the window, so served_row is absent on all five by the day rule. The minted prefixes at date=2026-06-23 hold one object each and were listed, not read. Supplementary: the 47 partitions hold HON on 9 days (17 rows, 2 accounts); served/store is 1.0 on all 9, served/minted 0.9535 on the 7 that have a minted row."
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W158-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~158",
+  "surfaced_at": "2026-10-13T17:15:32Z",
+  "one_line": "The TO's named graph control (s3://opal-data-cot/silver/prices/canonical_prices.parquet, comp-platinum reverse --firm cot) returns no consumer; a known portal consumer of a platinum key (platinum/firm/client_directory.json: CottonwoodClientsSection, ClientsTab) is found, so the graph resolves portal reads of platinum keys only and the named control could not be used.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-platinum reverse s3://opal-data-cot/silver/prices/canonical_prices.parquet --firm cot: PRODUCER empty, CONSUMED BY none (worktree .scratch/graph_7_control.txt, uncommitted)",
+      "comp-platinum reverse platinum/firm/client_directory.json --firm cot: CONSUMED BY ClientsTab and CottonwoodClientsSection (worktree .scratch/graph_control_cd_platinum_firm_client_directory.json.txt)",
+      "org/modules/graph/graph-call-manifest.yaml:809 trace.platinum.reverse@873fe28f00",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~158/CONSUMER_READ.json positive_control"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-cc-1 item 3: the positive control is the cot price store key, whose consumers are known; if it returns nothing the graph is blind to that kind of consumer.",
+  "world_is": "The cot price store key returns no consumer under comp-platinum reverse; platinum/firm/client_directory.json returns two. The reverse lookup covers portal reads of platinum keys only. The minted tables and the cot store key are outside that domain, so a zero from the graph on the minted tables means no portal-platinum reader, not no consumer.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W158-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~158",
+  "surfaced_at": "2026-10-13T17:15:32Z",
+  "one_line": "The premise of the disarm of D2-W155-S1 and D2-W155-S3 (row D2-S134: no consumer attached to the minted table, resting on D2-S131: the minted table has no reader) is contradicted by code: two readers open the minted S3 objects, commonwealth_account_return_daily.py (all three tables) and commonwealth_price_basis_census.py (account_day_value); the ARD output reaches a portal page only through a planned, not applied read route.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py:221-226 read_source reads the minted S3 objects; call sites :479 :482 :486 @873fe28f00",
+      "data/assets/scripts/silver/commonwealth_price_basis_census.py:292-295 reads the minted account_day_value object @873fe28f00",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_ADVI_COTBKF_ROUND_81_20261013.md section 2 ruling 1: W155-S1 stays ARMED with the CTO seat as owner; a found consumer makes the correction the next cell",
+      "org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md ADVI_COTBKF-D2-S134 world_is: no reader attached, not re-measured"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md section 2 and the round-80 ruling: an ARMED hazard disarms same-turn via its disarm_owner, and the disarm of W155-S1 rests on a measured read of EVERY consumer of the minted table (CTO analysis ruling 1a).",
+  "world_is": "Two code consumers of the minted tables exist (the ARD adapter reads all three; the price-basis census reads account_day_value). Neither has a route. The gold account_return_daily they feed has a publish path and a dashboard read in code, and the read route is recorded as planned, not applied (infra/aws/lambda/ci/lambda-source-map.json:6485). disarm_fact_a = consumers_found. The W155-S1 hazard is not disarmed by this read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W158-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~158",
+  "surfaced_at": "2026-10-13T17:15:32Z",
+  "one_line": "The never-widen record for the round-27 serve states 'MINT: 0 objects today' for the three minted prefixes; the S3 listing now shows one object per prefix, LastModified 2026-10-09T12:41Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R27_FWD3_SERVE_COO_HALF.md:15-17 @873fe28f00 (MINT: 0 objects today)",
+      "aws s3api list-objects-v2 --bucket opal-data-assets --prefix commonwealth/cottonwood/silver/<table>/date=2026-06-23/ --max-items 5: rc=0, one object per prefix, no NextToken (CONSUMER_READ.json prefixes)"
+    ]
+  },
+  "spec_asserts": "The never-widen record's 'MINT: 0 objects today' describes the served state at the time the record was written.",
+  "world_is": "Each of the three prefixes holds one part-00000.parquet, last modified 2026-10-09T12:41Z. The record predates the mint it describes, or the wording is stale; either way the record is not the current state.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W158-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~158",
+  "surfaced_at": "2026-10-13T17:15:32Z",
+  "one_line": "The TO asks the worker to flip its own <status> to complete, but the task-order file is not in the TO's <paths> write grant, so the flip cannot be made inside the grant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-cc-1.minted-table-consumers.md <paths> lists only deliverables/ and the INVESTIGATION_v1.md channel @873fe28f00",
+      "the same TO's proof block: flip the task order's <status> to complete when rc 0 and the mechanical criterion passes"
+    ]
+  },
+  "spec_asserts": "TO proof block: flip the task order's <status> to complete and commit instance, deliverables and flip together.",
+  "world_is": "The task-order file is outside the write grant, so the worker leaves <status> as issued and reports the flip for the issuer to make.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W158-S5",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~158",
+  "surfaced_at": "2026-10-13T17:15:32Z",
+  "one_line": "The header of commonwealth_account_return_daily.py says the file has NO S3 WRITE anywhere, but the same file carries a guarded --apply mint through emit_day(upload=True) and a sidecar PUT.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py:8-10 docstring: NO S3 WRITE anywhere in this file @873fe28f00",
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py:865-921 guarded mint through ard.emit_day(upload=True) (call at :910) and the sidecar put; main --apply at :1556 @873fe28f00"
+    ]
+  },
+  "spec_asserts": "The module docstring states the file performs no S3 write.",
+  "world_is": "The file performs guarded S3 writes under --apply. The writes go to the gold account_return_daily tier, not to the minted tables, so the consumer read is unaffected; the docstring is stale.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

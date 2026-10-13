@@ -3675,3 +3675,18 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r181/p181_cells.py`, dry-run at the b
 | `IB-pr-515` | `irpt-directory-search` candidate rebuilt and censused against its CURRENT live, step 0 (which directory home the function reads, against the builder's), the open deploy ledgers naming it, the replay and reach, and the refreshed never-widen packet | FWD-3 | SERVED (reads the live function and the landed directories; builds only) | none (round 171's candidate and arms are the prior art) | P181-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one rebuild with no sibling cell. One worker spawn (slot ~365).
+
+
+## 174. ROUND 182, WORKSTREAM ~P (2026-10-13 ~17:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the signed pair IB-pr-515 (COO half; CTO half @01d0a01db9, msg 7098) and Andrew's word at this seat, row D2-S140: "Your CTO on this box can handle Call 1")
+
+Round 181 built and censused the refreshed candidate (order 515 @23fb169341) and left the apply behind three gates. All three read met at the artifact (row D2-S141): both halves signed at packet sha256 `3c369b9086b3...`; the CTO's condition 3(a) (the built `handler.py` over every landed directory: 7,694 + 884 + 863 = 9,441 ACCOUNT entries, 0 with a null, empty or absent account id; positive control reads 1); no open deploy marker names the function (0 of 271 files on 15 readable worktrees); the live CodeSha256 is unchanged (`tvrsQ+w82...`).
+
+CUT now: `IB-pr-516`, the APPLY to `0.7.0_AE_CloudOps~IB2` by the Terraform path, digest-gated, with Branch B named before the first upload and one synthetic tail search through the deployed function. NOT cut now: the repair of the no-op report validator in the ycharts generate composition (row W352-S1), the latent `served`/`enforce` attribute mismatch (W349-S1, identical on live and built), and any IB-pr-456 step (waits on Andrew's execution ID).
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r182/p182_cells.py`, dry-run at the base: IB182-1 AC1, AC2, AC3 FAIL (no record); a synthetic record in a temp root the run created itself passes all three, one defect per arm fails that arm, and the root is removed.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-516` | `irpt-directory-search` moved to the signed built digest (`handler.py` only) by the module's Terraform path and `safe-apply`, then one synthetic-directory tail search and its resolve through the deployed function | FWD-3 | WORLD (moves a client-facing search) | none (the pair and the three gates above) | P182-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one apply with no sibling cell; the seat is the live `0.7.0_AE_CloudOps~IB2` (no worker spawn).
