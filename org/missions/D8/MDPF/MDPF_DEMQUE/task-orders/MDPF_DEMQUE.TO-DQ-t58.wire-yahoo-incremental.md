@@ -4,7 +4,7 @@
 <issued_to>0.9.0_WK_MDPF_DEMQUE~50</issued_to>
 <issued_by>2.0.0_SA_COO~Q1</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -47,7 +47,7 @@ exactly: [COO half](file:///C:/dev/ajb_workspace/org/missions/D8/MDPF/MDPF_DEMQU
    `test_a_gained_split_or_a_restated_overlap_bar_is_held_restatement_and_the_name_keeps_its_files`,
    `test_a_gap_beyond_five_days_pulls_from_the_stored_max_and_appends_only`,
    `test_the_receipt_lists_names_appended_without_a_relock_and_a_failed_lock_check_makes_the_name_held`.
-   Existing tests keep passing; a test that pins "a stored name is re-pulled over its whole range" changes that assertion and nothing else.
+   Existing tests keep passing (the order is amended below: FIVE named tests); a test that pins "a stored name is re-pulled over its whole range" changes that assertion and nothing else.
 
 ### ACCEPTANCE
 
@@ -58,6 +58,16 @@ exactly: [COO half](file:///C:/dev/ajb_workspace/org/missions/D8/MDPF/MDPF_DEMQU
 <expected_criteria>DQ9-t58-AC1,DQ9-t58-AC2</expected_criteria>
 
 Run each invocation from the worktree root. At the base: `WIRE-BAD no file ...test_demque_incremental_wiring.py`; `WIREEQ-BAD no file ...INCREMENTAL_WIRED_EQUALITY_REPORT.json`.
+
+
+### AMENDED 2026-10-13 ~23:0xZ (issuer; STRICTER than the signed pair, so no new pair; no gate limb graded it) -- ruling on rows D1-W50-S1 to S4, and the re-seated slot
+
+Your first pass (commits `0b279b80bc`, `39c3a3e402`) stands as inherited state; the proof and the stub night are good. Do NOT merge box/dell1; this amended order and the amended checks are placed on your branch by file.
+- **S2 (ARMED, the issuer disarms with your fix): ruled.** LCEYX and FTHSX serve LOCKED, but a fresh `lock.check` over the whole history REJECTS them; today's full path therefore refuses to rewrite them (`price_store.write`: lock state not LOCKED) and the incremental path would EXTEND their `valid_to`. That widens a served claim
+  and is what pair A condition 2 forbids. **Add a RELOCK OVER THE COMBINED HISTORY, with no network:** before an append is written, run `lock.check` on `stored as_traded_close ∪ appended rows` (the stored `prices.parquet` already holds the full history) with the same trades, range and `trades_through` the full path uses. A state other than LOCKED holds the
+  name: `HELD_RESTATEMENT` with reason `relock: <state> on the combined history`, files untouched. The appended-window check stays. `appended_without_relock` now lists only names for which the combined check could not be run (no trade rows to prove against), with that reason printed.
+  Add a FIFTH named test, in `test_demque_incremental_wiring.py`: `test_a_name_whose_combined_history_relock_is_rejected_is_held_even_when_the_appended_window_passes`. The report gains `relock_held` (symbols; the 50-name proof must list LCEYX and FTHSX) and the real check `dq_t58_equal.py` now requires both.
+- **S1, S3, S4: accepted.** (A different frontier rule when no `today` is passed, the 21:00 UTC final-bar rule, is accepted as the order's own sentence. The parallel `index()` is accepted: same rows and order, proven.)
 
 ## BOUNDS
 
