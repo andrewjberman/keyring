@@ -6624,3 +6624,185 @@
   }
 }
 ```
+
+## IRPT_ANLREQ-D2-S69 -- my order let a rebase worker run build-and-upload.sh at pre-guard commits; the irpt-holdings artifact key holds three wrong versions
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S69",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T11:14:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "My order AR-y-213 listed candidate base commits for a BUILD_ONLY without requiring that build-and-upload.sh at the candidate carries the BUILD_ONLY guard; at pre-guard commits the script UPLOADS, and the irpt-holdings artifact key received three wrong versions today.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "AR-y-213 step 2 (and the AR-y-201 and AR-y-212 faces it copied): 'BUILD_ONLY ... exits before any aws call'. True at base 5d8b0390ed (lines 691-696 of build-and-upload.sh, read by the AR-y-201 worker); not true at e274a0e60c and 69679b90e3 and the other candidates the order named.",
+  "world_is": "MEASURED by this seat 2026-10-13 ~11:1xZ: the key investor-reporting/irpt-holdings.zip in opal-313476888478-lambda-artifacts has versions T1NEd9G. (07:42:43Z), msFi8sD6 (10:52:50Z) and QCyspt0v (10:53:08Z, the latest), all 294243 bytes, sha256 base64 tS/APci3Mz/YRDP7pJboAVqKabShek9jYUqvQDIYwwE=; version dWoiYeH9 (2026-10-12T13:51:17Z, 299273 bytes) hashes to SWRfUfHdJarO2Rhbxw/KQK88DeDNorQujkaR1jUuZc0=, the live CodeSha256 of irpt-holdings (get-function, unchanged). The other seven keys (performance-adapter, narrative, status, directory-search, ycharts-generate, export-render, 49f-reporting-read-lambda) carry no version written by today's workers (latest versions listed and dated). No function was updated. The hazard: a Terraform plan or apply for irpt-holdings that reads the latest object would take the wrong bytes. Repair: TO-RESTORE-R20a (applier 0.7.0_AE_CloudOps~IB2) copies dWoiYeH9 onto the key; nothing is deleted. Worker rows W64-S1, S2 and S5 carry the same facts from the worker's side.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-object-versions for the eight keys, read by this seat",
+      "aws s3api get-object by version id for dWoiYeH9, T1NEd9G. and QCyspt0v, sha256 base64 computed by this seat",
+      "aws lambda get-function irpt-holdings CodeSha256 SWRfUfHd..., LastModified 2026-10-12T14:08:33Z"
+    ]
+  },
+  "notes": "Disarm by the restore's read-back (the new latest equals the live package) and by the issuer's amendment of AR-y-213 requiring the BUILD_ONLY guard at the candidate base before any build."
+}
+```
+
+## IRPT_ANLREQ-D2-W64-S1 -- the release served.py (pin 564e60) makes the directory-search suite fail where its live-bytes control passes
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W64-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~64",
+  "surfaced_at": "2026-10-13T10:57:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The release served.py (blob 30c0eb88, pin 564e60) makes directory/tests fail: test_custody_owner.py 28 errors (KeyError 'data') and test_opal_context.py 6 failures that the live-bytes control does not show; the control's only failures are 4 in test_read_once.py",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-213 AC1 and amendment 1: the function's own tests pass against the release served.py, except failures that ALSO fail with the original bytes, which must be named in tests.failed_names and shown failing in a control run.",
+  "world_is": "At base e274a0e60c, pytest 3.14.7, folder infra/aws/lambda/investor-reporting/directory/tests. Control (served.py = the live package member, sha256 87d9ecc4): 4 failed, 207 passed, all in test_read_once.py. Release (served.py = blob 30c0eb88 at 564e60): 10 failed, 173 passed, 28 errors. The extra 34 are test_custody_owner.py (28 errors, 'INTERNAL-CALLER-CLASS class=row_absent outcome=refused' then KeyError 'data' in setup) and test_opal_context.py (6 failed). The status rule refuses an internal caller selecting another firm when no users row exists, and these fixtures carry none. The directory/tests folder is outside this order's grant (<paths> is this channel file only), so the fixture cannot be changed here; the order's STOP applies.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-64/.scratch/r20/tests/irpt-directory-search.ctl.json and .rel.json (+ .folder.full.txt), this run",
+      "git blob 564e60483858a3cc5c51ffea6aed0f76ff291abe:infra/aws/lambda/investor-reporting/_authz/served.py, sha256 30c0eb88ec38a7dd (this run)",
+      "git diff --stat e274a0e60c HEAD -- infra/aws/lambda/investor-reporting/directory/tests: only test_tail_account_entry.py added; test_custody_owner.py and test_opal_context.py unchanged at trunk HEAD 4067c2dd5b"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W64-S2 -- the release served.py adds seven failures to the export-render suite
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W64-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~64",
+  "surfaced_at": "2026-10-13T10:57:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The release served.py (pin 564e60) on the export-render base e274a0e60c fails seven tests in export/tests/test_custody_writer_composed.py that pass with the live-bytes control",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-213 AC1 and amendment 1: the function's own tests pass against the release served.py, except failures that also fail with the original bytes.",
+  "world_is": "Folder export/tests at e274a0e60c. Control (live-package served.py, 87d9ecc4): 6 failed, 307 passed, 2 skipped, all six in test_export.py, test_export_path_b.py, test_submit_async.py, test_submit_service.py. Release (served.py 30c0eb88): 13 failed, 300 passed, 2 skipped; the seven new failures are all in test_custody_writer_composed.py (guarded or scheduled non-Opal callers, verified Opal caller persistence, content-bound refusal). The mechanism was not read beyond the test names (no deeper analysis in this order). The export/tests folder is outside the grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-64/.scratch/r20/tests/irpt-export-render.ctl.json and .rel.json, this run (failed_names compared as sets)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W64-S3 -- the source map's last_deployed_commit does not reproduce the live CodeSha256 for directory-search or ycharts-generate
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W64-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~64",
+  "surfaced_at": "2026-10-13T10:57:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The source map's last_deployed_commit for irpt-directory-search (4850c856) and irpt-ycharts-generate (06557b66) builds a package whose CodeSha256 is not the live one; the live directory-search package is reproduced at e274a0e60c and the live ycharts package at trunk HEAD 4067c2dd5b",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-213 step 2: a holds-only control at a candidate commit must reproduce the live CodeSha256; the map's last_deployed_commit is the first candidate.",
+  "world_is": "directory-search: last_deployed_commit 4850c856 builds CodeSha256 IV7P2AL4 (equal to the map's deployed_code_sha256, not the live TefVhmGS); its parent 35a7cad5 builds P6vHT5yp; e274a0e60c builds TefVhmGS (the live value, zero member differences). ycharts-generate: last_deployed_commit 06557b66 builds p/pwRXJd; its parent 4650422c builds p+17dqD9; e274a0e60c p+17dqD9; 69679b90e3 u0YnPLPQ; 5d8b0390ed p/pwRXJd; the live bNPCG2Oe is reproduced at trunk HEAD 4067c2dd5b with zero member differences. The nearest candidate (06557b66) differs from live in acceptance.py, submission.py, template_reader.py, uploads.py (the four rows of RELEASE_MAP_PATCH_R2).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-64/.scratch/r20/builds/irpt-directory-search/c1.zip, c2.zip, c3.zip and irpt-ycharts-generate/g1..g5.zip, h1.zip (manifests *.man.json), this run",
+      "infra/aws/lambda/ci/lambda-source-map.json entries irpt-directory-search and irpt-ycharts-generate at 4067c2dd5b (last_deployed_commit, deployed_code_sha256)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W64-S4 -- the ycharts-generate test folder cannot be collected in this environment (fitz is not installed)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W64-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~64",
+  "surfaced_at": "2026-10-13T10:57:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "pytest over ycharts/generate/tests reports 12 collection errors (ModuleNotFoundError: fitz) under both Python 3.14 and 3.12 on this box, so the function's pytest files do not run; the estate's run_offline_suite.py was run instead",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-213 step 4: run the function's own test folder with the release served.py staged.",
+  "world_is": "Python 3.14.7 and Python 3.12.10 on this box have neither fitz (PyMuPDF) nor (3.12) pytest. The control run of the folder gives 12 collection errors, the same as the release. The estate's offline proof run_offline_suite.py, run under Python 3.12 with -I, gives 11 arms (10 passing, g_schema_valid failing) in BOTH the live-bytes control and the release run, so that failure is pre-existing and was named. The record counts the suite as the function's test run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-64/.scratch/r20/tests/irpt-ycharts-generate.ctl.json.folder.full.txt (12 errors, ModuleNotFoundError fitz)",
+      "C:/dev/wk-irpt-anlreq-64/.scratch/r20/tests/irpt-ycharts-generate.suite.ctl.json and .rel.json (arms_pass, summary)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W64-S5 -- a BUILD_ONLY run at a commit whose builder predates the guard uploaded irpt-holdings.zip to the artifact bucket
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W64-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~64",
+  "surfaced_at": "2026-10-13T10:57:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Two BUILD_ONLY=1 runs of build-and-upload.sh for irpt-holdings, at commits 9e58503be1 and f89fc8e731 (the older builder has no BUILD_ONLY guard), wrote two new versions of s3 investor-reporting/irpt-holdings.zip (10:52:50Z and 10:53:08Z); this was an unauthorised write to a served artifact key",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (issuer); a restore of the latest version or a sign-off of the bytes is a served-artifact act for CTO and COO",
+  "spec_asserts": "AR-y-213 bounds: nothing is uploaded, deployed or applied; no write call except the read-only get-function and the zip download.",
+  "world_is": "Bucket opal-313476888478-lambda-artifacts has versioning Enabled. Versions of investor-reporting/irpt-holdings.zip: dWoiYeH9 2026-10-12T13:51:17Z, 299273 B, sha256 SWRfUfHd (equal to the map's artifact_sha256 and to the live CodeSha256); T1NEd9G 2026-10-13T07:42:43Z, 294243 B, sha256 tS/APci3 (written before this worker's first call; writer not read); msFi8sD6 2026-10-13T10:52:50Z and QCyspt0v 2026-10-13T10:53:08Z (latest), both 294243 B, sha256 tS/APci3, written by this worker's runs h1 and h2. The two writes did not change the bytes of the latest version but added two versions to the served key. The live Lambda irpt-holdings CodeSha256 is still SWRfUfHd (read-only). The map artifact_sha256 SWRfUfHd has not matched the latest object since 07:42:43Z. Nothing was deployed or applied; no git commit was made (the builds ran in a throwaway worktree C:/dev/wk64-release/base). The worker did not restore the object: a restore is a write and a served-output act.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-64/.scratch/r20/builds/irpt-holdings/h1.log and h2.log: 'write VERIFIED: size=294243' and 'Complete -- 1 function(s) built and uploaded' (no BUILD_ONLY line)",
+      "C:/dev/wk-irpt-anlreq-64/.scratch/r20/builds/irpt-holdings/h3.log: 'Complete (BUILD_ONLY) -- nothing uploaded' at e274a0e60c (guard present)",
+      "aws s3api list-object-versions and head-object --version-id, read-only, this run",
+      "git cat-file -p 9e58503be1addc5b005f509caaf6f18472540492:infra/aws/lambda/ci/build-and-upload.sh | grep -c BUILD_ONLY = 0 (e274a0e60c: 8)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W64-S6 -- the build script at pre-guard commits uploads under BUILD_ONLY=1, and the checker reads only failed counts
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W64-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~64",
+  "surfaced_at": "2026-10-13T10:57:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Instrument trap: BUILD_ONLY=1 is honoured only by builders at or after the commit that added the guard, so a holds-only build run from an older base commit uploads for real; and the y213-rebase check reads tests.failed but not tests.errors",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (issuer): forbid BUILD_ONLY runs from a base whose builder lacks the guard, or land the guard in the base commits used as candidates",
+  "spec_asserts": "AR-y-213 step 2 and AC1: BUILD_ONLY=1 bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting <fn> at a candidate builds and uploads nothing; the check reads the record's tests.failed.",
+  "world_is": "The guard (BUILD_ONLY branch before the upload calls) is absent from infra/aws/lambda/ci/build-and-upload.sh at 9e58503be1 and f89fc8e731 and present at e274a0e60c and later (8 mentions). A worker that detaches at an older base runs the older builder and uploads. The y213-rebase check (checks/r20/ar20_checks.py) reads tests.failed, tests.passed and tests.control_failed_names; a function with only collection or setup errors and failed=0 would pass the check.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git cat-file -p <commit>:infra/aws/lambda/ci/build-and-upload.sh | grep -c BUILD_ONLY: 9e58503be1 = 0, e274a0e60c = 8",
+      "checks/r20/ar20_checks.py lines 163-171 (tests.failed branch; the elif reads tests.passed only)"
+    ]
+  }
+}
+```

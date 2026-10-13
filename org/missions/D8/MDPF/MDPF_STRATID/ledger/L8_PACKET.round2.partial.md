@@ -124,7 +124,7 @@ Full read: `deliverables/2.0.0_SA_COO~S1/R2_RUN_READ_20261012.md`. The 10-10 and
 | Total | 2,172,724,681.31 = base + tax + sma within a cent; Global history 0 diffs on 493 common dates x 4 series | MEASURED |
 | Condition 1 | CTO-ruled per-firm read (@5a151aacea) clean on 49financial, inflection, cottonwood; 49financial by_model 1.99 vs model_aua 1.98 | MEASURED |
 | FWD-3 organic | Global `muni` row 0.00, `held_out=[]`; the sleeve is on the unidentified list | MEASURED, grade is the CVO's |
-| Client | **NOT GRADED**: served as_of 2026-10-09 vs the 268,516,586.73 figure's as_of 2026-10-08; no same-date pre-deploy Client exists | ABSENT |
+| Client | **NOT GRADED** on the served objects: served as_of 2026-10-09 vs the 268,516,586.73 figure's as_of 2026-10-08; no same-date pre-deploy Client exists. The fold's effect on Client IS exercised on one date, with and without the fold, by seam arm B (planted divz overlap 0: total +1,370,211.85 exactly, "Client unchanged"; `st_u1_seam` SEAM-OK re-run 2026-10-13 on the live bytes) | ABSENT on served; MEASURED on the seam |
 
 - **Issuer defect:** `r2_run_read.py` applied the Client clause with no date guard against the packet's "where the date is unchanged";
   amended with a date guard and a NOT-GRADED line, controls in the read page. The CVO rules whether NOT-GRADED stands or a QA run of
@@ -132,3 +132,12 @@ Full read: `deliverables/2.0.0_SA_COO~S1/R2_RUN_READ_20261012.md`. The 10-10 and
 - **Ledger:** `mdpf-stratid-r2-global-fold` CLOSED (all 5 legs). `mdpf-stratid-w2-wiring-silver` L3 stays OPEN: Stage 6 dies at
   `lib.opal_naming` before step 6d on the runner (MDPF_TAXSMA-S5, ARMED, owner `2.0.0_SA_COO~T`; row D1-S10), so no dispatch can show the
   6d log until S5 is disarmed. The served-slice half of L3 is read and equal.
+  - **Parked, owner and condition (2026-10-13, `1.0.0_SA_CTO~DELL1` msg 4774):** S5 is re-owned to `2.0.0_SA_COO~D1`, the runner
+    code sync (MDPF_CANON round-5 ADDENDUM 3). L3's runner-log read un-parks when that sync makes Stage 6 reach 6d; the reader is
+    this seat, the first dispatch after the sync is the read.
+  - **L3 AMENDED AND CLOSED (2026-10-13 ~11:2xZ, CTO ruling msg 4779, read `2.0.0_SA_COO~D1` round6/STRATID_W2_L3_NEED_READ.md):**
+    a lib sync is necessary and not sufficient, because Stage 6 also stands behind C2 AccessDenied `s3:ListBucket` and the cross-axis
+    gate, and M10 retires the stage. Ledger `mdpf-stratid-w2-wiring-silver` is CLOSED on the served half (MEASURED: the served slice
+    reads the S3 list, 16 keys, sma members divz and pfde equal, 0 of 493 cells differ) plus the in-memory QA read (the driver was session
+    scratch, so the served half is the stronger evidence). The runner-log half is PARKED, not closed: owner `2.0.0_SA_COO~D1`,
+    condition "M10's producer order runs step 6d's successor", reader this seat. Gate limb: none grades a ledger-leg amendment.

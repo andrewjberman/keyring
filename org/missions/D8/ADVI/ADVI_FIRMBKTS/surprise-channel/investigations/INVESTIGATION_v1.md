@@ -6844,3 +6844,53 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "AC1 is recorded as FAIL on the literal invocation. It can pass after integration if the order is re-graded on the integrated tree; the CVO or COO decides the re-grade, not this worker."
 }
 ```
+
+## Rows filed by 0.7.0_AE_CloudOps~FB1 (FB-j-13)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S52",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-13T10:11:15Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The seat gate read STOP (CROSSBOX-DEPLOY open_call=hit) at the FB-j-13 apply because the CTO's history-rewrite fork, opened 09:50:02Z, names the exec-summary root by project scope; WARN mode proceeded and I applied.",
+  "spec_asserts": "TO-FB-j-13 step 4-5: plan, apply on the saved plan. The pair (COO 89f2099f0a, CTO ddbaf334d1) signs the act; the order names no open-call precondition.",
+  "world_is": "safe-apply printed: [seat-gates] STOP: 1 hit(s) in OPEN-CALL -- row dell1-20261013T095002Z-825f of org/devices/state/dell1/open_calls.json names the root; 'WARN [seat-gates] would stop under ENFORCE (crossbox-deploy); WARN mode proceeds.' At the FB-j-10 apply (09:26Z) the same gate read open_call=clear. The row's subject is the CTO's question to Andrew whether to rewrite git history for the DRYRUN10 files (rec: forward-scrub only); its top-level orders and roots are empty and its scope.roots lists infra/aws/terraform/exec-summary and portal-auth, measured from the project's write set. I read the row, judged the question independent of this function's code and environment (a history decision changes no Lambda state), the CTO who owns the call having signed this apply, and applied under WARN. I did not ask first: the gate offered no acknowledgement path and the act is dry-run only with a defined rollback. Under ENFORCE this apply would have stopped.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/j13_switch/apply_safe-apply.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer and the CTO: if a call that names a root by project scope alone should block applies on it, the order's un-park conditions should have named it; if not, the gate's scope match is wider than the call's subject."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S53",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-13T10:11:15Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The 'name guard proved on the withheld one' requirement is met by the switch, not by the guard: with top_nna_mover off no model call is made for that slot, so the guard ran on none of its text.",
+  "spec_asserts": "TO-FB-j-13 amendment 1 (ii): the advisor whose top_nna_mover bullet leaked a client display name must come back with the slot off and the other four slots free of the name.",
+  "world_is": "Measured from the dry run (request bf5df30e-f444-4204-b9b8-f6e799568068): the formerly withheld advisor is ordinal 8 of 10, returned 3 bullets, 0 top_nna_mover, 0 client names and 0 relationship ids in text; 35 model calls for 35 bullets, 0 drops. The code (lambda_function.py lines 273-301) checks client_rel_id before the call and every *_name context value after the reply, so the guard is reached only when a slot is called; top_nna_mover was not. The guard's unit arms (FB-j-11) cover two named shapes; a live read of the guard needs a dry run with the slot enabled, which is a second environment change under a pair and not this act.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/SLOT_SWITCH_SAMPLE.json",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/j13_switch/sample_summary.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Input to the CTO's condition (b): the live proof of the guard on NNA text is open until a dry run enables the slot."
+}
+```
+

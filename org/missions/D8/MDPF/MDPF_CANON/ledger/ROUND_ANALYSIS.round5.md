@@ -76,3 +76,79 @@ cell: reordering a live dispatch chain is M10's work, not a rider.
 lands, and that is stated now so no later round grades it early.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 3 (2026-10-13 ~10:5xZ) -- MDPF_TAXSMA-S5 (ARMED since 2026-09-21, owner seat gone) is RE-OWNED to `2.0.0_SA_COO~D1` as a runner code-sync repair
+
+Surfaced by `2.0.0_SA_COO~S1` msg 4771: MDPF_STRATID's W2 L3 runner-log half cannot be read while S5 stands.
+- **The row:** the EC2 `mdpf-daily-runner`'s Stage 6 (REVAMP) has failed at IMPORT since TX-a-1's module reached the S3 code prefix at 2026-09-21T08:55:37Z.
+  `dim_mdpf_aggregate_aua_timeseries.py:75` imports `taxsma_assets`, whose `:95 from lib.opal_naming import address` resolves on the repo path but NOT in the runner tree
+  (`/opt/mdpf/scripts`). Stage 6 dies in 1 s, logged as "NON-FATAL build-alongside; legacy chain + serving UNAFFECTED".
+- **The owner seat no longer works the project.** `2.0.0_SA_COO~T`'s MDPF_TAXSMA was paused by Andrew-direct 2026-09-21 ("wind down your team at the next logical
+  checkpoint"), and the row has stood ARMED for three weeks with no one able to disarm it.
+
+**Ruling:**
+1. **Serving is not affected** (the row's own read). The gold Lambda's bundles are built by MDPF_CANON's packager and fire 16/16. The hazard is a dead build stage plus the
+   readers that wait on it, of which STRATID W2 is one.
+2. **The disarm is a RUNNER CODE-SYNC repair, not TAXSMA work,** so it does not resume Andrew's paused project. MDPF_CANON owns the runner's `code/` equality (CN-d-5, W9-S7).
+   The disarm owner is therefore `2.0.0_SA_COO~D1`: make `lib.opal_naming` (and what it reads: the registry files) resolvable in the runner tree, by the same sync path
+   CN-d-5 uses, so that Stage 6 imports.
+   - Arm: Stage 6 on the next dispatch logs past the import and reaches step 6d.
+   - Negative control: the legacy chain's served outputs are unchanged on that run.
+3. **The pair must state Stage 6's write set from its own code BEFORE the sync.** If Stage 6 writes anything a reader serves, that set is named with rollback. If it writes only
+   its build-alongside outputs, that is stated with the denominator.
+4. **The row's ownership moves on the record:** the CVO re-assigns S5's `disarm_owner` at its next compile. This seat informs Andrew that his paused project left one
+   ARMED row, now owned.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 4 (2026-10-13 ~11:0xZ) -- ADDENDUM 3 is REVISED: do NOT revive Stage 6; the real hazard is a SERVED count read from an 8-week-old runner-only object
+
+`2.0.0_SA_COO~D1` msg 4775, `round6/TAXSMA_S5_STAGE6_READ.md` @7de2c1aa99 (65 of 133 runner logs read).
+- **Stage 6 has not been green since 2026-08-14.** The 09-21 ImportError masks two earlier failures:
+  - the runner role lacks `s3:ListBucket` on `opal-data-assets` (C2 AccessDenied, 08-19 to 09-20);
+  - the cross-axis gate (08-15 to 08-18).
+  The lib sync alone would only move the failure to the next line.
+- **Stale since then, runner-only:**
+  - the three `gold/mdpf_revamp/*/account_distribution.json` (2026-08-18);
+  - the three firm `aum_metrics.json` (2026-08-14);
+  - the cycle marker.
+- **The SERVED dependency:** the gold Lambda reads the staged `global/account_distribution.json` for its FRONTIER account counts (`load_account_dist_frontier_counts`), so it has
+  been composing served frontier counts from an 8-week-old distribution. The measured seam is small, 160 versus 162 on the Int/Ltc blend, but it is a served number on a
+  stale input.
+
+**Ruling, replacing ADDENDUM 3 items 2 and 3:**
+1. **No Stage 6 revival.** It is a build-alongside stage that M10 retires. Reviving it costs an IAM pair, a nine-key sync and a priced count change, to restore something
+   scheduled for removal. The no-shadow law points the same way.
+2. **S5 is RE-CHARACTERISED** (the CVO grades the change at the next compile) from "Stage 6 import fails" to **"the gold Lambda's served frontier counts read a runner-only
+   object frozen since 2026-08-18".** Disarm owner `2.0.0_SA_COO~D1`. The disarm is moving that input OFF the runner-only object: the Lambda derives the frontier counts from
+   its own firm-scope inputs, or reads a source the Lambda itself refreshes. The first fresh count is a served-number change, priced under its own pair. It is cut AHEAD of
+   the rest of M10.
+3. **READ FIRST (read-only):** whether the `platinum/` publisher bridge reads the staged `aum_metrics.json` (dispatch comment `:577-580`). If it does, served AUM metrics have
+   been 8 weeks stale for the three firm scopes. That outranks everything above and comes straight back to this seat.
+4. **MDPF_STRATID W2 L3:** read what it actually needs. If it needs Stage 6 OUTPUT, it is re-scoped to M10's producer order. If it needs only the runner's import path, a
+   named-file lib sync with no Stage 6 revival is enough, under its own small pair.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 5 (2026-10-13 ~11:1xZ) -- S5's frontier-count fix, priced: option (a), roster (ii), fail closed
+
+`2.0.0_SA_COO~D1` msg 4781, `round6/S5_FRONTIER_COUNTS_PRICE.md` @b246f4786f.
+- **Measured:** the served 2026-10-09 frontier counts EQUAL the staged 2026-08-17 roster on every mapped key (global 7 of 7, 49financial 5, inflection 7).
+- **On a fresh input:**
+  - global `account_count_total` 8,264 -> **8,688 (+424, +5.1 pct)**;
+  - 49financial 7,144 -> 7,478;
+  - inflection 548 -> 561;
+  - aum-metrics row counts move too.
+
+**Ruling:**
+1. **Option (a), ACCEPTED:** the loader reads the A4 distribution (one function, about 15 lines, no new writer).
+2. **Roster (ii), the newest A4 object keyed ON OR BEFORE the axis date:** as-of coherent, so the counts describe the same day as the figures beside them. Option (i), a roster
+   one day ahead of its axis, is refused.
+3. **Fail closed:** if no A4 distribution exists on or before the axis date, the loader REFUSES the frontier counts (the existing honest-absent state). It NEVER falls back to
+   the staged runner object. That fallback is exactly how the counts froze for 8 weeks unnoticed.
+4. **It is a served-number change** under its own pair, with the moves above named per scope, both branches stated (an A4 object present, and absent), and the prior
+   VersionIds as rollback. It is cut as the cell AFTER the fold's first fire is read, one served change per fire.
+   - The counts appear on partner-facing MDPF pages, so Andrew is told the +424 global, as information, before it serves.
+5. **S5 disarms** on that cell's read-back: the served counts equal the as-of A4 roster, and nothing served reads the staged runner distribution.
+
+-- 1.0.0_SA_CTO~DELL1

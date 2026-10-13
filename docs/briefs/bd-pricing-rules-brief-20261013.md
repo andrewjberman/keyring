@@ -51,6 +51,12 @@ Today the served T-1 price has more than one writer, plus one more four-times-a-
 been identified (PART IV.5). An engineer who corrects a rule changes it once, and every writer of a served price applies the change.
 No writer keeps an older copy of the rule.
 
+### O7 -- An advisor reads a lot's gain computed on one consistent basis
+
+The gain or loss an advisor sees on an open lot compares a market value and a cost basis stated on the same footing. If one side is
+scaled for unit-count doubt, the other side is too; otherwise the gain is shown as unverified. A lot whose units held their value does
+not appear as a large loss because only its market value was compressed (PART IV.8). Added on `1.0.0_SA_CTO~DELL1` msg 4754.
+
 ---
 
 ## PART II -- WHERE THE BOUNDARY SITS
@@ -59,7 +65,11 @@ No writer keeps an older copy of the rule.
 - the T-1 trade-observed median and its de-duplication;
 - the precedence among price sources and its tie behaviour;
 - the date a price or a gains figure is keyed to;
-- the single home of those rules across the writers.
+- the single home of those rules across the writers;
+- the basis on which a served lot's gain compares market value and cost (O7). This widens the project from price rules to valuation
+  rules. The rule that compresses market value for unverified unit counts is B_01's tiered unit-confidence cap. Andrew and the CTO
+  approved it on 2026-04-17 (`docs/architecture/GOLD_B01_TIERED_UNIT_CONFIDENCE_CAP.md`). This project owns how the gain is stated
+  around that cap, and does not own whether lots are capped.
 
 **It RELIES ON, and does not own:**
 - **`ADVI_FIRMBKTS`** (D8, dell1): where the 49 Financial data lives. That project moved this pipeline's served output to
@@ -143,7 +153,19 @@ Each item is a finding from what was read. Code was read at `origin/box/dell1` @
    - The bucket is versioned (FB-h-7), so before/after reads and rollback by prior VersionId are available for O5.
    - The FB-h-7 scripts (`pricing_quant_s32_s33.py`, `pricing_quant_s34.py` under
      `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~66/`) already replicate the read logic offline.
-7. **No existing project owns these rules.** A register read of every `org/missions/D*/*/*/project.json` whose name names pricing
+8. **Gain on capped lots: the market value is scaled, and the cost basis is not.**
+   - `_apply_silver_noncash_cap` (`data/black_diamond/scripts/gold/B_01.holdings_lots.py:2291`) scales `market_value` on open lots of
+     classes B and C, the lots with no custody row. It recomputes `accrued_gain` as the scaled market value minus the unscaled
+     `cost_basis`, keeps `market_value_uncapped`, and leaves units, cost basis and price unchanged (its docstring).
+   - The approved design records that "accrued_gain fields reflect the capped valuation"
+     (`docs/architecture/GOLD_B01_TIERED_UNIT_CONFIDENCE_CAP.md`). The behaviour therefore matches an approved design. The
+     inconsistency is in the design, not a drift from it.
+   - **Measured** (FB-j-12, read 2026-10-13T09:59:36Z, merged @e6c4d46700): one advisor's IQLT lots are scaled to 0.2287. They read
+     -69.2% (-$302,165) against a +34.6% (+$151,031) uncapped gain. IQLT's price (49.84) and its cost (0 of 60 lots flagged) are both
+     consistent.
+   - On the served 2026-10-09 holdings object, 64,629 of 492,998 open lots (13%) are compressed, across 3,057 accounts and 1,007
+     tickers.
+9. **No existing project owns these rules.** A register read of every `org/missions/D*/*/*/project.json` whose name names pricing
    returned no Black Diamond pricing project.
 
 ---
@@ -162,6 +184,10 @@ These are named, not sequenced. Sequencing is step 5.
 6. The pandas version on the gold runner is known (pinned or read) before O3 is claimed on the live host.
 7. The 603-of-1,610 gap (PART VI.3) is explained, or bounded, before O1 is claimed. A trace instrument that cannot reproduce what was
    served does not satisfy O1.
+8. O7 changes how an Andrew-approved design (2026-04-17) states a gain, so the basis is chosen on Andrew's word. The choices include
+   scaling cost with market value, stating the gain on uncapped values, or marking the gain unverified on capped lots.
+9. The executive-summary position slots that rest on capped market values stay disabled until O7's correction is served. This is the
+   CTO's ruling in ADVI_FIRMBKTS (`CTO_SAMPLE_READ_FB_J_10_EXEC_SUMMARIES_20261013.md` ADDENDUM 1).
 
 ---
 
@@ -177,7 +203,9 @@ Status ages; do not cut outcomes from it.
    do not. Candidate causes are a multi-day backfill, or the file's state at write time. Neither has been isolated. Measured
    2026-10-13T07:05:55Z.
 4. **S34:** 2 of 12 under the instant reading and 0 of 12 under the strict reading. Measured 2026-10-13T07:05:55Z.
-5. **Rows:** `ADVI_FIRMBKTS-D1-S32`, `-S33` and `-S34` are OBSERVATION/INERT, UNDER_INVESTIGATION, and owned by
+5. **Capped lots:** 64,629 of 492,998 open lots (13%), across 3,057 accounts, carry a scaled market value against a whole cost basis
+   on the served 2026-10-09 object. That object was last written 2026-10-13T05:06:00Z. Measured 2026-10-13T09:59:36Z (FB-j-12).
+6. **Rows:** `ADVI_FIRMBKTS-D1-S32`, `-S33` and `-S34` are OBSERVATION/INERT, UNDER_INVESTIGATION, and owned by
    `1.0.0_SA_CTO~DELL1`. Read at `origin/box/dell1` @60c9b52ff0, 2026-10-13T07:3xZ.
 
 ---
@@ -192,7 +220,9 @@ Status ages; do not cut outcomes from it.
 5. It does not establish which portal pages, and which client logins, render these prices. O5's blast radius has to be measured per
    fix.
 6. It did not read the dell2 IRPT_DASHBD records directly. Their figures are as relayed in the ADVI_FIRMBKTS rows.
-7. It sets no numeric bar. Tolerances and sample sizes are the PRD's to set once the mechanics are known.
+7. It does not choose O7's basis, and does not claim the capped lots' units are held or not held. FB-j-12 left that unit-count
+   question open. It also does not measure the dollar size of the gain misstatement across the 64,629 lots.
+8. It sets no numeric bar. Tolerances and sample sizes are the PRD's to set once the mechanics are known.
 
 ---
 
@@ -203,6 +233,7 @@ Proposed qualitatively, for Andrew to confirm or rewrite:
 1. **Rule on record:** every served Black Diamond price for 49 Financial is produced by a rule written down in one place.
 2. **Traceability:** an analyst can trace any served price to that rule and its inputs.
 3. **Approved moves only:** every price that moved because of this project moved under a fix Andrew saw before it moved.
+4. **Consistent gains:** every served per-lot gain compares market value and cost on the basis Andrew chose for capped lots.
 
 ---
 
@@ -216,7 +247,10 @@ Proposed qualitatively, for Andrew to confirm or rewrite:
   SOURCES           org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/ROUND_ANALYSIS.round5.md section 2
                     org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~66/PRICING_QUANT.{md,json}
                     org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md rows D1-S32, -S33, -S34
+                    org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/CTO_SAMPLE_READ_FB_J_10_EXEC_SUMMARIES_20261013.md ADDENDUM 1
+                    org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~75/IQLT_TRACE.{md,json} (@e6c4d46700)
+                    docs/architecture/GOLD_B01_TIERED_UNIT_CONFIDENCE_CAP.md (approved design, 2026-04-17)
   PRIOR ART         SOURCE_RANK + upsert_canonical (bd_price_update.py:65-71, :587-603); scoped overrides;
                     E_05/E_06/E_12/E_16 pricing diagnostics; FB-h-7 offline replicas; versioned opal-data-bd
-  MEASURED AT       2026-10-13T07:05:55Z (FB-h-7); code read at origin/box/dell1 @60c9b52ff0
+  MEASURED AT       2026-10-13T07:05:55Z (FB-h-7); 2026-10-13T09:59:36Z (FB-j-12); code read at origin/box/dell1 @60c9b52ff0
 ```

@@ -1510,3 +1510,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W13-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~13",
+  "surfaced_at": "2026-10-13T10:55:17Z",
+  "one_line": "MP-z-1 premise: the order names MASTER_ADMIN_EMAILS and WRITE_CAPABLE_EMAILS as the holders of the master-admin and write-capable tiers, but tier.resolve_tier never reads them; a person's tier is keyed on MASTER_ADMIN_PRINCIPALS and WRITE_CAPABLE_PRINCIPALS (tid/oid), so an address in an email roster resolves to read_only through the real chain.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "MP-z-1 section 1: candidates are every address in config.MASTER_ADMIN_EMAILS and config.WRITE_CAPABLE_EMAILS, with the tier taken from tier.resolve_tier and the chain called for each; the 'how' basis reads 'master admin (MASTER_ADMIN_EMAILS)' / 'write-capable (WRITE_CAPABLE_EMAILS)'.",
+  "world_is": "app/config.py:320-323 states the two EMAIL rosters are 'NOT persons' tier and are NEVER read by tier.resolve_tier'; they feed token_broker._machine_tier only (machine identities). tier.resolve_tier(principal, cfg) reads MASTER_ADMIN_PRINCIPALS / WRITE_CAPABLE_PRINCIPALS by principal.key and returns READ_ONLY for a request with no principal. tools._run and run_integration_tool also deny every tool at data_entitlement.tool_denial ('principal_required') when no principal is set. So an email-only candidate cannot be evaluated as master admin by calling the chain, and calling it faithfully (as an unprofiled signed-in person with that display email) gives it exactly the population row's tools. The page still lists the email rosters as the order says, with that stated in holders_basis, and ADDS the two principal rosters as candidates (labelled 'master admin (MASTER_ADMIN_PRINCIPALS)' / 'write-capable (WRITE_CAPABLE_PRINCIPALS)'), because they are the rosters that actually raise a tier; an email roster entry equal to a known principal's profile email joins that principal's row. No chain function was re-typed and no gateway module was edited. Also not counted, stated in holders_basis: a client-qualified identity_scope row (admits only a request from its registered OAuth client, unknowable here).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/config.py:298-333 and app/tier.py resolve_tier (steps 2-5) at 233e78932a",
+      "infra/aws/ec2/opal-gateway/app/token_broker.py:162-177 _machine_tier is the only reader of the two email rosters",
+      "tests/test_admin_gateway_breakdown.py::test_holders_match_the_dispatch_chain: ROSTER_ONLY address holds exactly the population set on both sides, while the same address's principal in MASTER_ADMIN_PRINCIPALS holds send_email and schwab_query"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For 2.0.0_SA_COO~MP: the page-building cell (and the PRD wording of 'who holds what') should say the person tier comes from the principal rosters. If the intent was that the email rosters raise a person's tier, that is a gateway change (app/tier.py), outside this cell's paths."
+}
+```
