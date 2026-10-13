@@ -8182,3 +8182,108 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D2-W164-S1 -- The set's salted account tokens cannot be re-derived in this tree: the salt the round-161 record names is in n...
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W164-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~164",
+  "surfaced_at": "2026-10-13T23:01:09Z",
+  "one_line": "The set's salted account tokens cannot be re-derived in this tree: the salt the round-161 record names is in no committed file, and its worktree .scratch folder is absent, so the 20-account derivation check the order asks for is not performed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~161/ACTIVE_SET_RECORD.json not_established[1] names the salt as held only in the worktree .scratch folder",
+      "C:/dev/wk-cotbkf-161 holds only portal/ with no .scratch and no git checkout; the .scratch of this worker (C:/dev/wk-cotbkf-164/.scratch) was created by this run and holds no salt",
+      "plain SHA-256 of the Commonwealth account number matches 0 of 471 crosswalk predecessor tokens in REVERSE_MATCH.csv at HEAD a71af0a8d5 (count-only read)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ce-1 item 4: write additions exactly as the set writes them; where a key must be derived, derive it the way the record says and check the derivation by reproducing the set's row count for 20 accounts before relying on it.",
+  "world_is": "No derivation of the account token is possible in this tree. The additions file is header-only because no active account held the four identifiers, so no written row depends on a derived key. Any later additions round needs the salt restored or a keyed reader.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W164-S2 -- The premise that the four identifiers were traded by a matched active client fails under the set's definition...
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W164-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~164",
+  "surfaced_at": "2026-10-13T23:01:09Z",
+  "one_line": "The premise that the four identifiers were traded by a matched active client fails under the set's definition: each trader is MATCHED to a current account outside the 769-account active set, and one holder held its identifier non-zero in 74 of 88 silver snapshots before the 2026-10-12 snapshot showed no non-cash position.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ADVI_COTBKF.TO-CB-ce-1 item 1-2 and the round-83 framing: a MATCHED Cottonwood client traded the four identifiers (order text)",
+      "deliverables/0.9.0_WK_ADVI_COTBKF~164/FOUR_CUSIPS.json held_by and cause at HEAD a71af0a8d5: 0 active accounts traded any of the four; 1 non-active account each",
+      "s3://opal-data-cot/silver/holdings/ 88 of 88 snapshots 2026-06-08..2026-10-12: the holder of cause row 2 holds that identifier non-zero in 74 snapshots, cash_equivalent false; its 2026-10-12 snapshot has 0 non-cash non-zero rows (count-only read)"
+    ]
+  },
+  "spec_asserts": "CTO round-83 section 2 item 1: test every security a matched active account traded against the set; if an active account held it, add its rows with windows.",
+  "world_is": "No account in the 769-account active set traded any of the four. The holder of cause row 2 is excluded by the set's latest-snapshot definition although the bond was held in most snapshots of the window, so the set gives it no backfill and the MDPF_DEMQUE refusal of these identifiers stands. Whether the definition should look back is a CTO ruling.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W164-S3 -- REVERSE_MATCH.csv carries two account-key spaces: 457 raw Black Diamond account ids and 312 salted 71-characte...
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W164-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~164",
+  "surfaced_at": "2026-10-13T23:01:09Z",
+  "one_line": "REVERSE_MATCH.csv carries two account-key spaces: 457 raw Black Diamond account ids and 312 salted 71-character tokens. The 312 do not appear in any holdings snapshot by key, so a key join silently covers 457 of the 769 active accounts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/REVERSE_MATCH.csv (769 rows): crosswalk_matched keys 457 of 11 characters; none 300 and near_match 12 keys of 71 characters (count-only shape read at HEAD a71af0a8d5)",
+      "s3://opal-data-cot/silver/holdings/2026-10-12: 769 accounts hold a non-cash non-zero row, 457 of them match a REVERSE_MATCH raw key; no 71-character key appears in any of the 88 silver snapshots (count-only read)"
+    ]
+  },
+  "spec_asserts": "ACTIVE_SET_RECORD.json: the active set and its reverse match use the same account keys as the set; Commonwealth-side keys are salted SHA-256 tokens.",
+  "world_is": "The active list holds raw ids for the 457 matched accounts and tokens for the 312 unmatched; they are not one key space. The count of 769 agrees with the holdings definition, but membership of the 312 cannot be checked against raw holdings.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W164-S4 -- The two sides classify the same identifiers differently: every Commonwealth trade of the four identifiers carr...
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W164-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~164",
+  "surfaced_at": "2026-10-13T23:01:09Z",
+  "one_line": "The two sides classify the same identifiers differently: every Commonwealth trade of the four identifiers carries Asset_Type Cash Equivalent, while the Black Diamond cash_equivalent flag on the holder's rows is false. The transaction table's Fixed Income type does not isolate bonds and bills.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/commonwealth/cottonwood/silver/transactions/date=2026-06-23/ 14 of 14 parts: Asset_Type distinct values include Cash Equivalent 26,097 rows and Fixed Income 11,425 rows (count-only read)",
+      "the four identifiers in the transactions: every row Asset_Type Cash Equivalent (38, 2, 2 and 2 rows); the holder's silver holdings rows: cash_equivalent false in 88 of 88 snapshots"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ce-1 items 3 and 5: fixed income is judged by the CUSIP prefix or the security type the transaction table carries for bonds and bills.",
+  "world_is": "The table gives bonds and bills the Cash Equivalent type in these trades and the holdings flag them non-cash. Neither rule isolates fixed income alone; the order's fixed-income count uses the CUSIP prefix and the Fixed Income type together (0 of 7 missing).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
