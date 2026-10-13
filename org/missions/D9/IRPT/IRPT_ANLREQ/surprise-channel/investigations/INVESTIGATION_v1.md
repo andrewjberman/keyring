@@ -4824,3 +4824,194 @@
   "notes": "OBSERVATION only: the adaptation changes no member's hash. It is recorded so a later comparison does not treat the scratch SHA256SUMS as the host's byte-for-byte output."
 }
 ```
+
+## IRPT_ANLREQ-D2-W55-S15 -- the recipe-built release turns SECTION_BOUNDS on (extract.py line 450 = True); st32 has no such switch; the CTO's section 4 ruling says the release rides with it OFF
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S15",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T03:29:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "one_line": "The release built by the recovered st32 recipe at pin 069b8f797e carries SECTION_BOUNDS = True in ycharts/extract/extract.py; the st32 member has no SECTION_BOUNDS symbol; the CTO round-19 section 4 item 4 ruled that the release rides with the switch OFF.",
+  "spec_asserts": "CTO round-19 analysis section 4 item 4: extract.py (IB-pr-472) rides with SECTION_BOUNDS OFF, which restores today's behaviour, so this release moves no extracted value; switching it on is IRPT_BCKEND's own never-widen pair.",
+  "world_is": "The recipe-built release (069b8f797e, same recipe as st32) packages ycharts/extract/extract.py with SECTION_BOUNDS = True (line 450; used at line 704). The recorded st32 member has no SECTION_BOUNDS line. The release as built turns the section-bounds behaviour on relative to the live resident, so it is not the OFF release the ruling assumed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/extract/extract.py at 069b8f797e lines 447-450 and 704 (git show 069b8f797e:...)",
+      "C:/dev/ar199-55-tarballs/release_069b8f797e_recipe.tar.gz member ./ycharts/extract/extract.py: line 'SECTION_BOUNDS = True'; C:/dev/irpt-release-st32/0485393f3a-st32.tar.gz member ./ycharts/extract/extract.py: no SECTION_BOUNDS line (r19/recipe_evidence/delta_raw.json)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_ANLREQ_Y_ROUND_19_20261013.md section 4 item 4 (shared tree; the sentence added at f49e223ae2; file last changed at 049d643f43)"
+    ]
+  },
+  "notes": "Measured on the release tar only; no host read, nothing installed or uploaded. The ruling and any pair are the CTO's and the issuer's. Disarm: set the switch off in the release, or the CTO re-rules that the release turns it on."
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S16 -- the recipe-built release carries the capture library (ycharts-host/ycharts_session.js, db43e9f9..., the W328 change) and its bindings pin it; the CTO's section 4 says the release does not carry it, and the host installer checks st32's a1c288...
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S16",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T03:29:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "one_line": "The recipe's release carries ycharts-host/ycharts_session.js at sha db43e9f9... (the IB-pr-477 stored-bundle change) and its bindings pin that library; the host script as written checks the st32 library a1c288... at line 42 and would refuse the release.",
+  "spec_asserts": "CTO round-19 section 4: the W328-S1 repair lives in the host library, not in either tarball, so this release does not carry ycharts_session.js and D2-S109's hold does not bite; resident_host_install_0485393f3a-st32.sh line 42 checks ycharts-host/ycharts_session.js against WANT_LIBRARY (line 14, a1c288...).",
+  "world_is": "The recipe release carries ycharts-host/ycharts_session.js at sha256 db43e9f9744e697098120e11dd862a1348ffea05c6307f980dc24e7ea530a216 (100369 bytes; the file at 069b8f797e, last changed by 2e6885ef22 'build(IRPT_BCKEND TO-IB-pr-477...)') and its bindings capture.library_sha256 is db43e9f9.... The live st32 library is a1c288... (91936 bytes). So the release changes the capture library the resident runs, and the st32 installer would refuse it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ar199-55-tarballs/release_069b8f797e_recipe/ycharts-host/ycharts_session.js and reports/resident_bindings.json (capture.library_sha256); r19/recipe_evidence/release_build_report.json",
+      "C:/dev/irpt-release-st32/resident_host_install_0485393f3a-st32.sh lines 14 and 42",
+      "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js at 069b8f797e (git show); subject of 2e6885ef22 in the shared log"
+    ]
+  },
+  "notes": "Measured from the release tar; the W328 hold (D2-S109) status is not read here. This row states only that the premise 'the release does not carry the library' does not hold for the recipe-built release. Disarm: the issuer's pair names this member and its switch state, or the release is re-cut without it."
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S17 -- the order's and the check's 326 is not the live st32 count: the recorded st32 tar has 298 members (297 plus SHA256SUMS); 326 is the install proof's scratch universe
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S17",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T03:29:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cell and ar19_checks y199-recipe say the live st32 root has 326 members; the recorded st32 release tar has 298, and 326 is the AR-196 scratch universe (182 builder names plus 144 placeholders).",
+  "spec_asserts": "TO-AR-y-199 cell: 'the builder alone makes 184 members; the live st32 root has 326'; check ar19_checks.py y199-recipe: 'rebuilt at st32's pin (326 members by name and content)'.",
+  "world_is": "The recorded st32 tar (0485393f3a-st32.tar.gz, sha256 e59596e4...) carries 298 members: 297 package members plus SHA256SUMS (r19/recipe_evidence/st32_tar_members.txt). The 326 figure comes from INSTALL_SEMANTICS_SCRATCH_PROOF.json before_member_count: the 182 builder names plus 144 st32-only names given placeholder bytes. 28 builder names (schemas/*) are not in st32. The live root is not readable from this box; the host script installs the 298 tar members plus host-origin pydeps. The recipe rebuilds all 298 by name. The AR-196 conclusion that 143 of 144 are lost holds for the 8-argument builder alone; the recipe loses 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/irpt-release-st32/0485393f3a-st32.tar.gz member count (r19/recipe_evidence/st32_tar_members.txt: 298 lines)",
+      "r19/INSTALL_SEMANTICS_SCRATCH_PROOF.json denominators (live_resident_release_tar_st32 298; builder_live_pin_A1 182; st32_only_names 144; A1_only_names 28)",
+      "r19/recipe_evidence/st32_compare_clockheld.json (matched_by_name 298 of 298)"
+    ]
+  },
+  "notes": "OBSERVATION only. The rebuild's denominator is 298, and the record states it. Nothing in the order's pass rule depends on 326 except the check's message text."
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S18 -- the host's pydeps merge (host script line 44) is host-origin and its per-file names are in no record; the recipe names the category and cannot name the files
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S18",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T03:29:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The host copies /opt/investor-reporting-ycharts/pydeps into every root (host script line 44); no record gives the names or hashes of those files, only the manifest line count (4346) after the merge.",
+  "spec_asserts": "TO-AR-y-199 step 2: name the host-origin members (pydeps, host-generated files) and do not fabricate bytes.",
+  "world_is": "The pydeps set is host-origin, outside the recorded 298-member tar, and unnamed in every read: D2_V1_INSTALL_20261011.txt line 5 gives 4346 manifest lines; the AR-196 record's not_read lists the pydeps contents. The recipe names the category and its source line and records the names as MISSING. Nothing was fabricated.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/irpt-release-st32/resident_host_install_0485393f3a-st32.sh line 44 (cp -a pydeps)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_st32/D2_V1_INSTALL_20261011.txt line 5",
+      "r19/INSTALL_SEMANTICS_SCRATCH_PROOF.json not_read (the pydeps contents)"
+    ]
+  },
+  "notes": "Ask 0.7.0_AE_CloudOps~YC2 (the operator on the host) for a read-only sorted sha256sum listing of /opt/investor-reporting-ycharts/pydeps and for any pydeps name that equals a package member name (the cp -a copy would overwrite it). The overwrite question is unmeasured here; the row stays INERT on the record as it stands."
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S19 -- the release bindings' queue URL, table names and core_state_serial 5 are st32's values reconstructed from the st32 bindings; the live core-state read the builder makes was not executed; the packing command of the st32 tar is in no record
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S19",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T03:29:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "one_line": "The builder reads queue URL, table names and core_state_serial from the live core state in S3; the order forbids live AWS, so the rebuild and the release fed st32's recorded values through --state-json; the release bindings therefore carry st32's queue and table names with no live check.",
+  "spec_asserts": "The cell: run the recipe locally and build the release with the same recipe and arguments; no live AWS call. The builder's own rule: bindings come from the core root's canonical outputs read from its remote state.",
+  "world_is": "build_resident_package.py lines 108-123 and 259 read s3://opal-313476888478-terraform-state/investor-reporting/core/tfstate unless --state-json is given. Not executed here. The three values and serial 5 were taken from st32's recorded bindings (state_st32_from_bindings.json, labelled as reconstructed). The release bindings' queue_url, jobs_table, requests_table and core_state_serial are therefore not verified against the live core state. Separately, no record gives the command that packed the st32 tar; the release tar uses the './'-prefixed member form inferred from it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py at aaa458aa4f lines 51 and 108-123",
+      "r19/recipe_evidence/state_st32_from_bindings.json (reconstruction, no AWS call)",
+      "r19/recipe_evidence/release_build_report.json (queue_url, jobs_table, requests_table, core_state_serial 5)"
+    ]
+  },
+  "notes": "ARMED: a release installed with a stale or wrong queue or table binding would route the resident to the wrong place. Disarm: a read-only live read of the core state's serial and outputs (by the operator, not this worker) before the pair is signed, and the packing command recorded in the record."
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S20 -- the recipe is reproducible only at builder blob e1e58c2d (commits 3f5321ad36 and aaa458aa4f); the HEAD blob 46e3bae9 (commit 049834ad31) refuses the recipe as written
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S20",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T03:29:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The builder changed at 049834ad31 (.svg added to RESEARCH_EXT); with the HEAD blob the recipe's logo --member is refused as already a member, so the recipe must name its builder by blob.",
+  "spec_asserts": "The cell: rebuild st32 with the SAME recipe and arguments; the recipe includes the logo as --member (the R10 record's recipe).",
+  "world_is": "st32's bindings carry generated_at 2026-10-11T15:29:02Z, which precedes 049834ad31 (12:52 -0400). The blob at 3f5321ad36 and aaa458aa4f (e1e58c2d94a8d0b6fc4c16320fa385bf39e5d8a8) reproduces st32. The HEAD blob 46e3bae9223ae367ac6f729722a2cdc23cd5fa96 adds .svg to RESEARCH_EXT (line 60), and with the same arguments and --dry-run it prints '--member packaged path ycharts/research/brand/Opal-Capital-Logo-Full-Color.svg is already a member of the package' and exits 1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse aaa458aa4f:org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py = e1e58c2d94a8d0b6fc4c16320fa385bf39e5d8a8; HEAD blob 46e3bae922 (commit 049834ad31)",
+      "r19/recipe_evidence/st32_build_report.json (rebuild at blob e1e58c2d)",
+      "dry-run at HEAD blob with the recipe arguments: rc 1 (output above, recorded in RESIDENT_RECIPE_AND_DELTA.json st32_rebuild.head_builder_dry_run)"
+    ]
+  },
+  "notes": "OBSERVATION. The next release built from the HEAD builder must drop the logo --member (the .svg is then in the research walk) or pin the old blob. The record names the blob for the st32 and release builds."
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S21 -- under the recipe, the CTO's section 4 per-owner counts change: IRPT_BCKEND 8 to 12, ADVI_FIRMBKTS 3 to 4, DSGN_IRPTV1 1 to 0; the read assignments need re-issue
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S21",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T03:29:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The CTO's section 4 owner counts were measured with the 8-argument builder alone (20 differing). Under the recipe the st32-to-release delta is 24 differing (2 readers, 21 other, 1 generated) plus 1 only-new, and the per-owner counts differ.",
+  "spec_asserts": "CTO round-19 analysis section 4 item 2: P2 reads IRPT_BCKEND's 8; D2 reads DSGN_IRPTV1's 1; Y2 reads its own 3 and IRPT_YCDGEN's 1; ADVI_FIRMBKTS's 3 and NFRA_CTLPLN's 1 are equal-release citations; the pair names all 20 + 12.",
+  "world_is": "Under the recipe (RESIDENT_RECIPE_AND_DELTA.json delta.other_differing_by_owner): IRPT_BCKEND 12 (the record lists all twelve); ADVI_FIRMBKTS 4 (data/firm_registry.json added to the three the CTO named); IRPT_ANLREQ 3 (served.py, ops/status.py, name_rulings.json; the two readers move separately); IRPT_YCDGEN 1 (resident_worker.py); NFRA_CTLPLN 1 (lib/opal_naming.py) plus firm_pages.json only-new. DSGN_IRPTV1 0: the census is at the same census pin in both builds, so it does not differ. The read assignments and the equal-release citations in section 4 item 2 need re-issue under this delta.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r19/RESIDENT_RECIPE_AND_DELTA.json delta (generated from r19/recipe_evidence/delta_raw.json, old 0485393f3a, new 069b8f797e)",
+      "CTO_ROUND_ANALYSIS_IRPT_ANLREQ_Y_ROUND_19_20261013.md section 4 item 2 (shared tree, file last changed at 049d643f43)"
+    ]
+  },
+  "notes": "OBSERVATION only: the counts are the release-pin delta between the two recipe builds, not a re-ruling. The CTO and the issuer decide the read assignments."
+}
+```
