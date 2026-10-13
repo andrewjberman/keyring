@@ -32115,3 +32115,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "SUPERSEDES the 'computed from the model's target weights' wording in D2-S145's spec_asserts (an append-only channel: S145 stays as written and this row governs). Still RECORDED, not cut: queued behind the O1/O2 acceptance release. The measure-first cell I will cut after that release reads the served rows' class values and where a model-sleeve account's rows get theirs, so that one mechanism over the gold rows serves every vendor; whether that is a builder change, a portal candidate or both is NOT yet read. Owner me."
 }
 ```
+
+## IRPT_BCKEND-D2-S148 -- the comparison-catalogue cell's identity step has no seat route
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S148",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T19:15:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "CTO msg 7178 adds a round-183 cell (add the missing Opal models, Ultra Short-Term first, to the comparison catalogue); the cell's identity step has no seat route today: no seat can read a YCharts model portfolio's identity.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~86/r22/ULTRA_SHORT_TERM_READ.json (Y2's read: templates.json comparison_catalog.entries holds 4 entries, the fix is the IRPT_BCKEND lane, each entry needs a VERIFIED namespace/type/id/name read and a test pin moved)",
+      "my read 2026-10-13 ~19:2xZ of the gateway ycharts_search tool: 'Opal Ultra-Short Term' returns every category empty, and so does the POSITIVE CONTROL 'Opal Short-Term' (a model already in the catalogue, P:1728415), including category mp: the API search cannot see these models",
+      "infra/aws/lambda/investor-reporting/intake/resolution_broker.py:15,94-102: the production identity lookup is GET /securities/securities_info through an ENROLLED vendor session transport (broker.enrolled_user_id), with no raw-transport fallback; the prior reads (org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/COMPARISON_IDENTITY_READS_W18_20260927.json) came from a governed session window"
+    ]
+  },
+  "spec_asserts": "Every catalogue entry carries a VERIFIED identity read (current exact namespace/type/id/name evidence); a vendor id is never inferred from a label (templates.json comparison_catalog _note).",
+  "world_is": "STATE: nothing cut. The catalogue build (one templates.json entry per model, the _meta count, the test pin at tests/test_comparison_catalogue.py:33, the canonical order UST, ST, INT, LT, ULT) is repo-only and cuttable; what is NOT cuttable is the id for each missing model (Ultra-Short Term; Fixed Income and the two 50/50 blends if the cause is the same): they are not in the repo, the API search cannot see them, and the only reader is an enrolled YCharts session no seat holds. Two routes, asked of the CTO in one question: (a) Andrew reads each missing model's id and name from YCharts Model Portfolios (an act only he can take) and the order records them with that read as the evidence; (b) a governed session window for a seat. I recommend (a). Round 183's issuance waits on the answer for this cell; IB-pr-456 waits on Andrew's execution ID."
+}
+```
