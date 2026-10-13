@@ -5922,3 +5922,107 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "No arm was attempted, no session touched. A non-admin identity at the validator needs role not admin, firmRole not admin, tier not internal and userType not Dev, with a partner profile and an advisorKey in the ownership map: an advisor-tier user of a client firm. Owner of the un-park stays 1.0.0_SA_CTO~DELL1 (a seat's non-admin session, or Andrew supplies one, or the first organic advisor-tier line on those paths; 418 advisor-tier lines exist today, none on them)."
 }
 ```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~63 (FB-h-3 offline replay, 2026-10-13)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W63-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~63",
+  "surfaced_at": "2026-10-13T06:46:59Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Two of my pre-harness probe runs reached the render-key Secrets Manager secret, outside the order's two-S3-read bound; the mock I used did not bind.",
+  "spec_asserts": "Order section 2 BOUNDS 1: reads only, two S3 get-object calls. Order section 1b step 1: mock jwtPublicKeys.mjs; no production key, secret or token is read.",
+  "world_is": "Probe 1 (.scratch/probe_mock.mjs, bun run) and probe 2 (a probe file in the deliverables folder, since deleted) each imported render_auth.mjs and called getRenderKeySlots() under a Secrets Manager mock keyed by a bare specifier. The mock did not bind (probe 2 counted 0 mock sends), so getRenderKeySlots() reached the real SecretsManagerClient and returned slots without throwing: one GetSecretValue on opal/auth/irpt-render-jwt-public-key per probe. Inferred from the non-throw outcome; not measured in CloudTrail. No secret value was printed or written to the tree.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/lambda-edge/auth-validator-edge/render_auth.mjs@b39d4a70f6 (getRenderKeySlots sends GetSecretValueCommand for RENDER_PUBLIC_KEY_SECRET_ID when its cache is empty)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~63/replay_harness.mjs@4b8bd3b056 (stubs Secrets Manager and seeds the render cache, so the replay makes no such call)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The replay itself made no Secrets Manager call: the render cache is seeded before each request. Whether the two probe reads need a CloudTrail check is for the issuer to decide; the reads were read-only and touched a public-key secret."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~63 (FB-h-3 offline replay, 2026-10-13)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W63-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~63",
+  "surfaced_at": "2026-10-13T06:46:59Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's mock list does not cover the render branch: auth-validator-edge calls Secrets Manager before the human path whenever its render-key cache is empty.",
+  "spec_asserts": "Order section 1b step 1: replace @aws-sdk/client-s3 and lambda/lib/authkeys/jwtPublicKeys.mjs; the handler is otherwise driven as it is.",
+  "world_is": "index.mjs evaluateRenderBranch (lines 257-260, called at line 353) calls getRenderKeySlots() before the human path. render_auth.mjs getRenderKeySlots() (lines 58-72) sends GetSecretValueCommand for opal/auth/irpt-render-jwt-public-key when its cache is empty or older than 300 s. Mocking jwtPublicKeys.mjs does not cover that call. The replay closes it by calling __setRenderKeySlotsForTest before each request, so a human token fails the render audience check (verifyRenderTokenWithSlots, lines 159-170) and falls through to the human path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda-edge/auth-validator-edge/index.mjs@b39d4a70f6 lines 257-260 and 353",
+      "infra/aws/lambda-edge/auth-validator-edge/render_auth.mjs@b39d4a70f6 lines 58-72 and 159-170"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Any later replay or test of the human path must seed or mock the render key the same way, or it reads Secrets Manager."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~63 (FB-h-3 offline replay, 2026-10-13)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W63-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~63",
+  "surfaced_at": "2026-10-13T06:46:59Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The handler caches each firm's ownership map at module scope for 60 s, so back-to-back runs in one process reuse the first map; the harness steps the clock between runs.",
+  "spec_asserts": "Order section 1b steps 4-5: three runs (legacy, canonical, perturbed canonical) through the handler, each serving its own map.",
+  "world_is": "index.mjs getOwnershipMap (lines 161-194) keeps ownershipMapCache keyed by firmId with expiresAt = Date.now() + 60 s. A second run within 60 s returns the first run's map with no S3 read. The harness advances Date.now by 120 s before the canonical and control runs, asserts that each run made at least one GetObject, and asserts that the canonical run requested exactly one Bucket and Key.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda-edge/auth-validator-edge/index.mjs@b39d4a70f6 lines 161-166 and 177-194",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~63/replay_harness.mjs@4b8bd3b056 (clock step and per-run GetObject assertions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Any replay that neither steps the clock nor re-imports the handler per run measures the first map three times."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~63 (FB-h-3 offline replay, 2026-10-13)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W63-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~63",
+  "surfaced_at": "2026-10-13T06:50:53Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "AC2 names the base checkout's deliverables path for REPLAY_RESULT.json, but the record is committed in my worktree; AC2 fails verbatim as ABSENT.",
+  "spec_asserts": "Order section 4 AC2: r5_checks.py replay --file C:/dev/ajb_workspace/org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~63/REPLAY_RESULT.json. Order section 5: commit REPLAY_RESULT.json in the deliverables folder (the worktree's paths grant).",
+  "world_is": "The deliverables folder and REPLAY_RESULT.json exist only in the worktree C:/dev/wk-firmbkts-63, committed at 4b8bd3b056. The base checkout C:/dev/ajb_workspace has no 0.9.0_WK_ADVI_FIRMBKTS~63 folder and I did not write into it. Verbatim AC2 printed FAIL ABSENT or unreadable: FileNotFoundError (rc=1). The same checker on the worktree copy printed REPLAY record ok pairs=2127 mismatches=0 control_mismatches=1 bytes_equal=False (rc=0); that is a diagnostic, not the criterion verdict.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~63/REPLAY_RESULT.json@4b8bd3b056 (the worktree copy the checker reads on the diagnostic run)",
+      "C:/dev/ajb_workspace/org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round5/checks/r5_checks.py replay run verbatim: FAIL ABSENT or unreadable (rc=1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "AC2 stays FAIL on the instance; the order is not flipped. The issuer decides whether the checker path is to be re-pointed at the worktree copy or the record is to be copied to the base checkout; I did not do either."
+}
+```
