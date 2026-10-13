@@ -25165,3 +25165,53 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~399 at AMGT-bh-3. The order's NOT QUIET rule does not hold on this run as written: a count of 1 with a failed gate reads NO. The cold and handler numbers are printed in full, so the reading can state them. The issuer decides whether the verdict should carry the quiet state independently of the gate."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W400-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~400",
+  "surfaced_at": "2026-10-13T12:50:17Z",
+  "one_line": "The order's window holds no traffic for most of its 24 hours: 625 invocations, with no REPORT line for about 7 h (05:38Z to 12:30Z on 2026-10-12) and about 23 h (13:06Z on 2026-10-12 to 12:30Z on 2026-10-13).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bh-4 names the first full weekday after the S3-client build as the window to read, 2026-10-12T12:40Z to 2026-10-13T12:40Z, with the function live for the weekend tail and for Monday, and the round-99 reference of 32,528 invocations over a day as the comparison.",
+  "world_is": "The function's log group holds 625 REPORT lines in that window: 307 between 12:40 and 13:00Z on 2026-10-12, 317 between 13:00 and 13:06:42Z, then one at 12:30:43Z on 2026-10-13. No REPORT line lies between 05:38:03Z and 12:30:43Z on 2026-10-12, and none between 13:06:42Z on 2026-10-12 and 12:30:43Z on 2026-10-13. The round-99 window, run by the same query method, returns 32,528 REPORT lines, so the method is intact and the gap is in the window. The reading (BH4_FIRST_WEEKDAY_READING_20261013.md) reports the counts as they stand, grades the rates per 1,000, and does not infer why the log group is silent.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Logs Insights, log group /aws/lambda/opal-amgt-scoped-api, window 2026-10-12T12:40:00Z to 2026-10-13T12:40:00Z: filter @type = REPORT, stats count(*) by bin(1m): 16 non-empty minutes, n=625 (queries Complete; results held in the worker's scratch, not committed)",
+      "Logs Insights, stats count(*) and max/min @timestamp by bin(1h), 2026-10-11T12:00Z to 2026-10-13T12:40Z: 21 hour bins, n=34871 REPORT lines; hour 2026-10-12 05:00 last at 05:38:03Z, hour 2026-10-12 12:00 first at 12:30:43.859Z, hour 2026-10-12 13:00 last at 13:06:42.675Z, hour 2026-10-13 12:00 one line at 12:30:43.680Z",
+      "Logs Insights, round-99 window 2026-10-10T23:29:21Z to 2026-10-11T23:29:21Z, filter @type = REPORT, stats count(*): n=32528 (the control; matches the round-99 reading BF2_OVERLAY_TAIL_READING_20261011.md)",
+      "lambda get-function-configuration opal-amgt-scoped-api at 2026-10-13T12:44:06Z: CodeSha256 42z0tn68TZjuk8awBclnMii0k+FX2Pw2bw7iN9Xitz0=, State Active, LastUpdateStatus Successful"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~400 at AMGT-bh-4. The reading is written on the window as it stands; its rates are per 1,000 invocations and each rests on 0, 1 or 6 events, so the window does not carry a like-for-like comparison with round 99. The logs cannot tell a silent function from lost log delivery, and the API gateway log was not read; the issuer decides whether the window is re-cut."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W400-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~400",
+  "surfaced_at": "2026-10-13T12:50:17Z",
+  "one_line": "The order gives the S3-client build as applied at 2026-10-12T04:17:52Z; the function's LastModified reads 2026-10-12T04:18:21Z, 29 s later.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bh-4 states the build as applied 2026-10-12T04:17:52Z for opal-amgt-scoped-api (CodeSha256 beginning 42z0tn68).",
+  "world_is": "get_function_configuration returns LastModified 2026-10-12T04:18:21.000+0000 and CodeSha256 42z0tn68TZjuk8awBclnMii0k+FX2Pw2bw7iN9Xitz0= at 2026-10-13T12:44:06Z. The CodeSha256 prefix matches the order; the time differs by 29 s. Both times precede the window start of 2026-10-12T12:40Z, so the window is unaffected; the reading states both values.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda get-function-configuration opal-amgt-scoped-api at 2026-10-13T12:44:06Z: LastModified 2026-10-12T04:18:21.000+0000, CodeSha256 42z0tn68TZjuk8awBclnMii0k+FX2Pw2bw7iN9Xitz0=",
+      "BH4_FIRST_WEEKDAY_READING_20261013.md, section Window (both values stated)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~400 at AMGT-bh-4. The difference is between the order's apply time and the function's update time; it does not change the window or the counts."
+}
+```
