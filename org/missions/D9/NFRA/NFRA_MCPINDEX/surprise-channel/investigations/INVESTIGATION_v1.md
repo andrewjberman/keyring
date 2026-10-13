@@ -6846,6 +6846,31 @@ carries none.
     "spec_asserts": "MX-r-11 section 1 item 5: PHASE A writes the ANNOUNCE and PHASE B follows it. The ANNOUNCE is the applier's recipe.",
     "world_is": "The durable fix is cheap and belongs in two places, neither of which is a code change: (1) the ANNOUNCE/order states the deploy tree's cone as lib + infra/logic/registry + org/standards + .tools + data/transcripts/scripts/teams + infra/aws/ec2/opal-gateway (plus the base agent folder for the halt gate); (2) deploy-to-ec2.sh's _pf_need loop -- which exists only on the newer box/sitez copy, per Z-S109 -- is widened from 'stat lib/opal_naming.py' to 'exercise one address() call', which is the only form that would have caught either occurrence. NFRA_OPLGTW's OG-ap-14 cuts its tree next on this same recipe and will hit it a third time otherwise.",
     "notes": "disarm_owner 2.0.0_SA_COO~MI (INERT). Filed as a separate row rather than folded into Z-S108 because the recurrence, not the missing path, is what has an owner and a cheap durable fix; Z-S108 stands as the measurement of this occurrence. No hazard: both occurrences shipped nothing and both retries landed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S112",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-13T23:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S110"
+    ],
+    "one_line": "RULES Z-S110 (BLOCKING/ARMED: r11.AC2 reads 'definitions located 65 of 67' on the deployed bytes): READING (ii), NOT MET, FIX FORWARD. The definitions limb is load-bearing: it carries the CVO's note that each member is classified from its definition (msg 33712). The catalog SERVES two wrong `definition:` citations, so the limb is not waived. The rollback is NOT taken: it would restore FWD-20 0 of 67 and FWD-21 1 of 3 and fix nothing, so the release stays serving under the HELD ledger. Remedy: MX-c-8 re-opened by A1 to re-derive the two definitions against the live ad2acc0a93; MX-r-11 A5 cuts a v2 deploy-only commit on ad2acc0a93 carrying DATA_CATALOG.yaml only, under a fresh never-widen pair; L3 closes on v2's r11.AC2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Offline second reading at box/sitez HEAD (manifest deployed_commit ad2acc0a93): c8.AC1 reads PARTITION a=11 b=44 c=12, sum 67 of 67, definitions located 65 of 67, MISSING opal_describe and opal_discover (def=0), RESULT: FAIL. This independently reproduces the applier's host read.",
+        "Root cause, the issuer's: c8.AC1 graded the catalog's definitions against the PRE-release deployed tree (185dc04888). The cell's own change to opal_discover/integration.py (+57) moves the two definitions only once released, so AC1 was blind to it at the cut."
+      ]
+    },
+    "spec_asserts": "FWD-20 / MX-c-8 Part 1: every tool_index entry names its definition `<path>:<line>` in the deployed gateway tree.",
+    "world_is": "Two entries cite the pre-change lines of the one definition file the release itself changed. The partition, the links, the claims and discover are all correct live.",
+    "notes": "Disarm when v2's r11.AC2 reads definitions located 67 of 67 on the host and the ledger closes. Instrument lesson for the round-10 analysis: a census of definitions must read the tree AS SHIPPED (the base plus the cell's own changes), never the base alone. NFRA_OPLGTW OG-ap-14 is told its base moves again (to v2)."
   }
 ]
 ```
