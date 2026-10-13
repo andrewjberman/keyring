@@ -3543,3 +3543,18 @@ Checks `deliverables/2.0.0_SA_COO~P2/checks/r172/p172_cells.py`, dry-run at the 
 | `IB-pr-502` | the portal's `fe-s-18` generator reproduces the committed bytes the portal's tests consume, with the decision record | FWD-3 | LOCAL | none | P172-b |
 
 fanout: 2 of 2 chains, cap 8, reason: two disjoint write sets (a records-only read; one portal test-folder generator), no edge between them. Two worker spawns (slots ~352 and ~353).
+
+## 165. ROUND 173, WORKSTREAM ~P (2026-10-13 ~05:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6798 = ROUND-173 ANALYSIS section 2)
+
+The CTO's list has three items. Item 1: the export envelope fixture correction (row D2-W353-S5: the FIXTURE moves; the frozen envelope gains `facts.covered_account_ids`, synthetic ids, validated against the v1 schema, the generator reproducing it). Item 2: the `irpt-holdings` pass-through replay, then which packaged copies validate at serve (DONE in round 172: neither does), then the builder's `account_id` with its host bundle (which also carries the 49F temp-file fix, when the host is next Online). Item 3: the fe-s-18 truth decision and generator repair, carried (the repair is built and merged on the workspace side in round 172; the portal candidate awaits the DEV review lane).
+
+CUT now: the pass-through replay (`IB-pr-503`) and the fixture correction (`IB-pr-504`). NOT cut now, with the reason and the condition: the builder's `account_id` host-bundle deploy (it depends on the verdict of `IB-pr-503`, an unmet dependency inside the round, and on the host being Online for the bundle that also carries the temp-file fix; the next round cuts it as a never-widen pair, owner me); the `irpt-directory-search` apply (the signed pair, after the CVO's re-sign); the repair of the no-op report validator in the ycharts generate composition (row W352-S1; the CTO: before any path calls it, none does yet).
+
+Checks `deliverables/2.0.0_SA_COO~P2/checks/r173/p173_cells.py`, dry-run at the base: IB173-1 AC1, AC2, AC3 FAIL (no record, no script); IB173-2 AC3 FAIL ("covered_account_ids is a required property"; a temporary edit adding the member passes it, restored), AC2 PASS at base (28 pass, 8 skip, 0 fail: a regression guard), AC1 (runs the generator) fails at the portal DEV base by round 171's trial and is dry-run in a throwaway worktree.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-503` | an OFFLINE replay of the packaged `irpt-holdings` serve path on a synthetic snapshot whose ACCOUNT node carries `account_id`, a node without it and a node with an unknown member | FWD-3 | LOCAL | none | P173-a |
+| `IB-pr-504` | the frozen export envelope carries `facts.covered_account_ids` (synthetic ids), validated against the v1 `ExportReceipt` schema, and the generator reproduces it | FWD-3 | LOCAL | round 172's generator repair (merged; the portal branch `wk-IRPT_BCKEND-353-portal` @e1cd356e2f is fast-forwarded into the worker's portal worktree) | P173-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two disjoint write sets (a records-only replay; one portal generator and one fixture), no edge between them. Two worker spawns (slots ~354 and ~355).
