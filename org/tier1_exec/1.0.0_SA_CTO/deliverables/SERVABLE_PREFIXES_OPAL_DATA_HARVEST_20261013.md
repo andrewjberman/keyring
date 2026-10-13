@@ -1,4 +1,4 @@
-# SERVABLE_PREFIXES -- `opal-data-harvest`, harvest V1 for asset managers (`1.0.0_SA_CTO~DELL1` v1 2026-10-13 ~18:3xZ; v2 measured by `2.0.0_SA_COO~W1`; v3 = v2 with the CTO rulings F1-F5 applied, ~18:5xZ)
+# SERVABLE_PREFIXES -- `opal-data-harvest`, harvest V1 for asset managers (`1.0.0_SA_CTO~DELL1` v1 2026-10-13 ~18:3xZ; v2 measured by `2.0.0_SA_COO~W1`; v3 = v2 with the CTO rulings F1-F5 applied, ~18:5xZ; v3 updated ~19:1xZ for Andrew's Bloomberg word)
 
 **For:** site Z's NFRA_MCPINDEX round (catalog rows) and NFRA_OPLGTW (the asset-manager research grant), through `0.0.0_AB_MSTR`. Cluster direction
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_DELL1_20261013.md` O3.
@@ -23,11 +23,11 @@ differences are one narrowed row (8), one class now read (23), and five measured
 | # | prefix | content (measured where marked) | class | V1 |
 |---|---|---|---|---|
 | 1 | `packs/` | one prefix per covered name (105); MEASURED on 4 names: `input_ledger.json` only (input_class, source, outcome, stamp, detail) | derived (input ledger) | **SERVE** |
-| 2 | `scores/v1/` | per-name scores; MEASURED: divergence, `peers_v`, `inputs.model_block_key` | derived from the Bloomberg model block | **WITHHOLD -- HELD for Andrew (F2 ruled, C-BBG)** |
+| 2 | `scores/v1/` | per-name scores; MEASURED: divergence, `peers_v`, `inputs.model_block_key` | derived from the Bloomberg model block | **SERVE (F2 answered by Andrew-direct ~19:0xZ: cloud data is available to the team, BBG terms do not apply)** |
 | 3 | `management/v1/` | management outputs (FWD-17 roster); MEASURED: roster, `lusha_enrichment`, `ceo_public_profile` (url, title, snippet) | derived, with vendor and web fields | **WITHHOLD until the view exists; then SERVE (F4 ruled: view without `lusha_enrichment`, RESAPP's writer)** |
 | 4 | `filings/v1/` | MEASURED: `<accession>.source.json` carries `excerpt.text` (70,023 chars) and `<accession>.analysis.json` carries `passage_map[].text` (549 passages) | derived items plus verbatim SEC filing text | **SERVE as is (F1 ruled: SEC filings are public documents, not publisher text)** |
 | 5 | `posture/v1/` | posture judgments; MEASURED: verdict, reason, and `membership` (books, weight_by_book) | derived (model-book membership inside) | **SERVE (F5 ruled)** |
-| 6 | `peers/v1/` | peer sets; MEASURED: measures, country map, `csc_columns` | derived from the Bloomberg model block | **WITHHOLD -- HELD for Andrew (F2 ruled, C-BBG)** |
+| 6 | `peers/v1/` | peer sets; MEASURED: measures, country map, `csc_columns` | derived from the Bloomberg model block | **SERVE (F2 answered by Andrew-direct ~19:0xZ: cloud data is available to the team, BBG terms do not apply)** |
 | 7 | `publication-links/v1/` | per-name article links; MEASURED (291 B): security_key, company, ticker, article_key, publisher, first_discovered_at. **No url, no title** | article link INDEX | **SERVE as the index (F3 ruled: the derived link view is a staged enrichment item and joins it when built)** |
 | 8 | `amgt/harvest/gold/` -- ONLY these six tables: `article_security_mention`, `article_sentiment`, `chatter_daily`, `chatter_event`, `chatter_window`, `candidate_universe` | MEASURED: counts, tiers, scores, tone, hashes, keys; `chatter_event` carries `lead_headline` (string) | derived (the chatter) | **SERVE (these six only)** |
 | 9 | `identity/v1/` | security identity; MEASURED: crosswalk residue, cross-references | reference (lookup) | **SERVE** |
@@ -44,13 +44,13 @@ differences are one narrowed row (8), one class now read (23), and five measured
 | 19 | `sec/harvest/` | MEASURED: bronze `company_tickers`; silver `filing_source` (metadata, `object_json`) | SEC text and metadata (public domain) | WITHHOLD in V1. **The first widening candidate:** see call C-SEC |
 | 20 | `publications/v1/` (`barrons/`, `bbg/`, `ft/`, `sa/`, `wsj/`) | MEASURED: url, title, `body_blocks`, `text` (4,616 chars in the sample) | raw publisher text | WITHHOLD |
 | 21 | `bloomberg/harvest/`, `raw/` (`raw/bloomberg/`, `raw/seekingalpha/`) | MEASURED: `raw/bloomberg` histdata mnemonics; `raw/seekingalpha` symbol payload | raw vendor data | WITHHOLD (Bloomberg's licence as well as the V1 rule) |
-| 22 | `derived/` (`model_block/`, `model_block_fye/`) | MEASURED: figures (mnemonic, value, vintage, source), cases | derived from Bloomberg | WITHHOLD in V1: the Bloomberg licence's scope for redistribution to user Claude sessions is UNREAD. Andrew's call to open it (C-BBG) |
-| 23 | `drafting/v1/` | MEASURED: AI-drafted `sections[].sentences[]` and `evidence_records[].passage` (verbatim SEC filing passages, 774 chars in the sample), `quoted_spans` | derived (AI-drafted) with verbatim SEC passages | WITHHOLD (class now read; rides call C-SEC) |
+| 22 | `derived/` (`model_block/`, `model_block_fye/`) | MEASURED: figures (mnemonic, value, vintage, source), cases | derived from Bloomberg | **SERVE (Andrew-direct ~19:0xZ, as rows 2 and 6)** |
+| 23 | `drafting/v1/` | MEASURED: AI-drafted `sections[].sentences[]` and `evidence_records[].passage` (verbatim SEC filing passages, 774 chars in the sample), `quoted_spans` | derived (AI-drafted) with verbatim SEC passages | WITHHOLD per the CTO (rows 23 to 24 stay WITHHOLD). NOTE for the CTO: this is the same class as `filings/v1` (F1 served it), so the reason is no longer licence or publisher text; the row waits on a word that it is plumbing or serves |
 | 24 | `lib/local-publications/`, `social/v1/_measurement/` | MEASURED: a code archive (.zip); a vendor-job cost and delivery measurement | not data | WITHHOLD |
 
-**Count after the rulings (v3), 24 of 24 rows:** 8 SERVE now (rows 1, 4, 5, 7, 8, 9, 10, 11; row 8 is six tables), 1 SERVE when its view exists (row 3), 2 HELD for Andrew
-on the Bloomberg licence (rows 2, 6), 13 WITHHOLD (rows 12-24; row 12b is the split of row 8). C-SEC is closed by F1 as to `filings/v1` (row 19 stays WITHHOLD as plumbing);
-C-BBG is the one card at Andrew (rows 2, 6, 22).
+**Count now (v3, after Andrew's Bloomberg word), 24 of 24 rows:** 11 SERVE now (rows 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 22; row 8 is six tables), 1 SERVE when its view
+exists (row 3), 12 WITHHOLD (rows 12-21, 23, 24; row 12b is the split of row 8). C-BBG is answered. C-SEC is closed by F1 as to `filings/v1` (row 19 stays WITHHOLD as
+plumbing). Open at Andrew in one line: whether his word also lifts the V1 derived-only rule for raw articles and raw vendor responses.
 
 ## Flags -- measured findings the CTO decides (each row stays as the ruling put it until the CTO says)
 
@@ -70,8 +70,8 @@ publisher text, the producer drops the column; if it counts as the article link'
 ## The grant, as the V1 rule needs it
 
 - Grant an asset-manager principal `s3:GetObject` on the SERVE-NOW prefixes ONLY, as prefix conditions: `packs/`, `filings/v1/`, `posture/v1/`, `publication-links/v1/`,
-  `identity/v1/`, `crosswalk/v1/`, `universe/v1/` whole, and row 8 as the six table prefixes `amgt/harvest/gold/<table>/`, never `amgt/harvest/gold/`. `management/v1/` is
-  added when its view prefix exists and is named here; `scores/v1/`, `peers/v1/` and `derived/` are added only on Andrew's Bloomberg word. No bucket-wide read, and no `ListBucket` outside those prefixes.
+  `identity/v1/`, `crosswalk/v1/`, `universe/v1/`, `scores/v1/`, `peers/v1/`, `derived/` whole, and row 8 as the six table prefixes `amgt/harvest/gold/<table>/`, never `amgt/harvest/gold/`. `management/v1/` is
+  added when its view prefix exists and is named here. No bucket-wide read, and no `ListBucket` outside those prefixes.
 - **Negative arms (FWD of O3):**
   - the same principal is refused on a WITHHOLD prefix (`wsj/harvest/`) and on a withheld gold table (`amgt/harvest/gold/research-dossier/`);
   - a non-research principal is refused on `packs/`.
@@ -107,7 +107,7 @@ more than `input_ledger.json`; the Bloomberg and Lusha licence terms; which prin
 ## Owners
 
 - The list: AMGT_HARVST (`2.0.0_SA_COO~W1`), with AMGT_RESAPP for `packs/`.
-- The rulings F1-F5 (section "CTO RULINGS" below) and the one card C-BBG: `1.0.0_SA_CTO~DELL1`, then Andrew.
+- The rulings F1-F5 (section "CTO RULINGS" below) and the Andrew-direct on Bloomberg: `1.0.0_SA_CTO~DELL1`.
 - The derived link view (url, title, publisher, date, no body; F3): AMGT_HARVST, a staged enrichment item for the first issuance after the round-84 L10, not cut mid-round.
 - The management view without `lusha_enrichment` (F4): AMGT_RESAPP's management writer, as an added output.
 - The catalog rows and the grant: site Z, NFRA_MCPINDEX and NFRA_OPLGTW, under `1.0.0_SA_CTO~Z`.
