@@ -516,3 +516,9 @@ surface once a need's backfill is covered, with a targeted refill for a wider ga
 cells) may draw; (3) ACWI and IWM leave rival funds. One cell, `DQ-t-47` (the named exception in `bbg_quote._validate`, `0.9.0_WK_MDPF_DEMQUE~39`, worker, LOCAL, workstream
 MODELEXC, depends on DQ-t-44). Item (1) on the Yahoo standing extension is a SERVED change with its own question to the CTO (no Yahoo request is saved by a 5-day window; a split
 restates the history), so it is NOT cut here; item (3) and the Z-changes are site Z and ETFS_RIVALS's.
+
+**Round 9 amendment 13 (issuer, 2026-10-13 ~17:xxZ):** CTO msg 4936 answers the incremental-rule question: Yahoo takes the last 5 trading days normally and a full re-pull of a
+name only when a split (or another restatement the store keys on) lands, with a targeted refill for a gap wider than 5 trading days; the same request count; a SERVED change under its
+own never-widen pair, to be proved 50 of 50 cell-equal on a no-split day and on one split arm. One cell, `DQ-t-48` (`incremental_append.py`, `incremental_plan.py`,
+`incremental_equal.py` and a test file; LOCAL, builds and proves, wires nothing; `0.9.0_WK_MDPF_DEMQUE~40`, workstream INCREMENTAL, depends on DQ-t-37/40/45). The wiring into
+`daily_draw.py` and `extend_frontier.py` is a later SERVED cell (`DQ-t-49`) cut on this cell's report, with its pair written first.
