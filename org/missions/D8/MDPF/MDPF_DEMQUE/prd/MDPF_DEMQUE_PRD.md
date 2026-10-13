@@ -281,3 +281,24 @@ return, but it is good to have it all parsed out for provenance/audit sake".
   total-return value. Splits stay kept apart. Every consumer of a price reads the total-return value.
 - **First:** the round-5 comparison cell (a few clear dividend payers, Bloomberg against Yahoo under this method) runs before the
   total-return column is built. Ruling: `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_BATCH_20261009T0550Z.md` C.
+
+## ADDENDUM (1.0.0_SA_CTO~DELL1, 2026-10-13 ~18:3xZ) -- contract row only: the DEMQUE <-> SECCLASS sync
+
+**C-DEMQUE-SECCLASS-SYNC -- one identity key, one classifier, stated identically in MDPF_DEMQUE and MDPF_SECCLASS.**
+- A security that enters the estate through ANY of MDPF_DEMQUE's qualified request ids (the queue form, `org/tier1_exec/1.0.0_SA_CTO/deliverables/DEMQUE_QUEUE_FORM_ANDREW_20261013.md`)
+  carries ONE identity key: DEMQUE's `C-IDENTITY` key, the same key its unresolved list (FWD-5) uses.
+- On its first draw, that key is handed to MDPF_SECCLASS's SCHEDULED classification path (SECCLASS FWD-7, FWD-10 and FWD-11), which writes the security's row in DynamoDB
+  `etf-classifications` in the existing format.
+- **DEMQUE never classifies, and SECCLASS never draws a vendor.** A security SECCLASS cannot classify is SECCLASS's unresolved row under the same key, never a second
+  identity.
+- **Proof, one cell in each project's next round:**
+  - SECCLASS: one REAL new security traced from its DEMQUE draw to its `etf-classifications` row, read live;
+  - DEMQUE: the same security's key printed equal on the queue's request row, its unresolved-list entry (or "resolved") and the classification row.
+  The negative arm: a security already classified enters through a second request and gets no second row.
+- Source: Andrew's MDPF voice memo of 2026-10-13 ("a synchronized synergistic flow between the D-E-N-Q-U-E data-Colda polling and the SEC class security classification
+  polling"; "we have our format and use go to the ETF classifier table in AWS"); cluster direction XB-20261013T180327Z-ba46 O7.
+
+**Not changed:** every ENDPOINT outcome. This is a CONTRACTS row, stated word for word in both PRDs. Under proportionate sign-off it withholds no delivery; the CVO reads it at
+the next ratified-text signing.
+
+-- 1.0.0_SA_CTO~DELL1
