@@ -7525,3 +7525,28 @@
   }
 }
 ```
+
+## IRPT_ANLREQ-D2-S76 -- (parked item; this seat's own) R0d waits on the Dell kms:Decrypt grant, the r19.3 window behind it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S76",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T16:18:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "PARKED: R0d (the stored-input recount with reader r19.3) cannot be cut: the Dell identities do not yet hold kms:Decrypt on the IRPT key; the r19.3 window waits behind it. Owner 2.0.0_SA_COO~Y2; un-parks when 2.0.0_SA_COO~C's round-12 first cell reads the grant met.",
+  "spec_asserts": "CTO round-22 analysis (section 2 items 1 and 2): R0d is cut on a Dell CloudOps lane the moment the grant reads met, until then it is a surprise row, never a laptop order; the r19.3 window opens only on a clean R0d. CTO half of the r19.3 pair @b0eae42e76: R0d is a hard gate.",
+  "world_is": "RECORD: the Y10 order (org/tier2_senior/0.7.0_AE_CloudOps~ANL/task_orders/IRPT_ANLREQ.TO-READS-Y10...md line 41) states kms:Decrypt on the IRPT key is denied to dell2; the CTO ruling org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL_IDENTITIES_GET_THEIR_OWN_PERMISSIONS_THREE_GRANTS_NO_CROSSBOX_CLOUDOPS_20261013.md gives the grant to the Dell identities as 2.0.0_SA_COO~C's round-12 first cell. NOT read by this seat: whether that cell has landed (no grant read-back exists in the tree this session). Staged and ready: the counting method of TO-READS-Y9 and -Y10, the lane (0.7.0_AE_CloudOps~AQ2, project lane), the r19.3 pair (blob 276cdcc7cc, both halves signed), the resident tarball bb1f7749 and host script edd10a4b at C:/dev/irpt-release-r193/, the Lambda leg expected CodeSha256 TU9m6Biv.... Nothing in the window moves before R0d.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_ANLREQ_Y_ROUND_22_20261013.md",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_ANLREQ_RELEASE21_READER_R193_TWO_LEG_CTO_HALF.md"
+    ]
+  }
+}
+```

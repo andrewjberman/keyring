@@ -507,3 +507,18 @@ section; S2 disarmed (`DISARM_EVIDENCE_D1_W36_S2_20261013.md`). The TR quote was
 identity). The six Yahoo requests in the repo and the device queue were declared by the issuer (client, window start) @this commit. One cell, `DQ-t-45`: the same
 refusal in `demand_queue.validate` and `--check-declared`, and the standing extension declares itself (`0.9.0_WK_MDPF_DEMQUE~38`, worker, LOCAL, workstream YCLASS, depends on
 DQ-t-44). Row D1-W36-S8 (ADVI request carries no vendor or channel) is read by the Yahoo-side check, which keys on `securities` without a Bloomberg vendor.
+
+**Round 9 close of DQ-t-46 and DQ-t-45, and amendment 12 (issuer, 2026-10-13 ~17:xxZ):** DQ-t-46 merged @1d7ad82723 (P1 coverage on the merged window: Yahoo in store 0, rejected 5, no
+symbol 601; Black Diamond units and value 11 names and 126 held days; residual 606 names, 467,992 of 468,118 cells; cash-identifier rule for CFNCASH and FDIC). DQ-t-45 merged
+@6f6a61123b (the Yahoo side refuses an undeclared or over-window request; the standing extension and `redraw_stale` declare client; device queue 7 of 7 and requests 2 of 2
+accepted). Rows W37-S1/S3 and W38-S2 disarmed (evidence files). Andrew-direct via CTO msg 4931 (form @e961fee72f): (1) incremental mode is the last 5 trading days on every
+surface once a need's backfill is covered, with a targeted refill for a wider gap; (2) research-app model data keeps `HIST_START` 2016-01-01 as a NAMED exception, ABNB (989
+cells) may draw; (3) ACWI and IWM leave rival funds. One cell, `DQ-t-47` (the named exception in `bbg_quote._validate`, `0.9.0_WK_MDPF_DEMQUE~39`, worker, LOCAL, workstream
+MODELEXC, depends on DQ-t-44). Item (1) on the Yahoo standing extension is a SERVED change with its own question to the CTO (no Yahoo request is saved by a 5-day window; a split
+restates the history), so it is NOT cut here; item (3) and the Z-changes are site Z and ETFS_RIVALS's.
+
+**Round 9 amendment 13 (issuer, 2026-10-13 ~17:xxZ):** CTO msg 4936 answers the incremental-rule question: Yahoo takes the last 5 trading days normally and a full re-pull of a
+name only when a split (or another restatement the store keys on) lands, with a targeted refill for a gap wider than 5 trading days; the same request count; a SERVED change under its
+own never-widen pair, to be proved 50 of 50 cell-equal on a no-split day and on one split arm. One cell, `DQ-t-48` (`incremental_append.py`, `incremental_plan.py`,
+`incremental_equal.py` and a test file; LOCAL, builds and proves, wires nothing; `0.9.0_WK_MDPF_DEMQUE~40`, workstream INCREMENTAL, depends on DQ-t-37/40/45). The wiring into
+`daily_draw.py` and `extend_frontier.py` is a later SERVED cell (`DQ-t-49`) cut on this cell's report, with its pair written first.
