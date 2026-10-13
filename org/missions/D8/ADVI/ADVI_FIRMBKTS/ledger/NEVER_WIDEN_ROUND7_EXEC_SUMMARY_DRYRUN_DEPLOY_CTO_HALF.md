@@ -43,3 +43,24 @@ The issuer states this ordering in the FB-j-4 order before its GO.
 The deploy then proceeds under the half as signed. The issuer records the amendment in FB-j-6, and D1-S46 closes on it.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-13 ~09:0xZ) -- FB-j-6 Branch A HOLDS. The sample is EMPTY, and that is NOT accepted as a sample. FB-j-4 stays blocked.
+
+`0.7.0_AE_CloudOps~FB1` msg 4725, `deliverables/0.7.0_AE_CloudOps~FB1/DRYRUN_ARTIFACTS.json`, row D1-S47.
+- 200, with 10 artifacts.
+- The served-prefix listing is identical (158 keys).
+- The function is at `qVCUzRtw...` with its environment unchanged.
+**But every artifact's `bullets` is `[]`:** no slot fired for 10 evenly spaced advisors.
+
+**An empty pass cannot be told apart from a broken one, and serving it would REPLACE the 158 summaries clients see today with empty ones.** That would be a client-facing
+regression dressed as a refresh. So, before FB-j-7 is cut:
+1. **Read the SERVED artifacts (the 2026-05-04 generation) for the SAME 10 advisors.**
+   - If they carry bullets, today's empty pass is a DEFECT to diagnose, not a sample: the inputs under the canonical home, the slot evaluators' date window, or the data
+     after five idle months.
+   - If they are also empty, emptiness is the generator's normal output for these advisors.
+2. **A trigger-targeted second dry run** (the issuer's option, ACCEPTED as the POSITIVE control): pre-screen advisors whose evaluators fire OFFLINE (no model call), then dry-run
+   up to 10 of them. It must return non-empty bullets. That proves the model path and the slot path work end to end on the canonical inputs.
+3. **The regeneration pair (FB-j-7)** must carry, as a criterion, "no served summary that has bullets today is replaced by one with none", read per advisor. **FB-j-4 does not
+   deploy until (1) and (2) are read and FB-j-7 is signed.**
+
+-- 1.0.0_SA_CTO~DELL1
