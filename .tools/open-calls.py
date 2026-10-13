@@ -8,10 +8,15 @@ through its manager. "Touches only its fabric" is a MEASUREMENT here, never a ju
 
     python .tools/open-calls.py add --project <CODE> --subject <text> --context <2-3 lines> --rec <rec> --asked-by <serial> --source <path>
                                     [--orders <order file> ...] [--roots <dir> ...]
+    python .tools/open-calls.py add --kind approval --project NFRA_DEVPLN --box <box> --branch cand/<box>/<slug> --purpose <text>
+                                    --pages <p1,p2> --class client-facing|opal-internal|test-only --how <text> [--subject <text>]
     python .tools/open-calls.py list [--device <d> | --all] [--cloud] [--include-closed]
     python .tools/open-calls.py publish          # put this box's current list to the cluster copy, unchanged
     python .tools/open-calls.py close --id <id> --by <serial> --ruling <path> [--crossbox <crossbox id>]
                                       [--ruled-by andrew|cto]
+    python .tools/open-calls.py close --id <id> --ruled-by andrew|cto --ruling-file <path> --decision approved|declined
+                                      # an approval row only: --decision is required there and refused on any other kind
+    python .tools/open-calls.py approval-status --branch cand/<box>/<slug> [--store-dir <dir>]   # ONE line, rc 2 if unreadable
     python .tools/open-calls.py hold --id <id> --by <serial> --reason <one line>     # held for Andrew; the scan skips it
     python .tools/open-calls.py lift --id <id> --by <serial> --ruling <path>         # a hold lifted on a ruling (kept on the row)
   (close also takes --ruled-by cluster-lead: the laptop CTO's record or a RULED xadj file closes a CROSS-BOX row.)
@@ -30,7 +35,9 @@ CLOSING (1.0.0_SA_CTO msg 107148, on dell1's defect relay): a close whose ruling
 ruling file required) closes the row whatever its scope. CLOSED-BOTH binds only a CTO-ruled (`--ruled-by cto`, the
 default) CROSS-BOX call. The closure records `ruled_by`.
 `kind` (optional on a row): `fork` = a decision with options (the default) | `act` = an act only Andrew can do (a delete,
-a signature, a vendor use); Andrew 2026-10-08 ~18:4xZ: "keep that all in open calls". `--project NONE` records a call
+a signature, a vendor use); Andrew 2026-10-08 ~18:4xZ: "keep that all in open calls" | `approval` = a portal feature
+waiting for Andrew's yes or no (NFRA_DEVPLN; carries an `approval` object; closed with `decision`; read by `approval-status`).
+`--project NONE` records a call
 that belongs to no project (no scope measurement is run; its verdict reads NO-PROJECT).
 
 THE CLUSTER COPY (1.0.0_SA_CTO msg 107121, Andrew-direct ~18:4xZ point 5): every write of a box's list also puts it to
@@ -70,6 +77,7 @@ import json
 import os
 import re
 import secrets
+import subprocess
 import sys
 import tempfile
 
@@ -79,18 +87,26 @@ ROOT = os.path.dirname(TOOLS)
 SCHEMA = "open-calls/1"
 TOP_KEYS = {"schema", "device", "written_at", "written_by", "rows"}
 ROW_KEYS = {"id", "project", "subject", "asked_by", "source", "orders", "roots", "state", "opened_at", "scope", "closed",
-            "kind", "escalation", "context", "rec"}
+            "kind", "escalation", "context", "rec", "approval"}
 # `context` + `rec` (Andrew-direct 2026-10-09 ~01:1xZ, "yes, build the context and rec fields"; record
 # org/tier1_exec/4.0.0_SA_CRO~B/deliverables/ANDREW_DIRECT_20261009_011xZ_OPEN_CALL_CONTEXT_AND_REC_FIELDS.md): what created
 # the call and what it gates, and the asking seat's recommendation. Required on a NEW fork (context on a new act); rows written
 # before carry neither and read as before.
 CONTEXT_MIN, CONTEXT_MAX = 40, 600
-KINDS = ("fork", "act")
+KINDS = ("fork", "act", "approval")
 NO_PROJECT = "NONE"
 CLOUD_BUCKET = "opal-313476888478-globgrph"
 CLOUD_PREFIX = "fabric/open-calls/v1"
 ROW_REQUIRED = {"id", "project", "subject", "asked_by", "source", "state", "opened_at", "scope"}
-CLOSED_KEYS = {"at", "by", "ruling", "crossbox", "ruled_by", "xadj"}
+CLOSED_KEYS = {"at", "by", "ruling", "crossbox", "ruled_by", "xadj", "decision"}
+# `approval` (NFRA_DEVPLN round 1, cell DP-b-1; record org/missions/D0/NFRA/NFRA_DEVPLN/ledger/APPROVAL_KIND_RULE24_RECORD_20261013.md):
+# a portal feature waiting for Andrew's yes or no. The row carries an `approval` object; closing it writes `decision`
+# (approved|declined). head_sha and commits are written null here and computed by the registration cell (DP-b-5).
+APPROVAL_KEYS = {"box", "branch", "purpose", "pages", "class", "how", "head_sha", "commits"}
+APPROVAL_CLASSES = ("client-facing", "opal-internal", "test-only")
+APPROVAL_DECISIONS = ("approved", "declined")
+APPROVAL_RULED_BY = ("andrew", "cto")
+APPROVAL_BRANCH_RE = re.compile(r"^cand/([^/\s]+)/([A-Za-z0-9][A-Za-z0-9._-]*)$")
 # `escalation` (optional, Andrew-direct 2026-10-09 ~00:0xZ; .tools/open-calls-scan.py): the box CTO's answer to the scan when it
 # does not rule the call itself -- `xadj` (sent to cross-adjudication, ref = the XA id) or `andrew` (held for his word).
 ESC_KEYS = {"to", "ref", "at", "by", "reason"}
@@ -461,6 +477,8 @@ def validate_doc(doc, device: str, where: str) -> dict:
                 raise BadFile("%s: row %s `%s` is not text" % (where, row["id"], fld))
         if "kind" in row and row["kind"] not in KINDS:
             raise BadFile("%s: row %s kind %r is not one of %s" % (where, row["id"], row["kind"], "/".join(KINDS)))
+        if row.get("kind") == "approval" or "approval" in row:
+            check_approval_row(row, where)
         esc = row.get("escalation")
         if esc is not None and (not isinstance(esc, dict) or set(esc) != ESC_KEYS or esc["to"] not in ESC_TO):
             raise BadFile("%s: row %s `escalation` is malformed (keys %s, to one of %s)" % (
@@ -468,7 +486,24 @@ def validate_doc(doc, device: str, where: str) -> dict:
         closed = row.get("closed")
         if closed is not None and (not isinstance(closed, dict) or set(closed) - CLOSED_KEYS):
             raise BadFile("%s: row %s `closed` carries a key this reader does not know" % (where, row["id"]))
+        if isinstance(closed, dict) and "decision" in closed and closed["decision"] not in APPROVAL_DECISIONS:
+            raise BadFile("%s: row %s `closed.decision` %r is not approved/declined" % (where, row["id"], closed["decision"]))
     return doc
+
+
+def check_approval_row(row: dict, where: str) -> None:
+    """An approval row is kind approval with the approval object, and a CLOSED one carries its decision."""
+    ap = row.get("approval")
+    if row.get("kind") != "approval" or not isinstance(ap, dict) or set(ap) != APPROVAL_KEYS:
+        raise BadFile("%s: row %s is not a well-formed approval row (kind approval, approval keys %s)" % (
+            where, row["id"], "/".join(sorted(APPROVAL_KEYS))))
+    if ap["class"] not in APPROVAL_CLASSES:
+        raise BadFile("%s: row %s approval.class %r is not one of %s" % (where, row["id"], ap["class"], "/".join(APPROVAL_CLASSES)))
+    if not isinstance(ap["pages"], list) or not isinstance(ap["branch"], str) or not APPROVAL_BRANCH_RE.match(ap["branch"]):
+        raise BadFile("%s: row %s approval.pages must be a list and approval.branch cand/<box>/<slug>" % (where, row["id"]))
+    closed = row.get("closed")
+    if row["state"] == "CLOSED" and not (isinstance(closed, dict) and closed.get("decision") in APPROVAL_DECISIONS):
+        raise BadFile("%s: row %s is CLOSED without a decision (approved/declined)" % (where, row["id"]))
 
 
 def read_list(device: str) -> dict:
@@ -754,7 +789,69 @@ def check_call_text(kind: str, context, rec, source: str) -> None:
                       "read it. Cite a committed file (the record, decomposition, ruling or deliverable that holds the call)." % source)
 
 
+def approval_fields(args) -> dict:
+    """The `approval` object from the add flags. Refused naming the field, before anything is read or written (rc 2)."""
+    for f, v in (("--box", args.box), ("--branch", args.branch), ("--purpose", args.purpose), ("--pages", args.pages),
+                 ("--class", args.klass), ("--how", args.how)):
+        if v is None or not v.strip():
+            raise Refused("%s is required for --kind approval" % f)
+    if args.klass not in APPROVAL_CLASSES:
+        raise Refused("--class %r is not one of %s (field approval.class)" % (args.klass, "/".join(APPROVAL_CLASSES)))
+    branch = args.branch.strip()
+    m = APPROVAL_BRANCH_RE.match(branch)
+    if not m:
+        raise Refused("--branch %r is not cand/<box>/<slug> (field approval.branch)" % branch)
+    if m.group(1) != args.box.strip():
+        raise Refused("--branch %r names box %s but --box is %s (field approval.branch)" % (branch, m.group(1), args.box.strip()))
+    pages = [p.strip() for p in args.pages.split(",") if p.strip()]
+    if not pages:
+        raise Refused("--pages needs at least one page name (field approval.pages)")
+    return {"box": args.box.strip(), "branch": branch, "purpose": args.purpose.strip(), "pages": pages,
+            "class": args.klass, "how": args.how.strip(), "head_sha": None, "commits": None}
+
+
+def cmd_add_approval(args) -> int:
+    if args.project == NO_PROJECT:
+        raise Refused("--project NONE: an approval belongs to a project (--project NFRA_DEVPLN)")
+    ap = approval_fields(args)
+    ctx = real_ctx()
+    device = this_box(ctx["dev"], ctx["reg"])
+    if ctx["dev"].resolve(ap["box"], ctx["reg"]) != device or (args.device and ctx["dev"].resolve(args.device, ctx["reg"]) != device):
+        raise Refused("REFUSED: an approval for box %s is written to that box's list, and this box is %s. One writer per box." % (
+            ap["box"], device))
+    asked_by = (args.asked_by or "").strip() or writer_serial("")
+    if not asked_by:
+        raise Refused("--asked-by is required (no OPAL_AGENT_SERIAL to take it from)")
+    res, notes = scope_project(ctx, args.project, args.orders or [], args.roots or [])
+    path = list_path(device)
+    if os.path.exists(path):
+        doc = read_list(device)
+    else:
+        doc = {"schema": SCHEMA, "device": device, "written_at": now_utc(), "written_by": "", "rows": []}
+    cid = "%s-%s-%s" % (device, datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ"), secrets.token_hex(2))
+    doc["rows"].append({
+        "id": cid, "project": args.project, "subject": (args.subject or "").strip() or "approval: %s" % ap["branch"],
+        "asked_by": asked_by, "source": (args.source or "").strip() or ap["branch"],
+        "orders": [rel_to_root(o, ctx["root"]) for o in (args.orders or [])],
+        "roots": [norm(rel_to_root(r, ctx["root"])) for r in (args.roots or [])],
+        "state": "OPEN", "opened_at": now_utc(), "kind": "approval", "approval": ap,
+        "scope": public_scope(res), "closed": None})
+    written = write_list(device, doc, asked_by)
+    print("ADDED id=%s kind=approval file=%s open=%d" % (cid, written, sum(1 for r in doc["rows"] if r["state"] == "OPEN")))
+    print_scope(res, notes)
+    return 0
+
+
 def cmd_add(args) -> int:
+    if args.kind == "approval":
+        return cmd_add_approval(args)
+    stray = [f for f, v in (("--box", args.box), ("--branch", args.branch), ("--purpose", args.purpose), ("--pages", args.pages),
+                            ("--class", args.klass), ("--how", args.how)) if v is not None]
+    if stray:
+        raise Refused("%s is for --kind approval only" % ", ".join(stray))
+    for f, v in (("--subject", args.subject), ("--asked-by", args.asked_by), ("--source", args.source), ("--context", args.context)):
+        if v is None:
+            raise Refused("%s is required for a %s call" % (f, args.kind))
     check_call_text(args.kind, args.context, args.rec, args.source)
     ctx = real_ctx()
     device = this_box(ctx["dev"], ctx["reg"])
@@ -795,6 +892,13 @@ def cmd_add(args) -> int:
     return 0
 
 
+def print_approval_line(row: dict) -> None:
+    ap = row["approval"]
+    print("        APPROVAL branch=%s class=%s pages=%s | purpose: %s | how: %s%s" % (
+        ap["branch"], ap["class"], ",".join(ap["pages"]), ap["purpose"], ap["how"],
+        (" | closed %s by %s" % (row["closed"]["decision"], row["closed"]["by"])) if row.get("closed") else ""))
+
+
 def print_list(device: str, count: dict) -> None:
     path = list_path(device)
     doc = read_list(device)
@@ -807,6 +911,8 @@ def print_list(device: str, count: dict) -> None:
             row["id"], row["state"], row.get("kind", "fork"), row["project"], row["subject"], row["scope"].get("verdict", "?"),
             row["scope"].get("risk", "?"), row["asked_by"], row["source"],
             (" | escalated to %s %s" % (esc["to"], esc["ref"] or esc["reason"] or "")) if esc else ""))
+        if row.get("kind") == "approval":
+            print_approval_line(row)
     count["rows"] += len(rows)
     count["open"] += sum(1 for r in rows if r["state"] == "OPEN")
 
@@ -906,6 +1012,9 @@ def cmd_list_cloud(args, dev, reg) -> int:
                     print("      %s [%s] %-4s opened %s (%s) | %s | scope=%s | %s" % (
                         r["id"], r["state"], kind, r["opened_at"], age_text(r["opened_at"]), r["subject"],
                         r["scope"].get("verdict", "?"), r["source"]))
+                    if kind == "approval":
+                        print_approval_line(r)
+                        continue
                     print("        CONTEXT: %s" % (r.get("context") or "(none: written before the context field)"))
                     if kind == "fork":
                         print("        REC: %s" % (r.get("rec") or "(none)"))
@@ -969,6 +1078,28 @@ def cmd_close(args) -> int:
         raise Refused("REFUSED: no call %s on this box's list (%s)" % (args.id, path))
     if row["state"] == "CLOSED":
         raise Refused("REFUSED: call %s is already CLOSED" % args.id)
+    approval = row.get("kind") == "approval"
+    decision = getattr(args, "decision", None)
+    if approval:
+        # an approval row: the decision is required; the closing identity is Andrew's word or this box's CTO serial
+        if decision not in APPROVAL_DECISIONS:
+            raise Refused("REFUSED: call %s is an approval row: --decision approved|declined is required" % args.id)
+        if (getattr(args, "ruled_by", "cto") or "cto") not in APPROVAL_RULED_BY:
+            raise Refused("REFUSED: an approval is ruled by andrew or cto, not %s" % args.ruled_by)
+        if getattr(args, "xadj", None):
+            raise Refused("REFUSED: --xadj does not apply to an approval row (its validity is read by approval-status)")
+        if args.ruled_by == "cto":
+            by = os.environ.get("OPAL_AGENT_SERIAL", "").strip()
+            if not by:
+                raise Refused("REFUSED: --ruled-by cto closes as the serial in OPAL_AGENT_SERIAL, which is unset")
+        else:
+            by = "andrew"
+    else:
+        if decision is not None:
+            raise Refused("REFUSED: --decision is for an approval row; call %s is kind %s" % (args.id, row.get("kind", "fork")))
+        if not args.by:
+            raise Refused("--by is required to close a %s call" % row.get("kind", "fork"))
+        by = args.by
     ruling = args.ruling if os.path.isabs(args.ruling) else (
         os.path.join(os.getcwd(), args.ruling) if os.path.exists(os.path.join(os.getcwd(), args.ruling)) else os.path.join(ROOT, args.ruling))
     if not os.path.isfile(ruling):
@@ -991,20 +1122,26 @@ def cmd_close(args) -> int:
         if not rel.startswith(CLUSTER_LEAD_RULING_PREFIXES):
             raise Refused("REFUSED: a cluster-lead close cites the laptop CTO's own record or a RULED cross-adjudication file "
                           "(under %s); %s is neither" % (" or ".join(CLUSTER_LEAD_RULING_PREFIXES), rel))
-    if row["scope"].get("verdict") == "CROSS-BOX" and ruled_by not in ("andrew", "cluster-lead") and xid is None:
+    # an approval row is not gated by the cross-box file: its scope reads the whole project (the round's orders), so every
+    # approval of a project that touches the trunk reads CROSS-BOX; the call's validity is read by approval-status instead
+    if row["scope"].get("verdict") == "CROSS-BOX" and ruled_by not in ("andrew", "cluster-lead") and xid is None and not approval:
         found, lines = crossbox_closed_both(row["id"], args.crossbox)
         if found is None:
             raise Refused("REFUSED: call %s reads CROSS-BOX and no cross-box file for it reads CLOSED-BOTH (%s). A call that touches "
                           "another box is not settled alone." % (args.id, "; ".join(lines) or "none looked at"))
         cross = os.path.splitext(found)[0]
     row["state"] = "CLOSED"
-    row["closed"] = {"at": now_utc(), "by": args.by, "ruling": rel_to_root(args.ruling, ROOT), "crossbox": cross,
+    row["closed"] = {"at": now_utc(), "by": by, "ruling": rel_to_root(args.ruling, ROOT), "crossbox": cross,
                      "ruled_by": ruled_by, "xadj": xid}
-    write_list(device, doc, writer_serial(args.by))
+    if approval:
+        row["closed"]["decision"] = decision
+    write_list(device, doc, writer_serial(by))
     why = cross or ("cross-adjudication %s RULED" % xid if xid else None) or (
+        "not required (approval row: validity is read by approval-status)" if approval else
         "not required (Andrew's ruling)" if ruled_by == "andrew" else
         "not required (cluster-lead record)" if ruled_by == "cluster-lead" else "not required (OWN-BOX)")
-    print("CLOSED id=%s by=%s ruled_by=%s ruling=%s crossbox=%s" % (args.id, args.by, ruled_by, row["closed"]["ruling"], why))
+    print("CLOSED id=%s by=%s ruled_by=%s ruling=%s crossbox=%s%s" % (args.id, by, ruled_by, row["closed"]["ruling"], why,
+                                                               (" decision=%s" % decision) if approval else ""))
     return 0
 
 
@@ -1052,6 +1189,92 @@ def cmd_hold(args) -> int:
                                             "reason": args.reason}, args.by)
     print("HELD id=%s for Andrew by=%s file=%s (the scan no longer nudges the CTO for it; /open-calls carries it)" % (
         args.id, args.by, path))
+    return 0
+
+
+# ---------------------------------------------------------------- approval-status (NFRA_DEVPLN DP-b-1)
+
+def approval_read(box: str, store_dir) -> tuple:
+    """(doc, where): the box's list from --store-dir, else the working tree, else origin/box/<box>. Raises BadFile naming the
+    store when it cannot be read: an unreadable store is never read as an absent one."""
+    if store_dir:
+        where = os.path.join(store_dir, box, "open_calls.json")
+        try:
+            text = open(where, encoding="utf-8").read()
+        except OSError as exc:
+            raise BadFile("%s: unreadable (%s)" % (where, exc))
+    elif os.path.isfile(list_path(box)):
+        where = list_path(box)
+        try:
+            text = open(where, encoding="utf-8").read()
+        except OSError as exc:
+            raise BadFile("%s: unreadable (%s)" % (where, exc))
+    else:
+        where = "origin/box/%s:org/devices/state/%s/open_calls.json" % (box, box)
+        try:
+            got = subprocess.run(["git", "-C", ROOT, "show", where], capture_output=True, text=True, encoding="utf-8",
+                                 errors="replace")
+        except OSError as exc:
+            raise BadFile("%s: git unavailable (%s)" % (where, exc))
+        if got.returncode != 0:
+            raise BadFile("%s: no working-tree list and git show failed (rc %d: %s)" % (
+                where, got.returncode, got.stderr.strip()[:200]))
+        text = got.stdout
+    try:
+        doc = json.loads(text)
+    except ValueError as exc:
+        raise BadFile("%s: not JSON (%s)" % (where, exc))
+    return validate_doc(doc, box, where), where
+
+
+def approval_class_ok(klass: str, by: str) -> bool:
+    """The class rule (decomposition R3): test-only accepts any APPROVED; client-facing needs Andrew or a FAST lease;
+    opal-internal needs Andrew, a _SA_CTO serial, or a FAST lease."""
+    if klass == "test-only":
+        return True
+    who = by or ""
+    if who.lower() == "andrew" or who.startswith("FAST lease"):
+        return True
+    return klass == "opal-internal" and "_SA_CTO" in who
+
+
+def cmd_approval_status(args) -> int:
+    branch = args.branch.strip()
+    m = APPROVAL_BRANCH_RE.match(branch)
+    if not m:
+        print("ERROR: --branch %r is not cand/<box>/<slug>" % args.branch, file=sys.stderr)
+        return 2
+    box = m.group(1)
+
+    def line(state, valid, row, by, head, commits, klass, pages, why=None):
+        out = "APPROVAL branch=%s state=%s valid=%s row=%s by=%s head_sha=%s commits=%s class=%s box=%s pages=%s" % (
+            branch, state, valid, row, by, head, commits, klass, box, pages)
+        return out + (" why=%s" % why.replace("\n", " ") if why else "")
+
+    try:
+        doc, _where = approval_read(box, args.store_dir)
+    except BadFile as exc:
+        print(line("UNREADABLE", "-", "-", "-", "-", "-", "-", "-", why=str(exc)))
+        return 2
+    rows = [r for r in doc["rows"] if r.get("kind") == "approval" and r["approval"]["branch"] == branch]
+    if not rows:
+        print(line("ABSENT", "-", "-", "-", "-", "-", "-", "-"))
+        return 0
+    # the newest row by opened_at wins; a tie goes to the later row in the file
+    row = max(enumerate(rows), key=lambda t: (t[1]["opened_at"], t[0]))[1]
+    ap, closed = row["approval"], (row.get("closed") or {})
+    head = "-" if ap["head_sha"] is None else str(ap["head_sha"])
+    commits = "-" if ap["commits"] is None else str(ap["commits"])
+    pages = ",".join(ap["pages"]) or "-"
+    if row["state"] == "OPEN":
+        print(line("OPEN", "-", row["id"], "-", head, commits, ap["class"], pages))
+        return 0
+    by = closed.get("by") or "-"
+    if closed["decision"] == "approved":
+        valid = "yes" if approval_class_ok(ap["class"], closed.get("by")) else "no"
+        print(line("APPROVED", valid, row["id"], by, head, commits, ap["class"], pages))
+    else:
+        print(line("DECLINED", "no", row["id"], by, head, commits, ap["class"], pages))
     return 0
 
 
@@ -1348,17 +1571,27 @@ def build_parser() -> argparse.ArgumentParser:
     sub = ap.add_subparsers(dest="cmd", required=True)
     add = sub.add_parser("add", help="append one call to this box's list")
     add.add_argument("--project", required=True)
-    add.add_argument("--subject", required=True)
-    add.add_argument("--asked-by", required=True)
-    add.add_argument("--source", required=True)
+    # --subject, --asked-by, --source and --context are required for a fork or act (checked in cmd_add); an approval takes
+    # them from its own flags (--subject optional; --asked-by defaults to OPAL_AGENT_SERIAL; --source defaults to the branch)
+    add.add_argument("--subject")
+    add.add_argument("--asked-by")
+    add.add_argument("--source")
     add.add_argument("--orders", nargs="+", default=[])
     add.add_argument("--roots", nargs="+", default=[])
     add.add_argument("--device", help="refused unless it is this box (one writer per box)")
-    add.add_argument("--context", required=True,
+    add.add_argument("--context",
                      help="2-3 lines (%d-%d chars): what created the call and what it gates" % (CONTEXT_MIN, CONTEXT_MAX))
     add.add_argument("--rec", help="the asking seat's recommendation and its why (required on a fork)")
     add.add_argument("--kind", choices=KINDS, default="fork",
-                     help="fork = a decision with options (default); act = an act only Andrew can do")
+                     help="fork = a decision with options (default); act = an act only Andrew can do; "
+                          "approval = a portal feature waiting for his yes or no (NFRA_DEVPLN)")
+    add.add_argument("--box", help="approval: the box whose branch this is (must be this box)")
+    add.add_argument("--branch", help="approval: cand/<box>/<slug>, the candidate branch")
+    add.add_argument("--purpose", help="approval: what the feature is, in words")
+    add.add_argument("--pages", help="approval: the portal pages it touches, comma separated")
+    add.add_argument("--class", dest="klass", choices=APPROVAL_CLASSES,
+                     help="approval: client-facing | opal-internal | test-only")
+    add.add_argument("--how", help="approval: how to look at it")
     lst = sub.add_parser("list", help="print the list(s) with each file's age")
     grp = lst.add_mutually_exclusive_group()
     grp.add_argument("--device")
@@ -1368,8 +1601,11 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("publish", help="put this box's current list to the cluster copy in S3, unchanged")
     cls = sub.add_parser("close", help="set a call CLOSED with its ruling")
     cls.add_argument("--id", required=True)
-    cls.add_argument("--by", required=True)
-    cls.add_argument("--ruling", required=True)
+    # --by is required for a fork or act; an approval row takes its closing identity from --ruled-by (checked in cmd_close)
+    cls.add_argument("--by")
+    cls.add_argument("--ruling", "--ruling-file", dest="ruling", required=True)
+    cls.add_argument("--decision", choices=APPROVAL_DECISIONS,
+                     help="approval rows only (required there, refused on any other kind): approved | declined")
     cls.add_argument("--crossbox", help="id of the cross-box file for this call, when its text does not carry the call id")
     cls.add_argument("--xadj", help="id of the RULED cross-adjudication file (.tools/xadj.py) this close rests on")
     cls.add_argument("--ruled-by", choices=RULED_BY, default="cto",
@@ -1390,6 +1626,9 @@ def build_parser() -> argparse.ArgumentParser:
     lift.add_argument("--id", required=True)
     lift.add_argument("--by", required=True)
     lift.add_argument("--ruling", required=True, help="the ruling file the lift rests on")
+    aps = sub.add_parser("approval-status", help="one line: the approval state of a candidate branch (NFRA_DEVPLN)")
+    aps.add_argument("--branch", required=True, help="cand/<box>/<slug>")
+    aps.add_argument("--store-dir", help="a directory holding <box>/open_calls.json (tests); overrides the working tree and git")
     sco = sub.add_parser("scope", help="measure whether a call touches only this box")
     sco.add_argument("--project")
     sco.add_argument("--orders", nargs="+", default=[])
@@ -1402,7 +1641,8 @@ def main(argv: list) -> int:
     args = build_parser().parse_args(argv)
     try:
         return {"add": cmd_add, "list": cmd_list, "close": cmd_close, "scope": cmd_scope,
-                "publish": cmd_publish, "hold": cmd_hold, "lift": cmd_lift, "mode": cmd_mode}[args.cmd](args)
+                "publish": cmd_publish, "hold": cmd_hold, "lift": cmd_lift, "mode": cmd_mode,
+                "approval-status": cmd_approval_status}[args.cmd](args)
     except Refused as exc:
         print(str(exc) if str(exc).startswith("REFUSED") else "ERROR: %s" % exc, file=sys.stderr)
         return 1 if str(exc).startswith("REFUSED") else 2

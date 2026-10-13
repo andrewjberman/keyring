@@ -1,13 +1,13 @@
 {
   "prd": "MDPF_CANON_PRD.md",
-  "prd_version": "v2.12",
-  "prd_pin": "84aecdf45f9d772fc0ebc7db371066805010dc50",
+  "prd_version": "v2.15",
+  "prd_pin": "567018c9e53fa2cea7daaedf061bb6f38d1463fe",
   "half": "ratified-text",
-  "half_hash": "b7aa2eb054be842b74af9ff59f606f78864d572d91fc48c1cb242ba3375b77e5",
-  "endpoint_hash": "7ba6711802e19a6cef7ffa9d7dc2b98ca232870c51a242d9849d7c8401270599",
+  "half_hash": "4320120f04983fc6d032efd63d555b18234fcdcc9baeb399dd525e983ec2e74a",
+  "endpoint_hash": "a6663fa19f87267e9e92d1587bf8ade0bde0f299efcfb3bd21f6476073d002fb",
   "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_MDPF_CANON_v2.12_RATIFIED_TEXT_20261013.md@1337ef5c75",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_MDPF_CANON_v2.12_RATIFIED_TEXT_20261013.md@dbba589a4c",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-13T19:03:13Z",
-  "reason": "FWD-9: draw, comparison, membership sources and stack composition (Client split short of non_model_aua by ~21-23M) undefined"
+  "signed_at": "2026-10-13T19:19:34Z",
+  "reason": "FWD-9 v2.15: Other AUA remainder negative on 13 of 21 dates (to -4,649.20) with no governing clause; carve-out 'equal to the cent' claim false except 08-27"
 }

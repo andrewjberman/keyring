@@ -53,7 +53,7 @@ if (-not $All -and -not $Serial) {
     Write-Error "kill-agent: must pass either a Serial or -All"
     exit 1
 }
-if ($Serial -and ($Serial -notmatch '^[0-9]+\.[0-9]+\.[0-9]+_[A-Za-z]+_[A-Za-z0-9]+(~[A-Za-z0-9]+)?$')) {
+if ($Serial -and ($Serial -notmatch '^[0-9]+\.[0-9]+\.[0-9]+_[A-Za-z]+_[A-Za-z0-9_]+(~[A-Za-z0-9]+)?$')) {
     Write-Error "kill-agent: '$Serial' does not look like an agent serial"
     exit 1
 }
@@ -76,7 +76,7 @@ try {
 }
 
 # First serial-shaped token in a commandline (for audit labels).
-$serialPat = '[0-9]+\.[0-9]+\.[0-9]+_[A-Za-z]+_[A-Za-z0-9]+(?:~[A-Za-z0-9]+)?'
+$serialPat = '[0-9]+\.[0-9]+\.[0-9]+_[A-Za-z]+_[A-Za-z0-9_]+(?:~[A-Za-z0-9]+)?'
 
 # Filter to the requested target(s). Boundaries: leading (?<![\w~]) + trailing
 # (?![~\w]) make a BASE serial precise (won't catch its own ~lanes) and block
