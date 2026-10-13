@@ -11018,3 +11018,136 @@
   "notes": "Recorded so that the L9 grader can judge the authorization change on its full effect."
 }
 ```
+
+## IRPT_ANLREQ-D2-W111-S1 -- the stack's history carries three DEV merge commits and 22 files of delta, where CONTRIBUTING-BOXES says a feature branch carries only its own commits
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W111-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~111",
+  "surfaced_at": "2026-10-13T22:48:34Z",
+  "one_line": "The partner-firm stack cut from origin/PROD carries three DEV merge commits (73d8d3a4, 0101dd66, a577cba5) in its history, because two candidate tips were cut from DEV tip a577cba5 and two dependency chains contain DEV merges of themselves.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "portal/CONTRIBUTING-BOXES.md step 1 (at origin/PROD 07f065e6): cut the feature branch from the last PROD release so the branch carries only its own commits; AR-y-294 step 1: the branch is cut from origin/PROD.",
+  "world_is": "MEASURED at portal 1c71bfd8: git log 10e7664d..HEAD gives 21 commits: 8 merges, 9 candidate commits, 1 test-edit commit and 3 DEV merge commits (73d8d3a4, 0101dd66, a577cba5). The 103 and 104 tips (46a49e57, e82daf4c) have parent a577cba5, which is DEV tip after the three IRPT_ANLREQ DEV merges, and the 88 and 90 chains carry their DEV merges, so merging a tip brings them into history. Their content is the three dependency candidates already on DEV; no other DEV commit is in the range. The file delta from PROD is 22 files.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@1c71bfd8: git log --format='%h %p %s' 10e7664d..HEAD lists the 21 commits and the three DEV merges",
+      "portal@46a49e57 parent a577cba5 (candidate 103 cut from DEV)",
+      "portal@e82daf4c parent a577cba5 (candidate 104 cut from DEV)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The order fixes the cut at origin/PROD and the candidate tips; this worker did not re-cut the candidates. The CTO may prefer a re-cut from PROD of the candidate commits alone."
+}
+```
+
+## IRPT_ANLREQ-D2-W111-S2 -- the combination strands 21 tests at the partner-view merge, not the ten the cell names: ten AR-y-265, one AR-y-283, and ten from the C-FIRM and variant candidates' own pins
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W111-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~111",
+  "surfaced_at": "2026-10-13T22:48:34Z",
+  "one_line": "The stack strands 21 tests in the TicketCenter folder at the partner-view merge: the ten AR-y-265 silence tests named by W104-S1, one AR-y-283 partner-view test, and ten tests the C-FIRM and variant candidates pin to the bare select tag, the old comparison source text and the inferred variant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IRPT_ANLREQ-D2-W104-S1 (BLOCKING, ARMED, disarm owner 2.0.0_SA_COO~Y2): the stack strands ten AR-y-265 tests; AR-y-294 step 3: reconcile the stranded tests by re-pointing mounting or fixtures and keeping every assertion's words and intent.",
+  "world_is": "MEASURED with bun test src/pages/TicketCenter src/lib: after the C-FIRM merge 94 pass and 1 fail; after the variant merge 90 pass and 10 fail; after the partner-view merge 95 pass and 21 fail (r23/PORTAL_PARTNER_STACK.json after_each). The ten AR-y-265 tests fail with 'no button New Ticket on the page'. The eleven others are partner-view test a (select[aria-label=Firm] expected truthy), four in analysis-firm-c-firm (three bare select absences and the source pin filingForm.firm === ''), five in analysis-firm-choice (bare select absences), and one in analysis-form-no-fee (comparison_model SPY from the inferred variant). Each is re-pointed in portal commit 1c71bfd8; every edit is listed with before and after text in r23/PORTAL_PARTNER_STACK.json test_edits. The re-point of W104-S1 is the stack's proposal; its disarm owner rules on it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@f9e39deb bun test src/pages/TicketCenter src/lib: 95 pass, 21 fail (measured, after_each m7)",
+      "portal@1c71bfd8 src/pages/TicketCenter/__tests__/analysis-submit-silence.test.tsx (re-pointed to the partner submit route)",
+      "portal@1c71bfd8 src/pages/TicketCenter/__tests__/analysis-firm-c-firm.test.tsx and analysis-firm-choice.test.tsx (select count of one)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "W104-S1 remains ARMED until its disarm owner rules. This row does not disarm it."
+}
+```
+
+## IRPT_ANLREQ-D2-W111-S3 -- the variant candidate's merge re-introduces advisory_fee from a base that predates the no-fee removal; the conflict was resolved by keeping the removal
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W111-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~111",
+  "surfaced_at": "2026-10-13T22:48:34Z",
+  "one_line": "Candidate AR-y-275 (wk-IRPT_ANLREQ-96-portal, base 4d601023) carries an advisory_fee member that AR-y-263 (on DEV) removed; the merge conflicted on it and the removal was kept.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-294 step 2: resolve a conflict keeping BOTH sides' intent and never drop a candidate's behaviour to make a conflict go away; the no-fee removal (AR-y-263) is a dependency the stack carries.",
+  "world_is": "MEASURED at merge 4c378259: on the 96 side, EMPTY_ANALYSIS_FORM and answersFromForm in AnalysisRequestParts.tsx and the analysis-form-i1.test.tsx fixture carry advisory_fee, inherited from base 4d601023, which predates the AR-y-263 removal on DEV at 9ef6a359. The 96 side's own fee line was dead code (its answersFromForm never sent it). Resolved by keeping report_type and dropping advisory_fee and the fee line. No candidate behaviour was dropped: the variant change is kept and the fee field stays removed as AR-y-263 requires.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@80d7c70a: git diff 4d601023 80d7c70a -- AnalysisRequestParts.tsx keeps advisory_fee as context in EMPTY_ANALYSIS_FORM",
+      "portal@1c71bfd8 src/pages/TicketCenter/AnalysisRequestParts.tsx: EMPTY_ANALYSIS_FORM has no advisory_fee member"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W111-S4 -- the proof-of-spec checker's y294 rule requires failed 0 on every after_each row, which the order's own sequence cannot meet: reconciliation runs after the last merge
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W111-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~111",
+  "surfaced_at": "2026-10-13T22:48:34Z",
+  "one_line": "ar21_checks.py y294-stack refuses any after_each row with failed other than 0, but the order records counts after each merge and reconciles the stranded tests only after the last merge, so the honest mid-stack rows read failed 1, 10, 10, 21 and 21.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR294-y-AC1: the record lists the eight merges in order with the test and typecheck counts after each. ar21_checks.py y294-stack: every after_each row must read failed 0 and typecheck_rc 0, else 'after_each row not clean'.",
+  "world_is": "MEASURED: the record r23/PORTAL_PARTNER_STACK.json states the counts measured after each merge, before reconciliation: merge 4 failed 1, merge 5 failed 10, merge 6 failed 10, merge 7 failed 21, merge 8 failed 21; the test-edit commit reads failed 0 and 121 pass. The checker's rule reads every row, so AC1 refuses on the mid-stack rows. The record states the measured counts and is not edited to read clean. AC1 is recorded FAIL and the order stays open. The checker is outside this worker's grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py y294-stack: the failed-0 loop over every after_each row",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~111/r23/PORTAL_PARTNER_STACK.json after_each rows m4 to m8"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: either the checker reads the final after_each row only, or the order allows the reconciliation to precede the per-merge rows. The worker has not changed either."
+}
+```
+
+## IRPT_ANLREQ-D2-W111-S5 -- the staff analysis form's held submit says choose a firm, on a form that has no firm control and says staff cannot file from it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W111-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~111",
+  "surfaced_at": "2026-10-13T22:48:34Z",
+  "one_line": "On the internal (staff) analysis form, once staff pick the Analysis Request type, the held submit reads 'Choose the firm this request is filed under.' while the form has no firm control and states that staff cannot submit from it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "AR-y-294 step 4 asks what staff are told; the C-FIRM cell (AR-y-274): Opal staff file nothing here; the form says so in one sentence and the submit stays off.",
+  "world_is": "READ from code at portal 1c71bfd8, not rendered: filingFirm returns '' for an internal caller (AnalysisRequestParts.tsx line 116). The internal analysis submit is disabled by heldReason (TicketCenter.tsx lines 297 to 299 and line 537). For staff the firms list is the READY firms, not null and not empty, so submitHeldReason reaches its firm check and returns 'Choose the firm this request is filed under.' (analysisRequest.ts lines 226 to 227). The staff form shows no firm control (AnalysisRequestFields omits FirmLine for staff) and the sentence 'Opal staff open requests from the queue rather than file them, so this form cannot be submitted from here.' ARMED: left alone, each staff use of the analysis form after the stack reaches DEV shows the contradiction. The stack is not on DEV.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@1c71bfd8 src/pages/TicketCenter/TicketCenter.tsx lines 297-299 (heldReason) and line 537 (submit disabled)",
+      "portal@1c71bfd8 src/pages/TicketCenter/analysisRequest.ts lines 226-227 (submitHeldReason firm check)",
+      "portal@1c71bfd8 src/pages/TicketCenter/AnalysisRequestParts.tsx lines 115-116 and 155 (filingFirm for staff; FirmLine omitted for staff)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not rendered in a browser. The words are read from code. The issuer decides the held sentence for staff; this worker did not change it."
+}
+```
