@@ -1,0 +1,81 @@
+{
+ "kind": "COMPLETION_GRADES",
+ "schema_version": "1.0",
+ "project": "LGIC_LGCTFM",
+ "round": 10,
+ "graded_by": "1.0.0_SA_CTO",
+ "graded_utc": "2026-10-13T14:53Z",
+ "report_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/ledger/COMPLETION_REPORT.round10.json@3ead1e0cde",
+ "rows": [
+  {
+   "fwd_id": "FWD-1",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/1.0.0_SA_CTO/LGIC_LGCTFM_ROUND10_ANALYSIS.md",
+   "state_observed": "EXERCISED",
+   "note": "re-graded REALIZED 2026-09-20 on round 4 LT-x-5 (run 20260919T034609Z-c28c728; X5R4-AC2 floor 90 of 2595 nodes; see project.json phase) | PROJECT TALLY: REALIZED 8 of 10; FWD-4 and FWD-6 NOT_REALIZED, both barring outside the engine (HELD-AT-STOP since round 10); closed on Andrew's word, not on a zero-graduation round | close_ref org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_134xZ_LAPTOP_PARE_DOWN_UNSEATED_CLOSES_EXCEPT_SPMOVE.md@4750e84345"
+  },
+  {
+   "fwd_id": "FWD-2",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/1.0.0_SA_CTO/LGIC_LGCTFM_ROUND10_ANALYSIS.md",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 1, survived round-2 hardening (8 of 10 unchanged)"
+  },
+  {
+   "fwd_id": "FWD-3",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/1.0.0_SA_CTO/LGIC_LGCTFM_ROUND10_ANALYSIS.md",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 1, survived round-2 hardening"
+  },
+  {
+   "fwd_id": "FWD-4",
+   "verdict": "NOT_REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/project.json",
+   "state_observed": "APPLIED",
+   "note": "bars outside the engine: closes on Andrew's own read of ANDREW_CARD.md (the CTO fallback adjudication @662d53b793 does not substitute). Project CLOSED 2026-10-13 on his pare-down word @4750e84345 with this outcome open; the tool stays in force."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/1.0.0_SA_CTO/LGIC_LGCTFM_ROUND10_ANALYSIS.md",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED; regeneration fidelity met, qualified in the 2026-09-18 retraction and unchanged after FWD-1 re-grade"
+  },
+  {
+   "fwd_id": "FWD-6",
+   "verdict": "NOT_REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/project.json",
+   "state_observed": "APPLIED",
+   "note": "bars outside the engine: closes when a real migration's decomposition is cut from a run (LGIC_CANON's C6 wave). Project CLOSED 2026-10-13 on his pare-down word @4750e84345 with this outcome open."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/1.0.0_SA_CTO/LGIC_LGCTFM_ROUND10_ANALYSIS.md",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 1, survived round-2 hardening"
+  },
+  {
+   "fwd_id": "FWD-8",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/1.0.0_SA_CTO/LGIC_LGCTFM_ROUND10_ANALYSIS.md",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 1, survived round-2 hardening"
+  },
+  {
+   "fwd_id": "FWD-9",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/1.0.0_SA_CTO/LGIC_LGCTFM_ROUND10_ANALYSIS.md",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 1, survived round-2 hardening (N2R2-AC5, 520 digit runs)"
+  },
+  {
+   "fwd_id": "FWD-10",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/1.0.0_SA_CTO/LGIC_LGCTFM_ROUND10_ANALYSIS.md",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 1, survived round-2 hardening"
+  }
+ ]
+}
