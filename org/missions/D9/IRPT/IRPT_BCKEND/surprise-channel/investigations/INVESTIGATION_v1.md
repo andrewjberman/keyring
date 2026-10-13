@@ -32304,3 +32304,47 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The gate requires the dell2 coordinate in the worker row id. The order's bare form is not accepted on this fabric."
 }
 ```
+```json
+{
+  "id": "IRPT_BCKEND-D2-W366-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~366",
+  "surfaced_at": "2026-10-13T20:23:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The first commit of the build was refused by the lane gate: the _scope test file was not in the paths the gate read at HEAD, because the amended order (f127a6570b on box/dell2) had not yet reached this branch; the order was landed first (89be625971), then the build retried.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit owned-paths refusal for infra/aws/lambda/investor-reporting/_scope/tests/test_maintained_sources.py (lane IRPT_LIVE_SCOPE_P, agent not in permitted_agents; no NON-TERMINAL order at HEAD named the path) on the first commit attempt, HEAD a0c93a061b",
+      "order at HEAD before the land: a0c93a061b carried the pre-amendment paths block; box/dell2 carries f127a6570b (git log -1 --format=%h box/dell2 -- the order path)"
+    ]
+  },
+  "spec_asserts": "The order's <paths> block is the worker's write grant and the lane gate admits a worker to exactly the paths it names; a worker's commit is refused for a path the order at HEAD does not name.",
+  "world_is": "The amended order was on box/dell2 and not on this branch, so the gate read the superseded grant. Landing the order file at HEAD resolved the refusal without any change to the grant."
+}
+```
+```json
+{
+  "id": "IRPT_BCKEND-D2-W366-S8",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~366",
+  "surfaced_at": "2026-10-13T20:23:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The build step asks the worker to commit the issuer's check file deliverables/2.0.0_SA_COO~P2/checks/r183/p183_cells.py, which is outside the order's paths block; the lane gate refuses it (TREE_DELIVERABLES: the serial folder is the owner). The check was not committed; it stays as the issuer's file, read only, and the working copy holds the box/dell2 version.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit owned-paths refusal for org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r183/p183_cells.py (lane TREE_DELIVERABLES, owner = the serial in the path) on the first commit attempt",
+      "the order's <paths> block (amended) names no check path; the order's BOUNDS say do not edit the check"
+    ]
+  },
+  "spec_asserts": "Step F of the worker face lists the check file among the paths to commit.",
+  "world_is": "The check file is outside the grant and under the issuer's serial folder; a worker cannot commit it. It is unstaged and not in the build commit."
+}
+```
