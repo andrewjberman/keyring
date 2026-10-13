@@ -8518,3 +8518,27 @@
   "hazard_standing": "INERT"
 }
 ```
+
+## IRPT_ANLREQ-D2-S83 -- (Andrew-direct; relayed; this seat's own row) the Analysis Request submit creates no ticket and shows nothing
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S83",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T18:39:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "Andrew's Analysis Request submit on DEV (localhost:5174, portal DEV f6ef1d25, as andrew@opalinvest.com, ~18:3xZ) created NO ticket and showed NO confirmation and NO error.",
+  "spec_asserts": "Submitting the Analysis Request form creates an analysis_request ticket, shows its ticket id on screen, and any failed hop (upload, CREATE, or the form's own validation) is shown on screen (FWD-4).",
+  "world_is": "REPORTED by Andrew, verbatim: \"there is no new ticket created despite me trying to create a ticket for that Analysis Request ... it doesnt lock in somehow, or at least does not display a confirmation on the screen for the user, nor does it appear in the Open Tickets section\" (relayed by 1.0.0_SA_CTO~DELL2 msg 7156). MEASURED by the CTO: opal-tickets holds no analysis_request created today; the only ticket created today is TCK-20261013-5c5c3916 at 18:33Z, a trade_request. NOT read by this seat: which hop stops (the upload, the CREATE, or the form's own validation) or what Andrew entered. Cell AR-y-265 reads the submit path hop by hop and fixes the silence.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/mcp/inbox/2.0.0_SA_COO/~Y2/read/20261013T183521Z_1.0.0_SA_CTO_DELL2_O1_DEFECT__top_of_your_next_issuance__An.md (CTO msg 7156)"
+    ]
+  },
+  "class": "BLOCKING"
+}
+```
