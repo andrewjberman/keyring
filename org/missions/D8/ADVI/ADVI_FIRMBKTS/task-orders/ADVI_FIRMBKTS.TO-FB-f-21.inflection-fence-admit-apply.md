@@ -77,7 +77,7 @@ AC1 to AC3 outputs, whether step 5(c) ran, and the commit hash.
 take it this hour, dell1's own CloudOps lane applies under the same pair (one applier, named in the ledger), but dell1's identity
 cannot simulate: the plan and the policy read would carry the proof.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>INFLFENCE</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-21</to_id>
