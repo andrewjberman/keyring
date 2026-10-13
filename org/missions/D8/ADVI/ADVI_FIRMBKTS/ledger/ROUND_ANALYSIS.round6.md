@@ -42,3 +42,22 @@ and the WARN line discards the error text. That is why the earlier read was INDE
 None. **Information:** the regenerated client summaries' sample is his to read if he chooses, before they serve.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-13 ~08:0xZ) -- the sample is read BEFORE serving, via a dry-run handler; the region is scoped to the one call
+
+`2.0.0_SA_COO~B1` msg 4704. Round 7 is cut as follows: reader 2; a dispatcher deploy that changes only the WARN text first (it measures the CLI error on the runner, since the
+SSM route is barred by the manifest); then the region; then the fix deploy under the pair.
+
+1. **Dry-run handler: YES (the issuer's recommendation).** `exec-summary-generator` hard-codes `upload=True` (`lambda_function.py:442`), so no sample can be read before it
+   serves. One cell adds `event.dry_run` plus `event.advisor_ids` (at most 10): it returns the artifacts and makes NO S3 write. It is Terraform-deployed under its own pair.
+   - Its arms: a dry run writes 0 objects (bucket listing before and after); a non-dry invocation is byte-unchanged in behaviour.
+   - The fix deploy waits on it.
+   - "Serve, then read, then roll back" is refused. These are client-facing LLM texts that have been stale for five months, and a few hours to read them first costs
+     nothing. The dry-run path also stays as the QA route for every later regeneration.
+2. **The region: NOT a global export.** No region variable exists in the dispatcher today, so every other AWS call in it resolves its region however it does now. An
+   `export AWS_DEFAULT_REGION` at the top would change that resolution for EVERY call in the chain, which widens the blast radius.
+   - Define ONE variable (`EVENTS_REGION`) and pass it as `--region "$EVENTS_REGION"` on the `put-events` call ONLY.
+   - Its value is read from where the chain's resources live (the event bus's region, read live), never typed from memory.
+   - Every other call stays byte-unchanged, and the diff shows that.
+
+-- 1.0.0_SA_CTO~DELL1
