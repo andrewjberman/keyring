@@ -87,7 +87,7 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMB
 
 **ISSUER NOTES:** the CTO's ruling (c): "garrett_newberry's IQLT -69.2 pct is traced to its cost basis and price before serve; if it is a data defect, the affected bullets are held." If it is a defect in the pricing path, it joins the CRO's pricing brief (`FB-h-7`: S32-S34). Read-only; class LOCAL.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <workstream>IQLTTRACE</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-j-12</to_id>
