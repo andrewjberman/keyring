@@ -8418,3 +8418,103 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S79 -- (Andrew-direct smoke; relayed; this seat's own row) Analysis Request form (Andrew's smoke ~18:2xZ on DEV): the Opal Ultra Short-Term model is 
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S79",
+  "one_line": "Analysis Request form (Andrew's smoke ~18:2xZ on DEV): the Opal Ultra Short-Term model is missing from the 'Compare against' list.",
+  "spec_asserts": "The form lists every Opal model of the served comparison catalogue (AnalysisRequestParts.tsx :105-123, models from GET /api/scoped/investor-reporting/analysis/comparisons).",
+  "world_is": "REPORTED by Andrew (relayed by 1.0.0_SA_CTO~DELL2 msg 7151), verbatim: \"we're missing the Opal Ultra Short-Term\". NOT read by this seat why it is missing (the catalogue is served; the form renders what it receives): cell AR-y-261 reads it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/mcp/inbox/2.0.0_SA_COO/~Y2/read/20261013T183027Z_1.0.0_SA_CTO_DELL2_Andrew-direct__smoke__18_2xZ___four_Anal.md (CTO msg 7151, Andrew's words as relayed)",
+      "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx read by this seat at portal DEV cf52fdbf"
+    ]
+  },
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T18:32:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT"
+}
+```
+
+## IRPT_ANLREQ-D2-S80 -- (Andrew-direct smoke; relayed; this seat's own row) Analysis Request form (Andrew's smoke): the Opal models should be in canonical order, with
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S80",
+  "one_line": "Analysis Request form (Andrew's smoke): the Opal models should be in canonical order, with canonical color checkboxes that take that color when checked.",
+  "spec_asserts": "The model list is in the estate's canonical model order and each checkbox shows the estate's model color when checked (reused, not new values).",
+  "world_is": "REPORTED by Andrew, verbatim: \"they should be arranged in canonical order with canonical color checkboxes that take that color when checked\". READ by this seat: the checkboxes at AnalysisRequestParts.tsx :112-121 are plain unstyled checkboxes in the catalogue's order ('Model-catalogue entries come first, then tickers in ticker order', comparisonCatalogue.ts :10-11); the estate's model palette is in the portal (modelPortfolioColors.ts MODEL_PORTFOLIO_COLORS, the holdings palette.ts and the iv-e-11 model-color tests). Cell AR-y-262.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/mcp/inbox/2.0.0_SA_COO/~Y2/read/20261013T183027Z_1.0.0_SA_CTO_DELL2_Andrew-direct__smoke__18_2xZ___four_Anal.md (CTO msg 7151, Andrew's words as relayed)",
+      "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx read by this seat at portal DEV cf52fdbf"
+    ]
+  },
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T18:32:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT"
+}
+```
+
+## IRPT_ANLREQ-D2-S81 -- (Andrew-direct smoke; relayed; this seat's own row) Analysis Request form (Andrew's smoke): the Advisory Fee field is not needed.
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S81",
+  "one_line": "Analysis Request form (Andrew's smoke): the Advisory Fee field is not needed.",
+  "spec_asserts": "A prospect's fee is unknown to the advisor filing the request; reports are before advisory fees.",
+  "world_is": "REPORTED by Andrew, verbatim: \"the Advisory Fee doesn't need to be included ... These would largely be from prospects so we'd have no way of knowing their fees\". READ by this seat: the field is AnalysisRequestParts.tsx :127-130, state :31, answers :47 and :54 (advisory_fee), validation in analysisRequest.ts :73. Cell AR-y-263.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/mcp/inbox/2.0.0_SA_COO/~Y2/read/20261013T183027Z_1.0.0_SA_CTO_DELL2_Andrew-direct__smoke__18_2xZ___four_Anal.md (CTO msg 7151, Andrew's words as relayed)",
+      "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx read by this seat at portal DEV cf52fdbf"
+    ]
+  },
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T18:32:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT"
+}
+```
+
+## IRPT_ANLREQ-D2-S82 -- (Andrew-direct smoke; relayed; this seat's own row) Analysis Request form (Andrew's smoke): the 'Add commentary' checkbox does nothing.
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S82",
+  "one_line": "Analysis Request form (Andrew's smoke): the 'Add commentary' checkbox does nothing.",
+  "spec_asserts": "Checking 'Add commentary' makes the request carry commentary_requested (CTO msg 7151: the form half of J1).",
+  "world_is": "REPORTED by Andrew, verbatim: \"add commentary checkbox doesnt do anything\". READ by this seat: the form sends add_commentary (AnalysisRequestParts.tsx :33, :56); the wire contract names commentary_requested (portal/src/pages/InvestorReporting/contracts/wire/AnalysisSubmissionRequest.ts). Which member the ticket service reads is NOT read by this seat. Cell AR-y-264.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/mcp/inbox/2.0.0_SA_COO/~Y2/read/20261013T183027Z_1.0.0_SA_CTO_DELL2_Andrew-direct__smoke__18_2xZ___four_Anal.md (CTO msg 7151, Andrew's words as relayed)",
+      "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx read by this seat at portal DEV cf52fdbf"
+    ]
+  },
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T18:32:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT"
+}
+```
