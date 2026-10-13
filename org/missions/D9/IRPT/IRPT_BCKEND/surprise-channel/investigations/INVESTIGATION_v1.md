@@ -30298,3 +30298,184 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Form only. The holdings_inf.py fix and its two arms are committed separately at aa5778d962 and need no ruling."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W348-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~348",
+  "surfaced_at": "2026-10-13T03:19:10Z",
+  "one_line": "The irpt-holdings build (re-pin of the HoldingsSnapshot schema copy only) carries a pre-existing attribute mismatch that the r278 instrument reads on the BUILT zip and on the LIVE zip alike: the packaged served.py (pin 74a62fb) passes load_report_owner to enforce.Enforcer, whose packaged copy (pin 21eca74) has no such keyword. The order's refusal clause stops the release; nothing was changed.",
+  "spec_asserts": "Step 3 and the refusal clause: both limbs of the signature instrument read 0 mismatches on the built zip; a signature or attribute mismatch on the built zip is a STOP (file a row naming it, change nothing more, report). The census criterion requires built_attribute_mismatched 0.",
+  "world_is": "Built twice, byte-identical, zip sha256 c07833d87d366dc921188956441bc6a35450fa832011b452988ec4c7e5b97452 (live zip 49645f51f1dd25aaced9185bc70fca40af3c0de0cda2b42e8e4691d6352e65cd). Changed members vs live: exactly contracts/HoldingsSnapshot.schema.json (built = repo blob at f91aedd1ef, 5d9e7fe165). Signature limb 0 mismatched on both zips. Attribute limb: 1 mismatch on both zips (attr_checked 57): ATTR_MISMATCH served:856 calls enforce.Enforcer -- unknown keyword(s) ['load_report_owner']. The served.py copy sets render load_report_owner at line 855 and the enforce.py copy has no such string. Not introduced by this release: the mismatch is identical on the live zip, and the release changes no member that feeds it. Counts and hashes only; no client figure.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~348/IB171-3_release_census.json@f91aedd1ef (built and live sha256, changed_members, attribute counts)",
+      "signature_closure_attr.py@f91aedd1ef (r278 instrument) run with -I on built zip c07833d8 and live zip 49645f51: last line attr_checked=57 attr_mismatched=1",
+      "infra/aws/lambda/investor-reporting/_authz/served.py@74a62fb46c packaged copy line 855 render[\"load_report_owner\"] = ports[2]; infra/aws/lambda/investor-reporting/_authz/enforce.py@21eca74f40 packaged copy: string load_report_owner absent (HEAD enforce.py line 317 carries it, unreleased)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W348-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~348",
+  "surfaced_at": "2026-10-13T03:40:59Z",
+  "one_line": "The irpt-holdings schema re-pin carries more than the one optional account_id member the order describes: the built copy also admits two opt-in TARGET blocks that the function serves on include=target, and drops multi_asset from three asset_class enums. Build only; nothing uploaded or applied.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "Amendment 1, Why and build step 6: the served change of the schema re-pin is one serve-time validator admitting one more OPTIONAL member (account_id on an ACCOUNT node), and nothing is served differently until the builder first writes account_id.",
+  "world_is": "Structural diff of the packaged copies (built zip sha256 c07833d8, live zip sha256 49645f51; member sha256 5d9e7fe165 built, fde5dd4171 live): 93 schema leaves present only in the built copy (nodes items account_id, and the top-level optional arrays class_totals_target and security_aggregates_target with their items), 3 only in the live copy (multi_asset in the asset_class enums of nodes, class_totals and security_aggregates), 9 differing (the same three enums shifted by one index). snapshot.py target_admitted() reads the schema's own properties; it is True on the built copy and False on the live copy, so include=target would serve the TARGET blocks after the apply. Whether the builder writes multi_asset is unmeasured here. Counts and hashes only; no client figure.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings/snapshot.py@f91aedd1ef lines 332-342 (TARGET_BLOCKS; target_admitted reads the schema properties) and line 562 (include=target serves the blocks when admitted)",
+      "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json@f91aedd1ef (top-level properties class_totals_target and security_aggregates_target; nodes items account_id; asset_class enums without multi_asset)",
+      "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json@4cc72587d6 (the live pin: no target blocks, no account_id, multi_asset present in the three enums)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~348/candidate_source_map_498.json@a6fe8afec6 (the candidate pin row moved to f91aedd1ef, sha256 5d9e7fe165)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W348-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~348",
+  "surfaced_at": "2026-10-13T03:40:59Z",
+  "one_line": "The ADDENDUM 18 red-list reading the order asks for does not hold as written: the changed member lies under a red-list target prefix, and the _contracts suite at the candidate bytes reads 4 failed, not the 2 the r278 red list names. Nothing was changed to resolve it.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "Build step 6 (the red list): the ADDENDUM 18 red list shows the member touches none of its targets; the r278 red list names 2 failing nodes at its pin.",
+  "world_is": "The member repo path docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json lies under the red-list target prefix docs/contracts/investor-reporting/ (IB117-1_red_list.json target_prefixes). It names no red operation (analysis-request-original). pytest _contracts -rf at the worktree HEAD, which carries the same docs bytes: 4 failed, 201 passed; the two r278 nodes (test_every_declared_route_has_a_response_contract_whose_refs_resolve and test_control_a_known_good_document_conforms_and_a_known_bad_one_does_not[analysis-request-original]) plus test_the_consumer_fixture_source_is_named_and_non_empty and test_the_operation_map_covers_the_consumers_own_denominator. Not measured against the live docs bytes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~278/IB117-1_red_list.json@a6fe8afec6 (target_prefixes and failed_node_ids; the file is in the r278 folder at the base)",
+      "infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py@f91aedd1ef (pytest _contracts -rf: 4 failed, 201 passed; node ids as printed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W348-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~348",
+  "surfaced_at": "2026-10-13T03:41:27Z",
+  "one_line": "The order's reason for the deploy (the function validates each snapshot at serve against its packaged schema copy) is not what the function's non-test code does: jsonschema runs only in validate_slice, which no runtime path calls. The packaged copy is read for property presence. Read only; nothing changed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Why (the order's Why paragraph): the Lambda validates the snapshot at serve against its PACKAGED copy, so a snapshot carrying account_id is REFUSED by a function whose packaged copy is the old one; this deploy must land before the builder first writes account_id.",
+  "world_is": "In the function's non-test code, jsonschema is used only in snapshot.py:115-137 (validate_slice); its callers are tests (test_snapshot.py:315, test_aggregates.py:168 and :196, test_target_fold.py:82). The serve path reads the packaged copy for property presence only: snapshot.py:104-112 (load_contract), :223-231 (aggregates_admitted) and :336-343 (target_admitted). The replay arms validate the schema document, not the function's serve path. Whether a served account_id is refused by any other code is unmeasured here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings/snapshot.py@f91aedd1ef lines 104-137 and 223-231 and 336-343 (load_contract, validate_slice, aggregates_admitted, target_admitted)",
+      "infra/aws/lambda/investor-reporting/holdings/tests/test_snapshot.py@f91aedd1ef line 315 and test_target_fold.py@f91aedd1ef line 82 (the validate_slice callers, both tests)",
+      "native Grep over holdings/ excluding tests/ for jsonschema, Draft202012 and validate_slice at f91aedd1ef: snapshot.py:115, :128, :134 only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-S125 -- DISPOSITION of W347-S1, W347-S4, W344-S2, W348-S3 and S124; W345-S3 and W348-S2 stay ARMED
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S125",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T03:59:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISPOSITION by the issuer of rows W347-S1, W347-S4, W344-S2, W348-S3 and S124 after the round-171 drain of workers 347, 348 and 350; W345-S3 and W348-S2 stay ARMED, with the reason for each.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 8dc575a3b8 (worker 347): holdings_49f.py and holdings_inf.py remove the capture temp file they create (only when the vintage carries no env key); the issuer re-ran IB171-1-AC1, AC2 and AC3: PASS; test_holdings_49f.py: 22 passed.",
+      "commit 0f24e0ba1d (on 347, merged in 8dc575a3b8): raw_keys.json 49financial holdings_citation is prose naming the live mint at holdings_49f.py:363; the naming gate exempts prose, the field is a human citation and not a name or address, and holdings_source already uses the same form.",
+      "merge faf4f860bb (worker 348): the issuer re-ran IB171-3-AC1, AC2 and AC3: PASS. python -m pytest _contracts -rf from infra/aws/lambda/investor-reporting in the shared tree, which carries no candidate: 4 failed, 201 passed; the same four nodes the worker listed, so the red-list reading is a base state, not an effect of the schema member."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "DISARMED (code merged): W347-S1 (holdings_inf.py leak: fixed by 8dc575a3b8, two test arms); W344-S2 (holdings_source and holdings_citation now cite the live mint; no release carries raw_keys.json yet); W348-S3 (the 4 failed _contracts nodes exist at the base, the member names no red operation, nodes 3 and 4 are analysis-request operations unrelated to holdings). RULED, W347-S4: prose citation, as above. IB-pr-497 (S124): PARKED, reissued for a window when the runner is up; no start or stop of the host is granted. STILL ARMED: W345-S3, because the fix is in merged code only and the host bundle that runs the live builder is not redeployed, and the files already on the host are not counted (S124); W348-S2, because the built holdings schema copy also turns on include=target (two TARGET blocks) and drops multi_asset from three enums, so the apply is a served change that the CTO half must sign or refuse (asked of 1.0.0_SA_CTO in the round-171 packet); W346-S2, S3 and W350-S1 stay ARMED until the portal candidates land on DEV and the fe-s-18 committed bytes are ruled."
+}
+```
+
+## IRPT_BCKEND-D2-W349-S1 -- irpt-directory-search built zip carries a served.py/enforce.py keyword mismatch from the staged pins; the build STOPS on IB-pr-499
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W349-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~349",
+  "surfaced_at": "2026-10-13T03:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "The built irpt-directory-search zip reads 1 attribute mismatch: served.py:856 calls enforce.Enforcer with load_report_owner, which the staged enforce.py at its pin does not accept. The LIVE zip carries the same mismatch, so the build is a STOP under the refusal clause; no reach, arms or packet were produced and nothing was uploaded.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "signature_closure_attr.py (deliverables 0.9.0_WK_IRPT_BCKEND~278) run on the BUILT zip, BUILD_ONLY sha256 ea1ac36d051602354cb5d25c238c66e11a2c228bb3757118eb7797ff07a9dac3, built twice identical: 'signature_closure calls=40 checked=40 skipped_unpack=0 mismatched=0 attr_skipped_unpack=0 attr_checked=62 attr_mismatched=1', rc=1; 'ATTR_MISMATCH: served:856 calls enforce.Enforcer -- unknown keyword(s) [load_report_owner]'",
+      "the same instrument on the LIVE zip (aws lambda get-function Code.Location, CodeSha256 TefVhmGS.../ hex 4de7d586...): the identical summary line and the identical ATTR_MISMATCH line, rc=1",
+      "git show 74a62fb46ce9ff2e2baa305d3eadfac6b8145651:infra/aws/lambda/investor-reporting/_authz/served.py line 855 reads render[\"load_report_owner\"] = ports[2], and line 856 passes **render to _enforce.Enforcer",
+      "git show f9a00f732caebaaf7d36b7e066ef40a01bb5da51:infra/aws/lambda/investor-reporting/_authz/enforce.py contains 0 occurrences of load_report_owner; positive control, HEAD copy of the same file contains 6, and its Enforcer.__init__ (line 317) accepts load_report_owner=None",
+      "infra/aws/lambda/ci/lambda-source-map.json at base f91aedd1ef, entry irpt-directory-search, staged_from rows (lines 3587-3598) pin _authz/served.py at 74a62fb46c and _authz/enforce.py at f9a00f732c: the packaged pair is a mixed pin set"
+    ]
+  },
+  "spec_asserts": "IB-pr-499 build step 3 and the refusal clause: both signature limbs must read 0 on the built zip, and any signature or attribute mismatch is a STOP, a surprise row, and a report; no check is weakened.",
+  "world_is": "The built zip (24 members, 23 identical to the live bundle, 1 changed: handler.py, built equal to its repo blob at base) carries a served.py whose pinned copy passes load_report_owner to Enforcer, while the enforce.py pinned beside it does not define that parameter. The live bundle carries the same pair and the same mismatch, so the mismatch predates IB-pr-499 and is not produced by handler.py. Whether a live request reaches the keyword path (render_ports returning three ports) is NOT measured. Disposition is the pair owner's: the order is stopped and stays open.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-W349-S2 -- the portal reader the order names for the directory-search consumers reads permitted_scope.scope_ids[0] as the entry id; it reads no entry_id member
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W349-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~349",
+  "surfaced_at": "2026-10-13T03:39Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's consumer read-through says the portal's client search reads scope_kind and entry_id. The portal reader that maps a directory-search element (contracts/envelope.ts:187 to contracts/adapt.ts:629-631) reads permitted_scope.scope_kind and permitted_scope.scope_ids[0]; it reads no entry_id member. The function's search result carries top-level entry_id and scope_kind and no permitted_scope; the route layer that reshapes one into the other is outside this order's paths and was not read. No armed hazard: the build and the packet are unchanged by it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@53506d4903 src/pages/InvestorReporting/contracts/envelope.ts:187 'directory-search' maps each element of data through adaptDirectoryEntry (read)",
+      "portal@53506d4903 src/pages/InvestorReporting/contracts/adapt.ts:630-631 kind from wire.permitted_scope.scope_kind; entryId from wire.permitted_scope.scope_ids[0]; no entry_id read (read)",
+      "portal@53506d4903 src/pages/InvestorReporting/contracts/wire/responses.ts:81-86 DirectorySearchResponseWire declares data as DirectoryEntryWire[] (read)",
+      "wk-IRPT_BCKEND-349@f41501ab1d infra/aws/lambda/investor-reporting/directory/handler.py:270-283 search() result rows carry entry_id, scope_kind and no permitted_scope (read)"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-499 record face, consumers of the search results: the portal's client search reads scope_kind and entry_id; cite the portal reader file:line, one read-through each.",
+  "world_is": "The portal reader for a directory-search element reads permitted_scope.scope_kind and permitted_scope.scope_ids[0] (adapt.ts:630-631). It does not read an entry_id member. Its declared wire type is DirectoryEntry rows with permitted_scope, while the function returns results[] rows with a top-level entry_id. Whatever maps one to the other is not in this order's paths and was not read. For the synthesized ACCOUNT entries the reader's entryId is the one account id in scope_ids, so two entries of a shared tail carry two distinct ids; that is a fact about the reader, not a defect of this change."
+}
+```

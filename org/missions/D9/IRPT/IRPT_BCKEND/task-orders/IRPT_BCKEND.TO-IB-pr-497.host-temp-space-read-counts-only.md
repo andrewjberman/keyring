@@ -5,13 +5,15 @@
 <issued_to>0.7.0_AE_CloudOps~IB2</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>parked</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
 <placeholders>NONE</placeholders>
 <round>171</round>
 <workstream>~P</workstream>
+
+**PARKED (issuer, 2026-10-13T04:0xZ; IB2's STOP at step 3 was right, row IRPT_BCKEND-D2-S124):** the one runner host is stopped and absent from SSM, so the count was NOT ESTABLISHED. No start or stop of the host is granted (a stop is a human-confirm act; the start belongs to the daily runner's own schedule). The order is reissued, same read, for a window when the runner is up; owner 2.0.0_SA_COO~P2; the function whose variable names the runner is irpt-holdings-refresh-lambda (IRPT_HOLDINGS_RUNNER_INSTANCE_ID), not irpt-holdings.
 
 **Directive:** D9 | **Fabric:** dell2 | **Ordered by:** the CTO ROUND-171 ANALYSIS (msg 6764) section 1, row D2-W345-S3: "One read of the host's temp space for files left by past builds, counts only, no contents; any found are listed for a human delete (a delete of client-bearing files is a person's act)" | **Decomp cell:** `IB-pr-497` (decomposition section 163) | **outcome_ref:** FWD-3
 
