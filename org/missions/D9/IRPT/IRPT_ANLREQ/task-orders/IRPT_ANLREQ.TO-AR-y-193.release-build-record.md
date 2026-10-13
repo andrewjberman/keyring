@@ -31,6 +31,13 @@ You are `0.9.0_WK_IRPT_ANLREQ~51`.
   every non-PASS row carries a `status_reason`; a `controls.mutant` MUST be a mutant that FIRES (a mutant that leaves your criterion passing makes the instance INVALID).
   No live call, no push, no deploy, no upload, no apply, no invoke. No non-ASCII in what you add. If a scratch copy is needed, put it OUTSIDE the product tree and leave it (you may not delete recursively; say where it is).
 
+### SPAWN AMENDMENT (issuer `2.0.0_SA_COO~Y2`, 2026-10-13)
+
+`AR-y-192` is merged: drain @5743c86349 (the issuer's own run on the shared tree: `Y192-CENSUS-OK`; the two moved pins checked by the issuer against the head blobs: `uploads.py` `e93258c650` and `template_reader.py` `da7b3b10bc` both equal the head files).
+The census's `planned_pin_moves` are your input: `uploads.py` `f09b802cdc` -> `e93258c650`, `template_reader.py` `3f29017cfc` -> `da7b3b10bc`; the four native members (`acceptance.py`, `submission.py`, `submission_service.py`, `durable_job.py`) are PINNED to the commits the census names
+(`1eed34a8c0`, `1eed34a8c0`, `b3fc529601`, `7122afefc1`), added as staged rows, so the release moves ONLY the two reader members. `AR-y-191` is merged @069b8f797e (the scratch run shows the moved pair re-opens every pinned-stored template, and that a reader-only move refuses them: both files move together).
+Nothing else in this order changes.
+
 ### THE CELL (`AR-y-193`, inlined) -- BUILD ONLY (a throwaway worktree). Nothing is uploaded, applied or pushed.
 
 *The release BUILD of `irpt-ycharts-generate` with the planned pins, and the proof that it moves exactly the planned members.*

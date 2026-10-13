@@ -4995,3 +4995,61 @@
 }
 ```
 
+## IRPT_ANLREQ-D2-W52-S36 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S36",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-13T02:00:34Z",
+  "one_line": "Run in a scratch tree on the Lambda's pinned pair (uploads f09b802cdc, reader 3f29017cfc), the door answers NORMALIZED with no finding and total_dollars 600 on total_row_sheet: the file's TOTAL row is held as a holding and counted into the total (AAA 100, BBB 200, TOTAL 300).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/uploads.py@f09b802cdc (create answers NORMALIZED from the reader rows with no total-row check)",
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py@3f29017cfc (emits no TOTAL_ROW_PRESENT on the pinned reader; the TOTAL line is returned as a row)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r19/START_STATE_SCRATCH_RUN.json (door_cases: total_row_sheet, pinned pair: NORMALIZED, total_dollars 600, row_count 3, symbols AAA BBB TOTAL)"
+    ]
+  },
+  "spec_asserts": "AR-y-191 step 2: run the door on the four sheets and record each answer with its evidence. Round-18 row S33 asserts that the pinned reader holds the total row as a holding named TOTAL; it did not record the total the door reports for that file.",
+  "world_is": "RUN in process on the pinned pair: NORMALIZED, no finding, total 600 for a file whose own total row reads 300, so the door's total includes the total row. The same run holds the two-account sheets as NORMALIZED with total 300 and no account on any row (S33, now RUN). The measured figures are the scratch run's; the deployed Lambda's bytes were not read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S37 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S37",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-13T02:00:34Z",
+  "one_line": "The planned release move names uploads.py and template_reader.py as the two files that go to HEAD and r18.1. Of the upload door's 27-member import closure, six members differ between their map pins and HEAD: uploads.py and template_reader.py, and also ids.py, loaders.py, repository.py and served.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json@2da5c7b2c2 (irpt-ycharts-generate staged_from pins: ids.py 3f29017cfc, loaders.py 0642c9d004, repository.py 605c4cd4ac, served.py 74a62fb46c)",
+      "infra/aws/lambda/investor-reporting/_ids/ids.py@2da5c7b2c2 and infra/aws/lambda/investor-reporting/_authz/loaders.py@2da5c7b2c2 and infra/aws/lambda/investor-reporting/reports/repository.py@2da5c7b2c2 and infra/aws/lambda/investor-reporting/_authz/served.py@2da5c7b2c2 (each differs from its pin; sha256 per member in r19/START_STATE_SCRATCH_RUN.json door_closure_members_differing_from_head)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r19/START_STATE_SCRATCH_RUN.json (door_closure_members_differing_from_head)"
+    ]
+  },
+  "spec_asserts": "AR-y-191 step 3: the re-open runs use the pinned pair and the pair after the planned move (uploads.py and template_reader.py at the head, r18.1). CTO round-18 ruling item 5, as recorded in S34: the release pair moves as one pair.",
+  "world_is": "The two-file move is the pair the cell names. The door's closure at HEAD differs from its pins in six members, not two. The moved-pair run in the scratch tree keeps the other four at their pins, so it is not the HEAD-complete world; the HEAD-complete world was not run. Whether the four move with the pair is for the release census (AR-y-192) and the CTO, not decided here.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
