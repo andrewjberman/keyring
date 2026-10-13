@@ -1,0 +1,1521 @@
+{
+  "contract_version": "0.1.0",
+  "project": "IRPT_DASHBD",
+  "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
+  "prd_contracts": [
+    "C-SERVE",
+    "C-SEAM",
+    "C-LABEL",
+    "C-HONESTY"
+  ],
+  "writer": "the sample builder (IRPT_DASHBD.TO-DB-b-175, 0.9.0_WK_IRPT_DASHBD~141) writes filled values keyed by member id, from the sibling contracts each member's source names; no other writer",
+  "reader": "the Performance tab (IRPT_DASHBD.TO-DB-b-176) and the export document (IRPT_DASHBD.TO-DB-b-177), both in the section order below; neither derives a figure from another source",
+  "authored_by": "0.9.0_WK_IRPT_DASHBD~140",
+  "authored_under": "IRPT_DASHBD.TO-DB-b-174 under round 94 (ROUND-94 ANALYSIS item 1, PRD v0.14, FWD-21). The report's structure is read from the round-94 baseline structure note, which is held outside the repo's contract set and names the report only by its structure. Vendor-agnostic: the report is one Opal Shape, and the baseline is named only as 'the baseline'.",
+  "siblings": [
+    "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+    "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+    "org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json",
+    "org/standards/IRPT_DASHBD_ACCOUNT_LOT_REALIZED_CONTRACT.json",
+    "org/standards/IRPT_DASHBD_ACCOUNT_LOT_UNREALIZED_DAILY_CONTRACT.json",
+    "org/standards/IRPT_DASHBD_CLIENT_SUMMARY_CONTRACT.json",
+    "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json",
+    "org/standards/IRPT_DASHBD_SERIES_CONTRACT.json"
+  ],
+  "vendor_agnostic": "nothing in this file names a vendor or a custodian; a member's label is the report's own words, never a sibling's field name",
+  "sections": [
+    {
+      "id": "cover",
+      "title": "Cover",
+      "grain": "household"
+    },
+    {
+      "id": "portfolio_overview",
+      "title": "Portfolio Overview",
+      "grain": "household"
+    },
+    {
+      "id": "summary_of_portfolio_accounts",
+      "title": "Summary of Portfolio Accounts",
+      "grain": "household and each account"
+    },
+    {
+      "id": "holdings_overview",
+      "title": "Holdings Overview",
+      "grain": "household, by class"
+    },
+    {
+      "id": "taxable_realized_gain_loss_ytd",
+      "title": "Taxable Realized Gain/Loss Summary, Year To Date",
+      "grain": "account (taxable accounts with realized activity)"
+    },
+    {
+      "id": "account_overview",
+      "title": "Account Overview",
+      "grain": "account"
+    },
+    {
+      "id": "gain_loss_review_by_account",
+      "title": "Gain/Loss Review by Account, Last 12 Months",
+      "grain": "account, by class"
+    },
+    {
+      "id": "disclosure",
+      "title": "Disclosure page",
+      "grain": "not in the baseline export"
+    }
+  ],
+  "document": {
+    "shape": "One filled report per household. A filled report is one JSON object with: household {household_ref, as_of, accounts (one entry per account of the household, in account_id order)}; windows (the five windows below, each with its start rule); values, an object keyed by member id with exactly one entry per member in members; rows, the variable rows (one per account, and the class rows under each account and under the household). A value is a number, a text, or {\"absent\": \"<reason in words>\"}. A member whose source is ABSENT always holds the absent form, never zero and never a default. Units follow each member's unit: dollars as whole dollars with thousands separators; percent from the decimal fraction to one decimal place; text as written; series as the list the chart reads. The sample builder writes this object from the sibling contracts named in each member's source; the tab and the export read it by member id and print every absent form as its words. Neither the tab nor the export derives a figure from another source.",
+    "row_dimensions": {
+      "account": {
+        "order": "the household's accounts in account_id order; one row per account, labelled with its registration name and last four digits (the registration name is absent, so the label carries the absent form until a name source exists)",
+        "sources": {
+          "account_id": "account_activity_daily account_id (custodian account form)"
+        },
+        "grain": "account"
+      },
+      "class_hierarchy": {
+        "levels": [
+          "class",
+          "sub_class"
+        ],
+        "class_level": "Opal's asset-class enumeration from account_class_daily asset_class (seven values: cash, fixed_income, equity, structured, alternatives, commodities, unclassified), in the baseline's printed class order where a baseline class has an Opal counterpart",
+        "sub_class_level": "ABSENT. The baseline's sub-class rows (for example the large-cap, mid-cap, international, municipal and high-yield rows) are not carried by any sibling; each sub-class cell holds the absent form with the reason in words. A class with no holding prints a dash, which is an absent form, never zero.",
+        "grain": "household by class (holdings overview) and account by class (gain/loss review)"
+      }
+    },
+    "windows": {
+      "quarter_to_date": {
+        "column": "Quarter To Date",
+        "start_rule": "the first calendar day of the calendar quarter containing as_of (1 January, 1 April, 1 July or 1 October)",
+        "opening_anchor": "the last trading day before the start day, from lib/trading_calendar.py",
+        "client_summary_key": "QTD"
+      },
+      "year_to_date": {
+        "column": "Year To Date",
+        "start_rule": "1 January of as_of's year",
+        "opening_anchor": "the last trading day before 1 January, from lib/trading_calendar.py",
+        "client_summary_key": "YTD"
+      },
+      "last_12_months": {
+        "column": "Last 12 Months",
+        "start_rule": "the calendar day one year before as_of",
+        "opening_anchor": "the last trading day before that calendar day, from lib/trading_calendar.py",
+        "client_summary_key": "1Y"
+      },
+      "month_to_date": {
+        "column": "Month To Date",
+        "start_rule": "the first calendar day of as_of's month",
+        "opening_anchor": "the last trading day before that day, from lib/trading_calendar.py",
+        "client_summary_key": null,
+        "served": false,
+        "reason": "not a ruled period: no sibling carries it; the month-to-date members are absent"
+      },
+      "since_inception": {
+        "column": "Since <inception>",
+        "start_rule": "the account's first_data_date (the household's inception is the earliest first_data_date among its accounts)",
+        "opening_anchor": "none: the window opens on first_data_date",
+        "client_summary_key": "SI",
+        "annualization": "the baseline annualizes since inception past one year; the served since-inception return is cumulative and is printed as cumulative; annualization is not in any sibling"
+      }
+    },
+    "household_sum_rule": "a household figure built by summing accounts is absent when any contributing account term is absent; a partial sum is never printed as the household figure",
+    "footnotes": {
+      "not_held_for_entire_period": "a window whose figure is absent because the account did not span it (window_status NOT_SPANNED) prints a dash with the footnote 'Not held for the entire period' in place of the figure (member convention.not_held_for_entire_period)",
+      "inception_per_household_and_account": "the since-inception column is headed with the inception date of that household or that account (member convention.inception_per_household_and_account)",
+      "fee_basis": "the fee-basis words in convention.fee_basis_label print beside every Opal return and gain column and beside every baseline Net Gain column, so the two are never silently matched"
+    },
+    "section_order": [
+      "cover",
+      "portfolio_overview",
+      "summary_of_portfolio_accounts",
+      "holdings_overview",
+      "taxable_realized_gain_loss_ytd",
+      "account_overview",
+      "gain_loss_review_by_account",
+      "disclosure"
+    ],
+    "absent_rule": "ABSENT is never zero. A member with source ABSENT carries {\"absent\": reason} in values and prints the reason in words; a window with no measured figure prints its absent form, and a window the account did not span prints the not-held dash"
+  },
+  "members": [
+    {
+      "id": "pvs.qtd.beginning_value",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Beginning Value",
+      "label": "Beginning value, quarter to date",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "beginning_value",
+        "fold": "sum over the household's accounts of beginning_value on the window's opening anchor day; a household sum is absent when any account term is absent; an account whose anchor day carries NO_PRIOR_VALUE makes the sum absent, never zero"
+      }
+    },
+    {
+      "id": "pvs.qtd.net_additions",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Net Additions",
+      "label": "Net additions, quarter to date",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "contributions",
+        "fold": "contributions minus withdrawals, summed over the household's accounts across the window's trading days (from its opening anchor (the last trading day before the first calendar day of the quarter) to as_of)",
+        "also": [
+          "withdrawals"
+        ]
+      }
+    },
+    {
+      "id": "pvs.qtd.net_gain",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Net Gain (the baseline footnote says it includes fees)",
+      "label": "Net gain before advisory fees, quarter to date",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "realized",
+        "fold": "realized plus unrealized_change plus income, summed over the household's accounts across the window's trading days (from its opening anchor (the last trading day before the first calendar day of the quarter) to as_of); before advisory fees, and income is net of fee and administration cash (see convention.fee_basis_label)",
+        "also": [
+          "unrealized_change",
+          "income"
+        ]
+      }
+    },
+    {
+      "id": "pvs.qtd.ending_value",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Ending Value",
+      "label": "Ending value (as of the report date)",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "ending_value",
+        "fold": "ending_value on as_of, summed over the household's accounts; the same figure in every window column"
+      }
+    },
+    {
+      "id": "pvs.qtd.return_cumulative",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Return (Cumulative)",
+      "label": "Return, cumulative, before advisory fees, quarter to date",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
+    },
+    {
+      "id": "pvs.qtd.benchmark_ultra_short_term",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Benchmark: Ultra-Short Term Return (Cumulative)",
+      "label": "Opal model benchmark, ultra short term, cumulative, quarter to date",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "pvs.qtd.benchmark_short_term",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Benchmark: Short-Term Return (Cumulative)",
+      "label": "Opal model benchmark, short term, cumulative, quarter to date",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "pvs.qtd.benchmark_intermediate_term",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Benchmark: Intermediate-Term Return (Cumulative)",
+      "label": "Opal model benchmark, intermediate term, cumulative, quarter to date",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "pvs.qtd.benchmark_long_term",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Benchmark: Long-Term Return (Cumulative)",
+      "label": "Opal model benchmark, long term, cumulative, quarter to date",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "pvs.ytd.beginning_value",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Beginning Value",
+      "label": "Beginning value, year to date",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "beginning_value",
+        "fold": "sum over the household's accounts of beginning_value on the window's opening anchor day; a household sum is absent when any account term is absent; an account whose anchor day carries NO_PRIOR_VALUE makes the sum absent, never zero"
+      }
+    },
+    {
+      "id": "pvs.ytd.net_additions",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Net Additions",
+      "label": "Net additions, year to date",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "contributions",
+        "fold": "contributions minus withdrawals, summed over the household's accounts across the window's trading days (from its opening anchor (the last trading day before 1 January of as_of's year) to as_of)",
+        "also": [
+          "withdrawals"
+        ]
+      }
+    },
+    {
+      "id": "pvs.ytd.net_gain",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Net Gain (the baseline footnote says it includes fees)",
+      "label": "Net gain before advisory fees, year to date",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "realized",
+        "fold": "realized plus unrealized_change plus income, summed over the household's accounts across the window's trading days (from its opening anchor (the last trading day before 1 January of as_of's year) to as_of); before advisory fees, and income is net of fee and administration cash (see convention.fee_basis_label)",
+        "also": [
+          "unrealized_change",
+          "income"
+        ]
+      }
+    },
+    {
+      "id": "pvs.ytd.ending_value",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Ending Value",
+      "label": "Ending value (as of the report date)",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "ending_value",
+        "fold": "ending_value on as_of, summed over the household's accounts; the same figure in every window column"
+      }
+    },
+    {
+      "id": "pvs.ytd.return_cumulative",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Return (Cumulative)",
+      "label": "Return, cumulative, before advisory fees, year to date",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
+    },
+    {
+      "id": "pvs.ytd.benchmark_ultra_short_term",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Benchmark: Ultra-Short Term Return (Cumulative)",
+      "label": "Opal model benchmark, ultra short term, cumulative, year to date",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "pvs.ytd.benchmark_short_term",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Benchmark: Short-Term Return (Cumulative)",
+      "label": "Opal model benchmark, short term, cumulative, year to date",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "pvs.ytd.benchmark_intermediate_term",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Benchmark: Intermediate-Term Return (Cumulative)",
+      "label": "Opal model benchmark, intermediate term, cumulative, year to date",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "pvs.ytd.benchmark_long_term",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Benchmark: Long-Term Return (Cumulative)",
+      "label": "Opal model benchmark, long term, cumulative, year to date",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "pvs.last_12_months.beginning_value",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Beginning Value",
+      "label": "Beginning value, last 12 months",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "beginning_value",
+        "fold": "sum over the household's accounts of beginning_value on the window's opening anchor day; a household sum is absent when any account term is absent; an account whose anchor day carries NO_PRIOR_VALUE makes the sum absent, never zero"
+      }
+    },
+    {
+      "id": "pvs.last_12_months.net_additions",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Net Additions",
+      "label": "Net additions, last 12 months",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "contributions",
+        "fold": "contributions minus withdrawals, summed over the household's accounts across the window's trading days (from its opening anchor (the last trading day before the calendar day one year before as_of) to as_of)",
+        "also": [
+          "withdrawals"
+        ]
+      }
+    },
+    {
+      "id": "pvs.last_12_months.net_gain",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Net Gain (the baseline footnote says it includes fees)",
+      "label": "Net gain before advisory fees, last 12 months",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "realized",
+        "fold": "realized plus unrealized_change plus income, summed over the household's accounts across the window's trading days (from its opening anchor (the last trading day before the calendar day one year before as_of) to as_of); before advisory fees, and income is net of fee and administration cash (see convention.fee_basis_label)",
+        "also": [
+          "unrealized_change",
+          "income"
+        ]
+      }
+    },
+    {
+      "id": "pvs.last_12_months.ending_value",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Ending Value",
+      "label": "Ending value (as of the report date)",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "ending_value",
+        "fold": "ending_value on as_of, summed over the household's accounts; the same figure in every window column"
+      }
+    },
+    {
+      "id": "pvs.last_12_months.return_cumulative",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Return (Cumulative)",
+      "label": "Return, cumulative, before advisory fees, last 12 months",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
+    },
+    {
+      "id": "pvs.last_12_months.benchmark_ultra_short_term",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Benchmark: Ultra-Short Term Return (Cumulative)",
+      "label": "Opal model benchmark, ultra short term, cumulative, last 12 months",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "pvs.last_12_months.benchmark_short_term",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Benchmark: Short-Term Return (Cumulative)",
+      "label": "Opal model benchmark, short term, cumulative, last 12 months",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "pvs.last_12_months.benchmark_intermediate_term",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Benchmark: Intermediate-Term Return (Cumulative)",
+      "label": "Opal model benchmark, intermediate term, cumulative, last 12 months",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "pvs.last_12_months.benchmark_long_term",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Benchmark: Long-Term Return (Cumulative)",
+      "label": "Opal model benchmark, long term, cumulative, last 12 months",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "pvs.since_inception.beginning_value",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Beginning Value",
+      "label": "Beginning value, since inception",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "beginning_value",
+        "fold": "sum over the household's accounts of beginning_value on the window's opening anchor day; a household sum is absent when any account term is absent; an account whose anchor day carries NO_PRIOR_VALUE makes the sum absent, never zero"
+      }
+    },
+    {
+      "id": "pvs.since_inception.net_additions",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Net Additions",
+      "label": "Net additions, since inception",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "contributions",
+        "fold": "contributions minus withdrawals, summed over the household's accounts across the window's trading days (from the account's first_data_date to as_of)",
+        "also": [
+          "withdrawals"
+        ]
+      }
+    },
+    {
+      "id": "pvs.since_inception.net_gain",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Net Gain (the baseline footnote says it includes fees)",
+      "label": "Net gain before advisory fees, since inception",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "realized",
+        "fold": "realized plus unrealized_change plus income, summed over the household's accounts across the window's trading days (from the account's first_data_date to as_of); before advisory fees, and income is net of fee and administration cash (see convention.fee_basis_label)",
+        "also": [
+          "unrealized_change",
+          "income"
+        ]
+      }
+    },
+    {
+      "id": "pvs.since_inception.ending_value",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Ending Value",
+      "label": "Ending value (as of the report date)",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "ending_value",
+        "fold": "ending_value on as_of, summed over the household's accounts; the same figure in every window column"
+      }
+    },
+    {
+      "id": "pvs.since_inception.return_cumulative",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Return (Cumulative)",
+      "label": "Return, cumulative, before advisory fees, since inception",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
+    },
+    {
+      "id": "pvs.since_inception.benchmark_ultra_short_term",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Benchmark: Ultra-Short Term Return (Cumulative)",
+      "label": "Opal model benchmark, ultra short term, cumulative, since inception",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "pvs.since_inception.benchmark_short_term",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Benchmark: Short-Term Return (Cumulative)",
+      "label": "Opal model benchmark, short term, cumulative, since inception",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "pvs.since_inception.benchmark_intermediate_term",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Benchmark: Intermediate-Term Return (Cumulative)",
+      "label": "Opal model benchmark, intermediate term, cumulative, since inception",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "pvs.since_inception.benchmark_long_term",
+      "section": "portfolio_overview",
+      "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Benchmark: Long-Term Return (Cumulative)",
+      "label": "Opal model benchmark, long term, cumulative, since inception",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "act.beginning_value.household",
+      "section": "summary_of_portfolio_accounts",
+      "baseline": "section 2 Summary of Portfolio Accounts, table Activity Summary Last 12 Months, column Beginning Value, row household",
+      "label": "Beginning value, last 12 months (household)",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "beginning_value",
+        "fold": "beginning_value on the last-12-months opening anchor day, summed over the household's accounts; absent when any account term is absent"
+      }
+    },
+    {
+      "id": "act.contributions.household",
+      "section": "summary_of_portfolio_accounts",
+      "baseline": "section 2 Summary of Portfolio Accounts, table Activity Summary Last 12 Months, column Contributions, row household",
+      "label": "Contributions, last 12 months (household)",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "contributions",
+        "fold": "sum over the household's accounts of the daily contributions across the last-12-months trading days"
+      }
+    },
+    {
+      "id": "act.withdrawals.household",
+      "section": "summary_of_portfolio_accounts",
+      "baseline": "section 2 Summary of Portfolio Accounts, table Activity Summary Last 12 Months, column Withdrawals, row household",
+      "label": "Withdrawals, last 12 months (household)",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "withdrawals",
+        "fold": "sum over the household's accounts of the daily withdrawals (shown as a non-negative amount) across the last-12-months trading days"
+      }
+    },
+    {
+      "id": "act.net_gain.household",
+      "section": "summary_of_portfolio_accounts",
+      "baseline": "section 2 Summary of Portfolio Accounts, table Activity Summary Last 12 Months, column Net Gain *, row household",
+      "label": "Net gain before advisory fees, last 12 months (household)",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "realized",
+        "fold": "sum over the household's accounts of realized plus unrealized_change plus income across the last-12-months trading days; before advisory fees (see convention.fee_basis_label)",
+        "also": [
+          "unrealized_change",
+          "income"
+        ]
+      }
+    },
+    {
+      "id": "act.income.household",
+      "section": "summary_of_portfolio_accounts",
+      "baseline": "section 2 Summary of Portfolio Accounts, table Activity Summary Last 12 Months, column Income, row household",
+      "label": "Income recognised on cash receipt, net of fee and administration cash, last 12 months (household)",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "income",
+        "fold": "sum over the household's accounts of income across the last-12-months trading days; income is recognised on cash receipt and is net of fee and administration cash and of withheld tax"
+      }
+    },
+    {
+      "id": "act.ending_value.household",
+      "section": "summary_of_portfolio_accounts",
+      "baseline": "section 2 Summary of Portfolio Accounts, table Activity Summary Last 12 Months, column Ending Value, row household",
+      "label": "Ending value, last 12 months end (household)",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "ending_value",
+        "fold": "ending_value on as_of, summed over the household's accounts; cash included"
+      }
+    },
+    {
+      "id": "act.beginning_value.account",
+      "section": "summary_of_portfolio_accounts",
+      "baseline": "section 2 Summary of Portfolio Accounts, table Activity Summary Last 12 Months, column Beginning Value, row each account",
+      "label": "Beginning value, last 12 months (account)",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "beginning_value",
+        "fold": "beginning_value on the last-12-months opening anchor day, for this account"
+      }
+    },
+    {
+      "id": "act.contributions.account",
+      "section": "summary_of_portfolio_accounts",
+      "baseline": "section 2 Summary of Portfolio Accounts, table Activity Summary Last 12 Months, column Contributions, row each account",
+      "label": "Contributions, last 12 months (account)",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "contributions",
+        "fold": "sum over this account of the daily contributions across the last-12-months trading days"
+      }
+    },
+    {
+      "id": "act.withdrawals.account",
+      "section": "summary_of_portfolio_accounts",
+      "baseline": "section 2 Summary of Portfolio Accounts, table Activity Summary Last 12 Months, column Withdrawals, row each account",
+      "label": "Withdrawals, last 12 months (account)",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "withdrawals",
+        "fold": "sum over this account of the daily withdrawals (shown as a non-negative amount) across the last-12-months trading days"
+      }
+    },
+    {
+      "id": "act.net_gain.account",
+      "section": "summary_of_portfolio_accounts",
+      "baseline": "section 2 Summary of Portfolio Accounts, table Activity Summary Last 12 Months, column Net Gain *, row each account",
+      "label": "Net gain before advisory fees, last 12 months (account)",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "realized",
+        "fold": "sum over this account of realized plus unrealized_change plus income across the last-12-months trading days; before advisory fees (see convention.fee_basis_label)",
+        "also": [
+          "unrealized_change",
+          "income"
+        ]
+      }
+    },
+    {
+      "id": "act.income.account",
+      "section": "summary_of_portfolio_accounts",
+      "baseline": "section 2 Summary of Portfolio Accounts, table Activity Summary Last 12 Months, column Income, row each account",
+      "label": "Income recognised on cash receipt, net of fee and administration cash, last 12 months (account)",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "income",
+        "fold": "sum over this account of income across the last-12-months trading days; income is recognised on cash receipt and is net of fee and administration cash and of withheld tax"
+      }
+    },
+    {
+      "id": "act.ending_value.account",
+      "section": "summary_of_portfolio_accounts",
+      "baseline": "section 2 Summary of Portfolio Accounts, table Activity Summary Last 12 Months, column Ending Value, row each account",
+      "label": "Ending value, last 12 months end (account)",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "ending_value",
+        "fold": "ending_value on as_of, for this account; cash included"
+      }
+    },
+    {
+      "id": "hold.ending_value",
+      "section": "holdings_overview",
+      "baseline": "section 3 Holdings Overview, table Holdings Overview, column Ending Value, row household total",
+      "label": "Ending value of the household (as of the report date)",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "ending_value",
+        "fold": "sum over the household's accounts of ending_value on as_of, cash included"
+      }
+    },
+    {
+      "id": "hold.allocation",
+      "section": "holdings_overview",
+      "baseline": "section 3 Holdings Overview, table Holdings Overview, column Allocation, row household total",
+      "label": "Allocation, each asset class's share of household ending value",
+      "unit": "percent",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "each asset class's market_value_eod as a share of the household ending value on as_of; the household total is 100 percent; sub-class shares are not carried (see holdings.rows.class_hierarchy)"
+      }
+    },
+    {
+      "id": "hold.net_gain_last_12_months",
+      "section": "holdings_overview",
+      "baseline": "section 3 Holdings Overview, table Holdings Overview, column Net Gain / Last 12 Months, row household total",
+      "label": "Net gain before advisory fees, last 12 months",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "realized",
+        "fold": "sum over the household's accounts of realized plus unrealized_change plus income across the window's trading days (from its opening anchor (the last trading day before the calendar day one year before as_of) to as_of); before advisory fees (see convention.fee_basis_label)",
+        "also": [
+          "unrealized_change",
+          "income"
+        ]
+      }
+    },
+    {
+      "id": "hold.return_last_12_months",
+      "section": "holdings_overview",
+      "baseline": "section 3 Holdings Overview, table Holdings Overview, column Return / Last 12 Months, row household total",
+      "label": "Return before advisory fees, last 12 months (household)",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
+    },
+    {
+      "id": "hold.net_gain_ytd",
+      "section": "holdings_overview",
+      "baseline": "section 3 Holdings Overview, table Holdings Overview, column Net Gain / Year To Date, row household total",
+      "label": "Net gain before advisory fees, year to date",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "realized",
+        "fold": "sum over the household's accounts of realized plus unrealized_change plus income across the window's trading days (from its opening anchor (the last trading day before 1 January of as_of's year) to as_of); before advisory fees (see convention.fee_basis_label)",
+        "also": [
+          "unrealized_change",
+          "income"
+        ]
+      }
+    },
+    {
+      "id": "hold.return_ytd",
+      "section": "holdings_overview",
+      "baseline": "section 3 Holdings Overview, table Holdings Overview, column Return / Year To Date, row household total",
+      "label": "Return before advisory fees, year to date (household)",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
+    },
+    {
+      "id": "hold.net_gain_qtd",
+      "section": "holdings_overview",
+      "baseline": "section 3 Holdings Overview, table Holdings Overview, column Net Gain / Quarter To Date, row household total",
+      "label": "Net gain before advisory fees, quarter to date",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "realized",
+        "fold": "sum over the household's accounts of realized plus unrealized_change plus income across the window's trading days (from its opening anchor (the last trading day before the first calendar day of the quarter) to as_of); before advisory fees (see convention.fee_basis_label)",
+        "also": [
+          "unrealized_change",
+          "income"
+        ]
+      }
+    },
+    {
+      "id": "hold.return_qtd",
+      "section": "holdings_overview",
+      "baseline": "section 3 Holdings Overview, table Holdings Overview, column Return / Quarter To Date, row household total",
+      "label": "Return before advisory fees, quarter to date (household)",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
+    },
+    {
+      "id": "hold.net_gain_mtd",
+      "section": "holdings_overview",
+      "baseline": "section 3 Holdings Overview, table Holdings Overview, column Net Gain / Month To Date, row household total",
+      "label": "Net gain before advisory fees, month to date",
+      "unit": "dollars",
+      "source": "ABSENT",
+      "reason": "Month to date is not a ruled period. The client summary carries quarter to date, year to date, last 12 months and since inception only (its windows are YTD, QTD, 1Y and SI), and the ruled periods are QTD, YTD, 1Y and SI. The daily terms exist, so a month-to-date window needs a ruling before a sibling carries it."
+    },
+    {
+      "id": "hold.return_mtd",
+      "section": "holdings_overview",
+      "baseline": "section 3 Holdings Overview, table Holdings Overview, column Return / Month To Date, row household total",
+      "label": "Return before advisory fees, month to date (household)",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return. Month to date is also not a ruled period, so its household return waits on the same ruling as its net gain."
+    },
+    {
+      "id": "hold.net_gain_since_inception",
+      "section": "holdings_overview",
+      "baseline": "section 3 Holdings Overview, table Holdings Overview, column Net Gain / Since <inception>, row household total",
+      "label": "Net gain before advisory fees, since inception",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "realized",
+        "fold": "sum over the household's accounts of realized plus unrealized_change plus income across the window's trading days (from the account's first_data_date to as_of); before advisory fees (see convention.fee_basis_label)",
+        "also": [
+          "unrealized_change",
+          "income"
+        ]
+      }
+    },
+    {
+      "id": "hold.return_since_inception",
+      "section": "holdings_overview",
+      "baseline": "section 3 Holdings Overview, table Holdings Overview, column Return / Since <inception>, row household total",
+      "label": "Return before advisory fees, since inception (household)",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
+    },
+    {
+      "id": "trgl.cost_basis",
+      "section": "taxable_realized_gain_loss_ytd",
+      "baseline": "section 4 Taxable Realized Gain/Loss Summary, Year To Date, column Cost Basis (per taxable account with realized activity)",
+      "label": "Cost basis of lots closed, year to date",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_LOT_REALIZED_CONTRACT.json",
+        "field": "cost_basis",
+        "fold": "sum over the lots of this account closed in the year to date (closing date on or after 1 January of as_of's year); cost_basis as basis_source says"
+      }
+    },
+    {
+      "id": "trgl.proceeds",
+      "section": "taxable_realized_gain_loss_ytd",
+      "baseline": "section 4 Taxable Realized Gain/Loss Summary, Year To Date, column Proceeds (per taxable account with realized activity)",
+      "label": "Proceeds of lots closed, year to date",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_LOT_REALIZED_CONTRACT.json",
+        "field": "proceeds",
+        "fold": "sum over the lots of this account closed in the year to date (closing date on or after 1 January of as_of's year); proceeds net of the trade's fees"
+      }
+    },
+    {
+      "id": "trgl.realized_short_term",
+      "section": "taxable_realized_gain_loss_ytd",
+      "baseline": "section 4 Taxable Realized Gain/Loss Summary, Year To Date, column Realized ST (per taxable account with realized activity)",
+      "label": "Realized gain or loss, short-term, year to date",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_LOT_REALIZED_CONTRACT.json",
+        "field": "realized_gain",
+        "fold": "sum over the lots of this account closed in the year to date (closing date on or after 1 January of as_of's year) whose holding_term reads short-term",
+        "also": [
+          "holding_term"
+        ]
+      }
+    },
+    {
+      "id": "trgl.realized_long_term",
+      "section": "taxable_realized_gain_loss_ytd",
+      "baseline": "section 4 Taxable Realized Gain/Loss Summary, Year To Date, column Realized LT (per taxable account with realized activity)",
+      "label": "Realized gain or loss, long-term, year to date",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_LOT_REALIZED_CONTRACT.json",
+        "field": "realized_gain",
+        "fold": "sum over the lots of this account closed in the year to date (closing date on or after 1 January of as_of's year) whose holding_term reads long-term",
+        "also": [
+          "holding_term"
+        ]
+      }
+    },
+    {
+      "id": "trgl.total_realized_gl",
+      "section": "taxable_realized_gain_loss_ytd",
+      "baseline": "section 4 Taxable Realized Gain/Loss Summary, Year To Date, column Total RGL (per taxable account with realized activity)",
+      "label": "Total realized gain or loss, year to date",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_LOT_REALIZED_CONTRACT.json",
+        "field": "realized_gain",
+        "fold": "sum over the lots of this account closed in the year to date (closing date on or after 1 January of as_of's year), short-term and long-term together"
+      }
+    },
+    {
+      "id": "avs.qtd.beginning_value",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Beginning Value",
+      "label": "Beginning value, quarter to date",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "beginning_value",
+        "fold": "beginning_value on the window's opening anchor day for this account; absent where that day carries NO_PRIOR_VALUE, never zero"
+      }
+    },
+    {
+      "id": "avs.qtd.net_additions",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Net Additions",
+      "label": "Net additions, quarter to date",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "contributions",
+        "fold": "contributions minus withdrawals over the window's trading days (from its opening anchor (the last trading day before the first calendar day of the quarter) to as_of)",
+        "also": [
+          "withdrawals"
+        ]
+      }
+    },
+    {
+      "id": "avs.qtd.net_gain",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Net Gain (the baseline footnote says it includes fees)",
+      "label": "Net gain before advisory fees, quarter to date",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "realized",
+        "fold": "realized plus unrealized_change plus income over the window's trading days (from its opening anchor (the last trading day before the first calendar day of the quarter) to as_of); before advisory fees, and income is net of fee and administration cash (see convention.fee_basis_label)",
+        "also": [
+          "unrealized_change",
+          "income"
+        ]
+      }
+    },
+    {
+      "id": "avs.qtd.ending_value",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Ending Value",
+      "label": "Ending value (as of the report date)",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "ending_value",
+        "fold": "ending_value on as_of for this account; the same figure in every window column"
+      }
+    },
+    {
+      "id": "avs.qtd.return_cumulative",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Return (Cumulative)",
+      "label": "Return, cumulative, before advisory fees, quarter to date",
+      "unit": "percent",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_CLIENT_SUMMARY_CONTRACT.json",
+        "field": "windows",
+        "fold": "the account entry's windows[QTD], the geometric link of the account's daily total return over the window (from its opening anchor (the last trading day before the first calendar day of the quarter) to as_of); null, and so absent, where window_status[QTD] is NOT_SPANNED or BREAK, never a partial link; cumulative, not annualized",
+        "also": [
+          "window_status"
+        ]
+      }
+    },
+    {
+      "id": "avs.qtd.benchmark_ultra_short_term",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Benchmark: Ultra-Short Term Return (Cumulative)",
+      "label": "Opal model benchmark, ultra short term, cumulative, quarter to date",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "avs.qtd.benchmark_short_term",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Benchmark: Short-Term Return (Cumulative)",
+      "label": "Opal model benchmark, short term, cumulative, quarter to date",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "avs.qtd.benchmark_intermediate_term",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Benchmark: Intermediate-Term Return (Cumulative)",
+      "label": "Opal model benchmark, intermediate term, cumulative, quarter to date",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "avs.qtd.benchmark_long_term",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Benchmark: Long-Term Return (Cumulative)",
+      "label": "Opal model benchmark, long term, cumulative, quarter to date",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "avs.ytd.beginning_value",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Beginning Value",
+      "label": "Beginning value, year to date",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "beginning_value",
+        "fold": "beginning_value on the window's opening anchor day for this account; absent where that day carries NO_PRIOR_VALUE, never zero"
+      }
+    },
+    {
+      "id": "avs.ytd.net_additions",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Net Additions",
+      "label": "Net additions, year to date",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "contributions",
+        "fold": "contributions minus withdrawals over the window's trading days (from its opening anchor (the last trading day before 1 January of as_of's year) to as_of)",
+        "also": [
+          "withdrawals"
+        ]
+      }
+    },
+    {
+      "id": "avs.ytd.net_gain",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Net Gain (the baseline footnote says it includes fees)",
+      "label": "Net gain before advisory fees, year to date",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "realized",
+        "fold": "realized plus unrealized_change plus income over the window's trading days (from its opening anchor (the last trading day before 1 January of as_of's year) to as_of); before advisory fees, and income is net of fee and administration cash (see convention.fee_basis_label)",
+        "also": [
+          "unrealized_change",
+          "income"
+        ]
+      }
+    },
+    {
+      "id": "avs.ytd.ending_value",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Ending Value",
+      "label": "Ending value (as of the report date)",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "ending_value",
+        "fold": "ending_value on as_of for this account; the same figure in every window column"
+      }
+    },
+    {
+      "id": "avs.ytd.return_cumulative",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Return (Cumulative)",
+      "label": "Return, cumulative, before advisory fees, year to date",
+      "unit": "percent",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_CLIENT_SUMMARY_CONTRACT.json",
+        "field": "windows",
+        "fold": "the account entry's windows[YTD], the geometric link of the account's daily total return over the window (from its opening anchor (the last trading day before 1 January of as_of's year) to as_of); null, and so absent, where window_status[YTD] is NOT_SPANNED or BREAK, never a partial link; cumulative, not annualized",
+        "also": [
+          "window_status"
+        ]
+      }
+    },
+    {
+      "id": "avs.ytd.benchmark_ultra_short_term",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Benchmark: Ultra-Short Term Return (Cumulative)",
+      "label": "Opal model benchmark, ultra short term, cumulative, year to date",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "avs.ytd.benchmark_short_term",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Benchmark: Short-Term Return (Cumulative)",
+      "label": "Opal model benchmark, short term, cumulative, year to date",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "avs.ytd.benchmark_intermediate_term",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Benchmark: Intermediate-Term Return (Cumulative)",
+      "label": "Opal model benchmark, intermediate term, cumulative, year to date",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "avs.ytd.benchmark_long_term",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Benchmark: Long-Term Return (Cumulative)",
+      "label": "Opal model benchmark, long term, cumulative, year to date",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "avs.last_12_months.beginning_value",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Beginning Value",
+      "label": "Beginning value, last 12 months",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "beginning_value",
+        "fold": "beginning_value on the window's opening anchor day for this account; absent where that day carries NO_PRIOR_VALUE, never zero"
+      }
+    },
+    {
+      "id": "avs.last_12_months.net_additions",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Net Additions",
+      "label": "Net additions, last 12 months",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "contributions",
+        "fold": "contributions minus withdrawals over the window's trading days (from its opening anchor (the last trading day before the calendar day one year before as_of) to as_of)",
+        "also": [
+          "withdrawals"
+        ]
+      }
+    },
+    {
+      "id": "avs.last_12_months.net_gain",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Net Gain (the baseline footnote says it includes fees)",
+      "label": "Net gain before advisory fees, last 12 months",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "realized",
+        "fold": "realized plus unrealized_change plus income over the window's trading days (from its opening anchor (the last trading day before the calendar day one year before as_of) to as_of); before advisory fees, and income is net of fee and administration cash (see convention.fee_basis_label)",
+        "also": [
+          "unrealized_change",
+          "income"
+        ]
+      }
+    },
+    {
+      "id": "avs.last_12_months.ending_value",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Ending Value",
+      "label": "Ending value (as of the report date)",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "ending_value",
+        "fold": "ending_value on as_of for this account; the same figure in every window column"
+      }
+    },
+    {
+      "id": "avs.last_12_months.return_cumulative",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Return (Cumulative)",
+      "label": "Return, cumulative, before advisory fees, last 12 months",
+      "unit": "percent",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_CLIENT_SUMMARY_CONTRACT.json",
+        "field": "windows",
+        "fold": "the account entry's windows[1Y], the geometric link of the account's daily total return over the window (from its opening anchor (the last trading day before the calendar day one year before as_of) to as_of); null, and so absent, where window_status[1Y] is NOT_SPANNED or BREAK, never a partial link; cumulative, not annualized",
+        "also": [
+          "window_status"
+        ]
+      }
+    },
+    {
+      "id": "avs.last_12_months.benchmark_ultra_short_term",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Benchmark: Ultra-Short Term Return (Cumulative)",
+      "label": "Opal model benchmark, ultra short term, cumulative, last 12 months",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "avs.last_12_months.benchmark_short_term",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Benchmark: Short-Term Return (Cumulative)",
+      "label": "Opal model benchmark, short term, cumulative, last 12 months",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "avs.last_12_months.benchmark_intermediate_term",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Benchmark: Intermediate-Term Return (Cumulative)",
+      "label": "Opal model benchmark, intermediate term, cumulative, last 12 months",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "avs.last_12_months.benchmark_long_term",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Benchmark: Long-Term Return (Cumulative)",
+      "label": "Opal model benchmark, long term, cumulative, last 12 months",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "avs.since_inception.beginning_value",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Beginning Value",
+      "label": "Beginning value, since inception",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "beginning_value",
+        "fold": "beginning_value on the window's opening anchor day for this account; absent where that day carries NO_PRIOR_VALUE, never zero"
+      }
+    },
+    {
+      "id": "avs.since_inception.net_additions",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Net Additions",
+      "label": "Net additions, since inception",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "contributions",
+        "fold": "contributions minus withdrawals over the window's trading days (from the account's first_data_date to as_of)",
+        "also": [
+          "withdrawals"
+        ]
+      }
+    },
+    {
+      "id": "avs.since_inception.net_gain",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Net Gain (the baseline footnote says it includes fees)",
+      "label": "Net gain before advisory fees, since inception",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "realized",
+        "fold": "realized plus unrealized_change plus income over the window's trading days (from the account's first_data_date to as_of); before advisory fees, and income is net of fee and administration cash (see convention.fee_basis_label)",
+        "also": [
+          "unrealized_change",
+          "income"
+        ]
+      }
+    },
+    {
+      "id": "avs.since_inception.ending_value",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Ending Value",
+      "label": "Ending value (as of the report date)",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "ending_value",
+        "fold": "ending_value on as_of for this account; the same figure in every window column"
+      }
+    },
+    {
+      "id": "avs.since_inception.return_cumulative",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Return (Cumulative)",
+      "label": "Return, cumulative, before advisory fees, since inception",
+      "unit": "percent",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_CLIENT_SUMMARY_CONTRACT.json",
+        "field": "windows",
+        "fold": "the account entry's windows[SI], the geometric link of the account's daily total return over the window (from the account's first_data_date to as_of); null, and so absent, where window_status[SI] is NOT_SPANNED or BREAK, never a partial link; cumulative, not annualized",
+        "also": [
+          "window_status"
+        ]
+      }
+    },
+    {
+      "id": "avs.since_inception.benchmark_ultra_short_term",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Benchmark: Ultra-Short Term Return (Cumulative)",
+      "label": "Opal model benchmark, ultra short term, cumulative, since inception",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "avs.since_inception.benchmark_short_term",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Benchmark: Short-Term Return (Cumulative)",
+      "label": "Opal model benchmark, short term, cumulative, since inception",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "avs.since_inception.benchmark_intermediate_term",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Benchmark: Intermediate-Term Return (Cumulative)",
+      "label": "Opal model benchmark, intermediate term, cumulative, since inception",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "avs.since_inception.benchmark_long_term",
+      "section": "account_overview",
+      "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Benchmark: Long-Term Return (Cumulative)",
+      "label": "Opal model benchmark, long term, cumulative, since inception",
+      "unit": "percent",
+      "source": "ABSENT",
+      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+    },
+    {
+      "id": "glr.cost_basis",
+      "section": "gain_loss_review_by_account",
+      "baseline": "section 6 Gain/Loss Review by Account, Last 12 Months, column Cost Basis, row account total",
+      "label": "Cost basis of open lots, account total",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_LOT_UNREALIZED_DAILY_CONTRACT.json",
+        "field": "cost_basis",
+        "fold": "sum over this account's open lots on as_of of cost_basis, as basis_source says"
+      }
+    },
+    {
+      "id": "glr.ending_value",
+      "section": "gain_loss_review_by_account",
+      "baseline": "section 6 Gain/Loss Review by Account, Last 12 Months, column Ending Value, row account total",
+      "label": "Ending value of the account, cash included",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "ending_value",
+        "fold": "ending_value on as_of for this account"
+      }
+    },
+    {
+      "id": "glr.total_realized_gl",
+      "section": "gain_loss_review_by_account",
+      "baseline": "section 6 Gain/Loss Review by Account, Last 12 Months, column Total RGL, row account total",
+      "label": "Total realized gain or loss, last 12 months",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_LOT_REALIZED_CONTRACT.json",
+        "field": "realized_gain",
+        "fold": "sum over this account's lots closed in the last 12 months of realized_gain"
+      }
+    },
+    {
+      "id": "glr.total_unrealized_gl",
+      "section": "gain_loss_review_by_account",
+      "baseline": "section 6 Gain/Loss Review by Account, Last 12 Months, column Total UGL, row account total",
+      "label": "Total unrealized gain or loss on open lots",
+      "unit": "dollars",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_LOT_UNREALIZED_DAILY_CONTRACT.json",
+        "field": "unrealized_gain",
+        "fold": "sum over this account's open lots on as_of of unrealized_gain"
+      }
+    },
+    {
+      "id": "cover.household_name",
+      "section": "cover",
+      "baseline": "section 0 Cover, household name line",
+      "label": "Household name",
+      "unit": "text",
+      "source": "ABSENT",
+      "reason": "The client summary carries ids only, by design: no name and no custodian account number. No sibling holds the household's display name. It would come from the household's directory entry, which is outside these contracts."
+    },
+    {
+      "id": "cover.account_list",
+      "section": "cover",
+      "baseline": "section 0 Cover, Accounts list, each as registration name then masked number",
+      "label": "Accounts, each with its registration name and last four digits",
+      "unit": "text",
+      "source": "ABSENT",
+      "reason": "The account list needs each account's registration name, and no sibling holds it. The account tables carry the custodian account id, so the last four digits can be shown once a registration-name source exists. The client summary holds only issued opaque account ids, which no sibling maps to the custodian id (see open_changes)."
+    },
+    {
+      "id": "cover.as_of_date",
+      "section": "cover",
+      "baseline": "section 0 Cover, As of line",
+      "label": "As of date",
+      "unit": "text",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_CLIENT_SUMMARY_CONTRACT.json",
+        "field": "as_of",
+        "fold": "the newest as_of among the account entries, as YYYY-MM-DD"
+      }
+    },
+    {
+      "id": "overview.chart.allocation_by_asset_class",
+      "section": "portfolio_overview",
+      "baseline": "section 1(a) chart Allocation by Asset Class (household)",
+      "label": "Allocation by asset class (household)",
+      "unit": "series",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "each asset class's share of household market value on each day, by Opal's asset-class enumeration; sub-class segments are not carried (see document.row_dimensions.class_hierarchy)"
+      }
+    },
+    {
+      "id": "overview.chart.portfolio_performance_last_12_months",
+      "section": "portfolio_overview",
+      "baseline": "section 1(b) chart Portfolio Performance Last 12 Months (household, portfolio line and four benchmark lines)",
+      "label": "Household performance, last 12 months, with benchmark lines",
+      "unit": "series",
+      "source": "ABSENT",
+      "reason": "The household performance line needs a household daily return series, which no sibling carries (household return rule), and the four benchmark lines, which no sibling carries (benchmark rule). Each account's own performance line is served from its series object."
+    },
+    {
+      "id": "accounts.chart.allocation_by_account",
+      "section": "summary_of_portfolio_accounts",
+      "baseline": "section 2(a) chart Allocation by Account (household)",
+      "label": "Allocation by account (household)",
+      "unit": "series",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "ending_value",
+        "fold": "each account's share of the household ending_value on each day, by account_id"
+      }
+    },
+    {
+      "id": "accounts.chart.ending_value_and_net_additions_last_12_months",
+      "section": "summary_of_portfolio_accounts",
+      "baseline": "section 2(b) chart Ending Value and Net Additions Last 12 Months (household)",
+      "label": "Ending value and net additions, last 12 months (household)",
+      "unit": "series",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
+        "field": "ending_value",
+        "fold": "daily ending_value summed over the household's accounts across the last 12 months; net additions is contributions minus withdrawals summed the same way",
+        "also": [
+          "contributions",
+          "withdrawals"
+        ]
+      }
+    },
+    {
+      "id": "holdings.rows.class_hierarchy",
+      "section": "holdings_overview",
+      "baseline": "section 3 Holdings Overview, row labels: class, then sub-class (the baseline's class hierarchy)",
+      "label": "Class rows, then sub-class rows",
+      "unit": "text",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json",
+        "field": "asset_class",
+        "fold": "class level only: Opal's asset-class enumeration (seven values, unclassified included) from account_class_daily; the baseline's sub-class rows are not carried, so the sub-class cell of each row is absent with its reason (see document.row_dimensions.class_hierarchy)"
+      }
+    },
+    {
+      "id": "convention.fee_basis_label",
+      "section": "portfolio_overview",
+      "baseline": "section 1 and section 5 footnote: '*Net Gain includes Fees' and the conventions note",
+      "label": "Returns and gains are before advisory fees. The baseline's Net Gain includes fees, so the two are not the same figure. Income is net of fee and administration cash and of withheld tax.",
+      "unit": "text",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json",
+        "field": "fee_basis",
+        "fold": "the served fee basis is GROSS_ONLY (returns and gains are gross of advisory fees); the label words print beside every Opal return and gain column and beside every baseline Net Gain column"
+      }
+    },
+    {
+      "id": "convention.inception_per_household_and_account",
+      "section": "portfolio_overview",
+      "baseline": "section 1 and section 5 column heading 'Since <inception date>' and the conventions note",
+      "label": "Since-inception column is headed with that household's or that account's inception date",
+      "unit": "text",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_CLIENT_SUMMARY_CONTRACT.json",
+        "field": "first_data_date",
+        "fold": "per account: the account's first_data_date; per household: the earliest first_data_date among its accounts; never a firm-wide date"
+      }
+    },
+    {
+      "id": "convention.not_held_for_entire_period",
+      "section": "portfolio_overview",
+      "baseline": "section 1 and section 5 footnote: 'Not held for the entire period'",
+      "label": "Footnote: not held for the entire period (a window the account did not span prints a dash with this footnote)",
+      "unit": "text",
+      "source": {
+        "contract": "org/standards/IRPT_DASHBD_CLIENT_SUMMARY_CONTRACT.json",
+        "field": "window_status",
+        "fold": "a window whose window_status is NOT_SPANNED for an account prints the dash and this footnote in place of a figure"
+      }
+    },
+    {
+      "id": "disclosure.page",
+      "section": "disclosure",
+      "baseline": "disclosure page (not in the baseline export): every page says the report is incomplete without it",
+      "label": "Disclosure page",
+      "unit": "text",
+      "source": "ABSENT",
+      "reason": "The baseline export does not include the disclosure page, and no sibling holds its text. The method row carries the GIPS-alignment statement (the dim_return_method gips_alignment field) that the page will quote; the rest of the text needs its own source."
+    }
+  ],
+  "change_rule": "a member whose source changes names the new field in the sibling's own versioned edit; a derivation the siblings do not carry (a household return series, a benchmark series, a month-to-date window, the registration name, the disclosure text) is a new field or a new contract before this contract sources it, and the contract changes by a version bump with the gap table re-bound to its bytes",
+  "read_rule": "values are read by member id; an ABSENT member prints its reason in words; a figure is never derived from a source this contract does not name; the fee-basis words print beside every Opal return and gain figure and every baseline Net Gain figure",
+  "open_changes": [
+    "the household return series and the household daily return: a new contract (household return rule); until then the household return members are ABSENT",
+    "the four model benchmark return series: a new contract (benchmark rule); until then the benchmark members are ABSENT",
+    "month to date: a ruling is needed before a sibling carries it; until then the month-to-date members are ABSENT",
+    "the registration names and the disclosure text: no sibling holds them; the cover, account rows and disclosure page print absent forms",
+    "the since-inception convention: the baseline's conventions note says since inception is annualized past one year, while its Portfolio Value Summary row reads Return (Cumulative); the served figure is cumulative and is printed as cumulative until a ruling says otherwise",
+    "the account id spaces: the client summary holds issued opaque account ids, while the account tables key on the custodian account id; no sibling maps one to the other, so the masked account number on the cover cannot come from the summary alone"
+  ]
+}

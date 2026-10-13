@@ -12872,3 +12872,31 @@ name the one known failure instead of silently inheriting it.
   "notes": "The id is the SERIES id; a series-level match could not tell occurrences apart, which is why the 06-01 transcript id was searched as well (0 either way). The recipe is .scratch/final_read.py in the worker worktree (not committed)."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S101",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-13T20:08:09Z",
+  "one_line": "OG-bd-2 cannot release alone: its hunk is written on OG-pf-1's code, and pf-1 with OG-tg-1 (release 'r30', CTO ruling 32383, Andrew's Opal-users-only and Bloomberg-mirror words) was built and drained on 10-09 but never cut for release.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ EC2_MANIFEST.json services.opal-gateway.deployed_commit at HEAD = 185dc048881da2030efa11f4d0bfb8704b500c66.",
+      "RAN git apply --cached of c37fdf95a5's gateway diff onto a temp index of 185dc04888: 'patch failed: app/data_entitlement.py:144' and 'tests/test_data_entitlement_family.py: does not exist in index'.",
+      "READ git show 185dc04888:infra/aws/ec2/opal-gateway/app/data_entitlement.py: DATA_GRANT_TOOLS 0 occurrences (HEAD~2: 5); bd-2's decide() change keys on DATA_GRANT_TOOLS (OG-pf-1 b47fc56a98).",
+      "READ decompositions/NFRA_OPLGTW_DECOMP.md ADDENDUM R3-T.31 (~1844-1851): 'r30 carries OG-pf-1 and OG-tg-1 plus the two grant writes (Andrew's profile; the mirror)'; OG-tg-1 'held out of r29 (A6), ships in r30'. No OG-rl / OG-ap order for r30 exists in task-orders/ (OG-rl-16 and OG-ap-10..13 are the latest release/apply orders).",
+      "RAN git diff --stat 185dc04888 HEAD over app/, deploy-to-ec2.sh, dashboard/: 9 files, +789/-66, incl. data_entitlement.py +75, tools.py +265, identity_scope.py 38, audit.py +4, server.py 30, admin_gateway_breakdown.py +377 (NFRA_MCPORTAL MP-z-5's)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "1.0.0_SA_CTO~Z msg 33701: 'Ship OG-bd-2's release, then send the L10 slug'; bd-2's ask (deliverables/0.9.0_WK_NFRA_OPLGTW~60/NEVER_WIDEN_ASK_OG-bd-2.md) describes a release of bd-2's files alone.",
+  "world_is": "bd-2 needs pf-1's code underneath it, and the r30 release (pf-1 + tg-1) that would carry it was never cut, so Andrew's 10-09 Opal-users-only and mirror words are built but not served. The issuer's REC to 1.0.0_SA_CTO~Z: ONE release on the live ref after MP-z-5 closes, carrying pf-1 + tg-1 + bd-2 + sh-1, with a pair naming all four; the two grant writes stay their own act.",
+  "notes": "Issuer defect class: a cell 'ships in rN' with no release order cut is invisible to every round-close check, because the build order is complete. Carry to the cut template: a build cell whose release is deferred names the release order it rides at the cut."
+}
+```

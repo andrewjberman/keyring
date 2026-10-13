@@ -9014,3 +9014,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "CT-ab-1's ruling removed that Deny. The check now asserts the Deny is absent. A reader of the AMENDMENT 24 text should take the check as the inverted contract: a reinstated Deny makes it fail. The SHELL-PARITY print line was reworded to match."
 }
 ```
+
+## NFRA_CTLPLN-S9122 -- S9112 disposition: log streams purged, token expiry printed, rotation path read
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9122",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~U7",
+  "surfaced_at": "2026-10-13T20:12:00Z",
+  "one_line": "Disposition of row NFRA_CTLPLN-S9112: the 8513 pre-fix log streams of /aws/lambda/opal-portal-data-proxy are deleted and the pre-cut census reads 0 on all four key names; the leaked refresh and device_trust tokens stay acceptable until 2026-10-18T03:08:59Z and 2026-11-10T03:08:59Z unless the issuer cuts a rotation order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C (issuer): cut the signing-key rotation-and-retirement order under its own never-widen pair (every signed-in user re-authenticates), or accept the bounded expiry; the CTO ruling section 2 names rotation as the invalidation where a path exists",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~U7/deliverables/NFRA_CTLPLN.TO-CT-ab-10.s9112-purge-record.txt: streams_listed=8550 streams_deleted=8513 spanning_kept=0; post-purge re-list 37 streams, pre-cut census 0/0/0/0 with a positive control of 132 post-cut events; subscription filters none, export tasks none",
+      "ledger org/critical_paths/change_management/20261013T1950Z_s9112-data-proxy-log-purge-ab10-20261013_deploy_completion.md CLOSED, 4 legs proven",
+      "infra/aws/opalinvest_dev/lambda/auth-handler/src/jwt.ts REFRESH_TOKEN_EXPIRY = '7d'; deviceTrust.ts DEVICE_TRUST_TTL_SEC = 30 days; describe-secret opal/auth/jwt-private-key: RotationEnabled null, AWSCURRENT + AWSPREVIOUS present, LastChangedDate 2026-09-10T01:18:14Z",
+      "runbook org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~V/JWT_SIGNING_KEY_ROTATION_RUNBOOK.md @941aea16c8 section 7: retiring the old slot is a separate cut"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO ruling section 2 and order CT-ab-10: purge the pre-cut events, print the latest expiry of each token set, read whether a rotation path exists, disable no account, rotate nothing.",
+  "world_is": "The events are gone and the group reads 0 before the cut. A rotation path exists (the OP-s-10 runbook), but a single rotation does not invalidate these tokens, since the rotated-out key moves to the previous slot and still verifies; invalidation needs the rotation plus retiring the previous slot. Neither was done by this order. The 16 in-window refresh_token lines (10 device_trust) remain acceptable until the expiries above. The ruling's use-read for the no-path branch (proxy access log by source address, status only) was not run, since a path exists."
+}
+```
