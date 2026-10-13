@@ -1513,3 +1513,18 @@ dell2 cloud-ops seat (the pair's condition 6).
 | `DB-b-164` | the pair's apply: the gold Lambda release over live oNgy4rnr from the packet's four pins, ledger first, one targeted safe-apply, one dry-run invoke read against the 85 percent lines | WORLD | both halves SIGNED; the Monday acceptance fire read | R86-1 |
 
 **fanout:** 1 of 1 chain, cap 8. No worker: the order goes to `0.7.0_AE_CloudOps~IB2` (first sent to `~DELL2`, unread; reseated 2026-10-12).
+
+## 89. ROUND 87, WORKSTREAM B (2026-10-13 ~12:3xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ROUND-87 ANALYSIS @f55d3aa598 section 3 and msg 6897)
+
+R45 REFRESH 4 was applied 2026-10-12 13:58:42Z (DB-b-164, live i2r7CbVr) and its first scheduled fire (2026-10-13 11:41Z) was read CLEAN by the issuer at 12:14Z
+(`l5_read.py` b19ea40d71; REPORT 216.7 s of 765 s, 1,385 MB of 2,556.8 MB, 0 errors, the three added keys, six thresholds keys, `method_version` 2); ledger
+`irpt-dashbd-r45-refresh4-20261012` closed @db605d794c. That is round-87 item 1. Item 2, the thresholds-file swap's pair, is signed: packet
+`0.9.0_WK_IRPT_DASHBD~112/NEVER_WIDEN_PACKET_GOLD_PACKAGE_THRESHOLDS_FILE.md` sha256 `2ed4e840ef56...`, COO half @7c9ad9d0f0, CTO half @c5e183273f (the CTO's
+msg 6900: name the AE applier in the order; the scheduled-site read closes the ledger). The apply is the issuer's cell, ruled inside its own decomposition; its applier is the dell2
+cloud-ops seat `0.7.0_AE_CloudOps~IB2` (the pair's condition 6; it applied REFRESH 4).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-165` | the pair's apply: the gold Lambda release over live i2r7CbVr with ONE staged file re-pinned (the thresholds file, 24-key blob to the tracked six-key file), ledger first, one targeted safe-apply, one dry-run invoke read against the 85 percent lines | WORLD | both halves SIGNED; REFRESH 4's first fire read (met) |
+
+**fanout:** 1 of 1 chain, cap 8. No worker: the order goes to `0.7.0_AE_CloudOps~IB2`. The first-fire read after THIS release (the pair's condition 4) is the issuer's open ledger leg.
