@@ -8418,3 +8418,348 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S79 -- (Andrew-direct smoke; relayed; this seat's own row) Analysis Request form (Andrew's smoke ~18:2xZ on DEV): the Opal Ultra Short-Term model is 
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S79",
+  "one_line": "Analysis Request form (Andrew's smoke ~18:2xZ on DEV): the Opal Ultra Short-Term model is missing from the 'Compare against' list.",
+  "spec_asserts": "The form lists every Opal model of the served comparison catalogue (AnalysisRequestParts.tsx :105-123, models from GET /api/scoped/investor-reporting/analysis/comparisons).",
+  "world_is": "REPORTED by Andrew (relayed by 1.0.0_SA_CTO~DELL2 msg 7151), verbatim: \"we're missing the Opal Ultra Short-Term\". NOT read by this seat why it is missing (the catalogue is served; the form renders what it receives): cell AR-y-261 reads it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/mcp/inbox/2.0.0_SA_COO/~Y2/read/20261013T183027Z_1.0.0_SA_CTO_DELL2_Andrew-direct__smoke__18_2xZ___four_Anal.md (CTO msg 7151, Andrew's words as relayed)",
+      "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx read by this seat at portal DEV cf52fdbf"
+    ]
+  },
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T18:32:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT"
+}
+```
+
+## IRPT_ANLREQ-D2-S80 -- (Andrew-direct smoke; relayed; this seat's own row) Analysis Request form (Andrew's smoke): the Opal models should be in canonical order, with
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S80",
+  "one_line": "Analysis Request form (Andrew's smoke): the Opal models should be in canonical order, with canonical color checkboxes that take that color when checked.",
+  "spec_asserts": "The model list is in the estate's canonical model order and each checkbox shows the estate's model color when checked (reused, not new values).",
+  "world_is": "REPORTED by Andrew, verbatim: \"they should be arranged in canonical order with canonical color checkboxes that take that color when checked\". READ by this seat: the checkboxes at AnalysisRequestParts.tsx :112-121 are plain unstyled checkboxes in the catalogue's order ('Model-catalogue entries come first, then tickers in ticker order', comparisonCatalogue.ts :10-11); the estate's model palette is in the portal (modelPortfolioColors.ts MODEL_PORTFOLIO_COLORS, the holdings palette.ts and the iv-e-11 model-color tests). Cell AR-y-262.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/mcp/inbox/2.0.0_SA_COO/~Y2/read/20261013T183027Z_1.0.0_SA_CTO_DELL2_Andrew-direct__smoke__18_2xZ___four_Anal.md (CTO msg 7151, Andrew's words as relayed)",
+      "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx read by this seat at portal DEV cf52fdbf"
+    ]
+  },
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T18:32:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT"
+}
+```
+
+## IRPT_ANLREQ-D2-S81 -- (Andrew-direct smoke; relayed; this seat's own row) Analysis Request form (Andrew's smoke): the Advisory Fee field is not needed.
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S81",
+  "one_line": "Analysis Request form (Andrew's smoke): the Advisory Fee field is not needed.",
+  "spec_asserts": "A prospect's fee is unknown to the advisor filing the request; reports are before advisory fees.",
+  "world_is": "REPORTED by Andrew, verbatim: \"the Advisory Fee doesn't need to be included ... These would largely be from prospects so we'd have no way of knowing their fees\". READ by this seat: the field is AnalysisRequestParts.tsx :127-130, state :31, answers :47 and :54 (advisory_fee), validation in analysisRequest.ts :73. Cell AR-y-263.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/mcp/inbox/2.0.0_SA_COO/~Y2/read/20261013T183027Z_1.0.0_SA_CTO_DELL2_Andrew-direct__smoke__18_2xZ___four_Anal.md (CTO msg 7151, Andrew's words as relayed)",
+      "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx read by this seat at portal DEV cf52fdbf"
+    ]
+  },
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T18:32:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT"
+}
+```
+
+## IRPT_ANLREQ-D2-S82 -- (Andrew-direct smoke; relayed; this seat's own row) Analysis Request form (Andrew's smoke): the 'Add commentary' checkbox does nothing.
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S82",
+  "one_line": "Analysis Request form (Andrew's smoke): the 'Add commentary' checkbox does nothing.",
+  "spec_asserts": "Checking 'Add commentary' makes the request carry commentary_requested (CTO msg 7151: the form half of J1).",
+  "world_is": "REPORTED by Andrew, verbatim: \"add commentary checkbox doesnt do anything\". READ by this seat: the form sends add_commentary (AnalysisRequestParts.tsx :33, :56); the wire contract names commentary_requested (portal/src/pages/InvestorReporting/contracts/wire/AnalysisSubmissionRequest.ts). Which member the ticket service reads is NOT read by this seat. Cell AR-y-264.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/mcp/inbox/2.0.0_SA_COO/~Y2/read/20261013T183027Z_1.0.0_SA_CTO_DELL2_Andrew-direct__smoke__18_2xZ___four_Anal.md (CTO msg 7151, Andrew's words as relayed)",
+      "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx read by this seat at portal DEV cf52fdbf"
+    ]
+  },
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T18:32:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT"
+}
+```
+
+## IRPT_ANLREQ-D2-S83 -- (Andrew-direct; relayed; this seat's own row) the Analysis Request submit creates no ticket and shows nothing
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S83",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T18:39:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "Andrew's Analysis Request submit on DEV (localhost:5174, portal DEV f6ef1d25, as andrew@opalinvest.com, ~18:3xZ) created NO ticket and showed NO confirmation and NO error.",
+  "spec_asserts": "Submitting the Analysis Request form creates an analysis_request ticket, shows its ticket id on screen, and any failed hop (upload, CREATE, or the form's own validation) is shown on screen (FWD-4).",
+  "world_is": "REPORTED by Andrew, verbatim: \"there is no new ticket created despite me trying to create a ticket for that Analysis Request ... it doesnt lock in somehow, or at least does not display a confirmation on the screen for the user, nor does it appear in the Open Tickets section\" (relayed by 1.0.0_SA_CTO~DELL2 msg 7156). MEASURED by the CTO: opal-tickets holds no analysis_request created today; the only ticket created today is TCK-20261013-5c5c3916 at 18:33Z, a trade_request. NOT read by this seat: which hop stops (the upload, the CREATE, or the form's own validation) or what Andrew entered. Cell AR-y-265 reads the submit path hop by hop and fixes the silence.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/mcp/inbox/2.0.0_SA_COO/~Y2/read/20261013T183521Z_1.0.0_SA_CTO_DELL2_O1_DEFECT__top_of_your_next_issuance__An.md (CTO msg 7156)"
+    ]
+  },
+  "class": "BLOCKING"
+}
+```
+
+## IRPT_ANLREQ-D2-W83-S1 -- the real KimiAdvisory has no search port at HEAD, so the harness cannot build the advisory on the interface until AR-y-249 lands; the offline tests route through a stub with the interface kwargs
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W83-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~83",
+  "surfaced_at": "2026-10-13T18:28:02Z",
+  "one_line": "AR-y-250 builds KimiAdvisory(send, search, telemetry, search_capability) on the THE INTERFACE block; at c53686ba6d the constructor takes send, telemetry, clock and search_capability only, so the default factory raises TypeError. run_qa records that as HARNESS_EXCEPTION and mints no receipt (fail-safe). The offline tests inject a stub with the interface kwargs; the real advisory path is untested in this order and must be proven once AR-y-249 lands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/resolution_kimi.py@c53686ba6d:141-145 KimiAdvisory.__init__(self, *, send, telemetry, clock=time.monotonic, search_capability=None) has no search parameter",
+      "infra/aws/lambda/investor-reporting/intake/resolution_kimi.py@c53686ba6d:159-166 the swap gate still reads request_fields and tools, tool_choice, not the interface capability",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/kimi_search_qa.py (worktree, uncommitted until this order's commit) _default_advisory builds KimiAdvisory(**kwargs) with search= and the stub tests in ycharts/generate/tests/test_kimi_search_qa.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AR-y-250 step 2 (THE INTERFACE block): the harness builds its own KimiAdvisory(send=..., search=..., telemetry=..., search_capability=...) and the swap call keeps its return shape.",
+  "world_is": "The constructor and the swap gate at HEAD are the pre-ruling shape. The search port and the search_capability shape of the interface are AR-y-249's to land. Until then the real-advisory construction cannot be exercised in this worktree."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W83-S2 -- kimi_port.kimi_search does not exist at HEAD; the live QA command names it per the interface and cannot run until AR-y-249 lands it
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W83-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~83",
+  "surfaced_at": "2026-10-13T18:28:02Z",
+  "one_line": "AR-y-250 step 4 designs the live QA as the harness with kimi_port.kimi_send and kimi_port.kimi_search over the secret read by id. At c53686ba6d kimi_port.py has kimi_send, journal_telemetry and secret_reader only; there is no kimi_search and no KIMI_SEARCH_URL. The live command is written against the interface and is not runnable until AR-y-249 lands the transport.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/kimi_port.py@c53686ba6d:18-19 KIMI_URL and KIMI_SECRET_ID are the only Kimi constants; no KIMI_SEARCH_URL",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/kimi_port.py@c53686ba6d:25, :57, :65 defines kimi_send, journal_telemetry and secret_reader; the file ends at :69 with no search transport"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AR-y-250 step 4: the live QA is the harness run with kimi_port.kimi_send and kimi_port.kimi_search over the real secret read by id astn/kimi/api-key.",
+  "world_is": "kimi_search is absent at HEAD. The live_qa member of the record names it as the interface requires and marks the command NOT RUN. No live call was made in this order."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W83-S3 -- the checker floor is 8 cases while the cell's refusal floor is 6; the shipped list has 8, so both rules hold
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W83-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~83",
+  "surfaced_at": "2026-10-13T18:28:02Z",
+  "one_line": "AR-y-250 step 2 says a case list shorter than 6 is refused; the y250-qa checker at ar21_checks.py:412 requires at least 8 cases (TIMXX, at least 4 known funds, a nonsense symbol, two injection strings). The harness ships the 8-case list, so the stricter checker floor is met; the two floors differ on paper and nothing in this order reconciles them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py@c53686ba6d:412 len(cases) < 8 refuses the record",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/kimi_search_qa.py (worktree) MIN_CASES = 6 and CASES holds 8 entries"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AR-y-250 step 2 (refusal of a case list shorter than 6) and AR250-y-AC1 (the record names TIMXX, at least 4 known funds, a nonsense symbol, two injection strings).",
+  "world_is": "The two floors are both met by the 8-case list. The harness refuses at 6; the checker grades 8. Reconciling the floors is an issuer decision."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W83-S4 -- the cell's cost bound counts one search call per case, but the interface places the search port inside the advisory, so the call count per case is set by the advisory's attempt loop
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W83-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~83",
+  "surfaced_at": "2026-10-13T18:28:02Z",
+  "one_line": "AR-y-250 step 4 states the cost bound as one search call per case. The interface gives the search port to KimiAdvisory, and the advisory's attempt loop (resolution_kimi.py:168-225 at c53686ba6d) makes up to two attempts per call, so the number of search calls per case is set by AR-y-249's loop. The live_qa member states the bound both ways until AR-y-249 fixes it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/resolution_kimi.py@c53686ba6d:168 for attempt in (1, 2): the swap call's attempt loop",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R22C_Y.md (the AR-y-249 row) names the search transport and the chat call, not the search count per attempt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AR-y-250 step 4 cost bound: cases x attempts x swap budget, plus one search call per case.",
+  "world_is": "The search count per case is not fixed by the interface. The worst case is two searches per case if AR-y-249 searches once per attempt. The record states both figures."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W85-S1 -- the proxy placeholder change required one existing assertion to move: test (f) pinned the superseded placeholder
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W85-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~85",
+  "surfaced_at": "2026-10-13T18:32:54Z",
+  "one_line": "AR-y-252 asks for ONE new test and says the whole test file passes with the change. Existing test (f) asserted that the proxy input placeholder equals PROXY_HINT, the value the change removes, so the change fails (f). Its one assertion was moved to the input title (which keeps PROXY_HINT) and the test renamed to match; no other existing test changed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal worktree C:/dev/wk-portal-85 @3b1f44ba6749d86117d67c2f598b8083538b63ab: src/pages/InvestorReporting/tabs/analysis/tests/prospect-suggested-swaps.test.tsx (test f before the commit asserted placeholder equals PROXY_HINT)",
+      "portal candidate @1742505086408bc7120e3f36b9e3ced6dfc2fd02: the same test file, test (f) unchanged, 8 of 8 pass on the candidate; with the placeholder change (f) would fail",
+      "record r22/PORTAL_PROXY_PLACEHOLDER_CANDIDATE.json tests.modified_existing (this worker's deliverables folder)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AR-y-252 step 3: ONE new test in the existing test file; with the change the whole file and the tab folder pass. Step 2: nothing else changes.",
+  "world_is": "Test (f) pins the old placeholder, so the change alone turns the file red. The fix needed one assertion of test (f) to move from the placeholder to the title. The file (9 of 9) and the analysis tab folder (31 of 31) pass after the commit, and the typecheck is rc=0."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W85-S2 -- the cell's <paths> names only the investigation file, while its steps edit portal product files in a sibling worktree
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W85-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~85",
+  "surfaced_at": "2026-10-13T18:32:54Z",
+  "one_line": "The order's BOUNDS grant lists only the investigation file in <paths> (plus the deliverables folder and the order file), but the cell's steps direct edits to portal src/ files (ProspectComposer.tsx and the test file) in a portal worktree outside this workspace worktree. The steps were followed as written, in the portal repository only; the grant line was not widened by this worker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task order worker face BOUNDS section and <paths> block: only org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md is listed",
+      "task order THE CELL steps 1-4: portal worktree C:/dev/wk-portal-85 on branch wk-IRPT_ANLREQ-85-portal, edits to src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx and its test file, commit in the portal worktree",
+      "portal commit 3b1f44ba6749d86117d67c2f598b8083538b63ab touches those two src/ files only (git show --stat)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BOUNDS Grant: exactly the <paths> below, plus the deliverables folder and this order's file. <paths> names only the INVESTIGATION file. Cell steps 1-4 name portal src/ files and the portal worktree.",
+  "world_is": "The portal product files are outside <paths>. They were edited because the cell's own steps name them. Nothing in the workspace repository's product paths was written, and nothing was landed, pushed or deployed. The issuer may amend the grant."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W85-S3 -- a fresh portal worktree has no node_modules and the order names no install step
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W85-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~85",
+  "surfaced_at": "2026-10-13T18:32:54Z",
+  "one_line": "The order's portal step runs bun test and bun run typecheck, but the new worktree C:/dev/wk-portal-85 has no node_modules and the order gives no install step. To run them without a network install, a directory junction was made at C:/dev/wk-portal-85/node_modules pointing to the sibling candidate worktree C:/dev/wk-portal-81/node_modules. The junction is not committed (the directory is ignored).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -d node_modules in C:/dev/wk-portal-85 returned no such directory before the junction (run 2026-10-13)",
+      "cmd mklink /J output: Junction created for C:\\dev\\wk-portal-85\\node_modules <<===>> C:\\dev\\wk-portal-81\\node_modules",
+      "bun test and bun run typecheck then ran in C:/dev/wk-portal-85 with rc=0 for the suite and the typecheck after the fix"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Portal step 3: run the file and the tab folder and bun run typecheck, rc=0. The order names no dependency install for a fresh worktree.",
+  "world_is": "A fresh portal worktree carries no node_modules, so the named commands cannot run there without either an install or a link to an existing dependency tree."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W85-S4 -- one live ls-remote of the portal branch name, beyond the fetch the cell permits
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W85-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~85",
+  "surfaced_at": "2026-10-13T18:32:54Z",
+  "one_line": "The order permits no live call except a git fetch of the portal's remote-tracking refs. At report time this worker ran one git ls-remote of the portal branch wk-IRPT_ANLREQ-85-portal to read its push state (0 heads). It is a read-only remote call beyond the permitted fetch, recorded here and not hidden. Nothing was pushed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "command run at report time: git ls-remote --heads origin wk-IRPT_ANLREQ-85-portal in C:/dev/wk-portal-85 (output: 0 lines)",
+      "order bounds: No live call (a git fetch of the portal's remote-tracking refs is permitted), no push",
+      "record r22/PORTAL_PROXY_PLACEHOLDER_CANDIDATE.json ls_remote_note and push_state"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Bounds: no live call except a git fetch of the portal's remote-tracking refs; no push.",
+  "world_is": "A read-only ls-remote of the new branch name ran once, beyond the permitted fetch. No write reached the remote."
+}
+]
+```
