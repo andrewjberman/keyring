@@ -7706,3 +7706,89 @@
   "notes": "Form only. The candidate is a LOCAL commit on its branch, not landed or pushed. A screenshot is the gate a landing would need, for the CTO review lane or the issuer to decide."
 }
 ```
+
+---
+
+## IRPT_ANLREQ-D2-W78-S1 -- the portal worktree has no git identity; the amendment commit needed the committer set on the command
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W78-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~78",
+  "surfaced_at": "2026-10-13T17:48:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The first attempt to commit the amendment on the portal branch failed with 'Committer identity unknown' (rc=128, no commit made); the commit that landed (73f9d64c) carries the committer set on the command line for this one commit, not from the repository's configuration.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-242 amendment, final paragraph: commit the second commit on the same portal branch, made the way f5e92987 was made; the record names the full sha.",
+  "world_is": "C:/dev/wk-portal-74 has no user.name and no user.email in git config (read with git config --get, both empty); the precedent f5e92987 carries author and committer 0.9.0_WK_IRPT_ANLREQ~74 (git log --format). The amendment commit 73f9d64c carries author and committer 0.9.0_WK_IRPT_ANLREQ~78 via GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL set for that command only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-portal-74 git config --get user.name and user.email: empty (read in this session)",
+      "portal commit f5e92987f37e524e58b91185f60649e5be988a0d: author and committer 0.9.0_WK_IRPT_ANLREQ~74 (git log --format)",
+      "portal commit 73f9d64ca079c0ae41ef9b0412029233318f497d: author 0.9.0_WK_IRPT_ANLREQ~78 (git show --format)"
+    ]
+  },
+  "notes": "Form only. The commit is LOCAL on wk-IRPT_ANLREQ-74-portal, not pushed. The issuer or the CTO review lane decides whether a worker shell should carry an identity for portal commits."
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-W78-S2 -- the precedent commit path for the portal repository is a bare git commit, which the workspace rules forbid
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W78-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~78",
+  "surfaced_at": "2026-10-13T17:48:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The amendment face says to commit in the portal worktree the way f5e92987 was made, and that path is a plain git commit with --author and -F; the workspace rule names safe-commit.sh and forbids a bare git commit, and no safe-commit route for the portal repository is named in the face.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-242 amendment, final paragraph: make the second commit on the same portal branch the way f5e92987 was made; the workspace CLAUDE.md section 6 says commit via .tools/safe-commit.sh and never a bare git commit.",
+  "world_is": "The portal repository has no core.hooksPath (read with git config --get) and no .githooks directory, so no portal-side commit gate ran on 73f9d64c. The commit was made with git commit --author and -F <file> from C:/dev/wk-portal-74, as f5e92987 was. The workspace .tools/safe-commit.sh lives in the workspace repository and was not run against the portal repository.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-portal-74 git config --get core.hooksPath: empty; no .githooks directory (read in this session)",
+      "portal commit 73f9d64ca079c0ae41ef9b0412029233318f497d (the amendment, made with git commit)",
+      "C:/dev/ajb_workspace/CLAUDE.md section 6 (commit via safe-commit; never a bare git commit)"
+    ]
+  },
+  "notes": "Form only. The commit is LOCAL on the candidate branch and nothing is pushed. Whether a portal candidate commit should pass the workspace safe-commit route is for the issuer and the CTO to decide."
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-W78-S3 -- the lane gate refuses this worker's commit of the r22 record, which sits in the first worker's deliverables folder
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W78-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~78",
+  "surfaced_at": "2026-10-13T17:50:52Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The amendment's record update (r22/PORTAL_FILE_NAME_CANDIDATE.json under the first worker's deliverables folder 0.9.0_WK_IRPT_ANLREQ~74) is refused by the lane gate for serial 0.9.0_WK_IRPT_ANLREQ~78: the order's <paths> names only this channel file, so the record and the proof instance under ~74 cannot be committed by this worker and stay uncommitted in the worktree.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-242 amendment, step 6: update the record r22/PORTAL_FILE_NAME_CANDIDATE.json in 0.9.0_WK_IRPT_ANLREQ~74/ and commit it in the workspace worktree; the face's BOUNDS grant includes org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~74/. The face also says to fix the proof instance in ~74/ and re-run the proof check.",
+  "world_is": "The order's <paths> block at HEAD names only org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md. safe-commit (lane TREE_DELIVERABLES, ADHC_OWNPTH.005) refused the commit with: VIOLATION: org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~74/r22/PORTAL_FILE_NAME_CANDIDATE.json -- agent=0.9.0_WK_IRPT_ANLREQ~78 not in permitted_agents; no NON-TERMINAL task order at HEAD issued_to this serial names this path. Nothing was committed (git log -1 is d5ee6545a4). The record was edited in the worktree only (uncommitted); the proof instance was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit refusal, this session, commit attempt for r22/PORTAL_FILE_NAME_CANDIDATE.json (rc=1; HEAD still d5ee6545a4)",
+      "C:/dev/wk-irpt-anlreq-74 org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-242.prospect-upload-names-the-file.md <paths> block (names only the channel file)"
+    ]
+  },
+  "notes": "Form only. Not worked around: no author override and no path outside the lane. The issuer can widen the grant to the ~74 folder for a continuation worker, or name the record's owner; the checker y242-portal reads r22 under ~74 (D22 in ar21_checks.py), so the record must stay there."
+}
+```
