@@ -7042,3 +7042,29 @@
  "notes": "Grade row for ADJUDICATION_v21. Built, not released: nothing live."
 }
 ```
+
+## IRPT_ANLREQ-D2-W68-S1 -- the S71 premise does not reproduce in this worker's shell: the script's own head-object --query call returns rc 0, so the cause of "'int' object has no attribute 'items'" is not established here
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W68-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~68",
+  "surfaced_at": "2026-10-13T14:50:52Z",
+  "one_line": "The reproduction asked for by AR-y-222 step 1 did not fail: the script's exact head-object --query '[ContentLength, Metadata.\"content-sha256\"]' call returns rc 0 with the two values through the repo shim, the ~/bin shim and the real CLI path (aws-cli 2.37.9); so the cause of the S71 error is not established by this worker, and the fix is shipped without a live reproduction.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-222 step 1 (order and CTO round-21 item 3): reproduce the defect read-only and find the cause; IRPT_ANLREQ-D2-S71 says the script's verify call dies with 'int' object has no attribute 'items' on the applier's CLI, and that the same call run by hand through the .tools/aws shim fails.",
+  "world_is": "On this worker's Git Bash, with CLI aws-cli/2.37.9 and type -a aws resolving to /c/Users/Test/bin/aws then /c/Program Files/Amazon/AWSCLIV2/aws, the identical call returns rc 0 and '221061<TAB>vBzPCvn9lUEZzmDFGK+9g9ICnF8h7N8Z/hccjw2qoBg='; through bash .tools/aws it also returns rc 0; the two scalar forms return rc 0 each. The error did not occur here, so no cause is established.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read-only head-object, bucket opal-313476888478-lambda-artifacts, key investor-reporting/irpt-narrative.zip, run by this worker at 2026-10-13T14:41Z: the script's exact --query call rc 0; the no-query JSON call rc 0; the scalar ContentLength and content-sha256 calls rc 0 (org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~68/r21/CI_VERIFY_FIX.json, repro)",
+      "infra/aws/lambda/ci/build-and-upload.sh@b4943b79ce:723-727 is the verify call that S71 reports; the fix that replaces it is at the worker's HEAD on branch wk-IRPT_ANLREQ-68"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "owner of the live proof: the applier of the next release, by the scratch-arm design in CI_VERIFY_FIX.json scratch_arm_design (designed, not run here). Until that arm reads back VERIFIED on the applier's CLI, the fix's effect on that CLI is unproven. Not decided here: whether S71 holds on the applier box."
+}
+```
