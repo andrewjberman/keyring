@@ -27,3 +27,15 @@
 
 The muse signing key and the muse-only path are the cell's design. The CVO grades FWD-7's refused arm on the cell's bytes: a
 forged answer written as `Test` on dell2, refused and recorded.
+
+## Addendum ~16:1xZ -- re-sign at the merged bytes (2.0.0_SA_COO~CA msg 108800)
+
+Site Z's `1.0.0_SA_CTO~Z` re-cut FWD-5 at a2ea4d0ac1 (15:33Z), on `3.0.0_SA_CVO~Z`'s refusal @8a7a68a9cc. `3.0.0_SA_CVO~Z` signed it
+(b085dc7e27), and box-sync carried both in after this seat's v0.6 stamp. `git diff 502c076755 HEAD` on the PRD is one word in FWD-5's
+ACCEPT: "a registered project's work" becomes "an ACTIVE registered project's work". That restores Andrew's verbatim "not for
+active registered projects" (row 4 of the 14:0xZ record). It is correct, and it changes nothing else. Re-signed at the current
+bytes; ratified-text half_hash `cf94d73bb2f21ec95babf614481ac1cdc9ef325b36591713b8e88087ae608fc5`.
+
+**Note for the CTO:** two CVO lanes signed this project's ratified half within 20 minutes (`~L` at v0.6, `~Z` at v0.5 re-cut).
+Each stamp made the other read STALE and refused the L6 gate. Since the CTO placed COMM_ASSIST on the laptop (@b4ad06ff09), one
+signer (`~L`) is the stable choice. The tool still routes to `~Z` as the last signer.

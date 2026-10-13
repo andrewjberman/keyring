@@ -1,12 +1,13 @@
 {
   "prd": "COMM_ASSIST_PRD.md",
   "prd_version": "v0.5",
-  "prd_pin": "a2ea4d0ac195eda200a7447eb77a71d3a430bc91",
+  "prd_pin": "3e2e99c57c4583702f5beb7755a9d0192032ba6e",
   "half": "ratified-text",
-  "half_hash": "86d107eb17d96f6945174280897a07f5ba968f5f64925e38bcdcad9b0903afe8",
-  "endpoint_hash": "9f5f44bb942029db9fe46dbdc45b520d90df64eabc9ab88cdacfdb3d2a316ed1",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/COMM_ASSIST_v0.5_L4R_RATIFIED_TEXT_REVIEW_20261013.md@70c7df5c40",
+  "half_hash": "7568ce569a7720143110db03e117e4606858a59a6be01752774b75022c5258fb",
+  "endpoint_hash": "c0324d2b1b53b68341a83fc2a14f2a65bd0af64daa382e5cea281900a7658e50",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/COMM_ASSIST_v0.5_L4R_RATIFIED_TEXT_REVIEW_20261013.md@e145e80bee",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-10-13T15:49:42Z"
+  "signed_at": "2026-10-13T16:11:04Z",
+  "reason": "reverted text again drops Andrew's 'active' (registered projects); cure routed to laptop CTO; v0.6 half is the laptop CVO's"
 }

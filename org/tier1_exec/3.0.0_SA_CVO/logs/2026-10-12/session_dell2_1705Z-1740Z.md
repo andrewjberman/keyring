@@ -233,3 +233,10 @@ Quiet stretch 08:37Z to 13:04Z: watcher re-armed at each expiry; delivery ledger
 | item | result | commit |
 |---|---|---|
 | IRPT_BCKEND round 180 | ADJUDICATION_v81 + REMEDIATION_v55: account_id live end to end (7639 of 7640); 2 dismissed; D2-W364-S1 (the directory read via the opal-data-bd alias; my head-object read it present) graduates. Slug sent | 277aaf946e |
+
+## Addendum, 2026-10-13 15:42Z to 16:22Z (msgs 7033, 7055, 7057)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_ANLREQ round 21 (Y, YR) | Probed r19.3: 10 of 10 one-account neighbours unflagged, 8 of 8 two-account forms turned back (incl. Account Numbers, Subaccounts, Account Nos). L9: AR221 PASS, AR-y-222 judgment FAIL superseded by AR-y-229 PASS, four AC2J PASS, two re-grades accepted; 22 dismissed (incl. my D2-S73), nothing graduates. Slug sent | 99fe06bb74 |
+| IRPT_DASHBD round 91 | ADJUDICATION_v55 + REMEDIATION_v38: FWD-8 NOT REALIZED for 7 after the ledger-row read; D2-W137-S1 to the CTO; v37 D2-W136-S1 closed. Slug sent | 5e23f18556 |
