@@ -199,7 +199,11 @@ CONTRACTS changed, so both halves are owed again.
                     (Ultra Short-Term to Ultra Long-Term) stay as their own series;
                     and each grouped series' value equals the sum of its members
                     on three drawn dates (the negative arm: today's build lists
-                    about 17 individual series)
+                    about 17 individual series). Client Supervised and Client
+                    Unsupervised exist only on the dated category-views objects
+                    (the first is 2026-08-27): their chips draw on those dates
+                    alone and read ABSENT, never zero and never interpolated,
+                    on every date without one
          ACCEPT     The trend reads as a few meaningful groups, not a crowd of
                     individual models, and it matches Total Assets.
          SOURCE     Andrew-direct 2026-10-13 ~18:4xZ at the dell2 terminal, record
@@ -513,8 +517,13 @@ contract ACCEPT) and `workflows/legacy_transform/blackdiamond-49financial/202610
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_184xZ_MODEL_PORTFOLIOS_AUA_TREND_GROUP_CUSTOM_MODELS_AND_CHIPS.md` @5e80d5eb9b, on origin/box/dell2 and
 reaching dell1 at the next integrator pass. It was read here from `origin/box/dell2`. The owner is MDPF_CANON (relayed by MSTR msg 5064).
 
-- **New outcome FWD-9** (ENDPOINT above). It is presentation of a page already on PROD: the grouping and colors reuse the Total Assets breakdown's. No new color and no new
-  data are needed; the sums are of series the page already serves.
+- **New outcome FWD-9** (ENDPOINT above). It is presentation of a page already on PROD: the grouping and colors reuse the Total Assets breakdown's, so no new color is needed.
+- **CORRECTED** (`2.0.0_SA_COO~D1` msg 5071, `deliverables/2.0.0_SA_COO~D1/round7/FWD9_GROUPING_READ.md` @1c9f519b6f): "no new data" is TRUE for Custom Models, ALT and ETF
+  Strategies, but NOT for the two Client chips.
+  - The time series carries no per-date supervised/unsupervised split; only 21 dated category-views objects carry it (2026-08-27 to 2026-10-12), against 495 time-series
+    dates.
+  - **Ruling (i):** the Client chips draw on the dated objects only, and read absent before and between them (exactness: no back-cast, no interpolation).
+  - No new served key is minted for history. The series grows as the dated objects accrue.
 - **Where the grouping happens:** server-side, if the served payload is what the chart iterates, so the page does not invent groups. Otherwise in the portal component, reusing
   the Total Assets breakdown's grouping function. The cut names which, and reuses rather than re-implements (build ladder step 2).
 - **Client-facing:** Model Portfolios is open to partner firms. The PROD promote of this change waits on Andrew's word, carried as a card with the before/after, beside the
