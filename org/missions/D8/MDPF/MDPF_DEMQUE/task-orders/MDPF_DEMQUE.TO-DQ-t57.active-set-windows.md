@@ -75,6 +75,13 @@ Your first pass (commits `be745e7fa2`, `b5fab0e728`) stands as inherited state. 
 - **S3: the check now allows 110 seconds a build call; keep your speed changes.** **S4: accepted** (`accounts` counts the key of every row, 769, as the published set states). **S5: accepted.**
 - Update test 3 to assert the hold-back of an outside-the-set name and the dropped emptied name; keep its name.
 
+
+### AMENDED 2026-10-13 ~22:5xZ (issuer; no gate limb graded it, no new order added) -- ruling on rows D1-W49-S6 and S7: the check was wrong, the build is right
+
+Your second pass (commits `593c4d3455`, `468f377221`) is inherited state and is CORRECT: `--build` read securities 608, cells 34,223, held_back 5, emptied_cusips 1, exactly as ruled. **S7:** arm 3's substring test on the word "account" was the issuer's error (the ruled hold-back reason contains it); the check now tests KEY names and runs the repo's
+account-id oracle, and is placed on your branch by file. **S6:** accepted. YOUR ONLY TASK NOW: run both acceptance checks and the folder (`python -m pytest data/mdpf/scripts/demque -q`, 0 failed), regenerate the proof instance with the real outputs, validate it
+(`python .tools/proof-of-spec-check.py <instance> DQ9-t57-AC1,DQ9-t57-AC2`) and flip the order's status to complete in the same commit. Change no code unless a check fails.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below plus your deliverables folder and this order's file. Scaffolding goes under `.scratch/`, uncommitted.
