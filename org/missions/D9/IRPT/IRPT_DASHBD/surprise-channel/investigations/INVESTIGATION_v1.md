@@ -7293,3 +7293,28 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W135-S1 -- the commit-time client-data check did not run on the DB-b-170 module commit 8c6dcce508 (hashed account-id list absent)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W135-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~135",
+  "surfaced_at": "2026-10-13T14:38:12Z",
+  "one_line": "The client-data check in the commit gate did not run on the DB-b-170 module commit 8c6dcce508: the hashed account-id list is absent at its default path, so the commit was not checked for account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-170 BOUNDS: no client data in what you write (counts only), and every commit passes the commit gate via .tools/safe-commit.sh (CLAUDE.md section 6, rule 14).",
+  "world_is": "safe-commit 8c6dcce508 printed WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt, and stated the commit was NOT checked for client account ids. The commit holds one file, tieout/tieout_noflow_reasons.py (220 lines). The module prints counts only and writes its record only to the deliverables folder. A digit-run scan of the module finds one line, the RULE.md sha256 hex constant; that scan is not an account-id check, and the list-based check did not run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 8c6dcce508 on 2026-10-13: the client-data-check WARN line and the statement that the commit was not checked for client account ids",
+      "grep -cE on the committed module and on NOFLOW_2_REASONS.json: 1 line each, both the RULE.md sha256 hex constant (module line 25; the record's rule sha256 key)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
