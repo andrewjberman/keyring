@@ -428,3 +428,30 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   "world_is": "It is refused. The admission test is a line-anchored regex over bytes read straight from `git show`, and this order was committed CRLF, so the trailing [ \t]*$ never reaches the line end and the marker reads as absent. The work is unaffected -- L1 and L2 are closed with proof and the live state is verified -- but <status> stays `pending` and the order cannot be marked complete. NEITHER REMEDY IS THE ASSIGNEE'S: (a) normalise the order's line endings to LF, which is the ISSUER's file and the spec is frozen mid-round, or (b) widen the regex to tolerate a trailing \r (or normalise newlines in _committed_order_text), which is the GATE OWNER's instrument and fixes the whole class rather than this one order. (b) is recommended: (a) leaves the next CRLF-committed order to rediscover it. The audited `# pipeline-override:` escape was deliberately NOT taken -- its stated condition is that the TO stands outside the pipeline, which is false here, and a false reason in an audit log is worse than a blocked flip. Routed to 2.0.0_SA_COO~H1 with 1.0.0_SA_CTO~DELL1 copied as the decision."
 }
 ```
+
+## MDPF_SECHIST-D1-S5 -- The 2026-10-13 scheduled pull was stopped by its own precondition (DAPI down), so SH-t-21's gating event has not happened.
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-S5",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~H1",
+  "surfaced_at": "2026-10-13T11:55:00Z",
+  "one_line": "The 2026-10-13 07:00 ET scheduled pull started and was stopped by its own precondition (DAPI down, Terminal likely signed out), so no run_manifest exists for as_of 2026-10-12 and SH-t-21's gating event has not happened; the same condition holds for SH-t-22 behind it.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ s3://opal-data-etfs/bbg/2026-10-12/run_manifest.json at 2026-10-13T11:35Z by this seat: HeadObject 404; listing bbg/2026-10-12/ returned no key; newest bbg/ prefix 2026-10-09",
+      "CONTROL in the same call set: HeadObject on bbg/2026-10-09/run_manifest.json read LastModified 2026-10-12T11:03:03Z, so the instrument returns a value for a present key",
+      "RELAYED, not measured by this seat: 0.0.0_AB_MSTR~Z bus 042a6904 via 0.0.0_AB_MSTR~DELL1 msg 4788 (11:41Z): OPAL_BBGTML_daily_pull LastRunTime 2026-10-13T11:00:01Z, LastTaskResult 50, log bbg_tplus1_20261013_070001.log 108 lines; 0 matches for 'ETF LEG EXIT CODE' and 'run_class'; line 48 'PRECONDITION: FAILED -- DAPI DOWN and not self-healed. PULL NOT ATTEMPTED.'; blpapi connect IO_ERROR on 127.0.0.1:8194 at 07:03, 07:05, 07:06, 07:07 ET",
+      "RELAYED same message: the 2026-10-12 log read PRECONDITION PASS and ETF LEG EXIT CODE 0, which matches this seat's own read of that run's manifest (11:03:03Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SH-t21 depends_on: the scheduled pull for as-of 2026-10-12 and the publish that follows it; TO-SH-t22 depends_on SH-t-21 read OK and the next scheduled run (as-of 2026-10-13).",
+  "world_is": "No pull wrote a manifest and nothing was written (RIVALFUNDS legs exit 93 and 97, 'nothing written'). This is not the organic case SH-t-21 names: that case reads a landed run where the vendor left no null, and no run landed. Issuer ruling (2.0.0_SA_COO~H1): SH-t-21 and SH-t-22 stay `issued`, no read is run against an absent manifest and nothing is graded BAD; the date is ruled when a scheduled run lands again, because the as_of 2026-10-12 key may then be written by a catch-up or may never be (the next run after recovery writes the then-current T-1), which is a dated re-point inside this decomposition and not an ENDPOINT change. Recovery is site Z's Terminal sign-in, which 0.0.0_AB_MSTR~Z reports it told 1.0.0_SA_CTO~Z and Andrew; this seat does not act there. Disarm/close: the first scheduled manifest after the sign-in, read by this seat."
+}
+```

@@ -6806,3 +6806,157 @@
   }
 }
 ```
+
+## IRPT_ANLREQ-D2-S70 -- (disarm row; this seat's own) the irpt-holdings artifact key's latest version is the live package again
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S70",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T11:32:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "DISARMS rows IRPT_ANLREQ-D2-S69 and IRPT_ANLREQ-D2-W64-S5: the irpt-holdings artifact key's latest version is the live package again (version hfQkgY1L, read back by this seat).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Rows S69 and W64-S5: the key investor-reporting/irpt-holdings.zip carried three wrong versions, the latest wrong, written by rebase workers at pre-guard commits; the live Lambda unchanged.",
+  "world_is": "MEASURED by this seat 2026-10-13 ~11:3xZ: list-object-versions on the key shows hfQkgY1LcwrlvQCRQrJJlUJ2TLeah6op as latest (2026-10-13T11:24:26Z, 299273 bytes); get-object of the latest downloaded and hashed: sha256 base64 SWRfUfHdJarO2Rhbxw/KQK88DeDNorQujkaR1jUuZc0=, equal to the live CodeSha256 of irpt-holdings (get-function, LastModified 2026-10-12T14:08:33Z, unchanged). The three wrong versions (T1NEd9G., msFi8sD6, QCyspt0v) are kept, nothing deleted. Applier 0.7.0_AE_CloudOps~AQ2, order TO-RESTORE-R20a flipped complete after the applier's proof instance validated (VALID rc 0, run by this seat), ledger irpt-holdings-key-restore-20261013 CLOSED. NOT covered: the row W64-S6 (the pre-guard trap in the instrument) stays ARMED, mine: the y213-rebase check now counts collection and setup ERRORS like failures (amendment 2), AR-y-216 forbids build-and-upload.sh, and the status-rule pair's builds are the applier's, at a base whose builder carries the guard; the older candidates are named unsafe here. The other seven artifact keys were read after the incident and carry no version written by today's workers.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "list-object-versions and get-object of irpt-holdings.zip, hashed by this seat",
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r20/R3_READBACK_R20.txt and its proof instance (VALID)",
+      "aws lambda get-function irpt-holdings"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W65-S2 -- the narrative control of AR-y-216 does not isolate the rule at HEAD: the suite stages served.py at the rule pin itself
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W65-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~65",
+  "surfaced_at": "2026-10-13T11:43:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Narrative control premise: the AR-y-216 control (original served.py staged in place, pin 361c44fa9d) still fails 13 of 69 because test_served_error_path.py stages served.py at the rule pin itself; the control holds only with the parent-commit test file of 9ea2ba048d",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-216 step 1: CONTROL = the same run with the ORIGINAL served.py staged in place (narrative: pin 361c44fa9d); the failures that remain are PRE-EXISTING and control_failed_names lists them.",
+  "world_is": "At HEAD narrative/tests/test_served_error_path.py (commit 9ea2ba048d, AR-y-212) pins SERVED_PIN to 564e6048 and SERVED_SHA256 to 30c0eb88; test_opal_capital_binding.py and test_no_row_unknown.py reuse its _stage. Swapping only _authz/served.py to 361c44fa9d gives 13 failed and 56 passed, the same 13 names as the rule run, so that control cannot separate pre-existing from release-only. With the parent-commit test file (git cat-file blob 9ea2ba048d^ of that path) and served.py at 361c44fa9d the folder gives 69 passed, 0 failed, so all 13 are release-only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show --stat 9ea2ba048d: one narrative test file changed (test_served_error_path.py, 11 lines), in the history of HEAD c5950e99c6",
+      "measured at c5950e99c6 before any edit: narrative 56 passed 13 failed with served.py swapped to 361c44fa9d (same 13 names); with the parent-commit test file and served.py at 361c44fa9d 69 passed 0 failed"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W65-S3 -- a folder copy cannot serve as the AR-y-216 control: the suites need a real git checkout at repo depth
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W65-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~65",
+  "surfaced_at": "2026-10-13T11:43:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Control method: a copy of the investor-reporting folder fails at collection (repo-depth paths, git rev-parse and git show of a pin inside the suites), so the control ran in a detached throwaway worktree of HEAD",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-216 step 1: the control is the original served.py staged in place, run in a scratch copy of the tree OUTSIDE the worktree (git show of the pin into the copy).",
+  "world_is": "A folder copy fails: at a shallow depth IndexError at collection; at repo depth FileNotFoundError (export), CalledProcessError (narrative) and 69 failed with 38 errors (directory), because the suites read repo-root files and run git rev-parse --show-toplevel and git show <pin>:<path>. The control ran in a checkout made by git worktree add --detach C:/dev/wk65-control/base HEAD (78,785 files). Only _authz/served.py was swapped there, and HEAD's blob was restored after each run. That worktree is still registered in the shared repository (git worktree list) and was not removed, because no recursive delete was permitted to this worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured at c5950e99c6: a folder copy at a shallow depth gives IndexError: 6 at collection (directory, export) and CalledProcessError (narrative); the copy at repo depth gives 69 failed and 38 errors (directory) and FileNotFoundError at collection (export)",
+      "git worktree list after the control: C:/dev/wk65-control/base detached at c5950e99c6"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W65-S4 -- the status rule reaches a no-selection internal caller through narrative's own entry
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W65-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~65",
+  "surfaced_at": "2026-10-13T11:43:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The status rule also reaches a no-selection internal caller through narrative's entry: a row without status makes narrative hand roster None (class UNKNOWN), although the reader is documented to run only on a cross-firm selection",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "served.py _internal_allowed_firms docstring and the AR-y-216 cell: the status rule runs only when the caller selects a firm other than its verified firm (Entry.handle).",
+  "world_is": "narrative/entry.py calls self._internal_allowed_firms for every internal caller with no selection: _live_roster (line 198) and _held_to_verified_firm (line 218). A row without status raises inside that call, and _live_roster turns the raise into roster None. The narrative no-selection case row_listed_no_selection (control_shared_entry_row_listed keeps roster ops@) now expects roster None and class UNKNOWN. The change is fail-closed, not widening; it is recorded so the reach of the rule is known.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "narrative/entry.py at c5950e99c6: line 198 inside _live_roster and line 218 inside _held_to_verified_firm both call _internal_allowed_firms",
+      "narrative suite after the expectation edit at fdae98d07a: 69 passed, with row_listed_no_selection asserted roster None and class UNKNOWN"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W66-S2 -- the head's irpt-status files already hold the release bytes, so the release run is the head as it is
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W66-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~66",
+  "surfaced_at": "2026-10-13T12:07:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO-AR-y-217 step 5 stages the release served.py and status.py in place of the head ones, but at the worktree HEAD the head ones already are the release bytes (served.py 30c0eb88, status.py 8df461a0), so the release run is the head as it is and only the control swaps the live bytes in",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-217 step 5: run the ops/tests folder with the release served.py and status.py staged in place of the head ones (the head ones differ from the release), and record the same run with the ORIGINAL live served.py and status.py as the control.",
+  "world_is": "At fecc3f6e81 the files infra/aws/lambda/investor-reporting/_authz/served.py and ops/status.py are the release blobs (sha256 30c0eb88ec38 and 8df461a0d395, the same as the release zip members). The live Lambda package holds the pre-rule blobs (served.py ada9bf5b, status.py cb3b2ea6, from pin 361c44fa9d). So the head is not the pre-rule state, and the 'staged in place of the head ones' step is a no-op for the release run. Measured: ops tests on the release bytes 313 passed, 22 skipped, 0 failed; with the live bytes 310 passed, 3 failed (test_report_ticket_binding.py), 22 skipped. The control therefore carries the failures that the release clears.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show fecc3f6e81:infra/aws/lambda/investor-reporting/_authz/served.py | sha256sum = 30c0eb88ec38a7dd... (the release blob 564e60483858a3cc5c51ffea6aed0f76ff291abe)",
+      "git show fecc3f6e81:infra/aws/lambda/investor-reporting/ops/status.py | sha256sum = 8df461a0d3957949... (the blob of e93258c650b369df46e22210d94add7cbb0d1749)",
+      "aws lambda get-function --function-name irpt-status: CodeSha256 JmOhV/ep4mR1mt2NKKqyUlohgO3mlDw1GEM4eAWYKdw=; the downloaded package holds served.py ada9bf5b and status.py cb3b2ea6 (scratch .scratch/r20/irpt-status/live_zip)",
+      "scratch logs .scratch/r20/irpt-status/tests_ops_release.log and tests_ops_control_live.log"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W66-S3 -- the control ran in the detached base checkout, not in a scratch copy of the tree
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W66-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~66",
+  "surfaced_at": "2026-10-13T12:07:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO-AR-y-217 step 5 asks for the tests in a scratch copy of the tree; the run used the throwaway detached base checkout C:/dev/wk66-release/base instead, swapping the two live blobs into its files for the control and restoring the release blobs after, the method W65-S3 already recorded as the only one that runs",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-217 step 5: the ops tests run 'in a scratch copy of the tree'; the control is the same run with the original live served.py and status.py.",
+  "world_is": "A folder copy is not used, because a copy outside the checkout fails at collection (IRPT_ANLREQ-D2-W65-S3). The release run ran in the detached base checkout as it is (its served.py and status.py are the release bytes already). The control copied the live blobs (361c44fa9d served.py and status.py) over those two files, ran the folder and then copied the release blobs back from git (sha256 re-read: 30c0eb88 and 8df461a0). The parity control ran the same way. The checkout is a git worktree that is not removed, since no recursive delete was permitted to this worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git worktree add --detach C:/dev/wk66-release/base 5d8b0390ed; HEAD is 5d8b0390ed after the add (the base commit of the cell)",
+      "after the control run and the restore: sha256sum of _authz/served.py 30c0eb88ec38 and ops/status.py 8df461a0d395 (scratch logs parity.log and parity_control_live_status.log)",
+      "prior evidence IRPT_ANLREQ-D2-W65-S3 (folder copy fails at collection)"
+    ]
+  }
+}
+```
