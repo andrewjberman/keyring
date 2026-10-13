@@ -8931,3 +8931,103 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W86-S1 -- the cell names portal/src/lib/chartColors.ts as the home of MODEL_PORTFOLIO_COLORS; the map is in modelPortfolioColors.ts
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W86-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~86",
+  "surfaced_at": "2026-10-13T19:01:04Z",
+  "one_line": "AR-y-261 names portal/src/lib/chartColors.ts as the home of MODEL_PORTFOLIO_COLORS; the map is declared in portal/src/lib/modelPortfolioColors.ts, and chartColors.ts names it in comments only.",
+  "spec_asserts": "AR-y-261 step 2 says the portal's own model list is portal/src/lib/chartColors.ts MODEL_PORTFOLIO_COLORS, and asks the worker to read it there.",
+  "world_is": "At portal commit 53506d4903 (the gitlink this worktree pins; an ancestor of the base portal HEAD cf52fdbf), MODEL_PORTFOLIO_COLORS is declared at src/lib/modelPortfolioColors.ts:18 and its Ultra-Short Term entry at :55-62. src/lib/chartColors.ts holds PALETTE and mentions MODEL_PORTFOLIO_COLORS only in comments (:129, :134, :646). The read was made with git show of the pinned commit; nothing was changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@53506d4903 src/lib/modelPortfolioColors.ts:18 read by git -C C:/dev/ajb_workspace/portal show 53506d4903:src/lib/modelPortfolioColors.ts",
+      "portal@53506d4903 src/lib/chartColors.ts:129,134,646 (comments only) read by the same git show"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W86-S2 -- the worktree's portal/ submodule is an empty directory; portal facts were read from the pinned object store
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W86-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~86",
+  "surfaced_at": "2026-10-13T19:01:04Z",
+  "one_line": "The worktree's portal/ submodule is not populated, so every portal read in AR-y-261 was made from the base checkout's object store at the pinned gitlink, not from the worktree.",
+  "spec_asserts": "The worktree carries the portal/ product files the cell names as READ paths (portal/src/pages/TicketCenter/AnalysisRequestParts.tsx, comparisonCatalogue.ts, modelPortfolioColors.ts, ModelPortfolios.tsx).",
+  "world_is": "C:/dev/wk-irpt-anlreq-86/portal is an empty directory; the superproject pins portal at 53506d4903 (git ls-files -s portal: mode 160000). Reads used git -C C:/dev/ajb_workspace/portal show 53506d4903:<path> and git grep on that commit (read-only; no fetch, clone, checkout or submodule update). 53506d4903 is an ancestor of the base portal HEAD cf52fdbf, and git diff --stat between the two commits is empty for the six key files. No tree was rebuilt or extracted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -s portal in C:/dev/wk-irpt-anlreq-86 prints 160000 53506d4903aeabac675d87b7fe208fc9945c8ce7 portal; ls -la portal lists no files",
+      "git -C C:/dev/ajb_workspace/portal merge-base --is-ancestor 53506d4903 cf52fdbf returned success; diff --stat over the six key files returned rc 0 with no output"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W86-S3 -- Ultra Short-Term is not in the catalogue's source, so no filter can drop it; the CTO ruling assumes it is
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W86-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~86",
+  "surfaced_at": "2026-10-13T19:01:04Z",
+  "one_line": "The served comparison catalogue is built from templates.json, which holds four model entries and no Ultra Short-Term entry; the form cannot show what the catalogue never serves.",
+  "spec_asserts": "The served comparison catalogue lists every Opal model in the catalogue, Ultra Short-Term included (CTO ruling msg 7151, item 1, relayed in AR-y-261).",
+  "world_is": "The catalogue's model source is infra/aws/lambda/investor-reporting/ycharts/generate/templates.json comparison_catalog.entries, which holds opal_long_term (:103), opal_short_term (:134), opal_intermediate_term (:165) and opal_ultra_long_term (:196). A Grep of the investor-reporting tree finds no Ultra Short-Term or UST model entry. build_catalogue (comparison_catalogue.py:184-200) served those four entries in an offline run (rc 0; 4 entries; no Ultra-Short label). The source's own _meta.claim and verification_requirements require a separate vendor identity verification and firm permission before an entry is added, and forbid inferring a vendor ID from a label. So the fix is not a repo-only edit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "templates.json key lines 103,134,165,196 read by grep -n on the worktree file; comparison_catalogue.py:184-200 run offline via python -c from ycharts/generate (rc 0, 4 entries)",
+      "templates.json _meta.claim and comparison_catalog.verification_requirements read at the worktree file"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W86-S4 -- the estate's model order is written three times, and the served catalogue order is not that order
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W86-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~86",
+  "surfaced_at": "2026-10-13T19:01:04Z",
+  "one_line": "AR-y-261 asks for the estate's one definition of the model order; three copies exist and agree on the five names, and the served catalogue order and the form do not follow them.",
+  "spec_asserts": "The estate holds one definition of the Opal model order, which the form can use for canonical order (AR-y-261 step 4).",
+  "world_is": "Three copies agree on one order: portal src/pages/ModelPortfolios.tsx:88-94 (MODEL_ORDER), portal src/lib/modelPortfolioColors.ts:250-258 (getAllModelColors), and infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-model-portfolio-benchmarks/lambda_function.py:66 (MODEL_CODES = UST, ST, INT, LT, ULT). The served catalogue order is Long, Short, Intermediate, Ultra Long (templates.json :103, :134, :165, :196), and the form renders served order (portal AnalysisRequestParts.tsx:112-121). The holdings tab orders sub-asset classes (portal HoldingsBreakdownTable.tsx:129-176), not models.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@53506d4903 src/pages/ModelPortfolios.tsx:88-94 and src/lib/modelPortfolioColors.ts:250-258 read by git show of the pinned commit",
+      "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-model-portfolio-benchmarks/lambda_function.py:66 and :72-78 read at the worktree"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
