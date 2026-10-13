@@ -32633,3 +32633,54 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The ledger the source map cites as this function's deploy record is CLOSED and does not name the function in its text. The text scan of step 2 found 49 ledgers naming the function, all CLOSED; the cited ledger is not among them. The record of the function's last deploy therefore cannot be found by a text scan."
 }
 ```
+
+## IRPT_BCKEND-D2-W368-S4 -- The stored receipts do not lack facts.covered_account_ids: the dry-run census found one receipt, and it already carries the field
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W368-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~368",
+  "surfaced_at": "2026-10-13T23:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's premise that receipts written before IB-pr-343 lack facts.covered_account_ids, so that the backfill tool has receipts to fill, is not borne out at this read: the backfill tool's dry-run census listed one receipt, which already carries the field (receipts_lacking_field 0, branch none_needed). The one receipt is refused by the live v1.1 read today, which the apply resolves.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/tools/backfill_covered_account_ids.py@afa744802e: --dry-run is the default; a receipt whose facts carry a non-empty covered_account_ids is counted FILLED with source already_named",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~368/IB185-1_arms_receipts_ledgers.json (receipt_census: receipts_total 1, receipts_with_field 1, receipts_lacking_field 0, unreadable_or_denied 0; mode dry_run_reads_only)",
+      "cross-check at read time (counts only): 47 objects under the firms/ prefix of the evidence bucket, 1 key ending receipt.json, which is in the documented shape"
+    ]
+  },
+  "spec_asserts": "IB-pr-519 step 9 and the cell text: receipts written before IB-pr-343 lack facts.covered_account_ids and the backfill tool fills them, so the census counts them for the branch backfill_first.",
+  "world_is": "At 2026-10-13 the evidence store holds one receipt, and it carries the field. The census therefore counts zero receipts lacking the field and zero unreadable objects. The premise of a population of pre-IB-pr-343 receipts is not present in this store at this read. This is one read, not a standing fact: the packet's branch none_needed is valid for this read only, and the apply re-reads the store."
+}
+```
+
+## IRPT_BCKEND-D2-W368-S5 -- A worktree listed by git worktree list has no directory on disk, so its open-deploy markers could not be read
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W368-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~368",
+  "surfaced_at": "2026-10-13T23:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The worktree record C:/dev/wk-irpt-anlreq-104 is listed by git worktree list --porcelain, but its directory does not exist, so git -C on it fails with not a git repository. Step 2 read 54 of 55 listed worktrees; the marker scan of the function is therefore complete for 54 worktrees only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git worktree list --porcelain at afa744802e (run from C:/dev/wk-IRPT_BCKEND-368): 55 worktree entries, including C:/dev/wk-irpt-anlreq-104; plain git worktree list lists 54 lines",
+      "test -d on C:/dev/wk-irpt-anlreq-104 at read time: absent"
+    ]
+  },
+  "spec_asserts": "IB-pr-519 step 2: every open marker on every worktree is read (git worktree list --porcelain, then git -C <wt> ls-tree -r --name-only HEAD org/critical_paths/.open_deploys/).",
+  "world_is": "One listed worktree is unreadable, so its markers are not in the denominator (788 marker files read across 54 readable worktrees; 0 naming irpt-export-render). The record is stale; its owner decides whether to prune it. This order closes nothing and changes nothing in that worktree."
+}
+```
