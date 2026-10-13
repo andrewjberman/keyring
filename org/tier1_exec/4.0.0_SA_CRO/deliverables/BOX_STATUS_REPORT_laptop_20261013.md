@@ -112,7 +112,7 @@ footprint:
   standing_holds: []
 if_parked_this_week: "dell2 loses its laptop reader; 2 acked cross-box orders (552a, e261) stay open."
 cro_rec: KEEP
-cro_rec_why: "Client-facing and dell2-led; the laptop seat is idle, so keeping it costs one idle seat."
+cro_rec_why: "KEEP the project on dell2; the laptop seat exists only because dell2 lacks kms:Decrypt on the IRPT key, and stands down once that is granted (ANDREW_DIRECT_20261013_131xZ)."
 ```
 The laptop's share is one CloudOps seat that runs stored-input recounts for dell2 (TO-READS-Y10 complete, 05:35Z). The project's
 own status belongs to dell2's report.
@@ -148,7 +148,7 @@ footprint:
   standing_holds: []
 if_parked_this_week: "A half-migrated firm-bucket cutover: 49financial readers are moved, other firms are not; open ledgers on dell1 stay open."
 cro_rec: KEEP
-cro_rec_why: "A half-finished data migration is the worst state to stop in; the laptop seat applies its laptop-side legs."
+cro_rec_why: "KEEP the project on dell1 (a half-finished migration is the worst state to stop in); the laptop seat exists only because dell1 cannot simulate IAM or deploy the protected edge functions, and stands down once granted (ANDREW_DIRECT_20261013_131xZ)."
 ```
 The laptop applied the edge-function leg (FB-f-19, 2026-10-12) and the Inflection fence admit (FB-f-21, 2026-10-13 01:18Z). The
 1 open ledger counted is `advi-firmbkts-fb-f-19-act4-edge-leg-laptop-20261012`, and it exists only in the stale worktree.
