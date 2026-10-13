@@ -6624,3 +6624,32 @@
   }
 }
 ```
+
+
+## IRPT_ANLREQ-D2-S69 -- my order let a rebase worker run build-and-upload.sh at pre-guard commits; the irpt-holdings artifact key holds three wrong versions
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S69",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T11:14:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "My order AR-y-213 listed candidate base commits for a BUILD_ONLY without requiring that build-and-upload.sh at the candidate carries the BUILD_ONLY guard; at pre-guard commits the script UPLOADS, and the irpt-holdings artifact key received three wrong versions today.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "AR-y-213 step 2 (and the AR-y-201 and AR-y-212 faces it copied): 'BUILD_ONLY ... exits before any aws call'. True at base 5d8b0390ed (lines 691-696 of build-and-upload.sh, read by the AR-y-201 worker); not true at e274a0e60c and 69679b90e3 and the other candidates the order named.",
+  "world_is": "MEASURED by this seat 2026-10-13 ~11:1xZ: the key investor-reporting/irpt-holdings.zip in opal-313476888478-lambda-artifacts has versions T1NEd9G. (07:42:43Z), msFi8sD6 (10:52:50Z) and QCyspt0v (10:53:08Z, the latest), all 294243 bytes, sha256 base64 tS/APci3Mz/YRDP7pJboAVqKabShek9jYUqvQDIYwwE=; version dWoiYeH9 (2026-10-12T13:51:17Z, 299273 bytes) hashes to SWRfUfHdJarO2Rhbxw/KQK88DeDNorQujkaR1jUuZc0=, the live CodeSha256 of irpt-holdings (get-function, unchanged). The other seven keys (performance-adapter, narrative, status, directory-search, ycharts-generate, export-render, 49f-reporting-read-lambda) carry no version written by today's workers (latest versions listed and dated). No function was updated. The hazard: a Terraform plan or apply for irpt-holdings that reads the latest object would take the wrong bytes. Repair: TO-RESTORE-R20a (applier 0.7.0_AE_CloudOps~IB2) copies dWoiYeH9 onto the key; nothing is deleted. Worker rows W64-S1, S2 and S5 carry the same facts from the worker's side.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-object-versions for the eight keys, read by this seat",
+      "aws s3api get-object by version id for dWoiYeH9, T1NEd9G. and QCyspt0v, sha256 base64 computed by this seat",
+      "aws lambda get-function irpt-holdings CodeSha256 SWRfUfHd..., LastModified 2026-10-12T14:08:33Z"
+    ]
+  },
+  "notes": "Disarm by the restore's read-back (the new latest equals the live package) and by the issuer's amendment of AR-y-213 requiring the BUILD_ONLY guard at the candidate base before any build."
+}
+```
