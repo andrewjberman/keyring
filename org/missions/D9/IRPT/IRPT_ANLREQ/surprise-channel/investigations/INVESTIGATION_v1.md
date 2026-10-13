@@ -9386,3 +9386,138 @@
   }
 }
 ```
+
+## IRPT_ANLREQ-D2-W90-S1 -- the AR-y-265 grant names only the investigations file, but the cell's deliverable is a portal src/ commit
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W90-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~90",
+  "surfaced_at": "2026-10-13T19:40:36Z",
+  "one_line": "The cell's deliverable is a portal commit under portal/src/, outside the workspace <paths> the order grants; the face directs the portal worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-265 Bounds: the grant is exactly the <paths> (the investigations file), the deliverables folder and this order's file; the cell says the fix is a portal candidate under src/ on a portal branch in the portal repository.",
+  "world_is": "The portal src/ change sits in the portal repository (C:/dev/ajb_workspace/portal), outside the granted workspace paths. The face directs the portal worktree C:/dev/wk-portal-90 (branch wk-IRPT_ANLREQ-90-portal), where the candidate is two local commits, 923f7d69 and 794b7df4, on base f6ef1d25. Nothing was pushed, landed or deployed. The issuer should confirm that portal src/ writes are granted for this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-265.analysis-request-submit-silent-failure.md (Bounds, the <paths> block)",
+      "git -C C:/ajb_workspace/portal worktree list: C:/dev/wk-portal-90 on wk-IRPT_ANLREQ-90-portal at 794b7df4 (read by this seat)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W90-S2 -- the ticket CREATE refusals carry no code, so no refusal table can key on them
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W90-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~90",
+  "surfaced_at": "2026-10-13T19:40:36Z",
+  "one_line": "The service's CREATE refusals answer {error: text} with no code key; the page cannot map them to words by code.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-265 step 2: read the service side for what it REFUSES and the codes it returns; step 4: the service's refusal code is mapped to words where the portal has a table for it.",
+  "world_is": "infra/aws/lambda/ticket_center/lambda_function.py create_ticket answers each refusal as {error: <text>} with no code key: 400 from _validate_service_fields, _validate_answers (lines 689-735), _validate_attachment (lines 738-752), the requester_firm mismatch and the firm check; 403 from _deny (lines 339-341) and _resolve_scope (lines 398-406). The portal's apiRequest (src/api/api-client.ts lines 178-181) throws 'API request failed: <status> - <body>', so the page showed the raw service body before the change. The candidate shows the generic CREATE sentence instead; no code exists to key a table on.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py at workspace HEAD 56c8113a00 (read by this seat): create_ticket lines 1145-1206, _deny 339-341, _validate_answers 689-735, _validate_attachment 738-752",
+      "portal/src/api/api-client.ts at f6ef1d25 lines 178-181 (read by this seat)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W90-S3 -- a test file that releases the shared dom-env helper strands every later DOM test file
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W90-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~90",
+  "surfaced_at": "2026-10-13T19:40:36Z",
+  "one_line": "dom-env registers the DOM once per process and cannot register again; a file that releases it leaves later DOM-bound test files with no DOM.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "A test file that needs a DOM imports the shared dom-env helper and releases it in afterAll, as commentary-sent.test.tsx does.",
+  "world_is": "Measured in this cell: a mounted-page test file that called releaseDom() made commentary-sent.test.tsx fail 4 DOM-bound tests when the two ran together (12 pass, 4 fail); with the release removed the pair ran 15 of 15. The helper's module registers once and never again, so any later file that imports it after a release has no DOM. The candidate's test file registers happy-dom itself only when no DOM is present and releases only that. A future file that copies the release pattern will break later DOM tests without a visible cause.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/dom-env.ts at f6ef1d25: GlobalRegistrator.register() at module load; releaseDom() unregisters (read by this seat)",
+      "bun test of src/pages/TicketCenter/__tests__/analysis-submit-silence.test.tsx with commentary-sent.test.tsx, measured 12 pass 4 fail with the release and 15 pass 0 fail without (this seat, portal worktree C:/dev/wk-portal-90)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W90-S4 -- the service-request branch of the same create form has two silent ends the cell does not own
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W90-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~90",
+  "surfaced_at": "2026-10-13T19:40:36Z",
+  "one_line": "The service-request create still returns silently on an empty title and renders nothing on an error with an empty message; not fixed (neighbouring path).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-265 step 4: every hop that ended silently shows a plain sentence on screen, scoped to the Analysis Request submit.",
+  "world_is": "On origin/DEV f6ef1d25 TicketCenter.tsx handleCreate (line 385) returns with no message when the title is empty, which the disabled button prevents by click; its catch (line 401) sets the page error from e.message, which renders nothing when the message is empty. The candidate shows the held reason for the service-request button (the disabled rule itself is unchanged) and leaves these two ends as they are.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx at f6ef1d25 lines 385 and 401 (read by this seat)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W90-S5 -- origin/DEV moved under the cell and a landed commit touches the same TicketCenter.tsx
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W90-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~90",
+  "surfaced_at": "2026-10-13T19:40:36Z",
+  "one_line": "origin/DEV advanced from f6ef1d25 to 4d601023 during the cell; 4d601023 edits TicketCenter.tsx; the candidate merges onto it cleanly (merge-tree rc=0).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-265 step 1: record dev_tip as the full sha of origin/DEV at fetch; the candidate is judged against the DEV tip without the change.",
+  "world_is": "The dev_tip recorded at fetch is f6ef1d2548cf6f619f80662d3082d66ea0a3fcf4. The shared origin/DEV ref now reads 4d601023 (commit 'hide(TicketCenter, 1.0.0_SA_CTO~DELL2): Trade Request is not offered in the new-ticket type list', +3/-1 in TicketCenter.tsx) on top of c1d36723 (a landed merge of the AR-y-252 candidate). The before arm is measured against the recorded base f6ef1d25. A read-only merge of the candidate onto 4d601023 completes with no conflict (git merge-tree rc=0, tree 3c7161fa9e340c13ee005a16004d28d7e1ff7f27). The merge result was not checked for behaviour.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/ajb_workspace/portal log origin/DEV (read by this seat): 4d601023, c1d36723",
+      "git merge-tree --write-tree origin/DEV 794b7df4 (read-only, this seat): rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
