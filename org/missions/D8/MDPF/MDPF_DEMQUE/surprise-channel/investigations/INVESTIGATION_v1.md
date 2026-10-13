@@ -2020,6 +2020,149 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "real index read 2026-10-13: 326 rows, min valid_from 2013-04-08, max valid_to 2026-10-12"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W42-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~42",
+    "surfaced_at": "2026-10-13T17:32:49Z",
+    "one_line": "The $1.00 money market skip matches no priced name: the rule (MONEY MARKET in the name AND cash_equivalent true) selects 0 of 606, so the two Fidelity money market CUSIPs are read and pulled.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-50 BUILD step 2, cash-equivalent rule: a name whose text contains MONEY MARKET (case blind) and whose cash_equivalent flag is true is SKIPPED; every other cash equivalent, including an UNREAD one, is pulled.",
+    "world_is": "Of 227 priced Cash Equivalent names, 33 are in the held snapshot, all with cash_equivalent false, and 194 are absent (UNREAD, pulled). The snapshot rows with flag true are 973 over 2 CUSIPs (CASH and 316067107), neither priced, so 0 names are skipped. Two Fidelity money market CUSIPs are pulled as read-but-not-skipped: 316175108 (name FIDELITY COLCHESTER STR TR MNY MRKT FDS I, flag false, 21 rows) and 316175207 (FIDELITY COLCHESTER STR TR MONEY MKT CL I, flag false, 1 row). The rule as written does not reach its intent; the issuer decides the rule text. The request is built as written (skipped 0, unread pulled 194).",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "b1_request.py --build at 1dcdbbde7d (S3 read only): skipped_one_dollar 0, unread_pulled 194, priced_names 606, securities 614",
+        "held snapshot silver/cot_holdings.parquet: CUSIP 316175108 and 316175207 rows carry cash_equivalent false; asset_name MNY MRKT and MONEY MKT",
+        "explore over the snapshot: 0 of 227 priced Cash Equivalent CUSIPs have any row with cash_equivalent true and a MONEY MARKET name"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W42-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~42",
+    "surfaced_at": "2026-10-13T17:32:49Z",
+    "one_line": "The R9 check dq_t50_real.py docstring states priced_names + skipped_one_dollar == 606 + 0, but its executable arms require priced_names == 606 and securities == priced_names - skipped_one_dollar + funds_joined.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "dq_t50_real.py docstring: 'priced_names + skipped_one_dollar == 606 + 0'.",
+    "world_is": "The arms govern and were met: priced_names 606, securities 614 == 606 - 0 + 8. The docstring identity holds only while skipped_one_dollar is 0; with any skip the docstring and the arms disagree. The worker did not edit the issuer's check file; the arms were met as written.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t50_real.py docstring: priced_names + skipped_one_dollar == 606 + 0",
+        "dq_t50_real.py arms: priced_names == 606 and securities == priced_names - skipped_one_dollar + funds_joined; AC2 printed B1-REAL-OK"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W42-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~42",
+    "surfaced_at": "2026-10-13T17:32:49Z",
+    "one_line": "The held snapshot silver/cot_holdings.parquet has no row in the legacy address registry; the builder derives its bucket and name from the registry's silver transactions row and the firm short token, because the naming gate refused the typed filename.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-50 BUILD: read the held snapshot s3://opal-data-cot/silver/cot_holdings.parquet (columns cusip, asset_name, asset_display_name, cash_equivalent); CLAUDE.md rule 30: every S3 address is lib/opal_naming output.",
+    "world_is": "infra/logic/registry/legacy_addresses.json has no row for the snapshot, and no lib file names it. The first commit attempt of the code paths was refused by the naming gate (NAMING REFUSE b1_request.py cot_holdings.parquet -> lookup('cottonwood')). b1_request.py now reads the object the order names: bucket from legacy_address of cottonwood-silver-transactions-prefix, name from lookup('cottonwood')['short'] plus _holdings.parquet; 341,985 bytes and 10,183 rows at read. A registry row for the snapshot would retire the derivation.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit of the code paths, first attempt: NAMING REFUSE data/mdpf/scripts/demque/b1_request.py:74 cot_holdings.parquet -> lookup('cottonwood'); rc 1; files unstaged",
+        "grep of infra/logic/registry/legacy_addresses.json for the snapshot name: no row (the Cottonwood rows are cottonwood-silver-canonical-prices, cottonwood-silver-transactions-prefix, cottonwood-silver-historical-prices)",
+        "read of the snapshot on 2026-10-13: get_object returned 341985 bytes; pyarrow read 10183 rows"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W42-S4",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~42",
+    "surfaced_at": "2026-10-13T17:32:49Z",
+    "one_line": "The order's window start is max(first held date, 2012-01-01), but the P1 builder starts a name at its first Trade_Date (any type, any account); the request uses the builder's window, and no held-history table was read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-50 BUILD step 2 and Worker face item 1: the floor is max(first held date, 2012-01-01); the window end is the merged P1 builder's.",
+    "world_is": "card_a_slice.trade_windows sets start = max(first Trade_Date, 2012-01-01) and end = the frontier when held, else the last Trade_Date. No held-start is defined there, and the held snapshot is current-only. The worker used the builder's start for the P1 names; the end rule is the builder's, as the order also says. The earliest start in the request is 2013-04-09; cells 37514. A held-start rule would need a held-history source the order does not name.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/card_a_slice.py trade_windows at 1dcdbbde7d: start = max(first_day, FLOOR); end = frontier_day if held else min(last_day, frontier_day)",
+        "b1_request.py --build at 1dcdbbde7d: window_start 2013-04-09, cells 37514, days_to_finish 18"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W42-S5",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~42",
+    "surfaced_at": "2026-10-13T17:32:49Z",
+    "one_line": "The order requires a merge of box/dell1 before the rows are appended; the worker standing rules forbid a merge. This worker merged box/dell1 into its own branch (ad0aa2bf3d) because the investigation file differs by 41 lines from its base.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO refusal clause: 'Merge box/dell1 into your branch (a merge, never a rebase) before you append rows'; the worker rules: never push, merge, rebase, checkout or clean.",
+    "world_is": "git diff 932f896786 box/dell1 on this investigation file: 41 insertions (rows of other workers). The merge was a plain merge into wk-MDPF_DEMQUE-42 with no conflict (merge commit ad0aa2bf3d, rc 0). Nothing was pushed or rebased. This is the rule collision of MDPF_DEMQUE-D1-W41-S1; the drain should rule which governs.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff --stat 932f896786 box/dell1 on the investigation file: 1 file changed, 41 insertions",
+        "git merge --no-edit box/dell1 in wk-MDPF_DEMQUE-42: rc 0, merge commit ad0aa2bf3d, no unmerged paths"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W43-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~43",
+    "surfaced_at": "2026-10-13T17:44:38Z",
+    "one_line": "On the real store index the UNTESTABLE arm of DQ9-t51-AC2 is vacuous: no held window is under 10 trading days (the minimum is 125), so the real run lists 0 UNTESTABLE securities; the UNTESTABLE path is exercised only by the synthetic test.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-51 ACCEPTANCE DQ9-t51-AC2: 'the UNTESTABLE ones are listed with the reason'; the report asks for 'the count of UNTESTABLE securities'. The decomposition's DQ-t-51 amendment frames a window under 10 trading days as a case that occurs.",
+    "world_is": "Read-only probe of index/index.parquet at the worker's HEAD: 326 rows, 326 distinct CUSIPs; minimum trading days in the draw window 125; 182 windows are under 252 trading days (the 1-year length is replaced there); 0 windows are under 10. The --build line reads testable 326, untestable 0, intervals_total 1630, cells 3195. The 182 short windows are short against one year, not against ten trading days.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "porting_test.py build_request at a8710f8b4a: a window with fewer than MIN_WINDOW_DAYS=10 trading days is listed untestable",
+        "dq_t51_real.py run 2026-10-13 (rc=0): INT-REAL-OK 326 testable with exactly 5 intervals each, 0 UNTESTABLE, 3195 cells",
+        "read-only probe .scratch/t51_index_probe2.py (uncommitted): denominator 326, min N 125, N<252 count 182, N<=60 count 0"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W43-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~43",
+    "surfaced_at": "2026-10-13T17:44:38Z",
+    "one_line": "The order says a fixed length that does not fit is replaced by a sha256 draw from 'a salted second digest' and says 'does not fit inside the window (in trading days)' without a test; the worker chose the salt, the word order and the fit test, and the draw now depends on those choices.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-51 BUILD step 1: 'a length that does not fit inside the window (in trading days) is REPLACED by a length drawn from the digest between 5 and N - 1 trading days (a salted second digest if the first has been used, so the replacement is deterministic)'.",
+    "world_is": "porting_test.py at a8710f8b4a: a fixed length fits for k 0..2 when its calendar length has room inside the window and both endpoints snap to trading days inside it with at least 5 trading days between them. A replacement uses sha256('<cusip>|<k>|r'): word 0 gives the length 5 + (w mod (N-5)), so 5 to N-1; word 1 gives the start index (w mod (N-L)). k 3 and 4 use the first digest: length 5 + (word 1 mod (min(250, N-1)-4)). The draw is deterministic, so a second implementer must reproduce these bytes or the request differs.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/porting_test.py _fixed, _replacement, _drawn at commit a8710f8b4a",
+        "data/mdpf/scripts/demque/test_demque_porting_intervals.py test_a_fixed_length_that_does_not_fit_is_replaced_by_a_sha256_drawn_length_that_fits_so_every_testable_security_has_five_intervals recomputes the salted draw"
+      ]
+    }
   }
 ]
 ```

@@ -55,7 +55,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AMGT-bj-4"><invocation>cd C:/dev/wk-resapp-406 &amp;&amp; python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round103_prep/checks/r103_admission_arms.py" --instrument "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round94_prep/checks/r94_admission_table.py" | tail -7; echo "exit=${PIPESTATUS[0]}"</invocation><expect>five PASS rows (A1 to A5), `arms passed 5 of 5`, `R103 ADMISSION ARMS: YES`; and exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="AMGT-bj-4"><invocation>cd C:/dev/wk-resapp-406 &amp;&amp; git diff --name-only "$(git merge-base HEAD box/dell1)" HEAD -- . ":(exclude)org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~406" | sort</invocation><expect>exactly one line, `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round94_prep/checks/r94_admission_table.py`, and no other line</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-bj-4"><invocation>cd C:/dev/wk-resapp-406 &amp;&amp; git diff --name-only "$(git merge-base HEAD box/dell1)" HEAD -- . ":(exclude)org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~406" ":(exclude)org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel" | sort</invocation><expect>exactly one line, `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round94_prep/checks/r94_admission_table.py`, and no other line</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -78,7 +78,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** round 102's pair named eleven members because this tool diffed two registry files; RA1's build printed a twelfth (`exemptions.json`) and stopped. The tool's output is an
 ADMISSION aid; the build's own content diff stays the authority on what ships. The arms are the CTO's wording.
 
-<status>pending</status>
+<status>complete -- 2026-10-13T18:0xZ by the issuer (2.0.0_SA_COO~R1): wk-AMGT_RESAPP-406 @1d17d3cd4b (fix b5c16e920a) merged, proof instance VALID (rc=0). AC1 re-run by the issuer on the worker's tree: five PASS rows, arms passed 5 of 5, R103 ADMISSION ARMS: YES (the pre-patch tool reads 4 of 5 NO at A2); the tool on the real pin 7da642c1ff and ref 6ecb5bc567 prints TWELVE members including exemptions.json and scopes.json and no firm_pages.json. AMENDMENT 1 (the issuer's own order, no gate limb graded it: a modification): AC2's pathspec excluded the worker's deliverables folder but not the surprise channel, so a worker that files a row (the order's own grant) put INVESTIGATION_v1.md in the diff and AC2 read 2 lines; the pathspec now also excludes `surprise-channel`, and the issuer re-ran the AMENDED invocation on the worker's tree: exactly one line, r94_admission_table.py. Rows: W406-S1 (INERT: the worktree was cut one commit after the issuance) and S2 (INERT: the lib/ filter drops `/tests/` and `_test.py` only, so test_*.py modules are listed, which over-lists and never under-lists) are DISMISSED with no action; S3 (BLOCKING, INERT: AC2's one-line expectation could not hold beside the order's own rows) is DISMISSED, its cause the issuer's pathspec, corrected by AMENDMENT 1. The tool's output is an ADMISSION aid; the build's own content diff stays the authority.</status>
 <round>103</round>
 <slot>0.9.0_WK_AMGT_RESAPP~406</slot>
 <fabric>dell1</fabric>

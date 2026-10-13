@@ -185,6 +185,11 @@ distributions (dividends, interest), not price alone. Yahoo is admitted only thr
 
 **B1 total at this depth: about 13 days of the daily allowance** (12 for the 606, plus under 1 for the 11 bonds' total-return field, plus the 8 funds), less the $1.00 funds.
 
+**A4 amendment (bj-5, `2.0.0_SA_COO~R1`; via `2.0.0_SA_COO~Q1` msg 4980):** the price axis also pulls `DAY_TO_DAY_TOT_RETURN_GROSS_DVDS` over the last 5 trading days, about
++500 cells a day (A4 about 1,000 a day). **This seat's ruling: the field accrues FORWARD ONLY. No 365-day back year is pulled (it would be 25,100 cells, 9 days).** The rankings
+stay on price. If a back year of total return is ever needed, it is derived from the stored `PX_LAST` year plus `DVD_HIST_ALL` (about 100 bulk requests), with dividends
+reinvested on the ex-date close, the porting test's formula.
+
 ## STANDING RULE, Andrew: INCREMENTAL MODE = THE LAST 5 TRADING DAYS, on every surface
 
 Once a need's backfill is complete, every daily pull asks for **the last 5 trading days** (from `lib/trading_calendar.py`), not a single day and not a long window. That

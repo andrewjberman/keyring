@@ -1163,6 +1163,76 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "spec_asserts": "The order names the rule's printed name as opal_name builder output (rule 30): etfs-cot-satellites-characteristics-producer-reattempt-hourly; its refusal clause says a gate refusing a name is a stop, written as a surprise row, with no check weakened.",
     "world_is": "The naming limb cannot decide the cadence of a multi-hour window (14-23) and refuses the new name as a hole; the ratchet refuses growth. The HCL the criteria grade (AC1-AC3: T16-OK, T16IAM-OK, GATE-OK on the worktree; T16-BAD, T16IAM-BAD, GATE-BAD on base copies) lands through no commit, so the reattempt cannot reach the drain from this branch as written.",
     "notes": "Not worked around: no --force, no GIT_COMMIT_AUTHOR_OVERRIDE, no edit to the schedule expression or the name (AC1 names cron(25 14-23 * * ? *) and the printed name), no edit to any check. The uncommitted diff stays in the worktree for the COO. Owed from the naming-rule owner: a schedule the cadence reader decides (the gate prints 'not a list of single hours'), or a name that ends in the cadence word. Disposition for the COO and the CVO at L9; the two files are the only code change."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W15-S1",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~15",
+    "surfaced_at": "2026-10-13T17:36:07Z",
+    "one_line": "tools/astn_wsjft/scripts/store.py at base carries an unused 'import re' that ruff F401 refuses, so the universal commit gate blocked the issuer's reference patch from being committed as delivered; the one-line import removal is in commit 1eaea051c4.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "tools/astn_wsjft/scripts/store.py:9 read at fe216d8d06 (git show HEAD:path): 'import re' and no 're.' use anywhere in the file",
+        "ruff check --select F401 on git show fe216d8d06:tools/astn_wsjft/scripts/store.py (scratch copy): Found 1 error, re imported but unused",
+        "safe-commit of 3 code files before the fix: commit-gate BLOCKED ruff check failed on tools/astn_wsjft/scripts/store.py; after the fix: commit-gate clean for 3 of 3 file(s), commit 1eaea051c4 LOCAL on wk-MDPF_HEALGAP-15"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's build step applies the issuer's t18_tools.patch unchanged and runs the two criteria; a patch that does not apply or a criterion that reads BAD is a stop, written as a surprise row, with no check weakened.",
+    "world_is": "Both patches applied cleanly and both criteria read GATE-OK on the patched tree. The commit gate (universal, fail-closed, --force does not bypass) then refused store.py on a lint defect that predates the patch. The fix is one unused import line in a file the grant names; no behaviour changed, and the gates were re-run GATE-OK (rc=0) after it. Owed to the issuer: the patch set as delivered does not pass the commit gate at base, so the drain should expect this one-line delta.",
+    "notes": "Not worked around by --force or GIT_COMMIT_AUTHOR_OVERRIDE. No check edited. A mutant control (dedupe removed in a scratch copy via HG_T18_RUN) fired GATE-BAD F and rc=1, so arm F is live."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W16-S1",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~16",
+    "surfaced_at": "2026-10-13T17:38:44Z",
+    "one_line": "The 07-07 recon that Windows Credential Manager is not the session location (brief section 9) ran by SSM, which runs as SYSTEM, so it did not read the Administrator vault the puller reads; the 07-13 design note records a CredRead OK as Administrator. The two notes conflict and the code cannot settle it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/briefs/schwab-sdd-rest-ingest-aprime-design-20260702.md:111-120 at HEAD: a direct read-only SSM recon; cmdkey /list 'on the box (Administrator console...)' found one unrelated entry; the section rescopes the capturer away from Credential Manager",
+        "org/tier2_senior/0.6.2_AE_PartnerETL/logs/2026-07-07/schwabauto_gate3_recon_webview2_finding.md:19-20 at HEAD: 'Read-only SSM recon ... cmdkey /list'",
+        "infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1:252-256 at HEAD: a bare SSM RunPowerShellScript runs as nt authority\\system with an empty vault; :247-248 the puller reads the Administrator vault",
+        "data/assets/docs/SCHWAB_AUTO_PULL_DESIGN.md:365 at HEAD: a real pull as Administrator, CredRead OK (token len=128), dated 07-13"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The brief's section 9 says cmdkey /list run on the box as the Administrator console account found no Schwab-scoped Credential Manager entry, so Windows Credential Manager is not where the SDD session lives.",
+    "world_is": "The recon was an SSM command, and the puller's own comment says SSM runs as SYSTEM, so the recon read SYSTEM's vault, which the puller never reads. The design note records a successful CredRead as Administrator on 07-13. The brief's negative finding does not bear on the Administrator vault; the box read in the HG-t-19 determination (BOX-READ-OWED) settles it.",
+    "notes": "No AWS act. Not chased further: the determination reads the code only. The owner of the SI2 box or the CVO runs the named read."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S17",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~G1",
+    "surfaced_at": "2026-10-13T18:05:00Z",
+    "one_line": "The ASTN morning brief has not been SENT on any day in SSM's retained window: the 3 AM run's SES send raises ParamValidationError on the box (Destination.ToAddresses[0] is a list), because the deployed send_ses.py (S3 code prefix, 2026-06-25) wraps config.SES_TO, which is a list in the deployed config.py (2026-06-29). The digest and email objects are written before the send, so digest/ reads healthy; the astn-wsjft-alerts topic has 0 subscriptions.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ssm list-commands --instance-id i-059405dfefcb4b44a --max-results 50 read 2026-10-13T18:00Z: 31 commands, one per day 2026-09-13..2026-10-13, 31 of 31 Status Failed",
+        "ssm get-command-invocation a536d8e5 (2026-10-13 run) and cbb1e737 (2026-10-12 run), StandardErrorContent last lines: 'botocore.exceptions.ParamValidationError: Parameter validation failed: Invalid type for parameter Destination.ToAddresses[0], value: [austin@opalinvest.com, andrew@opalinvest.com], type: list, valid types: str', 'failed to run commands: exit status 1' (2 of 2 read in full; the other 29 read for Status only)",
+        "s3://opal-313476888478-lambda-artifacts/ec2/astn-wsjft/code/ listed 2026-10-13T17:49Z: scripts/send_ses.py 857 bytes LastModified 2026-06-25T00:42:57Z carries Destination={'ToAddresses': [config.SES_TO]}; scripts/config.py LastModified 2026-06-29T18:24:23Z carries SES_TO as a list (lines 44-45); downloaded copies byte-compared with git archive fe216d8d06 tools/astn_wsjft: 18 files identical, 4 differ (ARCHITECTURE.md, scripts/analyze.py, scripts/run.py, scripts/send_ses.py)",
+        "tools/astn_wsjft/scripts/send_ses.py at fe216d8d06 lines 11-15 builds `to = config.SES_TO if isinstance(...) else [config.SES_TO]` and sends Destination={'ToAddresses': to}: the repo carries the fix, the S3 prefix does not",
+        "infra/aws/lambda/astn-wsjft-orchestrator/lambda_function.py lines 183-187 run `bash /tmp/deploy.sh` before run.py, and infra/aws/ec2/astn-wsjft/deploy.sh line 13 pulls that S3 prefix over /opt/astn-wsjft; both invocations' stdout carries 'OK: code deployed to /opt/astn-wsjft (fetch_ft.js present)' ahead of the traceback; sns list-subscriptions-by-topic astn-wsjft-alerts read 2026-10-13T18:02Z: 0 subscriptions",
+        "digest/2026-10-13/digest.json LastModified 2026-10-13T07:17:11Z, 12 in / 1 out, warnings []: the digest is persisted before send_ses.send, so the absence guard (digest content only) reads healthy"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "orchestrator.tf and run.py say the 3 AM run sends the compiled brief to austin@opalinvest.com and andrew@opalinvest.com; the repo's send_ses.py handles a list of recipients.",
+    "world_is": "The box runs the S3 prefix's send_ses.py, not the repo's. Every daily run ends exit 1 at the send, so no brief email has left in the 31 retained days; the earlier history is not read. The orchestrator alerts 'run FAILED' to a topic with no subscriber, so the failure reached no one.",
+    "notes": "Found while preparing the HG-t-18 deploy half (round 5). That act uploads the repo's tools/astn_wsjft tree to the same prefix, which moves send_ses.py and run.py (and analyze.py's one-line field removal) and so restores the send from the next 3 AM run: a served output moves from not-sent to sent, named in the half's section 2. No act taken. The destination is the CTO's half; creating a subscriber to the topic is an alert and waits on Andrew's word."
   }
 ]
 ```
