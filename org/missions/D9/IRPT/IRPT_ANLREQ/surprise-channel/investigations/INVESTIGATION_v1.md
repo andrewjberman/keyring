@@ -11092,3 +11092,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W112-S4 -- AR-y-281 AC1: the task order's invocation names the ~102 checker; run literally it prints Y281-LIST-FAIL here, so the criterion cannot pass as issued
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W112-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~112",
+  "surfaced_at": "2026-10-13T22:38:58Z",
+  "one_line": "The AR-y-281 AC1 invocation in the task order names the checker under worktree 102 with --root 112; run literally it prints Y281-LIST-FAIL (no ~102 record), so AC1 cannot pass as issued.",
+  "spec_asserts": "Task order AR281-y-AC1 invocation: python C:/dev/wk-irpt-anlreq-102/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py y281-list --root C:/dev/wk-irpt-anlreq-112, expect Y281-LIST-OK. AMENDMENT 3 states the invocation of AR281-y-AC1 points at the ~112 worktree.",
+  "world_is": "MEASURED this turn at commit ebf4bf1d4c: the literal criterion command printed 'FAIL: no org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~102/r23/LIST_SCOPED.json' and 'Y281-LIST-FAIL' (rc 1). The checker run from the ~112 worktree (the face's invocation) prints 'tests/test_list_scoped_firm.py: 25 passed', 'ticket service folder: 279 passed' and 'Y281-LIST-OK' (rc 0). proof-of-spec-check reports the recorded invocation as not equal to the criterion's invocation (VIOLATION invocation-alignment[AR281-y-AC1]). The task order file is the issuer's and outside this worker's grant; it was not edited.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-281.list-scoped-to-the-callers-own-firm.md@df215447fa (criterion AR281-y-AC1 invocation names C:/dev/wk-irpt-anlreq-102 for the script)",
+      "python C:/dev/wk-irpt-anlreq-102/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py y281-list --root C:/dev/wk-irpt-anlreq-112 -> FAIL: no ...0.9.0_WK_IRPT_ANLREQ~102/r23/LIST_SCOPED.json; Y281-LIST-FAIL (rc 1), measured this turn",
+      "python C:/dev/wk-irpt-anlreq-112/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py y281-list --root C:/dev/wk-irpt-anlreq-112 -> Y281-LIST-OK (rc 0), measured this turn"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
