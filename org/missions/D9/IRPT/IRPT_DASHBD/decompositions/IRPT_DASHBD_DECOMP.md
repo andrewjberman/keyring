@@ -1587,3 +1587,20 @@ flow day included), and routes the day read through IRPT's existing per-account 
 The vendor read is a POST of a request body the estate already builds, read-only, 7 accounts, one request each; it needs no per-use word (CLAUDE.md, Agent Autonomy; PRD 11b) and no credential is printed or written anywhere.
 
 **fanout:** 2 of 2 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~134` (`DB-b-168`), `~136` (`DB-b-169`, spawned after the issuer's pull) and `~135` (`DB-b-170`).
+
+## 93. ROUND 91, WORKSTREAM B (2026-10-13 ~15:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ROUND-91 ANALYSIS @3a44c65c3e section 3 and msg 7032)
+
+Round 90 is terminal (MAY-CLOSE; the CVO's REMEDIATION_v37 @322f6b77f8; row `IRPT_DASHBD-D2-W136-S1` owed to the CTO). The analysis decides PRD 11b's open reading: a window whose stated reason, once corrected, re-closes it within 0.35 pp has met the day clause, so no day read is owed
+for the 7 windows reasoned at window grain; the day read is owed only where no window reason closes, which is the 7 (23 days). The next read is the ROWS: a whole-number multiple of income is the signature of a booking difference.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. ledger leg L7, carried: the 2026-10-14 11:41Z fire, `l5b_read.py`; close `irpt-dashbd-thresholds-swap-20261013` or restore rollback `8ELUDq...` the same session | the issuer's own act, no cell | FWD-8 | the 11:41Z fire | none |
+| 2. the ledger-row read of the 23 days: for each differing day, the served side's income and flow rows against Black Diamond's landed transaction rows for the same account and day (and the adjacent trading days), under a closed list written before the read, a reason taken only if correcting that row re-closes the window within 0.35 pp | `DB-b-171` | FWD-8 | `~136`'s record (the 23 days) and the stored tables of `~108` (read) | R91-1 |
+| 3. the FWD-8 grade at the grains of 11b as ruled, in the drain-end | the issuer's own act, no cell | FWD-8 | `DB-b-171` drained | R91-1 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the closed list is the CTO's, verbatim: `BD_INCOME_PER_LOT`, `DUPLICATE_ROW`, `BOOKING_DATE_DIFFERS`, `MISSING_IN_LEDGER`, `UNEXPLAINED`; (b) "through IRPT's existing per-account call" is read as: no new vendor call is needed, because Black Diamond's transactions for these accounts are
+already landed in `s3://opal-data-assets/blackdiamond/49financial/silver_legacy/transactions/` (the store the earlier tie-out cells read; read90 kept 12 columns of it) and the served side's rows are in the estate's own store the gold producer reads; the cell therefore makes ZERO vendor calls and reads S3 (GET/LIST) only, and a row the landed store cannot show is a surprise
+row, on which the issuer decides about a vendor read; (c) the criterion binds the 23 days and the per-account counts to `~136`'s committed record, so the population cannot drift; (d) rows are described by counts, multiples and day offsets, never by security, lot, account or amount in the repo.
+
+**fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~137` (`DB-b-171`).
