@@ -29620,3 +29620,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
  "notes": "Read row for ADJUDICATION_v70. It replaces D2-S114, which is closed in its stated form. Digests, counts and times only; no client name."
 }
 ```
+
+## IRPT_BCKEND-D2-W345 -- worker 0.9.0_WK_IRPT_BCKEND~345's rows, TO IB-pr-494 (the node-id mismatch count)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W345-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~345",
+  "surfaced_at": "2026-10-13T02:20:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The 49 mismatched accounts the cell asserts measure 1 at the latest custody date: of 7634 custody accounts, 7633 have a node id in the landed directory, 0 differ resolvably and 1 has neither form in it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "holdings_49f.py build_49f_actual (line 286 onward) mints each ACCOUNT node id with hs.opaque_id over the raw custody key @5743c86349; holdings_snapshot.py _directory_account_ids (line 1290) reads the landed directory pointer @5743c86349",
+      "the count, run read-only by org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~345/mismatch_count.py in this worktree: as_of 2026-10-09, directory_present true, denominator 7634; served 7625 (equal 7624, differs_unresolvable 1); withheld 9 (equal 9); refused 0",
+      "record IB170-3_node_id_mismatch_count.json in the same deliverables folder holds these counts and no account id"
+    ]
+  },
+  "spec_asserts": "Cell IB-pr-494 and the CTO ROUND-33 analysis (row DSGN_IRPTV1-D2-W72-S2): 49 Financial accounts have a node id that differs from the directory's account id, and nobody has counted it.",
+  "world_is": "Measured through the builder's own path: 7633 of 7634 custody accounts have a node id in the landed directory; 0 differ only in the padded form; 1 is in neither form. The figure of 49 does not hold at this custody date.",
+  "notes": "Counts only; no account id, name or key is recorded anywhere. The row does not name the cause. The directory population was not compared to the custody population in the other direction. Disposition is for the issuer and the CVO."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W345-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~345",
+  "surfaced_at": "2026-10-13T02:20:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The builder's three state lists do not partition accounts the way the TO defines them: a withheld account keeps a built ACCOUNT node, and the refused list mixes raw keys with node ids.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "build_49f_actual appends the ACCOUNT node before the drill check, and appends drill_withheld rows keyed by account_id, so a withheld account also satisfies the TO's served wording @5743c86349 (holdings_49f.py build_49f_actual, line 286 onward)",
+      "a balance row that refuses is appended to refused keyed by the RAW custody key and builds no node; a membership-conflict refusal is appended keyed by the node id and the account still builds a Client node @5743c86349 (holdings_49f.py build_49f_actual)",
+      "this run: refused 0, withheld 9, and the record's not_established states the partition used (refused first, then withheld, then served)"
+    ]
+  },
+  "spec_asserts": "IB-pr-494 defines served as an ACCOUNT node built and not refused, refused as a row for a node refused, and withheld as the drill withheld, and says to state the partition in not_established if the three do not partition.",
+  "world_is": "The three states overlap in the builder's own output: withheld accounts also have a built ACCOUNT node, and refused mixes two key spaces. This run had no membership-conflict refusals and no refused balance rows, so the overlap did not change any count, and the partition used is stated in the record.",
+  "notes": "Form only. The partition stated in the record follows the builder's precedence; the TO's wording is not changed by this row."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W345-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~345",
+  "surfaced_at": "2026-10-13T02:20:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The live 49 Financial entry point copies the Tax membership snapshot, which carries client account numbers, to a local system temp file on every build and never removes it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "holdings_49f.build_49f_meshed (line 594 onward) reaches the Tax snapshot through holdings_snapshot.retained_capture @5743c86349",
+      "retained_capture (holdings_snapshot.py line 1284) writes the fetched bytes with tempfile.mkstemp and os.fdopen to the system temp directory and returns that path; the function has no removal step @5743c86349",
+      "this worker did not call retained_capture: it fetched the same object in memory with the same address resolution and parsed it with the builder's own normalizer, so no account-bearing file was written by this worker"
+    ]
+  },
+  "spec_asserts": "IB-pr-494 says read through build_49f_actual, keep every account id in memory only, and stop on any builder function that writes.",
+  "world_is": "The live entry point leaves one account-bearing temp file per build when IRPT_49F_TAX_MEMBERSHIP_SNAPSHOT is unset. The hazard stays armed until the retained capture stops writing account-bearing bytes to disk, or removes them after use.",
+  "notes": "Read of code only; no run of build_49f_meshed. The worker's own run wrote no file. The row names the issuer as disarm owner for routing; the fix is the holdings owner's."
+}
+```
