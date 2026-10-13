@@ -6448,6 +6448,54 @@ carries none.
     "spec_asserts": "r10.AC2 grades the deployed discover's routes; the check file is the issuer's battery, dry-run at the base before the cut.",
     "world_is": "The dry-run at issuance could not catch it: at the base the census inputs did not exist, so AC2 was never run before the cut (recorded then as 'not dry-run'). A check whose PASS arm was never exercised shipped with a counter that could not reach PASS.",
     "notes": "Lesson for the battery: a check excused from the base dry-run still needs its PASS arm exercised once, on a planted input, before the cut. The wrapper's sparse-tree import gaps (lib/opal_naming at deploy-to-ec2.sh:94; comp_constants_cli at commit_gate_runner.py:96) recurred on this release. They are told to 2.0.0_SA_COO~O for its deploy-wrapper fix (round-8 analysis ruling 2c)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S101",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MI",
+    "surfaced_at": "2026-10-13T04:45Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-s-19's s19.AC1 is UNSATISFIABLE under amendment A2's PHASE B. The writer census counts an SSM document as a writer purely from its $LATEST/$DEFAULT CONTENT and never reads an EventBridge rule's State -- and the rule State is the only thing A2's PHASE B changes. Measured at the base: 2 of 4. It will read 2 of 4 after the apply too, in every world.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE INSTRUMENT'S OWN SOURCE: s19.AC1.sh delegates to round6/checks/s16.AC1.sh, whose header states it counts, per table, 'each SSM document opal-bd-{transaction,realized,unrealized,allocation}-download whose $LATEST AND DEFAULT content still runs merge-daily-incremental'. Its only live reads are `ssm get-document --document-version $LATEST|$DEFAULT --query Content` and `s3api get-bucket-notification-configuration`. There is no `events describe-rule` call anywhere in it, so a rule's State cannot enter the count.",
+        "MEASURED AT THE BASE 2026-10-13 ~04:3xZ, read-only: 'NOT-ONE: transactions: 2 writer(s) [ssm:opal-bd-transaction-download(latest=True,default=True), lambda:bd-silver-merge]'; 'NOT-ONE: realized: 2 writer(s) [ssm:opal-bd-realized-download(latest=True,default=True), lambda:bd-silver-merge]'; unrealized and allocations 1 each; 'WRITER CENSUS: 2 of 4 BD silver tables have exactly 1 writer; graded 2 of 4'; RESULT: FAIL, exit=1.",
+        "THE ACT CANNOT MOVE THE NUMBER. The saved PHASE A plan is 'Plan: 0 to add, 2 to change, 0 to destroy', both actions `~ update in-place` whose sole changed attribute is `state = \"ENABLED\" -> \"DISABLED\"` on aws_cloudwatch_event_rule.bd_realized_pipeline and aws_cloudwatch_event_rule.bd_transaction_pipeline. Neither document's content is in the plan, so both documents still satisfy the census's writer predicate after the apply.",
+        "A2 SCOPED IT OUT DELIBERATELY, twice: 'PHASE B is the rule disable only: bd-transaction-pipeline-trigger and bd-realized-pipeline-trigger ENABLED -> DISABLED through a saved targeted plan and safe-apply. No document version is published, nothing is deleted'; and 'Retiring the documents, trigger Lambdas and instances is a later order after one observed week.' So this is a criterion inherited from the pre-A2 scope, not a defect A2 introduced.",
+        "NOT A WORLD FACT: the documents are in fact already idle. Both evening legs ran on Monday 2026-10-12 (SSM 1a53ac57-f068-4818-9f2a-3d771554c5b6 and b974ccac-5950-4c2f-beb9-d6354199f3d7, both Success) and printed 'No new realized files to process' / 'No new files to process'; 0 objects were written under silver/transactions/ or silver/realized/ in the 20:00-24:00Z window over 2,336 and 1,388 versions scanned. So the census's '2 writers' is already a statement about document CONTENT, not about who writes -- which is the same gap from the other side."
+      ]
+    },
+    "spec_asserts": "The order's <proof_of_spec> AC1 expects 'WRITER CENSUS: 4 of 4 BD silver tables have exactly 1 writer -- RESULT: PASS -- exit=0', and BOUNDS item 3 says 'REFUSE a criterion you cannot meet as written, and report it with its measurement.'",
+    "world_is": "RESULT: FAIL at 2 of 4, and the failing input is document CONTENT, which A2's PHASE B does not touch. The criterion grades a document retirement; the act it is attached to is a rule disable. A grader handed only 'AC1 FAIL' after the apply would read it as the apply having failed, when the apply would have done exactly what the plan says.",
+    "notes": "OWNER'S CALL, not this seat's -- the check is the issuer's file and the scope is the issuer's amendment. Three options, with this seat's recommendation, are set out in ANNOUNCE_MX-s-19.md section 4: (a) widen PHASE B to publish both no-op document versions -- meets AC1 as written but reverses A2's deferral and Andrew's 'we need to confirm the shape first before making that move', so it is not taken on this seat's word; (b) RECOMMENDED, amend AC1 so a document counts as a writer only while its trigger rule is ENABLED (one `events describe-rule` limb per document), which matches the check's own declared intent 'Writers counted on the APPLIED plane' -- with the bound stated in the amendment that an ad-hoc send-command can still invoke the document, so the amended criterion grades the SCHEDULED plane and never reachability; (c) defer AC1 to the later retirement order and grade round 7 on AC2 and AC3. Under (b) the expected post-apply read is '4 of 4 ... RESULT: PASS'; under (c) AC1 is NOT_EVALUATED. s19.AC2 and s19.AC3 are unaffected either way. RULE IT BEFORE THE GO, not after the apply: the halves are signed on the plan's pin, and an acceptance owed a criterion that cannot pass is not an acceptance."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S102",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MI",
+    "surfaced_at": "2026-10-13T04:45Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "bd-silver-merge re-wrote silver/transactions/2026-10-10.parquet at 58,226 B on 2026-10-13T00:14:48Z, down from 4,462,340 B written 2026-10-10T00:18:39Z -- a 76x SHRINK on a re-write of an already-served partition, while the same merge's re-write of 2026-10-09 three days earlier GREW it (370,168 -> 388,158 B). Off-task: found while measuring MX-s-19's served DELTA, not caused by it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api list-object-versions on opal-data-bd, prefix silver/transactions/2026-10-10: two versions. nzvUy3WV0bUGkcENybYp0ifA8n23PIGR 4,462,340 B at 2026-10-10T00:18:39Z; wx6eFBQ20o10IIMpkoAdNfJVqcQsj35W 58,226 B at 2026-10-13T00:14:48Z (current).",
+        "DIRECTION IS NOT CONSISTENT, which is why this is not read as ordinary re-compression: same prefix, silver/transactions/2026-10-09 has NoHyjaQzcGZF5S8KOAWmvCoyjbw20K37 370,168 B at 2026-10-09T00:14:13Z re-written as tnLerK0ZIEiI6n9nh4DkenHPhCNLdFv1 388,158 B at 2026-10-12T00:17:22Z -- a GROWTH of 4.9%. One re-write adds, the other removes 98.7%.",
+        "THE WRITER IS THE MERGE LAMBDA, NOT A DOCUMENT: the 00:14:48Z write is inside bd-silver-merge's window and matches silver/incremental_manifest.json's 2026-10-13T00:14:51Z version to 3 seconds; the evening documents wrote 0 objects in that window and have written none since 2026-10-06."
+      ]
+    },
+    "spec_asserts": "MX-s-19 BOUNDS item 1: 'One producer per table: no second schedule, no parallel path, no comparator. Served silver must not lose a partition it has today.' The order's ANNOUNCE asks for the expected served DELTA of making bd-silver-merge the sole writer.",
+    "world_is": "The writer this retirement makes sole re-writes already-served partitions and at least once replaced one with 1.3% of its bytes. That is not a DELTA of the retirement -- it happens today with both writers live -- but it bears on 'served silver must not lose a partition it has today', because a partition can be emptied in place without being lost as a key, and no limb of s19.AC1/AC2/AC3 would see it.",
+    "notes": "NOT INVESTIGATED FURTHER, per the channel rule: one row, keep working. ROW COUNTS WERE NOT READ, so 'lost rows' is NOT claimed -- only the byte delta is measured, and a 76x byte drop is far outside parquet encoding variance but is not by itself a row count. THE ONE READ THAT SETTLES IT: pull both versions by --version-id and compare row counts and date ranges (nzvUy3WV... vs wx6eFBQ2...); if the newer holds fewer rows for the same date, this is silent partition truncation and belongs to bd-silver-merge's owner, not to MX-s-19. A plausible mechanism to test first, stated as INFERRED and not measured: the merge script's REPROCESS-etag-changed path (data/black_diamond/scripts/silver/merge-daily-incremental.py:254) re-writes a partition from the re-processed subset of bronze files rather than from the union with what the partition already held. ARMED because, left alone, the next etag change repeats it on whatever partition it lands on, and the retirement removes the second writer that until 2026-10-06 was re-writing the same keys."
   }
 ]
 ```

@@ -106,7 +106,7 @@ The worker's order grant covers the generated targets' lanes (a worker is admitt
 the issuer's, at the drain, immediately followed by `FB-g-31` (the eight re-pins), the integrate pass and the units' builds.
 Workstream `FLIPCOMMIT`. Class WORLD by the path floor.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>FLIPCOMMIT</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-30</to_id>
