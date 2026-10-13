@@ -25346,3 +25346,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "AMGT-bi-2 is STOPPED at its build leg; nothing uploaded, planned or applied; live still reads j+j1k5r7... The remedy is a decision (amend the pair to twelve members, name another pin, or the CTO rules it covered by the half's own measurement, which was taken from a tree that already carries it); this row changes nothing. Future admission tables for this function should list the registry folder whole, or be read against the build's content diff."
 }
 ```
+
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W404-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~404",
+  "surfaced_at": "2026-10-13T17:44:46Z",
+  "one_line": "AMGT-bj-1 premise on the feed-phase cost (18.8 s, of which the whole-table read is 17951 ms) was not reproduced locally: the feed phase measured 1.7-5.0 s base and 4.3-9.2 s candidate across two AC1 runs, with no consistent speedup.",
+  "spec_asserts": "AMGT-bj-1 (round 103): the first overlay a container serves costs about 20 s, 18.8 s of it the feed phase; the module gold_article_security_mention=17951 ms is the whole article_security_mention table read. The cell says the change moves no served byte and cuts that read to one security rows.",
+  "world_is": "Local runs on the live pool, fresh process each: feed phase base 4988 ms and 1753 ms, candidate 4296 ms and 9249 ms (two AC1 runs). The 17951 ms phase was not reproduced; the served-byte equality (16 of 16 arms, R103 FEED EQUAL: YES) held on both runs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC1 run 1 (worktree .scratch/ac1_full.txt, candidate blob 84002d3fd559 applied at HEAD 361982cc4d): 'local timings, not graded: feed phase base 4988 ms, candidate 4296 ms (fresh process each)'; 'arms passed 16 of 16'; 'R103 FEED EQUAL: YES'.",
+      "AC1 run 2 (worktree .scratch/ac1_second.txt, same tree and inputs): 'local timings, not graded: feed phase base 1753 ms, candidate 9249 ms (fresh process each)'; 'arms passed 16 of 16'; 'R103 FEED EQUAL: YES'.",
+      "Base-blob control (worktree .scratch/mutant_base.txt, --candidate-file on git cat-file blob 02627c18a0ea): 'arms passed 15 of 16'; 'R103 FEED EQUAL: NO'; R4b FAIL, base holds the whole-snapshot cache entry."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only, no significance judged. The equality verdict (AC1) and the one-file scope (AC2) hold on both runs; the 18.8 s and 17951 ms figures are container-side measurements from round 102 and were not re-measured in the container. Local timings are fresh-process single samples on a dell1 laptop and are not graded by the check."
+}
+```
