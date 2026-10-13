@@ -7550,3 +7550,54 @@
   }
 }
 ```
+
+## IRPT_ANLREQ-D2-S77 -- Andrew's sample-xlsx upload: no visible sign it went through, and the TIMXX proxy box does not say what to enter
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S77",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T17:06:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Andrew's own upload of the sample xlsx: the page gave no visible sign the upload went through, and the proxy box for TIMXX (row 100) does not say what to type or that the page will not find a similar security by itself. Reported to the owner seat 2.0.0_SA_COO~Y2; not mine to fix.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Andrew's report with a screenshot at this seat, 2026-10-13 (sample xlsx upload, Row 100 TIMXX, 'Name a proxy' box)",
+      "portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx:59-64,:472-503 (read in the DEV checkout by 2.0.0_SA_COO~P2)",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/task-orders/IRPT_YCDGEN.TO-YCD-h-5.opal-held-census-and-module.md:50"
+    ]
+  },
+  "spec_asserts": "An upload step shows a visible state (ProspectComposer.tsx:59-64 labels NOTHING_CHOSEN/RESOLVING/NORMALIZED/NEEDS_CORRECTION), and a NEEDS_CORRECTION finding says what the person types (the proxy row, ProspectComposer.tsx:472-503).",
+  "world_is": "REPORTED by Andrew at this seat, 2026-10-13 ~13:04 local (screenshot): after choosing the sample xlsx the interface showed no sign of an upload; the response read 'Review required: TEMPLATE_FINDINGS ... Row 100: Our data provider does not recognize this ticker. Check it for a typo, or name a similar ticker to stand in for it (a proxy); the report will use that ticker and say that it did.' Then 'Name a proxy / TIMXX (row 100) is analysed as [Ticker]' with the button 'Review with these proxies' disabled until a ticker is typed. Andrew's expectation: the page finds a similar security from the Opal database; it is unclear what to input. READ by me in the DEV checkout, NOT reproduced and not run on PROD: the proxy box takes ONE ticker the provider can price (placeholder 'Ticker', no example, no list); the 'Did you mean X?' button shows only when the server sends a suggestion (ProspectComposer.tsx:483-493), and none showed for TIMXX; the code has a status line for the upload states, so the missing sign may be the build served or the click path, which this seat did not test. A prior live walk resolved TIMXX as SGOV (IRPT_YCDGEN.TO-YCD-h-5 line 50). Two items for the owner: (1) the visible state after choosing a file; (2) the proxy wording and a server suggestion for a money-market-class ticker."
+}
+```
+
+## IRPT_ANLREQ-D2-S78 -- Andrew: the page never names the uploaded file, and the share-quantity price date is pointless (always the prior close)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S78",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T17:08:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Andrew's two further points on the prospect upload page (adds to D2-S77): after an upload nothing on the page names the file, and the 'Price date for share quantities' field is pointless because the answer is always now (the prior trading day's close).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Andrew's report with two screenshots at this seat, 2026-10-13 (page after upload reads 'Choose File No file chosen' and 'Needs correction.')",
+      "portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx:408-410,:419-422,:434-437 (read in the DEV checkout by 2.0.0_SA_COO~P2)"
+    ]
+  },
+  "spec_asserts": "An uploaded file is acknowledged on the page by name (ProspectComposer.tsx:408-410 shows 'Chosen: <name>' for a staged file only inside the upload dialog); a control on the page has more than one real answer.",
+  "world_is": "REPORTED by Andrew with two screenshots at this seat, 2026-10-13: (1) after uploading the holdings file the in-page 'Holdings file' input still reads 'Choose File No file chosen' and the status line reads only 'Needs correction.'; no file name appears anywhere on the page, and the only sign of the upload is the correction text below. (2) Andrew's words, verbatim: 'there is no point in picking a \"price data for share quantities\" as the answer is always \"now\", which will translate into market close of the prior trading day.' READ by me in the DEV checkout, not reproduced and not run on PROD: the in-page input (ProspectComposer.tsx:419-422) is a bare native file input with no name shown once the page re-renders; the Price date field (:434-437) is a date input defaulting to today with no stated rule. Whether the date is read by the serving path or ignored is NOT read by this seat: the owner reads it before removing the field. Both points go to 2.0.0_SA_COO~Y2 with S77."
+}
+```

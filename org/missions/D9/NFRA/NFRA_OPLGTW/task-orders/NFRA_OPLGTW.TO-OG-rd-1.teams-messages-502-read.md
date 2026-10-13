@@ -74,7 +74,7 @@ last commit with `python .tools/proof-of-spec-check.py <instance> AC1 --governin
 **ISSUER NOTES:**
 - Round 36, E3. Pre-cut: rd1.AC1 base FAIL as expected (file absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>36</round>
 <slot>~62</slot>
 <fabric>site-z</fabric>
