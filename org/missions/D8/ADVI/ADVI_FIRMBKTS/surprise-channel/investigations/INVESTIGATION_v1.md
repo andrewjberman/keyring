@@ -6695,3 +6695,126 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "For the CTO's read of the sample (his ruling): the served advisor view would show a client's name in that line if the artifact were written. FB-j-7 and FB-j-4 stay behind that read."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W75-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~75",
+  "surfaced_at": "2026-10-13T10:00:27Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order places the lots at gold/holdings_lots/ in opal-data-bd; the served object is gold/timeseries/holdings_lots/2026-10-09.parquet, last written 2026-10-13T05:06:00Z, after its date.",
+  "spec_asserts": "FB-j-12 section 1a.2: the holdings-lots object is gold/holdings_lots/... in opal-data-bd, or the file B_01.holdings_lots.py writes.",
+  "world_is": "B_01.holdings_lots.py save_lots writes holdings_lots_key(snap_date), which is gold/timeseries/holdings_lots/<date>.parquet (data/black_diamond/scripts/gold/lib/s3_layout.py:65-66) in bucket opal-data-bd (lib/config.py:14). No gold/holdings_lots/ key was read. The 2026-10-09 object was rewritten after its date, so the trace read the rewrite.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~75/IQLT_TRACE.md",
+      "data/black_diamond/scripts/gold/lib/s3_layout.py@a0e6872b88",
+      "data/black_diamond/scripts/gold/B_01.holdings_lots.py@6b903ab8e0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Path premise only. The trace reads the object as served; it does not judge the path convention."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W75-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~75",
+  "surfaced_at": "2026-10-13T10:00:27Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B1",
+  "one_line": "The -69.2 percent IQLT loss is not a price or cost defect: price and cost agree with the estate, and the defect is B_01's silver-noncash cap scaling market_value to 22.9 percent of units x price while cost_basis stays whole.",
+  "spec_asserts": "FB-j-12 section 1 (CTO ruling c) presumes the -69.2 percent is a cost-basis or price defect of the kind S32-S34 describe.",
+  "world_is": "2026-10-09: canonical 49.84 (yahoo_finance) and silver 49.31 (carry_forward) agree; 0 of 60 open lots' per-share cost is outside the 20 percent band of prices within five days of acquisition. Uncapped market_value = units x price = 587,547.40 (+34.6 percent); the bullet's 134,351 is the capped value. Served object: 64,629 of 492,998 open lots (3,057 accounts, 1,007 tickers) carry a compressed market_value; uncapped equals units x price on 99.99 percent of open lots. The cap is an approved design (docstring: Andrew and CTO, 2026-04-17); this row records only that its output is the bullet's market value.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~75/IQLT_TRACE.json",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~75/iqlt_cost_check.py",
+      "data/black_diamond/scripts/gold/B_01.holdings_lots.py@6b903ab8e0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED because the cap runs on each scheduled B_01 run and feeds served market values; left alone it reproduces the defect on future serves. Disarm is the COO's routing to the CTO (the cap owner's ruling); no serve of the -69.2 figure until dispositioned."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W75-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~75",
+  "surfaced_at": "2026-10-13T10:00:27Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Custody holds no IQLT for the advisor's 108 mapped accounts, although those accounts hold 60 open IQLT lots (11,788.67 units); whether those units are held is an open unit-count question.",
+  "spec_asserts": "FB-j-12 section 1a reads the lots as the position behind the bullet's figures and does not test their units against custody.",
+  "world_is": "silver/unrealized/2026-10-09.parquet: 11 IQLT rows firm-wide (11 accounts, MV 1,322,890.07); 0 rows in the 108 accounts mapped by advisor_assignments_history (is_current, role value 'Garrett Newberry'). The cap reads class B lots (no custody cusip) as phantom candidates. The trace does not establish whether the units are held.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~75/iqlt_advisor_map.py",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~75/iqlt_price_check.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Either way the -69.2 percent is not a market loss. Hazard carried by S2."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W75-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~75",
+  "surfaced_at": "2026-10-13T10:00:27Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The published IQLT figures (31 accounts, 61 lots, MV 134,377.61, cost 436,698.87) are not reproduced exactly by the advisor-to-account rule used here (30 accounts, 60 open lots, MV 134,350.71, cost 436,515.92).",
+  "spec_asserts": "FB-j-12 section 1a.1 takes the bullet's figures as the basis; section 1a.2 filters lots to the advisor's accounts without naming the rule.",
+  "world_is": "The difference is one lot and one account: cost 182.95, market value 26.90. The rule used (advisor_assignments_history, is_current, any role equal to 'Garrett Newberry') gives 108 accounts. The producer's account rule for positions.json was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~75/iqlt_advisor_map.py",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~75/IQLT_TRACE.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Immaterial to the classification; recorded so the trace's counts are read against the reconstruction, not the bullet."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W75-S5",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~75",
+  "surfaced_at": "2026-10-13T10:00:27Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The AC1 invocation names --file under the base checkout (C:/dev/ajb_workspace/.../0.9.0_WK_ADVI_FIRMBKTS~75/IQLT_TRACE.json), where the record does not exist; the record is on the worker branch, so the literal invocation returns FAIL ABSENT while the same checker on the worktree path returns the record ok line.",
+  "spec_asserts": "FB-j-12 section 4 AC1: the record is read at C:/dev/ajb_workspace/org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~75/IQLT_TRACE.json, and the deliverable is in the worker's worktree.",
+  "world_is": "The record is committed at c07c215810 on the worker branch in /c/dev/wk-firmbkts-75 and is absent from the base checkout C:/dev/ajb_workspace (ls returns no such directory). Literal run: r7_checks.py iqlt --file <base path> -> FAIL ABSENT or unreadable: FileNotFoundError, rc=1. Same checker, worktree path: IQLT record ok classification=DATA_DEFECT loss_pct=-69.22, rc=0. Writing the record into the base checkout was not done; it is outside this order's write grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-j-12.iqlt-trace.md@89f2099f0a",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~75/IQLT_TRACE.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "AC1 is recorded as FAIL on the literal invocation. It can pass after integration if the order is re-graded on the integrated tree; the CVO or COO decides the re-grade, not this worker."
+}
+```
