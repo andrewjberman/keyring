@@ -6383,3 +6383,31 @@
   }
 }
 ```
+
+
+## IRPT_ANLREQ-D2-W59-S1 -- No. of Accounts: the cell's "excluded only when counts" against the r18 test that holds names under that header
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W59-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~59",
+  "surfaced_at": "2026-10-13T06:55:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "AR-y-194 says No. of Accounts is excluded ONLY when its values are counts; the existing r18 test holds name values under that header and expects no finding, so the built rule reads it as: excluded unless its values are identifier-like.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-194 point 3 (cell, template_reader.py rule): 'No. of Accounts is excluded ONLY when its values are COUNTS (one small integer per row); if it holds identifiers the backstop reads it as an account column.' Also: every earlier test keeps passing.",
+  "world_is": "The header-word rule excludes the header (AR-y-181). The r18 test test_no_of_accounts_is_a_count_not_an_account_column holds the values ACCT-ONE and ACCT-TWO under 'No. of Accounts' and expects no finding. A literal reading (excluded only when the values are counts) would turn that sheet back and break the earlier test. The built rule excludes the header unless its values are identifier-like, so names are neither counts nor identifiers and are not turned back.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "template_reader.py at 920cdf69ca: _several_accounts backstop set (_is_count_header) and _identifier_like",
+      "intake/tests/test_template_account_totals.py test_no_of_accounts_is_a_count_not_an_account_column (unchanged; passing at 920cdf69ca)",
+      "intake suite at 920cdf69ca: 347 passed, 0 failed; ar19_checks y194-keep prints Y194-KEEP-OK"
+    ]
+  },
+  "notes": "Form only. The ruling between the literal reading and the built reading is the CTO's (round-19 analysis item 2) at L9. The record is org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~59/r19/CLOSED_LISTS_RULE24.json, field count_header_rule."
+}
+```
