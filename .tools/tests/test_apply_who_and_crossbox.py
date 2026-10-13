@@ -18,6 +18,7 @@ proof that the flow went on); the terraform named to them is a fake that writes 
 no AWS call, no deploy, no network. Cases are independent and run on a small thread pool (each wrapper run costs seconds
 of process start-up here), reported in order.
 """
+import itertools
 import json
 import os
 import re
@@ -972,7 +973,8 @@ def open_deploy_race(listing_after, tree_exists, fail_reread=False):
     spec = importlib.util.spec_from_file_location("cbdc_race", str(REPO / ".tools" / "crossbox-deploy-check.py"))
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
-    ghost = str(TMP / "ghost-worktree-race")
+    # One ghost path PER CALL: the cases run on a thread pool, and a shared path let one case's makedirs flip another's directory test.
+    ghost = str(TMP / ("ghost-worktree-race-%d" % next(UNIQUE)))
     if tree_exists:
         os.makedirs(ghost, exist_ok=True)
     calls = {"list": 0}
@@ -1164,6 +1166,82 @@ def diff_case(name):
 
 diff_case("safe-apply.sh")
 diff_case("safe-deploy.sh")
+
+
+# ------------------------------------------------------------------------- CT-ab-5: OPEN-DEPLOY ancestry and OPEN-CALL path matching
+UNIQUE = itertools.count(1)  # a fresh name per fixture: the cases run concurrently on one TMP directory
+
+
+def line_with(out, prefix):
+    return next((ln for ln in out.splitlines() if ln.startswith(prefix)), "")
+
+
+def merged_checkout_fixture():
+    """A worktree's branch goes into trunk's history with `-s ours` (trunk keeps its own tree), and trunk then CLOSES the ledger.
+    The worktree's checkout keeps the OPEN sentinel at its HEAD: that HEAD is contained in trunk, so it is STALE-MERGED. The
+    trunk checkout's own reading is CLOSED, so nothing else in the tree is live; the path is at trunk, so trunk-deleted does not apply."""
+    fx = fresh("LAPTOP")
+    n = next(UNIQUE)
+    wt = TMP / ("merged-wt%d" % n)
+    git(fx, "worktree", "add", "-q", "-b", "old%d" % n, str(wt))
+    put(wt / "org/critical_paths/.open_deploys/s3.json", sentinel_doc("s3", "0.7.0_AE_CloudComp~B", "old open deploy in " + ROOT_REL))
+    git(wt, "add", "-A")
+    git(wt, "commit", "-q", "-m", "old sentinel")
+    git(fx, "merge", "-q", "--no-edit", "-s", "ours", "old%d" % n)
+    closed = json.loads(sentinel_doc("s3", "0.7.0_AE_CloudComp~B", "old open deploy in " + ROOT_REL))
+    closed["status"] = "CLOSED"
+    put(fx / "org/critical_paths/.open_deploys/s3.json", json.dumps(closed))
+    git(fx, "add", "-A")
+    git(fx, "commit", "-q", "-m", "close s3 at trunk")
+    return fx
+
+
+@case("OPEN-DEPLOY: a merged checkout (HEAD contained in trunk) carrying an OPEN sentinel is STALE-MERGED and not counted")
+def _():
+    # open=1 is the TRUNK checkout (its own sentinel file is counted per checkout; its status is CLOSED, so it draws no hit).
+    rc, out = cross(merged_checkout_fixture(), serial="0.7.0_AE_CloudOps~F")
+    ok = (field(out, "open_deploy") == "clear" and "STALE-MERGED worktree" in out and "s3.json" in out
+          and "OPEN-DEPLOY worktrees_scanned=2 open=1 stale_merged=1" in out)
+    return ok, line_with(out, "OPEN-DEPLOY worktrees_scanned")
+
+
+@case("OPEN-DEPLOY: an unmerged checkout (HEAD not contained in trunk) carrying a sentinel is OPEN: open=1 stale_merged=0")
+def _():
+    fx = fresh("LAPTOP")
+    n = next(UNIQUE)
+    wt = TMP / ("unmerged-wt%d" % n)
+    git(fx, "worktree", "add", "-q", "-b", "live%d" % n, str(wt))
+    put(wt / "org/critical_paths/.open_deploys/s4.json", sentinel_doc("s4", "0.7.0_AE_CloudComp~B", "live deploy in " + ROOT_REL))
+    git(wt, "add", "-A")
+    git(wt, "commit", "-q", "-m", "live sentinel")
+    rc, out = cross(fx, serial="0.7.0_AE_CloudOps~F")
+    ok = field(out, "open_deploy") == "hit" and "open deploy s4" in out and "OPEN-DEPLOY worktrees_scanned=2 open=1 stale_merged=0" in out
+    return ok, line_with(out, "OPEN-DEPLOY worktrees_scanned")
+
+
+@case("OPEN-CALL: a call whose text names a Terraform root's BARE name but not its path does not match; calls_scanned is printed")
+def _():
+    fx = fresh("LAPTOP")
+    put(fx / "org/devices/crossbox/c1.json", call_doc(subject="the rootx state is being rewritten"))
+    put(fx / "org/devices/crossbox/c1.body.md", "nothing about paths here\n")
+    rc, out = cross(fx)
+    ok = field(out, "open_call") == "clear" and "OPEN-CALL calls_scanned=1 matched=0" in out
+    return ok, line_with(out, "OPEN-CALL calls_scanned")
+
+
+@case("OPEN-CALL: a call naming the root's PATH matches; a call whose own roots field names the root (bare name) matches")
+def _():
+    fx1 = fresh("LAPTOP")
+    put(fx1 / "org/devices/crossbox/c1.json", call_doc(subject="about " + ROOT_REL))
+    put(fx1 / "org/devices/crossbox/c1.body.md", "no paths\n")
+    rc1, out1 = cross(fx1)
+    fx2 = fresh("LAPTOP")
+    put(fx2 / "org/devices/crossbox/c1.json", call_doc(subject="x", roots=["rootx"]))
+    put(fx2 / "org/devices/crossbox/c1.body.md", "no paths\n")
+    rc2, out2 = cross(fx2)
+    ok = (field(out1, "open_call") == "hit" and "OPEN-CALL calls_scanned=1 matched=1" in out1
+          and field(out2, "open_call") == "hit" and "names the root in its roots field" in out2)
+    return ok, "path: %s | roots field: %s" % (line_with(out1, "OPEN-CALL calls_scanned"), line_with(out2, "OPEN-CALL calls_scanned"))
 
 
 def execute(item):

@@ -8531,3 +8531,57 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "The read is cheap and preventive: if the live seats' parents are transient wrappers, the cause is the spawn path (the same S9117 class) and the fix is the detached spawn; if the parents are stable, the next candidate is an idle-session exit at the limit prompt, read from the next ending's last stderr line (headless stdout/stderr should be captured to a file per seat from now on -- a log sink, not an alert). Not a cell this round; folds into the round-12 seat-boundary cell."
 }
 ```
+
+## NFRA_CTLPLN-W79-S1 -- OPEN-CALL keeps a project-code match that the CTO ruling's wording bans
+
+```json
+{
+  "id": "NFRA_CTLPLN-W79-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~79",
+  "surfaced_at": "2026-10-13T18:34:56Z",
+  "one_line": "The CTO ruling on D2-S32 says the OPEN-CALL arm never matches a bare token in a subject or context, but the project-code arm of the matcher still hits a bare project code in free text, and the kept case 943 requires that hit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_S27_S32_TOOL_FINDING_OWNERS_COMP_IAM_AND_SAFE_APPLY_CROSSBOX_LIMB_20261012.md lines 27-32 at 3477d67af5: the OPEN-CALL arm matches a root path or a named terraform root, never a bare token in a subject or context",
+      ".tools/crossbox-deploy-check.py mentions() at 3477d67af5: the codes loop matches a bare project code over json.dumps(call) plus body, so a subject that says a project code hits through its write set",
+      ".tools/tests/test_apply_who_and_crossbox.py case 943 (old, kept): subject 'the PA project needs a word' must hit root-only and must not hit when the carried file is outside the write set"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO ruling D2-S32 (2): the OPEN-CALL arm matches a root path or a named terraform root, never a bare token in a subject or context.",
+  "world_is": "The cell matches Terraform roots by path or by the roots field only, and kept the project-code arm because case 943 expects a project code in a subject to hit. The ruling's wording and the kept case disagree. ENFORCE is absent, so the limb only WARNs today.",
+  "notes": "Not decided by this worker. Whether a project code counts as a naming of the root is a ruling question. Owners: 2.0.0_SA_COO~C (case 943 and the round-12 cell) with 1.0.0_SA_CTO (the ruling)."
+}
+```
+
+## NFRA_CTLPLN-W79-S2 -- test_crossbox_call.py reads 45/50 at the base: five cli and writer checks refused on origin
+
+```json
+{
+  "id": "NFRA_CTLPLN-W79-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~79",
+  "surfaced_at": "2026-10-13T18:34:56Z",
+  "one_line": "The crossbox call test .tools/tests/test_crossbox_call.py prints CROSSBOX-TEST cases=45/50 ok=False at the base, with five checks refused on 'is not on origin yet'; it is outside this cell's grant and was not changed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_crossbox_call.py at worktree HEAD 3477d67af5 (before this cell's edits): CROSSBOX-TEST cases=45/50 ok=False; and after: the same 45/50 with the same five check names",
+      "FAIL lines: 'writer and watcher comparison ran', 'refusal cases ran', 'cli: line exits 0 and prints the sendable line', 'cli: receive before the pull exits 5 and says PULL-FIRST', 'cli: receive after the pull exits 0 and delivers'; each refusal reads 'Refused: commit <sha> is not on origin yet'",
+      "the reader checks in the same file (open-calls.py and the crossbox-deploy-check.py readers, lines 201 and 207) pass before and after this cell's change"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The crossbox call tests (.tools/tests/test_crossbox_call.py) pass at the shipped tree.",
+  "world_is": "45 of 50 checks pass at 3477d67af5. The five failures are refusals that name a commit as not on origin; the cause was not read here, and the cell that owns the test is not this one.",
+  "notes": "Found while running the reader checks this cell touches. Not fixed: the file is outside this order's <paths>. The owner is the seat that wrote crossbox-call.py and its test."
+}
+```
