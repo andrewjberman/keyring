@@ -5015,3 +5015,165 @@
   "notes": "OBSERVATION only: the counts are the release-pin delta between the two recipe builds, not a re-ruling. The CTO and the issuer decide the read assignments."
 }
 ```
+
+## IRPT_ANLREQ-D2-W55-S22 -- the order's step 1 scratch commit of the two reader paths was refused by the owned-paths lane gate; the build used the builder's --override instead
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S22",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T04:01:49Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-200 step 1 asks for ONE local scratch commit carrying the two release reader blobs; the pre-commit owned-paths gate refused it for this serial, so no commit exists and the build took the reader blobs through the builder's --override.",
+  "spec_asserts": "AR-y-200 step 1: in a throwaway worktree cut at st32 pin 0485393f3a, replace intake/uploads.py and intake/template_reader.py with the release pin blobs and make ONE local scratch commit; step 3: the scratch commit is the pin source for the package files.",
+  "world_is": "A git commit in C:/dev/ar200-55-wt (detached at 0485393f3a) was refused: owned-paths VIOLATION for intake/template_reader.py and intake/uploads.py, lane IRPT_Y_ACCESS_INTEGRATION_P, agent 0.9.0_WK_IRPT_ANLREQ~55 not in permitted_agents (this order's <paths> is the grant and names only the investigation file). No commit was made (HEAD stays 0485393f3a); no hook was bypassed. The builder's documented --override REPO_PATH=PIN (build_resident_package.py lines 168-170 and 228-236) packages each named member from another commit and records it in provenance.member_overrides; the build used it with --pin 0485393f3a and produced 297 members (the st32 count).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the git commit output in C:/dev/ar200-55-wt: the owned-paths VIOLATION lines for both reader paths (this session)",
+      "build_resident_package.py at blob e1e58c2d94a8d0b6fc4c16320fa385bf39e5d8a8, lines 168-170 and 228-236 (--override)",
+      "r19/RESIDENT_TWO_MEMBER_RELEASE.json scratch_commit and delta_vs_st32_rebuild"
+    ]
+  },
+  "notes": "OBSERVATION. The override is the builder's own mechanism and the commit was not forced. If the CTO wants the scratch commit itself, that is a grant question for the issuer; the worker does not override the gate."
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S23 -- the order's premise that the bindings carry the host root path does not hold: the st32 bindings name no root, so the two-member build needs no new HOST_ROOT
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S23",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T04:01:49Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The st32 bindings contain no install root; the root name lives in the host script (NEW), the cutover receipt (package_root) and the unit file, so a release tarball is root-agnostic and the host script's NEW must differ from the live root.",
+  "spec_asserts": "AR-y-200 step 5: the host script creates $R/$NEW from the tarball and the bindings carry the host root path; state what NEW must be for the bindings to point at the new root, and whether the build must therefore be made with a new HOST_ROOT.",
+  "world_is": "reports/resident_bindings.json of st32 (sha256 55d24940...) has no key that names /opt/irpt-resident or NEW: capture.wrapper_path and capture.library_path name /opt/investor-reporting-ycharts (the host app directory), census, opal_map and schema_directory are relative. NEW is the host script's variable (resident_host_install_0485393f3a-st32.sh line 5); ROOT=$R/$NEW (lines 7, 9); the receipt receives package_root=$ROOT (line 66); install-resident.sh takes package_root as its argument (installer line 8) and writes WorkingDirectory, PYTHONPATH and ExecStart from it (lines 56-59). Line 20 runs rm -rf on $ROOT, so NEW must not equal the live 0485393f3a-st32. Proposed NEW: 0485393f3a-r19.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/irpt-release-st32/0485393f3a-st32.tar.gz member ./reports/resident_bindings.json (extracted to the scratch folder and read)",
+      "C:/dev/irpt-release-st32/resident_host_install_0485393f3a-st32.sh lines 5-9, 20, 66, 97",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/install-resident.sh lines 8, 56-59 (read via INSTALL_SEMANTICS_SCRATCH_PROOF.json installer_lines_read)"
+    ]
+  },
+  "notes": "OBSERVATION. The two-member build carries no HOST_ROOT; the name is a host-script decision for the pair. The bindings' provenance.member_overrides is the only bindings change."
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S24 -- the cell's @e93258c650 and @da7b3b10bc name commits, not blobs; the release pin's blobs of the two readers are 35df2aa4 and fbc6c33a
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S24",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T04:01:49Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cell's '@<hash>' for the two reader members resolves to the commit that last changed each file, not to the blob the release carries; the blobs at the release pin are read directly and the build uses those.",
+  "spec_asserts": "AR-y-200 step 1: replace uploads.py and template_reader.py with their blobs at the release pin 069b8f797e (uploads.py @e93258c650, template_reader.py @da7b3b10bc).",
+  "world_is": "git rev-parse 069b8f797e:infra/aws/lambda/investor-reporting/intake/uploads.py = 35df2aa46146069d14fb0bfbaa4109214c180f60; ...template_reader.py = fbc6c33af050bc94284b51f8a489d9a6bd646576. e93258c650 and da7b3b10bc are commits (the last changes: build(IRPT_ANLREQ AR-y-162 ...) and feat(IRPT_ANLREQ.TO-AR-y-181 points 2-3 ...)); e93258c650:<uploads.py> resolves to the same blob as 069b8f797e:<uploads.py>. The content hashes of the two members at the release pin match the Lambda release bytes named in the cell.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse of both pins and both commits (this session)",
+      "git show <blob> | sha256sum (uploads.py 176682cb..., template_reader.py 83ab9b45...) equal to the build's member bytes"
+    ]
+  },
+  "notes": "OBSERVATION. Notation only; no consequence for the build."
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S25 -- test_correction_words::test_correction_words_are_the_envelopes_words fails on the two-member build: ops/status.py at st32 bytes lacks 24 CORRECTION_WORDS that the release uploads.py declares
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S25",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T04:01:49Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "one_line": "A named reader test fails on the built package: the release uploads.py declares 24 correction words that the st32 ops/status.py does not, and the CTO's held-member ruling leaves ops/status.py at st32 bytes. AC1 is not met.",
+  "spec_asserts": "CTO round-19 analysis section 4 item 5 (msg 6770): the release built with the four held members at st32 bytes passes the reader's import and acceptance tests in the scratch tree; a reader member that cannot run without a newer copy goes to its owner first. AR-y-200 step 6: a reader test that fails on a member at st32 bytes goes to the minimal import set or to the CTO; never widen silently.",
+  "world_is": "The test asserts uploads.CORRECTION_WORDS == status.CORRECTION_WORDS (test_correction_words.py line 44; it imports status from ops at line 41). The build's uploads.py (release bytes, sha256 176682cb...) declares 24 entries more than the st32 ops/status.py (blob 836e83e5...; CORRECTION_WORDS at line 86). ops/status.py is imported by neither reader member (51 import names resolve at st32 bytes). Diagnostic control in a copy with the release status.py (blob c98ed753...) in place: 9 of 9 pass. Decision taken: not added to the minimal import set, because the ruling says the release carries the reader members and what imports them, and the test import is not a reader import.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r19/recipe_evidence/two_member_tests_output.txt (test_correction_words.py: 1 failed, 8 passed)",
+      "uploads.py line 53 comment: the words are the ones the status envelope declares (ops/status.py::CORRECTION_WORDS)",
+      "CTO_ROUND_ANALYSIS_IRPT_ANLREQ_Y_ROUND_19_20261013.md section 4 items 5 and the status.py note (shared tree)"
+    ]
+  },
+  "notes": "BLOCKING for AC1 on this order. ARMED: left alone, the release installs a reader whose declared correction words are not the words the status envelope declares, which the uploads.py comment says it must match. Disarm: the CTO decides whether ops/status.py moves to release bytes (with its owner's read) or the test is re-scoped; the worker does not move it."
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S26 -- test_the_readers_output_on_the_fixtures_is_pinned_to_its_version fails: the builder packages no csv or xlsx fixture, so the reader digest runs over a different fixture set
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S26",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T04:01:49Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The reader's fixture digest test fails on the built package because the package carries none of the nine csv and xlsx fixtures the digest reads; the reader bytes are not implicated (the same test passes with the fixtures restored).",
+  "spec_asserts": "AR-y-200 step 6: the reader's named tests run against the extracted package; a test that needs data the package does not carry, because the test file is the head's, is NOT a pass; say which.",
+  "world_is": "reader_digest() reads every .csv and .xlsx under intake/fixtures/holdings (test_stored_input_contract.py lines 171-172): nine release files (seven csv, two xlsx). The builder admits only .py, .json, .sh and .md (build_resident_package.py line 80), so the built package carries FIXTURE_MANIFEST.json, generate_rt11_specimens.py and security_mapping.json from that folder and none of the nine. The st32 package has the same gap. Diagnostic control in a copy with the nine release files restored: 5 of 5 pass, the digest equals the pin.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r19/recipe_evidence/two_member_tests_output.txt (test_stored_input_contract.py: 1 failed, 4 passed)",
+      "git ls-tree 069b8f797e intake/fixtures/holdings (nine csv and xlsx files listed)",
+      "build_resident_package.py line 80 (wanted())"
+    ]
+  },
+  "notes": "BLOCKING for AC1 on this order. Not served behaviour: the resident does not read these fixtures. Disposition for the CTO: the package carries the data, or this test is re-pinned against the packaged set. The worker does neither."
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S27 -- the st32 host script's OLD is the st31 root; a pair that copies the script without changing OLD would roll back to the wrong root
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S27",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T04:01:49Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "one_line": "Line 112 of the st32 host script re-installs $OLD, which line 6 sets to the st31 root 19b02b2971-st31; the root running now is 0485393f3a-st32, so the rollback of a next pair must set OLD to 0485393f3a-st32.",
+  "spec_asserts": "AR-y-200 step 5: state what the rollback at line 112 re-installs.",
+  "world_is": "resident_host_install_0485393f3a-st32.sh line 6 OLD=19b02b2971-st31; line 18 tests test -d $R/$OLD; lines 110-111 restore the library and the receipt; line 112 runs install_root $OLD. Line 5 NEW=0485393f3a-st32 is the root the unit runs. A next pair's script that keeps line 6 would, on a failed cutover, re-install the st31 root and not the st32 root the service ran before the attempt.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/irpt-release-st32/resident_host_install_0485393f3a-st32.sh lines 5, 6, 18, 110-112",
+      "r19/RESIDENT_TWO_MEMBER_RELEASE.json root_naming.rollback_line_112"
+    ]
+  },
+  "notes": "ARMED for the next pair's script: disarm by setting OLD to the live root's name in the pair's host script, which the pair's COO writes. The worker wrote no host script."
+}
+```
