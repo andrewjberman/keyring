@@ -32374,3 +32374,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS: S1 (the pin-set test outside the paths) RULED by amendment 1, the file granted; S2 (fixture and count in the named test file) APPROVED; S4 (portal gitlink shows modified in a fresh worktree) not mine, not committed, recorded; S5 (security_id source) ANSWERED: the live path takes vendor_id (report_security_ids, resident_worker.py:401-405), so the refusal sits there, and the older envelope path (validate_envelope) is not reached by the live worker; S6 (row grammar) ruled: the dell2 form IRPT_BCKEND-D2-W<n>-S<k> is the one to cut, my order text was wrong and amendment 1 fixed it; S7, S8 (a lane refusal until the amended order landed; the issuer's check file not committed by the worker) are the lane gate working as designed. NOT FIXED HERE, with owner: (a) S3, four custody tests (test_custody_entry.py two, test_custody_retained.py two) fail at base with FIRM_BINDING / INTERNAL-CALLER-CLASS row_absent; cause untraced; the catalogue is not on their path; owner me, a later measure-first cell if the CTO rules it in; (b) recipe.comparison_security_ids (the older envelope helper the first worker built from my design) reads catalog[k]['security_id'] and the admitted projection has none; it has no non-test caller, so the live path is unaffected; it is kept because the declared refusal code and its tests ride on it; the repair or removal is mine. NOT YET TRUE: nothing is served differently: the catalogue changes only when a later signed apply moves the function that packages these files. ISSUER NOTE: the worker also flipped the order's <status> to complete; that is the issuer's act and I read it as correct on the merged tree (criteria re-run PASS)."
 }
 ```
+
+## IRPT_BCKEND-D2-S151 -- round 184: the catalogue release moves two members of irpt-ycharts-generate, not recipe.py
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S151",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T21:00:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Correction to the round-184 analysis's premise: the catalogue release does not move 'only templates.json'; it moves two members of irpt-ycharts-generate (templates.json and maintained_sources.py, which is staged at a pin) and must NOT move recipe.py, whose live bytes are not the repo's current blob.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "my read 2026-10-13 ~20:5xZ of the live zip of irpt-ycharts-generate (CodeSha256 hpNfkhLtLRl0e9TFL+Vdr5kilZ1W8bN3GKMhlzmVXgg=, LastModified 2026-10-13T13:01:13Z, Handler generate_installed.lambda_handler, 104 members) hashed against git blobs: maintained_sources.py live 29c35dbfba72 = the staged pin 0642c9d004 blob = the repo blob before IB-pr-517 (HEAD now 74c262b6db6d); templates.json live 54656584f476 = the repo blob before IB-pr-517 (HEAD now 87be046cf2bd); recipe.py live 0d57427fe850 = the staged pin 3f29017cfc blob but NOT the repo blob before IB-pr-517 (aeef18516f11; HEAD now 1a270e6701eb)",
+      "infra/aws/lambda/ci/lambda-source-map.json, function irpt-ycharts-generate: source_dir ycharts/generate with 92 staged_from rows; the maintained_sources.py row is pinned at 0642c9d00454 and the recipe.py row at 3f29017cfc; the same file lists 12 functions that package one of these files (maintained_sources.py in 8: irpt-performance-adapter, irpt-directory-search, irpt-narrative, irpt-ycharts-generate, irpt-export-render, irpt-holdings, irpt-status, irpt-49f-reporting-read-lambda)"
+    ]
+  },
+  "spec_asserts": "A release moves exactly the members its packet names; a member whose repo blob is not the live blob rides only by a pin to its own release (CLAUDE.md rule 22a: diff deployed bytes against the build input, never by filename).",
+  "world_is": "RULED (issuer, inside my decomposition): round 184's order IB-pr-518 builds a candidate that moves templates.json (native, HEAD) and maintained_sources.py (the one staged_from row re-pinned to 0d0e9e1229, whose blob equals the repo's current one: the only change since the live pin is IB-pr-517's one pin line) and leaves recipe.py at its live pin. CONSEQUENCES, stated in the packet: (1) the OPAL-namespace refusal in recipe.py (report_security_ids) does not ship with this release; the YCharts path is stopped, and if re-enabled it would fail closed on a missing security_id; the refusal rides with recipe.py's own release (the other cells' pending changes in it). (2) The 7 other functions that stage maintained_sources.py keep the four-pin copy and are not moved; they do not serve the catalogue. (3) The CTO's round-184 text read 'only templates.json and its test move against the live package'; the real set is two members plus one source-map row, which the pair names. NOT read: whether the staged maintained_sources.py pin bump drags other members' staged_from rows; the census checks that the changed members are exactly two."
+}
+```
