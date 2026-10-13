@@ -8282,3 +8282,112 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W83-S1 -- the real KimiAdvisory has no search port at HEAD, so the harness cannot build the advisory on the interface until AR-y-249 lands; the offline tests route through a stub with the interface kwargs
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W83-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~83",
+  "surfaced_at": "2026-10-13T18:28:02Z",
+  "one_line": "AR-y-250 builds KimiAdvisory(send, search, telemetry, search_capability) on the THE INTERFACE block; at c53686ba6d the constructor takes send, telemetry, clock and search_capability only, so the default factory raises TypeError. run_qa records that as HARNESS_EXCEPTION and mints no receipt (fail-safe). The offline tests inject a stub with the interface kwargs; the real advisory path is untested in this order and must be proven once AR-y-249 lands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/resolution_kimi.py@c53686ba6d:141-145 KimiAdvisory.__init__(self, *, send, telemetry, clock=time.monotonic, search_capability=None) has no search parameter",
+      "infra/aws/lambda/investor-reporting/intake/resolution_kimi.py@c53686ba6d:159-166 the swap gate still reads request_fields and tools, tool_choice, not the interface capability",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/kimi_search_qa.py (worktree, uncommitted until this order's commit) _default_advisory builds KimiAdvisory(**kwargs) with search= and the stub tests in ycharts/generate/tests/test_kimi_search_qa.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AR-y-250 step 2 (THE INTERFACE block): the harness builds its own KimiAdvisory(send=..., search=..., telemetry=..., search_capability=...) and the swap call keeps its return shape.",
+  "world_is": "The constructor and the swap gate at HEAD are the pre-ruling shape. The search port and the search_capability shape of the interface are AR-y-249's to land. Until then the real-advisory construction cannot be exercised in this worktree."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W83-S2 -- kimi_port.kimi_search does not exist at HEAD; the live QA command names it per the interface and cannot run until AR-y-249 lands it
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W83-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~83",
+  "surfaced_at": "2026-10-13T18:28:02Z",
+  "one_line": "AR-y-250 step 4 designs the live QA as the harness with kimi_port.kimi_send and kimi_port.kimi_search over the secret read by id. At c53686ba6d kimi_port.py has kimi_send, journal_telemetry and secret_reader only; there is no kimi_search and no KIMI_SEARCH_URL. The live command is written against the interface and is not runnable until AR-y-249 lands the transport.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/kimi_port.py@c53686ba6d:18-19 KIMI_URL and KIMI_SECRET_ID are the only Kimi constants; no KIMI_SEARCH_URL",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/kimi_port.py@c53686ba6d:25, :57, :65 defines kimi_send, journal_telemetry and secret_reader; the file ends at :69 with no search transport"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AR-y-250 step 4: the live QA is the harness run with kimi_port.kimi_send and kimi_port.kimi_search over the real secret read by id astn/kimi/api-key.",
+  "world_is": "kimi_search is absent at HEAD. The live_qa member of the record names it as the interface requires and marks the command NOT RUN. No live call was made in this order."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W83-S3 -- the checker floor is 8 cases while the cell's refusal floor is 6; the shipped list has 8, so both rules hold
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W83-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~83",
+  "surfaced_at": "2026-10-13T18:28:02Z",
+  "one_line": "AR-y-250 step 2 says a case list shorter than 6 is refused; the y250-qa checker at ar21_checks.py:412 requires at least 8 cases (TIMXX, at least 4 known funds, a nonsense symbol, two injection strings). The harness ships the 8-case list, so the stricter checker floor is met; the two floors differ on paper and nothing in this order reconciles them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py@c53686ba6d:412 len(cases) < 8 refuses the record",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/kimi_search_qa.py (worktree) MIN_CASES = 6 and CASES holds 8 entries"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AR-y-250 step 2 (refusal of a case list shorter than 6) and AR250-y-AC1 (the record names TIMXX, at least 4 known funds, a nonsense symbol, two injection strings).",
+  "world_is": "The two floors are both met by the 8-case list. The harness refuses at 6; the checker grades 8. Reconciling the floors is an issuer decision."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W83-S4 -- the cell's cost bound counts one search call per case, but the interface places the search port inside the advisory, so the call count per case is set by the advisory's attempt loop
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W83-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~83",
+  "surfaced_at": "2026-10-13T18:28:02Z",
+  "one_line": "AR-y-250 step 4 states the cost bound as one search call per case. The interface gives the search port to KimiAdvisory, and the advisory's attempt loop (resolution_kimi.py:168-225 at c53686ba6d) makes up to two attempts per call, so the number of search calls per case is set by AR-y-249's loop. The live_qa member states the bound both ways until AR-y-249 fixes it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/resolution_kimi.py@c53686ba6d:168 for attempt in (1, 2): the swap call's attempt loop",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R22C_Y.md (the AR-y-249 row) names the search transport and the chat call, not the search count per attempt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AR-y-250 step 4 cost bound: cases x attempts x swap budget, plus one search call per case.",
+  "world_is": "The search count per case is not fixed by the interface. The worst case is two searches per case if AR-y-249 searches once per attempt. The record states both figures."
+}
+]
+```
