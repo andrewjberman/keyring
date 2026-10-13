@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "laptop",
- "written_at": "2026-10-13T19:49:14Z",
+ "written_at": "2026-10-13T20:28:23Z",
  "written_by": "1.0.0_SA_CTO",
  "rows": [
   {
@@ -487,6 +487,86 @@
     "ruled_by": "andrew",
     "xadj": null
    }
+  },
+  {
+   "id": "laptop-20261013T200117Z-9e8a",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/laptop/contributing-boxes",
+   "asked_by": "2.0.0_SA_COO~DV",
+   "source": "portal/CONTRIBUTING-BOXES.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-13T20:01:17Z",
+   "kind": "approval",
+   "approval": {
+    "box": "laptop",
+    "branch": "cand/laptop/contributing-boxes",
+    "purpose": "One-page rule for how a box contributes a portal feature: cand/<box>/<slug> branch cut from the last PROD release, approval row, merge-forward, chosen-set promote. The first feature through the NFRA_DEVPLN approval route.",
+    "pages": [
+     "portal/CONTRIBUTING-BOXES.md (a docs file in the portal repo root; no page a user opens)"
+    ],
+    "class": "opal-internal",
+    "how": "Read the file on the branch: git -C portal show origin/cand/laptop/contributing-boxes:CONTRIBUTING-BOXES.md (57 lines, one commit 07f065e6 on PROD 15c97549)",
+    "head_sha": "07f065e69f54b6821d1197cd7b947ec1131c8026",
+    "commits": 1
+   },
+   "scope": {
+    "measured_at": "2026-10-13T20:01:17Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-13T20:27:44Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/APPROVAL_20261013_202xZ_DEVPLN_CAND_LAPTOP_CONTRIBUTING_BOXES.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "laptop-20261013T202823Z-87a2",
+   "project": "COMM_ASSIST",
+   "subject": "muse replaces the Kimi text agent as your interface: does Kimi ALSO stop drafting? (a) keep Kimi drafting until muse's efficacy read (FWD-12), (b) muse drafts too, now",
+   "asked_by": "1.0.0_SA_CTO",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_COO_CA_COMM_ASSIST_MUSE_20261013.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-13T20:28:23Z",
+   "kind": "fork",
+   "context": "Your ~18:0xZ 'muse as a replacement for the COMM_ASSIST kimi agent' vs your ~14:4xZ decision 2 (a) 'Kimi keeps drafting'. Round 16 (muse thread) is issued and does not wait; only a cell that re-homes the drafter waits.",
+   "rec": "(a): retire the drafter on the same efficacy read that retires the text fallback, so the switch is measured, not guessed; muse already reads, explains and answers every draft.",
+   "scope": {
+    "measured_at": "2026-10-13T20:28:23Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": null
   }
  ]
 }
