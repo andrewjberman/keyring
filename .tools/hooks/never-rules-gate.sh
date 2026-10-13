@@ -692,8 +692,21 @@ if [ -n "$_PUSHPULL_HIT" ] \
                 deny "BLOCKED (workspace-trunk rule, 1.0.0_SA_CTO~DELL1 msg 3173): a push from the ajb_workspace repo to '$BRANCH'. The workspace trunks are box/* and CLOUD; DEV and PROD belong to the portal repo. If you meant the portal, your cd/-C did not reach it -- check 'git remote get-url origin' reads Opal-Capital/portal. Audited override: append '# never-override: <reason>' to the SAME simple command." ;;
         esac
     fi
+    # --- NFRA_DEVPLN S03 (1.0.0_SA_CTO, 2026-10-13; PRD v0.3 C-MERGE-FORWARD fate (ii)): the DT's DEV admission ENDS. ---
+    # A promote is now a chosen set of approved features built from PROD (C-PROMOTE; .tools/portal-release-build.sh), so a
+    # DT never needs to push DEV; live DEV is never merged whole again. DEV is written by .tools/portal-merge-forward.sh,
+    # which refuses without an approved row. That script pushes from inside itself, so this gate (which sees only the
+    # command a seat types) admits it by construction and the script is the enforcement point. The DT keeps PROD.
+    # Fates (iii) FAST lease and (iv) test-only stay as they are: both are CLAUDE.md law, changed only on Andrew's word.
+    if [ "$BRANCH" = "DEV" ] && printf '%s' "$_PUSHPULL_HIT" | grep -qE -- "$_RE_PUSH_ONLY" \
+       && printf '%s' "$_CALLER" | grep -qE -- '^[0-9]+\.[0-9]+\.[0-9]+_DT_'; then
+        case "$(git -C "$REPO" config --get remote.origin.url 2>/dev/null)" in
+            *[/:]Opal-Capital/portal|*[/:]Opal-Capital/portal.git)
+                deny "BLOCKED (NFRA_DEVPLN S03, C-MERGE-FORWARD fate ii): a DT seat no longer pushes portal DEV. A promote is a chosen set of approved features (bash .tools/portal-release-build.sh --features <list>, then PROD); DEV is written only by bash .tools/portal-merge-forward.sh <cand/box/slug> --push on an approved row. Audited override: '# never-override: <reason>'." ;;
+        esac
+    fi
     _DT_PORTAL_PROD=0
-    if { [ "$BRANCH" = "PROD" ] || [ "$BRANCH" = "DEV" ]; }        && printf '%s' "$_PUSHPULL_HIT" | grep -qE -- "$_RE_PUSH_ONLY"        && printf '%s' "$_CALLER" | grep -qE -- '^[0-9]+\.[0-9]+\.[0-9]+_DT_[A-Za-z0-9]+(~[A-Za-z0-9]+)?$'; then
+    if [ "$BRANCH" = "PROD" ]        && printf '%s' "$_PUSHPULL_HIT" | grep -qE -- "$_RE_PUSH_ONLY"        && printf '%s' "$_CALLER" | grep -qE -- '^[0-9]+\.[0-9]+\.[0-9]+_DT_[A-Za-z0-9]+(~[A-Za-z0-9]+)?$'; then
         _origin_url="$(git -C "$REPO" config --get remote.origin.url 2>/dev/null)"
         case "$_origin_url" in
             *[/:]Opal-Capital/portal|*[/:]Opal-Capital/portal.git) _DT_PORTAL_PROD=1 ;;
