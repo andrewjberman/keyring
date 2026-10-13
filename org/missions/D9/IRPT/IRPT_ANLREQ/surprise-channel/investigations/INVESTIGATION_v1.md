@@ -7206,3 +7206,138 @@
 - **owner:** `2.0.0_SA_COO~Y2`
 - **disarm_owner:** n/a -- INERT
 - **state:** OBSERVATION / INERT
+
+## IRPT_ANLREQ-D2-W70-S1 -- AR-y-226 Read-first names the AR-y-191 record at ~51/r19; the record is at ~52/r19
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W70-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~70",
+  "surfaced_at": "2026-10-13T15:37:21Z",
+  "one_line": "AR-y-226 names the AR-y-191 record as deliverables/0.9.0_WK_IRPT_ANLREQ~51/r19/START_STATE_SCRATCH_RUN.json (if that is its name); the record is at deliverables/0.9.0_WK_IRPT_ANLREQ~52/r19/START_STATE_SCRATCH_RUN.json and ~51/r19 holds no such file.",
+  "spec_asserts": "TO-AR-y-226 Read first: the AR-y-191 record's reopen_matrix method, in deliverables/0.9.0_WK_IRPT_ANLREQ~51/r19/ (START_STATE_SCRATCH_RUN.json, if that is its name -- list the folder).",
+  "world_is": "At worktree HEAD ec4b724fdd, deliverables/0.9.0_WK_IRPT_ANLREQ~51/r19/ holds CROSS_BOX_MEMBERS_EQUALITY.json, LIVE_EQUIVALENT_MAP_PATCH.diff, RELEASE_BUILD_RECORD.json, RELEASE_MAP_PATCH.diff and YCHARTS_GENERATE_RELEASE_CENSUS.json. A Glob for START_STATE* under deliverables/ returns two files: ~52/r19/START_STATE_SCRATCH_RUN.json and ~57/r19/door_answers/START_STATE_RECORD_R19_RERUN.json. This order read the ~52 record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~51/r19/ listing @ec4b724fdd (five files, no START_STATE file)",
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~52/r19/START_STATE_SCRATCH_RUN.json @ec4b724fdd (the AR-y-191 record, read in full)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W70-S2 -- AR-y-226 stores 5 inputs per side, not the 8 named as the floor; 6 of 11 cases turn back at the door
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W70-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~70",
+  "surfaced_at": "2026-10-13T15:37:21Z",
+  "one_line": "AR-y-226 stores 5 inputs per side, below the 8 the cell names as the floor: 6 of the 11 cases are turned back at the door under both pairs and store nothing.",
+  "spec_asserts": "TO-AR-y-226 step 2: at least 8 stored inputs per side where the cases allow, for the AR-y-191 input set plus the one-account, two-account, total-row, repeated-header and two-sheet cases.",
+  "world_is": "With the pinned pair (r18.1 reader, uploads.py HEAD) and the moved pair (r19.3 reader, uploads.py HEAD), the NORMALIZED doors are the same five cases on both sides: two_sheet_workbook, one_account_sheet, repair_header_one_value, attribute_header_one_account and one_account_csv. Six are NEEDS_CORRECTION on both doors: total_row_sheet (TOTAL_ROW_PRESENT), two_value_account_sheet, repair_header_two_values, brokerage_two_account, two_account_csv (ACCOUNT_COLUMN_SEVERAL_VALUES) and repeated_header_csv (HEADER_ROW_REPEATED). Measured in org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~70/r21/REOPEN_AND_EFFECT.json door_cases.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~70/r21/REOPEN_AND_EFFECT.json door_cases and reopen_matrix (each cell cases=5, accepted=5)",
+      "the reader outcomes of the same eleven fixtures are in effect_table rows with kind sheet"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W70-S3 -- The word pinned names two pairs: the AR-y-191 record's moved pair is this order's pinned pair
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W70-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~70",
+  "surfaced_at": "2026-10-13T15:37:21Z",
+  "one_line": "The word pinned names two different pairs: this order's pinned pair (r18.1 reader, uploads.py HEAD) is the AR-y-191 record's MOVED pair; the AR-y-191 pinned pair (uploads f09b802cdc, reader 3f29017cfc) is not run by this order.",
+  "spec_asserts": "TO-AR-y-226 cell: pinned = the r18.1 reader with that uploads.py; moved = the HEAD reader with that uploads.py; uploads.py is the same bytes on both sides (176682cb...).",
+  "world_is": "The AR-y-191 record deliverables/0.9.0_WK_IRPT_ANLREQ~52/r19/START_STATE_SCRATCH_RUN.json defines its moved pair as uploads HEAD plus reader HEAD r18.1 (reader sha256 83ab9b45...), the pair this order calls pinned. Its moved door turned back the same four of its eight sheets as this order's pinned door (two_value_account_sheet, repair_header_two_values, brokerage_two_account, total_row_sheet).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~52/r19/START_STATE_SCRATCH_RUN.json controls (reader_head_sha256, uploads_head_sha256) and door_cases @ec4b724fdd",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~70/r21/REOPEN_AND_EFFECT.json controls (pinned_reader_sha256 83ab9b45, pinned_uploads_sha256 176682cb)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W70-S4 -- The scratch pairs carry the other closure members at HEAD, not at their pins
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W70-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~70",
+  "surfaced_at": "2026-10-13T15:37:21Z",
+  "one_line": "Both scratch pairs carry ids.py, loaders.py, repository.py and served.py at HEAD, because the cell names only the reader and uploads.py; the AR-y-191 record shows those four differ from their pins.",
+  "spec_asserts": "TO-AR-y-226 step 1: each pair is put in a scratch folder with the intake package it imports; the cell moves ONE member (template_reader.py) and holds uploads.py the same on both sides.",
+  "world_is": "The AR-y-191 record door_closure_members_differing_from_head lists ids.py, loaders.py, repository.py, served.py, template_reader.py and uploads.py. This order's two trees are git archive of HEAD infra/aws/lambda/investor-reporting (plus docs/contracts), so those four are at HEAD in both pairs and their pinned values were not run. The matrix does not test the live pins of the four.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~52/r19/START_STATE_SCRATCH_RUN.json door_closure_members_differing_from_head @ec4b724fdd",
+      "step 1 of TO-AR-y-226 (task-orders/IRPT_ANLREQ.TO-AR-y-226.reopen-matrix-and-effect-r193.md) @ec4b724fdd"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W70-S5 -- AR-y-226 worktree base is two-plus commits behind box/dell2 at filing; intake unchanged
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W70-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~70",
+  "surfaced_at": "2026-10-13T15:37:21Z",
+  "one_line": "The worktree HEAD ec4b724fdd is 50 commits behind box/dell2 at filing (3a44c65c3e); no commit in that range changes the intake folder, so the two readers and uploads.py are the same bytes at both heads.",
+  "spec_asserts": "TO-AR-y-226 preamble: the worktree wk-IRPT_ANLREQ-70 is already created from the current branch.",
+  "world_is": "At filing, git rev-list --count HEAD..box/dell2 is 50; git diff HEAD box/dell2 over infra/aws/lambda/investor-reporting/intake is empty; template_reader.py is blob 7c2c761d71 and uploads.py is blob 35df2aa461 at both heads. The session-start status showed box/dell2 at 112799fa63, so the branch moved again while this order ran.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-list --count HEAD..box/dell2 = 50 (measured at filing)",
+      "git diff HEAD box/dell2 -- infra/aws/lambda/investor-reporting/intake = empty (measured at filing)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
