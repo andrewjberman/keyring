@@ -214,6 +214,7 @@ Battery dry-run at base 08b77fd98d (`round10/checks/`):
 <status>issued</status>
 <status>complete</status>
 <status>issued</status>
+<status>complete</status>
 <round>10</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
