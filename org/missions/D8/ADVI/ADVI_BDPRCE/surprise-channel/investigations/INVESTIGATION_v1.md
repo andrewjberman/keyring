@@ -740,3 +740,234 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "The served object states its own as-of date and carries one current_price per lot, so the date and price are read from the object. The lot key carries a client identifier, so the record holds a SHA-256 prefix of it. The date source is a choice the task order did not name, and the record names it in served_source.date_source."
 }
 ```
+
+## ADVI_BDPRCE-D1-W7-S1 -- The third mapping-gap test cannot run: silver/historical_prices.parquet is keyed by ticker and has no asset_name column
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W7-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~7",
+  "surfaced_at": "2026-10-13T19:55:52Z",
+  "one_line": "The task order's mapping-gap test (a name that has a ticker in silver/historical_prices.parquet) cannot be run: that table has a ticker column and no asset_name column.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "opal-data-bd silver/historical_prices.parquet downloaded 2026-10-13 and schema read with pyarrow: columns date, ticker, close, fetch_date, source; 5,885,915 rows, 3,628 distinct tickers; no asset_name column",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~7/CENSUS.json@e7588a0117 listed_untickered.condition3 records the test as UNEVALUABLE",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~7/census_diagnostics.txt@e7588a0117 NAMES line: untickered names in ticker_lookup 1, in canonical rows carrying a ticker 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-b-3 section 1b: listed_untickered covers assets 'whose name has a ticker in historical_prices.parquet'; section 1a names silver/historical_prices.parquet (ticker column) as a ticker source.",
+  "world_is": "The table is keyed by ticker, not by name, so the name-to-ticker test has no column to run against. The listed count rests on config/ticker_lookup.json and the canonical table's own ticker column. Those two sources list 1 untickered asset (1 lot). The third condition is recorded as UNEVALUABLE, not as zero."
+}
+```
+
+## ADVI_BDPRCE-D1-W7-S2 -- acct_z client keys embed an account number, so the extract and the committed sample carry them hashed
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W7-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~7",
+  "surfaced_at": "2026-10-13T19:55:52Z",
+  "one_line": "The 138 acct_z client objects are keyed by acct_z followed by ten digits; the extract's object_key and the committed sample therefore carry them as acct_z#<sha12>, and the sample hashes every client key.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "listing of advi/49financial/platinum/entities/clients/ in opal-data-49financial (read 2026-10-13): 138 detail.json keys with the acct_z prefix; the suffix is ten digits (shape counted, values not printed)",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~7/scripts/census_bp_b3.py@e7588a0117 masked_path and sample_path: acct_z suffix written as sha12, every sample key as obj#sha12",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~7/CENSUS.md@e7588a0117 Privacy section states the re-read method (list the prefix, match the hash)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-b-3 section 1c: the extract carries object_key per lot and a 200-row sample is committed as lot_extract_sample.csv; section 2.2: no account number is printed or committed anywhere, and raw client keys are not printed.",
+  "world_is": "A raw acct_z key is an account number, so the extract (outside the checkout) and the committed sample cannot carry it as written. The extract holds acct_z#<sha12>; the sample holds obj#<sha12> for every client key. The next cell therefore cannot re-read an acct_z object from the extract key alone and must list the prefix and match the hash. No raw account key is in any committed file."
+}
+```
+
+## ADVI_BDPRCE-D1-W7-S3 -- The 26-object sample understates the off-canonical rate: 1,859 of 5,121 non-cash untickered lots across the home, against 61 of 586 in the sample
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W7-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~7",
+  "surfaced_at": "2026-10-13T19:55:52Z",
+  "one_line": "Across all 3,510 client detail objects, 1,859 of 5,121 non-cash untickered lots (36.3%) carry a price that matches no canonical row on the as-of date; the 26-object sample gave 61 of 586 (10.4%).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~7/CENSUS.json@e7588a0117 classes: PRICED_OFF_NO_CANONICAL 1859, NOT_UNTICKERED 192228, untickered_lots 6067, objects_read 3510 of 3510",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~7/census_diagnostics.txt@e7588a0117 CASH_HEURISTIC line: cash-like lots 946 with 0 off; non-cash lots 5121 with 1859 off",
+      "ADVI_BDPRCE-D1-W4-S2 (the sample of 586 untickered non-cash lots in 26 objects, 61 off) in this channel file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-b-3 cell: a sample of 586 untickered lots from 26 client objects found 61 whose served current_price matches no canonical row on the as-of date; the census is ordered to extend that sample to every lot.",
+  "world_is": "The full census gives a higher off rate than the sample, and the sample is not representative of the home: 942 objects carry untickered lots, and the off lots sit in z0 (1,792) and catch_all (67) objects. Any count or dollar effect taken from the 26-object sample describes that sample only. The cash rule is a name regex (diagnostic only), not a class."
+}
+```
+
+## ADVI_BDPRCE-D1-W7-S4 -- Served lots break market_value = quantity x current_price on 21,614 of 198,261 checked lots, 16,297 of them with market_value 0
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W7-S4",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~7",
+  "surfaced_at": "2026-10-13T19:55:52Z",
+  "one_line": "The market-value identity fails on 21,614 of 198,261 checked lots across the home, 16,297 of them with market_value 0 and nonzero quantity, where ADVI_BDPRCE-D1-W4-S8 read one object.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~7/CENSUS.json@e7588a0117 market_value_identity: lots_checked 198261, lots_off_quantity_times_price 21614, lots_off_over_1pct 21394, tolerance max(0.01, 1e-6*abs(market_value))",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~7/census_diagnostics.txt@e7588a0117 MV_IDENTITY lines: broken_by_class NOT_UNTICKERED 20520, broken_with_market_value_zero 16297, ratio quantiles 1.02 / 1.60 / 4.96 / 19.7 / 228",
+      "ADVI_BDPRCE-D1-W4-S8 in this channel file: the identity read on one client object (7 of 110 lots broken)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-b-3 section 1c asks for the count of lots off quantity x current_price; ADVI_BDPRCE-D1-W4-S8 records the served contract as 'the market value is the quantity times the current price'.",
+  "world_is": "The identity holds on 89.1% of checked lots and fails on the rest. The breaks are not one multiplier (median ratio of quantity x price to market value 4.96), and 16,297 breaks carry market_value exactly 0 while quantity is nonzero. 20,520 breaks sit on NOT_UNTICKERED lots. A valuation read from market_value differs from one read from quantity x price on these lots; the census does not say which field is right."
+}
+```
+
+## ADVI_BDPRCE-D1-W5-S1 -- R1 reads no price for EXXONMOBIL HOLDINGS CORP COM SHS on 2026-10-09: its only rows that day are Transfer In
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W5-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~5",
+  "surfaced_at": "2026-10-13T19:56:27Z",
+  "one_line": "R1 reads no price for EXXONMOBIL HOLDINGS CORP COM SHS on 2026-10-09: its only rows that day are Transfer In, so variants A and B are both absent and the 168.94 the task order expected is a non-trade row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver/transactions/2026-10-09.parquet in opal-data-bd: local MD5 3418b4f2cd45652b4c4b02c0420b769d equals the S3 ETag; 4 rows dated 2026-10-09 for this asset, one transaction_id, transaction_type Transfer In, price 168.94",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~5/RULE_PROBE.json@b8b710c884 (named row EXXON 2026-10-09: status absent_under_both; carry_forward 168.29 observed 2026-10-08)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-b-1 section 1e: include EXXONMOBIL HOLDINGS CORP COM SHS on 2026-10-09 in the probe assets (the round-1 thread asset: expect 168.94), under R1 clause 1 which excludes every non-trade row.",
+  "world_is": "The 168.94 on 2026-10-09 is a Transfer In row, which clause 1 excludes. R1 finds no Buy or Sale for the asset that day, so it is absent, and clause 5 carries forward 168.29 observed 2026-10-08 (a Sale)."
+}
+```
+
+## ADVI_BDPRCE-D1-W5-S2 -- R1 variant A reads no price for BLACKROCK INC COM on 2026-09-22: no Buy or Sale that day; only variant B reads a price
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W5-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~5",
+  "surfaced_at": "2026-10-13T19:56:27Z",
+  "one_line": "R1 variant A reads no price for BLACKROCK INC COM on 2026-09-22 (no Buy or Sale that day); only the sensitivity variant B reads a price, 1074.9259, from Dividend Reinvestment rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver/transactions/2026-09-22.parquet in opal-data-bd: local MD5 e01c1d1a9cad600170736e19f122268f equals the S3 ETag; the asset's rows dated 2026-09-22 are Dividend (33 rows, 11 ids) and Dividend Reinvestment (15 rows, 4 ids), no Buy or Sale",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~5/RULE_PROBE.json@b8b710c884 (named row BLACKROCK 2026-09-22: status absent_under_A_priced_under_B, price_variant_b 1074.9259)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-b-1 section 1e: BLACKROCK INC COM on 2026-09-22 is in the probe assets; the T1 median read 1.0 because cash rows dominated, and R1 must read a trade price.",
+  "world_is": "That date holds no Buy or Sale row for the asset. Variant A (clause 1, buys and sells only) is absent. Variant B reads 1074.9259, the median of 4 Dividend Reinvestment ids, which clause 1 names as a reinvestment cash leg. Under the ruling as written, R1 cannot read a trade price for this asset that day. Choosing A or B is the CTO's call; BP-b-2 replays the served rows."
+}
+```
+
+## ADVI_BDPRCE-D1-W5-S3 -- The silver transactions partition for 2026-10-12, the T-1 date for 2026-10-13, exists with zero rows
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W5-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~5",
+  "surfaced_at": "2026-10-13T19:56:27Z",
+  "one_line": "The silver transactions partition for 2026-10-12, the T-1 date for 2026-10-13, exists with zero rows, so R1 prices no asset for that date.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver/transactions/2026-10-12.parquet in opal-data-bd: LastModified 2026-10-12T00:17:25+00:00, 74 columns, row count 0 (parquet metadata read via get-object and pyarrow)",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~5/RULE_PROBE.json@b8b710c884 (per_date 2026-10-12: rows_on_date 0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-b-1 section 1e: run the module over REAL partitions silver/transactions/<date>.parquet for the named dates and a third of choice; the partitions are the data the probe reads.",
+  "world_is": "silver/transactions/2026-10-12.parquet exists with zero rows. The probe reads it, and R1 yields no price for any asset on 2026-10-12.",
+  "notes": "Cause of empty or lagging daily files is the BP-b-5 cell (cause of missing daily files). Not investigated in this cell."
+}
+```
+
+## ADVI_BDPRCE-D1-W5-S4 -- Five Buy rows on 2026-09-22 carry no asset_name, so R1 cannot price an asset from them
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W5-S4",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~5",
+  "surfaced_at": "2026-10-13T19:56:27Z",
+  "one_line": "Five Buy rows on 2026-09-22 carry no asset_name; R1 cannot price an asset from them, so it counts them under no_asset_excluded and prices nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver/transactions/2026-09-22.parquet in opal-data-bd: 5 rows with null asset_name, all transaction_type Buy, one distinct transaction_id, price 1.0",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~5/RULE_PROBE.json@b8b710c884 (per_date 2026-09-22: no_asset_excluded 5)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Ruling clause 4 and the module contract key the price per asset (asset_name); the task order gives no rule for a trade row whose asset_name is missing.",
+  "world_is": "Five Buy rows carry no asset name. The module excludes them from the per-asset result and counts them in the census, so the decision is visible and not silent."
+}
+```
+
+## ADVI_BDPRCE-D1-W5-S5 -- The 2026-10-09 partition carries 10 rows dated 2026-10-08, so a per-date read of the 2026-10-08 file alone would miss them
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W5-S5",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~5",
+  "surfaced_at": "2026-10-13T19:56:27Z",
+  "one_line": "The 2026-10-09 partition carries 10 rows dated 2026-10-08; a per-date read of the 2026-10-08 file alone would miss them, so the probe reads the union of partitions and lets trade_date decide.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver/transactions/2026-10-09.parquet in opal-data-bd: 10 rows with trade_date 2026-10-08 beside 6,264 rows dated 2026-10-09; the 2026-10-08 file has 84,459 rows dated 2026-10-08 and no transaction_id shared with the 2026-10-09 file",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~5/RULE_PROBE.json@b8b710c884 (per_date 2026-10-08: rows_on_date_by_file includes the 2026-10-09 file)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Ruling clause 6 (DEC-6): a row belongs to the target date when its trade_date equals it, whichever daily partition file carries it; the task order names the partitions to run the module over.",
+  "world_is": "Rows for one target date sit in a later file. The probe therefore reads the union of the four partitions and the date key decides. Reading only the file named for the date would drop them."
+}
+```
