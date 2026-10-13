@@ -8148,3 +8148,54 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W141-S7 -- the realized-lot window cannot open: gold account_lot_realized holds four trading days, so the year-to-date realized members and the last-12-months realized total are ABSENT in words
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W141-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~141",
+  "surfaced_at": "2026-10-13T23:00:12Z",
+  "one_line": "The realized-lot window cannot open: gold account_lot_realized holds four trading days, so the year-to-date realized members and the last-12-months realized total print an absent form naming the count, never zero.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The performance contract (version 0.2.0) sources the trgl.* members to the sum of the realized lots closed in the year to date across the lot table, and the order's BOUNDS and criterion DB94-2-AC1 say an unsourced figure reads ABSENT, never zero.",
+  "world_is": "The account_lot_realized partitions (one per closing date) hold four trading days in total; the household's realized rows across all of them total four, so the year-to-date window and the last-12-months realized total cannot open. Those members print the absent form with the count. The first build read only the newest partition and filled these members with zeros the table did not hold; that defect was corrected in commit af04c3a7c8 before the record was written, and the record comes from the corrected run at commit 3de2b240e2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "builder run output (private folder, counts only): lot_realized_rows_read 4 across every partition; class and activity partitions listed 4 each",
+      "commit af04c3a7c8 (every-partition read of account_lot_realized, with the window-coverage test) and commit 3de2b240e2 (member count)",
+      "org/standards/IRPT_DASHBD_ACCOUNT_LOT_REALIZED_CONTRACT.json: partition date=YYYY-MM-DD, grain realized lot (closing event x opening event)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W141-S8 -- the trading calendar on this device answers from its hardcoded NYSE fallback: pandas_market_calendars is absent, and the fallback covers only 2010 to 2027
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W141-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~141",
+  "surfaced_at": "2026-10-13T23:00:12Z",
+  "one_line": "The window anchors of the household build came from the hardcoded NYSE fallback of lib/trading_calendar.py, because pandas_market_calendars is absent on this device; the calendar warns that the fallback must be regenerated before 2028.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "lib/trading_calendar.py is the trading-day frontier that the window anchors and the activity-day pairs read (CLAUDE.md, the trading calendar rule); the contract's folds name the last trading day before each window start from it.",
+  "world_is": "The builder run printed WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027, and it names the regeneration step (lib/tests/gen_nyse_closures.py --write before 2028). The anchors and the pair checks of this build came from that fallback; the household rule itself reads no calendar.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "builder run output (private folder): the WARN line of the calendar import, printed on each of the three runs",
+      "lib/trading_calendar.py fallback label NYSE/hardcoded-fallback-2010-2027 as printed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
