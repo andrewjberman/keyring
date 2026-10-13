@@ -12795,3 +12795,31 @@ name the one known failure instead of silently inheriting it.
   "notes": "A later cell should read the EC2 journal for the 6 instants before touching --timeout-keep-alive. 502s on other routes (mcp, transcripts, token) are present in the same ALB logs and were out of scope."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W63-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~63",
+  "surfaced_at": "2026-10-13T19:52:00Z",
+  "one_line": "OG-sh-1 AC2 names a CloudWatch filter-log-events on the gateway's log group; no CloudWatch group holds the gateway's tool calls (the S3 audit lake does), so the read was taken from the lake and the verdict is NO_EVENT.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Order section 1.3: 'Find the gateway's log group in infra/aws/ec2/opal-gateway/, then run ONE filter-log-events'. A search of infra/aws/ec2/opal-gateway for log group names finds none; app/audit.py _emit writes audit.jsonl and, when AUDIT_S3_BUCKET is set, s3://opal-mcp-audit/audit/dt=<day>/<ts>-<id>.jsonl.",
+      "aws logs describe-log-groups (287 groups, auto-paginated): the only gateway-named group is aws-waf-logs-opal-gateway (retention 90 days), WAF request metadata with no JSON-RPC body, so a meeting id in a tool argument cannot appear in it. A filter over it would return 0 by construction and the 'other tool call' control could not tell blindness from absence.",
+      "Lake read instead, one pass over every object of the UTC day: s3://opal-mcp-audit/audit/dt=2026-09-29/ = 2536 objects, 2536 records, 2026-09-29T02:04:11Z to 23:01:55Z; 1278 tool calls (15 distinct tools) = the positive control; 0 records name the Monday-series meeting id or the 2026-06-01 transcript id; 0 transcript-kind calls. Visibility control: the same pass over audit/dt=2026-10-11/ finds 62 records naming that meeting id (tool hx_transcripts, id in the detail field).",
+      "Meeting id taken from data/transcripts/scripts/teams/series.json, series row table=monday_meeting, field online_meeting_id (a series id shared by every Monday occurrence); R22_CENSUS_0929.json carries only dates, so the 2026-06-01 occurrence was also searched by its transcript_id from NFRA_TRNSPT deliverables 2.0.0_SA_COO~T2/R22_MONDAY_LISTING_FIXTURE.json.",
+      "Deliverable: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~63/SH1_0929_READ.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-sh-1 section 1.3 / AC2: the gateway's request log for 2026-09-29 is read with one CloudWatch filter-log-events over a log group found in infra/aws/ec2/opal-gateway, filtered on the 2026-06-01 Monday meeting's id.",
+  "world_is": "The gateway's tool-call log of record is the S3 audit lake, not a CloudWatch group; the read was taken there and is NO_EVENT: no transcript-kind call of any sort reached the gateway on 2026-09-29 (consistent with the Teams pull first applying on 2026-10-09). The result neither confirms a fetch nor a refusal of the 06-01 meeting that day. The AC2 script reads only the JSON fields, so it passes; the substitution of plane is for the issuer to accept or re-cut.",
+  "notes": "The id is the SERIES id; a series-level match could not tell occurrences apart, which is why the 06-01 transcript id was searched as well (0 either way). The recipe is .scratch/final_read.py in the worker worktree (not committed)."
+}
+```
