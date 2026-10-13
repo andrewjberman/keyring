@@ -7601,3 +7601,108 @@
   "world_is": "REPORTED by Andrew with two screenshots at this seat, 2026-10-13: (1) after uploading the holdings file the in-page 'Holdings file' input still reads 'Choose File No file chosen' and the status line reads only 'Needs correction.'; no file name appears anywhere on the page, and the only sign of the upload is the correction text below. (2) Andrew's words, verbatim: 'there is no point in picking a \"price data for share quantities\" as the answer is always \"now\", which will translate into market close of the prior trading day.' READ by me in the DEV checkout, not reproduced and not run on PROD: the in-page input (ProspectComposer.tsx:419-422) is a bare native file input with no name shown once the page re-renders; the Price date field (:434-437) is a date input defaulting to today with no stated rule. Whether the date is read by the serving path or ignored is NOT read by this seat: the owner reads it before removing the field. Both points go to 2.0.0_SA_COO~Y2 with S77."
 }
 ```
+
+## IRPT_ANLREQ-D2-W74-S1 -- the AR-y-242 checker reads the candidate record at r21; the face writes it at r22
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W74-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~74",
+  "surfaced_at": "2026-10-13T17:33:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The AR-y-242 acceptance invocation reads the portal candidate record at deliverables/0.9.0_WK_IRPT_ANLREQ~74/r21/, while the worker face (step 5) says to write it at r22/. The record is written at r22 as the face says, so the criterion cannot find it.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR242-y-AC1 invokes ar21_checks.py y242-portal --root <worktree>; the face step 5 names r22/PORTAL_FILE_NAME_CANDIDATE.json as the record.",
+  "world_is": "ar21_checks.py:25 sets D to deliverables/0.9.0_WK_IRPT_ANLREQ~%s/r21/ and :301 calls portal_candidate on D % '74' + 'PORTAL_FILE_NAME_CANDIDATE.json', so the checker looks for r21/PORTAL_FILE_NAME_CANDIDATE.json. The record exists at r22/ only. The checker sits in the issuer's deliverables folder (deliverables/2.0.0_SA_COO~Y2/checks/r21/), outside this worker's grant, so the worker did not edit it and did not write a second copy at r21.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-74/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py:25 (D = .../~%s/r21/) and :301 (y242-portal)",
+      "the task order IRPT_ANLREQ.TO-AR-y-242 face step 5 (r22/PORTAL_FILE_NAME_CANDIDATE.json) at the worktree's task-orders/ folder",
+      "portal commit f5e92987f37e524e58b91185f60649e5be988a0d on branch wk-IRPT_ANLREQ-74-portal (portal repository), record at deliverables/0.9.0_WK_IRPT_ANLREQ~74/r22/PORTAL_FILE_NAME_CANDIDATE.json"
+    ]
+  },
+  "notes": "The round-20 analogue (AR-y-214) wrote its record under r20/, matching its checker's folder. For AR-y-242 the two round numbers differ (r21 checker, r22 face). Whether the record moves to r21 or the checker reads r22 is the issuer's call; the criterion stays FAIL until one of them changes."
+}
+```
+
+## IRPT_ANLREQ-D2-W74-S2 -- the upload state line reads "No file chosen yet." while a file is chosen and no review has run
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W74-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~74",
+  "surfaced_at": "2026-10-13T17:33:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "After the AR-y-242 change the upload step shows the file name line, but the status line beneath it still reads 'No file chosen yet.' whenever a file is set and no answer has come back yet (the NOTHING_CHOSEN state).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-242: the face names the chosen file in every state of the upload step and the native 'No file chosen' text is gone; the order says keep the existing state line.",
+  "world_is": "ProspectComposer.tsx:60 UPLOAD_STEP_STATE_LABELS.NOTHING_CHOSEN = 'No file chosen yet.', and uploadStepStateFor (:52-57) returns NOTHING_CHOSEN whenever no answer exists and no resolve is running, including when a file is set. The markup for that state therefore carries 'No file chosen' beside 'File: <name>' (commit f5e92987f37e524e58b91185f60649e5be988a0d). The candidate's test (c) scopes the 'No file chosen' assertion to answered states for this reason.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal worktree C:/dev/wk-portal-74 at f5e92987: ProspectComposer.tsx:52-60 (uploadStepStateFor and UPLOAD_STEP_STATE_LABELS)",
+      "bun test run of the candidate (before and after): the NOTHING_CHOSEN state with a file set renders 'No file chosen yet.' (seen in the before-arm markup output, C:/dev/wk-irpt-anlreq-74/.scratch/anlreq74_before_arm.txt)"
+    ]
+  },
+  "notes": "Form only. The label is an existing portal string and the order said keep the state line, so the candidate does not change it. Whether it should read differently while a file is chosen is for the issuer and the CTO review lane."
+}
+```
+
+## IRPT_ANLREQ-D2-W74-S3 -- the reference branch wk-IRPT_ANLREQ-63-portal named by the face does not exist in the portal repository
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W74-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~74",
+  "surfaced_at": "2026-10-13T17:33:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The AR-y-242 face says to read the commit convention from the log of branch wk-IRPT_ANLREQ-63-portal. No such branch exists in the portal repository; the AR-y-214 candidate is commit f6446051, reachable from other branches.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-242 step 1: commit the way an earlier candidate branch was made (git -C ... log of wk-IRPT_ANLREQ-63-portal).",
+  "world_is": "git -C C:/dev/ajb_workspace/portal branch --list 'wk-IRPT_ANLREQ-63*' returns nothing. The AR-y-214 candidate commit f644605182 (author 0.9.0_WK_IRPT_ANLREQ~63, message 'candidate on wk-IRPT_ANLREQ-63-portal, not landed') is in the portal history and was used as the convention read: author serial, subject form, Co-Authored-By trailer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/ajb_workspace/portal branch --list 'wk-IRPT_ANLREQ-63*' (empty output)",
+      "git -C C:/dev/wk-portal-74 show --stat f6446051 (subject and author read)"
+    ]
+  },
+  "notes": "Form only. The candidate branch is wk-IRPT_ANLREQ-74-portal as the face names; no other branch was touched."
+}
+```
+
+## IRPT_ANLREQ-D2-W74-S4 -- the portal's verification law asks for a rendered screenshot before a visual change is committed; the face asks for none
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W74-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~74",
+  "surfaced_at": "2026-10-13T17:33:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The portal's CLAUDE.md verification law says to render a visual change and read the screenshot (/frontend-dev, scripts/ui-smoke.mjs) before committing it. The AR-y-242 face asks only for tests and a record, so commit f5e92987 carries no screenshot; the trigger styling is checked by reading DESIGN.md clauses and by static markup.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-242 step 1: read the portal's CLAUDE.md and DESIGN.md first and cite the clause number for each visual choice; step 5 lists not_read including a browser render if none was run.",
+  "world_is": "C:/dev/wk-portal-74/CLAUDE.md 'Verification law -- LOOK AT THE PAGE, REJECT BY CLAUSE' (lines 75-84) names a screenshot, read against DESIGN.md, as the exercised path, and says the checklist without the screenshot is care, not a control. No browser render was run in this order (not_read in PORTAL_FILE_NAME_CANDIDATE.json).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-portal-74/CLAUDE.md:75-84 (Verification law)",
+      "C:/dev/wk-irpt-anlreq-74/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~74/r22/PORTAL_FILE_NAME_CANDIDATE.json (not_read)"
+    ]
+  },
+  "notes": "Form only. The candidate is a LOCAL commit on its branch, not landed or pushed. A screenshot is the gate a landing would need, for the CTO review lane or the issuer to decide."
+}
+```
