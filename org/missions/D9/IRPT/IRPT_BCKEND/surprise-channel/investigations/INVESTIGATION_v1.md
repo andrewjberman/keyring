@@ -30029,3 +30029,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-D2-S123 -- DISARM EVIDENCE for W348-S1 and W349-S1 (the staged _authz pin pair mismatch), and the status of W347-S1
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S123",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T03:26:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARM EVIDENCE, filed by the disarm owner the turn it was read, for rows W348-S1 (irpt-holdings) and W349-S1 (irpt-directory-search): the signature instrument's ONE attribute mismatch (the staged _authz/served.py at 74a62fb46c passes load_report_owner to enforce.Enforcer, whose staged pin f9a00f732c / 21eca74 lacks it) predates both orders, is identical in the LIVE zip of each function, and sits on a path neither function reaches.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 74a62fb46c:infra/aws/lambda/investor-reporting/_authz/served.py lines 850-856: render[\"load_report_owner\"] is set only inside `if self.render_ports is not None:` and only when the factory returns a third port; the Enforcer call with **render is the next statement. read by this seat.",
+      "infra/aws/lambda/investor-reporting/directory/entry.py: no occurrence of render_ports (read by this seat at HEAD and at the live function's last deployed commit 4850c85632); the Grep of infra/aws/lambda/investor-reporting/holdings: no match for render_ports in any .py file. So neither function constructs the served-context with render_ports, and the keyword path is dead in both.",
+      "the workers' own readings (rows W348-S1 and W349-S1): the same ATTR_MISMATCH line on the built zip and on the live zip of each, signature_closure 0 mismatches of 40 and of 38 calls."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "The mismatch is a LATENT defect of the product's mixed pin set, not a live fault: it cannot raise a TypeError in either function while render_ports is never passed, and the release it rides (a schema copy; a search handler) neither creates nor reaches it. The census rule of IB171-3 and IB171-4 is amended (commit of this row): attribute mismatches may not exceed the live zip's and every built line must be a live line; a NEW mismatch or any signature mismatch is still a STOP. The pin pair's repair is a separate later cell (owner 2.0.0_SA_COO~P2), never inside these releases. W347-S1 (holdings_inf.py leaks the same temp file) is NOT disarmed by this row: it stays ARMED; the order IB-pr-496 is amended to grant holdings_inf.py and the worker is re-seated."
+}
+```
