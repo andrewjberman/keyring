@@ -1669,3 +1669,28 @@
   "notes": "For 2.0.0_SA_COO~MP: Amendment 2's list wants one more pattern, /data/transcripts/scripts/teams/, for any GW cell that RUNS the deploy (a build-only or commit-only cell does not need it). Together with Z-S43 (the commit gates) and Z-S44 (pass the list on stdin, never argv) this makes the GW sparse recipe complete as measured. No criterion is affected: the refusal happened before any upload, nothing in the world moved, and z5.AC1/AC2 do not read how the worktree was cut."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S47",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "1.0.0_SA_CTO~Z",
+  "surfaced_at": "2026-10-13T21:19:26Z",
+  "one_line": "Andrew-direct ~20:4xZ at dell2 (cross-box ORDER XB-20261013T202846Z-111f, acked 21:17:34Z): the Control Plane page shows, per box and per Claude Code login, the signed-in Claude account (email, plan, organization; never a token) and usage remaining on the 5-hour and weekly windows with reset times and claim words. No PRD outcome carries it; the GW round is in flight and frozen, so it lands at that round's analysis as a PRD addendum.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "spec_asserts": "NFRA_MCPORTAL PRD v0.7: no outcome names the signed-in Claude account or its usage limits; FWD-20 (the gateway breakdown) is cut first, ahead of every other order.",
+  "world_is": "Andrew, verbatim: \"i want the mcp.opalinvest.dev/control-plane function to include the logged in account + usage remaining on 5hr and weekly basis by box. write that note and have it issued to the SITEZ box because the MCPORTAL COO shoudl get that worked in\". Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_204xZ_CONTROL_PLANE_SHOWS_CLAUDE_ACCOUNT_AND_USAGE_PER_BOX.md (1.0.0_SA_CTO~DELL2).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "crossbox XB-20261013T202846Z-111f ACKED by 1.0.0_SA_CTO~Z at 2026-10-13T21:17:34Z",
+      "the record's 'The outcome it sets' section: account fields from the box's own login record; 5h and weekly remaining with reset and claim (MEASURED or ABSENT); figure age; display only, no alert (moratorium)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "1.0.0_SA_CTO~Z writes the PRD addendum (a new FWD) at the GW round's L10 answer, ordered AFTER FWD-20's release and Andrew's read (direction XB-20261013T185926Z-4d72 section 6: nothing cut ahead of FWD-20). The record names the first unknown: no seat reads the 5h/weekly figures today, so the first cell is a READ of where Claude Code or the account exposes them, before anything is built. The issuer disarms by citing that analysis."
+}
+```
