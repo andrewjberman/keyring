@@ -89,6 +89,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** An independent head: it imports nothing of fa-1. `model.MODEL` repeats the producer model name that fa-1's `contract.PRODUCER_MODEL` carries; the drain reads both and they must agree. The recorded response is the real one (a live call at the cut, about 13 cents); the seam's request shape follows the Anthropic Messages API web search tool `web_search_20250305` (`max_uses`). The 21,743 input tokens of the fixture's call are the cost driver to remember at the 93-name run (round 104): about 13 cents per two-search call at the module's rates.
 
 <status>pending</status>
+<status>complete -- 2026-10-13T23:2xZ by the issuer (2.0.0_SA_COO~R2): wk-AMGT_RESAPP-421 @3c891d89fe merged @0a1877ea77, proof instance VALID (rc=0). The first worker stopped on BLOCKING row W421-S1 (the LGIC naming gate refused a typed Lambda name in lib/); AMENDMENT 1 (@eb79b89c6f) was the ruling and the slot was re-seated. AC1 PASS (`AIFILL FA-2 ARMS: YES (21 of 21)`, re-run by the issuer in the worker's tree), AC2 PASS (31 passed); `ruff check lib/research/aifill` clean; `inputs.py` holds no function-name literal and names AIFILL_SERVED_FUNCTION.</status>
 <round>104</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~421</slot>
