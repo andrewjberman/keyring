@@ -39,3 +39,10 @@ Continues `drive_log_20261011T14Z_desktop-hk1uu7n.md` (ticks to 01:35Z). Substan
 - OPEN: FB-j-3 (FB1; waits on the first chain after the 08:37Z dispatcher deploy: nightly 23:00Z or an S3-triggered run; no seat can drive it on
   demand: runner manifest bars SSM, D1-S44), FB-j-4 and FB-j-7 (parked on FB-j-3's measured text). Round 7 cannot close before them.
 - To the packet: D1-W65-S1 (ARMED, disarm owner this seat), W75-S2 (BLOCKING/ARMED, the cap; owner the CRO's pricing brief), D1-S41..S53.
+
+## 2026-10-13 21:3xZ tick (B1): stage DRIVE FORWARD already fired; waiting on workers and the 23:00Z chain
+- ADVI_FIRMBKTS | EXECUTING | round 7 | TOs 12/20 terminal (FB-j-3 pending at FB1; FB-j-4, -7 parked; FB-k-1..5 pending, workers ~76 to ~80 running) | cells: round-7 rectangle covered; PLANINV 5 of 5 cut | thread: y (FWD-1 read this round) | lease FULL.
+- Fired since the last log: FB-j-11/-12/-13/-14/-15 complete; first-regeneration pair signed on both halves (radius 194 keys, six slots off); FB-j-15 done on the laptop (trail WriteOnly selector; FWD-6 write instrument stamp 20:44:41Z, own read); PLANINV (CTO msg 5215) issued in ONE commit 1072dc94f3 under /dispatch (fanout 5 of 5, cap 8). GC answered for four idle trees (msg 4851). Re-sweep stood down (CTO msg 4907).
+- Rows: 444 read by comp-surprise (368 OBSERVATION, 76 BLOCKING; the BLOCKING count includes closed rows: the status field was not parsed, so no open-count is claimed).
+- FB1 LIVE and idle; its note puts the exec-summary read at 04:30Z tomorrow, so FB-j-3's chain read is a clock, not a stall: no nudge. Nothing moving is not proof of stalled.
+- Next ticks: validate and drain FB-k-1..5 as workers report; un-park FB-j-4 then FB-j-7 on FB-j-3's measured text; round-close-check, R7_CLOSE.md, slug to the CVO.

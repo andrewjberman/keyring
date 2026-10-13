@@ -2407,6 +2407,109 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "data/mdpf/scripts/demque/test_demque_carry_over.py CLI arm, this branch (the fresh directory after the failing run)"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W48-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~48",
+    "surfaced_at": "2026-10-13T21:12:32Z",
+    "one_line": "Under the drawability rule the order states (a reference request with a list of securities is drawable), the two AMGT_RESAPP S14 CRNCY requests become open at the standing drawer. The full request's own securities_note says it is drawn only if the slice reads a non-USD currency; the drawer cannot read that condition, so the first fire on 2026-10-17 would draw the 50-cell slice and then the 1,038-security request up to the reference room.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "spec_asserts": "DQ-t-56 Build item 4: a request with channel reference and a list of securities is drawable (one reference_data call per chunk). The R9 check arm 1 expects the open list to name B1, the porting test, the fund-type check and the TR comparison.",
+    "world_is": "python data/mdpf/scripts/demque/standing_drawer.py --open (this branch, rc=0) lists MDPF_SECHIST-CARD-A-B1-FUND-TYPE, MDPF_SECHIST-CARD-A-B1-OPTION-C, MDPF_SECHIST-CARD-A-PORTING-TEST, AMGT_RESAPP-S14-CRNCY-SCANNER-US-SLICE1, AMGT_RESAPP-S14-CRNCY-SCANNER-US and DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS. Both AMGT files are tier 4, non_client, reference, with a quote on file. The slice's securities_note says the full request is drawn only if the slice reads a non-USD currency. The filer is 2.0.0_SA_COO~R1 (filed_by). The reference room is the held reference ceiling of 52 cells per fire day, and the slice is first in file order. Disarm: the issuer holds the full request, or marks the slice result, before the 2026-10-17 fire.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/standing_drawer.py _undrawable_reason, _draw_reference and survey (this branch)",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/requests/AMGT_RESAPP-S14-CRNCY-SCANNER-US-SLICE1.json securities_note @8b7c76ad35",
+        "python data/mdpf/scripts/demque/standing_drawer.py --open (this branch, rc=0)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W48-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~48",
+    "surfaced_at": "2026-10-13T21:12:32Z",
+    "one_line": "Once client requests pass the priority gate, the three existing drawer test files reach the real crosswalk read (S3) and their fake cusips are excluded as P2. Their site fixtures now stub the gate; no assertion changed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DQ-t-56 Bounds: the existing drawer tests keep passing; the three named files change only where an assertion pins the old behaviour.",
+    "world_is": "With the gate applied, python -m pytest on test_demque_standing_drawer.py, test_demque_standing_drawer_close.py and test_demque_carry_over.py failed six tests with stop_reason GATED, and the run read S3. Each file's site fixture now monkeypatches priority_gate.load_inputs and priority_gate.excluded (two lines, plus an import). No assertion in those files was changed. The new test file stubs the gate in its own fixture.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/test_demque_standing_drawer.py, test_demque_standing_drawer_close.py, test_demque_carry_over.py site fixtures (this branch)",
+        "data/mdpf/scripts/demque/priority_gate.py excluded and load_inputs @8b7c76ad35"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W48-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~48",
+    "surfaced_at": "2026-10-13T21:12:32Z",
+    "one_line": "The order does not name a room for the reference channel. The drawer uses the held reference ceiling less the reference cells drawn today; history keeps its own room.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DQ-t-56 Build item 4: cells = securities x fields, one call per chunk of CHUNK_ROWS securities. No room is stated for the reference channel.",
+    "world_is": "run() gives reference requests their own room: allowance reference ceiling (held, 52 cells) less the reference cells in today's actuals lines. Reference rows are budget-recorded under mode demque-backfill-reference, which bbg_ledger_upload maps to channel None, so they never enter the history figure. The ceiling is a ledger floor (its own basis text says so). The issuer owns the reference figure.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/bbg_allowance.json reference.ceiling @8b7c76ad35",
+        "data/mdpf/scripts/demque/bbg_ledger_upload.py _conversion (unknown mode -> channel None) @8b7c76ad35",
+        "data/mdpf/scripts/demque/standing_drawer.py _reference_room and run (this branch)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W48-S4",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~48",
+    "surfaced_at": "2026-10-13T21:12:32Z",
+    "one_line": "The --plan line must print securities as a count with identifier_forms summing to it, but test_demque_need_class.py (outside this order's grant) pins the plan() dictionary with securities as a list of identifiers. Both shapes are kept: plan() is unchanged and plan_detail() is the CLI line.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DQ-t-56 Build item 6 and AC2 arm 2: the --plan line carries remaining_cells, securities (an integer of at least 600 for B1) and identifier_forms (a dict whose values sum to securities).",
+    "world_is": "test_a_request_whose_start_moves_later_draws_only_the_undrawn_in_window_rows_by_identity asserts plan() == {request_id, window_start, remaining_cells, securities: [identifiers]}. plan() keeps that shape. plan_detail() returns the DQ-t-56 shape and is what python standing_drawer.py --plan --request ID prints. The need-class test file was not edited.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/test_demque_need_class.py lines 154-178 @8b7c76ad35",
+        "data/mdpf/scripts/demque/standing_drawer.py plan and plan_detail (this branch)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W48-S5",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~48",
+    "surfaced_at": "2026-10-13T21:12:32Z",
+    "one_line": "The one-row probe's row is discarded and its day is drawn again by the normal draw. The probe costs one extra cell, counted on the request and in its actuals line.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DQ-t-56 Build item 1: the first draw of a /cusip/ entry is a one-row probe; if it returns the row the draw continues.",
+    "world_is": "A probe returns one field for one day, while a stored history row must carry every field of the request, so the probe row is not stored. The day is drawn again in full, which costs one cell. The probe's cell is charged against the room as well as the owed cap. The receipt prints the probe under probes, and the request prints identifier_form.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/standing_drawer.py _probe_history, _identifier_form and _draw_history (this branch)",
+        "data/mdpf/scripts/demque/test_demque_drawer_cusip_entries.py test 1 (this branch)"
+      ]
+    }
   }
 ]
 ```
