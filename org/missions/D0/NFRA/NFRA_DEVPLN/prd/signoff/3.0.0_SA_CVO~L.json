@@ -1,13 +1,12 @@
 {
   "prd": "NFRA_DEVPLN_PRD.md",
-  "prd_version": "v0.1",
-  "prd_pin": "1e49544e0517d84e57df1321546c8783e1e698f6",
+  "prd_version": "v0.2",
+  "prd_pin": "d2b7385bee30382d1ffbaa699e3757b5b43914a8",
   "half": "ratified-text",
-  "half_hash": "b23953fbd682fa72eb61f7ac159bd3b26d369bb36b2575151a8b1ab76cb811f1",
+  "half_hash": "3371f72bd76a8b134eb82bc6a9280f6facaac18cbfcab017a0daa87f5369dba5",
   "endpoint_hash": "07e3c63f9ade6f46d86572cafa8d8de0023e4af0a695ad044ac05db4748ff278",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_DEVPLN_PRD_V01_RATIFIED_TEXT_REVIEW_20261013.md@2b616031b1",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_DEVPLN_PRD_V02_RATIFIED_TEXT_REVIEW_20261013.md@ada268e3bb",
   "signed_by": "3.0.0_SA_CVO~L",
-  "signed_at": "2026-10-13T16:38:14Z",
-  "reason": "C-PROMOTE lets DEV-based feature branches ship unapproved commits (FWD-5); C-MERGE-FORWARD drops the Andrew-approved FAST-lease DEV route without his word"
+  "signed_at": "2026-10-13T16:56:45Z"
 }
