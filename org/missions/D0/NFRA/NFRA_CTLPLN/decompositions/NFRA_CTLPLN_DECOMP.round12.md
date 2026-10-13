@@ -38,3 +38,11 @@ Authority: a recut covers its affected cells (the spine's recut rule); the rows'
 |---|---|---|---|---|---|
 | `CT-ab-11` | rows `NFRA_CTLPLN-W78-S1` and `-S3`: `.tools/seat-boundary.ps1` and `.tools/kill-agent.ps1` accept an underscore in the third serial segment (so `0.9.0_WK_NFRA_CTLPLN~78` is a serial), and the boundary judges `codex.exe` as well as `claude.exe`; the test file gains the cases. | FWD-21, FWD-25 | LOCAL | SEATKILL / 2 | `0.9.0_WK_NFRA_CTLPLN~84` |
 | `CT-ab-12` | row `NFRA_CTLPLN-W77-S2`: `derive_ssm_documents.py`, `derive_respol_actions.py` and `derive_protected_functions.py` under `nfra-ctlpln-identity/tests/` stop rendering the Denies `CT-ab-1` removed, so a `--write` cannot reverse the ruling and each `--check` agrees with the committed documents. | FWD-10 | WORLD (path floor; no apply) | DELLADMIN / 2 | `0.9.0_WK_NFRA_CTLPLN~85` |
+
+## Recut 2 (2026-10-13, issuer 2.0.0_SA_COO~C): the staged apply of CT-ab-1, cut when its build merged
+
+Authority: the "Staged next" line above ("`CT-ab-2` the apply of `CT-ab-1`, under its own signed pair"); `CT-ab-1` merged at `e4ae5f7820`. The order carries a START CONDITION: it applies only when the COO half (`deliverables/2.0.0_SA_COO~C/CT-ab-2_PAIR_20261013.md`) and the CTO half both read SIGNED at one pin. `CT-aa-6` (the apply of `CT-aa-5`) is cut the same way when `CT-aa-5` merges.
+
+| cell | what | serves | risk | workstream / round | issued to |
+|---|---|---|---|---|---|
+| `CT-ab-2` | apply the six keys of `CT-ab-1` (two group memberships added, three policy documents updated, the routes-fn policy and attachment destroyed) under the signed pair; read back membership and the policy simulation; record. | FWD-10, FWD-5 | WORLD | DELLADMIN / 3 | `0.7.0_AE_CloudOps~U7` |
