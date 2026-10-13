@@ -1,0 +1,676 @@
+{
+  "request_id": "AMGT_RESAPP-S14-CRNCY-SCANNER-US-SLICE1",
+  "channel": "reference",
+  "reason": "Row AMGT_RESAPP-D1-S14 / CTO~DELL1 round-88 analysis item 2, ruled msg 3434: a peer member's price currency has no source in any store (the scanner carries no currency field; the model-block pool holds CRNCY only for held names). Round 90 replaces each member's plain reason with the currency this request returns. decomposition s.97a. SLICE1: see securities_note; filed by the issuer on COO~Q1's rescope question (msg 4870).",
+  "securities": [
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "AER",
+      "security_key": null,
+      "bloomberg": "AER US Equity",
+      "name": "AerCap Holdings NV",
+      "country": "United States",
+      "universes": [
+        "acwx",
+        "eafe",
+        "eafev"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "AUGO",
+      "security_key": null,
+      "bloomberg": "AUGO US Equity",
+      "name": "Aura Minerals Inc",
+      "country": "United States",
+      "universes": [
+        "r1000",
+        "acwx"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "BAP",
+      "security_key": null,
+      "bloomberg": "BAP US Equity",
+      "name": "Credicorp Ltd.",
+      "country": "United States",
+      "universes": [
+        "acwx"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "BVN",
+      "security_key": null,
+      "bloomberg": "BVN US Equity",
+      "name": "Compania de Minas Buenaventura SAA Sponsored ADR",
+      "country": "United States",
+      "universes": [
+        "acwx"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "BZ",
+      "security_key": null,
+      "bloomberg": "BZ US Equity",
+      "name": "Kanzhun Ltd. Sponsored ADR",
+      "country": "United States",
+      "universes": [
+        "acwx"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "CCEP",
+      "security_key": null,
+      "bloomberg": "CCEP US Equity",
+      "name": "Coca-Cola Europacific Partners plc",
+      "country": "United States",
+      "universes": [
+        "acwx",
+        "eafe"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "CHKP",
+      "security_key": null,
+      "bloomberg": "CHKP US Equity",
+      "name": "Check Point Software Technologies Ltd.",
+      "country": "United States",
+      "universes": [
+        "acwx",
+        "eafe"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "FUTU",
+      "security_key": null,
+      "bloomberg": "FUTU US Equity",
+      "name": "Futu Holdings Ltd. Sponsored ADR Class A",
+      "country": "United States",
+      "universes": [
+        "acwx",
+        "eafe"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "GRAB",
+      "security_key": null,
+      "bloomberg": "GRAB US Equity",
+      "name": "Grab Holdings Limited Class A",
+      "country": "United States",
+      "universes": [
+        "acwx",
+        "eafe"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "HTHT",
+      "security_key": null,
+      "bloomberg": "HTHT US Equity",
+      "name": "H World Group Limited Sponsored ADR",
+      "country": "United States",
+      "universes": [
+        "acwx"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "JBS",
+      "security_key": null,
+      "bloomberg": "JBS US Equity",
+      "name": "JBS N.V. Class A",
+      "country": "United States",
+      "universes": [
+        "r1000",
+        "r1000v",
+        "acwx"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "LEGN",
+      "security_key": null,
+      "bloomberg": "LEGN US Equity",
+      "name": "Legend Biotech Corp. Sponsored ADR",
+      "country": "United States",
+      "universes": [
+        "acwx"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "NBIS",
+      "security_key": null,
+      "bloomberg": "NBIS US Equity",
+      "name": "Nebius Group N.V. Class A",
+      "country": "United States",
+      "universes": [
+        "acwx",
+        "eafe",
+        "eafev"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "NU",
+      "security_key": null,
+      "bloomberg": "NU US Equity",
+      "name": "Nu Holdings Ltd. Class A",
+      "country": "United States",
+      "universes": [
+        "r1000",
+        "acwx"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "PDD",
+      "security_key": null,
+      "bloomberg": "PDD US Equity",
+      "name": "PDD Holdings Inc. Sponsored ADR Class A",
+      "country": "United States",
+      "universes": [
+        "acwx"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "SCCO",
+      "security_key": null,
+      "bloomberg": "SCCO US Equity",
+      "name": "Southern Copper Corporation",
+      "country": "United States",
+      "universes": [
+        "r1000",
+        "r1000v",
+        "acwx"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "SE",
+      "security_key": null,
+      "bloomberg": "SE US Equity",
+      "name": "Sea Limited Sponsored ADR Class A",
+      "country": "United States",
+      "universes": [
+        "acwx",
+        "eafe"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "SPOT",
+      "security_key": null,
+      "bloomberg": "SPOT US Equity",
+      "name": "Spotify Technology SA",
+      "country": "United States",
+      "universes": [
+        "r1000",
+        "acwx",
+        "eafe"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "TAL",
+      "security_key": null,
+      "bloomberg": "TAL US Equity",
+      "name": "TAL Education Group Sponsored ADR Class A",
+      "country": "United States",
+      "universes": [
+        "acwx"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "TIGO",
+      "security_key": null,
+      "bloomberg": "TIGO US Equity",
+      "name": "Millicom International Cellular SA",
+      "country": "United States",
+      "universes": [
+        "r1000",
+        "r1000v",
+        "acwx",
+        "eafe",
+        "eafev"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "TME",
+      "security_key": null,
+      "bloomberg": "TME US Equity",
+      "name": "Tencent Music Entertainment Group Sponsored ADR Class A",
+      "country": "United States",
+      "universes": [
+        "acwx"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "VIPS",
+      "security_key": null,
+      "bloomberg": "VIPS US Equity",
+      "name": "Vipshop Holdings Ltd Sponsored ADR",
+      "country": "United States",
+      "universes": [
+        "acwx"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "XP",
+      "security_key": null,
+      "bloomberg": "XP US Equity",
+      "name": "XP Inc. Class A",
+      "country": "United States",
+      "universes": [
+        "r1000",
+        "r1000v",
+        "acwx"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "YMM",
+      "security_key": null,
+      "bloomberg": "YMM US Equity",
+      "name": "Full Truck Alliance Co. Ltd. Sponsored ADR",
+      "country": "United States",
+      "universes": [
+        "acwx"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "A",
+      "security_key": null,
+      "bloomberg": "A US Equity",
+      "name": "Agilent Technologies, Inc.",
+      "country": "United States",
+      "universes": [
+        "sp500",
+        "r1000",
+        "r1000v"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "ALGN",
+      "security_key": null,
+      "bloomberg": "ALGN US Equity",
+      "name": "Align Technology, Inc.",
+      "country": "United States",
+      "universes": [
+        "sp500",
+        "r1000",
+        "r1000v"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "AS",
+      "security_key": null,
+      "bloomberg": "AS US Equity",
+      "name": "Amer Sports, Inc.",
+      "country": "United States",
+      "universes": [
+        "r1000",
+        "r1000v"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "BHF",
+      "security_key": null,
+      "bloomberg": "BHF US Equity",
+      "name": "Brighthouse Financial, Inc.",
+      "country": "United States",
+      "universes": [
+        "r1000",
+        "r1000v"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "CART",
+      "security_key": null,
+      "bloomberg": "CART US Equity",
+      "name": "Maplebear Inc.",
+      "country": "United States",
+      "universes": [
+        "r1000",
+        "r1000v"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "CLH",
+      "security_key": null,
+      "bloomberg": "CLH US Equity",
+      "name": "Clean Harbors, Inc.",
+      "country": "United States",
+      "universes": [
+        "r1000",
+        "r1000v"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "CRWV",
+      "security_key": null,
+      "bloomberg": "CRWV US Equity",
+      "name": "CoreWeave, Inc. Class A",
+      "country": "United States",
+      "universes": [
+        "r1000"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "DOCN",
+      "security_key": null,
+      "bloomberg": "DOCN US Equity",
+      "name": "DigitalOcean Holdings, Inc.",
+      "country": "United States",
+      "universes": [
+        "r1000"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "ENTG",
+      "security_key": null,
+      "bloomberg": "ENTG US Equity",
+      "name": "Entegris, Inc.",
+      "country": "United States",
+      "universes": [
+        "r1000",
+        "r1000v"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "FERG",
+      "security_key": null,
+      "bloomberg": "FERG US Equity",
+      "name": "Ferguson Enterprises Inc.",
+      "country": "United States",
+      "universes": [
+        "sp500",
+        "r1000",
+        "r1000v"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "GD",
+      "security_key": null,
+      "bloomberg": "GD US Equity",
+      "name": "General Dynamics Corporation",
+      "country": "United States",
+      "universes": [
+        "sp500",
+        "r1000",
+        "r1000v"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "HBAN",
+      "security_key": null,
+      "bloomberg": "HBAN US Equity",
+      "name": "Huntington Bancshares Incorporated",
+      "country": "United States",
+      "universes": [
+        "sp500",
+        "r1000",
+        "r1000v"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "INIO",
+      "security_key": null,
+      "bloomberg": "INIO US Equity",
+      "name": "INNIO N.V.",
+      "country": "United States",
+      "universes": [
+        "r1000",
+        "r1000v"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "KHC",
+      "security_key": null,
+      "bloomberg": "KHC US Equity",
+      "name": "Kraft Heinz Company",
+      "country": "United States",
+      "universes": [
+        "sp500",
+        "r1000",
+        "r1000v"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "LNG",
+      "security_key": null,
+      "bloomberg": "LNG US Equity",
+      "name": "Cheniere Energy, Inc.",
+      "country": "United States",
+      "universes": [
+        "r1000",
+        "r1000v"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "MHK",
+      "security_key": null,
+      "bloomberg": "MHK US Equity",
+      "name": "Mohawk Industries, Inc.",
+      "country": "United States",
+      "universes": [
+        "r1000",
+        "r1000v"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "MU",
+      "security_key": null,
+      "bloomberg": "MU US Equity",
+      "name": "Micron Technology, Inc.",
+      "country": "United States",
+      "universes": [
+        "sp500",
+        "r1000"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "O",
+      "security_key": null,
+      "bloomberg": "O US Equity",
+      "name": "Realty Income Corporation",
+      "country": "United States",
+      "universes": [
+        "sp500",
+        "r1000",
+        "r1000v"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "PEN",
+      "security_key": null,
+      "bloomberg": "PEN US Equity",
+      "name": "Penumbra, Inc.",
+      "country": "United States",
+      "universes": [
+        "r1000"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "PYPL",
+      "security_key": null,
+      "bloomberg": "PYPL US Equity",
+      "name": "PayPal Holdings, Inc.",
+      "country": "United States",
+      "universes": [
+        "sp500",
+        "r1000",
+        "r1000v"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "ROL",
+      "security_key": null,
+      "bloomberg": "ROL US Equity",
+      "name": "Rollins, Inc.",
+      "country": "United States",
+      "universes": [
+        "sp500",
+        "r1000"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "SLM",
+      "security_key": null,
+      "bloomberg": "SLM US Equity",
+      "name": "SLM Corp",
+      "country": "United States",
+      "universes": [
+        "r1000",
+        "r1000v"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "SYF",
+      "security_key": null,
+      "bloomberg": "SYF US Equity",
+      "name": "Synchrony Financial",
+      "country": "United States",
+      "universes": [
+        "sp500",
+        "r1000",
+        "r1000v"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "TSCO",
+      "security_key": null,
+      "bloomberg": "TSCO US Equity",
+      "name": "Tractor Supply Company",
+      "country": "United States",
+      "universes": [
+        "sp500",
+        "r1000",
+        "r1000v"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "VIK",
+      "security_key": null,
+      "bloomberg": "VIK US Equity",
+      "name": "Viking Holdings Ltd",
+      "country": "United States",
+      "universes": [
+        "r1000"
+      ]
+    },
+    {
+      "cusip": null,
+      "cusip_reason": "not stored for a scanner row; this request's purpose is the trading currency only",
+      "symbol": "WM",
+      "security_key": null,
+      "bloomberg": "WM US Equity",
+      "name": "Waste Management, Inc.",
+      "country": "United States",
+      "universes": [
+        "sp500",
+        "r1000",
+        "r1000v"
+      ]
+    }
+  ],
+  "securities_note": "FIRST SLICE of AMGT_RESAPP-S14-CRNCY-SCANNER-US (quote msg 4870: 1,038 cells, finish 2026-12-04, claim held): every row of acwx, eafe and eafev among the 1,038 (24 rows: the US-listed names the ex-US scanner universes hold) plus every 40th row of the filed order (26 rows, none repeated), 50 cells in all. All are 'TICKER US Equity' rows, whose price currency is expected to be USD; the slice tests that expectation where it is most likely to fail. The full request stays filed and is NOT withdrawn: it is drawn only if this slice reads a non-USD currency.",
+  "fields": [
+    "CRNCY"
+  ],
+  "start": null,
+  "end": null,
+  "filed_by": "2.0.0_SA_COO~R1",
+  "filed_for": "AMGT_RESAPP",
+  "vendor": "bloomberg",
+  "tier": 4,
+  "page": "research",
+  "authority": "1.0.0_SA_CTO~DELL1 msg 3434 (2026-10-11 ~03:2xZ), verbatim: 'under the 2026-10-09 law a Bloomberg pull goes through its queue (MDPF_DEMQUE) with no per-use word from Andrew. File one DEMQUE request for CRNCY over the scanner universes.'",
+  "runs_at": "site Z (the Terminal), by the queue's producer, under integrations/bloomberg/READ_HERE.md budget rules; quoted before it draws"
+}
