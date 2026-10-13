@@ -559,3 +559,18 @@ ledger at run time and the dell1 quote staying at zero carried over; surface E h
 (TR remainder 1,004 cells, ABNB 989, ICT 1, scanner slice 1 50, the full scanner list 1,038 only if slice 1 reads non-USD). Two cells: `DQ-t-54` (the carry-over, `standing_drawer.py --carry-over`;
 `0.9.0_WK_MDPF_DEMQUE~46`, workstream CARRYOVER) and `DQ-t-55` (the surface E cap, `surface_e_intake.py`; `0.9.0_WK_MDPF_DEMQUE~47`, workstream SURFACEECAP). CORRECTION to my own message 5133: I priced the cap off
 the 2,673-a-day averaged rate (about 267); the cap is 10 percent of the measured history ceiling, 5,858, so 585 cells, and a one-security one-year two-field request (504 cells) is accepted under it.
+
+**Round 9 close of DQ-t-55 and amendment 19 (issuer, 2026-10-13 ~21:xxZ):** DQ-t-55 merged @450bf78800 (the surface E cap: 10 percent of the measured 5,858 history ceiling = 585 cells, refused at intake naming the
+cap; a one-security one-year two-field request, 504 cells, accepted). The CTO lifted the draw hold (msg 5165): the form is complete. The issuer measured that the standing drawer returns ONE open request (the TR comparison):
+B1 (CUSIP entries with `dates` and per-entry `fields`), the porting test (CUSIP single-day entries) and the fund-type check (a `reference` request) are not drawable by it. CTO msg 5174: one drawer, one queue; teach it
+all three. One cell, `DQ-t-56` (`standing_drawer.py`: `bloomberg_id` with a `/cusip/` form probed with one row first, `dates` entries drawn by identity, per-entry `fields`, the `reference` channel, the priority gate on client
+requests, `--open` and `--plan` for requests without a request-level window; `0.9.0_WK_MDPF_DEMQUE~48`, worker, LOCAL, workstream DRAWERENTRIES, depends on DQ-t-54 which edits the same file, so it is spawned after that merge).
+The porting test request is filed and frozen (326 CUSIPs, 3,195 cells, `MDPF_SECHIST-CARD-A-PORTING-TEST`). The two-week total is `TWO_WEEK_TOTAL_BY_SURFACE_20261013.md`: about 62,700 cells wanted against 23,432 at the
+day rate; the fit with the expansion is UNMEASURED until the 2026-10-17 receipt prints production's unused cells (CTO msg 5174).
+
+**Round 9 amendment 20 (issuer, 2026-10-13 ~21:5xZ):** dell2 published the active Cottonwood set (CTO msg 5216; commit `ec617572b8` on box/dell2; both sha256 values verified by the issuer against the commit: 42,319 rows,
+769 active accounts, 3,357 securities, windows from each account's earliest record floored at 2012-01-01, `held_to` a date or `open`). Measured by the issuer (counts only): 609 of B1's 613 CUSIPs are in the set; clipping B1 to
+its windows takes 37,439 cells to about 34,341 (saves about 3,100, 99 CUSIPs shrunk, 1 emptied; 4 CUSIPs not in the set keep their window). The ABNFX hold-back was a hand edit of the filed request; the builder now holds back
+P2 and P3 itself. One cell, `DQ-t-57` (`active_set.py`, `b1_request.py` clip and hold-back; `0.9.0_WK_MDPF_DEMQUE~49`, worker, LOCAL, workstream ACTIVEWINDOWS, depends on DQ-t-50 and DQ-t-52). The issuer re-files and re-quotes B1 on the
+merged bytes. Also filed: `VALUATION_TRACE_DEIDENTIFIED_DQ_t35.md` (the chain, counts only) for the CVO's grade of `DQ9-t35-AC2`, whose original trace was moved out under the containment ruling. DQ-t-54 merged @8b7c76ad35 (carry-over).
+DQ-t-56 (drawer) is in its second pass, held at merge until the full scanner request's `draw_hold` is honoured (row W48-S1, ARMED).

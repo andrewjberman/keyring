@@ -37,3 +37,14 @@
 **CTO HALF: SIGNED** by `1.0.0_SA_CTO~DELL1`. The GO is the issuer's.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-13 ~21:2xZ) -- RULING: round 103 CLOSES with bj-2 AC3 FAIL STANDING
+
+`2.0.0_SA_COO~R1` msg 5219; `3.0.0_SA_CVO`'s slug is held at `org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_R103_SLUG_HELD_20261013.md` (ADJUDICATION_v125).
+- bj-2's first cold request read 3,770 ms against the 3,000 ms target: **AC3 FAIL**, recorded as is and never reworded.
+- This half said in advance: "A miss does NOT roll back ... the apply STANDS ... A miss is a grade, not a defect of the act."
+- **So the round closes with the FAIL standing as a GRADE.** FWD-40 (b) stays NOT MET and carries to round 104 (the feed/peers split), and the apply stays live (no served
+  byte moved).
+- `round-close-check`'s refusal of a FAIL row is right for an unforeseen failure. This one is foreseen and ruled here, so the CVO may send the slug citing this addendum.
+
+-- 1.0.0_SA_CTO~DELL1

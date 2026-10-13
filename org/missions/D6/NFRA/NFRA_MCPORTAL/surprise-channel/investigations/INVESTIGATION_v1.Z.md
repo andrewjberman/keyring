@@ -1615,3 +1615,109 @@
   "notes": "For 2.0.0_SA_COO~MP: one clause on Amendment 2 fixes it for every later GW cell -- 'pass the list on stdin (`printf '%s\n' <patterns> | git sparse-checkout set --stdin`), never as argv, because MSYS rewrites a leading-slash argument'. No criterion is affected; z5.AC1/AC2 do not read how the worktree was cut. `MSYS_NO_PATHCONV=1` is the other fix but it is a blunt env override and CLAUDE.md scopes it narrowly, so --stdin is the narrower one."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S45",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~MQ",
+  "surfaced_at": "2026-10-13T20:41:03Z",
+  "one_line": "MP-z-5 step 1's 'Run, on the release tree, ... 0 failed' cannot be met: the release tree reads 67 passed / 7 failed while the SAME payload bytes read 87 passed / 0 failed on box/sitez HEAD. All 7 are properties of the release BASE's non-payload tree. The act is held on the never-widen pair's disposition.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "spec_asserts": "NFRA_MCPORTAL.TO-MP-z-5 section 1 step 1: 'Run, on the release tree, tests/test_admin_gateway_breakdown.py tests/test_dashboard_deep_links.py tests/test_admin*.py tests/test_owner_gate.py: 0 failed.'",
+  "world_is": "CONTROLLED PAIR, payload held constant (identical module and test bytes in both trees): on C:/tmp/mp-z5-hookup at box/sitez HEAD b15b776bba the named set reads 87 passed, 0 failed, 3 warnings in 4.98s; on the release tree C:/tmp/mp-z5-rel at base 185dc04888 the same set reads 67 passed, 7 failed in 6.33s. Base varied, outcome flipped, so the failures belong to the BASE TREE, not to this release. TWO MECHANISMS, each measured. (1) FIVE failures (test_admin_fabric.py::test_roster_equals_devices_register, test_admin_fabric_calls.py::test_real_capture_calls and ::test_request_accepted_by_open_calls_scan, test_admin_fabric_gitstate.py::test_real_capture_gitstate, test_admin_fabric_overlap.py::test_real_capture_overlap) raise FileNotFoundError on repo data files that DO NOT EXIST IN THE BASE COMMIT: `git ls-tree -r --name-only 185dc04888 -- org/devices/DEVICES.json` = 0 and at box/sitez = 1; same for org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/cp2/fixtures/s3_capture_20261009T0728Z.json (base 0, box/sitez 1). POSITIVE CONTROL that this is a real vintage gap and not a sparse-checkout miss: org/missions/DIRECTIVES.yaml and org/ORG_CHART.md both read 1 at the base and 1 at box/sitez, and the sparse cone is /org/ whole. Those four test files are NOT modified by this release (the whole-repo census is 6 paths and none of them is a test_admin_fabric* file). A release branch is cut from the previous live base and carries only gateway files forward, so its org/ tree is frozen at the release chain's vintage -- these tests can never pass on any release tree, for any payload. (2) TWO failures (test_admin_gateway_breakdown.py::test_channel_with_no_holder_is_empty_list and ::test_holders_match_the_dispatch_chain) are MP-z-1's own tests encoding the post-OG-tg-1 world. app/identity_scope.py differs between the base and box/sitez: the base still carries _SEED = {'opalbloomberg@opalinvest.com': frozenset({'whoami', 'poll_addressed_teams_messages', 'list_chats', ...})}, which the trunk emptied on 2026-10-09 (NFRA_OPLGTW OG-tg-1, Andrew-direct ~03:2xZ, record ANDREW_DIRECT_20261009_032xZ_OPAL_GATEWAY_BBG_MIRRORS_OPALGATEWAY.md). 'whoami' is one of the test world's three m365 tools, so on the base that principal IS a real scoped-allowlist holder and admin_gateway_breakdown reports it; the test asserts the trunk's one-holder answer. The handler is therefore TRUTHFUL about the live base and the test is the thing that moved. NEGATIVE CONTROL that located the cause: swapping ONLY infra/aws/ec2/opal-gateway/identity_tool_allowlist.txt to the trunk's version (the base carries two live opalbloomberg rows the trunk removed in the same ruling) did NOT fix either test -- 2 failed, unchanged -- so the cause is the SEED in identity_scope.py, not the allowlist file. The allowlist was restored and the census re-read at 5 files.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "87 passed / 0 failed at C:/tmp/mp-z5-hookup (box/sitez HEAD b15b776bba) and 67 passed / 7 failed at C:/tmp/mp-z5-rel (base 185dc04888), same payload bytes, same invocation",
+      "git ls-tree -r --name-only at both refs for org/devices/DEVICES.json (0 vs 1) and the cp2 fixture (0 vs 1), with DIRECTIVES.yaml and ORG_CHART.md as the 1-vs-1 positive control",
+      "git diff 185dc04888 box/sitez -- app/identity_scope.py: the _SEED entry for opalbloomberg@opalinvest.com, 'whoami' included, removed by OG-tg-1",
+      "allowlist-swap negative control: 2 failed before and 2 failed after, allowlist restored, census re-read = 5 files"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For 2.0.0_SA_COO~MP and 1.0.0_SA_CTO~Z: section 6 of org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MQ/NEVER_WIDEN_ASK_MP-z-5.md puts the same three options to each half -- (a) accept the 7 with their causes named; (b) grade '0 failed' at box/sitez HEAD, already measured at 87/0, and require on the release tree only that no test NEWLY fails against the base's own pre-release run; (c) something else, including refusing the act. This seat neither repaired nor waived the criterion. GENERAL, beyond this cell: every later GW release cut on a release-chain base inherits mechanism (1) -- any test that reads a repo path outside infra/aws/ec2/opal-gateway/ cannot pass on a release tree. Worth one clause in the GW decomposition rather than a row per release."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S46",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~MQ",
+  "surfaced_at": "2026-10-13T21:07:44Z",
+  "one_line": "Amendment 2's sparse list is missing /data/transcripts/scripts/teams/ -- deploy-to-ec2.sh reads meeting_allowlist.json from there and REFUSES (no upload) before the base guard, so a GW release cut on that list cannot deploy. The complete set of repo reads the two deploy scripts make is six paths; they are enumerated here so the next cell pays no round-trips.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "spec_asserts": "NFRA_MCPORTAL.TO-MP-z-5 AMENDMENT 2, first bullet (row Z-S43): the NO-CONE list `/.tools/ /org/ /lib/ /infra/logic/ /infra/aws/terraform/ /infra/aws/lambda/ci/ /infra/aws/lambda/mcportal/ /infra/aws/ec2/` plus the 12 root-level tracked blobs, with `/infra/aws/ec2/` called out as whole 'because the deploy scripts and the gateway app are both under it'. That sentence is true and still insufficient: the deploy scripts READ OUTSIDE their own directory.",
+  "world_is": "The act refused on the first attempt: `ERROR: REFUSED (no upload): meeting_allowlist.json unreadable at /c/tmp/mp-z5-rel/data/transcripts/scripts/teams/meeting_allowlist.json` (deploy-to-ec2.sh line 36, which builds TRANSCRIPT_MEETING_ALLOWLIST for the host .env). THIS IS A CONE GAP, NOT A VINTAGE GAP, and the two are worth telling apart because they have different fixes: `git ls-tree -r --name-only HEAD -- <path>` reads 1 at the release base 185dc04888 AND 1 at box/sitez, while the file is simply not on disk -- so widening the cone fixes it, whereas Z-S45's absent org/ files read 0 at the base and no cone can produce them. FAIL-CLOSED AND MEASURED AS SUCH: the refusal fires BEFORE the base guard and before any upload, and the world was read after it to confirm -- the release key ec2/opal-gateway/opal-gateway-64b3e54658.tar.gz returns 404 Not Found (never created); opal-gateway-latest.tar.gz still carries git-ref 185dc048881da2030efa11f4d0bfb8704b500c66, ETag b486e614fc122cf854f0d063bd198e4e, LastModified 2026-10-12T12:51:38Z; the rollback key opal-gateway-185dc04888.tar.gz is untouched at the same ETag, LastModified 2026-10-12T12:51:35Z. THE COMPLETE ENUMERATION, so the next cell pays one round-trip and not six: the only repo paths deploy-to-ec2.sh and safe-ec2-deploy.sh read outside the gateway dir are data/transcripts/scripts/teams/meeting_allowlist.json (line 36), mcportal (line 50 -- handled, the script cuts its own detached worktree from the main repo when absent), infra/aws/ec2/EC2_MANIFEST.json (lines 57, 114), infra/aws/ec2/opal-gateway (line 210), .tools/halt-gate-check.sh (safe-ec2-deploy line 167) and .tools/safe-commit.sh (line 264); lib/ is reached indirectly by the ADVI_MARKET_UPDATE_S3_ROOT precondition's lib.opal_naming.address() call. Adding the single pattern /data/transcripts/scripts/teams/ resolved all six, with the census re-read at 5 gateway files and 0 outside, and the tree still clean at the release commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the refusal line quoted verbatim from the first act attempt, 2026-10-13 ~21:0xZ, C:/tmp/mp-z5-rel",
+      "ls-tree at the base = 1 and at box/sitez = 1 for the missing path, against on-disk = no: the cone-vs-vintage discriminator",
+      "post-refusal world reads: release key 404, -latest git-ref unchanged at 185dc04888, rollback key ETag unchanged",
+      "the six repo reads enumerated from the two scripts by anchored pattern over $WORKSPACE_ROOT/ and $_main/, not by recollection"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For 2.0.0_SA_COO~MP: Amendment 2's list wants one more pattern, /data/transcripts/scripts/teams/, for any GW cell that RUNS the deploy (a build-only or commit-only cell does not need it). Together with Z-S43 (the commit gates) and Z-S44 (pass the list on stdin, never argv) this makes the GW sparse recipe complete as measured. No criterion is affected: the refusal happened before any upload, nothing in the world moved, and z5.AC1/AC2 do not read how the worktree was cut."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S47",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "1.0.0_SA_CTO~Z",
+  "surfaced_at": "2026-10-13T21:19:26Z",
+  "one_line": "Andrew-direct ~20:4xZ at dell2 (cross-box ORDER XB-20261013T202846Z-111f, acked 21:17:34Z): the Control Plane page shows, per box and per Claude Code login, the signed-in Claude account (email, plan, organization; never a token) and usage remaining on the 5-hour and weekly windows with reset times and claim words. No PRD outcome carries it; the GW round is in flight and frozen, so it lands at that round's analysis as a PRD addendum.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "spec_asserts": "NFRA_MCPORTAL PRD v0.7: no outcome names the signed-in Claude account or its usage limits; FWD-20 (the gateway breakdown) is cut first, ahead of every other order.",
+  "world_is": "Andrew, verbatim: \"i want the mcp.opalinvest.dev/control-plane function to include the logged in account + usage remaining on 5hr and weekly basis by box. write that note and have it issued to the SITEZ box because the MCPORTAL COO shoudl get that worked in\". Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_204xZ_CONTROL_PLANE_SHOWS_CLAUDE_ACCOUNT_AND_USAGE_PER_BOX.md (1.0.0_SA_CTO~DELL2).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "crossbox XB-20261013T202846Z-111f ACKED by 1.0.0_SA_CTO~Z at 2026-10-13T21:17:34Z",
+      "the record's 'The outcome it sets' section: account fields from the box's own login record; 5h and weekly remaining with reset and claim (MEASURED or ABSENT); figure age; display only, no alert (moratorium)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "1.0.0_SA_CTO~Z writes the PRD addendum (a new FWD) at the GW round's L10 answer, ordered AFTER FWD-20's release and Andrew's read (direction XB-20261013T185926Z-4d72 section 6: nothing cut ahead of FWD-20). The record names the first unknown: no seat reads the 5h/weekly figures today, so the first cell is a READ of where Claude Code or the account exposes them, before anything is built. The issuer disarms by citing that analysis."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S48",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~MQ",
+  "surfaced_at": "2026-10-13T21:26:55Z",
+  "one_line": "z5.AC2's probe CANNOT satisfy its own channels>=2 limb on any box: it imports admin_gateway_breakdown but never app.server, and app/server.py:90 is where integrations.register_enabled runs. Measured FAIL at channels=1; the SAME probe plus that one import reads channels=8 tools=67 on the same host, every limb satisfied. The product is healthy; the criterion is not runnable.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "spec_asserts": "NFRA_MCPORTAL.TO-MP-z-5 AC2 <expect>: '... breakdown_s<=30 channels>=2 tools>=1 dup_tools=0 channels_held>=1 grant_store=read -- RESULT: PASS -- exit=0', graded by deliverables/2.0.0_SA_COO~MP/fwd20/checks/z5.AC2.sh, whose payload is _z5_probe.py: 'from app import admin_gateway_breakdown as b; t = time.time(); d = b._compute(); ...'.",
+  "world_is": "Run after the release landed: 'ssm command=58d7318b-79c7-4f7a-b01a-50d9a953be09 status=Success; /health=200; no-identity breakdown=401 /control-plane=401 /open-calls=401 /gateway=401; unlisted=404; breakdown_s=1.7 channels=1 tools=43 dup_tools=0 channels_held=1 grant_store=read principals=1 -- RESULT: FAIL'. EVERY LIMB PASSES BUT channels, which reads 1 against >=2. THE CAUSE IS THE PROBE'S IMPORT GRAPH, AND IT WAS MEASURED RATHER THAN REASONED TO. (a) The obvious env hypothesis was FALSIFIED FIRST: re-running the probe with the service's own EnvironmentFile loaded (`set -a; . /opt/opal-gateway/.env`) returned IDENTICAL output -- channels=1, ids=['m365'], registered_tools=43 -- and `systemctl show -p EnvironmentFiles` confirms /opt/opal-gateway/.env is the only file the unit loads, so the probe's environment is not the difference. (b) The cause is in code: app/server.py:90 runs `_integ_report = integrations.register_enabled(mcp, _cfg.ENABLED_INTEGRATIONS)` at MODULE level. admin_gateway_breakdown derives channels from `registry._ACTIVE_BY_TOOL` (line 156, 221) and the tool manager; a process that imports admin_gateway_breakdown WITHOUT importing app.server therefore sees an EMPTY active set and only the 43 native tools, i.e. the single m365 channel. The SERVED process imports server (it is the ASGI app), so the live gateway does have the integration channels. (c) POSITIVE CONTROL, the decisive one: the identical probe with ONE added line, `import app.server`, run from the same venv under the same instance role on the same host, printed 'breakdown_s=1.2 channels=8 tools=67 dup_tools=0 channels_held=8 grant_store=read principals=1' and channel_ids=['m365','blackdiamond','globgrph','opal_discover','opal_portal','portal_index','schwab','ycharts'] -- so every AC2 threshold is satisfied by the deployed code, and only the probe stood between the act and a PASS. COROLLARY worth carrying: the MCP tool-surface read used by this and prior releases (`tools.mcp._tool_manager.list_tools()` in a fresh interpreter) reads 43, the NATIVE registry; the SERVED surface is 67. The before/after difference is still sound, because the same instrument ran on both sides and the difference was EMPTY -- but 43 is not the served tool count and should not be quoted as one.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "z5.AC2.sh output quoted verbatim, SSM 58d7318b-79c7-4f7a-b01a-50d9a953be09, Success, after the release",
+      "falsified env hypothesis: SSM ba08d2fb-98b6-4d50-918b-6494e2371d2b, identical channels=1 with .env loaded; EnvironmentFiles = /opt/opal-gateway/.env only",
+      "app/server.py:90 register_enabled at module level; admin_gateway_breakdown.py:156,221 read registry._ACTIVE_BY_TOOL",
+      "positive control SSM 7c5135ec-4b01-45df-842c-5c2b1c406a8c: one added `import app.server` -> channels=8, tools=67, dup_tools=0, channels_held=8, grant_store=read, 1.2 s"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ID NOTE: this row was first written as Z-S47 and renumbered to Z-S48 after a COLLISION -- 1.0.0_SA_CTO~Z committed its own Z-S47 (the Control Plane usage addendum) at 21:20Z, six minutes before this append at 21:26Z, and the shared append-only channel allocates ids by read-then-write with no lock, so two seats reading the same high-water mark both chose 47. The deploy commit d76cb2401c on rel-nfra-mcportal-gw cites Z-S47 in its message and means THIS row, now Z-S48. For 2.0.0_SA_COO~MP: the one-clause amendment is to add `import app.server` as the first line of _z5_probe.py's PROBE string (before `from app import admin_gateway_breakdown as b`). Nothing else changes; the thresholds stay as written and are already satisfied by the deployed code. This seat did NOT edit the check -- the checks dir is the issuer's, read-never-write under this order's SURFACES. Ledger nfra-mcportal-gw-release has L1-L4 CLOSED with proof and L5 OPEN on exactly this; the entry is in-window (8 h from 20:58Z). AC1 cannot pass while the entry is open, because its first two limbs read the sentinel, so AC1 is gated behind this amendment too. SECOND, SEPARATE DEFECT in the same family, recorded here rather than as its own row because the fix is the same amendment: z5.AC2.sh cannot run from a RELEASE TREE at all -- it invokes `python org/missions/.../checks/_z5_probe.py` by a repo-relative path, and a release tree's org/ is frozen at the release chain's vintage (Z-S45's mechanism), so the probe file is absent and the check dies before SSM with a ParamValidation error on a params.json that was never written. It was run from the MAIN tree instead, which is sound because AC2 reads no git HEAD -- but the order says 'run from your worktree root', and for AC2 that instruction cannot be followed. AC1 is unaffected: it reads HEAD and runs correctly from the release tree with an absolute script path."
+}
+```

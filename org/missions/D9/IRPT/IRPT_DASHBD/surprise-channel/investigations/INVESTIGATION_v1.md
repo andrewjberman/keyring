@@ -7733,3 +7733,264 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W144-S1 -- the export status read answers UNEXPECTED: the portal chain reads it correctly, and the failing call is the export-receipt read refused by the producer's boundary envelope
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W144-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~144",
+  "surfaced_at": "2026-10-13T20:44:34Z",
+  "one_line": "Andrew's smoke (DB-b-178, S20): the export is created and then the status read answers 'The export's status could not be read (UNEXPECTED)'. The portal chain reads that answer correctly; the failing call is the export-receipt read, which the producer refuses in a boundary envelope (ok false, status public_reason_code UNEXPECTED). Portal side false, not fixed here: the route and the producer answer are outside this grant.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "An export a person starts completes and downloads, or fails with a stated cause; the export modal fits its content without side scrolling (TO-DB-b-178 worker face, export chain).",
+  "world_is": "Chain read at portal HEAD f1893eb40d, hop by hop: ExportButton.tsx:231-290 handleSubmit -> submitUnderGate -> submit-export ack; a QUEUED/RUNNING ack with no receipt starts pollExportReceipt (ExportButton.tsx:263) -> submit.ts:312 api.getExportReceipt -> investor-reporting.ts:1456-1463 getExportReceipt (route GET export-receipt, route table investor-reporting.ts:244) -> send() investor-reporting.ts:1053-1125. The refusal branch investor-reporting.ts:1091-1092 throws IrRequestError carrying publicReasonCode when parseIrEnvelope reports refused. envelope.ts:338 sets boundaryRefusal from body.ok === false and envelope.ts:359 sets refused. UNEXPECTED is not in IR_REFUSAL_REASON_CODES (envelope.ts:161), so only a boundary refusal reaches that throw with UNEXPECTED. The poll rejection reaches ExportButton.tsx:276, which names it through submit.ts:377-382 exportReceiptFailureWords: 'The export's status could not be read (UNEXPECTED). It may still finish'. No live request was made and the producer body is not in this checkout, so the exact producer body is INFERRED from the branch that prints the words. The modal width (42 rem before, 75 rem after) is fixed in the candidate and is not part of this row.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/export/ExportButton.tsx:263-278 (poll call and rejection named) @f1893eb40d",
+      "portal/src/pages/InvestorReporting/export/submit.ts:377-382 (exportReceiptFailureWords) @f1893eb40d",
+      "portal/src/api/endpoints/investor-reporting.ts:1091-1092 (refused envelope throws IrRequestError with publicReasonCode) @f1893eb40d",
+      "portal/src/pages/InvestorReporting/contracts/envelope.ts:161,338,359 (refusal codes, boundary refusal, refused flag) @f1893eb40d",
+      "1.0.0_SA_CTO~DELL2 msg 7139 (Andrew's smoke, relayed); no live request made by this seat"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W144-S2 -- FDRXX is classed Fixed Income by the producer's canonical classifier: the class is assigned outside the portal, at etf_classifier.py:144
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W144-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~144",
+  "surfaced_at": "2026-10-13T20:44:34Z",
+  "one_line": "Andrew's smoke (DB-b-178, S21): FDRXX shows the class Fixed Income on the report. The portal assigns no class by symbol; it reads the served asset_class. The class is assigned in the producer: data/black_diamond/scripts/gold/lib/etf_classifier.py:144 returns the canonical table row's asset_class verbatim for the ticker. Left unchanged here (outside the DEV-only candidate's grant).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A money-market fund such as FDRXX carries the class CASH on the Opal report (TO-DB-b-178 worker face, item 3).",
+  "world_is": "assignment_site: data/black_diamond/scripts/gold/lib/etf_classifier.py line 144 (classify: return item.get('asset_class') or self.UNKNOWN), with the same read at line 229 (classify_with_identity, identity_hop ticker). The ticker override data/black_diamond/scripts/gold/lib/ticker_overrides.py:305 maps the custodian name 'FIDELITY PHILLIPS STREET TRUST GOVT CASH RESV' to FDRXX (a name-to-ticker map, not a class). The portal side (portal/src/pages/InvestorReporting/tabs/holdings/assetClass.ts assetClassOf, lines 84-86) reads the served asset_class and has no money-market rule; CASH_ROW_SYMBOLS is CASH and FCASH only (SecurityList.tsx:128). The canonical table row for FDRXX is not in this checkout and was not read (no AWS call); Andrew's smoke reports it serves fixed_income. The remedy belongs to the canonical classifier table or the producer, not this candidate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/lib/etf_classifier.py:123-144 and 207-229 @f1893eb40d",
+      "data/black_diamond/scripts/gold/lib/ticker_overrides.py:305 @f1893eb40d",
+      "portal/src/pages/InvestorReporting/tabs/holdings/assetClass.ts:84-86 @f1893eb40d",
+      "portal/src/pages/InvestorReporting/tabs/holdings/SecurityList.tsx:128 @f1893eb40d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W144-S3 -- the surprise-row gate refused one commit on an index read ERROR for a tracked adjudication file, and the same commit landed unchanged on retry
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W144-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~144",
+  "surfaced_at": "2026-10-13T21:00:22Z",
+  "one_line": "The first safe-commit of TO-DB-b-178's deliverable was refused by the surprise-row gate: 'org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/adjudications/ADJUDICATION_v8.md unreadable in the index (ERROR)'. The file is tracked (blob 734c676d52), no index.lock existed, and the gate's own probe and git show both succeeded when run by hand. The same commit, unchanged and with no override, landed on the retry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The row gate fails closed on a genuine read error and admits a clean commit whose read succeeds (surprise-row-gate.py _blob_read: ERROR only when git cannot answer).",
+  "world_is": "The refusal printed the gate's ERROR state for ADJUDICATION_v8.md; .tools/surprise-row-gate.py _blob_read runs git ls-files -s then git show :path with a 60 second timeout. Measured after the refusal: git ls-files -s and git show :path both returned rc 0 for the file, and no index.lock was present in the worktree git dir. The retry of the identical staging set (the deliverables folder, the investigation file and the order) committed as a8d44d9210. The cause of the one transient ERROR was not identified; no override was used.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "/c/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~144/commit_ws.txt (first refusal, lines 29-31)",
+      "/c/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~144/commit_ws2.txt (retry, landed as a8d44d9210)",
+      ".tools/surprise-row-gate.py:1991-2036 (_blob_read) @a8d44d9210 parent",
+      "git ls-files -s on org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/adjudications/ADJUDICATION_v8.md: blob 734c676d52"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W142-S1 -- The contract does not say how an account-grain or class-grain figure is keyed inside values; this cell reads a by_row map
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W142-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~142",
+  "surfaced_at": "2026-10-13T20:56:32Z",
+  "one_line": "The contract says values holds exactly one entry per member, but an account-grain member such as avs.qtd.net_gain has one figure per account; the contract names no keying rule, so this cell reads values[member] as a by_row map keyed by account_id (and by asset class for hold.allocation).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The contract's document.shape says values is an object keyed by member id with exactly one entry per member, and that a value is a number, a text, or an absent form; the account-grain members (avs, glr, trgl, act account rows) are per account.",
+  "world_is": "The contract does not state how a per-account or per-class figure is held inside values. The performance tab reads values[member] = { by_row: { <account_id or asset class>: figure } } (dashboard/report/reportModel.ts, figureCell). The sample builder (TO-DB-b-175) must write that form, or the contract must name one in its next version; until then the two readers can disagree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at base a2ab71ab9e: document.shape, 'values, an object keyed by member id with exactly one entry per member in members'",
+      "portal worktree commit 47673668 (branch wk-IRPT_DASHBD-142-portal): dashboard/report/reportModel.ts figureCell and the by_row reading"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W142-S2 -- The account overview has no per-account chart: the contract names no account-grain chart member
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W142-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~142",
+  "surfaced_at": "2026-10-13T20:56:32Z",
+  "one_line": "The order asks the account overview to render per-account charts, but the contract has no per-account chart member; the tab renders the per-account value summary only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-176 step 2 says the account overview renders, per account, its charts and its account value summary.",
+  "world_is": "The contract's chart members are household-grain only: overview.chart.allocation_by_asset_class, overview.chart.portfolio_performance_last_12_months, accounts.chart.allocation_by_account and accounts.chart.ending_value_and_net_additions_last_12_months. No member names a chart for one account, so the account overview draws no chart; a per-account chart needs a member in a contract version first.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at base a2ab71ab9e: members list, unit series, the four chart ids above and no per-account chart id",
+      "portal worktree commit 47673668: dashboard/report/reportModel.ts accountOverview renders valueSummaryGrid per account only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W142-S3 -- The holdings class rows carry allocation only: ending value and the per-window net gain and return are household-grain in the contract
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W142-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~142",
+  "surfaced_at": "2026-10-13T20:56:32Z",
+  "one_line": "The order asks the holdings class rows to show ending value, allocation and per-window net gain and return; the contract's holdings figures are household-grain except allocation, so the class rows show allocation only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-176 step 2 says the holdings overview shows the class hierarchy with its ending value, allocation and per-window net gain and return.",
+  "world_is": "In the contract hold.ending_value, hold.net_gain_* and hold.return_* are household-grain (grain household, by class is stated only for hold.allocation). The class rows therefore carry hold.allocation alone; the household ending value and the per-window net gain and return print once, at household level. The sub-class rows are ABSENT with the contract's reason.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at base a2ab71ab9e: hold.ending_value, hold.net_gain_last_12_months and the other hold.* members with their section holdings_overview; hold.allocation as the only by-class member",
+      "portal worktree commit 47673668: dashboard/report/reportModel.ts buildReportModel holdings section"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W141-S3 -- The gold account_activity_daily table holds four trading days, so no standard window (QTD, YTD, last 12 months, since inception) can be measured for any household, and DB94-2-AC1 cannot pass
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W141-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~141",
+  "surfaced_at": "2026-10-13T21:38:36Z",
+  "one_line": "The gold account_activity_daily table carries four trading days (2026-10-07, 10-08, 10-09 and 10-12), one per date partition, so each standard window's opening day is absent for every household: no QTD, YTD, last-12-months or since-inception identity can be graded, the fewer-than-four-checks clause of TO DB-b-175 step 3 applies to every household, and the builder stopped before choosing one.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-175 step 3: for each of the four standard windows whose four members are sourced, check beginning + net additions + net gain = ending within a dollar, for the household and each account; if fewer than 4 checks are possible because those members are ABSENT, file a surprise row and stop. The contract's activity members open on the window's opening anchor (the last trading day before the window start): QTD 2026-09-30, YTD 2025-12-31, last 12 months the trading day before the calendar day one year before 2026-10-12.",
+  "world_is": "Read-only, LIST and GET only, by 0.9.0_WK_IRPT_DASHBD~141 on 2026-10-13. s3://opal-data-49financial/irpt/49financial/gold/account_activity_daily/ holds 4 date= partitions: 2026-10-07 (6897 rows), 2026-10-08 (6901), 2026-10-09 (6914) and 2026-10-12 (6914); each partition holds ONE distinct business_date and one row per account, and the table has 8 keys in total. The rows before 2026-10-07 are not in gold, so no window opening (2025-12-31, 2026-09-30, the last-12-months anchor) exists. The contract's window identity note measured a 24-trading-day window at round 25; the table now carries four trading days. The newest partition's coverage is 6897 MEASURED and 17 GAP_ABOVE_ALLOWANCE, which is not the blocker; the span is.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S3 LIST and GET of irpt/49financial/gold/account_activity_daily/ by 0.9.0_WK_IRPT_DASHBD~141 on 2026-10-13: 4 CommonPrefixes, 8 keys; per-partition counts by .scratch/probe_coverage.py (counts and dates only, output in the private folder)",
+      "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json at commit 0c0ae5a8f5: grain account x trading day, partition date=YYYY-MM-DD, window_identity_tolerance note (round 25 grading of a 24-trading-day window)",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at commit 0c0ae5a8f5: window start_rule and opening_anchor for quarter_to_date, year_to_date, last_12_months; since_inception opens on first_data_date",
+      "builder run at commit 8df8e76f09: outcome NO_ELIGIBLE_HOUSEHOLD before any window was graded; 596 households with at least three gold accounts were counted (counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W141-S4 -- The household rule in the builder docstring names the newest return partition for the twelve-month history test, and that partition holds one trading day; applied as written the rule yields zero eligible households
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W141-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~141",
+  "surfaced_at": "2026-10-13T21:38:36Z",
+  "one_line": "My household rule (builder docstring R4) tests 'at least 12 months of history in the return table' against the NEWEST account_return_daily partition, which holds one trading day; the table's history spans its 569 date partitions (2024-07-08 to 2026-10-12). Applied as written the rule gives 0 eligible households of 596 with at least three gold accounts. The rule text was not changed after its outcome was seen.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-175 step 2: choose ONE household by a rule written in the module's docstring before any figure is read; the order's example reads 'at least 12 months of history in the return table'.",
+  "world_is": "account_return_daily is partitioned one trading day per date= prefix (569 partitions, 2024-07-08 to 2026-10-12); the newest partition (2026-10-12) holds 6914 rows of a single business_date. A twelve-month history test must read the union of partitions, not the newest one. The rule as written could not be satisfied, which is a defect of the rule's wording, not a finding about the households.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S3 LIST of irpt/49financial/gold/account_return_daily/: 569 CommonPrefixes, earliest 2024-07-08, newest 2026-10-12; partition counts by .scratch/probe_coverage.py (counts and dates only)",
+      "builder docstring R4 at commit 8df8e76f09 (org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~141/build_sample.py): 'its earliest business_date in the newest account_return_daily partition'",
+      "builder run at commit 8df8e76f09: households_eligible_R4 = 0, households_with_3_or_more_gold_accounts = 596 (counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W141-S5 -- The sibling contract for account_class_daily states that no object of its table exists in any bucket, and gold holds four date partitions of it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W141-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~141",
+  "surfaced_at": "2026-10-13T21:38:36Z",
+  "one_line": "IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json says served false and 'No object of this table exists in any bucket', but s3://opal-data-49financial/irpt/49financial/gold/account_class_daily/ holds four date partitions (2026-10-07, 10-08, 10-09 and 10-12); the class members of the report, and the class rows, therefore do not rest on the absence the contract states.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The sibling contract's served_note: 'No object of this table exists in any bucket.' TO DB-b-175 step 2 reads the gold stores named in the sibling contracts' addresses.",
+  "world_is": "Four date= partitions exist in gold, each with data.parquet and manifest.json (the newest data.parquet is 485,289 bytes). Whether the gold table is complete is not measured here; the builder reads the newest partition only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json at commit 0c0ae5a8f5: served false, served_note 'No object of this table exists in any bucket'",
+      "S3 LIST of irpt/49financial/gold/account_class_daily/ by 0.9.0_WK_IRPT_DASHBD~141 on 2026-10-13: 4 CommonPrefixes, 8 keys; the newest partition's object sizes read by LIST (sizes only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W141-S6 -- The activity rows carry method_version 3, and the gold dim_return_method table holds versions 1 and 2 only, so the fee-basis member has no row to read
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W141-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~141",
+  "surfaced_at": "2026-10-13T21:38:36Z",
+  "one_line": "The contract's convention.fee_basis_label reads the fee basis from dim_return_method, and states it as GROSS_ONLY; the activity rows carry method_version 3 (6914 of 6914 on 2026-10-12), and gold dim_return_method holds method_version 1 and 2 only, so no landed row carries the version the figures were produced under.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PERFORMANCE_REPORT_CONTRACT convention.fee_basis_label: 'the served fee basis is GROSS_ONLY'; DIM_RETURN_METHOD contract: versions 1 and 2 are GROSS_ONLY, version 3 is PER_ENTRY_FEE_TREATMENT.",
+  "world_is": "dim_return_method/ in gold: method_version=1 and method_version=2 (LIST, 2 partitions); account_activity_daily rows of 2026-10-12: method_version 3 for all 6914 rows (counts only). The label is therefore ABSENT in the builder's rule (the row for the carried version is missing), and the GROSS_ONLY statement is not read from any landed row for version 3.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S3 LIST of irpt/49financial/gold/dim_return_method/ by 0.9.0_WK_IRPT_DASHBD~141 on 2026-10-13: method_version=1 and method_version=2",
+      "S3 GET of account_activity_daily/date=2026-10-12/data.parquet, column method_version only: counts {3: 6914} (probe in .scratch, counts only)",
+      "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json at commit 0c0ae5a8f5: method_versions list with fee_basis per version"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

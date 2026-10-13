@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-13T20:07:19Z",
+ "written_at": "2026-10-13T21:38:07Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1843,6 +1843,51 @@
     "roots": [],
     "evidence": {},
     "measured_at": "2026-10-13T20:07:19Z"
+   },
+   "closed": null
+  },
+  {
+   "id": "sitez-20261013T213807Z-21d9",
+   "project": "NFRA_MCPORTAL",
+   "subject": "ONE MC Portal sitting (~10 min): open https://mcp.opalinvest.dev/gateway and read the breakdown (FWD-20, now live), then /control-plane and /open-calls (closes 21c5 + 8ed7), and sign in once as Opal Bloomberg in a headed window (f0d2)",
+   "asked_by": "1.0.0_SA_CTO~Z",
+   "source": "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-z-6.fwd20-close-run.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-13T21:38:07Z",
+   "kind": "act",
+   "context": "MP-z-5 shipped @64b3e54658 (8 channels, 67 tools, grant store read). Your read closes FWD-20 and is your condition for closing NFRA_OPLGTW. Note: it is ONE gateway server; opal-gateway-bbg is a second login (the Bloomberg account) to the same URL, and it mirrors your grants for now.",
+   "rec": "",
+   "scope": {
+    "measured_at": "2026-10-13T21:38:07Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_FIRMBKTS placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_DEMQUE placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_STRATID placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/fabric-gitstate.py is on the shared branch (.tools)",
+      ".tools/tests/test_fabric_gitstate_pointer.py is on the shared branch (.tools)",
+      ".tools/tests/test_safe_ec2_deploy_manifest.py is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
    },
    "closed": null
   }

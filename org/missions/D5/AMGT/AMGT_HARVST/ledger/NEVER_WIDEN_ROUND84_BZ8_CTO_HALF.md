@@ -56,3 +56,27 @@ attributes; anything else is a STOP. The ledger `astn-3am-off-20261013` stays op
 **CTO HALF: RE-SIGNED for the 0/3/0** by `1.0.0_SA_CTO~DELL1`.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-13 ~20:5xZ) -- APPLIED 0/3/0; this seat's "the instance stays stopped" premise was WRONG
+
+`0.7.0_AE_CloudOps~HV1` msg 5180, `deliverables/0.7.0_AE_CloudOps~HV1/round84/bz8_apply.out`: "Apply complete! Resources: 0 added, 3 changed, 0 destroyed."
+- AC1 reads DISABLED, AC2 `cron(0 3 * * ? *)` unchanged, AC3 the source DISABLED.
+- **The provider STARTED the stopped instance** `i-059405dfefcb4b44a` to apply the `user_data` change: stopped at 20:46:51Z, launched 20:48:11Z. ADDENDUM 1 said the change "runs
+  nothing" and assumed no start. That was this seat's inference from the attribute, not a read of how the provider applies it, and it is wrong.
+- **Stopping it** is an EC2 stop, which CLAUDE.md (Agent Autonomy) reserves for Andrew's confirmation. It is carded to him with REC yes. HV1 does not stop it unasked.
+- **Lesson for the next pair touching `user_data`:** read the provider's apply behaviour for a stopped instance (it starts the instance) into the blast radius before signing.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 3 (2026-10-13 ~21:0xZ) -- Andrew confirms the EC2 stop
+
+Andrew-direct, dell1 terminal, verbatim: "Also yes can shut down the morning brief server."
+
+`0.7.0_AE_CloudOps~HV1`, under `AMGT_HARVST.TO-HVST-bz-8` and given the GO by `2.0.0_SA_COO~W1`:
+- one `aws ec2 stop-instances` on `i-059405dfefcb4b44a`;
+- read back `stopped`;
+- close the ledger `astn-3am-off-20261013`;
+- stand down.
+Call `dell1-20261013T205110Z-244d` closes on this addendum.
+
+-- 1.0.0_SA_CTO~DELL1

@@ -1,0 +1,86 @@
+# TO IRPT_BCKEND.TO-IB-pr-518 -- CENSUS and rebuild `irpt-ycharts-generate` against its CURRENT live bytes with the comparison-catalogue release (IB-pr-517), BUILD ONLY, and write the never-widen packet (CTO round-184 analysis, msg 7233: "the census and never-widen packet for the function that packages the catalogue, then the pair, then the apply")
+
+<to_id>IRPT_BCKEND.TO-IB-pr-518</to_id>
+<project>IRPT_BCKEND</project>
+<issued_to>0.9.0_WK_IRPT_BCKEND~367</issued_to>
+<issued_by>2.0.0_SA_COO~P2</issued_by>
+<issued_date>2026-10-13</issued_date>
+<status>open</status>
+<direct_act>false</direct_act>
+<risk>SERVED</risk>
+<worker_class>worker</worker_class>
+<placeholders>NONE</placeholders>
+<round>184</round>
+<workstream>~P</workstream>
+
+**Directive:** D9 | **Fabric:** dell2 | **Ordered by:** the CTO's round-184 analysis (msg 7233) | **Decomp cell:** `IB-pr-518` (decomposition section 176) | **outcome_ref:** FWD-1 (O1 hop)
+
+---
+
+## WORKER FACE
+
+**Your worktree (the only place you write):** `C:/dev/wk-IRPT_BCKEND-367` on a branch cut from the current branch. Commit there with `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_BCKEND~367 <0.9.0_WK_IRPT_BCKEND~367@opal.agent>" -F <msgfile> -- <explicit paths>` (message file by the Write tool; end it with `Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>`). The `portal` gitlink shows modified in a fresh worktree: NEVER commit it. Never push. Do not run a recursive grep over the repository (use Grep, Glob, Read). Commit gates can take minutes: wait.
+
+**Cell `IB-pr-518` (inlined).** Round 183's order `IB-pr-517` (merged @0d0e9e1229) put Opal Ultra Short-Term in the comparison catalogue. It changed three repo files: `infra/aws/lambda/investor-reporting/ycharts/generate/templates.json` (a NATIVE member of the function's source directory), `infra/aws/lambda/investor-reporting/_scope/maintained_sources.py` (a STAGED member: the source map `infra/aws/lambda/ci/lambda-source-map.json`, function `irpt-ycharts-generate`, `staged_from` row `repo_path` `.../_scope/maintained_sources.py`, pinned at commit `0642c9d00454a852068acdee3b1b9ccd8e6ddba2` with its `sha256`), and `.../ycharts/generate/recipe.py`. The function `irpt-ycharts-generate` packages them. **Measured by the issuer (read-only, row D2-S151):** the live zip (CodeSha256 `hpNfkhLtLRl0e9TFL+Vdr5kilZ1W8bN3GKMhlzmVXgg=`, LastModified 2026-10-13T13:01:13Z, 104 members; equals the source map's `artifact_sha256`) carries `maintained_sources.py` equal to the pin's blob and to the repo's blob BEFORE round 183 (sha256 starts `29c35dbfba72`), and `templates.json` equal to the repo's blob before round 183 (`54656584f476`); but its `recipe.py` (`0d57427fe850`, the staged pin `3f29017cfc`) is NOT the repo's current blob (HEAD's recipe.py carries other cells' pending changes). **So this release moves exactly TWO members: `templates.json` and `maintained_sources.py`; `recipe.py` is NOT moved** (it stays pinned to the live bytes; the OPAL refusal in `recipe.py` rides with that file's own release and is stated as a condition in the packet; the YCharts path is stopped). **This order CENSUSES and REBUILDS that candidate against the CURRENT live, writes the packet, and applies nothing.**
+
+**Client data rule:** counts, sha256 and reason codes only in any tracked file; extracted zips and scratch stay OUTSIDE the worktree (`C:/dev/_scratch367/`), deleted file by file at the end with a short bounded script.
+
+**Read first (prior art; copy what you need into YOUR folder, edit none of theirs):** `deliverables/0.9.0_WK_IRPT_BCKEND~365/` (the packet `NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-515.md` is the FORM to follow; `ib171_4_member_diff.py`, `IB181-1_release_census.json`) and `deliverables/0.9.0_WK_IRPT_BCKEND~278/signature_closure_attr.py`.
+
+**Do, in this order:**
+1. **Base.** `git rev-parse HEAD` before your first commit is `base_commit` (state it); the repo must contain commit `0d0e9e1229` (the IB-pr-517 merge): confirm with `git merge-base --is-ancestor`.
+2. **The open ledgers.** List every deploy ledger under `org/critical_paths/change_management/` (and every open marker on every worktree: `git worktree list --porcelain`, then `git -C <tree> ls-tree -r --name-only HEAD org/critical_paths/.open_deploys/` and read each marker's content at HEAD) that names `irpt-ycharts-generate`, with its status (`OPEN`/`CLOSED`/`SUPERSEDED`/`HELD`) and the denominators (ledger files read, worktrees read, marker files read): `open_ledgers_naming_the_function`. State in the packet which ledger(s) the apply waits on.
+3. **Fetch the live zip** (`aws lambda get-function`, `Code.Location`, a GET to scratch): its sha256 must equal the source map's `artifact_sha256` (hex of `hpNfkhLtLRl0...`), else STOP and say what differs.
+4. **Edit the source map IN YOUR WORKTREE ONLY, uncommitted:** in `lambda-source-map.json`, function `irpt-ycharts-generate`, `staged_from` row for `_scope/maintained_sources.py`: set `pin` to `0d0e9e1229` (or the full 40-hex of it) and `sha256` to the sha256 of that file's bytes at that pin (`git show 0d0e9e1229:infra/aws/lambda/investor-reporting/_scope/maintained_sources.py`, hashed: **verify by CONTENT that the blob at the pin equals the repo's current blob**). Change nothing else in the source map. Record the source map's sha256 before and after the edit; save the one-row diff to your deliverables folder as `IB184-1_source_map_row_diff.txt` (a unified diff, no other text). **Do NOT commit the source map; revert it with `git checkout -- infra/aws/lambda/ci/lambda-source-map.json` at the end and record its sha256 again (equal to the "before").**
+5. **Rebuild.** With the edited source map: `BUILD_ONLY=1 bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-ycharts-generate`; pack TWICE to byte-identical output; upload nothing.
+6. **The changed members** against the CURRENT live: **must be exactly `maintained_sources.py` and `templates.json`**, each built member's sha256 equal to the repo blob at its pin. Any other differing member, `recipe.py` above all, is a STOP: file a row naming it and report; do not widen.
+7. **Signature instrument** (`signature_closure_attr.py`) on the built AND the live zip: 0 signature mismatches on both; attribute mismatches: built not above live and every built line a live line.
+8. **The arms** (offline, SYNTHETIC; import each from its own zip in memory, no Lambda invoke): (a) `five_models_canonical_order`: the built zip's `comparison_catalogue.build_catalogue(tenant=<a permitted firm>)` served model entries read labels `Opal Ultra Short-Term`, `Opal Short-Term`, `Opal Intermediate-Term`, `Opal Long-Term`, `Opal Ultra Long-Term` in that order: verdict `five_in_order`; (b) `existing_four_entries`: those four entries' `key` and `label` equal the live zip's, in the same relative order: `unchanged`; (c) `admitted_three_firms`: the built zip's `maintained_sources._admitted_comparison` admits all five entries for each of the three permitted firms (`maintained_sources._comparison_firms()`) with principal class `FIRM_ADVISOR`: `admitted`; (d) `altered_copy`: a copy of the new entry with its `name` changed is refused with `MaintainedSourceUnauthorized`: `refused`. Record each.
+9. **The packet** `deliverables/0.9.0_WK_IRPT_BCKEND~367/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-518.md` in the form of `NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-515.md`: the served change in words (the catalogue lists the fifth Opal model, keyed by Opal's own identity with no YCharts id, in the canonical order; permission is unchanged: the same three firms and three principal classes; no figure moves); the CURRENT live and built sha256; the two changed members; the source-map row diff (one `staged_from` row, two fields, NOT committed by this order: the apply seat commits it with the release); **Branch A** (land digest-gated, never a mint: rebuild and compare to the signed built digest or ABORT; the function's Terraform path `infra/aws/terraform/investor-reporting/ycharts/generate.tf`, module `irpt_ycharts_generate`, `s3_object_version` and `source_code_hash` only; plan to a planfile showing 1 change and 0 to destroy; `bash .tools/safe-apply.sh`; its gates: both halves signed at the packet bytes, the ledgers of step 2 CLOSED, the live CodeSha256 equal to the start value); **Branch B** (restore the live version: the S3 object version of `investor-reporting/irpt-ycharts-generate.zip` in `opal-313476888478-lambda-artifacts` whose content equals the live zip, named and re-read at the apply BEFORE any upload; rollback per key; the source-map row reverted); the red list (`deliverables/0.9.0_WK_IRPT_BCKEND~278/IB117-1_red_list.json`: say whether the two changed members intersect its target prefixes); the consumers (one read-through each: the portal's Analysis Request form `src/pages/TicketCenter/TicketCenter.tsx:287` and `AnalysisRequestParts.tsx:112-121`, the catalogue route `entry.py:150-166`; plus the other functions that stage `maintained_sources.py` (read them from the source map and name them): they are NOT moved and keep the four-pin copy, say what that means); **three conditions stated plainly**: (i) `recipe.py` is NOT moved, so the OPAL-namespace refusal in the repo's `recipe.py` does not ship with this release and the stopped YCharts path would fail closed on a missing `security_id` if it were re-enabled; (ii) the four custody tests that fail at BASE (`test_custody_entry.py` two, `test_custody_retained.py` two; row IRPT_BCKEND-D2-S150) are pre-existing and not this release's gate; (iii) the after-read the CTO set: the served catalogue lists Ultra Short-Term in canonical order and the Analysis Request form shows it, read on DEV after the apply (a person's read; no seat can sign in); the pair: the COO half (`2.0.0_SA_COO~P2`) and the CTO half (`1.0.0_SA_CTO~DELL2`), both UNSIGNED.
+10. **Write** `deliverables/0.9.0_WK_IRPT_BCKEND~367/IB184-1_release_census.json`: `{"base_commit":"<40hex>","pin_commit":"<40hex>","uploaded":false,"source_map":{"rows_edited_in_scratch_worktree":1,"restored":true,"sha256_before":"<64hex>","sha256_after_restore":"<64hex>"},"functions":[{"function":"irpt-ycharts-generate","built_sha256":"<64hex>","live_sha256":"<64hex>","built_twice_identical":true,"built_signature_mismatched":0,"live_signature_mismatched":0,"built_attribute_mismatched":<n>,"live_attribute_mismatched":<n>,"attribute_mismatch_lines_built":[...],"attribute_mismatch_lines_live":[...],"changed_members":[{"name":"maintained_sources.py","built_member_sha256":"..","repo_blob_sha256_at_pin":".."},{"name":"templates.json","built_member_sha256":"..","repo_blob_sha256_at_pin":".."}]}]}` and `IB184-1_arms_and_ledgers.json`: `{"open_ledgers_naming_the_function":[{"ledger":"<file>","status":"OPEN|CLOSED|SUPERSEDED|HELD"}],"denominators":{"ledger_files_read":<n>,"worktrees_read":<n>,"marker_files_read":<n>},"arms":[{"arm":"five_models_canonical_order","verdict":"five_in_order"},{"arm":"existing_four_entries","verdict":"unchanged"},{"arm":"admitted_three_firms","verdict":"admitted"},{"arm":"altered_copy","verdict":"refused"}],"functions_invoked":0,"sign_ins_made":0,"aws_writes_made":0,"accounts_written":0,"figures_written":0,"vendor_requests_sent":0}`.
+11. **Run the three criteria below from your worktree root** (they read your deliverables and the REAL source map: the check reads `artifact_sha256` from the source map, which your revert restored), record each output and exit code verbatim in `IB184-1_criteria_output.txt`, write the proof instance named under `<proof_of_spec>` and validate it with `python .tools/proof-of-spec-check.py <instance>`, and commit with explicit paths. Do NOT edit this order file or the check; do not flip `<status>`. If a criterion fails, fix YOUR record (never the check) and run again.
+
+**Criteria (run each under `timeout 120` from your worktree root, record the output and exit code verbatim):**
+
+<criterion id="IB184-1-AC1" cell_refs="IB-pr-518"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r184/p184_cells.py" . IB184-1-AC1</invocation><expect>IB184-1-AC1 PASS</expect></criterion>
+<criterion id="IB184-1-AC2" cell_refs="IB-pr-518"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r184/p184_cells.py" . IB184-1-AC2</invocation><expect>IB184-1-AC2 PASS</expect></criterion>
+<criterion id="IB184-1-AC3" cell_refs="IB-pr-518"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r184/p184_cells.py" . IB184-1-AC3</invocation><expect>IB184-1-AC3 PASS</expect></criterion>
+
+<expected_criteria>IB184-1-AC1, IB184-1-AC2, IB184-1-AC3</expected_criteria>
+
+What the checks grade: AC1 the census (built twice identical, 0 signature mismatches, the live sha256 equal to the source map's last deployed CodeSha256, the changed members exactly `maintained_sources.py` and `templates.json` and each equal to its repo blob at its pin, the source map edited in one row in scratch then restored with equal sha256 before and after, nothing uploaded); AC2 the packet (Branch A, Branch B, the red list, live and built sha256, both halves, rollback, the open-ledger sequencing, the CURRENT live CodeSha256 `hpNfkhLtLRl0...`, `recipe.py` stated as not moved, the four base custody failures named, at least 3000 characters); AC3 the four arms exactly as above, the ledger list with valid statuses, no long digit run, the six bound counters 0. Do not edit the checks.
+
+## BOUNDS
+
+- **Grant:** the `paths` block, the scratch directory, and the TEMPORARY uncommitted source-map edit of step 4 (reverted). BUILD ONLY. **Nothing is uploaded, applied or deployed:** no `aws lambda update-function-code`, no `aws s3 cp` to a bucket, no `terraform`, no committed write to the source map, no change-management entry, no Lambda invoke, no sign-in, no vendor call. Allowed AWS calls (READ): `lambda get-function`, `lambda get-function-configuration`, `s3api list-object-versions` and `head-object` on the lambda-artifacts key for the Branch B version, `iam get-role-policy`/`list-attached-role-policies`.
+- **Refusal clause:** STOP, file a row, change nothing more, on any of: a changed member beyond the two named (`recipe.py` above all); a signature mismatch, or an attribute mismatch the live zip does not carry; a build not byte-identical twice; a live zip whose sha256 differs from the source map's `artifact_sha256`; a live zip you cannot fetch; the blob at the new pin differing from the repo's current `maintained_sources.py`. Never weaken a check.
+- **Row ids** are `IRPT_BCKEND-D2-W367-S<k>` (start at 1). Report once, under 150 words, with every path you name as a markdown link to its `file:///` absolute URI plus its repo-relative form.
+
+<paths>
+org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
+org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~367/
+</paths>
+
+<decomp_ref>
+<decomp_doc>org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md</decomp_doc> section 176 (round 184, workstream ~P), cell `IB-pr-518`.
+<owned_cells>IB-pr-518</owned_cells>
+</decomp_ref>
+
+<proof_of_spec>
+Criterion ids: IB184-1-AC1, IB184-1-AC2, IB184-1-AC3. The instance goes at `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~367/IRPT_BCKEND.TO-IB-pr-518.catalogue-function-census-and-packet.proof_of_spec.json`.
+Record in it the order's own relative invocation for each criterion. Validate it with `python .tools/proof-of-spec-check.py <instance>` BEFORE you report.
+</proof_of_spec>
+
+---
+
+## RECORD FACE
+
+<preflight>
+comp-blast: RUN -- the served catalogue (`GET /api/scoped/investor-reporting/analysis/comparisons`, `entry.py:150-166`) and its readers (the portal's Analysis Request form, the request composition `reports/request_composition.py:190-215`); the census reads the live zip and the source map and builds a candidate; 0 vendor reads, 0 invokes, 0 writes; the apply and its blast radius are the pair this order's packet carries.
+comp-iam: DECLARED-NOT-APPLICABLE -- reason: no permission, role or grant is changed; the new entry adds no firm and no principal class.
+comp-routes: DECLARED-NOT-APPLICABLE -- no route is touched.
+comp-schedule: DECLARED-NOT-APPLICABLE -- reason: no schedule is touched or created.
+comp-cache: DECLARED-NOT-APPLICABLE -- no CloudFront or cache surface is touched.
+comp-adversary: RUN -- p184_cells.py dry-run at base on dell2 2026-10-13 ~21:0xZ: IB184-1 AC1, AC2, AC3 FAIL (no records). Positive control in a temp root the run created itself (a copy of the real source map, synthetic records and a synthetic packet; removed): AC1 and AC3 PASS and AC2 PASS at a realistic packet length; negatives, each failing its own arm: a third changed member (recipe.py), a stale live digest, a packet without the recipe.py statement or without the current live digest, an altered copy admitted.
+lane: the paths block IS the grant; worker `0.9.0_WK_IRPT_BCKEND~367` (worktree `C:/dev/wk-IRPT_BCKEND-367`). Class SERVED (reads the live function and the source map; builds only; applies nothing). The measured premises (the live members' hashes against the pin and repo blobs) are row D2-S151.
+</preflight>

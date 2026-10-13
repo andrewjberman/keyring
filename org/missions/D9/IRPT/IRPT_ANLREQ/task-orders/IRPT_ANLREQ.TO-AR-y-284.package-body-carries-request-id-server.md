@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~108</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -43,13 +43,15 @@ You are `0.9.0_WK_IRPT_ANLREQ~108`.
 
 ### ACCEPTANCE
 
-<criterion id="AR284-y-AC1" cell_refs="AR-y-284"><invocation>python C:/dev/wk-irpt-anlreq-108/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py y284-pkg-server --root C:/dev/wk-irpt-anlreq-108</invocation><expect>Y284-PKG-OK</expect></criterion>
+<criterion id="AR284-y-AC1" cell_refs="AR-y-284"><invocation>python C:/dev/wk-irpt-anlreq-108/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py y284-pkg-server --root C:/dev/wk-irpt-anlreq-108</invocation><expect>Y284-PKG-SERVER-OK</expect></criterion>
 `AR284-y-AC1`: the record names the receiver's request-id pattern and the readers of report_ref, the authorization change, and a new test file with at least 10 passing tests whose case (a) fails at HEAD, with the existing ticket service tests passing and none edited.
 
 <criterion id="AR284-y-AC2J" cell_refs="AR-y-284" judgment="true"/>
 `AR284-y-AC2J` (judgment, graded at L9, never by you): the request id is written once by the named principal only, a different id is refused and never overwrites, the id pattern equals the receiver's, absent request_id behaves as today, no existing assertion was edited, and nothing was released.
 
 <expected_criteria>AR284-y-AC1 AR284-y-AC2J</expected_criteria>
+
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-13 ~21:5xZ, after the first report of `AR-y-284`'s worker; two defects of the issuer's order text, the worker was right).** (1) The criterion's expected token is `Y284-PKG-SERVER-OK` (the checker prints its whole check name; the order text said `Y284-PKG-OK`). (2) The record folder is `r23/` (the checker reads `deliverables/0.9.0_WK_IRPT_ANLREQ~<n>/r23/PACKAGE_REQUEST_ID_SERVER.json`), not `r26/`. A record already written to both folders is fine. Gate limb that graded this amendment: none stated (the issuer amends its own order's text).
 
 ## BOUNDS
 
@@ -87,3 +89,5 @@ lane: the files named in <paths> and the worker's deliverables.
 
 - Cut on `AR-y-280`'s BLOCKING row `W101-S1` and `AR-y-271`'s option ii (the J2 close), workstream `Y` round 26. The grant names every file the cell writes. Base: `AR284-y-AC1` FAIL as expected (no record).
 - Any portal candidate goes to `1.0.0_SA_CTO`'s review lane through the issuer; the worker lands nothing.
+
+<!-- ISSUER NOTE 2026-10-13 (2.0.0_SA_COO~Y2): status flipped to complete. The worker recorded AR284-y-AC1 FAIL only because the order text carried the wrong expected token (Y284-PKG-OK; the checker prints Y284-PKG-SERVER-OK, AMENDMENT 1); the trunk checker, run by the issuer after the drain, prints Y284-PKG-SERVER-OK (33 new tests, ticket folder 254), the proof instance is VALID. The CVO decides whether that re-grade is right. -->

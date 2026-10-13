@@ -32374,3 +32374,54 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS: S1 (the pin-set test outside the paths) RULED by amendment 1, the file granted; S2 (fixture and count in the named test file) APPROVED; S4 (portal gitlink shows modified in a fresh worktree) not mine, not committed, recorded; S5 (security_id source) ANSWERED: the live path takes vendor_id (report_security_ids, resident_worker.py:401-405), so the refusal sits there, and the older envelope path (validate_envelope) is not reached by the live worker; S6 (row grammar) ruled: the dell2 form IRPT_BCKEND-D2-W<n>-S<k> is the one to cut, my order text was wrong and amendment 1 fixed it; S7, S8 (a lane refusal until the amended order landed; the issuer's check file not committed by the worker) are the lane gate working as designed. NOT FIXED HERE, with owner: (a) S3, four custody tests (test_custody_entry.py two, test_custody_retained.py two) fail at base with FIRM_BINDING / INTERNAL-CALLER-CLASS row_absent; cause untraced; the catalogue is not on their path; owner me, a later measure-first cell if the CTO rules it in; (b) recipe.comparison_security_ids (the older envelope helper the first worker built from my design) reads catalog[k]['security_id'] and the admitted projection has none; it has no non-test caller, so the live path is unaffected; it is kept because the declared refusal code and its tests ride on it; the repair or removal is mine. NOT YET TRUE: nothing is served differently: the catalogue changes only when a later signed apply moves the function that packages these files. ISSUER NOTE: the worker also flipped the order's <status> to complete; that is the issuer's act and I read it as correct on the merged tree (criteria re-run PASS)."
 }
 ```
+
+## IRPT_BCKEND-D2-S151 -- round 184: the catalogue release moves two members of irpt-ycharts-generate, not recipe.py
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S151",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T21:00:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Correction to the round-184 analysis's premise: the catalogue release does not move 'only templates.json'; it moves two members of irpt-ycharts-generate (templates.json and maintained_sources.py, which is staged at a pin) and must NOT move recipe.py, whose live bytes are not the repo's current blob.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "my read 2026-10-13 ~20:5xZ of the live zip of irpt-ycharts-generate (CodeSha256 hpNfkhLtLRl0e9TFL+Vdr5kilZ1W8bN3GKMhlzmVXgg=, LastModified 2026-10-13T13:01:13Z, Handler generate_installed.lambda_handler, 104 members) hashed against git blobs: maintained_sources.py live 29c35dbfba72 = the staged pin 0642c9d004 blob = the repo blob before IB-pr-517 (HEAD now 74c262b6db6d); templates.json live 54656584f476 = the repo blob before IB-pr-517 (HEAD now 87be046cf2bd); recipe.py live 0d57427fe850 = the staged pin 3f29017cfc blob but NOT the repo blob before IB-pr-517 (aeef18516f11; HEAD now 1a270e6701eb)",
+      "infra/aws/lambda/ci/lambda-source-map.json, function irpt-ycharts-generate: source_dir ycharts/generate with 92 staged_from rows; the maintained_sources.py row is pinned at 0642c9d00454 and the recipe.py row at 3f29017cfc; the same file lists 12 functions that package one of these files (maintained_sources.py in 8: irpt-performance-adapter, irpt-directory-search, irpt-narrative, irpt-ycharts-generate, irpt-export-render, irpt-holdings, irpt-status, irpt-49f-reporting-read-lambda)"
+    ]
+  },
+  "spec_asserts": "A release moves exactly the members its packet names; a member whose repo blob is not the live blob rides only by a pin to its own release (CLAUDE.md rule 22a: diff deployed bytes against the build input, never by filename).",
+  "world_is": "RULED (issuer, inside my decomposition): round 184's order IB-pr-518 builds a candidate that moves templates.json (native, HEAD) and maintained_sources.py (the one staged_from row re-pinned to 0d0e9e1229, whose blob equals the repo's current one: the only change since the live pin is IB-pr-517's one pin line) and leaves recipe.py at its live pin. CONSEQUENCES, stated in the packet: (1) the OPAL-namespace refusal in recipe.py (report_security_ids) does not ship with this release; the YCharts path is stopped, and if re-enabled it would fail closed on a missing security_id; the refusal rides with recipe.py's own release (the other cells' pending changes in it). (2) The 7 other functions that stage maintained_sources.py keep the four-pin copy and are not moved; they do not serve the catalogue. (3) The CTO's round-184 text read 'only templates.json and its test move against the live package'; the real set is two members plus one source-map row, which the pair names. NOT read: whether the staged maintained_sources.py pin bump drags other members' staged_from rows; the census checks that the changed members are exactly two."
+}
+```
+
+## IRPT_BCKEND-D2-S152 -- root cause of the Opal report export-status failure: the live export function packages a stale ExportReceipt schema
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S152",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T21:28:46Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "ROOT CAUSE of Andrew's export-status failure (CTO msg 7259, D2 row W144-S1): the live irpt-export-render writes receipts with facts.covered_account_ids (receipt.py) but packages a STALE ExportReceipt.schema.json (pin 8d08ee54e4, no covered_account_ids, facts.additionalProperties false), so its own receipt read is refused as UNEXPECTED; the repo schema (v1.2) already has the field.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch log group /aws/lambda/irpt-export-render, my read (read-only, filter on covered_account_ids over the last 8 hours): one event, correlation corr-cae29ed93789, event irpt_error operation export-receipt public_reason_code UNEXPECTED, exception ValidationError 'Additional properties are not allowed (covered_account_ids was unexpected)' failing schema['properties']['facts'] (additionalProperties false) of ExportReceipt",
+      "my read of the live zip of irpt-export-render (CodeSha256 K74JEIjw0NKmy4YfEo7Sb7LcRxEII+/yaYtaKJ3qnD8=, LastModified 2026-10-13T12:43:58Z, 66 members): receipt.py carries covered_account_ids (True) while irpt_contracts/ExportReceipt.schema.json does NOT; the schema's live sha256 starts 5a7bda2ecddd = the staged_from pin 8d08ee54e4 blob, and HEAD's blob is 118a3575eaf2",
+      "docs/contracts/investor-reporting/v1/ExportReceipt.schema.json revision_note 1.2 (PRD ADDENDUM v0.30, row IRPT_BCKEND-W142-S4): facts.covered_account_ids is REQUIRED, minItems 1; export/receipt.py:14 and export/tools/backfill_covered_account_ids.py (receipts written before IB-pr-343 lack the field)"
+    ]
+  },
+  "spec_asserts": "A staged contract member in a packaged function equals the contract its writer was built against (CLAUDE.md rule 22a: diff deployed bytes against the build input).",
+  "world_is": "STATE: found, not yet fixed. FIX (a cell for round 185, ahead of everything but IB-pr-456's apply, per CTO msg 7259; round 184 is already issued): re-pin the one staged_from row ExportReceipt.schema.json of irpt-export-render so the packaged schema is v1.2, census and never-widen packet, then the pair, then the apply, after-read one export reaching a readable status on DEV. TWO things the packet must carry: (1) THE OTHER DIRECTION: HEAD's schema REQUIRES covered_account_ids (minItems 1) and 'a read of a receipt that names none is refused (fail closed)'; receipts written before IB-pr-343 lack it (the backfill tool exists for them), so after the re-pin those would be refused until backfilled: the packet counts them (a read-only census of the receipt store) and states the apply's branch for them; (2) the other staged schemas differ at HEAD from their live pins (ExportBundle, AnalysisReport), so the re-pin is ONE row by content, never a bump of the others; whether HEAD's ExportReceipt blob differs from the live pin by more than covered_account_ids is not yet read: the census checks. Client-facing: the failure is live on PROD."
+}
+```
