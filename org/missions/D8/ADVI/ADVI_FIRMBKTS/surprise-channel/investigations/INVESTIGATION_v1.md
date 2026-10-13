@@ -5897,3 +5897,29 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Any replay that neither steps the clock nor re-imports the handler per run measures the first map three times."
 }
 ```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~63 (FB-h-3 offline replay, 2026-10-13)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W63-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~63",
+  "surfaced_at": "2026-10-13T06:50:53Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "AC2 names the base checkout's deliverables path for REPLAY_RESULT.json, but the record is committed in my worktree; AC2 fails verbatim as ABSENT.",
+  "spec_asserts": "Order section 4 AC2: r5_checks.py replay --file C:/dev/ajb_workspace/org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~63/REPLAY_RESULT.json. Order section 5: commit REPLAY_RESULT.json in the deliverables folder (the worktree's paths grant).",
+  "world_is": "The deliverables folder and REPLAY_RESULT.json exist only in the worktree C:/dev/wk-firmbkts-63, committed at 4b8bd3b056. The base checkout C:/dev/ajb_workspace has no 0.9.0_WK_ADVI_FIRMBKTS~63 folder and I did not write into it. Verbatim AC2 printed FAIL ABSENT or unreadable: FileNotFoundError (rc=1). The same checker on the worktree copy printed REPLAY record ok pairs=2127 mismatches=0 control_mismatches=1 bytes_equal=False (rc=0); that is a diagnostic, not the criterion verdict.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~63/REPLAY_RESULT.json@4b8bd3b056 (the worktree copy the checker reads on the diagnostic run)",
+      "C:/dev/ajb_workspace/org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round5/checks/r5_checks.py replay run verbatim: FAIL ABSENT or unreadable (rc=1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "AC2 stays FAIL on the instance; the order is not flipped. The issuer decides whether the checker path is to be re-pointed at the worktree copy or the record is to be copied to the base checkout; I did not do either."
+}
+```
