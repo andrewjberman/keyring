@@ -6683,6 +6683,54 @@ carries none.
     "spec_asserts": "MX-c-8 Part 1: measured and inferred claims carry `basis: s3://<bucket>/<prefix>`.",
     "world_is": "Pre-LGIC served keys (platinum/...) cannot be re-typed in a new line under the naming gate without an R20 register entry or a registry row, which are outside this order's paths. A consumer that wants the full prefix joins the claim's `row` to that row's `key`.",
     "notes": "If the issuer wants the literal prefix in the claim, the route is an R20 register entry (or registry rows) for the platinum/ layouts, then one emitter line; Rule 30 puts those keys' conformance in their own migration project."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S106",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-13T21:32Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "No production reader of DATA_CATALOG.yaml keys rows by `entity` across the whole file. The duplicated id reaches only one test helper, and MX-c-8 already orders that helper's read correctly. The hazard is test-local, so its standing is INERT.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W33-S3"
+    ],
+    "one_line": "RULES Z-W33-S3 (OBSERVATION/ARMED: the (a) tool_index entries repeat their index row's `entity`): DISARMED to INERT at the MX-c-8 drain (@212f2370a3). A last-wins whole-YAML `entity` dict is found only in tests/test_portal_index.py _catalog_entities(); every app reader is section-scoped or set-keyed. The durable shape (a link key that is not the row identity) goes to the round-10 analysis as an enrichment candidate.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Native Grep over infra/aws/ec2/opal-gateway/app for [\"entity\"] / .get(\"entity\"): 3 hits. admin_gateway_breakdown.py:109 adds to a SET per read_tool, so order does not matter. portal_index/integration.py:195 iterates portal_datasets only. opal_discover/integration.py:664 builds an answer field and is not a lookup.",
+        "At the merged index 212f2370a3: c8.AC1, c8.AC2 and c8.AC3 RESULT: PASS (partition 67 of N=67; 16 of 16; 3 of 3). The worker read tests/test_portal_index.py with test_admin_gateway_breakdown.py and test_opal_discover.py at 56 passed after the emit-order change."
+      ]
+    },
+    "spec_asserts": "An (a) tool_index entry carries `entity: <row id>` so MC Portal's breakdown walker reads the link.",
+    "world_is": "The link works, and the row id now appears twice in the file. Only a whole-file, last-wins reader would see the wrong mapping, and today that is one test helper."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S107",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-13T21:32Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The 7 IDs fail on the unmodified base edc544ba75, so no MX-c-8 change produced them. Under standing battery clause 2, this project's drains and round-close verdicts list them beside the verdict as known base failures, and never refuse on them. That makes the hazard INERT. The re-baseline and the route-test owner are named for the round-10 analysis.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W33-S4"
+    ],
+    "one_line": "RULES Z-W33-S4 (OBSERVATION/ARMED: failing_ids_full.txt reads 7 NEW IDs that are base failures): DISARMED to INERT. The MX-c-8 drain graded the suite as 'new 7, all 7 present at base, 0 caused by the cell'. Clause 2's known-failure list widens from the 5 Z-S97 IDs to those 5 plus these 7 until a re-baseline lands. The six route/OIDC tests (404 where 405 is asserted) are gateway-route tests, NFRA_OPLGTW's surface, and are named for the round-10 analysis. test_real_server_tool_inventory is test-order pollution (it passes alone).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The worker's base control (row Z-W33-S4 evidence): the gateway dir of edc544ba75, extracted by git archive and run with the same python, fails the six route tests (404 vs 405; test_oga3_ac01 FileNotFoundError). tests/acceptance with test_admin_gateway_breakdown.py reads '2 failed, 22 passed' both at base and in the worktree.",
+        "suite_delta.py --shape full in the worktree reads 'new 7 fixed 0 baseline 41' (48 failed, 739 passed). The 3 test_portal_index.py IDs the cell had caused are fixed (row Z-W33-S3)."
+      ]
+    },
+    "spec_asserts": "MX-c-8 bound 3: a NEW failing ID against the MX-x-6 baseline is the cell's to fix.",
+    "world_is": "The baseline is stale on this device: 7 IDs that fail at base read as NEW. A delta-graded drain would refuse on them every round unless they are listed as known."
   }
 ]
 ```
