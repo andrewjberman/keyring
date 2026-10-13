@@ -985,6 +985,49 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "spec_asserts": "The LGIC root map row at line 264 records cot-satellites-registry-producer-daily as a decided EVENT_RULE name for the posn system, the rule that fires the registry producer.",
     "world_is": "The rule is retired by MDPF_HEALGAP.TO-HG-t15 and no tf declares it, but the root map row remains. The registry does not state whether a retired rule keeps its row.",
     "notes": "Recorded only; no edit to the registry. The CVO decides at L9 whether the row is retired with the rule."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S14",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~G1",
+    "surfaced_at": "2026-10-13T11:42:13Z",
+    "one_line": "The HG-t-10 half's acceptance text and its healed check predicted accounts healed_at null after the repair; the live result reads a timestamp, which is what the producer's own rule writes. The expectation was mine and was wrong; the check printed HEALED-BAD on that one condition and no other.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/NEVER_WIDEN_HALF_REQUEST_HEALGAP_R3_ACT_HG_T10_FWD3_EXERCISE_20261012.md section 5 item 3: 'healed_at on accounts reads null live (the R2-1 rule)'; hg_t10_exercise.py cmd_healed flags any non-null healed_at",
+        "infra/aws/lambda/cot-pipeline/cot-rebalancer-runner/lambda_function.py lines 276-278: healed_at = prev healed_at, and 'if prev.get(status) == missing and feed in landed_now: healed_at = now_iso'",
+        "live read 2026-10-13T11:42:13Z: meta/2026-10-13-result.json verdict COMPLETE, rebalancer_accounts status arrived, healed_at 2026-10-13T11:41:17Z; hg_t10_exercise.py healed printed 'HEALED-BAD accounts healed_at is 2026-10-13T11:41:17Z' with no other condition listed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The half (CTO ADDENDUM 7 signed it) says the healed feed's healed_at reads null live after the repair.",
+    "world_is": "healed_at carries the repair's invoke time, as lambda_function.py lines 276-278 write it for a feed an earlier result marked missing that lands in a later run. The served outcome (COMPLETE, stamp, accounts keys, the two present feeds' key sets equal to the pre-repair snapshot) is as the half intended; only the predicted field value was wrong.",
+    "notes": "The check script is left as run (not edited to pass). L6 is graded at 12:45Z by the producer's rule with this deviation stated; the CVO decides at L9 whether the half's text is corrected."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S15",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~G1",
+    "surfaced_at": "2026-10-13T11:42:13Z",
+    "one_line": "During the HG-t-10 exercise the Black Diamond API answered HTTP 401 to the runner four times between 11:35:58Z and 11:39:29Z (one GET of a model, two POSTs to strategies/search on the repair); the repair's third attempt at 11:41:17Z succeeded. The half expected the repair to land on its first invoke.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cot-rebalancer-runner log 2026-10-13: 11:35:58Z RuntimeError 'BD GET /api/models/<id> -> HTTP 401' (induced retry 3); 11:38:29Z and 11:39:29Z RuntimeError 'BD POST /api/models/strategies/search -> HTTP 401' (repair invoke and its first async retry); 11:41:17Z START then 11:41:34Z verdict BRONZE-COMPLETE models 71 accounts 993 model_details 93",
+        "the 11:32:36Z and 11:33:51Z attempts of the same day reached the vendor and raised PartialDay as designed, so the session was valid at 11:32Z and again at 11:41Z"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The half says the vendor session is valid at 11:32Z and the repair closes the hole before 11:45Z.",
+    "world_is": "The session answered 401 for roughly 11:35Z-11:40Z and was valid again at 11:41Z; the repair closed the hole at 11:41:34Z, inside the 11:45Z bound, by its second async retry. The cause (token expiry window, vendor rotation or another puller) is not read.",
+    "notes": "Not chased. The 12:45Z fire is the safety if a later run meets the same window. No code or config touched."
   }
 ]
 ```
