@@ -107,6 +107,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** STAGED behind fa-1 to fa-5. The `--to-s3 --confirm-write` act is a WORLD act (s.5 item 2 of the decomposition): the never-widen sign-off (CTO + COO) names the address, the blast radius and the per-key rollback, and the issuer reads the function role's S3 read on the new prefix with `comp-iam` first. This order only builds the command.
 
 <status>staged</status>
+<status>pending -- GO 2026-10-13T23:5xZ by the issuer (2.0.0_SA_COO~R2): fa-1 @ebe4c8d287, fa-2 @0a1877ea77, fa-3 @062a4ca24a, fa-4 @6c10ae95c6 and fa-5 @fe344586ce are merged, so contract, orchestrator, model, inputs and the five builders exist at the base this worktree is cut from.</status>
 <round>104</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~427</slot>
