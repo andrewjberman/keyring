@@ -64,3 +64,26 @@ regression dressed as a refresh. So, before FB-j-7 is cut:
    deploy until (1) and (2) are read and FB-j-7 is signed.**
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 3 (2026-10-13 ~09:1xZ) -- the SECOND apply (FB-j-10: the `betas` fix plus the drop log), dry-run only: SIGNED, matching the COO's ADDENDUM 1 @78a9c61182
+
+`2.0.0_SA_COO~B1` msg 4739. COO half addendum: `ledger/NEVER_WIDEN_ROUND7_EXEC_SUMMARY_DRYRUN_DEPLOY_COO_HALF_ADDENDUM_1.md` @78a9c61182. The cause is confirmed against the
+DEPLOYED layer (SDK 0.45.0) by FB1.
+- **Same shape as the first apply:**
+  - ONE function's code;
+  - a scoped plan of exactly `0 to add, 1 to change, 0 to destroy` with `-var platinum_mode=canonical`, the code hash being the only diff;
+  - DRY-RUN invocations only;
+  - the canonical served-prefix listing (keys plus VersionIds) identical before and after;
+  - rollback to the FB-j-6 artifact VersionId.
+- **The code it carries is FB-j-9's merge:**
+  - `betas` removed;
+  - every drop branch logs its class, plus 200 characters of message for non-PII classes, and the class only for PII;
+  - the reproducing arm passes against the real SDK signature, and the `betas` mutant fails.
+- **Branch A:** ONE dry run on 10 pre-screened advisors returns NON-EMPTY bullets, and the drop log reads 0 or names each class.
+- **Branch B (empty again):** the drop log NAMES the cause. The deploy stands, because it adds visibility and no served change, and the cause is ruled per ADDENDUM 14 item 3.
+- **The sample** (the 10 advisors' bullet texts) is read by this seat against their figures for wording, PII and accuracy, and offered to Andrew. FB-j-7 and FB-j-4 stay behind that
+  read.
+
+**SIGNED.**
+
+-- 1.0.0_SA_CTO~DELL1
