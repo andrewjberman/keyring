@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~90</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -70,6 +70,31 @@ Dry-run at the base (dell1 box/dell1 HEAD, 2026-10-13 ~04:3xZ): AC1 FAIL as expe
 minimally restored set of temp copies (15 lines inserted) passes every arm of the check and one with an extra edit fails the byte-equality arm; AC2
 FAIL as expected (the file is absent); AC3 is measured at the base by you (item 3).
 
+### AMENDMENT 1 -- the drift guard becomes "the contract admits the producer's six, plus the one retired member" (issuer 2.0.0_SA_COO~M1, 2026-10-13 ~05:0xZ; answers your rows MDPF_SECCLASS-D1-W90-S1 and S2)
+
+Your stop was right, and the failing test is the other half of the same narrowing. `test_holdings_snapshot.py::test_every_published_asset_class_enum_is_the_producers_list`
+asserts `sorted(enum) == sorted(hs.ASSET_CLASS_VALUES)`: the port (`01e843ce2e`, e62) made the contract enum EQUAL the producer's six, and this test pinned
+that. The CTO's ruling (round-23 analysis ADDENDUM 2, msg 4622) is that the frozen v1 contract keeps its additive-only shape and the six-class rule is
+enforced AT THE PRODUCER. Andrew's own word (`ANDREW_DIRECT_20261007_004xZ_NO_MULTI_ASSET_CLASS_SIX_CLASSES_ONLY.md`) is six classes, no `multi_asset`,
+and it routed "the Holdings contract's `multi_asset` entries" to `1.0.0_SA_CTO`, who has ruled: the producer's values stay six (this test's first assertion,
+`"multi_asset" not in hs.ASSET_CLASS_VALUES`, STAYS), the contract admits the retired member.
+1. **Edit that one test.** In `data/assets/scripts/gold/investor_reporting/tests/test_holdings_snapshot.py` change ONLY
+   `test_every_published_asset_class_enum_is_the_producers_list`: keep the schema load, the three enums and the `"multi_asset" not in hs.ASSET_CLASS_VALUES`
+   assertion; replace the equality loop with, for each enum: `set(hs.ASSET_CLASS_VALUES) <= set(enum)` (the contract admits every class the producer
+   emits) and `set(enum) - set(hs.ASSET_CLASS_VALUES) == {"multi_asset"}` (the ONE extra member is the frozen v1 member and nothing else: any other drift
+   still fails). Rewrite its leading comment to say so: six classes only at the producer (Andrew-direct 2026-10-07, SC-e-22); the frozen v1 contract is
+   additive-only and keeps `multi_asset` (CTO round-23 ADDENDUM 2); enforcement at the producer, not by narrowing the contract.
+2. **Fix the helper's docstring** in `test_holdings_publish_gate.py` (`_contract_admits_multi_asset`): it says the enum "already rejects multi_asset at
+   validation (a build defect, a bare raise)"; after the restoration that is false. Make the docstring true (the contract now admits it; the helper
+   keeps the gate test independent of the contract's content) and change nothing else there. If the helper's monkeypatch is now a no-op, say so in
+   your report and leave it (not your cell's to remove).
+3. **The grant grows by one path:** `data/assets/scripts/gold/investor_reporting/tests/test_holdings_snapshot.py`. Everything else in your `<paths>`
+   and `<bounds>` stands. Row W90-S1 (BLOCKING, ARMED) is dispositioned by items 1 and 3; W90-S2 by item 2.
+4. **Re-run** AC1, AC2 and AC3 (AC3 must now read all four sibling files green: the base's 70 and your 8 new), validate the proof instance, flip
+   `complete` only when all three pass, commit with the grown path list and report as before.
+5. **Gate limb.** The issuer amends its own criteria and grant without a CTO ruling; no gate limb grades an amendment to an existing order's criteria and
+   `<status>` (this order declares `<placeholders>NONE`; a path added to a new-in-this-round order's grant is the issuer's own).
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below, plus your deliverables folder and this order's file. Scaffolding goes under `.scratch/`, uncommitted.
@@ -86,6 +111,7 @@ docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json
 infra/aws/lambda/investor-reporting/_contracts/HoldingsSnapshot.schema.json
 infra/aws/lambda/investor-reporting/holdings/contracts/HoldingsSnapshot.schema.json
 data/assets/scripts/gold/investor_reporting/tests/test_holdings_multi_asset_v1_enum.py
+data/assets/scripts/gold/investor_reporting/tests/test_holdings_snapshot.py
 data/assets/scripts/gold/investor_reporting/tests/test_holdings_publish_gate.py
 org/missions/D8/MDPF/MDPF_SECCLASS/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
