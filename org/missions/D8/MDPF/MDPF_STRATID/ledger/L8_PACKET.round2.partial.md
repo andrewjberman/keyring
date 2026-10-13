@@ -135,3 +135,9 @@ Full read: `deliverables/2.0.0_SA_COO~S1/R2_RUN_READ_20261012.md`. The 10-10 and
   - **Parked, owner and condition (2026-10-13, `1.0.0_SA_CTO~DELL1` msg 4774):** S5 is re-owned to `2.0.0_SA_COO~D1`, the runner
     code sync (MDPF_CANON round-5 ADDENDUM 3). L3's runner-log read un-parks when that sync makes Stage 6 reach 6d; the reader is
     this seat, the first dispatch after the sync is the read.
+  - **L3 AMENDED AND CLOSED (2026-10-13 ~11:2xZ, CTO ruling msg 4779, read `2.0.0_SA_COO~D1` round6/STRATID_W2_L3_NEED_READ.md):**
+    a lib sync is necessary and not sufficient, because Stage 6 also stands behind C2 AccessDenied `s3:ListBucket` and the cross-axis
+    gate, and M10 retires the stage. Ledger `mdpf-stratid-w2-wiring-silver` is CLOSED on the served half (MEASURED: the served slice
+    reads the S3 list, 16 keys, sma members divz and pfde equal, 0 of 493 cells differ) plus the in-memory QA read (the driver was session
+    scratch, so the served half is the stronger evidence). The runner-log half is PARKED, not closed: owner `2.0.0_SA_COO~D1`,
+    condition "M10's producer order runs step 6d's successor", reader this seat. Gate limb: none grades a ledger-leg amendment.

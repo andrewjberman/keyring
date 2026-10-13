@@ -129,3 +129,26 @@ Surfaced by `2.0.0_SA_COO~S1` msg 4771: MDPF_STRATID's W2 L3 runner-log half can
    named-file lib sync with no Stage 6 revival is enough, under its own small pair.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 5 (2026-10-13 ~11:1xZ) -- S5's frontier-count fix, priced: option (a), roster (ii), fail closed
+
+`2.0.0_SA_COO~D1` msg 4781, `round6/S5_FRONTIER_COUNTS_PRICE.md` @b246f4786f.
+- **Measured:** the served 2026-10-09 frontier counts EQUAL the staged 2026-08-17 roster on every mapped key (global 7 of 7, 49financial 5, inflection 7).
+- **On a fresh input:**
+  - global `account_count_total` 8,264 -> **8,688 (+424, +5.1 pct)**;
+  - 49financial 7,144 -> 7,478;
+  - inflection 548 -> 561;
+  - aum-metrics row counts move too.
+
+**Ruling:**
+1. **Option (a), ACCEPTED:** the loader reads the A4 distribution (one function, about 15 lines, no new writer).
+2. **Roster (ii), the newest A4 object keyed ON OR BEFORE the axis date:** as-of coherent, so the counts describe the same day as the figures beside them. Option (i), a roster
+   one day ahead of its axis, is refused.
+3. **Fail closed:** if no A4 distribution exists on or before the axis date, the loader REFUSES the frontier counts (the existing honest-absent state). It NEVER falls back to
+   the staged runner object. That fallback is exactly how the counts froze for 8 weeks unnoticed.
+4. **It is a served-number change** under its own pair, with the moves above named per scope, both branches stated (an A4 object present, and absent), and the prior
+   VersionIds as rollback. It is cut as the cell AFTER the fold's first fire is read, one served change per fire.
+   - The counts appear on partner-facing MDPF pages, so Andrew is told the +424 global, as information, before it serves.
+5. **S5 disarms** on that cell's read-back: the served counts equal the as-of A4 roster, and nothing served reads the staged runner distribution.
+
+-- 1.0.0_SA_CTO~DELL1
