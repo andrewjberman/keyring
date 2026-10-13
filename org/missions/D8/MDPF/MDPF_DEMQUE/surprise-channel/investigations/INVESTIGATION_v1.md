@@ -2407,6 +2407,107 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "data/mdpf/scripts/demque/test_demque_carry_over.py CLI arm, this branch (the fresh directory after the failing run)"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W49-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~49",
+    "surfaced_at": "2026-10-13T22:00:25Z",
+    "one_line": "AC2 arm2 requires securities 613 in the B1 line; the rule as written yields 612. One in-set CUSIP (9128334Y3) has an active window that opens 2026-09-22, after all of its B1 history, so its cells are clipped away and the name is emptied and dropped (Build item 3). 613 is the pre-clip count less the held-back fund. The emptied rule and the 613 cannot both hold; 613 was not forced.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AC2 (dq_t57_real.py arm2): the B1 line shows securities 613, clipped about 99 CUSIPs, 33,000 to 35,500 cells. Build item 3: an entry left with no cells is dropped; a CUSIP left with none is counted in emptied_cusips; the --build securities key counts distinct CUSIPs in the request.",
+    "world_is": "At be745e7fa2 the --build line reads securities 612, clipped_cusips 99 (98 narrowed plus the one emptied), emptied_cusips 1, unclipped_cusips 4, held_back 1, cells 34341. 612 = 614 (606 priced plus 8 funds) minus 1 held-back fund minus 1 emptied name. The emptied name 9128334Y3 has an active window from 2026-09-22, open; none of its B1 cells (2024-08-05 to 2026-05-27) falls inside it. A 613 would need a name with no entries in the request. CTO to rule: confirm an emptied name leaves the request (Build item 3 as written), and restate AC2 as 612.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t57.active-set-windows.md@be745e7fa2",
+        "data/mdpf/scripts/demque/b1_request.py build_request and clip_entries@be745e7fa2",
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t57_real.py arm2, run at be745e7fa2: WIN-REAL-BAD arm2 (securities 612)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W49-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~49",
+    "surfaced_at": "2026-10-13T22:00:25Z",
+    "one_line": "AC2 and the order cite 37,439 filed cells for the unclipped B1 request. The unchanged base code measures 37,514 cells on this date, which matches the DQ-t-50 instance's measured 37514 at 1dcdbbde7d. The clip gives 34,341, which matches the issuer's figure exactly. The check's bound (under 37,439) holds either way.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order AC2: 'the B1 line clipped ... 33,000 to 35,500 cells against 37,439 filed'; arm2: cells strictly below 37439.",
+    "world_is": "The base b1_request.py, run once before any change on this branch (--build to a scratch path, S3 read only), printed cells 37514 and securities 614. The published set's clip gives 34341 cells. The figure 37439 does not reproduce on this date; no check was weakened.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t57.active-set-windows.md@be745e7fa2",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/0.9.0_WK_MDPF_DEMQUE~42/MDPF_DEMQUE.TO-DQ-t50.b1-cottonwood-depth-option-c-request.proof_of_spec.json@6765fe5e2b (cells 37514 at 1dcdbbde7d)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W49-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~49",
+    "surfaced_at": "2026-10-13T22:00:25Z",
+    "one_line": "The unchanged --build ran about 51 s wall time and the first clipped build went over the real check's 55 s subprocess timeout (TimeoutExpired in arm2). Four speed-only changes (memoised NYSE calendar lookups; the P2/P3 gate reads the named CUSIPs' rows; fund windows read from the fund rows; output verified byte-identical) bring --build to about 45 s. The margin is thin: card_a_slice.build (about 24 s) is outside this order's paths and is the largest cost.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order AC2 note: '55 seconds a run: read the CSV once; load the priority-gate classification lazily and cache it for the run'. dq_t57_real.py gives each --build subprocess a 55 s timeout.",
+    "world_is": "Measured at be745e7fa2: one --build run took 55 s before the speed changes (arm2 TimeoutExpired) and 45 s after (rc 0, same bytes). Stage times after the changes: transactions read about 3 s, card_a build about 24 s, gate about 1 s, build_request about 5 s, quote about 6 s.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/b1_request.py _fund_windows, excluded_names, calendar memoisation@be745e7fa2",
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t57_real.py _line timeout=55@be745e7fa2"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W49-S4",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~49",
+    "surfaced_at": "2026-10-13T22:00:25Z",
+    "one_line": "AC2 expects accounts 769. Counting only the rows that are not skipped gives 639; 130 active accounts appear only on the 472 blank-cusip rows. active_set.census counts every row's account key (769): a skipped row still belongs to an active account. The definition is stated in active_set.py's docstring.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order DQ-t-57 Build item 2: accounts = the distinct account keys COUNTED, not listed; Build item 1: a blank-cusip row is counted under skipped and ignored.",
+    "world_is": "The published CSV holds 769 distinct account keys over all 42,319 rows, 639 over the 41,847 rows with a non-blank cusip, and 130 keys only on blank-cusip rows (window_basis not_established). Neither reading was printed by account key; the counts are the only output.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/active_set.py census and module docstring@be745e7fa2",
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t57_real.py arm1 (accounts 769)@be745e7fa2"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W49-S5",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~49",
+    "surfaced_at": "2026-10-13T22:00:25Z",
+    "one_line": "The P2/P3 hold-back calls priority_gate.excluded on the crosswalk and transactions that main() already read, not priority_gate.excluded_for(), which would read S3 a second time (crosswalk and transactions) per run. The rule, the fail-closed refusal and the classification are the same; the P1 build and the gate rank over the same frames, so they cannot disagree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order Build item 3: P2/P3 names are held back via priority_gate.excluded, the same fail-closed read; AC2 note: load the priority-gate classification lazily and cache it for the run.",
+    "world_is": "b1_request.excluded_names calls priority_gate.excluded once per run on the frames main holds (narrowed to the named CUSIPs; rank's per-name statistics are unchanged by the narrowing). build_request holds nothing back when its excluded argument is None, so main() is the only caller that applies the gate.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/b1_request.py excluded_names and main@be745e7fa2",
+        "data/mdpf/scripts/demque/priority_gate.py excluded_for and load_inputs (not used by the build)@be745e7fa2"
+      ]
+    }
   }
 ]
 ```
