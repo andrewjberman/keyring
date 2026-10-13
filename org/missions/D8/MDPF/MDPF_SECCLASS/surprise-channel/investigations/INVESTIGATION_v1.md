@@ -7414,3 +7414,181 @@ by dell1 or by this seat.
   "world_is": "Both named falls are at their bounds to the cent (the $0.35 over on 10-09 is 0.00005 percent of the bound and inside the six-place rounding the code carries, row D1-W85-S6: ruled not a STOP by the issuer, to the CTO for confirmation). The same mechanism moved eight dates the Reach section never measured, by $0.6M to $96.7M each, totals held and no class outside the canonical set appeared; the e97 re-derive would move the same dates further to the rebuild. The measured 'before' of the e97 radius (served Unclassified $76M-$153M on 09-30..10-06, the bars' before) is therefore stale: the page's Q3 and September bars already read the post-SC-e-91 state."
 }
 ```
+
+## MDPF_SECCLASS-D1-W89-S1 -- the e91 in_range negative "bound + $1" sits inside the amended bound + $250 tolerance; it is replaced by bound + $251
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W89-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~89",
+  "surfaced_at": "2026-10-13T01:40:15Z",
+  "one_line": "TO SC-e-99 AMENDMENT 2 item 3 makes in_range 0 <= fall <= bound + $250. The face's negative 'a 10-09 fall of the bound plus $1' is inside that tolerance and cannot fail. The selftest negative is now the fall of bound + $251, the same boundary construction; the bound + $1 negative is not kept.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e99.legg-read-instruments.md lines 90-94 @c68cb7c25a: the face's selftest paragraph names 'a 10-09 fall of the bound plus $1 (in_range)'",
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e99.legg-read-instruments.md lines 157-171 @c68cb7c25a: AMENDMENT 2 item 3 (in_range is 0 <= fall <= bound + 250) and item 6 (a fall of the bound plus $251 fails in_range)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R24_CHECKS/r24_legg_read.py @c68cb7c25a: the trunk negative m_in_range adds bound + 1.0 to the 10-09 equity"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC1 (selftest) negatives: each must grade ok=False on exactly its own criterion, and one of them is a fall of the bound plus $1 that fails in_range (face lines 90-94). AMENDMENT 2 item 3 sets in_range at bound + $250.",
+  "world_is": "A fall of bound + $1 is in range under the amended tolerance, so the face's negative cannot fail in_range. The live fall on 10-09 is 653857.47 against a bound of 653857.12 (0.35 over), which is inside the tolerance. The negative now used is bound + $251, which fails in_range with the rest of the selftest unchanged."
+}
+```
+
+## MDPF_SECCLASS-D1-W89-S2 -- AMENDMENT 2 item 2 says "if AFTER is BEFORE" without naming the object; the state is graded on the mix daily summary alone
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W89-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~89",
+  "surfaced_at": "2026-10-13T01:40:15Z",
+  "one_line": "AMENDMENT 2 item 2 reads 'If AFTER is BEFORE, print NO-CHANGE-SINCE-FIRE' for the two objects it names (mix daily summary and platinum mix summary) without saying whether both must be unchanged. The script grades the state on the mix daily summary, the leg-G object, and prints the mix summary's move beside the line without grading it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e99.legg-read-instruments.md lines 152-156 @c68cb7c25a: AMENDMENT 2 item 2 wording",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R24_CHECKS/r24_legg_read.py fire_state (this order's commit): CHANGED iff the mix daily summary's newest version differs from its BEFORE version"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 2 item 2: BEFORE is the newest version of each of mix_daily_summary.json and platinum/firm/mix_summary.json earlier than the fire start; if AFTER is BEFORE, print NO-CHANGE-SINCE-FIRE and exit 3.",
+  "world_is": "Both objects moved at the live fire, so the reading does not differ at this fire. The reading differs only for a fire that moved the platinum mix summary and not the mix daily summary: the script would print the mix summary's move and grade the mix daily summary's unchanged state as NO-CHANGE-SINCE-FIRE. The order does not say which reading it means."
+}
+```
+
+## MDPF_SECCLASS-D1-W89-S3 -- the face's AC2 invocation (bare e91, expecting NO-CHANGE-SINCE-BASELINE) cannot give that line on the canonical default; the script prints FIRE-START-REQUIRED and exits 2
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W89-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~89",
+  "surfaced_at": "2026-10-13T01:40:15Z",
+  "one_line": "The baseline VersionIds were read at the legacy destination. Under the canonical default a bare 'e91' compares canonical VersionIds with them, which can never be equal. The script now prints E91-LEGG state=FIRE-START-REQUIRED and exits 2 for that call, and runs the baseline comparison only under --mode legacy. The face's bare-e91 expectation no longer holds on the default.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e99.legg-read-instruments.md lines 101-105 @c68cb7c25a: the face's AC2 invocation and expectation",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/LEGG_E91_PREFIRE_BASELINE_20261012.json served_versions @c68cb7c25a: the baseline VersionIds are the pre-fire legacy objects",
+      "data/black_diamond/scripts/gold/lib/platinum_dest.py @c68cb7c25a: canonical is the default mode the order names"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 2 item 6 replaces AC2 with the live fire-start control; the face's AC2 (bare e91 prints NO-CHANGE-SINCE-BASELINE, exit 3) is the criterion it replaces.",
+  "world_is": "Measured in this run: 'e91 --mode legacy' without --fire-start still runs the baseline comparison, and 'e91' on the canonical default without --fire-start prints FIRE-START-REQUIRED (exit 2). The bare-e91 expectation is no longer reachable on the default."
+}
+```
+
+## MDPF_SECCLASS-D1-W89-S4 -- the CLI writes a versioned body to a file named '-' and prints only metadata on stdout; the script fetches each version body into a temp file
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W89-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~89",
+  "surfaced_at": "2026-10-13T01:40:15Z",
+  "one_line": "The order gives no method for reading a specific version body (AMENDMENT 2 item 2 needs the BEFORE version). A probe with '.tools/aws s3api get-object ... --version-id <id> -' wrote the 9.8 MB body to a literal file named '-' in the worktree and printed only the metadata JSON on stdout. The probe file was deleted. The script now writes the body to a system temp file (tempfile.mkstemp), reads it, and removes it before the verdict.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "probe in the worktree /c/dev/wk-secclass-89 at 2026-10-13 ~01:34Z: s3api get-object --bucket opal-data-49financial --key advi/49financial/platinum/views/mix_daily_summary.json --version-id VyuLE19UQIHCSF6bkM9Brja6Lz___8RF - ; ls -la showed a 9877189-byte file named '-' and stdout held the 393-byte metadata JSON",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R24_CHECKS/r24_legg_read.py get_version_json (this order's commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 2 item 2: BEFORE = the newest version earlier than the fire start, read by VersionId; the instrument is read-only and writes nothing.",
+  "world_is": "A version body cannot be streamed to stdout by s3api get-object on this CLI; a file path is required. The temp file is local to the machine, is removed before the script returns, and is not in the repository. The read itself stays read-only."
+}
+```
+
+## MDPF_SECCLASS-D1-W89-S5 -- AMENDMENT 2 item 5 asks for one E97-READ line per object read; the 300 relationship JSONs print as one family line with bucket counts
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W89-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~89",
+  "surfaced_at": "2026-10-13T01:40:15Z",
+  "one_line": "The face says every object read prints its (bucket, key) on its E91-READ or E97-READ line. For e97's added_dropped read (about 300 relationship JSONs) the script prints one family line with the key template and the bucket counts from source(); each object's (bucket, key) is computed by source() per relationship and is not printed line by line, to keep the output bounded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e99.legg-read-instruments.md lines 148-151 @c68cb7c25a: AMENDMENT 2 item 1, 'Print the (bucket, key) of every object read on its E91-READ / E97-READ line'",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R24_CHECKS/r24_legg_read.py cmd_e97 (this order's commit): the E97-READ relationship JSONs line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 2 item 1: print the (bucket, key) of every object read on its E91-READ or E97-READ line.",
+  "world_is": "The e97 path is not reached live (shipped=False exits at the restated_through gate), so the family line has not been printed against live objects. The per-object line for each relationship is a print-volume choice the order did not state."
+}
+```
+
+## MDPF_SECCLASS-D1-W89-S6 -- the two live destinations hold different C_06-shaped key populations (7,586 canonical, 7,945 legacy) against 3,793 relationships
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W89-S6",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~89",
+  "surfaced_at": "2026-10-13T01:40:15Z",
+  "one_line": "The live --since count (run 2026-10-13 ~01:37Z, fire start 2026-10-12T23:00:00Z) printed denominators of 7,586 C_06-shaped keys under the canonical gold/entities/clients/ prefix and 7,945 under the legacy gold/client_timeseries/ prefix. C_06 reports 3,793 relationships read, so 2 x 3,793 = 7,586 matches the canonical side; the legacy side carries 359 more keys of the same shape. The instrument prints the counts and does not explain the 359.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "E91-LEGG-B lines of the live run, 2026-10-13 ~01:37Z: canonical prefix advi/49financial/platinum/entities/clients/ c06_keys_modified_since=1592 of 7586 listed_total=18230; legacy prefix gold/client_timeseries/ c06_keys_modified_since=1592 of 7945 listed_total=11314",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/LEGG_E91_FIRST_FIRE_READ_20261013.json c06.log_line @c68cb7c25a: relationships_read=3793"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 2 item 4: the idempotence count covers C_06 keys on both destinations and prints the denominator per prefix.",
+  "world_is": "The denominators are as measured. The two destinations do not hold the same number of C_06-shaped keys, which the instrument prints and which the order does not explain. The second-fire expectation (0 keys modified) is not affected by the denominators."
+}
+```
+
+## MDPF_SECCLASS-D1-W89-S7 -- the order's proof path and this session's lane grant name different deliverables folders (~88 and ~89); the lane gate refused the ~88 instance
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W89-S7",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~89",
+  "surfaced_at": "2026-10-13T01:46:23Z",
+  "one_line": "The order's proof_of_spec block names the deliverables folder of 0.9.0_WK_MDPF_SECCLASS~88 (the prior session's slot). This session is ~89 and its deliverables grant is the ~89 folder. The owned-paths lane gate refused a commit of the ~88 instance (agent ~89 not permitted under ~88). The instance is written under ~89, the order's proof path line is updated to ~89, and the ~88 instance is left at its trunk bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e99.legg-read-instruments.md <proof_of_spec> block @c68cb7c25a: the path names deliverables/0.9.0_WK_MDPF_SECCLASS~88/",
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e99.legg-read-instruments.md BOUNDS block @c68cb7c25a: the grant is the paths block plus the worker's own deliverables folder",
+      "safe-commit owned-paths refusal, 2026-10-13 ~01:45Z: VIOLATION on deliverables/0.9.0_WK_MDPF_SECCLASS~88/...proof_of_spec.json, agent 0.9.0_WK_MDPF_SECCLASS~89 not in permitted_agents"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's proof_of_spec block says write the instance at the ~88 path; the BOUNDS block grants the worker's own deliverables folder and the owned-paths gate admits a worker only under its own serial folder.",
+  "world_is": "The two statements name different folders for the same instance. The gate follows the serial, so the ~88 path is not writable by this session. The updated proof path is the ~89 folder. The earlier instance under ~88 is not rewritten by this session."
+}
+```
