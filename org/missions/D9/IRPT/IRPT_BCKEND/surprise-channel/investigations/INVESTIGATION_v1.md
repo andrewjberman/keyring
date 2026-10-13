@@ -31862,3 +31862,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Filed by the build-only recensus. Not disarmed here; no hazard to served values is shown. Step 0 itself MATCHED (function and builder both read opal-data-bd, opal-data-cot, opal-data-inf under investor-reporting/directory), so no home-mismatch row was needed."
 }
 ```
+
+## IRPT_BCKEND-D2-S138 -- DISPOSITION after the round-181 drain: step 0 matches; the COO half of the refreshed directory-search pair is signed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S138",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T16:20:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISPOSITION after the round-181 drain: the irpt-directory-search candidate is rebuilt against its CURRENT live and the COO half of the refreshed pair is signed; step 0 MATCHES (no home moves); the gap to the canonical address is ONE row for its migration project.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer re-run in the merged tree: IB181-1 AC1, AC2, AC3 PASS (merge 23fb169341); round-close-check MAY-CLOSE; live CodeSha256 re-read by this seat at ~16:15Z: tvrsQ+w820jp1pxiUoYrhiKCZGVnViUTbBsDUbJEG3w= (last modified 2026-10-13T12:34:28Z), equal to the packet's and to the source map's artifact_sha256.",
+      "the packet NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-515.md (sha256 3c369b9086b3...) read in full; COO half NEVER_WIDEN_IB_pr_515_DIRECTORY_SEARCH_REFRESHED_COO_HALF.md signed at that sha256; the CTO half is unsigned; ledger irpt-status-rule-exercise-20261013 has a completion record (20261013T1521Z)."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "RULED: (1) step 0 reads MATCH: the function (IRPT_DIRECTORY_BUCKET_MAP: opal-data-bd, opal-data-cot, opal-data-inf under investor-reporting/directory, role grants on the same) and the 49F builder read the same directory homes; no home moves. (2) The gap to the canonical address() (opal-data-49financial holds no directory object) is recorded as THIS one row for its migration project (CTO RE 7037; rule 30, R19): it is not a rider on this release and nothing here depends on it. (3) W365-S1 (the exercise ledger's .open_deploys marker still reads OPEN on two worktree HEADs while its change_management ledger reads CLOSED, 15:44Z): the apply measures the artifact on every live worktree before it waits; a stale marker is a clean-up for the trees that hold it. (4) CARRIED, a consumer condition set by me in the COO half: the portal's pick path throws for an ACCOUNT-kind row that is not narrowed (header/selectionRequest.ts:18); the CTO half is asked to confirm that the portal build serving clients handles an ACCOUNT-kind search row before the apply, because this release makes the function return such rows for tail queries. STILL ARMED: W349-S1 (the latent served.py/enforce.py mismatch, now at served:876, unreachable here), W361-S1, W348-S2."
+}
+```
