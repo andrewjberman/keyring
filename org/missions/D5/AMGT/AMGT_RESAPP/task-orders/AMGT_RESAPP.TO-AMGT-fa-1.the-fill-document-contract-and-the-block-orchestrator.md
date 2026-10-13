@@ -116,6 +116,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** The head of the contract chain. fa-3, fa-4 and fa-5 import `contract` and `orchestrate` and are STAGED behind this order's merge; fa-6 is staged behind all of them. The check is the issuer's, prepared and dry-run at the base (exit 1, `ModuleNotFoundError`); its green arm is not provable before a reference exists, so a check defect found by the worker is a surprise row and the issuer re-cuts the check, never the worker's code to a wrong check. Order of work for the issuer after this order: merge through `safe-merge.sh`, run `ruff` and `py_compile` on the package once at the drain, then flip fa-3, fa-4, fa-5 to pending and cut their worktrees from the merged head.
 
 <status>pending</status>
+<status>complete -- 2026-10-13T23:0xZ by the issuer (2.0.0_SA_COO~R2): wk-AMGT_RESAPP-420 @7a6b0f2ddd merged @ebe4c8d287, proof instance VALID (rc=0). AC1 PASS (`AIFILL FA-1 ARMS: YES (31 of 31)`, re-run by the issuer in the worker's tree, same line), AC2 PASS (114 passed). Drain hygiene once: `ruff check lib/research/aifill` clean, `py_compile` clean. Changed files = the four the face names. Rows W420-S1 to S3 are OBSERVATIONS (S2: `fold_text` strips before it drops non-ASCII so a trailing space can remain; S3: `build_document` catches Exception, not BaseException); not graded here.</status>
 <round>104</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~420</slot>

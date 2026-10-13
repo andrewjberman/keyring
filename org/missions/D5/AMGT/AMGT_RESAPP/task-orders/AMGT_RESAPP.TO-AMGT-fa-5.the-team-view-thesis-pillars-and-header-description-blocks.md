@@ -131,6 +131,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** STAGED behind `AMGT-fa-1`'s merge. Three blocks in one order because they are one pattern (a gap test, an optional Opal source, a web path) at about 60 lines each; each stays its own module with its own arms. The `identity_description` block is the only one the page header draws, and the header draws it once (ruling W126-S1): the serve puts it in the `/thesis` bundle (cell fa-7) and the page passes it down (cell fa-8), so the overlay route gains no read.
 
 <status>staged</status>
+<status>pending -- GO 2026-10-13T23:0xZ by the issuer (2.0.0_SA_COO~R2): fa-1 merged @ebe4c8d287, so `contract.py` and `orchestrate.py` exist at the base this worktree is cut from.</status>
 <round>104</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~426</slot>
