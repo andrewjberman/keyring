@@ -105,7 +105,7 @@ if (-not (Test-Path $ajb)) {
 }
 
 # Loose serial sanity check -- {N.N.N}_{ROLE}_{Name}[~lane]
-if ($Serial -notmatch '^[0-9]+\.[0-9]+\.[0-9]+_[A-Za-z]+_[A-Za-z0-9]+(~[A-Za-z0-9]+)?$') {
+if ($Serial -notmatch '^[0-9]+\.[0-9]+\.[0-9]+_[A-Za-z]+_[A-Za-z0-9_]+(~[A-Za-z0-9]+)?$') {
     Write-Error "spawn-agent: '$Serial' does not look like an agent serial (e.g. 0.4.0_DS_ClientPlatform)"
     exit 1
 }

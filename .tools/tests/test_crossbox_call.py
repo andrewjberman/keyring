@@ -53,10 +53,18 @@ def raised(kind, fn, needle=""):
     return False, "no %s raised" % kind.__name__
 
 
+def publish(h, box, *paths):
+    """Commit, then push to the fixture's OWN local origin (a temporary bare repository the Harness made). `line` refuses a commit
+    that is not on origin, by design; the fixture makes its commits reachable from its own origin, so the checks below run the
+    tool's real refusals and not a dependency on the state of any real remote."""
+    h.commit(box, *paths)
+    h.push(box.root)
+
+
 def opened(h, subject="Order from the other box", call_id=None, to_serial=None, kind="ORDER"):
     lines = h.a.open(kind, h.b.device, to_serial or (cb.SEAT + cb.SEAT_LANE), "1.0.0_SA_CTO", subject, cb.BODY, call_id=call_id)
     cid = lines[0].split()[1]
-    h.commit(h.a, h.a.rel(cid))
+    publish(h, h.a, h.a.rel(cid))
     return cid, h.a.line(cid)[0]
 
 
@@ -152,7 +160,7 @@ def part2_refusals():
         mine = json.loads(h.a.path(cid).read_text(encoding="utf-8"))
         mine["ack"] = {"at": "2026-10-08T02:00:00Z", "by": "9.9.1_ZZ_Absent", "bus_message_id": None}
         h.a.path(cid).write_text(json.dumps(mine), encoding="utf-8")
-        h.commit(h.a, h.a.rel(cid))
+        publish(h, h.a, h.a.rel(cid))
         h.pull(h.b, h.a, ff=False)
         ok, why = raised(cb.Refused, lambda: h.b.merge(cid, "FETCH_HEAD"), "different ack.at")
         check("merge refuses two copies that hold different values for one field", ok, why)
@@ -176,7 +184,7 @@ def part2_cli_and_readers():
                       "--from-serial", "1.0.0_SA_CTO", "--subject", "Needs the other box", "--body", cb.BODY, "--call-id", "OC-CLI-1")
         cid = out.split()[1] if out.startswith("OPENED") else ""
         check("cli: open exits 0 and prints the provisional line before the commit", rc == 0 and "@UNCOMMITTED" in out, out[:120])
-        h.commit(h.a, h.a.rel(cid))
+        publish(h, h.a, h.a.rel(cid))
         rc, out = cli(h.a.root, h.a.device, "line", "--id", cid)
         check("cli: line exits 0 and prints the sendable line", rc == 0 and out.startswith("CROSSBOX " + cid), out)
         line = out

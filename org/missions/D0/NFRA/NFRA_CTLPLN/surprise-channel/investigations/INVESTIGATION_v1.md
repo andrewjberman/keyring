@@ -9069,3 +9069,161 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "The COO decides whether the literal second limb should stand. If it does, the change is one branch in Get-SeatSubtreePids (treat a readable serial-less seat-named process as Unclassified) plus test case (h) inverted. Nothing was killed; no live process was touched."
 }
 ```
+
+## NFRA_CTLPLN-W87-S1 -- the crossbox suite's named denominator (50) is the base count before the exceptions; with the origin fixture fixed the suite reads 71 of 71
+
+```json
+{
+  "id": "NFRA_CTLPLN-W87-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~87",
+  "surfaced_at": "2026-10-13T22:22:37Z",
+  "one_line": "TO-CT-ac-1 CTac1-AC1 names 'reads 50 of 50' from the base 45/50. After the origin fixture fix, test_crossbox_call.py reads CROSSBOX-TEST cases=71/71 ok=True. The base count stopped early: each refused commit raised inside its part, so the checks behind that raise never ran.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/tests/test_crossbox_call.py at the worktree base (before the cell's edit): CROSSBOX-TEST cases=45/50 ok=False; the five FAIL lines each read a 'not on origin yet' refusal raised from a part at its first commit (writer and watcher, refusal cases, cli)",
+      ".tools/tests/test_crossbox_call.py on branch wk-NFRA_CTLPLN-87 after the cell's edit (publish() pushes each fixture commit to the fixture's own origin): CROSSBOX-TEST cases=71/71 ok=True, rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-ac-1 CTac1-AC1: the crossbox suite reads 50 of 50 (base: cases=45/50 ok=False); expect ok=True.",
+  "world_is": "The suite passes 71 of 71. The denominator 50 was the count at the base, where refused commits stopped their parts early; it is not the size of the suite. The ok=True expectation holds; the named denominator does not.",
+  "notes": "Recorded as measured. The order's expected count is for the issuer to correct at the round-13 analysis; the worker did not edit the order."
+}
+```
+
+## NFRA_CTLPLN-W87-S2 -- two comments in routes.tf still name tests/simulate_policy.py, which this cell removed
+
+```json
+{
+  "id": "NFRA_CTLPLN-W87-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~87",
+  "surfaced_at": "2026-10-13T22:22:37Z",
+  "one_line": "The CTO ruling on item 7 retired tests/simulate_policy.py as a gate; no test reads it as a fixture, so this cell deleted it. infra/aws/terraform/nfra-ctlpln-identity/routes.tf lines 23 and 30 are comments that still say the file reads the route Deny document. routes.tf is outside this order's <paths>, so the comments were not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/routes.tf:23 and :30 (branch wk-NFRA_CTLPLN-87): comment lines naming tests/simulate_policy.py",
+      "Grep of infra/aws/terraform/nfra-ctlpln-identity (.py, .sh, .ps1, .tf, .json) after the cell: no code or gate reads simulate_policy; the deleted file is infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py (git history keeps it)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO ruling (item 7): simulate_policy.py is retired as a gate; keep the file only if a test still reads it as a fixture, and then say so in a comment at its top.",
+  "world_is": "No test reads the file as a fixture, so it was deleted. Two routes.tf comments still name it: a dangling reference in a comment, not a gate.",
+  "notes": "Owner: the seat that owns routes.tf (the CT-d and CT-ab-1 lane). Not edited by this worker."
+}
+```
+
+## NFRA_CTLPLN-W87-S3 -- the OPEN-CALL project-field arm reads a key that crossbox call files do not carry
+
+```json
+{
+  "id": "NFRA_CTLPLN-W87-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~87",
+  "surfaced_at": "2026-10-13T22:22:37Z",
+  "one_line": "The CTO-ruled arm (a) matches a call's structured project field. crossbox-call.py KEYS has no project key and check_call refuses an unknown key, so a crossbox call FILE cannot carry a project field. The arm is reachable from open_calls rows and from a hand-made file. Case 943 now puts its project code in a project field of a call file, which the writer would refuse.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/crossbox-call.py KEYS (line 60, branch wk-NFRA_CTLPLN-87): no project key; check_call raises Refused on an unknown key",
+      ".tools/tests/test_apply_who_and_crossbox.py case 943 (branch wk-NFRA_CTLPLN-87): call_doc(subject='the project needs a word', project='PA')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO ruling D2-S32 (2) and order CT-ac-1 item 4: the OPEN-CALL arm matches the call's structured project field against the deploy's project.",
+  "world_is": "The deploy checker reads the field from any JSON it is given; the writer never writes one. A project-field hit on a crossbox call file can come only from a hand-made file or from an open_calls row. The ruling's wording holds; the carrier for arm (a) on call files is absent.",
+  "notes": "Owners: 2.0.0_SA_COO~C with 1.0.0_SA_CTO (the ruling). Not decided by this worker."
+}
+```
+
+## NFRA_CTLPLN-W89-S1 -- CT-ac-3 cannot read unchanged_today=True under the ruled attribution
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~89",
+  "surfaced_at": "2026-10-13T22:25:56Z",
+  "id": "NFRA_CTLPLN-W89-S1",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "CT-ac-3 cannot read unchanged_today=True under the ruled attribution: the 49financial render without scoped rows still lacks the irpt-performance-adapter-role admission and its three DenyPerformanceAdapter statements, which 057cfa8a1c removed when the adapter became a scoped registry row. The residual is neither an unscoped principal admitted since d5516cb074^ nor the grants change, so the check prints it UNATTRIBUTED and unchanged_today stays False.",
+  "spec_asserts": "TO CT-ac-3 ruling (d) and criterion CTac3-AC1: unchanged_today reads True only when the only differences from the render at d5516cb074^ are the principals admitted unscoped since that commit and the grants change.",
+  "world_is": "Check run at worktree branch wk-NFRA_CTLPLN-89 (base 4d7f557af9 plus the CT-ac-3 edits): unchanged_today=False. The printed residual is on opal_data_49financial: admitted only before [stub-adapter-role]; statements only before (Sid) DenyForeignFirmPrincipals (its admitted list differs by that one ARN), DenyPerformanceAdapterAnyOtherAction, DenyPerformanceAdapterReadsOutsideTheHoldingsGold, DenyPerformanceAdapterListingOutsideTheHoldingsGold. The cottonwood and inflection policies are EQUAL after the two named attributions. The pinned fence file at 06c783b92b and at d5516cb074^ carries 3 DenyPerformanceAdapter statements and 5 adapter references; HEAD carries 0 and 0. Commit 057cfa8a1c (FB-g-22, ADVI act 3b) removes those statements and the aws_iam_role.irpt_performance_adapter data source from infra/aws/terraform/shared-infra/s3-49financial.tf and adds 94 lines to infra/logic/registry/exemptions.json, making the adapter a SCOPED row on opal-data-49financial. The stripped registry removes every scoped row, so the stripped render has neither the adapter admission nor its denies.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 06c783b92b:infra/aws/terraform/shared-infra/s3-49financial.tf (3 DenyPerformanceAdapter lines, 5 adapter references)",
+      "git show 057cfa8a1c -- infra/aws/terraform/shared-infra/s3-49financial.tf (3 removed DenyPerformanceAdapter lines, removed data source and adapter ARN references)",
+      "worktree run output .scratch/run4.txt (UNATTRIBUTED residual line; opal_data_49financial DIFFERENT line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Ruling owed by the issuer, not decided by this worker: (1) accept the act 3b migration of the adapter block into a scoped row as a third attributed cause with its own attribution, or (2) re-baseline the before roots to the adapter-migrated state, or (3) define the stripped state so the adapter row is compared against the pre block. The check was not widened to absorb the residual. Simulator arms answered 31 of 31 (sim_ok=31/31), refusals 5 of 5, scoped renders 32 of 32 under the rulings."
+}
+```
+
+## NFRA_CTLPLN-W89-S2 -- The check's premises are stale for the current registry
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~89",
+  "surfaced_at": "2026-10-13T22:25:56Z",
+  "id": "NFRA_CTLPLN-W89-S2",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The check's premises are stale for the current registry: it states the registry holds no scoped row (AMENDMENT 7), a fixed three Deny statements per row, and a selector substitution that applies to every before root. The registry holds 10 real scoped rows and a grants object, the Deny count per row follows from its actions, and HEAD's selector reads restricted_prefix_hosts, which the pre-rows registry does not carry.",
+  "spec_asserts": "ADVI_FIRMBKTS-D1-S43 notes and ruling (b): substitute the pinned CRM-scope selector with HEAD's in the scratch copy; the check docstring AMENDMENT 7 (the registry holds no scoped row now).",
+  "world_is": "git show d5516cb074^:infra/logic/registry/scopes.json carries no restricted_prefix_hosts field: its firm rows are cottonwood (masters z09) and inflection (managed by s3-lgic-firm-buckets.tf, no masters). With HEAD's selector the before_pre root selects zero rows and the console fails, so the substitution is applied to the two before roots over today's registry (before_strip, before_today), and before_pre keeps the pinned selector, which resolves to cottonwood there. Expected Deny statements are computed per row from its actions (AnyOtherAction always; ObjectsOutsidePrefix with an object action; ListingOutsidePrefix with ListBucket): 32 for the with-state registry, 23 for today's. Refusal arms 3 and 4 retired: c64a667818 (FB-g-21) made a prefix member not ending in / an exact object key, and 8114bac9cf (FB-g-23) admitted s3:PutObject to the closed scoped set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show d5516cb074^:infra/logic/registry/scopes.json (no restricted_prefix_hosts field)",
+      "git show c64a667818 and git show 8114bac9cf (commit messages)",
+      "worktree run outputs .scratch/run2.txt and .scratch/run4.txt (selector line; expected Deny count line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The docstring of check_fence_scoped_rows.py is updated to the rulings in the same commit; its AMENDMENT 7 paragraph is not rewritten and is stale."
+}
+```
+
+## NFRA_CTLPLN-W89-S3 -- The lgic firm-bucket fence (s3-lgic-firm-buckets.tf) never appends module.opal_name.fence_
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~89",
+  "surfaced_at": "2026-10-13T22:25:56Z",
+  "id": "NFRA_CTLPLN-W89-S3",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The lgic firm-bucket fence (s3-lgic-firm-buckets.tf) never appends module.opal_name.fence_scoped_allow_statements: a scoped row on an lgic bucket renders its Deny with no Allow on that bucket. Measured on the with-state render: inflection carries 0 of the 4 Allow statements the module renders for it, and cottonwood 0 of 2.",
+  "spec_asserts": "infra/aws/terraform/modules/opal_name/main.tf (the fence_scoped_allow_statements comment): each scoped row renders an Allow from the same row as its Deny; infra/aws/terraform/shared-infra/s3-49financial.tf (ADVI act 3b, round 4) appends the module's Allow statements beside the Denies.",
+  "world_is": "s3-lgic-firm-buckets.tf references module.opal_name.fence_scoped_statements (line 172) and never fence_scoped_allow_statements; the only reference to the Allow output in shared-infra is s3-49financial.tf line 141. The real scoped row on opal-data-inflection (irpt-performance-adapter-role, GetObject and ListBucket on irpt/inflection/gold/holdings_performance_daily/, commit 61cc536c29) therefore renders its Deny on the inflection policy without its Allow. The 49financial policy carries all 15 of its module Allow statements.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "text search of infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf for fence_scoped_allow_statements (no match) and of s3-49financial.tf (line 141 match)",
+      "worktree run output .scratch/run4.txt (Allow statements rendered versus present at the tail, per bucket)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Observed by the check's tail arm and not judged for significance by this worker. The check reports it and does not fail on it, since no ruling asked for that arm."
+}
+```

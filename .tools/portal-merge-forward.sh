@@ -64,7 +64,7 @@ pmf_refuse() { pmf_finish REFUSED "$1"; }
 
 pmf_run() {
   local arg_branch="" do_push=0 tok out="" rc=0 nline=0 line="" F_BRANCH=""
-  local STATE="" VALID="" ROW="" BY="" HEAD_SHA="" paths="" npath=0 nonfirst=0 p
+  local STATE="" VALID="" ROW="" BY="" HEAD_SHA="" paths="" npath=0 nonfirst=0 p bases="" mb="" one=""
   local stamp slug APPR="" MERGESHA="" P1="" P2="" P3="" MSGTXT="" pout="" prc=0 _m=""
   local do_fetch=1 local_only=0 lsr_rc=0
   while [ $# -gt 0 ]; do
@@ -150,7 +150,18 @@ pmf_run() {
   # Step 2 (decision): fail closed, in the order the TO fixes.
   case "$STATE" in
     ABSENT)
-      paths="$(git -C "$REPO" diff --name-only "$DEVREF...$BREF")" || pmf_refuse no-approval-row
+      # The changed paths are the union over EVERY merge base of DEV and the branch, so the set does not depend on
+      # which base git would pick. A three-dot diff makes git choose one base and print "multiple merge bases" when
+      # the history has several (a criss-cross); a product file changed relative to any base must still be seen.
+      # With exactly one base the union is the three-dot diff.
+      bases="$(git -C "$REPO" merge-base --all "$DEVREF" "$BREF")" || pmf_refuse no-approval-row
+      [ -n "$bases" ] || pmf_refuse no-approval-row
+      paths=""
+      while IFS= read -r mb; do
+        [ -n "$mb" ] || continue
+        one="$(git -C "$REPO" diff --name-only "$mb" "$BREF")" || pmf_refuse no-approval-row
+        paths="$paths$one"$'\n'
+      done <<< "$bases"
       while IFS= read -r p; do
         [ -n "$p" ] || continue
         npath=$((npath + 1))
@@ -227,6 +238,7 @@ pmf_selftest_cleanup() {
 
 pmf_selftest() {
   local ORIG SEED CLONE OTHER FIX N=0 K=0 RC=0 LAST="" dev0="" dev1="" devnew="" devnew2=""
+  local CRISS="" devcriss="" CX=""
   local T_OK="" T_INV="" T_STALE="" T_UNR="" T_ABSP="" T_ABST="" T_CONF="" T_FF2="" SHA_OLD="" wtb="" wta=""
   local MF="" MS="" MFT="" tok
 
@@ -526,6 +538,61 @@ FIXEOF
     return 1
   }
   pmf_check "15 a broken remote makes the DEV fetch refuse fetch-failed" pmf_broken_15
+
+  # 16. a criss-cross history: DEV and the branch have TWO merge bases (two branches that merge each other, then a
+  # branch off one of the merges). The changed-file read unions the diff over both bases: no multiple-merge-bases
+  # warning, and a product file changed after the bases is seen, so the ABSENT row is refused no-approval-row.
+  CRISS="$PMF_TMP/criss"
+  git init -q "$CRISS"
+  git -C "$CRISS" symbolic-ref HEAD refs/heads/cc-root
+  printf 'root\n' > "$CRISS/root.txt"
+  git -C "$CRISS" add -A
+  git -C "$CRISS" commit -q -m "criss root"
+  git -C "$CRISS" checkout -q -b cc-x
+  mkdir -p "$CRISS/src/__tests__"
+  printf 'x\n' > "$CRISS/src/__tests__/x.test.ts"
+  git -C "$CRISS" add -A
+  git -C "$CRISS" commit -q -m "criss x side"
+  git -C "$CRISS" checkout -q cc-root
+  git -C "$CRISS" checkout -q -b cc-y
+  mkdir -p "$CRISS/src/__tests__"
+  printf 'y\n' > "$CRISS/src/__tests__/y.test.ts"
+  git -C "$CRISS" add -A
+  git -C "$CRISS" commit -q -m "criss y side"
+  CX="$(git -C "$CRISS" rev-parse --verify cc-x)"
+  git -C "$CRISS" checkout -q cc-x
+  git -C "$CRISS" merge -q --no-edit cc-y
+  git -C "$CRISS" checkout -q cc-y
+  git -C "$CRISS" merge -q --no-edit "$CX"
+  git -C "$CRISS" checkout -q cc-x
+  git -C "$CRISS" checkout -q -b cc-branch
+  mkdir -p "$CRISS/product"
+  printf 'product\n' > "$CRISS/product/p.txt"
+  git -C "$CRISS" add -A
+  git -C "$CRISS" commit -q -m "criss branch product change"
+  git -C "$CRISS" update-ref refs/remotes/origin/DEV "$(git -C "$CRISS" rev-parse --verify cc-y)"
+  devcriss="$(git -C "$CRISS" rev-parse --verify refs/remotes/origin/DEV)"
+  pmf_criss_16a() { # precondition: DEV and the branch have exactly two merge bases
+    [ "$(git -C "$CRISS" merge-base --all refs/remotes/origin/DEV refs/heads/cc-branch | grep -c '^[0-9a-f]')" -eq 2 ]
+  }
+  pmf_setfix "$(pmf_apv cc-branch ABSENT - - - - - -)"
+  PMF_RUNTMP="$PMF_TMP/runtmp" OPAL_APPROVAL_STATUS_CMD="bash $FIX" \
+    bash "$PMF_SELF" cc-branch --repo "$CRISS" --no-fetch >"$PMF_TMP/out-16.txt" 2>"$PMF_TMP/err-16.txt"
+  RC=$?
+  LAST="$(tail -n 1 "$PMF_TMP/out-16.txt")"
+  pmf_criss_16b() { # no multiple-merge-bases text on stderr
+    ! grep -q "multiple merge bases" "$PMF_TMP/err-16.txt"
+  }
+  pmf_criss_16c() { # the product file after the bases is seen: refused no-approval-row, DEV unchanged
+    [ "$RC" -eq 1 ] || return 1
+    case "$LAST" in
+      *" result=REFUSED reason=no-approval-row dev_before=$devcriss dev_after=$devcriss pushed=no merge=-") return 0 ;;
+    esac
+    return 1
+  }
+  pmf_check "16a precondition: the criss-cross branch has exactly two merge bases" pmf_criss_16a
+  pmf_check "16b the criss-cross run prints no multiple-merge-bases warning" pmf_criss_16b
+  pmf_check "16c a product file after the bases is seen: ABSENT refuses no-approval-row, DEV unchanged" pmf_criss_16c
 
   local okflag=False
   if [ "$K" -eq "$N" ]; then okflag=True; fi
