@@ -40,7 +40,12 @@ the function's own log and the returned bullets. No served object is written.
    invocation's `[SLOT_DROPPED]` lines (CloudWatch `filter-log-events`, the invocation's request id). Count drops per exception class and keep up to
    five distinct `msg=` texts verbatim (each at most 200 characters; they carry no advisor content by construction).
 8. **List again**: identical (0 objects written), else ROLL BACK to the prior artifact the same turn and report.
-9. Close the entry. Do NOT invoke without `dry_run`.
+9. **The sample for reading (the CTO reads it and it goes to Andrew):** write `DRYRUN10_ARTIFACTS.json` (the returned artifacts, per advisor id) and
+   `DRYRUN10_FIGURES.json`: for EACH returned bullet, the slot, its `headline` and `detail` text verbatim, and the FIGURES it rests on, read
+   from the objects its `evidence_keys` name in the canonical home (for a position slot: the ticker, the percentage or amount fields the
+   text cites; for a leaderboard or NNA slot: the ranks or flow figures). One row per bullet, so a reader can lay text beside figure. If
+   an artifact carries a client name, record the count and withhold that text. Do not judge the text: the CTO does.
+10. Close the entry. Do NOT invoke without `dry_run`.
 
 ### 1b. The record: `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/SLOT_DROP_CAUSE.json`
 
@@ -91,6 +96,8 @@ halves (the COO addendum authored by the issuer now; the CTO's addendum asked); 
 The CTO's ADDENDUM 14 shape: "deploy under FB-j-6's shape (0/1/0, platinum_mode=canonical, listing unchanged), then one dry run on three or
 more pre-screened advisors". A cause of class CONFIG is fixed in a later cell under its own pair and must prove non-empty bullets; PRODUCT goes
 to a CRO brief. The pre-screened ids are `SLOT_PRESCREEN.json`'s `targeted_ids` (FB1's own record of FB-j-8).
+
+**AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-13 ~10:2xZ):** the pair addendum is signed on both sides: the COO addendum 1 at 78a9c61182 (`ledger/NEVER_WIDEN_ROUND7_EXEC_SUMMARY_DRYRUN_DEPLOY_COO_HALF_ADDENDUM_1.md`) and the CTO's ADDENDUM 3 of his FB-j-6 half at f6ded5f20a ("same shape as FB-j-6, carrying FB-j-9's merge; Branch A: non-empty bullets from 10 pre-screened advisors; Branch B: empty again, but the drop log names the cause, and the deploy stands"). Step 9 added: the bullet texts and the figures they rest on go to the CTO, who reads them, and to Andrew, BEFORE `FB-j-7` and `FB-j-4` are cut or un-parked. Still parked on `FB-j-9` merged and PASS only.
 
 <status>parked</status>
 <round>7</round>
