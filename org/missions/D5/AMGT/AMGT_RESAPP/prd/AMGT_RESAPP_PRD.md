@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "dell1",
-  "prd_version": "v0.43",
+  "prd_version": "v0.44",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -1112,13 +1112,16 @@ disputable, by rule, and carry no technical language.*
                     pack prefixes reported beside it, every difference named):
                     (a) a per-name census read from the PROD-served payload:
                     every section of every name shows content OR a stated
-                    reason, and 0 BROKEN VALUES. A broken value is any hit of
-                    the ui-walk classes `unconnected-field`, `raw-code` and
+                    reason, and 0 BROKEN VALUES. A broken value is a CONFIRMED
+                    hit (a screenshot read confirms it) of the ui-walk classes
+                    `unconnected-field`, `raw-code` and
                     `format:money`, or of the minor-unit census (qq-1's
                     instrument); "raw code" is as FWD-5 uses the term;
-                    (b) DRIVEN ON DEMAND: the first OVERLAY request on a newly
-                    published version of the API Lambda (cold by
-                    construction), driven alone after the day's 12:30Z
+                    (b) DRIVEN ON DEMAND: the first OVERLAY request on a new
+                    package of the API Lambda deployed by its Terraform apply
+                    (the function runs $LATEST, with no published versions; a
+                    new package is cold by construction), driven alone after
+                    the day's 12:30Z
                     snapshot write, completes in under 3 s of HANDLER time
                     (the REPORT Duration, which the per-phase log lines sum
                     to), with Init printed beside it and the feed phase's
@@ -1128,11 +1131,13 @@ disputable, by rule, and carry no technical language.*
                     (c) a per-security pull census: for each name, which pulls
                     it makes (corpus, filings, management, news, price,
                     scanner) and the time each takes;
-                    (d) a browser walk of 10 names, drawn by sha256 of the
-                    walk date over the 93, on a LOCAL build of the PROD
-                    release commit (`bun run dev --port 5174`) against the
-                    live services, screenshots read (the estate's walker
-                    refuses a non-localhost base)
+                    (d) a browser walk of 10 names on a LOCAL build of the
+                    PROD release commit (`bun run dev:live --port 5174`,
+                    which reaches the live services whatever a box's
+                    `.env.local` says), screenshots read (the estate's walker
+                    refuses a non-localhost base). The draw: the 93 keys
+                    sorted by sha256(walk date + ' ' + key), the first ten,
+                    the draw printed with the walk
          ACCEPT     An analyst opens any of the 93 and the page is full, clean
                     and fast.
          SOURCE     Andrew voice memo 2026-10-13 (AMGT); cluster direction
@@ -1153,8 +1158,10 @@ disputable, by rule, and carry no technical language.*
                     (4) Thesis: "The research team's thesis pillars"
                     (`ThesisTab.tsx` PILLARS_HEADING) where the pack states
                     none;
-                    (5) the header company description (`HeaderBrief.tsx`, the
-                    description empty-state) where none is held.
+                    (5) the identity header's company description line
+                    (`SecurityOverlay.tsx` `identityDescriptionLine`,
+                    `data-identity-description`, drawn once per ruling
+                    W126-S1), which today prints nothing where none is held.
                     A web-search fill is a model call on the EXISTING Anthropic
                     path with its server-side web search tool, never OpenAI,
                     marked machine-written (FWD-9's marking). A census of the
@@ -2968,5 +2975,17 @@ above (one carrier).
 4. (d)'s sample (10 names, sha256-drawn) and its build (a local build of the PROD commit) are stated.
 5. FWD-41's five blocks are listed, pinned to PROD 15c9754975.
 The BAR DISTRIBUTION line is restated. No other outcome or contract changed.
+
+-- 1.0.0_SA_CTO~DELL1
+
+**v0.44 (2026-10-13 ~18:4xZ), on `3.0.0_SA_CVO`'s second review** (the same review file, ADDENDUM 1 @eac3ca88a0; v0.43 REFUSED on one ground):
+- FWD-41 block (5) is re-pinned to the identity header's description line (`SecurityOverlay.tsx` `identityDescriptionLine`), per ruling W126-S1. `HeaderBrief.tsx` draws no
+  description.
+- Notes A to D are taken:
+  - A: the 10-name draw is a stated function;
+  - B: `bun run dev:live`;
+  - C: a broken value is a CONFIRMED hit;
+  - D: the cold arm is a new package by its Terraform apply (the function runs $LATEST).
+No other outcome or contract changed.
 
 -- 1.0.0_SA_CTO~DELL1
