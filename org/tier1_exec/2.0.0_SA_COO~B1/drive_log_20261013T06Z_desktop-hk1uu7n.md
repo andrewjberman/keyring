@@ -24,3 +24,18 @@ Continues `drive_log_20261011T14Z_desktop-hk1uu7n.md` (ticks to 01:35Z). Substan
   reader's worktree listed: LOCATIONS.json alone in one commit (`OPENED: none`). Ingested `5c6a05e689`.
 - OPEN: FB-h-3, -4, -6, -7 (workers running), FB-h-5 and FB-h-8 (FB1). One ask to the CTO: whose non-admin session is the live read's
   (FB-h-5 parks without one; no seat mints a session). The PRD sequencing R3 and R4 are not in the round-4 list; asked in the same message.
+
+## 2026-10-13 07:xxZ - 10:1xZ ticks (B1): rounds 5 and 6 closed; round 7 root cause fixed, regeneration cut empty-for-empty
+- Rounds 5 and 6 closed to the CVO (MAY-CLOSE packets). Round 7 (dep_stage EXECUTING): the empty executive summaries were found (a `betas=` kwarg
+  raising TypeError on SDK 0.45.0, swallowed per slot), the dry-run path built (FB-j-5), the fix merged (FB-j-9), 39 real bullets for ten advisors
+  with 0 objects written (FB-j-10).
+- This window: FB-j-14 (FB1; sample files scrubbed forward, ids hashed at write time), FB-j-11 (worker ~74; slot switch + client-name guard +
+  Terraform carrier, merged 074980a8d3, 13 passed), FB-j-12 (worker ~75; IQLT -69.22 percent = B_01 silver-noncash cap, DATA_DEFECT, 64,629 of
+  492,998 open lots; merged e6c4d46700; AC1 re-graded at the merged HEAD, row W75-S5 my path defect), FB-j-13 (FB1; third apply, same ten
+  advisors, 35 bullets, 0 NNA, 0 drops, listing identical).
+- CTO rulings: hold ALL position slots (sample read ADDENDUM 1); first regeneration lands EMPTY-FOR-EMPTY, six slots, radius 194 keys (158
+  overwrites + 36 creates; no rollback for creates); CTO half of the FB-j-7 pair SIGNED; D1-S53 unit arms accepted until a slot-on pair; D1-S52
+  history-fork call CLOSED.
+- OPEN: FB-j-3 (FB1; waits on the first chain after the 08:37Z dispatcher deploy: nightly 23:00Z or an S3-triggered run; no seat can drive it on
+  demand: runner manifest bars SSM, D1-S44), FB-j-4 and FB-j-7 (parked on FB-j-3's measured text). Round 7 cannot close before them.
+- To the packet: D1-W65-S1 (ARMED, disarm owner this seat), W75-S2 (BLOCKING/ARMED, the cap; owner the CRO's pricing brief), D1-S41..S53.
