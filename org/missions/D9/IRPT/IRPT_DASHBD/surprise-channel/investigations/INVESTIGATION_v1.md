@@ -7679,3 +7679,139 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+## IRPT_DASHBD-D2-W141-S1 -- No store the builder may read groups the accounts of one 49 Financial client: the client summary keys accounts by issued id and the gold account tables by custodian id, and no named store maps one to the other
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W141-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~141",
+  "surfaced_at": "2026-10-13T20:52:00Z",
+  "one_line": "No gold or platinum store the order names groups several accounts of one 49 Financial client: the platinum client summary keys its accounts by issued id and the gold account tables by custodian id, and no named store maps one to the other, so no household can be built and DB94-2-AC1 cannot pass.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-175 step 2: choose ONE household of two or more accounts, assembled through whatever the gold and platinum stores of firm 49 Financial really carry (the directory or dimension tables the sibling contracts document); step 2 closes: if NO way to group several accounts into one household exists with the stores you may read, file a surprise row naming exactly what is missing and stop.",
+  "world_is": "Read-only, measured at commit base 0c27245bc9 on 2026-10-13 (LIST and GET only). (a) s3://opal-data-49financial/irpt/49financial/platinum/reporting/client=<id>/summary.json carries accounts[].account_id in the issued form (acc_ plus hex) and a series_object that names only the file series.json.gz, with no path to a custodian prefix. (b) platinum/reporting/account=<custodian>/ carries manifest.json (account_id in the custodian form, no client or issued id, no household key) and series.json.gz (no id of any kind). (c) gold account_activity_daily, account_return_daily, account_class_daily and the two account_lot tables key on account_id in the custodian form; their column lists in the sibling contracts carry no household, client or issued-id column. (d) The gold prefix holds dim_return_method only as a dimension, and no gold or platinum prefix of irpt/49financial holds an issued-id to custodian map. (e) The investor-reporting directory (investor-reporting/directory/ per infra/aws/lambda/investor-reporting/directory/refresh.py) is the store that holds the issued identity set; no IRPT sibling contract gives its address, the TO names no such store, and it is under no prefix of opal-data-49financial (top level: _campaign, _code, advi, gold, irpt, mdpf), so it was not read. Consequence: zero of the four window identity checks are possible; the household sample record was not written; the builder was not run to completion.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_CLIENT_SUMMARY_CONTRACT.json at base 0c27245bc9: summary.accounts account_id is the issued opaque account id; address platinum/reporting/client=<client_id>/summary.json",
+      "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json at base 0c27245bc9: columns list has account_id in the custodian form and no household or issued-id column",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at base 0c27245bc9: members pvs.* and act.* source the activity contract by account_id; cover.household_name ABSENT (no sibling holds the household's directory identity)",
+      "infra/aws/lambda/investor-reporting/directory/refresh.py at base 0c27245bc9: read grant is <bucket>/investor-reporting/directory/* (the directory store, not a gold or platinum prefix)",
+      "S3 LIST of opal-data-49financial/irpt/49financial/platinum/reporting/ and of .../gold/ and of the bucket top level, run by 0.9.0_WK_IRPT_DASHBD~141 on 2026-10-13; the probed client summary and account manifest key shapes were read in the private folder only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W141-S2 -- The one custodian-to-household crosswalk found is ADVI_BILLING's gold table, which no IRPT sibling names and this order does not grant; it was not read
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W141-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~141",
+  "surfaced_at": "2026-10-13T20:52:30Z",
+  "one_line": "org/standards/ADVI_BILLING_HOUSEHOLD_CROSSWALK_CONTRACT.json documents a gold household_crosswalk keyed by custodian account number that could group the accounts, but it sits in the ADVI_BILLING scope (advi/49financial/gold) which the IRPT sibling contracts do not name and the order does not grant; the issuer decides whether it is readable.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-175 step 2 names the gold and platinum stores of firm 49 Financial named in the sibling contracts' addresses, and the directory or dimension tables the sibling contracts document; a route the order did not name is a defect to stop on, not a route to take.",
+  "world_is": "org/standards/ADVI_BILLING_HOUSEHOLD_CROSSWALK_CONTRACT.json (read at base 0c27245bc9) documents lib/opal_naming address advi/49financial/gold/household_crosswalk/date=<run date>/household_crosswalk.parquet, one row per Schwab custodian account (schwab_account_number, 10 digits, the same form as the IRPT gold account_id), with bd_relationship_id and opal_relationship_id (rel_ plus hex, from gold dim_relationship) as household-level keys. The advi/ prefix exists in opal-data-49financial. It was not listed beyond the bucket top level and was not read; this row names it so the issuer can grant or refuse a read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/ADVI_BILLING_HOUSEHOLD_CROSSWALK_CONTRACT.json at base 0c27245bc9: address, grain, columns schwab_account_number, bd_relationship_id, opal_relationship_id",
+      "S3 LIST of the bucket top level opal-data-49financial by 0.9.0_WK_IRPT_DASHBD~141 on 2026-10-13 shows the advi/ prefix"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W144-S1 -- the export status read answers UNEXPECTED: the portal chain reads it correctly, and the failing call is the export-receipt read refused by the producer's boundary envelope
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W144-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~144",
+  "surfaced_at": "2026-10-13T20:44:34Z",
+  "one_line": "Andrew's smoke (DB-b-178, S20): the export is created and then the status read answers 'The export's status could not be read (UNEXPECTED)'. The portal chain reads that answer correctly; the failing call is the export-receipt read, which the producer refuses in a boundary envelope (ok false, status public_reason_code UNEXPECTED). Portal side false, not fixed here: the route and the producer answer are outside this grant.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "An export a person starts completes and downloads, or fails with a stated cause; the export modal fits its content without side scrolling (TO-DB-b-178 worker face, export chain).",
+  "world_is": "Chain read at portal HEAD f1893eb40d, hop by hop: ExportButton.tsx:231-290 handleSubmit -> submitUnderGate -> submit-export ack; a QUEUED/RUNNING ack with no receipt starts pollExportReceipt (ExportButton.tsx:263) -> submit.ts:312 api.getExportReceipt -> investor-reporting.ts:1456-1463 getExportReceipt (route GET export-receipt, route table investor-reporting.ts:244) -> send() investor-reporting.ts:1053-1125. The refusal branch investor-reporting.ts:1091-1092 throws IrRequestError carrying publicReasonCode when parseIrEnvelope reports refused. envelope.ts:338 sets boundaryRefusal from body.ok === false and envelope.ts:359 sets refused. UNEXPECTED is not in IR_REFUSAL_REASON_CODES (envelope.ts:161), so only a boundary refusal reaches that throw with UNEXPECTED. The poll rejection reaches ExportButton.tsx:276, which names it through submit.ts:377-382 exportReceiptFailureWords: 'The export's status could not be read (UNEXPECTED). It may still finish'. No live request was made and the producer body is not in this checkout, so the exact producer body is INFERRED from the branch that prints the words. The modal width (42 rem before, 75 rem after) is fixed in the candidate and is not part of this row.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/export/ExportButton.tsx:263-278 (poll call and rejection named) @f1893eb40d",
+      "portal/src/pages/InvestorReporting/export/submit.ts:377-382 (exportReceiptFailureWords) @f1893eb40d",
+      "portal/src/api/endpoints/investor-reporting.ts:1091-1092 (refused envelope throws IrRequestError with publicReasonCode) @f1893eb40d",
+      "portal/src/pages/InvestorReporting/contracts/envelope.ts:161,338,359 (refusal codes, boundary refusal, refused flag) @f1893eb40d",
+      "1.0.0_SA_CTO~DELL2 msg 7139 (Andrew's smoke, relayed); no live request made by this seat"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W144-S2 -- FDRXX is classed Fixed Income by the producer's canonical classifier: the class is assigned outside the portal, at etf_classifier.py:144
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W144-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~144",
+  "surfaced_at": "2026-10-13T20:44:34Z",
+  "one_line": "Andrew's smoke (DB-b-178, S21): FDRXX shows the class Fixed Income on the report. The portal assigns no class by symbol; it reads the served asset_class. The class is assigned in the producer: data/black_diamond/scripts/gold/lib/etf_classifier.py:144 returns the canonical table row's asset_class verbatim for the ticker. Left unchanged here (outside the DEV-only candidate's grant).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A money-market fund such as FDRXX carries the class CASH on the Opal report (TO-DB-b-178 worker face, item 3).",
+  "world_is": "assignment_site: data/black_diamond/scripts/gold/lib/etf_classifier.py line 144 (classify: return item.get('asset_class') or self.UNKNOWN), with the same read at line 229 (classify_with_identity, identity_hop ticker). The ticker override data/black_diamond/scripts/gold/lib/ticker_overrides.py:305 maps the custodian name 'FIDELITY PHILLIPS STREET TRUST GOVT CASH RESV' to FDRXX (a name-to-ticker map, not a class). The portal side (portal/src/pages/InvestorReporting/tabs/holdings/assetClass.ts assetClassOf, lines 84-86) reads the served asset_class and has no money-market rule; CASH_ROW_SYMBOLS is CASH and FCASH only (SecurityList.tsx:128). The canonical table row for FDRXX is not in this checkout and was not read (no AWS call); Andrew's smoke reports it serves fixed_income. The remedy belongs to the canonical classifier table or the producer, not this candidate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/lib/etf_classifier.py:123-144 and 207-229 @f1893eb40d",
+      "data/black_diamond/scripts/gold/lib/ticker_overrides.py:305 @f1893eb40d",
+      "portal/src/pages/InvestorReporting/tabs/holdings/assetClass.ts:84-86 @f1893eb40d",
+      "portal/src/pages/InvestorReporting/tabs/holdings/SecurityList.tsx:128 @f1893eb40d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W144-S3 -- the surprise-row gate refused one commit on an index read ERROR for a tracked adjudication file, and the same commit landed unchanged on retry
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W144-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~144",
+  "surfaced_at": "2026-10-13T21:00:22Z",
+  "one_line": "The first safe-commit of TO-DB-b-178's deliverable was refused by the surprise-row gate: 'org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/adjudications/ADJUDICATION_v8.md unreadable in the index (ERROR)'. The file is tracked (blob 734c676d52), no index.lock existed, and the gate's own probe and git show both succeeded when run by hand. The same commit, unchanged and with no override, landed on the retry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The row gate fails closed on a genuine read error and admits a clean commit whose read succeeds (surprise-row-gate.py _blob_read: ERROR only when git cannot answer).",
+  "world_is": "The refusal printed the gate's ERROR state for ADJUDICATION_v8.md; .tools/surprise-row-gate.py _blob_read runs git ls-files -s then git show :path with a 60 second timeout. Measured after the refusal: git ls-files -s and git show :path both returned rc 0 for the file, and no index.lock was present in the worktree git dir. The retry of the identical staging set (the deliverables folder, the investigation file and the order) committed as a8d44d9210. The cause of the one transient ERROR was not identified; no override was used.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "/c/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~144/commit_ws.txt (first refusal, lines 29-31)",
+      "/c/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~144/commit_ws2.txt (retry, landed as a8d44d9210)",
+      ".tools/surprise-row-gate.py:1991-2036 (_blob_read) @a8d44d9210 parent",
+      "git ls-files -s on org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/adjudications/ADJUDICATION_v8.md: blob 734c676d52"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
