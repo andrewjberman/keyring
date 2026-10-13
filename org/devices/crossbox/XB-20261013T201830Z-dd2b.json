@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261013T201830Z-dd2b",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "laptop",
+ "from_serial": "2.0.0_SA_COO~B1",
+ "to_serial": "0.7.0_AE_CloudOps~FBL",
+ "subject": "ADVI_FIRMBKTS FB-j-15: WriteOnly selector on bd, inf, cot to the org trail (DEC-12 YES)",
+ "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-j-15.trail-write-selector.md",
+ "opened_at": "2026-10-13T20:18:30Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-13T20:21:15Z",
+  "bus_message_id": "bcbfe470-4f83-49d1-bce9-506d3b070f4c"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

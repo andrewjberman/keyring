@@ -550,3 +550,12 @@ account's held dates (the active-account set dell2 publishes) are later cells; t
 refusal is DQ-t-52 (in flight). The DEMQUE half of the SECCLASS sync (`C-DEMQUE-SECCLASS-SYNC`, PRD addendum): one cell, `DQ-t-53` (`secclass_sync.py --prove`, read only: one real
 security's key printed equal on the request row, the unresolved entry and the `etf-classifications` row, plus the negative arm; `--coverage` of landed fund names; `0.9.0_WK_MDPF_DEMQUE~45`,
 worker, LOCAL, workstream SECCLASSSYNC). Measured by the issuer: the table's one hash key is `ticker`, so the key a human reads across the three places is the symbol string.
+
+**Round 9 close of DQ-t-52 and DQ-t-53, and amendment 18 (issuer, 2026-10-13 ~20:2xZ):** DQ-t-52 merged @0294f140f0 (the priority gate: P3 never drawn, P2 waits, P1 only, on CLIENT requests; non-client requests are not gated;
+fail closed; index P1 246, P2 72, P3 8; folder 187 passed). DQ-t-53 merged @2498d1dabc (key AES equal across the request row, the unresolved list and the `etf-classifications` row; 108 of 131 landed fund names
+classified). The B1 fund-type request (227 cells, FUND_TYP) is filed and priced @6a54a440d6. Andrew-direct ~20:0xZ and ~20:1xZ (CTO msgs 5130, 5134, 5139): the $1.00 check is YES; NO quota limit was hit on
+10-13 (Bloomberg was not logged in and there was no BBGTerminal fallback), so non-trading-day history pulls expand cell for cell with the unused trading-day allowance, the site Z drawer reading the `bbg_budget`
+ledger at run time and the dell1 quote staying at zero carried over; surface E has a turnaround CAP (10 percent of the day's history allowance, refused at intake naming the cap, never split); D1 to D5 approved
+(TR remainder 1,004 cells, ABNB 989, ICT 1, scanner slice 1 50, the full scanner list 1,038 only if slice 1 reads non-USD). Two cells: `DQ-t-54` (the carry-over, `standing_drawer.py --carry-over`;
+`0.9.0_WK_MDPF_DEMQUE~46`, workstream CARRYOVER) and `DQ-t-55` (the surface E cap, `surface_e_intake.py`; `0.9.0_WK_MDPF_DEMQUE~47`, workstream SURFACEECAP). CORRECTION to my own message 5133: I priced the cap off
+the 2,673-a-day averaged rate (about 267); the cap is 10 percent of the measured history ceiling, 5,858, so 585 cells, and a one-security one-year two-field request (504 cells) is accepted under it.

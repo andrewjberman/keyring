@@ -199,6 +199,32 @@ reinvested on the ex-date close, the porting test's formula.
 - **Surface E has NO oversized requests:** a CAP on what can be turned around, and a request above it is refused at intake, never split. It is designed in MDPF_DEMQUE surface E
   together with NFRA_OPLGTW. This replaces this seat's "split over up to 5 days" proposal.
 
+### Surface B: COMPLETE
+
+- B1: Cottonwood from Bloomberg at depth (c), on the client's income basis (total return for the 11 bonds), the 8 funds added, $1.00 funds checked.
+- B2: Yahoo only through the 10 bps porting test; stored Yahoo prices read UNVERIFIED until ported.
+- Former clients (P3) excluded; open matches (P2) wait (DQ-t-52).
+
+### Surface E: the starting cap
+
+The cap is the day's surface E reserve: 10 percent of the day's measured history ceiling (`bbg_allowance.json`, 5,858), so **585 cells**. **CORRECTED** from "about 267", which
+`2.0.0_SA_COO~Q1` (msg 5145) priced off the averaged P1 rate. A request above it is refused at intake naming the cap, enforced by NFRA_OPLGTW. One security's full year of price
+and total return (504 cells) is ACCEPTED under it. Andrew may raise it.
+
+### Surface C and D (Andrew, ~20:1xZ)
+
+> C1 yes measure that now. D1 to D5 approve recommended yes.
+
+- **C1, Rival Funds history still owed: MEASURE FIRST.** `2.0.0_SA_COO~V1` lists exactly what each chart and table on the Rival Funds page reads, at which grain (fund-level or
+  holding-level) and how far back. The owed set is then sized to that, before anything is drawn. Today's owed set is about 185,000 cells, or about 370,000 with total return.
+  At fund level only it would be about 9,500.
+- **D1 to D5 APPROVED as listed:**
+  - D1: the TR comparison remainder, 1,004 cells;
+  - D2: ABNB model data to 2016, 989 cells;
+  - D3: the ICT identity check, 1 cell;
+  - D4: scanner currency slice 1, 50 cells;
+  - D5: scanner currency full list, 1,038 cells, drawn ONLY if slice 1 reads a non-USD currency.
+
 ## STANDING RULE, Andrew: INCREMENTAL MODE = THE LAST 5 TRADING DAYS, on every surface
 
 Once a need's backfill is complete, every daily pull asks for **the last 5 trading days** (from `lib/trading_calendar.py`), not a single day and not a long window. That
