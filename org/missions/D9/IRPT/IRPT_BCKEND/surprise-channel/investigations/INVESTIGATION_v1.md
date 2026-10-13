@@ -31478,3 +31478,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "RULED: the host-bundle pair is NOT a re-cut of the packages from HEAD (that would ship 25 members' worth of other projects' changes per firm, among them a module-level import of a module the live packages do not carry). It is a MINIMAL package per firm: the live package's bytes with exactly the members the two merged changes touch replaced by the LIVE bytes plus those changes applied (holdings_49f.py, holdings_snapshot.py, the schema copy; holdings_inf.py only if its own temp-file fix needs it, which the census says 135fc3509e does not touch), every other member and SHA256SUMS regenerated only for the replaced members. Built BUILD ONLY, tested by extracting the candidate and running the builder tests against it, and then written as the never-widen pair (COO half and CTO half), applied at the host's next scheduled Online. The next cells: construct and census the candidate packages (live minus nothing, plus the changes) with a member-level diff against live equal to exactly the intended members, and the pair packet. STILL ARMED: W361-S1 and W361-S3 (they describe packages that are live and unchanged; the hazard is a careless re-cut, now fenced by this ruling), W345-S3 and W348-S2. OBSERVATIONS: W361-S2 (my order said the temp-file fix touches holdings_inf.py; it does not: measured), W361-S4 (the guard declares a manifest stamp; the live packages carry SHA256SUMS and S3 metadata members-sha256 and member-count, no manifest member, no source commit), W361-S5."
 }
 ```
+
+## IRPT_BCKEND-D2-W363-S1 -- the four census-unattributed members equal historical blobs once CRLF is read as LF; only line endings differ
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W363-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~363",
+  "surfaced_at": "2026-10-13T08:12:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The four rows flagged unattributed by IB176-1 (49financial reporting_policies.json and resources.json, inflection and cottonwood resources.json) are byte-equal to a repository blob once CRLF is read as LF: resources.json to f185873e (2026-09-21), reporting_policies.json to f60e6f1d (2026-10-05); the nearest-blob line counts are 0 added and 0 removed, change_kind eol.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB176-1 record packages[].members[] rows with unattributed true: equal false, eol_only_difference false, live_matches_blob_at_commit null, live_has_crlf true (census @2bde75ccc2, read by this worker)",
+      "git show f185873e6b93809f32686bfa0af914da069e8777:infra/logic/registry/resources.json: 169583 bytes, 2795 LF, 0 CRLF; live archive copy 172378 bytes, 2795 CRLF, 0 bare CR; live with CRLF replaced by LF equals the blob bytes (python -I, byte compare) @9863238ccf",
+      "git show f60e6f1d2a980efe227f0805e677ccf652e54992:infra/logic/registry/reporting_policies.json: 4887 bytes, 75 LF; live archive copy 4962 bytes, 75 CRLF; live with CRLF replaced by LF equals the blob bytes (byte compare); the nearest blob by lines is the same bytes at c6c3c0b674"
+    ]
+  },
+  "spec_asserts": "IB176-1 and the CTO round-177 analysis section 1 describe the four members as equal to no blob in the repository's history (unattributed), and the order asks for their nearest historical blob with a line diff ignoring only end-of-line characters.",
+  "world_is": "Ignoring only end-of-line characters, the four members match a repository blob exactly (0 lines added, 0 removed); the census field eol_only_difference reads false for them, and the byte-level match is missed because the live copies carry CRLF on every line. The archive (deliverables/0.9.0_WK_IRPT_BCKEND~363/archive) holds the bytes unchanged. The provenance of the CRLF is not measured here; the CTO rules on how the four are carried."
+}
+```
+
+## IRPT_BCKEND-D2-W363-S2 -- two PutBucketPolicy writes on the 49financial package bucket after its package upload; the policy body was not read
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W363-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~363",
+  "surfaced_at": "2026-10-13T08:12:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Two PutBucketPolicy writes on opal-data-49financial, on 2026-10-11 at 15:27:29Z and 16:07:36Z, by IAM user cloudops-dell1-agent-user, both after the 49financial package upload at 02:56:45Z; the policy body was not read and the hazard of the change is not judged by this worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/aws cloudtrail lookup-events --lookup-attributes AttributeKey=ResourceName,AttributeValue=opal-data-49financial over 2026-10-10T00:00Z to 2026-10-12T00:00Z (read by this worker, 2026-10-13): 2 events, both PutBucketPolicy, source s3.amazonaws.com, userIdentity type IAMUser, readOnly false",
+      "the same read's userIdentity name for both events: cloudops-dell1-agent-user (IAM user name; no access key read or recorded)",
+      "head-object of irpt/49financial/code/gold/investor-reporting-holdings.tar.gz (read by this worker): LastModified 2026-10-11T02:56:45+00:00, so both events are later than the package write"
+    ]
+  },
+  "spec_asserts": "The provenance read of IB-pr-511 covers the three package objects' PutObject events and their S3 metadata; it names no bucket-policy write on the package bucket, and the order allows no AWS write by its worker.",
+  "world_is": "The 49financial package bucket had two bucket-policy writes by an IAM user of the dell1 fabric's cloudops agent after the package it holds was written; the policy content, its before and after state, and whether the writes changed access are not read by this worker."
+}
+```
