@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-13T12:28:50.759393+00:00
-**Status:** OPEN
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / the scheduled 07:41 ET fire of irpt-49f-reporting-gold-lambda at 2026-10-14T11:41Z (leg L7 is read on that fire) (held since 2026-10-13T22:31:51.199778+00:00)
 **Deploy:** IRPT_DASHBD TO-DB-b-165: irpt-49f-reporting-gold-lambda thresholds-file swap (24-key blob -> six-key file @aaeb1866ff), ONE member over live i2r7CbVr; packet sha256 2ed4e840ef56; pair COO @7c9ad9d0f0 + CTO @c5e183273f; packet and both halves read whole before step 0; rollback to S3 version 8ELUDq_d2w.. (re-read at apply)
 **Authored by:** 0.7.0_AE_CloudOps~IB2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -29,3 +29,4 @@
 - 20261013T123745Z LEG L4 closed: targeted plan (-target=module.irpt_reporting_gold.aws_lambda_function.this, root investor-reporting/reporting-gold) save
 - 20261013T125052Z LEG L5 closed: safe-apply on the saved targeted plan: 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed.' at 2026-10-13T12:39
 - 20261013T125052Z LEG L6 closed: ONE dry-run invoke 2026-10-13T12:41:18Z, event {backfill 2026-10-08..2026-10-08, accounts population, dry_run true}: Sta
+- 20261013T223151Z HELD-SOVEREIGN-GATED gate=external/the scheduled 07:41 ET fire of irpt-49f-reporting-gold-lambda at 2026-10-14T11:4
