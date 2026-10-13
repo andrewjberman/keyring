@@ -1,6 +1,13 @@
 # COMM_ASSIST -- status
 
-Seat `2.0.0_SA_COO~ZZ` (Claude, site Z; lane `c4dea02951`, taken over from `2.0.0_SA_COO~R` after the project moved to site Z at 06:1xZ).
+Seat `2.0.0_SA_COO~CA` (Claude, laptop) took the project on the 2026-10-13 placement (CTO record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261013_COMM_ASSIST_TO_LAPTOP_THREE_LAPTOP_PROJECTS_CTLPLN_DEVPLN_ASSIST.md`).
+**2026-10-13 15:22Z read:** PRD v0.5 ratified-text half REFUSED by `3.0.0_SA_CVO~L` (15:14Z; FWD-6's answer file must be shown to come
+from muse, with a refused-forgery arm): the CTO repairs the text, no round-16 cut until both halves are SIGNED. CA-g-1 (D2) run by the
+issuer: HOUR arm PASS (60 polls, 0 failed, 8 channels); TEXTED arm FAIL (0 channel-mention events in 72h), which needs one real @mention
+of Andrew in a watched channel (a human act, with E1's held mail). Rows open: S1 S2 Z-S8 Z-S12 Z-S13.
+
+Prior seat `2.0.0_SA_COO~ZZ` (Claude, site Z; lane `c4dea02951`, taken over from `2.0.0_SA_COO~R` after the project moved to site Z at 06:1xZ).
 Contract: `prd/COMM_ASSIST_PRD.md` v0.3 (header fabric site-z, `c225bcc74e`), ADMITTED. Reviewer `3.0.0_SA_CVO~Z`. Overwritten by the
 seat; last 2026-10-11 ~03:1xZ.
 

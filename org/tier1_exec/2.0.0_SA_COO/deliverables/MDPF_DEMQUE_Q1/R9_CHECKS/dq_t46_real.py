@@ -1,7 +1,7 @@
 """MDPF_DEMQUE round 9, DQ-t-46 criterion AC2 (REAL inputs, S3 read only, NO vendor call, writes only the scratch --out path it is given):
 `p1_coverage.py --out <scratch.json>` prints ONE JSON line {"p1_names", "priced_names", "yahoo": {"in_store", "rejected", "symbol_known_untried",
-"no_symbol"}, "bd_units_value": {"names", "held_days", "sources": [...]}, "residual": {"names", "cells"}, "window_cells"}. Required: p1_names 609;
-priced_names 607; the four yahoo classes sum to priced_names; bd_units_value.names between 0 and priced_names, sources a non-empty list of strings;
+"no_symbol"}, "blackdiamond_units_value": {"names", "held_days", "sources": [...]}, "residual": {"names", "cells"}, "window_cells"}. Required: p1_names 609;
+priced_names 606 (AMENDED 2026-10-13 after rows D1-W37-S1 and S3: CFNCASH is a cash identifier, unresolved; the key is `blackdiamond_units_value` because the naming gate refuses the `bd` token); the four yahoo classes sum to priced_names; bd_units_value.names between 0 and priced_names, sources a non-empty list of strings;
 residual.names between 0 and priced_names and residual.cells between 0 and window_cells; the written JSON has no key containing 'account'.
 COVER-REAL-OK; else COVER-REAL-BAD <why>.
 """
@@ -40,7 +40,7 @@ def main() -> int:
     if r.returncode != 0 or not ls:
         return _bad("rc=%d %s" % (r.returncode, (r.stderr or r.stdout)[-300:].strip()))
     d = json.loads(ls[-1])
-    y, b, z = d.get("yahoo") or {}, d.get("bd_units_value") or {}, d.get("residual") or {}
+    y, b, z = d.get("yahoo") or {}, d.get("blackdiamond_units_value") or {}, d.get("residual") or {}
     print("p1=%s priced=%s yahoo=%s bd_names=%s bd_days=%s residual_names=%s residual_cells=%s of %s" % (
         d.get("p1_names"), d.get("priced_names"), y, b.get("names"), b.get("held_days"), z.get("names"), z.get("cells"), d.get("window_cells")))
     ints = all(isinstance(v, int) for v in (d.get("p1_names"), d.get("priced_names"), b.get("names"), z.get("names"), z.get("cells"), d.get("window_cells")))
@@ -48,7 +48,7 @@ def main() -> int:
     written = json.load(open(out, encoding="utf-8")) if os.path.isfile(out) else {}
     arms = {
         "ints": ints,
-        "p1": d.get("p1_names") == 609 and d.get("priced_names") == 607,
+        "p1": d.get("p1_names") == 609 and d.get("priced_names") == 606,
         "yahoo_sum": all(isinstance(v, int) for v in ycl) and sum(ycl) == d.get("priced_names"),
         "bd": ints and 0 <= b["names"] <= d["priced_names"] and isinstance(b.get("sources"), list) and bool(b["sources"])
               and all(isinstance(s, str) for s in b["sources"]),

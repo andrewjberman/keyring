@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~67</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-12</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -29,6 +29,8 @@ You are `0.9.0_WK_IRPT_ANLREQ~67`.
 - The proof instance: artifact rows use a `kind` the schema admits; a judgment row needs `method`, `invocation` and `denominator`;
   every non-PASS row carries a `status_reason`; a `controls.mutant` MUST be a mutant that FIRES (a mutant that leaves your criterion passing makes the instance INVALID).
   No live call, no push, no deploy, no upload, no apply, no invoke. No non-ASCII in what you add. If a scratch copy is needed, put it OUTSIDE the product tree and leave it (you may not delete recursively; say where it is).
+
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-13, after the first worker's report; this order is re-opened and a fresh worker continues in the SAME worktree `C:/dev/wk-irpt-anlreq-67`, slot `~67`, on top of the first worker's commits).** The first worker built the allowlist (a root header enters the backstop only when each word BEFORE the root is a modifier and each word AFTER it is an identifier-tail word; `alias` a tail word, `primary` a modifier; the attribute blocklist removed; READER_VERSION `irpt-template-reader.r19.3`) and its 16 negative and 5 positive controls behave as named (commits 3f9a884a98 controls alone, 55d1755d39 rule). Three EXISTING tests fail only because they use the header `Acct Ref Ext` as a backstop-only positive, and `ext` is in neither word list: `test_an_account_root_header_with_two_identifier_values_is_read_as_an_account_column`, `test_the_backstop_words_say_what_is_seen_and_ask`, `test_a_digit_run_column_with_no_separator_under_a_root_is_read_as_an_account_column`. **The issuer's ruling (the CTO's allowlist: an unknown word keeps a header OUT of the backstop; `ext` is NOT added to the tail words):** change those three tests' HEADER to `Client Primary Acct` (two modifiers and the root: the header rule rejects it, the allowlist admits it, so the tests still exercise the VALUES path; the issuer measured `Client Primary Acct`, `Sub Client Acct` and `Subacc` as `VALUES` with two identifier-like values on the first worker's reader) and keep each test's assertion otherwise; add one negative-control test that `Acct Ref Ext` with two identifier-like values is NOT turned back (the allowlist's price, named); do not touch the rule. Re-run the two checks, keep the proof honest (the first worker's FAIL rows stay; add the new run), commit, flip the order to `complete` only when `y221-allowlist` and `y221-keep` both print OK and the proof is VALID. Gate limb that graded this amendment: none stated (the issuer amends a pending order's text).
 
 ### THE CELL (`AR-y-221`, inlined) -- THE BACKSTOP ON THE ALLOWLIST. BUILD. Nothing is released by this order.
 

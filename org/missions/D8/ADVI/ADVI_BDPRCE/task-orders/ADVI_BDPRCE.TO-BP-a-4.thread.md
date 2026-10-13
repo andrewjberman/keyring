@@ -104,7 +104,7 @@ Instance at the path above. Commit `THREAD_TRACE.json`, `THREAD_TRACE.md` and yo
 **ISSUER NOTES:** PRD cell C10; FWD-1 DONE WHEN. STAGED at the cut: it un-parks when `BP-a-1`, `BP-a-2` and `BP-a-3` are merged and PASS at the merged HEAD; its worktree is cut from that HEAD, so the three deliverables are in it.
 The FWD-1 grade (REALIZED) is the CTO's at the round-1 analysis, on the issuer's one real run of this record at the drain (the served object re-opened). Read-only; class LOCAL.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <workstream>THREAD</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-a-4</to_id>

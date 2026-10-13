@@ -676,7 +676,7 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "notes": "A question for the queue's owner, not an instruction: keeping the 138 as a second source for currency is a reasonable use of the draw; dropping them narrows the quote. This seat takes no action on the request. The ask rides CTO~DELL1's round-90 analysis item 4."
   },
-{
+  {
     "id": "MDPF_DEMQUE-Z-S1",
     "one_line": "TO-DQ-t27's stated precondition oracle dq_t26_real.py can only ever pass ONCE: it re-runs refreeze on a COPY of the already-re-frozen real quote, refreeze correctly declines, and the check reads REFRZ-BAD -- so its BAD verdict is evidence DQ-t-26 SUCCEEDED, not that it is incomplete.",
     "spec_asserts": "TO-DQ-t27 THE CELL: 'Start only after DQ-t-26's commit is in your tree (python .../R8_CHECKS/dq_t26_real.py prints REFRZ-OK there; drawer_schedule.py exists).'",
@@ -698,7 +698,7 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
       ]
     }
   },
-{
+  {
     "id": "MDPF_DEMQUE-Z-S2",
     "one_line": "A MID-DRAW re-quote of a partially drawn request reads a finish date ONE FIRE DAY LATER than the frozen quote (2026-10-18 vs 2026-10-17) because quote() always prices the FULL request from today's fire days and never subtracts the cells already drawn -- a reader comparing the two would see a slip that is not a slip.",
     "spec_asserts": "CTO round-7 analysis R2 and the re-frozen quote: the TR request's finish_date is 2026-10-17 (Sat 10-10, Sun 10-11, Sat 10-17 at 5,858 a day), finish_date_claim measured, and quote_vs_actual grades the re-frozen quote.",
@@ -720,7 +720,7 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
       ]
     }
   },
-{
+  {
     "id": "MDPF_DEMQUE-Z-S3",
     "one_line": "The TR request can NEVER reach its quoted 15,720 cells: the quote prices 1,310 WEEKDAYS per security but the vendor returns 1,260 TRADING days, so full coverage is 15,120 cells and `drawn < quoted` leaves the request OPEN forever -- from 2026-10-18 every non-trading day will fire the standing drawer, draw 0 rows and append a DRAWN actuals line reading cells_drawn 0.",
     "spec_asserts": "TO-DQ-t27: an open request is one 'whose cells drawn so far ... are fewer than its quoted cells', and the drawer draws open backfill requests until they are no longer open. The frozen quote reads cells.bloomberg_history 15720 with claim measured.",
@@ -928,7 +928,7 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
       ]
     }
   },
-{
+  {
     "id": "MDPF_DEMQUE-Z-S4",
     "one_line": "TO-DQ-t34's precondition oracle dq_t33_real.py is once-only in the SAME way Z-S1 recorded for dq_t26_real.py: its arms[supersedes_new] demands the re-freeze TRANSITION, which DQ-t-33's real act already consumed, so it reads QR-REAL-BAD while three of its four arms confirm the end state it wanted.",
     "spec_asserts": "TO-DQ-t34 THE CELL: 'Start only after DQ-t-33's commit is in your tree (python .../R9_CHECKS/dq_t33_real.py prints QR-REAL-OK there; bbg_quote.record_actual accepts outcome=\"COMPLETE\").'",
@@ -1197,7 +1197,7 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
       ]
     }
   },
-{
+  {
     "id": "MDPF_DEMQUE-Z-S5",
     "one_line": "TO-DQ-t34's build item 3 (the completing fire records COMPLETE) and its build item 4 (the three existing test_demque_standing_drawer.py tests keep passing UNEDITED) cannot both hold: that t27 test's own fixture completes BOTH its requests on day 2, and it asserts at line 111 that the run outcome is DRAWN and at line 135 that every actuals line is DRAWN. The file is NOT in t34's <paths>.",
     "spec_asserts": "TO-DQ-t34 build 3: 'that run records its ONE line for the request with outcome COMPLETE ... not DRAWN'. TO-DQ-t34 build 4: 'The three existing test_demque_standing_drawer.py tests keep passing unedited.'",
@@ -1507,6 +1507,247 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
       "evidence": [
         "safe-commit output for 748b73b3ca (2026-10-13T14:2xZ): WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids",
         "test -e on C:\\Users\\Test\\.opal\\account_id_hashes.txt at 2026-10-13T14:25:02Z: ABSENT (rc=1); OPAL_ACCOUNT_ID_HASHES unset; the directory C:\\Users\\Test\\.opal exists"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W36-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~36",
+    "surfaced_at": "2026-10-13T14:56:32Z",
+    "one_line": "The ABNB model-block request declares window_start 2016-01-01 and need_date 2026-10-09; the 365-day non_client rule refuses it, so AC2 arm 1 cannot pass as written.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-44 step 4: AMGT_RESAPP-107a-ABNB-MODEL-BLOCK is declared non_client, need_date 2026-10-09, window_start = the producer's HIST_START. If the rule refuses it, do not weaken the rule: file a BLOCKING row and leave the file declared as read. AC2 arm 1 requires refused == [].",
+    "world_is": "integrations/bloomberg/research/model_block_pull.py line 313 reads HIST_START = \"2016-01-01\". bbg_quote.py --check-declared on the requests folder returns checked 8, accepted 7, refused [AMGT_RESAPP-107a-ABNB-MODEL-BLOCK: non_client window_start 2016-01-01 is more than 365 days before need_date 2026-10-09]. The request is not drawn and the rule is unchanged. The window that the rule admits is 2025-10-09 onward; re-windowing or dropping the request is the owner's call.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "dq_t44_real.py run 2026-10-13 on dell1: arm1 checked=8 accepted=7 refused=['AMGT_RESAPP-107a-ABNB-MODEL-BLOCK']; CLASS-REAL-BAD arm1 (rc 1)",
+        "integrations/bloomberg/research/model_block_pull.py line 313 HIST_START = \"2016-01-01\" (read at worktree base 47a0cf6d33)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W36-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~36",
+    "surfaced_at": "2026-10-13T14:56:32Z",
+    "one_line": "bbg_backfill.py draws the TR request from its request start to its end per security with no stored-row check, so a run outside its one-shot folder re-draws in-window rows; the identity remainder does not reach it.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "spec_asserts": "TO DQ-t-44 step 5: the drawer prices and draws the remainder as the undrawn (security, date) rows inside the request window, never quoted cells minus drawn cells; a stored row is never re-drawn.",
+    "world_is": "bbg_backfill.py run() (lines 106-108) loops every security from request['start'] to request['end'] in calendar windows and reads no stored parquet row. The TR request now starts 2025-10-09, and KO, JNJ, T and VZ are fully stored inside that window in MDPF_DEMQUE_ZQ_T24 and MDPF_DEMQUE_ZQ_STANDING. Its only guard is the one-shot marker run.started.json. Nothing was run in this cell: no Bloomberg call, no write.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/bbg_backfill.py lines 99-108 (base 47a0cf6d33): per-security loop from request start to request end, no parquet read",
+        "standing_drawer.py --plan --request DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS on dell1 2026-10-13: remaining_cells 1004 for MO and XOM; KO, JNJ, T, VZ have 251 stored in-window days each"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W36-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~36",
+    "surfaced_at": "2026-10-13T14:56:32Z",
+    "one_line": "Seventeen existing demque tests outside this order's seven-file grant build undeclared Bloomberg requests and now fail the need-class refusal; only the grant's files can take a stub declaration.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-44: existing demque test files keep passing; if one needs a stub request to carry the new declarations, change only that stub and nothing else in the file. The grant names test_demque_bbg, test_demque_card_a_slice, test_demque_standing_drawer and three others, not these.",
+    "world_is": "Failing with 'request ... refused by the need-class rule: need_class None is missing' (bbg_quote._validate). Counts: test_demque_ceiling.py 1; test_demque_nontrading.py 2; test_demque_quote_remaining.py 3; test_demque_refreeze.py 3; test_demque_reserve.py 1; test_demque_reserve_ledger.py 1; test_demque_tier_quote.py 3; test_demque_standing_drawer_close.py 3. The refusal is the rule working as written; nothing was weakened. The stubs need need_class and window_start, which the COO must grant.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest data/mdpf/scripts/demque -q on dell1 2026-10-13 (worktree 47a0cf6d33 plus this order's edits): 24 failed, 131 passed; baseline 151 passed",
+        "failure lines: need_class None is missing o... at bbg_quote.py:235 for each listed file"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W36-S4",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~36",
+    "surfaced_at": "2026-10-13T14:56:32Z",
+    "one_line": "Four test_demque_bbg_backfill.py tests use the TR request as their fixture and pin its old 2021-10-01 window; the re-windowed request draws 4380 cells, not 5858, and the vendor-limit tests read no parquet.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-44 step 4: the TR request moves start to 2025-10-09 with window_trim. The existing demque tests keep passing.",
+    "world_is": "test_backfill_stops_at_the_days_allowance[0] and [10]: assert 4380 == 5858; the stub returns one calendar row per day over 2025-10-09..2026-10-08 for 6 securities x 2 fields, which is 365 x 6 x 2 = 4380, so the window exhausts before the allowance binds. test_backfill_stops_on_a_vendor_limit_warning[field] and [response]: pyarrow NoneType, no parquet. The test file is outside the grant.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest data/mdpf/scripts/demque -q on dell1 2026-10-13: test_demque_bbg_backfill.py 4 FAILED (assert 4380 == 5858; assert 4380 == 5848; pyarrow NoneType x2)",
+        "data/mdpf/scripts/demque/bbg_backfill.py line 19 REQUEST = requests/DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS.json"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W36-S5",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~36",
+    "surfaced_at": "2026-10-13T14:56:32Z",
+    "one_line": "Two test_demque_card_a_slice.py tests assert the superseded P1 window (2013-04-03 floor, 2026-06-23 end, NOLATE001 unresolved); the order changes all three, so both fail until the grant updates their assertions.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-44 step 6: the P1 window starts at max(first Trade_Date, 2012-01-01) and ends at the frontier for a held name, its last Trade_Date for a sold one; the request declares need_class client.",
+    "world_is": "test_the_p1_slice_lists_priced_names_in_rank_order...: assert '2012-01-05' == '2013-04-03' (the floor is now 2012-01-01). test_a_p1_name_with_no_trades_or_no_bloomberg_cusip...: NOLATE001 trades on 2026-07-01 and 2026-08-01 fall before the frontier 2026-10-13, so it is priced, not unresolved. The real P1 quote reads window_end 2026-10-13.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest data/mdpf/scripts/demque/test_demque_card_a_slice.py -q on dell1 2026-10-13: 2 failed",
+        "card_a_slice.py --priority P1 --out .scratch/card_a_p1.json --quote (dell1, read-only S3): window_end 2026-10-13, p1_names 609, priced_names 607, unresolved_names 2"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W36-S6",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~36",
+    "surfaced_at": "2026-10-13T14:56:32Z",
+    "one_line": "test_demque_standing_drawer.py test_drawer_draws_min_of_allowance_and_remaining_in_rank_order asserts quoted minus drawn (20 more cells for AAA); the identity rule draws 16 cells, so the test fails on its second-day assertion.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-44 step 5: the remainder is the undrawn in-window (security, date) rows, never quoted cells minus drawn cells. Existing tests keep passing, with stub changes only.",
+    "world_is": "The stub returns one calendar row per day, and the 60-cell quote is a fixture figure, so no trading-day identity reproduces the asserted 20 (or 28 in total). The run reads DRAWN with cells_drawn 16. Changing the assertion is beyond a stub change. The COO or CTO decides whether the fixture or the test moves.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest data/mdpf/scripts/demque/test_demque_standing_drawer.py -q on dell1 2026-10-13: AssertionError outcome DRAWN cells_drawn 16 (expected COMPLETE, cells 20 then 28)",
+        "data/mdpf/scripts/demque/standing_drawer.py _draw_request and undrawn_runs (this order's edit)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W36-S7",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~36",
+    "surfaced_at": "2026-10-13T14:56:32Z",
+    "one_line": "The P1 held rule reads only the by and sl codes: 420 of 607 priced names read as sold and end at their last trade, and 403 of those carry other position codes (lo, li, trfi, trfo) whose meaning is not verified.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-44 step 6: held is net quantity, buys minus sells over every account, positive at the last transaction; a transactions frame with no sign makes every name held and the claim inferred.",
+    "world_is": "Read-only S3 on dell1, 2026-10-13: codes are lowercase; by has 178,889 rows and sl has 147,895, each with unsigned non-negative Quantity. Of the 607 priced P1 names, 187 read held (end = FRONTIER) and 420 read sold (end = last trade). Of the 420 sold, 403 carry another code: lo 30,977 rows, li 19,749, man 19,753, dv 9,186, trfi 1,355, trfo 1,346. The P1 cells fall from 882,024 (2013 floor, end 2026-06-23) to 500,314 (2012 floor, frontier or last trade); held_claim is measured per the rule. If lo, li, trfi or trfo move a position, the sold windows are cut short. Not decided here.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "card_a_slice.py --priority P1 --quote on dell1 2026-10-13: cells 500314, days_to_finish 184, finish_date 2027-07-10, held_claim measured",
+        "read-only transaction code census via rank.load_transactions (S3), dell1 2026-10-13, scratch script only"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W36-S8",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~36",
+    "surfaced_at": "2026-10-13T14:56:32Z",
+    "one_line": "ADVI_COTBKF-TIER2-15-FUNDS-AS-TRADED-20261012.json carries a securities list but no vendor and no channel, so the Bloomberg check skips it and quote() cannot read it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-44 step 3: --check-declared runs over every request with a securities list and vendor bloomberg, or no vendor and a Bloomberg channel.",
+    "world_is": "The file has no vendor and no channel key. The check reads it as not Bloomberg and skips it, and bbg_quote.quote would raise request missing 'channel'. It is not one of the TO's ten files and was not declared. The owner should confirm its vendor; the Yahoo side is outside this cell.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "requests/ADVI_COTBKF-TIER2-15-FUNDS-AS-TRADED-20261012.json read at base 47a0cf6d33: keys include securities (list of 15) and no vendor or channel",
+        "bbg_quote.check_declared output on dell1 2026-10-13: checked 8 (this file not among them)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W36-S9",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~36",
+    "surfaced_at": "2026-10-13T14:56:32Z",
+    "one_line": "The TR request's quote file still prices the superseded 2021 window at 15,720 cells; the drawer's open gate reads it, and the remainder no longer follows it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Andrew-direct 2026-10-13 ADDENDUM 2: current requests are re-priced on the new windows before their next draw.",
+    "world_is": "DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS.quote.json carries cells 15720 for 2021-10-01..2026-10-08. standing_drawer --plan gives remaining_cells 1004 by identity for 2025-10-09..2026-10-08. The quote file is outside this grant and was not rewritten.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "requests/DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS.quote.json at base 47a0cf6d33: cells bloomberg_history 15720",
+        "standing_drawer.py --plan --request DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS on dell1 2026-10-13: remaining_cells 1004, window_start 2025-10-09"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W36-S10",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~36",
+    "surfaced_at": "2026-10-13T15:26:42Z",
+    "one_line": "The drawer test's calendar-row stub leaves AAA's 29 and 30 January owed by identity after the second fire, so the test's COMPLETE pin reads DRAWN; the 16-cell figure holds.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-44 AMENDED S5: change test_drawer_draws_min_of_allowance_and_remaining_in_rank_order to the identity remainder (16 cells, not quoted minus drawn); every other assertion stays.",
+    "world_is": "The test's Stub returns one row per CALENDAR day up to the cap. Day 1 stores AAA 2026-01-02..01-21; day 2 draws 14 cells (22, 23, 26, 27, 28 Jan) and stops at the cap, so 29 and 30 Jan are trading days still owed and AAA reads DRAWN, not COMPLETE. ZZZ reads COMPLETE with 2 cells; the run total is 16. The vendor returns trading days only, so on a trading-day vendor this fixture would close AAA on day 2; the difference is the stub, not the drawer. The test now pins AAA DRAWN and ZZZ COMPLETE.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "scratch probe on dell1 2026-10-13 (base c01f633404 plus this order's edits, removed after use): day 2 cells_drawn 16, outcome DRAWN, requests AAA-FIRST 14 DRAWN and ZZZ-SECOND 2 COMPLETE; stored AAA dates end 2026-01-28",
+        "data/mdpf/scripts/demque/standing_drawer.py undrawn_runs and _draw_request at c01f633404 (identity over trading days)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W36-S11",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~36",
+    "surfaced_at": "2026-10-13T15:26:42Z",
+    "one_line": "The standing-drawer close tests' calendar-row stub spent the drawer's cap on weekend rows, so the identity remainder closed nothing on the first fire; their Stub now returns trading days only, as the vendor does.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-44 step 4 and AMENDED S3 to S6: the named files take declarations on their stubs; change only what a failure requires, every other assertion stays.",
+    "world_is": "test_demque_standing_drawer_close.py: with declarations added, three tests failed. The first fire drew 40 cells of 20 rows (2026-01-02..01-21 calendar rows) and left trading days 22 to 30 Jan owed, so the request read DRAWN, not COMPLETE. The Stub now yields the trading days inside the cap (sd.is_trading_day). The assertions are unchanged; one comment's figure was corrected from 60 calendar rows to 20 trading rows. All three pass.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest data/mdpf/scripts/demque/test_demque_standing_drawer_close.py -q on dell1 2026-10-13: before the Stub change 3 failed (DRAWN for COMPLETE; 2 == 1 closes); after it 3 passed",
+        "data/mdpf/scripts/demque/test_demque_standing_drawer_close.py Stub at c01f633404 (calendar rows) and after this order's edit (trading rows)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W36-S12",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~36",
+    "surfaced_at": "2026-10-13T15:26:42Z",
+    "one_line": "card_a_slice reads its transaction sign table from data/assets/scripts/silver/commonwealth_signs.py, outside the grant and read only; the P1 held rule now reads lo, li, trfi and trfo, and the real P1 quote moves from 500314 to 471522 cells.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AMENDED S7: classify each Transaction_Type as adds-to or removes-from a position from the source; a code that cannot be classified leaves the name HELD and the printed held_claim inferred.",
+    "world_is": "commonwealth_signs.py (ADVI_COTBKF CB-m-1) is the one Commonwealth sign table: PLUS_TYPES (by, li, LISU, lica, trfi, TRFIR, trci, dvr, ci, cs, so, LOX, QA, CAF, CAE, 12b1) add; MINUS_TYPES (sl, lo, loca, trfo, trco, ss, si, BYX, LIX, pyd, leu, DVRX) remove; NO_SHARE_MOVEMENT (dv, man, int, ...) moves no shares. card_a_slice imports it and matches case-blind. On the real table no code is unclassified, so held_claim is measured. docs/data/transaction_type_canonical_reference.md is the Black Diamond taxonomy and names no Commonwealth code. P1 --quote on dell1 2026-10-13: cells 471522, days_to_finish 175, finish_date 2027-06-26, window_end 2026-10-13 (S7 measured 500314 with by and sl only).",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "card_a_slice.py --priority P1 --out .scratch/p1_slice_request.json --quote on dell1 2026-10-13 (read-only S3): held_claim measured, priced_names 607, unresolved_names 2",
+        "data/assets/scripts/silver/commonwealth_signs.py SIGN, PLUS_TYPES, MINUS_TYPES and NO_SHARE_MOVEMENT at c01f633404"
       ]
     }
   },

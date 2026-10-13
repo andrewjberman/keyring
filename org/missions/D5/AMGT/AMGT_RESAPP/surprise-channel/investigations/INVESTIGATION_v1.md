@@ -25215,3 +25215,107 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~400 at AMGT-bh-4. The difference is between the order's apply time and the function's update time; it does not change the window or the counts."
 }
 ```
+
+---
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W402-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~402",
+  "surfaced_at": "2026-10-13T14:59:40Z",
+  "one_line": "The warm overlay path does not answer in about 1.3 s after the 60 s hold: the warm ASML overlay took 20.08 s on the live function, while the warm ADBE overlay took 0.76 s.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "TO AMGT-bi-3 section 1 (CTO~DELL1 round-101 analysis item 2): a warm overlay request after the 60 s hold is served from the snapshot in about 1.3 s, with bytes equal to the recompute. Criterion AC1 expects handler time under 3.0 s for q1, q2 and q3 (arm S5).",
+  "world_is": "The AC1 run (filed between 14:53Z and 14:59Z on 2026-10-13, CodeSha256 j+j1k5r7IY1ZCh9NijT8GSLaqEL3FhamwT8V3tYofCk=) measured: q0 ASML overlay COLD 19.81 s; q2 ASML overlay warm 20.08 s (wall 20.31 s); q3 ADBE overlay warm 0.76 s. The snapshot serves /freshness only (q1 0.27 s, served from the snapshot). Arm S5 FAIL.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~402/BI4_STEADY_STATE_OUTPUT_20261013.txt lines 3-6 and 12-13 (uncommitted at filing; committed by this order)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round102_prep/checks/r102_steady_state_live.py@7c9ed55820"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~402 at AMGT-bi-3. The instrument's verdict is NO (S4 and S5 failed), not NOT WARM. No retry was run (bound 5). Whether the overlay is meant to be snapshot-served is for the issuer to read."
+}
+```
+
+---
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W402-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~402",
+  "surfaced_at": "2026-10-13T14:59:40Z",
+  "one_line": "The first /freshness request, 65 s after a warming overlay request, landed on a cold container (Init 692 ms), so the warm-container arm S4 failed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "TO AMGT-bi-3 section 1: four requests, each more than the 60 s hold after the last, drive a steady state; arm S4 requires q1, q2 and q3 each to be a warm container, after q0 warmed one container.",
+  "world_is": "AC1 output lines 3-4: q0 ASML overlay COLD init 678.27 ms; q1 /freshness 200, handler 0.27 s, COLD init 692.30 ms, 65 s later on the same function. q2 and q3 were warm. Whether q1 reused q0's container is not measured by this run; the COLD init says it did not.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~402/BI4_STEADY_STATE_OUTPUT_20261013.txt lines 3-4 and 11 (uncommitted at filing; committed by this order)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round102_prep/checks/r102_steady_state_live.py@7c9ed55820"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~402 at AMGT-bi-3. The run is a single sample; no retry was run (bound 5)."
+}
+```
+
+---
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W402-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~402",
+  "surfaced_at": "2026-10-13T14:59:40Z",
+  "one_line": "The stored snapshot does not equal the live recompute: rows 302 and 302 with differing 2 (keys denominators and reads), so AC2 expected differing 0 and exit 0 was not met.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "TO AMGT-bi-3 AC2, and CTO round-100 addendum arm 3: the stored /freshness snapshot's 302 rows equal the live recompute, bytes equal; expected output differing: 0, then R101 SNAPSHOT EQUAL: YES, exit 0.",
+  "world_is": "r101_snapshot_equal.py printed 'snapshot generated_at 2026-10-13T12:30Z age 2.47 h | rows: snapshot 302, recompute 302 | differing: 2', then 'key denominators: snapshot {'names': 302, 'covered_names': 95, 'covered_names_added': 0 ...' versus recompute (same prefix)' and 'key reads: snapshot {'universe': {'status': 'SERVED', 'read_completed': True, 'p...' versus recompute (same prefix)', each cut at 60 characters by the instrument. Verdict R101 SNAPSHOT EQUAL: NO, exit 1. No row-level difference was printed. The packaged-list path was blanked on both sides for publishers and social_accounts.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-resapp-402/.scratch/ac2_r101.txt (the instrument's stdout, uncommitted scratch at filing; lines 'snapshot generated_at 2026-10-13T12:30Z age 2.47 h | rows: snapshot 302, recompute 302 | differing: 2' and 'R101 SNAPSHOT EQUAL: NO')",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round101_prep/checks/r101_snapshot_equal.py@7c9ed55820"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~402 at AMGT-bi-3. The two differing keys are not read further by the worker; no re-measure and no retry was run (bound 5)."
+}
+```
+```json
+{
+  "id": "AMGT_RESAPP-D1-W403-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~403",
+  "surfaced_at": "2026-10-13T15:06:31Z",
+  "one_line": "The nested portal worktree has no committer identity, so safe-commit.sh refuses the commit with rc=128 unless GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL are passed on the same call.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bi-4 section 5 commits the portal change in the nested worktree with .tools/safe-commit.sh --author \"0.9.0_WK_AMGT_RESAPP~403 <0.9.0_WK_AMGT_RESAPP~403@opal.agent>\" -F <msgfile> -- <paths>, run from the portal root, and names no committer identity.",
+  "world_is": "The first attempt (portal branch wk-AMGT_RESAPP-403-portal, HEAD 0a06280a) returned rc=128: 'Committer identity unknown ... fatal: unable to auto-detect email address (got Test@DESKTOP-HK1UU7N.(none))'. The portal repository carries no user.name or user.email, and the outer .tools/safe-commit.sh does not supply one. Nothing was committed and nothing was staged (the call unstaged its own three paths). The retry with GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL set for that one call committed 4477deca, whose committer reads 0.9.0_WK_AMGT_RESAPP~403. No git config was written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh refusal, cwd C:/dev/wk-resapp-403/portal, rc=128, 'Committer identity unknown' (first attempt, HEAD 0a06280a)",
+      "git log -1 --format=%H~%an~%cn~%s in the portal after the retry: 4477decaa9cf99e3a922469bcde72f8d9f667e8d~0.9.0_WK_AMGT_RESAPP~403~0.9.0_WK_AMGT_RESAPP~403~AMGT-bi-4 ..."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~403 at AMGT-bi-4. Any worker committing from a nested portal worktree hits the same refusal; the next order that names a nested portal commit should pass the committer identity or the portal repo should carry one. Whether to add it to the repo config is the issuer's or the CTO's call; this row changes nothing."
+}
+```
