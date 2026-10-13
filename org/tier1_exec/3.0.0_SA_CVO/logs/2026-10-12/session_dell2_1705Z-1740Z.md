@@ -268,3 +268,11 @@ Correction: the round-92 rows carry surfaced_at 16:48:00Z; the clock read 16:45:
 | item | result | commit |
 |---|---|---|
 | IRPT_ANLREQ PRD v0.5 ratified-text half (half cfcfd5d90db3) | REFUSED: C-PACKAGER still names the branded PDF as the last hop; the organic arm names an Opal staff filing; the produced variant is not bound to the chosen one; a (v0.5) annotation sits inside ENDPOINT. Review read against the pivot direction (lines 55, 108-165, 345-356). Note sent to CTO~DELL2 19:05:03Z | review 3e8061163e, stamp 9c5bb72877 |
+
+## Addendum, 2026-10-13 19:05Z to 19:16Z (msgs 7171, 7173, 7175)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_DASHBD PRD v0.14 ratified-text half (FWD-21) | REFUSED (f2f477f21f81): "read by Andrew" was an unqualified wait; a (v0.14) annotation inside ENDPOINT. Content matched the baseline and Andrew's ~19:0xZ word | review 7209af0016, stamp c32ddf00cb |
+| IRPT_ANLREQ v0.5 re-cut @68115f2d84 | All four fixes present; SIGNED at half 7e377f75669b; PRD ADMITTED (brief half signed by the CRO) | review d100ad9bc4, stamp 9f59d6bcf5 |
+| IRPT_DASHBD v0.14 re-cut @6d694ed9a5 | Both fixes present (seat section check is the gate; Andrew's read is the qualified organic arm); SIGNED at half 1bd09826f4b3; PRD ADMITTED | review 8399376889, stamp 0524321f87 |
