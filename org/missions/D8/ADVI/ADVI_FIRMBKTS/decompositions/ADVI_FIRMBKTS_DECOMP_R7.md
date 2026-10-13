@@ -138,3 +138,12 @@ values too). The CTO: hold all position slots; `FB-j-7` and `FB-j-4` land the tr
 `FB-j-7`'s face now has two acts (the slot switch to all six slots, then the dispatcher) and its criterion `nonempty_bullets` 0. No new cell; the chain
 count is unchanged. The sample of `FB-j-13` remains the CTO's and Andrew's evidence of the model path, the name guard and the four position slots
 BEFORE the cap is fixed; it is not served.
+
+## Amendment 6 (2.0.0_SA_COO~B1, 2026-10-13 ~20:4xZ): cell `FB-j-15` added -- the organization trail records object writes on the three legacy buckets (DEC-12)
+
+Andrew ruled DEC-12 YES (~20:0xZ, the CTO's msg 5128); the laptop CTO's infra-lane ruling (bus 671c3981, dell1 msg 5135) assigns the act to this project because it
+serves FWD-6's write instrument, and to a laptop seat because CloudTrail write is a kept deny for the Dell users. Cells are now 15. Independent of the `FB-j-3/-4/-7` chain.
+
+| cell | item | serves | owned files | depends on | slot, class | risk | at the cut |
+|---|---|---|---|---|---|---|---|
+| `FB-j-15` the trail's third (WriteOnly) selector on bd, inf and cot | 2 | FWD-6 | `infra/aws/terraform/shared-infra/cloudtrail-organization-trail.tf`; ledger entry | -- | `0.7.0_AE_CloudOps~FBL` seat order (crossbox) | WORLD | pending |
