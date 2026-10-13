@@ -76,8 +76,8 @@ move is recorded in NFRA_CTLPLN's addendum v0.21. FWD-3 and FWD-4 are new, on An
          DONE WHEN  EXERCISED -- one real ad hoc request bid, approved by Andrew in a reply, and taken up by the
                     placed seat
          ACCEPT     the text names the request, the proposed box and seat, and why that box; Andrew's reply over
-                    COMM_ASSIST is the only approval; a refused or unanswered bid places nothing; a registered
-                    project's work never rides this path
+                    COMM_ASSIST is the only approval; a refused or unanswered bid places nothing; an ACTIVE
+                    registered project's work never rides this path
          SOURCE     Andrew 2026-10-13 ~14:0xZ, VERBATIM: "The "bid" is not for active registered projects, it is for
                     ad hoc bug fixes and etc that come in over teams/outlook via the COMMS_ASSIST channel, which needs
                     to be approved at my discretion over that COMMS_ASSIST channel." (record
