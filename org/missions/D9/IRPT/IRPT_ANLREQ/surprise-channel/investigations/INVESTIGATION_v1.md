@@ -5976,3 +5976,32 @@
   "notes": "ARMED for the next pair's script: disarm by setting OLD to the live root's name in the pair's host script, which the pair's COO writes. The worker wrote no host script."
 }
 ```
+
+
+## IRPT_ANLREQ-D2-S66 -- the live generate package changed under ADVI_FIRMBKTS act 4; three native holds of the release pin the wrong bytes
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S66",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T04:15:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The live irpt-ycharts-generate package is not the one the round-19 census and release build were cut against: ADVI_FIRMBKTS act 4 replaced it on 2026-10-12, so three of the four native holds (acceptance.py, submission_service.py, durable_job.py) would move members the release must hold.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "CTO round-19 analysis section 3 and AR-y-193: the Lambda release moves exactly uploads.py and template_reader.py; the four native members are held at the live bytes (pins 1eed34a8c0, b3fc529601, 7122afefc1).",
+  "world_is": "MEASURED by this seat 2026-10-13 ~04:3xZ: lambda get-function irpt-ycharts-generate prints CodeSha256 NeAB50CNXWvM5Y6nsba220QmsEiASbVbXcZVRYe4MUM= (LastModified 2026-10-12T14:13:41Z), 615247 bytes, 104 members, equal to artifact_sha256 in the source map; the downloaded zip's members against the AR-y-193 release manifest: 5 differ (template_reader.py, uploads.py, and acceptance.py, durable_job.py, submission_service.py); submission.py equals. The three differing live blobs equal the files at 2f7cc7be42 (acceptance.py, submission_service.py) and 3acafb3f45 (durable_job.py). The AR-y-192 census took the natives from the r14 record of 2026-10-11 and says in its own what_only_the_live_package_can_tell that the live zip had not been re-read. Ledger of the replacing act: org/critical_paths/change_management/20261012T1340Z_advi-firmbkts-fb-f-11-act4-irpt-leg-20261012_deploy_completion.md (ycharts built from scratch/r4-act4-ycharts-pin c4ca0c9a99; last unit 14:13:46Z). NOT read: the Lambda configuration, and whether other members changed in ways the 104-member sha256 comparison hides (it compares every member).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function irpt-ycharts-generate (CodeSha256, Code.Location) read by this seat",
+      "the downloaded live zip's 104 member sha256 values against RELEASE_BUILD_RECORD.json member_manifest (AR-y-193)",
+      "git show 2f7cc7be42 / 3acafb3f45 blobs equal to the live members"
+    ]
+  },
+  "notes": "Disarmed by AR-y-201 (re-pins the four holds to the live bytes and shows the release differs from the live package in exactly the two reader members) and by the never-widen pair naming the new pins. The resident leg is not affected (its base is the st32 root). The two-leg pair is not written on the AR-y-193 patch."
+}
+```
