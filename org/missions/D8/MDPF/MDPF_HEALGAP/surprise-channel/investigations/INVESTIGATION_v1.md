@@ -1140,6 +1140,29 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "spec_asserts": "pull.tf header: the clock and writer are planned and not applied; the apply is a later release act with a change-management entry.",
     "world_is": "The live rule exists and is ENABLED. Either the apply happened outside this file's history or the header is stale. Which is true was not read further.",
     "notes": "Not chased. The disposition of the teams row does not depend on the header."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W13-S1",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~13",
+    "surfaced_at": "2026-10-13T14:26:31Z",
+    "one_line": "HG-t-16's code commit is refused by the naming limb (LGIC_ENFORCE, ENFORCE mode): the reattempt rule's printed name etfs-cot-satellites-characteristics-producer-reattempt-hourly is a HOLE because its cadence cannot be read from cron(25 14-23 * * ? *), so the hole-count ratchet for infra/aws/terraform/cot-pipeline grows 0 -> 1.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "base 011fd686a8: satellites-characteristics-producer.tf has one rule (cron(25 13 * * ? *)); worktree C:/dev/wk_healgap_r4_13 carries org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R4_PATCHES/t16_characteristics_tf.patch and t16_handler.patch applied, UNCOMMITTED, both files passed git apply --check first",
+        "safe-commit.sh on the two code files (lambda_function.py, satellites-characteristics-producer.tf) ABORTED at the naming limb: 'NAMING REFUSE infra/aws/terraform/cot-pipeline:0 <hole-count-ratchet> -> -'; 'New: HOLE EVENT_RULE etfs-cot-satellites-characteristics-producer-reattempt-hourly -> partial form etfs-cot-satellites-characteristics-producer-reattempt-{cadence}; could not fill {cadence}: hour field 14-23: more than once a day, not a list of single hours: not a fixed interval [infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf:434]'; 'NAMING-GATE: REFUSE 3 graded'; 'Commit aborted; files unstaged.'",
+        "same gate run: 'NAMING CONFORMANT infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf:425 etfs-cot-satellites-characteristics-producer-reattempt-hourly ... built by name() at the call site: CONFORMANT as SCHEDULE'; the S3Key WARN at tf:178 (platinum/satellites/characteristics.json) is on an EXISTING line and is not a refusal",
+        "after the abort: git rev-parse HEAD = 011fd686a8, git diff --cached empty, both code files show as modified in the worktree only"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order names the rule's printed name as opal_name builder output (rule 30): etfs-cot-satellites-characteristics-producer-reattempt-hourly; its refusal clause says a gate refusing a name is a stop, written as a surprise row, with no check weakened.",
+    "world_is": "The naming limb cannot decide the cadence of a multi-hour window (14-23) and refuses the new name as a hole; the ratchet refuses growth. The HCL the criteria grade (AC1-AC3: T16-OK, T16IAM-OK, GATE-OK on the worktree; T16-BAD, T16IAM-BAD, GATE-BAD on base copies) lands through no commit, so the reattempt cannot reach the drain from this branch as written.",
+    "notes": "Not worked around: no --force, no GIT_COMMIT_AUTHOR_OVERRIDE, no edit to the schedule expression or the name (AC1 names cron(25 14-23 * * ? *) and the printed name), no edit to any check. The uncommitted diff stays in the worktree for the COO. Owed from the naming-rule owner: a schedule the cadence reader decides (the gate prints 'not a list of single hours'), or a name that ends in the cadence word. Disposition for the COO and the CVO at L9; the two files are the only code change."
   }
 ]
 ```
