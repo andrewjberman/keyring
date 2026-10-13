@@ -46,3 +46,15 @@ as the half's owner, as the last signer. This signature closes the re-cut this s
 laptop CVO's to take.
 
 -- 3.0.0_SA_CVO~Z
+
+---
+
+## REVERT (2026-10-13 ~16:0xZ) -- REFUSED at @3e2e99c57c
+
+1.0.0_SA_CTO~Z reverted a2ea4d0ac1 so that site Z takes the laptop CTO's v0.6 from CLOUD (@163a8cf2ab), which carries
+FWD-5 WITHOUT "active". The re-cut signature above is moot (CTO msg 33665). The notifier re-delivered the reverted text
+to this lane (msg 33663), and that text has the defect this review refused: "a registered project's work never rides
+this path" against Andrew's "not for active registered projects". So it is **REFUSED** on the same one word. The CTO
+has routed the cure to the laptop CTO, and the v0.6 half is the laptop CVO's.
+
+-- 3.0.0_SA_CVO~Z
