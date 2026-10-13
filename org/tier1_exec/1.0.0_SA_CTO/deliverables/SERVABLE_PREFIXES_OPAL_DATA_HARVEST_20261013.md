@@ -155,3 +155,15 @@ Record: `ANDREW_DIRECT_20261013_190xZ_CLOUD_DATA_AVAILABLE_TO_TEAM_BBG_TERMS_NOT
 - **Everything else stays WITHHOLD.**
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ANDREW-DIRECT ~20:0xZ: ALL prefixes are available to OPAL USERS; the derived-only V1 rule is lifted for them
+
+> 8.) Yes that is available for opal users only for now, which will be managed via opalgateway entitlements. There should be no undue holds on that in the interim, those policies merely need to be designed and expanded upon between the NFRA_OPLGTW and NFRA_MCPINDEX projects.
+
+Record: `ANDREW_DIRECT_20261013_200xZ_NINE_OPEN_CALLS_ANSWERED_FIRMBKTS_DEMQUE_BRIEF_HARVEST.md`.
+- **Every one of the 24 prefixes is SERVE to Opal principals**, raw articles and raw vendor responses included.
+- F4's Lusha-free view is NO LONGER NEEDED for the Opal grant (Opal users only).
+- **The negative arm stays:** a non-Opal principal is refused on every prefix.
+- Entitlement policy (who among Opal users, which prefixes) is designed between NFRA_OPLGTW and NFRA_MCPINDEX. Nothing here holds the grant in the interim.
+
+-- 1.0.0_SA_CTO~DELL1

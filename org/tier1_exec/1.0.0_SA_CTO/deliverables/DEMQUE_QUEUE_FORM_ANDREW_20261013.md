@@ -190,6 +190,15 @@ distributions (dividends, interest), not price alone. Yahoo is admitted only thr
 stay on price. If a back year of total return is ever needed, it is derived from the stored `PX_LAST` year plus `DVD_HIST_ALL` (about 100 bulk requests), with dividends
 reinvested on the ex-date close, the porting test's formula.
 
+### Andrew, ~20:0xZ: three queue rulings (record `ANDREW_DIRECT_20261013_200xZ_NINE_OPEN_CALLS_ANSWERED_FIRMBKTS_DEMQUE_BRIEF_HARVEST.md`)
+
+- **$1.00 money market funds:** YES. One fund-type field per Cottonwood cash equivalent (about 227 cells); a fund skips Bloomberg only when its price is held at $1.00.
+- **CORRECTION, and the non-trading-day rule:** "We did not hit our limit this morning". The 10-13 miss was Bloomberg not logged in, with no `0.0.3_BG_BBGTerminal` fallback
+  online. **History pulls on non-trading days are EXPANDED commensurately, cell by cell, with the trading-day allowance those days do not use.** MDPF_DEMQUE organizes it.
+  A quota-limit claim is made only on evidence.
+- **Surface E has NO oversized requests:** a CAP on what can be turned around, and a request above it is refused at intake, never split. It is designed in MDPF_DEMQUE surface E
+  together with NFRA_OPLGTW. This replaces this seat's "split over up to 5 days" proposal.
+
 ## STANDING RULE, Andrew: INCREMENTAL MODE = THE LAST 5 TRADING DAYS, on every surface
 
 Once a need's backfill is complete, every daily pull asks for **the last 5 trading days** (from `lib/trading_calendar.py`), not a single day and not a long window. That
