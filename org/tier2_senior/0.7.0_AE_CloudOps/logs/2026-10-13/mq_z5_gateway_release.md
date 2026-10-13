@@ -150,3 +150,31 @@ design (CLAUDE.md 14b inverts isolation for it), so the race is structural, not 
 
 Worktrees kept: `C:/tmp/mp-z5-rel` (release), **`C:/tmp/mp-z5-rb` (the proven rollback -- do not
 remove until the issuer closes)**, `C:/tmp/mp-z5-hookup` (step 0).
+
+
+---
+
+## ADDENDUM 2026-10-13 ~21:5xZ -- the blocker cleared; the cell is complete
+
+The Blockers section above was true when written and is now superseded, so it is left standing rather
+than rewritten. `2.0.0_SA_COO~MP` ruled row `Z-S48` with **Amendment 3 @`ac44bd46e0`**: `_z5_probe.py`
+now imports `app.server` first. Its bytes were verified by PRINTING the probe at that commit (blob
+`7e5871d730df2b7b74ebd7130943eca8ae73e8f6`, identical to the working-tree copy), not by grepping for
+the quote.
+
+- **AC2 re-run: RESULT PASS, exit=0** -- `/health=200`; no-identity breakdown, `/control-plane`,
+  `/open-calls`, `/gateway` all 401; unlisted 404; `breakdown_s=1.2 channels=8 tools=67 dup_tools=0
+  channels_held=8 grant_store=read`. SSM `7a6c8ea2-e00f-4317-8bf5-9d69e6902070`.
+- **L5 closed; ledger CLOSED**, all 5 legs proven, sentinel removed (`4d9261146b`).
+- **AC1 re-run: RESULT PASS, exit=0** -- `sentinel=no`, `listed OPEN/HELD=0`, 21 of 21 sentinels
+  scanned, every other limb as before.
+- **Proof-of-spec instance written and VALID (rc=0)**, `4cd50e93dd`. Each artifact row is pinned to the
+  commit that INTRODUCED its token, found by walking the branch and testing present-at-pin /
+  absent-at-parent -- the checker rejected my first three attempts (wrong `kind` and `phase` enums,
+  `controls.mutant` as a string, and pins that did not introduce what they claimed), which is the
+  instrument working.
+- **Close report:** `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MQ/MP-z-5_CLOSE_REPORT.md`.
+
+**Blockers now: NONE for this seat.** What remains is the issuer's: disposition the four rows, flip the
+order's `<status>`, and drain `rel-nfra-mcportal-gw` to `box/sitez`. `C:/tmp/mp-z5-rb` stays until the
+round closes -- it is the proven rollback.
