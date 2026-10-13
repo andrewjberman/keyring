@@ -2122,6 +2122,47 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "git merge --no-edit box/dell1 in wk-MDPF_DEMQUE-42: rc 0, merge commit ad0aa2bf3d, no unmerged paths"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W43-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~43",
+    "surfaced_at": "2026-10-13T17:44:38Z",
+    "one_line": "On the real store index the UNTESTABLE arm of DQ9-t51-AC2 is vacuous: no held window is under 10 trading days (the minimum is 125), so the real run lists 0 UNTESTABLE securities; the UNTESTABLE path is exercised only by the synthetic test.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-51 ACCEPTANCE DQ9-t51-AC2: 'the UNTESTABLE ones are listed with the reason'; the report asks for 'the count of UNTESTABLE securities'. The decomposition's DQ-t-51 amendment frames a window under 10 trading days as a case that occurs.",
+    "world_is": "Read-only probe of index/index.parquet at the worker's HEAD: 326 rows, 326 distinct CUSIPs; minimum trading days in the draw window 125; 182 windows are under 252 trading days (the 1-year length is replaced there); 0 windows are under 10. The --build line reads testable 326, untestable 0, intervals_total 1630, cells 3195. The 182 short windows are short against one year, not against ten trading days.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "porting_test.py build_request at a8710f8b4a: a window with fewer than MIN_WINDOW_DAYS=10 trading days is listed untestable",
+        "dq_t51_real.py run 2026-10-13 (rc=0): INT-REAL-OK 326 testable with exactly 5 intervals each, 0 UNTESTABLE, 3195 cells",
+        "read-only probe .scratch/t51_index_probe2.py (uncommitted): denominator 326, min N 125, N<252 count 182, N<=60 count 0"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W43-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~43",
+    "surfaced_at": "2026-10-13T17:44:38Z",
+    "one_line": "The order says a fixed length that does not fit is replaced by a sha256 draw from 'a salted second digest' and says 'does not fit inside the window (in trading days)' without a test; the worker chose the salt, the word order and the fit test, and the draw now depends on those choices.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-51 BUILD step 1: 'a length that does not fit inside the window (in trading days) is REPLACED by a length drawn from the digest between 5 and N - 1 trading days (a salted second digest if the first has been used, so the replacement is deterministic)'.",
+    "world_is": "porting_test.py at a8710f8b4a: a fixed length fits for k 0..2 when its calendar length has room inside the window and both endpoints snap to trading days inside it with at least 5 trading days between them. A replacement uses sha256('<cusip>|<k>|r'): word 0 gives the length 5 + (w mod (N-5)), so 5 to N-1; word 1 gives the start index (w mod (N-L)). k 3 and 4 use the first digest: length 5 + (word 1 mod (min(250, N-1)-4)). The draw is deterministic, so a second implementer must reproduce these bytes or the request differs.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/porting_test.py _fixed, _replacement, _drawn at commit a8710f8b4a",
+        "data/mdpf/scripts/demque/test_demque_porting_intervals.py test_a_fixed_length_that_does_not_fit_is_replaced_by_a_sha256_drawn_length_that_fits_so_every_testable_security_has_five_intervals recomputes the salted draw"
+      ]
+    }
   }
 ]
 ```
