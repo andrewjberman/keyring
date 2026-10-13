@@ -499,3 +499,11 @@ how many P1 names Yahoo can price, how many have Black Diamond units and market 
 Bloomberg-only set with its cells. One cell, `DQ-t-46` (`p1_coverage.py`, read only, no vendor call; `0.9.0_WK_MDPF_DEMQUE~37`, worker, LOCAL, workstream
 P1COVER, depends on DQ-t-43). Inputs located by the issuer: Cottonwood bucket `s3://opal-data-cot/` `gold/canonical/holdings/YYYY-MM-DD.parquet` (daily from
 2026-04-22) and `silver/cot_holdings.parquet` (units, market_value, cusip; snapshot 2026-06-09); earlier history is for the worker to find and name.
+
+**Round 9 close of DQ-t-44 and amendment 11 (issuer, 2026-10-13 ~16:3xZ):** DQ-t-44 merged @900406e221 (AC1 CLASS-OK, AC2 CLASS-REAL-OK: 7 of 8 Bloomberg request files accepted,
+the ABNB model block refused by the 365-day rule and held undrawn per CTO msg 4912; the TR comparison plans 1,004 cells on MO and XOM; the P1 slice re-windowed to the
+frontier on the Commonwealth sign table: 609 names, 607 priced, 471,522 cells, 175 trading days; folder 156 passed). Worker rows S1-S12 ruled in the order's AMENDED
+section; S2 disarmed (`DISARM_EVIDENCE_D1_W36_S2_20261013.md`). The TR quote was re-frozen @eeb36aba99 with its finish corrected to 2026-10-17 (the refreeze tool counted cells, not
+identity). The six Yahoo requests in the repo and the device queue were declared by the issuer (client, window start) @this commit. One cell, `DQ-t-45`: the same
+refusal in `demand_queue.validate` and `--check-declared`, and the standing extension declares itself (`0.9.0_WK_MDPF_DEMQUE~38`, worker, LOCAL, workstream YCLASS, depends on
+DQ-t-44). Row D1-W36-S8 (ADVI request carries no vendor or channel) is read by the Yahoo-side check, which keys on `securities` without a Bloomberg vendor.

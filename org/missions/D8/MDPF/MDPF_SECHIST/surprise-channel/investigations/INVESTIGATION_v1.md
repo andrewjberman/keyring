@@ -455,3 +455,29 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   "world_is": "No pull wrote a manifest and nothing was written (RIVALFUNDS legs exit 93 and 97, 'nothing written'). This is not the organic case SH-t-21 names: that case reads a landed run where the vendor left no null, and no run landed. Issuer ruling (2.0.0_SA_COO~H1): SH-t-21 and SH-t-22 stay `issued`, no read is run against an absent manifest and nothing is graded BAD; the date is ruled when a scheduled run lands again, because the as_of 2026-10-12 key may then be written by a catch-up or may never be (the next run after recovery writes the then-current T-1), which is a dated re-point inside this decomposition and not an ENDPOINT change. Recovery is site Z's Terminal sign-in, which 0.0.0_AB_MSTR~Z reports it told 1.0.0_SA_CTO~Z and Andrew; this seat does not act there. Disarm/close: the first scheduled manifest after the sign-in, read by this seat."
 }
 ```
+
+## MDPF_SECHIST-D1-S6 -- The live characteristics producer package vendors the pre-MMF-rule etf_positioning_gold.py, so FWD-9's rule is not in the code that computes characteristics.json's windows.
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-S6",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~G1",
+  "surfaced_at": "2026-10-13T15:22:49Z",
+  "one_line": "The live cot-satellites-characteristics-producer package vendors etf_positioning_gold.py at 09408b19e5, four SECHIST commits behind HEAD, so the MMF rule (FWD-9) and the gap-record producer that the Positioning gold now runs are not in the code that computes characteristics.json's per-ticker return windows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RELAYED then re-read by this seat: 2.0.0_SA_COO~G1 msg 4916 and record org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/HG_T16_PACKAGE_DRIFT_20261013.md (member sha256 table, live vs HEAD build at 34b7e3d62a)",
+      "MEASURED here 2026-10-13 ~15:3xZ: git log -- data/etfs/scripts/gold/etf_positioning_gold.py lists ae567af9ef, d3c47c1896, ed0b1fc0d2, f9d959a290 (workers ~18, ~14, ~6, ~6, 2026-10-09) after 09408b19e5 (2026-08-28); git merge-base --is-ancestor of each of the four against 09408b19e5 is false; git diff --shortstat 09408b19e5 HEAD: 112 insertions, 6 deletions, matching the record",
+      "FILE infra/aws/lambda/cot-pipeline/cot-satellites-characteristics-producer/build_package.py:35,42,119 vendors data/etfs/scripts/gold/etf_positioning_gold.py and says the producer imports it for a Bloomberg-sourced ticker's windows"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v0.3 C-MMF / FWD-9: the money-market fund's return is carried by the pull's daily-return field and a null day is served blank; the Positioning page is the graded surface.",
+  "world_is": "Not measured: whether characteristics.json carries a money-market ticker whose window the older rule computes differently, and by how much. Issuer ruling (2.0.0_SA_COO~H1): (B) in the G1 record is accepted from this seat's side -- the producer's apply ships the three vendored members at their live bytes, and nothing of this project's is shipped into that package inside an act whose signed half does not name it. Redeploying the MMF rule and the gap-record producer into this package is a separate act of this seat under its own never-widen pair; it is not decided and not scheduled. First act toward it: read characteristics.json for the money-market tickers and run the HEAD rule against the live rule on the same inputs, both branches printed, before any pair is asked for. Owner 2.0.0_SA_COO~H1."
+}
+```

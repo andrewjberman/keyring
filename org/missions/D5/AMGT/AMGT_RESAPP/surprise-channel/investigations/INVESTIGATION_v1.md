@@ -25296,3 +25296,26 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~402 at AMGT-bi-3. The two differing keys are not read further by the worker; no re-measure and no retry was run (bound 5)."
 }
 ```
+```json
+{
+  "id": "AMGT_RESAPP-D1-W403-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~403",
+  "surfaced_at": "2026-10-13T15:06:31Z",
+  "one_line": "The nested portal worktree has no committer identity, so safe-commit.sh refuses the commit with rc=128 unless GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL are passed on the same call.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bi-4 section 5 commits the portal change in the nested worktree with .tools/safe-commit.sh --author \"0.9.0_WK_AMGT_RESAPP~403 <0.9.0_WK_AMGT_RESAPP~403@opal.agent>\" -F <msgfile> -- <paths>, run from the portal root, and names no committer identity.",
+  "world_is": "The first attempt (portal branch wk-AMGT_RESAPP-403-portal, HEAD 0a06280a) returned rc=128: 'Committer identity unknown ... fatal: unable to auto-detect email address (got Test@DESKTOP-HK1UU7N.(none))'. The portal repository carries no user.name or user.email, and the outer .tools/safe-commit.sh does not supply one. Nothing was committed and nothing was staged (the call unstaged its own three paths). The retry with GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL set for that one call committed 4477deca, whose committer reads 0.9.0_WK_AMGT_RESAPP~403. No git config was written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh refusal, cwd C:/dev/wk-resapp-403/portal, rc=128, 'Committer identity unknown' (first attempt, HEAD 0a06280a)",
+      "git log -1 --format=%H~%an~%cn~%s in the portal after the retry: 4477decaa9cf99e3a922469bcde72f8d9f667e8d~0.9.0_WK_AMGT_RESAPP~403~0.9.0_WK_AMGT_RESAPP~403~AMGT-bi-4 ..."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~403 at AMGT-bi-4. Any worker committing from a nested portal worktree hits the same refusal; the next order that names a nested portal commit should pass the committer identity or the portal repo should carry one. Whether to add it to the repo config is the issuer's or the CTO's call; this row changes nothing."
+}
+```
