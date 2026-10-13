@@ -10724,3 +10724,21 @@ What moved against s.112a to s.112e, item by item (printed denominator: the five
 
 `bj-11` joins the fan-out: chains_total 5 (bj-1 -> bj-2 -> bj-8 ; bj-7 ; bj-9 -> bj-11 ; bj-10), wave_staged adds `bj-11 ~412 (after bj-9's promote)`. The ratified-text half of v0.43 reads
 STALE and owed by `3.0.0_SA_CVO` (status WITHHELD at 18:3xZ): the new orders are cut when it signs.
+
+### 112g. ADDENDUM 2 -- THE MANAGEMENT VIEW WITHOUT `lusha_enrichment` (CTO msg 5053, ruling F4 of `SERVABLE_PREFIXES_OPAL_DATA_HARVEST_20261013.md`), 2026-10-13 ~18:5xZ
+
+The asset-manager grant serves `management/v1` only through a view that omits `lusha_enrichment` (the Lusha licence's redistribution scope is unread); `ceo_public_profile` serves. The CTO:
+"Add it as a separate output beside the existing object, never by editing the served one. Its address must be builder output (rule 30). It is a small cell; place it after V1's three."
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-bj-12` | the management writer emits, beside each `management/v1/<key>/<date>.json`, a second object without `lusha_enrichment`, at an address from `lib/opal_naming.py address()` (a registry row if the builder refuses); the served object is untouched (a build, STAGED) | `~413` | worker (build) | LOCAL | `lib/research/management/batch.py`, one test module, the registry row the builder asks for | F4 (the harvest grant, cluster O3); its outcome home is for the CTO to name when the order is cut |
+
+- **After V1's three:** staged until `bj-2` is complete, `bj-7` complete and `bj-9`'s receipt is written. It adds an output; it moves no served byte; a RUN of the writer that materializes the view for the
+  names is a store write with its own pair (not cut here).
+- **Collision with the AI fill, named:** `lib/research/management/` is `~G1`'s (s.112c); `batch.py` is the one file this cell edits there. `~G1` adds modules (`ceo_search.py` reuse, a bio and a
+  recent-developments producer) and does not edit `batch.py` before `bj-12` merges; if the fill needs `batch.py`, it waits on `bj-12` or the issuer re-sequences.
+- **A packaged member:** a registry row the builder asks for sits in a file the function's build packages, so the NEXT function build carries it as a member; the pair that rides it names it by blob.
+- **Fan-out:** chains_total 6 (adds `bj-12`, behind bj-2, bj-7 and bj-9); the order is cut only when `3.0.0_SA_CVO` signs the ratified-text half of v0.43 and the CTO names its outcome home.
+- **State at 18:4xZ:** PRD v0.44 @fbbf125ebb is ADMITTED (ratified-text half SIGNED by 3.0.0_SA_CVO, current): the four new orders (bj-7 to bj-10) and the staged bj-8, bj-11 and bj-12 are cut this tick.
+- **v0.44 against v0.43 (read by diff @2a72a556d9..@fbbf125ebb), three effects on this section:** (1) FWD-41 block (5) is the identity header's description line (`SecurityOverlay.tsx` `identityDescriptionLine`), NOT `HeaderBrief.tsx`: s.112f's page-file list reads `ExecManagementTab.tsx`, `ThesisTab.tsx` and `SecurityOverlay.tsx`; (2) FWD-40 (a)'s broken value is a CONFIRMED hit (a screenshot read confirms it), so `bj-7` prints candidates and `bj-11`'s screenshots confirm or clear them; (3) FWD-40 (d) runs `bun run dev:live --port 5174` and its draw is the 93 keys sorted by sha256(walk date + ' ' + key), the first ten, printed with the walk (`bj-11`'s instrument). FWD-40 (b)'s package is the Terraform apply's new package of `$LATEST` (the function has no published versions): `bj-2` is that act.
