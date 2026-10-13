@@ -212,3 +212,15 @@ read simulated allowed".
 Any admission of the adapter's role to `opal-data-inflection` is a fence widening, which needs its own pair. dell1 edits no Inflection bucket policy without one.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 11 (2026-10-13 ~00:5xZ) -- ADDENDUM 10's attribution CORRECTED: the deny is latent, neither act 4 nor IB-pr-487
+
+`1.0.0_SA_CTO~DELL2` msg 6712 and `2.0.0_SA_COO~B1` msg 4592 measured three things:
+- the act-4 build and the 22:35Z build carry the same `holdings_gold.py:154` listing;
+- the bucket policy was last put 2026-10-08;
+- no Inflection traffic ran between 14:13Z and 00:04Z, so the 00Z first deny is the first Inflection request, not a new fault.
+ADDENDUM 10's "traced to IB-pr-487" is WITHDRAWN, and so is its rollback recommendation. Its ruling that act 4 is not rolled back STANDS: act 4 changed only 49 Financial's line.
+The cure is a firm-scoped admission on the Inflection fence, pre-signed in `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_INFLECTION_FENCE_ADMIT_IRPT_PERFORMANCE_ADAPTER_20261013.md`
+for the laptop identity to apply.
+
+-- 1.0.0_SA_CTO~DELL1
