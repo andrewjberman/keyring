@@ -6006,7 +6006,6 @@
 }
 ```
 
-
 ## IRPT_ANLREQ-D2-W56-S1 -- the same native paths are staged by three other entries of the source map, which AR-y-201 does not re-pin
 
 ```json
@@ -6059,4 +6058,186 @@
   },
   "notes": "Disarm (ARMED): the owner records RELEASE_MAP_PATCH.diff as superseded by RELEASE_MAP_PATCH_R2.diff (deliverables of 0.9.0_WK_IRPT_ANLREQ~56/r19) so that no future leg applies the AR-y-193 pins. Related to IRPT_ANLREQ-D2-S66, which this order's measurements confirm; this row adds the baseline's package hash and the zip-level reproduction, and does not edit S66."
 }
+```
+
+## IRPT_ANLREQ-D2-W57-S1 -- adaptAnalysisUpload at PROD 37aa1247 refuses the create-path NEEDS_CORRECTION body of the four moved template sheets: no reason key, THREW EnvelopeMismatch on data
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W57-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~57",
+    "surfaced_at": "2026-10-13T04:51:13Z",
+    "one_line": "adaptAnalysisUpload at PROD 37aa1247 (envelope.ts:246-273) THREW EnvelopeMismatch('data') on the AFTER create body of the four moved NEEDS_CORRECTION sheets; the reader requires a non-empty string reason and the body carries none (key: reason).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y2",
+    "spec_asserts": "TO AR-y-202 step 4: a THREW on an AFTER case is a finding; file a BLOCKING row naming the reader, the commit and the key. Step 3 runs each moved answer body through the portal's own readers at PROD and DEV.",
+    "world_is": "At PROD 37aa1247, parseIrEnvelope('analysis-input-upload') -> adaptAnalysisUpload THREW on the AFTER create body of total_row_sheet, two_value_account_sheet, repair_header_two_values and brokerage_two_account (answer state NEEDS_CORRECTION, keys findings, input_id, state, template, upload_id; no reason). The same bodies THREW at DEV 64980b4d. A body built to the stored-row _answer shape (reason present, no template) RETURNED at both commits: that run is constructed, not a door run. Which shape the live door serves is NOT measured.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "src/pages/InvestorReporting/contracts/envelope.ts@37aa1247ee4b:246-273 (adaptAnalysisUpload; NEEDS_CORRECTION requires reason at :255; unknown state refused at :271)",
+        "src/pages/InvestorReporting/contracts/envelope.ts@64980b4d3a1e:247-274 (same reader; reason at :256; refusal at :272)",
+        ".scratch/r19/run_hr/readers_raw.json: AFTER rows THREW EnvelopeMismatch 'data' at PROD and DEV (bun 1.4.2, readers_run.ts)",
+        ".scratch/r19/run_hr/answer_bodies.json keys total_row_sheet|moved, two_value_account_sheet|moved, repair_header_two_values|moved, brokerage_two_account|moved: no reason key",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~57/r19/PORTAL_UPLOAD_ANSWER_READERS.json cases (arm AFTER, commit PROD and DEV) and deployed_path_cases (RETURNED at both)"
+      ]
+    },
+    "notes": "Not fixed; no reader was changed. Disarm: read the served NEEDS_CORRECTION body on the deployed template path and re-run this reader; if the served body carries reason the standing is INERT. The deployed template POST uses deferred_upload_service with request_resolution=send (pinned mirror intake/upload_resolution.py:102-113; reports/generate_installed.py:313,391), whose answers go through the stored-row _answer (uploads.py:411-415) that carries reason.",
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W57-S2 -- adaptAnalysisUpload at DEV 64980b4d refuses the create-path NEEDS_CORRECTION body of the four moved template sheets: no reason key, THREW EnvelopeMismatch on data
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W57-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~57",
+    "surfaced_at": "2026-10-13T04:51:13Z",
+    "one_line": "adaptAnalysisUpload at DEV 64980b4d (envelope.ts:247-274) THREW EnvelopeMismatch('data') on the AFTER create body of the four moved NEEDS_CORRECTION sheets; the reader requires a non-empty string reason and the body carries none (key: reason).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y2",
+    "spec_asserts": "TO AR-y-202 step 4: a THREW on an AFTER case is a finding; file a BLOCKING row naming the reader, the commit and the key. Step 3 runs each moved answer body through the portal's own readers at PROD and DEV.",
+    "world_is": "At DEV 64980b4d, parseIrEnvelope('analysis-input-upload') -> adaptAnalysisUpload THREW on the AFTER create body of total_row_sheet, two_value_account_sheet, repair_header_two_values and brokerage_two_account (no reason key). Identical result at PROD 37aa1247 (see the PROD row). A body built to the stored-row _answer shape RETURNED at DEV: constructed, not a door run.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "src/pages/InvestorReporting/contracts/envelope.ts@64980b4d3a1e:247-274 (adaptAnalysisUpload; reason at :256; refusal at :272)",
+        ".scratch/r19/run_hr/readers_raw.json: AFTER rows THREW at DEV (bun 1.4.2, readers_run.ts)",
+        ".scratch/r19/run_hr/answer_bodies.json keys total_row_sheet|moved, two_value_account_sheet|moved, repair_header_two_values|moved, brokerage_two_account|moved: no reason key",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~57/r19/PORTAL_UPLOAD_ANSWER_READERS.json cases (arm AFTER, commit DEV) and deployed_path_cases (RETURNED at DEV)"
+      ]
+    },
+    "notes": "Not fixed. Disarm as the PROD row: the served NEEDS_CORRECTION body on the deployed template path decides it. The DEV reader is byte-identical to PROD for this function (envelope.ts diff adds only one route alias).",
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W57-S3 -- the record's moved NEEDS_CORRECTION bodies come from the create path without request_resolution; the deployed template POST answers through _defer and the stored-row _answer
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W57-S3",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~57",
+    "surfaced_at": "2026-10-13T04:51:13Z",
+    "one_line": "The record's door bodies (UploadService.create, request_resolution unset) are not the deployed template-lane shape: the deployed POST builds its service with request_resolution=send and answers through _defer and the stored-row _answer, which carries reason.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO AR-y-202 step 3: take each door case's answer body as the pair returns it (START_STATE_SCRATCH_RUN.json door_cases), and pass it through the portal readers.",
+    "world_is": "The r19 harness (fresh_case, start_state_run.py) builds the service without request_resolution, so a template with ERROR findings takes the _freeze_template branch and returns {upload_id, input_id: None, state, findings, template} with no reason (pinned mirror uploads.py:313-317). The deployed upload POST is deferred_upload_service(send=...) (pinned mirror upload_resolution.py:102-113, called from reports/generate_installed.py:313 and :391), where the template lane goes to _defer (uploads.py:311-312) and its NEEDS_CORRECTION answer is _answer (uploads.py:411-415) with reason, findings and findings_total.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pinned mirror intake/uploads.py:311-317 (defer branch vs _freeze_template branch; return without reason at :317)",
+        "pinned mirror intake/upload_resolution.py:102-113 (deferred_upload_service, request_resolution=send)",
+        "pinned mirror reports/generate_installed.py:313 and :391 (the two callers of deferred_upload_service)",
+        "pinned mirror intake/uploads.py:411-415 (_answer NEEDS_CORRECTION with reason)",
+        ".scratch/r19/run/readers_deployed_shape.ts (constructed _answer shape; RETURNED at PROD and DEV)"
+      ]
+    },
+    "notes": "Changes which body the reader sees; it does not by itself change any served answer. Rows 1 and 2 record the reader result on the create body; the deployed-shape result is RETURNED at both commits. Not measured: the live served body (no live call).",
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W57-S4 -- no record door case produces HEADER_ROW_REPEATED; the checker's four-code coverage needs a constructed sheet
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W57-S4",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~57",
+    "surfaced_at": "2026-10-13T04:51:13Z",
+    "one_line": "HEADER_ROW_REPEATED is produced by none of the 16 record door answers, so AR202-y-AC1's four-code coverage cannot be met from the record alone; a constructed repeated-header CSV was added and labelled.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO AR-y-202 cell: the moved reader adds four finding codes (ACCOUNT_COLUMN_SEVERAL_VALUES, HEADER_ROW_REPEATED, SHEETS_NOT_READ, TOTAL_ROW_PRESENT); AC1 requires an AFTER case carrying each.",
+    "world_is": "Across the 16 record door answers (START_STATE_SCRATCH_RUN.json door_cases), the moved pair emits ACCOUNT_COLUMN_SEVERAL_VALUES, TOTAL_ROW_PRESENT and SHEETS_NOT_READ, and never HEADER_ROW_REPEATED (grep of the record: zero lines). The code is emitted by the moved template reader on a data row whose symbol and amount repeat the header (template_reader_HEAD.py:349-352). A constructed CSV (row 3 repeats Ticker,Dollars) produces it; the case is labelled CONSTRUCTED in r19 in each row's source.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".scratch/r19/run_hr/answer_bodies.json: HEADER_ROW_REPEATED absent; header_repeated_csv|moved carries it",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r19/START_STATE_SCRATCH_RUN.json (record door_cases: no HEADER_ROW_REPEATED)",
+        ".scratch/r19/ar191/head/template_reader_HEAD.py:349-352 (HEADER_ROW_REPEATED emission)"
+      ]
+    },
+    "notes": "AC1 passes with the constructed sheet included; the record's own sheets cover three of the four codes. Not extended to a new harness case beyond this one sheet.",
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W57-S5 -- SHEETS_NOT_READ sits in the moved NORMALIZED answer at portfolio.findings, and no portal reader consumes it
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W57-S5",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~57",
+    "surfaced_at": "2026-10-13T04:51:13Z",
+    "one_line": "SHEETS_NOT_READ (NOTICE) is carried at portfolio.findings in the moved two_sheet_workbook answer; no non-test portal file reads portfolio.findings or notices at PROD or DEV, so no person is shown it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO AR-y-202 step 2 and step 4: find every portal reader of the upload door's answer; a reader you could not find for a route is a row (not_read).",
+    "world_is": "The moved NORMALIZED answer for two_sheet_workbook holds the notice at /portfolio/findings[0] (code SHEETS_NOT_READ, severity NOTICE, description present). Non-test grep of src at PROD 37aa1247 and DEV 64980b4d for portfolio.findings, portfolio.notices and source.findings returned zero matches. The ticket path files the ticket with no notice; the composer shows the holdings with no notice.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".scratch/r19/run_hr/answer_bodies.json two_sheet_workbook|moved: portfolio.findings[0].code SHEETS_NOT_READ",
+        "portal src at PROD 37aa1247 (non-test): zero matches for portfolio.findings / portfolio.notices",
+        "portal src at DEV 64980b4d (non-test): zero matches for portfolio.findings / portfolio.notices"
+      ]
+    },
+    "notes": "Recorded in not_read of org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~57/r19/PORTAL_UPLOAD_ANSWER_READERS.json. Not a parse failure: the NORMALIZED answer RETURNED at both commits.",
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W57-S6 -- the owned-request view of a stored template input reads no findings; the findings reader for stored requests takes a different wire shape
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W57-S6",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~57",
+    "surfaced_at": "2026-10-13T04:51:13Z",
+    "one_line": "The owned-request view (readOwnedRequest, analysis-request-read) reads no findings at PROD or DEV; the stored request's findings are read by adaptAnalysisRequest, whose wire shape (code, detail, severity) differs from the upload door's (code, description, row, actions).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO AR-y-202 step 2: every portal reader of the upload door's answer or the stored input's findings, including the owned-request view of a stored template input.",
+    "world_is": "readOwnedRequest (owned-requests.ts:58-78 at PROD; :58-78 at DEV) reads identity, accepted_at, comparisons and composition under exact-key checks, and no findings. The stored request's findings are read by adaptAnalysisRequest (adapt.ts:866-872 at PROD; :877-882 at DEV) through the client's AnalysisRequest document map (investor-reporting.ts:1530 PROD, :1578 DEV): it takes finding.detail as the message. The upload door's findings carry description and row and no detail key, so a door-shaped finding would reach that view with no message.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "src/pages/InvestorReporting/contracts/owned-requests.ts@37aa1247ee4b:58-78 (no findings read)",
+        "src/pages/InvestorReporting/contracts/owned-requests.ts@64980b4d3a1e:58-78 (no findings read)",
+        "src/pages/InvestorReporting/contracts/adapt.ts@37aa1247ee4b:866-872 (finding.detail as message)",
+        ".scratch/r19/run_hr/answer_bodies.json: upload door finding keys include description, row, actions and no detail"
+      ]
+    },
+    "notes": "adaptAnalysisRequest was READ, not run: no AnalysisRequest wire body is produced by the upload door. Recorded in readers and not_read of org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~57/r19/PORTAL_UPLOAD_ANSWER_READERS.json.",
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
 ```
