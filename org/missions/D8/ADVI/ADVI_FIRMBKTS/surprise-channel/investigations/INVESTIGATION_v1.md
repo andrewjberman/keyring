@@ -6642,3 +6642,29 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Fix is a code cell under a pair (not this seat's): call client.beta.messages.create(..., betas=[...]) or drop betas= (prompt caching is generally available on the plain endpoint); then ONE dry run, which should return bullets and is the positive control FB-j-7 needs. Until then no non-dry invocation (FB-j-4's trigger) should deploy. The generator has therefore not been able to produce a bullet since the layer's SDK version met this call."
 }
 ```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~73 (FB-j-9, the log line's non-ASCII handling)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W73-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~73",
+  "surfaced_at": "2026-10-13T09:19:46Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "FB-j-9 interpretation: the drop log replaces non-ASCII characters in the exception text with a space as well as non-printable ones, because the workspace ASCII law covers production logs. The cell text names only non-printable characters.",
+  "spec_asserts": "FB-j-9 1a.1: the helper logs str(exc) clipped to 200 characters with every non-printable character replaced by a space; the order's bounds section 2.1 requires ASCII only in the commit.",
+  "world_is": "A non-ASCII printable character in an exception message (for example a curly quote) would pass through the cell's literal rule into the log line. The landed helper treats any character outside printable ASCII (0x20-0x7E) as non-printable and writes a space in its place. The clip length, the redacted classes and the one-line form are unchanged, and the four tests do not exercise a non-ASCII message.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/exec-summary-generator/lambda_function.py@2deaa9165e lines 230-246 (_log_slot_drop)",
+      "CLAUDE.md section 4: No non-ASCII in production code/logs/AWS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the COO and the adjudicating seat: decide whether a non-ASCII message character should be replaced (as landed) or kept as written. This seat took no action beyond the landed helper."
+}
+```
