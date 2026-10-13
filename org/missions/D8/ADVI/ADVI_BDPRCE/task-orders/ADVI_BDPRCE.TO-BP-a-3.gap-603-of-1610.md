@@ -95,7 +95,7 @@ Instance at the path above. Commit your scripts, `GAP.json`, `GAP.md` and `GAP_R
 
 **ISSUER NOTES:** PRD cell C9 (gap half), DEC-8 third bullet (the gap is explained or bounded before FWD-1 and FWD-3), brief V.7. Read-only; class LOCAL. A residue that stays UNEXPLAINED is bounded and named at the drain; it does not block the thread's own row.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <workstream>GAP</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-a-3</to_id>

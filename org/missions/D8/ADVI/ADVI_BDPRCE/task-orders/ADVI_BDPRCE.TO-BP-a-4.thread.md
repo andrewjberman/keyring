@@ -31,10 +31,19 @@ Three earlier cells of this round are merged into your worktree (read them first
 1. **Find the served T-1 object.** The 49 Financial served home is `opal-data-49financial` (prefixes `advi/49financial/gold/`, `advi/49financial/platinum/`, `gold/advi/`). Find, from the producer chain
    (`data/black_diamond/scripts/gold/B_01.holdings_lots.py` writes lots to `opal-data-bd`; read what carries the holdings, with a per-holding price and a date, into the served home and which object the portal
    reads at the default T-1 date), the one served object that lists a client account's holdings with a price per holding. Record its bucket, key and VersionId.
-2. **Choose the holding.** One account, one holding with NO public ticker (the served object's `ticker` is null, empty or `UNKNOWN`, or the asset has no entry in `config/ticker_lookup.json` of `opal-data-bd`),
-   whose served price's source is `transaction_observed`, and which `GAP_ROWS.csv` classes `EQUAL` for that (date, asset). State how many candidates there were and why you took this one (the first in file order that fits is enough).
-3. **Trace it.** Run `trace_price.py --asset "<asset_name>" --date <the served date> --out <your TRACE.json>`. Its `price_source`, `rule`, `trade_ids`, `recomputed_price` and `match` carry into the thread record.
-4. **Name the writer.** From `WRITERS.json`, name which writer wrote the price row served for that date (writer id and the rule copy it applies), or say `unidentified`.
+2. **Choose the holding.** One account, one holding with NO public ticker (the served object's `ticker` is null, empty or `UNKNOWN`, or the asset has no entry in `config/ticker_lookup.json` of `opal-data-bd`).
+   Its served price at the served date has one of two shapes; take the first shape for which a candidate exists, and state the counts of both:
+   a. **Direct:** the served price's source is `transaction_observed` at the served date and `GAP_ROWS.csv` classes that (date, asset) `EQUAL`.
+   b. **Chain:** the served price's source is `carry_forward` or `linear_interpolation` at the served date, and its anchor (the most recent earlier row of that asset in `canonical_prices.parquet`/the
+      daily files whose source is `transaction_observed`) is classed `EQUAL` in `GAP_ROWS.csv`, and the served price equals the anchor's price within `1e-6 * max(1, |price|)`. (The newest two daily
+      price files carry no `transaction_observed` row, measured by worker ~2 in row `ADVI_BDPRCE-D1-W2-S1`, so shape b is expected to be the normal case at the served T-1 date.)
+   State how many candidates there were of each shape and why you took this one (the first in file order that fits is enough).
+3. **Trace it.** Run `trace_price.py --asset "<asset_name>" --date <the date>` with `--out <your TRACE.json>`: for shape a the served date; for shape b the SERVED date (it reports the carry-forward
+   row and its rule) AND again at the anchor date (it reports the median and the trade ids). `trade_ids`, `recomputed_price` and `recompute_equals_served` carry into the record from the anchor trace
+   for shape b (the recompute is the anchor's median, and `recompute_equals_served` compares it with the price SERVED at the served date). `rule` names the whole chain in one or two sentences
+   (for example "carry_forward from <anchor date>; anchor is the median of that day's trades per bd_price_update.py:327-344"). Set `chain` to `true` and `anchor_date` to the anchor's date for shape b.
+4. **Name the writer.** From `WRITERS.json`, name which writer wrote the price row served for that date (writer id and the rule copy it applies), or say `unidentified`. For shape b also name the writer of
+   the anchor row if the versions let you (the version history is in `WRITERS_VERSIONS.tsv`), or say `unidentified`.
 5. **Do not choose a favourable row dishonestly.** If no candidate fits (no untickered transaction_observed holding with `EQUAL`), say exactly how many candidates failed each condition and file a BLOCKING row; do not relax a condition.
 
 ### 1b. The record: `org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~4/THREAD_TRACE.json`
@@ -43,11 +52,12 @@ Three earlier cells of this round are merged into your worktree (read them first
 {"order": "BP-a-4", "read_at": "<ISO UTC>", "claim": "measured",
  "served_object_key": "<bucket>/<key>@<VersionId>", "as_of_date": "YYYY-MM-DD",
  "account_ref": "<first 12 hex of sha256(str(account_id))>", "asset_name": "<name>", "ticker": null,
- "served_price": 0.0, "price_source": "transaction_observed",
+ "served_price": 0.0, "price_source": "transaction_observed | carry_forward | linear_interpolation",
+ "chain": false, "anchor_date": null, "shape_counts": {"direct": 0, "chain": 0},
  "rule": "<one sentence, with file:line>", "trade_ids": ["<transaction_id>", "..."],
  "recomputed_price": 0.0, "recompute_equals_served": true,
  "writer": "<writer id and rule copy from WRITERS.json, or unidentified>",
- "gap_class": "EQUAL", "candidates_considered": 0,
+ "gap_class": "EQUAL (the anchor's, for a chain)", "candidates_considered": 0,
  "instrument": "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~2/trace_price.py"}
 ```
 
@@ -87,7 +97,7 @@ Instance at the path above. Commit `THREAD_TRACE.json`, `THREAD_TRACE.md` and yo
 **ISSUER NOTES:** PRD cell C10; FWD-1 DONE WHEN. STAGED at the cut: it un-parks when `BP-a-1`, `BP-a-2` and `BP-a-3` are merged and PASS at the merged HEAD; its worktree is cut from that HEAD, so the three deliverables are in it.
 The FWD-1 grade (REALIZED) is the CTO's at the round-1 analysis, on the issuer's one real run of this record at the drain (the served object re-opened). Read-only; class LOCAL.
 
-<status>staged</status>
+<status>pending</status>
 <round>1</round>
 <workstream>THREAD</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-a-4</to_id>
