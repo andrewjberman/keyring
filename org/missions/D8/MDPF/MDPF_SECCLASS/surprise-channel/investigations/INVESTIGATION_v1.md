@@ -7592,3 +7592,55 @@ by dell1 or by this seat.
   "world_is": "The two statements name different folders for the same instance. The gate follows the serial, so the ~88 path is not writable by this session. The updated proof path is the ~89 folder. The earlier instance under ~88 is not rewritten by this session."
 }
 ```
+
+## MDPF_SECCLASS-D1-W90-S1 -- restoring multi_asset in the frozen v1 schema breaks test_holdings_snapshot.py::test_every_published_asset_class_enum_is_the_producers_list, outside this order's write grant
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W90-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~90",
+  "surfaced_at": "2026-10-13T04:28:39Z",
+  "one_line": "After the 15-line restore, the sibling test data/assets/scripts/gold/investor_reporting/tests/test_holdings_snapshot.py::test_every_published_asset_class_enum_is_the_producers_list fails: 1 failed, 69 passed (the four-file AC3 set). Its assertion requires each of the three contract asset_class enums (nodes, security_aggregates, class_totals) to equal the producer's ASSET_CLASS_VALUES, and the restored contract now carries multi_asset (9 members) while the producer list has 8. The test file is not in this order's <paths> grant, so AC3 cannot be met as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/tests/test_holdings_snapshot.py:419-430 read at 4bad100483 (assert sorted(enum) == sorted(hs.ASSET_CLASS_VALUES) for the three enums)",
+      "pytest run in worktree wk-secclass-90 after the reverse patch: test_holdings_publish_gate.py + test_holdings_narrowed.py + test_holdings_snapshot.py + test_holdings_cusip_fallback.py -> 1 failed, 69 passed; at base 4bad100483 the same four files: 70 passed",
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e100.holdings-schema-v1-restore-multi-asset.md item 3 names only the publish-gate helper as a possible breaking test; BOUNDS grant lists test_holdings_publish_gate.py and the new file only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Item 3 of the order: if an existing test breaks because it encoded the narrowed enum, change ONLY that helper or assertion, and only in test_holdings_publish_gate.py; AC3 requires the four sibling files to pass as at the base or with only that helper change.",
+  "world_is": "A second sibling test encodes the narrowed enum as an equality between the producer list and the contract enums. It sits outside the write grant. The restored contract (the frozen v1 copy, as the CTO ruled) and the producer's six-class ASSET_CLASS_VALUES now differ by design, so this assertion cannot pass without an edit to test_holdings_snapshot.py or a CTO ruling on the producer-contract relation. Not edited by this worker."
+}
+```
+
+## MDPF_SECCLASS-D1-W90-S2 -- the publish-gate helper docstring says the v1 enum already rejects multi_asset, which the restore makes false; the helper still passes, so item 3 did not apply
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W90-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~90",
+  "surfaced_at": "2026-10-13T04:28:39Z",
+  "one_line": "The docstring of _contract_admits_multi_asset in test_holdings_publish_gate.py (:179-181) reads 'Today the v1 contract's asset_class enum already rejects multi_asset at validation'. After the restore the v1 contract admits multi_asset, so the docstring states a false fact. The helper still makes its arms pass (it stubs validate_snapshot), so no test breaks and item 3's change condition is not met; the worker did not edit it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/tests/test_holdings_publish_gate.py:179-181 read at 4bad100483 (docstring text as quoted)",
+      "pytest run in worktree wk-secclass-90 after the reverse patch: test_holdings_publish_gate.py -> no failure (the arms pass with the stub in place)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Item 3 of the order: the helper docstring says the v1 enum already rejects multi_asset; change the helper only if an existing test breaks because it encoded the narrowed enum.",
+  "world_is": "The docstring's premise is false after the restore, and the helper is not broken. Whether the docstring is refreshed is for the issuer to decide inside its own grant."
+}
+```
