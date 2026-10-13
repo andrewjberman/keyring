@@ -587,3 +587,110 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Recorded for the tooling owner. Not a block: each file was reached by its named path or a name search."
 }
 ```
+
+## COMM_ASSIST-W8-S6 -- the stale-version refusal (unseen) is not reached by the edit (redraft) branch of on_sms_reply
+
+```json
+{
+  "id": "COMM_ASSIST-W8-S6",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~8",
+  "surfaced_at": "2026-10-13T18:49:41Z",
+  "one_line": "on_sms_reply calls unseen() (the stale-version refusal) only for send and drop; the edit (redraft) branch applies Andrew's notes to whatever draft is pending, so a redraft answer to a draft that changed is not refused.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/tenant.py@38ac43222d:497 reads 'if action in (\"send\", \"drop\") and unseen(ctx, p):'",
+      "data/transcripts/scripts/teams_chat/tenant.py@38ac43222d:527-530 the edit branch pushes the dialog and redrafts the current pending p with no unseen() call",
+      "data/transcripts/scripts/teams_chat/tenant.py@38ac43222d:137-138 unseen() returns True on a version mismatch, so the check exists and the edit branch does not reach it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "tenant.py@38ac43222d:498-499: a reply to a draft that changed is refused with 'changed just before your reply, so nothing was done'.",
+  "world_is": "A redraft (edit) reply is applied to the current pending draft without the version check. The new version is texted for approval and nothing is posted, so no Teams post follows from it. Measured by reading the code only; not exercised.",
+  "notes": "MUSE_ANSWER_PATH_DESIGN.md section 4 relies on the assistant's check, which does not hold for edit. The fix sits in tenant.py, outside CA-h-3; the forwarder's version check is the only guard for edit until then."
+}
+```
+
+## COMM_ASSIST-W8-S7 -- the muse public key the design relies on is not named anywhere in the repo
+
+```json
+{
+  "id": "COMM_ASSIST-W8-S7",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~8",
+  "surfaced_at": "2026-10-13T18:49:41Z",
+  "one_line": "The CA-h-3 premise that muse's public key is already in the boxes' administrators_authorized_keys cannot be checked from the repo: no muse key, principal or device row exists in org/devices/ or .tools/.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/DEVICES.json@38ac43222d:105-120 holds the dell2 row only; no muse row",
+      ".tools/ssh-tailnet-enable.ps1@38ac43222d:40 KeysPath, :254 AuthorizedKeysFile for Match Group administrators, :496 keys-file ACL; no muse key in the file",
+      "content search for muse over org/devices/ and .tools/ at base 38ac43222d returned no match"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-h-3 cell, section 1 choice (a): a signature made with muse's own key, whose public key is already in administrators_authorized_keys.",
+  "world_is": "The repo does not name muse's key, principal or fingerprint. Whether the key is on the box is not measured; the design states choice (a) on the premise and marks the fingerprint not measured.",
+  "notes": "The design does not depend on the key being named in the repo; it depends on a pinned allowed_signers that the build cell creates from muse's key once it is read on the box."
+}
+```
+
+## COMM_ASSIST-W8-S8 -- drafts.json carries no object id, and the assistant routes sms.reply by object id
+
+```json
+{
+  "id": "COMM_ASSIST-W8-S8",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~8",
+  "surfaced_at": "2026-10-13T18:49:41Z",
+  "one_line": "The forwarder cannot route an answer from the CA-h-1 reader folder alone: drafts.json rows carry tag and version but no object id, and sms.reply is delivered to the object id found through the sms-tag index.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/muse_reader/refresh.py@38ac43222d:230-234 _draft_row keeps tag, kind, version, status, texted_at, send_at, draft, chat_title; no object id",
+      "data/transcripts/scripts/teams_chat/tenant.py@38ac43222d:1157 the text path resolves oid = ldo.lookup('sms-tag', tag) and sends sms.reply to oid",
+      "infra/aws/terraform/modules/ldo/runtime/ldo.py@38ac43222d:152-155 lookup reads the item at pk '#index#' + namespace, sk key"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-h-3 section 5: the forwarder writes one sms.reply entry for the draft's object, found from the reader folder's tag and version.",
+  "world_is": "The object id is not in the reader folder. The design makes the forwarder read the #index#sms-tag row (a DynamoDB GetItem), or asks CA-h-1's layout to carry object_id. The design names the read; it does not change refresh.py.",
+  "notes": "A read of the state table is needed beyond the SQS write statement in section 5 of the design."
+}
+```
+
+## COMM_ASSIST-W8-S9 -- the CA-h-1 reader folder has no answers location for muse's answer file
+
+```json
+{
+  "id": "COMM_ASSIST-W8-S9",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~8",
+  "surfaced_at": "2026-10-13T18:49:41Z",
+  "one_line": "The CA-h-3 cell says muse writes an answer file into the CA-h-1 reader folder, but the CA-h-1 layout has no answers location: refresh.py writes only its six fixed names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/muse_reader/refresh.py@38ac43222d:57-68 the README text lists open_calls.json, drafts.json, eod_today.json, sprint_today.json, INDEX.json and README.txt; no inbox",
+      "data/transcripts/scripts/muse_reader/refresh.py@38ac43222d:182-183 the only writes are INDEX.json and README.txt, with each source written by name at :178"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-h-3 cell: muse writes an ANSWER FILE into the dell2 reader folder laid out in CA-h-1.",
+  "world_is": "No answers folder exists in the CA-h-1 layout. The design names <reader root>/answers/ as a folder the CA-h-2 or later build must create; refresh.py does not create it and was not changed here.",
+  "notes": "A refresh that rewrites only its named files leaves an answers/ folder untouched, so the two do not collide."
+}
+```
