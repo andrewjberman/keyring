@@ -31731,3 +31731,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "AC1 FAIL (no log line exists in any source this order grants), AC2 FAIL (the check's regex cannot match), AC3 PASS (0 and 0). Nothing was invented to pass AC1: snapshot_path_log_line is left empty with its note. The order stays pending for the issuer's ruling: either accept the count with the positive control taken from the served manifest's retained-input receipt (an S3 read outside this grant), or a driven or later scheduled build captured with an output sink; and repair the check's \b bytes."
 }
 ```
+
+## IRPT_BCKEND-D2-S136 -- DISARM EVIDENCE for W345-S3: 0 leftover files after a named build that took the S3 path
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S136",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T15:09:11Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARM EVIDENCE, filed by the disarm owner the turn it was read: W345-S3 (the 49F builder leaves a client-bearing Tax snapshot temp file) is DISARMED on the CTO's PASS definition: 0 leftover files after a named real build that took the S3 path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB178-2_post_build_count.json (IB2, TO-IB-pr-513, commit ac5c8dfba7), read by this seat: counts at 14:47:12Z on the running host (SSM Success): 49financial 0, inflection 0; the build is invocation 4f958436 (49financial holdings refresh, 14:15:25 to 14:20:49Z) on the package at VersionId UHOCIkWj3QiIzNucG1VjNnk_AufIg6oD (inferred: the command fetches the key unversioned and that version has been the latest since 13:35:24Z; 'package members 44 verified').",
+      "the control the CTO set (RE 7001): the build's own revision manifest carries the Tax membership snapshot's source_objects entry as an S3 bucket, key and VersionId (vintage kind s3, capture_date 2026-09-23, version 3Wf8ddk9...), not {env, path}; so the candidate retained_capture took the temp-file branch and the 0 count is not vacuous. IB2's extractor printed the vintage keys only.",
+      "the issuer re-ran IB178-2 AC1, AC2, AC3 on the shared tree: PASS (after my regex repair 8c4bde24a8 and the control amendment f18974e127); round-close-check for round 179; the packet IB-pr-510 scratch probe earlier showed the leak on the live modules (1/1) and none on the candidate (0/0)."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "DISARMED: W345-S3. The temp-file fix is on the host (49financial and inflection packages), a real scheduled 49financial build ran on it and took the S3 snapshot path, and no leftover snapshot temp file remains (0 and 0). Caveats stated, not hidden: (1) the package VersionId the build ran is inferred, not read from the build (the command fetches unversioned); (2) the inflection count is 0 but IB2 named only the 49financial build's vintage (the Inflection Eclipse capture's own vintage was not read); (3) the host's /tmp may be cleared by other means, so 0 shows the post-build state, not the absence of any creation. The claim that the OLD package leaks rests on the code and the scratch probe (live modules 1/1); no pre-fix host count was ever taken (IB-pr-497 parked). STILL ARMED: W361-S1 (a careless re-cut would ship unrelated changes), W348-S2."
+}
+```
