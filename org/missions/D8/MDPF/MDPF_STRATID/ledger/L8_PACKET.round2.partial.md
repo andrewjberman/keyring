@@ -132,3 +132,6 @@ Full read: `deliverables/2.0.0_SA_COO~S1/R2_RUN_READ_20261012.md`. The 10-10 and
 - **Ledger:** `mdpf-stratid-r2-global-fold` CLOSED (all 5 legs). `mdpf-stratid-w2-wiring-silver` L3 stays OPEN: Stage 6 dies at
   `lib.opal_naming` before step 6d on the runner (MDPF_TAXSMA-S5, ARMED, owner `2.0.0_SA_COO~T`; row D1-S10), so no dispatch can show the
   6d log until S5 is disarmed. The served-slice half of L3 is read and equal.
+  - **Parked, owner and condition (2026-10-13, `1.0.0_SA_CTO~DELL1` msg 4774):** S5 is re-owned to `2.0.0_SA_COO~D1`, the runner
+    code sync (MDPF_CANON round-5 ADDENDUM 3). L3's runner-log read un-parks when that sync makes Stage 6 reach 6d; the reader is
+    this seat, the first dispatch after the sync is the read.
