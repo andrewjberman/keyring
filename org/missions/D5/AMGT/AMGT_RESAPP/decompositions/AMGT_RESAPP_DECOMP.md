@@ -10742,3 +10742,27 @@ The asset-manager grant serves `management/v1` only through a view that omits `l
 - **Fan-out:** chains_total 6 (adds `bj-12`, behind bj-2, bj-7 and bj-9); the order is cut only when `3.0.0_SA_CVO` signs the ratified-text half of v0.43 and the CTO names its outcome home.
 - **State at 18:4xZ:** PRD v0.44 @fbbf125ebb is ADMITTED (ratified-text half SIGNED by 3.0.0_SA_CVO, current): the four new orders (bj-7 to bj-10) and the staged bj-8, bj-11 and bj-12 are cut this tick.
 - **v0.44 against v0.43 (read by diff @2a72a556d9..@fbbf125ebb), three effects on this section:** (1) FWD-41 block (5) is the identity header's description line (`SecurityOverlay.tsx` `identityDescriptionLine`), NOT `HeaderBrief.tsx`: s.112f's page-file list reads `ExecManagementTab.tsx`, `ThesisTab.tsx` and `SecurityOverlay.tsx`; (2) FWD-40 (a)'s broken value is a CONFIRMED hit (a screenshot read confirms it), so `bj-7` prints candidates and `bj-11`'s screenshots confirm or clear them; (3) FWD-40 (d) runs `bun run dev:live --port 5174` and its draw is the 93 keys sorted by sha256(walk date + ' ' + key), the first ten, printed with the walk (`bj-11`'s instrument). FWD-40 (b)'s package is the Terraform apply's new package of `$LATEST` (the function has no published versions): `bj-2` is that act.
+
+### 112h. ADDENDUM 3 -- THE CUT, AND WHAT CHANGED AT IT, 2026-10-13 ~19:0xZ
+
+- **Cut now:** `AMGT-bj-7` (`~408`, STAGED behind `bj-2`: the census invokes the function), `AMGT-bj-8` (`~409`, STAGED behind `bj-2`: its AC3 invokes the function), `AMGT-bj-9` (`~410`, PENDING: a portal
+  branch, no reader of the function). Instruments (prepared, self-tested, dry-run): `round103_prep/checks/r103_section_census.py`, `r103_pull_census.py`, `r103_pull_census_run.sh`,
+  `r103_feature_surface_check.py`, `r103_feature_green.sh`.
+- **`AMGT-bj-10` is NOT cut:** answered by the issuer's read of the code. `amgt-induction-daily` runs `induction_scheduled`, whose closing rc is the first non-zero of three steps; rc 4 is
+  `model_block_pull.py` `admit` (line 2280) and `refresh` (line 2405) returning REFUSED when the Bloomberg DAPI is unreachable, which is the Terminal sign-in that is down (an Andrew act, carried since
+  round 102). The one confirming read is the task's own log line on site Z (`REFUSED`), a site Z act; no site Z change is needed, so no `1.0.0_SA_CTO~Z` half. Stated, not graded: it is a code read
+  and a known state, not the log.
+- **`AMGT-bj-11` and `AMGT-bj-12` are NOT cut as shells:** a face the issuer cannot complete is not an order. `bj-11` is cut when the promote lands (the PROD release commit moves then); `bj-12` when
+  `bj-2`, `bj-7` and `bj-9` are done. Both stay placed in s.112b and s.112g.
+- **The AI fill's lane is `~R2`** (the CTO's naming, his half of the bj-2 pair); s.112c's `~G1` reads `~R2`.
+- **`AMGT-bj-2` APPLIED 2026-10-13T18:55:15Z** (RA1 msg 5070): CodeSha256 `AaACnKtrQyDeTH/qljASGyCs1uPLHUHydW2c7FPzoU8=`, one member of 408 as signed, replay 35/78/16 and 0 differ. **First cold
+  request: handler 3,769.92 ms, Init 533.51 ms, feed 1,776 ms (47 percent), peers 1,001 ms, identity 209, top_band 189, axis_reads 172, input_provenance 132, model_block 105: the 3,000 ms target is
+  NOT MET and the apply STANDS** (CTO half: a miss is a grade, not a rollback). The feed fell from 18,796 ms to 1,776 ms; the remainder is two cold-container costs, `peers` (twenty sequential
+  per-member refdata LISTs and GETs, the census's largest pull) and `feed` (one LIST, one GET of the 8.4 MB object, a projected decode). The `list`/`get`/`decode` split reads at AC3, after RA1 reports.
+
+- **THE KEY AT THE GATE (found at the commit):** `.tools/to-pipeline-gate.py` refuses a NEWLY ADDED order into a round that already has an issuance at HEAD (row `AMGT_RESAPP-Z-S154`: "A re-cut
+  into the first issuance MODIFIES its orders and adds no file"), and names the one sanctioned route: a SECOND WORKSTREAM issues its own round by a line-anchored `<workstream>NAME</workstream>` beside
+  `<round>` (row `IRPT_BCKEND-S179`). So the V1 cells are workstream **`V1`** of round 103: `bj-7`, `bj-8` and (when cut) `bj-9`, `bj-11`, `bj-12` carry `<round>103</round>` and
+  `<workstream>V1</workstream>`; the cold-start cells (`bj-1` to `bj-5`) are the workstream-less round 103. The disjoint boundaries are s.112c's: the function and `scoped_amgt.py` (the
+  cold start), the V1 censuses and the portal branch (V1), the AI fill's modules (`~R2`). One issuer (`2.0.0_SA_COO~R1`) holds each (workstream, round) key once. The round-close read for round 103
+  is owed under BOTH keys (`round-close-check.py` is run for the project's round and read for the V1 workstream's orders).

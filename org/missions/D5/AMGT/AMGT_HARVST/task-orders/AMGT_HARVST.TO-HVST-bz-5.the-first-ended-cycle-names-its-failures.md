@@ -86,9 +86,19 @@ This order touches none of them.
   read of what the runner wrote, by the seat that runs it, and the CVO's L9 read is the independent one (corroboration cap, CLAUDE.md rule 22).
 - Delivered as a crossbox ORDER through MSTR (`python .tools/crossbox-call.py open --kind ORDER --to-device sitez`).
 
+**COMPLETE 2026-10-13 ~19:1xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** `0.7.0_AE_CloudOps~ZW` @5142731071 (in box/dell1). The cycle `20261013T080909Z` (the first to end on its own under the windowless pin) started 08:09:09Z and ended
+  17:37:08Z, `stopped` `bot_check`, `completed` False, one failure whose `detail` is `ChallengeFailed: bot_check challenge_failed (bloomberg_press_and_hold)` -- the
+  `<ExceptionClassName>: <message>` shape HVST-bx-3 put in the pin, not the bare word `error`.
+- **AC1 PASS:** the live line `CYCLE=20261013T080909Z STOPPED=bot_check FAILED=1 NAMED=1`. Proof instance VALID rc 0 (`proof-of-spec-check --governing-order`), re-run by
+  this seat in its own tree. Independent read by this seat on the committed record (514 B, sha256 5e652eaf6594...), copied into a `cycles/bbg/` fixture and read by the
+  order's own script: FAILED=1 NAMED=1; the prior truncated record (320 B, sha256 52e0451bad83...) reads FAILED=0 NAMED=0, so the pattern discriminates.
+- **What this does NOT prove:** the cycle did not complete (`completed` False), so it does not count toward failure-free and the Z-S117 count stays 0 under amendment
+  @cea877dfc9. The read is the seat's own on a copy of site Z's record; the CVO's L9 read is the independent one. Nothing was planted, re-queued or driven to move the line.
+
 <risk>LOCAL</risk>
 <worker_class>seat</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>84</round>
 <slot>site-z</slot>
 <fabric>dell1</fabric>
