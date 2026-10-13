@@ -7372,3 +7372,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W136-S1 -- DB-b-169: under the day rule no differing day of the 7 segments takes a reason; all 7 windows stay open
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W136-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~136",
+  "surfaced_at": "2026-10-13T15:17:10Z",
+  "one_line": "Under the day rule committed before the read, all 23 differing days of the 7 UNEXPLAINED segments stay UNEXPLAINED; no account's window re-closes at 0.35 pp, so FWD-8 is not realized for any of the 7 accounts.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "RULE_DAY.md (committed cc529b9e3d, sections 3 to 5): a differing day takes the first round-89 reason whose TEST holds on that day and whose day-level CORRECTION brings the day within 0.01 pp of Black Diamond; the window re-closes at 0.35 pp when every differing day is reasoned.",
+  "world_is": "day_reasons.py (a16f3debc5) on the issuer's pull: 7 of 7 requests http_ok; 7 of 7 series controls true (the last cumulative equals the stored window return); 23 of 103 compared days differ and all 23 are UNEXPLAINED (reason counts 0, 0, 0, 0, 0, 23); the uncorrected window misses in 7 of 7; the fee add-back is zero for all 7. Reason 5's TEST holds on 12 of the 23 days but its correction closes none. On exactly those 12 days the BD income is a whole multiple (3x to 6x) of the served income, and on 2 of the 23 days the BD flow is 3x or 4x the served flow: a ledger-multiplicity pattern outside the closed list, not tested by this rule. Reasons 1 to 4 have no TEST that holds on any differing day.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~136/RULE_DAY.md@cc529b9e3d (committed before any pulled response was opened)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~136/day_reasons.py@a16f3debc5 (the module run that produced DAY_READ_7.json: 23 differing of 103 compared days, 0 reasoned)",
+      "the per-day detail with account ids is in the worker ~136 private folder (day_detail.json); the repo carries counts, offsets and multiples only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
