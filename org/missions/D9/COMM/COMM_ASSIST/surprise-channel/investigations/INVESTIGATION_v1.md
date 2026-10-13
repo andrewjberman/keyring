@@ -721,3 +721,85 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "CA-h-2 (host act on dell2) includes one SSH read from muse; its order will carry the key read-back as its own first step unless NFRA_CTLPLN adds the cell first. Owner of the gap: 1.0.0_SA_CTO."
 }
 ```
+
+## COMM_ASSIST-W11-S1 -- an unreadable drafts.json would make the once-only rejection permanent, so the forwarder defers instead
+
+```json
+{
+  "id": "COMM_ASSIST-W11-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~11",
+  "surfaced_at": "2026-10-13T22:37:00Z",
+  "one_line": "The BUILD rule rejects an answer file whose tag has no drafts.json row, and rejection writes a permanent marker. A refresh that could not read drafts writes items null, so the literal rule would reject every valid answer for good. The forwarder defers those files instead: no marker, no send, retried next run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/muse_reader/refresh.py@8bf64bac36:80-84 the README the refresh writes: an unreadable source has items null; absent and unreadable are never an empty list",
+      "data/transcripts/scripts/muse_reader/forwarder.py@8bf64bac36 (new file, CA-i-3 commit) _draft_rows raises DraftsUnreadable when items is not a list; forward() counts the file failed and writes no marker",
+      "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r17/checks/check_i3_forward.py@8bf64bac36:30 the check always writes drafts.json with a list, so the deferral arm is not exercised by the issuer's check"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CA-i-3 BUILD step 1: a file whose tag has no row in root/drafts.json with a non-empty object_id is written to answers/rejected/<sha>.json with reason tag-not-waiting; a rejected marker makes later runs skip the same bytes.",
+  "world_is": "refresh.py writes drafts.json with items null when the drafts read is unreadable, and the README says items null is not an empty list. Read literally, the BUILD rule treats that as no row and makes the rejection permanent. The forwarder treats an unreadable drafts.json as no verdict: it writes no marker and sends nothing, counts the file under failed, and retries next run.",
+  "notes": "The deferral is the forwarder's only departure from the BUILD rule list, and the CLI reports deferred files under failed. The issuer should confirm the reading. Edge arm measured in scratch only (.scratch/edge_ca_i3.py T1), not in the issuer's checks."
+}
+```
+
+## COMM_ASSIST-W11-S2 -- the forwarder routes on object_id, which the refresh at this base does not write
+
+```json
+{
+  "id": "COMM_ASSIST-W11-S2",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~11",
+  "surfaced_at": "2026-10-13T22:37:00Z",
+  "one_line": "THE CONTRACT says the refresh cell adds object_id to each drafts.json row this round. At this base refresh.py does not write object_id, so every answer would be rejected tag-not-waiting until the CA-i-1 refresh change lands in the reader folder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~CA",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/muse_reader/refresh.py@8bf64bac36:230-234 _draft_row keeps tag, kind, version, status, texted_at, send_at, draft and chat_title; no object_id",
+      "data/transcripts/scripts/muse_reader/refresh.py@8bf64bac36 a path-scoped search of the muse_reader folder for object_id returns zero matches in refresh.py",
+      "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r17/checks/check_i1_live.py@8bf64bac36:43-50 the CA-i-1 check requires every drafts item to carry a non-empty object_id, so that change is a separate cell"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CA-i-3 THE CONTRACT: the refresh cell adds object_id to each drafts.json row this round, and BUILD step 1 routes each answer on that row's object_id.",
+  "world_is": "At 8bf64bac36 the drafts rows carry no object_id, so the forwarder finds no waiting row for any tag. Under THE CONTRACT a rejected marker is permanent, so installing this forwarder before the CA-i-1 object_id change lands would reject every answer for good. The forwarder is not installed by this cell; the install cell CA-i-5 must sequence after CA-i-1.",
+  "notes": "This cell does not edit refresh.py: its <paths> do not name it. The check suite for this cell passes on synthetic drafts rows that carry object_id."
+}
+```
+
+## COMM_ASSIST-W11-S3 -- a permanent tag-not-waiting rejection can fire on a lagging drafts.json snapshot
+
+```json
+{
+  "id": "COMM_ASSIST-W11-S3",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~11",
+  "surfaced_at": "2026-10-13T22:37:00Z",
+  "one_line": "A tag-not-waiting rejection is permanent by the BUILD rule, but drafts.json is a scheduled refresh snapshot. An answer for a draft that is waiting in the cloud and not yet in the snapshot would be rejected for good, and the forwarder cannot tell the two cases apart.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~CA",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/muse_reader/refresh.py@8bf64bac36:155-184 refresh() writes drafts.json on each scheduled run, carrying read_at; the snapshot is whatever the last run read",
+      "data/transcripts/scripts/muse_reader/forwarder.py@8bf64bac36 the tag-not-waiting branch writes answers/rejected/<sha>.json, and the once-only check at the top of the loop skips any sha with a marker in done/ or rejected/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CA-i-3 BUILD step 1: no drafts.json row with a non-empty object_id for the tag writes answers/rejected/<sha>.json; a rejected marker stops any later run from acting on the same bytes.",
+  "world_is": "drafts.json is a snapshot written by the scheduled refresh, so it can lag the cloud table by one refresh interval. A draft that became waiting after the last refresh is absent from the snapshot, and the marker then makes that rejection permanent. The BUILD rule does not say the snapshot is current at the time of the answer.",
+  "notes": "Not mitigated in this cell: a retry-on-newer-snapshot rule would change the BUILD rule list and needs an issuer ruling. The rejection marker's at field is the run time, not the snapshot's read_at, so a later reader cannot tell from the marker which snapshot judged the answer."
+}
+```
