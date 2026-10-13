@@ -1047,3 +1047,105 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "The export holds exactly 500,000 rows, which matches a row cap. The fixture cannot establish whether the export is complete. The read of :1138-1215 shows no row-count check in the step. The premise binds the legacy table and the lot table alike."
 }
 ```
+
+## ADVI_BDPRCE-D1-W12-S1 -- The served 2026-10-09 price of ALLSPRING CORE BOND CIT CLASS E2 is written by a linear_interpolation row, which R1 clause 5 bans as an output source
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W12-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~12",
+  "surfaced_at": "2026-10-13T20:34:54Z",
+  "one_line": "The served 2026-10-09 price of ALLSPRING CORE BOND CIT CLASS E2 is written by a linear_interpolation row, which R1 clause 5 bans as an output source; the value equals R1's carry-forward.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~12/TRACE_BP-b-8.json: followed canonical_row source linear_interpolation price 10.3525; daily_row source carry_forward price 10.3525",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~12/recompute_R1_BP-b-8.py output: R1 carry-forward 10.3525 observed 2026-10-02 from distinct trades 742108391 and 742108404",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/ledger/CTO_RULING_R1_THE_PRICE_RULE_20261013.md clause 5: interpolation is banned; no trade on the date gives the last observed price carried with its observation date"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO ruling R1 clause 5 (ledger/CTO_RULING_R1_THE_PRICE_RULE_20261013.md): interpolation is banned; with no trade on the date, the last observed price is carried WITH its observation date.",
+  "world_is": "The served price for the holding on 2026-10-09 has a canonical row whose source is linear_interpolation (flat at 10.3525) and a daily partition row whose source is carry_forward (10.3525). The value agrees with R1's carry from the 2026-10-02 trades; the writing rule in the served row is the banned interpolation. The writer of this specific canonical row is not identified here; the trace names the bd_price_update.py backfill path as the interpolation source."
+}
+```
+
+## ADVI_BDPRCE-D1-W12-S2 -- No Buy or Sale row prices the private-pool names on 2026-10-09, so the natural private-fund exemplar falls away at the R1 condition
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W12-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~12",
+  "surfaced_at": "2026-10-13T20:34:54Z",
+  "one_line": "No Buy or Sale row prices the private-pool names on 2026-10-09; their 2026 rows are Transfer In, Valuation, Interest and Dividend, so the natural private-fund exemplar falls away at R1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-bdprce-r2-12-data/bp_b8_scan_rows.csv (silver/transactions 2026-01-01..2026-10-10, five columns, asset rows only): SHAW PARK PRIVATE MARKET S 2021 LP 0 Buy/Sale rows; KKR FS INCOME TRUST CLASS I 0; KKR PRIVATE EQUITY CONGLOMERATE CLASS U 0; BLACKSTONE REIT INCOME TRUST CLASS I 0; CNL STRATEGIC CAPITAL CLASS A 0; AQR TA DELPHI PLUS FUND LLC 0",
+      "R1 variant A on 2026-10-09 over partitions 2026-10-08..10-10 (bp_b8_shapeb / bp_b8_shapea probes): 229 of 1,861 finalist object-asset groups priced on the date, 8 equal to served, 221 unequal; 0 of the unlisted groups priced on the date"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-b-8 section 1a(5): a candidate counts only when R1 variant A prices it from Buy or Sale rows on the date (shape a) or its carry-forward is R1's last observed trade price (shape b); the natural exemplar is a private fund, structured note or model sleeve.",
+  "world_is": "The private-pool holdings in the lot extract carry no Buy or Sale row in the 2026 window; their served prices come from Transfer In, Valuation or interpolated canonical rows that R1 excludes or bans. Of the 371 unlisted finalist groups (198 names), 338 have no Buy or Sale in the window, so R1 cannot price them from the 2026 window. The chosen holding is a collective investment trust with Buy trades in the window; of the 33 unlisted names with 2026 Buy or Sale rows, 20 groups have an R1 carry equal to the served price and 13 do not."
+}
+```
+
+## ADVI_BDPRCE-D1-W12-S3 -- The no-ticker-in-any-source test also passes public funds and ETFs, and the dimension's symbol column holds CUSIPs and BD identifiers, not tickers
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W12-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~12",
+  "surfaced_at": "2026-10-13T20:34:54Z",
+  "one_line": "The no-ticker-in-any-source test also passes public funds and ETFs, and the dimension symbol column holds CUSIPs and BD identifiers rather than tickers, so the test alone does not establish an unlisted holding.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-bdprce-r2-12-data/bp_b8_sources_rows.json: AMERICAN FUNDS AMERICAN MUTUAL F2, AMERICAN FUNDS EUPAC F2, DIMENSIONAL US VECTOR EQUITY ETF, FLEXSHARES STOXX GLOBAL BROAD INFRASTRUCTURE INDEX FUND, TORTOISE GLOBAL WATER FUND: lookup null, canonical ticker empty, YF/OPAL/TC absent, dimension ticker empty",
+      "C:/dev/wk-bdprce-r2-12-data/bp_b8_sources_rows.json: dimension symbol for ALLSPRING CORE BOND CIT CLASS E2 is 01988T753 (a CUSIP), dimension ticker NaN"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-b-8 section 1a(2): the asset is truly unlisted only if NONE of the named sources gives a ticker; the exemplar is a security with no public ticker.",
+  "world_is": "Named public mutual-fund share classes and listed ETFs return no ticker from any of the named sources, so the source test separates them from private instruments only by the asset's name and kind, which the brief asks the analyst to judge. The dimension's symbol column carries CUSIPs, BD identifiers and Schwab identifiers, not tickers. The chosen holding's kind is judged from its name (CIT) and its dimension row, and no ticker is asserted for it."
+}
+```
+
+## ADVI_BDPRCE-D1-W12-S4 -- trace_price_v2 follows the interpolated canonical row and reports no trade ids, so it cannot show R1's carry-forward trades for this holding
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W12-S4",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~12",
+  "surfaced_at": "2026-10-13T20:34:54Z",
+  "one_line": "trace_price_v2 follows the interpolated canonical row and reports trade_ids empty for this holding, so R1's carry-forward trades come from a separate recompute.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~12/TRACE_BP-b-8.json: follows_served true, followed_source canonical, rule linear_interpolation, trade_ids [], rows_used 0, claim absent",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~12/recompute_R1_BP-b-8.py: R1 carry-forward 10.3525 observed 2026-10-02, distinct trade ids 742108391 and 742108404"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-b-8 section 1a(3): run trace_price_v2.py with the lot's current_price as the served price and record what it followed; for a day with no trade, the recompute is the last observed R1 price on observation_date.",
+  "world_is": "The trace is an as-built instrument: it reports the followed row and its own rule, not R1's carry-forward. It cannot name the trades behind an R1 carry, so the record's trade_ids come from recompute_R1_BP-b-8.py and the trace is cited for the served row only."
+}
+```
