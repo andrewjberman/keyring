@@ -11171,3 +11171,130 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W109-S1 -- two existing packager tests outside the grant pin the five-member payload and fail with the seven-member payload
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W109-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~109",
+  "surfaced_at": "2026-10-13T21:45:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "Two existing packager tests outside my grant assert the five-member PACKAGE payload and fail once request_id and request_revision are sent; per the order I stopped and did not edit them.",
+  "spec_asserts": "AR-y-285 step 3(f) and AC1: the existing packager tests pass with no assertion edited except where it pinned the exact five-member payload. BOUNDS: a test OUTSIDE the grant that fails because of the change is a BLOCKING row and a STOP; the grant is opal_packager.py, the new test file, the channel and the deliverables.",
+  "world_is": "MEASURED in the worktree on base 844d025f4a with the change: research folder 317 passed, 2 failed (HEAD: 306 passed, 0 failed). The two failures are ycharts/research/tests/test_opal_packager.py::test_d_one_message_one_render_to_package_pdf_then_one_attach (pin at :155) and ycharts/research/tests/test_packager_own_store.py::test_a_a_retained_package_makes_no_commentary_read_no_render_no_produce_and_posts_the_retained_ref (pin at :70). Both files are outside the <paths> grant, so the pins cannot be amended by this order. Each needs the same edit: add request_id and request_revision to the expected dict. Nothing was edited; the order stays open.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_packager.py:155 (five-member payload equality, base 844d025f4a)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_packager_own_store.py:70 (five-member payload equality, base 844d025f4a)",
+      "pytest run in infra/aws/lambda/investor-reporting/ycharts/research: 317 passed, 2 failed with the change; 306 passed, 0 failed at HEAD (worktree C:/dev/wk-irpt-anlreq-109)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W109-S2 -- a packager sending request_id before the ticket service accepts it refuses every package attach with 400
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W109-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~109",
+  "surfaced_at": "2026-10-13T21:45:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "The packager change released ahead of the ticket service half makes every package attach fail: HEAD package_ticket refuses any body field outside PACKAGE_ALLOWED_FIELDS with 400.",
+  "spec_asserts": "AR-y-285 interface: the PACKAGE body gains optional request_id and request_revision; the ticket service half (AR-y-284) is the other member of the pair, and the server half states its authorization change for the pair.",
+  "world_is": "MEASURED at base 844d025f4a: infra/aws/lambda/ticket_center/lambda_function.py:1497-1501 (package_ticket) returns 400 'unexpected field(s) on the package path' for any body key outside PACKAGE_ALLOWED_FIELDS, and the HEAD set has neither request_id nor request_revision. The packager change (opal_packager.py:219-220) sends both on every attach. Released alone, the packager's attach is refused 400 until the server half is live. Release order is server first; the packager is not released by this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:1497-1501 (package_ticket extra-field refusal, base 844d025f4a)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:219-220 (seven-member payload, worktree wk-IRPT_ANLREQ-109)"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
+
+## IRPT_ANLREQ-D2-W109-S3 -- the face names the record r26/ but the checker reads r23/
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W109-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~109",
+  "surfaced_at": "2026-10-13T21:45:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The face says write r26/PACKAGER_REQUEST_ID.json; the named check reads the record under r23/, so the record was written to r23/.",
+  "spec_asserts": "Face step 4: write r26/PACKAGER_REQUEST_ID.json in the deliverables folder for this order.",
+  "world_is": "MEASURED at base 844d025f4a: checks/r21/ar21_checks.py sets D26 = D23 (line 29), and the y285-pkg-sender branch loads D26 % '109' + 'PACKAGER_REQUEST_ID.json' (lines 655-656), which is the r23/ folder. The round-26 records of ~92 and ~101 also sit in r23/. The record is at org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~109/r23/PACKAGER_REQUEST_ID.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py:29 (D26 = D23) and :655-656 (record path)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~101/r23/ (round-26 record folder convention)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W109-S4 -- the AC1 invocation exits 0 but prints Y285-PKG-SENDER-OK, not the expected token Y285-PKG-OK
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W109-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~109",
+  "surfaced_at": "2026-10-13T21:45:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR285-y-AC1 names the expected token Y285-PKG-OK; the named invocation exits 0 and prints Y285-PKG-SENDER-OK, which does not contain that token.",
+  "spec_asserts": "AR285-y-AC1: invocation python ...ar21_checks.py y285-pkg-sender --root <worktree>, expect Y285-PKG-OK.",
+  "world_is": "MEASURED in the worktree after the change: 'packager request id tests: 13 passed, 0 failed (rc=0)' then 'Y285-PKG-SENDER-OK', rc=0. The checker's TOKENS map (ar21_checks.py:41) names the token Y285-PKG-SENDER for y285-pkg-sender. The expected literal Y285-PKG-OK does not occur in the output. Recorded as the output; AC1 is graded FAIL on this token and on BLOCKING row IRPT_ANLREQ-D2-W109-S1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py:41 (TOKENS y285-pkg-sender -> Y285-PKG-SENDER)",
+      "worktree run of the named invocation, rc=0, output Y285-PKG-SENDER-OK (C:/dev/wk-irpt-anlreq-109)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W109-S5 -- the ycharts/generate/tests run does not finish inside the 120-second bound, so the four-custody-failure baseline is recorded partially
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W109-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~109",
+  "surfaced_at": "2026-10-13T22:15:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-285 step 4 names the generate folder baseline (4 custody failures) and the bounded run of that folder does not complete inside timeout 120; two runs both return rc=124.",
+  "spec_asserts": "TO-AR-y-285 step 4: the known baseline of ycharts/generate/tests is 4 custody failures, reported with counts under the bound timeout 120.",
+  "world_is": "MEASURED in the worktree after the change: timeout 120 python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests -q returned rc=124 on the first run and on the one permitted retry. Partial output (.scratch/generate_run.txt) shows 4 F markers through about 68 percent of the run and no summary line. The full denominator and the final pass and fail counts were NOT reached inside the bound. Recorded as partial, not as a full count.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree run of the named invocation twice, rc=124 both (C:/dev/wk-irpt-anlreq-109)",
+      "C:/dev/wk-irpt-anlreq-109/.scratch/generate_run.txt (partial output, 4 F markers, 7 lines)"
+    ]
+  }
+}
+```

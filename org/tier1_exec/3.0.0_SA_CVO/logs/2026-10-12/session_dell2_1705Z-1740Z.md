@@ -290,3 +290,9 @@ Correction: the round-92 rows carry surfaced_at 16:48:00Z; the clock read 16:45:
 | IRPT_BCKEND round 183 (~P) | ADJUDICATION_v84 (C-S367), no remediation file: build only (Opal Ultra Short-Term in the comparison catalogue, IB-pr-517); I re-ran the two catalogue test files (16 passed) and read recipe.py:811-816 (fail-closed on any non-YCHARTS namespace). 10 dismissed; D2-S145 to -S147 and D2-S150 stay with the issuer. Slug sent | 220e1b5785 |
 
 Correction: C-S367 carries surfaced_at 20:56:00Z; the clock read 20:54:57Z before the write, so the stamp is about 1 minute ahead of the true time. The row is immutable, so the correction is recorded here.
+
+## Addendum, 2026-10-13 22:16Z to 22:24Z (msg 7303)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 184 (~P) | ADJUDICATION_v85 (C-S368), no remediation file: build only (IB-pr-518, irpt-ycharts-generate rebuilt with the catalogue release); live CodeSha256 hpNfkhLt unchanged (my read). 5 dismissed; D2-S145 to -S147, S150, S152, S153 stay with the issuer. For the unsigned pair: name the form's model checkbox reorder for every firm, and that recipe.py does not ship. Slug sent | 0cda29474c |
