@@ -7047,3 +7047,29 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Not cleared by the worker: no checkout, reset or commit of portal. A ruling is needed on whether AC2 reads the gitlink as out-of-scope drift or the submodule pointer is re-synced by the integrator. Disarm: none (INERT)."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W76-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~76",
+  "surfaced_at": "2026-10-13T22:15:48Z",
+  "one_line": "TO-FB-k-1 names the Inflection scope inside opal-data-bd as a legacy home to inventory; the census and the mapping table hold zero Inflection-scope objects in opal-data-bd, so the bd leg of that slice is empty by measurement.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/census.json@3fc68796 buckets.opal-data-bd: 36,395 bytes, 0 'inflection' or 'inf' scope tokens (python -I count, worktree 0.9.0_WK_ADVI_FIRMBKTS~76)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v4.json@3fc68796 rows: 3451 total; bucket opal-data-bd 247 rows, 0 with an inflection or inf scope token in prefix or address",
+      "aws s3api get-bucket-notification-configuration --bucket opal-data-bd: two Lambda notifications on bronze/ and silver/prices/ only; comp-find --corpus aws EVENT_RULE band names no Inflection scope in opal-data-bd",
+      "docs/briefs/d8-legacy-firm-buckets-migration-brief-20260913.md@3fc68796:251 maps opal-data-bd to mockadv, not inflection"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-FB-k-1 slice: the inventory covers what runs against opal-data-inf or the Inflection scope inside opal-data-bd.",
+  "world_is": "The measured opal-data-bd tree holds no Inflection-scope key (0 census tokens, 0 mapping rows). The bd rows of the inventory are the Black Diamond and mockadv scope; the bd Inflection leg is empty by measurement, not by an unread gap.",
+  "notes": "Recorded by the worker; the inventory reports the bd notification rows as legacy_touch false with claim absent where unread. Whether an Inflection scope should exist in opal-data-bd is the issuer's call; no disposition is proposed here. Disarm: none (INERT)."
+}
+```
