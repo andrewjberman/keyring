@@ -6356,3 +6356,30 @@
 }
 ]
 ```
+
+
+## IRPT_ANLREQ-D2-S67 -- (disarm row; this seat's own) the Lambda release is re-cut on the live package and the portal readers return on the deployed first answer
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S67",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T05:19:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "DISARMS rows IRPT_ANLREQ-D2-S66, -D2-W56-S2, -D2-W57-S1 and -D2-W57-S2: the Lambda release is re-cut on the live package (AR-y-201) and the portal's readers return on the deployed first answer (AR-y-203).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row S66 and W56-S2: a release built from the AR-y-193 patch would move three members it must hold. Rows W57-S1 and W57-S2: adaptAnalysisUpload threw at PROD and DEV on the create body of the four NEEDS_CORRECTION sheets.",
+  "world_is": "MEASURED by this seat 2026-10-13: ar19_checks y201-live prints Y201-LIVE-OK (the release package differs from the live package NeAB50... in exactly template_reader.py and uploads.py; the holds-only control builds the live CodeSha256 byte for byte), drained @a011ddd400; y203-defer prints Y203-DEFER-OK (the _defer first answer, reason TEMPLATE_FINDINGS, built by the moved uploads.py's own functions: 36 of 36 cases RETURNED at PROD 37aa1247ee and DEV 64980b4d3a, 0 threw), drained @acfd654740. The two-leg pair names RELEASE_MAP_PATCH_R2.diff and not the AR-y-193 patch. NOT covered: the HTTP route, the deployed portal bundles, the React render; the pair's after-read C1 reads the live body through the PROD reader.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "a011ddd400 (drain of TO-AR-y-201) and acfd654740 (drain of TO-AR-y-203)",
+      "ar19_checks.py y201-live and y203-defer run by this seat",
+      "uploads.py at 069b8f797e lines 459-475 (_defer) read by this seat"
+    ]
+  }
+}
+```
