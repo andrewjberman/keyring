@@ -32,7 +32,7 @@
     "cvo": "3.0.0_SA_CVO",
     "cro": "4.0.0_SA_CRO~DELL1"
   },
-  "coo_lane": null,
+  "coo_lane": "2.0.0_SA_COO~K1",
   "rulings": [
     "DONE WHEN CONFIRMED AS WRITTEN -- Andrew-direct 2026-10-13 ~12:1xZ, VERBATIM: 'Yes as written' (org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_121xZ_BD_PRICING_RULES_DONE_WHEN_CONFIRMED_AND_CAP_CLARIFICATION.md).",
     "CAPPED LOTS READ UNVERIFIED -- Andrew-direct 2026-10-13 ~12:2xZ, VERBATIM: 'Agreed with this positioning' (org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_122xZ_CAPPED_LOTS_UNVERIFIED_SHARE_COUNT_SOURCES_PORTAL_SMOKE_WSJ_CREDS.md); constraint: no estimation in exact performance reporting."
