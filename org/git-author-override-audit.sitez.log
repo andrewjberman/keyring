@@ -2168,3 +2168,11 @@
 2026-10-13T10:11:02Z MERGE-ATTEMPT  2.0.0_SA_COO~MP  rc=0  secs=7.88  graded=0/21 fast-lane  args=(mp-fwd20-issue -m merge(NFRA_MCPORTAL GW round 1 issuance, 2.0.0_SA_COO~MP): land @37192ad0fc into box/sitez)  first=(none)
 2026-10-13T10:12:35Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=11.67  graded=n/a  args=(--verify-merge 20ecf3455f473f0465e13f9caf9f2b65ba938b92)  first=(none)
 2026-10-13T10:12:50Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=47.19  took=eb9f3203f7 hold=4.86s graded=0/21 pushed=20ecf3455f  phases: t_fetch=5.33s t_merge_cloud=22.94s t_land=5.29s t_push=9.43s
+2026-10-13T10:15:19Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-13T10:15:26Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-13T10:15:48Z LANDED-2P  0.0.0_AB_MSTR~Z  43d0d772fb  paths=1  validate=32.63s  wait=0.15s  hold=2.90s  build=1.17s  ref=1.63s  post-commit=8.61s  attempt=1
+2026-10-13T10:16:10Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=19.15  took=already-current pushed=43d0d772fb  phases: t_fetch=6.45s t_push=7.17s
+2026-10-13T10:22:36Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=7.90  graded=n/a  args=(--verify-merge 1762d6dcbcddb1e44b3c262e70681876bf2761b2)  first=(none)
+2026-10-13T10:22:51Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=45.26  took=b1bf50ad3b hold=3.32s graded=0/26 pushed=1762d6dcbc  phases: t_fetch=4.00s t_merge_cloud=21.52s t_land=3.36s t_push=9.57s
+2026-10-13T10:33:12Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=19.92  graded=n/a  args=(--verify-merge 15ac260f34088ef3213f137a70cfdb92471be385)  first=(none)
+2026-10-13T10:33:37Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=89.44  took=0bdc6e956d hold=8.99s graded=0/1 pushed=15ac260f34  phases: t_fetch=6.36s t_merge_cloud=44.56s t_land=9.02s t_push=11.43s

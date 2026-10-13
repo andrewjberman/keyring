@@ -5677,3 +5677,19 @@ Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>)  first=(none)
 2026-10-13T09:33:14Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=0.99  graded=n/a  args=(--verify-merge 5f1be32b3c5257d202f87c16052eae4f592ef6b0)  first=(none)
 2026-10-13T09:33:18Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=15.08  took=85aa984b98 hold=0.84s graded=0/8 pushed=5f1be32b3c  phases: t_fetch=1.56s t_merge_cloud=8.86s t_land=0.85s t_push=2.84s
 2026-10-13T09:33:41Z BLOCK  0.0.0_AB_MSTR~DELL2  2  (1 violation(s): VIOLATION: org/devices/state/dell2/open_calls.json -- lane=NFRA_CTLPLN_FAST_C (CTO grantor, IRPT RULINGS batch 284, 2026-10-06 (2.0.0_SA_COO~C msg 105616): NFRA_CTLPLN FWD-2, the device register. org/devices/** (the register and its schema test) and ONE new reader, lib/devices.py. The .tools readers are lane ANY and need no grant. Struck when NFRA_CTLPLN closes.); agent=0.0.0_AB_MSTR~DELL2 not in permitted_agents;) act=b6811fbe6681 paths=2:org/devices/state/dell2/open_calls.json|org/mcp/agent-spawn-audit.log
+2026-10-13T09:34:11Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane) act=c6fb6123110e paths=1:org/git-author-override-audit.dell2.log
+2026-10-13T09:34:19Z LANDED-2P  0.0.0_AB_MSTR~DELL2  ff676e1781  paths=1  validate=8.98s  wait=0.13s  hold=0.95s  build=0.55s  ref=0.37s  post-commit=2.73s  attempt=1
+2026-10-13T09:36:09Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=7.14  took=already-current pushed=ff676e1781  phases: t_fetch=1.79s t_push=3.28s
+2026-10-13T09:46:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.74  graded=n/a  args=(--verify-merge ea10f1367ee214ecb28ccbb2c5b1b177ed759695)  first=(none)
+2026-10-13T09:46:22Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=20.02  took=dd56f2f256 hold=1.46s graded=0/5 pushed=ea10f1367e  phases: t_fetch=1.84s t_merge_cloud=10.54s t_land=1.47s t_push=4.03s
+2026-10-13T09:56:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.64  graded=n/a  args=(--verify-merge d5961f3c08c38733123b5a2ae743c1ced65f3e14)  first=(none)
+2026-10-13T09:56:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.99  took=764e050bfb hold=1.40s graded=0/16 pushed=d5961f3c08  phases: t_fetch=2.03s t_merge_cloud=10.29s t_land=1.41s t_push=3.01s
+2026-10-13T10:06:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.79  graded=n/a  args=(--verify-merge 775ddd35e137ac53b4c5dfabbf4acfaff04c1afa)  first=(none)
+2026-10-13T10:06:22Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.49  took=5c77fc4d87 hold=1.37s graded=0/15 pushed=775ddd35e1  phases: t_fetch=1.85s t_merge_cloud=10.73s t_land=1.38s t_push=3.21s
+2026-10-13T10:12:26Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.05  graded=n/a  args=(--verify-merge 06c5614047f69de12fb6bcbb54572ba7fe1b056c)  first=(none)
+2026-10-13T10:12:30Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=14.96  took=eb9f3203f7 hold=0.81s graded=0/19 pushed=06c5614047  phases: t_fetch=1.25s t_merge_cloud=8.97s t_land=0.82s t_push=2.87s
+2026-10-13T10:16:08Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=5.75  took=already-current pushed=06c5614047  phases: t_fetch=3.12s
+2026-10-13T10:26:22Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=2.04  graded=n/a  args=(--verify-merge caad956e626d98152764431e4c8a7eed07cf11d6)  first=(none)
+2026-10-13T10:26:27Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=25.14  took=b1bf50ad3b hold=1.87s graded=0/48 pushed=caad956e62  phases: t_fetch=6.19s t_merge_cloud=11.34s t_land=1.88s t_push=3.32s
+2026-10-13T10:29:26Z PASS  2.0.0_SA_COO~Y2  2  (all paths in-lane) act=d5deea39fd19 paths=2:org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r20/ar20_checks.py|org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-213.status-rule-rebase-b.md
+2026-10-13T10:29:34Z LANDED-2P  2.0.0_SA_COO~Y2  4067c2dd5b  paths=2  validate=9.51s  wait=0.06s  hold=1.00s  build=0.58s  ref=0.39s  post-commit=3.39s  attempt=1
