@@ -51,6 +51,7 @@ def _fixture_text(escaped=True):
         '    "beta": {\n'
         '      "source_path": "infra/aws/ec2/beta",\n'
         '      "note": "beta %s dash %s%s",\n'
+        '      "previous_deployed_commit": "0999999",\n'
         '      "deployed_commit": "1111111",\n'
         '      "deployed_at": "2026-02-02T00:00:00Z",\n'
         '      "deployed_by": "someone"\n'
@@ -146,8 +147,10 @@ def test_real_manifest_copy_roundtrip_moves_only_target(tmp_path):
     text = REAL_MANIFEST.read_text(encoding="utf-8")
     svc = next(iter(json.loads(text)["services"]))
     before, after = _run(tmp_path, text, service=svc)
+    b_lines = before.decode("utf-8").splitlines()
     for line in _changed_lines(before, after):
-        assert line.strip().startswith(MOVABLE), "real-manifest copy: non-target line moved: %r" % line
+        # a key appended after a line that had no trailing comma re-writes that line with one (comma-only change)
+        assert line.strip().startswith(MOVABLE) or (line.rstrip(",") in b_lines), "real-manifest copy: non-target line moved: %r" % line
     assert (b"\\u" in before) == (b"\\u" in after)
 
 
@@ -178,3 +181,23 @@ def test_negative_control_old_jq_tr_shape_differs(tmp_path):
     assert old != new, "the old jq|tr shape matched the helper's output on the escape fixture: control is not discriminating"
     # the old shape rewrote unrelated (alpha) lines, which the helper does not
     assert b"\\u2014" not in old.split(b'"beta"')[0], "expected jq to have un-escaped alpha's dash"
+
+
+def test_new_commit_moves_previous_deployed_commit(tmp_path):
+    text = _fixture_text(True)
+    _, after = _run(tmp_path, text)
+    b = json.loads(after)["services"]["beta"]
+    assert b["previous_deployed_commit"] == "1111111"
+    assert b["deployed_commit"] == NEW["commit"]
+
+
+def test_equal_commit_leaves_previous_unchanged(tmp_path):
+    text = _fixture_text(True)
+    _, once = _run(tmp_path, text)
+    helper = _load_helper(tmp_path)
+    p = tmp_path / "EC2_MANIFEST.json"
+    helper.update_manifest(str(p), "beta", NEW["commit"], "2027-01-01T00:00:00Z", "0.9.0_WK_TEST~2")
+    twice = p.read_bytes()
+    assert json.loads(twice)["services"]["beta"]["previous_deployed_commit"] == "1111111"
+    for line in _changed_lines(once, twice):
+        assert line.strip().startswith(('"deployed_at"', '"deployed_by"', '"_last_updated"')), line
