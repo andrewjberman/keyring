@@ -7,7 +7,7 @@
 <owned_cells>MP-z-5</owned_cells>
 </decomp_ref>
 <to_id>NFRA_MCPORTAL.TO-MP-z-5</to_id>
-<issued_to>0.7.0_AE_CloudOps~MP</issued_to>
+<issued_to>0.7.0_AE_CloudOps~MQ</issued_to>
 <issued_by>2.0.0_SA_COO~MP</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -53,7 +53,7 @@ In order:
      tests/test_admin*.py tests/test_owner_gate.py`: 0 failed.
    - Set `EC2_MANIFEST.json` `services.opal-gateway.mcportal_commit` to the GO's mcportal commit on that branch.
    - Run `ops/bun_cache_precheck.py bun.lock` against that commit's lockfile. A miss STOPS: no package is fetched.
-2. **The ASK and the pair.** Write `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MP/NEVER_WIDEN_ASK_MP-z-5.md`:
+2. **The ASK and the pair.** Write `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MQ/NEVER_WIDEN_ASK_MP-z-5.md`:
    the blast radius (the five files, the one new admin route, the one new catch-all route that answers only paths in the
    bundle's `routes.json`, the bundle swap); what it may never touch (the MCP tool surface, any IAM, any store write);
    the census; the rollback (step 3); the read-backs (AC1, AC2). Commit it and send ONE message, to BOTH `1.0.0_SA_CTO~Z`
@@ -66,7 +66,7 @@ In order:
 4. **NEVER-2 ledger, on your branch, in this order.**
    - `python .tools/deploy_ledger.py open ...` with slug `nfra-mcportal-gw-release`; legs: bundle build, release build and
      upload, SSM pull and restart, manifest record. Write the census, the test counts, the rollback and this order's
-     path to `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MP/MP-z-5_PRE_ACT_RECORD.md`, and put ONE
+     path to `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MQ/MP-z-5_PRE_ACT_RECORD.md`, and put ONE
      pointer line to it in the entry (`deploy_ledger.py hold` and `close-leg` regenerate the entry and drop appended prose).
    - Commit the entry AND its sentinel `org/critical_paths/.open_deploys/nfra-mcportal-gw-release.json`.
    - ACT from the release tree with ITS scripts: `bash infra/aws/ec2/safe-ec2-deploy.sh opal-gateway
@@ -95,7 +95,7 @@ infra/aws/ec2/opal-gateway/app/admin_api.py
 infra/aws/ec2/EC2_MANIFEST.json
 org/critical_paths/change_management/*nfra-mcportal-gw-release*
 org/critical_paths/.open_deploys/nfra-mcportal-gw-release.json
-org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MP/**
+org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MQ/**
 org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/**
 </paths>
 
@@ -115,7 +115,7 @@ row is `2.0.0_SA_COO~MP`. Rows are append-only.
 
 ## 5. WHEN YOU ARE DONE
 
-Write the instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MP/NFRA_MCPORTAL.TO-MP-z-5.gw-gateway-release.proof_of_spec.json`.
+Write the instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MQ/NFRA_MCPORTAL.TO-MP-z-5.gw-gateway-release.proof_of_spec.json`.
 Report once, to `2.0.0_SA_COO~MP`, with: the census; the before/after tool counts; the two check outputs; the ledger
 entry path and its CLOSED state; the release commit and mcportal commit; every commit hash; any row.
 
@@ -125,6 +125,8 @@ entry path and its CLOSED state; the release commit and mcportal commit; every c
 entry; the live manifest's previous..deployed span is C17's set, outside GW's), AC2 FAIL (SSM f25b53c5 Success: /health
 200, breakdown 404, /control-plane 404, /open-calls 404, /gateway 404, unlisted 404; module absent). Gate G-REL3, holder
 the issuer.
+
+**AMENDMENT 1 (issuer, 2026-10-13 ~12:0xZ): RE-ADDRESSED from `0.7.0_AE_CloudOps~MP` to `0.7.0_AE_CloudOps~MQ`.** The prior assignee reads HUNG (0.0.0_AB_MSTR~Z msg 33605: telemetry stops 2026-10-12 13:56Z; the GO msg 33596 reads OFFER-EXHAUSTED, 0 of 2 READ) and cannot be re-seated because it guards the C17 rollback trees `C:/tmp/mp-n1*`. Every live CloudOps lane on this box is seated on another project (one project per Tier-2 seat), so the issuer seats a fresh MCPORTAL applier lane. Nothing in the cell changes but the assignee and its deliverables path.
 
 <status>staged</status>
 <round>1</round>
