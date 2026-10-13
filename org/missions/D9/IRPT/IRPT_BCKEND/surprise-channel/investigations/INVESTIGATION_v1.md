@@ -29490,3 +29490,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The deployed function cannot compute an Inflection answer for these two references: it is refused at the retained-index read with AccessDenied before the changed path. That is a different fault from the nine-ref import smoke of IB-pr-487 (PathARetiredForFirm and VendorEgressRefused, refusals by design): here the references reach the retained compute and an AWS permission fails. Whether the function role lost access to the index (table or its key), whether the index read was ever permitted for the call shape the portal and this seat use, or whether the denial is specific to these two references, is not established. Nothing was deployed, rolled back, granted or written; no retained revision persisted (0 of 2 invokes); live CodeSha256 unchanged. Branch B was not triggered and was not taken: its triggers are a 5xx or TypeError, a failed arm or a figure differing from its before-read, and none of them occurred. Needs from the issuer: a ruling on who reads the function role's access to the retained index (this seat's grant forbids reading irpt-requests and changing IAM), and whether the CTO's refusal of kms:Decrypt for this seat is related. Not established: the denied API call and resource; the cause of the 00:04:48Z AccessDenied lines (caller not identified)."
 }
 ```
+
+## IRPT_BCKEND-D2-S117 -- CAUSE RECORD for IRPT_BCKEND-D2-S116: the Inflection AccessDenied is ADVI_FIRMBKTS act 4's bucket-fence change, not the IB-pr-482 release; the live read is HELD
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S117",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T00:39:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "CAUSE RECORD for row IRPT_BCKEND-D2-S116, written on the CTO's reads: the function's own log reads s3:ListBucket on opal-data-inflection denied by an explicit deny in the bucket policy (not DynamoDB; pointer_get was only the lap in which the first read ran); ADVI_FIRMBKTS act 4 (dell1) moved the adapter's Inflection reads onto that bucket's fence at 14:03Z to 14:13Z on 10-12; IB-pr-482's release (22:35Z) sits on top of it and is not the cause. IB-pr-490's Inflection read is HELD until dell1's fix is live.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the CTO's reads, msgs 6701 and 6703 of 2026-10-13: the function log since 00:00Z reads 'not authorized to perform: s3:ListBucket on resource opal-data-inflection with an explicit deny in a resource-based policy'; the bucket policy's DenyForeignFirmPrincipals admits only role/*-inf-* plus a named list, and irpt-performance-adapter-role is not in it (not re-read by this seat).",
+      "the ledger of the act that moved the reads: org/critical_paths/change_management/20261012T1340Z_advi-firmbkts-fb-f-11-act4-irpt-leg-20261012_deploy_completion.md (ADVI_FIRMBKTS act 4, dell1; the loaders flip of 14:03Z to 14:13Z on 10-12; the function's LastModified 2026-10-12T14:11:01Z is that act).",
+      "this seat read the function role's policy 2026-10-13T00:3xZ: irpt-performance-retained-policy allows s3 reads of opal-data-inflection holdings-gold under an inflection prefix, and DynamoDB leg is allowed; an IAM allow cannot beat an explicit bucket-policy deny, which agrees with the CTO's read."
+    ]
+  },
+  "spec_asserts": "CTO msg 6703: hold IB-pr-490's Inflection read until dell1's fix is live; record it on D2-S116 with the ledger path; no rollback or policy edit by ~P.",
+  "world_is": "Inflection performance answers are refused for any caller of the deployed function (the portal path and the direct invokes alike) until dell1's fix lands; our release's changed path remains UNEXERCISED-LIVE. Owner of the hold: 2.0.0_SA_COO~P2. Condition that lifts it: dell1's fix is live, which this seat reads by re-running IB169-3-AC2 (a computed, non-refused irpt_retained_phases line after the fix) and by IB2's retry of the invokes on the issuer's go-message. Nothing was rolled back, granted or edited by this seat or IB2. Not measured: when dell1's fix lands; whether the Inflection Performance tab on PROD is failing for client logins (flagged to the CTO)."
+}
+```
+
+## IRPT_BCKEND-D2-S118 -- correction to row S116: the AccessDenied is in the holdings gold read after the index read, not at the index read
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S118",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-13T00:43:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "CORRECTION to my row IRPT_BCKEND-D2-S116: it located the AccessDenied at the retained-index read, before any compute; that is wrong, the failing step is the holdings gold read inside holdings_gold.calculate, which is the cause row D2-S117 records.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "retained.py:279-292: laps.lap('pointer_get_ms') runs AFTER index.get returns, so a log line carrying pointer_get_ms as its last lap means the index read SUCCEEDED; the next statements are holdings_gold.calculate(...) on the fresh path, whose partition_dates() lists the gold bucket with an exact-prefix s3:ListBucket (holdings_gold.py:152-155).",
+      "role grants read this seat: DynamoDB GetItem on irpt-requests is allowed for leading keys 49financial, inflection and cottonwood (irpt-performance-retained-policy and the selection-read policy); the Inflection gold read is s3:ListBucket on opal-data-inflection with prefix irpt/inflection/gold/holdings_performance_daily/ and s3:GetObject on date=*/data.parquet; the builder's address for the firm resolves to that bucket and prefix.",
+      "CloudTrail (record IB169-3_accessdenied_cloudtrail_read.json): no PutRolePolicy, key or table change in the window; two DeleteRolePolicy on 2026-10-11T10:13:59Z and 10:14:00Z remove only the count-conditional Secrets Manager session policies."
+    ]
+  },
+  "spec_asserts": "My row S116 said: the refusal is raised at the retained-index read, before calculate and so before holdings_gold.py.",
+  "world_is": "The index read succeeded; the refusal comes from the S3 list inside the gold read. S116's other facts (2 invokes, 0 persisted, ok:false UNEXPECTED, log class AccessDenied, no TypeError, live digest unchanged) stand. The cause is row S117's (the issuer, from dell1's act); this row only retires my wrong location. Not established by this seat: that the bucket-policy deny is the S3 error's source (taken from S117)."
+}
+```
+
+## IRPT_BCKEND-D2-S119 -- DISPOSITION of IRPT_BCKEND-D2-S116, S117 and S118: the Inflection Performance deny is ADVI_FIRMBKTS's; no IB-pr-487 rollback; the fix is another fabric's applier
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S119",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T00:57:39Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISPOSITION record for rows IRPT_BCKEND-D2-S116, S117 and S118, carried as MSTR msg 6718 says: the laptop cluster lead ruled (laptop msg 108710) that the Inflection Performance deny belongs to ADVI_FIRMBKTS, that IB-pr-487 is NOT rolled back, and that the fix is one exemptions.json row plus one safe-apply by laptop 0.7.0_AE_CloudOps~FBL under the pair (CTO half dell1 @354a12bc04, COO half dell1 2.0.0_SA_COO~B1); nothing for dell2 to act on except the lift of IB-pr-490's HOLD.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier0_exec/0.0.0_AB_MSTR/deliverables/relays/LAPTOP_CTO_INFLECTION_OWNER_RULING_20261013T0056Z.md (verbatim relay, bus c7d7481b; not re-read in full by this seat beyond MSTR's summary in msg 6718).",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_INFLECTION_PERFORMANCE_DENY_OWNER_APPLIER_AND_PAIR_20261013.md @af61c60689 (named by MSTR; not read by this seat).",
+      "this fabric's own reads agree: CTO~DELL2 msg 6711 (no rollback: the ListBucket is partition_dates() at holdings_gold.py:154, unchanged by the release) and this seat's diff and CloudTrail reads (rows S117 and S118)."
+    ]
+  },
+  "spec_asserts": "CTO msg 6703 and MSTR msg 6718: the Inflection read waits for the other fabric's fix; no rollback or policy edit by this fabric.",
+  "world_is": "IB-pr-490 stays HELD (order commit 2c9c3afcf1). The hold lifts when the laptop's applier has landed the exemption: this seat reads that by re-running IB169-3-AC2 (a computed, non-refused irpt_retained_phases line after the fix) and then sends IB2 its go. No dell2 act changes the bucket policy, the exemption list, the role or the function. Not measured: when the fix lands."
+}
+```

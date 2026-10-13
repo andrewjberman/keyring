@@ -115,7 +115,7 @@ the ONE `<status>` tag to `complete` only if both PASS.
   - ap13.AC1: no ledger; v4 31 ARNs, bearer listed; sim bearer allowed, kept allowed (the control discriminates).
   - ap13.AC2: bearer granted=True; PLATFORM-KEY 31.
 
-<status>pending</status>
+<status>complete</status>
 <round>35</round>
 <workstream>APPLY-R35-T</workstream>
 <slot>~AE</slot>

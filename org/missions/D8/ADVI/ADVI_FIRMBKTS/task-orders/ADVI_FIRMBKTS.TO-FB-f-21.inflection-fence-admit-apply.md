@@ -84,7 +84,7 @@ occurrence now reads `aws_s3_bucket_policy.lgic_firm["inflection"]`. `0.7.0_AE_C
 read-back is owed by the seat that can request an Inflection performance answer (named in the issuer's message); AC3's zero is labelled
 "no traffic behind it" until then.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>INFLFENCE</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-21</to_id>
