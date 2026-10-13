@@ -36,6 +36,7 @@ case "$MODE" in box|integrate|status|grade) ;; *) echo "usage: box-sync.sh box|i
 
 ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || { echo "box-sync: not in a git repo" >&2; exit 2; }
 cd "$ROOT" || exit 2
+. "$ROOT/.tools/merged-checker.sh" || { echo "box-sync: cannot source .tools/merged-checker.sh" >&2; exit 2; }
 
 # STATUS (read-only, any seat): where every box branch stands against CLOUD, read from git, because each box's BOX-SYNC
 # rows live in that box's own untracked audit log and no other box can read them. A box still BEHIND CLOUD after its slot
@@ -128,7 +129,7 @@ grade_merge() {
   fi
   [ -f "$GATE" ] || { echo "box-sync: REFUSED -- $n path(s) to grade but $GATE is missing" >&2; return 1; }
   _standing_priv "$p1" "$p2" "$t" || return 1
-  local rc=0 gout tout cout=""
+  local rc=0 gout tout cout="" chk
   # shellcheck disable=SC2086
   gout="$(STAGED="$paths" GIT_DIR="$PRIV" GIT_WORK_TREE="$ROOT" ROOT="$ROOT" python "$GATE" 2>&1)" || rc=$?
   [ -n "$gout" ] && printf '%s
@@ -140,7 +141,8 @@ grade_merge() {
   fi
   # the project-tree check (GS-t-3), on the same merged bytes in the same private git dir, scoped to the merge's graded
   # path set: it refuses only a violation in a project those paths touch and prints every other one as STANDING.
-  tout="$(GRADE_ACT="$paths" GIT_DIR="$PRIV" GIT_WORK_TREE="$ROOT" python "$ROOT/.tools/missions-tree-index.py" check --staged --act-from-env GRADE_ACT 2>&1)" || rc=$?
+  chk="$(merged_checker_path "$PRIV" "$ROOT")" || { _standing_cleanup; echo "box-sync: REFUSED -- no merged checker for the tree check (see merged-checker above)" >&2; return 1; }
+  tout="$(GRADE_ACT="$paths" GIT_DIR="$PRIV" GIT_WORK_TREE="$ROOT" python "$chk" check --staged --act-from-env GRADE_ACT 2>&1)" || rc=$?
   [ -n "$tout" ] && printf '%s
 ' "$tout"
   # the corpus pass runs inside the row gate only when a channel path is in the set; otherwise show its standing view.
@@ -172,9 +174,10 @@ _standing_priv() {
 _standing_cleanup() { [ -n "$PRIV" ] && rm -rf "$PRIV"; PRIV=""; return 0; }
 # information pass: act = this script (belongs to no project, no channel); exit codes never refuse.
 _standing_run() {
-  local tool="$1" out rc=0
+  local tool="$1" out rc=0 chk
   if [ "$tool" = tree ]; then
-    out="$(GIT_DIR="$PRIV" GIT_WORK_TREE="$ROOT" python "$ROOT/.tools/missions-tree-index.py" check --staged --act .tools/box-sync.sh 2>&1)" || rc=$?
+    chk="$(merged_checker_path "$PRIV" "$ROOT")" || { echo "box-sync: WARN standing pass could not run (tree: no merged checker)"; return 0; }
+    out="$(GIT_DIR="$PRIV" GIT_WORK_TREE="$ROOT" python "$chk" check --staged --act .tools/box-sync.sh 2>&1)" || rc=$?
   else
     out="$(GIT_DIR="$PRIV" GIT_WORK_TREE="$ROOT" ROOT="$ROOT" python "$ROOT/.tools/surprise-corpus-validate.py" --act .tools/box-sync.sh 2>&1)" || rc=$?
   fi

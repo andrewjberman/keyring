@@ -688,3 +688,160 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "The served home holds client objects whose as-of date is months old, alongside objects dated 2026-10-09. The served T-1 object is therefore not uniform across client objects; the thread uses each object's own data_as_of."
 }
 ```
+
+## ADVI_BDPRCE-D1-W8-S1 -- The output contract enumerates followed_source as canonical or daily, and no value in that set holds when neither candidate equals the served price
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W8-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~8",
+  "surfaced_at": "2026-10-13T19:49:02Z",
+  "one_line": "Task order 1b enumerates followed_source as canonical or daily; when neither same-date candidate equals the served price, no value in that set is true, so the instrument emits followed_source null with follows_served false and traces no row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "trace_price_v2.py@80be485749 function trace_followed: the followed-is-None branch sets followed_source None, followed_price None, follows_served False, trade_ids [] and writes the candidates into served_rows without picking one",
+      "trace_price_v2.py@80be485749 self-test arm 4 (served 170.0 against daily 162.155 and canonical 168.94): follows_served False, followed_source None; TRACE2 SELFTEST: OK 7 arms",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/task-orders/ADVI_BDPRCE.TO-BP-b-4.trace-follows-served.md section 1b: output keys followed_source (canonical or daily); 'if neither equals it, report follows_served: false and say so'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order 1b: the output key followed_source is canonical or daily, and if neither candidate row equals the served price the instrument reports follows_served false and says so, never picking one silently.",
+  "world_is": "Both clauses are met only by a null followed_source, which the enumerated set does not name. The instrument writes null and follows_served false, lists both candidates in served_rows with followed false, and traces no rule. The task order does not say which value followed_source takes in that case."
+}
+```
+
+## ADVI_BDPRCE-D1-W8-S2 -- The lot-object usage names no date, so the instrument takes the date and the served price from the served object itself
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W8-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~8",
+  "surfaced_at": "2026-10-13T19:49:02Z",
+  "one_line": "The task order's --lot-object form takes no date; the instrument reads the date from the served object's data_as_of and the served price from its one current_price for the asset, and records the client key only as a SHA-256 prefix.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TRACE2_PROBE.json@80be485749 served_source: kind lot_object, date_source 'served object data_as_of', data_as_of 2026-10-09, lot_rows_for_asset 2, key_sha256 3a1adf541436e1d4 (prefix only); the client key is not in the record",
+      "served object read by get_object at VersionId ZCjWpzPR1n2uZl849onevhS.pIvSQhVA (bucket opal-data-49financial, 51,343 bytes): data_as_of 2026-10-09; the asset's open_lots carry one distinct current_price, 168.94",
+      "task order 1b usage line: --lot-object <bucket>/<key>@<VersionId> --asset <name> [--out]; section 2 bound 2: no client name, account number or advisor name is printed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order 1b: --lot-object <bucket>/<key>@<VersionId> --asset <name> [--out] with no date argument; section 2 bound 2: no client name, account number or advisor name is printed.",
+  "world_is": "The served object states its own as-of date and carries one current_price per lot, so the date and price are read from the object. The lot key carries a client identifier, so the record holds a SHA-256 prefix of it. The date source is a choice the task order did not name, and the record names it in served_source.date_source."
+}
+```
+
+## ADVI_BDPRCE-D1-W7-S1 -- The third mapping-gap test cannot run: silver/historical_prices.parquet is keyed by ticker and has no asset_name column
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W7-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~7",
+  "surfaced_at": "2026-10-13T19:55:52Z",
+  "one_line": "The task order's mapping-gap test (a name that has a ticker in silver/historical_prices.parquet) cannot be run: that table has a ticker column and no asset_name column.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "opal-data-bd silver/historical_prices.parquet downloaded 2026-10-13 and schema read with pyarrow: columns date, ticker, close, fetch_date, source; 5,885,915 rows, 3,628 distinct tickers; no asset_name column",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~7/CENSUS.json@e7588a0117 listed_untickered.condition3 records the test as UNEVALUABLE",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~7/census_diagnostics.txt@e7588a0117 NAMES line: untickered names in ticker_lookup 1, in canonical rows carrying a ticker 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-b-3 section 1b: listed_untickered covers assets 'whose name has a ticker in historical_prices.parquet'; section 1a names silver/historical_prices.parquet (ticker column) as a ticker source.",
+  "world_is": "The table is keyed by ticker, not by name, so the name-to-ticker test has no column to run against. The listed count rests on config/ticker_lookup.json and the canonical table's own ticker column. Those two sources list 1 untickered asset (1 lot). The third condition is recorded as UNEVALUABLE, not as zero."
+}
+```
+
+## ADVI_BDPRCE-D1-W7-S2 -- acct_z client keys embed an account number, so the extract and the committed sample carry them hashed
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W7-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~7",
+  "surfaced_at": "2026-10-13T19:55:52Z",
+  "one_line": "The 138 acct_z client objects are keyed by acct_z followed by ten digits; the extract's object_key and the committed sample therefore carry them as acct_z#<sha12>, and the sample hashes every client key.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "listing of advi/49financial/platinum/entities/clients/ in opal-data-49financial (read 2026-10-13): 138 detail.json keys with the acct_z prefix; the suffix is ten digits (shape counted, values not printed)",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~7/scripts/census_bp_b3.py@e7588a0117 masked_path and sample_path: acct_z suffix written as sha12, every sample key as obj#sha12",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~7/CENSUS.md@e7588a0117 Privacy section states the re-read method (list the prefix, match the hash)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-b-3 section 1c: the extract carries object_key per lot and a 200-row sample is committed as lot_extract_sample.csv; section 2.2: no account number is printed or committed anywhere, and raw client keys are not printed.",
+  "world_is": "A raw acct_z key is an account number, so the extract (outside the checkout) and the committed sample cannot carry it as written. The extract holds acct_z#<sha12>; the sample holds obj#<sha12> for every client key. The next cell therefore cannot re-read an acct_z object from the extract key alone and must list the prefix and match the hash. No raw account key is in any committed file."
+}
+```
+
+## ADVI_BDPRCE-D1-W7-S3 -- The 26-object sample understates the off-canonical rate: 1,859 of 5,121 non-cash untickered lots across the home, against 61 of 586 in the sample
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W7-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~7",
+  "surfaced_at": "2026-10-13T19:55:52Z",
+  "one_line": "Across all 3,510 client detail objects, 1,859 of 5,121 non-cash untickered lots (36.3%) carry a price that matches no canonical row on the as-of date; the 26-object sample gave 61 of 586 (10.4%).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~7/CENSUS.json@e7588a0117 classes: PRICED_OFF_NO_CANONICAL 1859, NOT_UNTICKERED 192228, untickered_lots 6067, objects_read 3510 of 3510",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~7/census_diagnostics.txt@e7588a0117 CASH_HEURISTIC line: cash-like lots 946 with 0 off; non-cash lots 5121 with 1859 off",
+      "ADVI_BDPRCE-D1-W4-S2 (the sample of 586 untickered non-cash lots in 26 objects, 61 off) in this channel file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-b-3 cell: a sample of 586 untickered lots from 26 client objects found 61 whose served current_price matches no canonical row on the as-of date; the census is ordered to extend that sample to every lot.",
+  "world_is": "The full census gives a higher off rate than the sample, and the sample is not representative of the home: 942 objects carry untickered lots, and the off lots sit in z0 (1,792) and catch_all (67) objects. Any count or dollar effect taken from the 26-object sample describes that sample only. The cash rule is a name regex (diagnostic only), not a class."
+}
+```
+
+## ADVI_BDPRCE-D1-W7-S4 -- Served lots break market_value = quantity x current_price on 21,614 of 198,261 checked lots, 16,297 of them with market_value 0
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W7-S4",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~7",
+  "surfaced_at": "2026-10-13T19:55:52Z",
+  "one_line": "The market-value identity fails on 21,614 of 198,261 checked lots across the home, 16,297 of them with market_value 0 and nonzero quantity, where ADVI_BDPRCE-D1-W4-S8 read one object.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~7/CENSUS.json@e7588a0117 market_value_identity: lots_checked 198261, lots_off_quantity_times_price 21614, lots_off_over_1pct 21394, tolerance max(0.01, 1e-6*abs(market_value))",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~7/census_diagnostics.txt@e7588a0117 MV_IDENTITY lines: broken_by_class NOT_UNTICKERED 20520, broken_with_market_value_zero 16297, ratio quantiles 1.02 / 1.60 / 4.96 / 19.7 / 228",
+      "ADVI_BDPRCE-D1-W4-S8 in this channel file: the identity read on one client object (7 of 110 lots broken)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-b-3 section 1c asks for the count of lots off quantity x current_price; ADVI_BDPRCE-D1-W4-S8 records the served contract as 'the market value is the quantity times the current price'.",
+  "world_is": "The identity holds on 89.1% of checked lots and fails on the rest. The breaks are not one multiplier (median ratio of quantity x price to market value 4.96), and 16,297 breaks carry market_value exactly 0 while quantity is nonzero. 20,520 breaks sit on NOT_UNTICKERED lots. A valuation read from market_value differs from one read from quantity x price on these lots; the census does not say which field is right."
+}
+```

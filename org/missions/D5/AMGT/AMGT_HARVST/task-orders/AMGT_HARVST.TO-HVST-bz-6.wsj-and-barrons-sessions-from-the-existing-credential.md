@@ -104,9 +104,18 @@ This order touches none of them.
   stops both on the first refusal. Vendor login is within the standing rule "other vendor APIs need no per-use word"; Bloomberg is not involved.
 - Delivered as a crossbox ORDER through MSTR (`python .tools/crossbox-call.py open --kind ORDER --to-device sitez`).
 
+**COMPLETE 2026-10-13 ~19:5xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** `0.7.0_AE_CloudOps~ZW` @2c6c9623ce: wsj minted 15:11Z and barrons 15:20Z, one mint each, no refusal; the two DPAPI files are the outside corroboration (mtimes match the
+  captured_at values). No secret was read, printed or committed.
+- **AC1 and AC2 PASS under the amended invocation (@f11e5a062f), re-run by `~ZW` @53aa581851 on site Z, read only, no sign-in:** `STATE wsj ... VALID=True` and `STATE barrons ...
+  VALID=True`, rc 0. The same form against a nonexistent runtime root prints `VALID=False` (4 of 4 arms behaved), so the PASS is the session state's and not the pattern's. Proof
+  instance VALID rc 0, 0 violations, invocation-alignment 2/2 (re-run by this seat at that commit). The first by-path instance is kept at 2c6c9623ce and as a copy beside it.
+- **What this does NOT prove:** that either session survives a cycle -- bz-7 reads that (a completed wsj and barrons cycle record). The runner is up (pid 8792 from 18:57:48Z,
+  pin 995adcaeaa, per site Z's manager). Row Z-S118 is answered by the amendment; its disarm word is with the CVO.
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>84</round>
 <workstream>WSJBARRONS</workstream>
 <slot>site-z</slot>

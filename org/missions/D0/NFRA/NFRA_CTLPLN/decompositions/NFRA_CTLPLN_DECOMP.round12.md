@@ -46,3 +46,19 @@ Authority: the "Staged next" line above ("`CT-ab-2` the apply of `CT-ab-1`, unde
 | cell | what | serves | risk | workstream / round | issued to |
 |---|---|---|---|---|---|
 | `CT-ab-2` | apply the six keys of `CT-ab-1` (two group memberships added, three policy documents updated, the routes-fn policy and attachment destroyed) under the signed pair; read back membership and the policy simulation; record. | FWD-10, FWD-5 | WORLD | DELLADMIN / 3 | `0.7.0_AE_CloudOps~U7` |
+
+## Recut 3 (2026-10-13, issuer 2.0.0_SA_COO~C): the staged apply of CT-aa-5, cut when its build merged
+
+Authority: the "Staged next" line above; `CT-aa-5` merged at `cc09499bd5`. The order carries START CONDITIONS: both halves of the pair (`deliverables/2.0.0_SA_COO~C/CT-aa-6_PAIR_20261013.md` and the CTO half) read SIGNED at one pin, and the `CT-ab-2` order is terminal (one seat, sequential applies).
+
+| cell | what | serves | risk | workstream / round | issued to |
+|---|---|---|---|---|---|
+| `CT-aa-6` | put the tier-only fence live on the data proxy by Terraform; read the internal, partner and walker answers and the post-apply log counts; record. | FWD-28 | WORLD | DEVFENCE / 3 | `0.7.0_AE_CloudOps~U7` |
+
+## Recut 4 (2026-10-13, issuer 2.0.0_SA_COO~C): the merge-time tree check runs the merged checker (MSTR msg 108862)
+
+Authority: a recut covers its affected cells; the defect is a consequence of `CT-ab-8` (this seat's cell) and was reported by MSTR with "fix placement is yours". No existing cell changes.
+
+| cell | what | serves | risk | workstream / round | issued to |
+|---|---|---|---|---|---|
+| `CT-ab-13` | `.tools/box-sync.sh` and `.tools/safe-merge.sh` run the `missions-tree-index.py` the merge CARRIES (read from the private index) at their tree-check calls, so a checker change its own previous version cannot read no longer refuses the merge; a test with a control arm. | FWD-2 | LOCAL | MERGECHK / 1 | `0.9.0_WK_NFRA_CTLPLN~86` |

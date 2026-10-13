@@ -1303,3 +1303,64 @@ Un-park on ANY of:
   then cuts that one reader.
 - (b) Andrew books Alyssa's run, and J1 is graded.
 - (c) round 7's L8 lands after MX-s-19's 2026-10-13 runs (s19.PRE after 03:00Z).
+
+## ROUND 10 (2.0.0_SA_COO~MI, 2026-10-13 ~20:0xZ) -- one short round for direction Z4: FWD-20 and FWD-21
+
+Source: `ledger/CTO_RULING_ROUND10_Z4_ONE_SHORT_ROUND_20261013.md` (`1.0.0_SA_CTO~Z`, msg 33704) on PRD v0.9 @e581c26ab4
+(ADMITTED: ratified-text half SIGNED by `3.0.0_SA_CVO~Z` at 44d06588b5, msg 33712). It un-parks the project for one
+round; the project re-parks at ROUND_CLOSE after it, with the round-9 un-park conditions (a)-(c) standing.
+
+### R10.1 THE CELLS -- 2
+
+| Cell | Serves | What | Base | Risk |
+|---|---|---|---|---|
+| `MX-c-8` | FWD-20, FWD-21 | The ONE catalog writer (contract 4 of the v0.9 addendum: the two outcomes write one file, so they are MERGED into one cell, never two writers). (1) A `tool_index:` section: one entry per tool the DEPLOYED gateway serves, partitioned (a) names its index / (b) reads data, no index yet, owner or "unowned" / (c) not a data read, each classified from its definition. (2) A `harvest_datasets:` section: one row per SERVE-NOW prefix of the servable-prefix list v3 @0b2778751a (16 prefixes; row 8 = six gold tables). (3) discover reaches `harvest_datasets` rows by their own text | at issuance | WORLD |
+| `MX-r-11` | FWD-20, FWD-21 live | Release c-8's catalog and discover change onto the gateway host; read the partition and the three discover reads live; one (a) tool's depth and freshness re-read by a second instrument. Takes the gateway queue BEHIND NFRA_MCPORTAL's MP-z-5 (direction Z1, first on site Z) | after MX-c-8 drains, and after MP-z-5's ledger closes | WORLD |
+
+**Chains (fan-out 1 of 1 chains, cap 8):** [MX-c-8 -> MX-r-11], worker `0.9.0_WK_NFRA_MCPINDEX~33`. One chain because
+the round has one write surface (the catalog) and its release. PHASE A of MX-r-11 (deploy-only commit + ANNOUNCE) is the
+worker's; PHASE B is re-addressed by amendment to `0.7.0_AE_CloudOps~MI` at the gateway slot (the MX-r-10 pattern).
+
+### R10.2 CHOICES THIS CUT MAKES (the issuer's, inside its decomposition)
+
+1. **The served-tool denominator** is the deployed commit's tool manager plus its enabled integrations
+   (`services.opal-gateway.deployed_commit` in `infra/aws/ec2/EC2_MANIFEST.json`; `ENABLED_INTEGRATIONS` from that
+   commit's `deploy-to-ec2.sh`), the same set MC Portal's `admin_gateway_breakdown._registered_tool_names()` reads.
+   Measured at base 08b77fd98d against 185dc04888: **N = 67** (43 native + 24 from 7 integrations); the live host read
+   the same 67 (ssm 6f80490b, 2026-10-13 ~19:5xZ).
+2. **The link is the one MC Portal already reads** (`admin_gateway_breakdown._catalog_read_tool_rows`: any mapping with
+   `read_tool` names an index by its `entity`/`key`). An (a) entry carries `read_tool: <tool>` and `entity: <a row id
+   outside tool_index>`; (b) and (c) entries carry no `read_tool`, so the panel never shows a made-up index. Base:
+   10 of 67 tools already have a link (the portal and silver read tools); 0 carry depth or freshness.
+3. **Member by definition, never name** (the CVO's carried note, msg 33712): every entry names its `definition`
+   (`<path>:<line>` in the deployed gateway tree), and the check confirms the tool is defined there.
+4. **Depth and freshness of an (a) tool** are read at emission from the index's served artifact (read-only S3 listing),
+   recorded with `claim`, `value`, `basis: s3://<bucket>/<prefix>`, `method` (key-date | last-modified) and `read_at`;
+   where no artifact can be listed (a live-queried silver row), the claim is `absent` with its reason. discover's
+   answer-time freshness (FWD-13) is unchanged.
+5. **No existing gateway tool reads `opal-data-harvest`**: `comp-find 'opal-data-harvest' infra/aws/ec2/opal-gateway`
+   reads 0 hits across 261 files (115 binary not searched), and `gateway_query_catalog` reads only the catalog's one
+   `bucket` (`portal_index/integration.py:185`). So each harvest row is catalogued with `read_tool` null and
+   `gap_owner: NFRA_OPLGTW` (the asset-manager principals, the research grant and its reader are that project's next
+   round, direction Z5; contract 2 of the v0.9 addendum). The worker re-verifies before relying on this.
+6. **The V1 rule is mechanical here:** a WITHHOLD prefix, `management/v1/`, the whole `amgt/harvest/gold/` prefix and
+   any prefix not on the list get no row.
+
+### R10.3 BATTERY (base 08b77fd98d; `deliverables/2.0.0_SA_COO~MI/round10/checks/`)
+
+| check | base | planted PASS arm (standing clause 1) |
+|---|---|---|
+| c8.AC1 | FAIL: partition sum 0 of N=67 | planted tool_index (7 a / 53 b / 7 c): PASS; planted bad definition, bad link, missing entry: each FAIL |
+| c8.AC2 | FAIL: 0 of 16 prefixes rowed; list parse 11 rows / 16 prefixes agrees with the grant section | planted 16 rows: PASS; planted WITHHOLD row, planted whole-gold row: each FAIL |
+| c8.AC3 | FAIL: discover good 1 of 3 (the Schwab control holds: 8 matches, 3 of 3 silver) | stub discover answering harvest rows: PASS; stub with a harvest match on the Schwab control: FAIL |
+| r11.AC1 | FAIL: no ledger entry at HEAD (12 of 12 sentinels scanned) | the MX-r-10 check, re-pointed |
+| r11.AC2 | FAIL live: /health 200, partition 0 of 67, discover 1 of 3 | the two instruments above, shipped to the host |
+| r11.AC3 | FAIL: no (a) entry with a measured s3 basis | grader on a planted listing: AGREE PASS; depth off by a day: DISAGREE FAIL |
+
+### R10.4 WHAT THIS CUT DOES NOT CLAIM
+
+- It does not grade whether an asset manager can READ the harvest data: that needs NFRA_OPLGTW's principals and grant
+  (Z5). FWD-21's DONE WHEN is the discover route, and that is what this round proves.
+- It does not prove the (a)/(b)/(c) classification is semantically right beyond its definition line; L9 (the CVO) reads
+  a sample of the (c) members against their definitions.
+- FWD-19 and FWD-11 stay parked (positioning ruling @f469cb665f). MX-s-19's s19.AC2 reads stay dated 2026-10-19/20.
