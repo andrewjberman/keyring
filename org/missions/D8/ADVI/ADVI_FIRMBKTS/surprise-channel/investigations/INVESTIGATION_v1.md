@@ -7047,3 +7047,79 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Not cleared by the worker: no checkout, reset or commit of portal. A ruling is needed on whether AC2 reads the gitlink as out-of-scope drift or the submodule pointer is re-synced by the integrator. Disarm: none (INERT)."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W80-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~80",
+  "surfaced_at": "2026-10-13T22:03:45Z",
+  "one_line": "The Door 6 retirement premise (retire after a no-other-consumer read) does not hold: a live S3 event notification on opal-data-inf (prefix gold/meta/, suffix pipeline-complete.json) invokes inf-portal-publisher, so retiring the key stops that trigger.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api get-bucket-notification-configuration --bucket opal-data-inf (read 2026-10-13 ~21:50Z): LambdaFunctionConfigurations has 2 entries; one invokes inf-portal-publisher with Filter Prefix gold/meta/ and Suffix pipeline-complete.json",
+      "infra/aws/terraform/inf-pipeline/s3-notifications.tf:15-21 at eff1db9d7f: 'ADVI_INFETL.005: gold/meta/pipeline-complete.json -> inf-portal-publisher', lambda_function block with filter_prefix and filter_suffix",
+      "aws lambda get-function-configuration --function-name inf-portal-publisher: INPUT_BUCKET and OUTPUT_BUCKET both opal-data-inf",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/ROUND8_PLAN_INPUTS_20261013.md:11 at eff1db9d7f: 'DEC-13 Door 6 RETIRE, no successor marker, inside the Inflection move, after a no-other-consumer read'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ROUND8_PLAN_INPUTS_20261013.md:11 records DEC-13 Door 6 as RETIRE, no successor marker, inside the Inflection move, after a no-other-consumer read of gold/meta/pipeline-complete.json.",
+  "world_is": "The no-other-consumer read finds a second live consumer: an S3 event notification on opal-data-inf (prefix gold/meta/, suffix pipeline-complete.json) that invokes inf-portal-publisher, wired under ADVI_INFETL.005. Retiring the key as ruled would stop that trigger.",
+  "notes": "Not decided by this worker. The ruling's precondition is not met as written; the disposition (re-point the publisher's trigger, or retire it with the key) is Andrew's ruling with the CTO. Disarm: CTO, before the Door 6 retirement act is cut. Evidence record: org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~80/PLANINV_LEGACY_OPERATIONS.json (candidate inf-portal-publisher-sentinel-trigger) @59c2e13ecc."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W80-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~80",
+  "surfaced_at": "2026-10-13T22:03:45Z",
+  "one_line": "infra/aws/terraform/opal-assets/router_iam.tf:26-29 says mdpf-daily-refresh-trigger is ENABLED and armed on the Door 6 key, but the live account has no such rule (describe-rule ResourceNotFound) and feeder-trigger.tf:7-8 records its destruction on 2026-08-18.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/opal-assets/router_iam.tf:26-29 at eff1db9d7f: '# `mdpf-daily-refresh-trigger` is ENABLED and armed on ObjectCreated of that EXACT key.'",
+      "infra/aws/terraform/mdpf-pipeline/feeder-trigger.tf:7-8 at eff1db9d7f: 'destroyed the mdpf-daily-trigger Lambda + mdpf-daily-refresh-trigger rule' (TO-3 K3, 2026-08-18)",
+      "aws events describe-rule --name mdpf-daily-refresh-trigger --region us-east-1: ResourceNotFound ('does not exist on EventBus default'); aws events list-rules --name-prefix mdpf-daily: 0 rules"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "router_iam.tf:26-29 states that mdpf-daily-refresh-trigger is ENABLED and armed on the Door 6 key.",
+  "world_is": "No rule of that name exists on the default event bus; it was destroyed on 2026-08-18. The router deny statement 3 still cites it as the live guard.",
+  "notes": "Stale comment in a Terraform file. No harm measured: the deny blocks writes the chain no longer makes. Its disposition rides candidate router-iam-door6-deny in the FB-k-5 record (decision Andrew). Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W80-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~80",
+  "surfaced_at": "2026-10-13T22:03:45Z",
+  "one_line": "The aws shim, run from a directory outside a git checkout (the data directory), prints a WARN line into its captured output, so a raw JSON capture is not parseable until that line is stripped.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-firmbkts-80-data/targets_firmsep.json (aws events list-targets-by-rule, 2026-10-13 ~21:4xZ) begins with 'WARN: aws: no caller-toplevel .tools/aws (git rc=128) -- PREPENDING THE BAKED C:/dev/ajb_workspace/.tools instead'; json.load on that file fails with Expecting value, line 1 column 1",
+      "the same warning appeared in the captured outputs of later aws calls run from the same directory; the captures were filtered with grep -v '^WARN:' before parsing"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task order's bounds say AWS from bash is .tools/aws, and downloads go to the data directory outside the checkout; the shim is expected to read cleanly from there.",
+  "world_is": "Run from outside a checkout, the shim falls back to the baked workspace tools and writes a WARN line into the captured stream, so the raw capture is not valid JSON until the line is removed.",
+  "notes": "Read-only calls were unaffected. No write was made by the shim. Disarm: none (INERT)."
+}
+```
