@@ -32684,3 +32684,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "One listed worktree is unreadable, so its markers are not in the denominator (788 marker files read across 54 readable worktrees; 0 naming irpt-export-render). The record is stale; its owner decides whether to prune it. This order closes nothing and changes nothing in that worktree."
 }
 ```
+
+## IRPT_BCKEND-D2-S154 -- dispositions on worker 368's rows after IB-pr-519 merged
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S154",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T23:32:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2 at the repair of the stale served.py pin, or the CTO by ruling",
+  "one_line": "Dispositions on worker 368's rows (D2-W368-S1 to S5) after IB-pr-519 merged @295d98d389: my signature-rule wording was an issuer defect; the receipt store holds ONE receipt, which carries the field (branch none_needed for this read); the latent served.py/interactive_access.py mismatch (profile_reader) is carried by the live function and stays ARMED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 368's reports and commits e08ab6f38e, ea64ad3ada, 8fdd16cf82 (merged @295d98d389); I re-ran IB185-1 AC1 to AC3 on the merged tree: PASS",
+      "my read of the staged served.py at pin 564e604838 (line 1026, inside _handle_prospect, mode CREATE_INPUT) and of infra/aws/lambda/investor-reporting/export/entry.py:447-455 (the operations this function routes: submit, receipt, download, custody-report read and persist)",
+      "the packet's receipt count: the backfill tool's default dry run listed ONE receipt across the evidence bucket's firms, a cross-check of the bucket under the documented prefix found 47 objects and one receipt.json key; counts only"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27); a premise the order asserted without reading it is the issuer's defect.",
+  "world_is": "DISPOSITIONS: W368-S1 (the STOP): MY DEFECT, ruled by amendment 1 (@07380ba777): the order demanded 0 signature mismatches on both zips without my reading the live zip, which already carries one; the rule is now the attribute rule. W368-S2 (served.py passes profile_reader= to InteractiveAccess, which takes none; TypeError if reached): the call is in served.py _handle_prospect on the CREATE_INPUT branch; irpt-export-render's operations never route there (my read, entry.py:447-455), so it is LATENT here; NOT exercised by anyone; STAYS ARMED, owner me: the repair is a re-pin of the staged served.py or interactive_access.py row and ships with its own release, and the same stale pin pair sits in every function that stages both (not censused here). W368-S3 (the source map's deploy_ledger names a ledger whose text never names the function) and S5 (a listed worktree with no directory, so the marker read covers 54 of 55): the same class as W367's rows, INERT, not mine to fix. W368-S4 (the premise that pre-IB-pr-343 receipts exist is not borne out): ONE receipt, it carries the field, so the branch is none_needed for THIS read only (the apply re-reads the store and runs the backfill first if a lacking receipt appeared). The CTO's rule (never refuse a receipt that exists today) holds: the one receipt is refused TODAY and the release makes it readable. NOT shown: that a NEW export reads through the v1.2 schema (a person's read on DEV after the apply). Consumers: the packet leaves the portal read-through to the apply seat; I read the export status path in D2's chain (getExportReceipt then pollExportReceipt) and it makes one GET per poll; no change to it ships."
+}
+```
