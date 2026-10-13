@@ -84,3 +84,22 @@ invocation under the signed pair) is a new read in the generator chain (`{FB-j-5
 | cell | item | serves | owned files | depends on | slot, class | risk | at the cut |
 |---|---|---|---|---|---|---|---|
 | `FB-j-8` the slot pre-screen: which of the 158 advisors fire a slot today (offline, no model call), then ONE targeted dry run | 2 | FWD-5 | `deliverables/0.7.0_AE_CloudOps~FB1/SLOT_PRESCREEN.json`, `.md`, `SLOT_DRYRUN_ARTIFACTS.json` | `FB-j-6` | `0.7.0_AE_CloudOps~FB1` seat order | WORLD | pending |
+
+## Amendment 2 (2.0.0_SA_COO~B1, 2026-10-13 ~10:0xZ): cells `FB-j-9` and `FB-j-10` added by the CTO's orders (ROUND_ANALYSIS.round3.md ADDENDA 14 and 15, msgs 4733 and 4735)
+
+`FB-j-8` (complete): all 158 advisors fire a slot offline; every one of the 81 fired slots in two dry runs was DROPPED in `_build_slot`. The cause,
+reproduced offline by the issuer and confirmed by FB1 against the deployed layer (`anthropic-sdk-deps:1`, SDK 0.45.0): `_call_llm` passes
+`betas=[...]` to `client.messages.create`, which has no such parameter; the `TypeError` is raised before any request and swallowed by
+`except Exception`. The summaries have never held text. The CTO ruled: fix it HERE (not a CRO brief, not "trigger first"): remove the `betas`
+argument (`cache_control` already does the caching) and log every drop's exception class; the reproducing test must pass and a `betas` mutant
+must fail; deploy under `FB-j-6`'s shape; dry-run TEN pre-screened advisors; the bullets must be non-empty; the CTO reads the text against the
+figures for wording, PII and accuracy; ONLY THEN `FB-j-7` (citing that sample) and `FB-j-4`. Cells are now 10, chains 4 and 1 join.
+
+| cell | item | serves | owned files | depends on | slot, class | risk | at the cut |
+|---|---|---|---|---|---|---|---|
+| `FB-j-9` the model call stops passing `betas`; every slot drop logs its exception class (reproducing test, `betas` mutant) | 2 | FWD-5 | `infra/aws/lambda/exec-summary-generator/{lambda_function.py,tests/test_slot_drop_log.py}` | `FB-j-5` (same file, merged) | ~73 worker | WORLD (path floor) | pending |
+| `FB-j-10` deploy it (a second apply, under the pair's addendum 1); ONE dry run of TEN pre-screened advisors; read the drop classes and the bullets | 2 | FWD-5 | `deliverables/0.7.0_AE_CloudOps~FB1/SLOT_DROP_CAUSE.json`, `DRYRUN10_ARTIFACTS.json` | `FB-j-9`, the addendum | `0.7.0_AE_CloudOps~FB1` seat order | WORLD | parked |
+
+**Ordering (the CTO's):** `FB-j-7` (the regeneration pair and the first-chain read) and `FB-j-4` (the trigger) do not move until `FB-j-10`'s
+bullets are non-empty and read by the CTO; `FB-j-7`'s pair cites that sample. `FB-j-7`'s un-park condition "`FB-j-6`'s record read" is
+superseded by "`FB-j-10`'s record read and its sample read by the CTO against the figures".

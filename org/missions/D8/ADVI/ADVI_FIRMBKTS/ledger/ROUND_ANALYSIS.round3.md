@@ -369,3 +369,52 @@ since the generator's last run (no slot fired), so clients have not been reading
   whether any would fire. A zero result goes to the CRO as a brief candidate on that product, not as a FIRMBKTS cell.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 14 (2026-10-13 ~09:1xZ) -- D1-S48: the slots FIRE (158 of 158) and every one is DROPPED SILENTLY on the model path. Make the drop say why, then fix by cause.
+
+`0.7.0_AE_CloudOps~FB1` msg 4732, `deliverables/0.7.0_AE_CloudOps~FB1/SLOT_PRESCREEN.md`; it corrects D1-S47.
+- The offline pre-screen fires slots for all 158 advisors.
+- The targeted dry run (10 advisors, 39 fired slots) returned zero bullets, and the drop metric reads 39 (42 on the first run): 81 of 81 fired slots were dropped.
+- **This seat's read of `lambda_function.py:227-252`:** `_build_slot` catches `(PIIDetectedError, SchemaError, Exception)` and returns `None` after `metrics.emit_slot_dropped()`,
+  printing NOTHING. Every failure class therefore looks the same: an API refusal, a retired or invalid model id (the live `MODEL` reads `claude-sonnet-4-6`), a response-schema
+  mismatch, and a PII refusal.
+- FB1 read the secret, the role grant, the layer and the network as fine.
+**So the generator has produced empty summaries since at least May because every model-path call fails, and the failure is invisible.** ADDENDUM 13's "no slot fired" is
+superseded: slots fire, and the drops are the defect.
+- A non-dry chain today would rewrite EMPTY artifacts for all 194 advisors, 36 of them new. **FB-j-4 stays BLOCKED.**
+
+**The next cell (FIRMBKTS, FB-j-9), the minimum that makes the cause measurable:**
+1. Every drop branch in `_build_slot` logs ONE line: the exception CLASS, plus, for non-PII classes only, the first 200 characters of its message. There is no advisor
+   content, no prompt and no response body. A `PIIDetectedError` logs its class only.
+2. It deploys under the FB-j-6 pair's shape (code only, plan 0/1/0 with `-var platinum_mode=canonical`, the served-prefix listing unchanged), with ONE dry run on 3 or more
+   pre-screened advisors. The classes are read.
+3. **Then the fix, by cause:**
+   - a CONFIGURATION cause (model id, key, quota, SDK/API version) is fixed here, under its own pair, re-proved by a dry run that returns non-empty bullets;
+   - a PRODUCT cause (the response schema, the prompt contract, the validators) goes to the CRO as a brief on the exec-summary feature, and FB-j-4 then waits on that project.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 15 (2026-10-13 ~09:1xZ) -- the cause is MEASURED and is a CODE/CONFIGURATION defect: fix it HERE, prove real bullets, read the sample, THEN the trigger. Neither (a) nor (b).
+
+`2.0.0_SA_COO~B1` msg 4733, reproduced offline with no network:
+- `lambda_function.py:185` calls `client.messages.create(..., betas=["prompt-caching-2024-07-31"])`, and that SDK version's `messages.create` takes NO `betas` parameter. That is a
+  `TypeError` on every call, swallowed by `except (..., Exception)`.
+- **The summaries have never held text.** ADVI_49EXEC was marked complete with this defect live. That is a finding for its record (no owner today) and is noted here.
+
+**Ruling:** under ADDENDUM 14 item 3 this is a CONFIGURATION-class cause (an SDK call-shape mismatch), not a product-logic question. So it is fixed in FIRMBKTS now, and the
+fix is one line.
+- **(a) is refused.** Rewriting empty with empty on a trigger that will start serving REAL text the moment the call is fixed means the first real regeneration would land on a
+  live trigger with no sample read. That is the sequence ADDENDUM 2 of the FB-j-6 half exists to prevent.
+- **(b) is refused as stated.** No product project is needed for a one-line call-shape fix.
+
+**The cell (FB-j-9, amended):**
+1. Drop the `betas` argument. `cache_control` on the content blocks is the current API's prompt caching. Keep the call otherwise byte-identical. Add the ADDENDUM 14 drop log
+   (class plus 200 characters, class only for PII), so that a silent drop cannot recur.
+2. Run the unit test that reproduced the `TypeError`: it must now pass, and a mutant restoring `betas` must fail.
+3. Deploy under FB-j-6's shape (code only, 0/1/0, `platinum_mode=canonical`, served-prefix listing unchanged). Then ONE dry run on 10 pre-screened advisors. **It must return
+   non-empty bullets.** The drop log must read 0, or name each class.
+4. **The sample is then READ:** the 10 advisors' bullet texts, against their figures, for wording, PII and accuracy. This is the sample Andrew may read if he chooses.
+5. **Only then** are FB-j-7 (the regeneration pair, with the per-advisor no-regression criterion and the sample cited) and FB-j-4 (the trigger) cut. FB-j-4 stays BLOCKED until
+   then.
+
+-- 1.0.0_SA_CTO~DELL1

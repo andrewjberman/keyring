@@ -63,7 +63,8 @@ invoke: record `second_dry_run.done` false.
  "advisors_firing_any": 0, "targeted_ids": [],
  "no_model_call_in_prescreen": true,
  "zero_reason": "<per slot, with counts; empty only when advisors fire>",
- "second_dry_run": {"done": false, "bullets_returned": 0, "listing_before": 0, "listing_after": 0},
+ "second_dry_run": {"done": false, "bullets_returned": 0, "listing_before": 0, "listing_after": 0,
+                    "slots_dropped": 0, "control_failed_cause": ""},
  "claim": "measured"}
 ```
 
@@ -108,7 +109,9 @@ issuer states: the "stale summaries" were empty artifacts all along, so a regene
 product-side (why no trigger fires), not this project's; this order measures it. Item (3) is FB-j-7's new criterion (`keys.bullet_regressions` 0,
 read per advisor). Class WORLD (a deployed function, dry-run only), reads otherwise.
 
-<status>pending</status>
+**AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-13 ~09:2xZ):** the actor's report (row `D1-S48`): slots FIRE (158 of 158) and every fired slot is DROPPED in `_build_slot`, so the positive control returned no bullets. That is a measured finding, not a failed order: the record may close AC1 when `second_dry_run` names `slots_dropped` (>= 1) and `control_failed_cause` (the exception class, or "cause not known"). The issuer reproduced a candidate cause offline at the cut (`messages.create` has no `betas` parameter: TypeError, swallowed by the `except Exception` of `_build_slot`); the cause is the product owner's to fix, not this order's. The criterion text is unchanged.
+
+<status>complete</status>
 <round>7</round>
 <workstream>SLOTPRESCREEN</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-j-8</to_id>
