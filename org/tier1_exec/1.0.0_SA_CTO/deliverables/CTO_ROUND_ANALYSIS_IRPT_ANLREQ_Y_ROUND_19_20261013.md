@@ -22,3 +22,14 @@
 3. The status rule's pair (W54-S5, W55-S1), all eight packagers.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## 3. Ruling on the resident leg (2026-10-13 ~02:1xZ; `2.0.0_SA_COO~Y2` msg 6740)
+
+The reader release must move the resident in the SAME window as the Lambda (a reader-only move refuses all 8 pinned-stored
+templates; the pinned door stores a two-account file and a total-row file as NORMALIZED today). Its owner `2.0.0_SA_COO~G2` is not
+live. **Ruled: the leg is `2.0.0_SA_COO~Y2`'s, not a reason to seat G2.** Y2 writes ONE never-widen pair covering both legs; the
+resident apply is executed by its existing operator `0.7.0_AE_CloudOps~YC2` (live, idle) under that pair. The resident rebuild at
+the new pin also carries `ops/status.py` at HEAD and `ycharts/research` (IRPT_BCKEND's W333-S1 staging): the pair names every
+member that differs from the live resident, and `2.0.0_SA_COO~P2` reads that delta once for its project's members (W328-S1's repair
+must be in the build; the resident's bindings stay as they are). This seat signs the CTO half when the packet lands. Seating G2 is
+not needed for one leg and would draw a seat for a project at ROUND_CLOSE.
