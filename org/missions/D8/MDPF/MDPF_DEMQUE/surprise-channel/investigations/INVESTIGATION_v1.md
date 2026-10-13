@@ -1750,6 +1750,68 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "data/assets/scripts/silver/commonwealth_signs.py SIGN, PLUS_TYPES, MINUS_TYPES and NO_SHARE_MOVEMENT at c01f633404"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W38-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~38",
+    "surfaced_at": "2026-10-13T15:49:02Z",
+    "one_line": "The device queue copy of the standing extension request (STANDING-T1-EXTEND-2026-10-12) carries no need_class and no window_start, so AC2 arm 1 (--check-declared over the device queue) refuses it; the other six queue Yahoo requests are declared.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-45 THE CELL and Decomp round 9: the six Yahoo requests in the repo and the device queue are ALREADY declared by the issuer (need_class and window_start); the worker edits no requests/*.json; AC2 arm 1 requires refused == [] over the device queue.",
+    "world_is": "~/.opal/demque/queue/Z-STANDING-T1-EXTEND.json (keys end, fields, page, reason, request_id, securities, start, tier; request_id STANDING-T1-EXTEND-2026-10-12; 141 securities) is undeclared: it was written by the previous day's extend_frontier --apply before the declaration existed. demand_queue.py --check-declared on that queue prints checked 7, accepted 6, refused [STANDING-T1-EXTEND-2026-10-12]. The file is outside the repo and the grant forbids writing the queue directory; the next scheduled run_daily_draw.sh runs extend_frontier --apply first, which rewrites this file declared (the apply path builds it through _request), so the refusal clears at that run and not before.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python data/mdpf/scripts/demque/demand_queue.py --check-declared ~/.opal/demque/queue on dell1 2026-10-13 (worktree 86abd8733d plus the DQ-t-45 edit): {checked 7, accepted 6, refused STANDING-T1-EXTEND-2026-10-12}",
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t45_real.py arm1 queue: refused or too few checked (YCLASS-REAL-BAD)",
+        "data/mdpf/scripts/demque/run_daily_draw.sh@86abd8733d runs extend_frontier.py --apply before daily_draw.py --queue"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W38-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~38",
+    "surfaced_at": "2026-10-13T15:49:02Z",
+    "one_line": "redraw_stale.enqueue builds a Yahoo request with no need_class or window_start and calls demand_queue.validate, so DQ-t-45's refusal breaks it; the file is outside the grant, so both of its tests fail and redraw_stale --apply would reset the pacer and then refuse to enqueue.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "spec_asserts": "TO DQ-t-45 BOUNDS: the grant is demand_queue.py, extend_frontier.py, test_demque_yahoo_need_class.py, the test_demque_*.py stub declarations, and the investigation file; the folder runs with 0 failed (156 passed plus 3). Existing demque tests take a stub declaration and nothing else.",
+    "world_is": "data/mdpf/scripts/demque/redraw_stale.py enqueue (line 98-102 at 86abd8733d) builds {request_id DEMQUE-S8-REDRAW-<day>, tier 2, reason, page, securities, fields close, start, end} with no need_class or window_start, then calls dq.validate(req). The refusal now raises before the file is written. test_demque_redraw_stale.py test_resets_exactly_those_symbols_in_the_pacer_and_enqueues_one_request and test_second_run_with_no_stale_files_enqueues_nothing fail on the production enqueue, not on a stub, so no stub declaration can clear them. In main() reset_pacer runs before enqueue, so a redraw_stale --apply after this change resets the pacer entries and then raises with no request queued. The folder runs 157 passed, 2 failed.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest data/mdpf/scripts/demque -q on the worktree 86abd8733d plus the DQ-t-45 edit: 2 failed, 157 passed (both failures ValueError need-class rule at bbg_quote.py:235 raised from demand_queue.validate via redraw_stale.enqueue)",
+        "data/mdpf/scripts/demque/redraw_stale.py@86abd8733d lines 98-108 (enqueue) and 132-133 (main: reset_pacer before enqueue)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W38-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~38",
+    "surfaced_at": "2026-10-13T15:49:02Z",
+    "one_line": "extend_frontier.apply returns early without writing when the plan names no securities, so a stale undeclared standing file can stay in the queue, and demand_queue.draw then refuses the whole queue on it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-45 BUILD 3: extend_frontier._request declares need_class client and window_start; the standing extension declares itself. The spec does not cover the empty-plan branch of apply.",
+    "world_is": "extend_frontier.py apply (line 407-409 at 86abd8733d) returns {request: None} without rewriting Z-STANDING-T1-EXTEND.json when plan securities are empty. The old undeclared file then stays in the queue. demand_queue._load_requests calls validate on every queue file, so daily_draw's draw raises ValueError on that file and the run exits nonzero before any pull. Reachable only when no locked name has landed; not seen on dell1 2026-10-13, where the plan names 183 symbols.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "data/mdpf/scripts/demque/extend_frontier.py@86abd8733d apply: if not p[\"securities\"]: return without a write",
+        "data/mdpf/scripts/demque/demand_queue.py _load_requests calls validate on every queue *.json (DQ-t-45 worktree edit)"
+      ]
+    }
   }
 ]
 ```
