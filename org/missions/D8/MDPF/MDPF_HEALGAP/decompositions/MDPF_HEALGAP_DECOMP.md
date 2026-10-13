@@ -401,3 +401,40 @@ No data edge between the two cells. `fanout: 2 of 2 chains, cap 8`.
   `s3://opal-data-bd/logs/asset-dim-download-<D>.log` and the instance's result. Until it occurs the row stays OPEN and the positive arms stand
   (round-3 act-3 L4: 22:10Z downloaded, 22:40Z `SKIP-COMPLETE`).
 - **Item 2 withdrawn** (above); nothing carried.
+
+## AMENDMENT 1 (round 4; issuer `2.0.0_SA_COO~G1`, 2026-10-13 ~14:4xZ) -- cell `HG-t-16`, the re-attempt's schedule and guard
+
+**Why, and who ruled it:** worker `0.9.0_WK_MDPF_HEALGAP~13` applied the reference patches and stopped on its refusal clause with BLOCKING row
+`MDPF_HEALGAP-D1-W13-S1`. The naming limb refused the code commit: `NAMING REFUSE infra/aws/terraform/cot-pipeline:0 <hole-count-ratchet> -> -`,
+because the new rule's schedule `cron(25 14-23 * * ? *)` has no cadence word (`lib/opal_naming_cadence.word_for` returns `None`: "hour field 14-23:
+more than once a day, not a list of single hours"), so the name ending in `hourly` would add one hole. `word_for("cron(55 * * * ? *)")` returns
+`hourly`. The defect was the issuer's: the order's checks graded the rule's schedule against the intent and never ran the cadence reader.
+The issuer rules inside its own decomposition (CLAUDE.md rule 27, no CTO ruling); this amendment is recorded here, not as a recut.
+
+**What changes in the cell (and what does not):**
+
+| | first cut | amended |
+|---|---|---|
+| schedule | `cron(25 14-23 * * ? *)`, ten fires 14:25Z-23:25Z | `cron(55 * * * ? *)`, 24 fires a day, at :55 |
+| "after the registry's 13:15Z fire" | carried by the window | carried by the handler's FIRST test: `holdings.json` listed with LastModified (UTC) == today, else `HOLDINGS-NOT-FINAL` |
+| "complete day" | `characteristics.json` LastModified (UTC date) == today | the output is listed and its LastModified >= `holdings.json`'s (a day is complete only when the output is no older than its input) |
+| grant | one `ListBucket`, exact key `characteristics.json` | one `ListBucket`, `StringEquals` the two exact keys `characteristics.json` and `holdings.json` |
+| name | `etfs-cot-satellites-characteristics-producer-reattempt-hourly` | unchanged |
+| the 13:25Z fire | unchanged | unchanged |
+
+**Reasons the guard moved from the clock to the fact:** a window assumed holdings final after 14:25Z by arithmetic; the handler now reads it. The
+:55 minute keeps every re-attempt out of the scheduled :25 minute and out of the registry's :15 fire, so two producers never share a minute.
+Cost: 24 invocations a day, each at most four listings; before 13:15Z each ends at the first test.
+
+**Residual named:** a day on which the registry producer's stamp-gated 13:15Z fire did not write `holdings.json` (the runner left no stamp) draws
+`HOLDINGS-NOT-FINAL` all day; the scheduled 13:25Z fire alone serves it, exactly as before this cell.
+
+**Check and patches (issuer's, dry-run again at the base 2026-10-13 ~14:3xZ):** `R4_CHECKS/hg_r4_rules.py --t16` now also reads the naming
+limb's cadence reader and is BAD at the base, OK on the reference change, and BAD on 6 rule mutants (the window cron among them) and 7 grant
+mutants; `hg_t16_gate.py` has fifteen arms (A-N plus E2) and is BAD at the base, OK on the reference handler and BAD on 11 handler mutants.
+24 of 24 mutants discriminated. Reference patches `R4_PATCHES/t16_*.patch` are regenerated and apply cleanly to a pristine HEAD.
+
+**Gate limb that graded this amendment:** none of `to-pipeline-gate` limb 6 fires on a modified order (it grades newly added orders); GATE (viii)
+reads `<placeholders>NONE</placeholders>` unchanged. The graded refusal was the naming limb at the worker's commit (the limb that found the defect).
+**Worker:** the finished slot is re-seated, naming its prior commits (the surprise row and an INVALID proof instance) as inherited state; the
+row stayed on the worker's branch (the row gate refuses a seat-authored W-coordinate row) and reached the channel with the worker's merge `8cc7e0458e`.
