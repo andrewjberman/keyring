@@ -25828,3 +25828,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The gate treats display text as an address. The drafting reader carries the same display text shape (pre-existing, not in this diff, not graded here). Whether the naming gate should read a reason string is the issuer's and naming owner's call; the face's wording was kept."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W422-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~422",
+  "surfaced_at": "2026-10-13T23:15:46Z",
+  "one_line": "The measured premise of the conftest amendment (29 live fill-key GETs across 44 passing thesis tests without the line) does not reproduce under the probe's counting; the effect reproduces with the same sign: 42 GET attempts across 37 tests with the variable unset, 0 with the line.",
+  "spec_asserts": "The worker face, section 1 (conftest AMENDMENT 1), records the first worker's measurement as 29 live GETs of the fill key across 44 passing thesis tests without the line, and asks the worker to confirm with a probe that existing thesis tests no longer GET the fill key.",
+  "world_is": "A probe (deliverables folder, probe_aifill/probe_aifill_gets.py) counts each botocore GetObject whose Key contains ai_fill, per test nodeid, and blocks each call before it is sent. Over lib/research/api/tests excluding test_ai_fill_serve.py (973 tests: 969 passed, 4 failed, the base 4 failing): with the line committed at 505cc189de, 0 GETs across 0 tests (probe_out_with_line.json). With AMGT_AIFILL_ROOT removed at each test body as a negative control, 42 GETs across 37 tests (probe_out_unset.json). The predecessor's evidence does not record its counting method, so the 29-across-44 figure is not reproduced; the zero with the line is confirmed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "probe_aifill/probe_out_with_line.json and probe_aifill/probe_out_unset.json in the deliverables folder of this order (0.9.0_WK_AMGT_RESAPP~422), written by probe_aifill/probe_aifill_gets.py at the commit that carries this row.",
+      "pytest run B on the same suite with the variable unset: 4 failed, 969 passed, the same 4 base failures as AC2 at 505cc189de."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The direction and the zero are confirmed by the probe; the count is the probe's own method. Whether the 29-across-44 figure should be restated in the record is the issuer's call (disarm owner 2.0.0_SA_COO~R2)."
+}
+```
