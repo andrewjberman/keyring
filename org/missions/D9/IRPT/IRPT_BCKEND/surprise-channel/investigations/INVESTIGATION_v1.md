@@ -30423,3 +30423,59 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISARMED (code merged): W347-S1 (holdings_inf.py leak: fixed by 8dc575a3b8, two test arms); W344-S2 (holdings_source and holdings_citation now cite the live mint; no release carries raw_keys.json yet); W348-S3 (the 4 failed _contracts nodes exist at the base, the member names no red operation, nodes 3 and 4 are analysis-request operations unrelated to holdings). RULED, W347-S4: prose citation, as above. IB-pr-497 (S124): PARKED, reissued for a window when the runner is up; no start or stop of the host is granted. STILL ARMED: W345-S3, because the fix is in merged code only and the host bundle that runs the live builder is not redeployed, and the files already on the host are not counted (S124); W348-S2, because the built holdings schema copy also turns on include=target (two TARGET blocks) and drops multi_asset from three enums, so the apply is a served change that the CTO half must sign or refuse (asked of 1.0.0_SA_CTO in the round-171 packet); W346-S2, S3 and W350-S1 stay ARMED until the portal candidates land on DEV and the fe-s-18 committed bytes are ruled."
 }
 ```
+
+## IRPT_BCKEND-D2-W349-S1 -- irpt-directory-search built zip carries a served.py/enforce.py keyword mismatch from the staged pins; the build STOPS on IB-pr-499
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W349-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~349",
+  "surfaced_at": "2026-10-13T03:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "The built irpt-directory-search zip reads 1 attribute mismatch: served.py:856 calls enforce.Enforcer with load_report_owner, which the staged enforce.py at its pin does not accept. The LIVE zip carries the same mismatch, so the build is a STOP under the refusal clause; no reach, arms or packet were produced and nothing was uploaded.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "signature_closure_attr.py (deliverables 0.9.0_WK_IRPT_BCKEND~278) run on the BUILT zip, BUILD_ONLY sha256 ea1ac36d051602354cb5d25c238c66e11a2c228bb3757118eb7797ff07a9dac3, built twice identical: 'signature_closure calls=40 checked=40 skipped_unpack=0 mismatched=0 attr_skipped_unpack=0 attr_checked=62 attr_mismatched=1', rc=1; 'ATTR_MISMATCH: served:856 calls enforce.Enforcer -- unknown keyword(s) [load_report_owner]'",
+      "the same instrument on the LIVE zip (aws lambda get-function Code.Location, CodeSha256 TefVhmGS.../ hex 4de7d586...): the identical summary line and the identical ATTR_MISMATCH line, rc=1",
+      "git show 74a62fb46ce9ff2e2baa305d3eadfac6b8145651:infra/aws/lambda/investor-reporting/_authz/served.py line 855 reads render[\"load_report_owner\"] = ports[2], and line 856 passes **render to _enforce.Enforcer",
+      "git show f9a00f732caebaaf7d36b7e066ef40a01bb5da51:infra/aws/lambda/investor-reporting/_authz/enforce.py contains 0 occurrences of load_report_owner; positive control, HEAD copy of the same file contains 6, and its Enforcer.__init__ (line 317) accepts load_report_owner=None",
+      "infra/aws/lambda/ci/lambda-source-map.json at base f91aedd1ef, entry irpt-directory-search, staged_from rows (lines 3587-3598) pin _authz/served.py at 74a62fb46c and _authz/enforce.py at f9a00f732c: the packaged pair is a mixed pin set"
+    ]
+  },
+  "spec_asserts": "IB-pr-499 build step 3 and the refusal clause: both signature limbs must read 0 on the built zip, and any signature or attribute mismatch is a STOP, a surprise row, and a report; no check is weakened.",
+  "world_is": "The built zip (24 members, 23 identical to the live bundle, 1 changed: handler.py, built equal to its repo blob at base) carries a served.py whose pinned copy passes load_report_owner to Enforcer, while the enforce.py pinned beside it does not define that parameter. The live bundle carries the same pair and the same mismatch, so the mismatch predates IB-pr-499 and is not produced by handler.py. Whether a live request reaches the keyword path (render_ports returning three ports) is NOT measured. Disposition is the pair owner's: the order is stopped and stays open.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-W349-S2 -- the portal reader the order names for the directory-search consumers reads permitted_scope.scope_ids[0] as the entry id; it reads no entry_id member
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W349-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~349",
+  "surfaced_at": "2026-10-13T03:39Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's consumer read-through says the portal's client search reads scope_kind and entry_id. The portal reader that maps a directory-search element (contracts/envelope.ts:187 to contracts/adapt.ts:629-631) reads permitted_scope.scope_kind and permitted_scope.scope_ids[0]; it reads no entry_id member. The function's search result carries top-level entry_id and scope_kind and no permitted_scope; the route layer that reshapes one into the other is outside this order's paths and was not read. No armed hazard: the build and the packet are unchanged by it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@53506d4903 src/pages/InvestorReporting/contracts/envelope.ts:187 'directory-search' maps each element of data through adaptDirectoryEntry (read)",
+      "portal@53506d4903 src/pages/InvestorReporting/contracts/adapt.ts:630-631 kind from wire.permitted_scope.scope_kind; entryId from wire.permitted_scope.scope_ids[0]; no entry_id read (read)",
+      "portal@53506d4903 src/pages/InvestorReporting/contracts/wire/responses.ts:81-86 DirectorySearchResponseWire declares data as DirectoryEntryWire[] (read)",
+      "wk-IRPT_BCKEND-349@f41501ab1d infra/aws/lambda/investor-reporting/directory/handler.py:270-283 search() result rows carry entry_id, scope_kind and no permitted_scope (read)"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-499 record face, consumers of the search results: the portal's client search reads scope_kind and entry_id; cite the portal reader file:line, one read-through each.",
+  "world_is": "The portal reader for a directory-search element reads permitted_scope.scope_kind and permitted_scope.scope_ids[0] (adapt.ts:630-631). It does not read an entry_id member. Its declared wire type is DirectoryEntry rows with permitted_scope, while the function returns results[] rows with a top-level entry_id. Whatever maps one to the other is not in this order's paths and was not read. For the synthesized ACCOUNT entries the reader's entryId is the one account id in scope_ids, so two entries of a shared tail carry two distinct ids; that is a fact about the reader, not a defect of this change."
+}
+```
