@@ -130,3 +130,72 @@ The re-sign condition: a v2.13 whose FWD-9 names the draw (1), the comparison an
 path (3), and the per-date series set with the sum-to-Total arm (5).
 
 -- 3.0.0_SA_CVO
+
+---
+
+## ADDENDUM -- v2.13 @fed23ff9ff, ratified-text half -- REFUSE
+
+**Delivery:** `1.0.0_SA_CTO~DELL1` msgs 5077 and 5078.
+**Reviewed bytes:** `git show fed23ff9ff:org/missions/D8/MDPF/MDPF_CANON/prd/MDPF_CANON_PRD.md`, blob d0ea4877cc. It is equal at HEAD and
+in the working tree. Ratified-text half_hash **3eea94b4862515db2cc8608991fc53e9a93970b9f98a007242c26c2503652f71** (equal to the CTO's
+quote 3eea94b48625); endpoint_hash cb2f5ef3d855.
+**Diff** `84aecdf45f..fed23ff9ff`, read whole, +68 -18: the header v2.13, FWD-9's DONE WHEN and ACCEPT rewritten, and the v2.13 note in the
+ADDENDUM. Nothing else in ENDPOINT or CONTRACTS moved.
+
+### The seven items, against this seat's ground
+
+| item | v2.13 | this seat's check | verdict |
+|---|---|---|---|
+| 1 draw | dates A-D | lib.trading_calendar with build date 2026-10-13: A = 2026-10-12 (it carries a category-views object), B = 2026-08-27 (a trading day), C = 2026-08-26, D = 2026-08-31 (the first trading day after 08-27 with no object; 32 trading days 08-27..A against 21 objects). "The first gap day" is defined in the text and resolves deterministically. | taken |
+| 2 comparison | to the cent, against served members | named | taken in form; see the contradiction below |
+| 3 citations | path:line | `CategoryViewTree.tsx:87-95` is `L1_COLOR` (Custom = `fuchsia500`); `mdpf_category_registry.py:150-157` is the `fee_taking` Client axis (`DISPLAY_L1_AXIS`); `FWD9_GROUPING_READ.md:28-32` is the member map. All three exist as cited. | taken |
+| 4 Client source | ruling (i) | unchanged (21 of 21, reproduced in the first review) | taken |
+| 5 composition | the Client chips split `non_model_aua` with an "Other AUA" remainder | remainder = `non_model_aua` - (Supervised + Unsupervised) is >= 0 on 21 of 21 dates (served ts 2026-10-12 against each dated object), so the split is coherent and chips + remainder = `non_model_aua` by construction | taken -- but see below |
+| 6 absent | observable named, no "-$0" | named | taken |
+| 7 mechanism | dev:live at a stated commit | named | taken |
+
+The added terms trace to their sources: "Other AUA" remainder to this seat's measurement, "adds up" to CN-d-3's property (C-S39), and
+Custom absorbing Other Models to the fe9b ruling (A). They are not Andrew's words, but they are fair readings of his "group on this basis".
+
+### What blocks: the series set contradicts the sum-to-Total arm
+
+This seat summed v2.13's own series set from the served global `aggregate-aua-timeseries/2026-10-12.json`: the five canonical models +
+Custom (the non-canonical model-class lines) + ETF (`opal_div_sma`, `opal_growth_sma`, `pfde`) + ALT + `non_model_aua`.
+
+| date | canonical + custom vs `model_aua` | stack - `opal_aggregate_aua`, ALT = `tax` once | ALT = `tax` + `tax_additive_aua` | carries (`opal_div_sma` + `opal_growth_sma`) |
+|---|---|---|---|---|
+| 2026-10-09 | +0.01 | **+21,121,201.39** | +50,055,335.01 | 21,121,201.38 |
+| 2026-08-27 | 0.00 | **+22,794,766.25** | +22,794,766.25 (tax 0 that date) | 22,794,766.25 |
+
+- **The two carries overshoot the Total by their own value, to the cent.**
+  - ETF lists `opal_div_sma` and `opal_growth_sma` as members. They are the FWD-3 carries, held by no firm, frozen at 2026-07-17 counts.
+  - Their dollars are in no headline sum: this seat measured that `opal_aggregate_aua` = model + non_model + sma_additive (= `pfde`) +
+    tax_additive (ADJUDICATION_v4 C-S41 / S13). Per the fold's docstring note (`dim_mdpf_aggregate_aua_timeseries.py:2274`), the 49F SMA
+    sleeves sit inside the 49F non-model residual, which this seat did not re-measure.
+  - So stacking them beside `non_model_aua` draws those dollars twice. Arm (2) fails on every drawn date where the carries have a value
+    (B and A at least).
+- **ALT lists two members that are the same dollars.** `tax` (by_model) equals `tax_additive_aua` to the cent (28,934,133.62 on 10-09).
+  Summing both adds 28.9M.
+- **The fold suppresses; it does not redistribute.** CN-f-1 (`round6/draft/TO-CN-f-1.DRAFT.md:24-28`, steps 5-6) sets the pooled
+  `other_models` line to None on a date where fewer than 2 firms hold the pool. The dollars leave `by_model` while `model_aua` and
+  `opal_aggregate_aua` are unchanged. On such a date at Global, Custom (which absorbs Other Models) cannot carry them, so the stack is
+  below the Total by the suppressed amount. FWD-3 requires that (a one-firm book is not shown). FWD-9 must then not claim sum-to-Total
+  there. It does not contradict FWD-3 as written, but the universal "so no dollar is drawn twice" is only true on the drawn dates if none
+  is a suppression date; A-D are post-cottonwood and very likely are not, which this seat did not measure post-fold.
+- SMA lines are never folded (step 7: "non-model-class entries (SMA lines, `tax`) are carried unchanged"). So the carries stay at Global
+  after the fold, and the overshoot survives round 6.
+
+**Fix (all wording within FWD-9):**
+- (a) ETF's stacked member is `pfde` (= `sma_additive_aua`). The two carries are not stacked: they are already inside `non_model_aua` via
+  the 49F residual. If they are to be shown, they are carved out of "Other AUA" by a stated rule. Which one is the CTO's (or Andrew's, under
+  fe9b) to state.
+- (b) ALT's stacked member is ONE of `tax` / `tax_additive_aua`, named.
+- (c) Arm (2)'s sum-to-Total holds on each drawn date, and on a fold-suppressed date at Global the stack is below the line by the
+  suppressed amount, read from the fold's own record, never drawn.
+
+With (a)-(c), this seat expects to sign. The other six items are taken as above.
+
+**Verdict: REFUSE** at half_hash 3eea94b48625. The series set as written cannot meet its own sum-to-Total arm on the served data: it
+overshoots by the carries, 21,121,201.39 on 2026-10-09 and 22,794,766.25 on 2026-08-27.
+
+-- 3.0.0_SA_CVO
