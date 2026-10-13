@@ -32,6 +32,7 @@ Four small repairs from round 1, batched in one order. Your worktree has the por
    and one new case proves the default fetch picks up a branch pushed to the temporary origin after the clone); (b) the result line carries the merge commit: `MERGE-FORWARD branch=<b> result=MERGED reason=- dev_before=<sha> dev_after=<sha> pushed=<yes|no> merge=<sha>` (`merge=-` on a refusal); update the
    self-test's expectations for the new field and keep every existing case; (c) `--no-fetch` on an unknown branch still prints `... result=REFUSED reason=branch-not-found ...`.
 3. `.tools/open-calls.py` `approval-lease`: `--project` becomes required (argparse's own message, `the following arguments are required: --project`). Touch nothing else in that file, and keep `.tools/tests/test_open_calls_approval.py` and `test_open_calls_register.py` green.
+4. (Amended by the issuer after your row W2-S6.) `.tools/tests/test_open_calls_register.py` is now in your `<paths>`: its `register_lease` helper omits `--project`, so four lease cases go red when item 3 lands. Add `--project NFRA_DEVPLN` to that helper's `approval-lease` call (the one-line fix you named) and change nothing else in that file; it must read `ok=True` again.
 
 ### RULES FOR THIS CELL
 
@@ -52,13 +53,16 @@ FOUND SOMETHING ODD OFF-TASK? Append ONE row to the investigation file named in 
 
 <criterion id="DPr1-AC4" cell_refs="DP-r-1"><invocation>bash .tools/portal-merge-forward.sh --selftest</invocation><expect>ok=True</expect></criterion>
 `DPr1-AC4` -- a fourth criterion, with its reason: this order edits an existing script whose 18 self-test cases must stay green with the new `merge=` field and the fetch case added.
+
+<criterion id="DPr1-AC5" cell_refs="DP-r-1"><invocation>python .tools/tests/test_open_calls_register.py</invocation><expect>ok=True</expect></criterion>
+`DPr1-AC5` -- a fifth criterion, with its reason (row W2-S6): the required `--project` must not leave the register test red; this one command is what BUILD item 3 promised and item 4 repairs.
 </proof_of_spec>
 
-<expected_criteria>DPr1-AC1,DPr1-AC2,DPr1-AC3,DPr1-AC4</expected_criteria>
+<expected_criteria>DPr1-AC1,DPr1-AC2,DPr1-AC3,DPr1-AC4,DPr1-AC5</expected_criteria>
 
 Each invocation runs from the worktree root under `timeout 120`. Write the proof instance to
 `org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~2/NFRA_DEVPLN.TO-DP-r-1.repair-batch.proof_of_spec.json`, validate it with
-`python .tools/proof-of-spec-check.py <instance> DPr1-AC1,DPr1-AC2,DPr1-AC3,DPr1-AC4`, and flip `<status>` to `complete` only when every mechanical criterion passes and the instance is VALID.
+`python .tools/proof-of-spec-check.py <instance> DPr1-AC1,DPr1-AC2,DPr1-AC3,DPr1-AC4,DPr1-AC5`, and flip `<status>` to `complete` only when every mechanical criterion passes and the instance is VALID.
 
 <decomp_ref>
 <decomp_doc>org/missions/D0/NFRA/NFRA_DEVPLN/decompositions/NFRA_DEVPLN_DECOMP.round2.md</decomp_doc>
@@ -67,6 +71,7 @@ Each invocation runs from the worktree root under `timeout 120`. Write the proof
 
 <paths>
 .tools/tests/test_open_calls.py
+.tools/tests/test_open_calls_register.py
 .tools/portal-merge-forward.sh
 .tools/open-calls.py
 org/missions/D0/NFRA/NFRA_DEVPLN/surprise-channel/investigations/INVESTIGATION_v1.md
