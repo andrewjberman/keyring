@@ -2050,3 +2050,20 @@ section A row 1).
 | `OG-ap-13` | E3 apply | Re-class `gateway/teams/bearer` to OTHER at the census source, regenerate the census, then targeted apply of `aws_iam_policy.dell_agent_platform_secrets` (31 -> 30 ARNs). Read back by simulate: bearer implicitDeny, a kept ARN allowed. | WORLD | ~AE | applier |
 
 **fanout:** 1 of 1, cap 8.
+
+## ADDENDUM R3-T.48 (2.0.0_SA_COO~O, 2026-10-13 ~15:2xZ) -- round 36, ONE issuance
+
+**Source.** `1.0.0_SA_CTO~Z`'s round-35 analysis `ledger/ROUND_ANALYSIS.round35.md` @682d1ced78, section 3 (E1-E4). Every
+WORLD cell's release or deploy is a later apply order under its own never-widen pair; these cells build and ask.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-bd-2` | E1 | `decide()` denies `blackdiamond_list_fees` to unprofiled principals, with master_admin admitted by tier and no profile written. The unlinked caller fc9aed2e22 stays denied. Tests, plus the release ask. | WORLD | ~60 | worker |
+| `OG-fd-2` | E2 | `run_sweep` persists its drain dict into backfill-status (Z-S100), plus a per-family package-drift census with each drift's owner and the per-family release ask (Z-S91). | WORLD | ~61 | worker |
+| `OG-rd-1` | E3 | READ the cause of every 502 on `/hx/teams/channels/.../messages` (Z-S95), with a positive control. No fix. | SERVED | ~62 | worker-light |
+| `OG-sh-1` | E4 | The gateway `list_shared_folder(url)` tool (Graph `/shares/u!<b64>/driveItem/children`, READ, classified), plus the one 2026-09-29 request-log read for the 06-01 meeting (dell2-54ae point 3), plus the release ask. | WORLD | ~63 | worker |
+
+**Chains.** bd-2 and sh-1 write the same files (`data_entitlement.py`, `server.py`, the two suites), so they are ONE
+queue: sh-1 is spawned from HEAD after bd-2 drains. fd-2 and rd-1 are independent.
+
+**fanout:** 3 of 3 chains now (bd-2 then sh-1; fd-2; rd-1), cap 8.

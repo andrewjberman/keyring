@@ -91,3 +91,4 @@ of the file.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
+<status>complete</status>
