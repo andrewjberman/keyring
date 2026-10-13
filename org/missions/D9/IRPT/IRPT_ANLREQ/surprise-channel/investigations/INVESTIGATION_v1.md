@@ -6241,3 +6241,145 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W58-S1 -- the deployed first answer of the template lane (the _defer body, reason TEMPLATE_FINDINGS) RETURNED through all three portal readers at PROD and DEV, 36 of 36 cases, none threw
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W58-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~58",
+  "surfaced_at": "2026-10-13T05:14:28Z",
+  "one_line": "The _defer first answer of the template lane (reason TEMPLATE_FINDINGS, built by the moved uploads.py's own functions) RETURNED at PROD 37aa1247 and at DEV 64980b4d: 30 of 30 AFTER reader rows (5 sheets x 2 commits x 3 readers) and 6 of 6 BEFORE rows, none threw.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-203 step 3: if any AFTER case threw, file a BLOCKING row; if none threw, file one OBSERVATION row stating that the deployed first-answer shape RETURNED at both commits, with the denominator.",
+  "world_is": "36 cases in org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~58/r19/PORTAL_DEFER_SHAPE_READERS.json: 36 RETURNED, 0 THREW. AFTER: 30 rows over total_row_sheet, two_value_account_sheet, repair_header_two_values, brokerage_two_account and header_repeated_csv, at PROD and DEV, through parseIrEnvelope, fileAnalysisRequest and proxyableFindings. The envelope reader reads state NEEDS_CORRECTION on every body (the reason key passes the guard); the ticket path files nothing and shows one line per finding. Denominator printed: 36 of 36 RETURNED; AFTER 30 of 30; BEFORE 6 of 6.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal src at PROD 37aa1247ee4b and DEV 64980b4d3a1e matched git archive of each commit's src tree (diff -rq, no lines)",
+      "intake/uploads.py@069b8f797e:459-475 (the _defer literal, read by the worker)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~58/r19/PORTAL_DEFER_SHAPE_READERS.json (committed with this row; cases[].outcome)"
+    ]
+  },
+  "notes": "Form only. The HTTP route, the resident's resolution and the React render were not run; the live bundles were not read. Recorded in not_read of the record.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W58-S2 -- the pinned pair's _defer has no ERROR branch: it dispatches RESOLVING and never answers the template findings, so the BEFORE body is constructed, not the pinned door's answer
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W58-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~58",
+  "surfaced_at": "2026-10-13T05:14:28Z",
+  "one_line": "The pinned uploads.py _defer (f09b802cdc, lines 370-386) reads the template, publishes RESOLVING and dispatches; it has no ERROR branch and returns no NEEDS_CORRECTION body, so the BEFORE arm of AR-y-203 is a body built from the pinned functions, not a door answer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-203 step 2: BEFORE arm = the pinned pair, for the sheets whose pinned template has an ERROR finding; the order asks the pinned pair's deferred first answer to be read beside the moved one.",
+  "world_is": "uploads.py@f09b802cdc:370-386 (_defer) has no ERROR branch: it calls read_template, publishes RESOLVING and dispatches. Under the pinned reader (3f29017cfc) one sheet, header_repeated_csv, carries an ERROR (AMOUNT_NOT_A_NUMBER); the other four sheets carry none. Its BEFORE body was built from the pinned _with_correction_words and the moved _defer literal; the pinned door's own first answer for that sheet is RESOLVING (read, not run).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "uploads.py@f09b802cdc:370-386 (_defer: read_template, RESOLVING row, _dispatch; no findings branch)",
+      "uploads.py@069b8f797e:459-475 (the moved _defer with the ERROR branch and the NEEDS_CORRECTION literal)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~58/r19/PORTAL_DEFER_SHAPE_READERS.json (arms and built_bodies)"
+    ]
+  },
+  "notes": "Whether the live pinned Lambda wires request_resolution was not read; no hazard standing is asserted here. A reader of the BEFORE rows must not take them as what the pinned door returns.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W58-S3 -- header_repeated_csv answers with 2 findings through _defer, where the synchronous create answer the prior cell ran carried 3
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W58-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~58",
+  "surfaced_at": "2026-10-13T05:14:28Z",
+  "one_line": "The _defer body of header_repeated_csv carries 2 findings (HEADER_ROW_REPEATED and one AMOUNT_NOT_A_NUMBER); the synchronous create body the prior cell ran for the same bytes carried 3 (a second AMOUNT_NOT_A_NUMBER with value null at row 3). The other four sheets' findings match the prior body exactly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-203 step 1: for each fixture sheet, the _defer body is built from the moved read_template findings; the prior cell's (AR-y-202) deployed-shape body for header_repeated_csv was built from its synchronous create answer's findings.",
+  "world_is": "The synchronous lane returns freeze_template_portfolio's findings (moved uploads.py:592, _freeze_template); _defer returns the template's own findings (uploads.py:459-475) and does not call freeze_template_portfolio. For the same sheet bytes the deferred answer has 2 findings and the synchronous answer 3. The 2-finding body is the one the r19 record carries.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "intake/uploads.py@069b8f797e:592 (freeze_template_portfolio in _freeze_template)",
+      "intake/uploads.py@069b8f797e:459-475 (_defer: findings from template[findings] only)",
+      "run_hr/answer_bodies.json (prior cell, header_repeated_csv|moved: 3 findings; template.findings: 2)"
+    ]
+  },
+  "notes": "Form only. Which of the two is what a person sees at the deployed door is not run here; the record names both counts.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W58-S4 -- the same reader prints a different line for a finding with no description at PROD and at DEV
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W58-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~58",
+  "surfaced_at": "2026-10-13T05:14:28Z",
+  "one_line": "For the BEFORE body of header_repeated_csv (AMOUNT_NOT_A_NUMBER with no description), the ticket path shows 'AMOUNT_NOT_A_NUMBER, row 3' at PROD 37aa1247 and 'One finding has no description; see details' at DEV 64980b4d.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-203 step 2: the words a person sees per finding code are what the portal's functions produced at each named commit.",
+  "world_is": "TicketCenter/analysisRequest.ts fileAnalysisRequest, run through the same parser at both commits on the same body, returns different lines for a finding without a description: PROD gives the code and row, DEV gives the no-description fallback with details carrying 'AMOUNT_NOT_A_NUMBER, row 3'. The AFTER bodies carry descriptions and show the same words at both commits.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun run readers_defer.ts (worker scratch): PROD BEFORE ticket line 'AMOUNT_NOT_A_NUMBER, row 3'; DEV BEFORE ticket line 'One finding has no description; see details'",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~58/r19/PORTAL_DEFER_SHAPE_READERS.json (cases with arm BEFORE, shown_per_code)"
+    ]
+  },
+  "notes": "Form only. The difference is in the readers, not in the body: both commits received the same body.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+
+## IRPT_ANLREQ-D2-S67 -- (disarm row; this seat's own) the Lambda release is re-cut on the live package and the portal readers return on the deployed first answer
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S67",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T05:19:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "DISARMS rows IRPT_ANLREQ-D2-S66, -D2-W56-S2, -D2-W57-S1 and -D2-W57-S2: the Lambda release is re-cut on the live package (AR-y-201) and the portal's readers return on the deployed first answer (AR-y-203).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row S66 and W56-S2: a release built from the AR-y-193 patch would move three members it must hold. Rows W57-S1 and W57-S2: adaptAnalysisUpload threw at PROD and DEV on the create body of the four NEEDS_CORRECTION sheets.",
+  "world_is": "MEASURED by this seat 2026-10-13: ar19_checks y201-live prints Y201-LIVE-OK (the release package differs from the live package NeAB50... in exactly template_reader.py and uploads.py; the holds-only control builds the live CodeSha256 byte for byte), drained @a011ddd400; y203-defer prints Y203-DEFER-OK (the _defer first answer, reason TEMPLATE_FINDINGS, built by the moved uploads.py's own functions: 36 of 36 cases RETURNED at PROD 37aa1247ee and DEV 64980b4d3a, 0 threw), drained @acfd654740. The two-leg pair names RELEASE_MAP_PATCH_R2.diff and not the AR-y-193 patch. NOT covered: the HTTP route, the deployed portal bundles, the React render; the pair's after-read C1 reads the live body through the PROD reader.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "a011ddd400 (drain of TO-AR-y-201) and acfd654740 (drain of TO-AR-y-203)",
+      "ar19_checks.py y201-live and y203-defer run by this seat",
+      "uploads.py at 069b8f797e lines 459-475 (_defer) read by this seat"
+    ]
+  }
+}
+```
