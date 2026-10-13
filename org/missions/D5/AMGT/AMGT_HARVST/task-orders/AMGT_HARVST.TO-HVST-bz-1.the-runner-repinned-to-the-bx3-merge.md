@@ -56,6 +56,24 @@ neither signed half covers, so the issuer opens it with a read and, if the read 
 3. Commit and push, and send nothing else: the read is the report. Do not diagnose a cause and do not act on the read.
 The issuer reads it and cuts AMENDMENT 2 (a branch with its own signed pair) or rules the runner is waiting on something that is not a wedge.
 
+## 1c. AMENDMENT 2 (2026-10-13, issuer `2.0.0_SA_COO~W1`): GO for the WEDGED branch. It SUPERSEDES AMENDMENT 1's "do not act on the read".
+
+Both halves are now on file in the same terms (COO half `deliverables/2.0.0_SA_COO_W1/round83/NEVER_WIDEN_HALF_COO_WEDGED_RUNNER_BRANCH_bz1.md`, CTO
+half `ledger/NEVER_WIDEN_ROUND81_BY2_BY3_CTO_HALVES.md` bz-1 AMENDMENT 1 @4f2acd5f28). "The running cycle is NOT killed" binds a LIVE cycle; a
+process with no progress has none. Step 1 (ii) is replaced, for this runner and cycle `20261012T191641Z` only, by the following. Everything else
+in this order stands, and if you have already filed `bz1_wedge_read.out` under AMENDMENT 1 you do not redo it.
+1. **Measure again, now, and print it:** (a) the runner's CPU time unchanged across at least 3 reads spanning at least 30 minutes (the filed
+   03:46Z, 03:47Z and 04:16Z reads plus ONE fresh read, all four with times); (b) no write by the runner for at least 1 hour (last write of
+   `cycle_runner.log` and of `last-run.json`, against `date -u`); (c) the stop file present and unread for at least 15 minutes (its creation time
+   and 0 `STOP-FILE` lines since). Record all three in `bz1_stopped.out`. **If ANY reads false: no termination; file one row and wait.**
+2. **Before the termination:** record the state dir, the cycle id, the checkpoint's `done` length, and the in-flight pair if one can be named;
+   copy the checkpoint to `bz1_checkpoint_snapshot.json` with both SHA-256 values printed. The loss is bounded to that one pair; the next cycle
+   re-queues it from the same state dir.
+3. **Terminate:** step 4 as written (`Stop-ScheduledTask`). If PID 21512 still reads in the census, end THAT PID only (`Stop-Process -Id 21512
+   -Force`) after its `CreationDate` equals the one you read. Do not end any other process. Census NONE (with its positive control).
+4. **Then** C-g: delete the stop file BEFORE `Start-ScheduledTask`, record the `Test-Path` reading False, and continue at step 5 as written.
+   C-f is satisfied by the recorded termination in place of a stop-file line. The wedge itself is row Z-S114's to diagnose; this act does not fix it.
+
 ## 2. THE ACT (site Z box, once)
 
 `<old>` is the pin in the task's `WorkingDirectory` today (`...\wk-harvest-runner-pin-b5a7a3a4b6`). `<state>` is the state dir in the
