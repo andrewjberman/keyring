@@ -721,3 +721,110 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "CA-h-2 (host act on dell2) includes one SSH read from muse; its order will carry the key read-back as its own first step unless NFRA_CTLPLN adds the cell first. Owner of the gap: 1.0.0_SA_CTO."
 }
 ```
+
+## COMM_ASSIST-W10-S1 -- the owner.text redraft sends its edit WITH a version, so the W8-S6 stale check reaches it
+
+```json
+{
+  "id": "COMM_ASSIST-W10-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~10",
+  "surfaced_at": "2026-10-13T22:43:46Z",
+  "one_line": "CA-i-2 says a text-path edit carries no version, but the owner.text redraft path sends its edit with a version, so the W8-S6 stale check now reaches those redrafts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/tenant.py@8bf64bac36:874-876 on_owner_text sends sms.reply with action edit and version = act.get('version') or item['version'] for every non-send, non-dev action",
+      "data/transcripts/scripts/teams_chat/tenant.py@8bf64bac36:497 the send and drop stale check that the edit now shares, for an edit that carries a version",
+      "data/transcripts/scripts/teams_chat/tenant.py@8bf64bac36:1110-1165 route_text (the #N text path) sends sms.reply with no version key, and is unchanged by this cell"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-i-2 step 3: a text-path edit carries no version in its payload, so its behaviour must not change; the stale check covers an edit that carries a version.",
+  "world_is": "The premise holds for the #N text path but not for owner.text. An owner.text redraft of a draft that has moved on is now refused as unseen (the changed-just-before text) where it used to redraft. The #N text path, which sends no version, is not checked and its behaviour is unchanged.",
+  "notes": "Chosen in the worker commit: the edit check runs only when the payload carries a version (on_sms_reply), so every version-less edit is untouched. The owner-path change is a consequence of the order's wording, not a separate decision; the CVO grades whether it is wanted."
+}
+```
+
+## COMM_ASSIST-W10-S2 -- the sms.reply path has no origin check of its own, so a queued sms.reply is acted on as Andrew's text
+
+```json
+{
+  "id": "COMM_ASSIST-W10-S2",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~10",
+  "surfaced_at": "2026-10-13T22:43:46Z",
+  "one_line": "The sms.reply handler trusts any sms.reply event; the only sender check is the SNS originationNumber test in route_text, so an sms.reply put on the queue directly is acted on as Andrew's text.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~CA",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/tenant.py@8bf64bac36:469-470 on_sms_reply reads the payload's tag, action and notes and acts on them, with no origin check",
+      "data/transcripts/scripts/teams_chat/tenant.py@8bf64bac36:1110-1111 route_text compares originationNumber to a.secret(a.PHONE_SECRET); this is the only sender check, and it runs only on the SNS ingress",
+      "data/transcripts/scripts/teams_chat/tenant.py@8bf64bac36:955 dispatch routes kind sms.reply to on_sms_reply for any event on the queue, so an event put there directly is not checked"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-i-2 rules: a forged sms.reply that imitates the text path is a pre-existing weakness of the text path and is outside this cell; if confirmed from the code, file one row naming it.",
+  "world_is": "Confirmed from the code, not exercised: an sms.reply event on the queue with action send posts the chat's draft to Teams, and one with action drop cancels it, with no text from Andrew behind it. The muse receiver does not change this, because the muse path is a separate kind and this one is still open.",
+  "notes": "Left alone by this cell (outside its rules). Remedy belongs to a later cell; the disarm owner is the issuing COO, who routes the ruling to 1.0.0_SA_CTO. No AWS call was made to test it."
+}
+```
+
+## COMM_ASSIST-W10-S3 -- the order names no reason for a verified answer that is not the contract, or for a pinned line that is not a key
+
+```json
+{
+  "id": "COMM_ASSIST-W10-S3",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~10",
+  "surfaced_at": "2026-10-13T22:43:46Z",
+  "one_line": "CA-i-2 names reasons no-signature, no-key-configured and bad-signature only; a verified answer whose payload is not the contract, and a pinned key line that does not parse, have no named reason.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/muse_verify.py (new in the worker commit on wk-COMM_ASSIST-10): _pinned_key returns None for a line that does not parse as ssh-ed25519, and verify() then reports no-key-configured",
+      "data/transcripts/scripts/teams_chat/tenant.py (new in the worker commit on wk-COMM_ASSIST-10): _muse_fields returns None for a signed payload that is not the contract, and on_muse_reply refuses it with reason bad-payload"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-i-2 step 2 names the refusal reasons no-signature, no-key-configured and bad-signature; step 1 says a malformed signature is bad-signature.",
+  "world_is": "Two cases had no named reason. A signed payload that is not JSON, not an object, has no string tag, has an action outside send, drop and edit, or has a non-integer version is refused as bad-payload and recorded with its tag if one parses. A pinned line that is not an ssh-ed25519 key is treated as no key, so it fails closed as no-key-configured.",
+  "notes": "Both choices are the worker's, made so that nothing is sent. Both are recorded in the refusal list. The CVO grades whether bad-payload should exist as a reason."
+}
+```
+
+## COMM_ASSIST-W10-S4 -- a muse answer addressed to the owner object cannot answer a K### confirmation
+
+```json
+{
+  "id": "COMM_ASSIST-W10-S4",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~10",
+  "surfaced_at": "2026-10-13T22:43:46Z",
+  "one_line": "A verified muse answer sent to the owner object runs on_sms_reply, which has no pending draft there, so muse cannot answer a K### confirmation.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/tenant.py@8bf64bac36:955 dispatch sends only sms.reply on the owner object to on_owner_reply; a muse.reply on that object falls through to ROUTES",
+      "data/transcripts/scripts/teams_chat/tenant.py@8bf64bac36:899-921 on_owner_reply is the only code that answers a K### confirmation (st['confirm'])"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-i-2 step 2: a verified answer is run through the same code on_sms_reply runs for the same tag, action, notes and version.",
+  "world_is": "The order names only on_sms_reply. For a muse answer addressed to the owner object, on_sms_reply finds no pending draft and answers nothing-open, so the K### confirmation is not answered. Nothing is sent by this path, and the action set is limited to send, drop and edit, so dev and close cannot be reached through muse.",
+  "notes": "Left as the order says. A later cell that wants muse to answer K### confirmations needs on_owner_reply on the same verified fields; that is a decision for the issuer."
+}
+```
