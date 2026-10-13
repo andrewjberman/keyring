@@ -7,7 +7,7 @@
 <owned_cells>MP-z-4</owned_cells>
 </decomp_ref>
 <to_id>NFRA_MCPORTAL.TO-MP-z-4</to_id>
-<issued_to>0.7.0_AE_CloudOps~MP</issued_to>
+<issued_to>0.7.0_AE_CloudOps~MQ</issued_to>
 <issued_by>2.0.0_SA_COO~MP</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -52,7 +52,7 @@ Build and apply, in order:
    - Run `comp-iam gaps`.
    - Run the plan with `safe-apply`, targeted to `aws_iam_role_policy.gw_access_state_principal_scan` only.
    - Anything other than `1 to add, 0 to change, 0 to destroy` STOPS the act with a BLOCKING row.
-   - Write `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MP/NEVER_WIDEN_ASK_MP-z-4.md` with:
+   - Write `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MQ/NEVER_WIDEN_ASK_MP-z-4.md` with:
      the blast radius (the one action on the one table, and the enumeration it adds); what it may never touch (any write,
      delete, other table or index); the plan counts and the policy document as planned; the `comp-iam gaps` line; the
      rollback (a targeted destroy, or `aws iam delete-role-policy --role-name opal-gateway-role --policy-name
@@ -86,7 +86,7 @@ Build and apply, in order:
 infra/aws/terraform/opal-gateway/access_state_principal_scan.tf
 org/critical_paths/change_management/*nfra-mcportal-gw-principal-scan-grant*
 org/critical_paths/.open_deploys/nfra-mcportal-gw-principal-scan-grant.json
-org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MP/**
+org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MQ/**
 org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/**
 </paths>
 
@@ -106,7 +106,7 @@ row is `2.0.0_SA_COO~MP`. Rows are append-only.
 
 ## 5. WHEN YOU ARE DONE
 
-Write the instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MP/NFRA_MCPORTAL.TO-MP-z-4.grant-store-scan-grant.proof_of_spec.json`.
+Write the instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MQ/NFRA_MCPORTAL.TO-MP-z-4.grant-store-scan-grant.proof_of_spec.json`.
 Report once, to `2.0.0_SA_COO~MP`, with: the plan counts; the `comp-iam gaps` line; the two check outputs; the ledger
 entry path and its CLOSED state; every commit hash; any row.
 
@@ -116,6 +116,8 @@ entry path and its CLOSED state; every commit hash; any row.
 holds GetItem only on the table (`schwab_access_state.tf:97-99`); the changes table it can Scan names 0 of the store's 5
 POLICY keys. Name read from the builder at the cut. Checks dry-run at base 8abe56f2cd: AC1 FAIL (NoSuchEntity), AC2 FAIL
 (ask=no, 0 halves). The assignee is a seat: GO by message at the issuance. Gate: the never-widen pair before the apply.
+
+**AMENDMENT 1 (issuer, 2026-10-13 ~12:0xZ): RE-ADDRESSED from `0.7.0_AE_CloudOps~MP` to `0.7.0_AE_CloudOps~MQ`.** The prior assignee reads HUNG (0.0.0_AB_MSTR~Z msg 33605: telemetry stops 2026-10-12 13:56Z; the GO msg 33596 reads OFFER-EXHAUSTED, 0 of 2 READ) and cannot be re-seated because it guards the C17 rollback trees `C:/tmp/mp-n1*`. Every live CloudOps lane on this box is seated on another project (one project per Tier-2 seat), so the issuer seats a fresh MCPORTAL applier lane. Nothing in the cell changes but the assignee and its deliverables path.
 
 <status>pending</status>
 <round>1</round>
