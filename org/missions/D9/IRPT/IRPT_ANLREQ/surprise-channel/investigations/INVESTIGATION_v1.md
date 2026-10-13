@@ -8542,3 +8542,79 @@
   "class": "BLOCKING"
 }
 ```
+
+## IRPT_ANLREQ-D2-W88-S1 -- AR-y-263 step 4(c) asks for a board display of a stored advisory_fee; no board renders ticket answers, so (c) is not written
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W88-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~88",
+  "surfaced_at": "2026-10-13T19:10:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "class": "OBSERVATION",
+  "one_line": "TO AR-y-263 step 4(c) asks for a test that an existing ticket's advisory_fee still renders where the board showed it. On the portal DEV tip no board renders a ticket's answers, so there is no rendering to pin; test (c) is not written and the candidate 9ef6a359b8 carries tests (a) and (b) only.",
+  "spec_asserts": "TO AR-y-263 step 4(c): an existing ticket with an advisory_fee still renders its value where the board showed it; step 3: a ticket that already carries an advisory_fee still displays as before.",
+  "world_is": "On portal origin/DEV 4d6010234e (the tip the candidate sits on) no src/ file displays a ticket's answers.advisory_fee. advisory_fee appears in portal src/ only at src/api/endpoints/tickets.ts:43 (the optional type member, kept by the candidate), at src/pages/TicketCenter/analysisRequest.ts (the validation branch, removed by the candidate) and in tests. src/pages/TicketCenter/TicketCenter.tsx reads no ticket answers member (its answers references are answersFromForm at :69 and :309 only). The board therefore showed no fee for any ticket on this tip. Server side, infra/aws/lambda/ticket_center/lambda_function.py:110 keeps advisory_fee optional, so an earlier ticket may still store one with nothing displaying it. Measured by this seat in portal worktree C:/dev/wk-portal-88 and workspace worktree C:/dev/wk-irpt-anlreq-88 at 56c8113a00.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@4d6010234ed2 src/pages/TicketCenter/TicketCenter.tsx (no ticket answers display; read by 0.9.0_WK_IRPT_ANLREQ~88)",
+      "portal@4d6010234ed2 src/api/endpoints/tickets.ts:43 (type member only; grep of portal src/ for advisory_fee)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:110@56c8113a00 (optional, required False, no value applied when absent)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W88-S2 -- the portal DEV tip moved three times while the AR-y-263 candidate was cut
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W88-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~88",
+  "surfaced_at": "2026-10-13T19:10:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "class": "OBSERVATION",
+  "one_line": "origin/DEV in the portal repository moved from f6ef1d2548 to c1d3672317 and then to 4d6010234e while the candidate was cut; the candidate branch was fast-forwarded onto 4d6010234e with its uncommitted edits held, and the record names 4d6010234e as dev_tip.",
+  "spec_asserts": "TO AR-y-263 step 1: record dev_tip (full sha of origin/DEV) and cut the portal worktree from origin/DEV.",
+  "world_is": "origin/DEV was f6ef1d2548 at this seat's fetch and at worktree creation. Sibling landings then moved it: c1d367231c (merge of wk-IRPT_ANLREQ-85-portal at 3b1f44ba67) and 4d6010234e (hide of Trade Request in TicketCenter.tsx by 1.0.0_SA_CTO~DELL2). The fast-forward (git merge --ff-only) touched files this seat did not change; the candidate's seven files had no overlap with either landing. The candidate commit 9ef6a359b8 sits on 4d6010234e. Measured by git rev-parse origin/DEV at each step.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal repository git rev-parse origin/DEV read by 0.9.0_WK_IRPT_ANLREQ~88 at f6ef1d2548, c1d367231c and 4d6010234e",
+      "portal commit 4d6010234ed2 hide(TicketCenter, 1.0.0_SA_CTO~DELL2) in the portal history"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W88-S3 -- the commit-pattern branch named by step 1 does not exist in the portal repository
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W88-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~88",
+  "surfaced_at": "2026-10-13T19:10:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "class": "OBSERVATION",
+  "one_line": "TO AR-y-263 step 1 names wk-IRPT_ANLREQ-63-portal as the pattern for the portal commit; no local branch of that name exists in the portal repository, so the pattern was taken from its commit f6446051, whose message names that branch.",
+  "spec_asserts": "TO AR-y-263 step 1: commit the way an earlier candidate branch was made (git -C ... log of wk-IRPT_ANLREQ-63-portal).",
+  "world_is": "git -C C:/dev/ajb_workspace/portal branch --list '*63*' lists wk-IRPT_BCKEND-163-portal and wk-IRPT_BCKEND-363-portal only, and git log on wk-IRPT_ANLREQ-63-portal is an unknown revision. Commit f6446051 (author and committer 0.9.0_WK_IRPT_ANLREQ~63, message naming the candidate branch) is in the portal history and was used as the pattern: the worker serial as author, a candidate-form message, a Co-Authored-By trailer. Measured by 0.9.0_WK_IRPT_ANLREQ~88.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal repository git branch --list '*63*' read by 0.9.0_WK_IRPT_ANLREQ~88 (no wk-IRPT_ANLREQ-63-portal)",
+      "portal commit f6446051 (AR-y-214 candidate, message names wk-IRPT_ANLREQ-63-portal)"
+    ]
+  }
+}
+```
