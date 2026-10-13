@@ -144,3 +144,9 @@ My miss: round-17 rows D2-W54-S4, S5, S6 had no disposition at my round-17 compi
 My error, corrected in the v0.52 review (CORRECTION section): I rested the ordering condition on serve-time validation in irpt-holdings;
 row W348-S4 shows validate_slice has no runtime caller (my search: 4 test callers, 0 runtime). Lesson: read the caller before resting a
 condition on a check.
+
+## Addendum, 2026-10-13 04:51Z to 04:56Z (msg 6794)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 172 | ADJUDICATION_v73 + REMEDIATION_v49: IB-pr-501 confirms my round-171 correction; 6 dismissed, 2 OPEN, no new ARMED. Slug sent | 26dbe40a10 |
