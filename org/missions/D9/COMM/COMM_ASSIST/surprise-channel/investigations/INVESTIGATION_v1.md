@@ -457,3 +457,133 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Non-blocking for D2's mention arm. If the 502 rate holds, D2's hour arm can still pass in any clean hour; the issuer grades D2 on a clean hour plus the mention. A retry in channel_mentions would hide the gateway's 502s, not cure them, so none is proposed here. Pointed to NFRA_OPLGTW's issuer as one line."
 }
 ```
+
+## COMM_ASSIST-W8-S1 -- the default AWS executable name and the repo shim do not launch bare from Python on this laptop
+
+```json
+{
+  "id": "COMM_ASSIST-W8-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~8",
+  "surfaced_at": "2026-10-13T18:30:01Z",
+  "one_line": "TO CA-h-1 BUILD 1 names MUSE_AWS_BIN default 'aws' and the repo shim .tools/aws as the working form; from Python on this Windows laptop, bare 'aws' fails to launch and bare 'bash' hits the WSL stub.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Measured 2026-10-13 ~18:2xZ from Python 3.12.10 on this laptop, worktree wk-COMM_ASSIST-8 at base 3477d67af5: subprocess.run(['aws','--version']) raised FileNotFoundError [WinError 2]; subprocess.run([C:\\Program Files\\Git\\usr\\bin\\bash.exe, '.tools/aws', '--version']) returned rc 0 (aws-cli/1.44.44); subprocess.run(['bash', ...]) returned rc 1 with 'WSL ... execvpe(/bin/bash) failed'.",
+      "shutil.which('aws') returned C:\\Users\\AndrewBerman\\bin\\aws.CMD and subprocess on that path returned rc 0; refresh.py aws_bin() resolves MUSE_AWS_BIN with shutil.which, so the default works here. The repo shim was not the form used; .tools/aws is a bash script and needs Git Bash."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO COMM_ASSIST.TO-CA-h-1 BUILD 1: AWS reads go through the AWS CLI by subprocess, executable name from MUSE_AWS_BIN, default aws; on this laptop the working form is the repo shim .tools/aws.",
+  "world_is": "On this laptop the default 'aws' resolves only through shutil.which to aws.CMD (the ~/bin forwarder), not through CreateProcess; the repo shim works only when launched by Git Bash. dell2's launch form is unmeasured here (CA-h-2 reads it on the host). A launch failure is caught per source and shows as unreadable, so the failure is loud, not silent.",
+  "notes": "No disarm needed: refresh.py already uses the shutil.which form measured here. CA-h-2 must measure the launch form on dell2 before scheduling. Pointed to the CA-h-2 seat via this row."
+}
+```
+
+## COMM_ASSIST-W8-S2 -- drafts: pending is not a table attribute; it sits inside the state row's data JSON
+
+```json
+{
+  "id": "COMM_ASSIST-W8-S2",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~8",
+  "surfaced_at": "2026-10-13T18:30:01Z",
+  "one_line": "TO CA-h-1 BUILD 3 reads the rows 'whose pending is non-null'; in teams-global-chat-assist-table pending is a key inside a JSON string in the data attribute of the sk='state' row, not a top-level attribute.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/modules/ldo/runtime/ldo.py at base 3477d67af5: load() lines 145-152 reads item['data']['S'] as JSON and item['version']['N']; the commit writes pk=object id, sk='state', data=S(json.dumps(state)), version=N (lines 236-241). Index rows are pk='#index#<namespace>'; event markers are sk='event#<id>' (lines 223-258).",
+      "data/transcripts/scripts/teams_chat/tenant.py lines 17-19 at base 3477d67af5: STATE chat {title, chat_type, recent, tag, pending}, eod {day, tag, pending, done}; pending = {tag, kind, draft, version, incoming, chat_title, texted_at, status, send_at}."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO COMM_ASSIST.TO-CA-h-1 BUILD 3: drafts = the rows of teams-global-chat-assist-table whose pending is non-null; read how the table is keyed and how pending is shaped in tenant.py and assist.py.",
+  "world_is": "Keyed by pk (the object id: a chat id, eod:<day>, inbox:owner) and sk ('state' for the state row). The reader parses data and reads state['pending']. The table also holds index and event rows, which the reader skips. Measured: one whole-table scan read 556 to 558 rows over 2 pages (the count moves, the table is live) and returned 4 pending rows.",
+  "notes": "The reader treats a state row whose data does not parse as unreadable for the whole source, rather than dropping it silently."
+}
+```
+
+## COMM_ASSIST-W8-S3 -- the AWS CLI prints nothing for a get-item whose row is absent
+
+```json
+{
+  "id": "COMM_ASSIST-W8-S3",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~8",
+  "surfaced_at": "2026-10-13T18:30:01Z",
+  "one_line": "aws dynamodb get-item for a missing row returns rc 0 with EMPTY stdout, not a JSON document; a reader that parses stdout reads absence as a failure.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Measured 2026-10-13 ~18:2xZ: get-item --table-name teams-global-chat-assist-table --key {pk: eod:2026-10-13, sk: state} --consistent-read: rc 0, stdout 0 bytes, stderr 0 bytes (the day's End of Day row does not exist yet).",
+      "Positive control, same call shape on an existing state row (pk taken from a scan page): rc 0, stdout 794 bytes, JSON with an Item key. The key file form file://<drive>/<path> resolved in both."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO COMM_ASSIST.TO-CA-h-1 BUILD 3: eod_today reads the single row eod:<today>; no such row raises Absent.",
+  "world_is": "The AWS CLI emits nothing for a get-item response with no Item. Absence is therefore empty stdout with rc 0, which the reader must map to Absent, never to a parse error or an empty list. refresh.py does so (text.strip() empty -> no Item -> Absent).",
+  "notes": "Any other command with an empty-response shape (a query with no items, for one) can read the same way; the reader that parses it must treat empty stdout explicitly."
+}
+```
+
+## COMM_ASSIST-W8-S4 -- sprint_today: the publisher takes a report day from a person and defines no today
+
+```json
+{
+  "id": "COMM_ASSIST-W8-S4",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~8",
+  "surfaced_at": "2026-10-13T18:30:01Z",
+  "one_line": "The sprint key is formed by daily_reports/scripts/publish_daily_report.py from an explicit --date; nothing in the producer names 'today', so the reader defines today itself.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "daily_reports/scripts/publish_daily_report.py at base 3477d67af5: PREFIX 'daily-reports/' (line 41), BUCKET 'opal-data-portal-v2' (line 40), _key(day, variant) = PREFIX + day + '/' + variant + '_DAILY_REPORT_' + day + '.html' (lines 54-55); main() takes --date as required input (line 143).",
+      "data/transcripts/scripts/teams_chat/tenant.py eod_today(now) = now in America/New_York, strftime %Y-%m-%d (line 76-77); the reader uses the same zone and form."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO COMM_ASSIST.TO-CA-h-1 BUILD 3: sprint_today lists today's prefix under s3://opal-data-portal-v2/daily-reports/; read how daily_reports keys are formed; do not guess.",
+  "world_is": "The key form is measured from the producer. 'Today' is not in the producer; refresh.py takes the New York date, the same as the End of Day key. A report published under another day reads as absent for today. Measured: today's prefix daily-reports/2026-10-13/ lists 0 objects (absent); the prefix daily-reports/ lists keys from 2026-08-27 on (positive control, first page of 5, truncated).",
+  "notes": "Judgment, not measurement: New York date chosen to match the End of Day key. The sprint publisher's day rule is owned by its producer; this row only records that the reader supplies it."
+}
+```
+
+## COMM_ASSIST-W8-S5 -- a whole-repo content search exceeds the bounded call
+
+```json
+{
+  "id": "COMM_ASSIST-W8-S5",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~8",
+  "surfaced_at": "2026-10-13T18:30:01Z",
+  "one_line": "comp-find with a content pattern and no pathspec (DAILY_REPORT_, 81,506 files in scope) did not return inside the 120 s bound; the name search for the same file answered at once.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 comp-find 'DAILY_REPORT_' from the worktree root: moved to background, ended with exit 143 at the bound, no output recorded.",
+      "timeout 100 comp-find --name publish_daily_report --files: returned in time with DENOMINATOR 1 hit across 81506 files, HEAD=1, daily_reports/scripts/publish_daily_report.py."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO COMM_ASSIST.TO-CA-h-1 navigation: comp-find and comp-read; navigate to the paths given, do not hunt.",
+  "world_is": "A content search over the default corpus without a pathspec is not usable inside the bound from this laptop. A name search is. The worker narrowed by name and read the named files directly.",
+  "notes": "Recorded for the tooling owner. Not a block: each file was reached by its named path or a name search."
+}
+```
