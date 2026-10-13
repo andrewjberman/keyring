@@ -24,7 +24,8 @@ a generated block or file, inside the arguments of a key(), address(), name() or
 Python syntax tree), or inside the arguments of a Terraform module whose source is the opal_name module.
 Anywhere else a string carrying one is a HAND-KEPT CARRIER: a NEW one is refused, printing the registry
 lookup that replaces it; an EXISTING one warns. NOT graded: prose (a string with whitespace, a docstring),
-comments, Terraform block labels, and anything under */tests/* (the generated-file check still runs there).
+comments, Terraform block labels, and anything under a fixture folder, */tests/* or */test/* (FIXTURE_DIRS; the
+generated-file check still runs there).
 
 Inputs: S3 key and bucket literals, resource-name literals, secret paths, log groups, and firm and product
 tokens as whole segments. File types: .py .js .mjs .ts .tf .json .yaml .yml. A JSON post-image whose top
@@ -121,6 +122,14 @@ PLACE_PATH_PREFIX = "infra/aws/"
 PLACE_ROOT_CAP = 8  # roots placed per commit; each costs about two root-check runs (about 10 s)
 REGISTRY_PREFIX = "infra/logic/registry/"
 GRADED_EXT = (".py", ".js", ".mjs", ".ts", ".tf", ".json", ".yaml", ".yml")
+# THE FIXTURE FOLDERS (CT-ab-9, ruled): a fixture under either spelling is not graded. Matched as WHOLE path segments
+# against "/" + path, never as a substring: latest/, contest/ and test_data/ are NOT exempt.
+FIXTURE_DIRS = ("/tests/", "/test/")
+
+
+def _is_fixture(path):
+    """True when `path` sits under a FIXTURE_DIRS folder, matched on whole segments ("/" + path)."""
+    return any(d in "/" + path for d in FIXTURE_DIRS)
 # THE GATE'S DOMAIN (R-11/R-13, round-3 EN-n-1): a resource is MINTED where the applied plane is
 # DECLARED, never in a RECORD (proof instances, task orders, deliverables, surprise rows, logs, PRDs,
 # project rows). The record trees are the WHOLE of org/** and docs/**; a record tree is never opened
@@ -993,8 +1002,8 @@ def _carried_at_head(value, path):
             for line in text_of(out).splitlines():
                 hit = line.split(":", 1)[1] if line.startswith("HEAD:") else line
                 if (hit and hit != path and not _is_record_tree(hit) and hit.endswith(GRADED_EXT)
-                        and hit != ".tools/naming-gate.py" and "/tests/" not in "/" + hit):
-                    hits.append(hit)  # never the gate's own bytes or a fixture under */tests/*
+                        and hit != ".tools/naming-gate.py" and not _is_fixture(hit)):
+                    hits.append(hit)  # never the gate's own bytes or a fixture under a FIXTURE_DIRS folder
         _CARRIED_CACHE[value] = sorted(hits)
     hits = [h for h in _CARRIED_CACHE[value] if h != path]
     return hits[0] if hits else ""
@@ -2166,8 +2175,8 @@ def grade_file(nm, f, post_from_index):
     # the literal grade
     if path.startswith(REGISTRY_PREFIX):
         return rows  # the registry files: every token is permitted there
-    if "/tests/" in "/" + path:
-        return rows  # fixtures under */tests/* are not graded
+    if _is_fixture(path):
+        return rows  # fixtures under a FIXTURE_DIRS folder (*/tests/* or */test/) are not graded
     if path.endswith(".py"):
         try:
             lits = py_literals(post_text, added)
@@ -2875,6 +2884,22 @@ def adopt_self_test(nm):
     return ok_held and ok_absent and ok_failed and ok_undated and ok_wrong
 
 
+def test_folder_self_test(nm):
+    """The TEST-FOLDER arm (CT-ab-9). A fixture under a FIXTURE_DIRS folder (`test/`) is not graded; the same bytes under a
+    folder that merely contains the letters (`latest/`) are graded, so the exemption is whole-segment, never a substring."""
+    name = "pipeline-chain"
+    text = 'resource "aws_iam_policy" "probe" {\n  name = "%s"\n}\n' % name
+    exempt = _grade_added(nm, "infra/x/test/fixture.tf", text, name)
+    graded = _grade_added(nm, "infra/latest/fixture.tf", text, name)
+    ok_exempt = len(exempt) == 0
+    print("SELF-TEST arm test-folder: a firm-token fixture under infra/x/test/fixture.tf is not graded -> %s: %s"
+          % ("no row" if ok_exempt else ", ".join("%s %s" % (r[0], r[6]) for r in exempt), "ok" if ok_exempt else "FAIL"))
+    ok_graded = len(graded) >= 1 and any(r[6] == "REFUSE" for r in graded)
+    print("SELF-TEST arm test-folder control: the same token under infra/latest/fixture.tf IS graded (latest/ is not a test folder) -> %s: %s"
+          % (", ".join("%s %s" % (r[0], r[6]) for r in graded) or "no row", "ok" if ok_graded else "FAIL"))
+    return ok_exempt and ok_graded
+
+
 def self_test():
     """--self-test: judge() on a NEW group-A name takes the fourth verdict and passes, and (the difference control) a NEW
     group-B name is still refused. Reads no diff, writes no log. Returns 0 when both arms hold."""
@@ -2893,6 +2918,7 @@ def self_test():
     ok = override_self_test() and ok
     ok = rename_self_test(nm) and ok
     ok = adopt_self_test(nm) and ok
+    ok = test_folder_self_test(nm) and ok
     print("NAMING-GATE-SELF-TEST: %s" % ("PASS" if ok else "FAIL"))
     return 0 if ok else 1
 
