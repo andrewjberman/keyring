@@ -31,13 +31,18 @@ You get ONE real read on those paths, and record it. This is the live half of th
    `/books/relationship/` paths by a non-admin caller, and the events `ownership_map_fetch_failed`,
    `ownership_map_schema_mismatch`, `advisor_not_in_ownership_map`, `advisor_scoping_denied`. A non-admin request
    that passed (status 200 at the edge, no denial event) counts when the log or the CloudFront standard log shows the path.
-2. **Driven, only if step 1 finds none, and only with a session that already exists.** One request on an accounts path (or a
-   relationship path) by a signed NON-ADMIN session, issued through the product's own entry (the portal host, the path form
-   the handler matches). **You do not mint, sign, forge, copy or replay a session or a token, and you do not create a user.**
-   A non-admin session already in your hands through your own sanctioned login is the only input. If you hold none, file a
-   BLOCKING row `ADVI_FIRMBKTS-D1-FB1-S<k>` naming "no non-admin session in hand for the validator's ownership read", set
-   this order's `<status>` to `parked` in your commit and stop: the issuer routes the need to the CTO. A parked order here is
-   the correct outcome, not a failure of yours.
+2. **Driven, only if step 1 finds none: the dormant Opal UI walker service account, never Andrew's (the CTO's ruling, `ledger/ROUND_ANALYSIS.round4.md` ADDENDUM 1, msg 4662).** It is the cluster's sanctioned non-human login, armed per walk and
+   disarmed after (the one `1.0.0_SA_CTO~DELL2`'s seat used for the Inflection product-path read). Drive ONE request on an
+   accounts path (or a relationship path) with `--firm 49financial`, by that account, and arm and disarm it as its own runbook says.
+   **Never Andrew's session** (he is an admin: his decisions are not the non-admin ones FWD-4 needs, and it is his credential).
+   **You do not mint, sign, forge, copy or replay a session or a token, and you do not create a user.**
+   **PRECONDITION, read first:** the walker's request must CROSS `auth-validator-edge`; the validator's own log line at the request's
+   T0 is the evidence. If the route does not reach the validator (for example a local dev build that calls the API directly), the live read
+   is NOT EXERCISED by it: write no record (AC1 stays failing), set this order's `<status>` to `parked` in your commit,
+   file a BLOCKING row `ADVI_FIRMBKTS-D1-FB1-S<k>` naming the route, and stop. The order then parks with owner `1.0.0_SA_CTO~DELL1` and the
+   un-park condition "the first organic non-admin validator line on those paths"; FWD-4's comparison rests on the offline replay
+   (`FB-h-3`) plus that line. A parked order is the correct outcome, not a failure of yours.
+   The walker's results are read as tier-and-firm decisions only: no client name, account id or advisor id in the record.
 3. **The record `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/round5/VALIDATOR_LIVE_READ.json`**, keys exactly:
 
 ```json
@@ -88,7 +93,9 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~F
 
 **ISSUER NOTES:** CTO round-4 analysis section 3 item 2 (live half): "one signed non-admin session read on those paths". The issuer's standing ruling (RULING_L6_VALIDATOR_FBL.md) is that no seat mints a session; the CTO's list does not say whose session. The order therefore takes an organic line first (the watch FB1 already runs hourly), and a driven read only with a session already in hand; if neither, the order parks with owner `1.0.0_SA_CTO~DELL1` and the condition "a non-admin session exists in a seat's hands or Andrew supplies one". The issuer sends the CTO ONE question on it at the issuance. Class WORLD (a live request path), reads only.
 
-<status>parked</status>
+**AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-13 ~06:5xZ):** step 2 carries the CTO's ruling on whose session the driven request uses (ROUND_ANALYSIS.round4.md ADDENDUM 1: the UI walker service account, `--firm 49financial`, never Andrew's; the precondition is that the request crosses the validator). The status reads `pending` again (an uncommitted `parked` in the shared tree, set when no session was in hand, is superseded by the ruling). A criterion is unchanged. The issuer amends its own pending order; no gate limb grades it (the criteria and the `<placeholders>` are untouched).
+
+<status>pending</status>
 <round>5</round>
 <workstream>VALIDATOR</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-h-5</to_id>
