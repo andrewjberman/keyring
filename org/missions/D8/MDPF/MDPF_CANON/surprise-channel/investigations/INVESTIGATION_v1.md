@@ -1234,3 +1234,27 @@
   "notes": "Not fixed here: the role's grant is IAM (a Terraform pair of its own), not in any MDPF_CANON cell. The IAM simulation the fork cites was not re-run by the issuer (this identity holds no SimulatePrincipalPolicy grant yet); the manifest AccessDenied text is the evidence."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S23",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-13T22:38:19Z",
+  "one_line": "The code-equality tool .tools/mdpf-code-equality.py (CN-d-5, round 4) hashes the checkout's working-tree bytes, not the git blob, so a CRLF working-tree file reads DIFFER against an S3 object that equals its git blob byte for byte.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "docs/deployment/MDPF_RUNNER_CODE_SYNC.md and CN-d-5: a runner-tree name reads EQUAL when the S3 object equals the repo's file; the round-4 close is 'every file the dispatch chain executes or reads is EQUAL, every other non-EQUAL name is listed with its reason'.",
+  "world_is": "Measured 2026-10-13T22:38:19Z, read-only, by the issuer re-checking a read-only fork's claim. data/mdpf/scripts/gold/mdpf_model_registry.json: S3 md5 6b89cc935c, git blob (git show HEAD:path) md5 6b89cc935c, working-tree md5 fa784dd4ab: S3 equals the blob and not the working tree, and the tool lists the name as DIFFER (one of CloudOps' 8 runner-member rows, 2026-10-12). Cause: the dell1 checkout has CRLF line endings on that file. data/mdpf/config/bronze_homes.json is a true difference of one line: S3 carries _generated 'infra/logic/registry@bd1619b411e1330c', the repo '@280826a6a96c3b37' (provenance comment only, FIRMBKTS-owned under PRD v2.11 R2). Effect: a false DIFFER inflates the non_EQUAL count and a named-file deploy from a CRLF checkout could write CRLF bytes (whether safe-deploy.sh normalizes was not verified). Of CloudOps' 8 runner members, the issuer re-verified 2 of 8 against S3 and the blob here; the other 6 dispositions are the fork's read (round7/CODE_SYNC_RUNNER_MEMBERS_READ.md).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-mdpf/code/scripts/gold/mdpf_model_registry.json vs git show HEAD:data/mdpf/scripts/gold/mdpf_model_registry.json (md5 6b89cc935c both)",
+      "s3://opal-data-mdpf/code/config/bronze_homes.json vs git show HEAD:data/mdpf/config/bronze_homes.json (one _generated line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Repair is one LOCAL line of the tool (compare against the git blob, or normalise EOL) plus its test: it batches into round 7's repair cell once the CTO's round-6 analysis is in hand; not cut here (the round-6 spec and decomposition are frozen)."
+}
+```

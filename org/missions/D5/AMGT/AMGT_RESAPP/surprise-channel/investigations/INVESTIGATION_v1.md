@@ -25730,3 +25730,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The rows' text is unchanged; the byte-level change is what the append-only rule is about. The fix is a follow-on commit, not an amend. Whether other Edit calls on this file normalize line endings was not tested."
 }
 ```
+```json
+{
+  "id": "AMGT_RESAPP-D1-W428-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~428",
+  "surfaced_at": "2026-10-13T22:34:42Z",
+  "one_line": "check_fa9_prefix.py prints failure-text as the detail column on PASS arms, so the arm lines read as FAIL while the verdict line reads YES (8 of 8)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "check_fa9_prefix.py at d1439782c7: arm 'the scoped sources tuple is unchanged' returns the detail string '_SOURCES moved' as its second tuple element regardless of result (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa9_prefix.py, the sources_unchanged function).",
+      "check_fa9_prefix.py at d1439782c7: arm 'test_harvest_prefixes.py pins the new constant' returns the detail string 'the neighbouring test does not pin the new constant' regardless of result (the test_pin function).",
+      "Run in worktree wk-AMGT_RESAPP-428 after the generator edit: output lines 'ARM the scoped sources tuple is unchanged PASS _SOURCES moved' and 'ARM test_harvest_prefixes.py pins the new constant to fresh opal_naming output PASS the neighbouring test does not pin the new constant' followed by 'AIFILL FA-9 ARMS: YES (8 of 8)', exit=0."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC1 expect: the line 'AIFILL FA-9 ARMS: YES (N of N)' with N equal to 8, no FAIL arm line above it, and exit=0. The arm lines carry a PASS/FAIL verdict beside a detail column that the reader takes as the arm's evidence.",
+  "world_is": "The detail column is the failure message on PASS arms: two of the eight arms print their failure text beside PASS (the sources-tuple arm prints '_SOURCES moved' and the test-pin arm prints 'the neighbouring test does not pin the new constant'). All eight arms PASS and no arm line reads FAIL; the verdict line and exit code are computed from the pass flag and are correct.",
+  "notes": "Form only. The verdict is unaffected: 8 of 8 arms PASS, exit 0. The defect is in the detail strings the check passes to arms.run, which are static failure text. Not fixed here: the check file is outside this order's write surface."
+}
+```

@@ -1,5 +1,12 @@
 {
-  "contract_version": "0.1.0",
+  "contract_version": "0.2.0",
+  "lineage": [
+    {
+      "contract_version": "0.1.0",
+      "sha256": "53fce40546882c90b634decb91ec5176a54ddf3c3b4622270bfc5cc35f66991b",
+      "reason": "window figures re-sourced to the account return table"
+    }
+  ],
   "project": "IRPT_DASHBD",
   "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
   "prd_contracts": [
@@ -146,9 +153,9 @@
       "label": "Beginning value, quarter to date",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "beginning_value",
-        "fold": "sum over the household's accounts of beginning_value on the window's opening anchor day; a household sum is absent when any account term is absent; an account whose anchor day carries NO_PRIOR_VALUE makes the sum absent, never zero"
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "sum over the household's accounts of market_value_eod of this account on the window's opening anchor day (the last trading day before the first day of the calendar quarter containing as_of), the whole-account value at end of day with cash included; an account with no row on its anchor day did not hold a value at the window's start: its term is absent, never zero, and its window is NOT_SPANNED, so it prints the not-held dash; absent, never zero, when that row's day_quality is SOURCE_LAG; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum"
       }
     },
     {
@@ -158,12 +165,9 @@
       "label": "Net additions, quarter to date",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "contributions",
-        "fold": "contributions minus withdrawals, summed over the household's accounts across the window's trading days (from its opening anchor (the last trading day before the first calendar day of the quarter) to as_of)",
-        "also": [
-          "withdrawals"
-        ]
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "external_flow",
+        "fold": "sum over the household's accounts of the sum of external_flow (net external flow, capital-in positive) over this account's rows for the quarter to date window: the trading days after its opening anchor (the last trading day before the first day of the calendar quarter containing as_of) up to and including as_of; each row's carried_days already folds the flows of a skipped closure into its trading day, so every flow is counted once; absent when any trading day of the window has no row for this account or a row there is SOURCE_LAG (that day's flow is unknown), never zero; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum"
       }
     },
     {
@@ -173,13 +177,9 @@
       "label": "Net gain before advisory fees, quarter to date",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "realized",
-        "fold": "realized plus unrealized_change plus income, summed over the household's accounts across the window's trading days (from its opening anchor (the last trading day before the first calendar day of the quarter) to as_of); before advisory fees, and income is net of fee and administration cash (see convention.fee_basis_label)",
-        "also": [
-          "unrealized_change",
-          "income"
-        ]
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "sum over the household's accounts of each account's ending_value minus beginning_value minus net_additions over the quarter to date window: the trading days after its opening anchor (the last trading day before the first day of the calendar quarter containing as_of) up to and including as_of; a gain BEFORE advisory fees (convention.fee_basis_label: the baseline's Net Gain includes fees, so the two are not the same figure); absent when any account term is absent (document.household_sum_rule), never a partial sum"
       }
     },
     {
@@ -189,9 +189,9 @@
       "label": "Ending value (as of the report date)",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "ending_value",
-        "fold": "ending_value on as_of, summed over the household's accounts; the same figure in every window column"
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "sum over the household's accounts of market_value_eod of this account on as_of, the whole-account value at end of day with cash included; absent, never zero, when there is no row on as_of or as_of's day_quality is SOURCE_LAG; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum"
       }
     },
     {
@@ -246,9 +246,9 @@
       "label": "Beginning value, year to date",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "beginning_value",
-        "fold": "sum over the household's accounts of beginning_value on the window's opening anchor day; a household sum is absent when any account term is absent; an account whose anchor day carries NO_PRIOR_VALUE makes the sum absent, never zero"
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "sum over the household's accounts of market_value_eod of this account on the window's opening anchor day (the last trading day before 1 January of as_of's year), the whole-account value at end of day with cash included; an account with no row on its anchor day did not hold a value at the window's start: its term is absent, never zero, and its window is NOT_SPANNED, so it prints the not-held dash; absent, never zero, when that row's day_quality is SOURCE_LAG; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum"
       }
     },
     {
@@ -258,12 +258,9 @@
       "label": "Net additions, year to date",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "contributions",
-        "fold": "contributions minus withdrawals, summed over the household's accounts across the window's trading days (from its opening anchor (the last trading day before 1 January of as_of's year) to as_of)",
-        "also": [
-          "withdrawals"
-        ]
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "external_flow",
+        "fold": "sum over the household's accounts of the sum of external_flow (net external flow, capital-in positive) over this account's rows for the year to date window: the trading days after its opening anchor (the last trading day before 1 January of as_of's year) up to and including as_of; each row's carried_days already folds the flows of a skipped closure into its trading day, so every flow is counted once; absent when any trading day of the window has no row for this account or a row there is SOURCE_LAG (that day's flow is unknown), never zero; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum"
       }
     },
     {
@@ -273,13 +270,9 @@
       "label": "Net gain before advisory fees, year to date",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "realized",
-        "fold": "realized plus unrealized_change plus income, summed over the household's accounts across the window's trading days (from its opening anchor (the last trading day before 1 January of as_of's year) to as_of); before advisory fees, and income is net of fee and administration cash (see convention.fee_basis_label)",
-        "also": [
-          "unrealized_change",
-          "income"
-        ]
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "sum over the household's accounts of each account's ending_value minus beginning_value minus net_additions over the year to date window: the trading days after its opening anchor (the last trading day before 1 January of as_of's year) up to and including as_of; a gain BEFORE advisory fees (convention.fee_basis_label: the baseline's Net Gain includes fees, so the two are not the same figure); absent when any account term is absent (document.household_sum_rule), never a partial sum"
       }
     },
     {
@@ -289,9 +282,9 @@
       "label": "Ending value (as of the report date)",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "ending_value",
-        "fold": "ending_value on as_of, summed over the household's accounts; the same figure in every window column"
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "sum over the household's accounts of market_value_eod of this account on as_of, the whole-account value at end of day with cash included; absent, never zero, when there is no row on as_of or as_of's day_quality is SOURCE_LAG; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum"
       }
     },
     {
@@ -346,9 +339,9 @@
       "label": "Beginning value, last 12 months",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "beginning_value",
-        "fold": "sum over the household's accounts of beginning_value on the window's opening anchor day; a household sum is absent when any account term is absent; an account whose anchor day carries NO_PRIOR_VALUE makes the sum absent, never zero"
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "sum over the household's accounts of market_value_eod of this account on the window's opening anchor day (the last trading day before the calendar day one year before as_of), the whole-account value at end of day with cash included; an account with no row on its anchor day did not hold a value at the window's start: its term is absent, never zero, and its window is NOT_SPANNED, so it prints the not-held dash; absent, never zero, when that row's day_quality is SOURCE_LAG; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum"
       }
     },
     {
@@ -358,12 +351,9 @@
       "label": "Net additions, last 12 months",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "contributions",
-        "fold": "contributions minus withdrawals, summed over the household's accounts across the window's trading days (from its opening anchor (the last trading day before the calendar day one year before as_of) to as_of)",
-        "also": [
-          "withdrawals"
-        ]
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "external_flow",
+        "fold": "sum over the household's accounts of the sum of external_flow (net external flow, capital-in positive) over this account's rows for the last 12 months window: the trading days after its opening anchor (the last trading day before the calendar day one year before as_of) up to and including as_of; each row's carried_days already folds the flows of a skipped closure into its trading day, so every flow is counted once; absent when any trading day of the window has no row for this account or a row there is SOURCE_LAG (that day's flow is unknown), never zero; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum"
       }
     },
     {
@@ -373,13 +363,9 @@
       "label": "Net gain before advisory fees, last 12 months",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "realized",
-        "fold": "realized plus unrealized_change plus income, summed over the household's accounts across the window's trading days (from its opening anchor (the last trading day before the calendar day one year before as_of) to as_of); before advisory fees, and income is net of fee and administration cash (see convention.fee_basis_label)",
-        "also": [
-          "unrealized_change",
-          "income"
-        ]
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "sum over the household's accounts of each account's ending_value minus beginning_value minus net_additions over the last 12 months window: the trading days after its opening anchor (the last trading day before the calendar day one year before as_of) up to and including as_of; a gain BEFORE advisory fees (convention.fee_basis_label: the baseline's Net Gain includes fees, so the two are not the same figure); absent when any account term is absent (document.household_sum_rule), never a partial sum"
       }
     },
     {
@@ -389,9 +375,9 @@
       "label": "Ending value (as of the report date)",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "ending_value",
-        "fold": "ending_value on as_of, summed over the household's accounts; the same figure in every window column"
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "sum over the household's accounts of market_value_eod of this account on as_of, the whole-account value at end of day with cash included; absent, never zero, when there is no row on as_of or as_of's day_quality is SOURCE_LAG; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum"
       }
     },
     {
@@ -446,9 +432,9 @@
       "label": "Beginning value, since inception",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "beginning_value",
-        "fold": "sum over the household's accounts of beginning_value on the window's opening anchor day; a household sum is absent when any account term is absent; an account whose anchor day carries NO_PRIOR_VALUE makes the sum absent, never zero"
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "sum over the household's accounts of market_value_eod of this account on the account's first valued day (its first emitted account_return_daily row, the first day its market_value_eod exists), the whole-account value at end of day with cash included; an account with no row on its anchor day did not hold a value at the window's start: its term is absent, never zero, and its window is NOT_SPANNED, so it prints the not-held dash; absent, never zero, when that row's day_quality is SOURCE_LAG; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum"
       }
     },
     {
@@ -458,12 +444,9 @@
       "label": "Net additions, since inception",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "contributions",
-        "fold": "contributions minus withdrawals, summed over the household's accounts across the window's trading days (from the account's first_data_date to as_of)",
-        "also": [
-          "withdrawals"
-        ]
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "external_flow",
+        "fold": "sum over the household's accounts of the sum of external_flow (net external flow, capital-in positive) over this account's rows for the since-inception window: the trading days after the account's first valued day up to and including as_of; each row's carried_days already folds the flows of a skipped closure into its trading day, so every flow is counted once; absent when any trading day of the window has no row for this account or a row there is SOURCE_LAG (that day's flow is unknown), never zero; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum"
       }
     },
     {
@@ -473,13 +456,9 @@
       "label": "Net gain before advisory fees, since inception",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "realized",
-        "fold": "realized plus unrealized_change plus income, summed over the household's accounts across the window's trading days (from the account's first_data_date to as_of); before advisory fees, and income is net of fee and administration cash (see convention.fee_basis_label)",
-        "also": [
-          "unrealized_change",
-          "income"
-        ]
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "sum over the household's accounts of each account's ending_value minus beginning_value minus net_additions over the since-inception window: the trading days after the account's first valued day up to and including as_of; a gain BEFORE advisory fees (convention.fee_basis_label: the baseline's Net Gain includes fees, so the two are not the same figure); absent when any account term is absent (document.household_sum_rule), never a partial sum"
       }
     },
     {
@@ -489,9 +468,9 @@
       "label": "Ending value (as of the report date)",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "ending_value",
-        "fold": "ending_value on as_of, summed over the household's accounts; the same figure in every window column"
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "sum over the household's accounts of market_value_eod of this account on as_of, the whole-account value at end of day with cash included; absent, never zero, when there is no row on as_of or as_of's day_quality is SOURCE_LAG; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum"
       }
     },
     {
@@ -906,9 +885,9 @@
       "label": "Beginning value, quarter to date",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "beginning_value",
-        "fold": "beginning_value on the window's opening anchor day for this account; absent where that day carries NO_PRIOR_VALUE, never zero"
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "market_value_eod of this account on the window's opening anchor day (the last trading day before the first day of the calendar quarter containing as_of), the whole-account value at end of day with cash included; an account with no row on its anchor day did not hold a value at the window's start: its term is absent, never zero, and its window is NOT_SPANNED, so it prints the not-held dash; absent, never zero, when that row's day_quality is SOURCE_LAG"
       }
     },
     {
@@ -918,12 +897,9 @@
       "label": "Net additions, quarter to date",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "contributions",
-        "fold": "contributions minus withdrawals over the window's trading days (from its opening anchor (the last trading day before the first calendar day of the quarter) to as_of)",
-        "also": [
-          "withdrawals"
-        ]
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "external_flow",
+        "fold": "the sum of external_flow (net external flow, capital-in positive) over this account's rows for the quarter to date window: the trading days after its opening anchor (the last trading day before the first day of the calendar quarter containing as_of) up to and including as_of; each row's carried_days already folds the flows of a skipped closure into its trading day, so every flow is counted once; absent when any trading day of the window has no row for this account or a row there is SOURCE_LAG (that day's flow is unknown), never zero"
       }
     },
     {
@@ -933,13 +909,9 @@
       "label": "Net gain before advisory fees, quarter to date",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "realized",
-        "fold": "realized plus unrealized_change plus income over the window's trading days (from its opening anchor (the last trading day before the first calendar day of the quarter) to as_of); before advisory fees, and income is net of fee and administration cash (see convention.fee_basis_label)",
-        "also": [
-          "unrealized_change",
-          "income"
-        ]
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "ending_value minus beginning_value minus net_additions for this account, the three terms above read from the same rows: a gain BEFORE advisory fees (convention.fee_basis_label: the baseline's Net Gain includes fees, so the two are not the same figure); absent when any of the three terms is absent; it is a residual and is never plugged to tie"
       }
     },
     {
@@ -949,9 +921,9 @@
       "label": "Ending value (as of the report date)",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "ending_value",
-        "fold": "ending_value on as_of for this account; the same figure in every window column"
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "market_value_eod of this account on as_of, the whole-account value at end of day with cash included; absent, never zero, when there is no row on as_of or as_of's day_quality is SOURCE_LAG"
       }
     },
     {
@@ -961,12 +933,9 @@
       "label": "Return, cumulative, before advisory fees, quarter to date",
       "unit": "percent",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_CLIENT_SUMMARY_CONTRACT.json",
-        "field": "windows",
-        "fold": "the account entry's windows[QTD], the geometric link of the account's daily total return over the window (from its opening anchor (the last trading day before the first calendar day of the quarter) to as_of); null, and so absent, where window_status[QTD] is NOT_SPANNED or BREAK, never a partial link; cumulative, not annualized",
-        "also": [
-          "window_status"
-        ]
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "total_return_daily",
+        "fold": "the account's cumulative return over the quarter to date window: the trading days after its opening anchor (the last trading day before the first day of the calendar quarter containing as_of) up to and including as_of: the product of (1 + total_return_daily) over the window's trading days, minus 1, read from this account's rows. Guard and day rules: a row whose total_return_daily is null (day_quality NOT_MEASURABLE or SOURCE_LAG, where the geometric link breaks) makes the window ABSENT with the gap date named, never bridged; a row whose guard_state is GRADED_DISAGREED serves no number (ruling 17), so the window is ABSENT; a row whose day_quality is FLOW_UNRECONCILED or LARGE_FLOW, or whose guard_state is NOT_GRADED_OUTSIDE_DOMAIN, NOT_GRADED_NO_NEIGHBOUR or GUARD_NOT_REACHED, compounds as served and the window carries that flag. An account with no row on its anchor day is NOT_SPANNED: its term is absent, its window prints the not-held dash, and its figure is never a compounding over the part it held"
       }
     },
     {
@@ -1012,9 +981,9 @@
       "label": "Beginning value, year to date",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "beginning_value",
-        "fold": "beginning_value on the window's opening anchor day for this account; absent where that day carries NO_PRIOR_VALUE, never zero"
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "market_value_eod of this account on the window's opening anchor day (the last trading day before 1 January of as_of's year), the whole-account value at end of day with cash included; an account with no row on its anchor day did not hold a value at the window's start: its term is absent, never zero, and its window is NOT_SPANNED, so it prints the not-held dash; absent, never zero, when that row's day_quality is SOURCE_LAG"
       }
     },
     {
@@ -1024,12 +993,9 @@
       "label": "Net additions, year to date",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "contributions",
-        "fold": "contributions minus withdrawals over the window's trading days (from its opening anchor (the last trading day before 1 January of as_of's year) to as_of)",
-        "also": [
-          "withdrawals"
-        ]
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "external_flow",
+        "fold": "the sum of external_flow (net external flow, capital-in positive) over this account's rows for the year to date window: the trading days after its opening anchor (the last trading day before 1 January of as_of's year) up to and including as_of; each row's carried_days already folds the flows of a skipped closure into its trading day, so every flow is counted once; absent when any trading day of the window has no row for this account or a row there is SOURCE_LAG (that day's flow is unknown), never zero"
       }
     },
     {
@@ -1039,13 +1005,9 @@
       "label": "Net gain before advisory fees, year to date",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "realized",
-        "fold": "realized plus unrealized_change plus income over the window's trading days (from its opening anchor (the last trading day before 1 January of as_of's year) to as_of); before advisory fees, and income is net of fee and administration cash (see convention.fee_basis_label)",
-        "also": [
-          "unrealized_change",
-          "income"
-        ]
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "ending_value minus beginning_value minus net_additions for this account, the three terms above read from the same rows: a gain BEFORE advisory fees (convention.fee_basis_label: the baseline's Net Gain includes fees, so the two are not the same figure); absent when any of the three terms is absent; it is a residual and is never plugged to tie"
       }
     },
     {
@@ -1055,9 +1017,9 @@
       "label": "Ending value (as of the report date)",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "ending_value",
-        "fold": "ending_value on as_of for this account; the same figure in every window column"
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "market_value_eod of this account on as_of, the whole-account value at end of day with cash included; absent, never zero, when there is no row on as_of or as_of's day_quality is SOURCE_LAG"
       }
     },
     {
@@ -1067,12 +1029,9 @@
       "label": "Return, cumulative, before advisory fees, year to date",
       "unit": "percent",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_CLIENT_SUMMARY_CONTRACT.json",
-        "field": "windows",
-        "fold": "the account entry's windows[YTD], the geometric link of the account's daily total return over the window (from its opening anchor (the last trading day before 1 January of as_of's year) to as_of); null, and so absent, where window_status[YTD] is NOT_SPANNED or BREAK, never a partial link; cumulative, not annualized",
-        "also": [
-          "window_status"
-        ]
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "total_return_daily",
+        "fold": "the account's cumulative return over the year to date window: the trading days after its opening anchor (the last trading day before 1 January of as_of's year) up to and including as_of: the product of (1 + total_return_daily) over the window's trading days, minus 1, read from this account's rows. Guard and day rules: a row whose total_return_daily is null (day_quality NOT_MEASURABLE or SOURCE_LAG, where the geometric link breaks) makes the window ABSENT with the gap date named, never bridged; a row whose guard_state is GRADED_DISAGREED serves no number (ruling 17), so the window is ABSENT; a row whose day_quality is FLOW_UNRECONCILED or LARGE_FLOW, or whose guard_state is NOT_GRADED_OUTSIDE_DOMAIN, NOT_GRADED_NO_NEIGHBOUR or GUARD_NOT_REACHED, compounds as served and the window carries that flag. An account with no row on its anchor day is NOT_SPANNED: its term is absent, its window prints the not-held dash, and its figure is never a compounding over the part it held"
       }
     },
     {
@@ -1118,9 +1077,9 @@
       "label": "Beginning value, last 12 months",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "beginning_value",
-        "fold": "beginning_value on the window's opening anchor day for this account; absent where that day carries NO_PRIOR_VALUE, never zero"
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "market_value_eod of this account on the window's opening anchor day (the last trading day before the calendar day one year before as_of), the whole-account value at end of day with cash included; an account with no row on its anchor day did not hold a value at the window's start: its term is absent, never zero, and its window is NOT_SPANNED, so it prints the not-held dash; absent, never zero, when that row's day_quality is SOURCE_LAG"
       }
     },
     {
@@ -1130,12 +1089,9 @@
       "label": "Net additions, last 12 months",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "contributions",
-        "fold": "contributions minus withdrawals over the window's trading days (from its opening anchor (the last trading day before the calendar day one year before as_of) to as_of)",
-        "also": [
-          "withdrawals"
-        ]
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "external_flow",
+        "fold": "the sum of external_flow (net external flow, capital-in positive) over this account's rows for the last 12 months window: the trading days after its opening anchor (the last trading day before the calendar day one year before as_of) up to and including as_of; each row's carried_days already folds the flows of a skipped closure into its trading day, so every flow is counted once; absent when any trading day of the window has no row for this account or a row there is SOURCE_LAG (that day's flow is unknown), never zero"
       }
     },
     {
@@ -1145,13 +1101,9 @@
       "label": "Net gain before advisory fees, last 12 months",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "realized",
-        "fold": "realized plus unrealized_change plus income over the window's trading days (from its opening anchor (the last trading day before the calendar day one year before as_of) to as_of); before advisory fees, and income is net of fee and administration cash (see convention.fee_basis_label)",
-        "also": [
-          "unrealized_change",
-          "income"
-        ]
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "ending_value minus beginning_value minus net_additions for this account, the three terms above read from the same rows: a gain BEFORE advisory fees (convention.fee_basis_label: the baseline's Net Gain includes fees, so the two are not the same figure); absent when any of the three terms is absent; it is a residual and is never plugged to tie"
       }
     },
     {
@@ -1161,9 +1113,9 @@
       "label": "Ending value (as of the report date)",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "ending_value",
-        "fold": "ending_value on as_of for this account; the same figure in every window column"
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "market_value_eod of this account on as_of, the whole-account value at end of day with cash included; absent, never zero, when there is no row on as_of or as_of's day_quality is SOURCE_LAG"
       }
     },
     {
@@ -1173,12 +1125,9 @@
       "label": "Return, cumulative, before advisory fees, last 12 months",
       "unit": "percent",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_CLIENT_SUMMARY_CONTRACT.json",
-        "field": "windows",
-        "fold": "the account entry's windows[1Y], the geometric link of the account's daily total return over the window (from its opening anchor (the last trading day before the calendar day one year before as_of) to as_of); null, and so absent, where window_status[1Y] is NOT_SPANNED or BREAK, never a partial link; cumulative, not annualized",
-        "also": [
-          "window_status"
-        ]
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "total_return_daily",
+        "fold": "the account's cumulative return over the last 12 months window: the trading days after its opening anchor (the last trading day before the calendar day one year before as_of) up to and including as_of: the product of (1 + total_return_daily) over the window's trading days, minus 1, read from this account's rows. Guard and day rules: a row whose total_return_daily is null (day_quality NOT_MEASURABLE or SOURCE_LAG, where the geometric link breaks) makes the window ABSENT with the gap date named, never bridged; a row whose guard_state is GRADED_DISAGREED serves no number (ruling 17), so the window is ABSENT; a row whose day_quality is FLOW_UNRECONCILED or LARGE_FLOW, or whose guard_state is NOT_GRADED_OUTSIDE_DOMAIN, NOT_GRADED_NO_NEIGHBOUR or GUARD_NOT_REACHED, compounds as served and the window carries that flag. An account with no row on its anchor day is NOT_SPANNED: its term is absent, its window prints the not-held dash, and its figure is never a compounding over the part it held"
       }
     },
     {
@@ -1224,9 +1173,9 @@
       "label": "Beginning value, since inception",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "beginning_value",
-        "fold": "beginning_value on the window's opening anchor day for this account; absent where that day carries NO_PRIOR_VALUE, never zero"
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "market_value_eod of this account on the account's first valued day (its first emitted account_return_daily row, the first day its market_value_eod exists), the whole-account value at end of day with cash included; an account with no row on its anchor day did not hold a value at the window's start: its term is absent, never zero, and its window is NOT_SPANNED, so it prints the not-held dash; absent, never zero, when that row's day_quality is SOURCE_LAG"
       }
     },
     {
@@ -1236,12 +1185,9 @@
       "label": "Net additions, since inception",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "contributions",
-        "fold": "contributions minus withdrawals over the window's trading days (from the account's first_data_date to as_of)",
-        "also": [
-          "withdrawals"
-        ]
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "external_flow",
+        "fold": "the sum of external_flow (net external flow, capital-in positive) over this account's rows for the since-inception window: the trading days after the account's first valued day up to and including as_of; each row's carried_days already folds the flows of a skipped closure into its trading day, so every flow is counted once; absent when any trading day of the window has no row for this account or a row there is SOURCE_LAG (that day's flow is unknown), never zero"
       }
     },
     {
@@ -1251,13 +1197,9 @@
       "label": "Net gain before advisory fees, since inception",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "realized",
-        "fold": "realized plus unrealized_change plus income over the window's trading days (from the account's first_data_date to as_of); before advisory fees, and income is net of fee and administration cash (see convention.fee_basis_label)",
-        "also": [
-          "unrealized_change",
-          "income"
-        ]
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "ending_value minus beginning_value minus net_additions for this account, the three terms above read from the same rows: a gain BEFORE advisory fees (convention.fee_basis_label: the baseline's Net Gain includes fees, so the two are not the same figure); absent when any of the three terms is absent; it is a residual and is never plugged to tie"
       }
     },
     {
@@ -1267,9 +1209,9 @@
       "label": "Ending value (as of the report date)",
       "unit": "dollars",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json",
-        "field": "ending_value",
-        "fold": "ending_value on as_of for this account; the same figure in every window column"
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "market_value_eod",
+        "fold": "market_value_eod of this account on as_of, the whole-account value at end of day with cash included; absent, never zero, when there is no row on as_of or as_of's day_quality is SOURCE_LAG"
       }
     },
     {
@@ -1279,12 +1221,9 @@
       "label": "Return, cumulative, before advisory fees, since inception",
       "unit": "percent",
       "source": {
-        "contract": "org/standards/IRPT_DASHBD_CLIENT_SUMMARY_CONTRACT.json",
-        "field": "windows",
-        "fold": "the account entry's windows[SI], the geometric link of the account's daily total return over the window (from the account's first_data_date to as_of); null, and so absent, where window_status[SI] is NOT_SPANNED or BREAK, never a partial link; cumulative, not annualized",
-        "also": [
-          "window_status"
-        ]
+        "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+        "field": "total_return_daily",
+        "fold": "the account's cumulative return over the since-inception window: the trading days after the account's first valued day up to and including as_of: the product of (1 + total_return_daily) over the window's trading days, minus 1, read from this account's rows. Guard and day rules: a row whose total_return_daily is null (day_quality NOT_MEASURABLE or SOURCE_LAG, where the geometric link breaks) makes the window ABSENT with the gap date named, never bridged; a row whose guard_state is GRADED_DISAGREED serves no number (ruling 17), so the window is ABSENT; a row whose day_quality is FLOW_UNRECONCILED or LARGE_FLOW, or whose guard_state is NOT_GRADED_OUTSIDE_DOMAIN, NOT_GRADED_NO_NEIGHBOUR or GUARD_NOT_REACHED, compounds as served and the window carries that flag. An account with no row on its anchor day is NOT_SPANNED: its term is absent, its window prints the not-held dash, and its figure is never a compounding over the part it held"
       }
     },
     {
