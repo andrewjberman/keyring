@@ -32348,3 +32348,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The check file is outside the grant and under the issuer's serial folder; a worker cannot commit it. It is unstaged and not in the build commit."
 }
 ```
+
+## IRPT_BCKEND-D2-S150 -- dispositions on worker 366's rows after IB-pr-517 merged; what this seat did not fix
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S150",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T20:43:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on worker 366's rows (D2-W366-S1 to S8) after the merge of IB-pr-517 @0d0e9e1229, and two things this seat did not fix: four custody tests fail at base, and recipe.comparison_security_ids reads a security_id key the admitted projection lacks.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 366's final report and commits 89be625971 and 2db3cefd1f, merged @0d0e9e1229; I re-ran IB183-1 AC1 to AC3 on the merged tree: PASS (AC3: 31 passed, 55 subtests)",
+      "git diff of the worker branch against box/dell2: 10 files, the order, the proof instance, the criteria output and rows included",
+      "the worker's rows S3 and S5 (read by me in its commit a0c93a061b); the live path read by me at recipe.py report_security_ids and resident_worker.py:401-405"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27).",
+  "world_is": "DISPOSITIONS: S1 (the pin-set test outside the paths) RULED by amendment 1, the file granted; S2 (fixture and count in the named test file) APPROVED; S4 (portal gitlink shows modified in a fresh worktree) not mine, not committed, recorded; S5 (security_id source) ANSWERED: the live path takes vendor_id (report_security_ids, resident_worker.py:401-405), so the refusal sits there, and the older envelope path (validate_envelope) is not reached by the live worker; S6 (row grammar) ruled: the dell2 form IRPT_BCKEND-D2-W<n>-S<k> is the one to cut, my order text was wrong and amendment 1 fixed it; S7, S8 (a lane refusal until the amended order landed; the issuer's check file not committed by the worker) are the lane gate working as designed. NOT FIXED HERE, with owner: (a) S3, four custody tests (test_custody_entry.py two, test_custody_retained.py two) fail at base with FIRM_BINDING / INTERNAL-CALLER-CLASS row_absent; cause untraced; the catalogue is not on their path; owner me, a later measure-first cell if the CTO rules it in; (b) recipe.comparison_security_ids (the older envelope helper the first worker built from my design) reads catalog[k]['security_id'] and the admitted projection has none; it has no non-test caller, so the live path is unaffected; it is kept because the declared refusal code and its tests ride on it; the repair or removal is mine. NOT YET TRUE: nothing is served differently: the catalogue changes only when a later signed apply moves the function that packages these files. ISSUER NOTE: the worker also flipped the order's <status> to complete; that is the issuer's act and I read it as correct on the merged tree (criteria re-run PASS)."
+}
+```

@@ -7944,6 +7944,55 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+```json
+{
+  "id": "ADVI_COTBKF-D2-W162-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~162",
+  "surfaced_at": "2026-10-13T20:26:42Z",
+  "one_line": "The 'Planned, not applied' sentence on the reporting-read route (lambda-source-map.json:6485) is stale: the Lambda, its route and its integration are deployed and registered, and the sentence is cited by round 81 as the reason the read route is not live.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CONSUMER_READ.json (round 81, 0.9.0_WK_ADVI_COTBKF~158) and the CTO round-82 ruling 1 take the read route as planned, not applied, read from lambda-source-map.json:6485; the cell asks the route to be read from deployed configuration.",
+  "world_is": "irpt-49f-reporting-read-lambda is Active (LastModified 2026-10-13T13:07:19Z, CodeSha256 equal to deployed_code_sha256 at lambda-source-map.json:6492); API 7k3ed8px20 carries route GET /api/scoped/investor-reporting/reporting/{account_id}/{which} (route 3smc8xr) on integration 904xvoc, AWS_PROXY, invoking that Lambda. The note's own neighbours (:6488 to :6492) record the deploy. The sentence is stale against live state. The same stale sentence sits at :6023 for reporting-publish (its own record :6027 is 2026-10-05; live LastModified 2026-10-03T17:22:27Z; CodeSha256 equal).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json:6485 @04b9a0bbed (the sentence) and :6488-6492 (deploy fields)",
+      "aws lambda get-function-configuration irpt-49f-reporting-read-lambda rc=0 (State Active, LastModified 2026-10-13T13:07:19.000+0000)",
+      "aws apigatewayv2 get-routes 7k3ed8px20 rc=0 (121 routes, no NextToken; route key matched once, id 3smc8xr) and get-integration 904xvoc rc=0",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~162/ROUTE_READ.json hop 3 and planned_not_applied_reading"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "ADVI_COTBKF-D2-W162-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~162",
+  "surfaced_at": "2026-10-13T20:26:42Z",
+  "one_line": "The second hop named in the round-82 analysis (gold account_return_daily -> reporting-publish -> dashboard) does not reach Cottonwood: the deployed publish reads 49financial gold only, the Cottonwood-scoped publish function is absent, and the read Lambda is firm-locked to 49financial.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO_ROUND_ANALYSIS_ADVI_COTBKF_ROUND_82 section 2 ruling 1 and CONSUMER_READ.json name the route ARD -> gold account_return_daily -> reporting-publish -> dashboard as the one whose liveness decides W155-S1.",
+  "world_is": "The Cottonwood gold partition exists (opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=2026-06-22, LastModified 2026-10-11T07:17:06Z), but handler.py resolves only the declared custody source schwab_08335338, which is firm 49financial (sources.json; handler.py:87-103), and reads opal-data-49financial gold. The Cottonwood master z09 is not a declared source (sources.json _commonwealth_delivery is method-fields-only). get-function-configuration irpt-cot-reporting-publish-lambda returned ResourceNotFoundException (rc=254); the positive control irpt-49f-reporting-publish-lambda was found. reporting-read locals.tf:37-38 is firm 49financial. Route verdict recorded as route_not_live at hop 2; the disarm decision is the CTO's and the COO's, not this row's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py:87-103 and :111-126 @04b9a0bbed (firm 49financial, gold read)",
+      "data/assets/scripts/gold/irpt_reporting/sources.json:6-10 and :123-130 @04b9a0bbed (one custody source; _commonwealth_delivery underscore-prefixed)",
+      "infra/aws/terraform/investor-reporting/reporting-publish/locals.tf:38-61 and reporting-read/locals.tf:37-48 @04b9a0bbed",
+      "aws lambda get-function-configuration irpt-cot-reporting-publish-lambda rc=254 ResourceNotFoundException; irpt-49f-reporting-publish-lambda rc=0 State Active",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~162/ROUTE_READ.json hops 1-3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
 
 ## ADVI_COTBKF-D2-W161-S1 -- CB-cd-1: the near-match file the FWD-8 reader names is absent; the crosswalk carries 22 awaiting-a-person rows, not 21
 
@@ -8074,5 +8123,62 @@ round.** Never edit an existing row.
  "disposition": "UNDER_INVESTIGATION",
  "spec_asserts": "Order CB-cd-1 names gold/canonical/holdings as the Black Diamond side of the firm's own bucket.",
  "world_is": "The gold canonical schema holds more than one custodian's unit columns. The cell projected account_id, asset_name, units, cusip, ticker and cash_equivalent only, so the BD-side windows are measured on the units column as the table carries it; whether that column is BD-only per row is not established by this read."
+}
+```
+
+## ADVI_COTBKF-D2-W163-S1 -- The round-82 ruling names the builder and the two minted-table readers as the readers of the cot price store; 
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W163-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~163",
+  "surfaced_at": "2026-10-13T20:34:16Z",
+  "one_line": "The round-82 ruling names the builder and the two minted-table readers as the readers of the cot price store; none of them reads that key (the builder writes it, the ARD adapter reads minted tables). Four production scripts read the store keyed by ticker alone, so the zero-ticker-only-reader disarm of D2-W158-S2 is not met.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/analysis/commonwealth_price_census.py:57-58 key_cols ticker only; :411-420 _clean drops price @04b9a0bbed",
+      "data/assets/scripts/silver/commonwealth_price_basis_census.py:364 nk = ticker, :384 ticker-day median @04b9a0bbed",
+      "data/assets/scripts/silver/commonwealth_bond_custodian_price.py:125-126 ticker value tested against bond CUSIPs @04b9a0bbed",
+      "data/assets/scripts/silver/commonwealth_bd_txn_provenance.py:38, :117-121 @04b9a0bbed",
+      "data/cot/scripts/gold/build_canonical_prices_v2.py:174 OUTPUT_KEY (writer) @04b9a0bbed",
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py:221-226 reads minted tables only @04b9a0bbed",
+      "deliverables/0.9.0_WK_ADVI_COTBKF~163/TICKER_KEY_READ.json readers, ticker_only_readers=4"
+    ]
+  },
+  "spec_asserts": "CTO round-82 analysis ruling 2: W158-S2 disarms on a read that names 0 ticker-only readers (the builder build_canonical_prices_v2.py and the two minted-table readers first), or on a keyed fix to the (ticker, asset_name) pair.",
+  "world_is": "The cot store has four ticker-keyed production readers outside the named set (census, basis census, bond custodian, bd_txn_provenance) and seven asset_name-keyed gold readers. The named builder is a writer; the ARD adapter reads the minted tables and not this key. Ticker-only readers exist, so the keyed fix is the disarm path, not the zero read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W163-S2 -- The graph cannot enumerate the readers of a store key: comp-pipescript io lists the cot price store as an exte
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W163-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~163",
+  "surfaced_at": "2026-10-13T20:34:16Z",
+  "one_line": "The graph cannot enumerate the readers of a store key: comp-pipescript io lists the cot price store as an external input with no writer edge, consumers answers at the canonical-holdings script level, the .py and bare script names are refused, and comp-platinum reverse covers portal reads only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-pipescript io B_00 / B_01 / A_03 --pipeline cot: silver/prices/canonical_prices.parquet <- (external/silver), no writer edge (run in worktree at 04b9a0bbed)",
+      "comp-pipescript consumers build_canonical_prices_v2 --pipeline cot: rc=1 Unknown script; .py form rc=1 Unknown script",
+      "comp-platinum reverse s3://opal-data-cot/silver/prices/canonical_prices.parquet --firm cot: PRODUCER empty, CONSUMED BY none (already D2-W158-S1)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-cd-3 item 1: the graph first (org/modules/graph/graph-call-manifest.yaml), then comp-find and comp-estate, to find every reader of the store key.",
+  "world_is": "The graph answers the script-level consumers of canonical holdings and the io of each reader, but not the readers of the store key itself. The reader list for this key came from comp-find and each file's own code, not from the graph.",
+  "disposition": "UNDER_INVESTIGATION"
 }
 ```

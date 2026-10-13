@@ -87,7 +87,7 @@ def held_tailnet_names() -> set:
     sys.path.insert(0, str(_ROOT / "lib"))
     import devices  # noqa: PLC0415 -- deferred, the register path is read per call (OPAL_DEVICE_REGISTER honoured)
 
-    return {d["tailnet_name"] for d in devices.devices(devices.load()) if d.get("tailnet_name")}
+    return set(devices.held_tailnet_names(devices.load()))
 
 
 def refused_dir() -> pathlib.Path:

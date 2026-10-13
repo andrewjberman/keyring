@@ -77,9 +77,16 @@ This order touches none of them.
 - **Not planted:** nothing is driven to make a line pass. A refusal is answered by a `bz-6`-shaped re-mint order under its own pair.
 - Delivered as a crossbox ORDER through MSTR.
 
+**CANCELLED 2026-10-13 ~21:1xZ (issuer `2.0.0_SA_COO~W1`), by the ruling of `1.0.0_SA_CTO~DELL1` msg 5143 (Re the Z-S119 decision): "CLOSE round 84 with bz-7 reported NOT MET to my analysis"; "(A) next round":**
+- **Measured, so the cancel is not read as a pass:** AC1 did NOT match. `0.7.0_AE_CloudOps~ZW` @93d0e7c0ee (site Z, via MSTR msg 5140): wsj `CYCLE=20261013T173708Z COMPLETED=False STOPPED=sign_in_refused ASKED=242 NEW=0 FAILED=1` and barrons `CYCLE=20261013T184606Z COMPLETED=False
+  STOPPED=sign_in_refused ASKED=242 NEW=0 FAILED=1`. wsj did 35 real pairs over 69 minutes and then one key returned 401 under `--no-sign-in`; barrons did 0 pairs in 21 seconds. `VALID=True` from bz-6 is a local predicate, not vendor acceptance. Row `AMGT_HARVST-Z-S119`.
+- **Carried, not dropped:** the ruling is the successor cell for the next round: the runner refreshes once per publisher per cycle through the existing `SessionManager`, with no new credential path and no secret printed, and before the refresh it prints Barron's refusal class
+  (expired, entitlement or blocked) from the response; if it is not expiry, the refresh cannot fix it and that is the finding. Not a plain re-mint, not a park.
+- bx-4's acceptance (a completed wsj and barrons cycle, unattended) is therefore NOT MET at the close of round 84; the CTO's analysis carries it.
+
 <risk>LOCAL</risk>
 <worker_class>seat</worker_class>
-<status>issued</status>
+<status>cancelled</status>
 <round>84</round>
 <workstream>WSJBARRONS</workstream>
 <slot>site-z</slot>
