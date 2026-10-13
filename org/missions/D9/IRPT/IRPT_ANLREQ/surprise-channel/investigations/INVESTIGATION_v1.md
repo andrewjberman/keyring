@@ -3749,6 +3749,161 @@
 }
 ```
 
+## IRPT_ANLREQ-D2-W51-S10 -- (heading added by the issuer at the drain of TO-AR-y-185, which lost this row in its first merge; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S10",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T00:08:53Z",
+  "one_line": "AR-y-185: the worktree is behind the shared head. Its lambda-source-map.json (blob 78e79160) and _authz/served.py (blob 1d55a27a) are older than the read ref 9f43f29de8 (map a5cc836a, served.py d1bf60c9). The eight served.py pins agree in both; the record reads the ref.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse 9f43f29de8:infra/aws/lambda/ci/lambda-source-map.json = a5cc836ae7c4a27ee2bd2c8e37ac3cc6405fb913; worktree (HEAD c0e2b493d4) = 78e79160bdbd44db0f1cff2dfb39c348c7caa825",
+      "git rev-parse 9f43f29de8:infra/aws/lambda/investor-reporting/_authz/served.py = d1bf60c9f907e5bbbbda6c4de5f22f4ad224ee64 (last changed at 564e604838, AR-y-184); worktree = 1d55a27aaefccdb2051c9e5973febdb08d253797",
+      "At the ref, 17 map entries differ from the worktree copy, all eight packagers among them, in loaders.py pins and artifact_sha256 only; the eight served.py pins (361c44fa9d, 74a62fb46c) are identical in both",
+      "read_at block and not_read of org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~51/r18/SERVED_PY_PACKAGERS.json"
+    ]
+  },
+  "spec_asserts": "Read first (the order): the map and the status rule are in the worktree; a file absent from the worktree, or stale against the current head, may be read at the shared tree head.",
+  "world_is": "The worktree and the shared head hold different bytes for the map and for _authz/served.py, and the head moves during a seat's reads. The census read one ref, 9f43f29de8, and cites it; the worktree copies were read and not used.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S11 -- (heading added by the issuer at the drain of TO-AR-y-185, which lost this row in its first merge; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S11",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T00:08:53Z",
+  "one_line": "AR-y-185: the Y185-READ check proves that each named function has a non-empty pin field. It does not prove that the pin is a commit or that the pinned bytes equal the map's sha256, so a PASS of AR185-y-AC1 verifies no pin.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r18/ar18_checks.py at worktree commit c0e2b493d4, y185-read branch of main(): it tests `not funcs[name].get(\"pin\")` and the presence of the three top-level members",
+      "this seat's run: y185-read printed Y185-READ-OK over 8 of 8 names; the same seat verified each of the eight pins by git show plus sha256 against the map (all eight match), outside the checker"
+    ]
+  },
+  "spec_asserts": "AR185-y-AC1 (checker y185-read): the record names each of the eight functions with its pin and how it packages served.py, and states the map denominator, the claim and what was not read.",
+  "world_is": "The checker tests the presence of a non-empty pin and of a non-empty how_it_packages_served_py per name. A record that names a wrong or non-existent commit as a pin would print Y185-READ-OK.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S12 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S12",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T01:59:58Z",
+  "one_line": "AR-y-192 'Read first' names row IRPT_ANLREQ-D2-W52-S28 in INVESTIGATION_v1.md. The worktree copy (branch wk-IRPT_ANLREQ-51 at a204eefd51) has no such row; the shared-tree head 537391d103 has it at line 4085.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "grep -n W52-S28 on the worktree copy of org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md: no hit (the file ends at IRPT_ANLREQ-D2-W51-S11, 3798 lines)",
+      "git -C C:/dev/ajb_workspace show 537391d103:org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md carries the row at line 4085 (id IRPT_ANLREQ-D2-W52-S28, surfaced_by 0.9.0_WK_IRPT_ANLREQ~52, 2026-10-12T23:07:22Z)"
+    ]
+  },
+  "spec_asserts": "AR-y-192 WORKER FACE, 'Read first': row IRPT_ANLREQ-D2-W52-S28 in org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md, read in this worktree.",
+  "world_is": "The row exists at the shared-tree head, not in the worktree branch, which was cut before the rows minted after a204eefd51. The row was read at the shared-tree head at 537391d103 and nothing was copied into the worktree for it. The worktree copy of the file is the one this worker appends to, per the append-only rule.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S13 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S13",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T01:59:58Z",
+  "one_line": "AR-y-192 premise: the reader pair's release pins are the r14 census pins (uploads.py 4215d98f26, template_reader.py d95cf11106). Both are off the trunk: 114c77fb01 reverted them and e93258c650 and da7b3b10bc re-landed and widened the pair. A release cut from the r14 pins would ship the reverted reader.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "UPLOAD_DOOR_RELEASE_CENSUS.json (0.9.0_WK_IRPT_ANLREQ~53/r14, read at f166732b43) functions_that_package_the_reader[0].repin_the_release_needs names 4215d98f26319f25df1678783fe1b3d6a9006a2c and d95cf11106206babd2dda9c502ec60aa5c15c84f",
+      "git -C C:/dev/ajb_workspace show --stat 114c77fb01: revert, 7 files, 24 insertions and 509 deletions; e93258c650 (AR-y-162, 8 files) and da7b3b10bc (AR-y-181, 2 files) re-land and widen the pair after it",
+      "at REF 537391d103: intake/uploads.py blob 35df2aa46146 (sha256 176682cb1545435eec084376b3c37a578ca70d05f9ad5a376c0f2275f62b05ea, = e93258c650); intake/template_reader.py blob fbc6c33af050 (sha256 83ab9b45d59065f53c640803df9fd07a0ddfcc97d89c13540c20622a6bf7bd58, = da7b3b10bc)"
+    ]
+  },
+  "spec_asserts": "AR-y-192 items 1, 2 and 4 and the r14 census repin_the_release_needs: the reader pair the release moves is uploads.py at 4215d98f26 and template_reader.py at d95cf11106; the CTO ruling 20261013 section 1 says the pinned pair runs in a scratch tree before it is cut (AR-y-191 record not yet landed).",
+  "world_is": "Those pins are no longer on the trunk. The planned moves in the AR-y-192 census name the trunk pair at 537391d103 (uploads.py e93258c650, template_reader.py da7b3b10bc), each checked by name against its pinned neighbours. Which pair the round cuts, and whether the scratch run ran that pair, is the issuer's call; no r19 scratch record exists at 537391d103 to confirm it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S14 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S14",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T01:59:58Z",
+  "one_line": "The native member acceptance.py moved at HEAD after the r14 census read: 06557b6618 (IB-pr-478, 16 lines added) is its head, so a rebuild from HEAD ships a blob the census never built (census built abbdab4935, head sha256 0c4acec625).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log f166732b43..537391d103 -- infra/aws/lambda/investor-reporting/ycharts/generate: one commit, 06557b6618, touching acceptance.py (16 insertions)",
+      "census changed_members_detail acceptance.py built_sha256 abbdab4935097ea5d595c0e4abcde9cea977b12b15440b0ee70caa9eeb22895d equals the blob at 74bbdbb322; the blob at 06557b6618 hashes to 0c4acec625b7 (git show, sha256)",
+      "the other three natives (submission.py, submission_service.py, durable_job.py) have the same head blob as the census built, at 74bbdbb322, 2f7cc7be42 and 3acafb3f45"
+    ]
+  },
+  "spec_asserts": "The r14 census (changed_members_detail) and the W53-S9 row describe the four native members at the census head f166732b43: acceptance.py built from 74bbdbb322.",
+  "world_is": "At the shared head 537391d103 acceptance.py is at 06557b6618. The planned pin for acceptance.py (1eed34a8c0, the live blob) holds 06557b6618 and 74bbdbb322 and 2f7cc7be42 back from this release, which is an issuer decision the census states and does not make.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S15 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S15",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T01:59:58Z",
+  "one_line": "The resident builder's DIRS list at HEAD has twelve folders, ycharts/research among them; the r14 census quoted the list at :37-38 without it, so the r14 description of what a resident rebuild packages is stale.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 537391d103:infra/aws/lambda/investor-reporting/reports/build_resident_package.py line 37: DIRS = [_scope, _ids, _keys, _authz, _contracts, intake, ops, reports, ycharts/generate, ycharts/session, ycharts/extract, ycharts/research]",
+      "UPLOAD_DOOR_RELEASE_CENSUS.json resident_runtime.how_built (r14): DIRS at :37-38 listed as eleven folders without ycharts/research"
+    ]
+  },
+  "spec_asserts": "The r14 census resident_runtime.how_built: a resident tarball is built from one backend pin over the eleven listed folders.",
+  "world_is": "The builder at 537391d103 packages twelve folders; ycharts/research is in the resident package the census did not describe. The resident release record must name the current DIRS list, not the r14 one.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
 ## IRPT_ANLREQ-D2-W52-S16 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
 
 ```json
@@ -4570,58 +4725,6 @@
 }
 ```
 
-## IRPT_ANLREQ-D2-W51-S10 -- (heading added by the issuer at the drain of TO-AR-y-185, which lost this row in its first merge; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W51-S10",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
-  "surfaced_at": "2026-10-13T00:08:53Z",
-  "one_line": "AR-y-185: the worktree is behind the shared head. Its lambda-source-map.json (blob 78e79160) and _authz/served.py (blob 1d55a27a) are older than the read ref 9f43f29de8 (map a5cc836a, served.py d1bf60c9). The eight served.py pins agree in both; the record reads the ref.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "git rev-parse 9f43f29de8:infra/aws/lambda/ci/lambda-source-map.json = a5cc836ae7c4a27ee2bd2c8e37ac3cc6405fb913; worktree (HEAD c0e2b493d4) = 78e79160bdbd44db0f1cff2dfb39c348c7caa825",
-      "git rev-parse 9f43f29de8:infra/aws/lambda/investor-reporting/_authz/served.py = d1bf60c9f907e5bbbbda6c4de5f22f4ad224ee64 (last changed at 564e604838, AR-y-184); worktree = 1d55a27aaefccdb2051c9e5973febdb08d253797",
-      "At the ref, 17 map entries differ from the worktree copy, all eight packagers among them, in loaders.py pins and artifact_sha256 only; the eight served.py pins (361c44fa9d, 74a62fb46c) are identical in both",
-      "read_at block and not_read of org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~51/r18/SERVED_PY_PACKAGERS.json"
-    ]
-  },
-  "spec_asserts": "Read first (the order): the map and the status rule are in the worktree; a file absent from the worktree, or stale against the current head, may be read at the shared tree head.",
-  "world_is": "The worktree and the shared head hold different bytes for the map and for _authz/served.py, and the head moves during a seat's reads. The census read one ref, 9f43f29de8, and cites it; the worktree copies were read and not used.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-```
-
-## IRPT_ANLREQ-D2-W51-S11 -- (heading added by the issuer at the drain of TO-AR-y-185, which lost this row in its first merge; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W51-S11",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
-  "surfaced_at": "2026-10-13T00:08:53Z",
-  "one_line": "AR-y-185: the Y185-READ check proves that each named function has a non-empty pin field. It does not prove that the pin is a commit or that the pinned bytes equal the map's sha256, so a PASS of AR185-y-AC1 verifies no pin.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r18/ar18_checks.py at worktree commit c0e2b493d4, y185-read branch of main(): it tests `not funcs[name].get(\"pin\")` and the presence of the three top-level members",
-      "this seat's run: y185-read printed Y185-READ-OK over 8 of 8 names; the same seat verified each of the eight pins by git show plus sha256 against the map (all eight match), outside the checker"
-    ]
-  },
-  "spec_asserts": "AR185-y-AC1 (checker y185-read): the record names each of the eight functions with its pin and how it packages served.py, and states the map denominator, the claim and what was not read.",
-  "world_is": "The checker tests the presence of a non-empty pin and of a non-empty how_it_packages_served_py per name. A record that names a wrong or non-existent commit as a pin would print Y185-READ-OK.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-```
-
 ## IRPT_ANLREQ-D2-W52-S33 -- the Lambda's pinned reader (3f29017cfc) has no account check and no total-row check: two-account and total-row sheets return no finding
 
 ```json
@@ -4892,109 +4995,6 @@
 }
 ```
 
-## IRPT_ANLREQ-D2-W51-S12 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W51-S12",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
-  "surfaced_at": "2026-10-13T01:59:58Z",
-  "one_line": "AR-y-192 'Read first' names row IRPT_ANLREQ-D2-W52-S28 in INVESTIGATION_v1.md. The worktree copy (branch wk-IRPT_ANLREQ-51 at a204eefd51) has no such row; the shared-tree head 537391d103 has it at line 4085.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "grep -n W52-S28 on the worktree copy of org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md: no hit (the file ends at IRPT_ANLREQ-D2-W51-S11, 3798 lines)",
-      "git -C C:/dev/ajb_workspace show 537391d103:org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md carries the row at line 4085 (id IRPT_ANLREQ-D2-W52-S28, surfaced_by 0.9.0_WK_IRPT_ANLREQ~52, 2026-10-12T23:07:22Z)"
-    ]
-  },
-  "spec_asserts": "AR-y-192 WORKER FACE, 'Read first': row IRPT_ANLREQ-D2-W52-S28 in org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md, read in this worktree.",
-  "world_is": "The row exists at the shared-tree head, not in the worktree branch, which was cut before the rows minted after a204eefd51. The row was read at the shared-tree head at 537391d103 and nothing was copied into the worktree for it. The worktree copy of the file is the one this worker appends to, per the append-only rule.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-```
-
-## IRPT_ANLREQ-D2-W51-S13 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W51-S13",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
-  "surfaced_at": "2026-10-13T01:59:58Z",
-  "one_line": "AR-y-192 premise: the reader pair's release pins are the r14 census pins (uploads.py 4215d98f26, template_reader.py d95cf11106). Both are off the trunk: 114c77fb01 reverted them and e93258c650 and da7b3b10bc re-landed and widened the pair. A release cut from the r14 pins would ship the reverted reader.",
-  "class": "BLOCKING",
-  "hazard_standing": "ARMED",
-  "disarm_owner": "2.0.0_SA_COO~Y2",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "UPLOAD_DOOR_RELEASE_CENSUS.json (0.9.0_WK_IRPT_ANLREQ~53/r14, read at f166732b43) functions_that_package_the_reader[0].repin_the_release_needs names 4215d98f26319f25df1678783fe1b3d6a9006a2c and d95cf11106206babd2dda9c502ec60aa5c15c84f",
-      "git -C C:/dev/ajb_workspace show --stat 114c77fb01: revert, 7 files, 24 insertions and 509 deletions; e93258c650 (AR-y-162, 8 files) and da7b3b10bc (AR-y-181, 2 files) re-land and widen the pair after it",
-      "at REF 537391d103: intake/uploads.py blob 35df2aa46146 (sha256 176682cb1545435eec084376b3c37a578ca70d05f9ad5a376c0f2275f62b05ea, = e93258c650); intake/template_reader.py blob fbc6c33af050 (sha256 83ab9b45d59065f53c640803df9fd07a0ddfcc97d89c13540c20622a6bf7bd58, = da7b3b10bc)"
-    ]
-  },
-  "spec_asserts": "AR-y-192 items 1, 2 and 4 and the r14 census repin_the_release_needs: the reader pair the release moves is uploads.py at 4215d98f26 and template_reader.py at d95cf11106; the CTO ruling 20261013 section 1 says the pinned pair runs in a scratch tree before it is cut (AR-y-191 record not yet landed).",
-  "world_is": "Those pins are no longer on the trunk. The planned moves in the AR-y-192 census name the trunk pair at 537391d103 (uploads.py e93258c650, template_reader.py da7b3b10bc), each checked by name against its pinned neighbours. Which pair the round cuts, and whether the scratch run ran that pair, is the issuer's call; no r19 scratch record exists at 537391d103 to confirm it.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-```
-
-## IRPT_ANLREQ-D2-W51-S14 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W51-S14",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
-  "surfaced_at": "2026-10-13T01:59:58Z",
-  "one_line": "The native member acceptance.py moved at HEAD after the r14 census read: 06557b6618 (IB-pr-478, 16 lines added) is its head, so a rebuild from HEAD ships a blob the census never built (census built abbdab4935, head sha256 0c4acec625).",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "git log f166732b43..537391d103 -- infra/aws/lambda/investor-reporting/ycharts/generate: one commit, 06557b6618, touching acceptance.py (16 insertions)",
-      "census changed_members_detail acceptance.py built_sha256 abbdab4935097ea5d595c0e4abcde9cea977b12b15440b0ee70caa9eeb22895d equals the blob at 74bbdbb322; the blob at 06557b6618 hashes to 0c4acec625b7 (git show, sha256)",
-      "the other three natives (submission.py, submission_service.py, durable_job.py) have the same head blob as the census built, at 74bbdbb322, 2f7cc7be42 and 3acafb3f45"
-    ]
-  },
-  "spec_asserts": "The r14 census (changed_members_detail) and the W53-S9 row describe the four native members at the census head f166732b43: acceptance.py built from 74bbdbb322.",
-  "world_is": "At the shared head 537391d103 acceptance.py is at 06557b6618. The planned pin for acceptance.py (1eed34a8c0, the live blob) holds 06557b6618 and 74bbdbb322 and 2f7cc7be42 back from this release, which is an issuer decision the census states and does not make.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-```
-
-## IRPT_ANLREQ-D2-W51-S15 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W51-S15",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
-  "surfaced_at": "2026-10-13T01:59:58Z",
-  "one_line": "The resident builder's DIRS list at HEAD has twelve folders, ycharts/research among them; the r14 census quoted the list at :37-38 without it, so the r14 description of what a resident rebuild packages is stale.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "git show 537391d103:infra/aws/lambda/investor-reporting/reports/build_resident_package.py line 37: DIRS = [_scope, _ids, _keys, _authz, _contracts, intake, ops, reports, ycharts/generate, ycharts/session, ycharts/extract, ycharts/research]",
-      "UPLOAD_DOOR_RELEASE_CENSUS.json resident_runtime.how_built (r14): DIRS at :37-38 listed as eleven folders without ycharts/research"
-    ]
-  },
-  "spec_asserts": "The r14 census resident_runtime.how_built: a resident tarball is built from one backend pin over the eleven listed folders.",
-  "world_is": "The builder at 537391d103 packages twelve folders; ycharts/research is in the resident package the census did not describe. The resident release record must name the current DIRS list, not the r14 one.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-```
-
 ## IRPT_ANLREQ-D2-W52-S36 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
 
 ```json
@@ -5186,6 +5186,122 @@
       "the worker's two runs A1 and A2 at 0485393f3a (C:/dev/ar195-55-tarballs/live_0485393f3a_A1.tar.gz and _A2.tar.gz): file sha256 differs; uncompressed sha256 91d5b9edc1d0ee73a3ea44658862d47726fec5a26370888001f10743c6030b6d in both; member maps equal"
     ]
   }
+}
+```
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S16",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T02:22:14Z",
+  "one_line": "The release build against the unpatched map moves six members, not the two the census planned: the four native holds differ from the baseline; the census hold is relative to the live package, not to the current map.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RELEASE_BUILD_RECORD.json disagreement: acceptance.py, submission.py, submission_service.py, durable_job.py, uploads.py, template_reader.py differ between patch and baseline",
+      "RELEASE_BUILD_RECORD.json native_members_release_vs_census_live: all four true (release member equals the census live_member_sha256)",
+      "baseline zip members equal the HEAD blobs: acceptance.py 0c4acec625, submission.py 18aba4f079, submission_service.py 24b793e8ab, durable_job.py afba08fefb",
+      "ar19_checks.py y193-build rc=1: FAIL the planned members and the members that differ are not the same set"
+    ]
+  },
+  "spec_asserts": "The AR-y-193 spawn amendment and cell: the four native members are PINNED at the commits the live package matches, so the release moves ONLY the two reader members, and the planned set equals the measured set.",
+  "world_is": "Measured against the current map with no patch, the four pinned natives differ (HEAD blobs versus pinned blobs 06425d4731, 82c47bd021, d07a8281bb, b5192fa2a1), so the release moves six members. The census 'moves nothing' holds against the live package only. Any normal build of irpt-ycharts-generate from the unpatched map packages the four pending HEAD natives 06557b6618, 74bbdbb322, 2f7cc7be42 and 3acafb3f45 that the census holds back.",
+  "notes": "The worker did not change the planned list or the baseline to make the check agree. The issuer decides whether the planned list names the four holds or the baseline is the live-hold package. The trunk map is unedited. Disarm: the issuer lands the map patch or holds normal builds of this function.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S17",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T02:22:14Z",
+  "one_line": "BUILD_ONLY keeps its zip at one fixed path per function; the second build (baseline) replaced the first (patch), so the release package survives only as a copy taken between the two builds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/build-and-upload.sh line 411: ZIP_PATH=\"${TMPDIR:-/tmp}/lambda-artifact-${FN_NAME}.zip\" (a fixed name per function)",
+      "build_patch.log BUILD_ONLY line sha256=WnJlFFzELuJsZfWM5NG+qASMAM+ZBMjFVmvBV7b8FjU=; build_baseline.log BUILD_ONLY line sha256=p/pwRXJd+daoVKIhRimGzlxhHHLs2E4lGsz+eZVNBns= at the same path"
+    ]
+  },
+  "spec_asserts": "BUILD_ONLY keeps the zip at $ZIP_PATH so a release census can diff it (build-and-upload.sh lines 657-660).",
+  "world_is": "ZIP_PATH is one name per function, so a second BUILD_ONLY of the same function replaces the first zip. Two builds for a baseline need a copy taken between them; the copies are in .scratch/r19 of this worktree.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S18",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T02:22:14Z",
+  "one_line": "The worker branch wk-IRPT_ANLREQ-51 does not contain the shared-tree drain commits 5743c86349 and 069b8f797e; its map differs from the shared map, so the throwaway worktrees were cut from the shared head 5d8b0390ed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor 5743c86349 97dadd5cda returns rc=1 on the worker branch; the same test on the shared tree HEAD 5d8b0390ed returns 0",
+      "sha256 of infra/aws/lambda/ci/lambda-source-map.json: worker branch c181684c4d, shared HEAD a8c55c584d (the census value)",
+      "worker branch commit 97dadd5cda carries the same subject as shared fba6052830 under a different hash"
+    ]
+  },
+  "spec_asserts": "The order cuts throwaway worktrees from the current head of the SHARED tree (commit fba6052830 or later), and the spawn amendment names AR-y-192 merged at 5743c86349.",
+  "world_is": "The worker's own branch was cut before those drain commits. The shared tree carries them. The builds used the shared head 5d8b0390ed, whose map equals the census read at 537391d103 (no diff in the map between the two).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S19",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T02:22:14Z",
+  "one_line": "The release build's manifest-index gate printed SKIP, not a pass: the BUILD_MANIFEST.json staged into this package declares no declared_blobs, so no vendored member was checked against a committed-blob index.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "build_patch.log line: 'SKIP: manifest-index gate -- this BUILD_MANIFEST declares no declared_blobs ... (not a pass)'",
+      "the staged_from gate printed 'sha256 verified' for each staged row of the map entry (92 rows), so the pinned members were checked by declared sha256 instead"
+    ]
+  },
+  "spec_asserts": "The release build proves the package it reports; a gate that prints SKIP reports that it checked nothing.",
+  "world_is": "The index gate verified nothing in this build; the staged_from sha256 gate verified the declared rows. The packaged members outside staged_from were not checked against any committed-blob index.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S20",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T02:36:14Z",
+  "one_line": "The shared head 731a72ecb2 carries a different map row for irpt-ycharts-generate than the base 5d8b0390ed: the _authz/loaders.py pin moves 69679b90e3 to 0642c9d004 and its sha256 a2283dc8 to 93f2f02a, so a build cut from HEAD is not the base member set.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 5d8b0390ed:infra/aws/lambda/ci/lambda-source-map.json and git show 731a72ecb2:infra/aws/lambda/ci/lambda-source-map.json, read as functions.irpt-ycharts-generate.files: 88 rows at each commit, 87 identical; the one differing row is infra/aws/lambda/investor-reporting/_authz/loaders.py (pin 69679b90e3 at base, 0642c9d004 at HEAD; sha256 a2283dc8 at base, 93f2f02a at HEAD)",
+      "the entry's top-level keys artifact_sha256 and staged_from also differ between the two commits",
+      "the baseline and the release builds at 5d8b0390ed carry loaders.py sha256 a2283dc8436dc048343bb105b07cd56e93aa0fe038f90457d1b57a882eb887fa (RELEASE_BUILD_RECORD.json member_manifest)"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1 says the executor must build the release from a commit that carries the same members as the three builds, named base_commit 5d8b0390ed.",
+  "world_is": "HEAD 731a72ecb2 is not that commit for this function: its map pins a different loaders.py. The three builds were cut at 5d8b0390ed and are unaffected. No build from HEAD was run by this worker; the packaged member at HEAD is measured from the map only.",
+  "disposition": "UNDER_INVESTIGATION"
 }
 ```
 
