@@ -82,6 +82,18 @@ client. Change, in `app/server.py` only:
   - `test_unknown_path_any_method_404` -- `POST /no-such-page` and `PUT /no-such-page` answer 404, never 405.
 - AC1 now names 7 tests (the check file is amended at the same commit).
 
+**AMENDMENT 2 (issuer, 2026-10-13 ~11:5xZ, at the drain hygiene run on trunk `ed6ccbcfc5`): the test file must not pollute a
+suite that runs after it.** Each gateway test file passes alone, but `python -m pytest tests/test_dashboard_deep_links.py
+tests/test_owner_gate.py tests/test_admin_grants.py tests/test_admin_refusals.py` reads 7 failed, 16 passed (for example
+`test_owner_gate.py::test_owner_page_served` and `test_admin_grants.py::test_get_grant_reads_store`). With the deep-link file
+LAST, everything passes. The cause read by the issuer: the module fixture `app_mods` pops every `app`/`app.*` module it
+imported from `sys.modules` at teardown (`tests/test_dashboard_deep_links.py:47-49`). Test files collected earlier still
+hold the old module objects, so a later import builds fresh ones and their patches land on the wrong objects. The release
+cell runs these files together in that order, so this blocks the release. Change, in `tests/test_dashboard_deep_links.py`
+only (no product code): leave the process's module table as the other gateway test files expect it, e.g. by not popping
+modules and relying on the `MonkeyPatch.undo()` you already run, or by following the pattern the other admin test files use.
+AC1's check now also runs that co-run, deep-link file FIRST, and requires 0 failed. The 7 named tests are unchanged.
+
 ## 2. BOUNDS
 
 1. Write surface: exactly the paths in section 3. Change nothing in `server.py` but the new handler, its route line, its
@@ -110,7 +122,7 @@ ARMED row is `2.0.0_SA_COO~MP`.
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="MP-z-3"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/fwd20/checks/z3.AC1.sh; echo "exit=$?"</invocation><expect>deep-link tests: 0 failed; named tests PASSED 7 of 7 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="MP-z-3"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/fwd20/checks/z3.AC1.sh; echo "exit=$?"</invocation><expect>co-run (deep links first): 0 failed; deep-link tests: 0 failed; named tests PASSED 7 of 7 -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -139,3 +151,5 @@ Under 100 product lines: worker-light. No gate. Lives through MP-z-5.
 <worker_class>worker-light</worker_class>
 <status>complete</status>
 <!-- REOPENED by the issuer 2026-10-13 ~10:5xZ: AMENDMENT 1 (the catch-all turned POST /mcp from 307 into 405); the same worker continues. -->
+<status>in_progress</status>
+<!-- REOPENED by the issuer 2026-10-13 ~11:5xZ: AMENDMENT 2 (the test file's teardown pollutes later suites; 7 failed in co-run). Slot ~15 re-seated. -->
