@@ -9867,3 +9867,138 @@
   "class": "OBSERVATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W99-S1 -- C-SWAP step (4) names a designated-proxy table that is not in this worktree
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W99-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~99",
+  "surfaced_at": "2026-10-13T20:04:16Z",
+  "one_line": "C-SWAP step (4) names MDPF_SECCLASS's designated-proxy table as a pre-arranged input; no such table is in this worktree (no hit in data/mdpf, infra/aws/lambda/v2_portal/_shared, or the MDPF_SECCLASS folder).",
+  "spec_asserts": "C-SWAP (org/missions/D9/IRPT/IRPT_ANLREQ/prd/IRPT_ANLREQ_PRD.md line 104), step (4): PROXY, deterministic, no model: the designated registry ETF for that pair, else the class default, and it must have prices. The designated-proxy table is MDPF_SECCLASS's (dell1), a pre-arranged input.",
+  "world_is": "Not located at this worktree HEAD. A case-insensitive Grep for proxy_for, PROXY_TABLE, designated_proxy and designated proxy over data/mdpf returned one unrelated string; over infra/aws/lambda/v2_portal/_shared, no hit; over org/missions/D8/MDPF/MDPF_SECCLASS, no file names designated or proxy_for. It may be dell1-local or ungitted; dell1 was not reachable from this box, so it is unmeasured there. The AR-y-278 design leaves step (4) out of its cells until the table's shape is known.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/prd/IRPT_ANLREQ_PRD.md line 104 (C-SWAP step 4)",
+      "Grep (negative) of data/mdpf, infra/aws/lambda/v2_portal/_shared and org/missions/D8/MDPF/MDPF_SECCLASS at worktree C:/dev/wk-irpt-anlreq-99 HEAD"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W99-S2 -- yfinance returns an empty frame, not an error, for a missing symbol, so an outage reads as absence
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W99-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~99",
+  "surfaced_at": "2026-10-13T20:04:16Z",
+  "one_line": "yfinance returns an empty frame with no exception for a 404 and for a no-data symbol, so a provider outage and an absent symbol look the same unless its exception hiding is switched off.",
+  "spec_asserts": "C-SWAP step (2): one paced yfinance call; history means KEPT (IRPT_ANLREQ_PRD.md line 104). FWD-2 ACCEPT (lines 44-46): a holding that cannot be priced is kept only if Opal or yfinance can price it, never by an unverified guess. The PRD does not say how a failed yfinance read is told apart from a missing symbol.",
+  "world_is": "yfinance 1.2.0 on dell2: Ticker.history() defaults raise_errors=False and returns an empty DataFrame unless yf.config.debug.hide_exceptions is False (yfinance/scrapers/history.py). Measured 2026-10-13T19:48:56Z to 19:49:35Z: ALPPL, BREIT and CCCQ each returned zero rows with no exception; the HTTP Error 404 Quote not found text went to stderr only. TIMXX returned 20 rows, last close 1.0. The AR-y-278 design sets hide_exceptions False in the checker so an outage raises and the holding stays UNKNOWN, never KEPT and never read as absent.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "yfinance 1.2.0 scrapers/history.py: raise_errors default False and the YfConfig.debug.hide_exceptions guard (read by introspection at this box)",
+      "the four-symbol history run recorded in org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~99/r23/C_SWAP_STEPS_1_2_READ.json (measurement)"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W99-S3 -- the upload door never reads the registry, and typo suggestions are verified against YCharts
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W99-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~99",
+  "surfaced_at": "2026-10-13T20:04:16Z",
+  "one_line": "The resolver's identity port is a stub that returns None, so C-SWAP step (1) (KNOWN in etf-classifications) is never consulted, and typo suggestions are verified by the YCharts read, not by the registry or yfinance.",
+  "spec_asserts": "C-SWAP step (1): KNOWN in etf-classifications and MDPF_SECHIST, and a typo suggestion verified against the registry and yfinance, never YCharts (IRPT_ANLREQ_PRD.md line 104; FWD-2 ACCEPT lines 44-46).",
+  "world_is": "ycharts/generate/resident_worker.py lines 619-620 build the resolver with identity=lambda symbol, namespace: None. intake/security_resolution.py lines 206-212 turn that into reference state UNAVAILABLE for every symbol. intake/security_resolution.py lines 242-249 (verified_suggestions) call resolver.check, the YCharts securities_info read. No investor-reporting code reads the etf-classifications table (Grep of the investor-reporting tree, negative).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py lines 619-620 at worktree HEAD",
+      "infra/aws/lambda/investor-reporting/intake/security_resolution.py lines 206-212 and 242-249 at worktree HEAD"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W99-S4 -- the offline test world models TIMXX as a gated fund, the live premise says not found
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W99-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~99",
+  "surfaced_at": "2026-10-13T20:04:16Z",
+  "one_line": "The repository's offline test world treats TIMXX as a gated fund row that answers TICKER_DATA_NOT_ENTITLED, while the AR-y-278 premise is that the live door refuses TIMXX as TICKER_NOT_FOUND.",
+  "spec_asserts": "AR-y-278 premise (and IRPT_ANLREQ_PRD.md line 104): the upload door refused TIMXX as TICKER_NOT_FOUND, measured live by 2.0.0_SA_COO~Y2 at about 19:12Z.",
+  "world_is": "The live answer is not re-measured here: no live provider call is in this order's scope. In the tests, TIMXX is a gated fund row: intake/tests/test_resolve_upload.py line 315 (features_needed mutualFundData) and ycharts/generate/tests/test_y5_proxy_corrections.py lines 15-16 and 39 (gated_fund TIMXX answers TICKER_DATA_NOT_ENTITLED with proxy SGOV). The NOT_FOUND branch is portfolio.py lines 477-478 and the entitlement branch is portfolio.py lines 479-482; both are reachable, so which one the live provider gives for TIMXX decides the path the design takes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/tests/test_resolve_upload.py line 315 at worktree HEAD",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_y5_proxy_corrections.py lines 15-16 and 39 at worktree HEAD"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W99-S5 -- C-SWAP step (2) would put yfinance egress in the resident, which the Yahoo admission does not cover
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W99-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~99",
+  "surfaced_at": "2026-10-13T20:04:16Z",
+  "one_line": "C-SWAP step (2) puts a yfinance call inside the upload door in the resident; the only Yahoo egress admitted from dell1 is one file for ADVI_COTBKF, and the PRD says any other use is surfaced to Andrew.",
+  "spec_asserts": "C-SWAP step (2): the yfinance checker, one paced call, inside the holding check (IRPT_ANLREQ_PRD.md line 104). MDPF_SECHIST PRD ADDENDUM v0.2 (lines 168-171) admits Yahoo from dell1 for the Yahoo-sourced share of ADVI_COTBKF's price-need file, and states: any other use of Yahoo is surfaced to Andrew, not assumed.",
+  "world_is": "No investor-reporting code calls yfinance today (Grep of infra/aws/lambda/investor-reporting, negative). A door call would run in the resident, not on dell1 and not for that file. The yfinance-using Lambdas that exist (bd-price-update lambda_function_v2.py line 26; opal-portal-volatility-fetcher lambda_function.py line 27) are not an admission for the resident. Surfaced here to Andrew through the CVO; design cell B names it as its precondition. Nothing was built.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECHIST/prd/MDPF_SECHIST_PRD.md lines 168-175 (ADDENDUM v0.2)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/prd/IRPT_ANLREQ_PRD.md line 104 (C-SWAP)"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
