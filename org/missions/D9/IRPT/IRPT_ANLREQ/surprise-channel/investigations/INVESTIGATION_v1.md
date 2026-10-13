@@ -4514,3 +4514,144 @@
 }
 ```
 
+
+
+## IRPT_ANLREQ-D2-W55-S4 -- the cell's builder does not reproduce the live st32 package: it packages 182 members where the live tar carries 298, so the delta names the builder's member set, not every member that differs from the live resident
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T02:31:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The cell's builder (reports/build_resident_package.py, eight positional arguments) did not build the live st32 package. At the live pin it packages 182 members where the recorded live tar carries 298; the live tar carries ycharts-host/ (the capture library and wrapper), which the builder never packages. The member delta from this builder therefore does not name every member that differs from the live resident.",
+  "spec_asserts": "TO-AR-y-195 steps 3 and 4 and AC1, under the CTO ruling (round-19 analysis section 3): the pair names every member that differs from the live resident, and the delta is built from the builder with the arguments the live resident was built with.",
+  "world_is": "The recorded live tar C:/dev/irpt-release-st32/0485393f3a-st32.tar.gz (sha256 e59596e4d731a89c0349dd28d36d34eaafa4d1237e43e36a598bd40b36a34f1e, 298 members) names 2.0.0_SA_COO~P build_resident_package.py as its generator, with --research, --opal-map and --member, and its bindings carry a provenance block, no pin object, and relative census and schema paths. The repo builder packages whole folders only: 182 members at 0485393f3a and 183 at 069b8f797e. Of the 182, 153 are byte-identical to the live tar. The builder has no ycharts-host/, writes schemas/ where the live tar uses docs/contracts/, and excludes _contracts/fixtures/ and SHA256SUMS. The record states that its claim covers the builder member set and not the live resident. Not decided here: which tool builds the next resident release.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/irpt-release-st32/0485393f3a-st32.tar.gz member reports/resident_bindings.json: provenance.generated_by 2.0.0_SA_COO~P build_resident_package.py, no pin key, census.path ../census/ (read by the worker, 2026-10-13)",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:37-38 DIRS has no ycharts-host entry @8ee48892bf (builder blob 1cd98efd2b)",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/st32_release/NEVER_WIDEN_PACKET_ST32.md section 1 (the st32 build recipe: --research, --opal-map, 2 --member) @8ee48892bf",
+      "the record org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/r19/RESIDENT_PACKAGE_DELTA.json, key live_tar_fidelity (182 vs 298 members; 153 same; 144 only in the live tar; 28 only in the builder build)"
+    ]
+  },
+  "notes": "INERT: nothing is built into a release, uploaded, installed or called under this order. A release cut from this builder would ship without the library; the installer expects the ycharts-host member, so the gap would surface as a loud refusal at install, not a silent wrong answer. Owner for the decision: 2.0.0_SA_COO~Y2 (the leg) with 3.0.0_SA_CVO at L9."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W55-S5 -- the W328-S1 repair (a stored-bundle probe classified WAF_CHALLENGE ends the run instead of signing in again) lives in the host capture library, which the cell's builder never packages; a release built with the same arguments does not carry it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T02:31:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2 (the repair, row IRPT_BCKEND-D2-W328-S1); 2.0.0_SA_COO~Y2 (the release leg that must carry it)",
+  "one_line": "The W328-S1 repair (IB-pr-477, a stored-bundle probe whose reply is a WAF challenge ends the run without a second sign-in) is in infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js at 069b8f797e. That file is not a member of either builder tarball, so a release built with the same arguments does not carry the repair, and the LIBRARY_SHA256 argument still names the old library a1c288.",
+  "spec_asserts": "CTO ruling (round-19 analysis section 3): the reader resident rebuild at the new pin carries IRPT_BCKEND's W328-S1 repair, which must be in the build; the resident's bindings stay as they are.",
+  "world_is": "The repair exists only at 069b8f797e: withAuthenticatedPage takes a WAF_CHALLENGE probe and throws ChallengeFailure without refreshSession. At 0485393f3a, the library the live host holds (sha256 a1c2880169c5f7996cc7c5880e4fe36db90f0a2c1f5a1cd01e0d1d8153544841, read on the host 2026-10-11), any unauthenticated stored probe reaches refreshSession, a fresh sign-in submission. The new library's blob sha256 is db43e9f9744e69709812 (not read in full). Neither builder tarball has ycharts-host/ (0 members in each); the live st32 tar has ycharts-host/ycharts_session.js. So the repair reaches the host only by a library install the 8-argument builder does not drive, and the bindings pin would still name a1c288. Not read: whether the resident's own capture reaches withAuthenticatedPage (the row names mainCli as its path).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js withAuthenticatedPage at 069b8f797e: the branch at lines 1635-1651 (if !probe.authenticated && probe.reason === 'WAF_CHALLENGE' -> record challenge_end refreshed false, throw ChallengeFailure)",
+      "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js withAuthenticatedPage at 0485393f3a line 1470-1500: no WAF_CHALLENGE token in the file (0 occurrences) and `if (!bundle) bundle = await refreshSession(...)` for any unauthenticated probe",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/st32_release/CENSUS_ST32_AGAINST_ST31_20261011.md D2 row: the host library is the one the bindings pin (a1c288)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_st32/D2_V1_INSTALL_20261011.txt: host library a1c288 on the live host"
+    ]
+  },
+  "notes": "ARMED because the old library's stored-probe path is the W328-S1 hazard that the row already carries (disarm owner 2.0.0_SA_COO~P2). This row adds the delivery gap: no build from this builder disarms it. Disarm is by a release whose library is installed and whose bindings pin the new library hash, read on the host."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W55-S6 -- no record names REGISTRY_ROW_PIN for st32; the value 0485393f3a was measured from the live tar's reporting_policies.json, not read from a record
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T02:31:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The st32 packet and census name no REGISTRY_ROW_PIN. The live tar's infra/logic/registry/reporting_policies.json is byte-equal to the blob at 0485393f3a (and at 069b8f797e), not to the blob at 7262571e4c that the 2026-09-24 install recorded, so the value passed is the one the artifact measures, and it equals the builder default.",
+  "spec_asserts": "TO-AR-y-195 step 1: the builder's arguments, REGISTRY_ROW_PIN included, are read from the st32 packet or the census records; a value that cannot be found is named in not_read, never invented.",
+  "world_is": "No st32 record read names REGISTRY_ROW_PIN, and the live tar's bindings have no registry_row_commit key. The live tar's reporting_policies.json has sha256 229eca2d1ec7c6f8bf93a106ba788a213a19c189809f582b6d2a185b7adeb982, equal to the git blob at 0485393f3a and at 069b8f797e, and unequal to the blob at 7262571e4c (sha256 d7c2dad8b27bbe5e69e1e6d4753d7df45a5646a40638e308e7259d8cf615f834) recorded in org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/RESIDENT_INSTALL_20260924.json. The worker passed 0485393f3a, which is the builder's own default for an absent eighth argument.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/irpt-release-st32/0485393f3a-st32.tar.gz member infra/logic/registry/reporting_policies.json: sha256 229eca2d1ec7c6f8bf93a106ba788a213a19c189809f582b6d2a185b7adeb982 (read by the worker)",
+      "git show 0485393f3a:infra/logic/registry/reporting_policies.json and 069b8f797e:... : both sha256 229eca2d1ec7c6f8bf93a106ba788a213a19c189809f582b6d2a185b7adeb982; 7262571e4c: d7c2dad8b27bbe5e69e1e6d4753d7df45a5646a40638e308e7259d8cf615f834",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/RESIDENT_INSTALL_20260924.json line 7 (registry_row from 7262571e4c, X10 ACTIVE)",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:35 REGISTRY_ROW_PIN default = PIN @1cd98efd2b"
+    ]
+  },
+  "notes": "Recorded as a gap in the st32 record, not as a conflict: the registry member is identical at both pins, so the choice of REGISTRY_ROW_PIN does not move the delta."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W55-S7 -- the builder file differs between the pins: the live-pin file lists no ycharts/research folder, the shared-head file does; the W333-S1 premise holds for the old file, not for the tree
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T02:31:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The builder file at the live pin (blob c74554be2f) has DIRS without ycharts/research; the shared-head file (blob 1cd98efd2b, from IB-pr-485, commit 3775a93368) has it. The W333-S1 row read the live-pin file. The folder exists at the live pin (38 tracked files, 12 of them packaged), so 'absent from old' is a fact about the builder version, not about the tree.",
+  "spec_asserts": "Row IRPT_BCKEND-D2-W333-S1 and CTO ruling section 3: ycharts/research is in the new tarball and absent from the old.",
+  "world_is": "Built with one builder file (the shared-head file, the same for both pins), ycharts/research is in both tarballs: 12 members each, with no new-only or old-only member, and one differing member, ycharts/research/opal_packager.py. The 'absent from old' premise holds only for a package built by the live-pin builder file, whose DIRS line omits the folder; that build was not run here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 0485393f3a:infra/aws/lambda/investor-reporting/reports/build_resident_package.py lines 37-38: DIRS ends at ycharts/extract (blob c74554be2f)",
+      "git show 8ee48892bf:infra/aws/lambda/investor-reporting/reports/build_resident_package.py lines 37-38: DIRS ends at ycharts/research (blob 1cd98efd2b); commit 3775a93368 build(IRPT_BCKEND IB-pr-485)",
+      "git ls-tree -r --name-only 0485393f3a -- infra/aws/lambda/investor-reporting/ycharts/research/ : 38 files"
+    ]
+  }
+}
+```
+
+
+## IRPT_ANLREQ-D2-W55-S8 -- the tarball file sha256 is not a determinism oracle for this builder: identical arguments give different file hashes through the gzip header clock, while the member map and the uncompressed stream agree
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S8",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T02:31:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The builder writes its gzip file with tarfile 'w:gz', which stamps the clock into the gzip header. Two runs at the live pin with identical arguments differ in file sha256 (9298dc65 and be48662e) but agree in the uncompressed tar stream (91d5b9ed) and in all 182 member hashes. A comparison of a release tarball by file hash would report a false difference.",
+  "spec_asserts": "TO-AR-y-195 step 3: the builder must run twice identically (a determinism control at the live pin), with each tarball's sha256 recorded.",
+  "world_is": "Determinism holds at the member and uncompressed-stream level and fails at the file level. The file-level hash is therefore not a determinism oracle for build_resident_package.py, and any host-side or release-side comparison must use member hashes or the uncompressed stream.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:102-111 tarfile.open(OUT, 'w:gz') with info.mtime = 0 per member, no gzip mtime argument",
+      "the worker's two runs A1 and A2 at 0485393f3a (C:/dev/ar195-55-tarballs/live_0485393f3a_A1.tar.gz and _A2.tar.gz): file sha256 differs; uncompressed sha256 91d5b9edc1d0ee73a3ea44658862d47726fec5a26370888001f10743c6030b6d in both; member maps equal"
+    ]
+  }
+}
+```
