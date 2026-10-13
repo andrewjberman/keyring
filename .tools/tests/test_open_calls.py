@@ -105,7 +105,10 @@ def main():
     cases = []
     ruling = sc.write("ruling.md", "RULING -- fixture\n")
     nowhere = sc.write("order_nowhere.md", "<status>issued</status>\n<risk>LOCAL</risk>\n<paths>\norg/zz_open_calls_test_nowhere/f.txt\n</paths>\n")
-    base_add = ["add", "--project", "NFRA_CTLPLN", "--asked-by", "1.0.0_SA_CTO", "--source", "docs/none.md"]
+    # a fork needs its own --context (40-600 characters) and --rec (check_call_text in the tool); the test supplies both
+    base_add = ["add", "--project", "NFRA_CTLPLN", "--asked-by", "1.0.0_SA_CTO", "--source", "docs/none.md",
+                "--context", "Fixture call: the test creates it to exercise the list shape, the close path and the refusals.",
+                "--rec", "Fixture recommendation: none; the test reads the row, it does not act on it."]
     try:
         # 1. add (an OWN-BOX call: a scratch order naming one path nobody owns)
         rc, out, err = run(*base_add, "--subject", "own-box call", "--orders", nowhere)

@@ -18,7 +18,7 @@
  "ack": {
   "at": "2026-10-13T21:25:51Z",
   "by": "0.7.0_AE_CloudOps~ZW",
-  "bus_message_id": null
+  "bus_message_id": "40b591a9-a7f2-47d2-9f69-fde7a059ecb5"
  },
  "closed": {
   "from_at": null,

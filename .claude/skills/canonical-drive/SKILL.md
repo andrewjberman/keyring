@@ -72,6 +72,8 @@ or `[STUCK]` to MSTR; a dead assignee with an open order is respawned or reseate
 
 - **Hard gate:** a tick that read a graduated round, an uncompiled terminal order, an unacked packet past one tick, an
   idle lane beside an uncovered cell, an unruled call, an unpitched closer candidate or an empty tick with no `/next-calls --drive`, and fired nothing on it, FAILS.
+  The empty-tick limb is MECHANICAL: the `Stop` hook `.tools/hooks/coo-drive-tick-gate.py` reads the turn (not the label) and
+  refuses to end a COO drive turn that fired no act and ran no `/next-calls --drive` + `unblock.py tick` while keep-driving is ON.
 - **Log:** append each tick to `org/mcp/drive_ticks/<RUNNING_SERIAL>.md` (gitignored runtime file). Commit one log,
   `org/tier1_exec/<RUNNING_SERIAL>/drive_log_<YYYYMMDDTHH>Z_<host>.md` (`<host>` = `hostname | tr A-Z a-z`, derived,
   never typed: one serial on two devices otherwise collides at the merge) holding that hour's substantive ticks, once per

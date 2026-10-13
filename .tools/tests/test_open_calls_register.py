@@ -133,7 +133,7 @@ def add(env, branch, portal="portal-default", klass="client-facing", check_only=
 
 
 def register_lease(env, branch, lease_path, portal="portal-default", serial=SERIAL):
-    args = ["approval-lease", "--branch", branch, "--box", BOX, "--purpose", PURPOSE, "--pages", PAGES, "--class", "client-facing",
+    args = ["approval-lease", "--branch", branch, "--project", "NFRA_DEVPLN", "--box", BOX, "--purpose", PURPOSE, "--pages", PAGES, "--class", "client-facing",
             "--how", "open the page and look at it", "--lease-file", lease_path]
     if portal == "portal-default":
         portal = env.repo

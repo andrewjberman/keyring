@@ -5,7 +5,7 @@
  "project": "ADVI_BDPRCE",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v1.0",
+ "prd_version": "v1.1",
  "step": 4,
  "brief_ref": "docs/briefs/bd-pricing-rules-brief-20261013.md@f2171cae6c",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -105,7 +105,7 @@ Quoted from the endpoint record. The ids are permanent.
 | **account totals** | **consumed, unchanged** | an account's served total value stays BD's own account value (`silver/allocations`), never a sum of lots. That is what keeps totals exact while some lots read UNVERIFIED. A reader that SUMS lots into an account figure is named by the C3 census and changed under FWD-7 before any lot reads UNVERIFIED. | BD's export (producer); every account-level reader |
 | **the BD unrealized export (qt4)** | **consumed, configuration changed** | template `data/black_diamond/scripts/bronze/templates/unrealized.json`, measures 15 (Units) and 16 (Cost Basis) switched ON. The runner reads its S3 copy `s3://opal-data-bd/code/bronze/templates/unrealized.json`, measured 2026-10-13 equal to the repo (sha256 equal, 14,419 bytes), VersionId `VgzqQbd.3F3sAlllb6SWsjKZ2XvXgAfE`, LastModified 2026-06-30T17:15:38Z, with 15 and 16 both `isSelected: false`. | Black Diamond DataMining (producer); this project's silver step |
 | **the legacy silver unrealized table** | **consumed, BYTE-UNCHANGED** | `silver/unrealized/<date>.parquet` keeps its rows, columns and values exactly. Its `(account_id, asset_name)` keep-first de-duplication (`data/black_diamond/scripts/silver/merge-daily-incremental.py:1205-1210`) is NOT changed in place, because B_01's veto set, injections and cap classes read it today. The lot-level data goes to the NEW table below. | B_01 and its other current readers |
-| **the lot-level unrealized table** | **produced, NEW** | every lot row of the qt4 export, with Units and Cost Basis, de-duplicated on the LOT (`account_id`, `asset_id`, `open_date`, `unit_cost`), never on the position. **Address, builder output (Rule 30):** `lib/opal_naming.py address("blackdiamond", "49financial", "silver", "unrealized_lots", "date=YYYY-MM-DD")` returns `s3://opal-data-assets/blackdiamond/49financial/silver/unrealized_lots/date=YYYY-MM-DD` (run 2026-10-13). Source `bd` is REFUSED by the builder ("not a systems.json key"), so the registry key `blackdiamond` is used; nothing is typed. | C2's measure; C4's unit authority |
+| **the lot-level unrealized table** | **produced, NEW** | every lot row of the qt4 export, with Units and Cost Basis, de-duplicated on the LOT (`relationship_id`, `account_id`, `asset_id`, `open_date`, `unit_cost`), or on the export's own lot identifier where one exists (v1.1), never on the position. **Address, builder output (Rule 30):** `lib/opal_naming.py address("blackdiamond", "49financial", "silver", "unrealized_lots", "date=YYYY-MM-DD")` returns `s3://opal-data-assets/blackdiamond/49financial/silver/unrealized_lots/date=YYYY-MM-DD` (run 2026-10-13). Source `bd` is REFUSED by the builder ("not a systems.json key"), so the registry key `blackdiamond` is used; nothing is typed. | C2's measure; C4's unit authority |
 | **the never-widen pair per served move** | **consumed** (law) | each fix that moves a served price, lot value or gain is its own act under a CTO and COO pair. The pair names every asset, date and client-facing figure that moves, and the rollback per key. FWD-7 adds Andrew's review of the named before/after list BEFORE the deploy. | every fix cell |
 | **inherited law** | **consumed** | Rule 30 for any NEW address; R19 (the legacy pipeline's own migration is not a rider here); the push law for any client-facing PROD page; the alert moratorium (no new monitor). | the law surface |
 
@@ -222,5 +222,18 @@ The decomposition at L5 is the COO lane's, and it may split, merge or re-sequenc
 | served T-1 prices (`silver/prices`, `canonical_prices.parquet`) | SERVED change under FWD-7 | C5-C8 | ADVI_BDPRCE |
 | `org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/` | documents | C2, C3, C5, C9, C10 | ADVI_BDPRCE |
 | other firms' buckets; vendors; the Bloomberg queue; the cap's existence | excluded | -- | untouched |
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM v1.1 (2026-10-13 ~21:3xZ) -- the lot key gains the relationship id (contract row only)
+
+**Call** `dell1-20261013T212600Z-239a`, ruled by this seat under `/self-drive` on the dell1 box (Andrew ~20:3xZ, the box CTO adjudicates every open call).
+- **The measurement:** BP-b-6 (merged @e33999e30b), on the 2026-10-09 export of 500,000 rows. The v1.0 lot key (`account_id`, `asset_id`, `open_date`, `unit_cost`) folds
+  15,553 rows, and 14,514 of the 14,696 colliding groups differ on Relationship ID (row ADVI_BDPRCE-D1-W10-S2, ARMED). Applying the export-template change under that key
+  would DROP distinct lots, the opposite of FWD-9's exact units.
+- **RULING:** the lot key becomes (`relationship_id`, `account_id`, `asset_id`, `open_date`, `unit_cost`), or the export's own lot identifier where it carries one.
+  - BP-b-6's fixture proof re-runs on the new key as ONE small cell before any apply. It prints the rows folded and the colliding groups that still differ on any column.
+  - The template apply stays under its own never-widen pair.
+- **Not changed:** every ENDPOINT outcome. This is a CONTRACTS wording change, so under proportionate sign-off it withholds no delivery; the CVO reads it at the next signing.
 
 -- 1.0.0_SA_CTO~DELL1

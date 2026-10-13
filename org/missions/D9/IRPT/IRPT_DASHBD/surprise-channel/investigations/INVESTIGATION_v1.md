@@ -7680,7 +7680,6 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
-
 ## IRPT_DASHBD-D2-W141-S1 -- No store the builder may read groups the accounts of one 49 Financial client: the client summary keys accounts by issued id and the gold account tables by custodian id, and no named store maps one to the other
 
 ```json
@@ -7810,6 +7809,81 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
       "/c/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~144/commit_ws2.txt (retry, landed as a8d44d9210)",
       ".tools/surprise-row-gate.py:1991-2036 (_blob_read) @a8d44d9210 parent",
       "git ls-files -s on org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/adjudications/ADJUDICATION_v8.md: blob 734c676d52"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W142-S1 -- The contract does not say how an account-grain or class-grain figure is keyed inside values; this cell reads a by_row map
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W142-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~142",
+  "surfaced_at": "2026-10-13T20:56:32Z",
+  "one_line": "The contract says values holds exactly one entry per member, but an account-grain member such as avs.qtd.net_gain has one figure per account; the contract names no keying rule, so this cell reads values[member] as a by_row map keyed by account_id (and by asset class for hold.allocation).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The contract's document.shape says values is an object keyed by member id with exactly one entry per member, and that a value is a number, a text, or an absent form; the account-grain members (avs, glr, trgl, act account rows) are per account.",
+  "world_is": "The contract does not state how a per-account or per-class figure is held inside values. The performance tab reads values[member] = { by_row: { <account_id or asset class>: figure } } (dashboard/report/reportModel.ts, figureCell). The sample builder (TO-DB-b-175) must write that form, or the contract must name one in its next version; until then the two readers can disagree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at base a2ab71ab9e: document.shape, 'values, an object keyed by member id with exactly one entry per member in members'",
+      "portal worktree commit 47673668 (branch wk-IRPT_DASHBD-142-portal): dashboard/report/reportModel.ts figureCell and the by_row reading"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W142-S2 -- The account overview has no per-account chart: the contract names no account-grain chart member
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W142-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~142",
+  "surfaced_at": "2026-10-13T20:56:32Z",
+  "one_line": "The order asks the account overview to render per-account charts, but the contract has no per-account chart member; the tab renders the per-account value summary only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-176 step 2 says the account overview renders, per account, its charts and its account value summary.",
+  "world_is": "The contract's chart members are household-grain only: overview.chart.allocation_by_asset_class, overview.chart.portfolio_performance_last_12_months, accounts.chart.allocation_by_account and accounts.chart.ending_value_and_net_additions_last_12_months. No member names a chart for one account, so the account overview draws no chart; a per-account chart needs a member in a contract version first.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at base a2ab71ab9e: members list, unit series, the four chart ids above and no per-account chart id",
+      "portal worktree commit 47673668: dashboard/report/reportModel.ts accountOverview renders valueSummaryGrid per account only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W142-S3 -- The holdings class rows carry allocation only: ending value and the per-window net gain and return are household-grain in the contract
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W142-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~142",
+  "surfaced_at": "2026-10-13T20:56:32Z",
+  "one_line": "The order asks the holdings class rows to show ending value, allocation and per-window net gain and return; the contract's holdings figures are household-grain except allocation, so the class rows show allocation only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-176 step 2 says the holdings overview shows the class hierarchy with its ending value, allocation and per-window net gain and return.",
+  "world_is": "In the contract hold.ending_value, hold.net_gain_* and hold.return_* are household-grain (grain household, by class is stated only for hold.allocation). The class rows therefore carry hold.allocation alone; the household ending value and the per-window net gain and return print once, at household level. The sub-class rows are ABSENT with the contract's reason.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at base a2ab71ab9e: hold.ending_value, hold.net_gain_last_12_months and the other hold.* members with their section holdings_overview; hold.allocation as the only by-class member",
+      "portal worktree commit 47673668: dashboard/report/reportModel.ts buildReportModel holdings section"
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
