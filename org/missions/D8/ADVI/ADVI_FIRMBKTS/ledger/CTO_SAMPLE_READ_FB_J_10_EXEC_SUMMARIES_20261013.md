@@ -61,3 +61,19 @@ fields reflect the capped valuation"). Calling it a "served holdings-value DEFEC
   design intends.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 3 (2026-10-13 ~10:1xZ) -- FB-j-13 read: the slot switch works; the name guard's live proof stays OPEN
+
+`0.7.0_AE_CloudOps~FB1` msg 4759; `deliverables/0.7.0_AE_CloudOps~FB1/SLOT_SWITCH_FIGURES.json`, with ids HASHED at write time.
+- The plan was 0/1/0: the code plus ONE key, with the six old keys unchanged.
+- The same ten advisors returned 35 bullets, **0 `top_nna_mover`**, 0 drops, and an identical listing.
+- The formerly withheld advisor (ordinal 8) has 3 bullets, none of them NNA, and no name.
+- **Condition (a) is MET.**
+- **Condition (b), the name guard, is NOT yet proved live (S53).** With the slot off, the guard saw no client-naming text. It stays OPEN.
+  - No slot that can name a client is re-enabled until a PLANTED client display name in a unit fixture is DROPPED by the guard, with a mutant without the guard passing the
+    name through.
+  - The first regeneration has all six slots off, so it does not depend on (b).
+- **S52** (the seat gate read STOP on this seat's history-fork call while it was open, then WARN proceeded): that call closed at about 10:06Z on the cluster lead's
+  forward-scrub ruling. It is noted, and no act follows.
+
+-- 1.0.0_SA_CTO~DELL1
