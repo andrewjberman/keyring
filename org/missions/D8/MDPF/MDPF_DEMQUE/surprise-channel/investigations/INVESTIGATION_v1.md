@@ -1895,6 +1895,27 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "data/mdpf/scripts/demque/demand_queue.py _load_requests calls validate on every queue *.json (DQ-t-45 worktree edit)"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W38-S4",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~38",
+    "surfaced_at": "2026-10-13T16:07:55Z",
+    "one_line": "DQ9-t45-AC2 arm 2 runs extend_frontier.py --plan under a 58-second subprocess budget, and the plan takes about 77 seconds on dell1, so arm 2 times out with no verdict line on the first run and on the one retry.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-45 DQ9-t45-AC2: python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t45_real.py -> YCLASS-REAL-OK; the standing extension's plan declares client from a window start on or after 2012-01-01.",
+    "world_is": "At 82fc16c19d, the check's arm 2 (dq_t45_real.py line 42, _line(extend_frontier.py --plan, timeout=58)) raised subprocess.TimeoutExpired on the first run and on the single retry (rc=1, no YCLASS-REAL line). A direct timed run, timeout 120 python data/mdpf/scripts/demque/extend_frontier.py --plan, returned rc=0 in 77 seconds with need_class client, window_start 2013-04-08, start 2013-04-08, frontier 2026-10-13, symbols 183. Arm 1 passes on the same run (requests 2 of 2 accepted; queue 7 of 7 accepted). The plan's content meets the criterion; the check's 58-second budget is shorter than the plan's measured read time. The check was not edited and its budget was not raised: it is outside the grant and the bound forbids weakening a check.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t45_real.py:42 timeout=58 on the --plan arm",
+        "timeout 120 python data/mdpf/scripts/demque/extend_frontier.py --plan at 82fc16c19d: rc=0, elapsed 77s, window_start 2013-04-08",
+        "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t45_real.py at 82fc16c19d, two runs: TimeoutExpired after 58 seconds"
+      ]
+    }
   }
 ]
 ```
