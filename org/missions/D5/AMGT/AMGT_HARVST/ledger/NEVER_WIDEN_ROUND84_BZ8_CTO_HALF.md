@@ -29,3 +29,41 @@ Anything the COO half excludes: deletes, an untargeted apply, the digest's conte
 **CTO HALF: SIGNED** by `1.0.0_SA_CTO~DELL1`.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-13 ~20:4xZ) -- branch P read 0/3/0; the CTO half is RE-SIGNED for the 0/3/0, conditioned on the COO's matching addendum
+
+`0.7.0_AE_CloudOps~HV1` msg 5168, plan `deliverables/0.7.0_AE_CloudOps~HV1/round84/bz8_plan.out`. The targeted plan pulls two dependencies along with the schedule:
+1. **`aws_scheduler_schedule.astn_run`** `state` ENABLED to DISABLED: the intended act.
+2. **`aws_lambda_function.orchestrator`** `source_code_hash` `gXzCrCaE...` (built 2026-07-13) to `RcBxw9W4...`: the repo's merged HG-t-18 code half (dormant `ft_reattempt` mode,
+   this seat's ruling @91d26ce18b, KEEP).
+3. **`aws_instance.astn`** `user_data` `751e88e4...` to `07717eec...`: the CRLF/LF hash already named in the HG-t-18 request (D1-S17 record). Cause not further established.
+
+**Why the 0/3/0 is signable:**
+- **Once the schedule is DISABLED, both riders are INERT.** The orchestrator is invoked only by this schedule; the COO half read the live denominator as 1 Scheduler schedule
+  and 0 rules, and the `absence_check` schedule was torn down at 0ee89c9826. So nothing invokes the new code.
+- The instance is `stopped` between runs, and `user_data` executes only at first boot, so the in-place change runs nothing.
+- **No served output moves beyond the intended one** (the brief stops), and no email, vendor call or boot follows from the riders.
+
+**Rollback, per key:**
+- schedule: `state` to ENABLED;
+- orchestrator: a targeted apply from a worktree at the live build's source (code hash `gXzCrCaE...`, 2026-07-13), restoring the prior package;
+- instance: the same targeted apply restores `751e88e4...`.
+Each is one targeted plan and a `safe-apply`.
+
+**Condition:** `2.0.0_SA_COO~W1` signs a matching addendum to its half naming the same three changes. The plan must still read EXACTLY these three resources and these
+attributes; anything else is a STOP. The ledger `astn-3am-off-20261013` stays open until the read-back.
+
+**CTO HALF: RE-SIGNED for the 0/3/0** by `1.0.0_SA_CTO~DELL1`.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-13 ~20:5xZ) -- APPLIED 0/3/0; this seat's "the instance stays stopped" premise was WRONG
+
+`0.7.0_AE_CloudOps~HV1` msg 5180, `deliverables/0.7.0_AE_CloudOps~HV1/round84/bz8_apply.out`: "Apply complete! Resources: 0 added, 3 changed, 0 destroyed."
+- AC1 reads DISABLED, AC2 `cron(0 3 * * ? *)` unchanged, AC3 the source DISABLED.
+- **The provider STARTED the stopped instance** `i-059405dfefcb4b44a` to apply the `user_data` change: stopped at 20:46:51Z, launched 20:48:11Z. ADDENDUM 1 said the change "runs
+  nothing" and assumed no start. That was this seat's inference from the attribute, not a read of how the provider applies it, and it is wrong.
+- **Stopping it** is an EC2 stop, which CLAUDE.md (Agent Autonomy) reserves for Andrew's confirmation. It is carded to him with REC yes. HV1 does not stop it unasked.
+- **Lesson for the next pair touching `user_data`:** read the provider's apply behaviour for a stopped instance (it starts the instance) into the blast radius before signing.
+
+-- 1.0.0_SA_CTO~DELL1

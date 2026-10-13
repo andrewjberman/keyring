@@ -2324,6 +2324,89 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "survey of requests/ and ~/.opal/demque/queue at b3c92c8830 (7 queue files, all need_class client; the requests/ no-CUSIP counts above)"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W47-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~47",
+    "surfaced_at": "2026-10-13T20:26:48Z",
+    "one_line": "The DQ-t-55 order names the surface E CLI key set as {day, history_allowance, cap, cells, verdict, message}; the built CLI line also carries claim and remaining_reserve.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO MDPF_DEMQUE.TO-DQ-t55 step 4: the CLI prints ONE JSON line {day, history_allowance, cap, cells, verdict, message}; step 1: a non-measured ceiling claim is carried by the result; step 2: an ACCEPT carries remaining_reserve.",
+    "world_is": "surface_e_intake.py at b079e76bd6 prints {cap, cells, claim, day, history_allowance, message, remaining_reserve, verdict}. claim is carried because step 1 says the result carries it; remaining_reserve because step 2 and the test name print it. A consumer that matches the exact listed key set sees two extra keys. dq_t55_real.py reads keys by name and is unaffected. The order does not fix the ACCEPT message text; the builder wrote it. The REFUSE message is the order's exact text.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/surface_e_intake.py check() and main() at branch wk-MDPF_DEMQUE-47 commit b079e76bd6",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t55.surface-e-intake-cap.md WORKER FACE step 4 (CLI key list) at commit 1cd9c6f1ab",
+        "python data/mdpf/scripts/demque/surface_e_intake.py --cost --securities 1 --trading-days 252 --fields 2 --day 2026-10-14 printed the 8-key line, rc=0"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W46-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~46",
+    "surfaced_at": "2026-10-13T20:30:47Z",
+    "one_line": "The AC2 arm 1 expectation in dq_t54_real.py, (ceiling - 1000) + 0 + ceiling + ceiling, is 16574 at ceiling 5858, which is three ceilings where the order's own formula over the five trading days gives four: Tuesday, Thursday and Friday each carry a whole ceiling, so the figure is 22432. The criterion cannot be met as written; the check is not edited and the figure is not bent to match it.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "dq_t54_real.py arm 1 (the R9 check, unedited): a synthetic week Mon 1000, Tue 0, Wed ceiling + 500, Thu 0, Fri 0 must read carried_over == (ceiling - 1000) + 0 + ceiling + ceiling. The order's Build item 1: carried_over = the sum over trading days of max(ceiling - spent[d], 0). The order's AC2 line: Monday 1,000, Wednesday ceiling + 500, the rest 0 carries (ceiling - 1000) + 0 + ceiling + ceiling.",
+    "world_is": "The five trading days between the previous fire day Sun 2026-10-11 and the fire day Sat 2026-10-17 are Mon 10-12, Tue 10-13, Wed 10-14, Thu 10-15 and Fri 10-16 (lib/trading_calendar.py is_trading_day True for each). Under the formula: Mon ceiling-1000, Tue ceiling, Wed 0, Thu ceiling, Fri ceiling = 4 x ceiling - 1000 = 22432. Measured by the R9 check run from the worktree: 'arm2 empty dir: carried_over=0 claim=absent room=5858 ceiling=5858', then 'arm1 synthetic ledger: carried_over=22432 expected=16574 room=28290 claim=measured', then 'CARRY-REAL-BAD arm1 carried_over/room mismatch', rc=1. Arm 3 is not reached by the check; a direct probe of the real default directory (absent on dell1) reads carried_over 0, claim absent.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t54_real.py arm 1 expect line @1cd9c6f1ab (read, unedited)",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t54.non-trading-day-carry-over.md Build item 1 and the AC2 arm line @1cd9c6f1ab",
+        "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t54_real.py, run from the worktree wk-MDPF_DEMQUE-46 with this branch's standing_drawer.py (rc=1, CARRY-REAL-BAD arm1)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W46-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~46",
+    "surfaced_at": "2026-10-13T20:30:47Z",
+    "one_line": "The order reads a missing or unreadable budget ledger as spending 0 and marking that day's figure absent, while carried_over sums max(ceiling - spent, 0) over every trading day. Read literally, a day whose ledger is unreadable carries a whole ceiling even when production spent on it. The implementation follows the literal reading and lists such days in absent_days; the conservative reading (an absent day carries 0) is the CTO's to rule.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order Build item 1: a missing or unreadable file reads 0 and marks the figure absent; carried_over = the sum over trading days of max(ceiling - spent[d], 0); claim is measured when at least one trading day's ledger was read, else absent with carried_over 0.",
+    "world_is": "carry_over implements the literal reading: a partially readable week carries a whole ceiling for each missing day, lists it in absent_days, and claims measured. An empty or absent budget directory is the no-ledger case and carries 0 with claim absent. The real default directory on dell1 does not exist, so no site Z figure is measured here. The question only arises at site Z, where the first non-trading fire after a partially readable week would carry those days in full.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/standing_drawer.py carry_over and _day_spent, this branch (committed with this row)",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t54.non-trading-day-carry-over.md Build item 1 @1cd9c6f1ab",
+        "python data/mdpf/scripts/demque/standing_drawer.py --carry-over --day 2026-10-17 (default directory, rc=0, claim absent, absent_days lists the five trading days)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W46-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~46",
+    "surfaced_at": "2026-10-13T20:30:47Z",
+    "one_line": "bbg_budget.record keys each spend line by the UTC date at the moment it is written, so a non-trading fire run in the evening Eastern time writes its own draws into the next UTC date. When that date is a trading day inside the carry window, the carry reads the drawer's own draw as production spend. The error only lowers the carry, which is the conservative direction.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The carry reads spent[d] from the budget ledger of UTC day d (order Build item 1, that UTC day's budget ledger). The drawer's draws are recorded through bbg_budget.record with mode demque-backfill.",
+    "world_is": "bbg_budget.record writes to the file for dt.datetime.now(timezone.utc).date(). Observed in this worker's own test run: the run recorded its draw into the UTC-today ledger of the test budget directory, and that directory then read as a measured trading day. The test now uses a fresh directory for the CLI arm. A Sunday-evening or holiday-evening Eastern fire lands its draws on Monday or Tuesday UTC. No production change was made.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/bbg_budget.py record() and _ledger_file() @1cd9c6f1ab (read)",
+        "data/mdpf/scripts/demque/test_demque_carry_over.py CLI arm, this branch (the fresh directory after the failing run)"
+      ]
+    }
   }
 ]
 ```

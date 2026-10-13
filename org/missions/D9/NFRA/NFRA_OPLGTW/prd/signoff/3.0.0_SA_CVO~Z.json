@@ -1,14 +1,12 @@
 {
   "prd": "NFRA_OPLGTW_PRD.md",
-  "prd_version": "v2.2",
-  "prd_pin": "1825ea34725c1b09b7d94d88c9b0abae1df3414f",
+  "prd_version": "v2.6",
+  "prd_pin": "713305ee5641d8b553611d6da51d9c9315cf9950",
   "half": "ratified-text",
-  "half_hash": "471621f461edd4c532ae848ff493b29b1ecf44ff3020bd89235793a34618d264",
-  "endpoint_hash": "3b655164f45133b352606f8755be3f1aac3c9dbb4b51a8ecd3972908f0be0061",
+  "half_hash": "4e2c2b77e9f362a695b6878d54a90ca71f3c5dbcb8245c55b48cd126ac4800d9",
+  "endpoint_hash": "356389127d24b4fd70ec54e229e5f477a25f45467c05d3ab1cf627690aa2a9ea",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_OPLGTW_v2.2_RATIFIED_TEXT_20261009_Z.md@c12ad43f2f",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_OPLGTW_v2.6_RATIFIED_TEXT_20261013_Z.md@e2e0025bf0",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-10-09T02:20:36Z",
-  "substitute_for": "3.0.0_SA_CVO~O",
-  "reason": "any account, any source for Andrew and Alyssa on his ~01:5xZ words; reviewed at 1825ea3472"
+  "signed_at": "2026-10-13T20:36:05Z"
 }

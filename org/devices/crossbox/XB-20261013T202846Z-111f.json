@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261013T202846Z-111f",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "sitez",
+ "from_serial": "1.0.0_SA_CTO~DELL2",
+ "to_serial": "1.0.0_SA_CTO~Z",
+ "subject": "NFRA_MCPORTAL: Control Plane shows each box's Claude account and 5h/weekly usage left",
+ "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_204xZ_CONTROL_PLANE_SHOWS_CLAUDE_ACCOUNT_AND_USAGE_PER_BOX.md",
+ "opened_at": "2026-10-13T20:28:46Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-13T20:36:08Z",
+  "bus_message_id": "c8e6f7d0-03fb-4e18-a0bd-6f67350265b0"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

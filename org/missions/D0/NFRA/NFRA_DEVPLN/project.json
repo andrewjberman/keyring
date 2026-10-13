@@ -41,8 +41,8 @@
     "cto": "1.0.0_SA_CTO",
     "coo": "2.0.0_SA_COO~DV (laptop, seated 2026-10-13 ~16:3xZ by 0.0.0_AB_MSTR; laptop COOs 3 of 3: ~C, ~CA, ~DV)"
   },
-  "blocking": "Round 1 issued by 2.0.0_SA_COO~DV (6 task orders, cells DP-b-1..5 and DP-s-1; DP-g-1 is the CTO's gate edit, carried as a file). Settlement needs Andrew's per-group word (issuer act A3) and the integrator's back-merge (A2). The whole-DEV portal promote (dell1 e7f2) stays held until FWD-6's settlement.",
+  "blocking": "Round 2 issued by 2.0.0_SA_COO~DV on the CTO round-1 analysis (cells DP-c-1, DP-r-1 to workers; DP-x-1 to the DT; DP-g-1 is the CTO gate edit). The live run needs the integrator to push the approved merge of cand/laptop/contributing-boxes to DEV first (act A1).",
   "endpoint_approval_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_160xZ_NFRA_DEVPLN_ENDPOINT_CONFIRMED_ALL_AGREED_PROCEED.md",
-  "last_updated": "2026-10-13T18:40:00Z",
+  "last_updated": "2026-10-13T21:10:00Z",
   "coo_lane": "2.0.0_SA_COO~DV"
 }
