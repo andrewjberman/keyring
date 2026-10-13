@@ -125,3 +125,5 @@ POLICY keys. Name read from the builder at the cut. Checks dry-run at base 8abe5
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+<status>complete</status>
+<!-- FLIPPED by the issuer 2026-10-13 ~16:4xZ at the drain @5ee667b8eb: AC1 4/4 arms (issuer's independent read too), AC2 pair 2/2 + ledger CLOSED; instance VALID. Rows Z-S42/Z-S43 INERT: the applier's notes for MP-z-5 (no terraform plan in z-5; its sparse list is NO-CONE). -->
