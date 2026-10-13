@@ -7425,3 +7425,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+---
+
+## IRPT_DASHBD-D2-W138-S1 -- under RULE_EXCL.md, 3 of the 7 windows stay open: 10 differing days take no reason on the closed list, after the new reason's 13 corrections
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W138-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~138",
+  "surfaced_at": "2026-10-13T16:34:20Z",
+  "one_line": "Under RULE_EXCL.md as committed, BD_EXCLUDES_SERVED_INCOME takes 13 of the 23 differing days (its test holds on the same 13, and every one re-corrects within 0.01 pp); 4 of 7 windows re-close at 0.35 pp, 3 stay open with 10 UNEXPLAINED days (offsets and sizes in world_is).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "RULE_EXCL.md (committed d8a3f1fa58, sections 1, 2 and 5) and the round-92 ruling (1.0.0_SA_CTO~DELL2, round-92 analysis section 3 item 2): the new reason, removing the served income from the served day, explains the days it touches, and the other days under the full list close the windows at 0.35 pp.",
+  "world_is": "Counts, multiples, offsets and sizes only. Population reproduced: 7 accounts, 23 differing days (per account 9, 2, 1, 1, 7, 1, 2 in plan order). (a) The new reason's TEST holds on 13 days (per account 3, 2, 1, 1, 4, 0, 2); every one of the 13 is taken, the correction landing within 0.01 pp. (b) Reasons (2) to (5) take 0 days in every account, under Reading B for the per-lot reason. (c) Accounts 2, 3, 4 and 7 close with reasons (window re-closes, no UNEXPLAINED day). Accounts 1, 5 and 6 stay open: account 1 has 6 UNEXPLAINED days (offsets 0, 5, 6, 10, 12, 17; sizes +0.0451, -6.8584, -0.0439, -2.3920, +0.0308, -3.8429 pp); account 5 has 3 (offsets 0, 9, 10; sizes +0.0602, +0.0441, +0.0253 pp); account 6 has 1 (offset 0; size -2.7454 pp). (d) The uncorrected windows miss 0.35 pp in 7 of 7 accounts. (e) round91_pattern_8_days_confirmed is false: the test holds on 13 days over all 23 differing days, against the 8 round 91 measured over the 12 whole-multiple days; the populations differ, the difference is not decomposed here. (f) Reads: 925 BD rows and 261 served rows; the stored-table control matches on all window days (mismatches 0). No served value changed; no vendor call; no S3 write.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~138/RULE_EXCL.md@d8a3f1fa58 (committed alone before any computation on the 23 days)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~138/excl_income.py@46c09941ef (the run, rc 2 after the measurement: an account stays UNEXPLAINED, so no record was written without a row)",
+      "per-day detail, account ids and dates are in the worker 138 private folder; the repo carries counts, multiples, offsets and sizes only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
