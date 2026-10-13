@@ -522,3 +522,12 @@ name only when a split (or another restatement the store keys on) lands, with a 
 own never-widen pair, to be proved 50 of 50 cell-equal on a no-split day and on one split arm. One cell, `DQ-t-48` (`incremental_append.py`, `incremental_plan.py`,
 `incremental_equal.py` and a test file; LOCAL, builds and proves, wires nothing; `0.9.0_WK_MDPF_DEMQUE~40`, workstream INCREMENTAL, depends on DQ-t-37/40/45). The wiring into
 `daily_draw.py` and `extend_frontier.py` is a later SERVED cell (`DQ-t-49`) cut on this cell's report, with its pair written first.
+
+**Round 9 close of DQ-t-47 and DQ-t-48, and amendment 14 (issuer, 2026-10-13 ~18:xxZ):** DQ-t-47 merged @2989e78de8 (ABNB admitted under the named 2016 exception, 989 cells, 8 of 8
+Bloomberg requests accepted); DQ-t-48 merged @9de742d8f9 (the Yahoo incremental path proved 50 of 50 cell-equal on a no-split day, one split arm refilled and equal; plan 326 names, 326
+requests, writes 2,959 cells instead of 427,433; lock record differs on LCEYX and FTHSX, row W40-S1). Andrew-direct "Go with your rec" and Surface B (CTO msgs 4946, 4964): the porting
+test is confirmed (returns, 10 bps, 5 intervals, at most 10 cells a security) and Yahoo-sourced client prices read UNVERIFIED until they pass; B1 is option C on the client-income
+basis with the total-return field for the 11 long-held bonds, $1.00 money market funds skipped by fund type (UNREAD pulled), the 8 rejected funds joined. Cells: `DQ-t-49` (the porting-test
+request and comparator, `0.9.0_WK_MDPF_DEMQUE~41`, workstream PORTING) and `DQ-t-50` (the B1 request: `dates` and per-entry `fields` in `bbg_quote`, `b1_request.py`;
+`0.9.0_WK_MDPF_DEMQUE~42`, workstream B1REQUEST). Not cut here: the UNVERIFIED labelling (SERVED, its own pair), Z8 and Z9 (the models pull's incremental change and meter; the
+notebooks are production code on the Bloomberg device and their change is a site-Z act). The draw of B1 waits on Andrew's form.
