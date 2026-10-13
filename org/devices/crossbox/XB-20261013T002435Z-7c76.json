@@ -10,12 +10,16 @@
  "subject": "TO-READS-Y9 AMENDMENT 1: base-worktree self-test accepted as step 0 (ii); one live run cleared once (i)+(iii) pass",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps~ANL/task_orders/IRPT_ANLREQ.TO-READS-Y9.stored-input-count-r18-laptop.md",
  "opened_at": "2026-10-13T00:24:35Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-13T00:25:15Z",
   "bus_message_id": "e164aa98-962d-4b37-b8d1-b6960a0515ed"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-13T00:27:17Z",
+  "by": "0.7.0_AE_CloudOps~ANL",
+  "bus_message_id": "c2dfbfe4-2404-48a2-8319-822f7ff30388"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
