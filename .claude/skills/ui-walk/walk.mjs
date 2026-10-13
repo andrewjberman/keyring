@@ -113,7 +113,15 @@ const OUT = path.join(ROOT, 'tmp', 'ui-walk', stamp)
 mkdirSync(path.join(OUT, 'shots'), { recursive: true })
 // --first-client: the walked name is read from the page and never printed; every terminal line is redacted of it (files stay under OUT).
 let firstName = null
-const log = (...m) => console.log(new Date().toISOString().slice(11, 19), ...m.map((x) => (firstName && String(x).includes(firstName) ? String(x).split(firstName).join('<first client>') : x)))
+// AMENDMENT 3 (c): once --first-client has set the name, the name and each whitespace- or comma-separated word of it of 3+ characters
+// read `first-client` in every text that leaves the walker: a shot file name (built from the redacted label), a finding's step, a terminal line.
+function redactFirst(s) {
+  if (!firstName) return String(s)
+  const esc = (t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const parts = [firstName, ...firstName.split(/[\s,]+/).filter((w) => w.length >= 3)].filter(Boolean).sort((a, b) => b.length - a.length)
+  return String(s).replace(new RegExp(parts.map(esc).join('|'), 'gi'), 'first-client')
+}
+const log = (...m) => console.log(new Date().toISOString().slice(11, 19), ...m.map((x) => (firstName ? redactFirst(x) : x)))
 
 // ---- account ------------------------------------------------------------------------------------------------------
 const py = (cmd, extraEnv = {}, ...args) => execFileSync('python', [ACCOUNT, cmd, ...args], { encoding: 'utf8', env: { ...process.env, ...extraEnv }, stdio: ['ignore', 'pipe', 'pipe'] })
@@ -135,8 +143,9 @@ let step = 'start'
 
 function pathOnly(u) { try { const x = new URL(u); return x.pathname } catch { return u } }
 
-async function shot(page, label) {
+async function shot(page, label0) {
   shotN += 1
+  const label = redactFirst(label0)
   const file = `shots/${String(shotN).padStart(3, '0')}-${label.replace(/[^a-z0-9]+/gi, '-').slice(0, 60)}.png`
   await page.screenshot({ path: path.join(OUT, file), fullPage: true }).catch((e) => log('shot failed', e.message.split('\n')[0]))
   return file
@@ -265,7 +274,8 @@ const CHECKS = () => {
 
 let walkVoid = false
 class WalkVoid extends Error {}
-async function checks(page, label) {
+async function checks(page, label0) {
+  const label = redactFirst(label0)
   if (label !== 'login-failed') {
     const probe = await page.evaluate(() => {
       const vis = (el) => { if (!el) return false; const r = el.getBoundingClientRect(); const s = getComputedStyle(el); return r.width > 0 && r.height > 0 && s.visibility !== 'hidden' && s.display !== 'none' }
