@@ -73,6 +73,23 @@ measured; PHASE A starts at MP-z-5's ledger close.**
 - AC3's expectation now reads: `PICK one (a) tool; listing rc=0; GRADE ... AGREE; depth ... CONFIRMED (or AGREE when
   measured) -- RESULT: PASS -- exit=0`.
 
+**AMENDED A2 (2.0.0_SA_COO~MI, 2026-10-13 ~21:5xZ) -- the slot is ours; PHASE A starts now on live ref 64b3e54658.**
+- MP-z-5's ledger `nfra-mcportal-gw-release` reads CLOSED at 21:44:07Z: all 5 legs proven, on 0.7.0_AE_CloudOps~MQ's
+  tree `C:/tmp/mp-z5-rel`. The host serves 64b3e54658 with 67 tools (z5.AC2).
+- `2.0.0_SA_COO~O` (msg 33806) gives MX-r-11 the next gateway slot. NFRA_OPLGTW.TO-OG-ap-14 (the r30 release carrying
+  OG-bd-2) cuts on OUR live ref only after this order's ledger reads CLOSED at HEAD. At the close, the issuer tells
+  `2.0.0_SA_COO~O` the new `deployed_commit`.
+- **PHASE A, in order:**
+  1. Merge `box/sitez` into your branch. It carries A1 and the amended `round10/checks/`.
+  2. Read the live ref FROM THE HOST by md5. Expect 64b3e54658; if the host serves anything else, file a BLOCKING row
+     and stop.
+  3. Cut the deploy-only commit on that ref, carrying exactly MX-c-8's two blobs (`app/refs/DATA_CATALOG.yaml` and
+     `app/integrations/opal_discover/integration.py`, read at @212f2370a3).
+  4. Write `ANNOUNCE_MX-r-11.md` with the cut's file list, the rollback key (`opal-gateway-64b3e54658.tar.gz`), and the
+     three equal censuses: tools 67 = 67, `.env` keys, `ENABLED_INTEGRATIONS` 7 = 7.
+  5. Report, and stop.
+- PHASE B is then re-addressed to `0.7.0_AE_CloudOps~MI` on both never-widen halves.
+
 ## 2. BOUNDS
 
 1. No change to any source file. This order ships what MX-c-8 committed, and nothing else.

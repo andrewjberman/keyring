@@ -151,7 +151,7 @@ the ONE `<status>` tag to `complete` only if both PASS, and report once.
 - Pre-cut: hv1.AC1 base FAIL as expected (`tests/test_og_hv1.py` absent; `app/harvest_read.py` absent); hv1.AC2 base FAIL as
   expected (`HV1_PRINCIPALS.json` absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <slot>~64</slot>
 <fabric>site-z</fabric>
