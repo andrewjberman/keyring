@@ -7098,3 +7098,30 @@
   "notes": "For the CTO's read of the rule: the position test is the one the controls pass with no extra word list. The literal set test would need custodian removed from the modifier set, which the header rule needs. Residual: a backstop-only header with a word before the root that is not a modifier (e.g. 'No. of Acct Ref Ext') no longer enters the backstop; no test or fixture carries one (the header-rule matches 'No. of Acct' and 'Roth IRA Acct No.' are unaffected)."
 }
 ```
+
+## IRPT_ANLREQ-D2-W67-S3 -- two money-column tests under a root header use "Acct Ref Ext", which the allowlist does not admit: they pass without reaching the VALUES path they name
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W67-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~67",
+  "surfaced_at": "2026-10-13T15:02:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Two money-column tests in test_account_value_backstop.py (test_a_digit_run_column_holding_a_decimal_is_a_money_column_under_a_root and test_a_digit_run_column_holding_a_comma_or_a_dollar_is_a_money_column_under_a_root) still use the header 'Acct Ref Ext'. The ruled allowlist does not admit that header, so both assert 'not turned back' for the wrong reason: the reader never reaches the VALUES path, and a regression in repair (b) would not turn them red. The order named three tests for the header change; these two were not changed.",
+  "spec_asserts": "AR-y-221 amendment 1 (deliverables IRPT_ANLREQ.TO-AR-y-221 task order, paragraph before THE CELL): change the HEADER of the three named tests to Client Primary Acct and keep each test's assertions otherwise; add one negative-control test for Acct Ref Ext. The two money-column tests are not among the three named.",
+  "world_is": "At commit 2ccad1f84f, _root_header_admitted('Acct Ref Ext') is False (ext is in neither ACCOUNT_TAIL_WORDS nor ACCOUNT_MODIFIERS, template_reader.py:192-203 @00ed339bf8), and _several_accounts on Acct Ref Ext with values 10023845, 10023846, 1234.50 returns [] (the same as with two identifier values). On Client Primary Acct the same two-identifier call returns [('C', 'VALUES', 2)], so the header is the one that exercises the path. The money tests stay green under the header Acct Ref Ext whether or not repair (b) is correct.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/tests/test_account_value_backstop.py money tests (the headers 'Acct Ref Ext' at the two money-column test bodies) @2ccad1f84f",
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py:192-203 @00ed339bf8 (_root_header_admitted)",
+      "python -c run in the worktree intake folder at 2ccad1f84f: Acct Ref Ext admitted_by_allowlist=False; money col 1234.50 -> []; two ids -> []; Client Primary Acct admitted_by_allowlist=True; two ids -> [('C', 'VALUES', 2)]"
+    ]
+  },
+  "notes": "For the CVO's or CTO's read: the fix is a header change in two more tests (Client Primary Acct), which is a test-file edit outside this order's named tests and so a ruling or a new order, not taken here. Until then the money-column behaviour (AR-y-211 repair (b)) is covered only by the function-level test_a_money_column_turns_off_the_digit_run_only_and_not_letter_and_digit_identifiers, which calls _identifier_like directly and never reads a column."
+}
+```
