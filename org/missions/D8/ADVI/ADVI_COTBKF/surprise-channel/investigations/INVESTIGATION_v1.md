@@ -8125,3 +8125,60 @@ round.** Never edit an existing row.
  "world_is": "The gold canonical schema holds more than one custodian's unit columns. The cell projected account_id, asset_name, units, cusip, ticker and cash_equivalent only, so the BD-side windows are measured on the units column as the table carries it; whether that column is BD-only per row is not established by this read."
 }
 ```
+
+## ADVI_COTBKF-D2-W163-S1 -- The round-82 ruling names the builder and the two minted-table readers as the readers of the cot price store; 
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W163-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~163",
+  "surfaced_at": "2026-10-13T20:34:16Z",
+  "one_line": "The round-82 ruling names the builder and the two minted-table readers as the readers of the cot price store; none of them reads that key (the builder writes it, the ARD adapter reads minted tables). Four production scripts read the store keyed by ticker alone, so the zero-ticker-only-reader disarm of D2-W158-S2 is not met.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/analysis/commonwealth_price_census.py:57-58 key_cols ticker only; :411-420 _clean drops price @04b9a0bbed",
+      "data/assets/scripts/silver/commonwealth_price_basis_census.py:364 nk = ticker, :384 ticker-day median @04b9a0bbed",
+      "data/assets/scripts/silver/commonwealth_bond_custodian_price.py:125-126 ticker value tested against bond CUSIPs @04b9a0bbed",
+      "data/assets/scripts/silver/commonwealth_bd_txn_provenance.py:38, :117-121 @04b9a0bbed",
+      "data/cot/scripts/gold/build_canonical_prices_v2.py:174 OUTPUT_KEY (writer) @04b9a0bbed",
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py:221-226 reads minted tables only @04b9a0bbed",
+      "deliverables/0.9.0_WK_ADVI_COTBKF~163/TICKER_KEY_READ.json readers, ticker_only_readers=4"
+    ]
+  },
+  "spec_asserts": "CTO round-82 analysis ruling 2: W158-S2 disarms on a read that names 0 ticker-only readers (the builder build_canonical_prices_v2.py and the two minted-table readers first), or on a keyed fix to the (ticker, asset_name) pair.",
+  "world_is": "The cot store has four ticker-keyed production readers outside the named set (census, basis census, bond custodian, bd_txn_provenance) and seven asset_name-keyed gold readers. The named builder is a writer; the ARD adapter reads the minted tables and not this key. Ticker-only readers exist, so the keyed fix is the disarm path, not the zero read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W163-S2 -- The graph cannot enumerate the readers of a store key: comp-pipescript io lists the cot price store as an exte
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W163-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~163",
+  "surfaced_at": "2026-10-13T20:34:16Z",
+  "one_line": "The graph cannot enumerate the readers of a store key: comp-pipescript io lists the cot price store as an external input with no writer edge, consumers answers at the canonical-holdings script level, the .py and bare script names are refused, and comp-platinum reverse covers portal reads only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-pipescript io B_00 / B_01 / A_03 --pipeline cot: silver/prices/canonical_prices.parquet <- (external/silver), no writer edge (run in worktree at 04b9a0bbed)",
+      "comp-pipescript consumers build_canonical_prices_v2 --pipeline cot: rc=1 Unknown script; .py form rc=1 Unknown script",
+      "comp-platinum reverse s3://opal-data-cot/silver/prices/canonical_prices.parquet --firm cot: PRODUCER empty, CONSUMED BY none (already D2-W158-S1)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-cd-3 item 1: the graph first (org/modules/graph/graph-call-manifest.yaml), then comp-find and comp-estate, to find every reader of the store key.",
+  "world_is": "The graph answers the script-level consumers of canonical holdings and the io of each reader, but not the readers of the store key itself. The reader list for this key came from comp-find and each file's own code, not from the graph.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
