@@ -8182,3 +8182,106 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D2-W166-S1 -- The AC1 invocation as written errors at collection on a duplicate package name; the same error at HEAD before any edit
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W166-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~166",
+  "surfaced_at": "2026-10-13T22:41:43Z",
+  "one_line": "The AC1 invocation (three files in one pytest run) stops at collection on a duplicate package name (tests); the same error occurs at HEAD before any edit. The three files pass 28 of 28 under --import-mode=importlib.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/tests/__init__.py and data/assets/scripts/analysis/tests/__init__.py @df215447fa",
+      "baseline run at HEAD before any edit: the two existing files together, rc=2, collection error (this worker's shell)",
+      "combined AC1 invocation as written after the edits, rc=2, collection error (this worker's shell)",
+      "diagnostic: the same three files with --import-mode=importlib, 28 passed, rc=0 (this worker's shell)"
+    ]
+  },
+  "spec_asserts": "CB-ce-3 CB83ce3-AC1: `python -m pytest data/assets/scripts/silver/tests/test_commonwealth_ticker_asset_key.py data/assets/scripts/silver/tests/test_commonwealth_price_basis.py data/assets/scripts/analysis/tests/test_commonwealth_price_census.py -q` passes with no failure and no skipped test.",
+  "world_is": "The combined run is interrupted at collection: ModuleNotFoundError 'tests.test_commonwealth_price_census' (rc=2, 1 error during collection). data/assets/scripts/silver/tests/ and data/assets/scripts/analysis/tests/ are both packages named tests (an __init__.py in each). Per file: 6, 3 and 19 passed. Combined with --import-mode=importlib: 28 passed, rc=0. The packaging fix lies outside this order's paths and was not made.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W166-S2 -- Item 2's literal rule would drop 177,413 price-equal yahoo ticker-days; implemented for price-distinct days only
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W166-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~166",
+  "surfaced_at": "2026-10-13T22:41:43Z",
+  "one_line": "Item 2's literal rule (no median on a two-name ticker-day) would remove 177,413 yahoo_finance ticker-days, all of which carry the same price under both names. Implemented as: a two-name day is left out only where the names disagree on price (0 such days on the pinned store).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_price_basis_census.py ticker_day_series @df215447fa (the change), and @df215447fa line 384 (the old median)",
+      ".scratch/measure_cb_ce3.json BASIS block (scratch; counts only): two_name_yahoo_ticker_days 177413, ambiguous 0, series_days_removed 0"
+    ]
+  },
+  "spec_asserts": "CB-ce-3 item 2: where one ticker-day then has two rows, the reader no longer takes a median, mean or first of them: it keeps both and picks by name, or reports the day as ambiguous_name with a count.",
+  "world_is": "On the pinned store the yahoo_finance rows of the tickers carry 177,413 two-name ticker-days (SCCO 701, APH 45 of them). All 177,413 agree on price; 0 disagree. The literal rule would remove those values from the basis census series and change the class inputs of those tickers. The implemented rule removes none (series days removed 0, values changed 0). The one disagreeing day (APH 2026-04-14) sits on the transaction_observed and linear_interpolation rows, which the basis census does not read for its series.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W166-S3 -- The four readers' main() cannot run as the read-only before/after; measured through their own functions on the local copy
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W166-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~166",
+  "surfaced_at": "2026-10-13T22:41:43Z",
+  "one_line": "The four readers' main() runs are not the read-only before/after the order names: each lists or reads beyond the pinned object (census lists every bucket and writes deliverables; basis census calls Yahoo; custodian needs the transactions table and writes a deliverable; provenance lists every version of the cot bucket). The before/after was run through each reader's own functions on the local store copy, HEAD copies for the old side.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/analysis/commonwealth_price_census.py main() and data/assets/scripts/silver/commonwealth_price_basis_census.py main() @df215447fa",
+      "data/assets/scripts/silver/commonwealth_bond_custodian_price.py main() and data/assets/scripts/silver/commonwealth_bd_txn_provenance.py main() @df215447fa",
+      ".scratch/measure_cb_ce3.log (scratch; counts only)"
+    ]
+  },
+  "spec_asserts": "CB-ce-3 item 4: each reader is run in its read-only mode over local inputs, per reader, with the old and the new code; a reader that needs an input not on this box is marked not_established.",
+  "world_is": "commonwealth_price_census.py main() calls boto3 list_buckets and reads every price store. commonwealth_price_basis_census.py main() calls yfinance (a vendor call barred for this order). commonwealth_bond_custodian_price.py main() needs the transactions table (not on this box) and writes a deliverable. commonwealth_bd_txn_provenance.py main() lists every object version of opal-data-cot. The custodian name test needs the transactions Security_Description: its name effect is not_established here; zero CUSIP-matched rows on the store make it inert on this store.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W166-S4 -- Channel row ADVI_COTBKF-D2-W158-S2 is written about the minted-table consumers; the ticker-key disarm is attached to that id
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W166-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~166",
+  "surfaced_at": "2026-10-13T22:41:43Z",
+  "one_line": "The channel row ADVI_COTBKF-D2-W158-S2 is written about the minted-table consumers of W155-S1/S3, but the round-82 ruling, this order and the W163-S1 row attach the ticker-only-readers disarm to that id. Nothing in the row's text mentions the four ticker-keyed readers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md ADVI_COTBKF-D2-W158-S2 @df215447fa",
+      "org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md ADVI_COTBKF-D2-W163-S1 @df215447fa"
+    ]
+  },
+  "spec_asserts": "CTO round-82 analysis ruling 2, as quoted in ADVI_COTBKF-D2-W163-S1: W158-S2 disarms on a read that names 0 ticker-only readers, or on a keyed fix to the (ticker, asset_name) pair.",
+  "world_is": "The row's one_line and spec_asserts state the minted-table consumer premise (disarm_owner 1.0.0_SA_CTO~DELL2). The ticker-key disarm cannot be answered on that row's text. This worker reports row_w158_s2_disarms as not_established and did not edit the row.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
