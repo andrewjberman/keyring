@@ -2,7 +2,7 @@
 
 <to_id>IRPT_ANLREQ.TO-AR-y-194</to_id>
 <project>IRPT_ANLREQ</project>
-<issued_to>0.9.0_WK_IRPT_ANLREQ~56</issued_to>
+<issued_to>0.9.0_WK_IRPT_ANLREQ~59</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-12</issued_date>
 <status>pending</status>
@@ -15,17 +15,17 @@
 
 **Directive:** D9 | **Fabric:** dell2 | **Risk:** WORLD
 **Decomp cell:** `AR-y-194` (`decompositions/IRPT_ANLREQ_DECOMP_R19_Y.md`) | **outcome_ref:** FWD-1 (hop 2) | **depends_on:** the reader's release pair is cut
-**NOT SPAWNED AT ISSUANCE.** The issuer spawns this order when the reader's release pair is cut, and states it in a spawn amendment. If there is none, STOP: the order was spawned too early.
+**SPAWN AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-13).** The reader's release pair is cut, signed and applied (resident 0485393f3a-r19 at 06:09:33Z, Lambda CodeSha256 bNPCG2Oe... at 06:27Z; CTO half @6facbbb2d3). Slot `~59` was used by `AR-y-201` after this order was written, so this order is re-slotted to `~59` (worktree `C:/dev/wk-irpt-anlreq-59`, branch `wk-IRPT_ANLREQ-59`): every `~59` below is now `~59`. Base for the work: the trunk head's `template_reader.py` (READER_VERSION r18.1, the bytes now released). Nothing in this order is released by it; the next reader release repeats the two-leg method. No gate limb graded this amendment (a pending order's text).
 
 ---
 
 ## WORKER FACE
 
-You are `0.9.0_WK_IRPT_ANLREQ~56`.
-- **Worktree:** `C:/dev/wk-irpt-anlreq-56` (branch `wk-IRPT_ANLREQ-56`). Commit there with
-  `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~56 <0.9.0_WK_IRPT_ANLREQ~56@opal.agent>" -F <msgfile> -- <paths>`.
+You are `0.9.0_WK_IRPT_ANLREQ~59`.
+- **Worktree:** `C:/dev/wk-irpt-anlreq-59` (branch `wk-IRPT_ANLREQ-59`). Commit there with
+  `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~59 <0.9.0_WK_IRPT_ANLREQ~59@opal.agent>" -F <msgfile> -- <paths>`.
 - Write every message file with the Write tool. `surfaced_at` of any row = `date -u +%FT%TZ` at filing; a row id has the form
-  `IRPT_ANLREQ-D2-W56-S<k>` (take the next free `<k>`). The worktree shows ` M portal` (and may show a modified `.parquet`
+  `IRPT_ANLREQ-D2-W59-S<k>` (take the next free `<k>`). The worktree shows ` M portal` (and may show a modified `.parquet`
   fixture): never commit either. Every `.py` you add or change passes `bash .tools/commit-gate.sh <file>` before its commit.
 - The proof instance: artifact rows use a `kind` the schema admits; a judgment row needs `method`, `invocation` and `denominator`;
   every non-PASS row carries a `status_reason`; a `controls.mutant` MUST be a mutant that FIRES (a mutant that leaves your criterion passing makes the instance INVALID).
@@ -48,13 +48,13 @@ You are `0.9.0_WK_IRPT_ANLREQ~56`.
 
 ### ACCEPTANCE
 
-<criterion id="AR194-y-AC1" cell_refs="AR-y-194"><invocation>python C:/dev/wk-irpt-anlreq-56/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r19/ar19_checks.py y194-rule --root C:/dev/wk-irpt-anlreq-56</invocation><expect>Y194-RULE-OK</expect></criterion>
+<criterion id="AR194-y-AC1" cell_refs="AR-y-194"><invocation>python C:/dev/wk-irpt-anlreq-59/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r19/ar19_checks.py y194-rule --root C:/dev/wk-irpt-anlreq-59</invocation><expect>Y194-RULE-OK</expect></criterion>
 `AR194-y-AC1`: over the stored population every listed identifier form is matched, every attribute, non-account and negative-control form is not.
 
-<criterion id="AR194-y-AC2" cell_refs="AR-y-194"><invocation>python C:/dev/wk-irpt-anlreq-56/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r19/ar19_checks.py y194-backstop --root C:/dev/wk-irpt-anlreq-56</invocation><expect>Y194-BACKSTOP-OK</expect></criterion>
+<criterion id="AR194-y-AC2" cell_refs="AR-y-194"><invocation>python C:/dev/wk-irpt-anlreq-59/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r19/ar19_checks.py y194-backstop --root C:/dev/wk-irpt-anlreq-59</invocation><expect>Y194-BACKSTOP-OK</expect></criterion>
 `AR194-y-AC2`: the five named backstop tests exist and pass.
 
-<criterion id="AR194-y-AC3" cell_refs="AR-y-194"><invocation>python C:/dev/wk-irpt-anlreq-56/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r19/ar19_checks.py y194-keep --root C:/dev/wk-irpt-anlreq-56</invocation><expect>Y194-KEEP-OK</expect></criterion>
+<criterion id="AR194-y-AC3" cell_refs="AR-y-194"><invocation>python C:/dev/wk-irpt-anlreq-59/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r19/ar19_checks.py y194-keep --root C:/dev/wk-irpt-anlreq-59</invocation><expect>Y194-KEEP-OK</expect></criterion>
 `AR194-y-AC3`: the difference control -- the whole intake test folder passes (331 at the base) and `READER_VERSION` differs from r18.1.
 
 <criterion id="AR194-y-AC4J" cell_refs="AR-y-194" judgment="true"/>
@@ -64,7 +64,7 @@ You are `0.9.0_WK_IRPT_ANLREQ~56`.
 
 ## BOUNDS
 
-- **Grant:** exactly the `<paths>` below, plus `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~56/` and this order's file (status flip only). If a test OUTSIDE the grant fails because of your change, STOP: file a BLOCKING row naming it; the issuer amends the grant.
+- **Grant:** exactly the `<paths>` below, plus `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~59/` and this order's file (status flip only). If a test OUTSIDE the grant fails because of your change, STOP: file a BLOCKING row naming it; the issuer amends the grant.
 - READ only: everything else.
 
 <paths>
@@ -83,7 +83,7 @@ org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v
 
 <proof_of_spec>
 Criterion ids: see ACCEPTANCE. The instance is at
-`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~56/IRPT_ANLREQ.TO-AR-y-194.account-header-value-backstop.proof_of_spec.json`.
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~59/IRPT_ANLREQ.TO-AR-y-194.account-header-value-backstop.proof_of_spec.json`.
 Its `to_id` is exactly `IRPT_ANLREQ.TO-AR-y-194`. The judgment criterion is recorded under `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming `3.0.0_SA_CVO` (never PASS or FAIL). Validate it AFTER its commit with
 `python .tools/proof-of-spec-check.py <instance> <the criterion ids>`; flip `<status>` to `complete` only when it prints VALID.
 </proof_of_spec>
