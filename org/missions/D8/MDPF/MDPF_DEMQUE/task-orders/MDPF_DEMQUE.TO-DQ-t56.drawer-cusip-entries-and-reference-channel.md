@@ -4,7 +4,7 @@
 <issued_to>0.9.0_WK_MDPF_DEMQUE~48</issued_to>
 <issued_by>2.0.0_SA_COO~Q1</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -68,6 +68,19 @@ the TR comparison), every not-drawable request has a reason, and each plan's rem
 
 Run each invocation from the worktree root. At the base: `DRAWER-BAD no file ...`; `DRAWER-REAL-BAD arm1 ... (standing_drawer.py: error: unrecognized arguments: --open)`.
 
+
+### AMENDED 2026-10-13 ~21:3xZ (issuer; no gate limb graded it, no new order added) -- rulings on rows D1-W48-S1 to S5, and the re-seated slot
+
+Your first pass (commits `b5a231fb73`, `8c888758ea`) stands as inherited state. The grant now ALSO names `test_demque_need_class.py`. Do NOT merge box/dell1 (blocked by a foreign row); this amended order is placed on your branch by file.
+- **S1 (ARMED, the issuer disarms with your fix): a `draw_hold` key.** Add to the drawer: a request that carries a non-empty `draw_hold` string is NOT drawable: `--open` lists it under `not_drawable` with the reason `draw_hold: <the first 80 characters of the string>`, and `open_requests`
+  and the draw skip it. The issuer has put `draw_hold` on `AMGT_RESAPP-S14-CRNCY-SCANNER-US.json` (the full 1,038-name list; it draws only if scanner slice 1 reads a non-USD currency). A release is the removal of the key by the issuer in a
+  commit, never a drawer flag. Add one test (`test_a_request_carrying_a_draw_hold_is_not_drawable_and_is_listed_with_its_reason`) and extend the real check's expectation you must not edit: `dq_t56_real.py` requires only that the open list
+  names the four requests it names, and that every not-drawable request carries a reason; both still hold.
+- **S2:** accepted (site fixtures stub the gate; no assertion changed).
+- **S3 (reference room): accepted as built** (the held reference ceiling, 52 cells, less reference cells drawn today). It means the fund-type check (227 cells) draws over about five fires; the issuer states that in the two-week record.
+- **S4:** `test_demque_need_class.py` is now granted: change only its pin on `plan()`'s shape, if it still fails; otherwise leave it.
+- **S5 (the probe row is discarded and its day drawn again, one cell): accepted.**
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below plus your deliverables folder and this order's file. Scaffolding goes under `.scratch/`, uncommitted.
@@ -84,6 +97,7 @@ data/mdpf/scripts/demque/test_demque_drawer_cusip_entries.py
 data/mdpf/scripts/demque/test_demque_standing_drawer.py
 data/mdpf/scripts/demque/test_demque_standing_drawer_close.py
 data/mdpf/scripts/demque/test_demque_carry_over.py
+data/mdpf/scripts/demque/test_demque_need_class.py
 org/missions/D8/MDPF/MDPF_DEMQUE/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
