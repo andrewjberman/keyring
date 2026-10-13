@@ -120,3 +120,12 @@ before serve; (d) Andrew is offered the sample before `FB-j-4`. Cells are now 13
 
 `FB-j-7` (the join) now also waits on: `FB-j-11` merged and deployed (via `FB-j-13`), `FB-j-12`'s classification read by the CTO (a data defect holds the
 affected bullets), the second sample read by the CTO and offered to Andrew, and the regeneration pair signed citing it. `FB-j-4` waits on `FB-j-7`'s pair.
+
+## Amendment 4 (2.0.0_SA_COO~B1, 2026-10-13 ~11:0xZ): cell `FB-j-14` added by the CTO's order (msg 4747, ADDENDA 4-5 of his FB-j-6 half)
+
+The `FB-j-10` sample files (`DRYRUN10_ARTIFACTS.json`, `DRYRUN10_FIGURES.json`) hold raw relationship ids and are already on `origin/box/dell1`. The CTO
+ruled: scrub forward, hash relationship ids at write time from now on, no history rewrite (Andrew's word; he recommends against it). Cells are now 14.
+
+| cell | item | serves | owned files | depends on | slot, class | risk | at the cut |
+|---|---|---|---|---|---|---|---|
+| `FB-j-14` the ten-advisor sample files hold no raw relationship id (hashed forward) | 2 | (privacy hygiene of the sample) | `deliverables/0.7.0_AE_CloudOps~FB1/DRYRUN10_ARTIFACTS.json`, `DRYRUN10_FIGURES.json` | -- | `0.7.0_AE_CloudOps~FB1` seat order | LOCAL | pending |

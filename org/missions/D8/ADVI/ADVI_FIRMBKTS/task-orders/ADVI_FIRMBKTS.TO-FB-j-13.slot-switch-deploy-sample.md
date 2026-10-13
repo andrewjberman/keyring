@@ -86,6 +86,8 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~F
 
 **ISSUER NOTES:** PARKED at the cut: owner `2.0.0_SA_COO~B1`; un-park conditions (all): `FB-j-11` merged and PASS; the pair addendum 2 signed by both halves (the COO addendum is the issuer's, authored at the cut; the CTO's matching addendum asked); the issuer amends `<status>` and messages FB1 citing this order. The CTO's ruling: (a) `top_nna_mover` disabled by config for the first regeneration, (b) the PII guard learns client display names, then the sample is offered to Andrew before `FB-j-4`. The Terraform variable is `disabled_slots` (default empty: no key).
 
+**AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-13 ~11:0xZ):** the CTO's ADDENDA 4-5 of his FB-j-6 half (ddbaf334d1) sign the third apply and add two requirements: (i) dry-run the SAME ten advisors as `FB-j-10` (the keys of its `DRYRUN10_ARTIFACTS.json`), so the two samples compare per advisor; (ii) PROVE THE NAME GUARD ON THE WITHHELD ONE: the advisor whose `top_nna_mover` bullet leaked a client display name in `FB-j-10` must come back with the slot switched off (zero NNA bullets) and the other four slots' bullets free of the name; record that advisor's result by ordinal only (no id, no name). Also, from now on hash relationship ids AT WRITE TIME in every file you write (see `FB-j-14`). The plan's only diffs are the code hash plus `EXEC_SUMMARY_DISABLED_SLOTS`; the other environment keys stay byte-unchanged (the plan record names that). The COO addendum 2 is at 89f2099f0a and the CTO's at ddbaf334d1. Still parked on `FB-j-11` merged and PASS only.
+
 <status>parked</status>
 <round>7</round>
 <workstream>SLOTSWITCHDEPLOY</workstream>
