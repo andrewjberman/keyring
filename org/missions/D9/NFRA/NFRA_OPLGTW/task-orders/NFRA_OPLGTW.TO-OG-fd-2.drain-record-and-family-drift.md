@@ -86,7 +86,7 @@ ONE `<status>` tag to `complete` only if both PASS, and report once.
   - fd2.AC1 base FAIL as expected: named 0 of 2, both suites rc=0, so the harness runs.
   - fd2.AC2 base FAIL as expected: the files are absent.
 
-<status>pending</status>
+<status>complete</status>
 <round>36</round>
 <slot>~61</slot>
 <fabric>site-z</fabric>

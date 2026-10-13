@@ -12,9 +12,10 @@ PRD v0.9 adds FWD-20 and FWD-21. Cut them in ONE issuance once both halves read 
 
 1. **FWD-20, tool-to-index links.**
    - Census the DEPLOYED gateway's served tools (the deployed commit from `infra/aws/ec2/EC2_MANIFEST.json`).
-   - Link each tool to its catalog entry or GAP entry.
-   - Carry history depth and freshness, each with its claim.
-   - Print the denominator.
+   - Partition the tools into three counted members that sum to N: (a) names its index; (b) data read with no index yet,
+     owner or unowned; (c) not a data read.
+   - Carry history depth and freshness on each (a) tool, each with its claim.
+   - Print N and the three counts.
 2. **FWD-21, harvest rows.**
    - One catalog row per SERVE row of
      `org/tier1_exec/1.0.0_SA_CTO/deliverables/SERVABLE_PREFIXES_OPAL_DATA_HARVEST_20261013.md` @0b2778751a (11 rows;

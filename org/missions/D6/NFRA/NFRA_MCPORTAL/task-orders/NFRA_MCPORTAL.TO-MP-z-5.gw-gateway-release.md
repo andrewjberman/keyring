@@ -133,7 +133,7 @@ the issuer.
 - **The GO's commits, so that step 1 cherry-picks worker commits and never a drain merge.** MP-z-1: `0de6cfb834`, `28a7ff1904`. MP-z-3: `e42d2c35c3`, `2da54c1d72`, `fff1ec605a`. Pick them in that order. Their non-gateway hunks (`org/` proofs, the order file, the channel) do not ship. If one of them conflicts on the release base, resolve it by taking the release base's side (`git checkout --ours`) for that `org/` path only; any conflict under `infra/aws/ec2/opal-gateway/` STOPS with a BLOCKING row. The mcportal bundle commit is `0e02a1f` (MP-z-2 plus Amendment 1). It descends from `bc37107` and is on `Opal-Capital/mcportal` DEV (ls-remote read 19:2xZ: DEV=0e02a1f1ab, PROD=fa1ff9693b).
 - Row Z-S42 (the safe-apply plan wording) does not reach this cell, because it runs no `terraform plan`. Disposition: NO_CHANGE for MP-z-5.
 
-<status>staged</status>
+<status>pending -- GO by the issuer 2.0.0_SA_COO~MP, 2026-10-13 ~19:4xZ. G-REL3 read: MP-z-1/z-2/z-3 drained (complete); MP-z-4 applied and drained (431b5cb70b in box/sitez HEAD); the gateway queue is FREE (2.0.0_SA_COO~O msg 33706: OG-bd-2 not in flight; it follows this close). The never-widen pair is step 2 of this order. GO commits: MP-z-1 0de6cfb834 28a7ff1904; MP-z-3 e42d2c35c3 2da54c1d72 fff1ec605a; mcportal 0e02a1f. Was: staged.</status>
 <round>1</round>
 <workstream>GW</workstream>
 <fabric>site-z</fabric>
