@@ -9042,3 +9042,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The events are gone and the group reads 0 before the cut. A rotation path exists (the OP-s-10 runbook), but a single rotation does not invalidate these tokens, since the rotated-out key moves to the previous slot and still verifies; invalidation needs the rotation plus retiring the previous slot. Neither was done by this order. The 16 in-window refresh_token lines (10 device_trust) remain acceptable until the expiries above. The ruling's use-read for the no-path branch (proxy access log by source address, status only) was not run, since a path exists."
 }
 ```
+
+## NFRA_CTLPLN-W88-S1 -- CT-ac-2 BUILD 1 reads a serial-less readable claude.exe as Unclassified; the native-helper rule says it is not a seat
+
+```json
+{
+  "id": "NFRA_CTLPLN-W88-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~88",
+  "surfaced_at": "2026-10-13T22:09:12Z",
+  "one_line": "CT-ac-2 BUILD 1 defines Unclassified as a seat-named process whose command line cannot be read OR whose launch serial cannot be extracted. Read literally, the second limb refuses every tree holding a serial-less native helper, which the existing rule says is not a seat.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/seat-boundary.ps1 header at base b122c649e9: 'A claude.exe or codex.exe with no serial token is not a seat (a native helper; S9118 notes) and is never reported.'",
+      ".tools/tests/test_seat_boundary.ps1 at base b122c649e9, case 17: 'a serial-less claude.exe under the target is not a seat (count 0)'",
+      "worktree .tools/seat-boundary.ps1 Get-SeatSubtreePids: Unclassified = seat-named with an unreadable (null or empty) command line; a readable serial-less process is killable as a non-seat, and the new test case (h) pins it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ac-2 BUILD 1: Get-SeatSubtreePids returns Unclassified for a seat-named process whose command line cannot be read or whose launch serial cannot be extracted; a non-empty Unclassified keeps the whole-tree refusal; a target tree with no foreign seat behaves as today.",
+  "world_is": "Under the existing rule a claude.exe or codex.exe with a readable command line and no serial token is a native helper, not a seat, and the kill tree stopped it at base. Reading the second limb literally would refuse every such tree, which breaks 'behaves as today'. Built: Unclassified is the unreadable-command-line limb only; a readable serial-less helper is killable.",
+  "notes": "The COO decides whether the literal second limb should stand. If it does, the change is one branch in Get-SeatSubtreePids (treat a readable serial-less seat-named process as Unclassified) plus test case (h) inverted. Nothing was killed; no live process was touched."
+}
+```
