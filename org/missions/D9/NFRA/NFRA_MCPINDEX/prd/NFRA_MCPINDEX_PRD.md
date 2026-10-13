@@ -296,17 +296,19 @@ FWD-19  The operations lead's trade reconciliation and billing are answerable in
 
 FWD-20  Every tool the gateway serves names its catalog index, that index's history depth and its freshness (v0.9)
          DONE WHEN  EXERCISED -- a census over the DEPLOYED gateway's served tools reads N tools
-                    served and N naming a catalog entry (or a GAP entry), each entry carrying its
-                    history depth (earliest served date) and its freshness (latest served date)
+                    served, partitioned into three counted members that sum to N: (a) names its
+                    catalog index; (b) reads data but has no index yet, naming its owner or
+                    "unowned"; (c) is not a data read (e.g. send_email, whoami). Each (a) tool carries
+                    its index's history depth (earliest served date) and freshness (latest served date)
          ACCEPT     the tool list is read from the deployed gateway's definitions, never a hand-kept
                     list; freshness is read at answer time (FWD-13's rule); depth and freshness each
                     carry a claim (measured / inferred / absent), and "absent" is said, never blank;
                     the values are readable by NFRA_MCPORTAL through the existing catalog read
-         PROOF      the census with its denominator printed; for one tool, the depth and freshness
-                    compared with the served artifact by a second instrument
+         PROOF      the census with N and the three member counts printed; for one (a) tool, the depth
+                    and freshness compared with the served artifact by a second instrument
          SOURCE     Andrew's site Z voice memo 2026-10-13 ("We need to be able to see all indexes for
                     all vendor slash channels ... the depth and breadth of channels and indexes and
-                    tools available per vendor"), via the laptop CTO's direction XB-20261013T185926Z-4d72 Z4
+                    tools available per vendor"), via direction XB-20261013T185926Z-4d72 Z4
 
 FWD-21  An asset manager's research question routes to the servable harvest data (v0.9)
          DONE WHEN  EXERCISED -- opal_discover for "harvested news articles and chatter" and for
@@ -603,3 +605,7 @@ else. `0.7.0_AE_CloudOps~MI` keeps its MX-s-19 read on 2026-10-19/20.
 - ENDPOINT and CONTRACTS change, so the ratified-text half re-opens for `3.0.0_SA_CVO~Z`.
 - The brief half is the CRO's alignment reports on Andrew's memos, accepted as written (rule 27, PROPORTIONATE
   SIGN-OFF).
+- Cure (~19:4xZ) on `3.0.0_SA_CVO~Z`'s refusal at half_hash 0fa643617bfd (msg 33707; review
+  `org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_MCPINDEX_v0.9_RATIFIED_TEXT_20261013_Z.md`): FWD-20 is a
+  three-member partition summing to N (a: names its index; b: data read with no index yet, owner or unowned; c: not a
+  data read). GAP keeps its v0.7 meaning, "a need with no tool". The SOURCE line no longer names a seat.
