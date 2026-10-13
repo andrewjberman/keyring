@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-13T08:05:11Z",
+ "written_at": "2026-10-13T08:09:42Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -2004,7 +2004,7 @@
    "source": "docs/briefs/bd-pricing-rules-brief-20261013.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-13T07:37:21Z",
    "kind": "fork",
    "context": "FIRMBKTS found 49F's T-1 price weighted by duplicate rows (830 of 5,366 asset-days move), a latent unstable tie sort, and a file-day/trade-date question. CRO brief docs/briefs/bd-pricing-rules-brief-20261013.md PART VIII; no work starts before your word.",
@@ -2020,7 +2020,14 @@
     "evidence": {},
     "measured_at": "2026-10-13T07:37:21Z"
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-13T08:09:42Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL1_1261_BD_PRICING_RULES_L2_CONFIRMATION_IS_ANDREWS_20261013.md",
+    "crossbox": null,
+    "ruled_by": "cluster-lead",
+    "xadj": null
+   },
    "escalation": {
     "to": "andrew",
     "ref": null,
