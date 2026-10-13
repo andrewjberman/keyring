@@ -188,6 +188,7 @@ Battery dry-run at base 08b77fd98d (`round10/checks/`):
 - The planted PASS arms and planted FAIL arms of all three instruments: decomposition R10.3.
 
 <status>issued</status>
+<status>complete</status>
 <round>10</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

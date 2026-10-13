@@ -9741,6 +9741,79 @@
 }
 ```
 
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W104-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~104",
+  "surfaced_at": "2026-10-13T20:53:39Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "one_line": "The AR-y-283 partner view (portal commit e82daf4c98 on wk-IRPT_ANLREQ-104-portal) moves the TicketCenter folder from 89 pass 0 fail to 90 pass 10 fail; all 10 failures sit in analysis-submit-silence.test.tsx, which mounts a firm caller on the path the cell replaces.",
+  "spec_asserts": "AR-y-283 step 4: the whole TicketCenter folder passes with the change (counts printed); criterion (f): an internal caller's page is unchanged and the existing tests for it all pass. The order does not name the firm-caller suite as superseded.",
+  "world_is": "MEASURED at portal e82daf4c98 (wk-IRPT_ANLREQ-104-portal): bun test src/pages/TicketCenter gives 90 pass, 10 fail of 100. All 10 fail in analysis-submit-silence.test.tsx with 'no button New Ticket on the page', because its useAuth mock (analysis-submit-silence.test.tsx:86, isInternal false) is a firm caller, which the page now renders as the partner view (TicketCenter.tsx partner branch). On origin/DEV a577cba5 the same folder gives 89 pass 0 fail, and the suite passes 10 of 10. The suite was NOT edited. Whether it is re-pointed to an internal caller or its firm-caller cases are retired is the issuer's or the CTO's call.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "src/pages/TicketCenter/__tests__/analysis-submit-silence.test.tsx:86 (useAuth isInternal false) at portal e82daf4c98",
+      "src/pages/TicketCenter/TicketCenter.tsx partner = !internal and the if (partner) return branch at portal e82daf4c98",
+      "bun test src/pages/TicketCenter: portal e82daf4c98 90 pass 10 fail of 100; origin/DEV a577cba5 89 pass 0 fail of 89"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W104-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~104",
+  "surfaced_at": "2026-10-13T20:53:39Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The partner list reads a package_state word that no served vocabulary defines in this tree: the cell names the field but not its values, and the server folder holds no package_state at HEAD.",
+  "spec_asserts": "AR-y-283 wire shapes: each list item carries package_state, and criterion (c) asks the partner list to render a package-state word. The order fixes no value set for it.",
+  "world_is": "MEASURED: a grep of infra/aws/lambda/ticket_center in worktree wk-irpt-anlreq-104 (base 0c27245bc9) returns 0 matches for package_state; the folder holds lambda_function.py and 22 test files. The candidate renders an absent state as 'Not yet packaged' and a served word with its underscores read as spaces (packageStateWord in TicketCenter.tsx). The served vocabulary belongs to the list route's owner; the candidate invents none.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center grep package_state: 0 matches in worktree wk-irpt-anlreq-104 at 0c27245bc9",
+      "src/api/endpoints/tickets.ts PartnerRequestItem.package_state at portal e82daf4c98",
+      "src/pages/TicketCenter/TicketCenter.tsx packageStateWord at portal e82daf4c98"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W104-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~104",
+  "surfaced_at": "2026-10-13T20:53:39Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The portal repository has no committer identity configured, so safe-commit refused the first portal commit (rc=128, Committer identity unknown); the retry set GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL for that one call.",
+  "spec_asserts": "AR-y-283 step 5 and the portal rule: commit the candidate in the portal worktree the way an earlier candidate branch was made (its commit line names the worker serial as author).",
+  "world_is": "MEASURED: safe-commit.sh run from C:/dev/wk-portal-104 exited rc=128 with 'Committer identity unknown' and 'unable to auto-detect email address'; git config user.name and user.email are unset there. The retry, with the serial as author and as committer, landed commit e82daf4c98 LOCAL on wk-IRPT_ANLREQ-104-portal, and the repository confirms the author. No git config was written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh run in portal worktree C:/dev/wk-portal-104: rc=128, Committer identity unknown (first attempt)",
+      "git -C C:/dev/ajb_workspace/portal log -1 923f7d69: author line names 0.9.0_WK_IRPT_ANLREQ~90",
+      "portal commit e82daf4c98 on wk-IRPT_ANLREQ-104-portal, author 0.9.0_WK_IRPT_ANLREQ~104"
+    ]
+  }
+}
+```
+
 ## IRPT_ANLREQ-D2-W97-S1 -- (AR-y-276) the authorizer does not carry allowedFirmIds in the token; the portal authorizer computes it
 
 ```json
@@ -10461,3 +10534,75 @@
 - **owner:** `2.0.0_SA_COO~Y2`
 - **disarm_owner:** n/a -- INERT
 - **state:** OBSERVATION / INERT
+
+## IRPT_ANLREQ-D2-W106-S1 -- yfinance is not in the repo's resident or Lambda dependency records, so release_needs carries it and the module injects its history port
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W106-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~106",
+  "surfaced_at": "2026-10-13T21:04:04Z",
+  "one_line": "AR-y-292 step 1 asks whether yfinance is a member of the resident and the irpt-ycharts-generate Lambda package. Neither is shown by the repo: the resident's host pydeps are unread, and the Lambda's layers do not list yfinance, so the default history port raises CHECKER_UNAVAILABLE on those hosts and the module injects the port.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-292 step 1: read whether yfinance is importable in the resident host's Python and in the irpt-ycharts-generate Lambda package, with file:line; if it is not a member, state the missing dependency in release_needs and build with the history port injected, adding no dependency.",
+  "world_is": "Resident: RESIDENT_RECIPE_AND_DELTA.json names the host pydeps (/opt/investor-reporting-ycharts/pydeps, host script line 44) as host-origin with names NOT RECORDED; the membership is NOT READ. Lambda: infra/aws/terraform/investor-reporting/ycharts/generate.tf:396-399 attaches irpt-common and AWSSDKPandas-Python312:16; infra/aws/lambda/layers/irpt-common/requirements.txt pins jsonschema, attrs, jsonschema-specifications, referencing, rpds-py and typing_extensions with no yfinance; no requirements*.txt exists under infra/aws/lambda/investor-reporting (Glob, 0 files); the AWS-managed layer's contents are not in the repo. yfinance 1.2.0 is importable on dell2 only. No dependency was added.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/ycharts/generate.tf:396-399 (layers) @d2c68580a1",
+      "infra/aws/lambda/layers/irpt-common/requirements.txt (pinned closure, no yfinance) @d2c68580a1",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/r19/RESIDENT_RECIPE_AND_DELTA.json (host_origin_names, pydeps names MISSING) @d2c68580a1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The module is built to the interface with the port injected. The release needs the resident pydeps listing (host read, YC2) and the Lambda layer contents before a live upload can check a symbol."
+},
+{
+  "id": "IRPT_ANLREQ-D2-W106-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~106",
+  "surfaced_at": "2026-10-13T21:04:04Z",
+  "one_line": "With yfinance errors raised, a symbol Yahoo answers 404 (ALPPL, ZZQXJVK) raises HTTPError and reads CHECK_FAILED/EXCEPTION, never NOT_KEPT, so the clean-empty NOT_KEPT path is not produced for a nonexistent quote.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-292 ruling: NOT_KEPT is a clean empty answer; an exception reads CHECK_FAILED and is never treated as absent. The read record measured ALPPL, BREIT and CCCQ as zero rows with no exception.",
+  "world_is": "One read-only call per symbol through the real default port with hide_exceptions False, dell2, yfinance 1.2.0, 2026-10-13: TIMXX returned 20 rows, last close 1.0, KEPT (0.517 s); ALPPL raised HTTPError 404 (0.615 s), CHECK_FAILED EXCEPTION; ZZQXJVK raised HTTPError 404 (0.510 s), CHECK_FAILED EXCEPTION. The zero-rows-without-exception reading in the read record is the hidden-config behaviour; with the config honoured the same 404 raises. The ruling is applied as written; whether a 404 HTTPError should count as a clean NOT_KEPT is the CTO's to rule.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~106/r23/YFINANCE_CHECKER.json measurement block (committed with this row)",
+      "yfinance 1.2.0 scrapers/history.py:80-98 and :268-273 (raise when hide_exceptions is False) @site-packages",
+      "measurement script C:/dev/wk-irpt-anlreq-106/.scratch/measure_yfinance_checker.py run 2026-10-13"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Safe direction: the symbol stays unknown and is never read as absent. The finding will say check failed for holdings Yahoo calls not found."
+},
+{
+  "id": "IRPT_ANLREQ-D2-W106-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~106",
+  "surfaced_at": "2026-10-13T21:04:04Z",
+  "one_line": "The default port's error-shaped-empty-frame fallback reads yfinance.shared._ERRORS, a private module dict; the signal is verified on yfinance 1.2.0 (dell2) only, and dell1 runs 1.7.0, which is not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-292 interface: the default port classifies an error-shaped empty frame from the error signal, never as absent; the hidden-error frame is built from what the measurement showed for ALPPL.",
+  "world_is": "yfinance 1.2.0 shared.py:24 defines _ERRORS, and scrapers/history.py:97, :123, :272 and :480 write shared._ERRORS[ticker] on the hidden-error path. The port reads that dict after an empty frame and raises ErrorFrame when an entry exists; with no observable signal it raises ErrorFrame too, so an empty frame is never read as absent. No public accessor for the signal was found. The hidden-error fake in test_yfinance_check.py mirrors these lines. yfinance 1.7.0 (dell1) was not read, so the private name is unverified there.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "yfinance 1.2.0 shared.py:24 and scrapers/history.py:97,123,272,480 (site-packages, read on dell2 2026-10-13)",
+      "infra/aws/lambda/investor-reporting/intake/yfinance_check.py default_history @d2c68580a1 (module written by this order)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "If a later yfinance renames _ERRORS, the fallback fails safe: an empty frame raises ErrorFrame rather than reading NOT_KEPT."
+}
+]
+```

@@ -3995,3 +3995,27 @@ Denominator: 1 scheduler schedule and 0 EventBridge rules carry the `astn` prefi
 - **Why a workstream and not the next round:** the schedule fires nightly; a cell cut after the round-84 L10 would let more runs go. Disjoint boundary (an AWS scheduler and one Terraform line, no harvest code, no site Z), disjoint write surface, a different `~lane` (`HV1`), one issuer.
 - **Not orders:** deleting the schedule, the Lambda or the bucket; the dormant FT-reattempt code (stays as recorded); any change to the digest content or its recipients.
 - **Checks dry-run at the base before the cut:** AC1 base FAIL as expected (the live schedule reads `ENABLED`); AC2 base PASS as expected (the expression reads `cron(0 3 * * ? *)`, which is also its after-state: an unchanged-field control); AC3 base FAIL as expected (the source reads `"ENABLED"`).
+
+## 104. ROUND 85 -- the session refresh, then the project PARKS (`1.0.0_SA_CTO~DELL1` msg 5209, `ledger/ROUND_ANALYSIS.round84.md` section 2; Andrew-direct ~21:1xZ), 2026-10-13 ~21:4xZ
+
+Round 84 ended bx-4's acceptance NOT MET (row `AMGT_HARVST-Z-S119`): wsj returned 401 after 35 pairs and 69 minutes under `--no-sign-in`, barrons on its first key, though both saved sessions read `VALID=True` (a local predicate).
+The CTO's ruling (A): the runner refreshes once per publisher per cycle through the existing `SessionManager`; no new credential path, no secret printed; the refusal class is recorded before the refresh, and if it is not
+expiry the refresh cannot fix it and that is the finding; closed on one full cycle per publisher with the session alive at its end, or the named non-expiry cause. After round 85 the project PARKS and `~W1` stands down.
+
+**Where the seam is (read, names and line ranges only):** each pair is one `collector run --no-sign-in ... --max-jobs 1` subprocess spawned by `backfill_driver.Collector.run_job` (about line 262); a persisted 401 raises `transport.AuthExpired`
+(raise sites about lines 591 and 607), `worker.run_job` turns it under `--no-sign-in` into `SignInRefused` and the job status `sign_in_refused` (about lines 753-756 and 773-776); `drive()` (about line 360) treats `sign_in_refused` as a
+STOP status. `auth.SessionManager.refresh(publisher)` is the existing sign-in. So the budget "once per publisher per cycle" belongs to `drive()`, which is called once per cycle and owns the checkpoint, not to the per-pair subprocess.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-bz-9` | `bz-9` | **A refused pair carries its evidence, and the driver refreshes once.** `AuthExpired` carries `status`, `host`, `login_redirect`; the job record carries a `refusal` object (field names only, no body, no cookie); `drive()` prints a `REFUSAL` line and records it in the checkpoint for ANY stop status with its class from one explicit table over `STOP_STATUSES`; under a new flag `--refresh-once` (default OFF) a `sign_in_refused` job whose class is `expired` gets ONE `SessionManager.refresh(publisher)` per publisher per cycle (budget kept in the checkpoint, so a restart does not re-spend) and the SAME pair replays once; a second refusal in the cycle, a refresh that raises, or any other class makes no further sign-in. `cycle_runner` passes the flag; the installer gains `-RefreshOnce`. | LOCAL | worker `0.9.0_WK_AMGT_HARVST~139` | CUT |
+| `HVST-bz-10` | (cut after bz-9's merge) | **Site Z re-registered with `-Windowless -RefreshOnce`** at a cycle boundary by the stop file, `-Plan` read first, one runner, both pins locked, the old pin kept as the signed rollback. | WORLD | seat `0.7.0_AE_CloudOps~ZW` | STAGED: cut under workstream `REFRESH-SITEZ` once its pin (bz-9's merge) is a real commit and the pair is signed |
+| `HVST-bz-11` | (cut with bz-10) | **The close read, read only:** each of `wsj` and `barrons` ends one full cycle (`completed true`, `stopped` none) with the session alive at its end, OR the checkpoint's `REFUSAL` record names a non-expiry cause for the publisher. Organic, about a cycle length. | LOCAL (read) | seat `0.7.0_AE_CloudOps~ZW` | STAGED with bz-10 |
+| read | (none) | **The 2026-10-14 07:00Z non-fire of `astn-wsjft-3am-run`** (Lambda `Invocations` for that window, expect none). | LOCAL (read) | `2.0.0_SA_COO~W1` | CARRIED, not an order |
+
+- **Fan-out:** 1 worker, 1 chain of 1, cap 8. bz-10 and bz-11 are seat orders, not spawns.
+- **Why the refresh is gated on the class:** a refresh costs a headful sign-in on a shared Dow Jones account that can lock. It is spent only when the response says the session expired; a bot check, an entitlement stop or an unclassified refusal is recorded and left alone.
+- **The class table (MECE over the declared domain `STOP_STATUSES`):** `sign_in_refused` -> `expired`; `bot_check` -> `blocked`; `account_or_harvester_unavailable` -> `entitlement`; every other member (`unclassified`, `throttled`, `upstream_unavailable`, `cooldown`, `error`, `upload_timeout`) -> `other`.
+- **Why bz-10 is not cut in this issuance:** its pin is bz-9's merge commit, which does not exist yet (the same shape as bz-3 -> bz-4).
+- **Not orders:** a re-mint (round 84's finding was that a plain re-mint postpones wsj and leaves barrons untouched); FT; the servable-prefix list work (a standing deliverable).
+- **Checks dry-run at the base before the cut:** bz-9 AC1 base FAIL as expected (`no tests ran`: the file does not exist); bz-9 AC2 base PASS as expected (`76 passed`).

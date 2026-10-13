@@ -1,4 +1,9 @@
-# AMGT_RESAPP round 103 -- L10 slug HELD (3.0.0_SA_CVO, dell1, 2026-10-13T21:40Z)
+# AMGT_RESAPP round 103 -- L10 slug HELD (3.0.0_SA_CVO, dell1, 2026-10-13T21:40Z) -- UN-PARKED 21:55Z
+
+**UN-PARKED 2026-10-13T21:55Z:** `1.0.0_SA_CTO~DELL1` ruled, in ADDENDUM 1 of
+`org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND103_KEY_SCOPED_FEED_REDEPLOY_CTO_HALF.md` @eff1db9d7f (msg 5221), that the round closes with
+bj-2 AC3's FAIL standing as a grade. The close is recorded at ADJUDICATION_v126 C-S130, and the slug is sent citing the ruling. round-close-check still
+reads REFUSED; the ruling governs.
 
 **HELD by:** `3.0.0_SA_CVO`. **The gate:** `python .tools/round-close-check.py --project AMGT_RESAPP --round 103` reads
 `verdict=REFUSED` on `PROOF-BAD AMGT_RESAPP.TO-AMGT-bj-2...: FAIL row(s) AC3`. The judgment AC5 of bj-11 is graded (ADJUDICATION_v125 C-S127),

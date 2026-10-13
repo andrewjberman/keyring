@@ -440,3 +440,95 @@ Filed by 2.0.0_SA_COO~ZB while preparing the Z6 repairs 2-5 issuance (CTO ruling
   "notes": "Repair 4 is NOT cut in the Z6 issuance; it is parked on this row. Un-park condition: a CTO ruling on who re-mints opal/ticketing/svc-analyst-intake and under which project, then the re-run of r4_backlog_read.py reads a number. Asked of 1.0.0_SA_CTO~Z in one message. The row's ARMED standing is the client-facing hazard the ruling named: whoever re-mints the token without the pin fix gets exit 2 still; whoever re-mints it WITH the pin fix landed gets a first good pass that may post the whole backlog since cursor 2026-08-20T20:18Z into the client ticket channel. So the re-mint and the pin must be one act behind the backlog read."
 }
 ```
+
+### OPAL_BBGTML-Z-S15 -- the P0 gate's trailing line still says "transport sustained-down" on the new listener-up path, so the gate's own output contradicts itself
+
+Filed by 0.7.0_AE_CloudOps~ZS while executing TO-Z6-R2 (cell Z6-R2). The line is inside the edited STEP 2 but outside the order's instruction set, so it was left byte-unchanged rather than amended at the cut.
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S15",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~ZS",
+  "surfaced_at": "2026-10-13T21:20Z",
+  "one_line": "On the new $absent -eq 0 path the gate prints 'P0 gate: 8194 listening (3/3) ... listener up, not entitled' and then, two lines later, 'P0 gate: transport sustained-down, network OK -> sign-in warranted' -- the transport is NOT down on that path, so an unattended pull log now carries two contradictory classifications of the same state.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZB",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-13 ~21:10Z, AC1 of TO-Z6-R2 (r2_p0_listener_check.sh against the deployed bytes @f6cc68d6bf), full stdout in order: '[fallback] DAPI DOWN.' / '[fallback] P0 gate: 8194 listening (3/3) but dapi_check failed -> listener up, not entitled -> sign-in warranted.' / '[fallback] P0 gate: transport sustained-down, network OK -> sign-in warranted.' / '[fallback] fire-once ledger clear (0 in 6h).' / '[fallback] STUB: would now fill ...'",
+      "READ integrations/bloomberg/auth/bbg_fallback.ps1 @f6cc68d6bf line 66: 'Say \"P0 gate: transport sustained-down, network OK -> sign-in warranted.\"' sits after the two network checks and is reached unconditionally by both the $absent -eq 0 and the $absent -eq 3 branches."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-Z6-R2 the_act item 2: on $absent -eq 0 print EXACTLY the 'listener up, not entitled' line 'and continue into the existing network checks (69.187.48.83:8194 and the 8.8.8.8:53 control), then STEP 3'. It names no change to the trailing line, and its bounds say nothing else in the file changes.",
+  "world_is": "Both lines print on the same run. AC1 does not grade the trailing line (it greps only for the absence of 'not sustained-absent', the presence of 'listener up, not entitled', and the stub/fire-once marker), so the criterion passes with the contradiction in place.",
+  "notes": "Remedy is one line and is the ISSUER's cut, not this seat's: guard it as 'if ($absent -eq 3) { Say ... }'. This seat wrote and discarded exactly that edit to stay inside the order's bounds mid-round. Cost of leaving it: a human reading tomorrow's 07:00 ET pull log sees the gate assert the transport is both up and sustained-down. No behavioural effect -- the branch taken is correct either way."
+}
+```
+
+### OPAL_BBGTML-Z-S16 -- `wintrv.exe` absence is not a signed-out oracle: the DAPI measured UP and ENTITLED with zero wintrv processes, so the trace's "INFERRED signed out" and disposition 1's premise are both unconfirmed
+
+Filed by 0.7.0_AE_CloudOps~ZS while executing TO-Z6-R2 AC2 (the real, un-forced run). The reading instrument is the one the ruling itself prescribes.
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S16",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~ZS",
+  "surfaced_at": "2026-10-13T21:20Z",
+  "one_line": "At 21:12-21:14Z the Terminal's DAPI was UP and ENTITLED (a real SPX Index/PX_LAST returned) while Get-Process wintrv read 0 and the only Bloomberg processes were bbcomm and blpcrashmon, both started 19:07:29Z -- so 'no wintrv.exe therefore signed out' is an unsound inference, and the state the Z6 repair was cut against was not the state on the box.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZB",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-13 ~21:12Z, AC2 of TO-Z6-R2, un-forced run of the deployed bytes: 'powershell -File integrations/bloomberg/auth/bbg_fallback.ps1 -StubSubmit' printed '[fallback] checking DAPI availability...' then '[fallback] DAPI UP -- proceed with pull, no sign-in needed.' exit=0. Dapi-Up had just run dapi_check.py for real (no -ForceDown).",
+      "MEASURED 2026-10-13T21:14:16Z, second independent run of the same oracle directly: 'C:\\Anaconda\\envs\\cma\\python.exe integrations/bloomberg/auth/dapi_check.py' printed 'DAPI: UP (session + SPX Index/PX_LAST returned -- entitled session live)' rc=0.",
+      "MEASURED the same minute: @(Get-Process -Name wintrv).Count = 0; the process census matching 'wintrv|bbcomm|blp|bbg|dde' returned exactly bbcomm (pid 17756, started 2026-10-13T19:07:29.3429109Z) and blpcrashmon (pid 27320, started 19:07:29.3996499Z). 8194 listeners = 1, owned by bbcomm pid 17756.",
+      "READ CTO_RULING_OPAL_BBGTML_Z6_REPAIR_DISPOSITIONS_20261013_Z.md: the leg table records 'after the 14:57 ET reboot there is no wintrv.exe, so the Terminal is INFERRED signed out', and disposition 1 says 'Confirm the sign-in with dapi_check.py, which makes a real data request, never bloomberg_health'. This row runs that prescribed confirmation and it disagrees with the inference."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-Z6-R2 context, 'Live state at issue (measured 20:36Z)': '8194 LISTEN with one listener (bbcomm.exe started by integrations/bloomberg/mcp/server.py); the Terminal shell wintrv.exe is not running (inferred signed out).' Disposition 1 treats a Terminal sign-in before 07:00 ET 2026-10-14 as Andrew's act, on the premise that the Terminal is signed out.",
+  "world_is": "The DAPI is up and entitled with no wintrv.exe. Either the session was signed in all along (and wintrv is simply not the Terminal's live process name on this box), or it was signed in between 20:36Z and 21:12Z by an act this seat did not make and no record this seat read names. Not distinguished here; the 20:36Z reading was itself taken with the same unsound instrument, so there is no sound before-measurement to compare against.",
+  "notes": "TWO consequences the issuer should weigh before 11:00Z. (1) Andrew's open call to sign the Terminal in may already be satisfied -- it should be re-read with dapi_check, not with a wintrv census. (2) EVIDENCE LIMIT on repair 2 itself: AC1 reaches the new classification only under -ForceDown, which short-circuits Dapi-Up before dapi_check is ever called. So the 'listener up, not entitled' branch has been exercised against a FORCED STEP-1 failure and never against a genuinely un-entitled session. ABSENT is not EXERCISED-AGAINST. The repair is still correct and still needed -- whenever a real dapi_check fails while 8194 listens, the old gate refused to sign in -- but nobody should report it as proven against the live un-entitled state."
+}
+```
+
+### OPAL_BBGTML-Z-S17 -- the file cell Z6-R2 was ordered to edit sits under a standing Andrew no-modify order that names "the sign-in scripts", and the ruling that cut the edit neither cites nor lifts it
+
+Filed by 0.7.0_AE_CloudOps~ZS after the edit landed. Surfaced, NOT adjudicated: per CLAUDE.md the receiving agent does not read a sovereign order wider or narrower, and this seat did not revert on its own reading.
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S17",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~ZS",
+  "surfaced_at": "2026-10-13T21:20Z",
+  "one_line": "integrations/bloomberg/auth/bbg_fallback.ps1 was edited and deployed under TO-Z6-R2 while the record of Andrew's no-modify order says at HEAD that it 'still stands for the Positioning and ETFS-view files (integrations/bloomberg/pipeline/, the vehicle and the sign-in scripts)' -- and the CTO ruling that cut the cell contains no mention of the no-modify order at all.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~ZB",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ at HEAD, org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_201xZ_BLOOMBERG_NO_MODIFY_IS_POSITIONING_AND_ETFS_VIEW_RESEARCH_OUTSIDE_OPEN_SEASON.md lines 27-28, bytes printed: 'The order still stands for the Positioning and ETFS-view files (`integrations/bloomberg/pipeline/`, the vehicle and the sign-in\\nscripts), per call 5 of `ANDREW_DIRECT_20261006_1818Z_ALL_RECS_APPROVED_MSTRZ_OPEN_CALLS.md`.' The phrase wraps the line break, so a single-line grep for 'sign-in scripts' returns 0 against a file that contains it.",
+      "READ integrations/bloomberg/auth/bbg_fallback.ps1 header line 2: 'bbg_fallback.ps1 -- UNSUPERVISED Bloomberg DAPI-down sign-in fallback (LD-0413)'. It is a sign-in script on its own description.",
+      "CENSUS of CTO_RULING_OPAL_BBGTML_Z6_REPAIR_DISPOSITIONS_20261013_Z.md (4387 bytes, whole file) for 'no-modify|no modify': 0 hits. Its stated basis is 'Andrew's site Z memo: \"We want to make sure that's functional ... that people can use it.\"'",
+      "ABSENT at HEAD: the basis the 201xZ record cites, 'ANDREW_DIRECT_20261006_1818Z_ALL_RECS_APPROVED_MSTRZ_OPEN_CALLS.md'. git ls-tree -r HEAD org/tier1_exec/ lists 43 ANDREW_DIRECT_20261006_* records and that filename is not among them; git log --diff-filter=D over the pattern returns no deletion. The nearest same-hour records are ANDREW_DIRECT_20261006_181xZ_*. So the standing clause's own citation does not resolve to a readable record.",
+      "The surprise channel's own header (INVESTIGATION_v1.md line 4) states: 'integrations/bloomberg/ is under Andrew's no-modify order, so any remedy is his word.' Prior seats honoured it as covering this surface: BBG_SIGNIN_CLICK_COORD_DRIFT_20261006.md line 3 reads 'Status: PROPOSAL. NOT APPLIED. integrations/bloomberg/ is no-modify'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO ruling @61e3067f5c disposition 2 cuts the edit as a CELL under OPAL_BBGTML: 'The file runs from the working tree, so the edit is the deploy: the cell carries a change-management entry and one real run.' TO-Z6-R2 names the file as the one production file to edit and states 'Saving the file IS the deploy.' Neither names the no-modify order.",
+  "world_is": "The edit is landed and deployed at @f6cc68d6bf on box/sitez and is what the 07:00 ET 2026-10-14 Scheduled Task will run. Whether the Z6 memo ('make sure that's functional') lifts a standing order that specifically names the sign-in scripts is a sovereign reading this seat is barred from making in either direction, so it did not revert and did not widen.",
+  "notes": "NOT A CLAIM THAT THE CELL WAS WRONGLY CUT. Two readings are open and this seat holds neither: (a) the Z6 memo authorises functional repair of the sign-in path, in which case the 201xZ record's standing clause is stale and should be struck; (b) the order stands, in which case cells Z6-R2 and Z6-R3 need Andrew's word and this one is already landed. DISARM IS ONE ACT EITHER WAY: the issuer or 1.0.0_SA_CTO~Z states which reading holds, in a record. If (b) and he says revert, the rollback is already specified by the order: git checkout f6cc68d6bf~1 -- integrations/bloomberg/auth/bbg_fallback.ps1, commit, and close the deploy ledger entry opal-bbgtml-z6-r2-p0-gate-20261013 as rolled back -- a 0-risk revert to bytes sha256 5aeb770858cead537dd8106754324a3428a580260cb259a2855f3c89395d9193. TIME-BOXED: whichever way it falls, it should fall before the 11:00Z fire. This row also blocks R3 (the next order on this lane), which edits bbg_signin.ps1 -- squarely a sign-in script by name."
+}
+```
