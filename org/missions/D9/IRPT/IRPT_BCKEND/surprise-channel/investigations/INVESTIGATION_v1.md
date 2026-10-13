@@ -31189,3 +31189,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "After the change the folder reads 2 fail: the producer fixtures and F14-AC3. IVE26-AC3 and IVE98 pass here, and the worker did not measure the base in this worktree, so the cause of the difference is not settled. The criterion (at least 1214 pass, at most 4 fail) is met."
 }
 ```
+
+## IRPT_BCKEND-D2-S128 -- DISPOSITION after the round-174 drain
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S128",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T06:33:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISPOSITION after the round-174 drain: W357-S4 and S5 superseded by the CTO's six-class ruling (RE 6818); W356-S1 to S3 and W357-S6 to S8 are observations, ruled.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer re-run: IB174-1 AC1, AC2, AC3 PASS in the merged tree (merge 50fc1010d5); IB174-2 AC1, AC2, AC3 PASS in worker 357's worktree at portal 63b31b0c (merge 7c14d46b59 workspace side); the generated wire file differs from base by the header sha256 line and the optional account_id member only (read).",
+      "CTO RE 6818 and the round-174 analysis section 3 @cbcc4a88b8: the portal keeps six classes; iv-e-148 (quoting Andrew-direct 2026-10-07) stands as written and the check pins its sha256."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "CLOSED: W357-S4 (iv-e-148 six_class (d) failed after a regeneration to the contract's enum) and W357-S5 (the adapter folds multi_asset to unclassified): superseded, the wire generator now subtracts the retired set {multi_asset} and the adapter logs a served retired token; the worker's own row S6 asks the CVO to close them. RULED OBSERVATIONS: W356-S1 (validate_snapshot is called in run_firm, which main reaches; my wording), W356-S2 (land writes a local file before its validate hook when called directly with upload off; no production path does, and it is not an S3 write; the S3 path is validated at publication.py:232 and run_firm), W356-S3 (the combined pytest of test_runner_jsonschema_tolerance.py with the builder tests stops at collection: the file removes .tools from sys.path then imports safe_deploy_core; a pre-existing import-order defect in a test I do not own, no repair cut), W357-S7 (the regenerated wire header sha256 line moved with the contract), W357-S8 (IVE26-AC3 and IVE98 pass in the worker tree; the folder failures there are producer fixtures and F14-AC3). STILL ARMED: W345-S3, W348-S2, W346-S2, W346-S3, W350-S1 as in D2-S126 and S127; the portal candidates 346, 350, 353, 355 and 357 await the DEV review lane."
+}
+```
