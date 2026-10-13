@@ -830,32 +830,6 @@
 }
 ```
 
-## NFRA_DEVPLN-S3 -- the pre-push payload limb (CTO addendum) missed round 4; the gate refused a same-round add
-
-```json
-{
-  "id": "NFRA_DEVPLN-S3",
-  "project": "NFRA_DEVPLN",
-  "fabric": "laptop",
-  "surfaced_by": "2.0.0_SA_COO~DV",
-  "surfaced_at": "2026-10-13T23:05Z",
-  "one_line": "The CTO's round-3 analysis ADDENDUM item (a DEV payload limb in the portal repo's pre-push hook) is missing from the round-4 issuance 7dbc992996; the issuer cut without re-reading the analysis after it grew, and the pipeline gate refused adding the order to the same round (one issuance per round).",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "ledger/ROUND_ANALYSIS.round3.md ADDENDUM ~22:3xZ: 'The structural close is a payload check in the portal repo's git pre-push limb ... That is a round-4 cell for this project.' The issuer read the file at ~22:25Z (3 sections) and cut at ~22:55Z (issuance 7dbc992996: DP-e-1, DP-e-2, DP-e-3).",
-      "attempted amendment commit adding NFRA_DEVPLN.TO-DP-e-4: .tools/to-pipeline-gate.py REFUSED it: 'workstream ENRICHMENT round 4 of NFRA_DEVPLN already has an issuance at HEAD ... ONE ISSUER PER ROUND is keyed to the ROUND, never the serial (Rule 27)'. No override was taken. The draft order is saved at org/tier1_exec/2.0.0_SA_COO~DV/deliverables/drafts/ROUND5_DRAFT_dev-push-payload-limb.md",
-      "the CTO named .tools/git-hooks/pre-push-safe-deploy.sh as the portal repo's pre-push limb; that file is the workspace repo's HALTGT hook (it delegates to safe-deploy.sh and never runs on a portal push). The portal repo's installed hook portal/.git/hooks/pre-push is byte-identical to .tools/portal-hooks/pre-push (cmp), which already carries the per-ref VALGATE loop"
-    ]
-  },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "CTO round-3 analysis addendum: the pre-push payload limb is a round-4 cell for NFRA_DEVPLN, in .tools/git-hooks/pre-push-safe-deploy.sh.",
-  "world_is": "The limb is not in round 4. The correct file is .tools/portal-hooks/pre-push (plus a separate checker script). It becomes the first cell of round 5 unless the CTO rules an audited pipeline override into round 4 on his own word; the issuer takes neither route on its own."
-}
-```
-
 ## NFRA_DEVPLN-W1-S13 -- the worktree's portal gitlink is recorded at 4d601023 but its nested checkout sits at 24877b67, so git status shows portal modified before any edit
 
 ```json
@@ -882,6 +856,32 @@
 }
 ```
 
+## NFRA_DEVPLN-S3 -- the pre-push payload limb (CTO addendum) missed round 4; the gate refused a same-round add
+
+```json
+{
+  "id": "NFRA_DEVPLN-S3",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~DV",
+  "surfaced_at": "2026-10-13T23:05Z",
+  "one_line": "The CTO's round-3 analysis ADDENDUM item (a DEV payload limb in the portal repo's pre-push hook) is missing from the round-4 issuance 7dbc992996; the issuer cut without re-reading the analysis after it grew, and the pipeline gate refused adding the order to the same round (one issuance per round).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ledger/ROUND_ANALYSIS.round3.md ADDENDUM ~22:3xZ: 'The structural close is a payload check in the portal repo's git pre-push limb ... That is a round-4 cell for this project.' The issuer read the file at ~22:25Z (3 sections) and cut at ~22:55Z (issuance 7dbc992996: DP-e-1, DP-e-2, DP-e-3).",
+      "attempted amendment commit adding NFRA_DEVPLN.TO-DP-e-4: .tools/to-pipeline-gate.py REFUSED it: 'workstream ENRICHMENT round 4 of NFRA_DEVPLN already has an issuance at HEAD ... ONE ISSUER PER ROUND is keyed to the ROUND, never the serial (Rule 27)'. No override was taken. The draft order is saved at org/tier1_exec/2.0.0_SA_COO~DV/deliverables/drafts/ROUND5_DRAFT_dev-push-payload-limb.md",
+      "the CTO named .tools/git-hooks/pre-push-safe-deploy.sh as the portal repo's pre-push limb; that file is the workspace repo's HALTGT hook (it delegates to safe-deploy.sh and never runs on a portal push). The portal repo's installed hook portal/.git/hooks/pre-push is byte-identical to .tools/portal-hooks/pre-push (cmp), which already carries the per-ref VALGATE loop"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-3 analysis addendum: the pre-push payload limb is a round-4 cell for NFRA_DEVPLN, in .tools/git-hooks/pre-push-safe-deploy.sh.",
+  "world_is": "The limb is not in round 4. The correct file is .tools/portal-hooks/pre-push (plus a separate checker script). It becomes the first cell of round 5 unless the CTO rules an audited pipeline override into round 4 on his own word; the issuer takes neither route on its own."
+}
+```
+
 ## NFRA_DEVPLN-W2-S11 -- the merge-forward self-test fixture writes have no exit check, so a failed write silently produces a degenerate graph
 
 ```json
@@ -905,5 +905,31 @@
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## NFRA_DEVPLN-W1-S14 -- the DP-e-2 build step 6 needs a git-source test seam the order does not name; the cell adds OPAL_GIT_READ_ROOT (tests only) beside OPAL_CLOUD_READ_LOCAL
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S14",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-13T23:13:04Z",
+  "one_line": "The order names one test-only variable (OPAL_CLOUD_READ_LOCAL) for the cluster stand-in, but its git-newer-than-cluster case cannot run without a controlled origin/box/<box> ref; the cell adds a second test-only variable OPAL_GIT_READ_ROOT, read only when set, and the test builds its own temporary repository",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "approval_read git source before this cell (.tools/open-calls.py at 4d40d2552f): subprocess.run([\"git\", \"-C\", ROOT, \"show\", \"origin/box/<box>:org/devices/state/<box>/open_calls.json\"]); ROOT is the real checkout, so a test reads the real refs",
+      "git -C <worktree> rev-parse origin/box/dell2 is the real remote ref; a test that needs git newer than a stale cluster copy must either write a real ref or read the real dell2 history, and neither is a temporary state",
+      ".tools/tests/test_open_calls_cloudread.py case 2 (git newer than a stale cluster copy) runs with OPAL_GIT_READ_ROOT pointing at a temporary repository; 7/7 cases pass, and the real refs are untouched"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DP-e-2 build step 4 adds ONE test-only variable, OPAL_CLOUD_READ_LOCAL, and build step 6 requires a foreign box whose git copy is newer than a stale cluster copy to read git, on a temporary state root.",
+  "world_is": "The git source has no test seam of its own, so the git-newer case cannot be exercised without a second variable; OPAL_GIT_READ_ROOT is that seam (the repository whose origin/box refs are read, default ROOT, unset in production). The order's one-variable count is exceeded by this one; the production read path and the grammar of the approval-status line are unchanged."
 }
 ```
