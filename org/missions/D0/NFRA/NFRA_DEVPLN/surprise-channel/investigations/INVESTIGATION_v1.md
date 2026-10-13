@@ -829,3 +829,29 @@
   "world_is": "Two defects in the route for a feature on a box other than the one running the merge-forward. (1) A duplicate row is read as the feature's row and cannot be withdrawn: the route needs a close decision of withdrawn that the status reader ignores (all rows withdrawn reads ABSENT, so the consumers refuse). (2) A foreign box's list is read from a possibly stale local copy; a stale readable copy reads as ABSENT, which for a test-only change would let the merge-forward proceed. The reader should take a foreign box's list from the cluster copy first and fall back to git. Interim: leave both rows OPEN and have Andrew close BOTH with the same decision. Proposed as the first two cells of round 4, ahead of the CTO's analysis."
 }
 ```
+
+## NFRA_DEVPLN-S3 -- the pre-push payload limb (CTO addendum) missed round 4; the gate refused a same-round add
+
+```json
+{
+  "id": "NFRA_DEVPLN-S3",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~DV",
+  "surfaced_at": "2026-10-13T23:05Z",
+  "one_line": "The CTO's round-3 analysis ADDENDUM item (a DEV payload limb in the portal repo's pre-push hook) is missing from the round-4 issuance 7dbc992996; the issuer cut without re-reading the analysis after it grew, and the pipeline gate refused adding the order to the same round (one issuance per round).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ledger/ROUND_ANALYSIS.round3.md ADDENDUM ~22:3xZ: 'The structural close is a payload check in the portal repo's git pre-push limb ... That is a round-4 cell for this project.' The issuer read the file at ~22:25Z (3 sections) and cut at ~22:55Z (issuance 7dbc992996: DP-e-1, DP-e-2, DP-e-3).",
+      "attempted amendment commit adding NFRA_DEVPLN.TO-DP-e-4: .tools/to-pipeline-gate.py REFUSED it: 'workstream ENRICHMENT round 4 of NFRA_DEVPLN already has an issuance at HEAD ... ONE ISSUER PER ROUND is keyed to the ROUND, never the serial (Rule 27)'. No override was taken. The draft order is saved at org/tier1_exec/2.0.0_SA_COO~DV/deliverables/drafts/ROUND5_DRAFT_dev-push-payload-limb.md",
+      "the CTO named .tools/git-hooks/pre-push-safe-deploy.sh as the portal repo's pre-push limb; that file is the workspace repo's HALTGT hook (it delegates to safe-deploy.sh and never runs on a portal push). The portal repo's installed hook portal/.git/hooks/pre-push is byte-identical to .tools/portal-hooks/pre-push (cmp), which already carries the per-ref VALGATE loop"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-3 analysis addendum: the pre-push payload limb is a round-4 cell for NFRA_DEVPLN, in .tools/git-hooks/pre-push-safe-deploy.sh.",
+  "world_is": "The limb is not in round 4. The correct file is .tools/portal-hooks/pre-push (plus a separate checker script). It becomes the first cell of round 5 unless the CTO rules an audited pipeline override into round 4 on his own word; the issuer takes neither route on its own."
+}
+```
