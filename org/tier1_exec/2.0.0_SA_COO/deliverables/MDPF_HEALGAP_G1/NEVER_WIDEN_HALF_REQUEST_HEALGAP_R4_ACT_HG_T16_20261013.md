@@ -86,4 +86,9 @@ freshness time or compares `holdings_as_of` with `as_of`.
 4. The organic arm, read when it occurs: the first day with `PARTITION-ABSENT` followed by the partition's arrival serves the day at the next :55; a day written at 13:26Z
    draws `HOLDINGS-NOT-FINAL` before 13:15Z and only `SKIP-COMPLETE` after it.
 
-**Merge pin (filled at the drain):** not yet.
+**Merge pin (filled at the drain, 2026-10-13 ~15:0xZ):** worker `0.9.0_WK_MDPF_HEALGAP~13` branch `wk-MDPF_HEALGAP-13` merged by `.tools/safe-merge.sh` as
+`8cc7e0458e` (LOCAL on `box/dell1`; code commit `bc2389506c`, record commit `1c90de5363`). The issuer re-ran the three criteria in the worker's tree
+(`T16-OK`, `T16IAM-OK`, `GATE-OK` 15 arms), validated the instance (`VALID` rc=0), and byte-compared the worker's two code files with the reference
+patches applied on a clean worktree at the issuance base (IDENTICAL for the `.tf` and the handler). `py_compile` OK, `ruff` (py39) clean, the three
+checks re-run on main after the merge. The package build and the targeted plan are the first acts after your half; the plan's counts are read then, not
+predicted here.
