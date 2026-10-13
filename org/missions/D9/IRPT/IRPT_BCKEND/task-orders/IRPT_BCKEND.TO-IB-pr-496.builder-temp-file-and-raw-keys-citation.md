@@ -19,6 +19,8 @@
 
 ## WORKER FACE
 
+**AMENDMENT 1 (issuer, 2026-10-13T03:3xZ; your rows S1, S2 and S3 were right):** (a) S1: `data/assets/scripts/gold/investor_reporting/holdings_inf.py` leaks the same way (`retained_capture(...)` at about :286 for `IRPT_INF_ECLIPSE_MEMBERSHIP_SNAPSHOT`, read once by `eclipse_membership_capture(capture_path)` right after): `holdings_inf.py` and its test are now IN your paths; fix it the same way (remove the file the builder created, only when the vintage carries no `env` key, whether the read returns or raises), and add TWO arms for it to your test file (so five or more in all; the file must name `holdings_inf`). (b) S2: also correct `holdings_citation` in the same `raw_keys.json` entry to cite the live mint (`holdings_49f.py:363`, the line you found; the order's `:339` was a line number that had moved). (c) S3 stands: cite `:363`. Everything else is as written below.
+
 **Cell `IB-pr-496` (inlined):** every live 49 Financial build copies the Tax membership snapshot, which carries client account numbers, to a system temp file and never removes it. `data/assets/scripts/gold/investor_reporting/holdings_49f.py` `build_49f_meshed` (:633) calls `holdings_snapshot.retained_capture(...)` (`holdings_snapshot.py:1266`), which, when the operator's env var `IRPT_49F_TAX_MEMBERSHIP_SNAPSHOT` is unset, reads the snapshot object with the build's own `s3` and writes its bytes with `tempfile.mkstemp(suffix="-" + obj)` and returns that path; nothing removes it, so a build that returns AND a build that raises both leave one account-bearing file. **BUILD ONLY: no deploy, no AWS call, no run of the live builder. Client data stays out of every file.**
 
 **Fix it, in `holdings_49f.py` and/or `holdings_snapshot.py` (your choice of the smaller edit; no other module):** the builder either reads the snapshot in memory, or removes the file it created in a `finally` that runs on return AND on a raise. A file the OPERATOR supplied through the env var is NEVER removed (it is theirs): remove only a file the builder itself created. Read `build_49f_meshed` (:603-650) and `retained_capture` (:1266-1290) and every other caller of `retained_capture` (`grep` the gold-runner tree; if another caller leaks the same way, fix it the same way and say so).
@@ -35,7 +37,7 @@
 
 <expected_criteria>IB171-1-AC1, IB171-1-AC2, IB171-1-AC3</expected_criteria>
 
-What the checks grade: AC1 your new test file passes (3 or more, none failed); AC2 the issuer's seam probe on stubs: a build that raises, a build that returns, and an operator-owned env-var file (kept) leave no builder-created snapshot temp file; AC3 `raw_keys.json`'s `holdings_source` cites `dim_balance` and `holdings_49f` and no longer names the smartx map. Do not edit the checks. Existing tests: run `data/assets/scripts/gold/investor_reporting/tests/test_holdings_49f.py` ONCE at the end (22 pass at base) and report; do NOT run the whole `tests/` folder (one test in it makes live read-only AWS calls).
+What the checks grade: AC1 your new test file passes (5 or more, none failed) and names `holdings_inf`; AC2 the issuer's seam probe on stubs: a build that raises, a build that returns, and an operator-owned env-var file (kept) leave no builder-created snapshot temp file; AC3 `raw_keys.json`'s `holdings_source` cites `dim_balance` and `holdings_49f` and no longer names the smartx map. Do not edit the checks. Existing tests: run `data/assets/scripts/gold/investor_reporting/tests/test_holdings_49f.py` ONCE at the end (22 pass at base) and report; do NOT run the whole `tests/` folder (one test in it makes live read-only AWS calls).
 
 ## BOUNDS
 
@@ -46,6 +48,7 @@ What the checks grade: AC1 your new test file passes (3 or more, none failed); A
 <paths>
 data/assets/scripts/gold/investor_reporting/holdings_49f.py
 data/assets/scripts/gold/investor_reporting/holdings_snapshot.py
+data/assets/scripts/gold/investor_reporting/holdings_inf.py
 data/assets/scripts/gold/investor_reporting/tests/test_retained_capture_cleanup.py
 infra/aws/lambda/investor-reporting/_ids/raw_keys.json
 org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
