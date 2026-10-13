@@ -8467,3 +8467,130 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D2-W165-S1 -- The per-day price file carries no price origin (source is dropped at security_day_prices)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W165-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~165",
+  "surfaced_at": "2026-10-13T22:56:38Z",
+  "one_line": "security_day_prices merges each security-day to a min and max price and drops the store's source label, so the per-day file (cusip, date, price, store) cannot say which price is Yahoo-sourced; the dry run rebuilt the label from the store caches.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commonwealth_daily_valuation.py@68c10c2f6c:403-406 (groupby min and max; source not in the group)",
+      ".scratch/dryrun/dryrun_summary.json positive_control_price_table (both 2124908, store_mismatch 0, only_r34 0, only_new 0)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ce-2 item 4: the dry run over the local copies (r34/after/security_day_price.parquet) with the changed code counts the figure rows that read UNVERIFIED under the Yahoo rule, which needs each price's origin.",
+  "world_is": "At HEAD the store's source column is in PRICE_COLS but is not carried past the merge (commonwealth_daily_valuation.py@68c10c2f6c:403-406); the written per-day file has four columns and the local r34 copy has no source. The worktree change appends source. The counts were produced by re-deriving the source per security-day from the price caches under fwd3/price_cache and the as-traded input r34_price_input.parquet. Positive control: store and presence equal on 2124908 of 2124908 rows (.scratch/dryrun/dryrun_summary.json).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W165-S2 -- month_grades existing values not re-derived on the local copies (performance input is outside the grant)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W165-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~165",
+  "surfaced_at": "2026-10-13T22:56:38Z",
+  "one_line": "The month_grades existing values were not re-derived against the served object: the grade rows need Commonwealth's reported performance, an s3 prefix (commonwealth_monthly_grade.performance_prefix, line 45@68c10c2f6c) outside this worker's read grant, so the dry run's existing-values check covers account_day_value and daily_returns only.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commonwealth_monthly_grade.py@68c10c2f6c:45-48 (performance_prefix is an s3 address)",
+      "commonwealth_fwd3_serve.py grade_table (additive porting_verdict column; test passing in the worktree)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ce-2 item 4: the number of figure rows whose existing values change must be 0 for each of the three tables, under both rules.",
+  "world_is": "The appended porting_verdict leaves grade_table's existing columns equal with and without the map on a fixture (test_daily_and_grade_tables_keep_their_existing_columns_under_the_appended_one, passing). The served month rows were not compared with a re-derivation. PORTING_VERDICT_RECORD marks month_grades existing_values_changed as NOT_MEASURED.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W165-S3 -- The r28 split repair cannot be replayed offline: 37077 security-day prices differ by a split factor
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W165-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~165",
+  "surfaced_at": "2026-10-13T22:56:38Z",
+  "one_line": "The r34 per-day price values carry the r28 split repair from dell1's split store, which the offline dry run cannot read; 37077 security-days over 34 CUSIPs differ from the rebuilt price, each by a split factor (30 CUSIPs one constant ratio, 4 vary by day).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".scratch/split_ratio_check.py output: 34 CUSIPs with a price mismatch, 30 with one constant ratio, 37077 rows of 2115525",
+      "commonwealth_daily_valuation.py@68c10c2f6c load_store_splits (S3 read of dell1's split store)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ce-2 item 4 and its positive control: the dry run re-derives the round-82 values from the local copies with the changed code.",
+  "world_is": "The re-derivation reproduces every account-day value (worst absolute difference 0.0 over 1691729 account-days) because it reads the r34 file's prices; the source labels and store ids are exact (store_mismatch 0). apply_splits was not replayed: its split history is read from S3 (load_store_splits in commonwealth_daily_valuation.py@68c10c2f6c). The counts depend only on presence and source, which are exact.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W165-S4 -- The granted performance read covers the Month partition only: Year and InceptionToDate columns of month_grades are NOT_MEASURED
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W165-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~165",
+  "surfaced_at": "2026-10-13T23:31:00Z",
+  "one_line": "AMENDMENT 1 granted one read of performance_prefix() (reporting_period=Month only). The month_grades columns built from the reporting_period=Year and reporting_period=InceptionToDate partitions (reported_year_*, reported_itd_*, benchmark_year_pct, benchmark_itd_pct, and the reported_note and benchmark_description parts that depend on them) were not read and are NOT_MEASURED.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commonwealth_fwd3_serve.py@011ec49e35 load_perf: Month, Year and InceptionToDate each read as base + /reporting_period=<k>, base = performance_prefix() minus its Month suffix",
+      "commonwealth_fwd3_serve.py@011ec49e35 grade_table: reported_year_*, reported_itd_* and benchmark_year_pct / benchmark_itd_pct come from perf_year and perf_itd",
+      ".scratch/mg_measure/mg_measure_summary.json: Month partition 80709 rows; the nine Month-derived existing columns changed 0 of 82593 rows under both rules; control mutant reads 1"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ce-2 AMENDMENT 1: re-derive month_grades under the changed code and compare its EXISTING columns with the served object under both rules; the count must be 0 for every existing column.",
+  "world_is": "The granted read covered the Month partition only. Measured: 0 of 82593 changed on each of the nine Month-derived columns (computed_pct, reported_month_pct, diff_pct, verdict, reason, benchmark_month_pct, list_version, cash_leg, run_commit), wide and narrow. NOT measured: the ten Year- and ITD-derived columns; their partitions are siblings of the granted one and were not listed or read. The diff of grade_table at 68c10c2f6c..011ec49e35 changes only its signature and appends porting_verdict; no Year or ITD line moved, so their values are unmeasured, not measured unchanged. This row narrows ADVI_COTBKF-D2-W165-S2 to the ten columns; S2 is not edited.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W165-S5 -- The order's own status flip is outside the <paths> grant: the order stays issued
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W165-S5",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~165",
+  "surfaced_at": "2026-10-13T23:34:19Z",
+  "one_line": "The order's proof section and the launch brief direct the worker to flip the order's <status> from issued to complete in the proof commit, but the order file (org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-ce-2.porting-verdict-into-the-figures.md) is not in the <paths> write grant; the flip is withheld and the order stays issued for the issuer.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task order <paths> block: deliverables folder, the channel file, the code and test files; the task-orders folder is not listed",
+      "task order proof_of_spec section: 'You flip your own order <status> to complete in the commit that carries the proof instance'",
+      ".tools/proof-of-spec-check.py on the instance: VALID (rc=0) with CB83ce2-AC1, CB83ce2-AC2 PASS and CB83ce2-AC3 UNVERIFIABLE-BY-INSTRUMENT PENDING-ADJUDICATION"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ce-2 proof_of_spec and the launch brief: the worker flips its own order status to complete in the commit that carries the proof instance; <paths> is the worker's write grant and names no task-orders file.",
+  "world_is": "The proof instance and record are valid and committed on this branch; the order file still reads issued. Editing it would write outside <paths>, which the worker rules forbid, so the flip is not made by this worker. The issuer 2.0.0_SA_COO~C2 holds the order and can flip it or widen the grant.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
