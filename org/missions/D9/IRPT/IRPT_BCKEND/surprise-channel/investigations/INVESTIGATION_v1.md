@@ -30899,3 +30899,57 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISARMED: W354-S2 (the serve path validates nothing and would serve schema-invalid bytes; the 49F builder's account_id is schema-VALID under the repo v1 schema, which admits the optional member since PRD v0.52, so the account_id line serves no invalid bytes; the missing serve-time check is a pre-existing property of the function, not a hazard this line creates). CLOSED: W355-S1 (the grant omitted four fixtures the generator also writes: my defect; amended and delivered). OBSERVATIONS: W354-S1 (the packaged project() has no include argument, consistent with the live function not serving TARGET); W355-S2 (the full portal folder reads 1212 pass, 27 skip, 5 fail against 1213/27/4): the fifth failure is IVE48-AC1, which compares the wire fixtures' asset_class union to the contract enum read from docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json; that enum regained multi_asset when dell1's TO-SC-e100 (7d49d6cc6d) reached this branch at ~05:1Z, and the portal wire fixtures carry no multi_asset. Not caused by IB-pr-504 (the test fails alone at the worker's portal HEAD). The fix is a portal-owned decision (the wire union and its type move together, or the test names the producer's six): asked of the CTO in the round-173 slug. STILL ARMED: W345-S3, W348-S2, W346-S2, W346-S3, W350-S1 as in D2-S126; the portal candidates 346, 350, 353 and 355 await the DEV review lane."
 }
 ```
+
+## IRPT_BCKEND-D2-W357-S1 -- the regeneration of the wire copy changes a second member (account_id on the nodes block), so the IB-pr-506 refusal clause fired
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W357-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~357",
+  "surfaced_at": "2026-10-13T05:56Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "Step 1 of IB-pr-506 regenerated the wire copy with gen-all.ts. The regeneration changes HoldingsSnapshot.ts in two ways beyond the header sha: the multi_asset member in the five asset_class unions (expected), and one added optional member 'account_id?: string' in the nodes block (not multi_asset). The contract carries account_id on ACCOUNT nodes since 7ace854890 (IB-pr-493); the committed wire copy never received it. Per the refusal clause the worker stopped: no portal commit, the regenerated file restored to HEAD bytes, the other 28 generated files byte-identical to HEAD.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun run src/pages/InvestorReporting/__tests__/fe-s-13/gen-all.ts at portal cf52fdbf: rc=0, 'gen-wire: 25 of 25 documents, 19 of 24 routes responses; gen-consumed: 11 of 11 contracts'",
+      "git -C portal diff --ignore-cr-at-eol -- src/pages/InvestorReporting/contracts/wire/HoldingsSnapshot.ts: 7 insertions, 6 deletions; hunks = source sha256 7c221b13... -> c7890367... (expected), multi_asset added to five asset_class unions (expected), and one added line 'readonly account_id?: string' after model_code in the nodes block (not multi_asset)",
+      "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json at workspace HEAD 6e3cbe050a: account_id under the nodes items at line 617; the HEAD blob of the wire copy has no account_id in the nodes block (its two account_id hits are the scope and attribution_holdouts account_ids arrays)",
+      "git log of the contract: 7ace854890 build(IRPT_BCKEND TO-IB-pr-493) added the account_id member; 506096fc9a restore(MDPF_SECCLASS~90) restored multi_asset in this file",
+      "git -C portal cat-file/cmp over the 28 files reported dirty by stat: 0 of 28 byte-differ from HEAD after the restore of HoldingsSnapshot.ts"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-506 step 1: the expected change in the generated wire file is the multi_asset member of the asset_class union; if the regeneration changes anything else in any generated wire file, STOP and file a row (the contract may have moved for another reason).",
+  "world_is": "The contract has moved for another reason: the v1 HoldingsSnapshot schema carries an account_id member on ACCOUNT nodes (added by IB-pr-493), and the committed portal wire copy does not. The regeneration therefore brings two changes, not one. The multi_asset fix alone cannot be committed as the order names it without also taking the account_id member, which the order does not name. IVE48-AC1 stays failing at this HEAD until the COO or CTO decides whether the wire copy takes account_id in this cell or in another."
+}
+```
+
+## IRPT_BCKEND-D2-W357-S2 -- the order's typecheck command (tsc --noEmit -p .) checks nothing on this tree; the app project is checked with -p tsconfig.app.json
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W357-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~357",
+  "surfaced_at": "2026-10-13T05:56Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order says to run 'bunx tsc --noEmit -p .' from portal/ and record its error count. On this tree that command reads the root tsconfig.json, whose files array is empty and whose references name tsconfig.app.json and tsconfig.node.json; it checks zero files and reports zero errors by construction. bunx is also not on PATH in Git Bash here (rc=127). The app project was checked with 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.app.json': baseline at portal cf52fdbf, 0 'error TS' lines, rc=0, 20.9 s.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/tsconfig.json at cf52fdbf: \"files\": [] with references to ./tsconfig.app.json and ./tsconfig.node.json",
+      "bunx from Git Bash: 'failed to run command bunx: No such file or directory', rc=127; bun 1.4.2 is on PATH and node_modules/.bin holds tsc.bunx",
+      "node node_modules/typescript/bin/tsc --noEmit -p tsconfig.app.json: rc=0, output empty, 20.9 s (TypeScript 5.9.3)"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-506 step 2: run bunx tsc --noEmit -p . from portal/ once after step 1 and record its error count.",
+  "world_is": "The named command is a no-op on this tree and cannot grade exhaustiveness; the typecheck that covers src is -p tsconfig.app.json. The tsc gate for IB-pr-506 therefore needs the app project named explicitly."
+}
+```
