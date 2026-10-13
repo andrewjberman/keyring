@@ -31296,3 +31296,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The docstring count is stale: the bundle has twelve declared members and twelve live members. The stale count is a comment; the census found no member missing from the object."
 }
 ```
+
+## IRPT_BCKEND-D2-S130 -- DISPOSITION after the round-175 drain: the builder files ship in the per-firm holdings package
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S130",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T07:08:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISPOSITION after the round-175 drain: W359-S1 (the order's premise was mine and wrong: the builder files ship in the per-firm holdings package, not the directory bundle) ruled; the per-firm holdings package census is the next cell; W359-S2 observation.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer re-run: IB175-1 AC1, AC2, AC3 PASS in the merged tree (merge 8db2eb22f5); IB175-2 AC1 and AC2 PASS in the merged tree (merge 89af2d14e4), AC3 PASS in the worker's worktree.",
+      "the census record (read): the 12-member object investor-reporting.tar.gz (last_modified 2026-10-09T04:16:44Z) is read by the directory refresh (refresh.py:675 and :681, schedule.tf:161); holdings_snapshot.py:110-111 imports holdings_49f and holdings_inf at module level; refresh_dispatch.py:65 fetches the per-firm package and :75 runs it; safe_deploy_core.py:538 names investor-reporting-holdings.tar.gz."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "RULED, W359-S1: the guard's investor_reporting bundle is the DIRECTORY refresh's package (12 members, 5 differing from HEAD: directory_runner.py, holdings_snapshot.py, firm_registry.json, the HoldingsSnapshot schema copy, lib/trading_calendar.py); the 49F and Inflection builders and their temp-file fix and account_id reach the host inside the per-firm investor-reporting-holdings.tar.gz named by IRPT_HOLDINGS_BUNDLE_MAP, which no seat has read. So the host-bundle pair cannot be written from this census, and W345-S3 stays ARMED. The next cell is a read-only census of those per-firm holdings packages (which firms, their S3 keys, members against HEAD, the commits since each object was written), and then the pair. OBSERVATION W359-S2: the directory refresh docstring says nine members, the guard and the object carry twelve (a stale comment). The directory host bundle is a separate release path with its own 5 differing members; it is NOT part of the account_id pair and nothing here moves it. STILL ARMED: W345-S3, W348-S2."
+}
+```
