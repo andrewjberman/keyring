@@ -51,9 +51,20 @@ What each family's rebuild ships:
    - the prior S3 object version of `opal-assets/opal-assets-silver-<family>.zip`;
    - the drift lines, re-measured against the live package as FD2_DRIFT measured them.
 
-   Write `W/ap15_build.json` = `{"build_branch", "families": [{"family", "build_commit", "package_sha256",
-   "prior_code_sha256", "prior_s3_version", "drift_lines", "carries": "drain-only" | "drain+drift", "held_modules":
-   [..]}]}`.
+   Write `W/ap15_build.json` = `{"build_branch", "families": [{"family", "route", "build_commit", "base_sha",
+   "deployed_equals_base", "package_sha256", "prior_code_sha256", "prior_s3_version", "drift_lines", "carries":
+   "drain-only" | "drain+drift", "held_modules": [..]}]}`.
+   **A1 ROUTES (CTO ruling msg 33818, route (a)).** `route` is `full` for schwab and etf, built as above. It is
+   `drain-only` for blackdiamond, orion and eclipse, built this way instead of a re-vendor:
+   - confirm the DEPLOYED package (`get-function` Code.Location) equals the package dir at `base_sha`, and record
+     `deployed_equals_base: true`; any other delta is a STOP;
+   - from `base_sha`'s package dir, apply ONLY the `data/assets/scripts/silver/mirror_conversion.py` hunks of OG-fd-1
+     (`12a92ffa49`) and OG-fd-2 (`b2538131ea`) to that family's `mirror_conversion.py` (`git diff <c>~1 <c> -- <src>`,
+     path rewritten, `git apply --3way`). Measured at A1: both apply cleanly to all three packages;
+   - change no other member, then commit one family per commit on the build branch. The LGIC gate sees no new address
+     line, because the hunks carry none.
+   Rewrite the ask's sections 3-5 for the three drain-only packages: drift 0 beyond the drain, the blast radius the
+   drain alone, and the rollback as before. Each family is signed alone.
 4. **The ask**, `W/NEVER_WIDEN_ASK_OG-ap-15.md`, for `1.0.0_SA_CTO~Z` and `2.0.0_SA_COO~O`, ONE section per family.
    Each section is signed or refused on its own, and names:
    - what ships, with the drift by file and its owner (FD2_DRIFT's two owners);
@@ -120,7 +131,7 @@ Rows: id `NFRA_OPLGTW-Z-S<k>` (the next free), fabric `site-z`, disarm_owner `2.
 ## 4. PROOF OF SPEC (literal; run from the repo root; AC1 after Phase A, AC2 after the last family is terminal)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-ap-15"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ap15.AC1.sh; echo "exit=$?"</invocation><expect>(?s)families named 5; expected set equal: yes.*families built from source with fields: 5 of 5; ask names all five: yes.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-ap-15"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ap15.AC1.sh; echo "exit=$?"</invocation><expect>(?s)families named 5; expected set equal: yes.*families built per their route with fields: 5 of 5; ask names all five: yes.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-ap-15"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ap15.AC2.sh; echo "exit=$?"</invocation><expect>(?s)families released and graded [1-5]; refused with a file [0-4]; of 5; defects 0 \(want 0\).*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -145,6 +156,23 @@ last commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --gove
     a11240c01c read 0 of 5 byte-equal (schwab 10 of 11, etf 5 of 8, orion 3 of 6, eclipse 3 of 6, blackdiamond 4 of 9),
     so the check sees an un-re-vendored package.
   - ap15.AC2 base FAIL as expected (record absent).
+
+- A1 (issuer, 2026-10-13 ~22:5xZ): **Phase B GO for schwab and etf.**
+  - Both halves are SIGNED: COO `deliverables/2.0.0_SA_COO~O/NEVER_WIDEN_HALF_COO_OG-ap-15_20261013.md` @50caa7855b, and
+    CTO `deliverables/1.0.0_SA_CTO~Z/NEVER_WIDEN_HALF_CTO_OG-ap-15_20261013.md` @39efe27671.
+  - Their conditions bind. etf's E1: the deployed package equals the measured copy, else STOP. schwab moves its pin
+    `a11240c01c` -> `12ecbe2b8f`; etf adds its pin `58ee124eb7`.
+  - Windows: outside [21:15,23:59)Z, so the first applies run after 00:00Z. schwab is graded at the 2026-10-14
+    `cron(15 12)` sweep and etf at the 2026-10-14 `cron(30 23)` sweep.
+  - **blackdiamond as built is NOT signed by either half.** It, orion and eclipse take route (a) drain-only (CTO
+    ruling msg 33818): Phase A step 3's A1 routes, then their own asks and halves.
+  - ap15.AC1 is re-written to grade each family by its route. A drain-only package must equal `base_sha` on every member
+    but `mirror_conversion.py`, whose diff may hold only OG-fd-1's and OG-fd-2's lines.
+  - Dry runs:
+    - a synthetic drain-only orion+eclipse arm (commit bc8779d068, not on any branch) passed for both;
+    - blackdiamond's full build graded as drain-only failed (17 stray lines, 6 of 10 members unchanged);
+    - the current record fails (no `route`).
+  - Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>
