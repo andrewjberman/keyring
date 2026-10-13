@@ -32091,3 +32091,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "RECORDED, not cut: queued behind the O1/O2 acceptance release with S145. NOT read: where the string 'Cash' is produced (the model sleeve data, the snapshot builder or the portal), so the owner of the change is unknown. Cut as part of the S145 measure-first read; owner me."
 }
 ```
+
+## IRPT_BCKEND-D2-S147 -- CORRECTION to D2-S145: the breakdown is one vendor-agnostic mechanism over the served rows
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S147",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T18:23:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "CORRECTS D2-S145's ruling text: the Holdings class breakdown is ONE mechanism over the served rows' own class values, vendor-agnostic (an 'Opal Shape' in the gold layer), with no model-target special case; D2-S146 (CASH) stands.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 7148, 2026-10-13T18:22Z, correcting its msg 7145 item (1); the CTO's record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_182xZ_VENDOR_AGNOSTIC_OPAL_SHAPE_IN_GOLD.md @d630aeda77 quotes Andrew: 'one simple mechanism regardless what data vendor it is sourced from ... make an Opal Shape for anything that is served, that is the purpose of a Gold layer' (relayed; not read in full by this seat)"
+    ]
+  },
+  "spec_asserts": "The class breakdown sums the served rows' own class values, whatever produced them, with no model-target branch and no reader that branches on vendor (CTO msg 7148).",
+  "world_is": "SUPERSEDES the 'computed from the model's target weights' wording in D2-S145's spec_asserts (an append-only channel: S145 stays as written and this row governs). Still RECORDED, not cut: queued behind the O1/O2 acceptance release. The measure-first cell I will cut after that release reads the served rows' class values and where a model-sleeve account's rows get theirs, so that one mechanism over the gold rows serves every vendor; whether that is a builder change, a portal candidate or both is NOT yet read. Owner me."
+}
+```
