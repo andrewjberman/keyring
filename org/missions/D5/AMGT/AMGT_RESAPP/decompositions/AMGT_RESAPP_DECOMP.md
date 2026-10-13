@@ -10789,3 +10789,57 @@ entitlements, with no interim holds. The view without `lusha_enrichment` (F4) wa
 is no file to withdraw: it leaves the rectangle. The issuer's question of 20:08Z (omit only `lusha_enrichment`, or also the three Lusha-derived officer fields `profile_url`, `lusha_title`,
 `enrichment`) is moot with it and is carried only as a fact for any later wider audience: the writer sets those three beside the top-level `lusha_enrichment`
 (`lib/research/management/enrich.py` `attach_profiles`).
+
+## 113. ROUND 104 -- THE COLD START'S REMAINING 770 ms (SUB-PHASE LINES, THE TOP BAND'S REUSE) AND THE CLEAN-PAGE FIXES (THE HEADER'S MONEY FORMAT AND ITS BARE DASHES, THE SERVED P/E). Three builds, one staged apply, the re-runs placed.
+
+**Issuer:** `2.0.0_SA_COO~R1` on dell1. **Input:** the CTO~DELL1 round-103 analysis `ledger/ROUND_ANALYSIS.round103.md` (msg 5230) section 2, after the CVO's slug (msg 5228, `ADJUDICATION_v126`). Round 103 closed under the
+CTO's ruling (bj-2 CTO half ADDENDUM 1 @eff1db9d7f). **Prefix:** `bk`. Two rulings of the CTO the cut stands on: (i) the page renders USD as `$`, page-side, the team's prose is never rewritten; (iii) the served
+historical P/E is `PX_LAST / IS_EPS` of the same fiscal year, basis stated, withheld with a reason where EPS is not positive or an input is absent (msg 5244).
+
+### 113a. MEASURED AT THE CUT
+
+- **The round-103 apply's remainder** (RA1's request 9084a41d, handler 3,770 ms): feed 1,776 ms of which 705 is its read; peers 1,001; the others about 1,000. Locally and cold (not a Lambda figure) the new sub-phase lines read
+  `feed.snapshot` 946 ms, `peers.numeric_tickers` 895, `peers.subject_cap` 365, `feed.imports` 189: suspects, not causes; the Lambda lines are what bk-2 reads.
+- **The top band repeats the feed's read:** `read_feed` and `_overlay_top_band` each LIST the mention table and filter the same subject's rows (the base reads two LISTs per overlay; the candidate one).
+- **The money format is two sources:** the API serves `PX_LAST` as a number and a `currency`; the portal renders `USD 453.31` in three formatters (`StatTile.tsx:84`, `HeaderCards.tsx:84`, `WhatChangedPanel.tsx:198`); the
+  `$41bn` is the research team's own pack prose (thesis dossier fields, pillars) and publishers' headlines.
+- **The served P/E:** SAN FP FY2025 `PE_RATIO` 20.4397 is Bloomberg's own; `PX_LAST` 82.72 and `IS_EPS` 6.402 (the printed EPS) give 12.921. The model cases read the stored block, not the served list; `fiscal_unresolved` already
+  carries a reason per mnemonic and year (the contract the withheld rows use).
+- **The bare dashes:** `StatTile` returns no number for an unmeasured-currency or unresolved-unit money figure and says why on HOVER only (its own comment); the CVO read the dash with no reason on TSM US, HSBA LN, AZN LN.
+
+### 113b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-bk-1` | the overlay prints sub-phase lines for feed and peers, and its top band reuses the feed's rows (a build; one file) | `~414` | worker (build) | LOCAL | `lib/research/api/scoped_amgt.py` | FWD-40 (b), item 1 |
+| `AMGT-bk-2` | the apply carrying bk-1 and bk-4 from one merged pin, and the first request after it driven alone and read with the split -- STAGED seat order | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | the function's code; ledger; one request file | FWD-40 (b) and (a), items 1 and 2 (iii) |
+| `AMGT-bk-3` | the header renders USD as `$` in every page formatter, and every dash tile shows its reason in visible words (a portal build) | `~416` | worker (portal) | LOCAL | `portal/src/pages/SecurityAnalysis/` and one harness | FWD-40 (a), item 2 (i), (ii) |
+| `AMGT-bk-4` | the served fiscal P/E is `PX_LAST / IS_EPS` of the same year, withheld with a reason (a build; the same file as bk-1, so AFTER it) -- STAGED | `~415` | worker (build) | LOCAL | `lib/research/api/scoped_amgt.py` | FWD-40 (a), item 2 (iii) |
+| `AMGT-bk-5` | the 93-name census and the ten-name walk re-run on the live page -- NOT CUT until bk-2 is applied and bk-3's portal change is on PROD | -- | -- | -- | -- | FWD-40 (a) re-grade |
+
+**Uncovered, with its owner:** the portal DEV and PROD promote of bk-3 (the portal release seat; staff-only page, no word from Andrew); FWD-41 (`~R2`); the deferred steady-state window and admission-table cells (the CTO: cut when both FWD-40 arms read MET); the Terminal sign-in (Andrew).
+
+### 113c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: the analysis's items. Item 1 -> bk-1 + bk-2; item 2 (i) and (ii) -> bk-3; item 2 (iii) -> bk-4 (+ bk-2's apply); the re-run -> bk-5 (placed); item 3 deferred; FWD-41 not this project's
+  workstream. Printed denominator: 3 listed items + the re-run, 4 of 4 placed.
+- **(ii) Same grain.** bk-1 one file with a log helper and three call-site groups; bk-3 one page's formatters and its dash tiles; bk-4 one pure function and two call sites; bk-2 one code leg and one request.
+- **(iii) Intent coherence.** bk-1 moves no served byte; bk-3 moves rendered text on a staff-only page and no API field; bk-4 moves exactly the PE_RATIO row of the fiscal figures and nothing else.
+- **(iv) What a cell does NOT move.** bk-1: any served value; bk-4: any other figure, any model case, any forecast; bk-3: any value or any page other than Security Analysis; bk-2: IAM, routes, memory, timeout, schedule, any store.
+
+### 113d. EDGES AND FAN-OUT
+```
+bk-4 after bk-1 merged (one file)
+bk-2 after bk-1 and bk-4 merged, after its pair (COO half from the merged pin's own worktree; CTO half reads both candidates)
+bk-3 independent
+bk-5 after bk-2 applied and bk-3 on PROD
+fanout:
+  cap: 8
+  orders_total: 4        (bk-1, bk-3 pending; bk-4, bk-2 staged)
+  chains_total: 2        (bk-1 -> bk-4 -> bk-2 ; bk-3)    plus bk-5 placed
+  wave_0: [bk-1 ~414, bk-3 ~416]
+  wave_1 staged: [bk-4 ~415 (after bk-1's merge), bk-2 RA1 (after bk-1, bk-4 and its pair)]
+  no_s3_deletes: true
+  egress: none; no Bloomberg call in any order
+  portal_ref: 24877b67 (portal DEV, read 22:3xZ; PROD 10e7664d; the SecurityAnalysis page files are equal on both) for bk-3
+```

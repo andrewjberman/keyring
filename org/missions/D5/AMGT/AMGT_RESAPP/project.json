@@ -10,7 +10,7 @@
   "coo_lane": "2.0.0_SA_COO~R1",
   "created": "2026-09-10",
   "registered_under_tree": "2026-09-10",
-  "last_updated": "2026-10-13T21:4xZ (2.0.0_SA_COO~R1): ROUND 103 CLOSED under the CTO's ruling (bj-2 CTO half ADDENDUM 1 @eff1db9d7f) and the CVO's slug (ADJUDICATION_v126 C-S130); FWD-40 (a) and (b) NOT MET and carried; round 104 from ROUND_ANALYSIS.round103.md (msg 5230)",
+  "last_updated": "2026-10-13T22:4xZ (2.0.0_SA_COO~R1): ROUND 104 issued (bk-1, bk-3 pending; bk-4, bk-2 staged) from ROUND_ANALYSIS.round103.md; ~R2 holds workstream AIFILL of round 104",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -56,8 +56,8 @@
     "MACRO AMGT ratified 2026-09-10 -- Andrew-direct at the 1.0.0_SA_CTO~Z terminal: 'AMGT is a new macro, short for Asset Management' / 'can get that registered.' / 'AMGT can definitely hold all of this, all of that research and analysis and etc is Asset Management'. Record @1f89e24eac; enum record MACRO_ENUM_RULE24_D5_20260910.md, amended @dfe562ff6c; ratification by 0.0.0_AB_MSTR~Z @1d9e731ba5 on his later imperative word to the register holder.",
     "L1 4.0.0_SA_CRO~Z @19ce7d5b4d (v2). L2 endpoint 1.0.0_SA_CTO~Z @3bc8f5f2c4 -- FWD-13 and FWD-14 ADDED at L2 and accepted without reservation by the brief's author (msg 21001) as its own gaps. L3+L4 this commit."
   ],
-  "phase": "ROUND 103 CLOSED 2026-10-13 (three keys: the cold start, workstream V1, scope V1WALK), with bj-2 AC3 FAIL standing as a grade (CTO ruling @eff1db9d7f; round-close-check still reads REFUSED on that one row, which the gate cannot read as a close condition). Graded by the CVO (ADJUDICATION_v125, v126): FWD-40 (b) NOT MET at 3,770 ms (was 20,566), FWD-40 (a) NOT MET (4 format:money, bare '--' tiles, five 2025 P/E that do not follow), FWD-40 (c) MET as a read, FWD-41 OPEN (the ~R2 workstream). ROUND 104 is cut in ONE issuance from the CTO's ROUND_ANALYSIS.round103.md (msg 5230): the remaining 770 ms (feed/peers log lines, top_band reuse) and the clean-page fixes under pairs.",
-  "blocking": "round 104 is cut this tick; the Terminal sign-in (Andrew) is also why site Z's amgt-induction-daily exits rc 4; FWD-16 on Andrew's 2026-09-15 hold; key rotation is Andrew's act; the rankings' switch to total return waits on a PRD addendum (the CTO); ss-7/pp-4 wait on the DEMQUE answer (not a V1 gate); D1-S18's three reds are routed to dell2.",
+  "phase": "ROUND 104 EXECUTING on dell1 (issuer 2.0.0_SA_COO~R1), CTO round-103 analysis ledger/ROUND_ANALYSIS.round103.md (msg 5230); decomposition s.113. Orders: bk-1 (the overlay prints sub-phase lines for feed and peers and its top band reuses the feed's rows; a build, ~414) pending, bk-3 (the header renders USD as $ and every dash tile shows its reason; a portal build, ~416) pending, bk-4 (the served fiscal P/E is PX_LAST / IS_EPS of the same year, minor unit scaled, different currency withheld; a build, ~415) STAGED behind bk-1, bk-2 (the apply carrying bk-1 and bk-4 and the first cold request read with the split; RA1) STAGED behind a pair, bk-5 (the 93-name census and the ten-name walk re-run) placed, cut when bk-2 is applied and bk-3 is on PROD. ~R2 runs FWD-41 as workstream AIFILL of this round (decompositions/AMGT_RESAPP_AIFILL_DECOMP.md). Round 103 closed with FWD-40 (a) and (b) NOT MET.",
+  "blocking": "bk-4 waits on bk-1's merge (one file); bk-2 waits on bk-1 and bk-4 merged, the CTO's read of both candidates and its pair; bk-5 waits on bk-2 applied and bk-3 on PROD (the portal release seat; staff-only page); the Terminal sign-in (Andrew) is also why site Z's amgt-induction-daily exits rc 4; FWD-16 on Andrew's 2026-09-15 hold; key rotation is Andrew's act; the rankings' switch to total return waits on a PRD addendum (the CTO); ss-7/pp-4 wait on the DEMQUE answer (not a V1 gate); D1-S18's three reds are routed to dell2.",
   "threads": [],
   "thread_counter": 0,
   "placement": "DELL1",
