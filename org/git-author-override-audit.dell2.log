@@ -5067,3 +5067,55 @@
 2026-10-13T00:27:16Z LANDED-2P  1.0.0_SA_CTO~DELL2  39d21c5657  paths=1  validate=5.77s  wait=0.06s  hold=0.85s  build=0.53s  ref=0.29s  post-commit=2.23s  attempt=1
 2026-10-13T00:30:22Z PASS  0.7.0_AE_CloudOps~IB2  1  (all paths in-lane) act=c9506ba79beb paths=1:org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
 2026-10-13T00:30:59Z LANDED-2P  0.7.0_AE_CloudOps~IB2  24201ab29b  paths=1  validate=64.76s  wait=0.06s  hold=0.99s  build=0.61s  ref=0.36s  post-commit=3.38s  attempt=1
+2026-10-13T00:31:20Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane) act=c6fb6123110e paths=1:org/git-author-override-audit.dell2.log
+2026-10-13T00:31:26Z LANDED-2P  0.0.0_AB_MSTR~DELL2  e92ae7db13  paths=1  validate=6.11s  wait=0.13s  hold=0.83s  build=0.50s  ref=0.31s  post-commit=2.23s  attempt=1
+2026-10-13T00:31:32Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane) act=9928ac5674f7 paths=1:org/devices/crossbox/XB-20261013T002435Z-7c76.json
+2026-10-13T00:31:38Z LANDED-2P  0.0.0_AB_MSTR~DELL2  8490393f4b  paths=1  validate=6.54s  wait=0.06s  hold=0.86s  build=0.53s  ref=0.31s  post-commit=2.27s  attempt=1
+2026-10-13T00:31:50Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.06  graded=n/a  args=(--verify-merge 8234f3d608eaa7a1ffdef8233098396149fc04a3)  first=(none)
+2026-10-13T00:31:55Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=16.47  took=7194774ac6 hold=0.82s graded=0/0 pushed=8234f3d608  phases: t_fetch=1.73s t_merge_cloud=9.39s t_land=0.83s t_push=3.27s
+2026-10-13T00:32:40Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane) act=9928ac5674f7 paths=1:org/devices/crossbox/XB-20261013T002435Z-7c76.json
+2026-10-13T00:32:47Z LANDED-2P  0.0.0_AB_MSTR~DELL2  f7f69c2ce9  paths=1  validate=7.74s  wait=0.06s  hold=0.93s  build=0.60s  ref=0.31s  post-commit=2.37s  attempt=1
+2026-10-13T00:34:11Z PASS  2.0.0_SA_COO~P2  1  (all paths in-lane) act=4d3e3c30acff paths=1:org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-490.inflection-live-read-claim-and-counts.md
+2026-10-13T00:34:17Z LANDED-2P  2.0.0_SA_COO~P2  52519a3e7a  paths=1  validate=6.44s  wait=0.06s  hold=0.91s  build=0.59s  ref=0.30s  post-commit=2.14s  attempt=1
+2026-10-13T00:36:19Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.94  graded=n/a  args=(--verify-merge 1142ba848ee9b91b515666c9131d71c80a8cfeed)  first=(none)
+2026-10-13T00:36:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=4  secs=18.95  held=dirty-overlap graded=1/6  phases: t_fetch=2.35s t_merge_cloud=13.40s
+2026-10-13T00:38:36Z PASS  2.0.0_SA_COO~P2  1  (all paths in-lane) act=4d3e3c30acff paths=1:org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-490.inflection-live-read-claim-and-counts.md
+2026-10-13T00:38:43Z LANDED-2P  2.0.0_SA_COO~P2  5ced7372f4  paths=1  validate=6.55s  wait=0.06s  hold=0.86s  build=0.53s  ref=0.31s  post-commit=3.00s  attempt=1
+2026-10-13T00:40:10Z PASS  2.0.0_SA_COO~P2  2  (all paths in-lane) act=1e8926eac3a0 paths=2:org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md|org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-490.inflection-live-read-claim-and-counts.md
+2026-10-13T00:40:44Z LANDED-2P  2.0.0_SA_COO~P2  2c9c3afcf1  paths=2  validate=71.59s  wait=0.16s  hold=1.43s  build=1.05s  ref=0.36s  post-commit=2.75s  attempt=1
+2026-10-13T00:44:26Z PASS  0.7.0_AE_CloudOps~IB2  2  (all paths in-lane) act=aafe57a01353 paths=2:org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IB169-3_accessdenied_cloudtrail_read.json|org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
+2026-10-13T00:45:04Z LANDED-2P  0.7.0_AE_CloudOps~IB2  88585c9b66  paths=2  validate=71.45s  wait=0.10s  hold=1.10s  build=0.68s  ref=0.39s  post-commit=3.69s  attempt=1
+2026-10-13T00:46:05Z PASS  1.0.0_SA_CTO~DELL2  1  (all paths in-lane) act=36b2f5ada8dc paths=1:org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_P_ROUND_169_20261012.md
+2026-10-13T00:46:11Z LANDED-2P  1.0.0_SA_CTO~DELL2  e37ffabc66  paths=1  validate=6.26s  wait=0.06s  hold=0.95s  build=0.63s  ref=0.30s  post-commit=2.37s  attempt=1
+2026-10-13T00:46:18Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.52  graded=n/a  args=(--verify-merge 4cde74523687ad8709faf38f4241f23adcafe273)  first=(none)
+2026-10-13T00:46:31Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=2.37  graded=n/a  args=(--verify-merge 4afd2a7f672e67167982135677a06115f83bec69)  first=(none)
+2026-10-13T00:46:33Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=4  secs=31.04  held=dirty-overlap graded=1/7  phases: t_fetch=2.01s t_merge_cloud=12.47s a2.t_merge_cloud=13.13s
+2026-10-13T00:50:25Z PASS  1.0.0_SA_CTO~DELL2  1  (all paths in-lane) act=36b2f5ada8dc paths=1:org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_P_ROUND_169_20261012.md
+2026-10-13T00:50:33Z LANDED-2P  1.0.0_SA_CTO~DELL2  a25e73b73a  paths=1  validate=8.62s  wait=0.13s  hold=0.90s  build=0.51s  ref=0.30s  post-commit=2.52s  attempt=1
+2026-10-13T00:56:18Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.46  graded=n/a  args=(--verify-merge 57e6e3e195f9822eb3c8739fbf883a94deaac231)  first=(none)
+2026-10-13T00:56:19Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=4  secs=17.25  held=dirty-overlap graded=1/12  phases: t_fetch=1.88s t_merge_cloud=12.64s
+2026-10-13T00:58:19Z PASS  2.0.0_SA_COO~P2  1  (all paths in-lane) act=72d52bb79121 paths=1:org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
+2026-10-13T00:58:54Z LANDED-2P  2.0.0_SA_COO~P2  8266a4f3c4  paths=1  validate=70.06s  wait=0.06s  hold=1.83s  build=0.64s  ref=1.16s  post-commit=2.61s  attempt=1
+2026-10-13T01:05:22Z PASS  0.9.0_WK_IRPT_ANLREQ~54  1  (all paths in-lane) act=a9c3d47dd17a paths=1:infra/aws/lambda/investor-reporting/_authz/tests/test_final_release_bites.py
+2026-10-13T01:06:18Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.98  graded=n/a  args=(--verify-merge 99681bc9b40ec0bf547bad7d70862b9f6d61b56b)  first=(none)
+2026-10-13T01:06:19Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=4  secs=17.31  held=dirty-overlap graded=1/25  phases: t_fetch=1.80s t_merge_cloud=12.55s
+2026-10-13T01:06:31Z PASS  0.9.0_WK_IRPT_ANLREQ~54  1  (all paths in-lane) act=c78100b4c036 paths=1:org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
+2026-10-13T01:09:04Z PASS  0.9.0_WK_IRPT_ANLREQ~54  2  (all paths in-lane) act=3490605beacc paths=2:org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~54/IRPT_ANLREQ.TO-AR-y-183.final-release-arms-bite.proof_of_spec.json|org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-183.final-release-arms-bite.md
+2026-10-13T01:11:14Z MERGE-ATTEMPT  2.0.0_SA_COO~Y2  rc=4  secs=3.53  graded=n/a  args=(wk-IRPT_ANLREQ-54 -m drain(IRPT_ANLREQ r18 slot 54 TO-AR-y-183, 2.0.0_SA_COO~Y2): six tests, one per final-release arm, each showing the arm refused by the check it names and, with the second comparison neutralised for a stated reason, letting the payload escape once that check is removed; a source-removal mutant at owner_reads.py:38 fails 2 of the 6; the _authz folder 343 pass; no product file changed; own runs: Y183-BITE-OK, Y183-KEEP-OK, proof VALID. Four arms (actor and renderer, read and prospect) are refused by a SECOND check when the named one alone is removed (rows W54-S10, S11))  first=(CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED)
+2026-10-13T01:11:29Z PASS  2.0.0_SA_COO~Y2  0  (MERGE COMMIT -- per-file lane check exempt; merged files were gated at their own authorship) act=none paths=0:
+2026-10-13T01:11:43Z MERGE-ATTEMPT  2.0.0_SA_COO~Y2  rc=0  secs=28.13  graded=2/4  args=(--continue -m drain(IRPT_ANLREQ r18 slot 54 TO-AR-y-183, 2.0.0_SA_COO~Y2): six tests, one per final-release arm, each showing the arm refused by the check it names and, with the second comparison neutralised for a stated reason, letting the payload escape once that check is removed; a source-removal mutant at owner_reads.py:38 fails 2 of the 6; the _authz folder 343 pass; no product file changed; own runs: Y183-BITE-OK, Y183-KEEP-OK, proof VALID. Four arms (actor and renderer, read and prospect) are refused by a SECOND check when the named one alone is removed (rows W54-S10, S11))  first=(WARN: client-data-check: hashed account-id list ABSENT at C:\Users\Test\)
+2026-10-13T01:12:58Z PASS  2.0.0_SA_COO~Y2  1  (all paths in-lane) act=b38a7ec464c1 paths=1:org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
+2026-10-13T01:13:13Z LANDED-2P  2.0.0_SA_COO~Y2  24b75f3dab  paths=1  validate=24.05s  wait=0.06s  hold=0.87s  build=0.54s  ref=0.30s  post-commit=2.23s  attempt=1
+2026-10-13T01:14:18Z PASS  2.0.0_SA_COO~Y2  1  (all paths in-lane) act=bd96cddad523 paths=1:org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND18_Y_L8_COMPILE_20261013.md
+2026-10-13T01:14:24Z LANDED-2P  2.0.0_SA_COO~Y2  5fa1d976ec  paths=1  validate=5.51s  wait=0.06s  hold=0.86s  build=0.54s  ref=0.29s  post-commit=2.21s  attempt=1
+2026-10-13T01:16:17Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.60  graded=n/a  args=(--verify-merge e2f99ac6479a51830eaac7a18f1b5591d3478d33)  first=(none)
+2026-10-13T01:16:19Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=4  secs=17.02  held=dirty-overlap graded=1/26  phases: t_fetch=1.75s t_merge_cloud=12.48s
+2026-10-13T01:20:35Z PASS  3.0.0_SA_CVO  2  (all paths in-lane) act=da53c5e5bf8e paths=2:org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_ROUND_18_HELD_20261013.md|org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_ROUND_18_L9_GRADE_20261013.md
+2026-10-13T01:20:42Z LANDED-2P  3.0.0_SA_CVO  a60300f1fb  paths=2  validate=7.21s  wait=0.13s  hold=0.93s  build=0.53s  ref=0.37s  post-commit=2.66s  attempt=1
+2026-10-13T01:22:25Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=0.99  graded=n/a  args=(--verify-merge b60769e7be3752160841866c98008940c45a9856)  first=(none)
+2026-10-13T01:22:26Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=4  secs=12.42  held=dirty-overlap graded=1/32  phases: t_fetch=1.22s t_merge_cloud=9.91s
+2026-10-13T01:23:17Z PASS  0.0.0_AB_MSTR~DELL2  2  (all paths in-lane) act=427a5f6e449a paths=2:org/devices/crossbox/XB-20261013T001130Z-a827.json|org/devices/crossbox/XB-20261013T002435Z-7c76.json
+2026-10-13T01:23:23Z LANDED-2P  0.0.0_AB_MSTR~DELL2  f65b8dc289  paths=2  validate=6.17s  wait=0.06s  hold=0.84s  build=0.52s  ref=0.29s  post-commit=2.17s  attempt=1
+2026-10-13T01:23:35Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.12  graded=n/a  args=(--verify-merge 8e1a256e365ed4fafb9e0f5f9e1679245238b28d)  first=(WARN -- 2 of 32 needed file(s) kept the first parent's version (fine for a PICK-ours resolutio)
+2026-10-13T01:23:40Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=17.08  took=8c194cfed8 hold=0.77s graded=2/30 pushed=8e1a256e36  phases: t_fetch=1.52s t_merge_cloud=10.22s t_land=0.78s t_push=3.59s
+2026-10-13T01:26:05Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=3.49  took=already-current pushed=8e1a256e36  phases: t_fetch=1.50s
