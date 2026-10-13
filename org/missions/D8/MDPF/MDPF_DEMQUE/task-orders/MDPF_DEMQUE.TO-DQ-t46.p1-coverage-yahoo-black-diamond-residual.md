@@ -69,6 +69,20 @@ sources, the residual sits inside the window cells, and the written file has no 
 
 Run each invocation from the worktree root. At the base: `COVER-BAD no file ...`; `COVER-REAL-BAD no file data\mdpf\scripts\demque\p1_coverage.py`.
 
+
+### AMENDED 2026-10-13 ~17:0xZ (issuer; no gate limb graded it, no new order added) -- rulings on rows D1-W37-S1 to S3, and the re-seated slot
+
+Your first pass (commits `aa3b2100ee`, `9b43288850`, `e2366a6d56`) stands as inherited state. The grant now also names `card_a_slice.py` and its test. Rulings:
+- **S3 (key name): the key is `blackdiamond_units_value`.** The naming gate is right; the check script's arm now reads that key (amended by the issuer). Nothing for you to rename.
+- **S1 (CFNCASH): a name whose identifier is not 9 alphanumeric characters, or that starts with `FDIC`, is a cash identifier: UNRESOLVED, never priced, reason
+  `cash_identifier`.** Put the rule in `card_a_slice.py` (so the P1 request never carries it) and cover it with a test in `test_demque_card_a_slice.py`; the
+  expected P1 is 609 names, 606 priced, 3 unresolved (FDIC66606, FDIC66853, CFNCASH). Update the real check's expectations only where the issuer already did
+  (priced 606).
+- **Measure on the merged window.** DQ-t-44 merged @900406e221 (P1 window to the frontier, held rule on the Commonwealth sign table, 471,522 cells before this
+  rule). MERGE `box/dell1` into your branch (a merge, never a rebase; the investigation file will conflict at its end because both sides append rows: keep every row of
+  both sides, by id) and rerun `p1_coverage.py` so `window_cells` is the merged builder's own cell count, not 882,024.
+- **S2:** stands (47 early gold files carry no cusip column; counted as read, not attributed).
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below plus your deliverables folder and this order's file. Scaffolding goes under `.scratch/`, uncommitted.
@@ -82,6 +96,7 @@ Run each invocation from the worktree root. At the base: `COVER-BAD no file ...`
 <paths>
 data/mdpf/scripts/demque/p1_coverage.py
 data/mdpf/scripts/demque/test_demque_p1_coverage.py
+data/mdpf/scripts/demque/test_demque_card_a_slice.py
 org/missions/D8/MDPF/MDPF_DEMQUE/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
