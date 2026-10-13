@@ -241,6 +241,8 @@ and total return (504 cells) is ACCEPTED under it. Andrew may raise it.
 - The 36,705 owed units outside every held day and dialog are NOT drawn.
 - Andrew may override.
 
+**CONFIRMED by Andrew (~21:0xZ):** "C1 yes, approved in that order". The staged order (30, then 90, then 365 days, field-matched) stands on his word.
+
 ### THE FORM IS COMPLETE (surfaces A, B, C, D, E): this seat's msg-4892 draw hold LIFTS
 
 New draws proceed through the queue under the rules above, inside the two-week budget, with the non-trading-day expansion. `2.0.0_SA_COO~Q1` prints the two-week total
