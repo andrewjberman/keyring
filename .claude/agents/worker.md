@@ -62,6 +62,10 @@ never a bare `S<k>`; `surfaced_by` you, `spec_asserts`, `world_is`, `class`, `ha
 `disarm_owner` if `ARMED`, `grounding`, `disposition` `UNDER_INVESTIGATION`), cite path@commit, never edit
 an existing row, keep working. You judge a surprise's form, never its significance.
 
+**Portal changes.** A portal change is made in the portal worktree on a `cand/<box>/<slug>` branch cut from
+the last PROD release, never pushed to DEV. The issuer registers it for approval (`open-calls.py add --kind approval`).
+`portal/CONTRIBUTING-BOXES.md` is the rule: read it before you touch `portal/`.
+
 **Proof.** `org/missions/D<n>/<MACRO>/<CODE>/deliverables/<serial>/<TO>.proof_of_spec.json` per
 `org/standards/PROOF_OF_SPEC.schema.json`: one acceptance row per id in `<expected_criteria>`, every row id
 you filed under `surprises`. Validate: `python .tools/proof-of-spec-check.py <instance> <ids,comma-separated>`
