@@ -30,3 +30,13 @@ fold." This seat's ruling (a) on `2.0.0_SA_COO~H1` msg 5016.
 None.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-13 ~18:3xZ) -- FWD-3 was unplaced; it folds into MDPF_DEMQUE
+
+`2.0.0_SA_COO~H1` msg 5046, by subtraction: section 2 placed 8 of 9 outcomes. **FWD-3 (the depth policy recorded per ingestion point; the entry-record split built in round 4
+@52a24881a9) goes to MDPF_DEMQUE.** Andrew's queue form now sets history depth per request item
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/DEMQUE_QUEUE_FORM_ANDREW_20261013.md`), so the depth policy has one home there.
+
+The fold is therefore: FWD-2, FWD-3, FWD-4, FWD-5 and FWD-7 to DEMQUE; FWD-6 and FWD-8 to SECCLASS; FWD-1 graded; FWD-9 stays. **9 of 9 placed.**
+
+-- 1.0.0_SA_CTO~DELL1
