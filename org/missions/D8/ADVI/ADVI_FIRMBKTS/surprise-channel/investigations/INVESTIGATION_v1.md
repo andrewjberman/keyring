@@ -6668,3 +6668,30 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "For the COO and the adjudicating seat: decide whether a non-ASCII message character should be replaced (as landed) or kept as written. This seat took no action beyond the landed helper."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-j-10, the sample)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S50",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-13T09:36:57Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "One of the ten dry-run artifacts carries a client's two-word display name in the detail of a top_nna_mover bullet; the generator's own PII guard did not drop it.",
+  "spec_asserts": "TO-FB-j-10 step 9: an artifact that carries a client name is counted and its text withheld; the CTO reads the rest.",
+  "world_is": "Read-only. The returned artifacts for the 10 targeted advisors (dry run, request 233e4339-b4a1-4ab5-bdaa-4700f56017e6, nothing written) were matched against the display_name, client-name, account-name, owner and household string fields of each advisor's nna_clients.json, summary.json and positions.json in the canonical home (strings of 5 or more characters, case-insensitive substring). 1 of 10 advisors, 1 of 39 bullets matched: the detail of a top_nna_mover bullet carries a 13-character, two-word, title-case display_name served for that advisor (10 distinct display_name values in that advisor's file). The function returned that artifact with no PIIDetectedError and no [SLOT_DROPPED] line. The text of that advisor's four bullets is withheld in DRYRUN10_FIGURES.json and DRYRUN10_ARTIFACTS.json. Not established: whether the slot is meant to name the client (that is a content rule, the CRO's and the CTO's), and the match can miss a name spelled differently from the served field, so zero matches for the other nine is a floor, not a clean bill. An unreadable file in the name set was skipped without a count.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/DRYRUN10_FIGURES.json",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/DRYRUN10_ARTIFACTS.json",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/SLOT_DROP_CAUSE.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the CTO's read of the sample (his ruling): the served advisor view would show a client's name in that line if the artifact were written. FB-j-7 and FB-j-4 stay behind that read."
+}
+```
