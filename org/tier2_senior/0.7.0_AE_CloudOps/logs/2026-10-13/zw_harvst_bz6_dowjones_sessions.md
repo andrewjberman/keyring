@@ -129,3 +129,49 @@ either path** -- the sessions are already valid.
   its newest row at 11:46Z, while both 12:47Z orders were real and actionable. They carry no `Msg-ID`, so **there is
   nothing to ack** -- the LD-0099 ferry class that `org/XXX.md` Step 1b.B warns about. A seat that treated the broker
   ledger as the denominator of its mail would have found zero work this session.
+
+---
+
+## Addendum, 2026-10-13T18:25:49Z -- HVST-bz-5 CLOSED, and a prediction of mine corrected
+
+**archetype:** VALIDATE
+
+**`HVST-bz-5` now PASSES and the instance is filed.** The hourly re-read found the windowless
+cycle `20261013T080909Z` had ENDED at 17:37:08Z, and it carries a named failure:
+
+```
+CYCLE=20261013T080909Z STOPPED=bot_check FAILED=1 NAMED=1
+```
+
+The one failure is `key=security-0f3eb2ded85ad44b`, `status=bot_check`, and its detail reads
+`ChallengeFailed: bot_check challenge_failed (bloomberg_press_and_hold)` -- the `bx-3` form
+`<ExceptionClassName>: <message>`, 70 characters, inside the 303 cap, and **not** the bare word
+`error` that every record before this pin carried. That is the close of row
+`AMGT_HARVST-D1-W135-S2`. A truncated record is allowed to serve this read by the order's own
+words; nothing claims the cycle completed, and `completed=False` is recorded as False.
+Instance reads **VALID (rc=0), violations=0**.
+
+**Nothing was driven to make it pass.** No pair planted or re-queued, no sign-in, the task not
+stopped, started or re-registered, the state dir never written. The transition from FAIL to PASS
+came from the runner finishing its own cycle between two identical read-only invocations, and
+both readings are in the record.
+
+**Two things I got wrong earlier in this session, corrected on measurement:**
+
+1. **I predicted the announced 17:51Z reboot would cut the live bbg cycle and void bz-7's
+   ~19:10Z estimate.** `LastBootUpTime` still reads `2026-10-10 16:47:29` local -- **no reboot
+   has occurred** -- and the bbg cycle ended on its own at 17:37:08Z, before the announced
+   window. A reboot notice is a plan, not an event; the boot clock is the measurement.
+2. **The order's own estimate that bz-5 would read true "about 17:00Z" was also not what
+   happened** -- the condition had been met since 07:59:03Z by a truncated record, and the
+   record that actually CLOSED the cell arrived at 17:37:08Z. Two different facts, and I had
+   conflated them.
+
+**Supersession handled without loss.** The order names one file, `bz5_cycle_record.json`, and it
+now holds the closing `080909Z` record (514 B, sha256 `5e652eaf...`). The earlier truncated
+`055243Z` record (320 B, sha256 `52e0451b...`) is preserved beside it as
+`bz5_cycle_record_prior_20261013T055243Z.json` -- a state artifact superseded in place, with the
+prior bytes kept rather than overwritten, which is the lesson from earlier in this same session.
+
+**`HVST-bz-7` stays OPEN:** both publishers still read `NONE`. The bbg cycle ending is what lets
+wsj begin, and the runner is live and progressing (events.jsonl written within the minute).
