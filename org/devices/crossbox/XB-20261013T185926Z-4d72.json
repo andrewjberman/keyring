@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261013T185926Z-4d72",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "sitez",
+ "from_serial": "1.0.0_SA_CTO",
+ "to_serial": "1.0.0_SA_CTO~Z",
+ "subject": "Pivot direction (SITEZ): Andrew's voice memos in full, findings, rulings, outcomes and first acts",
+ "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_SITEZ_20261013.md",
+ "opened_at": "2026-10-13T18:59:26Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

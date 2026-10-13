@@ -46,6 +46,9 @@ $ws     = Split-Path -Parent $PSScriptRoot
 $log    = Join-Path $ws 'org\mcp\agent-spawn-audit.log'
 $marker = '# OPAL_SPAWN_MARKER_v1'
 
+# SEAT BOUNDARY (CT-ab-4): a target is matched by its LAUNCH serial, and a tree holding a foreign seat is never stopped.
+. (Join-Path $PSScriptRoot 'seat-boundary.ps1')
+
 if (-not $All -and -not $Serial) {
     Write-Error "kill-agent: must pass either a Serial or -All"
     exit 1
@@ -84,7 +87,8 @@ if ($All -and $Serial) {
     # whole family, does NOT bleed into a different serial. EXPLICIT opt-in
     # family-kill (the old accidental base-substring-sweep, now deliberate).
     $needleRe = '(?<![\w~])' + [regex]::Escape($Serial) + '(~[A-Za-z0-9]+)?(?![~\w])'
-    $targets = @($allClaude | Where-Object { $_.CommandLine -match $needleRe })
+    # CT-ab-4: the needle alone matched a serial NAMED in another seat's hint; keep only the launch serial (or its ~lanes).
+    $targets = @($allClaude | Where-Object { $_.CommandLine -match $needleRe -and (Test-LaunchSerialMatch -CommandLine $_.CommandLine -Serial $Serial -Family) })
 } elseif ($All) {
     # FABRIC-WIDE (-All alone): every live agent -- EXCEPT (a) the requester's own
     # session (no suicide mid-command) and (b) the MSTR conductor (kill MSTR only
@@ -132,7 +136,8 @@ if ($All -and $Serial) {
         Write-Host "[kill-agent] WARN: OPAL_AGENT_SERIAL is unset -- self-exclusion could NOT be evaluated for '$Serial'. Proceeding; verify you are not killing yourself." -ForegroundColor Yellow
     }
     $needleRe = '(?<![\w~])' + [regex]::Escape($Serial) + '(?![~\w])'
-    $targets = @($allClaude | Where-Object { $_.CommandLine -match $needleRe })
+    # CT-ab-4: the needle alone matched a serial NAMED in another seat's hint; keep only the launch serial.
+    $targets = @($allClaude | Where-Object { $_.CommandLine -match $needleRe -and (Test-LaunchSerialMatch -CommandLine $_.CommandLine -Serial $Serial) })
 }
 
 if ($targets.Count -eq 0) {
@@ -167,15 +172,52 @@ function Stop-ProcessTree {
     } catch { }
 }
 
+# SEAT BOUNDARY (CT-ab-4). Every target's tree is judged before Stop-ProcessTree touches it.
+# The judged serial is the NAMED serial (single or family), else the target's own launch serial.
+# Selected = every pid this run targets, so a fabric-wide sweep does not refuse its own seats.
+$selectedPids   = @($targets | ForEach-Object { [int]$_.ProcessId })
+$boundaryFamily = [bool]($All -and $Serial)
+$boundarySerial = $null
+function Test-TreeBoundary {
+    param([int]$RootPid)
+    try {
+        return [PSCustomObject]@{ Ok = $true; Foreign = @(Test-SeatBoundary -RootPid $RootPid -TargetSerial $boundarySerial -Family:$boundaryFamily -Selected $selectedPids); Err = '' }
+    } catch {
+        return [PSCustomObject]@{ Ok = $false; Foreign = @(); Err = $_.Exception.Message }
+    }
+}
+function Write-SeatRefusal {
+    param([string]$Tree, [int]$RootPid, [string]$Target, $Verdict)
+    if (-not $Verdict.Ok) {
+        Write-Host "[kill-agent] REFUSED: seat boundary -- $Tree of pid $RootPid (target $Target) could not be evaluated, so not stopped: $($Verdict.Err)" -ForegroundColor Red
+        Add-Content -Path $log -Value "$ts  KILL-REFUSED  $Target  by $by  pid=$RootPid  tree=$Tree  foreign=UNEVALUATED  reason=$Reason"
+        return
+    }
+    foreach ($f in $Verdict.Foreign) {
+        Write-Host "[kill-agent] REFUSED: seat boundary -- $Tree of pid $RootPid (target $Target) holds foreign seat $($f.Serial) at pid $($f.ProcessId); tree not stopped." -ForegroundColor Red
+    }
+    $list = (@($Verdict.Foreign) | ForEach-Object { "$($_.Serial)@$($_.ProcessId)" }) -join ','
+    Add-Content -Path $log -Value "$ts  KILL-REFUSED  $Target  by $by  pid=$RootPid  tree=$Tree  foreign=$list  reason=$Reason"
+}
+
 $killedPids     = @()
 $killedSerials  = @()
+$refused        = @()
 foreach ($t in $targets) {
     $claudePid    = $t.ProcessId
-    $targetSerial = if ($t.CommandLine -match $serialPat) { $matches[0] } else { 'unknown' }
-    $killedSerials += $targetSerial
+    $ownSerial    = Get-LaunchSerial -CommandLine $t.CommandLine
+    $targetSerial = if ($ownSerial) { $ownSerial } else { 'unknown' }
+    $boundarySerial = if ($Serial) { $Serial } else { $ownSerial }
 
-    # 1. Kill claude.exe + its descendants (bash, python, watcher children).
+    # 1. Kill claude.exe + its descendants (bash, python, watcher children) -- only if no foreign seat is under it.
+    $verdict = Test-TreeBoundary -RootPid $claudePid
+    if (-not $verdict.Ok -or @($verdict.Foreign).Count -gt 0) {
+        Write-SeatRefusal -Tree 'claude tree' -RootPid $claudePid -Target $targetSerial -Verdict $verdict
+        $refused += $claudePid
+        continue
+    }
     Stop-ProcessTree -RootPid $claudePid
+    $killedSerials += $targetSerial
 
     # 2. Kill the HOST window ONLY if it's a spawn-agent window (carries the
     #    marker) -- releases the concurrency-cap slot + closes the window. If the
@@ -184,7 +226,13 @@ foreach ($t in $targets) {
     try {
         $parent = Get-CimInstance Win32_Process -Filter "ProcessId=$($t.ParentProcessId)" -ErrorAction SilentlyContinue
         if ($parent -and $parent.Name -eq 'powershell.exe' -and $parent.CommandLine -and ($parent.CommandLine -like "*$marker*")) {
-            Stop-ProcessTree -RootPid $parent.ProcessId
+            $hostVerdict = Test-TreeBoundary -RootPid $parent.ProcessId
+            if (-not $hostVerdict.Ok -or @($hostVerdict.Foreign).Count -gt 0) {
+                Write-SeatRefusal -Tree 'host shell' -RootPid $parent.ProcessId -Target $targetSerial -Verdict $hostVerdict
+                $refused += $parent.ProcessId
+            } else {
+                Stop-ProcessTree -RootPid $parent.ProcessId
+            }
         }
     } catch { }
 
@@ -210,3 +258,7 @@ try {
 } catch { }
 
 Write-Host "[kill-agent] killed $($killedPids.Count) agent(s): $($killedPids -join ', ')" -ForegroundColor Cyan
+if (@($refused).Count -gt 0) {
+    Write-Host "[kill-agent] REFUSED $(@($refused).Count) tree(s) on the seat boundary -- each named above; nothing under a foreign seat was stopped." -ForegroundColor Red
+    exit 2
+}

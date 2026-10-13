@@ -5,10 +5,10 @@
  "project": "IRPT_DASHBD",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.13",
+ "prd_version": "v0.14",
  "step": 4,
  "brief_ref": "docs/briefs/reporting-dashboard-backend-brief-20260930.md@0ee065b116",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21"],
  "status": "RATIFIED"
 }
 ```
@@ -196,6 +196,17 @@ outcomes verbatim.
                     holds more than Black Diamond's feed, that is shown
          SOURCE     Andrew-direct ~21:0xZ, "figure out what black diamond endpoints correspond with the
                     various fields and we essneitally do black diamonds job for them"; was IRPT_CUSTDY FWD-9 (merged 2026-10-09, CTO ruling @ca5f74553d)
+  FWD-21 Any client at any firm opens one default performance report, on the Performance tab and as the export, in one Opal Shape (v0.14)
+         DONE WHEN  EXERCISED -- one household at each of 49 Financial, Cottonwood and Inflection rendered from Opal gold, on DEV, on the
+                    Performance tab and as the export, carrying the baseline's sections; read by Andrew
+         ACCEPT     the report has the sections and columns of the baseline (household value summary with QTD/YTD/12M/since-inception and
+                    the four Opal benchmarks; the activity summary by account; holdings by class with gain and return per window; per account:
+                    realized gain/loss YTD, the account value summary, the gain/loss review); the same layout for every firm, whatever vendor
+                    fed the data; a figure Opal cannot produce says so in words, never blank; fee basis labeled
+         SOURCE     Andrew's dell2 memo 2026-10-13 ("decide what the default performance report is going to look like"); Andrew ~19:0xZ with
+                    the Black Diamond export as "a baseline schema that we can work toward for the 'performance' tab as well as the export";
+                    the Opal Shape word ~18:2xZ (ANDREW_DIRECT_20261013_182xZ); baseline: deliverables/1.0.0_SA_CTO~DELL2/BD_FINANCIAL_PERFORMANCE_REPORT_BASELINE_SCHEMA_20261013.md
+
 ```
 
 ## ENDPOINT PROVENANCE (outside the ratified section)

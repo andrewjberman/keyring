@@ -272,8 +272,17 @@ if ($usableWt) {
 } else {
     # Fallback for non-WT environments -- relies on the OSC + WindowTitle in
     # $inner to set the title best-effort.
-    $proc = Start-Process powershell -ArgumentList '-NoProfile', '-NoExit', '-Command', $inner -PassThru
-    if ($proc) { $hostPid = $proc.Id }   # this IS the marker-carrying shell
+    # DETACHED LAUNCH (CT-ab-4, method: cmd.exe 'start'). A Start-Process powershell is a CHILD of this
+    # caller, so a kill of the caller's tree stops the new seat too. Here cmd.exe runs 'start', which
+    # parents the seat to cmd; cmd exits at once, so the seat's ParentProcessId is a dead pid and the
+    # caller's tree walk cannot reach it. The payload travels base64-encoded (UTF-16LE) inside -Command,
+    # so no quote, space or ';' of $inner meets the cmd parser. The marker and the serial stay in PLAIN
+    # TEXT on the command line as a trailing PowerShell comment: the marker-shell poll below matches on
+    # them, and a launch that hid them would read as "no marker shell" (UNKNOWN host pid).
+    # The hostPid is resolved by that poll, never from the cmd.exe pid ($launcher is cmd, not the seat).
+    $encInner = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($inner))
+    $seatCmd  = "Invoke-Expression ([Text.Encoding]::Unicode.GetString([Convert]::FromBase64String('$encInner'))) $marker`: $Serial"
+    $launcher = Start-Process -FilePath cmd.exe -ArgumentList '/d', '/c', 'start', '""', 'powershell.exe', '-NoProfile', '-NoExit', '-Command', ('"' + $seatCmd + '"') -PassThru
 }
 
 # ---------------------------------------------------------------------------

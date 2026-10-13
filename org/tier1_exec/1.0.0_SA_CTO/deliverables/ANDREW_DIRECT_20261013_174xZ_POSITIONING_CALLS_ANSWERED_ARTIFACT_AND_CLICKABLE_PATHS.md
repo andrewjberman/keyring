@@ -62,3 +62,11 @@ Applied:
   CTO as an Opal-internal page. It is not a promote of DEV as a whole, which stays held until NFRA_DEVPLN lands.
 - Correction carried from the dell1 packet: `mockadv` is a live test tenant (`data/firm_registry.json:88`, "Mock Advisor (test
   account)"). Retiring it waits on a census of its consumers that reads zero.
+
+## Addendum ~19:0xZ -- site Z released
+
+VERBATIM: "Furthermore, SITEZ is now coming back online, so it is now time to send them their pivot docs + transcript(s) so they
+can get started on that strategic pivorts"
+
+Applied: the site Z hold is lifted. Two crossbox ORDERs carry `DIRECTION_SITEZ_20261013.md` (@4e963d4a12) to `1.0.0_SA_CTO~Z`
+and `0.0.0_AB_MSTR~Z`; `0.0.0_AB_MSTR` sends them on the bus.

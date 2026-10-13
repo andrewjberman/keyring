@@ -8763,3 +8763,171 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W84-S1 -- the granted resident_session.py does not exist; the session factory that builds the advisory is outside the grant, so the swap advisory is built in resident_worker.py
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W84-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~84",
+  "surfaced_at": "2026-10-13T18:35:38Z",
+  "one_line": "TO-AR-y-251 names infra/aws/lambda/investor-reporting/ycharts/generate/resident_session.py in <paths> and places the swap advisory in resident_session.kimi_advisory. That file does not exist at c53686ba6d; the resident session is ycharts/session/resident_session.py (kimi_advisory at :133-137), which is outside the grant. The swap advisory is therefore built in ycharts/generate/resident_worker.py (_swap_advisory, granted): a second construction of KimiAdvisory beside the session factory.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files at c53686ba6d lists ycharts/session/resident_session.py and no ycharts/generate/resident_session.py",
+      "ycharts/session/resident_session.py:133-137 kimi_advisory() builds KimiAdvisory(send=kimi_send(secret_reader(self.secrets_client)), telemetry=journal_telemetry) with no search argument",
+      "ycharts/generate/resident_worker.py _swap_advisory (worktree edit for AR-y-251) builds the same advisory with search_capability and search; suggest() calls it only when SEARCH_CAPABILITY is not None"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-251 <paths> and wiring step 2: the resident builds KimiAdvisory with search_capability and search inside resident_session.kimi_advisory, under the granted path ycharts/generate/resident_session.py.",
+  "world_is": "No such file exists under the granted path. The session factory is in ycharts/session and is not granted, so the wiring was built in the granted resident_worker.py, and the session factory and the swap advisory are two constructions of one advisory. The branch is unreachable until a capability file ships. The issuer rules whether the session factory should own the construction."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W84-S2 -- the swap wiring calls a KimiAdvisory search parameter and kimi_port.kimi_search, neither of which exists at HEAD; the AR-y-249 cell owns both
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W84-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~84",
+  "surfaced_at": "2026-10-13T18:35:38Z",
+  "one_line": "The swap wiring calls KimiAdvisory(search_capability=, search=) and kimi_port.kimi_search. Neither exists at c53686ba6d; both belong to the AR-y-249 cell, outside this grant. Until AR-y-249 lands, building the swap advisory raises; suggest() catches it, prints IRPT_RESIDENT_SWAP unavailable and runs the check lane alone, so an upload is never failed by the swap lane.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "intake/resolution_kimi.py:140-141 at c53686ba6d: class KimiAdvisory and __init__(self, *, send, telemetry, clock=time.monotonic, search_capability=None) have no search parameter",
+      "ycharts/generate/kimi_port.py at c53686ba6d defines KIMI_URL, kimi_send, journal_telemetry and secret_reader; no kimi_search",
+      "ycharts/generate/resident_worker.py suggest() wraps _swap_advisory in try/except Exception; a construction failure is one journal line and the check lane still runs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-251 wiring step 2: the resident builds KimiAdvisory with search_capability and search=kimi_port.kimi_search(...), against the fixed interface THE INTERFACE of the round.",
+  "world_is": "Both interfaces are absent at HEAD, so the swap wiring is correct only against the AR-y-249 interface and is dormant until that cell lands and a capability receipt exists. The tests use fake ports and do not exercise the construction."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W84-S3 -- the resident release builder admits a tracked ycharts/generate JSON member with no builder change, so the capability carrier needs no packaging edit
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W84-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~84",
+  "surfaced_at": "2026-10-13T18:35:38Z",
+  "one_line": "reports/build_resident_package.py copies every tracked file under ycharts/generate (tests, __pycache__, .pyc and fixtures excluded) and intake/ into the resident package, and the host checks SHA256SUMS. A capability file committed at ycharts/generate/kimi_search_capability.json would therefore ride a release pair with no builder change. The order ships no such file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "reports/build_resident_package.py:37-38 DIRS includes ycharts/generate and intake",
+      "reports/build_resident_package.py:64-68 adds every tracked file under each DIRS entry unless excluded (tests, __pycache__, .pyc, fixtures)",
+      "ycharts/generate/resident_worker.py load_search_capability reads SEARCH_CAPABILITY_FILE beside the module, the way comparison_catalogue reads templates.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-251 wiring step 2: the capability is a package member, read once at resident start, and a release pair must add it.",
+  "world_is": "The carrier is read beside the module and the builder admits it as a tracked member with no change. The release pair's own tooling and the Lambda leg were not read; release_size in the record covers the resident leg only."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W82-S1 -- the before-arm premise: the new AR-y-249 test files import at HEAD and fail at construction; they do not fail to import
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W82-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~82",
+  "surfaced_at": "2026-10-13T18:38:02Z",
+  "one_line": "AR-y-249 before_arm says the new test files cannot import at HEAD. Measured: both new files import at HEAD and every test in them fails there (TypeError on the new search= keyword of KimiAdvisory.__init__; AttributeError: kimi_port has no kimi_search), so the before-arm evidence is failure at construction, not an import error.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "intake/tests/test_swap_from_search.py run against a git archive of HEAD c53686ba6d (.scratch/headcopy): 18 failed, TypeError KimiAdvisory.__init__() got an unexpected keyword argument 'search'",
+      "ycharts/generate/tests/test_kimi_search_port.py run against the same HEAD copy: 17 failed (AttributeError: module 'kimi_port' has no attribute 'kimi_search' or the same TypeError)",
+      "intake/tests/test_resolution_kimi.py (edited fixtures) run against the same HEAD copy: 27 failed, 21 passed; test_swap_requires_qa_capability_and_rejects_prior_failed_proxy fails with KIMI_WEB_SEARCH_UNVERIFIED where KIMI_REJECTED_CANDIDATE is expected"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-249 before_arm: run the new tests against HEAD without the change: they cannot import (record that), and run the two edited fixtures: they FAIL on HEAD under the new capability shape.",
+  "world_is": "The new files import at HEAD because the modules they import (resolution_kimi, kimi_port) exist there; they fail when the new keywords and the new function are used. The 27 failures in the edited file include check-kind deadline cases, because the shared deadline_case fixture now passes search= for both kinds."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W82-S2 -- the ycharts/generate baseline cannot be re-measured inside the 120 second bound on either tree
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W82-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~82",
+  "surfaced_at": "2026-10-13T18:38:02Z",
+  "one_line": "AR-y-249 step 4 asks that the ycharts/generate tests which collect show the same result at HEAD (baseline row W79-S4). The full folder run does not finish inside timeout 120 on either tree (rc 124 on both), so the 4 custody failures and the fitz collection errors were not re-measured by a run; collect-only is identical on both trees.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 python -m pytest tests -q in ycharts/generate: worktree rc=124 at 67 percent, HEAD copy rc=124 at 69 percent (.scratch/gen_wt.txt, .scratch/gen_head.txt)",
+      "timeout 120 python -m pytest tests --co -q in ycharts/generate: worktree 592 tests collected rc=0 with 0 ERROR lines; HEAD copy 592 tests collected rc=0 with 0 ERROR lines (.scratch/co_wt.txt, .scratch/co_head.txt)",
+      "test_y4_check_gate.py, the only other ycharts/generate test file that imports the Kimi modules: 16 passed on the worktree and 16 passed on the HEAD copy"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-249 step 4: the ycharts/generate/tests files that collect (4 custody failures and fitz collection errors are the known baseline at 85f43d3456: show they are the same at HEAD, row W79-S4).",
+  "world_is": "The baseline comparison this order asks for needs a longer bound than the 120 second rule allows for the whole folder. The Kimi-touching files were run individually instead; the custody and fitz baseline was not re-run."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W82-S3 -- the cell is silent on search egress telemetry and on the swap's drop counts; the worker added both
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W82-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~82",
+  "surfaced_at": "2026-10-13T18:38:02Z",
+  "one_line": "AR-y-249 names one search call and says nothing of its journaling. I added BEFORE_SEARCH and AFTER_SEARCH events on the same telemetry port (attempt 0, outcome, elapsed seconds; no query text, no results), and two counts, dropped_unsupported and dropped_unsupported_sources, beside the swap return keys. The check kind's return is unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/generate/kimi_port.py:62-127 kimi_search and _search_results (the search port, no telemetry of its own)",
+      "intake/resolution_kimi.py:218-246 KimiAdvisory._search (BEFORE_SEARCH and AFTER_SEARCH journaled through self.telemetry before and after the single search call)",
+      "intake/resolution_kimi.py:332 the swap return carries dropped_unsupported and dropped_unsupported_sources; the check return is unchanged"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-249 step 3: one call to search(query, search_limit, timeout_seconds) inside the kind's deadline; the return shape keeps result, failure and attempts. AR249-y-AC2J: the key is never printed or logged.",
+  "world_is": "Search is egress, and the module's rule is that a telemetry sink failure prevents unrecorded egress (test_telemetry_failure_prevents_call). The cell does not say whether search egress carries the same record, so the event shape was chosen by the worker. For the CVO's L9 grade of AR249-y-AC2J and the CTO to confirm or refuse the shape."
+}
+]
+```

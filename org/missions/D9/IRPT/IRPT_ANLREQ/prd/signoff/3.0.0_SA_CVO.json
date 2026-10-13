@@ -1,12 +1,13 @@
 {
   "prd": "IRPT_ANLREQ_PRD.md",
-  "prd_version": "v0.4",
-  "prd_pin": "4b1447e2cc91b135cf8eaa4eaed0924140e55c69",
+  "prd_version": "v0.5",
+  "prd_pin": "e977af93bf976db4c674be3f0c79683c8f491b71",
   "half": "ratified-text",
-  "half_hash": "b4773171f32bb0498db8320166f4a1f57496514d852cc7edbab85e218ab2edf3",
-  "endpoint_hash": "96a55d200df27b26fbcb756980ad39298daa69e6107d6da54c552db37fe44f5f",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_PRD_v0.4_RATIFIED_TEXT_REVIEW_20261012.md@669b79addcb0ceae29d3450ba8587c25f0a7713b",
+  "half_hash": "cfcfd5d90db389e82bb0032305c441b25a2ac34ed307325c3ecba70b63ecc80c",
+  "endpoint_hash": "4a69f6b64f48a01f071a1d103d1c15d3b3e5557fdc8772fb0bc78d0c14e573b9",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_PRD_v0.5_RATIFIED_TEXT_REVIEW_20261013.md@3e8061163e",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-12T01:56:10Z"
+  "signed_at": "2026-10-13T19:04:25Z",
+  "reason": "C-PACKAGER still names the branded PDF as the last hop; organic arm names an Opal staff filing; produced variant not bound to the chosen one; (v0.5) annotation inside ENDPOINT"
 }

@@ -262,3 +262,9 @@ Correction: the round-92 rows carry surfaced_at 16:48:00Z; the clock read 16:45:
 |---|---|---|
 | Law edit relay, CLAUDE.md rule 33 (msg 7120) | Acked; paths posted from now on carry a file:/// URI, plus the repo-relative form when bound for another box | -- |
 | IRPT_BCKEND round 182 (~P) | ADJUDICATION_v83 (C-S366), no remediation file: irpt-directory-search live at the signed digest (my read, 18:23Z); Andrew's lifting of the hold read in open calls cfd4/b6fa (ruled_by andrew); 5 dismissed incl. v56 D2-S139; D2-S145 to -S147 stay with the issuer. Not shown: a client login on PROD. Slug sent 18:30:28Z | 8a628274ca |
+
+## Addendum, 2026-10-13 18:59Z to 19:05Z (msgs 7165, 7167)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_ANLREQ PRD v0.5 ratified-text half (half cfcfd5d90db3) | REFUSED: C-PACKAGER still names the branded PDF as the last hop; the organic arm names an Opal staff filing; the produced variant is not bound to the chosen one; a (v0.5) annotation sits inside ENDPOINT. Review read against the pivot direction (lines 55, 108-165, 345-356). Note sent to CTO~DELL2 19:05:03Z | review 3e8061163e, stamp 9c5bb72877 |
