@@ -88,7 +88,7 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~F
 
 **ISSUER NOTES:** CTO round-4 analysis section 3 item 2 (live half): "one signed non-admin session read on those paths". The issuer's standing ruling (RULING_L6_VALIDATOR_FBL.md) is that no seat mints a session; the CTO's list does not say whose session. The order therefore takes an organic line first (the watch FB1 already runs hourly), and a driven read only with a session already in hand; if neither, the order parks with owner `1.0.0_SA_CTO~DELL1` and the condition "a non-admin session exists in a seat's hands or Andrew supplies one". The issuer sends the CTO ONE question on it at the issuance. Class WORLD (a live request path), reads only.
 
-<status>pending</status>
+<status>parked</status>
 <round>5</round>
 <workstream>VALIDATOR</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-h-5</to_id>

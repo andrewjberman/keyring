@@ -5819,3 +5819,29 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Not caused by the move (the log shows it on every date from April). Act 4b's deployed generator (canonical mode, CodeSha256 fdPwodukz88d...) has therefore never been exercised; its read path was graded by r4_execeq only. No fix is in this lane's permitted set; ADDENDUM 4 item 3 classes a generator failure as a BLOCKING row fixed forward, with the stale summaries as the named cost (stale since 2026-05-04, not one day). Decision owed by the issuer: who fixes the put-events failure, and whether one manual invocation of the generator is authorised to exercise 4b (the order said not to invoke it)."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-h-5, validator live read)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S41",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-13T06:43:35Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "no non-admin session in hand for the validator's ownership read: the 17 organic lines on /platinum/accounts/ and /books/relationship/ since the edge leg are all tier=internal (admin bypass), so the validator's canonical ownership read has not been exercised by a non-admin request.",
+  "spec_asserts": "TO-FB-h-5 step 1: take an organic non-admin line on /platinum/accounts/ or /books/relationship/ since 2026-10-12T15:15:10Z; step 2: a driven request only with a signed non-admin session already in hand, none minted; otherwise a BLOCKING row, status parked, and report.",
+  "world_is": "Read 2026-10-13T06:41Z: auth-validator-edge log groups in 7 regions, 9136 lines, Version 23 only. Auth OK lines by tier and path class since 15:15:10Z: advisor 303 on firm paths and 115 on other paths, 0 on accounts or relationship; internal 15 on accounts and 2 on relationship, 592 on firm and 1045 on other; service 2 on other; total 2074. The validator admits tier=internal as an admin bypass (index.mjs lines 35 and 401-406) before any ownership-map read, so the 17 lines are not ownership reads. The four events ownership_map_fetch_failed, ownership_map_schema_mismatch, advisor_not_in_ownership_map and advisor_scoping_denied: 0 each. This seat holds no signed non-admin session and mints none (order bound 2.2), so step 2 is not taken. The record VALIDATOR_LIVE_READ.json is committed at 0a817c97a03447ca1b0536d7b3e0b288128c21db and the grader reads FAIL no non-admin request on an accounts or relationship path was read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/round5/VALIDATOR_LIVE_READ.json",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/round5/h5_validator_reads.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the un-park: 1.0.0_SA_CTO~DELL1. Condition: a non-admin session exists in a seat's hands, or Andrew supplies one; at that point the order re-opens with one request on an accounts path. An organic non-admin line may also arrive on its own (advisor lines exist on other paths today); the read can be repeated without a session. Standing watch: none added (no monitor)."
+}
+```
