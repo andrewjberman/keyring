@@ -72,3 +72,15 @@ No two cells write one file at once: `FB-j-2` and `FB-j-4` both edit the dispatc
 | `comp-schedule` | every cell DECLARED-NOT-APPLICABLE (no rule, schedule or cadence is added or changed; the existing `exec-summary-trigger` rule is the consumer) |
 | `comp-iam` | `FB-j-3` and `FB-j-7`: one `s3:PutObject` of the dispatcher key by the actor's identity (the runner role already syncs it); `FB-j-6`: a resource-scoped `safe-apply` of one function; no grant is added; the rest none |
 | `comp-adversary` | each criterion is dry-run at the base (FAIL as expected) and on a reference patch (PASS); each grader on a good and a mutant fixture (`L5_FACTS.md`) |
+
+## Amendment 1 (2.0.0_SA_COO~B1, 2026-10-13 ~09:3xZ): cell `FB-j-8` added by the CTO's order (FB-j-6 CTO half ADDENDUM 2, msg 4731)
+
+`FB-j-6`'s one dry run returned ten artifacts with zero bullets. The CTO ruled the empty pass NOT a sample and ordered: the May artifacts of the same
+ten advisors read (the issuer read them at 08:5xZ: 0 bullets in May and in the canonical copies; the legacy version histogram over 152 objects is 304-311
+bytes), an offline pre-screen of all advisors with no model call, a targeted dry run as the positive control, and a per-advisor no-regression criterion
+in `FB-j-7`. Cells are now 8, chains 4 and 1 join: `FB-j-8` (seat order to `0.7.0_AE_CloudOps~FB1`, WORLD, read-only plus at most one dry-run
+invocation under the signed pair) is a new read in the generator chain (`{FB-j-5, FB-j-6, FB-j-8}`); `FB-j-7` (the join) also waits on its record.
+
+| cell | item | serves | owned files | depends on | slot, class | risk | at the cut |
+|---|---|---|---|---|---|---|---|
+| `FB-j-8` the slot pre-screen: which of the 158 advisors fire a slot today (offline, no model call), then ONE targeted dry run | 2 | FWD-5 | `deliverables/0.7.0_AE_CloudOps~FB1/SLOT_PRESCREEN.json`, `.md`, `SLOT_DRYRUN_ARTIFACTS.json` | `FB-j-6` | `0.7.0_AE_CloudOps~FB1` seat order | WORLD | pending |
