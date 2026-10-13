@@ -41,6 +41,7 @@ of EVERY call in the chain and widens the blast radius; the CTO refused it.
 ## 2. BOUNDS
 
 1. One commit of the script only (plus rows and instance). No deploy, no push, no AWS call.
+2. **Sequencing (the CTO's condition on the dry-run pair, `NEVER_WIDEN_ROUND7_EXEC_SUMMARY_DRYRUN_DEPLOY_CTO_HALF.md`):** this change is the TRIGGER that makes chain-complete reach EventBridge; once it is DEPLOYED the next chain serves up to 158 client-facing summaries. Merging it to the branch is fine; it is NOT deployed to `code/gold/` by anyone until the dry-run sample (`FB-j-6`) has been read by the CTO AND the regeneration pair (`FB-j-7`) is signed on both halves citing that sample. The deploy is `FB-j-7`'s, never this cell's.
 
 ## 3. SURFACES
 
@@ -68,6 +69,8 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMB
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** PARKED at the cut: owner `2.0.0_SA_COO~B1`; un-park condition: `FB-j-3` read (the measured text names the cause; if it names a DIFFERENT cause the issuer re-cuts this cell on that cause, never on the hypothesis) and `FB-j-2` merged (same file). The CTO's ADDENDUM 1 item 2 replaced the issuer's first proposal (a top-of-file export). The grader's `--region` count of 1 is the byte-unchanged proof for the other calls.
+
+**AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-13 ~09:1xZ):** the CTO's ordering (his half of the FB-j-6 pair) is stated in section 2: the edit may merge; the deploy waits for the sample read and the FB-j-7 pair. Un-park condition now also names it: this cell is cut AFTER `FB-j-3` is read, and its merge is not a deploy.
 
 <status>parked</status>
 <round>7</round>

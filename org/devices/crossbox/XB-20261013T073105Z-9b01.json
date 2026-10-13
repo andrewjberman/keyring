@@ -10,12 +10,16 @@
  "subject": "AMGT_HARVST HVST-bz-4 windowless re-pin from 995adcaeaa; halves COO@b0267c5443 CTO@469a566fa1",
  "body_path": "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-bz-4.site-z-runner-registered-windowless.md",
  "opened_at": "2026-10-13T07:31:05Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-13T07:32:22Z",
   "bus_message_id": "88d1b708-561f-4de1-82cf-02f411a84f09"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-13T07:44:14Z",
+  "by": "0.7.0_AE_CloudOps~ZW",
+  "bus_message_id": "510b62fc-d618-4717-a990-7ddb4b721ffb"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
