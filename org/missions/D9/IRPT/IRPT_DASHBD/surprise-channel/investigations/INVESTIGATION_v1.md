@@ -7143,3 +7143,78 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W133-S1 -- 7 of the 12 neither-convention segments stay UNEXPLAINED under the closed list (FWD-8 unmet for 7 accounts)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W133-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~133",
+  "surfaced_at": "2026-10-13T14:01:11Z",
+  "one_line": "Applying RULE.md (committed 99d37085ba, before the read) to the 12 segments that neither flow convention closes leaves 7 UNEXPLAINED, in 7 accounts of one segment each; the closed list explains 5.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IRPT_DASHBD.TO-DB-b-167: each of the 12 segments neither convention closes owes one reason from the closed list that, corrected alone, closes it within 0.35 pp; a segment left UNEXPLAINED is filed as one surprise row and FWD-8 is unmet for its account.",
+  "world_is": "tieout/tieout_neither_reasons.py at 600f5a0df6, run on a copy of the stored tables, prints: 88 flow-bearing gradable segments, 12 neither, uncorrected closes 0. By reason: BD_ACCRUED_INCOME 4, FLOW_ABSENT_ONE_SIDE 1, MISSING_PRICE 0, FLOW_ON_NON_TRADING_DAY 0, INCOME_OFF_FLOW_DAY 0, UNEXPLAINED 7 (sum 12). UNEXPLAINED is 7 segments in 7 accounts, one segment each. combined_only 0. demoted_to_unexplained 7. The BD_ACCRUED_INCOME identity holds on all 12, its correction closes 4 and leaves 7; FLOW_ABSENT_ONE_SIDE holds on 1 and closes it; the MISSING_PRICE, FLOW_ON_NON_TRADING_DAY and INCOME_OFF_FLOW_DAY tests hold on none of the 12.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 python -I org/missions/D9/IRPT/IRPT_DASHBD/tieout/tieout_neither_reasons.py (no record path), at worktree commit 600f5a0df6, rc 0: 'flow_segments 88; neither 12', 'uncorrected_closes_among_12 0', 'by_reason {... UNEXPLAINED: 7} (sum 12)', 'unexplained accounts 7; unexplained segments per account [1, 1, 1, 1, 1, 1, 1]'",
+      "RULE.md at commit 99d37085ba (written and committed before any row of the 12 was read; code and column names only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W133-S2 -- DB89-1-AC1 population limb: RULE.md defines accounts over the 88 flow segments (84), the checker requires 1..12
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W133-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~133",
+  "surfaced_at": "2026-10-13T14:02:20Z",
+  "one_line": "DB89-1-AC1 prints FAIL on its population limb: the record's population.accounts is 84 by RULE.md's own definition (accounts among the 88 flow segments), and the checker requires an int from 1 to 12; the order does not define the field.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-167 record spec: population {flow_segments 88, neither_segments 12, accounts}, with no definition of accounts. RULE.md section 2 (commit 99d37085ba), committed before the read: population.accounts = distinct accounts among the 88 flow-bearing gradable segments. checks/r89/p89_round89.py: population flow_segments 88, neither_segments 12, accounts int 1..12.",
+  "world_is": "The record written by tieout_neither_reasons.py at 600f5a0df6 carries population accounts 84. The checker prints 'FAIL: population {accounts: 84, flow_segments: 88, neither_segments: 12} (must reproduce 88 flow segments and 12 neither-closes segments)', rc 1. The rule's definition and the checker's range cannot both hold for this record; the rule was not edited after the read and the record was not changed to fit the checker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 python checks/r89/p89_round89.py . DB89-1-AC1 at worktree HEAD 600f5a0df6 plus the record: 'FAIL: population {'accounts': 84, 'flow_segments': 88, 'neither_segments': 12} ...', 'DB89-1-AC1 FAIL', rc 1",
+      "checks/r89/p89_round89.py line 82: pop.get('accounts') must satisfy 1 <= accounts <= 12; RULE.md section 2 population.accounts defined over the 88"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W133-S3 -- DB89-1-AC1 digit-run limb: the record's rule.sha256 (sha256 of the committed RULE.md) carries an 8-digit run, the same defect class as W132-S1
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W133-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~133",
+  "surfaced_at": "2026-10-13T14:02:20Z",
+  "one_line": "DB89-1-AC1 cannot PASS as written: the record must carry rule.sha256 = sha256 of the committed RULE.md, and that value holds the 8-digit run 41859941, which the criterion's no-run-of-8-digits limb refuses.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-167 BOUNDS and record spec: rule.sha256 is the sha256 of the committed bytes of RULE.md; DB89-1-AC1: the record holds no run of 8 or more digits.",
+  "world_is": "RULE.md at commit 99d37085ba has sha256 fc50363af10dfad3d0088a4220c68132b8a02c41859941e8ab30c7be53361f55, which contains the 8-digit run 41859941. The record line 62 holds that value, and grep for 8 or more digits returns one match. The code sha256 (0cb1529c...) has no such run. This is the defect class of W132-S1 (round 88), recurring on the rule file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git cat-file blob 99d37085ba:org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~133/RULE.md | sha256sum = fc50363af10dfad3d0088a4220c68132b8a02c41859941e8ab30c7be53361f55",
+      "grep -o '[0-9]\\{8,\\}' on NEITHER_12_REASONS.json returns 41859941 (line 62, rule.sha256), rc 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
