@@ -4865,3 +4865,30 @@
 }
 ```
 
+
+## IRPT_ANLREQ-D2-S65 -- (disarm row; this seat's own, allocated on the main index)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S65",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T01:12:44Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W52-S24: the account-header rule now matches Brokerage Account, IRA Account, Joint Account, Subaccount, Account Seq and Account Sequence, so a multi-account file under any of them is turned back; the residual spellings outside the ruled vocabulary are carried by row IRPT_ANLREQ-D2-W52-S31.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO round-18 ruling (CTO_ROUND_ANALYSIS_IRPT_ANLREQ_Y_ROUND_18_20261012.md section 1 row D2-W52-S24): WIDEN before the release pair, not a stated limit. The owner of the ARMED row (this seat) disarms it when the widening is on the trunk.",
+  "world_is": "MEASURED by this seat 2026-10-13 on the shared tree after the drain a665d34dd3: ar18_checks y181-rule prints Y181-RULE-OK over 28 identifier forms (the six named in S24 among them), 2 count forms, 10 attribute forms, 7 non-account forms and 6 negative controls committed before the rule (015af53b8f, rule da7b3b10bc); y181-keep prints Y181-KEEP-OK (331 intake tests pass, READER_VERSION irpt-template-reader.r18.1). The reader is unreleased, so the hazard was never live; it is disarmed where it was armed. NOT covered: identifier spellings outside the ruled vocabulary (Account Numbers, Subaccounts, Accnt, Account Nos, Seqno, Serial), carried by row W52-S31 (ARMED, this seat), and a real identifier column headed No. of Accounts, carried by row W52-S32 (ARMED, the CTO).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "a665d34dd3 (the drain of TO-AR-y-181)",
+      "ar18_checks.py y181-rule and y181-keep run by this seat on the shared tree",
+      "CTO round-18 analysis section 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
