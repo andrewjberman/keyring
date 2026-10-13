@@ -6806,3 +6806,30 @@
   }
 }
 ```
+
+
+## IRPT_ANLREQ-D2-S70 -- (disarm row; this seat's own) the irpt-holdings artifact key's latest version is the live package again
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S70",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T11:32:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "DISARMS rows IRPT_ANLREQ-D2-S69 and IRPT_ANLREQ-D2-W64-S5: the irpt-holdings artifact key's latest version is the live package again (version hfQkgY1L, read back by this seat).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Rows S69 and W64-S5: the key investor-reporting/irpt-holdings.zip carried three wrong versions, the latest wrong, written by rebase workers at pre-guard commits; the live Lambda unchanged.",
+  "world_is": "MEASURED by this seat 2026-10-13 ~11:3xZ: list-object-versions on the key shows hfQkgY1LcwrlvQCRQrJJlUJ2TLeah6op as latest (2026-10-13T11:24:26Z, 299273 bytes); get-object of the latest downloaded and hashed: sha256 base64 SWRfUfHdJarO2Rhbxw/KQK88DeDNorQujkaR1jUuZc0=, equal to the live CodeSha256 of irpt-holdings (get-function, LastModified 2026-10-12T14:08:33Z, unchanged). The three wrong versions (T1NEd9G., msFi8sD6, QCyspt0v) are kept, nothing deleted. Applier 0.7.0_AE_CloudOps~AQ2, order TO-RESTORE-R20a flipped complete after the applier's proof instance validated (VALID rc 0, run by this seat), ledger irpt-holdings-key-restore-20261013 CLOSED. NOT covered: the row W64-S6 (the pre-guard trap in the instrument) stays ARMED, mine: the y213-rebase check now counts collection and setup ERRORS like failures (amendment 2), AR-y-216 forbids build-and-upload.sh, and the status-rule pair's builds are the applier's, at a base whose builder carries the guard; the older candidates are named unsafe here. The other seven artifact keys were read after the incident and carry no version written by today's workers.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "list-object-versions and get-object of irpt-holdings.zip, hashed by this seat",
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r20/R3_READBACK_R20.txt and its proof instance (VALID)",
+      "aws lambda get-function irpt-holdings"
+    ]
+  }
+}
+```
