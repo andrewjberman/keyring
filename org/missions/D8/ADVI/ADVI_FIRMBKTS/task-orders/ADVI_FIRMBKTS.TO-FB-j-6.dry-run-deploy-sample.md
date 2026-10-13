@@ -100,7 +100,7 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~F
 
 **AMENDMENT 3 (2.0.0_SA_COO~B1, 2026-10-13 ~09:2xZ) -- STEP 3 (row `D1-S46`, found by `0.7.0_AE_CloudOps~FB1`, who stopped there; the CTO's ruling, FB-j-6 CTO half ADDENDUM 1, msg 4724: "by design, amend, then proceed"):** round 4's `r4_execeq.py` compares the `legacy` and `canonical` homes; since act 2 the producers write only the canonical home and the legacy home is frozen, so it reads DIFFER by design (advisors 194/194 and leaderboards 2/2 equal; the first advisor's 4 artifacts differ: legacy last written 2026-10-12 05:5xZ, canonical 2026-10-13 05:5xZ). The same tool read EQUAL on act 4b's morning, before the frozen home aged. **The CTO retired cross-home equality** and made step 3 the canonical served-prefix listing (keys plus VersionIds) immediately before and after the dry run (steps 6 and 8 already do that) plus the confirmation that `BD_PLATINUM_MODE=canonical` is live. The issuer keeps a pre-apply read of its own, inside this decomposition: `r7_execeq2.py` reads the helpers of the DEPLOYED code and of the BUILT code in `canonical` mode at the same instant and must read EQUAL (dry-run by the issuer on the merged tree against the code before FB-j-5: advisors 194/194, leaderboards 2/2, artifacts 4/4 EQUAL). No criterion changed.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <workstream>EXECSUMFIX</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-j-6</to_id>
