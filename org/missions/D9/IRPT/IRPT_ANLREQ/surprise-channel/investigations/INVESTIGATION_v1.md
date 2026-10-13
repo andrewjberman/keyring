@@ -5468,3 +5468,157 @@
 }
 ```
 
+## IRPT_ANLREQ-D2-W54-S13 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S13",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-13T03:03:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-AR-y-197 reads each member with git show <pin>:infra/aws/lambda/investor-reporting/<member>; for infra/logic/registry/name_rulings.json that path does not exist at either pin, so the member was read at infra/logic/registry/name_rulings.json instead (the path the delta's source field names).",
+  "spec_asserts": "TO-AR-y-197 READ FIRST: for each member, git show <pin>:infra/aws/lambda/investor-reporting/<member>, with the four members named as _authz/served.py, infra/logic/registry/name_rulings.json, ops/status.py and ycharts/generate/resident_worker.py.",
+  "world_is": "Control: git ls-tree 069b8f797e -- infra/logic/registry/name_rulings.json returns blob d0752edf6e; git ls-tree 069b8f797e -- infra/aws/lambda/investor-reporting/infra/logic/registry/name_rulings.json returns nothing; the same negative control at 0485393f3a returns nothing. The delta's own source field for this member is infra/logic/registry/name_rulings.json. The other three members are under the investor-reporting prefix as the cell says.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/name_rulings.json @069b8f797e (blob d0752edf6ee15355a1c782675f800bd00b667a04) and @0485393f3a (blob 4cef897c32a243034a0359a9d9b35d40f691dfca)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/r19/RESIDENT_PACKAGE_DELTA.json (differing, source field for infra/logic/registry/name_rulings.json)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S14 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S14",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-13T03:03:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cell lists resident_installed.py among the resident's entry points beside resident_main.py and resident_worker.py; the file is at infra/aws/lambda/investor-reporting/reports/resident_installed.py and ycharts/generate/ holds no resident_installed.py. The trace followed the factory from its real location (resident_main.py:46 imports it by module name).",
+  "spec_asserts": "TO-AR-y-197 cell: the resident's entry point is ycharts/generate/resident_main.py, resident_installed.py or resident_worker.py, traced from there.",
+  "world_is": "At 069b8f797e: ycharts/generate/ contains resident_main.py and resident_worker.py; reports/resident_installed.py defines build_resident_runtime at line 344 and sets its sys.path at lines 4-8 (_scope, _ids, _keys, _authz, _contracts, intake, ops, reports, ycharts/generate, ycharts/session, lib). The installer (install-resident.sh) names the factory by module:function, so the module location is set by sys.path, not by the entry directory.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py @069b8f797e (line 344 def build_resident_runtime; lines 4-8 sys.path)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py @069b8f797e (line 46 importlib.import_module of the factory module)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S15 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S15",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-13T03:03:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The resident's static import closure reaches _authz/served.py only through a function-level chain that no resident path calls; if a caller of resolve_custody_profile_fields were added on the resident, served.py would load (running its import-time _earn_the_mark) and Entry.handle's status rule and log line would be in the resident's reach. No gate or cell names this edge.",
+  "spec_asserts": "TO-AR-y-197 AC2J (judgment): a member the resident does not reach is shown not reached rather than assumed; the pair's reading of served.py rests on the static trace.",
+  "world_is": "Chain at 069b8f797e: reports/resident_installed.py:376 (lazy) -> _scope/canonical_profile_reads.py:15 (module level) -> _scope/maintained_sources.py:332 (lazy, in snapshot_custody_profile_sources, def 313) -> _scope/custody.py:25 (lazy, in current_custody_principal, def 24) -> _authz/served.py:323. snapshot_custody_profile_sources has one caller, resolve_custody_profile_fields (maintained_sources.py:380-386), which has no caller in the closure; CustodyAccess (custody.py:45) is never instantiated in the closure. served.py:1384 runs _earn_the_mark() at import.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/maintained_sources.py @069b8f797e (lines 313, 332, 380, 386)",
+      "infra/aws/lambda/investor-reporting/_scope/custody.py @069b8f797e (lines 24-25, 45, 61, 64)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py @069b8f797e (line 1384 GUARD_WIRING_PROVEN = _earn_the_mark())"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S21 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S21",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T03:02:16Z",
+  "one_line": "The source-map row direction the AR-y-198 cell names is reversed at the shared head read now: the head map pins _authz/loaders.py for irpt-ycharts-generate at 69679b90e3 again (sha256 a2283dc8), not 0642c9d004.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 95406de7f3:infra/aws/lambda/ci/lambda-source-map.json, functions.irpt-ycharts-generate.staged_from loaders.py row: pin 69679b90e3dc52b670d33fddd96d06be1deaac90, sha256 a2283dc8436dc048343bb105b07cd56e93aa0fe038f90457d1b57a882eb887fa",
+      "the worktree copy at 2107dfe618 (infra/aws/lambda/ci/lambda-source-map.json) carries pin 0642c9d00454 and sha256 93f2f02a1bd40d01 for the same row",
+      "git rev-parse 069b8f797e:infra/aws/lambda/investor-reporting/_authz/loaders.py = a89958a0e7215de27837eacf709bc759accfc4c8, the blob of 69679b90e3; the blob of 0642c9d004 is b39e8809b39fabbfd71ebc8f808ea7d56aa572b2"
+    ]
+  },
+  "spec_asserts": "AR-y-198 cell: the source-map row for irpt-ycharts-generate _authz/loaders.py moved from 69679b90e3 to 0642c9d004 between the round-19 base and the head (row W51-S20 names head 731a72ecb2).",
+  "world_is": "At the shared head 95406de7f3 the row carries pin 69679b90e3 and sha256 a2283dc8, equal to the base 5d8b0390ed. The release pin 069b8f797e carries the 69679b90e3 blob. The head row has moved more than once; the AR-y-198 verdict is read from the blobs and the owner's commit, not from the row.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S22 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S22",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T03:02:16Z",
+  "one_line": "No NFRA_CTLPLN release record ships the bytes the AR-y-198 cell calls the CTLPLN release: every CTLPLN artifact row for lib/opal_naming.py and infra/logic/registry/firm_pages.json reads COMMITTED-NOT-DEPLOY-SCOPE.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~70/NFRA_CTLPLN.TO-CT-w-8.firm-pages-note-field-and-comments.proof_of_spec.json (artifacts_produced: lib/opal_naming.py 6ae365f583 and firm_pages.json e76206bdcb, deployed_state COMMITTED-NOT-DEPLOY-SCOPE, 'No deploy, no AWS call.')",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~65/ proofs of CT-w-1 (firm_pages.json 9efa1021ce; lib/opal_naming.py a99d7e584c and 22169e24fb) and CT-w-4 (lib/opal_naming.py c5d1415676): each COMMITTED-NOT-DEPLOY-SCOPE",
+      "RESIDENT_PACKAGE_DELTA.json only_in_new: infra/logic/registry/firm_pages.json (NFRA_CTLPLN, last_commit_in_range e76206bdcb)"
+    ]
+  },
+  "spec_asserts": "AR-y-198 cell and CTO round-19 section 4 point 2: NFRA_CTLPLN's lib/opal_naming.py and firm_pages.json are compared to a version the owner already released (the CTLPLN release, a Lambda artifact its pair shipped).",
+  "world_is": "No CTLPLN record ships these bytes; the owner's proofs say never deployed. firm_pages.json is new in the release build. Both members read NOT_EQUAL to any owner-released version in the AR-y-198 record, and go to NFRA_CTLPLN through 0.0.0_AB_MSTR~DELL2 before the pair is signed.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S23 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S23",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T03:02:16Z",
+  "one_line": "The bytes the eight act-4 artifacts carry for ADVI_FIRMBKTS scopes.json and exemptions.json are not recorded: act 4 checked loaders.py only, and the source-map rows for those two members still carry pre-act pins and values.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act4_irpt/member.out: the member check covers loaders.py only (8 of 8 equal to the flip blob)",
+      "shared head source map: scopes.json staged_from rows of irpt-status (pin 80a79a746284) and irpt-ycharts-generate (pin 3f29017cfcd2) carry sha256 8fcd28d3 (8 rows in total); exemptions.json rows carry sha256 56c38d7e (9 rows in total); commit e274a0e60c touched only the loaders.py rows (16 insertions, 16 deletions)",
+      "git log 0485393f3a..069b8f797e: scopes.json changed only at 69679b90e3; exemptions.json changed at 3a6d8aa89d and 61cc536c29"
+    ]
+  },
+  "spec_asserts": "AR-y-198 cell: the owner's released versions of the ADVI_FIRMBKTS members are read from the Lambda artifacts their own pairs shipped (act 4's eight).",
+  "world_is": "The act-4 record attests loaders.py only. The stale source-map values for scopes.json (8fcd28d3) and exemptions.json (56c38d7e) match neither the release pin (6ce64167, 5241338b) nor the live pin (3a5f96e4, 9ea684d5). Whether the eight shipped artifacts carry the flip's scopes.json and the trunk exemptions.json is not recorded, and the AR-y-198 verdicts for those two members are CANNOT_TELL until it is.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
