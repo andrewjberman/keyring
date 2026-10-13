@@ -962,3 +962,29 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Left as the order says. A later cell that wants muse to answer K### confirmations needs on_owner_reply on the same verified fields; that is a decision for the issuer."
 }
 ```
+
+## COMM_ASSIST-W13-S1 -- the footer every mail text carries names #dev and 0 only, so the approve and redraft replies are not stated where he reads them
+
+```json
+{
+  "id": "COMM_ASSIST-W13-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~13",
+  "surfaced_at": "2026-10-13T23:17:35Z",
+  "one_line": "The mail text footer (_mail_text) says Reply #dev [notes] to open a job / 0 drop; it does not name 1 (approve) or notes (redraft), which CA-i-7 now answers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/mail_requests.py@90adf8a007:229 the footer line of _mail_text: Reply #dev [notes] to open a job / 0 drop",
+      "data/transcripts/scripts/teams_chat/mail_requests.py (worker commit on wk-COMM_ASSIST-13): on_mail_reply now answers 1 with the final draft and notes with a redraft, and the footer is unchanged"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-i-7 step 2: his notes redraft the mail draft and his 1 approves it, so he can finish the item by text.",
+  "world_is": "Every mail text, first or redrafted, ends with a footer that names only #dev and 0. Nothing in the text he receives says that 1 approves or that notes redraft. The chat text names 1 and notes (its offer text); the mail text does not.",
+  "notes": "Not changed here: the footer is the first-text format and the order names no footer change. The issuer decides the wording. The mail item's approve and redraft replies work regardless of the footer."
+}
+```
