@@ -10,6 +10,13 @@ through its manager. "Touches only its fabric" is a MEASUREMENT here, never a ju
                                     [--orders <order file> ...] [--roots <dir> ...]
     python .tools/open-calls.py add --kind approval --project NFRA_DEVPLN --box <box> --branch cand/<box>/<slug> --purpose <text>
                                     --pages <p1,p2> --class client-facing|opal-internal|test-only --how <text> [--subject <text>]
+                                    --portal <portal repo path> [--check-only]
+                                    # DP-b-5: head_sha and commits are COMPUTED from the portal (origin/PROD, origin/DEV); a branch
+                                    # cut from DEV (overlap above 0) is refused; --check-only runs the checks and writes nothing
+    python .tools/open-calls.py approval-lease --branch cand/<box>/<slug> --box <box> --purpose <text> --pages <p1,p2>
+                                    --class <class> --how <text> --portal <portal repo path> --lease-file <path> [--project NFRA_DEVPLN]
+                                    # DP-b-5: a live FAST lease of this seat (mode FAST, expires_epoch ahead, seat = OPAL_AGENT_SERIAL)
+                                    # writes the row already CLOSED approved (by "FAST lease <file>", ruled_by lease)
     python .tools/open-calls.py list [--device <d> | --all] [--cloud] [--include-closed]
     python .tools/open-calls.py publish          # put this box's current list to the cluster copy, unchanged
     python .tools/open-calls.py close --id <id> --by <serial> --ruling <path> [--crossbox <crossbox id>]
@@ -80,8 +87,9 @@ import secrets
 import subprocess
 import sys
 import tempfile
+import time
 
-TOOLS = os.path.dirname(os.path.abspath(__file__))
+TOOLS =os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(TOOLS)
 
 SCHEMA = "open-calls/1"
@@ -101,7 +109,7 @@ ROW_REQUIRED = {"id", "project", "subject", "asked_by", "source", "state", "open
 CLOSED_KEYS = {"at", "by", "ruling", "crossbox", "ruled_by", "xadj", "decision"}
 # `approval` (NFRA_DEVPLN round 1, cell DP-b-1; record org/missions/D0/NFRA/NFRA_DEVPLN/ledger/APPROVAL_KIND_RULE24_RECORD_20261013.md):
 # a portal feature waiting for Andrew's yes or no. The row carries an `approval` object; closing it writes `decision`
-# (approved|declined). head_sha and commits are written null here and computed by the registration cell (DP-b-5).
+# (approved|declined). head_sha and commits are computed from the portal repository at registration (DP-b-5, register_facts).
 APPROVAL_KEYS = {"box", "branch", "purpose", "pages", "class", "how", "head_sha", "commits"}
 APPROVAL_CLASSES = ("client-facing", "opal-internal", "test-only")
 APPROVAL_DECISIONS = ("approved", "declined")
@@ -789,8 +797,9 @@ def check_call_text(kind: str, context, rec, source: str) -> None:
                       "read it. Cite a committed file (the record, decomposition, ruling or deliverable that holds the call)." % source)
 
 
-def approval_fields(args) -> dict:
-    """The `approval` object from the add flags. Refused naming the field, before anything is read or written (rc 2)."""
+def approval_fields(args, check_only: bool = False) -> dict:
+    """The `approval` object from the add flags. Refused naming the field, before anything is read or written (rc 2).
+    A --check-only registration accepts any branch name (DP-b-5): the cand/<box>/<slug> name check is skipped there."""
     for f, v in (("--box", args.box), ("--branch", args.branch), ("--purpose", args.purpose), ("--pages", args.pages),
                  ("--class", args.klass), ("--how", args.how)):
         if v is None or not v.strip():
@@ -799,9 +808,9 @@ def approval_fields(args) -> dict:
         raise Refused("--class %r is not one of %s (field approval.class)" % (args.klass, "/".join(APPROVAL_CLASSES)))
     branch = args.branch.strip()
     m = APPROVAL_BRANCH_RE.match(branch)
-    if not m:
+    if not check_only and not m:
         raise Refused("--branch %r is not cand/<box>/<slug> (field approval.branch)" % branch)
-    if m.group(1) != args.box.strip():
+    if not check_only and m.group(1) != args.box.strip():
         raise Refused("--branch %r names box %s but --box is %s (field approval.branch)" % (branch, m.group(1), args.box.strip()))
     pages = [p.strip() for p in args.pages.split(",") if p.strip()]
     if not pages:
@@ -810,19 +819,95 @@ def approval_fields(args) -> dict:
             "class": args.klass, "how": args.how.strip(), "head_sha": None, "commits": None}
 
 
-def cmd_add_approval(args) -> int:
-    if args.project == NO_PROJECT:
-        raise Refused("--project NONE: an approval belongs to a project (--project NFRA_DEVPLN)")
-    ap = approval_fields(args)
+# ---------------------------------------------------------------- approval registration (NFRA_DEVPLN DP-b-5)
+# The facts an approval binds are COMPUTED from the portal repository, never taken as arguments: head_sha (the branch tip),
+# commits (origin/PROD..<branch>) and overlap (the commits of that range that are also in origin/PROD..origin/DEV). A feature
+# cut from DEV carries every DEV commit beneath its own, so an overlap above 0 is refused: a feature is cut from PROD.
+REGISTER = "APPROVAL-REGISTER"
+PORTAL_PROD, PORTAL_DEV = "refs/remotes/origin/PROD", "refs/remotes/origin/DEV"
+LEASE_MODE = "FAST"
+
+
+class RegisterStop(Exception):
+    """A registration refused or unreadable: the reason goes on the APPROVAL-REGISTER line and the tool exits 3."""
+
+    def __init__(self, reason: str, extra: str = ""):
+        Exception.__init__(self, reason)
+        self.reason = reason
+        self.extra = extra
+
+
+def register_refused(reason: str, extra: str = "") -> int:
+    print("%s result=REFUSED reason=%s%s" % (REGISTER, reason, (" " + extra) if extra else ""))
+    return 3
+
+
+def portal_git(portal: str, *args) -> tuple:
+    """(rc, stdout) of one read-only git command in the portal repository. A missing path is rc 128, never an empty read."""
+    try:
+        got = subprocess.run(["git", "-C", portal] + list(args), capture_output=True, text=True, encoding="utf-8",
+                             errors="replace")
+    except OSError as exc:
+        return 127, str(exc)
+    return got.returncode, got.stdout
+
+
+def portal_commit(portal: str, ref: str):
+    """The full sha a ref names as a commit, or None."""
+    rc, out = portal_git(portal, "rev-parse", "--verify", "--quiet", ref + "^{commit}")
+    return out.strip() if rc == 0 and out.strip() else None
+
+
+def register_facts(portal: str, branch: str) -> dict:
+    """head, commits, overlap and ref of a candidate branch against the portal's origin/PROD and origin/DEV. Read-only.
+    The branch is read as origin/<branch>, else as the local branch <branch>, else as the remote-tracking name <branch>.
+    Raises RegisterStop with the reason when the branch cannot be registered."""
+    rc, _out = portal_git(portal, "rev-parse", "--git-dir")
+    if rc != 0:
+        raise RegisterStop("portal-not-git", "portal=%s" % portal)
+    prod, dev = portal_commit(portal, PORTAL_PROD), portal_commit(portal, PORTAL_DEV)
+    if prod is None or dev is None:
+        raise RegisterStop("portal-refs-missing", "origin/PROD=%s origin/DEV=%s" % (prod or "absent", dev or "absent"))
+    head = None
+    for cand in ("refs/remotes/origin/" + branch, "refs/heads/" + branch, "refs/remotes/" + branch):
+        head = portal_commit(portal, cand)
+        if head:
+            break
+    if head is None:
+        raise RegisterStop("branch-not-found", "branch=%s" % branch)
+    rc_own, own_out = portal_git(portal, "rev-list", "%s..%s" % (prod, head))
+    rc_dev, dev_out = portal_git(portal, "rev-list", "%s..%s" % (prod, dev))
+    if rc_own or rc_dev:
+        raise RegisterStop("portal-read-failed", "rev-list rc=%d/%d" % (rc_own, rc_dev))
+    own = own_out.split()
+    if not own:
+        raise RegisterStop("empty", "commits=0")
+    in_dev = set(dev_out.split())
+    overlap = sum(1 for c in own if c in in_dev)
+    if overlap:
+        raise RegisterStop("dev-overlap", "overlap=%d commits=%d" % (overlap, len(own)))
+    return {"head": head, "commits": len(own), "overlap": overlap}
+
+
+def approval_register_facts(args, ap: dict) -> dict:
+    """The portal facts for one registration. RegisterStop(portal-required) when --portal is not given."""
+    portal = (getattr(args, "portal", None) or "").strip()
+    if not portal:
+        raise RegisterStop("portal-required")
+    return register_facts(portal, ap["branch"])
+
+
+def approval_append(args, ap: dict, asked_by: str, source: str, closed=None) -> tuple:
+    """Append one approval row to this box's list (one writer per box); the scope is measured as for any call.
+    Returns (row id, file written, the list doc, the scope result, the scope notes)."""
     ctx = real_ctx()
     device = this_box(ctx["dev"], ctx["reg"])
-    if ctx["dev"].resolve(ap["box"], ctx["reg"]) != device or (args.device and ctx["dev"].resolve(args.device, ctx["reg"]) != device):
+    dev_flag = getattr(args, "device", None)
+    if ctx["dev"].resolve(ap["box"], ctx["reg"]) != device or (dev_flag and ctx["dev"].resolve(dev_flag, ctx["reg"]) != device):
         raise Refused("REFUSED: an approval for box %s is written to that box's list, and this box is %s. One writer per box." % (
             ap["box"], device))
-    asked_by = (args.asked_by or "").strip() or writer_serial("")
-    if not asked_by:
-        raise Refused("--asked-by is required (no OPAL_AGENT_SERIAL to take it from)")
-    res, notes = scope_project(ctx, args.project, args.orders or [], args.roots or [])
+    orders, roots = getattr(args, "orders", None) or [], getattr(args, "roots", None) or []
+    res, notes = scope_project(ctx, args.project, orders, roots)
     path = list_path(device)
     if os.path.exists(path):
         doc = read_list(device)
@@ -830,14 +915,88 @@ def cmd_add_approval(args) -> int:
         doc = {"schema": SCHEMA, "device": device, "written_at": now_utc(), "written_by": "", "rows": []}
     cid = "%s-%s-%s" % (device, datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ"), secrets.token_hex(2))
     doc["rows"].append({
-        "id": cid, "project": args.project, "subject": (args.subject or "").strip() or "approval: %s" % ap["branch"],
-        "asked_by": asked_by, "source": (args.source or "").strip() or ap["branch"],
-        "orders": [rel_to_root(o, ctx["root"]) for o in (args.orders or [])],
-        "roots": [norm(rel_to_root(r, ctx["root"])) for r in (args.roots or [])],
-        "state": "OPEN", "opened_at": now_utc(), "kind": "approval", "approval": ap,
-        "scope": public_scope(res), "closed": None})
+        "id": cid, "project": args.project,
+        "subject": (getattr(args, "subject", None) or "").strip() or "approval: %s" % ap["branch"],
+        "asked_by": asked_by, "source": source,
+        "orders": [rel_to_root(o, ctx["root"]) for o in orders],
+        "roots": [norm(rel_to_root(r, ctx["root"])) for r in roots],
+        "state": "CLOSED" if closed else "OPEN", "opened_at": now_utc(), "kind": "approval", "approval": ap,
+        "scope": public_scope(res), "closed": closed})
     written = write_list(device, doc, asked_by)
+    return cid, written, doc, res, notes
+
+
+def cmd_add_approval(args) -> int:
+    if args.project == NO_PROJECT:
+        raise Refused("--project NONE: an approval belongs to a project (--project NFRA_DEVPLN)")
+    ap = approval_fields(args, check_only=args.check_only)
+    try:
+        facts = approval_register_facts(args, ap)
+    except RegisterStop as stop:
+        return register_refused(stop.reason, stop.extra)
+    if args.check_only:
+        print("%s result=OK row=- head_sha=%s commits=%d check-only=yes" % (REGISTER, facts["head"], facts["commits"]))
+        return 0
+    ap["head_sha"], ap["commits"] = facts["head"], facts["commits"]
+    asked_by = (args.asked_by or "").strip() or writer_serial("")
+    if not asked_by:
+        raise Refused("--asked-by is required (no OPAL_AGENT_SERIAL to take it from)")
+    cid, written, doc, res, notes = approval_append(args, ap, asked_by, (args.source or "").strip() or ap["branch"])
+    print("%s result=OK row=%s head_sha=%s commits=%d" % (REGISTER, cid, facts["head"], facts["commits"]))
     print("ADDED id=%s kind=approval file=%s open=%d" % (cid, written, sum(1 for r in doc["rows"] if r["state"] == "OPEN")))
+    print_scope(res, notes)
+    return 0
+
+
+def lease_live(path, seat: str) -> tuple:
+    """(True, '') when path is a live FAST lease of this seat; else (False, why). Reads the file only."""
+    if not path or not str(path).strip():
+        return False, "no lease file given"
+    try:
+        with open(path, encoding="utf-8") as fh:
+            lease = json.load(fh)
+    except OSError as exc:
+        return False, "lease unreadable (%s)" % exc
+    except ValueError as exc:
+        return False, "lease is not JSON (%s)" % exc
+    if not isinstance(lease, dict):
+        return False, "lease is not an object"
+    if lease.get("mode") != LEASE_MODE:
+        return False, "lease mode is %r, not %s" % (lease.get("mode"), LEASE_MODE)
+    exp = lease.get("expires_epoch")
+    if isinstance(exp, bool) or not isinstance(exp, (int, float)):
+        return False, "lease expires_epoch is not a number"
+    if exp <= time.time():
+        return False, "lease expired (expires_epoch %s)" % exp
+    if not seat:
+        return False, "OPAL_AGENT_SERIAL is unset"
+    if lease.get("seat") != seat:
+        return False, "lease seat %r is not %s" % (lease.get("seat"), seat)
+    return True, ""
+
+
+def cmd_approval_lease(args) -> int:
+    """A live FAST lease of this seat registers its feature with the approval already CLOSED (DP-b-5 item 3)."""
+    if args.project == NO_PROJECT:
+        raise Refused("--project NONE: an approval belongs to a project (--project NFRA_DEVPLN)")
+    ap = approval_fields(args, check_only=False)
+    live, why = lease_live(args.lease_file, writer_serial(""))
+    if not live:
+        return register_refused("lease-not-live", "why=%s" % why)
+    try:
+        facts = approval_register_facts(args, ap)
+    except RegisterStop as stop:
+        return register_refused(stop.reason, stop.extra)
+    ap["head_sha"], ap["commits"] = facts["head"], facts["commits"]
+    asked_by = (getattr(args, "asked_by", None) or "").strip() or writer_serial("")
+    if not asked_by:
+        raise Refused("--asked-by is required (no OPAL_AGENT_SERIAL to take it from)")
+    lease_rel = rel_to_root(args.lease_file, ROOT)
+    closed = {"at": now_utc(), "by": "FAST lease %s" % os.path.basename(args.lease_file), "ruling": lease_rel, "crossbox": None,
+              "ruled_by": "lease", "xadj": None, "decision": "approved"}
+    cid, _written, _doc, res, notes = approval_append(args, ap, asked_by, lease_rel, closed=closed)
+    print("%s result=OK row=%s head_sha=%s commits=%d" % (REGISTER, cid, facts["head"], facts["commits"]))
+    print("CLOSED id=%s by=%s ruled_by=lease ruling=%s decision=approved" % (cid, closed["by"], lease_rel))
     print_scope(res, notes)
     return 0
 
@@ -846,7 +1005,9 @@ def cmd_add(args) -> int:
     if args.kind == "approval":
         return cmd_add_approval(args)
     stray = [f for f, v in (("--box", args.box), ("--branch", args.branch), ("--purpose", args.purpose), ("--pages", args.pages),
-                            ("--class", args.klass), ("--how", args.how)) if v is not None]
+                            ("--class", args.klass), ("--how", args.how), ("--portal", args.portal)) if v is not None]
+    if args.check_only:
+        stray.append("--check-only")
     if stray:
         raise Refused("%s is for --kind approval only" % ", ".join(stray))
     for f, v in (("--subject", args.subject), ("--asked-by", args.asked_by), ("--source", args.source), ("--context", args.context)):
@@ -1592,6 +1753,9 @@ def build_parser() -> argparse.ArgumentParser:
     add.add_argument("--class", dest="klass", choices=APPROVAL_CLASSES,
                      help="approval: client-facing | opal-internal | test-only")
     add.add_argument("--how", help="approval: how to look at it")
+    add.add_argument("--portal", help="approval (required): the portal repository; origin/PROD, origin/DEV and the branch are read")
+    add.add_argument("--check-only", action="store_true", dest="check_only",
+                     help="approval: run the registration checks and print the APPROVAL-REGISTER line; write nothing")
     lst = sub.add_parser("list", help="print the list(s) with each file's age")
     grp = lst.add_mutually_exclusive_group()
     grp.add_argument("--device")
@@ -1629,6 +1793,17 @@ def build_parser() -> argparse.ArgumentParser:
     aps = sub.add_parser("approval-status", help="one line: the approval state of a candidate branch (NFRA_DEVPLN)")
     aps.add_argument("--branch", required=True, help="cand/<box>/<slug>")
     aps.add_argument("--store-dir", help="a directory holding <box>/open_calls.json (tests); overrides the working tree and git")
+    alz = sub.add_parser("approval-lease", help="register an approval a live FAST lease of this seat already APPROVES (NFRA_DEVPLN)")
+    alz.add_argument("--project", default="NFRA_DEVPLN", help="the project the approval belongs to (default NFRA_DEVPLN)")
+    alz.add_argument("--branch", required=True, help="cand/<box>/<slug>")
+    alz.add_argument("--box", required=True)
+    alz.add_argument("--purpose", required=True)
+    alz.add_argument("--pages", required=True, help="the portal pages it touches, comma separated")
+    alz.add_argument("--class", dest="klass", required=True, choices=APPROVAL_CLASSES)
+    alz.add_argument("--how", required=True)
+    alz.add_argument("--portal", help="the portal repository (required: refused reason=portal-required without it)")
+    alz.add_argument("--lease-file", help="the FAST lease JSON (mode FAST, expires_epoch, seat)")
+    alz.add_argument("--asked-by", help="defaults to OPAL_AGENT_SERIAL")
     sco = sub.add_parser("scope", help="measure whether a call touches only this box")
     sco.add_argument("--project")
     sco.add_argument("--orders", nargs="+", default=[])
@@ -1642,7 +1817,7 @@ def main(argv: list) -> int:
     try:
         return {"add": cmd_add, "list": cmd_list, "close": cmd_close, "scope": cmd_scope,
                 "publish": cmd_publish, "hold": cmd_hold, "lift": cmd_lift, "mode": cmd_mode,
-                "approval-status": cmd_approval_status}[args.cmd](args)
+                "approval-status": cmd_approval_status, "approval-lease": cmd_approval_lease}[args.cmd](args)
     except Refused as exc:
         print(str(exc) if str(exc).startswith("REFUSED") else "ERROR: %s" % exc, file=sys.stderr)
         return 1 if str(exc).startswith("REFUSED") else 2
