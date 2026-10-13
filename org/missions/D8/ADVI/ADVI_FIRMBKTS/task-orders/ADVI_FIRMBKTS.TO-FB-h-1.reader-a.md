@@ -100,7 +100,7 @@ re-runs AC1 and closes this order.
 
 **ISSUER NOTES:** the 22 are the 11 canonical locations whose four fields did not agree in round 4 (`FWD1_R4_DISAGREEMENTS.json`; ruled in `RULING_FWD1_R5.md`) and 11 locations both round-4 readers got right (one per class, seeded), so a regression of the face shows. The face is round 4's FB-g-4/-5 face plus ONE sentence: the table is the component after the tier (the fix; every one of the 11 follows from it). Independence is by construction as in round 4 (the CTO's round-3 ruling); the residual (subagents of the issuing session on one model) is unchanged and named in the packet. The issuer writes the proof instance from the grader's output on ingest and flips the status in its own commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <workstream>FWD1REREAD</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-h-1</to_id>
