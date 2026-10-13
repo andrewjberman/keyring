@@ -1047,3 +1047,106 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "The export holds exactly 500,000 rows, which matches a row cap. The fixture cannot establish whether the export is complete. The read of :1138-1215 shows no row-count check in the step. The premise binds the legacy table and the lot table alike."
 }
 ```
+
+## ADVI_BDPRCE-D1-W9-S1 -- The round-1 premise that an EventBridge rule and cron drive bd-price-update does not hold: it is invoked by the silver merge on an S3 sentinel
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W9-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~9",
+  "surfaced_at": "2026-10-13T20:15:48Z",
+  "one_line": "bd-price-update has no EventBridge rule and no cron; no rule targets it in the live account. It runs only when bd-silver-merge invokes it, and bd-silver-merge runs only on the bronze sentinel S3 event.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws events list-targets-by-rule --rule bd-price-update (us-east-1): ResourceNotFoundException, no rule of that name; of the 45 bd-related rules listed, none targets the function bd-price-update",
+      "infra/aws/terraform/bd-pipeline/s3-notifications.tf:68-73 at HEAD 6f20fe54c6: BronzeCompleteSilverMerge, prefix bronze/, suffix _BRONZE_COMPLETE.json, function bd-silver-merge; live get-bucket-notification-configuration (scratch copy, 2026-10-13T20:0xZ) matches",
+      "data/black_diamond/scripts/silver/merge-daily-incremental.py:675-707 invoke_price_update, InvocationType Event, payload date = max processed partition date"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-b-5 section 1 item 1: the daily price Lambda bd-price-update writes the daily file, and the question asks for the Lambda's EventBridge rule and its cron.",
+  "world_is": "There is no cron for the daily price file. The file is written only after a complete bronze sentinel, which bd-49f-runner writes. The schedule question resolves to the runner's chain, not to a price-update schedule. The cause record follows the real trigger chain."
+}
+```
+
+## ADVI_BDPRCE-D1-W9-S2 -- The pre-2026-10-07 bd-49f-runner printed "OK: bronze sentinel emitted" after the shared module had withheld the sentinel, so its self-report and S3 disagree
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W9-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~9",
+  "surfaced_at": "2026-10-13T20:15:48Z",
+  "one_line": "On 2026-10-05 and 2026-10-06 the runner logged WARN bronze sentinel NOT emitted and then OK bronze sentinel emitted; S3 holds no bronze/<date>/_BRONZE_COMPLETE.json for either date, so the OK line was false and the silver chain never fired.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws logs filter-log-events on /aws/lambda/bd-49f-runner, 2026-10-05T00:00-01:00Z: 'WARN: bronze sentinel NOT emitted -- 1 object(s) present but NOT content-complete' then 'OK: bronze sentinel emitted for 2026-10-05'; the same pattern on 2026-10-06 (request 6e3026c2-3392-4a92-89cc-0b5d8e7f8653)",
+      "aws s3api head-object bronze/2026-10-05/_BRONZE_COMPLETE.json: 404; list-object-versions --prefix bronze/2026-10-05/: zero versions, zero delete markers; control bronze/2026-10-04/_BRONZE_COMPLETE.json present (2026-10-04T00:13:34Z)",
+      "git show 3709ae40d6^:infra/aws/lambda/bd-pipeline/bd-49f-runner/lambda_function.py lines 206-207 print the OK line after mod.emit_bronze_sentinel with no completeness check; the deployed package before 2026-10-07T00:50:44Z was that revision"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "bd-49f-runner at HEAD (from commit 3709ae40d6): the OK line prints only after a head_object reads the sentinel key back, and a withheld sentinel is logged as withheld.",
+  "world_is": "The defect is fixed in the deployed code from 2026-10-07 (deployed md5 968b33e2 equals the repo file). Six run dates before that fix have no sentinel and no daily price file. Nothing in the current code re-emits a sentinel for a past run date, so the gaps persist until a later cell backfills them."
+}
+```
+
+## ADVI_BDPRCE-D1-W9-S3 -- The served client detail data_as_of equals the newest date of gold/timeseries/account_performance (2026-10-09), and the producer has no T-1 rule, so the one-day lag is not by design
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W9-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~9",
+  "surfaced_at": "2026-10-13T20:15:48Z",
+  "one_line": "data_as_of in the served client detail objects is the input's max date, which stops at 2026-10-09 with no rows for 2026-10-10 or 10-11. The producer applies no trading-day offset, so the lag is inherited from the ledger, not a documented T-1 rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/D_02.advisor_client_detail.py:2874 latest_date = acct['date'].max(); :2937 'data_as_of': latest_date.strftime; acct loaded from ACCOUNT_PERFORMANCE at :473-507 at HEAD 6f20fe54c6",
+      "pyarrow read of opal-data-bd gold/timeseries/account_performance.parquet (column date only): rows 7,871,793, max_date 2026-10-09, 2,473 distinct dates; weekend rows 2026-09-19 and 2026-09-20 present, none for 2026-10-10 or 2026-10-11",
+      "census of opal-data-49financial advi/49financial/platinum/entities/clients/ (3,510 detail.json; counts only): data_as_of 2026-10-09 on 3,267, older on 243"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-b-5 section 1a item 2: the lag is by design (a documented T-1 rule) or a defect, stated from the code and lib/trading_calendar.py.",
+  "world_is": "lib/trading_calendar.py gives T-1 = 2026-10-12 and expected_last_trading_day(2026-10-13) = 2026-10-13. The producer does not call it. Why account_performance stops at 2026-10-09 (the C_03 ledger upstream) is not established by this cell."
+}
+```
+
+## ADVI_BDPRCE-D1-W9-S4 -- Two instrument traps: a rail denial on a repo grep blocked the whole Bash call, and a get-object to /dev/stdout returned empty bodies with no error
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W9-S4",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~9",
+  "surfaced_at": "2026-10-13T20:15:48Z",
+  "one_line": "A recursive repo grep under infra/ was denied by the comp-rail hook (F1 blind recursive search), and the denial blocked the whole Bash call, not only the search; a get-object to /dev/stdout returned empty bodies with no error.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PreToolUse denial deny_id 20261013T194328Z-1f13f679 on a Bash call that also carried a live aws s3api get-bucket-notification-configuration; the AWS read did not run and the call returned the rail message only",
+      "aws s3api get-object --version-id ... /dev/stdout returned empty bodies for 21 versions (2026-09-13 to 2026-10-08) under Git Bash; the same reads to a file under C:/dev/wk-bdprce-r2-9-data/ returned the bodies"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task order bounds: a raw S3 listing the rail denies is re-run with a trailing '# rail-checked: <why>' comment, and a read that cannot finish reports claim absent for what was not read.",
+  "world_is": "The denial named no rail-checked override path for a repo grep, and its remainder line ran nothing. A read to /dev/stdout under Git Bash is an empty-body hazard that looks like a clean empty result. Every read in this cell was re-run to a file and printed from there."
+}
+```

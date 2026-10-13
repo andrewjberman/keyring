@@ -207,8 +207,9 @@ reinvested on the ex-date close, the porting test's formula.
 
 ### Surface E: the starting cap
 
-The cap is the day's surface E reserve (10 percent of that day's history allowance, about 267 cells). A request above it is refused at intake naming the cap, enforced by
-NFRA_OPLGTW. Andrew may raise it; one security's full year of price and total return is about 500 cells.
+The cap is the day's surface E reserve: 10 percent of the day's measured history ceiling (`bbg_allowance.json`, 5,858), so **585 cells**. **CORRECTED** from "about 267", which
+`2.0.0_SA_COO~Q1` (msg 5145) priced off the averaged P1 rate. A request above it is refused at intake naming the cap, enforced by NFRA_OPLGTW. One security's full year of price
+and total return (504 cells) is ACCEPTED under it. Andrew may raise it.
 
 ### Surface C and D (Andrew, ~20:1xZ)
 
