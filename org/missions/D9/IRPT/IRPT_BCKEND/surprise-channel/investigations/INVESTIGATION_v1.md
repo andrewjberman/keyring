@@ -30079,3 +30079,222 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "hosts_read 0 of 1. No SSM command was sent, nothing was started, no record file was written. The count of leftover Tax-snapshot temp files is NOT ESTABLISHED. Two points for the issuer: (1) the order's step 1 names irpt-holdings, which carries no runner variable; the holdings build is handed to the runner by irpt-holdings-refresh-lambda, read here as the intended function; (2) starting the host is outside this order's grant (the directory refresh starts it on its own schedule). To take the read the host must be Online: the issuer amends the grant to allow one start-and-stop of that host, or re-issues the order for a window when the daily runner is up."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W350-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~350",
+  "surfaced_at": "2026-10-13T03:27:00Z",
+  "one_line": "REFUSED per the order's refusal clause: fe-s-18/gen-fixtures.ts cannot reproduce the committed fe-s-18 maps. The committed maps are mutually inconsistent, and the HEAD generator rewrites a committed map before it throws.",
+  "spec_asserts": "Step 2: repair the generator so each run reproduces every fixtures/smoke/fe-s-18-*.json it writes, section lines included. Refusal clause: STOP and file a row if a generator cannot reproduce a committed file without changing a figure beyond those named, or if two committed files no single generator can both reproduce.",
+  "world_is": "(a) Committed fe-s-18-frozen.json at portal cf52fdbf carries directory/resolve verified_request_firm_id F-49F; committed fe-s-18-holdings-observed.json, -target.json, -missing-attribution.json and __tests__/fe-s-32/holdings-no-answer.json carry fir_4f9c1a7b2e6d03518ca47b90 for the same key. gen-fixtures.ts holdingsMap copies the frozen map's keys into every holdings map, so no single run writes both. (b) Regenerating from fe-s-13-wire.json, with the holdings key resolved by prefix, changes figures the order does not name: committed maps key routes by bare prefix (performance/, analysis/, holdings/, export/, status/), the wire copy by hash or id; status operation is status-summary committed and status-job in the wire; export covered_account_ids is absent committed; the wire's narrative/perf-9 key is copied in extra. (c) The HEAD generator writes fe-s-18-frozen.json at gen-fixtures.ts:331 before it throws in holdingsMap; IB171-5-AC1 therefore dirties a committed fixture on every run. The prefix-resolved trial rewrote frozen (231 added, 102 removed lines, CR ignored) and each holdings map (232 lines). Reverted; no fe-s-18 change is in commit 69f69895.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-18/gen-fixtures.ts@cf52fdbf holdingsMap copies frozen keys; write of fe-s-18-frozen.json at line 331 precedes the HOLDINGS_KEY read",
+      "portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json@cf52fdbf directory/resolve verified_request_firm_id F-49F; bare keys performance/, analysis/, holdings/, export/, status/",
+      "portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json@cf52fdbf directory/resolve verified_request_firm_id fir_4f9c1a7b2e6d03518ca47b90",
+      "portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-13-wire.json@cf52fdbf status operation status-job; export covered_account_ids present",
+      "IB171-5-AC1 run at 69f69895 (workspace): FAIL: fe-s-18 did not run ... gen-fixtures.ts:435:18"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Which side is the truth (the committed frozen map or the wire copy) is for the fe-s-18 fixture owner and the COO to decide; the fe-s-18 generator is unchanged by this worker."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W350-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~350",
+  "surfaced_at": "2026-10-13T03:27:00Z",
+  "one_line": "The order says AnalysisReport.valid.json no longer carries S-RET-1; it does. Only S-ALLOC-2 is absent, so the alignment drops S-ALLOC-2 and keeps S-RET-1.",
+  "spec_asserts": "Step 3: set selected_sections to the section ids that exist in fixtures/wire/AnalysisReport.valid.json; today it names S-RET-1 and S-ALLOC-2, which the AnalysisReport no longer carries.",
+  "world_is": "portal fixtures/wire/AnalysisReport.valid.json section_id list at cf52fdbf is [S-RET-1] (1 of 1). ExportBundle.valid.json and requests/submit-export.request.json named [S-RET-1, S-ALLOC-2] at cf52fdbf and name [S-RET-1] at 69f69895. IB171-5-AC2 PASS: 2 of 2 selected ids resolve.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/fixtures/wire/AnalysisReport.valid.json@cf52fdbf section_id S-RET-1 only",
+      "portal/src/pages/InvestorReporting/fixtures/wire/ExportBundle.valid.json@cf52fdbf lines 14-17 selected_sections S-RET-1, S-ALLOC-2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W350-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~350",
+  "surfaced_at": "2026-10-13T03:27:00Z",
+  "one_line": "IB171-5-AC3 cannot pass as written: its old-section scan matches section_type annualized_return, which the current AnalysisReport copy carries, so 15 fixtures match, including that copy.",
+  "spec_asserts": "AC3: the five token-citing portal tests still pass and no AnalysisReport old section is back (a scan of the portal fixtures for the old section).",
+  "world_is": "p171_cells.py IB171-5-AC3 prints 'FAIL: 15 fixture(s) carry the old AnalysisReport section again' after its five-test gate passed (the gate was reached, so the tests passed). The 15 include wire/AnalysisReport.valid.json, whose current section is S-RET-1 with section_type annualized_return, plus the fe-s-15 job files, fe-s-13-wire.json, smoke/default.json, smoke/fe-s-21-queued.json and the fe-s-18 maps. The pattern cannot separate the old section from the current one.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/fixtures/wire/AnalysisReport.valid.json@cf52fdbf section_type annualized_return on S-RET-1",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r171/p171_cells.py IB171-5-AC3 regex section_type annualized_return over fixtures/**/*.json",
+      "IB171-5-AC3 run at 69f69895 (workspace): FAIL: 15 fixture(s) carry the old AnalysisReport section again"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W350-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~350",
+  "surfaced_at": "2026-10-13T03:27:00Z",
+  "one_line": "The producer ExportBundle.valid.json still names S-RET-1 and S-ALLOC-2; the portal mirror now names S-RET-1 only, so the fe-s-13 producer-fixtures test lists a new disagreement on ExportBundle.selected_sections.",
+  "spec_asserts": "Step 3: leave the producer fixture and file ONE observation row saying the producer fixture needs the same alignment (outside this grant).",
+  "world_is": "The producer fixture infra/aws/lambda/investor-reporting/_contracts/fixtures/ExportBundle.valid.json, read at the worktree HEAD, names selected_sections [S-RET-1, S-ALLOC-2]; this order left it unchanged. The portal mirror at 69f69895 names [S-RET-1]. bun test of __tests__/fe-s-13/producer-fixtures.test.ts now also lists 'ExportBundle.selected_sections: the copy and the source disagree'; the HoldingsSnapshot.nodes item was already present at base.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/fixtures/ExportBundle.valid.json selected_sections [S-RET-1, S-ALLOC-2]",
+      "portal/src/pages/InvestorReporting/fixtures/wire/ExportBundle.valid.json@69f69895 selected_sections [S-RET-1]",
+      "bun test src/pages/InvestorReporting at 69f69895: producer fixtures test message lists ExportBundle.selected_sections"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W350-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~350",
+  "surfaced_at": "2026-10-13T03:27:00Z",
+  "one_line": "The order's base count (1216 pass, 27 skip, 1 fail) does not match the base measured at portal cf52fdbf: 1213 pass, 27 skip, 4 fail.",
+  "spec_asserts": "Run bun test src/pages/InvestorReporting once and report its counts against the base run (1216 pass, 27 skip, 1 fail at the last round's base; the one fail is pre-existing).",
+  "world_is": "Full folder at portal cf52fdbf (the three changed files restored to cf52fdbf): 1213 pass, 27 skip, 4 fail, 1244 tests across 393 files. At 69f69895: the same 1213 pass, 27 skip, 4 fail. The four failures, identical at both states: IVE26-AC3 (dsgn-irptv1/iv-e-26.wire-regen.test.ts), IVE98 (dsgn-irptv1/iv-e-98.generators-drift.test.ts), 'producer fixtures' (fe-s-13/producer-fixtures.test.ts), F14-AC3 (fe-s-14/allowlist.test.ts). Count-neutral for this commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test src/pages/InvestorReporting at portal cf52fdbf and at 69f69895 (output counts 1213 / 27 / 4)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W347-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~347",
+  "surfaced_at": "2026-10-13T03:16:11Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The sibling caller holdings_inf.py also writes a retained capture to a system temp file that nothing removes; the order asked for the same fix there, but holdings_inf.py is outside the order's paths, so it is not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "holdings_inf.py:286-288 calls hs.retained_capture for IRPT_INF_ECLIPSE_MEMBERSHIP_SNAPSHOT with membership_map.json @f91aedd1ef",
+      "holdings_inf.py:297 reads capture_path through eclipse_membership_capture and holds no removal step @f91aedd1ef",
+      "holdings_snapshot.py:1288 writes the fetched bytes with tempfile.mkstemp inside retained_capture, the shared write both callers reach @f91aedd1ef"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-496 says: if another caller of retained_capture leaks the same way, fix it the same way and say so; its paths block names holdings_49f.py and holdings_snapshot.py only, no other module.",
+  "world_is": "The Eclipse membership capture leaves one temp file per build when IRPT_INF_ECLIPSE_MEMBERSHIP_SNAPSHOT is unset. The 49F fix (holdings_49f.py finally-removal of builder-created files) does not reach it. Needs a grant for holdings_inf.py or a follow-on order that names it.",
+  "notes": "Form only. The contents of the Eclipse capture are not read by this worker; no run of any builder."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W347-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~347",
+  "surfaced_at": "2026-10-13T03:16:11Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "raw_keys.json 49financial account holdings_citation still cites holdings_snapshot.py:352-353, the superseded source, after holdings_source was corrected to the live mint.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_ids/raw_keys.json line 12 holdings_citation reads holdings_snapshot.py:352-353 @f91aedd1ef",
+      "holdings_49f.py:363 is the live custody mint, opaque_id of the dim_balance raw account @f91aedd1ef"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-496: correct the declared holdings_source key and keep every other key unchanged.",
+  "world_is": "The two declared fields of this account entry now disagree about the source: holdings_source names the live mint and holdings_citation names the old crosswalk line. The worker kept holdings_citation unchanged as the order directs.",
+  "notes": "Form only. A follow-on cell may re-point holdings_citation; the order did not ask for it."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W347-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~347",
+  "surfaced_at": "2026-10-13T03:16:11Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order cites holdings_49f.py:339 for the custody account mint; in this tree line 339 is the smartx overlay call and the mint is at line 363.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "holdings_49f.py:339 reads overlay, closed, smartx_accounts = _smartx_overlay(frames) @f91aedd1ef",
+      "holdings_49f.py:363 reads account_id = hs.opaque_id(account, firm_id, raw_account) @f91aedd1ef"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-496 says correct the declared key and cite holdings_49f.py:339 for the mint.",
+  "world_is": "The mint the declared key describes is at holdings_49f.py:363. raw_keys.json now cites :363, and the order's :339 is not used.",
+  "notes": "Form only. The line number in the order is off by the overlay call; the source name it asks for, dim_balance.account_id, is confirmed at the mint."
+}
+```
+```json
+{
+  "id": "IRPT_BCKEND-D2-W347-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~347",
+  "surfaced_at": "2026-10-13T03:36:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "Amendment 1 (b) cannot be committed: the naming gate refuses the bare path citation holdings_49f.py:363 as a NEW hand-kept carrier of the 49f token in raw_keys.json holdings_citation, so the correction was reverted in the worktree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_ids/raw_keys.json line 12 holdings_citation @aa5778d962 is at HEAD text holdings_snapshot.py:352-353 (reverted)",
+      ".tools/naming-gate.py NAMING REFUSE at the raw_keys.json diff line 12, hand-kept carrier of 49f, remedy printed as lookup('49financial') @3c6a833932 gate read",
+      "holdings_49f.py:363 is the live mint, opaque_id of the dim_balance raw account @f91aedd1ef"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-496 amendment 1 (b): correct holdings_citation in the 49financial account entry to cite the live mint at holdings_49f.py:363; keep everything else.",
+  "world_is": "The naming gate (LGIC_ENFORCE, ENFORCE mode) refuses a NEW bare path string carrying the 49f firm token in an authored JSON file under infra/. The gate exempts strings with whitespace as prose, and that exemption was not used to pass the citation through. The raw_keys.json citation stays at its HEAD value; holdings_source keeps the mint citation committed at 135fc3509e. A ruling is needed: a registry-backed citation form, or a gate ruling on a source-file path citation in an authored JSON.",
+  "notes": "Form only. The holdings_inf.py fix and its two arms are committed separately at aa5778d962 and need no ruling."
+}
+```
