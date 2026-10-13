@@ -309,7 +309,7 @@ act-2 fail-loud delete is untouched). The same read at `a9f4bac7b5` (the last co
 re-pins) reads 20 of 20, `platinum_dest_view.py` included (the flip's mark line, shipped by `0.7.0_AE_CloudOps~FB1` at act 4's close).
 AC1 now reads `--ref a9f4bac7b5`. A criterion edit of a pending order by its issuer; GATE viii reads `<placeholders>MOVE_TS` and no new token.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-9</to_id>
 <slot>~FB1</slot>
