@@ -6807,7 +6807,6 @@
 }
 ```
 
-
 ## IRPT_ANLREQ-D2-S70 -- (disarm row; this seat's own) the irpt-holdings artifact key's latest version is the live package again
 
 ```json
@@ -6829,6 +6828,81 @@
       "list-object-versions and get-object of irpt-holdings.zip, hashed by this seat",
       "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r20/R3_READBACK_R20.txt and its proof instance (VALID)",
       "aws lambda get-function irpt-holdings"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W65-S2 -- the narrative control of AR-y-216 does not isolate the rule at HEAD: the suite stages served.py at the rule pin itself
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W65-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~65",
+  "surfaced_at": "2026-10-13T11:43:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Narrative control premise: the AR-y-216 control (original served.py staged in place, pin 361c44fa9d) still fails 13 of 69 because test_served_error_path.py stages served.py at the rule pin itself; the control holds only with the parent-commit test file of 9ea2ba048d",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-216 step 1: CONTROL = the same run with the ORIGINAL served.py staged in place (narrative: pin 361c44fa9d); the failures that remain are PRE-EXISTING and control_failed_names lists them.",
+  "world_is": "At HEAD narrative/tests/test_served_error_path.py (commit 9ea2ba048d, AR-y-212) pins SERVED_PIN to 564e6048 and SERVED_SHA256 to 30c0eb88; test_opal_capital_binding.py and test_no_row_unknown.py reuse its _stage. Swapping only _authz/served.py to 361c44fa9d gives 13 failed and 56 passed, the same 13 names as the rule run, so that control cannot separate pre-existing from release-only. With the parent-commit test file (git cat-file blob 9ea2ba048d^ of that path) and served.py at 361c44fa9d the folder gives 69 passed, 0 failed, so all 13 are release-only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show --stat 9ea2ba048d: one narrative test file changed (test_served_error_path.py, 11 lines), in the history of HEAD c5950e99c6",
+      "measured at c5950e99c6 before any edit: narrative 56 passed 13 failed with served.py swapped to 361c44fa9d (same 13 names); with the parent-commit test file and served.py at 361c44fa9d 69 passed 0 failed"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W65-S3 -- a folder copy cannot serve as the AR-y-216 control: the suites need a real git checkout at repo depth
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W65-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~65",
+  "surfaced_at": "2026-10-13T11:43:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Control method: a copy of the investor-reporting folder fails at collection (repo-depth paths, git rev-parse and git show of a pin inside the suites), so the control ran in a detached throwaway worktree of HEAD",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-216 step 1: the control is the original served.py staged in place, run in a scratch copy of the tree OUTSIDE the worktree (git show of the pin into the copy).",
+  "world_is": "A folder copy fails: at a shallow depth IndexError at collection; at repo depth FileNotFoundError (export), CalledProcessError (narrative) and 69 failed with 38 errors (directory), because the suites read repo-root files and run git rev-parse --show-toplevel and git show <pin>:<path>. The control ran in a checkout made by git worktree add --detach C:/dev/wk65-control/base HEAD (78,785 files). Only _authz/served.py was swapped there, and HEAD's blob was restored after each run. That worktree is still registered in the shared repository (git worktree list) and was not removed, because no recursive delete was permitted to this worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured at c5950e99c6: a folder copy at a shallow depth gives IndexError: 6 at collection (directory, export) and CalledProcessError (narrative); the copy at repo depth gives 69 failed and 38 errors (directory) and FileNotFoundError at collection (export)",
+      "git worktree list after the control: C:/dev/wk65-control/base detached at c5950e99c6"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W65-S4 -- the status rule reaches a no-selection internal caller through narrative's own entry
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W65-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~65",
+  "surfaced_at": "2026-10-13T11:43:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The status rule also reaches a no-selection internal caller through narrative's entry: a row without status makes narrative hand roster None (class UNKNOWN), although the reader is documented to run only on a cross-firm selection",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "served.py _internal_allowed_firms docstring and the AR-y-216 cell: the status rule runs only when the caller selects a firm other than its verified firm (Entry.handle).",
+  "world_is": "narrative/entry.py calls self._internal_allowed_firms for every internal caller with no selection: _live_roster (line 198) and _held_to_verified_firm (line 218). A row without status raises inside that call, and _live_roster turns the raise into roster None. The narrative no-selection case row_listed_no_selection (control_shared_entry_row_listed keeps roster ops@) now expects roster None and class UNKNOWN. The change is fail-closed, not widening; it is recorded so the reach of the rule is known.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "narrative/entry.py at c5950e99c6: line 198 inside _live_roster and line 218 inside _held_to_verified_firm both call _internal_allowed_firms",
+      "narrative suite after the expectation edit at fdae98d07a: 69 passed, with row_listed_no_selection asserted roster None and class UNKNOWN"
     ]
   }
 }
