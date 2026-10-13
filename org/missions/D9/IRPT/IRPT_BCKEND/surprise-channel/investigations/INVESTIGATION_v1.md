@@ -31757,3 +31757,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISARMED: W345-S3. The temp-file fix is on the host (49financial and inflection packages), a real scheduled 49financial build ran on it and took the S3 snapshot path, and no leftover snapshot temp file remains (0 and 0). Caveats stated, not hidden: (1) the package VersionId the build ran is inferred, not read from the build (the command fetches unversioned); (2) the inflection count is 0 but IB2 named only the 49financial build's vintage (the Inflection Eclipse capture's own vintage was not read); (3) the host's /tmp may be cleared by other means, so 0 shows the post-build state, not the absence of any creation. The claim that the OLD package leaks rests on the code and the scratch probe (live modules 1/1); no pre-fix host count was ever taken (IB-pr-497 parked). STILL ARMED: W361-S1 (a careless re-cut would ship unrelated changes), W348-S2."
 }
 ```
+
+## IRPT_BCKEND-D2-W364-S1 -- IB-pr-514 premise: the builder's directory read (opal-data-bd) and the canonical directory address (opal-data-49financial) name different buckets for one firm, and the canonical one holds no object
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W364-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~364",
+  "surfaced_at": "2026-10-13T15:29:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-514 premise: the builder's own directory read (firm_bucket_map 49financial = opal-data-bd, investor-reporting/directory/latest.json) finds the landed directory, but the canonical address for that same directory (lib/opal_naming, irpt/49financial/platinum/directory/current/latest.json in opal-data-49financial) holds no object, while the served holdings index for the firm sits in opal-data-49financial. One firm, two bucket homes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py address('irpt','49financial','platinum','directory','current','latest.json') at worktree HEAD returns s3://opal-data-49financial/irpt/49financial/platinum/directory/current/latest.json; list-objects-v2 of prefix irpt/49financial/platinum/directory/ returned None (dell2, 2026-10-13 ~15:2xZ, read only)",
+      "holdings_snapshot.py firm_bucket_map() (GENERATED from the identity registry) maps 49financial to opal-data-bd; _directory_account_ids (holdings_snapshot.py:1299-1320) reads investor-reporting/directory/latest.json in that bucket: head-object LastModified 2026-10-13T13:40:54Z, population 7694 (in-memory count, no content kept)",
+      "lib/opal_naming.py address('irpt','49financial','platinum','holdings','current','manifest.json') = s3://opal-data-49financial/irpt/49financial/platinum/holdings/current/manifest.json, LastModified 2026-10-13T14:20:49Z: the served index the IB-pr-514 read used (order's own step 1 read path)"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-514 WORKER FACE step 1 names 'the firm's bucket' for the publication; step 2 names 'the landed directory's account-id population for 49financial, loaded with the builder's own holdings_snapshot._directory_account_ids(s3, bucket, firm_id)'. The order leaves the bucket to the builder's own mapping.",
+  "world_is": "The builder's own mapping and read agree: the directory is landed in opal-data-bd and its population (7694) was taken there, so the IB-pr-514 counts stand on the builder's read path. The canonical address() for the same directory names opal-data-49financial, where no object exists, and the served publication is in that bucket. No read made by this order reconciles the two homes; the directory count is valid for the builder's path only."
+}
+```
+
+## IRPT_BCKEND-D2-W364-S2 -- HoldingsPublication.capture() and load() with no account_ids refuse the served 49F publication: 200 accepted parts exceed the 64-part selected-read cap, so a full-firm read is refused
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W364-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~364",
+  "surfaced_at": "2026-10-13T15:29:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2 (issuer of round 180 workstream ~P; this worker changed no publication code and no order in this issuance does)",
+  "one_line": "publication.py caps selected part reads at 64 (MAX_SELECTED_PART_READS; _load_parts refuses above it), and a full-firm read names every part, so capture() and load() with no account_ids refuse the served 49F publication, which has 200 parts (the pre-release one too). The IB-pr-514 count needed a full walk of the parts in memory.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings/publication.py:24 MAX_SELECTED_PART_READS = 64; _load_parts (publication.py:440-445) sets needed = the parts that intersect the selected accounts and refuses above the cap with 'selected publication request count exceeds bound'; account_ids None selects every account",
+      "infra/aws/lambda/investor-reporting/holdings/snapshot.py:158-180: load_snapshot and capture_snapshot pass account_ids straight through, so a full-firm call (None) reaches the same refusal",
+      "in-memory read at 2026-10-13 ~15:2xZ (dell2): HoldingsPublication.capture() with no account_ids raised PublicationRefused on the served 2026-10-12 publication; its manifest lists 200 partitions, and the 2026-10-09 publication also lists 200; a walk of all 200 parts through the builder's read_exact and account-group check succeeded (7640 and 7634 ACCOUNT nodes)"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-514 WORKER FACE step 2: the served snapshot is GET into memory and counted with the builder's own helpers; the order presumes the builder's publication reader can return the full served document.",
+  "world_is": "The builder's own reader refuses the full served snapshot (200 parts against a 64-part selected-read cap), so the count needed a full walk of the parts in memory. That walk uses the same read_exact and account-group checks, but it is not the reader the serving entry points run, and those entry points refuse a full-firm call today."
+}
+```
+
+## IRPT_BCKEND-D2-S137 -- DISPOSITION after the round-180 drain: account_id is live end to end on the builder side
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S137",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T15:38:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISPOSITION after the round-180 drain: the served 49F snapshot built on the new package carries account_id on 7639 of 7640 ACCOUNT nodes, all in the landed directory; W364-S1 and S2 ruled.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer re-run in the merged tree: IB180-1 AC1, AC2, AC3 PASS (merge ce0bb315af); round-close-check MAY-CLOSE (orders=1).",
+      "IB180-1 record (read): positive snapshot (written 2026-10-13T14:20:49Z, inside the 14:15Z build's window): 7640 ACCOUNT nodes, 7639 with account_id, 7639 in the directory population (7694), 1 without (reason no_candidate); negative arm (the latest served snapshot before the release, written 2026-10-12T14:20:43Z): 7634 nodes, 0 with account_id."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "RESULT: the account_id member is live end to end on the builder side: 7639 of 7640 (99.99%) 49F ACCOUNT nodes carry it, every one in the landed directory, the one without has no directory candidate; the pre-release snapshot carried none; the node total grew 7634 to 7640 between the two builds (new accounts; not examined). RULED: W364-S2 (publication.py caps selected part reads at 64 and refuses a full-firm read of the 200-part served publication): by design, not a hazard: the serving entry points read only the selected accounts' parts, the cap bounds a per-request read, and the count needed a full in-memory walk by an operator script that runs the same read_exact and account-group checks; ARMED withdrawn to INERT by this ruling. OBSERVATION W364-S1 (carried to the CTO): the builder's own directory read finds the landed directory in the bucket its firm_bucket_map names (opal-data-bd, investor-reporting/directory/latest.json, population 7694) while the canonical address() of the same directory names opal-data-49financial, where no object exists; the account_id counts stand on the builder's read path; whether the directory-search function reads the canonical home or the builder's one is the first thing the directory-search apply's step 0 must establish, because its reach count depends on it. STILL ARMED: W361-S1, W348-S2."
+}
+```

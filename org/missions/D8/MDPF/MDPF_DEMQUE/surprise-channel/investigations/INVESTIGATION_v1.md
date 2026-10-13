@@ -676,7 +676,7 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "notes": "A question for the queue's owner, not an instruction: keeping the 138 as a second source for currency is a reasonable use of the draw; dropping them narrows the quote. This seat takes no action on the request. The ask rides CTO~DELL1's round-90 analysis item 4."
   },
-{
+  {
     "id": "MDPF_DEMQUE-Z-S1",
     "one_line": "TO-DQ-t27's stated precondition oracle dq_t26_real.py can only ever pass ONCE: it re-runs refreeze on a COPY of the already-re-frozen real quote, refreeze correctly declines, and the check reads REFRZ-BAD -- so its BAD verdict is evidence DQ-t-26 SUCCEEDED, not that it is incomplete.",
     "spec_asserts": "TO-DQ-t27 THE CELL: 'Start only after DQ-t-26's commit is in your tree (python .../R8_CHECKS/dq_t26_real.py prints REFRZ-OK there; drawer_schedule.py exists).'",
@@ -698,7 +698,7 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
       ]
     }
   },
-{
+  {
     "id": "MDPF_DEMQUE-Z-S2",
     "one_line": "A MID-DRAW re-quote of a partially drawn request reads a finish date ONE FIRE DAY LATER than the frozen quote (2026-10-18 vs 2026-10-17) because quote() always prices the FULL request from today's fire days and never subtracts the cells already drawn -- a reader comparing the two would see a slip that is not a slip.",
     "spec_asserts": "CTO round-7 analysis R2 and the re-frozen quote: the TR request's finish_date is 2026-10-17 (Sat 10-10, Sun 10-11, Sat 10-17 at 5,858 a day), finish_date_claim measured, and quote_vs_actual grades the re-frozen quote.",
@@ -720,7 +720,7 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
       ]
     }
   },
-{
+  {
     "id": "MDPF_DEMQUE-Z-S3",
     "one_line": "The TR request can NEVER reach its quoted 15,720 cells: the quote prices 1,310 WEEKDAYS per security but the vendor returns 1,260 TRADING days, so full coverage is 15,120 cells and `drawn < quoted` leaves the request OPEN forever -- from 2026-10-18 every non-trading day will fire the standing drawer, draw 0 rows and append a DRAWN actuals line reading cells_drawn 0.",
     "spec_asserts": "TO-DQ-t27: an open request is one 'whose cells drawn so far ... are fewer than its quoted cells', and the drawer draws open backfill requests until they are no longer open. The frozen quote reads cells.bloomberg_history 15720 with claim measured.",
@@ -928,7 +928,7 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
       ]
     }
   },
-{
+  {
     "id": "MDPF_DEMQUE-Z-S4",
     "one_line": "TO-DQ-t34's precondition oracle dq_t33_real.py is once-only in the SAME way Z-S1 recorded for dq_t26_real.py: its arms[supersedes_new] demands the re-freeze TRANSITION, which DQ-t-33's real act already consumed, so it reads QR-REAL-BAD while three of its four arms confirm the end state it wanted.",
     "spec_asserts": "TO-DQ-t34 THE CELL: 'Start only after DQ-t-33's commit is in your tree (python .../R9_CHECKS/dq_t33_real.py prints QR-REAL-OK there; bbg_quote.record_actual accepts outcome=\"COMPLETE\").'",
@@ -1197,7 +1197,7 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
       ]
     }
   },
-{
+  {
     "id": "MDPF_DEMQUE-Z-S5",
     "one_line": "TO-DQ-t34's build item 3 (the completing fire records COMPLETE) and its build item 4 (the three existing test_demque_standing_drawer.py tests keep passing UNEDITED) cannot both hold: that t27 test's own fixture completes BOTH its requests on day 2, and it asserts at line 111 that the run outcome is DRAWN and at line 135 that every actuals line is DRAWN. The file is NOT in t34's <paths>.",
     "spec_asserts": "TO-DQ-t34 build 3: 'that run records its ONE line for the request with outcome COMPLETE ... not DRAWN'. TO-DQ-t34 build 4: 'The three existing test_demque_standing_drawer.py tests keep passing unedited.'",
@@ -1748,6 +1748,89 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
       "evidence": [
         "card_a_slice.py --priority P1 --out .scratch/p1_slice_request.json --quote on dell1 2026-10-13 (read-only S3): held_claim measured, priced_names 607, unresolved_names 2",
         "data/assets/scripts/silver/commonwealth_signs.py SIGN, PLUS_TYPES, MINUS_TYPES and NO_SHARE_MOVEMENT at c01f633404"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W37-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~37",
+    "surfaced_at": "2026-10-13T15:29:12Z",
+    "one_line": "The CARD-A P1 slice prices CFNCASH, a cash identifier and not a CUSIP; the placeholder rule (FDIC plus digits) does not catch it, so it adds 3,326 needed cells to the P1 draw.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "spec_asserts": "data/mdpf/scripts/demque/card_a_slice.py@6293183101 lines 13-14 and 51: a name is unresolved only when it has no trade in the window or its CUSIP is a cash-sweep placeholder shaped FDIC plus digits; every other P1 name is priced over its window (worker face: 609 P1, 607 priced, the 2 FDIC placeholders unresolved).",
+    "world_is": "CFNCASH is ranked 571 of 1,319 at P1 and pursued in MDPF_SECHIST-CARD-A-COT-BBG-HISTORY.quote.json, so card_a_slice.build prices it over 2013-04-03..2026-06-23: 3,326 trading days, inside the 882,024 window cells. It is a cash line, not a Bloomberg-priceable security. Nothing was drawn; the next P1 draw would quote it.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "p1_coverage.py run 2026-10-13 at 6293183101 (rc 0): per_cusip row cusip CFNCASH, yahoo_class no_symbol, needed_days 3326, uncovered_days 3326; window_cells 882024 equals the card_a_slice merge figure",
+        "MDPF_SECHIST-CARD-A-COT-BBG-HISTORY.quote.json ranked: CFNCASH rank 571 priority P1 pursued true (python read, 2026-10-13)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W37-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~37",
+    "surfaced_at": "2026-10-13T15:29:12Z",
+    "one_line": "47 gold holdings daily files (2026-04-22..2026-06-05, source bd) carry no cusip column, so their Black Diamond rows cannot be priced per CUSIP and those days stay in the residual.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DQ-t-46 input list: Black Diamond units and value per CUSIP and held date from s3://opal-data-cot/gold/canonical/holdings/YYYY-MM-DD.parquet, exact price = market value over units per CUSIP and day.",
+    "world_is": "The daily files dated 2026-04-22 to 2026-06-07 (47 files, source bd) hold ten columns (date, one account column, asset_name, units, price, market_value, source, bd_units, schwab_units, ticker) and no cusip. The cusip column appears from 2026-06-08 (88 files, source bd_snapshot); all 120 trading days of 2026-04-22..2026-10-12 have a daily file. Only ticker and asset_name identify the early rows; a ticker-to-CUSIP map was not built because it would be an inference. The early days are uncovered in the residual.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "schema read of all 135 gold/canonical/holdings parquet files, 2026-10-13 (rc 0): 47 without cusip (source bd), 88 with cusip (source bd_snapshot), first cusip file 2026-06-08",
+        "trading_days_between 2026-04-22..2026-10-12 = 120 days, missing gold daily files on trading days = 0"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W37-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~37",
+    "surfaced_at": "2026-10-13T15:35:38Z",
+    "one_line": "The DQ-t-46 output key bd_units_value, which the AC2 check reads, is a refused naming token; the naming gate refuses it, so the module prints blackdiamond_units_value and AC2 reads COVER-REAL-BAD.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "spec_asserts": "DQ-t-46 cell and AC2 (dq_t46_real.py): p1_coverage.py prints one JSON line carrying the key bd_units_value and per-CUSIP bd_held_days; the worker face names the block Black Diamond units and value.",
+    "world_is": "org/standards/NAMING_SCHEMA.json refused_tokens: bd is refused in every slot (the vendor is blackdiamond; the firm is 49financial). The naming gate refused the first commit of the module (13 graded lines, every bd carrier and the bucket alias). The module as committed at aa3b2100ee prints blackdiamond_units_value and blackdiamond_held_days; dq_t46_real.py at aa3b2100ee returns COVER-REAL-BAD arms=ints,bd,residual. The check was not edited and the key was not kept.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit naming limb, first attempt 2026-10-13: NAMING-GATE REFUSE 13 graded (bd carriers at p1_coverage.py lines 139-154 and test lines 45-72; bucket alias at line 54); second attempt after the rename: committed aa3b2100ee",
+        "dq_t46_real.py run at aa3b2100ee 2026-10-13 (rc 1): COVER-REAL-BAD arms=ints,bd,residual; the check reads d.get bd_units_value",
+        "org/standards/NAMING_SCHEMA.json refused_tokens.bd: refused in EVERY slot; the vendor is blackdiamond"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W37-S4",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~37",
+    "surfaced_at": "2026-10-13T15:51:46Z",
+    "one_line": "The amended cash-identifier rule refuses any identifier that is not 9 alphanumeric characters, so two existing card_a_slice test fixtures (LO00000001, OK00000009; 10 characters each) would be refused; they were renamed to the 9-character LO0000001 and OK0000009.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order DQ-t-46 AMENDED 2026-10-13 (ruling on rows D1-W37-S1): a name whose identifier is not exactly 9 alphanumeric characters is UNRESOLVED with reason cash_identifier; change only what the rule requires in existing tests (only the placeholder reason assertion is named).",
+    "world_is": "data/mdpf/scripts/demque/test_demque_card_a_slice.py at 010cb17a67 used the 10-character identifiers LO00000001 (test_the_p1_slice_lists_priced_names_in_rank_order) and OK00000009 (test_a_p1_name_with_no_trades_or_no_bloomberg_cusip_is_listed_unresolved_and_never_quoted). Under the rule both would be unresolved, so their P1 assertions could not pass as written. The fixtures were renamed to LO0000001 and OK0000009 (9 characters); no assertion other than the placeholder reason string changed.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python length check 2026-10-13: LO00000001 10, OK00000009 10, LO0000001 9, OK0000009 9",
+        "python -m pytest data/mdpf/scripts/demque/test_demque_card_a_slice.py at the worktree after the rule: 4 passed (rc 0)"
       ]
     }
   },
