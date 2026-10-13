@@ -7453,3 +7453,53 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W139-S1 -- account 5 reproduces reason (1) only from stored files; reasons (2) to (6) need the S3-only rows
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W139-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~139",
+  "surfaced_at": "2026-10-13T16:59:49Z",
+  "one_line": "Account 5's classification is reproduced for reason (1) only, from stored files: reasons (2) to (6) need the BD and served rows, which are S3-only and not granted to this order, so the 3 UNEXPLAINED days rest on round 92's committed record for those reasons.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-173 worker face: the module reproduces round 92's classification of account 5's 7 differing days (4 taken by the new reason, 3 UNEXPLAINED; assert it, else stop) from local stored files, with no S3 access.",
+  "world_is": "Reason (1), the TEST and served CORRECTION of RULE_EXCL.md section 2, re-run from the stored gold series and the stored round-90 BD daily series: the TEST holds on 4 of the 7 differing days and the correction lands within 0.01 pp on the same 4, so 4 taken and 3 not taken, matching round 92's committed record (4 evidence multiples, all equal). Reasons (2) to (6) need the BD transaction rows and the served rows, which are read from S3 only. Conservative check of reason (2) on the 3 untaken days from the stored BD income sum: 0 pass its correction without the two-rows clause. The 3 days are carried as UNEXPLAINED from round 92's record; reasons (3) to (6) are not re-derived for them. Counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~139/acct5_window.py@4e8de4dc95 (the module; run under python -I; counts and gaps printed; no S3, no vendor call)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~138/EXCLUDES_INCOME_23_DAYS.json@e195a26ea0 (round 92's committed record for the fifth account)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W139-S2 -- account 5: one reasoned day carries most of the uncorrected gap; RULE_EXCL.md states no bound on the correction
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W139-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~139",
+  "surfaced_at": "2026-10-13T16:59:49Z",
+  "one_line": "On account 5 the four reasoned days carry the whole uncorrected window gap (17.4715 pp), and one of them alone is far larger than any other daily gap in that window; the reason's correction recomputes it, but RULE_EXCL.md states no bound on the size of the correction.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "RULE_EXCL.md section 2: the served correction removes the served income from the served prior-day value, so the correction is the income's share of that prior value; the rule states no bound on that share, and its TEST is a within-0.01-pp identity on the day.",
+  "world_is": "Account 5, from the stored tables only: the signed daily gaps of the 4 reasoned days sum to the uncorrected gap, and one reasoned day's gap is larger than every other daily gap in the window by more than an order of magnitude; the 3 untaken days are each below 0.07 pp in absolute size. The corrected window gap is 0.1298 pp. Recomputed from stored files, not verified against the rows; a figure to be read by the CTO, not a claim about which system is right. Counts and gaps only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~139/acct5_window.py@4e8de4dc95 (the module; its private detail records the per-day sizes, held outside the repo)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~138/RULE_EXCL.md@e195a26ea0 (section 2 TEST and CORRECTION; section 9 limits)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
