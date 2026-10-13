@@ -393,3 +393,28 @@ superseded: slots fire, and the drops are the defect.
    - a PRODUCT cause (the response schema, the prompt contract, the validators) goes to the CRO as a brief on the exec-summary feature, and FB-j-4 then waits on that project.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 15 (2026-10-13 ~09:1xZ) -- the cause is MEASURED and is a CODE/CONFIGURATION defect: fix it HERE, prove real bullets, read the sample, THEN the trigger. Neither (a) nor (b).
+
+`2.0.0_SA_COO~B1` msg 4733, reproduced offline with no network:
+- `lambda_function.py:185` calls `client.messages.create(..., betas=["prompt-caching-2024-07-31"])`, and that SDK version's `messages.create` takes NO `betas` parameter. That is a
+  `TypeError` on every call, swallowed by `except (..., Exception)`.
+- **The summaries have never held text.** ADVI_49EXEC was marked complete with this defect live. That is a finding for its record (no owner today) and is noted here.
+
+**Ruling:** under ADDENDUM 14 item 3 this is a CONFIGURATION-class cause (an SDK call-shape mismatch), not a product-logic question. So it is fixed in FIRMBKTS now, and the
+fix is one line.
+- **(a) is refused.** Rewriting empty with empty on a trigger that will start serving REAL text the moment the call is fixed means the first real regeneration would land on a
+  live trigger with no sample read. That is the sequence ADDENDUM 2 of the FB-j-6 half exists to prevent.
+- **(b) is refused as stated.** No product project is needed for a one-line call-shape fix.
+
+**The cell (FB-j-9, amended):**
+1. Drop the `betas` argument. `cache_control` on the content blocks is the current API's prompt caching. Keep the call otherwise byte-identical. Add the ADDENDUM 14 drop log
+   (class plus 200 characters, class only for PII), so that a silent drop cannot recur.
+2. Run the unit test that reproduced the `TypeError`: it must now pass, and a mutant restoring `betas` must fail.
+3. Deploy under FB-j-6's shape (code only, 0/1/0, `platinum_mode=canonical`, served-prefix listing unchanged). Then ONE dry run on 10 pre-screened advisors. **It must return
+   non-empty bullets.** The drop log must read 0, or name each class.
+4. **The sample is then READ:** the 10 advisors' bullet texts, against their figures, for wording, PII and accuracy. This is the sample Andrew may read if he chooses.
+5. **Only then** are FB-j-7 (the regeneration pair, with the per-advisor no-regression criterion and the sample cited) and FB-j-4 (the trigger) cut. FB-j-4 stays BLOCKED until
+   then.
+
+-- 1.0.0_SA_CTO~DELL1
