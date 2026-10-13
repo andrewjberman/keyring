@@ -35,6 +35,7 @@ pair bounds that.
    session (>= 1); `AWS/Lambda` `Invocations` of `exec-summary-generator` (>= 1) and its log for errors; then the regenerated keys: count
    the keys whose newest VersionId is newer than the deploy, confirm the count is at most the named ceiling, and read the sample you took
    (the same advisors as `FB-j-6`) against their dry-run artifacts (record equal or differing, by advisor id, not by text).
+5b. **No regression, read PER ADVISOR (the CTO's criterion, FB-j-6 CTO half ADDENDUM 2 item 3):** from `rollback_versions.json` (the prior VersionIds) count the advisors whose PRIOR `exec_summary.json` carried at least one bullet (`advisors_with_bullets_before`), and for each such advisor read the regenerated object: a summary that carried bullets before and carries NONE now is a regression (`bullet_regressions` counts them). Any regression is a roll-back trigger (step 6) for THAT advisor's key at least, and a report.
 6. **Roll back** (restore the prior VersionIds from `rollback_versions.json`, and restore the prior dispatcher VersionId) if any regenerated
    key is outside the named set, or the count exceeds the ceiling, or the generator errors on more than 5 percent of advisors, and report.
 7. Close the ledger entry.
@@ -47,7 +48,8 @@ pair bounds that.
  "dry_run_sample": {"advisors": 0, "objects_written": 0, "read_before_deploy": true},
  "deploy": {"key": "code/gold/gold_dispatch.sh", "sha256": "<64 hex>", "ledger_closed": true},
  "chain": {"label": "...", "emitted_line": true, "cloudtrail_putevents": 0, "generator_invocations": 0},
- "keys": {"regenerated": 0, "ceiling": 158, "prior_version_ids_recorded": true},
+ "keys": {"regenerated": 0, "ceiling": 158, "prior_version_ids_recorded": true,
+          "advisors_with_bullets_before": 0, "bullet_regressions": 0},
  "claim": "measured"}
 ```
 
@@ -82,6 +84,8 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~F
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** PARKED at the cut: owner `2.0.0_SA_COO~B1`; un-park conditions (all): `FB-j-3` read and its cause named in an amendment of this order; `FB-j-4` merged and PASS; `FB-j-6`'s record read by the CTO; the fix pair signed (COO half authored by the issuer at the un-park: the key set, the rollback per key, writers N = 1: the generator; the CTO's half). The CTO's section 2 item 4: closes on the first chain's emitted line, the CloudTrail PutEvents and the generator invoked; `D1-W65-S1` disarms on that read (disarm owner this seat). A join cell: it waits on both the dispatcher chain and the generator chain.
+
+**AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-13 ~09:3xZ):** the CTO's ruling on `D1-S47` adds step 5b and the record fields `advisors_with_bullets_before` and `bullet_regressions` (the grader requires the latter to be 0). A further un-park condition: `FB-j-8`'s record read (it measures whether any advisor fires a slot today; if none does, the regeneration rewrites empty artifacts with empty ones and the pair is to say so). FB-j-4 stays blocked behind this order's pair.
 
 <status>parked</status>
 <round>7</round>
