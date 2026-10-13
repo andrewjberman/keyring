@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "laptop",
- "written_at": "2026-10-13T17:11:10Z",
+ "written_at": "2026-10-13T19:49:14Z",
  "written_by": "1.0.0_SA_CTO",
  "rows": [
   {
@@ -437,6 +437,54 @@
     "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_CFD4_IB_PR_515_HELD_ON_ANDREWS_WORD_AND_CC32_FWD8_TIEOUT_YES_WITH_NAMED_RESIDUE_20261013.md",
     "crossbox": null,
     "ruled_by": "cluster-lead",
+    "xadj": null
+   }
+  },
+  {
+   "id": "laptop-20261013T191056Z-1e0b",
+   "project": "NFRA_DEVPLN",
+   "subject": "Portal backlog: rule each DEV group forward, held or dropped (settlement, one list)",
+   "asked_by": "2.0.0_SA_COO~DV",
+   "source": "org/missions/D0/NFRA/NFRA_DEVPLN/ledger/SETTLEMENT_LIST.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-13T19:10:56Z",
+   "kind": "fork",
+   "context": "DEV is 201 commits ahead of PROD (229 files, six groups: Investor Reporting 143 files, Security Analysis 51, Ticket Center 19, Advisor Intelligence 4, api 3, firm access 1, other 8); PROD is 33 ahead; 9 branches hold work not on DEV. Your word per group gates the PROD-into-DEV back-merge and the first approved-only promote.",
+   "rec": "Accept DEV as the baseline: approve all six groups forward (your decision 4(a) of 2026-10-13); drop the 5 branches whose patches are already on DEV (cand-dell1-secclass-e53-r9, cand-dell1-secclass-e59-r10, q/dell2/wk-IRPT_BCKEND-167-portal/r1, irpt-dev-candidate-7-20260924, sitez/merge-trial-20260915); hold the 4 with a unique patch (wk-dsgn-irptv1-r25-61-prodcut, irpt-dev-candidate-3-20260924, irpt-opal-scope-p-portal-20260923, wk-IRPT_ANLREQ-51-portal-r4) until their owners register each as a cand/ feature. Why: re-writing DEV would break the no-rebase rule, and the approval rule binds from the settlement forward.",
+   "scope": {
+    "measured_at": "2026-10-13T19:10:56Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      ".tools/tests/test_open_calls_approval.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_open_calls_register.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/open-calls.py is on the shared branch (.tools)",
+      ".tools/tests/test_open_calls_approval.py is on the shared branch (.tools)",
+      ".tools/portal-merge-forward.sh is on the shared branch (.tools)",
+      ".tools/portal-release-build.sh is on the shared branch (.tools)",
+      ".claude/skills/prod-deploy/SKILL.md is on the shared branch (.claude)",
+      ".tools/tests/test_open_calls_register.py is on the shared branch (.tools)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-13T19:49:14Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/RULING_20261013_194xZ_DEVPLN_1E0B_SUPERSEDED_BY_WHOLE_DEV_PROMOTE.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
     "xadj": null
    }
   }
