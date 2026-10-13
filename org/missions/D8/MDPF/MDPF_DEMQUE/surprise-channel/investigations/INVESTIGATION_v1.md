@@ -2591,6 +2591,26 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "DQ-t-58 AC2: the live spot check 'incremental_equal.py --spot 5 --tr' runs inside dq_t58_equal.py's 100-second subprocess timeout.",
     "world_is": "A sequential index read alone used half the timeout. The index is a read only; the parallel read changes its speed, not its rows or order. The nightly write_index call runs the same function."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W50-S5",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~50",
+    "surfaced_at": "2026-10-13T23:01:33Z",
+    "one_line": "The re-seating message asks for the commit trailer Co-Authored-By: Claude Sonnet 5.5; this worker runs as claude-haiku-5-5, so its commits carry the Haiku 5.5 trailer that the session attribution rule names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the worker's model identity in the session environment: claude-haiku-5-5 (Haiku 5.5)",
+        "commit 9449d5f48e on wk-MDPF_DEMQUE-50 carries Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Re-seating instruction (launching agent, 2026-10-13): commits end with 'Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>'.",
+    "world_is": "The worker runs as claude-haiku-5-5. Attribution must name the model that produced the work, so the commit carries Claude Haiku 5.5; the Sonnet trailer was not written."
   }
 ]
 ```
