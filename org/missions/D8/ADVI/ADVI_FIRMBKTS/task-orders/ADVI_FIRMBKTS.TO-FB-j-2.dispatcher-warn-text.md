@@ -12,7 +12,7 @@
 <preflight>
 comp-schedule: DECLARED-NOT-APPLICABLE -- a shell function body only; no cron, rule, schedule or cadence is added or changed.
 comp-iam: DECLARED-NOT-APPLICABLE -- no AWS act and no grant; the check stubs `aws` as a shell function.
-comp-adversary: RUN by the issuer -- at the base `r7_emit_test.sh` reads 1 of 3 (E2 passes as a control; E1 and E3 FAIL as expected); on a reference patch it reads 3 of 3; `awsdiff` reads OK on the reference patch and FAIL on a patch that also adds `--region` to another call. Blindness: the stub proves the function's output logic, not the real CLI's text on the runner.
+comp-adversary: RUN by the issuer -- `r7_emit_test.sh` (4 arms) reads 1 of 4 at the original base, 3 of 4 on the already-merged edit (arm E4, the `set -e` arm, FAILS) and 4 of 4 on the corrected reference; `awsdiff` reads OK on the reference and FAIL on a patch that also adds `--region` to another call. Blindness: the stub proves the function's output logic under `set -e`, not the real CLI's text on the runner.
 EGRESS CLASS, declared: NONE.
 </preflight>
 
@@ -26,18 +26,26 @@ prints the real error.
 
 ### 1a. The edit (ONE file: `data/black_diamond/scripts/gold/gold_dispatch.sh`, inside `emit_chain_complete` only)
 
-1. Capture the call's combined output in a variable (`out=$(aws events put-events --entries "file://$entries_file" 2>&1); rc=$?`).
-2. The success predicate is unchanged: the output contains `"FailedEntryCount": 0`; the success line is unchanged.
-3. On failure print ONE line: `  WARN: EventBridge chain-complete put-events failed (non-fatal to chain close): rc=<rc> <text>` where
-   `<text>` is the output with every non-printable character (newlines included) replaced by a space and cut to its first 300 characters.
-4. The function still returns 0 (non-fatal). No other line of the script changes. No `--region`, no `AWS_DEFAULT_REGION`, no new variable
-   outside the function: the region change is a LATER cell.
+**State you start from:** an earlier worker's edit (commit `e33708f50b`) is ALREADY in your tree: the function captures the call's output in
+`out`, prints the WARN with `rc=<rc>` and the first 300 printable characters, and keeps the success predicate and line. It has ONE defect, which
+you correct: the dispatcher runs under `set -e` (`gold_dispatch.sh` line 57), and the line
+
+    out=$(aws events put-events --entries "file://$entries_file" 2>&1); rc=$?
+
+is a plain assignment, so when put-events FAILS the script EXITS at that line (no WARN; the CDN invalidation, the recon harness and the
+`SHUTDOWN_ARMED` step after it are skipped). The original code tested inside an `if`, which `set -e` exempts.
+
+1. Change that one line to the command-list form `set -e` exempts:
+   `out=$(aws events put-events --entries "file://$entries_file" 2>&1) && rc=0 || rc=$?`
+2. Nothing else changes: the success predicate (`"FailedEntryCount": 0`), the success line, the WARN format
+   (`  WARN: EventBridge chain-complete put-events failed (non-fatal to chain close): rc=<rc> <text>`, `<text>` = the output with every
+   non-printable character replaced by a space, first 300 characters), and the function still returns 0.
+3. No `--region`, no `AWS_DEFAULT_REGION`, no new variable outside the function; no other line of the script changes.
 
 ### 1b. Rules
 
-1. Your two checks are issuer files, already written: `bash org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round7/checks/r7_emit_test.sh <the script>` (4 arms against a stubbed `aws`; at the
-   base it reads 1 of 4) and the diff bound (AC2). Do not edit them. ASCII only; keep the file's line endings as they are.
-2. `bash -n` the script after your edit.
+1. Your two checks are issuer files, already written: `bash org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round7/checks/r7_emit_test.sh <the script>` (4 arms against a stubbed `aws`; arm E4 runs the function under `set -e`) and the diff bound (AC2). Do not edit them. ASCII only; keep the file's line endings as they are.
+2. `bash -n` the script after your edit. Run AC1 BEFORE your edit once (expect 3 of 4, E4 FAIL), then after (4 of 4).
 
 ## 2. BOUNDS
 
