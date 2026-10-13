@@ -16,7 +16,10 @@ RULE NUMBERS ARE STABLE IDs, NOT READING ORDER. Rules 4-12 and 18 live in `/clou
    LD-0615); a response binds by reading. Exceptions: a prose-specific skill's output (`/exec-sum`, `/daily-sprint`,
    `/outcome-check`) and a deliverable document (a brief, PRD, report or record). Threshold source:
    `docs/briefs/process-architecture-verification-bureaucracy-brief-20260924.md` section 1.4. Order:
-   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_160xZ_CLAUDE_MD_FIRST_POINT_STANDARD_TECHNICAL_ENGLISH.md`.
+   `ANDREW_DIRECT_20260924_160xZ_*` (tier1 CTO).
+33. **Every path an agent posts is ctrl+click accessible: an absolute `file:///` URI (forward slashes, a space as `%20`) or
+   a markdown link to one.** A path bound for another box (commit, broker message) also carries its repo-relative form,
+   since an absolute path names one box. Binds by reading. Order: `ANDREW_DIRECT_20261013_174xZ_*` (tier1 CTO).
 
 ## 1. HOW WE WORK
 
@@ -76,7 +79,7 @@ RULE NUMBERS ARE STABLE IDs, NOT READING ORDER. Rules 4-12 and 18 live in `/clou
       under different `~lane` instances.
     - **Seating: ONE PROJECT PER TIER-2 SEAT INSTANCE**, enforced by `.tools/to-decomp-ref-lint.py`'s seating check.
       It does NOT reach Tier 1: a Tier-1 seat may hold several projects and seat several Tier-1 lanes. Record:
-      `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_173xZ_SEVEN_OPEN_CALLS_ANSWERED.md`.
+      `ANDREW_DIRECT_20260910_173xZ_*` (tier1 CTO).
     - A worker's write surface is exactly the `<paths>` its non-terminal order names (`.tools/owned-paths-validate.py`);
       its rows mint `<CODE>-W<n>-S<k>`; it writes no telemetry (L7 reads from git). The eight v3 carriers refuse (spine
       section 3), as does the drain's refuser on the merged index (`.tools/safe-merge.sh`); spine section 4 binds by
@@ -217,8 +220,8 @@ field -> you may NOT treat it as measured. The consuming half is the whole mecha
   `T-1` unless declared; Friday IS Monday's answer. One frontier: `lib/trading_calendar.py`; a `comp-freshness` entry
   lacking `freshness_basis: trading-day-frontier` false-alarms every Monday.
 - **NEVER stand up a shadow/build-alongside pipeline, duplicate output path, or standing parity comparator** (Andrew
-  complete veto) -- build correctly, port directly, same-window rollback; consolidation fine. Record: box memory
-  `feedback_no_inferred_gates_no_shadow_pipelines_20260804` (per-device, not in the repo).
+  complete veto) -- build correctly, port directly, same-window rollback; consolidation fine. Record:
+  `ANDREW_DIRECT_20260804_1827Z_*` (tier1 CTO).
 - **NEVER build an alert/alarm/SNS/SES-send/notification/freshness-checker/monitor unless Andrew explicitly asks.
   Standing moratorium** -- canonical routes first. Findings land as gates or owned blocking items.
   `docs/architecture/MDPF_DEBTCLEAN_PRD.md` sections 11-12.
@@ -263,7 +266,7 @@ commit and is not destructive git (`ANDREW_DIRECT_20261009_035xZ_GOVERN_ADJUDICA
   `DEV` and `PROD`). ONE exception: a portal `PROD` push that changes a CLIENT-FACING page (one a partner-firm or client login
   can open) waits on his word; an Opal-internal page (staff-only, e.g. Portfolio Management, Security Analysis) does not. Unsure =
   client-facing; the push receipt names the pages changed and their class. Who may push where stays with
-  `.tools/hooks/never-rules-gate.sh`. Order: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_044xZ_PUSHES_NEED_NO_APPROVAL_EXCEPT_CLIENT_FACING_PROD.md`.
+  `.tools/hooks/never-rules-gate.sh`. Order: `ANDREW_DIRECT_20261009_044xZ_*` (tier1 CTO).
 - **Bloomberg pulls go only through their queue; other vendor APIs need no per-use word.** Per-user entitlement
   scoping waits for a second MCP user. Order: `ANDREW_DIRECT_20261009_024xZ_LAW_EDIT_*` (tier0_exec).
 
@@ -319,7 +322,7 @@ is current-day-only; never mint `data/bloomberg/`).
 - **A portal candidate touching NO product file lands on DEV by its author** as a fast-forward with a one-line
   receipt (Andrew-direct 2026-09-24); the CTO reviews only candidates that touch a product file; VALGATE runs on
   every push; trunks are pushed at will under the push law (Agent Autonomy), a CTO-approved DEV fast-forward landed by
-  the box manager under `/govern` (`ANDREW_DIRECT_20261009_035xZ_*`, tier0_exec); only a PROD push changing a client-facing page waits on Andrew.
+  the box manager under `/govern` (`ANDREW_DIRECT_20261009_035xZ_*`, tier0_exec).
 - **Under a live FAST lease, the lease's seat lands product changes on portal DEV itself** (CI running; no CTO go-ahead,
   no integrator push; DEV only, PROD by `/prod-deploy` under the push law). Mechanism: `.tools/hooks/never-rules-gate.sh` admits a DEV push from a
   live lease's seat only (`.tools/drive-mode.py`); `/closer-drive` step 5 checks the payload. Order:
