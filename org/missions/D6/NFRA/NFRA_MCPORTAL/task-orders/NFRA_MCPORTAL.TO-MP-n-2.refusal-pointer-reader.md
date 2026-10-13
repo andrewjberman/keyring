@@ -103,3 +103,4 @@ the base: AC1 FAIL (10 passed, named 0 of 4). No gate. Lives through MP-n-4.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
+<status>complete</status>
