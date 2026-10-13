@@ -30479,3 +30479,134 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The portal reader for a directory-search element reads permitted_scope.scope_kind and permitted_scope.scope_ids[0] (adapt.ts:630-631). It does not read an entry_id member. Its declared wire type is DirectoryEntry rows with permitted_scope, while the function returns results[] rows with a top-level entry_id. Whatever maps one to the other is not in this order's paths and was not read. For the synthesized ACCOUNT entries the reader's entryId is the one account id in scope_ids, so two entries of a shared tail carry two distinct ids; that is a fact about the reader, not a defect of this change."
 }
 ```
+
+## IRPT_BCKEND-D2-W353-S1 -- the order's status premise (status-summary committed, status-job in the wire) does not hold at key level
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W353-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~353",
+  "surfaced_at": "2026-10-13T04:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-IB-pr-502 states that the status operation is status-summary in the committed maps and status-job in the wire. Measured at portal cf52fdbf: the wire's bare status key carries status-summary and its status/REQ-0001 key carries status-job, the same pairing the committed frozen map carries. The premise does not hold at key level, so no status mapping was added.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@cf52fdbf src/pages/InvestorReporting/fixtures/smoke/fe-s-13-wire.json: key .../investor-reporting/status/REQ-0001 has operation status-job; key .../investor-reporting/status has operation status-summary (python json read)",
+      "portal@cf52fdbf src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json: key .../investor-reporting/status/ has operation status-job; key .../investor-reporting/status has operation status-summary (python json read)",
+      "wire-to-committed walk of both status keys at portal cf52fdbf: 0 differences"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-502 Do step 2: where the wire map and the committed outputs differ in a figure, the committed bytes win; one listed figure is 'the status operation is status-summary committed and status-job in the wire'.",
+  "world_is": "No status-operation difference exists between the wire and the committed maps at key level. The bare status key is status-summary in both, and the status/REQ-0001 key is status-job in both. The status-job operation sits under the id-keyed status/ route, not under the bare status key. The generator's committedKey keeps both keys as they are."
+}
+```
+
+## IRPT_BCKEND-D2-W353-S2 -- the base generator's statuses are not verbatim: the committed statuses carry no internal_correlation_id, and the generator emitted one
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W353-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~353",
+  "surfaced_at": "2026-10-13T04:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The base generator's FE_S_26_STATUS and FE_S_32_NO_ANSWER_STATUS carried an internal_correlation_id member and were described as verbatim copies of committed maps. None of the five committed statuses carries that member, so the base generator would have rewritten all five with it. Repaired in the generator (portal e1cd356e2f); no output changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@cf52fdbf src/pages/InvestorReporting/__tests__/fe-s-18/gen-fixtures.ts: FE_S_26_STATUS doc says the statuses are read from the committed maps VERBATIM, and carries internal_correlation_id for observed, target and missing-attribution; FE_S_32_NO_ANSWER_STATUS carries it too",
+      "portal@cf52fdbf fixtures/smoke/fe-s-18-holdings-observed.json, -target.json, -missing-attribution.json, fixtures/smoke/fe-s-18-frozen.json performance status, __tests__/fe-s-32/holdings-no-answer.json status: no internal_correlation_id member (python json read, 0 of 5 carry it)",
+      "portal@cf52fdbf src/pages/InvestorReporting/__tests__/fe-s-19/_wire.ts statusWire comment: internal_correlation_id is SERVER-ONLY and PublicStatusEnvelope never carries it"
+    ]
+  },
+  "spec_asserts": "gen-fixtures.ts doc at portal cf52fdbf: the three holdings statuses are FE-s-26's, VERBATIM, read from the committed maps; the no-answer status is read from the map FE-s-32 committed.",
+  "world_is": "The committed statuses carry operation, state, source_dates, actions and public_reason_code only. The internal_correlation_id member is absent from all five. The verbatim claim is false for that member. The committed bytes win, so the generator now omits it from every status it emits."
+}
+```
+
+## IRPT_BCKEND-D2-W353-S3 -- the committed maps name two firms for the directory answer: F-49F in the frozen map, fir_4f9c in the holdings maps; every holdings scope names F-49F
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W353-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~353",
+  "surfaced_at": "2026-10-13T04:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The committed directory/resolve answer names F-49F in fe-s-18-frozen.json and fir_4f9c in the three holdings maps and the no-answer map. Every envelope firm_id is fir_4f9c, and every holdings data.scope.firm_id is F-49F. The generator reproduces both answers as committed, each derived from its own map's source.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@cf52fdbf src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json directory/resolve data.verified_request_firm_id = F-49F (python json read)",
+      "portal@cf52fdbf fixtures/smoke/fe-s-18-holdings-observed.json, -target.json, -missing-attribution.json and __tests__/fe-s-32/holdings-no-answer.json directory/resolve data.verified_request_firm_id = fir_4f9c1a7b2e6d03518ca47b90 (python json read)",
+      "portal@cf52fdbf the five maps: holdings envelope firm_id fir_4f9c1a7b2e6d03518ca47b90 and holdings data.scope.firm_id F-49F (python json read)",
+      "portal@cf52fdbf fixtures/smoke/fe-s-13-wire.json line 13 verified_request_firm_id fir_4f9c; line 389 scope firm_id F-49F (grep)"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-502 Do step 2: write each holdings map's firm id from what its consumers require rather than copying the frozen map's.",
+  "world_is": "No test at HEAD asserts a directory/resolve firm id on the six outputs. fe-s-33/fixtures-reach.test.ts:617 asserts served firm equals verified_request_firm_id on the Global map only. The split is unpinned by a consumer. The frozen value is taken from the report's own lineage.tenant_firm_id; the holdings value is taken from the envelope firm_id. Whether a page compares a holdings scope.firm_id against its directory answer was not measured."
+}
+```
+
+## IRPT_BCKEND-D2-W353-S4 -- no portal test reads fe-s-16-print-prehistory.json by name at HEAD; the named reader is the generic fe-s-66 smoke classifier
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W353-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~353",
+  "surfaced_at": "2026-10-13T04:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-IB-pr-502 asks for a test that consumes each of the six outputs. No portal test names fixtures/smoke/fe-s-16-print-prehistory.json at HEAD. The only reader found is __tests__/fe-s-66/smoke-classification.test.ts, which parses every fixtures/smoke JSON file and checks its keys. The decision record cites that reader.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@cf52fdbf src/pages/InvestorReporting/__tests__/fe-s-66/smoke-classification.test.ts:84 reads and JSON-parses every file in fixtures/smoke/ (native Read)",
+      "native Grep of portal@cf52fdbf src/pages/InvestorReporting/__tests__ for prehistory and print-prehistory: the map name appears only in __tests__/fe-s-18/gen-fixtures.ts (writer) and in __tests__/fe-s-22/round2-captures.frozen.json (a capture file name)",
+      "native Grep of portal@cf52fdbf portal/ outside node_modules for 16-print: no other reader"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-502 Do step 1: for each of the six outputs find the portal test or tests that consume it at HEAD and cite one consumer.",
+  "world_is": "The pre-history map has no named test consumer. Its bytes are reproduced byte for byte. The decision record cites the generic smoke classifier, which requires the map's keys to be wire-keyed; no test asserts its contents."
+}
+```
+
+## IRPT_BCKEND-D2-W353-S5 -- the committed frozen export omits facts.covered_account_ids, a member the portal's ExportReceipt wire type declares required
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W353-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~353",
+  "surfaced_at": "2026-10-13T04:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The committed frozen export envelope has no facts.covered_account_ids, while the wire export receipt carries it and the portal's ExportReceipt type declares it as a required member. The base generator copied the wire member. The committed bytes win, so the generator now drops it; the committed map and the portal type disagree at HEAD.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@cf52fdbf src/pages/InvestorReporting/contracts/wire/ExportReceipt.ts:29 readonly covered_account_ids: readonly string[] (no optional marker; native Read)",
+      "portal@cf52fdbf src/pages/InvestorReporting/fixtures/smoke/fe-s-13-wire.json key export/EXP-1 data.facts.covered_account_ids = [ACCT-1] (python json read)",
+      "portal@cf52fdbf src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json key export/ data.facts has no covered_account_ids (python json read)"
+    ]
+  },
+  "spec_asserts": "The ExportReceipt wire type (contracts/wire/ExportReceipt.ts:29) declares covered_account_ids as a required member of facts; TO-IB-pr-502 names its absence from the committed export as a figure the generator maps to the committed shape.",
+  "world_is": "The committed export map omits a member the portal's typed export receipt declares required. Whether a typed parser refuses the committed map was not measured. The map is reproduced as committed."
+}
+```
