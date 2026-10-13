@@ -29333,3 +29333,54 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The Firm option was selected and the page shows the label Inflection Wealth Management. The empty client search then listed no client, so the walker recorded walker:first-client-absent and walked no client. The Performance tab was not reached, 0 performance request paths were logged, and no reference file was written. Why the empty search listed no client is not established by this walk."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W341-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~341",
+  "surfaced_at": "2026-10-13T00:11:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The IB-pr-489 walk with --firm 'Inflection Wealth Management' --first-client --performance-state, on the amendment 2 walker, listed 0 options for the empty search and 100 options for the first letter a, walked the first listed client, and recorded performance state ceiling at 45009 ms (no answer body, no refusal). The net log holds 4 GET performance request paths answered 200, carrying 2 distinct sel_ references. By the walker's own measure the Performance tab was not reached, so the refusal clause applies: no reference was written. The walker disarmed at 00:07:36Z; status reads disabled armed=no.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".claude/skills/ui-walk/walk.mjs@028cd41072 (--first-client letter fallback over a e i o n r s t; firstListedClient waits up to SEARCH_ANSWER_CEILING_MS per letter)",
+      "tmp/ui-walk/20261013T000334Z/performance-state.json in worktree wk-IRPT_BCKEND-341 (state ceiling, waited_ms 45009, ceiling_ms 45000)",
+      "tmp/ui-walk/20261013T000334Z/netlog.tsv in worktree wk-IRPT_BCKEND-341 (4 GET /api/scoped/investor-reporting/performance/ paths, all status 200; 2 distinct sel_ values, not recorded in this row)",
+      "walk log of 00:04:33 in the walker's terminal output: FIRST-CLIENT empty search 0 option(s) listed; FIRST-CLIENT letter a 100 option(s) listed",
+      "ui_walker_account.py status after the walk: status=disabled role=admin userType=Dev armed=no armedBy=none"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-IB-pr-489 step 4 and refusal clause: a walk that reaches the Performance tab yields one sel_ reference from the performance request path; a Performance tab not reached is a refusal (STOP, disarm, file a row, report).",
+  "world_is": "The walker's detector reads no answer body and no refusal on the Performance tab within 45 s, while the network log holds 4 performance answers with status 200. The two sources disagree and this walk does not establish which is right (the detector's selector may not match the served tab, or the answers may not be the tab's own). The performance paths carry 2 distinct sel_ references, so the order's 'one reference' is not a single value. The walk record reads performance_tab_reached false and performance_request_paths 4."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W341-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~341",
+  "surfaced_at": "2026-10-13T00:11:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The walker's terminal output leaks a fragment of the walked client's name. Each STEP line prints a screenshot path whose slug is the step label cut to 60 characters, and the step label carries the first listed client's name; the --first-client redaction in log() matches only the full name string, so the slug passes through. The walk of 00:04:00 to 00:05:57 printed such fragments on the terminal. The walker contract says a client name is never printed, so any further --first-client run leaks the same way until the slug is covered by the redaction.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".claude/skills/ui-walk/walk.mjs@028cd41072:116 (log() redacts only String(x).includes(firstName), the full name)",
+      ".claude/skills/ui-walk/walk.mjs@028cd41072:138-140 (shot() builds shots/NNN-<label>.png, label cut to 60 characters after the name is in the label)",
+      "tmp/ui-walk/20261013T000334Z/shots/ in worktree wk-IRPT_BCKEND-341 (file names carry the name prefix; the folder stays local and gitignored)"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-IB-pr-489 bounds and step 3: client data stays local and no client name is ever printed; the walker's --first-client redaction keeps the first client's name out of the terminal.",
+  "world_is": "The redaction holds for the full name but not for the slug the walker derives from it. Shot paths and STEP lines on the terminal carry a name fragment. The shot files stay under tmp/ui-walk (gitignored), so the leak is to the terminal and to the walker's log only. The walk record and the proof are written without any name; this row carries none."
+}
+```
