@@ -30058,3 +30058,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-W349-S2 -- the portal reader the order names for the directory-search consumers reads permitted_scope.scope_ids[0] as the entry id; it reads no entry_id member
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W349-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~349",
+  "surfaced_at": "2026-10-13T03:39Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's consumer read-through says the portal's client search reads scope_kind and entry_id. The portal reader that maps a directory-search element (contracts/envelope.ts:187 to contracts/adapt.ts:629-631) reads permitted_scope.scope_kind and permitted_scope.scope_ids[0]; it reads no entry_id member. The function's search result carries top-level entry_id and scope_kind and no permitted_scope; the route layer that reshapes one into the other is outside this order's paths and was not read. No armed hazard: the build and the packet are unchanged by it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@53506d4903 src/pages/InvestorReporting/contracts/envelope.ts:187 'directory-search' maps each element of data through adaptDirectoryEntry (read)",
+      "portal@53506d4903 src/pages/InvestorReporting/contracts/adapt.ts:630-631 kind from wire.permitted_scope.scope_kind; entryId from wire.permitted_scope.scope_ids[0]; no entry_id read (read)",
+      "portal@53506d4903 src/pages/InvestorReporting/contracts/wire/responses.ts:81-86 DirectorySearchResponseWire declares data as DirectoryEntryWire[] (read)",
+      "wk-IRPT_BCKEND-349@f41501ab1d infra/aws/lambda/investor-reporting/directory/handler.py:270-283 search() result rows carry entry_id, scope_kind and no permitted_scope (read)"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-499 record face, consumers of the search results: the portal's client search reads scope_kind and entry_id; cite the portal reader file:line, one read-through each.",
+  "world_is": "The portal reader for a directory-search element reads permitted_scope.scope_kind and permitted_scope.scope_ids[0] (adapt.ts:630-631). It does not read an entry_id member. Its declared wire type is DirectoryEntry rows with permitted_scope, while the function returns results[] rows with a top-level entry_id. Whatever maps one to the other is not in this order's paths and was not read. For the synthesized ACCOUNT entries the reader's entryId is the one account id in scope_ids, so two entries of a shared tail carry two distinct ids; that is a fact about the reader, not a defect of this change."
+}
+```
