@@ -90,7 +90,7 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~F
 
 **AMENDMENT 2 (2.0.0_SA_COO~B1, 2026-10-13 ~11:2xZ) -- UN-PARKED:** `FB-j-11` is merged at 074980a8d3 (worker commit 2090965f22; the generator tests directory reads 13 passed at the merged HEAD: its 6 arms plus the 7 earlier; `tfslots` 3 of 3; instance VALID; the worker's mutants fail arms 1, 3 and 4 as intended). The diff you deploy: `_disabled_slots()` reading `EXEC_SUMMARY_DISABLED_SLOTS` at call time with each slot's evaluator skipped when named; `_guard_client_id_before_call` (a `client_rel_id` string that is not an id is dropped before the model call; an EMPTY string is dropped too, ruled: a bad value) and `_guard_client_names_after_reply`; the Terraform variable `disabled_slots` (default empty, validated against the six names) and its one `merge` term. Both halves of addendum 2 are signed (COO 89f2099f0a, CTO ddbaf334d1). Build from the main checkout at or after 074980a8d3. Hash relationship ids at write time (FB-j-14's rule). Status pending. No criterion changed.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <workstream>SLOTSWITCHDEPLOY</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-j-13</to_id>
