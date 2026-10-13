@@ -8148,3 +8148,28 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-S23 -- Resolves and disarms IRPT_DASHBD-D2-W145-S1: the two guard-state rules are now stated in the account_return_daily contract
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S23",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-13T22:57:58Z",
+  "one_line": "Resolves and disarms IRPT_DASHBD-D2-W145-S1: the CTO ruled both guard-state inferences stand and become the return table's stated rule (msg 7330), written as served_day_rules into the account_return_daily contract.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row W145-S1: the return table does not say whether total_return_daily is served on FLOW_UNRECONCILED or GRADED_DISAGREED days, so the performance report contract's fold for the account returns rested on an inference.",
+  "world_is": "CTO msg 7330 rules: a GRADED_DISAGREED day serves no number (ruling 17), so a window containing one reads ABSENT with its reason and the count of such days, never compounded around the gap; a FLOW_UNRECONCILED day compounds as served and the window carries the flag with its count. Both are now one sentence each under the new top-level key served_day_rules in org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json (no column, enum or hash changed). The fold of avs.<window>.return_cumulative in the performance report contract already says the same, so it now cites a rule. W145-S2 is a documentation word: no change (CTO).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 7330 (2026-10-13 ~22:55Z)",
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json, key served_day_rules, in the commit that carries this row; DB94-1-AC1 and DB94-6-AC1 re-run PASS after the edit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
