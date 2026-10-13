@@ -29462,3 +29462,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The redaction is by code read plus the worker's three IB169-1 criteria (node --check, flag parsing, SKILL.md and FIRM_OPTION_ABSENT); none of them runs a walk, so the redaction is NOT exercised on a live page. It is written so that any text leaving the walker for a file name or a terminal line passes through one function. No further --first-client walk is planned; a later one rides on this fix. Not measured: a live run of the fixed walker."
 }
 ```
+
+## IRPT_BCKEND-D2-S116 -- TO-IB-pr-490: both Inflection references are refused with AccessDenied at the retained-index read; no computed answer, no live read of the changed path
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S116",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-13T00:29:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-IB-pr-490: both Inflection references answer ok:false UNEXPECTED, the function log names AccessDenied at the retained-index read (pointer_get) before any compute, so the changed path has still run on no live answer and the three criteria read FAIL; stopped at 2 invokes, 0 persisted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured 2026-10-13T00:26:08Z and 00:26:49Z by this seat: two direct invokes of the deployed irpt-performance-adapter (live CodeSha256 abep4h7RngMS9JomQUdkcOT3EZ+W953OdxeK0HkdzFo=, promoted 2026-10-12T22:35:06Z), Opal internal principal, selected_tenant inflection, window 2026-01-01 to 2026-10-09, first then second reference of the file: both StatusCode 200, no FunctionError, ok:false state UNAVAILABLE public_reason_code UNEXPECTED. Per invoke the log carries irpt_internal exception_type AccessDenied (classifier_code UNEXPECTED) and irpt_retained_phases path refused:AccessDenied with only prepare_ms and pointer_get_ms laps. 0 TypeError and 0 Traceback in the two invokes' events (7 and 5 events counted).",
+      "retained.py:279-280: the lap pointer_get_ms is the line after index.get(owner firm, pointer_key), the retained-report index read; the refusal is raised there, before calculate and so before holdings_gold.py, the one member this release changed. The code on that path is identical in the live zip and the previous zip (1 of 71 members differs).",
+      "log history since 2026-10-06, irpt_retained_phases lines grouped by path (denominator 122 lines, auto-paginated): refused:AccessDenied 6, all on 2026-10-13 (00:04:48Z x3, 00:05:36Z, and this seat's two); the only computed paths ('fresh') are 3 lines at 2026-10-11 09:45Z, before the release and before the 10-12 traffic; no Inflection computed path exists between 10-11 09:45Z and now. So AccessDenied is NOT shown to predate the release: there is no Inflection traffic in the window between, and it is not shown to be caused by it either.",
+      "CloudTrail lookup-events for the function's session, 2026-10-13T00:26:00Z to 00:28:30Z: 10 events, 9 kms Decrypt with no errorCode and 1 CreateLogStream; no kms error. DynamoDB GetItem is a data event and is not in a management-event lookup, so the denied call itself is not identified.",
+      "criteria run verbatim at the repo root, rc and last line: IB169-3-AC1 rc=1 'no ... IB169-3_inflection_live_read.json'; IB169-3-AC2 rc=1 'no irpt_retained_phases line since the apply names a computed path (denominator: 25 line(s))'; IB169-3-AC3 rc=1 'no ... IB169-3_inflection_live_read.json'. No record file was written: nothing computed, so no claim, count or figure hash exists to record."
+    ]
+  },
+  "spec_asserts": "The order: invoke the first reference, then the second if the first answers ok:false; on the first ok answer read the claim, days_without_base, days_with_return_left_out and the figure hash, compare the claim with the offline prediction; if both are ok:false, STOP and probe no other firm. Refusal clause: STOP and file a row on an ok:false first answer.",
+  "world_is": "The deployed function cannot compute an Inflection answer for these two references: it is refused at the retained-index read with AccessDenied before the changed path. That is a different fault from the nine-ref import smoke of IB-pr-487 (PathARetiredForFirm and VendorEgressRefused, refusals by design): here the references reach the retained compute and an AWS permission fails. Whether the function role lost access to the index (table or its key), whether the index read was ever permitted for the call shape the portal and this seat use, or whether the denial is specific to these two references, is not established. Nothing was deployed, rolled back, granted or written; no retained revision persisted (0 of 2 invokes); live CodeSha256 unchanged. Branch B was not triggered and was not taken: its triggers are a 5xx or TypeError, a failed arm or a figure differing from its before-read, and none of them occurred. Needs from the issuer: a ruling on who reads the function role's access to the retained index (this seat's grant forbids reading irpt-requests and changing IAM), and whether the CTO's refusal of kms:Decrypt for this seat is related. Not established: the denied API call and resource; the cause of the 00:04:48Z AccessDenied lines (caller not identified)."
+}
+```
