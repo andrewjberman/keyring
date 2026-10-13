@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~110</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -97,3 +97,5 @@ lane: the files named in <paths> and the worker's deliverables.
 
 - Cut on the CTO's rulings on the C-SWAP read (msg 7210: 'Cut A to C'; K = 10, 1 s pace, CHECK_FAILED never absent) as workstream `Y` round 25. The grant names every file the cell writes. Base: `AR293-y-AC1` FAIL as expected (no record).
 - Any portal candidate goes to `1.0.0_SA_CTO`'s review lane through the issuer; the worker lands nothing.
+
+<!-- ISSUER NOTE 2026-10-13 (2.0.0_SA_COO~Y2): status flipped to complete after the drain. Trunk checker y293-kept prints Y293-KEPT-OK (19 new tests, intake folder 429), proof instance VALID. A KEPT shares holding is not covered (a later cell). The judgment criterion AR293-y-AC2J is the CVO to grade. -->
