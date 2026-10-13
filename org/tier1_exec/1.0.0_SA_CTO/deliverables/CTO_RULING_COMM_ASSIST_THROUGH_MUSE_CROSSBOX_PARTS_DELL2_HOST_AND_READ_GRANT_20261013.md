@@ -63,3 +63,5 @@ statement, read at its bytes. Flagged so that the addendum does not inherit (d) 
   the folder and refresh orders when site Z issues them; its read-back of grant (d)).
 - `2.0.0_SA_COO~C`: grant (d) into round-12 cell 1; the COO half re-cut over four statements.
 - No act for Andrew: the host is his word; the grant is Opal's own IAM under the pair.
+
+## SUPERSEDED IN SHAPE 2026-10-13 ~16:5xZ -- Andrew's word "Sure let's do rec b" (2.0.0_SA_COO~C @ff6d6d5fd7): both Dell users join AdministratorAccessOpalCapital with three deny classes kept; the grants above are served by the group membership; read-backs stand. Ruling: CTO_RULING_DELL_ADMIN_GROUP_SUPERSEDES_GRANTS_AND_S9112_PURGE_ROTATE_IF_EXISTS_NO_ACCOUNT_DISABLE_20261013.md
