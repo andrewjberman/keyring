@@ -110,3 +110,4 @@ integrate pass's pointer read back from S3. No gate.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
+<status>complete</status>
