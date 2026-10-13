@@ -8665,3 +8665,166 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Each resource lists both groups, so the membership set is the same as the group-side resource states. CT-ab-2's plan should show two membership updates that add the admin group and no removal from cloudops-dell-agents-group."
 }
 ```
+
+## NFRA_CTLPLN-W78-S1 -- the seat-boundary serial pattern cannot read a worker serial whose project code carries an underscore
+
+```json
+{
+  "id": "NFRA_CTLPLN-W78-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~78",
+  "surfaced_at": "2026-10-13T18:12:43Z",
+  "one_line": "The launch-serial pattern in CT-ab-4 (third segment [A-Za-z0-9]+) does not match 0.9.0_WK_NFRA_CTLPLN~78: Get-LaunchSerial returns null for that seat, so the boundary never counts it as a seat, and kill-agent.ps1 refuses the same serial before any tree is judged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree test run 1 (uncommitted, .tools/tests/test_seat_boundary.ps1): Get-LaunchSerial of '0.9.0_WK_NFRA_CTLPLN~78.' returned null and the case 'trailing full stop' FAILED. The fixture was then changed to 0.9.0_WK_CTLPLN~78 and the order's pattern was kept.",
+      ".tools/kill-agent.ps1:53 @5bd9bd2ed2 rejects the serial with 'does not look like an agent serial' (the same third-segment pattern).",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-ab-4.kill-tools-seat-boundary.md:33 (BUILD 1, the pattern as ordered)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO (rules whether a project code may carry an underscore, or the token pattern widens); 2.0.0_SA_COO~C (re-cuts the pattern once ruled)",
+  "spec_asserts": "CT-ab-4 BUILD 1 and S9117: Get-LaunchSerial reads the first full serial token per the ordered pattern, and a kill ends the seat it names and no seat under another serial.",
+  "world_is": "A seat whose project code carries an underscore has a serial the ordered pattern does not match. Such a seat has no launch serial, so the boundary does not count it and a tree holding it can still be stopped; kill-agent cannot target it at all. Not measured: whether any live tree holds such a seat.",
+  "notes": "Not widened here: the order fixes the pattern, and this cell may not widen its own grant. S9117's hazard stays open for underscore-coded seats until the ruling. This worker's own serial is the example."
+}
+```
+
+## NFRA_CTLPLN-W78-S2 -- S9117 fix shape stops at a foreign descendant; CT-ab-4 BUILD 2 refuses the whole tree
+
+```json
+{
+  "id": "NFRA_CTLPLN-W78-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~78",
+  "surfaced_at": "2026-10-13T18:12:43Z",
+  "one_line": "S9117's notes say Stop-ProcessTree should stop AT a descendant claude.exe carrying a different serial. BUILD 2 refuses the whole target tree, so a target with any live foreign seat beneath it is not stopped and kill-agent exits 2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md:8446 (S9117 notes, fix shape 1): 'Stop-ProcessTree stops at a descendant claude.exe whose command line carries a different serial, prints it'.",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-ab-4.kill-tools-seat-boundary.md:34 (BUILD 2): 'a non-empty list REFUSES the kill of that tree'.",
+      ".tools/kill-agent.ps1 (worktree, uncommitted): the Write-SeatRefusal path skips the target and sets exit 2."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S9117 notes fix shape (1) versus CT-ab-4 BUILD 2: stop at the foreign seat without descending into it, versus refuse the kill of the whole tree.",
+  "world_is": "Built to BUILD 2. A target with a live foreign seat under it survives the kill, and so does the host shell when a foreign seat sits under it. Not run live: no kill was executed.",
+  "notes": "The two readings differ only for a target that parents a foreign seat. The COO decides which reading stands; the cell followed the order's wording."
+}
+```
+
+## NFRA_CTLPLN-W78-S3 -- the seat boundary tests claude.exe only; a codex.exe seat under a tree is not judged
+
+```json
+{
+  "id": "NFRA_CTLPLN-W78-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~78",
+  "surfaced_at": "2026-10-13T18:12:43Z",
+  "one_line": "Test-SeatBoundary names claude.exe only (BUILD 1), so a codex.exe seat under a killed tree is neither refused nor named; kill-maint.ps1's existing descendant guard names both claude and codex.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/kill-maint.ps1:725 @5bd9bd2ed2 names 'claude|codex' in the existing descendant guard.",
+      "worktree .tools/seat-boundary.ps1 Test-SeatBoundary name test (uncommitted): -ine 'claude.exe' is the only process name the walk judges."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~C (decides whether codex.exe joins the boundary; one name test in .tools/seat-boundary.ps1)",
+  "spec_asserts": "CT-ab-4 BUILD 1: Test-SeatBoundary returns the descendant claude.exe processes whose launch serial is not the target's.",
+  "world_is": "A codex.exe process carrying a serial is outside the boundary by construction. Not measured: whether any codex seat is parented under a kill target.",
+  "notes": "Built as ordered (claude.exe only). The hazard stays ARMED for codex-launched seats under a tree."
+}
+```
+
+## NFRA_CTLPLN-W78-S4 -- the TO asks for its own status flip, but the TO file is outside the order's paths grant
+
+```json
+{
+  "id": "NFRA_CTLPLN-W78-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~78",
+  "surfaced_at": "2026-10-13T18:23:32Z",
+  "one_line": "The order's ACCEPTANCE says flip <status> to complete when both criteria pass and the instance is VALID, but the task-order file is not among the order's <paths>; the flip is not performed by this worker and is left pending for the issuer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-ab-4.kill-tools-seat-boundary.md:8 (<status>pending</status>)",
+      "the same file, lines 62-69: <paths> names five .tools paths and the investigation file; no task-order path is granted",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~78/NFRA_CTLPLN.TO-CT-ab-4.kill-tools-seat-boundary.proof_of_spec.json: proof-of-spec-check.py VALID rc=0 for CTab4-AC1,CTab4-AC2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ab-4 ACCEPTANCE: flip <status> to complete only when both criteria pass and the instance is VALID; the grant <paths> block names six paths.",
+  "world_is": "Both criteria PASS and the instance is VALID, but the status-bearing file is outside the grant, so this worker does not make the flip.",
+  "notes": "The issuer 2.0.0_SA_COO~C flips the status, or widens the grant for the flip. The instance lists this row under surprises."
+}
+```
+
+## NFRA_CTLPLN-W79-S1 -- OPEN-CALL keeps a project-code match that the CTO ruling's wording bans
+
+```json
+{
+  "id": "NFRA_CTLPLN-W79-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~79",
+  "surfaced_at": "2026-10-13T18:34:56Z",
+  "one_line": "The CTO ruling on D2-S32 says the OPEN-CALL arm never matches a bare token in a subject or context, but the project-code arm of the matcher still hits a bare project code in free text, and the kept case 943 requires that hit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_S27_S32_TOOL_FINDING_OWNERS_COMP_IAM_AND_SAFE_APPLY_CROSSBOX_LIMB_20261012.md lines 27-32 at 3477d67af5: the OPEN-CALL arm matches a root path or a named terraform root, never a bare token in a subject or context",
+      ".tools/crossbox-deploy-check.py mentions() at 3477d67af5: the codes loop matches a bare project code over json.dumps(call) plus body, so a subject that says a project code hits through its write set",
+      ".tools/tests/test_apply_who_and_crossbox.py case 943 (old, kept): subject 'the PA project needs a word' must hit root-only and must not hit when the carried file is outside the write set"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO ruling D2-S32 (2): the OPEN-CALL arm matches a root path or a named terraform root, never a bare token in a subject or context.",
+  "world_is": "The cell matches Terraform roots by path or by the roots field only, and kept the project-code arm because case 943 expects a project code in a subject to hit. The ruling's wording and the kept case disagree. ENFORCE is absent, so the limb only WARNs today.",
+  "notes": "Not decided by this worker. Whether a project code counts as a naming of the root is a ruling question. Owners: 2.0.0_SA_COO~C (case 943 and the round-12 cell) with 1.0.0_SA_CTO (the ruling)."
+}
+```
+
+## NFRA_CTLPLN-W79-S2 -- test_crossbox_call.py reads 45/50 at the base: five cli and writer checks refused on origin
+
+```json
+{
+  "id": "NFRA_CTLPLN-W79-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~79",
+  "surfaced_at": "2026-10-13T18:34:56Z",
+  "one_line": "The crossbox call test .tools/tests/test_crossbox_call.py prints CROSSBOX-TEST cases=45/50 ok=False at the base, with five checks refused on 'is not on origin yet'; it is outside this cell's grant and was not changed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_crossbox_call.py at worktree HEAD 3477d67af5 (before this cell's edits): CROSSBOX-TEST cases=45/50 ok=False; and after: the same 45/50 with the same five check names",
+      "FAIL lines: 'writer and watcher comparison ran', 'refusal cases ran', 'cli: line exits 0 and prints the sendable line', 'cli: receive before the pull exits 5 and says PULL-FIRST', 'cli: receive after the pull exits 0 and delivers'; each refusal reads 'Refused: commit <sha> is not on origin yet'",
+      "the reader checks in the same file (open-calls.py and the crossbox-deploy-check.py readers, lines 201 and 207) pass before and after this cell's change"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The crossbox call tests (.tools/tests/test_crossbox_call.py) pass at the shipped tree.",
+  "world_is": "45 of 50 checks pass at 3477d67af5. The five failures are refusals that name a commit as not on origin; the cause was not read here, and the cell that owns the test is not this one.",
+  "notes": "Found while running the reader checks this cell touches. Not fixed: the file is outside this order's <paths>. The owner is the seat that wrote crossbox-call.py and its test."
+}
+```

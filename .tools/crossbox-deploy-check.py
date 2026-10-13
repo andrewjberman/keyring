@@ -11,15 +11,19 @@ Andrew's word: the laptop needs to know what goes on across the devices, but not
 the laptop -- only when there is an open call, a potential project overlap, or a deploy that could upset another device's work.
 
   OPEN-CALL    an unfinished cross-box call (org/devices/crossbox/*.json, state OPEN or ACKED) or an open_calls row
-               (org/devices/state/*/open_calls.json) that names this root, its name (terraform roots only) or a project
-               whose write set covers the root.
+               (org/devices/state/*/open_calls.json) that names this root by its PATH (infra/aws/terraform/<root> or
+               <root>/), by a root named in its own roots field, or a project whose write set covers the root. A bare
+               name in free text is NOT a match (CTO ruling on D2-S32; cell CT-ab-5). Line: OPEN-CALL calls_scanned= matched=.
   OVERLAP      a live project placed on ANOTHER box (project.json `placement`, else its `fabric` box) whose write set shares
                a path with the root -- .tools/placement-check.py's own read_projects() and overlaps(), imported.
   UPSET        a live deploy notice (org/devices/deploy_notices/<id>.json) that names the root: rule "no-apply" hits any
                apply; "targeted-only-excluding" hits an UNTARGETED apply and a targeted one that names a listed resource;
                an empty `resources` list means the whole root. An expired notice is ignored and listed as expired.
   OPEN-DEPLOY  another seat's open deploy on the root: org/critical_paths/.open_deploys/*.json at HEAD of EVERY live
-               worktree (git worktree list --porcelain, then ls-tree), the per-worktree denominator printed.
+               worktree (git worktree list --porcelain, then ls-tree), the per-worktree denominator printed. A worktree
+               whose HEAD is contained in the shared trunk HEAD is STALE-MERGED and its sentinels are not counted; the
+               trunk checkout itself (HEAD equal to trunk) is the control and always counts. Line: OPEN-DEPLOY
+               worktrees_scanned= open= stale_merged=.
 
 FILES MODE (--files, --files-from, --files-vs-trunk; AMENDMENT 1 of the cell's task order): OVERLAP is judged on the files a
 push or deploy actually carries against another box's write set, never on a shared root -- a project hits only if one of THOSE
@@ -86,14 +90,43 @@ def rel_root(root: str, repo_root: str) -> str:
 
 
 def mention_patterns(rel: str) -> list:
-    """Regexes that count as 'names this root': the path, the last two components, and for a terraform root the bare name."""
+    """Regexes that count as 'names this root' in FREE TEXT. A Terraform root is named by its full PATH only (a trailing '/'
+    included): its bare name is a word, not the root (CTO ruling on D2-S32; a call that says 'rootx' is not about
+    infra/aws/terraform/rootx). A non-Terraform root also keeps its last two components, as the data roots are named that way."""
+    bounded = r"(?<![A-Za-z0-9_-])%s(?![A-Za-z0-9_-])"
+    pats = [(bounded % re.escape(rel), rel)]
     parts = rel.split("/")
-    pats = [(re.escape(rel), rel)]
-    if len(parts) >= 2:
-        pats.append((re.escape("/".join(parts[-2:])), "/".join(parts[-2:])))
-    if rel.startswith("infra/aws/terraform/") and len(parts) >= 4:
-        pats.append((r"(?<![A-Za-z0-9_-])%s(?![A-Za-z0-9_-])" % re.escape(parts[-1]), parts[-1]))
+    if not rel.startswith("infra/aws/terraform/") and len(parts) >= 2:
+        last = "/".join(parts[-2:])
+        pats.append((bounded % re.escape(last), last))
     return pats
+
+
+def roots_field_names(doc) -> list:
+    """The root names a call or row carries in its OWN roots field (`roots` or `--roots`), normalised. Structured data, not text."""
+    out = []
+    if not isinstance(doc, dict):
+        return out
+    for key in ("roots", "--roots"):
+        value = doc.get(key)
+        if isinstance(value, list):
+            items = value
+        elif isinstance(value, str):
+            items = re.split(r"[,\s]+", value)
+        else:
+            items = []
+        out.extend(norm_file(str(x)).rstrip("/") for x in items if str(x).strip())
+    return out
+
+
+def roots_field_hit(doc, rel: str) -> str:
+    """Non-empty when the doc's own roots field names this root: its full path (or a path under it), or for a Terraform root its name."""
+    name = rel.split("/")[-1]
+    tf = rel.startswith("infra/aws/terraform/")
+    for entry in roots_field_names(doc):
+        if entry == rel or entry.startswith(rel + "/") or (tf and entry == name):
+            return "names the root in its roots field (%s)" % entry
+    return ""
 
 
 def mentions(text: str, pats: list, codes: list) -> str:
@@ -154,6 +187,7 @@ def measure_open_call(repo_root, rel, covering, now, files=None) -> tuple:
     pats = file_patterns(files) if narrow else mention_patterns(rel)
     codes = [c[0] for c in covering]
     lines, hits = [], []
+    scanned = 0  # every call file read and every open_calls row read (closed or not): the denominator
     if narrow:
         lines.append("  files mode: a call or row hits only if it names one of the %d carried file(s) or a project covering one, "
                      "not the shared root" % len(files))
@@ -161,6 +195,7 @@ def measure_open_call(repo_root, rel, covering, now, files=None) -> tuple:
     if not crossbox:
         lines.append("  org/devices/crossbox/*.json: none recorded (0 files) -- reads clear")
     for path in crossbox:
+        scanned += 1
         name = os.path.relpath(path, repo_root).replace("\\", "/")
         try:
             call = json.load(open(path, encoding="utf-8"))
@@ -174,7 +209,7 @@ def measure_open_call(repo_root, rel, covering, now, files=None) -> tuple:
                     body = open(os.path.join(repo_root, call["body_path"]), encoding="utf-8", errors="replace").read()
                 except OSError:
                     body = ""
-            why = mentions(json.dumps(call) + "\n" + body, pats, codes)
+            why = (roots_field_hit(call, rel) if not narrow else "") or mentions(json.dumps(call) + "\n" + body, pats, codes)
         except Exception as exc:
             hits.append("%s unreadable (%s: %s): a file that exists and cannot be parsed is not clear" % (name, type(exc).__name__, exc))
             lines.append("  HIT %s" % hits[-1])
@@ -195,15 +230,17 @@ def measure_open_call(repo_root, rel, covering, now, files=None) -> tuple:
             age = age_text(doc.get("written_at"), now)
             lines.append("  %s: device=%s written_by=%s %s rows=%d" % (name, doc.get("device"), doc.get("written_by"), age, len(rows)))
             for row in rows:
+                scanned += 1
                 if str(row.get("state", "")).upper() in CLOSED_WORDS:
                     continue
-                why = mentions(json.dumps(row), pats, codes)
+                why = (roots_field_hit(row, rel) if not narrow else "") or mentions(json.dumps(row), pats, codes)
                 if why:
                     hits.append("%s row %s %s" % (name, row.get("id", "?"), why))
                     lines.append("  HIT %s" % hits[-1])
         except Exception as exc:
             hits.append("%s unreadable (%s: %s): not clear" % (name, type(exc).__name__, exc))
             lines.append("  HIT %s" % hits[-1])
+    lines.append("OPEN-CALL calls_scanned=%d matched=%d" % (scanned, len(hits)))
     return hits, lines
 
 
@@ -349,9 +386,32 @@ def listing_rows(listing: str) -> tuple:
     return entries, [e for e in entries if len(e) == 4 and not os.path.basename(e[3].split("\t")[-1]).startswith(".")]
 
 
+def worktree_heads(porcelain: str) -> dict:
+    """{worktree path: its HEAD sha} from `git worktree list --porcelain` (a branch checkout or a detached one alike)."""
+    heads, path = {}, None
+    for ln in porcelain.splitlines():
+        if not ln.strip():
+            path = None
+        elif ln.startswith("worktree "):
+            path = ln[9:].strip()
+        elif path is not None and ln.startswith("HEAD "):
+            heads[path] = ln[5:].strip()
+    return heads
+
+
+def contained_in_trunk(repo_root, sha, trunk_sha) -> str:
+    """'merged' when sha is an ancestor of trunk_sha (its checkout is contained in the shared trunk), 'open' when it is not, or when
+    it IS the trunk (the shared tree's own sentinels are the control), 'error' when git cannot say (rc other than 0 or 1)."""
+    if sha == trunk_sha:
+        return "open"
+    rc, _out = git_lines(repo_root, "merge-base", "--is-ancestor", sha, trunk_sha)
+    return {0: "merged", 1: "open"}.get(rc, "error")
+
+
 def measure_open_deploy(repo_root, rel, serial, files=None) -> tuple:
     """files None, or a Terraform root: a sentinel hits when its text names the root (the state of a whole root is what an apply
-    works on). A non-Terraform root in FILES MODE: a sentinel hits only when its text names a carried file."""
+    works on). A non-Terraform root in FILES MODE: a sentinel hits only when its text names a carried file.
+    A checkout whose HEAD is contained in the shared trunk HEAD is STALE-MERGED: its sentinels are printed and not counted."""
     narrow = files is not None and not rel.startswith("infra/aws/terraform/")
     pats = file_patterns(files) if narrow else mention_patterns(rel)
     lines, hits = [], []
@@ -360,53 +420,81 @@ def measure_open_deploy(repo_root, rel, serial, files=None) -> tuple:
     rc, out = git_lines(repo_root, "worktree", "list", "--porcelain")
     trees = [ln[9:].strip() for ln in out.splitlines() if ln.startswith("worktree ")] if rc == 0 else []
     refs = worktree_refs(out) if rc == 0 else {}
+    heads = worktree_heads(out) if rc == 0 else {}
     if rc != 0 or not trees:
         hits.append("git worktree list failed (rc=%d): the open deploys of other seats cannot be read, so this is not clear" % rc)
         return hits, ["  HIT %s" % hits[0]]
-    found = []
     vanished = 0
+    pending = []  # (tree, its HEAD sha, [(blob sha, path)] of its sentinels): the ancestry rule below decides which of them count
     for tree in trees:
-        if not os.path.isdir(tree):
-            # SC-e-92 limb e, AMENDED (AMENDMENT 1, row D1-W81-S2): a registration whose directory is gone is VANISHED in the denominator,
-            # and its ref (branch, else detached HEAD sha) is read at repo_root exactly like a HEAD. Clear only when the ref was read.
-            vanished += 1
-            shown, ref = tree.replace("\\", "/"), refs.get(tree)
-            rc, listing = git_lines(repo_root, "ls-tree", "-r", ref, "org/critical_paths/.open_deploys/") if ref else (1, "")
-            if not ref or rc != 0:
-                why = ("ls-tree %s rc=%d" % (ref, rc)) if ref else "no branch or HEAD ref to read"
-                hits.append("worktree %s: VANISHED (registered, directory absent), %s: not readable, not clear" % (shown, why))
-                lines.append("  HIT %s" % hits[-1])
-                continue
-            entries, sentinels = listing_rows(listing)
-            lines.append("  worktree %s: VANISHED (registered, directory absent), read through %s: %d file(s), %d sentinel(s)" % (
-                shown, ref, len(entries), len(sentinels)))
-            found.extend((e[2], e[3].strip(), tree) for e in sentinels)
-            continue
-        rc, listing = git_lines(tree, "ls-tree", "-r", "HEAD", "org/critical_paths/.open_deploys/")
-        if rc != 0:
+        shown = tree.replace("\\", "/")
+        gone = not os.path.isdir(tree)
+        # SC-e-92 limb e, AMENDED (AMENDMENT 1, row D1-W81-S2): a registration whose directory is gone is read through its ref (branch,
+        # else detached HEAD sha) at repo_root, exactly like a HEAD. A tree whose read fails is then RACE-CHECKED (below).
+        ref = refs.get(tree) if gone else "HEAD"
+        if ref:
+            rc, listing = git_lines(repo_root if gone else tree, "ls-tree", "-r", ref, SENTINEL_DIR)
+        else:
+            rc, listing = 1, ""
+        if rc != 0 or not ref:
+            # The race between the list and this read (CLAUDE.md NEVER-2 names the per-tree read): a checkout removed in between is
+            # VANISHED and not a hit; a checkout still listed (or whose path still exists) is unreadable, and that is a hit.
+            why = ("ls-tree %s rc=%d" % (ref, rc)) if ref else "no branch or HEAD ref to read"
             rc2, out2 = git_lines(repo_root, "worktree", "list", "--porcelain")
             if rc2 != 0:
-                hits.append("worktree %s: ls-tree rc=%d and the re-read of the worktree list failed (rc=%d): not clear" % (tree, rc, rc2))
+                hits.append("worktree %s: %s and the re-read of the worktree list failed (rc=%d): not clear" % (shown, why, rc2))
                 lines.append("  HIT %s" % hits[-1])
                 continue
             still = {ln[9:].strip() for ln in out2.splitlines() if ln.startswith("worktree ")}
             if tree not in still and not os.path.exists(tree):
                 vanished += 1
-                lines.append("  worktree %s: VANISHED during the read (listed, then removed)" % tree.replace("\\", "/"))
+                lines.append("  worktree %s: VANISHED during the read (listed, then removed)" % shown)
                 continue
-            hits.append("worktree %s: ls-tree rc=%d (not readable, not clear)" % (tree, rc))
+            hits.append("worktree %s: %s (not readable, not clear)" % (shown, why))
             lines.append("  HIT %s" % hits[-1])
             continue
         entries, sentinels = listing_rows(listing)
-        lines.append("  worktree %s: %d file(s) at HEAD, %d sentinel(s) read"% (tree.replace("\\", "/"), len(entries), len(sentinels)))
-        found.extend((e[2], e[3].strip(), tree) for e in sentinels)
+        if gone:
+            vanished += 1
+            lines.append("  worktree %s: VANISHED (registered, directory absent), read through %s: %d file(s), %d sentinel(s)" % (
+                shown, ref, len(entries), len(sentinels)))
+        else:
+            lines.append("  worktree %s: %d file(s) at HEAD, %d sentinel(s) read" % (shown, len(entries), len(sentinels)))
+        if sentinels:
+            pending.append((tree, heads.get(tree), [(e[2], e[3].strip()) for e in sentinels]))
+    # OPEN-DEPLOY ancestry (CTO ruling on D2-S32, cell CT-ab-5): a sentinel counts at a checkout only when that checkout's HEAD is NOT
+    # contained in the shared trunk HEAD. A contained HEAD is STALE-MERGED and not counted. The trunk checkout (HEAD equal to trunk) is the
+    # control and always counts. A HEAD that git cannot compare is not clear, so it counts.
+    merged = []  # (tree, sha, rows) of every checkout whose HEAD is contained in trunk
+    found = []  # (blob sha, path, tree) of the sentinel readings that are not excluded
+    if pending:
+        rc, trunk_out = git_lines(repo_root, "rev-parse", "--verify", "-q", "HEAD^{commit}")
+        trunk_sha = trunk_out.strip() if rc == 0 else ""
+        if not trunk_sha:
+            hits.append("trunk HEAD does not resolve (rc=%d): a checkout contained in trunk cannot be told from an open one, so this is not clear" % rc)
+            lines.append("  HIT %s" % hits[-1])
+        for tree, sha, rows in pending:
+            shown = tree.replace("\\", "/")
+            verdict = contained_in_trunk(repo_root, sha, trunk_sha) if (sha and trunk_sha) else "open"
+            if verdict == "error":
+                hits.append("worktree %s: HEAD %s cannot be compared with trunk (merge-base): not clear" % (shown, (sha or "?")[:10]))
+                lines.append("  HIT %s" % hits[-1])
+                verdict = "open"
+            if verdict == "merged":
+                merged.append((tree, sha, rows))
+                lines.append("  STALE-MERGED worktree %s: HEAD %s is contained in trunk %s; %d sentinel(s) not counted: %s" % (
+                    shown, sha[:10], trunk_sha[:10], len(rows), ", ".join(path for _blob, path in rows)))
+                continue
+            found.extend((blob, path, tree) for blob, path in rows)
+    open_checkouts = len(pending) - len(merged)
     # SC-e-92 limb d, TRUNK FIRST: the HEAD of repo_root is trunk. A sentinel that trunk does not carry, at a path trunk's history DOES
     # carry, was deleted at trunk: a worktree that has not taken the closing commit still reads it, so it is STALE and draws no hit.
     # A path trunk never carried is a deploy open on a worker's branch until the drain (CLAUDE.md NEVER-2) and counts as before. A
     # stale reading must also be a blob trunk once carried at that path: a sentinel re-opened on a branch under the same name carries
     # a blob trunk never had, so it stays a hit.
     stale_at = {}  # path -> (the trunk commit that deleted it, {blob shas trunk carried at that path})
-    rc, trunk = git_lines(repo_root, "ls-tree", "-r", "HEAD", "org/critical_paths/.open_deploys/")
+    # The trunk listing is needed only when a sentinel was read: with none, there is nothing to call stale.
+    rc, trunk = git_lines(repo_root, "ls-tree", "-r", "HEAD", SENTINEL_DIR) if found else (0, "")
     if rc != 0:
         hits.append("trunk HEAD ls-tree rc=%d: a stale sentinel cannot be told from a live one, so this is not clear" % rc)
         lines.append("  HIT %s" % hits[-1])
@@ -485,8 +573,10 @@ def measure_open_deploy(repo_root, rel, serial, files=None) -> tuple:
             stale_count += 1
             lines.append("  STALE slug %s: %s deleted at trunk by commit %s, read at HEAD of %d worktree(s): closed at trunk, "
                          "draws no hit" % (slug, path, commit, len({r[2] for r in rows})))
+    reads = sum(len(rows) for _tree, _sha, rows in pending)
     lines.append("  denominator: %d worktree(s), %d sentinel read(s), %d distinct (path, blob), %d distinct slug(s), vanished=%d, "
-                 "stale=%d" % (len(trees), len(found), len(seen), len(order), vanished, stale_count))
+                 "stale=%d" % (len(trees), reads, len(seen), len(order), vanished, stale_count))
+    lines.append("OPEN-DEPLOY worktrees_scanned=%d open=%d stale_merged=%d" % (len(trees), open_checkouts, len(merged)))
     return hits, lines
 
 
@@ -498,6 +588,7 @@ def norm_file(path: str) -> str:
 
 
 TF_SUFFIXES = (".tf", ".tfvars", ".tf.json", ".hcl", ".tftpl")
+SENTINEL_DIR = "org/critical_paths/.open_deploys/"
 
 
 def trunk_files(repo_root, rel) -> tuple:
