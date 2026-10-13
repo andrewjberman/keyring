@@ -31,7 +31,7 @@ Author `1.0.0_SA_CTO~DELL1`, 2026-10-13 ~12:5xZ. Placement: DELL1, directive D8,
 
   FWD-3  Any served price traces to its rule and inputs (DONE WHEN 2)
          DONE WHEN  EXERCISED -- for a sample spanning every price source (override, trade median, interpolation, vendor), the trace names the rule and
-                    inputs and the recompute equals the served value; the sample is set in the PRD (DEC-10)
+                    inputs and the recompute equals the served value; the sample is set in DEC-10
          ACCEPT     an analyst can trace ANY served price, not only the thread's
          SOURCE     O1; DONE WHEN 2
 
