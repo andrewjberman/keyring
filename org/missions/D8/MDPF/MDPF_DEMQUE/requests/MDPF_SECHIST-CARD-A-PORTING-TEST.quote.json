@@ -1,0 +1,23 @@
+{
+  "allowance_gap": null,
+  "allowance_today": 0,
+  "basis": "history backfill quoted over NON-trading days (weekends and NYSE holidays, lib/trading_calendar.py is_trading_day) at the measured ceiling per day; a trading day's backfill allowance is 0 (production draws history on trading days); counted only on days a scheduled drawer fires (drawer_schedule.py)",
+  "basis_note": "Surface B porting test (Andrew-direct 2026-10-13, confirmed): 326 Yahoo-sourced client securities x 5 sha256-drawn intervals, 2 single-day endpoints each, TOT_RETURN_INDEX_GROSS_DVDS, at most 10 cells a security; built by porting_test.py --build at box/dell1 (t-49, t-51). NOT drawn. A pass ports a security to Yahoo; the comparator is porting_test.compare.",
+  "cells": {
+    "bloomberg_history": 3195
+  },
+  "cells_remaining": 3195,
+  "claims": {
+    "ceiling": "measured",
+    "reserve": "held"
+  },
+  "finish_date": "2026-10-17",
+  "finish_date_claim": "measured",
+  "frozen_by": "2.0.0_SA_COO~Q1",
+  "label": "full-request quote",
+  "page": "client performance (Cottonwood), porting test",
+  "quoted_at": "2026-10-13T20:44:20Z",
+  "quoted_for_today": "2026-10-13",
+  "request_id": "MDPF_SECHIST-CARD-A-PORTING-TEST",
+  "securities_count": 326
+}
