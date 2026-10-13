@@ -1,13 +1,12 @@
 {
   "prd": "MDPF_CANON_PRD.md",
-  "prd_version": "v2.15",
-  "prd_pin": "567018c9e53fa2cea7daaedf061bb6f38d1463fe",
+  "prd_version": "v2.16",
+  "prd_pin": "ba8b400e037be0e84a37ee55a0c29ebb8a4b9082",
   "half": "ratified-text",
-  "half_hash": "4320120f04983fc6d032efd63d555b18234fcdcc9baeb399dd525e983ec2e74a",
-  "endpoint_hash": "a6663fa19f87267e9e92d1587bf8ade0bde0f299efcfb3bd21f6476073d002fb",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_MDPF_CANON_v2.12_RATIFIED_TEXT_20261013.md@dbba589a4c",
+  "half_hash": "d8db1b7ab4845919abac7e9846faae3a9adc6be02c83899034cd233635e704fa",
+  "endpoint_hash": "9c61c436ab1eabd80adf7a16d32bae01f95896044a82f08070d2397eae1a3288",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_MDPF_CANON_v2.12_RATIFIED_TEXT_20261013.md@a9b96313a7",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-13T19:19:34Z",
-  "reason": "FWD-9 v2.15: Other AUA remainder negative on 13 of 21 dates (to -4,649.20) with no governing clause; carve-out 'equal to the cent' claim false except 08-27"
+  "signed_at": "2026-10-13T19:25:15Z"
 }
