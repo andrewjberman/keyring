@@ -7354,3 +7354,103 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Form only. Recorded so the issuer can re-read the denominator against the plane before the move plan relies on either count."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W78-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~78",
+  "surfaced_at": "2026-10-13T22:22:11Z",
+  "one_line": "The Cottonwood scope inside opal-data-bd is empty: no blackdiamond/cottonwood/ or blackdiamond/cot/ prefix exists there. The Cottonwood legacy home is opal-data-cot, and its monolith copy is in opal-data-assets.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-objects-v2 --bucket opal-data-bd with --prefix blackdiamond/cottonwood/, blackdiamond/cot/, advi/cottonwood/ and cottonwood/ and --delimiter / (2026-10-13, rc 0): no CommonPrefixes and no Contents for each (saved as C:/dev/wk-firmbkts-78-data/bd_*.json)",
+      "aws s3api list-objects-v2 --bucket opal-data-bd --prefix blackdiamond/ --delimiter / returns CommonPrefixes 49f and 49financial only (C:/dev/wk-firmbkts-78-data/bdl_blackdiamond_.json)",
+      "infra/aws/lambda/bd-pipeline/bd-silver-merge/lambda_function.py:18-20: the Black Diamond merge is opal-data-bd only, with an explicit Deny on opal-data-cot"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-FB-k-3 section 1a: inventory every thing that touches opal-data-cot or the Cottonwood scope inside opal-data-bd.",
+  "world_is": "The Cottonwood scope inside opal-data-bd does not exist as a key prefix. No Lambda or script row carries a Cottonwood access to opal-data-bd. The Cottonwood legacy access is to opal-data-cot.",
+  "notes": "Recorded for the move plan; no action taken and no row proposes one. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W78-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~78",
+  "surfaced_at": "2026-10-13T22:22:11Z",
+  "one_line": "The satellites characteristics producer header says characteristics.json has zero writers today, but the object was last modified 2026-10-13T15:56:02Z, and its daily and hourly rules are ENABLED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf:22: 'characteristics.json has ZERO WRITERS TODAY -- it is' (non-application statement in the header)",
+      "aws s3api list-objects-v2 --bucket opal-data-cot --prefix platinum/satellites/ (2026-10-13): characteristics.json LastModified 2026-10-13T15:56:02Z; holdings.json 13:15:49Z; registry.json 13:15:48Z",
+      "aws events list-rules (us-east-1): cot-satellites-characteristics-producer-daily cron(25 13 * * ? *) ENABLED; etfs-cot-satellites-characteristics-producer-reattempt-hourly cron(55 * * * ? *) ENABLED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The producer header, as a non-application statement, says the characteristics object has no writers today.",
+  "world_is": "The object is written on the hourly and daily schedules. The header statement is stale, or it describes an earlier state, and the producer's own schedules are live.",
+  "notes": "Read by list only; the object body was not read. Not re-derived here. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W78-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~78",
+  "surfaced_at": "2026-10-13T22:22:11Z",
+  "one_line": "The served graph lists an EventBridge rule cot-satellites-registry-producer-daily that is absent from the live account: describe-rule returns ResourceNotFound and list-rules has no such name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws events describe-rule --name cot-satellites-registry-producer-daily --region us-east-1 (rc 254): ResourceNotFoundException, rule does not exist on EventBus default",
+      "aws events list-rules --region us-east-1 (156 rules) and --name-prefix cot-satellites (1 rule: cot-satellites-characteristics-producer-daily)",
+      "comp-find --corpus aws -i 'cottonwood|cot-|cot_|_cot|/cot' (VINTAGE built 2026-10-13 21:02:47 UTC) lists an EVENT_RULE node of that name with drift DECLARED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-FB-k-3 section 1a item 1: list all EventBridge rules, then describe those that name the Cottonwood scope or the gold chain.",
+  "world_is": "The served graph and the live account disagree on this rule. The registry producer runs from etfs-cot-satellites-registry-producer-stamp-gated-daily, which is live.",
+  "notes": "The inventory records the rule as claim absent with no function behind it. The graph vintage is the comp-find VINTAGE line. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W78-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~78",
+  "surfaced_at": "2026-10-13T22:22:11Z",
+  "one_line": "The live cot-etf-ownership-daily Lambda has an environment variable SRC_BUCKET naming the legacy bucket opal-data-cot, but its code reads only opal-data-assets and opal-data-etfs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda list-functions --region us-east-1: cot-etf-ownership-daily environment names ASSETS_BUCKET, ETFS_BUCKET, PARTNER, SRC_BUCKET and others; SRC_BUCKET value opal-data-cot",
+      "infra/aws/lambda/cot-pipeline/cot-etf-ownership-daily/lambda_function.py:87-91 (env reads: ETFS_BUCKET, ASSETS_BUCKET, and the prefixes) and :119, :199 (assets reads); grep for SRC_ finds only the historical comment at line 5",
+      "the inventory row lambda.cot-etf-ownership-daily carries legacy_touch false, with this row as its consumer note"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-FB-k-3 section 1a: legacy_touch is true only where a function reads or writes the legacy home.",
+  "world_is": "A live configuration names the legacy bucket for a function that does not use it. A reader of configuration alone would count a legacy dependency that the code does not have.",
+  "notes": "Not touched. A configuration cleanup is a move-plan item for the round 8 author, not for this inventory. Disarm: none (INERT)."
+}
+```
