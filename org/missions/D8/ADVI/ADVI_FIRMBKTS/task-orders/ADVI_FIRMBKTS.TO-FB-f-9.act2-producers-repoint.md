@@ -8,7 +8,7 @@
 </decomp_ref>
 <issued_to>0.7.0_AE_CloudOps~FB1</issued_to>
 <issued_by>2.0.0_SA_COO~B1</issued_by>
-<placeholders>MOVE_TS</placeholders>
+<placeholders>NONE</placeholders>
 <preflight>
 comp-schedule: RUN by the actor at step 2 (the producers' next scheduled chain start and that no run straddles the move); the act itself adds no cron, rule or schedule.
 comp-iam: RUN by the issuer for the actor's identity only at the grain of the object: the actor reads `simulate-principal-policy` at step 2 for the producers' role and its own identity on the two prefixes below (resource-scoped, never `*`).
@@ -85,8 +85,8 @@ org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION
 <proof_of_spec>
 Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.phaseB.proof_of_spec.json`.
   <criterion id="AC1" cell_refs="FB-f-9"><invocation>python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_act2_reads.py deployed-equal --ref a9f4bac7b5</invocation><expect>^DEPLOY EQUAL: 20 of 20 objects equal the repository at a9f4bac7b5$</expect></criterion>
-  <criterion id="AC2" cell_refs="FB-f-9"><invocation>python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_act2_reads.py new-home --since <MOVE_TS></invocation><expect>^NEW HOME: 11 of 11 served classes written since </expect></criterion>
-  <criterion id="AC3" cell_refs="FB-f-9"><invocation>python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_act2_reads.py old-home --since <MOVE_TS></invocation><expect>^OLD HOME QUIET: 0 keys of 11 classes modified since </expect></criterion>
+  <criterion id="AC2" cell_refs="FB-f-9"><invocation>python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_act2_reads.py new-home --since 2026-10-12T06:22:08Z</invocation><expect>^NEW HOME: 11 of 11 served classes written since </expect></criterion>
+  <criterion id="AC3" cell_refs="FB-f-9"><invocation>python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_act2_reads.py old-home --since 2026-10-12T06:22:08Z</invocation><expect>^OLD HOME QUIET: 0 keys of 11 classes modified since </expect></criterion>
 </proof_of_spec>
 
 AC1 is the 20 objects against `git show HEAD:<path>` (the build and the switch landed). AC2 is the new home written since
@@ -308,6 +308,12 @@ is not yet shipped (its release path is the push hook under its own pair; D_04's
 act-2 fail-loud delete is untouched). The same read at `a9f4bac7b5` (the last commit before it, a descendant of the flip commit and the
 re-pins) reads 20 of 20, `platinum_dest_view.py` included (the flip's mark line, shipped by `0.7.0_AE_CloudOps~FB1` at act 4's close).
 AC1 now reads `--ref a9f4bac7b5`. A criterion edit of a pending order by its issuer; GATE viii reads `<placeholders>MOVE_TS` and no new token.
+
+**AMENDMENT 15 (2.0.0_SA_COO~B1, 2026-10-13 ~06:5xZ) -- AC2 AND AC3 NAME THE RECORDED INSTANT (row D1-C-S34, a recurrence of D1-C-S21):** the order reached
+`complete` with AC2 and AC3 still typed `--since <MOVE_TS>`, which does not run as written (a bash syntax error). `MOVE_TS` was recorded at step 4 as
+`2026-10-12T06:22:08Z`; both invocations now carry it, `<placeholders>` reads `NONE`, and no `<token>` is left in an invocation. Read at the cut by the issuer:
+`new-home --since 2026-10-12T06:22:08Z` and `old-home --since 2026-10-12T06:22:08Z` run (the CVO read both PASS, D1-C-S27). A criterion edit of a COMPLETE order by its
+issuer, a record repair that changes no outcome; GATE viii reads a MODIFIED order that declared `<placeholders>`: it now declares none and the invocations carry no token.
 
 <status>complete</status>
 <round>4</round>
