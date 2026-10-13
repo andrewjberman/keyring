@@ -25829,3 +25829,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. No change to the listed behaviour was made beyond the Exception catch."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W424-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~424",
+  "surfaced_at": "2026-10-13T23:07:50Z",
+  "one_line": "The fa-3 acceptance arm 'OPAL citations are plain-words source labels (team pack, officer list)' requires an officer-list citation, but the served ASML fixture's CEO officer row has role_start and tenure_years both null, so the spec's officer fact (taken only when one of them is not null) is absent and the arm cannot pass.",
+  "spec_asserts": "AMGT-fa-3 face, section 1, step 1 of build_block for mgmt_bio: the CEO officer row is a fact 'when role_start or tenure_years is not None'. Acceptance check check_fa3_mgmt_bio.py, arm 'OPAL citations are plain-words source labels (team pack, officer list)', requires any opal citation whose ref contains 'officer'.",
+  "world_is": "served_inputs_ASML_NA_Equity.json thesis.management.officers[0] (Christophe Fouquet, role 'President/CEO/Chairman Mgmt Brd') carries role_start null and tenure_years null, so the builder emits no officer fact and the OPAL citations are the team-pack citation alone. The module follows the spec literally; the check reads 13 of 14 arms with that one FAIL. No spec or check edit was made; the decision belongs to the issuer.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/fixtures/served_inputs_ASML_NA_Equity.json thesis.management.officers[0].role_start and .tenure_years are null @0a4abb922c (base HEAD of worktree wk-AMGT_RESAPP-424).",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa3_mgmt_bio.py opal_citations arm requires any('officer' in ref.lower()) @0a4abb922c; check output in worktree .scratch/ac1_out.txt reads 'FAIL' on that arm and 'AIFILL FA-3 ARMS: NO (13 of 14)'."
+    ]
+  },
+  "notes": "Form only. Filed by the worker; the issuer owns the disposition and the disarm owner is 2.0.0_SA_COO~R2 (hazard INERT, no disarm required)."
+}
+```
