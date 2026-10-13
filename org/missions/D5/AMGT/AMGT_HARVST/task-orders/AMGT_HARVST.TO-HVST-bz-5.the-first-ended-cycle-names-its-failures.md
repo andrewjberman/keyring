@@ -31,8 +31,9 @@ most, by the existence of the file only.
 
 ## 2. THE ACT (site Z box, once, READ ONLY)
 
-1. From the repo root of the site Z checkout, after a `git fetch origin CLOUD` and a fast-forward to the commit that holds the script (it is in
-   `<paths>`; if it is absent, say so in one row and stop), run the script in the proof below. It reads
+1. From the repo root of the site Z checkout, after a `git fetch origin CLOUD` and a fast-forward to the commit that holds the script
+   (`org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round84/bz5_cycle_read.py`, which you READ and run and never write; if it is
+   absent, say so in one row and stop), run the script in the proof below. It reads
    `<state>/cycles/bbg/*.cycle.json` and writes nothing. `<state>` is the state dir in the scheduled task's own `--state-dir` argument
    (`...\wk-harvest-runner-pin-c1be67f53c\.runtime\harvest-cycle\state`).
 2. Copy the cycle record you read, byte for byte, to `bz5_cycle_record.json` and print its SHA-256 and length beside the source's, and paste the
@@ -45,7 +46,6 @@ most, by the existence of the file only.
 <paths>
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round84/
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/
-org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round84/bz5_cycle_read.py
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
