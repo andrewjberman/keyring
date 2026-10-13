@@ -7478,3 +7478,97 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+```json
+{
+  "id": "ADVI_COTBKF-D2-W155-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~155",
+  "surfaced_at": "2026-10-13T13:04:19Z",
+  "one_line": "Same-hour clause, round 80 CB-cb-1: APH (CUSIP 032095101) is held on 48 SERVED minted days (1 account, 48 account-days, 2025-02-11 to 2025-04-21). Its served close is 0.50 of the store (0.5035 to 0.5048) and 0.487 of the price paid on the nearest sale: a split-sized error in the price served on those days.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "spec_asserts": "CB-cb-1 item 6 of the round-80 order: a held SERVED day carrying a split-sized error in the served price is reported FIRST, with the ticker and the counts of served days and holding account-days, so the issuer can carry it to the CTO at once.",
+  "world_is": "In fwd3_serve_r34/account_day_value.parquet the close for APH on its 48 held account-days equals the build (r34/after/security_day_price.parquet), and the build over the store is 0.5000 on the last common day and 0.5035 to 0.5048 on the served days. The 47 early partitions do not hold APH. Cause not established: no step in the build over store equals a split ratio. Counts only; no account id or value printed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~155/THREE_EQUITIES.json (worker record, entries APH and CTVA; to be committed on wk-ADVI_COTBKF-155 from b38e73ab2d)",
+      "C:/dev/ajb_workspace/.scratch/advi_cotbkf/fwd3_serve_r34/account_day_value.parquet (read: cusip, quantity, close columns, filtered to the five CUSIPs)",
+      "C:/dev/ajb_workspace/.scratch/advi_cotbkf/r34/after/security_day_price.parquet (read: cusip, date, price, store)",
+      "store object s3://opal-data-cot/silver/prices/canonical_prices.parquet at version 76.rgWIXYdLNsXSwrXvyuEmaEtfr9y98 (97443387 bytes, read by get-object into .scratch)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "ADVI_COTBKF-D2-W155-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~155",
+  "surfaced_at": "2026-10-13T13:04:19Z",
+  "one_line": "The vendor split dates the round-80 order asks for are not on disk for the five securities: the build split plan the order names is absent from r34/after/, and the cache files carry no split events.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CB-cb-1 item 4 and its local-data list: the vendor split dates come from the cache file split events if present, else from the split store entries the build plan lists; the order says to list r34/after/ for the plan of applied splits per CUSIP and the suspect rows.",
+  "world_is": "r34/after/ holds four files: account_day_value.parquet, price_basis.json, repair_days.parquet, security_day_price.parquet. It has no plan of applied splits. The yahoo_census CSV files carry Date, Close, Adj Close only, with no split event, and no day move over 30 percent. repair_days.parquet has no row for the five CUSIPs. The split store was not read (not in the grant). vendor_splits is empty for all five for this reason.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ajb_workspace/.scratch/advi_cotbkf/r34/after/ (directory listing, four files)",
+      "C:/dev/ajb_workspace/.scratch/advi_cotbkf/yahoo_census/APH.csv, CTVA.csv, KLAC.csv, HON.csv, SCCO.csv (header and day moves read)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~155/THREE_EQUITIES.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "ADVI_COTBKF-D2-W155-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~155",
+  "surfaced_at": "2026-10-13T13:04:19Z",
+  "one_line": "The served minted copy and the 47 early holdings partitions disagree for HON: the minted copy holds it on 32 days of 2026-04-22 to 2026-06-07 (3 accounts) at the build price; the partitions hold it on 9 days (2 accounts) at the store price.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "spec_asserts": "CB-cb-1 item 2: the held days in the 47 served early partitions and the held days in the minted table are read as the served record for the same securities; the order expects one served price per security day.",
+  "world_is": "Partition price over store is 1.0000 on all 9 held partition days, and over build 0.9535. Minted close over build is 1.0000 on the 32 minted window days, and the minted close is 1.0488 times the store on those days. Seven partition held days are also minted held days. Counts and ratios only. Not reconciled: the partitions were read by asset_name (HONEYWELL INTL INC COM), since their ticker column is empty.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "gold/canonical/holdings/2026-04-22 to 2026-06-07 (47 objects, read by get-object into .scratch, asset_name match only)",
+      "C:/dev/ajb_workspace/.scratch/advi_cotbkf/fwd3_serve_r34/account_day_value.parquet (read: cusip, quantity, close)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~155/THREE_EQUITIES.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "ADVI_COTBKF-D2-W155-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~155",
+  "surfaced_at": "2026-10-13T13:04:19Z",
+  "one_line": "The build series after the store last day (2026-06-05 onward) has one-day steps of split size or more on several securities (APH 2026-09-04 factor 0.5171; CTVA 2026-10-02 factor 0.1535; KLAC 2026-09-04 factor 1.0774), which the store cannot test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CB-cb-1 item 4: the build over the store is read on the store days, and the split behind a level factor is named only where a step equals a split ratio on the split date.",
+  "world_is": "security_day_price.parquet after 2026-06-05 (all store labels) holds one-day ratios of 0.5171 (APH, 2026-09-04), 0.1535 (CTVA, 2026-10-02) and 1.0774 (KLAC, 2026-09-04). The store object ends 2026-06-09, so these days have no store comparison. A split dated after the store end would explain a level factor across the store window, but none is on disk, and the cause is not established.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ajb_workspace/.scratch/advi_cotbkf/r34/after/security_day_price.parquet (read: cusip, date, price, store; days after 2026-06-05)",
+      "store object s3://opal-data-cot/silver/prices/canonical_prices.parquet at version 76.rgWIXYdLNsXSwrXvyuEmaEtfr9y98 (last date 2026-06-09)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
