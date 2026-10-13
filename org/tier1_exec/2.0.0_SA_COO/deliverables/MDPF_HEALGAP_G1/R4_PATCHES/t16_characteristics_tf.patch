@@ -1,32 +1,37 @@
 diff --git a/infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf b/infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf
-index c8dc017cd1..b39b6f265d 100644
+index c8dc017cd1..180dff0f73 100644
 --- a/infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf
 +++ b/infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf
-@@ -162,6 +162,23 @@ resource "aws_iam_role_policy" "cot_satellites_characteristics_producer_s3" {
+@@ -162,6 +162,28 @@ resource "aws_iam_role_policy" "cot_satellites_characteristics_producer_s3" {
            }
          }
        },
 +      {
-+        # HG-t-16 (MDPF_HEALGAP round 4): the re-attempt fire LISTS this one key to read its LastModified and skip a day
-+        # that is already written. A listing is the only read that tells an absent key (empty) from a grant fault (403): an
-+        # s3:prefix condition is populated on a LIST request only, so a HEAD or GET on this key would read 403 either way.
-+        # StringEquals, not StringLike: exactly the output key, nothing under platinum/satellites/ beside it. NO GetObject
-+        # is granted on the output (the producer never reads back what it wrote, CTO PRD ruling 13c); a listing returns
-+        # the key and its LastModified, never its bytes.
-+        Sid       = "ListSatellitesCharacteristicsKey"
++        # HG-t-16 (MDPF_HEALGAP round 4): the re-attempt fire LISTS these two exact keys to read their LastModified: the
++        # output (is it already written after its input?) and holdings.json (has the registry's stamp-gated 13:15Z fire made
++        # today's?). A listing is the only read that tells an absent key (empty) from a grant fault (403): an s3:prefix
++        # condition is populated on a LIST request only, so a HEAD or GET on either key would read 403 either way.
++        # StringEquals, not StringLike: exactly these two keys, nothing under platinum/satellites/ beside them (registry.json
++        # is not reachable). NO GetObject is granted on the output (the producer never reads back what it wrote, CTO PRD
++        # ruling 13c); a listing returns the key and its LastModified, never its bytes. holdings.json's GetObject is the
++        # existing ReadSatellitesHoldings statement and is not touched.
++        Sid       = "ListSatellitesCharacteristicsKeys"
 +        Effect    = "Allow"
 +        Action    = ["s3:ListBucket"]
 +        Resource  = ["arn:aws:s3:::${local.cot_bucket}"]
 +        Condition = {
 +          StringEquals = {
-+            "s3:prefix" = ["platinum/satellites/characteristics.json"]
++            "s3:prefix" = [
++              "platinum/satellites/characteristics.json",
++              "platinum/satellites/holdings.json",
++            ]
 +          }
 +        }
 +      },
        {
          # The two objects the return rule READS, by leaf name. The date and the ticker are the
          # only wildcards: history_topup.parquet is the daily series and history.csv is the
-@@ -382,6 +399,60 @@ resource "aws_lambda_permission" "events_cot_satellites_characteristics_producer
+@@ -382,6 +404,70 @@ resource "aws_lambda_permission" "events_cot_satellites_characteristics_producer
    source_arn    = aws_cloudwatch_event_rule.cot_satellites_characteristics_producer_daily.arn
  }
  
@@ -39,17 +44,27 @@ index c8dc017cd1..b39b6f265d 100644
 +# re-attempt that serves the day when the partition lands, and does nothing on a complete day.
 +#
 +# THE HANDLER DECIDES, on the target input {"require_partition": true} only (the scheduled event
-+# carries no such key and runs as it always has):
-+#   SKIP-COMPLETE      characteristics.json was written today (UTC) -> nothing runs.
-+#   PARTITION-ABSENT   bbg/<T-1>/characteristics.parquet or run_manifest.json is not listed -> one log
-+#                      line, nothing runs, no raise (a raise would burn two async retries an hour).
-+#   otherwise          the producer runs exactly as the scheduled fire runs it.
-+# AccessDenied on either listing raises: a grant fault is never read as "absent".
++# carries no such key and runs as it always has), in this order:
++#   HOLDINGS-NOT-FINAL  holdings.json was not written today (UTC): the registry producer's stamp-gated
++#                       13:15Z fire has not made today's, so a run now would read the previous day's
++#                       holdings (the one-day lag HG-t-14 removed). One log line, nothing runs.
++#   SKIP-COMPLETE       characteristics.json is listed and is at least as new as holdings.json: the
++#                       day is written. Nothing runs.
++#   PARTITION-ABSENT    bbg/<T-1>/characteristics.parquet or run_manifest.json is not listed: one log
++#                       line, nothing runs, no raise (a raise would burn two async retries an hour).
++#   otherwise           the producer runs exactly as the scheduled fire runs it.
++# AccessDenied on a listing raises: a grant fault is never read as "absent".
 +#
-+# WINDOW cron(25 14-23 * * ? *): ten fires, 14:25Z-23:25Z, each 600 s past the registry producer's
-+# stamp-gated 13:15Z fire's declared worst case (see the schedule derivation above) and after the
-+# scheduled fire. A partition that lands after 23:25Z is served by the next day's scheduled fire,
-+# which resolves its own T-1; the object stays honestly dated meanwhile.
++# WHY cron(55 * * * ? *) AND NOT A WINDOW. The first cut was cron(25 14-23 * * ? *), to stay after the
++# 13:15Z fire. The naming limb's cadence reader (lib/opal_naming_cadence.py) gives such an uneven window
++# no word, so the name could not end in `hourly` without adding a hole to the ratchet (worker row
++# MDPF_HEALGAP-D1-W13-S1). The window's work is now the handler's first test, which reads the fact
++# itself (holdings.json final today) instead of a clock that assumes it. :55 keeps every fire clear of
++# the :25 scheduled fire and of the registry's :15 fire.
++#
++# COST: 24 invocations a day, each at most four S3 listings and no producer run unless due.
++# A partition that lands at any hour is served at the next :55; a day with no holdings stamp is left
++# to the scheduled fire alone, as it was.
 +#
 +# NAME from the opal_name builder (rule 30): etfs-cot-satellites-characteristics-producer-reattempt-hourly.
 +# -----------------------------------------------------------------------------
@@ -64,8 +79,8 @@ index c8dc017cd1..b39b6f265d 100644
 +
 +resource "aws_cloudwatch_event_rule" "cot_satellites_characteristics_producer_reattempt" {
 +  name                = module.reattempt_rule_name.name
-+  description         = "HG-t-16: hourly re-attempt 14:25Z-23:25Z; serves the day only when the T-1 Bloomberg partition has landed and characteristics.json was not already written today."
-+  schedule_expression = "cron(25 14-23 * * ? *)"
++  description         = "HG-t-16: hourly re-attempt at :55; serves the day only when holdings.json is final today, the T-1 Bloomberg partition has landed and characteristics.json is older than holdings.json."
++  schedule_expression = "cron(55 * * * ? *)"
 +  state               = "ENABLED"
 +}
 +
