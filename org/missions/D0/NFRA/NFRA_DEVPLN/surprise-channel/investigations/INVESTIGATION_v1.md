@@ -881,3 +881,29 @@
   "world_is": "The worktree's recorded gitlink for portal is 4d6010234e, one commit behind-or-equal to a nested checkout at 24877b67b7 that is ahead of it on the wk-NFRA_DEVPLN-1-portal branch, so the parent index reports portal as modified with no edit by this worker. The cell touches no portal file, so DP-e-1 is unaffected; the gitlink mismatch is not repaired by this worker."
 }
 ```
+
+## NFRA_DEVPLN-W2-S11 -- the merge-forward self-test fixture writes have no exit check, so a failed write silently produces a degenerate graph
+
+```json
+{
+  "id": "NFRA_DEVPLN-W2-S11",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~2",
+  "surfaced_at": "2026-10-13T22:58:47Z",
+  "one_line": "pmf_selftest builds its fixtures with no set -e and no exit check on the git and printf steps. A failed write inside the fixture does not stop the self-test; it yields an empty commit and a graph that is not the one the case names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DP-e-3 BUILD: the self-test adds case 16, a criss-cross history (two merge bases) built in a mktemp repository, asserting no multiple-merge-bases warning and an ABSENT product-file refusal.",
+  "world_is": "In the first draft of case 16 the y-side write ran before its src/__tests__ directory existed. The printf failed with 'No such file or directory', the commit reported 'nothing to commit', and git merge-base --all returned ONE base, so the criss-cross was not built. The draft's own run printed cases=28/29 ok=False; only the new precondition (16a) caught the degenerate graph. Without such a precondition a fixture failure would read as a green case on the wrong graph. The fix in case 16 is a mkdir before the write. The fixture steps of cases 1-15 carry the same unchecked failure mode and were not changed (out of this order's paths and cell).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "wk-NFRA_DEVPLN-2 .tools/portal-merge-forward.sh at dc9b9ed25a (HEAD before this order's commit): pmf_selftest runs its fixture git and printf commands with no set -e and no exit check",
+      "probe at .scratch/criss-probe (the same graph built by hand, before the fix): 'No such file or directory' for src/__tests__/y.test.ts, 'nothing to commit, working tree clean', and git merge-base --all cc-x cc-y printed one base (766371a7)",
+      "selftest run before the fix: 'SELFTEST FAIL 16a precondition: the criss-cross branch has exactly two merge bases' and 'MERGE-FORWARD-SELFTEST cases=28/29 ok=False'; after the mkdir fix: cases=29/29 ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
