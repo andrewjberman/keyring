@@ -31427,3 +31427,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The packages have no manifest member and no source commit. The record gives manifest_source_commit null with the reason. The declared stamp name and the live stamp differ."
 }
 ```
+
+## IRPT_BCKEND-D2-W361-S5 -- the AC2 amendment is applied: four unexplained rows flagged unattributed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W361-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~361",
+  "surfaced_at": "2026-10-13T07:40:56Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The AC2 amendment delivered by 2.0.0_SA_COO~P2 (ed1c1ec438) is applied to the census record: four differing rows with a repo_path (49financial 2, inflection 1, cottonwood 1) carry unattributed true and a note, and each package carries members_unattributed; the check file is not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p176_cells.py run at the worktree root: IB176-1-AC1, AC2 and AC3 each print PASS with rc=0 (AC2 output: OK: head hashes are the blobs at HEAD; each package carries the 45-member closure)",
+      "the four rows: git rev-list HEAD -- path gives 14 (reporting_policies.json) and 13 (resources.json) commits; no commit is dated after each package's last_modified; the live sha256 equals no blob in those histories (a positive control on build_cottonwood_mdpf_slice.py matches its recorded blob)"
+    ]
+  },
+  "spec_asserts": "IB176-1-AC2 as amended by the issuer: a differing member is accepted if it carries commits_since_live, eol_only_difference true, a live_matches_blob_at_commit value, or unattributed true with a note; the guard's closure members absent from a package must equal its closure_absent_from_package.",
+  "world_is": "The record flags exactly the four differing rows that carry none of the other three explanations; the 45-member closure check passes with closure_absent_from_package unchanged; no hash, no other row and no AWS object was touched."
+}
+```
