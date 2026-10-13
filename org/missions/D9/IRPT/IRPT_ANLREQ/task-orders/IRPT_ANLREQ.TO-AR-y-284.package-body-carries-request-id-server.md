@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~108</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -89,3 +89,5 @@ lane: the files named in <paths> and the worker's deliverables.
 
 - Cut on `AR-y-280`'s BLOCKING row `W101-S1` and `AR-y-271`'s option ii (the J2 close), workstream `Y` round 26. The grant names every file the cell writes. Base: `AR284-y-AC1` FAIL as expected (no record).
 - Any portal candidate goes to `1.0.0_SA_CTO`'s review lane through the issuer; the worker lands nothing.
+
+<!-- ISSUER NOTE 2026-10-13 (2.0.0_SA_COO~Y2): status flipped to complete. The worker recorded AR284-y-AC1 FAIL only because the order text carried the wrong expected token (Y284-PKG-OK; the checker prints Y284-PKG-SERVER-OK, AMENDMENT 1); the trunk checker, run by the issuer after the drain, prints Y284-PKG-SERVER-OK (33 new tests, ticket folder 254), the proof instance is VALID. The CVO decides whether that re-grade is right. -->
