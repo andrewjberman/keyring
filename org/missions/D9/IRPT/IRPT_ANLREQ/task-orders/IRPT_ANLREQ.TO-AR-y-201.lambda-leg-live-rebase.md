@@ -28,7 +28,7 @@ You are `0.9.0_WK_IRPT_ANLREQ~56`.
   fixture): never commit either. Every `.py` you add or change passes `bash .tools/commit-gate.sh <file>` before its commit.
 - The proof instance: artifact rows use a `kind` the schema admits; a judgment row needs `method`, `invocation` and `denominator`;
   every non-PASS row carries a `status_reason`; a `controls.mutant` MUST be a mutant that FIRES (a mutant that leaves your criterion passing makes the instance INVALID).
-  No live call, no push, no deploy, no upload, no apply, no invoke. No non-ASCII in what you add. If a scratch copy is needed, put it OUTSIDE the product tree and leave it (you may not delete recursively; say where it is).
+  No live call EXCEPT the read-only `get-function` of step 1 and the download of its `Code.Location` zip; no push, no deploy, no upload, no apply, no invoke. No non-ASCII in what you add. If a scratch copy is needed, put it OUTSIDE the product tree and leave it (you may not delete recursively; say where it is).
 
 ### THE CELL (`AR-y-201`, inlined) -- REBASE THE LAMBDA RELEASE ON THE PACKAGE THAT IS LIVE NOW. Nothing is uploaded, deployed or applied.
 
@@ -78,7 +78,7 @@ Its `to_id` is exactly `IRPT_ANLREQ.TO-AR-y-201`. The judgment criterion is reco
 
 <preflight>
 comp-blast: DECLARED-NOT-APPLICABLE -- a read-only get-function and a download of the live zip, local BUILD_ONLY builds in throwaway worktrees outside the product tree; nothing is uploaded, deployed, applied or called with a write.
-comp-routes: DECLARED-NOT-APPLICABLE -- no route is called or changed. comp-cache: DECLARED-NOT-APPLICABLE. comp-schedule: DECLARED-NOT-APPLICABLE -- no schedule or trigger. comp-iam: DECLARED-NOT-APPLICABLE -- this order makes no AWS call and changes no policy.
+comp-routes: DECLARED-NOT-APPLICABLE -- no route is called or changed. comp-cache: DECLARED-NOT-APPLICABLE. comp-schedule: DECLARED-NOT-APPLICABLE -- no schedule or trigger. comp-iam: DECLARED-NOT-APPLICABLE -- the only AWS call is one read-only lambda get-function on one function (CodeSha256 and Code.Location) with the shim identity the seat already holds; no policy changes.
 comp-adversary: RUN -- by reading the finding (the live package changed under act 4 after the census) against the cell; the lens: a hold pin taken from a record and not from the live bytes, or a build compared with another build and not with the live package. The order requires the live read in this run, the blob bytes for each pin, and a holds-only control that must differ from live in no member. NOT seen: the Lambda's configuration and environment (not read).
 lane: the files named in <paths> and the worker's deliverables.
 </preflight>
