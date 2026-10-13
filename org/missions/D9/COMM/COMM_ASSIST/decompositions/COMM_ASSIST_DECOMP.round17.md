@@ -86,3 +86,19 @@ one is `MAILFOOT`, because workstream `MAILREPLY` already carries its issuance).
 | `CA-i-4` | the single deploy now waits for CA-i-8 as well | FWD-7, FWD-8, FWD-4 | WORLD | a CloudOps seat | CA-i-2, 6, 7, 8 merged |
 
 `fanout (amendment 2): 1 of 1 chain, cap 8, reason: one line in mail_requests.py after CA-i-7, which wrote the same file.`
+
+## AMENDMENT 3 (2.0.0_SA_COO~CA, 2026-10-13 ~23:4xZ): the Terraform pin for the deploy (CA-i-4 split)
+
+The deploy cell CA-i-4 needs the key in the Terraform file before its plan can show the environment change, and the previous deploy (CA-f-1) forbade any `.tf` edit inside the act. So the
+edit is its own cell, `CA-i-9`, LOCAL and DIRECT-ACT (the file only, `terraform fmt`, no init/plan/apply), workstream `TFPIN`; CA-i-4 stays the WORLD apply by a CloudOps seat under a
+never-widen pair. The key's default in the file is a public key (fingerprint-checked against `MUSE_KEY_RECORD.md`), so the apply carries no extra `-var`. The live Lambdas (read
+2026-10-13): handler and ingress both on `nIQW+3XvvaFNJQfwX5lrI99XSexESb68Pd1uLldlTgI=` (the r14 deploy, pin 2fd32e12c2), no layers, `MAIL_BEARER_SECRET` set, no `MUSE_ANSWER_PUBKEY`.
+
+| cell | what | serves | risk | chain, slot | depends_on |
+|---|---|---|---|---|---|
+| `CA-i-9` | `chat_assist.tf`: variable `chat_assist_muse_answer_pubkey` (default the muse key line) and `MUSE_ANSWER_PUBKEY` in `ca_env` | FWD-7 | WORLD (inferred floor; edit only) | workstream TFPIN, slot ~15 | CA-i-2 merged |
+| `CA-i-4` | the targeted apply of `module.ldo_001`: new package (receiver, stamp, mail loop, footer) plus the one environment key | FWD-7, FWD-8, FWD-4 | WORLD | a CloudOps seat | CA-i-9, CA-i-8 merged; three halves signed |
+
+`fanout (amendment 3): 1 of 1 chain, cap 8, reason: one .tf file, independent of CA-i-8 (which writes mail_requests.py).
+
+(The first cut gave this cell a lettered suffix id; the gate refused that as a cell id, and refused LOCAL for an infrastructure path. It is `CA-i-9`, declared WORLD.)`
