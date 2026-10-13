@@ -31631,3 +31631,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The amended AC1 grants a needs-nothing firm no replaced member. Cottonwood stays at the live object and is not in the Branch A apply; the apply order is 49financial, then inflection. Nothing is uploaded, applied or invoked in this order."
 }
 ```
+
+## IRPT_BCKEND-D2-S132 -- DISPOSITION after the round-177 drain; DISARM EVIDENCE for W361-S3
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S132",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T08:29:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISPOSITION after the round-177 drain, and DISARM EVIDENCE for W361-S3: the four 'unattributed' live members are CRLF copies of repository blobs (0 lines differ), so the pair carries them unchanged; the minimal packages are built and the COO half is signed; W363-S2 (two PutBucketPolicy writes on the 49financial bucket) goes to the CTO.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer re-run in the merged tree: IB177-1 AC1, AC2, AC3 PASS (merge 06a7bd1525) and IB177-2 AC1, AC2, AC3 PASS (merge d5124284a0); round-close-check MAY-CLOSE (orders=2).",
+      "IB177-2 record (read): resources.json (3 packages) equals the blob at f185873e (2026-09-21) and reporting_policies.json (49financial) the blob at f60e6f1d (2026-10-05), 0 lines added and 0 removed, change_kind eol (CRLF on every line); the archive holds the live bytes; CloudTrail event history returned no PutObject for any of the three package objects (management events only), so the writing principal is NOT established.",
+      "the packet NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-510.md (sha256 c2b7275939d0...) read in full; the COO half NEVER_WIDEN_IB_pr_510_MINIMAL_HOLDINGS_PACKAGES_COO_HALF.md signed at that sha256; the CTO half is unsigned."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "DISARMED: W361-S3 (4 live members equal to no historical blob): they equal historical blobs once CRLF is read as LF, 0 lines apart; a packaging artifact (CRLF-stored copies), not a hand edit and not another tree; the cause of the CRLF is not measured. RULED: the packages are built from the LIVE bytes plus only 135fc3509e, 7ace854890 and aa5778d962 (49financial 3 members, inflection 2, cottonwood none and not in the apply); W362-S1 (my check demanded a replaced member for every firm: amended f33aa02571), S2 (the apply restamps the S3 metadata: in the packet and the COO half), S3 (the live schema copy is CRLF; the candidate keeps CRLF). RAISED: W363-S2: two PutBucketPolicy writes by the IAM user cloudops-dell1-agent-user on opal-data-49financial (2026-10-11T15:27:29Z and 16:07:36Z), after the package upload; the policy bodies were not read; the apply principal needs PutObject on that bucket, so the apply order must read the current policy before its first write; asked of the CTO. STILL ARMED: W361-S1 (a careless re-cut would ship unrelated changes: fenced by the packet), W345-S3 (disarms on the first leftover-count read after the apply), W348-S2."
+}
+```
