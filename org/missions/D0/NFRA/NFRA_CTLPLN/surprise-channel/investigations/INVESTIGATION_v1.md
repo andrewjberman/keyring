@@ -8828,3 +8828,32 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Found while running the reader checks this cell touches. Not fixed: the file is outside this order's <paths>. The owner is the seat that wrote crossbox-call.py and its test."
 }
 ```
+
+## NFRA_CTLPLN-W81-S1 -- TO-CT-ab-8 cannot derive FABRIC_ENUM: the AST carrier is read by the tree index outside the grant
+
+```json
+{
+  "id": "NFRA_CTLPLN-W81-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~81",
+  "surfaced_at": "2026-10-13T18:26:11Z",
+  "one_line": "TO-CT-ab-8 BUILD 1 cannot make FABRIC_ENUM derived: .tools/missions-tree-index.py reads it by ast.literal_eval (outside the grant), so a derived assignment raises there; the gate's decisions already read the register.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/missions-tree-index.py@2ab34bf8ff:70-86 _resolve_enum reads the module-level FABRIC_ENUM by ast.literal_eval; measured: ast.literal_eval on FABRIC_ENUM = tuple([...]) raises ValueError malformed node (scratch probe, .scratch/derived_probe.py)",
+      "org/standards/PROJECT_TREE.contract.json@2ab34bf8ff:84-87 value_enums.fabric names source .tools/to-pipeline-gate.py and symbol FABRIC_ENUM",
+      ".tools/to-pipeline-gate.py@2ab34bf8ff:97-100 says FABRIC_ENUM stays a literal ONLY as the AST carrier missions-tree-index and the contract still resolve; decisions go through _fabric_values() at :103-111",
+      ".tools/tests/test_no_hand_listed_boxes.py@2ab34bf8ff:30 HELD row NFRA_CTLPLN-W53-S1 for the literal carrier; base run cases=23/23 ok=True hand_listed=9",
+      ".tools/tests/test_fabric_readers_dell.py@2ab34bf8ff:59-62 enum_from_source regex-matches ^FABRIC_ENUM = (...) and literal_eval's it; a call value does not match; the schema org/surprise_channel/schemas/investigation_item.schema.json also carries a literal fabric enum read against it"
+    ]
+  },
+  "spec_asserts": "TO-CT-ab-8 BUILD 1: FABRIC_ENUM becomes tuple(<lib.devices placement_values()>), and every reader that parses the literal by AST makes it call the derived value instead (CTab8-AC1 expects gate=derived).",
+  "world_is": "FABRIC_ENUM is the AST carrier for the tree index and the contract, and a derived value is not a literal, so BUILD 1 cannot land inside the order's <paths>; the other readers are outside the grant.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Worker 81 did not derive FABRIC_ENUM and did not edit the outside readers. Built and measured: box-status-report-check.py BOXES derives from lib/devices.py names() (AC2 and AC3 still pass; real-tree hand_listed 9 -> 8, the held gate carrier remains). Decision needed from the issuer (2.0.0_SA_COO~C) or the CTO: widen the grant to missions-tree-index.py, PROJECT_TREE.contract.json value_enums.fabric, test_fabric_readers_dell.py and the investigation schema, or keep the literal as the single carrier (CTab8-AC1 gate=derived then unreachable). Not decided by the worker."
+}
+```
