@@ -1916,6 +1916,69 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t45_real.py at 82fc16c19d, two runs: TimeoutExpired after 58 seconds"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W40-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~40",
+    "surfaced_at": "2026-10-13T16:46:29Z",
+    "one_line": "The append path keeps the stored lock; a full re-lock on the same transactions differs on 2 of 50 names (LCEYX, FTHSX): the served record is LOCKED with claim held under a below-floor claim_reason, the re-lock is REJECTED:LOW_TRADE_AGREEMENT with claim measured.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-48 THE CELL item 1: on append the lock valid_to is extended to the frontier with claim and trades_through unchanged; the docstring must say why that equals a full re-lock on a no-split day, or name the difference in a surprise row.",
+    "world_is": "incremental_equal.py --n 50 at frontier 2026-10-12 (report lock_record: compared 50, differences 6). LCEYX (cusip 00141B204) and FTHSX (cusip 14064D865) served lock.json: state LOCKED, claim held, claim_reason 'below the 90 pct floor (row MDPF_DEMQUE-D1-S9); cause under measurement', trades_through null, observations 211/184 and 627/255. lock.check over the full history on the same transactions: state REJECTED:LOW_TRADE_AGREEMENT, claim measured, trades_through 2020-02-24 and 2026-06-02. The other 48 names agree on every lock field. The daily draw re-locks each pulled name (daily_draw.py line 88), and a re-lock over the 5-day window would count only the trade dates its pulled prices cover (lock.py line 88 inner join), so the append path cannot re-prove the identity on five days. incremental_append keeps the stored lock by design and says so in its docstring.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/0.9.0_WK_MDPF_DEMQUE~40/INCREMENTAL_EQUALITY_REPORT.json no_split_arm.lock_record (compared 50, differences 6)",
+        "served lock.json of cusip 00141B204 and cusip 14064D865 in the price store (price_store.s3_root(), read 2026-10-13T16:4xZ)",
+        "data/mdpf/scripts/demque/daily_draw.py@83c3920c82 line 88: lock.check on each pulled name",
+        "data/mdpf/scripts/demque/lock.py@83c3920c82 line 88: trades inner-joined to prices"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W40-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~40",
+    "surfaced_at": "2026-10-13T16:46:29Z",
+    "one_line": "The append path returns PRICE_COLS only; price_store.write stores TR_COLS (cash, total_return, tr_source, flags) beside them, and a new row's TR needs the stored max close as its prior close, so a wiring order must add the TR step before an append can be written to the served store.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-48 THE CELL item 1: apply_incremental returns the new price rows with close_served and as_traded_close computed as yahoo_pull.pull computes them; no TR column is named.",
+    "world_is": "price_store.py@83c3920c82 line 25 defines TR_COLS; line 141 merges tr_column.build and keeps PRICE_COLS + TR_COLS; lines 150-156 write prices.parquet with those columns. tr_column.py@83c3920c82 line 66 build() computes daily_tr over the full close series with the dividends, so the first new row needs its prior close. incremental_append.py returns no TR column (named in its COLUMNS docstring). The compared cells (prices, dividends, splits) exclude TR, so AC3 is silent on it.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/price_store.py@83c3920c82 lines 25, 141, 150-156",
+        "data/mdpf/scripts/demque/tr_column.py@83c3920c82 line 66 (build)",
+        "data/mdpf/scripts/demque/incremental_append.py (this order's commit): append returns PRICE_COLS, dividends, splits, lock"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W40-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~40",
+    "surfaced_at": "2026-10-13T16:46:29Z",
+    "one_line": "The order says to merge box/dell1 into the worker branch before appending rows; the worker standing rule forbids a merge, so the worker did not merge, appended its rows on its own branch, and leaves the merge to the drain.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-48 REFUSAL CLAUSE: 'first MERGE box/dell1 into your branch, never rebase, before you append rows'.",
+    "world_is": "The worker standing rules say never push, merge, rebase, checkout or clean. HEAD 83c3920c82 is an ancestor of box/dell1 (3a14a2a55d), and INVESTIGATION_v1.md is identical between the two (git diff empty), so appending on this branch cannot conflict now. A merge would fast-forward the whole worker branch to the box's tree, so none was run. A later box/dell1 append at the same offset will conflict, which the drain resolves.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git merge-base --is-ancestor 83c3920c82 box/dell1 succeeded at 2026-10-13T16:46Z",
+        "git diff 83c3920c82 box/dell1 -- org/missions/D8/MDPF/MDPF_DEMQUE/surprise-channel/investigations/INVESTIGATION_v1.md: empty"
+      ]
+    }
   }
 ]
 ```
