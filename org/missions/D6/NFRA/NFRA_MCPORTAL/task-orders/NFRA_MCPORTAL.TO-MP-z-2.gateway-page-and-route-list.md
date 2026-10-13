@@ -145,3 +145,5 @@ through MP-z-5.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+<status>complete</status>
