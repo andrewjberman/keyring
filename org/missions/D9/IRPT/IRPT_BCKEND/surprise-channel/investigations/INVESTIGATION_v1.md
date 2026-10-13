@@ -29698,3 +29698,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Read of code only; no run of build_49f_meshed. The worker's own run wrote no file. The row names the issuer as disarm owner for routing; the fix is the holdings owner's."
 }
 ```
+
+## IRPT_BCKEND-D2-S122 -- ISSUER RULINGS on W345-S1 (a misreading), W345-S2 (state overlap) and the STATUS of W345-S3 (ARMED, still armed, and why)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S122",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T02:27:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "STILL ARMED, said plainly: W345-S3 (the live 49 Financial entry point build_49f_meshed copies the Tax membership snapshot, which carries client account numbers, to a system temp file via holdings_snapshot.retained_capture and never removes it) is the product's own existing behaviour, not a product of this round, and cannot be disarmed from this seat in this turn; it is dispositioned by a builder fix cell cut at the next issuance. Also ruled here: W345-S1 is a misreading of the order's wording, and W345-S2 is a form observation the record already states.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 0.9.0_WK_IRPT_BCKEND~345 row W345-S3 (code read of holdings_49f.build_49f_meshed and holdings_snapshot.retained_capture at @5743c86349, line 1284: tempfile.mkstemp + os.fdopen write, no removal); the worker's own run did not call retained_capture and wrote no account-bearing file. The issuer read the cited lines.",
+      "W345-S1 reads the order's '49 Financial accounts whose node id differs' as the number 49 and reports 'the figure of 49 does not hold'; the order names the FIRM 49 Financial and asserts no figure. The measurement stands: denominator 7634, 7633 equal, 0 differ resolvably, 1 unresolvable (IB170-3_node_id_mismatch_count.json, merged @88f9224045).",
+      "W345-S2: the builder's three state lists overlap (a withheld account keeps a built ACCOUNT node; the refused list mixes raw keys and node ids). The record states the partition it used (refused first, then withheld, then served): refused 0, withheld 9, served 7625."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "W345-S3 is STILL ARMED. Why it cannot be disarmed now: the temp file, if any, is written on the host that runs the live builder (an SSM-run gold runner), not on this box; this seat has no read of that host's temp directory and has not measured whether files exist there; the cure is a code change (the retained capture removes its file after use, or reads in memory) in gold-runner code outside every Lambda, which is a build cell. Owner of the hazard until then: 2.0.0_SA_COO~P2. The cell is cut at the round that follows 170's L10 (the issuer's own decomposition; no served value moves). Until then the rule for any seat: do not call retained_capture or build_49f_meshed from a worker or a laptop; the count cell avoided it by fetching in memory."
+}
+```
