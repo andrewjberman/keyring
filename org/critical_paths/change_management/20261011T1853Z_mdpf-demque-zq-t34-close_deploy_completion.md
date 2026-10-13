@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-11T18:53:36.084447+00:00
-**Status:** OPEN
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / the 2026-10-17 non-trading-day fire of mdpf-demque-drawer-daily (10:00 ET, MSFT_TaskDailyTrigger DaysInterval 1, so Saturdays fire) draws the 1,004-cell MO/XOM identity remainder and records the one COMPLETE line; AC2 dq_t34_close.py then reads CLOSE-OK. L1 (merge) and L2 (the 2026-10-12 trading-day read) are closed with proof; only the AC2 verify leg L3 is open, and a history draw is barred on trading days (round-6 R1), so there is no on-demand act. (held since 2026-10-13T19:38:15.237150+00:00)
 **Deploy:** MDPF DEMQUE t34 merge the drawer close-on-completion change at site Z
 **Authored by:** 0.7.0_AE_CloudOps~ZQ
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -21,3 +21,4 @@
 - 20261011T185336Z OPENED by 0.7.0_AE_CloudOps~ZQ with 3 leg(s)
 - 20261011T190355Z LEG L1 closed: Merged wk-t34-zq 8152a8ea42 into box/sitez at 9037d7b4c2 via safe-merge.sh (fast lane: no content introduced by the merg
 - 20261012T213429Z LEG L2 closed: CTO half condition 2 PASSES; no revert owed. The first LIVE read of the merged code: task mdpf-demque-drawer-daily LastR
+- 20261013T193815Z HELD-SOVEREIGN-GATED gate=external/the 2026-10-17 non-trading-day fire of mdpf-demque-drawer-daily (10:00 ET, MSFT_
