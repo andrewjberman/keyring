@@ -174,6 +174,17 @@ last commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --gove
     - the current record fails (no `route`).
   - Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
+- A2 (issuer, 2026-10-13 ~23:1xZ): **Phase B GO for blackdiamond (`67c7697ede`), orion (`fdf2b07a9e`) and eclipse
+  (`b915719f25`), drain-only.**
+  - Both halves are SIGNED against the re-ask @dbc074fd31: COO ADDENDUM 1 @36f36ad3be, CTO ADDENDUM 1 @29c257aa4e
+    (msg 33826).
+  - Each family is applied alone, outside the preflight's windows, and graded at its next scheduled sweep: blackdiamond
+    `cron(0 13)`, orion and eclipse `cron(0 16)`. One pin row each. Z-S91 closes for each family on its grade.
+  - Record correction, from the CTO's measurement: `mirror_conversion.py` reads +85/-9 against `base_sha` (79 non-blank
+    added lines, all inside OG-fd-1's and OG-fd-2's range), not the ask's +73/-9. Fix the figure in the ask's section 0
+    when you next commit to it.
+  - Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>37</round>
 <slot>~AE</slot>
