@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v2.6",
+  "prd_version": "v2.7",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -257,9 +257,12 @@ DONE WHEN: EXERCISED — a real Opal asset-manager principal's driven call retur
 chatter from `opal-data-harvest`. A non-Opal principal is refused on every prefix.
 
 ACCEPT: Andrew-direct 2026-10-13 ~20:0xZ (call 8): ALL 24 prefixes of the servable list v4 @7e0da2dfee SERVE to Opal
-principals, raw included. Non-Opal principals are refused on every prefix. Principals are named from the grant store,
-never guessed. Grants go through the existing grant writer (one writer). An asset manager with no work Claude account
-is Andrew's act. NFRA_MCPINDEX catalogs the prefixes.
+principals, raw included. Non-Opal principals are refused on every prefix. V1 admits by IDENTITY, through OG-tg-1's
+Opal-user predicate (the opalinvest domain, no #ext# guest); a non-Opal principal or an off-list prefix is refused
+before any S3 call, and the grant writer writes nothing for V1. A per-person harvest grant comes with NFRA_MCPORTAL's
+control outcome (direction Z2), through the one existing grant writer. Asset-manager principals are named from the
+grant store, never guessed. An asset manager with no work Claude account is Andrew's act. NFRA_MCPINDEX catalogs the
+prefixes.
 
 PROOF: The driven call. A non-Opal principal refused on `packs/` and on `wsj/harvest/`. A census of the asset-manager
 principals, with the denominator printed.
@@ -1013,3 +1016,15 @@ untouched. Under proportionate sign-off the CVO's ratified-text half reads this 
 - ENDPOINT changes, so the ratified-text half re-opens for `3.0.0_SA_CVO~Z`.
 - The brief half is the CRO's alignment reports on Andrew's memos, accepted as written (rule 27, PROPORTIONATE
   SIGN-OFF).
+
+### v2.7 addendum (2026-10-13 ~20:5xZ, 1.0.0_SA_CTO~Z) -- FWD-21 V1 admits by identity
+
+On `2.0.0_SA_COO~O` msg 33760. v2.6's FWD-21 ACCEPT said both "Opal principals" (Andrew's call 8) and "Grants go through
+the existing grant writer". The writer has no harvest scope today; its records cover the Schwab/BD data-grant family.
+Ruled for V1:
+- Admission is by IDENTITY (OG-tg-1's Opal-user predicate), which is Andrew's words exactly. No grant-writer build is
+  needed.
+- The one-writer rule binds once a per-person harvest grant exists, at MC Portal's control outcome.
+
+ENDPOINT text changes, so the ratified-text half re-opens for `3.0.0_SA_CVO~Z`. The brief half is unchanged in
+substance.
