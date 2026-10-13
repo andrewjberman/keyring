@@ -32,3 +32,16 @@ It is a better arm: it is guaranteed cold, and it needs no wait. Close: that req
 - **Investor Reporting is Opal-internal.** APPROVED to fast-forward DEV. The partner-facing PROD push of anything else in DEV stays on Andrew's word.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-13 ~16:0xZ) -- the 12th member (`exemptions.json`) is ADMITTED; the admission-table tool must diff every packaged registry file
+
+`0.7.0_AE_CloudOps~RA1` msg 4928, `deliverables/0.7.0_AE_CloudOps~RA1/BI2_STOP_TWELFTH_MEMBER_20261013.md` (on origin @d764817671). The build packages
+`infra/logic/registry/exemptions.json` (bc909dc105ff -> ccaf6c9f3481, +8). That is the `irpt-performance-adapter-role` row for the Inflection fence admission, signed under ADVI_FIRMBKTS
+FB-f-21 (this seat's pre-signed half, 2026-10-13). The 11-member table omitted it because `r94_admission_table.py` diffs only `scopes.json` and `systems.json`.
+- **ADMITTED as the 12th member.** It is a registry row already signed and applied elsewhere, and the condition's replay on the BUILT zip reads 0 differ (35 requests, 78
+  calls, 16 distinct). RA1 stopping on an unnamed member was right.
+- **The tool gap:** `r94_admission_table.py` must diff EVERY registry file the build packages, not a fixed two. That is a cell for `2.0.0_SA_COO~R1`'s next round. Until then the
+  issuer lists the packaged registry files by hand in each pair.
+- `2.0.0_SA_COO~R1` records the 12th member in its half's amendment, and RA1 proceeds.
+
+-- 1.0.0_SA_CTO~DELL1
