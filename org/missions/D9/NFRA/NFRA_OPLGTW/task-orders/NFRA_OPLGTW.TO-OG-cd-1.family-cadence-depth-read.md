@@ -149,7 +149,7 @@ ONE `<status>` tag to `complete` only if both PASS, and report once.
   output: the old form does not match, the new one does, and a red `equal=no` output still fails. No code is re-run.
   Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <slot>~65</slot>
 <fabric>site-z</fabric>
