@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "laptop",
- "written_at": "2026-10-13T17:03:57Z",
+ "written_at": "2026-10-13T17:11:10Z",
  "written_by": "1.0.0_SA_CTO",
  "rows": [
   {
@@ -373,7 +373,7 @@
    "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_CFD4_IB_PR_515_HELD_ON_ANDREWS_WORD_AND_CC32_FWD8_TIEOUT_YES_WITH_NAMED_RESIDUE_20261013.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-13T17:03:57Z",
    "kind": "act",
    "context": "Carried from dell2 fork cfd4 on the cluster-lead ruling (tick 34): the pair's CTO half stays unsigned on dell2; after his dealing the laptop CTO signs if an apply is still owed, conditioned on 0 null-accountId rows or the search.ts fix.",
@@ -431,7 +431,14 @@
      ]
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-13T17:11:10Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_CFD4_IB_PR_515_HELD_ON_ANDREWS_WORD_AND_CC32_FWD8_TIEOUT_YES_WITH_NAMED_RESIDUE_20261013.md",
+    "crossbox": null,
+    "ruled_by": "cluster-lead",
+    "xadj": null
+   }
   }
  ]
 }
