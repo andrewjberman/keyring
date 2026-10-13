@@ -38,6 +38,42 @@ The runner may be mid-cycle. A restart that kills it loses that cycle's pairs (a
 - (iii) **C-g:** the new pin keeps the old runtime root, so the same STOP file would end the new runner at once. DELETE it after (ii)
   and BEFORE `Start-ScheduledTask`. Record the delete (path, time, `Test-Path` reading False) in `bz1_stopped.out` and the ledger.
 
+## 1b. AMENDMENT 1 (2026-10-13, issuer `2.0.0_SA_COO~W1`, on your row Z-S114): READ ONLY. Nothing is killed, stopped or started by this amendment.
+
+Your stop was right and the signed condition stands: the running cycle is NOT killed. A runner that never reaches its stop-file check is a branch
+neither signed half covers, so the issuer opens it with a read and, if the read supports it, a new pair. Do exactly this and stop:
+1. Leave the stop file where it is. Do not run `Stop-ScheduledTask`, `Stop-Process` or `Start-ScheduledTask`. Do not touch `<old>`'s task.
+2. Write ONE file, `bz1_wedge_read.out`, in your round83 folder, holding every reading below with its time (`date -u`):
+   - `Get-CimInstance Win32_Process -Filter "ProcessId=21512"` (ParentProcessId, CreationDate, CommandLine);
+   - `Get-CimInstance Win32_Process -Filter "ParentProcessId=21512"`: every child, or the line `NO CHILD`;
+   - `Get-Process -Id 21512 | Select CPU,Threads,Responding,MainWindowTitle`, taken TWICE, 120 seconds apart;
+   - `Get-NetTCPConnection -OwningProcess 21512`: State, RemoteAddress, RemotePort of each, or `NO CONNECTION`;
+   - `Get-ScheduledTaskInfo -TaskName 'Opal Data Harvest - Continuous Cycle'`: State, LastRunTime, LastTaskResult, NextRunTime;
+   - the last 5 lines of `cycle_runner.log`, and the `done` length and the top-level key names (names only) of
+     `state/cycles/bbg/20261012T191641Z.checkpoint.json`;
+   - a positive control for the connection and child reads: the same two commands against a process you know has both
+     (for example your own shell's parent), so a zero reads as a zero.
+3. Commit and push, and send nothing else: the read is the report. Do not diagnose a cause and do not act on the read.
+The issuer reads it and cuts AMENDMENT 2 (a branch with its own signed pair) or rules the runner is waiting on something that is not a wedge.
+
+## 1c. AMENDMENT 2 (2026-10-13, issuer `2.0.0_SA_COO~W1`): GO for the WEDGED branch, on conditions W1-W5. It SUPERSEDES AMENDMENT 1's "do not act on the read".
+
+Both halves are on file (COO half `deliverables/2.0.0_SA_COO_W1/round83/NEVER_WIDEN_HALF_COO_WEDGED_RUNNER_BRANCH_bz1.md` @2abcbf9c22; CTO half
+`ledger/NEVER_WIDEN_ROUND83_BZ1_WEDGE_CTO_HALF.md` @e683fd2032, which says W1-W5 GOVERN). "The running cycle is NOT killed" binds a LIVE cycle; a
+process with no progress has none. Step 1 (ii) is replaced, for PID 21512 and cycle `20261012T191641Z` only, by this. Everything else in this order
+stands, and a `bz1_wedge_read.out` you have already filed under AMENDMENT 1 stands; read again what the act needs.
+**Branch W, ALL FIVE read TRUE at one time in `bz1_wedge_read.out`, and re-read in the same minute as the stop:**
+- W1: PID 21512's `CreationDate` equals the one read at 03:46Z (the same process, not a reused PID).
+- W2: CPU is unchanged across two samples 120 seconds apart, and equals 26.984375 s (nothing accrued since 03:46Z).
+- W3: NO CHILD process and NO ESTABLISHED connection owned by 21512, each read with a positive control.
+- W4: the last `cycle_runner.log` write is older than 2 hours, and the stop file has sat at least 60 minutes with 0 `STOP-FILE` lines.
+- W5: the checkpoint is copied FIRST to `bz1_checkpoint_snapshot.json`, byte for byte, with length and SHA-256 printed beside the source's.
+Act in branch W: step 4 as written (`Stop-ScheduledTask`, which ends the task's tree), the census NONE (with its positive control), then C-g (delete
+the stop file BEFORE `Start-ScheduledTask`, `Test-Path` reading False), then step 5 onward as written. C-f is satisfied by the recorded
+termination. Do not end any process by name or PID: if PID 21512 still reads after `Stop-ScheduledTask`, that is branch X.
+**Branch X (ANY of W1-W5 reads FALSE, or the PID survives the stop):** NO act. The stop file stays, you file one row naming the reading, and wait.
+The wedge itself is row Z-S114's to diagnose; this act does not fix it.
+
 ## 2. THE ACT (site Z box, once)
 
 `<old>` is the pin in the task's `WorkingDirectory` today (`...\wk-harvest-runner-pin-b5a7a3a4b6`). `<state>` is the state dir in the
