@@ -1813,6 +1813,26 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "org/standards/NAMING_SCHEMA.json refused_tokens.bd: refused in EVERY slot; the vendor is blackdiamond"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W37-S4",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~37",
+    "surfaced_at": "2026-10-13T15:51:46Z",
+    "one_line": "The amended cash-identifier rule refuses any identifier that is not 9 alphanumeric characters, so two existing card_a_slice test fixtures (LO00000001, OK00000009; 10 characters each) would be refused; they were renamed to the 9-character LO0000001 and OK0000009.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order DQ-t-46 AMENDED 2026-10-13 (ruling on rows D1-W37-S1): a name whose identifier is not exactly 9 alphanumeric characters is UNRESOLVED with reason cash_identifier; change only what the rule requires in existing tests (only the placeholder reason assertion is named).",
+    "world_is": "data/mdpf/scripts/demque/test_demque_card_a_slice.py at 010cb17a67 used the 10-character identifiers LO00000001 (test_the_p1_slice_lists_priced_names_in_rank_order) and OK00000009 (test_a_p1_name_with_no_trades_or_no_bloomberg_cusip_is_listed_unresolved_and_never_quoted). Under the rule both would be unresolved, so their P1 assertions could not pass as written. The fixtures were renamed to LO0000001 and OK0000009 (9 characters); no assertion other than the placeholder reason string changed.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python length check 2026-10-13: LO00000001 10, OK00000009 10, LO0000001 9, OK0000009 9",
+        "python -m pytest data/mdpf/scripts/demque/test_demque_card_a_slice.py at the worktree after the rule: 4 passed (rc 0)"
+      ]
+    }
   }
 ]
 ```
