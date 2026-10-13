@@ -153,3 +153,4 @@ Under 100 product lines: worker-light. No gate. Lives through MP-z-5.
 <!-- REOPENED by the issuer 2026-10-13 ~10:5xZ: AMENDMENT 1 (the catch-all turned POST /mcp from 307 into 405); the same worker continues. -->
 <status>in_progress</status>
 <!-- REOPENED by the issuer 2026-10-13 ~11:5xZ: AMENDMENT 2 (the test file's teardown pollutes later suites; 7 failed in co-run). Slot ~15 re-seated. -->
+<status>complete</status>
