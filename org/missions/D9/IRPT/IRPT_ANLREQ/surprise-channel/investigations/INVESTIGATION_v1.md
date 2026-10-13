@@ -7206,3 +7206,192 @@
 - **owner:** `2.0.0_SA_COO~Y2`
 - **disarm_owner:** n/a -- INERT
 - **state:** OBSERVATION / INERT
+
+## IRPT_ANLREQ-D2-W70-S1 -- AR-y-226 Read-first names the AR-y-191 record at ~51/r19; the record is at ~52/r19
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W70-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~70",
+  "surfaced_at": "2026-10-13T15:37:21Z",
+  "one_line": "AR-y-226 names the AR-y-191 record as deliverables/0.9.0_WK_IRPT_ANLREQ~51/r19/START_STATE_SCRATCH_RUN.json (if that is its name); the record is at deliverables/0.9.0_WK_IRPT_ANLREQ~52/r19/START_STATE_SCRATCH_RUN.json and ~51/r19 holds no such file.",
+  "spec_asserts": "TO-AR-y-226 Read first: the AR-y-191 record's reopen_matrix method, in deliverables/0.9.0_WK_IRPT_ANLREQ~51/r19/ (START_STATE_SCRATCH_RUN.json, if that is its name -- list the folder).",
+  "world_is": "At worktree HEAD ec4b724fdd, deliverables/0.9.0_WK_IRPT_ANLREQ~51/r19/ holds CROSS_BOX_MEMBERS_EQUALITY.json, LIVE_EQUIVALENT_MAP_PATCH.diff, RELEASE_BUILD_RECORD.json, RELEASE_MAP_PATCH.diff and YCHARTS_GENERATE_RELEASE_CENSUS.json. A Glob for START_STATE* under deliverables/ returns two files: ~52/r19/START_STATE_SCRATCH_RUN.json and ~57/r19/door_answers/START_STATE_RECORD_R19_RERUN.json. This order read the ~52 record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~51/r19/ listing @ec4b724fdd (five files, no START_STATE file)",
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~52/r19/START_STATE_SCRATCH_RUN.json @ec4b724fdd (the AR-y-191 record, read in full)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W70-S2 -- AR-y-226 stores 5 inputs per side, not the 8 named as the floor; 6 of 11 cases turn back at the door
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W70-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~70",
+  "surfaced_at": "2026-10-13T15:37:21Z",
+  "one_line": "AR-y-226 stores 5 inputs per side, below the 8 the cell names as the floor: 6 of the 11 cases are turned back at the door under both pairs and store nothing.",
+  "spec_asserts": "TO-AR-y-226 step 2: at least 8 stored inputs per side where the cases allow, for the AR-y-191 input set plus the one-account, two-account, total-row, repeated-header and two-sheet cases.",
+  "world_is": "With the pinned pair (r18.1 reader, uploads.py HEAD) and the moved pair (r19.3 reader, uploads.py HEAD), the NORMALIZED doors are the same five cases on both sides: two_sheet_workbook, one_account_sheet, repair_header_one_value, attribute_header_one_account and one_account_csv. Six are NEEDS_CORRECTION on both doors: total_row_sheet (TOTAL_ROW_PRESENT), two_value_account_sheet, repair_header_two_values, brokerage_two_account, two_account_csv (ACCOUNT_COLUMN_SEVERAL_VALUES) and repeated_header_csv (HEADER_ROW_REPEATED). Measured in org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~70/r21/REOPEN_AND_EFFECT.json door_cases.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~70/r21/REOPEN_AND_EFFECT.json door_cases and reopen_matrix (each cell cases=5, accepted=5)",
+      "the reader outcomes of the same eleven fixtures are in effect_table rows with kind sheet"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W70-S3 -- The word pinned names two pairs: the AR-y-191 record's moved pair is this order's pinned pair
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W70-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~70",
+  "surfaced_at": "2026-10-13T15:37:21Z",
+  "one_line": "The word pinned names two different pairs: this order's pinned pair (r18.1 reader, uploads.py HEAD) is the AR-y-191 record's MOVED pair; the AR-y-191 pinned pair (uploads f09b802cdc, reader 3f29017cfc) is not run by this order.",
+  "spec_asserts": "TO-AR-y-226 cell: pinned = the r18.1 reader with that uploads.py; moved = the HEAD reader with that uploads.py; uploads.py is the same bytes on both sides (176682cb...).",
+  "world_is": "The AR-y-191 record deliverables/0.9.0_WK_IRPT_ANLREQ~52/r19/START_STATE_SCRATCH_RUN.json defines its moved pair as uploads HEAD plus reader HEAD r18.1 (reader sha256 83ab9b45...), the pair this order calls pinned. Its moved door turned back the same four of its eight sheets as this order's pinned door (two_value_account_sheet, repair_header_two_values, brokerage_two_account, total_row_sheet).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~52/r19/START_STATE_SCRATCH_RUN.json controls (reader_head_sha256, uploads_head_sha256) and door_cases @ec4b724fdd",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~70/r21/REOPEN_AND_EFFECT.json controls (pinned_reader_sha256 83ab9b45, pinned_uploads_sha256 176682cb)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W70-S4 -- The scratch pairs carry the other closure members at HEAD, not at their pins
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W70-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~70",
+  "surfaced_at": "2026-10-13T15:37:21Z",
+  "one_line": "Both scratch pairs carry ids.py, loaders.py, repository.py and served.py at HEAD, because the cell names only the reader and uploads.py; the AR-y-191 record shows those four differ from their pins.",
+  "spec_asserts": "TO-AR-y-226 step 1: each pair is put in a scratch folder with the intake package it imports; the cell moves ONE member (template_reader.py) and holds uploads.py the same on both sides.",
+  "world_is": "The AR-y-191 record door_closure_members_differing_from_head lists ids.py, loaders.py, repository.py, served.py, template_reader.py and uploads.py. This order's two trees are git archive of HEAD infra/aws/lambda/investor-reporting (plus docs/contracts), so those four are at HEAD in both pairs and their pinned values were not run. The matrix does not test the live pins of the four.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~52/r19/START_STATE_SCRATCH_RUN.json door_closure_members_differing_from_head @ec4b724fdd",
+      "step 1 of TO-AR-y-226 (task-orders/IRPT_ANLREQ.TO-AR-y-226.reopen-matrix-and-effect-r193.md) @ec4b724fdd"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W70-S5 -- AR-y-226 worktree base is two-plus commits behind box/dell2 at filing; intake unchanged
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W70-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~70",
+  "surfaced_at": "2026-10-13T15:37:21Z",
+  "one_line": "The worktree HEAD ec4b724fdd is 50 commits behind box/dell2 at filing (3a44c65c3e); no commit in that range changes the intake folder, so the two readers and uploads.py are the same bytes at both heads.",
+  "spec_asserts": "TO-AR-y-226 preamble: the worktree wk-IRPT_ANLREQ-70 is already created from the current branch.",
+  "world_is": "At filing, git rev-list --count HEAD..box/dell2 is 50; git diff HEAD box/dell2 over infra/aws/lambda/investor-reporting/intake is empty; template_reader.py is blob 7c2c761d71 and uploads.py is blob 35df2aa461 at both heads. The session-start status showed box/dell2 at 112799fa63, so the branch moved again while this order ran.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-list --count HEAD..box/dell2 = 50 (measured at filing)",
+      "git diff HEAD box/dell2 -- infra/aws/lambda/investor-reporting/intake = empty (measured at filing)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W72-S1 -- AR-y-228 step 3 says move ONLY the reader pin; the builder refuses a pin-only move, so the row's declared sha256 moved with the pin
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W72-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~72",
+  "surfaced_at": "2026-10-13T15:45:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-228 step 3 asks to move ONLY the pin of intake/template_reader.py; build-and-upload.sh refuses a staged row whose declared sha256 differs from the blob at the pin, so the release patch moved the pin and the row's declared sha256 together",
+  "spec_asserts": "AR-y-228 worker face, step 3: 'move ONLY the pin of intake/template_reader.py in the irpt-ycharts-generate entry to a commit whose blob is the trunk head's template_reader.py (a full 40-hex commit; confirm its blob sha256 equals HEAD's)'.",
+  "world_is": "infra/aws/lambda/ci/build-and-upload.sh at 4067c2dd5b lines 229-233 refuses any staged_from row whose git show <pin>:<repo_path> sha256 differs from the row's declared sha256 ('BLOB HASH MISMATCH ... re-pin it'). The head blob of intake/template_reader.py (commit 55d1755d39, blob 7c2c761d71, sha256 a61cd0c6...) differs from the declared 83ab9b45..., so a pin-only move cannot build. The release patch moved pin and declared sha256 in the one row (RELEASE_MAP_PATCH_R3.diff, git hash-object 5be34a0f17); the build ran and staged template_reader.py at 55d1755d39 with sha256 verified.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/build-and-upload.sh @4067c2dd5b lines 229-233 (declared sha256 versus blob hash, refusal)",
+      "blob 55d1755d3934f362702797e034cee032b8be6247:infra/aws/lambda/investor-reporting/intake/template_reader.py sha256 a61cd0c622f8dd54864b8f2415cbe9968c0287d28087ce703073c7e392c1fc35 (git show | sha256sum, this run)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~72/r21/RELEASE_MAP_PATCH_R3.diff (the template_reader row: pin and sha256 both moved)"
+    ]
+  },
+  "notes": "Not blocking: the release build ran and differs from the live package in exactly template_reader.py. For the CVO's read: a future reader-pin move must move the declared sha256 with the pin; the worker-face wording 'pin only' predates the builder's hash check."
+}
+```
+
+## IRPT_ANLREQ-D2-W72-S2 -- the r19 release record's live read of irpt-ycharts-generate names a template_reader.py that the live package no longer carries
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W72-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~72",
+  "surfaced_at": "2026-10-13T15:45:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The r19 record's live read of irpt-ycharts-generate (04:21Z, CodeSha256 NeAB50CN...) lists template_reader.py as 76795b75...; the live package read in this run (CodeSha256 hpNfkhLt..., deployed 13:01Z) carries template_reader.py 83ab9b45..., so the r19 record does not describe the live package now",
+  "spec_asserts": "deliverables/0.9.0_WK_IRPT_ANLREQ~56/r19/LAMBDA_LEG_LIVE_REBASE.json live_read: code_sha256 NeAB50CN..., read_at 2026-10-13T04:21:17Z, member_manifest template_reader.py 76795b75313b076488d6c2f0ed7a8480be92b999efb6886a3ede92b11e916409 (the live package as read at that time).",
+  "world_is": "Live read in this run (15:28Z): CodeSha256 hpNfkhLtLRl0e9TFL+Vdr5kilZ1W8bN3GKMhlzmVXgg=, zip 621567 bytes, template_reader.py 83ab9b45d59065f53c640803df9fd07a0ddfcc97d89c13540c20622a6bf7bd58 (the r18.1 reader hash named READER_R181_SHA in ar21_checks.py). The group B record (~64/r20) measured the live package before release 20 as bNPCG2Oe..., 620712 bytes, and the map at 4067c2dd5b records last_deployed_at 2026-10-13T13:01:13Z. The r19 record's live member set is therefore superseded; this run did not re-read it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~56/r19/LAMBDA_LEG_LIVE_REBASE.json live_read (CodeSha256 NeAB50CN..., template_reader.py 76795b75...)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~72/r21/LAMBDA_LEG_R193.json live_read (CodeSha256 hpNfkhLt..., template_reader.py 83ab9b45..., read this run)",
+      "infra/aws/lambda/ci/lambda-source-map.json irpt-ycharts-generate last_deployed_at 2026-10-13T13:01:13Z @af7069280322058cc496a4d3f9232466040d1bb8"
+    ]
+  },
+  "notes": "For the CTO's or CVO's read: the r19 record's live_read is a superseded package and should not be used as the live baseline for the r19.3 leg; AR-y-228 used this run's read. Not checked whether any gate reads that record as a live baseline."
+}
+```
