@@ -2611,6 +2611,28 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "Re-seating instruction (launching agent, 2026-10-13): commits end with 'Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>'.",
     "world_is": "The worker runs as claude-haiku-5-5. Attribution must name the model that produced the work, so the commit carries Claude Haiku 5.5; the Sonnet trailer was not written."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W50-S6",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~50",
+    "surfaced_at": "2026-10-13T23:17:25Z",
+    "one_line": "The wired run checks identity over the COMBINED history only: the appended-window lock.check that the amended pair A condition 2 keeps was dropped at 9449d5f48e, so a trade that disagrees only inside the appended window can be written (measured: combined LOCKED 20 of 21; window-only REJECTED:PRICE_MISMATCH 0 of 1).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/daily_draw.py on_incremental on branch wk-MDPF_DEMQUE-50 at aeb1c69990: the only pair A condition 2 term is combined_relock (line ~242); no lock.check runs on the appended days (data/mdpf/scripts/demque/incremental_append.py:45 says lock.check is not re-run there)",
+        "data/mdpf/scripts/demque/daily_draw.py at 39c3a3e402 lines 227-235 carried 'relock: <state> on the appended window'; 9449d5f48e replaced it with the combined check only",
+        "measured on synthetic data (scratch .scratch/window_gap_measure.py, not committed): 20 agreeing stored trades plus one window trade at 1.5x; lock.check over the combined history LOCKED (20 of 21), lock.check on the appended window REJECTED:PRICE_MISMATCH (0 of 1)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMENDED 2026-10-13 ~23:0xZ (ruling on S2), MDPF_DEMQUE.TO-DQ-t58 and build item 4 (pair A condition 2): 'After building the appended window, run lock.check on the appended days'; 'The appended-window check stays.' The combined history relock is added beside it, not in its place.",
+    "world_is": "The tree runs one identity check, over the combined history. A name whose appended window carries a trade that disagrees with Yahoo, while its stored trades agree, is LOCKED by that check and its window is written; the appended-window check would hold it. No named test isolates a window-only mismatch (test 4 and test 5 each carry a mismatch that fails the combined check too). Nothing is written by this row; the fix is the issuer's decision."
   }
 ]
 ```
