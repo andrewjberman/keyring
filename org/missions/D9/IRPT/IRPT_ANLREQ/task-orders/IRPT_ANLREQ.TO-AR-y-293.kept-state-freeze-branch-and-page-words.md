@@ -2,7 +2,7 @@
 
 <to_id>IRPT_ANLREQ.TO-AR-y-293</to_id>
 <project>IRPT_ANLREQ</project>
-<issued_to>0.9.0_WK_IRPT_ANLREQ~107</issued_to>
+<issued_to>0.9.0_WK_IRPT_ANLREQ~110</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-13</issued_date>
 <status>pending</status>
@@ -54,6 +54,8 @@ You are `0.9.0_WK_IRPT_ANLREQ~107`.
 <expected_criteria>AR293-y-AC1 AR293-y-AC2J</expected_criteria>
 
 **AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-13 ~21:3xZ, after the first worker's stop, rows `IRPT_ANLREQ-D2-W107-S1` and `-S3`; the stop was right).** (S1, the grant) `<paths>` now also names `infra/aws/lambda/investor-reporting/ops/status.py`: the words-table lock (`intake/tests/test_correction_words.py` :44 `uploads.CORRECTION_WORDS == status.CORRECTION_WORDS`) compares the upload door's table with the status envelope's literal copy (`ops/status.py` :86), and `SHEETS_NOT_READ` set the precedent (a new finding code goes in BOTH tables; release 20's `irpt-status` carried its words, words-only by AST). Add EXACTLY the three new entries, copied byte for byte from `uploads.CORRECTION_WORDS`, to the `ops/status.py` literal and change nothing else in that file; prove it: an AST comparison of `ops/status.py` before and after shows only the `CORRECTION_WORDS` dict literal changed, and only by three added keys (print it). The release therefore gains an `irpt-status` leg (record it in `release_needs`). The first worker's source edits are held in its worktree as `r23/KEPT_STATE_SOURCE.patch` (record folder `0.9.0_WK_IRPT_ANLREQ~107/r23/`): apply it (`git apply --check` first), then continue; do not redo the design. (S3, shares) CONFIRMED as scoped by the first worker: a KEPT SHARES holding is NOT covered by this cell; it refuses as the existing `SHARES_PRICE_UNAVAILABLE`, which is the honest answer; say so in `shares_status`; the pricing of a KEPT shares holding from the checker's dated closes is a later cell and a CTO question (issuer). Dollar and weight bases are covered. Build `intake/tests/test_kept_holding.py` (at least 14 tests as the face lists) and keep the intake suite at its floor; the test's count of finding codes (`len(codes) == 30`) becomes 33 by the three new codes: edit it ONLY for that. Your record goes in YOUR folder `deliverables/0.9.0_WK_IRPT_ANLREQ~110/r23/KEPT_STATE.json` (the lane gate refuses a continuation serial under the first worker's folder); the check reads it first. Gate limb that graded this amendment: none stated (the issuer amends its own pending order's grant and text).
+
+**AMENDMENT 2 (issuer `2.0.0_SA_COO~Y2`, 2026-10-13 ~22:0xZ; the same defect as `AR-y-281`'s `W108-S3`, closed before the continuation worker hits it).** `<issued_to>` is now `0.9.0_WK_IRPT_ANLREQ~110`, the continuation worker, who works in the first worker's worktree `C:/dev/wk-irpt-anlreq-107` and commits the code and test paths as `~110`; its record folder is `deliverables/0.9.0_WK_IRPT_ANLREQ~110/`. Nothing else changes. Gate limb that graded this amendment: none stated (the issuer amends its own pending order's assignee).
 
 ## BOUNDS
 
