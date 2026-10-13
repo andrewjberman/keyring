@@ -12769,3 +12769,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "NOT A ROLLBACK CASE, and that is the judgment worth stating. The order's rollback trigger is 'if any read-back disagrees'; every read-back agrees. Rolling back would undo working code over a clause no deployment of this code could satisfy. TWO FIXES, the issuer's call, and they are not equivalent: (a) AMEND AC2's report clause to read the behaviour from the QUEUE -- foreign present after the sweep, own gone -- which is provable today and is what the criterion is actually about; or (b) PERSIST the report in the code, writing run_sweep's dlq dict into the backfill-status section or a run-log object, which is a new build order and would make the criterion readable as written for EVERY family rather than just schwab. SAME TWO FIELDS FAILED IN OG-ap-11 FOR AN UNRELATED REASON -- there the function raised before returning, so no report was produced; here it is produced and discarded. A criterion that fails twice for two different causes is worth re-cutting rather than re-running. GENERAL FORM: A CRITERION THAT NAMES AN ARTIFACT MUST NAME ONE THE SYSTEM PERSISTS; a return value is not an artifact, and the difference is invisible until the first time the code actually succeeds."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W62-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~62",
+  "surfaced_at": "2026-10-13T16:57:30Z",
+  "one_line": "Z-S95's 502s on GET /hx/teams/channels/{team}/{channel}/messages are ALB-generated (target gave no response), not gateway- or Graph-emitted: 6 of 4165 requests 2026-10-11..13, and the gateway audit lake holds no record of any of them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ALB access logs s3://opal-data-security/waf-logs/alb-opal-gateway/.../2026/10/11-13: 6 lines elb_status=502 target_status=- response_processing=-1, at 2026-10-11T18:48:41Z, 21:27:34Z, 23:30:29Z, 2026-10-12T02:08:33Z, 12:33:30Z, 2026-10-13T02:06:26Z; 4159 same-route 200s. Request-to-failure 0.01s to 1.9s.",
+      "Audit lake s3://opal-mcp-audit/audit/dt=2026-10-11..13: 4145 route records = 4143 ok + 2 denied + 0 error; teams_route.py:396-401 writes outcome=error for every 502 the handler emits, so none was emitted. The 'ok' records at 21:27:39Z and 23:30:36Z that Z-S95 cites are the NEXT poll, not the failed one.",
+      "Deliverable: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~62/RD1_502.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-S95 / OG-rd-1: a 502 on this route carries a gateway error body or log line that classifies into the closed set (gateway_timeout, gateway_error, graph_*, unreadable).",
+  "world_is": "All 6 are the ALB's own 502 with no target response, so each is classed unreadable: no gateway line exists. Z-S95's 2 of ~285 is 6 of 4165 over the full window. The host journal was not readable from this seat; the keep-alive cause (uvicorn default 5s vs ALB idle 60s; opal-gateway.service line 16) is INFERRED only. Verdict recorded as gateway (connection layer between ALB and process), no app/ code line implicated.",
+  "notes": "A later cell should read the EC2 journal for the 6 instants before touching --timeout-keep-alive. 502s on other routes (mcp, transcripts, token) are present in the same ALB logs and were out of scope."
+}
+```

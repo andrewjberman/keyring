@@ -49,7 +49,7 @@ failed read); D1-S16 (BLOCKING) is the CTO's re-run ruling; the rest are INERT t
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v3"
     },
@@ -58,7 +58,7 @@ failed read); D1-S16 (BLOCKING) is the CTO's re-run ruling; the rest are INERT t
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "MDPF_HEALGAP-D1-S14",
