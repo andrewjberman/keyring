@@ -19,6 +19,8 @@
 
 ## WORKER FACE
 
+**AMENDMENT 1 (issuer, 2026-10-13T05:3xZ; your row W355-S1 was right and the grant was my defect):** the generator clones the frozen export key into the three holdings maps and the fe-s-32 no-answer map, so a run adds the same `covered_account_ids` list to four more committed fixtures. They are GRANTED: `fixtures/smoke/fe-s-18-holdings-observed.json`, `fixtures/smoke/fe-s-18-holdings-target.json`, `fixtures/smoke/fe-s-18-holdings-missing-attribution.json` and `__tests__/fe-s-32/holdings-no-answer.json` (portal-relative to `src/pages/InvestorReporting/`). Run the generator, check that each of the four gains ONLY the same list (no other line moves), commit them in the portal repo with the frozen map, then re-run the three criteria and update your proof. Your row S2 (the full-folder count 1212/27/5 against the stated base 1213/27/4) stands as an observation; run the base count once at the portal commit `e1cd356e2f` to settle which test is the fifth, and report it.
+
 **Cell `IB-pr-504` (inlined):** the committed frozen map `portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json` holds an export envelope under the key `/api/scoped/investor-reporting/export/` whose `data.facts` lacks `covered_account_ids`, while the v1 contract `docs/contracts/investor-reporting/v1/ExportReceipt.schema.json` lists it in `/properties/facts` `required`, the wire fixture `fixtures/smoke/fe-s-13-wire.json` carries it (`["ACCT-1"]`, synthetic) and the portal's `ExportReceipt` type declares it required. The CTO ruled: **the FIXTURE moves**. The committed envelope gains the member (synthetic ids only), is validated against the v1 schema in the same cell, and the generator then reproduces the committed bytes. Round 172's repair of `fe-s-18/gen-fixtures.ts` deliberately DROPS the member (`exportEnvelope()` deletes `facts.covered_account_ids`) because the committed bytes then omitted it; that drop is now the defect. You work in the PORTAL repo (your worktree's `portal/` directory, `node_modules` linked, `bun` on PATH). This is a candidate for portal DEV. Your worktree's portal repo starts at a commit that does NOT yet carry round 172's generator repair (it is on the branch `wk-IRPT_BCKEND-353-portal` at `e1cd356e2f`): FIRST run `git -C portal merge --ff-only e1cd356e2f` (it is in the same object store; if it is not a fast-forward, STOP and file a row), then work on top of it.
 
 **Do:**
@@ -41,7 +43,7 @@ What the checks grade: AC1 the check RUNS the `fe-s-18` generator and then `git 
 
 ## BOUNDS
 
-- **Grant:** the `paths` block and nothing else. Portal repo: only `src/pages/InvestorReporting/__tests__/fe-s-18/gen-fixtures.ts` and `src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json`. No other fixture, no test, no product code, no `package.json` or lockfile; run no `bun install`; push nothing.
+- **Grant:** the `paths` block and nothing else. Portal repo: only `src/pages/InvestorReporting/__tests__/fe-s-18/gen-fixtures.ts`, `src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json` and the four files named in AMENDMENT 1. No other fixture, no test, no product code, no `package.json` or lockfile; run no `bun install`; push nothing.
 - **Refusal clause:** STOP, file a row, change nothing more, if the regeneration changes any line of any output other than the one added list, if the v1 schema rejects the envelope for any reason other than the missing member, or if a portal test fails because of the change.
 - **Commit** in BOTH repos per your definition: the workspace commit (order flip, proof, rows) with `.tools/safe-commit.sh`, and the portal commit with plain `git -C portal commit` (same author and committer values, message file from the Write tool outside the worktree); ASCII only; never stage the workspace's `portal` gitlink.
 - **Row ids** are `IRPT_BCKEND-D2-W355-S<k>` (the next free `k`). Report once, under 150 words.
@@ -49,6 +51,10 @@ What the checks grade: AC1 the check RUNS the `fe-s-18` generator and then `git 
 <paths>
 portal/src/pages/InvestorReporting/__tests__/fe-s-18/gen-fixtures.ts
 portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json
+portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json
+portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-target.json
+portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-missing-attribution.json
+portal/src/pages/InvestorReporting/__tests__/fe-s-32/holdings-no-answer.json
 org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~355/
 org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-504.frozen-export-envelope-carries-covered-account-ids.md
