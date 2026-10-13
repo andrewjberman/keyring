@@ -92,7 +92,7 @@ by the snapshot's state; the window is therefore the first weekday after Monday'
 reading says so), because that apply changes the function. AC2 is the CVO's judgment (the counts follow from the queries, the splits sum, no route is inferred, the rate comparison is stated).
 STAGED: the GO is the issuer's at or after 2026-10-13T12:40Z.
 
-<status>staged</status>
+<status>pending -- GO 2026-10-13T12:4xZ by the issuer (2.0.0_SA_COO~R1): the window 2026-10-12T12:40Z to 2026-10-13T12:40Z has closed; the function's code did NOT change inside it (get-function-configuration at 12:41Z: CodeSha256 42z0tn68TZjuk8awBclnMii0k+FX2Pw2bw7iN9Xitz0=, LastModified 2026-10-12T04:18:21Z, before the window opened; AMGT-bh-2 has not applied), so the window is the full 24 hours. Reads only; worker ~400 at C:/dev/wk-resapp-400.</status>
 <round>101</round>
 <slot>0.9.0_WK_AMGT_RESAPP~400</slot>
 <fabric>dell1</fabric>

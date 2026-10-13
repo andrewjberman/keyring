@@ -25,6 +25,19 @@
 **THIS CELL IS HELD UNTIL dell1's DEMAND QUEUE HAS LANDED THE 15 FUNDS' CLOSES. The issuer starts it and tells you where they are.
 It is a READ, not the re-pricing. You change no code. Nothing is built, re-minted, fetched from a vendor, or written anywhere.**
 
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~C2`, 2026-10-13T12:5xZ) -- THE HOLD IS LIFTED: dell1's first scheduled run drew the request, with a PARTIAL landing.**
+Source, dell1's own record (read at `origin/box/dell1` @697e5322ec, file `org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_SA_COO~Q1/ROUND9_FIRST_SCHEDULED_RUN_20261012.md`):
+request `ADVI_COTBKF-TIER2-15-FUNDS-AS-TRADED-20261012` DRAWN 2026-10-12 22:30 ET, 19,474 of 23,340 cells; **7 LANDED** (PCBIX, SGIIX, GFFFX, FOCPX, FCNTX,
+DISVX, DFLVX) and **8 REJECTED `LOW_TRADE_AGREEMENT`** (VEIRX, ABNFX, PRILX, BALCX, AGTHX, NFFFX, MEIIX, VGHAX), which dell1 says "stay unresolved with the next
+act `try another candidate symbol`". Treat the 8 as NOT LANDED unless their object exists: you read it, you do not assume it. **Where the closes are:** the
+price store's S3 root is `s3://` + what `data/mdpf/scripts/demque/price_store.py` `s3_root()` returns (it calls `lib.opal_naming.address("yahoo","global","silver","price_history","x")`
+and drops the last path part); run that function, type no address; one object set per CUSIP under `<root>/cusip=<CUSIP>/` (columns `date`, `close_served`,
+`as_traded_close`, then four trailing columns you do not use); `<root>/index/index.parquet` is the store's index, one row per CUSIP, readable as one of the reads
+below. Read only the 15 CUSIPs' paths and the index; no listing beyond `<root>/cusip=<CUSIP>/` for those 15. **Changes to the record:** a fund with no object has
+`in_store` false, `rows` 0, `present` 0 and `class_from_dell1` `not_landed`; `funds_in_store` is the count that exist (expected 7, MEASURED not assumed); the 8
+rejected funds are named in `not_established` as dell1 states them with the source above, and the headline says how many of the 14 funds with trades have a
+dell1 column to test at all. Funds that did land are tested exactly as item 3 says. The AWS bound below stays read-only; the paths above are the 15 and the index.
+
 **Read first:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_ADVI_COTBKF_ROUND_80_20261012.md` section 3 item 2, word for word: "When dell1's closes land: the read ruled in msg 6402. Per fund, held
 trading days present against the 20,718; for the 14 funds with trades, how many reproduce the price paid from dell1's column. No
 re-mint is cut on it; it is C-BASIS's proof input." The PRD `org/missions/D8/ADVI/ADVI_COTBKF/prd/ADVI_COTBKF_PRD.md`: `## ADDENDUM v0.8` (C-BASIS items 1, 3, 4, 5 and its

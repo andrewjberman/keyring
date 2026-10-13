@@ -12741,3 +12741,31 @@ name the one known failure instead of silently inheriting it.
   "notes": "THREE WAYS OUT, all the issuer's or the CTO's, none mine. (a) Add 0.7.0_AE_CloudOps~Z to lane NFRA_CTLPLN_FAST_C's permitted_agents -- the lane names the CTO as grantor, and this is the smallest change; it is also the one that deserves a second look, since that lane's glob covers more than its description claims. (b) Take COO half Condition A's OTHER branch and have NFRA_CTLPLN's own issuer cut the edit -- the half already contemplates exactly this, '(b) cut by NFRA_CTLPLN's own issuer'. (c) The audited GIT_COMMIT_AUTHOR_OVERRIDE lane escape, which this order's bounds forbid ('override a gate') and which I did not use. The gate's own rationale comment records the precedent for why not: v3's first drain 'committed both real surfaces its order named through the audited override because no lane admitted it', and ADHC_OWNPTH.005 was written to make that unnecessary FOR WORKERS -- it was never extended to AE seats. GENERAL FORM WORTH KEEPING: A RULING THAT APPROVES AN ACT DOES NOT CREATE THE WRITE SURFACE FOR IT. Consent, lane membership and an order's <paths> are three different registries, and a cross-fabric act needs the first and one of the other two. The edit is preserved at ap13_source_edit.patch (12405 bytes, 2 files) outside the repo, so whoever gets the surface can apply it rather than redo it."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S100",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-13T12:35:50Z",
+  "one_line": "OG-ap-12's AC2 cannot be satisfied by ANY scheduled sweep, however correct the code: it asks for the foreign record to be absent from, and the own record present in, 'the schwab sweep's report', and that report is the function's RETURN VALUE, which an EventBridge invocation discards. The per-family drain WORKED -- foreign survived, own drained, sweep clean with no retries -- so this is an unmeasurable criterion, not a product defect, and NO rollback was taken.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE BEHAVIOUR IS PROVEN. The 12:15Z sweep ran ONE invocation, RequestId 37fe3466, 12:15:49Z -> 12:18:19Z, with no error, no traceback and no retries -- against OG-ap-11's three invocations on one RequestId all ending AccessDenied. The eclipse synthetic f9a08314 was RETURNED by a post-sweep non-destructive receive, which is positive proof of presence. The schwab synthetic 44ee0375 is gone, proven from the COUNT plus the identity of the remainder: depth 2 at plant, 1 after, and the single remaining message is proven to be the eclipse one.",
+      "THE REPORT DOES NOT EXIST, measured four ways. (1) drain_dlq's report is the dict it RETURNS; run_sweep returns it to an EventBridge caller, which discards it. (2) schwab_runtime.py contains 0 occurrences of print(, which is why CloudWatch holds only INIT_START/START/END/REPORT for this run and 0 application output lines. (3) The module makes exactly ONE S3 write, bs.write_layer_status at line 423, and the section passed is built purely from the lane's conversion results (frontier_date, backfill_complete, counts, holes, guard_*) with no dlq field. (4) comp-find for a run-log writer across data/assets/scripts read 0 hits over 425 files scanned.",
+      "AC2 as written returned exit=1 on the honest grade; AC1 still returns exit=0, so the deploy and the grant are sound and unchanged.",
+      "THE CTO'S HOLD WAS NOT THE CONSTRAINT: msg 33608 lifted the opal-assets terraform hold at 11:46Z after cot-bronze-complete was restored at 11:37:21Z, so a rollback was fully available and was deliberately not taken."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-12 step 5: 'After the sweep, the foreign record is still in the queue and absent from the schwab sweep's report (run log or backfill-status), and the schwab record is gone and present in the report.' AC2's expect demands foreign_absent_from_schwab_report=True and schwab_drained_and_reported=True.",
+  "world_is": "The first half of each sentence is true and provable from the queue. The second half -- the 'in the report' clause -- has no referent: the sweep produces its DLQ report and throws it away. So W/AP12_GRADE.json records those two fields as UNREADABLE rather than True, because recording True would be asserting a read of an artifact that does not exist, and recording False would imply the drain misbehaved when it did not.",
+  "notes": "NOT A ROLLBACK CASE, and that is the judgment worth stating. The order's rollback trigger is 'if any read-back disagrees'; every read-back agrees. Rolling back would undo working code over a clause no deployment of this code could satisfy. TWO FIXES, the issuer's call, and they are not equivalent: (a) AMEND AC2's report clause to read the behaviour from the QUEUE -- foreign present after the sweep, own gone -- which is provable today and is what the criterion is actually about; or (b) PERSIST the report in the code, writing run_sweep's dlq dict into the backfill-status section or a run-log object, which is a new build order and would make the criterion readable as written for EVERY family rather than just schwab. SAME TWO FIELDS FAILED IN OG-ap-11 FOR AN UNRELATED REASON -- there the function raised before returning, so no report was produced; here it is produced and discarded. A criterion that fails twice for two different causes is worth re-cutting rather than re-running. GENERAL FORM: A CRITERION THAT NAMES AN ARTIFACT MUST NAME ONE THE SYSTEM PERSISTS; a return value is not an artifact, and the difference is invisible until the first time the code actually succeeds."
+}
+```
