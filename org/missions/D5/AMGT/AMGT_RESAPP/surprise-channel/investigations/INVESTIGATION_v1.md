@@ -25883,3 +25883,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The interpretation is recorded so the issuer can narrow it; no arm tests the not-carried case."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W423-S7",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~423",
+  "surfaced_at": "2026-10-13T23:15:30Z",
+  "one_line": "On the portal amendment commit the pre-commit instruments reported PARTIAL_OR_BLIND: the risk reflex scanned 0 of 3 files against a 192.7h-old danger map, and commit-gate checked 0 of 3 files, so the three .cjs harness edits reached the portal index with no scanning instrument.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Portal commit 85d5749f (cand/dell1/aifill-blocks, LOCAL) made by .tools/safe-commit.sh from C:/dev/wk-resapp-423/portal. Its output printed: '[risk-reflex] danger map: 192.7h old !! STALE', 'ANSWER STATE: PARTIAL_OR_BLIND', 'WITHIN BUDGET: scanned 0 of 3 file(s)'.",
+      "The same output printed '[commit-gate] WARN: commit-gate checked 0 of 3 file(s) -- NOTHING WAS CHECKED' and states that this gate reads only .py / .sh / .tf / org/projects/*.json, so the .cjs files fall through unexamined.",
+      "The risk reflex also printed that the nested portal toplevel carries no .tools/comp-pulse and executed the baked path C:/dev/ajb_workspace/.tools/comp-pulse instead."
+    ]
+  },
+  "spec_asserts": "The order's commit line: commit in the nested portal worktree with the outer .tools/safe-commit.sh; the standing rule that a frontend artifact is validated by its language-appropriate instrument (the face names the harness runs, bun run typecheck and bun run lint).",
+  "world_is": "The commit gate and the risk reflex both answered for zero of the three files committed. The validation of the commit rests on the node runs of the three harnesses (rc 0 each) and on AC1 and AC2 run on the committed bytes, not on the commit gate.",
+  "notes": "Form only. Recorded so the CVO can see the pre-commit gate state for portal frontend commits. No gate was changed and no command was re-run to clear the reflex."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W423-S8",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~423",
+  "surfaced_at": "2026-10-13T23:15:30Z",
+  "one_line": "The base harness count disagrees between two instruments: r103_feature_green_v2.sh reads base 15 of 21 at PROD 63c4f9e3, while the predecessor's bare run of every __harness__ file at that base read 18 of 21 exit 0; AC2 meets its expect on the script's own denominator and the two counts are not reconciled.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC2 on the committed portal bytes (portal 85d5749f) printed 'typecheck rc 0 | lint rc 0 | harness 19 of 22 pass | base 15 of 21 | regressions 0: none | pre-existing: assembled.harness.cjs exportCompare.harness.cjs timelineFourStates.harness.cjs' and 'R103 FEATURE GREEN: YES (...)', exit 0.",
+      "Predecessor proof instance at 4b5678b3ee, compiler_tools entry 'every __harness__ file run bare (portal)': bare run at the cut base tree reads 18 of 21 exit 0, with assembled, exportCompare and timelineFourStates non-zero; the entry records that the script's base 15 of 21 was not reconciled with it."
+    ]
+  },
+  "spec_asserts": "AC2 expect: 'R103 FEATURE GREEN: YES (typecheck rc 0, lint rc 0, harness P of T pass, base Q of U, regressions 0, pre-existing: names)' with T one more than U, and P at least Q plus 1; the base figure is the script's own detached base run at 63c4f9e3.",
+  "world_is": "The script's base run finds 6 of 21 harnesses not passing at 63c4f9e3 (21 minus 15), where a bare run of the same tree finds 3 non-zero exits (18 of 21). The discrepancy is between two readings of the base tree and was not explained by this worker.",
+  "notes": "Form only. AC2's expect is met on the script's rule; the reconciliation is the issuer's. No harness and no script was edited to make the two counts agree."
+}
+```
