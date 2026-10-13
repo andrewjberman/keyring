@@ -25879,3 +25879,101 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The arm-count expectation is the issuer's to amend or the check's to extend; the worker did not change either."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W422-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~422",
+  "surfaced_at": "2026-10-13T22:56:04Z",
+  "one_line": "conftest.py is hermetic for the pool and the drafted read but not for the AI fill read: every existing thesis-bundle test that does not patch _s3_client now issues a live GET of the fill key.",
+  "spec_asserts": "The worker face (AMGT-fa-7, section 1) asks for one wiring line in read_thesis_bundle and a new test module, and says the S3 client in the tests is a fake. The test tree's convention (lib/research/api/tests/conftest.py docstring: no test in this package reaches the pool unless it says so) sets AMGT_POOL_ROOT and AMGT_DRAFTING_ROOT to empty directories and nothing else.",
+  "world_is": "The fill read has no empty-root default in the test tree, so with AMGT_AIFILL_ROOT unset it calls the real _s3_client() for every thesis bundle. Measured in this worktree with a probe plugin that logs and refuses each GET (not committed): 29 GET lines for ai_fill keys at opal-data-harvest across 44 passing tests in test_corrected_overlay_wiring.py, test_fiscal_scope_contract.py, test_dossier_fields.py, test_team_cases.py and test_r79_hookups.py. The suite stays green (AC2 new 0) because a failed read returns ABSENT, so the leak is silent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/tests/conftest.py at e8d65751f4, lines 52-56: the autouse empty_pool_roots fixture sets ENV_POOL_ROOT and ENV_DRAFTING_ROOT and no AIFILL root.",
+      "lib/research/api/scoped_amgt.py lines 3279-3331 (_read_ai_fill_document) in the worker commit: with ENV_AIFILL_ROOT unset it calls _s3_client().get_object(Bucket=crosswalk.POOL_BUCKET, Key=...).",
+      "Measured 2026-10-13 in worktree C:/dev/wk-resapp-422: .scratch/probe_aifill.log holds 29 GET lines to opal-data-harvest amgt/harvest/gold/ai_fill/security_key=.../ai_fill.json over 44 passed tests in five modules."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm owner 2.0.0_SA_COO~R2: an empty AMGT_AIFILL_ROOT default in conftest.py (outside this order's write surface) closes the leak. Not fixed here because conftest.py is not in this order's paths."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W422-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~422",
+  "surfaced_at": "2026-10-13T22:56:04Z",
+  "one_line": "read_ai_fill's validator enforces the aifill/v1 block rules beyond the face's enumerated validator list (citation mix, text length and ASCII, model_call search count, opal ref charset).",
+  "spec_asserts": "The worker face, section 1, enumerates the validator's rules (the NONE block, the text, reason and citation rules, a web url, an opal ref, a WEB_SEARCH web citation). Its inlined contract text says every cell of the workstream writes against the full block rules.",
+  "world_is": "The contract text also states that OPAL_SOURCE has no web citation, WEB_SEARCH has no opal citation and model_call.web_search_requests >= 1, text is at most 1200 ASCII characters with no double asterisks, an opal ref carries no underscore or brackets and does not start with thesis. or overlay., and a NONE reason carries no underscore. The validator in scoped_amgt.py (_validate_ai_fill_block, lines 3332-3407) enforces these too. A conforming document is unaffected; a non-conforming one the enumerated list alone would have served is INVALID instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/scoped_amgt.py lines 3332-3407 in the worker commit: _validate_ai_fill_block enforces the rules beyond the enumerated list.",
+      "The worker face, section 1, 'The contract every cell of this workstream writes against' block rules (face lines 35-38)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The extra rules follow the inlined contract text; the enumerated list was not narrowed. Whether the validator should be exactly the enumerated list is the issuer's call."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W422-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~422",
+  "surfaced_at": "2026-10-13T23:01:42Z",
+  "one_line": "The naming gate reads the display literal s3://{0}/{1} in the fill reader's reason text as an S3 address and returns WARN (RAISE as S3Key, K1) on the commit of the serve.",
+  "spec_asserts": "The worker face, section 1, specifies the fill reader's reason text as 'no AI fill document at s3://<bucket>/<key>: <ErrClass>: <err>'. The standing rule (CLAUDE.md rule 30) says every S3 address is lib/opal_naming.py address() output and a naming-gate refusal is a missing registry row to add.",
+  "world_is": "At commit 0b89670d1a the naming gate reports 'NAMING RAISE lib/research/api/scoped_amgt.py:3309 s3://{0}/{1} -> (rule or registry defect)' and 'NAMING-GATE: WARN 1 graded'. The literal builds only the reason string; the key the reader GETs is _hp.AI_FILL_GOLD_PREFIX + crosswalk.security_key_partition + ai_fill.json, and no address literal is typed. The commit was not refused.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit-gate and naming-gate output of the code commit 0b89670d1a (safe-commit run, 2026-10-13): 'NAMING RAISE lib/research/api/scoped_amgt.py:3309 s3://{0}/{1}' and 'NAMING-GATE: WARN 1 graded'.",
+      "lib/research/api/scoped_amgt.py line 3309 in commit 0b89670d1a: where = \"s3://{0}/{1}\".format(bucket, key) inside _read_ai_fill_document."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The gate treats display text as an address. The drafting reader carries the same display text shape (pre-existing, not in this diff, not graded here). Whether the naming gate should read a reason string is the issuer's and naming owner's call; the face's wording was kept."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W422-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~422",
+  "surfaced_at": "2026-10-13T23:15:46Z",
+  "one_line": "The measured premise of the conftest amendment (29 live fill-key GETs across 44 passing thesis tests without the line) does not reproduce under the probe's counting; the effect reproduces with the same sign: 42 GET attempts across 37 tests with the variable unset, 0 with the line.",
+  "spec_asserts": "The worker face, section 1 (conftest AMENDMENT 1), records the first worker's measurement as 29 live GETs of the fill key across 44 passing thesis tests without the line, and asks the worker to confirm with a probe that existing thesis tests no longer GET the fill key.",
+  "world_is": "A probe (deliverables folder, probe_aifill/probe_aifill_gets.py) counts each botocore GetObject whose Key contains ai_fill, per test nodeid, and blocks each call before it is sent. Over lib/research/api/tests excluding test_ai_fill_serve.py (973 tests: 969 passed, 4 failed, the base 4 failing): with the line committed at 505cc189de, 0 GETs across 0 tests (probe_out_with_line.json). With AMGT_AIFILL_ROOT removed at each test body as a negative control, 42 GETs across 37 tests (probe_out_unset.json). The predecessor's evidence does not record its counting method, so the 29-across-44 figure is not reproduced; the zero with the line is confirmed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "probe_aifill/probe_out_with_line.json and probe_aifill/probe_out_unset.json in the deliverables folder of this order (0.9.0_WK_AMGT_RESAPP~422), written by probe_aifill/probe_aifill_gets.py at the commit that carries this row.",
+      "pytest run B on the same suite with the variable unset: 4 failed, 969 passed, the same 4 base failures as AC2 at 505cc189de."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The direction and the zero are confirmed by the probe; the count is the probe's own method. Whether the 29-across-44 figure should be restated in the record is the issuer's call (disarm owner 2.0.0_SA_COO~R2)."
+}
+```
