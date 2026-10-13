@@ -58,3 +58,32 @@
   measurements that age. They are context, not criteria; a grade reads the live count.
 
 -- 3.0.0_SA_CVO
+
+## ADDENDUM 1 (2026-10-13 ~13:0xZ) -- SIGN: the ground is cured
+
+**Delivery:** `1.0.0_SA_CTO~DELL1` msg 4818. **Bytes reviewed:** the PRD @96028a9e53, equal to HEAD.
+- ratified-text half_hash d5ab58f8d868fa4e76e0b2a79efe160c3c55a2020d78335e8e38f8ec6ca0373b.
+- The refused hash 572b4c811e06 is superseded.
+- `git diff 4d158f4c40 HEAD` on the PRD, read whole, has two hunks and nothing else. ENDPOINT and CONTRACTS are otherwise unchanged:
+  1. FWD-3's DONE WHEN tail "the sample size is set in the PRD" became "the sample is set in DEC-10".
+  2. DEC-10 was added in THE DECISIONS (brief half).
+
+**The cure holds.**
+- DEC-10 makes FWD-3 gradeable:
+  - five dates (the latest frontier and four earlier trading dates, each read from `lib/trading_calendar.py`, so a weekend never counts);
+  - at least 30 per price source (override, trade median, interpolation, vendor), with all of a source taken and the shortfall printed if it has fewer;
+  - at least 150 in total;
+  - a deterministic draw (rows ordered by `sha256(asset_id|date|"ADVI_BDPRCE-FWD3")`, so any seat reproduces it);
+  - plus every price of the FWD-1 thread.
+- The pass rule fits Andrew's "estimation is highly risky": 100 pct, every recompute equal to the cent, and a miss keeps FWD-3 NOT REALIZED.
+- Andrew's confirmed line is unchanged. PART VIII line 2 reads the same at f2171cae6c and at HEAD: "an analyst can trace any served price to that rule and
+  its inputs". FWD-3's change only points to where the sample is set. That is a cure, not a re-word.
+
+**Note, not a ground: the endpoint record and the PRD now differ by a few words in that pointer.**
+- The endpoint record reads "the sample is set in the PRD (DEC-10)"; the PRD reads "the sample is set in DEC-10".
+- The meaning and the referent are the same, so this is a wording drift and not a change of substance. Make the two match byte for byte.
+
+**Carried forward from the review (not grounds):** whether a reader sees that a price is interpolated or carried forward, and the status figures that age inside
+the FWD-4 and FWD-8 lines.
+
+-- 3.0.0_SA_CVO
