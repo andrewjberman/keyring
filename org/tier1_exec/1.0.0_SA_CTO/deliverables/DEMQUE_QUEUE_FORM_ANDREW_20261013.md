@@ -71,13 +71,36 @@ security, every day. Instead:
 
 **DECISION, Andrew: ACWI and IWM do NOT need full holdings depth** (about 2,200 and 2,000 holdings a day today).
 
--- open for Andrew to confirm: this seat proposes the TOP 25 holdings by weight, daily, for those two broad index ETFs only.
+**ACWI and IWM: REMOVED from the rival-funds holdings pull** (Andrew, ~16:2xZ: "we do not need to track these for Rivalfunds, we do not need holdings data for these in any context, they arent even displayed on Rivalfunds").
+
+#### A4 Research app daily pull (AMGT_RESAPP, `integrations/bloomberg/research/price_axis_pull.py`, about 9:00 am ET at site Z): APPROVED, with its recommendation
+
+> Approved as well as recommendations for A4. In general I think the last 5 trading days is a good incrememntal strategy as a means to cover potential trading holidays/missed data for whatever reason/etc, across the various surfaces once we move to incremental mode (after backfill is already covered for the relevant needs). I also aree with model data depth on financials back to 2016. Regarding ACWI and IWM, we do not need to track these for Rivalfunds, we do not need holdings data for these in any context, they arent even displayed on Rivalfunds.
+
+1. **Who uses it:** the research app (each covered company's 30, 90 and 365-day price rankings and breakout flags).
+2. **Priority:** A, fourth.
+3. **History depth:** `WINDOW_DAYS` 30 is re-pulled daily today. It becomes INCREMENTAL (the rule below); the stored year is extended by `price_series_persist.py`.
+4. **Field breadth:** `PX_LAST` only.
+5. **Securities:** every covered company (about 100, counted at the next run).
+6. **Schedule:** daily, trading days, after the 7:00 am ET job.
+7. **Budget:** about 3,000 history cells a day today, about 500 under the incremental rule.
+
+**DECISION, Andrew: research-app model data (`model_block_pull.py`, `HIST_START` 2016-01-01) keeps fiscal-year financials back to 2016.** This is a named exception to the
+365-day non-client rule: a company model needs several fiscal years. The pull is one-time per newly covered company (about 1,000 cells; ABNB is 989).
+
+## STANDING RULE, Andrew: INCREMENTAL MODE = THE LAST 5 TRADING DAYS, on every surface
+
+Once a need's backfill is complete, every daily pull asks for **the last 5 trading days** (from `lib/trading_calendar.py`), not a single day and not a long window. That
+covers holidays, a missed run and late vendor corrections. A security with a gap wider than 5 trading days gets a targeted refill for just that gap, never a wider
+standing window. It applies to every surface (A through E) after its backfill is covered.
 
 ## FOR SITE Z (the Bloomberg device): changes to carry, appended as decided
 
 | # | change | file | source decision |
 |---|---|---|---|
 | Z1 | Fund-only fields (`FUND_EXPENSE_RATIO`, `FUND_TOTAL_ASSETS`, `TOTAL_NUMBER_OF_HOLDINGS_IN_PORT`, `TRACKING_ERROR`) are requested only for funds | `integrations/bloomberg/pipeline/etf_daily_pull.py`, the `CHAR` request | A2, Andrew 2026-10-13 |
-| Z3 | Dividends: one 365-day `DVD_HIST_ALL` pull per security on first entry, then a daily window of the last few trading days (replacing the 730-day daily re-pull) | `data/etfs/scripts/rivalfunds/enrichment_bloomberg.py` (`DEFAULT_WINDOW_DAYS`, `build_plan`) | A3, Andrew 2026-10-13 |
-| Z4 | ACWI and IWM: not full holdings depth (the depth is to be confirmed; proposed top 25 by weight, daily) | `data/etfs/scripts/rivalfunds/collector_bloomberg.py` (the BQL holdings query) | A3, Andrew 2026-10-13 |
+| Z3 | Dividends: one 365-day `DVD_HIST_ALL` pull per security on first entry, then the last 5 trading days daily (replacing the 730-day daily re-pull) | `data/etfs/scripts/rivalfunds/enrichment_bloomberg.py` (`DEFAULT_WINDOW_DAYS`, `build_plan`) | A3 plus the incremental rule, Andrew 2026-10-13 |
+| Z4 | ACWI and IWM REMOVED from the rival-funds holdings pull entirely (not displayed; no holdings needed in any context) | `data/etfs/scripts/rivalfunds/collector_bloomberg.py` and the rival-funds universe | A3, Andrew 2026-10-13 |
+| Z5 | The research price axis pulls the last 5 trading days daily (not 30), with stored history extended by `price_series_persist.py` and a targeted refill for any wider gap | `integrations/bloomberg/research/price_axis_pull.py` (`WINDOW_DAYS` for the daily pull) | A4 plus the incremental rule, Andrew 2026-10-13 |
+| Z6 | INCREMENTAL MODE everywhere: once a need's backfill is complete, daily pulls ask for the last 5 trading days | every site Z daily pull (the ETF pull's history top-up, rival funds, research, the models pull) | the standing rule, Andrew 2026-10-13 |
 | Z2 | `DEPTH_START_DAYS` 372 becomes 365 (non-client need: 365 days before the need; the trading calendar resolves the first business day) | `integrations/bloomberg/pipeline/etf_daily_pull.py` | backfill law ADDENDUM 2 item 4 |
