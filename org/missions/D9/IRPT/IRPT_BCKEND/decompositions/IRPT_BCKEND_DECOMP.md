@@ -3528,3 +3528,18 @@ Checks `deliverables/2.0.0_SA_COO~P2/checks/r171/p171_cells.py`, dry-run at the 
 | `IB-pr-500` | the portal's `fe-s-15` and `fe-s-18` generators reproduce their committed bytes; `selected_sections` resolves | FWD-3 | LOCAL | none | P171-e |
 
 fanout: 5 of 5 chains, cap 8, reason: five disjoint write sets (the gold-runner builder and `raw_keys.json`; a records-only host read; one Lambda's candidate build; another Lambda's candidate build; the portal fixtures and generators), no edge between them. Four worker spawns (slots ~347 to ~350) and one order to `0.7.0_AE_CloudOps~IB2`.
+
+## 164. ROUND 172, WORKSTREAM ~P (2026-10-13 ~04:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6783 = ROUND-172 ANALYSIS section 4)
+
+The CTO's list has three items. Item 1: read which packaged `HoldingsSnapshot` copies are validated at serve, then their minimal re-pin, then the builder's `account_id` (the CTO ruled `irpt-holdings` NOT re-pinned: it does not validate at serve; TARGET serving and the `multi_asset` enum change are their own pairs, and the frozen-v1 enum finding is routed to dell1's MDPF_SECCLASS owner). Item 2: the fe-s-18 truth decision (the committed bytes the portal's tests consume) and the generator repair (rows W350-S1, W346-S3). Item 3: the host bundle carrying the temp-file fix, when the host is next Online.
+
+CUT now: the READ of item 1 (`IB-pr-501`) and item 2 (`IB-pr-502`). NOT cut now, with the reason and the condition: the minimal re-pin and the builder's `account_id` apply (they depend on the verdict of `IB-pr-501`, an unmet dependency inside the round; the next round cuts them from the record, owner me); the `irpt-ycharts-generate` leg also waits on IRPT_ANLREQ's reader release; `irpt-directory-search` apply (the signed pair, after the CVO's re-sign); item 3, the host bundle (rides the next host bundle; the host is stopped and a start for a read alone is not cut; condition: the host Online).
+
+Checks `deliverables/2.0.0_SA_COO~P2/checks/r172/p172_cells.py`, dry-run at the base: IB172-1 AC1, AC2, AC3 FAIL (no record; a synthetic record passes all three and a contradicting `validated_at_serve` fails AC3); IB172-2 AC3 FAIL (no record), AC2 PASS at base (28 pass, 8 skip, 0 fail: a regression guard), AC1 (runs the generator) fails at base by round 171's trial and is dry-run in a throwaway portal worktree, not the shared checkout.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-501` | a READ of which functions package the `HoldingsSnapshot` schema copy and which validate against it at serve, with the minimal re-pin members | FWD-3 | LOCAL | none | P172-a |
+| `IB-pr-502` | the portal's `fe-s-18` generator reproduces the committed bytes the portal's tests consume, with the decision record | FWD-3 | LOCAL | none | P172-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two disjoint write sets (a records-only read; one portal test-folder generator), no edge between them. Two worker spawns (slots ~352 and ~353).
