@@ -10028,3 +10028,82 @@
   "class": "OBSERVATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W96-S1 -- the receiver takes the template from the comparison count; its body member variant is only a consistency check, and acceptance.py names no variant
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W96-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~96",
+  "surfaced_at": "2026-10-13T20:04:32Z",
+  "one_line": "AR-y-275 asks which member the receiver reads for the variant and how it chooses the report. The receiver reads the body member variant only to check it against the comparison count; the template is chosen from the count, and acceptance.py holds no variant read.",
+  "spec_asserts": "AR-y-275 step 2: read the receiver's member for the variant and how the receiver chooses the report (submission.py, acceptance.py), so that the variant the advisor selects is the variant produced.",
+  "world_is": "submission.py :61-62 validates the body member variant (auto, overview, comparison or multicomp) and :72-74 accepts it only when it is auto or the variant the comparison_keys count derives; any other value is refused VARIANT_CARDINALITY_MISMATCH. The template is chosen from the count: recipe_snapshot.py :90-91 (variant_for_comparison_count over len(comparison_keys)) and recipe.py :126-163 (recipe_for, which also refuses a declared variant that disagrees). acceptance.py has no variant read (a grep of the generate folder finds none in it). Read at workspace worktree HEAD 4b1e07dabc, read only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py@4b1e07dabc :61-62, :72-74 (read)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/recipe_snapshot.py@4b1e07dabc :90-91 and recipe.py@4b1e07dabc :126-163 (read)",
+      "portal candidate 80d7c70a record r23/PORTAL_VARIANT_CANDIDATE.json, read.receiver_member"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W96-S2 -- the portal repository has no safe-commit path, so the portal candidate was committed with plain git and a committer set on that one command
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W96-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~96",
+  "surfaced_at": "2026-10-13T20:04:32Z",
+  "one_line": "The order says to commit the portal candidate the way an earlier candidate branch was made. The workspace safe-commit.sh has no portal path, and the portal repository has no git identity, so the first commit was refused with Committer identity unknown; the candidate was committed with git commit --author and GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL set on that one command.",
+  "spec_asserts": "Portal commits follow the earlier candidate branch's pattern (portal log of wk-IRPT_ANLREQ-85-portal), and every commit goes through .tools/safe-commit.sh with a message file (CLAUDE.md section 6).",
+  "world_is": ".tools/safe-commit.sh has no portal path: its comment at :936-938 says the enforcing half lived in the portal repo and was retired with it. The portal worktree C:/dev/wk-portal-96 has no user.name or user.email (git config --get printed nothing), and the first git commit failed with Committer identity unknown. The earlier candidate commit 3b1f44ba67 has author and committer 0.9.0_WK_IRPT_ANLREQ~85 and the same message shape. The candidate is 80d7c70a7d on wk-IRPT_ANLREQ-96-portal, LOCAL, not pushed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-commit.sh@4b1e07dabc :936-938 (read)",
+      "portal commit 3b1f44ba67 author and committer fields (git log --format read in C:/dev/ajb_workspace/portal)",
+      "git -C C:/dev/wk-portal-96 config --get user.name and user.email printed nothing; the failed commit printed Committer identity unknown"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W96-S3 -- a fresh portal worktree has no node_modules; the candidate's tests were run through a directory junction to the main checkout's node_modules, which a recursive delete may follow
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W96-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~96",
+  "surfaced_at": "2026-10-13T20:04:32Z",
+  "one_line": "bun test and bun run typecheck cannot run in a fresh portal worktree (no node_modules); I linked C:/dev/wk-portal-96/node_modules to C:/dev/ajb_workspace/portal/node_modules with a directory junction. A recursive delete of that worktree may follow the junction into the main checkout's installed packages.",
+  "spec_asserts": "The order says to make the portal worktree with git worktree add and run the candidate's tests in it (bun test, bun run typecheck).",
+  "world_is": "C:/dev/wk-portal-96/node_modules is a directory junction (mklink /J) to C:/dev/ajb_workspace/portal/node_modules, created during this round. The junction is untracked: node_modules is in the portal .gitignore (line 11). Whether git worktree remove or a recursive delete follows a junction was NOT tested here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "mklink /J output: Junction created for C:\\dev\\wk-portal-96\\node_modules <<===>> C:\\dev\\ajb_workspace\\portal\\node_modules",
+      "portal .gitignore line 11 (node_modules), read in C:/dev/wk-portal-96"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "notes": "Disarm: remove the junction with rmdir (no recursion, no delete of its target) before the worktree C:/dev/wk-portal-96 is removed or pruned.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
