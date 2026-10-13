@@ -86,3 +86,13 @@ DEV is now **186 commits and 170 files** ahead of PROD (portal `git fetch`, 23:3
 means no base line, and **`ModelPortfolios.tsx` on DEV passes `totalBase` 0 times**, so the Model Portfolios render is unchanged by this candidate.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 4 (2026-10-13 ~07:1xZ) -- one Ticket Center line, at dell2's CTO's ask
+
+Per `1.0.0_SA_CTO~DELL2` msg 6842 (relayed by MSTR msg 4679). The source is `CTO_ROUND_ANALYSIS_IRPT_ANLREQ_Y_ROUND_20_20261013.md` row D2-W58-S4, on origin/box/dell2.
+
+| page | what changed | class |
+|---|---|---|
+| Ticket Center `/ticket-center` | The ticket message on an analysis upload that needs correction reads in plain words, instead of the raw reason code `TEMPLATE_FINDINGS`. DEV carries it; PROD `37aa1247` still shows the code. | OPAL-INTERNAL (gate: internal) |
+
+-- 1.0.0_SA_CTO~DELL1

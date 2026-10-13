@@ -3590,3 +3590,17 @@ Checks `deliverables/2.0.0_SA_COO~P2/checks/r175/p175_cells.py`, dry-run at the 
 | `IB-pr-508` | the tolerance test's import order repaired so the three builder suites run together | FWD-3 | LOCAL | none | P175-b |
 
 fanout: 2 of 2 chains, cap 8, reason: two disjoint write sets (a records-only AWS read; one gold-runner test file), no edge between them. Two worker spawns (slots ~359 and ~360).
+
+## 168. ROUND 176, WORKSTREAM ~P (2026-10-13 ~07:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6844 = ROUND-176 ANALYSIS section 2)
+
+The CTO's list has three items. Item 1: the per-firm holdings package census (read-only): which firms, the S3 keys `IRPT_HOLDINGS_BUNDLE_MAP` names (`refresh_dispatch.py:65`), each package's members against HEAD, the commits since each object was written, denominators printed (row D2-W359-S1; the CTO said yes in RE 6838). Item 2: the host-bundle pair on that census, naming exactly the packages and members the release needs (the 49F temp-file fix and the `account_id` builder), every other member at today's bytes, applied at the runner host's next scheduled Online (no start for it). Item 3, carried: the import-order repair (W356-S3), DRAINED in round 175 (`89af2d14e4`).
+
+CUT now: `IB-pr-509` (the census). NOT cut now, with the reason and the condition: the pair (item 2) depends on the census record (which packages exist, which members differ and which commits explain them: an unmet dependency inside the round); the next round cuts it from the record, owner me; its apply is gated by the host's next scheduled Online and its first read is the leftover temp-file count (counts only). Also not cut: the `irpt-directory-search` apply (the signed pair, after the CVO's re-sign) and the repair of the no-op report validator in the ycharts generate composition (row W352-S1; none calls it yet).
+
+Checks `deliverables/2.0.0_SA_COO~P2/checks/r176/p176_cells.py`, dry-run at the base: IB176-1 AC1, AC2, AC3 FAIL (no record); a synthetic record naming the three BUILDERS firms with the guard's 45 closure members at HEAD hashes passes all three (removed).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-509` | a READ-ONLY census of the per-firm `investor-reporting-holdings.tar.gz` packages (the bundle map against the guard, each package's members against HEAD, where the two merged changes land) | FWD-3 | SERVED (a read of the packages that decide what the host runs) | none | P176-a |
+
+fanout: 1 of 1 chains, cap 8, reason: a single records-only AWS read with no sibling cell. One worker spawn (slot ~361).
