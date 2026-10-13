@@ -1566,3 +1566,24 @@ reported as `combined_only`, still `UNEXPLAINED`). `UNEXPLAINED` above zero is c
 correction, stated so another seat would count the same way) is committed before the read; its bytes are bound by hash in the record.
 
 **fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~133` (worker), a new slot.
+
+## 92. ROUND 90, WORKSTREAM B (2026-10-13 ~14:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ROUND-90 ANALYSIS @d573cb1cb8 section 3 and msg 6986)
+
+Round 89 is terminal (MAY-CLOSE; the CVO's REMEDIATION_v36 @46e9beb3fd: FWD-8 NOT REALIZED, row `IRPT_DASHBD-D2-W133-S1` owed to the CTO). The PRD addendum v0.13, decision 11b, reads FWD-8 at two grains
+(a window that agrees within 0.35 pp meets the clause; a window outside it meets FWD-8 only if every differing day carries a stated reason that re-closes the window), counts all 90 stored segments (the 2 with no
+flow day included), and routes the day read through IRPT's existing per-account call (`bd_adapter.adapt`: `performancePeriod` and `performanceSeries`, daily cumulative returns), which needs no per-use word. The analysis fixes four items.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. ledger leg L7, carried: the 2026-10-14 11:41Z fire, `l5b_read.py`; close `irpt-dashbd-thresholds-swap-20261013` or restore rollback `8ELUDq...` the same session | the issuer's own act, no cell | FWD-8 | the 11:41Z fire | none |
+| 2a. BUILD the day-grain read of the 7: plan (offline), the live runner (never run by a worker), the analysis, a self-test | `DB-b-168` | FWD-8 | `~133`'s module (read) | R90-1 |
+| 2b. the issuer's live pull: ONE `performanceSeries` request per account for each of the 7 segments, read-only, written only to a private folder, never to S3 | the issuer's own act, no cell | FWD-8 | `DB-b-168` drained | R90-1 |
+| 2c. READ the 7 at day grain: each differing day gets a reason from round 89's closed list (the day rule committed before the read), the cause corrected and the window re-closed at 0.35 pp, else its days stay UNEXPLAINED by offset and size | `DB-b-169` | FWD-8 | the pull of 2b | R90-1 |
+| 3. the 2 no-flow segments by a tracked cell (the accrual correction closes both; the uncorrected control misses both) | `DB-b-170` | FWD-8 | `~133`'s module and rule (read) | R90-2 |
+| 4. the FWD-8 grade at the grains of 11b, in the drain-end | the issuer's own act, no cell | FWD-8 | `DB-b-169`, `DB-b-170` drained | R90-1 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the day-differs line is `0.01` pp (one basis point) of daily return, a number the criterion fixes before the read; (b) day figures are offsets from the segment start and sizes in pp, never dates with an account
+(the repo carries no client data); (c) the day read is built and run in three steps because a worker holds no credential: the worker builds, the issuer pulls, a second worker reads; (d) the pull's responses live only in the private folder of `~134`.
+The vendor read is a POST of a request body the estate already builds, read-only, 7 accounts, one request each; it needs no per-use word (CLAUDE.md, Agent Autonomy; PRD 11b) and no credential is printed or written anywhere.
+
+**fanout:** 2 of 2 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~134` (`DB-b-168`), `~136` (`DB-b-169`, spawned after the issuer's pull) and `~135` (`DB-b-170`).
