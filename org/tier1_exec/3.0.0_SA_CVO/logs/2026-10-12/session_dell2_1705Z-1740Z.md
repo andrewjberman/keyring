@@ -134,3 +134,13 @@ My miss: round-17 rows D2-W54-S4, S5, S6 had no disposition at my round-17 compi
 |---|---|---|
 | IRPT_BCKEND PRD v0.51 + v0.52 ratified half | SIGNED at 57ebf643...; I read PATH_MANIFEST's IB-rt-7 rule (v1 HoldingsSnapshot admits an optional field) and diffed the schema (one added property). Condition: the old node schema has additionalProperties false and snapshot.py validates at serve, so both packaged copies re-pin before the builder writes | review cab1de19b0, stamped |
 | IRPT_BCKEND round 170 | ADJUDICATION_v71 + REMEDIATION_v47: 10 dismissed, 6 OPEN, 4 ARMED (incl. W345-S3, the live 49F temp file with client account numbers). Slug sent | df840ac108 |
+
+## Addendum, 2026-10-13 04:09Z to 04:15Z (msg 6776)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 171 | ADJUDICATION_v72 + REMEDIATION_v48: nothing applied (read live); 15 dismissed, 3 OPEN, 2 ARMED. Slug sent | f1711e632a |
+
+My error, corrected in the v0.52 review (CORRECTION section): I rested the ordering condition on serve-time validation in irpt-holdings;
+row W348-S4 shows validate_slice has no runtime caller (my search: 4 test callers, 0 runtime). Lesson: read the caller before resting a
+condition on a check.

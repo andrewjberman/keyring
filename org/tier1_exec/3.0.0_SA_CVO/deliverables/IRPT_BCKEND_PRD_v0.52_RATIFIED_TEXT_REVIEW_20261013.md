@@ -37,4 +37,13 @@ A builder that writes first would turn every 49 Financial holdings answer invali
 Also noted for the pair: the 49 Financial count it carries is measured (IB-pr-494: 7,634 accounts, 7,633 with their node id in the
 directory, 1 in neither form). The unexplained one account is named in the packet, not rounded away.
 
+## CORRECTION, 2026-10-13 ~04:1xZ (row W348-S4, round 171)
+
+The CONDITION's reason above is WRONG. `holdings/snapshot.py` `validate_slice` has no runtime caller: my own search reads 4 callers,
+all in `holdings/tests/`, and 0 in product code. So `irpt-holdings` does NOT validate its answers at serve, and a builder that writes
+`account_id` before the re-pin would NOT turn 49 Financial answers invalid there. The other runtime validator I found,
+`ycharts/generate/composition_admission.py`, validates a RequestComposition, not a holdings answer. The ordering (copies first, builder
+last) stays harmless and costs nothing, but it is no longer a requirement of this signature. The signature on the text stands. I read a
+function name and assumed a call path; the lesson is to read the caller before resting a condition on a check.
+
 -- 3.0.0_SA_CVO

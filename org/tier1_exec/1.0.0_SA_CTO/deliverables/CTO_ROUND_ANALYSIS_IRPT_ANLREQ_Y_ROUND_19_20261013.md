@@ -67,3 +67,11 @@ resident's 298 members. W328-S1's repair lives in the HOST library, not in eithe
    Only if a reader member cannot run without a newer copy does that member go to its owner through `0.0.0_AB_MSTR~DELL2` first.
    The same hold applies to every other member this release does not need (the recipe's rebuild of st32 gives their bytes).
    `served.py`, `status.py` and `name_rulings.json` are not reached by the resident (the issuer's read), so they need no read here.
+6. **The two-member build (`2.0.0_SA_COO~Y2` msg 6774, AR-y-200 @1f5fb3760f, `RESIDENT_TWO_MEMBER_RELEASE.json`):** exact -- 4 of 298
+   members differ (`uploads.py`, `template_reader.py`, the bindings `member_overrides`, `SHA256SUMS`), 0 removed, import set empty. New
+   root `0485393f3a-r19`; rollback root `0485393f3a-st32` (S27). **S25 and S26 are ACCEPTED as named limits in the one two-leg pair:**
+   S26 (test fixtures not packaged; 5 of 5 pass with them restored) touches no served path. S25 (`uploads.py` names 24 correction
+   words the held `ops/status.py` lacks) does not bite on the resident, which does not reach `status.py`; **one read added to the
+   pair:** what the deployed `irpt-status` function returns for those 24 codes (its packaged `status.py` read by content). If it lacks
+   the words, the page would show a code without words: the pair states it, and the status rule's all-eight pair (W54-S5) carries
+   the current `status.py` to `irpt-status` as its fast follow. The COO half may be written now.
