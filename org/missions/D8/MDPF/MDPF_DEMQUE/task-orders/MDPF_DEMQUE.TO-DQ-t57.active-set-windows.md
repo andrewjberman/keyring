@@ -65,6 +65,16 @@ a CUSIP with no row in the active set (by CUSIP; a row with a blank CUSIP is mat
 The issuer measured the case: B1's 4 CUSIPs outside the set are bonds and T-bills with no symbol (118 cells together, last trades from 2023-08 to 2026-05); the expected real line is therefore `securities` 609, `held_back` 5 (those 4 and the P2 fund),
 cells about 34,223. The real check `dq_t57_real.py` is already amended to 609 and 5; test 3's name stays and its body asserts the hold-back of a name outside the set instead of the old unclipped behaviour.
 
+
+### AMENDED 2026-10-13 ~22:4xZ (issuer; no gate limb graded it, no new order added) -- rulings on rows D1-W49-S1 to S5, and the re-seated slot
+
+Your first pass (commits `be745e7fa2`, `b5fab0e728`) stands as inherited state. **You built to the order BEFORE the 22:0xZ amendment: the amended order and the amended real check are placed on your branch by file, and they govern.** Do NOT merge box/dell1.
+- **S1 (the emptied name): RULED, it leaves the request.** A name in the active set whose window opens after all its B1 history is `emptied_cusips` and is not in `securities` (draws are limited to the held dates). The check was the issuer's error: the expected count is 608, not 609 or 613.
+  Build to BOTH rulings together: names outside the set are held back (the section above), and the emptied name is dropped. Expected line: `securities` 608, `emptied_cusips` 1, `held_back` 5 (the P2 fund and the 4 outside names), `cells` about 34,223; `unclipped_cusips` is retired.
+- **S2: accepted.** The builder's own base measures 37,514 cells, 614 securities; the filed 37,439 is that minus the hand-held-back P2 fund. The builder now holds the P2 fund back itself, so 37,439 is the like-for-like base.
+- **S3: the check now allows 110 seconds a build call; keep your speed changes.** **S4: accepted** (`accounts` counts the key of every row, 769, as the published set states). **S5: accepted.**
+- Update test 3 to assert the hold-back of an outside-the-set name and the dropped emptied name; keep its name.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below plus your deliverables folder and this order's file. Scaffolding goes under `.scratch/`, uncommitted.

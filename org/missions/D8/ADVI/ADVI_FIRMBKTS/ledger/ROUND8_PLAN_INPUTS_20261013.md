@@ -22,3 +22,13 @@ written first, and writing it starts no Inflection or Cottonwood move.
   OPERATION to retire (`FIRMSEP-s3-direct-access-bypass`; `inf-canonical-prices-daily` stays disabled and held).
 - the Cottonwood crosswalk input (CTO msg 5028).
 - the exec-summary pricing defect (B_01 silver-noncash cap, row W75-S2) is the CRO's pricing brief, not a move.
+
+## FB-k-5 finding and the CTO's ruling (msg 5260, ~22:1xZ)
+
+Door 6 is not consumer-free: `opal-data-inf` has an ObjectCreated S3 notification on prefix `gold/meta/`, suffix `pipeline-complete.json`, invoking the Lambda `inf-portal-publisher`
+(read live by the issuer; row `D1-W80-S1`, ARMED, disarm owner `1.0.0_SA_CTO~DELL1`). The CTO's ruling: Andrew did not order the publish to stop; he ordered Inflection to run as
+49 Financial does ("the same flow for inflection as the comparable 49 Financial/Cottonwood job"). So:
+- the plan READS 49 Financial's live trigger for its portal publish and gives `inf-portal-publisher` that same shape in the new home;
+- only AFTER that is proven live do the marker, its S3 notification, `mdpf-feeder-accelerator` and the `router_iam` Door 6 deny retire, in ONE change with a rollback;
+- `D1-W80-S1` disarms when the plan names the successor and its proof;
+- the 13 CTO candidates among FB-k-5's 16 are ruled at the round-7 L10 on the plan's REC per row (record `deliverables/0.9.0_WK_ADVI_FIRMBKTS~80/PLANINV_LEGACY_OPERATIONS.json`).
