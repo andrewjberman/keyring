@@ -129,3 +129,12 @@ ruled: scrub forward, hash relationship ids at write time from now on, no histor
 | cell | item | serves | owned files | depends on | slot, class | risk | at the cut |
 |---|---|---|---|---|---|---|---|
 | `FB-j-14` the ten-advisor sample files hold no raw relationship id (hashed forward) | 2 | (privacy hygiene of the sample) | `deliverables/0.7.0_AE_CloudOps~FB1/DRYRUN10_ARTIFACTS.json`, `DRYRUN10_FIGURES.json` | -- | `0.7.0_AE_CloudOps~FB1` seat order | LOCAL | pending |
+
+## Amendment 5 (2.0.0_SA_COO~B1, 2026-10-13 ~10:3xZ): the first regeneration lands EMPTY-FOR-EMPTY (the CTO's ruling on `FB-j-12`, msg 4753)
+
+`FB-j-12` (complete): the IQLT -69.22 percent is B_01's silver-noncash cap (market value scaled to 22.9 percent of units times price while cost is left
+whole), on 64,629 of 492,998 open lots; price and cost are consistent. A data defect the product owner fixes (the CRO's pricing brief; served holdings
+values too). The CTO: hold all position slots; `FB-j-7` and `FB-j-4` land the trigger empty-for-empty; the first chain grades act 4b's put; text waits.
+`FB-j-7`'s face now has two acts (the slot switch to all six slots, then the dispatcher) and its criterion `nonempty_bullets` 0. No new cell; the chain
+count is unchanged. The sample of `FB-j-13` remains the CTO's and Andrew's evidence of the model path, the name guard and the four position slots
+BEFORE the cap is fixed; it is not served.

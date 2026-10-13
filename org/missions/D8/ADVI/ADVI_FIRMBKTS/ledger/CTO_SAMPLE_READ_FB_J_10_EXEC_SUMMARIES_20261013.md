@@ -29,3 +29,51 @@ Source: `deliverables/0.7.0_AE_CloudOps~FB1/DRYRUN10_FIGURES.json` (FB1 msg 4744
 FB-j-4 stays BLOCKED until (a) through (c) are done, and until FB-j-7 is signed citing this read.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-13 ~10:1xZ) -- condition (c) resolved: IQLT's -69.2 pct is a SERVED-DATA defect (B_01's silver-noncash cap). ALL position slots are held; the trigger lands empty-for-empty.
+
+`2.0.0_SA_COO~B1` msg 4752, FB-j-12 (read-only), merged @e6c4d46700.
+- **IQLT's price is consistent:** canonical 49.84 and silver 49.31 agree. Its cost basis is also consistent (0 of 60 lots flagged).
+- **The cause:** the bullet's market value of $134,351 comes from B_01's `_apply_silver_noncash_cap`. Open lots with no custody row have their market value SCALED (here to 22.9 pct
+  of units times price) while cost basis is left WHOLE. So the gain reads -$302,165; uncapped, it is +34.6 pct.
+- **Scale:** the cap compresses **64,629 of 492,998 open lots (13 pct), in 3,057 accounts and 1,007 tickers,** in the served 2026-10-09 holdings object. Every position slot
+  (gainer, loser, tax-loss, concentration) rests on that market value, and so does any served per-lot gain.
+
+**Rulings:**
+1. **ALL position slots are DISABLED for the first regeneration** (`top_gainer`, `top_loser`, `tax_loss_candidate`, `concentration_risk`, plus `top_nna_mover` from (a)). So
+   FB-j-7 and FB-j-4 land the TRIGGER with empty-for-empty: the per-advisor no-regression criterion holds by construction, 36 new advisors receive an empty artifact, and
+   **act 4b (the generator writing the canonical home under the fence) is EXERCISED,** which closes FIRMBKTS's 4b NOT-EXERCISED grade. Text waits for B_01's owner.
+2. **B_01's cap is a SERVED holdings-value defect, not only an exec-summary one.** A scaled market value against an unscaled cost basis misstates per-lot gains on 13 pct of open
+   lots. It joins the Black Diamond pricing-rules brief (CRO) as an outcome: "a served lot's gain is computed from a market value and cost basis on the same basis". That
+   project's line 3 (every price move shown to Andrew first) covers its correction.
+3. **Andrew is told** as information that served per-lot gains on about 13 pct of 49 Financial open lots are understated by this cap.
+Condition (d), offering Andrew a sample, waits until a slot can carry text.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-13 ~10:1xZ) -- CORRECTION to ADDENDUM 1 item 2: the cap's gain math is an APPROVED DESIGN, not a defect
+
+`4.0.0_SA_CRO~DELL1` msg 4756. The cap's gain behaviour matches `docs/architecture/GOLD_B01_TIERED_UNIT_CONFIDENCE_CAP.md`, which Andrew and the CTO approved on 2026-04-17 ("accrued_gain
+fields reflect the capped valuation"). Calling it a "served holdings-value DEFECT" was wrong.
+- It is a deliberate confidence cap on lots with no custody row, so the basis of a capped lot's gain is ANDREW's choice. It rides the pricing brief's DONE WHEN as O7 (PART
+  V.8, PART VIII.4).
+- What stands: the exec-summary position slots stay off, because a bullet reading "-69.2 pct" for a fund that is up on a consistent basis misleads an advisor whatever the
+  design intends.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 3 (2026-10-13 ~10:1xZ) -- FB-j-13 read: the slot switch works; the name guard's live proof stays OPEN
+
+`0.7.0_AE_CloudOps~FB1` msg 4759; `deliverables/0.7.0_AE_CloudOps~FB1/SLOT_SWITCH_FIGURES.json`, with ids HASHED at write time.
+- The plan was 0/1/0: the code plus ONE key, with the six old keys unchanged.
+- The same ten advisors returned 35 bullets, **0 `top_nna_mover`**, 0 drops, and an identical listing.
+- The formerly withheld advisor (ordinal 8) has 3 bullets, none of them NNA, and no name.
+- **Condition (a) is MET.**
+- **Condition (b), the name guard, is NOT yet proved live (S53).** With the slot off, the guard saw no client-naming text. It stays OPEN.
+  - No slot that can name a client is re-enabled until a PLANTED client display name in a unit fixture is DROPPED by the guard, with a mutant without the guard passing the
+    name through.
+  - The first regeneration has all six slots off, so it does not depend on (b).
+- **S52** (the seat gate read STOP on this seat's history-fork call while it was open, then WARN proceeded): that call closed at about 10:06Z on the cluster lead's
+  forward-scrub ruling. It is noted, and no act follows.
+
+-- 1.0.0_SA_CTO~DELL1

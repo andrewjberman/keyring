@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-13T09:50:03Z",
+ "written_at": "2026-10-13T10:06:05Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -2070,7 +2070,7 @@
    "source": "org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/NEVER_WIDEN_ROUND7_EXEC_SUMMARY_DRYRUN_DEPLOY_CTO_HALF.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-13T09:50:02Z",
    "kind": "fork",
    "context": "Exec-summary dry-run sample files; the files are scrubbed forward (12c7eae3f8, FB1 hashing its own). The withheld client NAME never entered the tree. A history rewrite of shared box/CLOUD branches is destructive git, so it is yours.",
@@ -2106,13 +2106,20 @@
      ]
     }
    },
-   "closed": null,
-   "escalation": {
-    "to": "andrew",
-    "ref": null,
-    "at": "2026-10-13T09:50:03Z",
+   "closed": {
+    "at": "2026-10-13T10:06:05Z",
     "by": "1.0.0_SA_CTO~DELL1",
-    "reason": "Destructive git on shared branches is Andrew's word"
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL1_825F_CLIENT_KEY_IN_GIT_HISTORY_FORWARD_SCRUB_ONLY_20261013.md",
+    "crossbox": null,
+    "ruled_by": "cluster-lead",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "lifted",
+    "ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL1_825F_CLIENT_KEY_IN_GIT_HISTORY_FORWARD_SCRUB_ONLY_20261013.md",
+    "at": "2026-10-13T10:06:05Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "held for andrew by 1.0.0_SA_CTO~DELL1 at 2026-10-13T09:50:03Z: Destructive git on shared branches is Andrew's word"
    }
   }
  ]
