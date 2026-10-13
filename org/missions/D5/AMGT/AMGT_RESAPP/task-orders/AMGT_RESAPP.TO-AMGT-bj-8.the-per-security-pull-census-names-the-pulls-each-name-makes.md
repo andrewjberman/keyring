@@ -77,6 +77,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** FWD-40 (c) is Andrew's added ask ('worth exploring the individual security pulls'). The census REPORTS what each name pulls and what each takes; it grades nothing. Local call times are an attribution aid (WHAT is pulled, how often, how many bytes); Lambda per-phase time is the time. STAGED behind `AMGT-bj-2` because AC3 invokes the function: the issuer flips it pending when bj-2 completes. The first request of AC3 may start a cold container; the instrument prints cold starts (Init) by name.
 
 <status>staged</status>
+<status>pending -- GO 2026-10-13T19:5xZ by the issuer (2.0.0_SA_COO~R1): `AMGT-bj-7` is complete and merged and RA1 released the function (19:11Z); the function is read by this order alone. AC1 and AC2 read S3 and DynamoDB in-process (no function invoke); AC3 invokes ONE overlay per name, sequentially. Portal PROD is DEV `63c4f9e3` since 19:24Z (Andrew-direct promote), so the census reads the LIVE page's routes.</status>
 <round>103</round>
 <workstream>V1</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~409</slot>
