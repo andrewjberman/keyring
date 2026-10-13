@@ -438,3 +438,82 @@ mutants; `hg_t16_gate.py` has fifteen arms (A-N plus E2) and is BAD at the base,
 reads `<placeholders>NONE</placeholders>` unchanged. The graded refusal was the naming limb at the worker's commit (the limb that found the defect).
 **Worker:** the finished slot is re-seated, naming its prior commits (the surprise row and an INVALID proof instance) as inherited state; the
 row stayed on the worker's branch (the row gate refuses a seat-authored W-coordinate row) and reached the channel with the worker's merge `8cc7e0458e`.
+
+## ROUND 5 -- the enrichment (issuer 2.0.0_SA_COO~G1, 2026-10-13 ~17:2xZ; PRD v0.3 @1c25ac7a85; CTO round-4 analysis @c36a37275f, msgs 4962 and 4966)
+
+Input: `ledger/ROUND_ANALYSIS.round4.md` section 3 (four items) and the CTO's ruling (A) on the schedule's name (msg 4966). The CTO's item numbers map to cells:
+item 1 = `HG-t-18` (the code half), item 2 = `HG-t-19`, item 3 = `HG-t-20`; item 4 is a carried obligation, not a cell. FWD-6 grades PARTIAL on the
+analysis: all seven pulls are dispositioned and the characteristics re-attempt is live, but D1-W14-S3 regrades ASTN to RE-ATTEMPT-DESIGNED, and a design
+is not a build. FWD-6 grades REALIZED on item 1's re-attempt (the CTO's text).
+
+### Measured at the base, 2026-10-13 ~17:2xZ
+
+- **ASTN FT leg:** `tools/astn_wsjft/scripts/run.py` degrades to WSJ-only when the FT fetch raises (the warning `FT fetch failed ...`), never refills the day;
+  `_fresh` keeps 12 h. The orchestrator Lambda (`infra/aws/lambda/astn-wsjft-orchestrator/lambda_function.py`) has modes `run` and `absence_check`;
+  the schedule `astn-wsjft-3am-run` (`aws_scheduler_schedule.astn_run`, `cron(0 3 * * ? *)` America/New_York) is the only trigger; no 4 AM absence-check
+  schedule exists in Terraform. The code reaches the scraper from `s3://opal-313476888478-lambda-artifacts/ec2/astn-wsjft/code/` by `deploy.sh`.
+- **The naming obstacle, found at the cut and raised the same hour:** `lib/opal_naming.grade(<any astn name>, 'SCHEDULE')` raises `R1.c: 'astn' is an
+  unresolved token` (the registry holds `astn` unresolved; ruling R10-2 keeps its existing names). A new hand-named astn schedule would add a hole and the
+  naming limb refuses the commit (the HG-t-16 failure). CTO ruling (A), msg 4966: astn gets a registry row with owner AMGT_HARVST, routed through MSTR to
+  the laptop CRO's lane; the schedule resource is cut when the row is on CLOUD and `grade()` returns the name clean. **The cell therefore builds only the code.**
+- **SDD session:** the puller reads Credential Manager `SDDSecure` (`sdd-daily-pull.ps1:229`); the capture writes Secrets Manager `schwab/sdd/session`;
+  no in-repo writer of `SDDSecure` was found (row D1-W14-S2; the CTO ruled the census row WRONG as written).
+- **Transcripts header:** `infra/aws/terraform/transcripts/pull.tf:1-3` says DESIRED ONLY, never applied; both transcripts rules are live and ENABLED
+  (read 2026-10-13). Its non-comment bytes are blob `ebabe8dad470cfb6a4ed0e865c13172bef05e12a`.
+
+## Rule 24
+
+Domain: the three live items, one adapter per cell. Same grain: `HG-t-18` is one behaviour (an FT-only refill) across the code that runs it and the
+Lambda that starts it; `HG-t-19` is one document; `HG-t-20` is three comment lines. State coherence: `HG-t-18` does not change what the 3 AM run does
+(the gate pins `run()` and the `run` command line byte-for-byte), adds no schedule, no grant and no SES identity; `HG-t-19` and `HG-t-20` change no
+code and no resource.
+
+## The cells
+
+| cell | what | serves | placement | risk | chain / slot |
+|---|---|---|---|---|---|
+| `HG-t-18` | The code half of the ASTN FT same-day re-attempt: `run.ft_reattempt` (complete-day no-op, FT-only fetch, window since the last successful run, de-dup by article id across the window's digests, one `FT supplement` send, `-ftsup` digest as the done-marker), `store.try_load_digest`, the `--ft-reattempt` / `--dry-run` CLI switch, and the orchestrator Lambda's mode `ft_reattempt`. NO Terraform; the schedule resource waits on the registry row | FWD-6 (D1-W14-S3) | dell1 code; the S3 code upload and the Lambda deploy are the issuer's drain acts under their own never-widen pair | WORLD | A, `0.9.0_WK_MDPF_HEALGAP~15` |
+| `HG-t-19` | READ-ONLY: what `SDDSecure` holds, who writes it, whether the capture's store is the same, and ONE decision: `NAMED-ACT` (person and trigger), `REPOINT` (a pair named) or `BOX-READ-OWED` (the exact read and the identity) | FWD-6 (D1-W14-S2) | dell1, document only | LOCAL | B, `0.9.0_WK_MDPF_HEALGAP~16` |
+| `HG-t-20` | The `pull.tf` header's first three comment lines corrected: both live rules named, `live`, read 2026-10-13; no non-comment line changes | FWD-6 (D1-W14-S4) | dell1 code; the proof is a `terraform plan` reading no change, run by the issuer | WORLD | C, `0.9.0_WK_MDPF_HEALGAP~17` |
+
+## Write sets (disjoint)
+
+- **HG-t-18:** `tools/astn_wsjft/scripts/run.py`, `tools/astn_wsjft/scripts/store.py`, `infra/aws/lambda/astn-wsjft-orchestrator/lambda_function.py`, the channel.
+- **HG-t-19:** `org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~16/SDD_SESSION_RESTORE_DETERMINATION_R5.md`, the channel.
+- **HG-t-20:** `infra/aws/terraform/transcripts/pull.tf`, the channel.
+- Checks (issuer's, dry-run at the base 2026-10-13 ~17:2xZ, each BAD as expected with a GREEN control and mutants discriminated: 20 of 20 for HG-t-18, 6 of 6
+  for HG-t-20, 9 of 9 for HG-t-19): `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R5_CHECKS/` -- `hg_t18_run_gate.py`, `hg_t18_orch_gate.py`,
+  `hg_t19_sdd.py`, `hg_t20_comment_only.py`. Reference patches that pass both HG-t-18 gates on a pristine HEAD: `R5_PATCHES/t18_tools.patch`,
+  `R5_PATCHES/t18_orchestrator.patch`.
+
+## Edges and fan-out
+
+No data edge between the three cells. `fanout: 3 of 3 chains, cap 8`. The schedule resource (round-5 item 1's second half) depends on the registry row, an
+act outside this project; it is cut as a later cell, or an amendment, when `grade()` returns its name clean.
+
+## Battery
+
+- `comp-schedule`: HG-t-18 adds no schedule in this round. The refill's own schedule is chosen when its resource is cut: it must fall after the 3 AM ET run's
+  worst case (the orchestrator's 900 s Lambda and the box's 600 s SSM timeout), and be a fixed cadence the cadence reader decides (the HG-t-16 lesson).
+- `comp-iam`: none changed. The scraper role already writes `digest/` and `email/`; the supplement writes `digest/<date>-ftsup/` and `email/<date>-ftsup/`,
+  inside those prefixes. Read at the drain by `get-role-policy`, not assumed.
+- `comp-adversary`: the two failures the gates pin are a re-send of an already-sent article and a refill that fires on a complete day; the residual is a day
+  whose FT cookie is still dead at the re-attempt (the fetch raises: loud, nothing sent).
+- C-NAMES: no new resource name in this round's code half (the schedule's name is the open registry row).
+- C-FIX-NOT-NOTIFY: no alarm, topic, SES identity or monitor in any cell; the supplement uses the brief's own `send_ses.send` to its own recipients.
+
+## The issuer's acts at the drain (not cells)
+
+1. **Deploy HG-t-18 (WORLD, own never-widen pair):** count the writers of `digest/<date>-ftsup/`, `email/<date>-ftsup/` and the brief's recipients first (N
+   printed in the half); read the scraper role and the orchestrator role; upload the `tools/astn_wsjft` tree to the box's code prefix and the Lambda
+   (Terraform `archive_file` update, targeted at the function) with a plan reading ONE changed attribute (the function's source hash); read the deployed bytes
+   against the build input. The first driven arm is `{"mode":"ft_reattempt","dry_run":true}`: fetch, analyse, compile, send and write nothing.
+2. **HG-t-20:** a `terraform plan` in `infra/aws/terraform/transcripts` reads no change; the transcripts project's owner is copied on the commit.
+3. **HG-t-19:** if the decision is `BOX-READ-OWED`, the read is a separate act with its own half and an executor on the box's identity; if `REPOINT`, a pair;
+   if `NAMED-ACT`, the person and trigger go to the CTO's open-calls list.
+
+## Carried obligations (not cells)
+
+- **The schedule resource** for the refill: cut when the registry row is on CLOUD and `grade()` returns the name clean (CTO msg 4966). Owner: the issuer.
+- **HG-t-16 ledger L6:** the `HOLDINGS-NOT-FINAL` read from 00:55Z 2026-10-14 (recorded, not waited on; CTO round-4 section 1).
+- **D1-W8-S1's remediation:** the first live failed guard read of the asset-dim pull (recorded, not waited on).
