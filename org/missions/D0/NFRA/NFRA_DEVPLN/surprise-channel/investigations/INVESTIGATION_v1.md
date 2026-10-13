@@ -241,3 +241,57 @@
   "world_is": "The fork add refuses without --context on HEAD (the check is in cmd_add, unchanged by DP-b-5), so the suite's case 1 never writes its list and the suite exits red. The failure predates DP-b-5. The suite is outside this order's paths, so it was not edited."
 }
 ```
+
+## NFRA_DEVPLN-W1-S9 -- DPb5-AC2 (amended) names origin/DEV as a DEV-cut tip, but the live portal holds no commit over origin/PROD in origin/DEV, so the run prints reason=empty, not dev-overlap
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S9",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-13T19:39:12Z",
+  "one_line": "AC2 as amended (origin/DEV, expect REFUSED reason=dev-overlap) prints APPROVAL-REGISTER result=REFUSED reason=empty commits=0 at the real portal: origin/DEV has 0 commits over origin/PROD, so no overlap can be counted.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_DEVPLN/task-orders/NFRA_DEVPLN.TO-DP-b-5.registration-facts-and-lease.md at c357598ced: DPb5-AC2 invocation with --branch origin/DEV and expect 'APPROVAL-REGISTER result=REFUSED reason=dev-overlap'; the amendment text says origin/DEV is a DEV-cut tip 'about 201 commits over PROD, all of them DEV-only'",
+      "run at /c/Users/AndrewBerman/Desktop/ajb_wk/devpln-1 (portal checkout /c/Users/AndrewBerman/Desktop/ajb_wk/devpln-1/portal) at 2026-10-13T19:39Z: timeout 120 python .tools/open-calls.py add --kind approval --check-only --project NFRA_DEVPLN --box dell1 --branch origin/DEV --purpose x --pages x --class client-facing --how x --portal portal -> 'APPROVAL-REGISTER result=REFUSED reason=empty commits=0', rc 3",
+      "read-only git -C portal at the same run: rev-parse refs/remotes/origin/PROD = 63c4f9e35f259ad76071b1099aeb9dddb150409f; refs/remotes/origin/DEV = 4d6010234ed2eb1d0a1c1782b4bf782b7e019993; rev-list --count origin/PROD..origin/DEV = 0; rev-list --count origin/DEV..origin/PROD = 34; merge-base --is-ancestor origin/PROD origin/DEV = no"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DPb5-AC2 (as amended) says origin/DEV is a DEV-cut tip of about 201 commits over PROD, all DEV-only, and that the registration is refused reason=dev-overlap; BUILD item 1 refuses commits=0 as reason=empty, and counts overlap only within origin/PROD..<branch>.",
+  "world_is": "origin/DEV is 34 commits BEHIND origin/PROD and holds no commit that origin/PROD lacks, so origin/PROD..origin/DEV is empty and the overlap set is empty. The branch origin/DEV has 0 commits over origin/PROD, so the tool refuses it at the earlier empty check (rc 3, nothing written), as BUILD item 1 defines. No branch can be refused reason=dev-overlap against this portal as it stands, because the overlap set it counts against is empty. The ~201 figure does not match the live refs. The tool follows BUILD item 1; the issuer or CTO rules the expected line or the branch. Nothing was written: the run was --check-only."
+}
+```
+
+## NFRA_DEVPLN-W1-S10 -- the DP-b-1 approval test cannot be green after DP-b-5: its case 1 asserts head_sha and commits are null after an add, which DP-b-5 now writes computed; the amendment fixed only the --portal refusal
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S10",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-13T19:39:12Z",
+  "one_line": "With --portal supplied to every approval add (item 4), .tools/tests/test_open_calls_approval.py still fails case 1 (cases=12/13 ok=False): it asserts head_sha and commits are None after add, and DP-b-5 writes them computed (commits=1, head = branch tip).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~DV",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_DEVPLN/task-orders/NFRA_DEVPLN.TO-DP-b-5.registration-facts-and-lease.md at c357598ced: item 4 'the test keeps all 13 of its cases and stays green'; DPb5-AC3 expect ok=True; worker rule: do not change what that test asserts",
+      ".tools/tests/test_open_calls_approval.py line 146 (case 1 of the DP-b-1 test, unchanged): r['approval']['head_sha'] is None and r['approval']['commits'] is None",
+      "run at /c/Users/AndrewBerman/Desktop/ajb_wk/devpln-1: timeout 120 python .tools/tests/test_open_calls_approval.py -> first line 'FAIL  add makes an OPEN approval row (head_sha and commits null, pages split)', last line 'OPEN-CALLS-APPROVAL-TEST cases=12/13 ok=False', rc 1",
+      "probe of that same case 1 add against the fixture portal (scratch script, removed): rc 0, 'APPROVAL-REGISTER result=OK row=... head_sha=be0a27ff0085efb9708b304cc3b4f1eb2cdc2a7d commits=1'; the stored row carries head_sha be0a27ff0085efb9708b304cc3b4f1eb2cdc2a7d and commits 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Item 4 of DP-b-5 (amended): the DP-b-1 test keeps its 13 cases, every approval add passes --portal to a temporary fixture, and the test stays green (DPb5-AC3 expects ok=True). BUILD item 1: add writes head_sha and commits computed.",
+  "world_is": "Both cannot hold as written. The fixture change makes the adds succeed, and the successful add writes the computed head and commits, so case 1's null assertion is false. Making AC3 green would need that assertion changed, which the order forbids, so the assertion is left as written and the test stays red (12/13). The fixture change is in place in .tools/tests/test_open_calls_approval.py. The disarm is the issuer's: rule whether case 1 is the DP-b-1 placeholder (now computed) and amend its expectation, or keep it. Nothing was written to the live lists; the test runs on OPAL_STATE_ROOT."
+}
+```
