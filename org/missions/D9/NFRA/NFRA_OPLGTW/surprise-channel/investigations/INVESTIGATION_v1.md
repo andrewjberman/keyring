@@ -12976,3 +12976,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "A precise per-family scope list needs a registry carrier (lookup) the deployed gateway does not ship; the issuer decides whether to cut that."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W65-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~65",
+  "surfaced_at": "2026-10-13T22:07:01Z",
+  "one_line": "OG-cd-1 AC2's <expect> pattern cannot match any real output: it needs 'record=\\S+ live=\\S+' but the schedule value is an EventBridge expression with spaces ('cron(15 12 * * ? *)'), so the script reads RESULT: PASS exit=0 while the pattern fails.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN timeout 120 bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/cd1.AC2.sh; echo exit=$? from the worktree root at 2b000fea49: lines 'schwab schedule record=cron(15 12 * * ? *) live=cron(15 12 * * ? *) equal=yes', 'schwab backfill frontier record=2026-10-12 live=2026-10-12 equal=yes', 'RESULT: PASS', 'exit=0'.",
+      "RAN python re.search of the order's AC2 <expect> over that output: no match. The break is 'schwab schedule record=\\S+ live=\\S+ equal=yes': \\S+ stops at 'cron(15' and the next token is ' 12', not ' live='.",
+      "READ cd1.AC2.sh: the script's own comparison is record == live as strings, so a record whose schedule value has no space would read equal=no; the live ScheduleExpression of opal-assets-silver-schwab-sweep-daily is 'cron(15 12 * * ? *)' (ISSUER NOTES, measured at the cut, and re-read by the script)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "TO OG-cd-1 section 4 AC2 <expect>: '(?s)families ([1-9]\\d*); denominator \u0001 \\([^)]+\\); claim-less values 0.*schwab schedule record=\\S+ live=\\S+ equal=yes.*schwab backfill frontier record=\\S+ live=\\S+ equal=yes.*RESULT: PASS.*exit=0'; ISSUER NOTES: the GREEN arm PASSED on a planted record carrying the live values.",
+  "world_is": "The script passes and the pattern does not, for the live schedule value alone; every other clause of the pattern matches. Recorded as AC2 FAIL, the order left open. Smallest amendment: record=.+? live=.+? equal=yes (and the same for the frontier line), which the issuer may make without a CTO ruling.",
+  "notes": "The off-host record W/CD1_LIVE_READ.json is committed and the script's own verdict is PASS; only the order's expectation is unmeetable as written. A re-grade needs no re-run of the code."
+}
+```
