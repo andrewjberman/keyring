@@ -105,7 +105,7 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMB
 
 **ISSUER NOTES:** CTO ADDENDUM 12 (round-3 analysis) and round-4 analysis section 3 item 4: read-only; the fix is a later cell under its own pair naming up to 158 summary keys. Row `D1-S40` (FB1) holds the facts to date: the rule is an event pattern with no schedule, TriggeredRules reads no data since 2026-09-01, the generator's newest log stream is 2026-05-04, the runner role holds events:PutEvents per FB1. The runbook's step-9 cron premise was the issuer's error (named in R4_CLOSE.md). Why a worker and not the seat: reads only, one chain, no deploy; FB1 holds the two seat orders of the round.
 
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <workstream>EXECSUM</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-h-6</to_id>
