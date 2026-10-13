@@ -516,7 +516,7 @@ APPLIED for the validator's canonical ownership read (D1-C-S37).
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v5",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v5"
     },
@@ -525,7 +525,7 @@ APPLIED for the validator's canonical ownership read (D1-C-S37).
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_FIRMBKTS-D1-S32",
@@ -620,7 +620,7 @@ APPLIED for the validator's canonical ownership read (D1-C-S37).
     "owner": "2.0.0_SA_COO~B1",
     "round": "v5",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B1",
       "round": "v5"
     },
@@ -629,7 +629,7 @@ APPLIED for the validator's canonical ownership read (D1-C-S37).
       "owner": "2.0.0_SA_COO~B1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_FIRMBKTS-D1-S35",
@@ -801,7 +801,7 @@ APPLIED for the validator's canonical ownership read (D1-C-S37).
     "owner": "2.0.0_SA_COO~B1",
     "round": "v5",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B1",
       "round": "v5"
     },
@@ -810,7 +810,7 @@ APPLIED for the validator's canonical ownership read (D1-C-S37).
       "owner": "2.0.0_SA_COO~B1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_FIRMBKTS-D1-C-S34",
