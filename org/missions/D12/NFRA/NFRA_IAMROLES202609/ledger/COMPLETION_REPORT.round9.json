@@ -1,0 +1,137 @@
+{
+ "kind": "COMPLETION_REPORT",
+ "schema_version": "1.0",
+ "project": "NFRA_IAMROLES202609",
+ "round": 9,
+ "written_by": "2.0.0_SA_COO~ZI",
+ "written_utc": "2026-10-13T07:52:02Z",
+ "decomposition_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/decompositions/NFRA_IAMROLES202609_DECOMP_R9.md@1308fdf7d3",
+ "denominators": {
+  "fwd_in_prd_header": 8,
+  "cells_in_decomposition": 5,
+  "task_orders": 6,
+  "task_orders_terminal_with_valid_proof": 6
+ },
+ "outcomes": [
+  {
+   "fwd_id": "FWD-1",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "a reviewer has actually answered the question with that evidence attached, rather than an opinion",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 9 per ROUND_ANALYSIS.round8.md: REALIZED at round 4."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "real roles have been read and their unused permissions named, over a stated lookback",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 9 per ROUND_ANALYSIS.round8.md: REALIZED at round 3."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "at least one real policy has been surfaced as perfectly scoped and yet requiring nothing of whoever calls it",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 9 per ROUND_ANALYSIS.round8.md: REALIZED at round 4."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "done_when_state": "APPLIED",
+   "done_when_text": "each one is either in code or carries a named owner and a reason",
+   "cells": [
+    {
+     "cell_id": "IAM-z-1",
+     "task_orders": [
+      {
+       "id": "NFRA_IAMROLES202609.TO-IAM-z-1.narrow-five-dead-names",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/NFRA_IAMROLES202609.TO-IAM-z-1.narrow-five-dead-names.proof_of_spec.json@ad42350eca"
+      }
+     ]
+    },
+    {
+     "cell_id": "IAM-z-2",
+     "task_orders": [
+      {
+       "id": "NFRA_IAMROLES202609.TO-IAM-z-2.schwab-reader-then-grant",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/NFRA_IAMROLES202609.TO-IAM-z-2.schwab-reader-then-grant.proof_of_spec.json@20e606c764"
+      },
+      {
+       "id": "NFRA_IAMROLES202609.TO-IAM-z-5.schwab-builder-dead-read-out",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~15/NFRA_IAMROLES202609.TO-IAM-z-5.schwab-builder-dead-read-out.proof_of_spec.json@55962b72f9"
+      }
+     ]
+    },
+    {
+     "cell_id": "IAM-z-3",
+     "task_orders": [
+      {
+       "id": "NFRA_IAMROLES202609.TO-IAM-z-3.market-data-v2-declaration-and-allow",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/NFRA_IAMROLES202609.TO-IAM-z-3.market-data-v2-declaration-and-allow.proof_of_spec.json@3130d03e8f"
+      }
+     ]
+    },
+    {
+     "cell_id": "IAM-z-4",
+     "task_orders": [
+      {
+       "id": "NFRA_IAMROLES202609.TO-IAM-z-4.wildcard-grant-census",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~14/NFRA_IAMROLES202609.TO-IAM-z-4.wildcard-grant-census.proof_of_spec.json@2d89c21256"
+      }
+     ]
+    },
+    {
+     "cell_id": "IAM-z-6",
+     "task_orders": [
+      {
+       "id": "NFRA_IAMROLES202609.TO-IAM-z-6.fred-retire-dead-raw-write",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/NFRA_IAMROLES202609.TO-IAM-z-6.fred-retire-dead-raw-write.proof_of_spec.json@4729bf8ba0"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "ENRICHMENT, per DECOMP_R9 line 7 (FWD-4 stays REALIZED). 5 cells, 6 orders (IAM-z-2 carries z-2 and its builder precondition z-5), all complete with VALID proof instances (.tools/proof-of-spec-check.py, 6 of 6, read at this writing). z-1: 13 dead ARNs off 4 roles. z-2: schwab-bucket-access deleted from bd-exporter-ec2-role; branch A graded on full post-delete chains, 29 of 29 stages (POST_APPLY.md 4e/4f @7ff6c7bdf7), rollback unused. z-3: market-data-v2 declaration and Allow out, not re-created. z-4: wildcard census, 3 grants. z-6: FRED raw write retired, portal yield curve unfrozen. JUDGMENT criteria are 3.0.0_SA_CVO~Z's (REMEDIATION_v9.Z.md @b589e3fad0). Written by a reseated ~ZI after the issuer ended (1.0.0_SA_CTO~Z msg 33581)."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "a real narrowing has been checked in advance and the check was believed",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 9 per ROUND_ANALYSIS.round8.md: REALIZED at round 5."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "each of the known past plans has been established as done or not done, on evidence",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 9 per ROUND_ANALYSIS.round8.md: REALIZED at round 3."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "done_when_state": "APPLIED",
+   "done_when_text": "the assessment reports the two differently, at permission grain",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 9 per ROUND_ANALYSIS.round8.md: REALIZED at round 3."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "it has actually been re-run and produced a comparable answer",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 9 per ROUND_ANALYSIS.round8.md: REALIZED at round 4."
+  }
+ ]
+}

@@ -41,7 +41,7 @@ Every row the slug carries keeps a live owner, and none is owned by the ended is
 
 Round-8 Addendum 1 (the dell agents' invoke narrowing) stays WITHDRAWN on Andrew's word.
 
-## The CLOSE: ruled here; the flip waits on one artifact
+## The CLOSE
 
 The CTO rules the project CLOSED. The mechanical flip to `dep_stage: CLOSED` needs both close documents, and the R6 rule
 in `.tools/missions-tree-index.py` refuses without them:
@@ -53,3 +53,5 @@ The issuer `2.0.0_SA_COO~ZI` has ended. Until a COO lane writes (1), the row rea
 `dep_stage: ROUND_CLOSE`. No work remains; only the paperwork does.
 
 -- 1.0.0_SA_CTO~Z
+
+**Flipped 2026-10-13 ~08:0xZ.** The COO's `COMPLETION_REPORT.round9.json` @89ae680e21 (`2.0.0_SA_COO~ZI`, re-seated once) and this seat's `COMPLETION_GRADES.round9.json` (8 of 8 REALIZED) are written. R6 reads 0 violations. `dep_stage: CLOSED`, `status: closed`.
