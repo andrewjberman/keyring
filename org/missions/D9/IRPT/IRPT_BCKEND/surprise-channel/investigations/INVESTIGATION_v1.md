@@ -30744,3 +30744,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "At the cell's commit the folder reads 1212 pass, 27 skip, 5 fail. The five named failures are present with the base frozen bytes, so none is attributable to the frozen export change. The base count of four was not reproduced and the difference of one pass is not attributed to a test; a full base run would settle it and was not made."
 }
 ```
+
+## IRPT_BCKEND-D2-W355-S3 -- closes IRPT_BCKEND-D2-W355-S1: AMENDMENT 1 granted the four fixtures and they are committed in the portal repo
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W355-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~355",
+  "surfaced_at": "2026-10-13T05:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "CLOSES IRPT_BCKEND-D2-W355-S1 (the four generator-rewritten fixtures were outside the grant). The issuer's AMENDMENT 1 (2.0.0_SA_COO~P2) granted fixtures/smoke/fe-s-18-holdings-observed.json, fe-s-18-holdings-target.json, fe-s-18-holdings-missing-attribution.json and __tests__/fe-s-32/holdings-no-answer.json. The generator was re-run and each file gained only the covered_account_ids list (five-line hunk, git diff --ignore-cr-at-eol); committed at portal c8c668c0 (4 files, 16 insertions, 4 deletions). Run after the commit: IB173-2-AC1 PASS rc=0, so the S1 hazard is disarmed by the amendment; S1 itself is not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@c8c668c0 git show --stat: the four fixture paths, 16 insertions, 4 deletions (LOCAL on wk-IRPT_BCKEND-355-portal)",
+      "python checks/r173/p173_cells.py . IB173-2-AC1 run from the workspace root under timeout 120: 'IB173-2-AC1 PASS', rc=0",
+      "git -C portal status --short after the run: clean (the generator reproduces the committed bytes)"
+    ]
+  },
+  "spec_asserts": "The TO's grant names only gen-fixtures.ts and fe-s-18-frozen.json; IB173-2-AC1 requires the smoke, fe-s-16 and fe-s-32 folders to be byte-equal after a generator run.",
+  "world_is": "The grant now covers the four fixtures (AMENDMENT 1). They are committed at portal c8c668c0, and the generator run leaves no drift in the smoke, fe-s-16 and fe-s-32 folders. Disposition INERT: the S1 hazard no longer holds at this commit."
+}
+```
+
+## IRPT_BCKEND-D2-W355-S4 -- base finding for IRPT_BCKEND-D2-W355-S2: a linked scratch base at e1cd356e2f does not reproduce 1213/27/4, and all five failures also occur there
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W355-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~355",
+  "surfaced_at": "2026-10-13T05:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Base run for S2: a detached scratch worktree at portal e1cd356e2f (outside the workspace; node_modules, workspace infra and docs linked by junction) reads 1087 pass, 27 skip, 21 fail over 1135 tests. The 16 extra failures are mostly ENOENT on workspace org/ paths that the scratch cannot see, so the scratch is not the stated base (1213/27/4). The five failures at the head commit (IVE26-AC3, IVE48-AC1, IVE98, producer fixtures, F14-AC3) also fail at e1cd356e2f with the same messages (HoldingsSnapshot drift, wire union with multi_asset, FIRMACCESS +35). So no failure is new to the frozen change. Which test accounts for the order's one-pass difference is not settled.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test src/pages/InvestorReporting at scratch e1cd356e2f with infra and docs linked: 1087 pass, 27 skip, 21 fail, Ran 1135 tests across 393 files (scratch output, not kept in the worktree)",
+      "the five head failures in that run print the same messages as at c8c668c0: gen-wire HoldingsSnapshot regeneration drift, wire union != contract enum, HoldingsSnapshot.nodes copy drift, FIRMACCESS DIFF +35 -36",
+      "scratch worktree removed (git -C portal worktree remove --force; prune; list shows none); junctions removed with rmdir, targets intact"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-504 states the base as 1213 pass, 27 skip, 4 fail, the four pre-existing, and asks for one base run at e1cd356e2f to settle the fifth failure.",
+  "world_is": "The one base run possible in a scratch tree does not reproduce the stated base, because the portal tests read workspace-level paths outside the portal (org/, infra/, docs/). Inside those limits, the fifth failure is not one the frozen change introduces: all five head failures are also present at e1cd356e2f. The stated base count of four and the one-pass difference remain unexplained."
+}
+```
