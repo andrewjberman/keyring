@@ -2633,6 +2633,27 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "AMENDED 2026-10-13 ~23:0xZ (ruling on S2), MDPF_DEMQUE.TO-DQ-t58 and build item 4 (pair A condition 2): 'After building the appended window, run lock.check on the appended days'; 'The appended-window check stays.' The combined history relock is added beside it, not in its place.",
     "world_is": "The tree runs one identity check, over the combined history. A name whose appended window carries a trade that disagrees with Yahoo, while its stored trades agree, is LOCKED by that check and its window is written; the appended-window check would hold it. No named test isolates a window-only mismatch (test 4 and test 5 each carry a mismatch that fails the combined check too). Nothing is written by this row; the fix is the issuer's decision."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W50-S7",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~50",
+    "surfaced_at": "2026-10-13T23:32:34Z",
+    "one_line": "The amended appended-window check names the trades and the appended rows but not lock.check's valid_from. With valid_from at the window's first day, lock.check's early-third rule rejects an agreeing trade that falls late in the window (measured 1 of 1 agreeing, REJECTED:PRICE_MISMATCH). The wired window_relock takes valid_from at the window's first in-window trade, as the full path starts a name's range at its first trade (measured 1 of 1 agreeing, LOCKED).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/lock.py check(): early_end = valid_from + (valid_to - valid_from) / 3; a passed trade must sit on or before early_end (lock.py lines 102-104, base 362d75e8fa)",
+        "scratch measurement .scratch/vf_measure.py (not committed, this pass): one agreeing trade on the last window day 2026-10-13 against appended closes 2026-10-06..2026-10-13: valid_from 2026-10-06 gives REJECTED:PRICE_MISMATCH 1 of 1; valid_from 2026-10-13 gives LOCKED 1 of 1",
+        "data/mdpf/scripts/demque/daily_draw.py window_relock (this pass, branch wk-MDPF_DEMQUE-50, base 362d75e8fa): valid_from = the first trade dated inside (stored max, frontier]; test_a_stored_name_takes_the_five_day_window... depends on the last-day trade reading LOCKED"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMENDED 2026-10-13 ~23:5xZ (ruling on S6), MDPF_DEMQUE.TO-DQ-t58 item (1): 'lock.check over the appended rows with the trades that fall inside the appended window'. No valid_from is named for that check.",
+    "world_is": "lock.check's early-third rule makes the check's valid_from decide whether an agreeing late-window trade can pass. The wired check anchors valid_from at the window's first in-window trade, so the early-third rule applies to the window's own trades; the 90 pct floor and the three-trade minimum are unchanged. The issuer is asked to confirm this reading or name another valid_from. Nothing is written by this row."
   }
 ]
 ```
