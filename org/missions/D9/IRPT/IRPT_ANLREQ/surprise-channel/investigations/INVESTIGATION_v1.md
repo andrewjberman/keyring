@@ -4435,3 +4435,82 @@
 }
 ```
 
+
+## IRPT_ANLREQ-D2-W55-S1 -- an internal caller whose profile lookup raises, or whose firm is outside the bucket registry, gets no INTERNAL-CALLER-CLASS line
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-12T23:58:56Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A call whose profile lookup raises, or whose selected firm is outside the bucket registry, has no users-row class, so the AR-y-184 line is not printed for it. The cell's once-per-call reading is not met for those calls, and a census must read them from the answer, not from the line.",
+  "spec_asserts": "TO-AR-y-184 point 1: ONE line, written once per such call, in the branch for an INTERNAL non-service caller that selects a firm other than its verified firm, with class one of row_present, row_absent, row_non_active. The cell names no fourth class.",
+  "world_is": "At ac3f6d75c5, served.py handle() runs the bucket_for ValueError refusal before the internal else branch, so that call never reaches the line. In the else branch the reader appends the class to seen only after the row is read; a load_service_profile or CanonicalProfileReaders exception before that append leaves seen empty, and _caller_class_line returns without printing. No fourth token was added. No test in test_caller_class_log.py exercises a lookup exception or an unregistered firm; the four named tests cover the three classes only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1151-1156 @ac3f6d75c5 (the profile lookup that can raise before any row is read)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1216-1223 @ac3f6d75c5 (the bucket_for refusal before the internal else branch)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1233-1236 @ac3f6d75c5 (the reader call and its fail-closed except)"
+    ]
+  }
+}
+```
+
+
+## IRPT_ANLREQ-D2-W55-S2 -- the cell asks for the file's logging idiom, but served.py prints JSON; the line follows the cell's plain key=value form
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-12T23:58:56Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cell says to copy the logging idiom at served.py lines 81-108, but the prints there emit JSON objects with an event key. The cell's form is a plain key=value line, so the new line is plain text printed with print() to the same function stream. A census that parses JSON from that stream will skip it and must match the literal prefix.",
+  "spec_asserts": "TO-AR-y-184 point 1: 'in the file's existing logging idiom (read how served.py logs at lines 81-108 and copy it), of the form INTERNAL-CALLER-CLASS class=<...> outcome=<...>'.",
+  "world_is": "At ac3f6d75c5, served.py lines 83 and 85 (_internal_sink) and line 107 (_record, via errors.public_line) print json.dumps objects. The new helper _caller_class_line prints the plain text INTERNAL-CALLER-CLASS class=%s outcome=%s. Both the cell's form and the file's stream are honoured; the JSON shape of the idiom is not.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:81-86 @ac3f6d75c5 (_internal_sink prints json.dumps objects)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:107-108 @ac3f6d75c5 (_record prints errors.public_line)"
+    ]
+  }
+}
+```
+
+
+## IRPT_ANLREQ-D2-W55-S3 -- outcome= reads the selection gate's verdict, not the answer: a row_present caller logged admitted can still be answered FIRM_BINDING by a later check
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-12T23:58:56Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cell defines outcome=admitted|refused without saying what it measures past the selection gate. The line is set to the gate's own verdict, so a caller logged outcome=admitted can still receive FIRM_BINDING from a later check in handle, and the line does not reproduce every FIRM_BINDING.",
+  "spec_asserts": "TO-AR-y-184 point 1: 'outcome=<admitted|refused>', and the line 'changes NO served answer, status code or envelope (the refusal reasons stay exactly as they are)'.",
+  "world_is": "At ac3f6d75c5, after the selection block, handle() calls firm_claims_match(event, verified) and refuses FIRM_BINDING on a mismatch (served.py lines 1240-1245). The gate's outcome is printed before that check runs. The line's refused value comes from the gate only (an allowedFirmIds narrowing, or a row read that raised); a census of answers must read the envelope.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1231-1239 @ac3f6d75c5 (the selection gate whose verdict outcome= carries)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1240-1245 @ac3f6d75c5 (the later firm_claims_match refusal that the line does not reflect)"
+    ]
+  }
+}
+```
+
