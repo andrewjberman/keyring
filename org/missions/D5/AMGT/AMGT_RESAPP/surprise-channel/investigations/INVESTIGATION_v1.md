@@ -25451,3 +25451,53 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only, no significance judged. The equality verdict (AC1) and the one-file scope (AC2) hold on both runs; the 18.8 s and 17951 ms figures are container-side measurements from round 102 and were not re-measured in the container. Local timings are fresh-process single samples on a dell1 laptop and are not graded by the check."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W408-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~408",
+  "surfaced_at": "2026-10-13T19:20:30Z",
+  "one_line": "The deliverables folder named in the order's paths and AC2 did not exist at the cut; the worker created it with mkdir -p before AC2 wrote into it.",
+  "spec_asserts": "Order section 3 and AC2 name org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~408/ as the worker's deliverables folder, the write target for census_sections.json and census_sections.txt.",
+  "world_is": "At worktree C:/dev/wk-resapp-408, HEAD 8ce0be2edb, that folder does not exist (ls: cannot access ... No such file or directory). The worker ran mkdir -p on the same path before AC2; AC2 then exited 0 and wrote both files there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -d on the deliverables folder at worktree HEAD 8ce0be2edb: 'No such file or directory'.",
+      "mkdir -p of the same path ran before AC2; AC2 printed exit=0 and the last line 'R103 SECTION CENSUS: RAN 95 of 95 names (0 read failures)'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only, no significance judged. The folder is inside the order's own write grant, so no path outside the grant was written."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W408-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~408",
+  "surfaced_at": "2026-10-13T19:20:30Z",
+  "one_line": "The FWD-40 (a) population's 93-name denominator (FWD-19's population) is not printed by the section census; the output carries only resolved=95 and pack_prefixes=105.",
+  "spec_asserts": "AMGT-bj-7 (FWD-40 (a), ratified text): the census is over the 93 names of AMGT_CORPUS FWD-19's population, printed, with the 95 covered names and the 105 pack prefixes reported beside it, every difference named.",
+  "world_is": "census_sections.txt line 2 reads 'POPULATION resolved=95 pack_prefixes=105', followed by two difference lists (resolved not in packs/: 2 names; packs/ not in resolved: 12 names). A case-insensitive search of the whole file for 93, FWD-19 and population returns line 2 only, so no 93 figure is printed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep of census_sections.txt for '\\b93\\b|FWD-19|population' (case-insensitive) returned one line: 'POPULATION resolved=95 pack_prefixes=105' (line 2).",
+      "Order AC2 expects the last line 'RAN N of N names' with N equal to the resolved names, 95 at the cut; the instrument's population count matches that, but the 93 figure named in FWD-40 (a) has no printed counterpart."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only, no significance judged. The issuer decides whether the 93 denominator is printed by a later instrument or stated beside the 95 by the CVO at grading; the worker has not run or edited any instrument to add it."
+}
+```

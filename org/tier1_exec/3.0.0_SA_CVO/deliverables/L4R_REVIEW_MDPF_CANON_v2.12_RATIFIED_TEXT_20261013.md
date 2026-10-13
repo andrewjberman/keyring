@@ -272,3 +272,65 @@ The served global timeseries (`aggregate-aua-timeseries/2026-10-12.json`, 495 da
 - What blocks is a false "to the cent" claim in the text, and a negative "Other AUA" band on 13 of 21 dates that no clause governs.
 
 -- 3.0.0_SA_CVO
+
+---
+
+## ADDENDUM -- v2.16 @ba8b400e03, ratified-text half -- SIGN
+
+**Delivery:** `1.0.0_SA_CTO~DELL1` msgs 5100 and 5101.
+**Reviewed bytes:** `git show ba8b400e03:org/missions/D8/MDPF/MDPF_CANON/prd/MDPF_CANON_PRD.md`, blob c71496c343. It is equal at HEAD;
+the working tree has the same content (`git diff HEAD` is empty). Ratified-text half_hash
+**d8db1b7ab4845919abac7e9846faae3a9adc6be02c83899034cd233635e704fa** (equal to the CTO's quote); endpoint_hash 9c61c436ab1e.
+**Diff** `567018c9e5..ba8b400e03`, read whole: the header v2.16; FWD-9's measurement, Other AUA, sum-to-Total and draw clauses; and the
+v2.16 note. Nothing else in ENDPOINT or CONTRACTS moved.
+
+### Reproduced
+
+On the served global timeseries `aggregate-aua-timeseries/2026-10-12.json` (ETag ad4381e454..., equal to this seat's copy) and the 21
+dated category-views objects:
+- **The range:** remainder (`non_model_aua` - Client - carve-outs) from **-4,649.20 to +301,207.84**, equal to (i). At or below zero
+  on 16 dates: 13 negative, 3 exactly 0.00 (2026-08-27, 09-25, 10-12).
+- **Rule (ii) applied:**
+  - On every date with remainder > 0, the stack - `opal_aggregate_aua` is within 0.01.
+  - On every date at or below zero, the excess equals |remainder| within 0.01: 1.87 against 1.86 on 09-09; the 0.01 is the per-model
+    rounding by which canonical + custom differ from `model_aua`, the same cent the sum arm already allows.
+- **Date E:** 2026-09-30 is the most negative date, with remainder -4,649.20 and excess exactly 4,649.20. The arm is well-defined: it
+  is named by date, and its excess is computed at read time, so it stays gradeable if a later re-emit moves the figure.
+
+### The judgment
+
+**1. "Absent, with the excess printed" is honest and gradeable, and Andrew's word permits it.**
+- **His words set grouping and color, not a sum.** Andrew's FWD-9 source (`ANDREW_DIRECT_20261013_184xZ_..._CHIPS.md` @5e80d5eb9b,
+  printed in this file's first section) asks for a Custom Models block in the Models-hover color and chips for ALT, ETF, Client
+  Supervised and Client Unsupervised: "easier to group on this basis rather than trying to stack all this random shit". "It adds up" and
+  sum-to-Total to the cent are the CTO's and CN-d-3's, not his. FWD-9 still keeps them on every date except two named, bounded
+  exceptions.
+- **The value carries its claim.**
+  - The chart draws no negative band and no invented clamp.
+  - The Client chips are the served category-views values, unaltered.
+  - The difference is a measured basis difference between two served artifacts, printed with the read as that date's figure.
+  - A clamp or a pro-rata adjustment would put an unmeasured number on a client-facing page; absent is the honest form.
+- **It is not visibly inconsistent at the rendered precision.** The worst excess is 4,649.20 on a total of about 2.17B (about 2 parts
+  per million). The tooltip formats to three significant digits (round-4 render: "$2.15B", "$410K"), so rows that exceed the Total by
+  4.6K read identical.
+- **It is gradeable.** Arm E checks excess = |remainder| to the cent, and B checks a zero-remainder date. **Condition, not a block:**
+  Andrew's PROD card should state it in one line beside "21 of 495 dates": "on up to 13 dated days the Client snapshot and the time series
+  differ by at most 4,649.20; Other AUA is then absent". His promote word is then given on it.
+
+**2. "A basis difference noted for a later cell" is not a wait on FWD-9.**
+- Every FWD-9 arm (A-E, the absent observable, the sums) is gradeable now on served data. The cause-finding is not a condition of any
+  arm, so FWD-9 is not partly ungradeable.
+- As written, though, the later cell has no owner and no carrier ("noted" is a wish). **Condition, not a block:** park it on its own
+  carrier: a surprise row with `disarm_owner` (suggest `2.0.0_SA_COO~D1`) and its un-park condition. It cites the range and date E from
+  this addendum, and lands at the round-7 cut.
+
+**3. Prior items:** all held at v2.15 and are unchanged here: the stack composition, the single-count ALT, the owed read-only history
+route, vermilion500 traced to Andrew 2026-10-01, the draw A-D, the citations, the absent observable and dev:live.
+
+**Verdict: SIGN** at half_hash d8db1b7ab484.
+- Conditions carried to the CTO, neither blocking:
+  - the PROD card line on the basis difference;
+  - an owned row for the basis-difference cause.
+- Proportionate sign-off: a wording-only change under this hash would not re-open the half.
+
+-- 3.0.0_SA_CVO
