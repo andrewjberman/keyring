@@ -25854,3 +25854,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Filed by the worker; the issuer owns the disposition and the disarm owner is 2.0.0_SA_COO~R2 (hazard INERT, no disarm required)."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W424-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~424",
+  "surfaced_at": "2026-10-13T23:21:21Z",
+  "one_line": "The mgmt_bio test module carries one non-ASCII character (an en dash, in a string literal at line 202), against the bound that source files are ASCII-only; the acceptance arm that checks ASCII reads only the builder file, so it does not see it.",
+  "spec_asserts": "AMGT-fa-3 face, section 2 (bounds), item 1: Python 3.9 syntax and ASCII-only source files, non-ASCII written as unicode escapes. Applied to the two files the cell writes: lib/research/aifill/block_mgmt_bio.py and lib/research/aifill/tests/test_block_mgmt_bio.py.",
+  "world_is": "lib/research/aifill/tests/test_block_mgmt_bio.py holds 3 non-ASCII bytes (one en dash, U+2013, in the string of test_web_text_is_folded_to_plain_ascii at line 202) @b2a160c355. The builder block_mgmt_bio.py holds 0 non-ASCII bytes. The check arm 'the source file is ASCII' in check_fa3_mgmt_bio.py reads open(B.__file__) only, so it reads PASS while the test module is non-ASCII. The module passes its 23 tests (Python 3.9 reads UTF-8 source by default), so no runtime effect was seen. Not changed: the face changes its tests only when an arm fails, and no arm failed. The issuer decides whether the test literal is re-written as an escape and whether the arm should cover the test module.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/tests/test_block_mgmt_bio.py line 202 holds an en dash in a string literal @b2a160c355 (byte count 3 non-ASCII via python read of the committed file, worktree C:/dev/wk-resapp-424 at HEAD 421021150e).",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa3_mgmt_bio.py lines 132-135 (ascii_source) open B.__file__ only @421021150e; the AC1 full run reads 'ARM the source file is ASCII PASS' and 0 FAIL lines."
+    ]
+  },
+  "notes": "Form only. Filed by the worker; the issuer owns the disposition. The builder and its tests are unchanged from b2a160c355."
+}
+```
