@@ -92,4 +92,5 @@ pin's own handler against the live function (route tables and `r98_thesis_fullbo
 <slot>0.7.0_AE_CloudOps~RA1</slot>
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
+<proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
