@@ -10430,3 +10430,34 @@
   }
 }
 ```
+
+### IRPT_ANLREQ-D2-S85 -- TO-READS-R193 step 1 names a commit at which the count script's self-test cannot pass
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S85",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-13T21:20:00Z",
+  "one_line": "TO-READS-R193 step 1 asks for the count script's --self-test to exit 0 in a worktree detached at a665d34dd3 (the r18.1 reader); it exits 1 there (read_the_same 0 not 1, read_differently 7 not 6, by_cause all OTHER:NON_FINDING_DIFFERENCE), and exits 0 at 35c3c4bd45, the base commit Y9 AMENDMENT 1 used; so the order's step 1 is unmeetable as written and the live counting run was not made.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r22/R0D_STEP0_AND_STOP.json, member step1: self_test_at_a665d34dd3 exit 1 with its first failures; control_self_test_at_35c3c4bd45 exit 0",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r16/count_stored_inputs.py:446-453 and the self_test: the new reader is hard-wired to d95cf11106 and the checkout's reader is the old one",
+      "org/tier2_senior/0.7.0_AE_CloudOps~ANL/task_orders/IRPT_ANLREQ.TO-READS-Y9.stored-input-count-r18-laptop.md AMENDMENT 1: the same defect, resolved by running the self-test at the base reader"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-READS-R193 step 1: the script's --self-test exits 0 in a throwaway worktree detached at a665d34dd3 ('the self-test takes the checkout's own reader as the old reader'). A self-test failure is a STOP.",
+  "world_is": "The self-test takes the checkout's reader as the old reader but its expected counts are written for the BASE reader as old (35c3c4bd45) against the hard-wired new reader d95cf11106; with r18.1 as old the stored-template differences collapse into one cause. The same self-test at 35c3c4bd45 exits 0 on this box, so the script and the box are sound. Step 0 of the order passed first (identity, one decrypt of 214395 bytes with the digest equal, delete simulated explicitDeny). No stored-input count was taken.",
+  "notes": "owner of the amendment: 2.0.0_SA_COO~Y2 (the issuer amends its own order). The ask is whether step 1 may be met by the self-test at 35c3c4bd45, as under Y9 AMENDMENT 1."
+}
+```
+
+- **owner:** `2.0.0_SA_COO~Y2`
+- **disarm_owner:** n/a -- INERT
+- **state:** OBSERVATION / INERT
