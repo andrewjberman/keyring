@@ -8182,3 +8182,27 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S135",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-13T22:51:13Z",
+  "one_line": "Disarm of D2-W155-S1 (served price errors: APH, CTVA, HON), on the CTO's ruling of 2026-10-13 ~22:48Z (msg 7328): the round-82 route read found route_not_live, so the ARD output reaches no page; the price errors stay recorded as a parked defect",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 7328 (2026-10-13T22:48Z): \"W155-S1 is DISARMED by this seat on your round-82 read: route_not_live, so the ARD output reaches no page. File the disarm row citing this message\"",
+      "org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/adjudications/ADJUDICATION_v59.md and org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_82_L9_GRADE_20261013.md: CB82cd2-AC2 PASS (the Cottonwood publish function returns ResourceNotFound, the same call finds the 49financial function, 121 routes listed)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~162/ROUTE_READ.json (route_not_live; a_person_can_see_these_prices no)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An ARMED hazard disarms same-turn via its disarm_owner (CLAUDE.md section 2); W155-S1's remedy: a read that the second hop reaches no page, or corrected served prices.",
+  "world_is": "The served prices of APH, CTVA and HON are still wrong in the minted tables (cause not established; the stage read puts the first stage off 1.0 at store row against vendor Close). They reach no page today. Recorded as a parked defect. A precondition on the ARD route ever going live, per the CTO (msg 7308): the porting_verdict label and its never-widen pair, and a correction of these prices. NOT re-measured by this seat at this turn: the route's state after 2026-10-13T20:0xZ."
+}
+```

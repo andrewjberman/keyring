@@ -72,6 +72,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** WORLD class because its `<paths>` name an infrastructure-tree script (the L6 gate's inferred floor; the first cut of this change rode inside the serve order at LOCAL and was refused). It applies nothing: the exercised read for the WORLD class is the generator's own `--check` plus the neighbouring test's byte comparison against fresh `lib.opal_naming` output, run by the issuer at the drain, and the CTO's read at the round close. The constant is the rule-30 route for the serve (`AMGT-fa-7`, staged behind this order); the S3 write that fills the address is a separate never-widen act (decomposition s.5).
 
 <status>pending</status>
+<status>complete -- 2026-10-13T22:5xZ by the issuer (2.0.0_SA_COO~R2): wk-AMGT_RESAPP-428 @f56dbd91a5 merged @957b04a764, proof instance VALID (rc=0). AC1 PASS (`AIFILL FA-9 ARMS: YES (8 of 8)`, re-run by the issuer in the worker's tree, same line), AC2 PASS (6 passed). Issuer re-read: `gen_harvest_prefixes.py --check` byte for byte, registry hash fff9a273 unmoved, the diff is the three lines the face names (generator entry, regenerated constant `AI_FILL_GOLD_PREFIX = 'amgt/harvest/gold/ai_fill/'`, the test pin). Row W428-S1 is an OBSERVATION (the check prints failure text as detail on two PASS arms; verdict and exit code are right); not graded here.</status>
 <round>104</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~428</slot>
