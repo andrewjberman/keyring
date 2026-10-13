@@ -8905,6 +8905,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      "world_is": "The first real pythonw.exe run used subprocess.run with capture_output=True: the child reported stdout_is_none False, and the mutant wrote stopped None instead of AttributeError (2 failed, 5 passed). Launching with creationflags DETACHED_PROCESS and no redirection gave sys.stdout and sys.stderr None; the test now asserts that premise before any cycle assertion. The gap is the test launch, not the build.",
      "grounding": {"status": "GROUNDED", "evidence": ["worktree lib/opal_data_harvest/test_bz3_windowless_runner.py run_pythonw (uncommitted at filing): the DETACHED_PROCESS launch and the stdout_is_none and stderr_is_none assertions", "pytest of the module before the launch fix: capture_output run gave stdout_is_none False and the mutant stopped None (2 failed, 5 passed); after the fix: 7 passed"]},
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-S13",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-13T07:30Z",
+     "one_line": "The shared tree's copy of AMGT_HARVST~120/rank_universe_20261008.json reads CRLF on disk while its index entry is LF, so test_bn1's byte-equality test fails there (a fifth failure) though a clean checkout of the same commit shows the four known ones.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "disarm_owner": "2.0.0_SA_COO~W1",
+     "spec_asserts": "HVST-bz-3 COO half C-b (deliverables/2.0.0_SA_COO_W1/round84/NEVER_WIDEN_HALF_COO_BZ3_MERGE.md): on the merged tree the full lib/opal_data_harvest suite shows the same four failures as the base and no new one.",
+     "world_is": "Measured 2026-10-13 ~07:2xZ after the merge 995adcaeaa. In the shared tree the full suite read 5 failed, 798 passed: the four known (test_ah1_fixture_solve[bbg]; three in test_aw1_origin_load_wait) plus test_bn1_names_made_whole.py::test_v_building_twice_gives_equal_bytes_and_they_equal_the_files_on_disk, an AssertionError at line 144 comparing the file's bytes on disk (b'{\r\n ...') with the computed LF bytes. git ls-files --eol on org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/rank_universe_20261008.json reads i/lf w/crlf in the shared tree and i/lf w/lf in the worker worktree; core.autocrlf is false. The merge did not touch that file (git diff --name-only over the merge lists 6 paths, none under ~120). CONTROL: a clean detached checkout of 995adcaeaa read 4 failed, 799 passed, 3 skipped, the same four, none new. Who wrote CRLF into the shared tree's copy is not known.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "git ls-files --eol -- org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/rank_universe_20261008.json (shared tree: i/lf w/crlf; worker worktree C:/Dev/wk-harvst-138: i/lf w/lf)",
+       "python -m pytest lib/opal_data_harvest -q in the shared tree @995adcaeaa: 5 failed, 798 passed; in a clean detached checkout of 995adcaeaa: 4 failed, 799 passed, 3 skipped",
+       "lib/opal_data_harvest/test_bn1_names_made_whole.py:144"
+      ]
+     },
+     "notes": "INERT: it cannot move a served byte; it fails one test in the shared tree only. It would also fail the next merge's C-b read there. A pre-existing line-ending state of one file in the shared tree, not a regression of bz-3. Not repaired here (no write to another round's deliverable); the owner of that file's checkout normalises it, or the next issuer reads the clean-checkout count.",
+     "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
