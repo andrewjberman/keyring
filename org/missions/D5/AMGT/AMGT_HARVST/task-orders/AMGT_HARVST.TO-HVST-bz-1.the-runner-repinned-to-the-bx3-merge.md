@@ -38,6 +38,24 @@ The runner may be mid-cycle. A restart that kills it loses that cycle's pairs (a
 - (iii) **C-g:** the new pin keeps the old runtime root, so the same STOP file would end the new runner at once. DELETE it after (ii)
   and BEFORE `Start-ScheduledTask`. Record the delete (path, time, `Test-Path` reading False) in `bz1_stopped.out` and the ledger.
 
+## 1b. AMENDMENT 1 (2026-10-13, issuer `2.0.0_SA_COO~W1`, on your row Z-S114): READ ONLY. Nothing is killed, stopped or started by this amendment.
+
+Your stop was right and the signed condition stands: the running cycle is NOT killed. A runner that never reaches its stop-file check is a branch
+neither signed half covers, so the issuer opens it with a read and, if the read supports it, a new pair. Do exactly this and stop:
+1. Leave the stop file where it is. Do not run `Stop-ScheduledTask`, `Stop-Process` or `Start-ScheduledTask`. Do not touch `<old>`'s task.
+2. Write ONE file, `bz1_wedge_read.out`, in your round83 folder, holding every reading below with its time (`date -u`):
+   - `Get-CimInstance Win32_Process -Filter "ProcessId=21512"` (ParentProcessId, CreationDate, CommandLine);
+   - `Get-CimInstance Win32_Process -Filter "ParentProcessId=21512"`: every child, or the line `NO CHILD`;
+   - `Get-Process -Id 21512 | Select CPU,Threads,Responding,MainWindowTitle`, taken TWICE, 120 seconds apart;
+   - `Get-NetTCPConnection -OwningProcess 21512`: State, RemoteAddress, RemotePort of each, or `NO CONNECTION`;
+   - `Get-ScheduledTaskInfo -TaskName 'Opal Data Harvest - Continuous Cycle'`: State, LastRunTime, LastTaskResult, NextRunTime;
+   - the last 5 lines of `cycle_runner.log`, and the `done` length and the top-level key names (names only) of
+     `state/cycles/bbg/20261012T191641Z.checkpoint.json`;
+   - a positive control for the connection and child reads: the same two commands against a process you know has both
+     (for example your own shell's parent), so a zero reads as a zero.
+3. Commit and push, and send nothing else: the read is the report. Do not diagnose a cause and do not act on the read.
+The issuer reads it and cuts AMENDMENT 2 (a branch with its own signed pair) or rules the runner is waiting on something that is not a wedge.
+
 ## 2. THE ACT (site Z box, once)
 
 `<old>` is the pin in the task's `WorkingDirectory` today (`...\wk-harvest-runner-pin-b5a7a3a4b6`). `<state>` is the state dir in the
