@@ -933,3 +933,29 @@
   "world_is": "The git source has no test seam of its own, so the git-newer case cannot be exercised without a second variable; OPAL_GIT_READ_ROOT is that seam (the repository whose origin/box refs are read, default ROOT, unset in production). The order's one-variable count is exceeded by this one; the production read path and the grammar of the approval-status line are unchanged."
 }
 ```
+
+## NFRA_DEVPLN-W1-S15 -- The order gives a live FAST lease admission for the whole push (BUILD 4) and refusals for a delete, a new ref and a non-
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S15",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-13T23:55:45Z",
+  "one_line": "The order gives a live FAST lease admission for the whole push (BUILD 4) and refusals for a delete, a new ref and a non-fast-forward (BUILD 2) without an order between them; the cell runs the structural refusals first, so a lease admits only the commit walk",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/portal-hooks/dev_push_payload_gate.py decide() at the worktree (working copy at bb0100a77b, uncommitted at write time): ref skip, then delete, new-ref and not-fast-forward refusals, then the FAST lease check, then the commit walk",
+      "the order's BUILD 2 names the three refusals and BUILD 4 says 'the whole push is ADMITTED reason=fast-lease' with no ordering between them",
+      "tests: .tools/tests/test_dev_push_payload_gate.py cases 'delete refused', 'new ref refused', 'non-fast-forward refused' run with no lease, and the lease cases run with a commit payload; 19/19 pass"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BUILD 4: a live FAST lease held by OPAL_AGENT_SERIAL makes the whole push ADMITTED reason=fast-lease; BUILD 2: a delete, a new branch or a non-fast-forward push is REFUSED. The order names no precedence between the two.",
+  "world_is": "A lease seat that pushes a delete or a non-fast-forward of DEV is still refused, because the structural refusals run before the lease check. The lease therefore exempts only the commit payload walk. The order's 'whole push' wording would admit a delete or a history rewrite; the built order does not. Reported for the lane owner's ruling, not changed here."
+}
+```
