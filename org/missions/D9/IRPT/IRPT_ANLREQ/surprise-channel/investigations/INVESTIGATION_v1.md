@@ -3879,3 +3879,80 @@
   }
 }
 ```
+
+## IRPT_ANLREQ-D2-W54-S10 -- the second refusal of the renderer arms is not at interactive_access.py:110: it is a live current() that raises at :109, and the owner arms have no second comparison
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S10",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-13T01:05:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Row S7 and the AR-y-183 cell place the second refusal of the actor and renderer arms at interactive_access.py:110. Measured with the named check pinned: the actor arms are refused at line 110 (principal != live current()), but the renderer arms are not. On renderer headers the live current() at interactive_access.py:109 raises, and authorize_current returns False at lines 120-121. Both routes are recorded as 'issued record not currently authorized' (owner_reads.py:33) or 'prospect input not currently authorized' (prospect.py:87). The owner arms have no second comparison.",
+  "spec_asserts": "AR-y-183 cell and row IRPT_ANLREQ-D2-W54-S7: each of the six final-release arms is caught by its named identity comparison, and the second comparison that also refuses the actor and renderer arms is interactive_access.py:110 (principal != current).",
+  "world_is": "Measured in _authz/tests/test_final_release_bites.py, step 2a of each actor and renderer test (the named check pinned, the live comparison left in). Read actor: refused at owner_reads.py:33, raised from retained() at owner_reads.py:40, after the live comparison at interactive_access.py:110 returned False. Read renderer: refused at owner_reads.py:33; current() raised at interactive_access.py:109 and was caught at :120-121. Prospect actor and prospect renderer: refused at prospect.py:87. Owner read and owner prospect: the payload escapes once the retained-owner comparison is pinned, so no second comparison exists for them. Not measured: any other arm of the folder.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py:108-121 @16795233f6 (authorize_current: 109 live current(), 110 principal comparison, 120-121 except returns False)",
+      "infra/aws/lambda/investor-reporting/_scope/owner_reads.py:33-41 @16795233f6 (retained() refusal at 33; post-compute retained() at 40; owner raise at 41)",
+      "infra/aws/lambda/investor-reporting/_scope/prospect.py:87-95 @16795233f6 (authorization refusal at 87; actor comparison 92-93; owner comparison 94-95)",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_final_release_bites.py @f722a48d92 (step 2a of the actor and renderer tests)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S11 -- the authorize argument the six final-release arms pass (lambda *a: True) is never consulted for the internal caller: served substitutes the live authorize_current
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S11",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-13T01:05:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The read arms of test_final_release_refuses_changed_actor_owner_or_service_identity pass authorize = lambda *a: True to read_entry, which reads as the test deciding the retained-record grant. For an internal caller served replaces that argument with InteractiveAccess.authorize_current, so the injected lambda is never called in those arms; the refusal and the grant both come from authorize_current.",
+  "spec_asserts": "test_interactive_entry.py:87-103 (the read arms): the authorize argument of the read entry is the retained-record grant under test.",
+  "world_is": "served.py:59-62 @16795233f6: authorizer = self.authorize_record_owner, then replaced by InteractiveAccess(...).authorize_current when verified_internal_subject(headers) is not None. For the opal caller the test's lambda is therefore dead in the read arms. Measured by the new file: with the named owner-read check pinned, the read actor arm is refused at owner_reads.py:33 through authorize_current. Not checked: whether other test modules rely on the injected authorizer for an internal caller.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:59-62 @16795233f6 (authorizer replaced for an internal subject)",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_interactive_entry.py:84-104 @16795233f6 (the six arms; lambda *a: True passed as the authorizer in the read mode)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S12 -- a copy of the investor-reporting tree outside the repo cannot resolve the firm registry: ids.py walks up from _ids and finds none, so a mutant copy needs IRPT_FIRM_REGISTRY
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S12",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-13T01:05:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A mutant run in a scratch copy of infra/aws/lambda/investor-reporting raises IdRefused at _ids/ids.py:136 in every test until IRPT_FIRM_REGISTRY names the worktree's data/firm_registry.json. The order's mutant instruction asks for a scratch copy and does not name the variable.",
+  "spec_asserts": "AR-y-183 cell and preflight: a mutant is run in a scratch copy outside the product tree; no registry requirement is stated.",
+  "world_is": "Measured: the copy with no variable set gives 6 failed, all IdRefused at _ids/ids.py:136 (the walk is bounded upward from _ids and the copy has no data/firm_registry.json above it). With IRPT_FIRM_REGISTRY set to the worktree file: the unmutated copy gives 6 passed; source mutants give 2 failed (owner_reads.py:38 removed), 3 failed (owner_reads.py:40 removed), 2 failed (prospect.py:92 removed), 3 failed (prospect.py:94 removed). Not measured: the rest of the _authz folder under a copy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_ids/ids.py:114-139 @16795233f6 (registry resolution: env variable, then bounded walk upward, then beside the module; IdRefused at 136)",
+      "data/firm_registry.json @16795233f6 (the file the walk finds from inside the worktree)"
+    ]
+  }
+}
+```
