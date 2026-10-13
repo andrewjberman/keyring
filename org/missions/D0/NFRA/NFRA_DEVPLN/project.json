@@ -39,9 +39,10 @@
   "decomposition_lineage": [],
   "leads": {
     "cto": "1.0.0_SA_CTO",
-    "coo": "UNSEATED at L4; the third laptop COO lane, seated by 0.0.0_AB_MSTR on this PRD (limit three: ~C, ~CA, this one)"
+    "coo": "2.0.0_SA_COO~DV (laptop, seated 2026-10-13 ~16:3xZ by 0.0.0_AB_MSTR; laptop COOs 3 of 3: ~C, ~CA, ~DV)"
   },
-  "blocking": "L4-R: 3.0.0_SA_CVO~L signs the ratified-text half of PRD v0.1 (the brief half is the CRO's, accepted); L5/L6 wait on the third laptop COO lane 0.0.0_AB_MSTR seats. The whole-DEV portal promote (dell1 e7f2) stays held until FWD-6's settlement.",
+  "blocking": "L4-R: 3.0.0_SA_CVO~L signs the ratified-text half of PRD v0.1 @1e49544e05 (brief half accepted); then 2.0.0_SA_COO~DV cuts L5/L6, round 1 = FWD-6 settlement then the FWD-1 thread. The whole-DEV portal promote (dell1 e7f2) stays held until FWD-6's settlement.",
   "endpoint_approval_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_160xZ_NFRA_DEVPLN_ENDPOINT_CONFIRMED_ALL_AGREED_PROCEED.md",
-  "last_updated": "2026-10-13T16:15:18Z"
+  "last_updated": "2026-10-13T16:42:49Z",
+  "coo_lane": "2.0.0_SA_COO~DV"
 }
