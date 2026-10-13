@@ -6496,6 +6496,58 @@ carries none.
     "spec_asserts": "MX-s-19 BOUNDS item 1: 'One producer per table: no second schedule, no parallel path, no comparator. Served silver must not lose a partition it has today.' The order's ANNOUNCE asks for the expected served DELTA of making bd-silver-merge the sole writer.",
     "world_is": "The writer this retirement makes sole re-writes already-served partitions and at least once replaced one with 1.3% of its bytes. That is not a DELTA of the retirement -- it happens today with both writers live -- but it bears on 'served silver must not lose a partition it has today', because a partition can be emptied in place without being lost as a key, and no limb of s19.AC1/AC2/AC3 would see it.",
     "notes": "NOT INVESTIGATED FURTHER, per the channel rule: one row, keep working. ROW COUNTS WERE NOT READ, so 'lost rows' is NOT claimed -- only the byte delta is measured, and a 76x byte drop is far outside parquet encoding variance but is not by itself a row count. THE ONE READ THAT SETTLES IT: pull both versions by --version-id and compare row counts and date ranges (nzvUy3WV... vs wx6eFBQ2...); if the newer holds fewer rows for the same date, this is silent partition truncation and belongs to bd-silver-merge's owner, not to MX-s-19. A plausible mechanism to test first, stated as INFERRED and not measured: the merge script's REPROCESS-etag-changed path (data/black_diamond/scripts/silver/merge-daily-incremental.py:254) re-writes a partition from the re-processed subset of bronze files rather than from the union with what the partition already held. ARMED because, left alone, the next etag change repeats it on whatever partition it lands on, and the retirement removes the second writer that until 2026-10-06 was re-writing the same keys."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S103",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-13T05:31Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Z-S101's hazard is removed: amendment A8 replaces s19.AC1 with a scheduled-plane census that reads each trigger rule's State. All three of its arms were dry-run before the GO, and the order's AC1 expect line is unchanged.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S101"
+    ],
+    "one_line": "RULES Z-S101 (BLOCKING/ARMED; 0.7.0_AE_CloudOps~MI's refusal of s19.AC1): CONFIRMED and DISARMED by option (b). s19.AC1 now counts a document writer only while an ENABLED EventBridge rule targets its trigger Lambda, so it grades the SCHEDULED plane, never reachability. The applier was right to refuse the criterion as written, before the apply.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "LIVE at the base (rules ENABLED): 'WRITER CENSUS: 2 of 4 BD silver tables have exactly 1 writer', RESULT: FAIL, exit=1. Each trigger Lambda has exactly 1 targeting rule (list-rule-names-by-target).",
+        "PLANTED (S19_FIXTURE, live document/notification bytes, both rules DISABLED): 4 of 4, RESULT: PASS, exit=0.",
+        "PLANTED (transactions DISABLED, realized ENABLED): 3 of 4, NOT-ONE realized, RESULT: FAIL, exit=1."
+      ]
+    },
+    "spec_asserts": "s19.AC1 grades the one-writer outcome of MX-s-19's PHASE B.",
+    "world_is": "Under A2, PHASE B changes only rule State, which the round-6 census never read. The criterion was inherited from the pre-A2 scope.",
+    "notes": "A document is counted fail-closed (trigger=UNKNOWN) when no trigger Lambda is mapped for it. Unrealized and allocations are counted that way; both are already no-op documents (MX-s-16)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S104",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-13T05:31Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "No rows were lost. All 84,533 rows of the prior 2026-10-10 version are present in silver/transactions/2026-10-08.parquet, matching on all 69 value-stable columns; the shrink removed a duplicate copy.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S102"
+    ],
+    "one_line": "RULES Z-S102 (OBSERVATION/ARMED, the 76x shrink of silver/transactions/2026-10-10.parquet): DISMISSED, not a truncation. The prior version (4,462,340 B, 84,533 rows) held return_date 2026-10-08 rows from TRANSACTIONS_DAILY_2026-10-10.xlsx, duplicating the 2026-10-08 partition (84,533 rows, return_date 2026-10-08). The 2026-10-13 re-write replaced it with 123 return_date 2026-10-09 rows.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Versions: 2026-10-10.parquet nzvUy3WV... 4,462,340 B at 2026-10-10T00:18:39Z; wx6eFBQ2... 58,226 B at 2026-10-13T00:14:48Z (latest).",
+        "Prior version: 84,533 rows, return_date {2026-10-08: 84533}, _source_file TRANSACTIONS_DAILY_2026-10-10.xlsx. Latest version: 123 rows, return_date {2026-10-09: 123}.",
+        "silver/transactions/2026-10-08.parquet (4,468,744 B): 84,533 rows, return_date {2026-10-08: 84533}. A distinct-row join on the 69 columns whose value sets agree matches 84,533 of 84,533. The 5 differing columns are source metadata or formatting: original_account_name, account_fee ('0' vs '0.0'), as_of_date, _source_file, _ingested_at."
+      ]
+    },
+    "spec_asserts": "A re-write of a served partition does not drop rows that are not served elsewhere.",
+    "world_is": "The partition key follows the source file's date, not return_date, so one return_date can sit under two keys. The shrink removed the duplicate.",
+    "notes": "Not measured: whether return_date 2026-10-09 rows now overlap between the 2026-10-09 partition (6,278 rows) and the 2026-10-10 partition (123 rows). That is a dedup question for bd-silver-merge's owner, not MX-s-19's path."
   }
 ]
 ```
