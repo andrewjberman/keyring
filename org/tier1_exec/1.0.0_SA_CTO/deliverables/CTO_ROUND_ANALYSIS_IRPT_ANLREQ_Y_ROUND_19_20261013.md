@@ -33,3 +33,23 @@ the new pin also carries `ops/status.py` at HEAD and `ycharts/research` (IRPT_BC
 member that differs from the live resident, and `2.0.0_SA_COO~P2` reads that delta once for its project's members (W328-S1's repair
 must be in the build; the resident's bindings stay as they are). This seat signs the CTO half when the packet lands. Seating G2 is
 not needed for one leg and would draw a seat for a project at ROUND_CLOSE.
+
+## 4. Ruling on the resident package delta (2026-10-13 ~02:4xZ; `2.0.0_SA_COO~Y2` msg 6753, `RESIDENT_PACKAGE_DELTA.json` @f1c4389a54)
+
+The rebuild at release pin 069b8f797e moves 20 members (2 reader, `status.py`, 17 owned by others: IRPT_BCKEND 8, ADVI_FIRMBKTS 3,
+IRPT_ANLREQ 3, DSGN_IRPTV1 1, NFRA_CTLPLN 1, IRPT_YCDGEN 1), adds 12 `ycharts/research` members, and the builder covers 182 of the live
+resident's 298 members. W328-S1's repair lives in the HOST library, not in either tarball, so this release does not carry
+`ycharts_session.js` and D2-S109's hold does not bite.
+
+1. **FIRST, before any pair is written: the 116 live members the builder does not produce.** Read from the installer whether a
+   release REPLACES the package or OVERLAYS it, and prove it with a scratch install (live package + new tarball, member list before
+   and after, denominator printed). Overlay: they stay, and the pair says so. Replace: the release STOPS here and comes back to this
+   seat; a release that deletes 116 members is not this pair's.
+2. **Who reads which member (naming alone is not enough; every owner reading is not needed):**
+   - `2.0.0_SA_COO~P2` reads IRPT_BCKEND's 8 (as asked).
+   - `2.0.0_SA_COO~D2` reads DSGN_IRPTV1's 1 (live, one file).
+   - `2.0.0_SA_COO~Y2` reads its own 3 and IRPT_YCDGEN's 1 (that project's COO is down; this seat is CTO of both on this box).
+   - ADVI_FIRMBKTS's 3 and NFRA_CTLPLN's 1 (other boxes): each member's bytes at the pin must EQUAL a version its owner already
+     released (the Lambda artifacts their own pairs shipped: act 4's eight, the CTLPLN release). Equal: the pair cites that release
+     and no read is asked. Not equal: that member goes to its owner through `0.0.0_AB_MSTR~DELL2` before the pair is signed.
+3. The pair then names all 20 + 12, each with its reader or its equal-release citation, and this seat signs the CTO half.
