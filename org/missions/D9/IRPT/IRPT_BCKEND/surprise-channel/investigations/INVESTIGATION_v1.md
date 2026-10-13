@@ -31530,3 +31530,104 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The 49financial package bucket had two bucket-policy writes by an IAM user of the dell1 fabric's cloudops agent after the package it holds was written; the policy content, its before and after state, and whether the writes changed access are not read by this worker."
 }
 ```
+
+## IRPT_BCKEND-D2-W362-S1 -- AC1 needs a non-empty allowed replaced set per firm; the order's own rule gives cottonwood nothing
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W362-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~362",
+  "surfaced_at": "2026-10-13T08:13:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB177-1 AC1 requires every BUILDERS firm's package to replace a non-empty subset of the allowed members; the order's rule (a firm whose builder does not need account_id gets the temp-file fix only if it carries that code path, else nothing) gives cottonwood NOTHING, because build_cot reaches neither retained_capture nor the 49F account_id path. So cottonwood's package replaces zero members and AC1 cannot pass without editing the check, which the worker does not do.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@9863238ccf:2674-2675 maps cottonwood to build_cot; build_cot is defined at :2303",
+      "Grep of holdings_snapshot.py@9863238ccf (worktree) for retained_capture: the only match is its definition at :1266, so build_cot has no caller of it; the only retained_capture callers are holdings_49f.py:634 and holdings_inf.py:287 (Grep of each named file)",
+      "IB177-1_candidate_packages.json plan.cottonwood needs [] (committed in 0da8f0bbfc); the cottonwood candidate is the live object, object sha256 3f2e738f83aa415a2b56cf506d54368f9d2f86f7ded8f19202fc373ef6a28901, not rebuilt"
+    ]
+  },
+  "spec_asserts": "IB177-1 AC1 (p177_cells.py): packages are exactly the BUILDERS firms and each replaces a non-empty subset of the allowed members. Order worker face: a firm whose builder does not need account_id gets the temp-file fix only if it carries that code path, else nothing.",
+  "world_is": "Cottonwood carries neither change, so the order's own rule yields an empty replaced set that the check refuses. Recorded as measured: cottonwood members_replaced is empty and its AC1 result is FAIL. No hunk of any commit was added to cottonwood to satisfy the check. Disposition for the COO and CTO: whether cottonwood's package is in the pair at all, or the check's non-empty expectation is amended by the issuer."
+}
+```
+
+## IRPT_BCKEND-D2-W362-S2 -- the Branch A apply omits the S3 metadata restamp (members-sha256, member-count)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W362-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~362",
+  "surfaced_at": "2026-10-13T08:13:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The Branch A apply in the order copies each candidate object to its key and reads it back; it names no S3 metadata. The live objects carry members-sha256 and member-count (44), so a candidate object copied with the live stamp would name a SHA256SUMS that it no longer carries. The candidate stamps are recorded in the record (candidate_members_sha256_metadata).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api head-object (read only, 2026-10-13) on opal-data-49financial and opal-data-inflection: Metadata members-sha256 73f33c3c59b77528c6eaaa56799e9c55f570a7adac23a0c6bcd12e66fe343a81 (49financial) and 0b1a3bf7077865054a330ba9360521425f6299bb1bb970766023d2011d70a093 (inflection), member-count 44",
+      "candidate SHA256SUMS sha256 97515201fe83bdeca1f47c788f2d701d8c1b975a25f42fb4f6601ed2dd6c1aee (49financial) and 14f55af02989ae7f262759c20b0d4666cd7f535ca74b173d5457df67c2befb9f (inflection), from the scratch rebuild; the record IB177-1_candidate_packages.json (committed in 0da8f0bbfc and later)"
+    ]
+  },
+  "spec_asserts": "IB-pr-510 worker face step 5 (Branch A): the apply is an aws s3 cp of each candidate to its key with the live VersionId named and re-read before the write, one firm at a time, each read back by ETag and sha256.",
+  "world_is": "The apply order as written does not restamp the object metadata; the packet names the restamp as an apply step, so the apply order carries it or the stamp goes stale. Nothing is applied in this order."
+}
+```
+
+## IRPT_BCKEND-D2-W362-S3 -- the live schema copy is CRLF end to end; the candidate keeps the live convention
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W362-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~362",
+  "surfaced_at": "2026-10-13T08:13:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The live HoldingsSnapshot.schema.json copy in the 49financial and inflection packages is CRLF on every line, while HEAD's copy is LF. The candidate schema keeps the live CRLF, so the 7ace854890 lines it adds are CRLF in the candidate; the order does not name line endings.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scratch count on the extracted 49financial package member docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json: 1322 CRLF of 1322 lines; the census member row (IB176-1 census, committed at 2a16f74311) reads head_has_crlf false and live_has_crlf true",
+      "candidate schema sha256 953d319e9b97c71cb9fcf51951d975e15faa5b911496fe897ecad8d8037b1e61, 1326 lines, CRLF throughout; AC2 normalises CR before comparing lines (p177_cells.py lines_of and commit_changed_lines)"
+    ]
+  },
+  "spec_asserts": "IB-pr-510 worker face: each candidate member is the LIVE bytes with the allowed commits' hunks applied; the order names no line-ending rule.",
+  "world_is": "The candidate differs from the live schema only by the four lines of 7ace854890 (CRLF-terminated). Whether the next apply keeps CRLF or converts to HEAD's LF is a choice the pair signs, not one this build made silently."
+}
+```
+
+## IRPT_BCKEND-D2-W362-S4 -- the issuer's amendment of IB177-1-AC1 is applied; cottonwood is NOT IN THE APPLY
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W362-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~362",
+  "surfaced_at": "2026-10-13T08:25:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The issuer's amendment of check IB177-1-AC1 (issued at f33aa02571, delivered to this branch at be8bd99362) is applied as written: a firm whose plan has needs [] must have empty members_replaced, an empty member_diff_vs_live.changed, unchanged_count 45 and candidate_package_sha256 equal to live_object_sha256. Cottonwood has needs [] and is not in the apply; its package is not rebuilt. The worker did not edit the check file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r177/p177_cells.py . IB177-1-AC1 (worker tree, branch wk-IRPT_BCKEND-362 at be8bd99362, timeout 120): 'OK: 3 package(s); replaced members {49financial: 3, inflection: 2, cottonwood: 0}' then 'IB177-1-AC1 PASS', rc=0",
+      "the cottonwood plan in deliverables/0.9.0_WK_IRPT_BCKEND~362/ (committed 0da8f0bbfc): builder build_cot reaches neither retained_capture nor the 49F account_id path, so needs is empty"
+    ]
+  },
+  "spec_asserts": "IB177-1-AC1 as first delivered: one package per BUILDERS firm, each with a non-empty allowed replaced set; the cottonwood package counted as failing for zero replaced members.",
+  "world_is": "The amended AC1 grants a needs-nothing firm no replaced member. Cottonwood stays at the live object and is not in the Branch A apply; the apply order is 49financial, then inflection. Nothing is uploaded, applied or invoked in this order."
+}
+```
