@@ -25730,3 +25730,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The rows' text is unchanged; the byte-level change is what the append-only rule is about. The fix is a follow-on commit, not an amend. Whether other Edit calls on this file normalize line endings was not tested."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W421-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~421",
+  "surfaced_at": "2026-10-13T22:41:43Z",
+  "one_line": "The LGIC naming gate (ENFORCE) refuses the literal default Lambda name opal-amgt-scoped-api in lib/research/aifill/inputs.py line 14 as NEW and out of pattern, so AMGT-fa-2's inputs.py and its test module cannot be committed as the face specifies.",
+  "spec_asserts": "Face AMGT-fa-2 section 1: served_inputs(security_key, lam=None, function_name='opal-amgt-scoped-api') takes that literal as its default, and the prepared check asserts the served invoke goes to opal-amgt-scoped-api. CLAUDE.md section 4: every resource name is name() output; a builder refusal is a missing registry row to add (infra/logic/registry/), never a hand-typed workaround.",
+  "world_is": "The commit of 0.9.0_WK_AMGT_RESAPP~421 with inputs.py staged was refused by the naming limb: 'NAMING REFUSE lib/research/aifill/inputs.py:14 opal-amgt-scoped-api -> amgt-scoped-api ... NEW and OUT-OF-PATTERN as API_GW: REFUSE'; the commit was aborted and the files unstaged. infra/logic/registry/resources.json holds no row for the live function (a Grep of the registry folder for 'scoped' returns no amgt-scoped-api row). The live function is declared as a literal at infra/aws/terraform/harvest/scoped-amgt-api.tf:455. model.py carries no such literal and is committed at 3018dac548. inputs.py and lib/research/aifill/tests/test_model_inputs.py are held uncommitted in the worktree; the test module also carries the literal (line 314) and the gate did not refuse it.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/resources.json@816797e82366: no amgt-scoped-api row; Grep of infra/logic/registry for 'scoped' returns market-update-dynamodb-scoped, bd-s3-scoped and other names only.",
+      "infra/aws/terraform/harvest/scoped-amgt-api.tf@816797e82366 line 455: function_name = \"opal-amgt-scoped-api\" (the live function, also named in the Lambda source map entry).",
+      "lib/research/aifill/inputs.py@816797e82366 (worktree, uncommitted) line 14: DEFAULT_FUNCTION = \"opal-amgt-scoped-api\"; safe-commit naming-gate output of 0.9.0_WK_AMGT_RESAPP~421 quoted in world_is."
+    ]
+  },
+  "notes": "Not worked around: the name was not renamed, derived or hidden, and the naming gate was not bypassed. The disposition is the issuer's: a registry row for the live function (infra/logic/registry is outside this order's write grant) or an R20 register entry Andrew acknowledges. Held files, both STAGED-AWAITING-GATE in the proof instance: lib/research/aifill/inputs.py and lib/research/aifill/tests/test_model_inputs.py."
+}
+```
