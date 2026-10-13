@@ -31,8 +31,8 @@ commit `61cc536c29`. Take it into your checkout first (`git merge-base --is-ance
 
 0. **Gate.** Both halves read SIGNED at their pins; `61cc536c29` is an ancestor of HEAD; the registry row reads as above and `python lib/opal_naming.py validate` exits 0. Any not so: STOP, a BLOCKING row.
 1. **Read before you write, print each:** `aws s3api get-bucket-policy --bucket opal-data-inflection` saved to the entry's evidence folder (the rollback document); the identity side, `simulate-principal-policy` of `arn:aws:iam::313476888478:role/irpt-performance-adapter-role` for `s3:ListBucket` on `arn:aws:s3:::opal-data-inflection` with `s3:prefix` = `irpt/inflection/gold/holdings_performance_daily/` (WITHOUT the resource policy: the identity side alone): it must read allowed. If the identity policy does not allow it, the row alone cures nothing: STOP and say so.
-2. **The entry.** Open the change-management entry BEFORE the write (scope: the `shared-infra` root, ONE resource `aws_s3_bucket_policy.lgic_firm["opal-data-inflection"]`, the pair, the saved prior policy, rollback = `put-bucket-policy` of it). Commit it and its sentinel first.
-3. **Plan, scoped.** `.tools/safe-apply.sh` plan limb in `infra/aws/terraform/shared-infra` with `-target='aws_s3_bucket_policy.lgic_firm["opal-data-inflection"]'`: `Plan: 0 to add, 1 to change, 0 to destroy`, and the policy document's diff is exactly THREE ADDED statements (`DenyScopedExemption1AnyOtherAction`, `DenyScopedExemption1ObjectsOutsidePrefix`, `DenyScopedExemption1ListingOutsidePrefix`). Any other resource, or a removed or changed statement (a hand edit since 10-08): STOP, a BLOCKING row.
+2. **The entry.** Open the change-management entry BEFORE the write (scope: the `shared-infra` root, ONE resource `aws_s3_bucket_policy.lgic_firm["inflection"]`, the pair, the saved prior policy, rollback = `put-bucket-policy` of it). Commit it and its sentinel first.
+3. **Plan, scoped.** `.tools/safe-apply.sh` plan limb in `infra/aws/terraform/shared-infra` with `-target='aws_s3_bucket_policy.lgic_firm["inflection"]'`: `Plan: 0 to add, 1 to change, 0 to destroy`, and the policy document's diff is exactly THREE ADDED statements (`DenyScopedExemption1AnyOtherAction`, `DenyScopedExemption1ObjectsOutsidePrefix`, `DenyScopedExemption1ListingOutsidePrefix`). Any other resource, or a removed or changed statement (a hand edit since 10-08): STOP, a BLOCKING row.
 4. **Apply** through `.tools/safe-apply.sh` on that saved plan (never a bare `terraform apply`). Print its start and end times.
 5. **Read after, print each:** (a) the live policy carries the three statements; (b) `simulate-principal-policy` WITH `--resource-policy` = the live policy: `s3:ListBucket` on the prefix reads allowed; `s3:ListBucket` on another Inflection prefix reads denied; `s3:PutObject` under that prefix reads denied; a foreign-firm principal not on the list still reads explicitDeny; (c) one Inflection holdings-performance request answers 2xx, if a seat that can read the answer is live (if not, say so: the log read in AC3 is the measure); (d) the `explicit deny` lines in `/aws/lambda/irpt-performance-adapter` stop.
 6. **Close the entry** with the outputs, and a Branch B rollback if (b) reads wrong (re-put the saved policy, read it back).
@@ -56,7 +56,7 @@ org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION
 
 <proof_of_spec>
 Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FBL/ADVI_FIRMBKTS.TO-FB-f-21.inflection-fence-admit-apply.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="FB-f-21"><invocation>cd infra/aws/terraform/shared-infra &amp;&amp; timeout 118 terraform plan -input=false -lock=false -refresh=true -no-color -target='aws_s3_bucket_policy.lgic_firm["opal-data-inflection"]' 2&gt;&amp;1 | grep -E "^(Plan:|No changes)"</invocation><expect>^No changes\.</expect></criterion>
+  <criterion id="AC1" cell_refs="FB-f-21"><invocation>cd infra/aws/terraform/shared-infra &amp;&amp; timeout 118 terraform plan -input=false -lock=false -refresh=true -no-color -target='aws_s3_bucket_policy.lgic_firm["inflection"]' 2&gt;&amp;1 | grep -E "^(Plan:|No changes)"</invocation><expect>^No changes\.</expect></criterion>
   <criterion id="AC2" cell_refs="FB-f-21"><invocation>timeout 60 aws s3api get-bucket-policy --bucket opal-data-inflection --query Policy --output text | grep -o "DenyScopedExemption[0-9]*[A-Za-z]*" | sort -u | paste -sd" " -</invocation><expect>^DenyScopedExemption1AnyOtherAction DenyScopedExemption1ListingOutsidePrefix DenyScopedExemption1ObjectsOutsidePrefix$</expect></criterion>
   <criterion id="AC3" cell_refs="FB-f-21"><invocation>timeout 90 aws logs filter-log-events --log-group-name /aws/lambda/irpt-performance-adapter --region us-east-1 --start-time $(( ($(date +%s) - 600) * 1000 )) --filter-pattern '"explicit deny"' --query "length(events)" --output text</invocation><expect>^0$</expect></criterion>
 </proof_of_spec>
@@ -76,6 +76,13 @@ AC1 to AC3 outputs, whether step 5(c) ran, and the commit hash.
 **ISSUER NOTES:** cut on the cluster lead's ruling @af61c60689 (client-facing). Workstream `INFLFENCE`. If `0.7.0_AE_CloudOps~FBL` cannot
 take it this hour, dell1's own CloudOps lane applies under the same pair (one applier, named in the ledger), but dell1's identity
 cannot simulate: the plan and the policy read would carry the proof.
+
+**AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-13 ~01:3xZ, on `0.7.0_AE_CloudOps~FBL`'s row S22):** the issuer typed the resource address with the
+BUCKET name as its `for_each` key; the real key is `inflection`, so `-target` and AC1 as written matched no instance (AC1 read vacuous). Every
+occurrence now reads `aws_s3_bucket_policy.lgic_firm["inflection"]`. `0.7.0_AE_CloudOps~FBL` planned and applied with the real key
+(01:17:20Z-01:18:05Z, 0 add 1 change 0 destroy). Step 5(c) was NOT RUN (no invocation of the adapter after the apply): the 2xx
+read-back is owed by the seat that can request an Inflection performance answer (named in the issuer's message); AC3's zero is labelled
+"no traffic behind it" until then.
 
 <status>pending</status>
 <round>4</round>
