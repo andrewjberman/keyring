@@ -1,0 +1,65 @@
+diff --git a/infra/aws/lambda/astn-wsjft-orchestrator/lambda_function.py b/infra/aws/lambda/astn-wsjft-orchestrator/lambda_function.py
+index 748328e3d7..c1fc7f6e5e 100644
+--- a/infra/aws/lambda/astn-wsjft-orchestrator/lambda_function.py
++++ b/infra/aws/lambda/astn-wsjft-orchestrator/lambda_function.py
+@@ -4,6 +4,9 @@ EventBridge Scheduler (America/New_York, DST-native) invokes this. Two modes via
+   {"mode": "run"}            -- start the transient scraper, run the digest, ALWAYS stop it, fail-loud.
+   {"mode": "absence_check"}  -- (4am ET) verify today's digest object exists; alert if the run never
+                                produced one (the silent-absence guard -- absence is the dangerous mode).
++  {"mode": "ft_reattempt"}   -- HG-t-18: the same start/run/ALWAYS-stop sequence, running `run.py --ft-reattempt`
++                               (an FT-only refill of a day whose FT fetch failed; a complete day no-ops).
++                               `"dry_run": true` adds `--dry-run` (fetch + analyze + compile, send and write nothing).
+ 
+ ROBUSTNESS -- TWO SEPARATE GUARANTEES. The original code collapsed them into one and lost briefs:
+   (1) the box must NEVER STAY running (cost leak), and
+@@ -153,7 +156,15 @@ def _wait_ssm_online(deadline: float) -> bool:
+     return False
+ 
+ 
+-def _run_digest(hard_deadline: float) -> None:
++def _run_command(mode: str, dry_run: bool) -> str:
++    """The run line the scraper executes. `run` is byte-identical to what it was before HG-t-18."""
++    args = "python3 run.py"
++    if mode == "ft_reattempt":
++        args += " --ft-reattempt" + (" --dry-run" if dry_run else "")
++    return f"su - ec2-user -c 'cd /opt/astn-wsjft/scripts && {args}'"
++
++
++def _run_digest(hard_deadline: float, mode: str = "run", dry_run: bool = False) -> None:
+     date = _et_date()
+     # When the poll budget expires while run.py is STILL RUNNING, we must NOT stop the box --
+     # stopping it SIGTERMs the scrape (RC 143) and destroys the brief. See the module docstring.
+@@ -168,11 +179,11 @@ def _run_digest(hard_deadline: float) -> None:
+         cmd = _ssm.send_command(
+             InstanceIds=[INSTANCE_ID],
+             DocumentName="AWS-RunShellScript",
+-            Comment=f"ASTN 3am-ET digest run {date}",
++            Comment=f"ASTN {'FT re-attempt' if mode == 'ft_reattempt' else '3am-ET digest run'} {date}",
+             Parameters={"commands": [
+                 f"aws s3 cp {ARTIFACT} /tmp/deploy.sh --region {REGION} --only-show-errors",
+                 "bash /tmp/deploy.sh",
+-                "su - ec2-user -c 'cd /opt/astn-wsjft/scripts && python3 run.py'",
++                _run_command(mode, dry_run),
+             ]},
+             TimeoutSeconds=600,
+         )
+@@ -220,6 +231,10 @@ def _run_digest(hard_deadline: float) -> None:
+                    f"rc=2 => the verbatim gate refused to send (empty/unfaithful brief) -- CORRECT, but NO BRIEF REACHED ANDREW.\n"
+                    f"rc=143 => SIGTERM (something stopped the box mid-run).\n"
+                    f"STDERR:\n{(inv.get('StandardErrorContent') or '')[:1500]}")
++        elif mode == "ft_reattempt":
++            # The main-run guard asks "is there a usable BRIEF"; a refill's verdict is run.py's own line
++            # (SKIP-COMPLETE / NO-PRIOR-DIGEST / FT-REATTEMPT-*) in the SSM output, not the digest object.
++            print(f"{date}: ft_reattempt finished rc={rc}")
+         else:
+             ok, why = _digest_ok(date)
+             if not ok:
+@@ -293,5 +308,8 @@ def handler(event, context):  # noqa: ANN001
+     hard_deadline = 0.0
+     if context is not None and hasattr(context, "get_remaining_time_in_millis"):
+         hard_deadline = time.time() + (context.get_remaining_time_in_millis() / 1000.0) - STOP_RESERVE
++    if mode == "ft_reattempt":
++        _run_digest(hard_deadline, mode="ft_reattempt", dry_run=bool((event or {}).get("dry_run")))
++        return {"mode": "ft_reattempt", "ok": True}
+     _run_digest(hard_deadline)
+     return {"mode": "run", "ok": True}

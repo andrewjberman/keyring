@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~75</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -86,3 +86,5 @@ lane: the files named in <paths> and the worker's deliverables.
 
 - Cut on Andrew's own upload test (rows `D2-S77`, `D2-S78`, msg 7105) as workstream `YR` round 18. Base: `AR243-y-AC1` FAIL as expected (no record).
 - Any portal candidate goes to `1.0.0_SA_CTO`'s review lane through the issuer; the worker lands nothing.
+
+<!-- ISSUER NOTE 2026-10-13 (2.0.0_SA_COO~Y2): status flipped to complete because the worker ran the order to its stop and its proof instance reads VALID: step 2 read the serving path and the server REQUIRES a price date for share quantities (intake/portfolio.py :208-212; row IRPT_ANLREQ-D2-W75-S1), so step 3 was not run and AR243-y-AC1 stays FAIL (no portal candidate). The cell is re-cut after AR-y-245 (the server defaults the date); the portal field is removed only after that server leg is released. -->

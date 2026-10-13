@@ -7601,3 +7601,106 @@
   "world_is": "REPORTED by Andrew with two screenshots at this seat, 2026-10-13: (1) after uploading the holdings file the in-page 'Holdings file' input still reads 'Choose File No file chosen' and the status line reads only 'Needs correction.'; no file name appears anywhere on the page, and the only sign of the upload is the correction text below. (2) Andrew's words, verbatim: 'there is no point in picking a \"price data for share quantities\" as the answer is always \"now\", which will translate into market close of the prior trading day.' READ by me in the DEV checkout, not reproduced and not run on PROD: the in-page input (ProspectComposer.tsx:419-422) is a bare native file input with no name shown once the page re-renders; the Price date field (:434-437) is a date input defaulting to today with no stated rule. Whether the date is read by the serving path or ignored is NOT read by this seat: the owner reads it before removing the field. Both points go to 2.0.0_SA_COO~Y2 with S77."
 }
 ```
+
+## IRPT_ANLREQ-D2-W75-S1 -- AR-y-243: the server REFUSES a share-quantity upload with no price date, so the Price date field cannot be removed from the portal alone
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W75-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~75",
+  "surfaced_at": "2026-10-13T17:24:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "one_line": "The serving path REQUIRES a price date for share quantities: a holdings file with a Shares column and no price date is refused with PRICE_DATE_REQUIRED (CSV lane) or SHARES_PRICE_UNAVAILABLE per row (template lane). The portal's Price date field therefore cannot be removed as AR-y-243 step 3 asks; the issuer must cut a server cell.",
+  "spec_asserts": "AR-y-243 step 2 (worker face): if the server REQUIRES a date for share quantities, or cannot price without one, STOP before step 3, file a BLOCKING row naming the file and line, and write the record with candidate absent. Andrew's test (D2-S78): the field is pointless because the answer is always now (prior close).",
+  "world_is": "READ at workspace HEAD 2d244d2ff0 and portal origin/DEV f6ef1d25. intake/portfolio.py:208-212 raises PortfolioRefused('PRICE_DATE_REQUIRED') when a SHARES unit is present and price_date is None (date.fromisoformat(None) TypeError). uploads.py:419-421 calls resolve_prices with options['price_date'] (None) before freeze at uploads.py:425. The portal omits the member when the field is empty (prospect.ts:136), so a blank field with a Shares column is refused. intake/tests/test_portfolio.py:144 asserts PRICE_DATE_REQUIRED. The server prices only at the date it is given (portfolio.py:250, 479) and computes no prior trading day: no trading-day rule in the intake folder (only settings.json:48 PRIOR_CLOSE, a constant for another analysis). Consequence: the 'pointless' field is in fact required by the server; the issuer decides whether a server cell derives the prior close. The portal was NOT changed and nothing was landed or pushed. Record: org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~75/r22/PORTAL_PRICE_DATE_CANDIDATE.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py:208-212@2d244d2ff0 (SHARES requires a date; PRICE_DATE_REQUIRED)",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py:419-421,425@2d244d2ff0 (resolve_prices called with options price_date before freeze)",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_portfolio.py:144@2d244d2ff0 (test asserts PRICE_DATE_REQUIRED)",
+      "portal src/pages/InvestorReporting/tabs/analysis/prospect.ts:136@f6ef1d25 (price_date member omitted when empty)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W75-S2 -- the y243-portal check reads round 21's folder, the face names round 22
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W75-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~75",
+  "surfaced_at": "2026-10-13T17:24:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The face says the record is written to r22/PORTAL_PRICE_DATE_CANDIDATE.json; checks/r21/ar21_checks.py line 25 sets D to .../0.9.0_WK_IRPT_ANLREQ~%s/r21/ and line 303 reads D % '75' + PORTAL_PRICE_DATE_CANDIDATE.json. The check therefore cannot see an r22 record.",
+  "spec_asserts": "AR243-y-AC1 invocation (ar21_checks.py y243-portal) grades the record at the path the face names (r22).",
+  "world_is": "Measured: the check printed 'FAIL: no .../0.9.0_WK_IRPT_ANLREQ~75/r21/PORTAL_PRICE_DATE_CANDIDATE.json' and Y243-PORTAL-FAIL rc=1 with no candidate present. The r22 record exists and is not read by the check. The ~73 and ~74 siblings also write to r21 (copy-forward of the round-21 folder name).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py:25 and :303@2d244d2ff0",
+      "check run output: FAIL no .../0.9.0_WK_IRPT_ANLREQ~75/r21/PORTAL_PRICE_DATE_CANDIDATE.json; Y243-PORTAL-FAIL rc=1"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W75-S3 -- the S78 row's 'defaulting to today' and the line numbers :434-437 do not match origin/DEV
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W75-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~75",
+  "surfaced_at": "2026-10-13T17:24:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Row D2-S78 says the Price date field (:434-437) is a date input defaulting to today. At portal origin/DEV f6ef1d25 the field is at ProspectComposer.tsx:441-443 and its state starts empty (useState('') at :146), not today.",
+  "spec_asserts": "AR-y-243 face: the field is ProspectComposer.tsx :434-437, a date input, default empty. D2-S78 grounding: :434-437 'defaulting to today with no stated rule'.",
+  "world_is": "Read at origin/DEV f6ef1d25: the label and input are at :441-443; the state is useState('') at :146; the request uses priceDate at :281; asOf at :210. The default is empty, so the 'defaults to today' claim in D2-S78 is not the DEV tip's behaviour. The line range :434-437 in the face and in S78 is stale (the Price date label sits five lines lower).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx:146, :441-443@f6ef1d25",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_ANLREQ-D2-S78 grounding evidence (:434-437)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W75-S4 -- the face's commit-style reference branch wk-IRPT_ANLREQ-63-portal does not exist in the portal repository
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W75-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~75",
+  "surfaced_at": "2026-10-13T17:24:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-243 step 5 says to commit the way an earlier candidate branch was made, via git log of wk-IRPT_ANLREQ-63-portal. No local or remote-tracking branch of that name exists in C:/dev/ajb_workspace/portal (the 63 candidate is commit f6446051 on origin/DEV's history, not a branch). The commit style was not taken from that reference.",
+  "spec_asserts": "AR-y-243 step 5 (worker face): commit the way an earlier candidate branch was made (git -C ... log of wk-IRPT_ANLREQ-63-portal).",
+  "world_is": "git -C C:/dev/ajb_workspace/portal rev-parse of wk-IRPT_ANLREQ-63-portal fails (ambiguous revision). The 63 candidate's commit f6446051 is reachable from origin/DEV and its subject reads 'IRPT_ANLREQ AR-y-214 (0.9.0_WK_IRPT_ANLREQ~63, candidate on wk-IRPT_ANLREQ-63-portal, not landed)'. No portal commit was made in this order, so the step was not exercised.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/ajb_workspace/portal log origin/wk-IRPT_ANLREQ-63-portal: fatal ambiguous argument (run 2026-10-13T17:2xZ)",
+      "portal origin/DEV history: commit f6446051 subject 'IRPT_ANLREQ AR-y-214 (0.9.0_WK_IRPT_ANLREQ~63, candidate on wk-IRPT_ANLREQ-63-portal, not landed)'"
+    ]
+  }
+}
+```
