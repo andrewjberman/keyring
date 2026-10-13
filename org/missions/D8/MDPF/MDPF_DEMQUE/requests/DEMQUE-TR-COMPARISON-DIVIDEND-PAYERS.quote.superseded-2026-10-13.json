@@ -1,0 +1,20 @@
+{
+  "allowance_gap": null,
+  "basis": "history backfill quoted over NON-trading days (weekends and NYSE holidays, lib/trading_calendar.py is_trading_day) at the measured ceiling per day; a trading day's backfill allowance is 0 (production draws history on trading days); counted only on days a scheduled drawer fires (drawer_schedule.py); re-frozen under the rule in force: cells priced on trading days, round 9 Z-S3",
+  "cells": {
+    "bloomberg_history": 15120
+  },
+  "channel": "history",
+  "claim": "measured",
+  "finish_date": "2026-10-17",
+  "finish_date_claim": "measured",
+  "frozen_by": "2.0.0_SA_COO~Q1",
+  "quoted_as_of": "2026-10-09",
+  "reason": "cells priced on trading days, round 9 Z-S3",
+  "refrozen_at": "2026-10-11T15:54:22Z",
+  "request_id": "DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS",
+  "superseded_by": "DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS.quote.json",
+  "superseded_on": "2026-10-13",
+  "superseded_reason": "Andrew-direct 2026-10-13 addendum 2 (CTO msg 4889): the request window is trimmed to 365 days (2025-10-09..2026-10-08, 251 trading days); 11,716 drawn cells kept, the remainder is the identity set (1,004 cells on MO and XOM); t-44 merged @900406e221",
+  "supersedes": "DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS.quote.superseded-2026-10-11-2.json"
+}
