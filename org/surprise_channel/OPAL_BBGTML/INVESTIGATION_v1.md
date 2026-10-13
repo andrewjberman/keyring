@@ -532,3 +532,35 @@ Filed by 0.7.0_AE_CloudOps~ZS after the edit landed. Surfaced, NOT adjudicated: 
   "notes": "NOT A CLAIM THAT THE CELL WAS WRONGLY CUT. Two readings are open and this seat holds neither: (a) the Z6 memo authorises functional repair of the sign-in path, in which case the 201xZ record's standing clause is stale and should be struck; (b) the order stands, in which case cells Z6-R2 and Z6-R3 need Andrew's word and this one is already landed. DISARM IS ONE ACT EITHER WAY: the issuer or 1.0.0_SA_CTO~Z states which reading holds, in a record. If (b) and he says revert, the rollback is already specified by the order: git checkout f6cc68d6bf~1 -- integrations/bloomberg/auth/bbg_fallback.ps1, commit, and close the deploy ledger entry opal-bbgtml-z6-r2-p0-gate-20261013 as rolled back -- a 0-risk revert to bytes sha256 5aeb770858cead537dd8106754324a3428a580260cb259a2855f3c89395d9193. TIME-BOXED: whichever way it falls, it should fall before the 11:00Z fire. This row also blocks R3 (the next order on this lane), which edits bbg_signin.ps1 -- squarely a sign-in script by name."
 }
 ```
+
+### OPAL_BBGTML-Z-S18 -- a closed round's AC freezes teams-watch.py by AST equality, so the ordered Z6 R5 edit flips it PASS -> FAIL on commit
+
+Filed by 0.7.0_AE_CloudOps~ZT while executing OPAL_BBGTML.TO-Z6-R5 step 2c (the launcher/consumer census).
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S18",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~ZT",
+  "surfaced_at": "2026-10-13T21:28:21Z",
+  "one_line": "NFRA_OPALAI round-2 AC1 (e7.AC1.sh) freezes .claude/skills/teams-assist/teams-watch.py by AST EQUALITY against cut c8df03c408, but that file is LIVE PRODUCTION later projects are ordered to edit; the Z6 R5 receipt line flips that closed round's criterion PASS -> FAIL, and the flip is invisible until the edit is committed because the check reads HEAD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZB",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-13 ~21:18Z, working tree dirty with the R5 edit: bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/e7.AC1.sh printed 'header consumers named 3 of 3; code AST equal to cut=yes; compiles=yes' / 'RESULT: PASS'.",
+      "MEASURED the same minute, the same AST comparison run against the three refs side by side: cut(c8df03c408)=39398 bytes, HEAD=39750, worktree=40285; AST cut==HEAD True, AST cut==WORKTREE False. The check passes today ONLY because `git show HEAD:<file>` cannot see an uncommitted edit; it reads FAIL once the R5 commit lands.",
+      "READ, e7.AC1.sh:1-7, its own BOUND clause: 'the module's code is UNCHANGED against the round-2 cut -- its AST with the module docstring removed is equal (comments are invisible to the AST)'. A comment-only edit would pass; the R5 receipt is a print statement, so it is an AST node.",
+      "READ, CTO ruling @61e3067f5c disposition 5 and OPAL_BBGTML.TO-Z6-R5: the receipt line is the ORDERED act on this file, so the two contracts are in direct conflict by construction, not by accident.",
+      "NEGATIVE CONTROL, same sweep: the sibling f15.AC1.sh also reads FAIL ('skill absent at HEAD'), but its subject is `git -C opal_ai show` of opal/agent/skills/bbg-teams-assist/SKILL.md in the SEPARATE opal_ai repo -- pre-existing and NOT caused by this edit."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "e7.AC1.sh grades NFRA_OPALAI OA-e-7 by asserting that teams-watch.py's AST equals the round-2 cut c8df03c408, as a standing acceptance criterion of a closed round.",
+  "world_is": "An AST-equality freeze on a file whose own order-of-record tells other projects to change it is a criterion that must fail on the next authorized edit. It is not a defect in the R5 act and not a reason to withhold it: it is a grading instrument outliving the state it graded. Any later cell touching this engine inherits the same flip.",
+  "notes": "Surfaced, not chased -- and NOT edited: TO-Z6-R5's bounds are exactly two files and its step 2c says to file a row for a consumer needing a change this order does not carry. This is a READER of the file, not a launcher, so the stdout contract is untouched: it never runs main() and never reads stdout. The launcher question itself came back clean -- the census found NO script, task or cron that execs the module (see the R5 deliverable). Disarm candidates for the owner to route to NFRA_OPALAI's issuer: re-cut e7.AC1's base to the post-R5 commit, or narrow the criterion from whole-module AST equality to the properties it actually means to protect (the header's 3 named consumers, py_compile, and the runner's empty stdout -- all three still hold at the worktree bytes)."
+}
+```
