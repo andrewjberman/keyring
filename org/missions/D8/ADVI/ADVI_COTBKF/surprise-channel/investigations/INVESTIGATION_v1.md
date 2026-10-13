@@ -7771,3 +7771,56 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D2-W159-S1 -- Store object holds two asset_names under one ticker (SCCO, APH)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W159-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~159",
+  "surfaced_at": "2026-10-13T17:10:04Z",
+  "one_line": "The price store holds more than one asset_name under one ticker: SCCO on 1027 dates (the 3.875% 04/23/2025 bond row at the equity's price) and APH on 70 dates (CL A and NEW CL A, differing on 2026-04-14); a read keyed by ticker alone takes two rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-cot/silver/prices/canonical_prices.parquet version 76.rgWIXYdLNsXSwrXvyuEmaEtfr9y98 (97443387 bytes), get-object into the worktree .scratch; counts from that read",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~159/STAGE_READ.json (not_established; securities SCCO and APH drift)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~153/STORE_WRITER.md section 1 (the version listing)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-cc-2 item 2 reads the store row for each security on its day: one store value per stage per day, from the columns date, asset_name, ticker, price, source.",
+  "world_is": "The live store carries two asset_names per ticker on some days: SCCO on 1027 dates (SOUTHERN COPPER CORP 3.875% 04/23/2025 at the equity's price on all 1027) and APH on 70 dates (AMPHENOL CORP CL A and NEW CL A, equal on 69, differing on 2026-04-14). The stage read matched by the equity asset_name. Not read: whether any consumer keys by ticker alone."
+}
+```
+
+## ADVI_COTBKF-D2-W159-S2 -- No chosen day falls in the served window; served_row absent for all five
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W159-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~159",
+  "surfaced_at": "2026-10-13T17:10:04Z",
+  "one_line": "None of the five chosen days falls in the served holdings window 2026-04-22 to 2026-06-07, so served_row is absent for all five; the HON partitions on 9 window days were read as a supplementary to find a served value.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-cc-2.stage-read.md (served_row: the served holdings partition for a day in 2026-04-22 to 2026-06-07)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~145/NO_SNAPSHOT_BRANCH.json (first_snapshot_date 2026-06-08; 47 partitions 2026-04-22 to 2026-06-07)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~159/STAGE_READ.json (securities served_row; securities HON drift.served_window_supplementary)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-cc-2 reads served_row on each security's chosen day: the served holdings partition for a day in 2026-04-22 to 2026-06-07, otherwise the minted prefixes.",
+  "world_is": "No chosen day (2014-04-22, 2020-05-28, 2025-04-21, 2026-02-04, 2026-02-17) lies in the window, so served_row is absent on all five by the day rule. The minted prefixes at date=2026-06-23 hold one object each and were listed, not read. Supplementary: the 47 partitions hold HON on 9 days (17 rows, 2 accounts); served/store is 1.0 on all 9, served/minted 0.9535 on the 7 that have a minted row."
+}
+```
