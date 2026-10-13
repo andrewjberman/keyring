@@ -99,7 +99,7 @@ Instance at the path above. Commit `trace_price.py`, `TRACE_SAMPLE.json` and `TR
 **ISSUER NOTES:** PRD cell C9 (instrument half), FWD-1 and FWD-3 (the instrument is generalised to every price source at the enrichment round). The nearest prior art is `E_06.trace_asset_pricing.py`, which
 compares against Yahoo and does not list trades; this order does not extend it. Class LOCAL: a new script under `deliverables/`, reads only.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <workstream>TRACE</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-a-2</to_id>

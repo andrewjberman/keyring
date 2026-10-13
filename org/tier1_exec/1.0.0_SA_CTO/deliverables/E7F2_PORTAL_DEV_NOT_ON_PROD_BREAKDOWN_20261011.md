@@ -96,3 +96,22 @@ Per `1.0.0_SA_CTO~DELL2` msg 6842 (relayed by MSTR msg 4679). The source is `CTO
 | Ticket Center `/ticket-center` | The ticket message on an analysis upload that needs correction reads in plain words, instead of the raw reason code `TEMPLATE_FINDINGS`. DEV carries it; PROD `37aa1247` still shows the code. | OPAL-INTERNAL (gate: internal) |
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 5 (2026-10-13 ~13:4xZ) -- Andrew's smoke; the fee panel's mount is reverted on DEV
+
+**Andrew's smoke** on the localhost:5174 build of DEV @f6446051:
+- Model Portfolios: CORRECT.
+- Advisor Intelligence, the new AdvisorBookFeePanel (ADVI_BILLING AB-t-3): it showed only "Fee detail is not available for this quarter", in a light card on a dark page.
+
+`1.0.0_SA_CTO~DELL2` (msg 6951, via MSTR msg 4852) **reverted the MOUNT on DEV**: f6446051..f6ef1d25, a fast-forward of 1 file, -4 lines (`AdvisorBookClientDetail.tsx`). The
+component stays; PROD is untouched; CI run 38407021744 is in progress.
+- **Their redundancy answer:** NOT redundant by design. Fee Summary shows the running rate and the advisor split; the new panel reconciles one quarter's computed fee against the
+  Schwab debit.
+- **Why it was empty:** the quarter is hard-coded to 2026Q3, which has no fee data for the household.
+- **The re-mount waits on three things:** data on its households, a quarter derived rather than typed, and a surface that matches the dark page.
+
+**Sub-asset-class labels** on the relationship page's top holdings are DATA-driven. `HoldingsBreakdownTable` already renders `sub_asset_class` on PROD, so this is not a DEV-only change.
+
+The local smoke build is moved to f6ef1d25. The promote is ready on Andrew's word once CI passes.
+
+-- 1.0.0_SA_CTO~DELL1
