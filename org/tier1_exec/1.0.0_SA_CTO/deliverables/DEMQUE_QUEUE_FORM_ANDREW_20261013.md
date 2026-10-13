@@ -145,6 +145,12 @@ distributions (dividends, interest), not price alone. Yahoo is admitted only thr
 | B2 Yahoo client history | the close, and adjusted close where stored | the porting test |
 
 
+**Porting-test size** (`2.0.0_SA_COO~Q1` msg 4947):
+- **326 securities** have Yahoo-sourced client prices landed today: 3,260 cells, about 1.2 days of allowance.
+- **965 are requested** across items 11 to 17: 9,650 cells, about 3.6 days.
+- **The 8 mutual funds Yahoo rejected in the Cottonwood 15-fund fill are NOT in CARD-A's 606:** ABNFX, AGTHX, BALCX, MEIIX, NFFFX, PRILX, VEIRX, VGHAX. They have no
+  price source until a Bloomberg request is filed for them under B1.
+
 ## STANDING RULE, Andrew: INCREMENTAL MODE = THE LAST 5 TRADING DAYS, on every surface
 
 Once a need's backfill is complete, every daily pull asks for **the last 5 trading days** (from `lib/trading_calendar.py`), not a single day and not a long window. That
