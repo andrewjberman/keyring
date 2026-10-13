@@ -30029,3 +30029,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-D2-W349-S1 -- irpt-directory-search built zip carries a served.py/enforce.py keyword mismatch from the staged pins; the build STOPS on IB-pr-499
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W349-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~349",
+  "surfaced_at": "2026-10-13T03:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "The built irpt-directory-search zip reads 1 attribute mismatch: served.py:856 calls enforce.Enforcer with load_report_owner, which the staged enforce.py at its pin does not accept. The LIVE zip carries the same mismatch, so the build is a STOP under the refusal clause; no reach, arms or packet were produced and nothing was uploaded.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "signature_closure_attr.py (deliverables 0.9.0_WK_IRPT_BCKEND~278) run on the BUILT zip, BUILD_ONLY sha256 ea1ac36d051602354cb5d25c238c66e11a2c228bb3757118eb7797ff07a9dac3, built twice identical: 'signature_closure calls=40 checked=40 skipped_unpack=0 mismatched=0 attr_skipped_unpack=0 attr_checked=62 attr_mismatched=1', rc=1; 'ATTR_MISMATCH: served:856 calls enforce.Enforcer -- unknown keyword(s) [load_report_owner]'",
+      "the same instrument on the LIVE zip (aws lambda get-function Code.Location, CodeSha256 TefVhmGS.../ hex 4de7d586...): the identical summary line and the identical ATTR_MISMATCH line, rc=1",
+      "git show 74a62fb46ce9ff2e2baa305d3eadfac6b8145651:infra/aws/lambda/investor-reporting/_authz/served.py line 855 reads render[\"load_report_owner\"] = ports[2], and line 856 passes **render to _enforce.Enforcer",
+      "git show f9a00f732caebaaf7d36b7e066ef40a01bb5da51:infra/aws/lambda/investor-reporting/_authz/enforce.py contains 0 occurrences of load_report_owner; positive control, HEAD copy of the same file contains 6, and its Enforcer.__init__ (line 317) accepts load_report_owner=None",
+      "infra/aws/lambda/ci/lambda-source-map.json at base f91aedd1ef, entry irpt-directory-search, staged_from rows (lines 3587-3598) pin _authz/served.py at 74a62fb46c and _authz/enforce.py at f9a00f732c: the packaged pair is a mixed pin set"
+    ]
+  },
+  "spec_asserts": "IB-pr-499 build step 3 and the refusal clause: both signature limbs must read 0 on the built zip, and any signature or attribute mismatch is a STOP, a surprise row, and a report; no check is weakened.",
+  "world_is": "The built zip (24 members, 23 identical to the live bundle, 1 changed: handler.py, built equal to its repo blob at base) carries a served.py whose pinned copy passes load_report_owner to Enforcer, while the enforce.py pinned beside it does not define that parameter. The live bundle carries the same pair and the same mismatch, so the mismatch predates IB-pr-499 and is not produced by handler.py. Whether a live request reaches the keyword path (render_ports returning three ports) is NOT measured. Disposition is the pair owner's: the order is stopped and stays open.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
