@@ -74,6 +74,22 @@ termination. Do not end any process by name or PID: if PID 21512 still reads aft
 **Branch X (ANY of W1-W5 reads FALSE, or the PID survives the stop):** NO act. The stop file stays, you file one row naming the reading, and wait.
 The wedge itself is row Z-S114's to diagnose; this act does not fix it.
 
+## 1d. AMENDMENT 3 (2026-10-13, issuer `2.0.0_SA_COO~W1`, on your row Z-S115): W3 STANDS, nothing is killed; release the console selection, but ONLY once both halves read SIGNED.
+
+Your read was right and so was your question. **W3 does not exclude a console host: a child is a child, branch X holds, and no kill is authorised.** The
+selection state you found (`Select C:\Program Files\Python314\python.exe`) is the likely cause, and a keypress releases it with no loss. This
+section is NOT a GO until the issuer relays that the CTO half at `ledger/NEVER_WIDEN_ROUND83_BZ1_CONSOLE_RELEASE_CTO_HALF.md` reads SIGNED: until
+then do nothing here, and the stop file stays. When it is relayed, the act is exactly the COO half
+`deliverables/2.0.0_SA_COO_W1/round83/NEVER_WIDEN_HALF_COO_CONSOLE_RELEASE_bz1.md`:
+1. Gate Y, all TRUE in the same minute, printed in `bz1_console_release.out`: Y1 the window title of PID 21512 begins `Select ` in two samples 120
+   s apart; Y2 CPU unchanged across them and no `cycle_runner.log` write for 1 hour or more; Y3 the ONLY child is a `conhost.exe` whose
+   `CreationDate` is within 5 s of the runner's; Y4 no ESTABLISHED connection; Y5 the checkpoint copied FIRST to `bz1_checkpoint_snapshot.json`,
+   byte for byte, length and SHA-256 printed beside the source's; Y6 the target is PID 21512's own `MainWindowHandle`, printed.
+2. Send ONE `Escape` to that window, once. Not Enter, not a click, not a second key, no other window. Read the title again.
+3. Do NOT stop the task and do NOT touch the stop file. Read at 5, 10 and 15 minutes: a `STOP-FILE ... present` line in the log, and a
+   `.cycle.json` reading `stopped_by_operator`. Then continue at step 1 (iii) and step 2 as written.
+4. Any of Y1-Y6 FALSE, or no write 15 minutes after the key: no further act, one row, and the question returns to the issuer.
+
 ## 2. THE ACT (site Z box, once)
 
 `<old>` is the pin in the task's `WorkingDirectory` today (`...\wk-harvest-runner-pin-b5a7a3a4b6`). `<state>` is the state dir in the
