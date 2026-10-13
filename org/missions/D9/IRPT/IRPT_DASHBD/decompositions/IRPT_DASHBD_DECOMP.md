@@ -1660,3 +1660,13 @@ Second to O1/O2; takes no seat from IRPT_ANLREQ; every cell is LOCAL or DEV-only
 (c) a `member` is a baseline table cell, a chart, a cover field or a convention (the checker derives the required set from the baseline's structure: 117 members, no extras); (d) FDRXX: the cell reads where the class is assigned; if the assignment is in a producer or gold script (outside DEV-only scope) it files a row naming the file and line and changes nothing there; (e) counts and synthetic fixtures only in the repo; the household chosen for the sample is referenced by hash.
 
 **fanout:** 2 of 2 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~140` (`DB-b-174`) and `~144` (`DB-b-178`) now; `~141` (`DB-b-175`) after `DB-b-174` drains; `~142` (`DB-b-176`) after `DB-b-174`; `~143` (`DB-b-177`) after `DB-b-176`.
+
+## 97. ROUND 95, WORKSTREAM B (2026-10-13 ~22:0xZ, issuer 2.0.0_SA_COO~D2, on the CTO's ruling msg 7289 after row W141-S3; round 94 is still executing, this round is its own issuance because the gate admits one issuance per round)
+
+**Why a new round.** Gold `account_activity_daily` holds four trading days, so no report window opens from it. The CTO rules: every window figure `account_return_daily` can derive comes from it; what only activity holds reads ABSENT until IRPT_BCKEND backfills activity (queued to `2.0.0_SA_COO~P2`). One cell is cut, in its own round:
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-179` re-source 36 window members of the performance report contract (the value summaries' beginning, ending, net additions, net gain, and the account returns, for QTD, YTD, 12M and since inception) to `account_return_daily`; contract 0.2.0, the 0.1.0 bytes in its `lineage`; the gap table regenerated | FWD-21 | LOCAL | `DB-b-174` | R95-1 |
+
+`DB-b-175` (the household sample) is stopped and re-seated after `DB-b-179` drains, reading windows from `account_return_daily`. The records of `DB-b-175`, `DB-b-176` and `DB-b-177` bind to the contract's bytes; the checker accepts the 0.1.0 bytes through the lineage, so no record is re-made. **fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~145` (`DB-b-179`). Round 94 stays open until its orders are terminal; round 96 carries the FDRXX class cell.
