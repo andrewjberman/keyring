@@ -19,6 +19,8 @@
 
 ## WORKER FACE
 
+**AMENDMENT 1 (issuer, 2026-10-13T06:0xZ; your refusal and row W357-S1 were right and the clause was my defect):** the regeneration also adds `account_id?: string` to the `nodes` block of `contracts/wire/HoldingsSnapshot.ts`, because the contract has carried the OPTIONAL `account_id` member since PRD v0.52 (the wire copy predates it). That change is EXPECTED and GRANTED: the contract is the truth the wire copy follows. The regeneration may therefore differ from HEAD by exactly two things in the generated files: the `multi_asset` member of the `asset_class` union, and the optional `account_id?: string` on the ACCOUNT node. Any OTHER difference in any generated file still means STOP and a row. Run `gen-all.ts` as you did, keep both changes, then do steps 2 to 5. For the typecheck use `bunx tsc --noEmit -p tsconfig.app.json` (your row S2: `-p .` checks nothing). If a portal test that passes at the base fails because the node type gained `account_id`, STOP and name it.
+
 **Cell `IB-pr-506` (inlined):** the v1 contract `docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json` admits `multi_asset` in its `asset_class` enum again (restored by `7d49d6cc6d`; it is a retired, never-emitted member). The portal's generated wire copy `portal/src/pages/InvestorReporting/contracts/wire/HoldingsSnapshot.ts` was generated while the enum lacked it, so its `asset_class` union lacks `multi_asset`, and the test `portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-48.new-classes.test.tsx` (test `IVE48-AC1`, arm 1: the wire union equals the contract's enum) now FAILS: `wire union [alternatives,cash,commodities,equity,fixed_income,other,structured,unclassified] != contract enum [... multi_asset ...]`. The CTO's ruling: **the wire union and type MOVE to the contract's enum; the test keeps asserting wire == contract (never the producer's six); `multi_asset` gets a plain fallback label.** You work in the PORTAL repo (your worktree's `portal/` directory, `node_modules` linked, `bun` on PATH). This is a portal candidate for the CTO's review lane, DEV only.
 
 **Do:**
@@ -41,7 +43,7 @@ What the checks grade: AC1 `IVE48-AC1` passes (`bun test` of its file); AC2 the 
 ## BOUNDS
 
 - **Grant:** the `paths` block and nothing else. Portal repo: only the files named in `<paths>`. No `package.json` or lockfile; run no `bun install`; push nothing.
-- **Refusal clause:** STOP, file a row, change nothing more, if the regeneration changes anything other than the `multi_asset` member, if making a type exhaustive needs a file outside the paths (name it), or if a test other than `IVE48-AC1` that passes at the base fails after your change.
+- **Refusal clause:** STOP, file a row, change nothing more, if the regeneration changes anything other than the `multi_asset` member and the optional `account_id` node member (AMENDMENT 1), if making a type exhaustive needs a file outside the paths (name it), or if a test other than `IVE48-AC1` that passes at the base fails after your change.
 - **Commit** in BOTH repos per your definition: the workspace commit (order flip, proof, rows) with `.tools/safe-commit.sh`, and the portal commit with plain `git -C portal commit` (same author and committer values, message file from the Write tool outside the worktree); ASCII only; never stage the workspace's `portal` gitlink.
 - **Row ids** are `IRPT_BCKEND-D2-W357-S<k>` (the next free `k`). Report once, under 150 words.
 

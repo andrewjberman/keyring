@@ -26,7 +26,7 @@ own-firm admit leg (D1-W7-S1) and the F7 compare instrument (D1-C-S7).
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v3"
     },
@@ -35,7 +35,7 @@ own-firm admit leg (D1-W7-S1) and the F7 compare instrument (D1-C-S7).
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": "2026-10-11T05:35:00Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_FIRMBKTS-D1-S7",
@@ -398,7 +398,7 @@ own-firm admit leg (D1-W7-S1) and the F7 compare instrument (D1-C-S7).
     "owner": "2.0.0_SA_COO~B1",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B1",
       "round": "v3"
     },
@@ -407,7 +407,7 @@ own-firm admit leg (D1-W7-S1) and the F7 compare instrument (D1-C-S7).
       "owner": "2.0.0_SA_COO~B1",
       "at": null
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
