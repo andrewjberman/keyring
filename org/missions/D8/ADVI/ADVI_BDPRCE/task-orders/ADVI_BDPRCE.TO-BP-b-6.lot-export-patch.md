@@ -90,7 +90,7 @@ Instance at the path above. Commit the three change files, the test, `LOT_PROOF.
 **ISSUER NOTES:** round-1 analysis item 6, first half (the PRD's C1 as code). The apply is WORLD and is not cut here: it is the next amendment, after this merges and the pair (CTO + COO halves) is signed at the current bytes; the COO half is authored from this proof.
 No `data/`, `infra/` or `lib/` edit, so the L6 floor reads LOCAL. Rollback at apply: the template's prior VersionId, named in `LOT_PROOF.json`.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <workstream>LOTEXPORT</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-b-6</to_id>
