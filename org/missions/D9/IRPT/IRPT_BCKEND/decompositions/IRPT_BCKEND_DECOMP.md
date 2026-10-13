@@ -3604,3 +3604,18 @@ Checks `deliverables/2.0.0_SA_COO~P2/checks/r176/p176_cells.py`, dry-run at the 
 | `IB-pr-509` | a READ-ONLY census of the per-firm `investor-reporting-holdings.tar.gz` packages (the bundle map against the guard, each package's members against HEAD, where the two merged changes land) | FWD-3 | SERVED (a read of the packages that decide what the host runs) | none | P176-a |
 
 fanout: 1 of 1 chains, cap 8, reason: a single records-only AWS read with no sibling cell. One worker spawn (slot ~361).
+
+## 169. ROUND 177, WORKSTREAM ~P (2026-10-13 ~08:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6863 = ROUND-177 ANALYSIS section 2)
+
+The CTO's list has two items. Item 1: the host-bundle pair: ONE minimal package per firm (the live package's members by hash plus only the temp-file fix and the `account_id` builder member(s); the four unattributed live members carried unchanged and named by path and sha256), applied at the runner host's next scheduled Online (no start for it); the pair prints each package's member diff against live and a scratch-install read; rollback per firm is the live object version (CTO RE 6859). Item 2: the provenance read (S3 metadata and the CloudTrail `PutObject` event per package object; a line diff of the four members against their nearest historical blob) and the evidence archive of the four members (row D2-W361-S3 (b), (c)), not blocking the pair.
+
+CUT now: `IB-pr-510` (the three minimal candidate packages BUILT, censused, scratch-installed, with the never-widen packet and the COO half) and `IB-pr-511` (the provenance read and the evidence archive). NOT cut now, with the reason and the condition: the APPLY (an order to `0.7.0_AE_CloudOps~IB2` under the signed pair, at the host's next SCHEDULED Online; the pair needs the CVO/CTO halves signed first, an unmet dependency inside the round; owner me; condition: pair signed and the host's scheduled start) and its first read, the leftover temp-file count (counts only; a person deletes any found, row D2-W345-S3); also not cut: the `irpt-directory-search` apply (the signed pair, after the CVO's re-sign) and the repair of the no-op report validator in the ycharts generate composition (row W352-S1).
+
+Checks `deliverables/2.0.0_SA_COO~P2/checks/r177/p177_cells.py`, dry-run at the base: IB177-1 and IB177-2 AC1, AC2, AC3 FAIL (no record). Positive control for IB177-1-AC2: a synthetic replaced member (holdings_49f.py at 135fc3509e against its parent) passes the hunk-subset test with the commit declared.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-510` | three minimal per-firm holdings packages built from the live objects plus only the allowed commits' hunks (BUILD ONLY), their member diff against live, a scratch install, and the never-widen packet | FWD-3 | WORLD (host code that writes served data; build only) | none (the census record IB176-1 is merged) | P177-a |
+| `IB-pr-511` | READ-ONLY provenance of the three package objects (S3 metadata, CloudTrail PutObject) and the evidence archive of the four unattributed live members | FWD-3 | SERVED (a read of the objects that decide what the host runs) | none | P177-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two disjoint write sets (the candidate packages and packet; the provenance record and the archive), both reading the same three live objects and writing none. Two worker spawns (slots ~362 and ~363).

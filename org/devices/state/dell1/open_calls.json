@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-13T07:37:22Z",
+ "written_at": "2026-10-13T08:05:11Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -2028,6 +2028,32 @@
     "by": "1.0.0_SA_CTO~DELL1",
     "reason": "L2 DONE WHEN is Andrew's to confirm"
    }
+  },
+  {
+   "id": "dell1-20261013T080511Z-91e6",
+   "project": "NONE",
+   "subject": "Confirm the DONE WHEN lines of the new Black Diamond pricing-rules project (L2, Andrew's act)",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "docs/briefs/bd-pricing-rules-brief-20261013.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-13T08:05:11Z",
+   "kind": "act",
+   "context": "Andrew-direct 2026-09-03: 'i will confirm CTO's DONE WHEN from their /endpoint --forward' (ANDREW_DIRECT_20260903_052xZ_WHO_DECIDES_DONE_COO_COMPLETION_REPORT_CTO_GRADES_TWO_READS.md). Lines: docs/briefs/bd-pricing-rules-brief-20261013.md PART VIII; supersedes fork 1261.",
+   "rec": "Yes, as written. Line 3's standing wait on Andrew is stated in the endpoint with its reason (client-visible prices) and its discharging act (his review of a named before/after diff per fix), never an open-ended hold.",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-13T08:05:11Z"
+   },
+   "closed": null
   }
  ]
 }
