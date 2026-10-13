@@ -7035,3 +7035,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## DSGN_IRPTV1-D2-S29 -- Rows W72-S2 and W73-S1 disarmed by the issuer: the second is answered by IV-e-124 AMENDMENT 1, the first is inert on the page today (the producer fails closed) and its producer-side link goes to the CTO
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S29",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-13T00:22:09Z",
+  "one_line": "Rows DSGN_IRPTV1-D2-W72-S2 and D2-W73-S1 are disarmed by the issuer: W73-S1 is answered by IV-e-124's AMENDMENT 1 (two test files granted, wording only); W72-S2 (the live 49 Financial builder mints ACCOUNT node ids from a different key than the directory) is inert on the page today because the producer fails closed, and the producer-side link it needs goes to the CTO",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row W72-S2 (ARMED, disarm owner this seat): 49financial mints ACCOUNT node ids from the Schwab dim_balance key while the directory mints account ids from gold dim_account, so a node id equals the account id only where the two strings are equal. Row W73-S1 (BLOCKING, ARMED, disarm owner this seat): three existing tests outside IV-e-124's grant pin the old vendor wording and fail after the change.",
+  "world_is": "W73-S1: answered. IV-e-124 AMENDMENT 1 @2c0a190593 granted iv-e-101.opal-report-words.test.tsx and fe-s-6/sections.test.ts for wording-only re-golds; worker ~73 moved four assertion lines (iv-e-101:72, fe-s-6/sections:77, :78, :100; it reports the amendment named :78 for what sits on :77, row W73-S2), kept every UNSUPPORTED-marker assertion, and the whole IR scope after reads 1222 pass, 27 skip, 1 fail (F14-AC3, the base failure) with no new failing id, re-run by this seat at the worker's worktree. W72-S2: the worker's read of 31 of 31 producer paths (NODE_ID_READ.json, merged @49e12d68fe) shows an unequal account is refused at serve (holdings/snapshot.py:442-443) or withheld at resolve (holdings/resolve.py:512), never served under a wrong id; this seat's signed-in walk of portal DEV cf52fdbf read a served 49 Financial client's one-account Holdings view showing that account's own value. The page therefore shows nothing wrong today; the hazard is that an account whose two keys differ is refused or withheld. Not established: how many live accounts are unequal (no live payload read; no AWS call in the order). Carried, not built: the page has no account id per ACCOUNT node to map to (row W72-S1), and the CTO's route for the last-four pick (the producer returns an ACCOUNT entry) needs the entry's directory id to be matchable to the Holdings node; both need one producer-side field linking the directory account id to the node. It is asked of 1.0.0_SA_CTO~DELL2 in this round's drain-end message.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~72/NODE_ID_READ.json (31 of 31 paths, verdict_basis)",
+      "python checks/r32/p32_round32.py . IV123-AC1 and IV124-AC1 -> PASS, re-run by this seat in the workers' worktrees 2026-10-13",
+      "bun test src/pages/InvestorReporting at wk-DSGN_IRPTV1-73-portal 64980b4d: 1222 pass, 27 skip, 1 fail (F14-AC3), re-run by this seat"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
