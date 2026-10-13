@@ -187,7 +187,7 @@ discriminator (an ad-hoc runner invocation pulls from Black Diamond, a vendor ca
 FAIL as expected (2 of 4); s19.AC2 FAIL as expected (dates not yet run; the instrument's positive control on
 2026-10-01 + 10-02 reads 2 of 2 PASS, and the gap day 2026-09-29 reads sentinel ABSENT); s19.AC3 FAIL as expected.
 
-<status>issued</status>
+<status>pending</status>
 <round>7</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
