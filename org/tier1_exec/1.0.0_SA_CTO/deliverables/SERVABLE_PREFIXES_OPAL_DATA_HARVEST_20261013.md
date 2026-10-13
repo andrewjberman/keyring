@@ -1,4 +1,4 @@
-# SERVABLE_PREFIXES -- `opal-data-harvest`, harvest V1 for asset managers (`1.0.0_SA_CTO~DELL1` v1 2026-10-13 ~18:3xZ; v2 measured by `2.0.0_SA_COO~W1`, ~18:5xZ)
+# SERVABLE_PREFIXES -- `opal-data-harvest`, harvest V1 for asset managers (`1.0.0_SA_CTO~DELL1` v1 2026-10-13 ~18:3xZ; v2 measured by `2.0.0_SA_COO~W1`; v3 = v2 with the CTO rulings F1-F5 applied, ~18:5xZ)
 
 **For:** site Z's NFRA_MCPINDEX round (catalog rows) and NFRA_OPLGTW (the asset-manager research grant), through `0.0.0_AB_MSTR`. Cluster direction
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_DELL1_20261013.md` O3.
@@ -23,16 +23,16 @@ differences are one narrowed row (8), one class now read (23), and five measured
 | # | prefix | content (measured where marked) | class | V1 |
 |---|---|---|---|---|
 | 1 | `packs/` | one prefix per covered name (105); MEASURED on 4 names: `input_ledger.json` only (input_class, source, outcome, stamp, detail) | derived (input ledger) | **SERVE** |
-| 2 | `scores/v1/` | per-name scores; MEASURED: divergence, `peers_v`, `inputs.model_block_key` | derived from the Bloomberg model block | **SERVE per ruling, FLAG F2** |
-| 3 | `management/v1/` | management outputs (FWD-17 roster); MEASURED: roster, `lusha_enrichment`, `ceo_public_profile` (url, title, snippet) | derived, with vendor and web fields | **SERVE per ruling, FLAG F4** |
-| 4 | `filings/v1/` | MEASURED: `<accession>.source.json` carries `excerpt.text` (70,023 chars) and `<accession>.analysis.json` carries `passage_map[].text` (549 passages) | derived items plus verbatim SEC filing text | **SERVE per ruling, FLAG F1** |
-| 5 | `posture/v1/` | posture judgments; MEASURED: verdict, reason, and `membership` (books, weight_by_book) | derived (model-book membership inside) | **SERVE, FLAG F5** |
-| 6 | `peers/v1/` | peer sets; MEASURED: measures, country map, `csc_columns` | derived from the Bloomberg model block | **SERVE per ruling, FLAG F2** |
-| 7 | `publication-links/v1/` | per-name article links; MEASURED (291 B): security_key, company, ticker, article_key, publisher, first_discovered_at. **No url, no title** | article link INDEX | **SERVE, FLAG F3** |
+| 2 | `scores/v1/` | per-name scores; MEASURED: divergence, `peers_v`, `inputs.model_block_key` | derived from the Bloomberg model block | **WITHHOLD -- HELD for Andrew (F2 ruled, C-BBG)** |
+| 3 | `management/v1/` | management outputs (FWD-17 roster); MEASURED: roster, `lusha_enrichment`, `ceo_public_profile` (url, title, snippet) | derived, with vendor and web fields | **WITHHOLD until the view exists; then SERVE (F4 ruled: view without `lusha_enrichment`, RESAPP's writer)** |
+| 4 | `filings/v1/` | MEASURED: `<accession>.source.json` carries `excerpt.text` (70,023 chars) and `<accession>.analysis.json` carries `passage_map[].text` (549 passages) | derived items plus verbatim SEC filing text | **SERVE as is (F1 ruled: SEC filings are public documents, not publisher text)** |
+| 5 | `posture/v1/` | posture judgments; MEASURED: verdict, reason, and `membership` (books, weight_by_book) | derived (model-book membership inside) | **SERVE (F5 ruled)** |
+| 6 | `peers/v1/` | peer sets; MEASURED: measures, country map, `csc_columns` | derived from the Bloomberg model block | **WITHHOLD -- HELD for Andrew (F2 ruled, C-BBG)** |
+| 7 | `publication-links/v1/` | per-name article links; MEASURED (291 B): security_key, company, ticker, article_key, publisher, first_discovered_at. **No url, no title** | article link INDEX | **SERVE as the index (F3 ruled: the derived link view is a staged enrichment item and joins it when built)** |
 | 8 | `amgt/harvest/gold/` -- ONLY these six tables: `article_security_mention`, `article_sentiment`, `chatter_daily`, `chatter_event`, `chatter_window`, `candidate_universe` | MEASURED: counts, tiers, scores, tone, hashes, keys; `chatter_event` carries `lead_headline` (string) | derived (the chatter) | **SERVE (these six only)** |
 | 9 | `identity/v1/` | security identity; MEASURED: crosswalk residue, cross-references | reference (lookup) | **SERVE** |
 | 10 | `crosswalk/v1/` | the identity crosswalk; MEASURED: security_key, bloomberg, display_ticker | reference (lookup) | **SERVE** |
-| 11 | `universe/v1/` | the covered universe; MEASURED: names with `books` and `weight_by_book` | reference (lookup, model-book membership inside) | **SERVE, FLAG F5** |
+| 11 | `universe/v1/` | the covered universe; MEASURED: names with `books` and `weight_by_book` | reference (lookup, model-book membership inside) | **SERVE (F5 ruled)** |
 | 12 | `amgt/harvest/bronze/`, `amgt/harvest/silver/` | MEASURED: bronze `research-report-extract/extract.json` holds `paragraphs[].text`; silver `research-report` holds metadata only (author, fund, sector, period) | raw report text (bronze); report metadata (silver) | WITHHOLD |
 | 12b | `amgt/harvest/gold/` -- the other seven tables: `research-backlog`, `research-continuation`, `research-dossier`, `research_dossier`, `research-fund-form`, `research-model-typecast`, `research-sector-template` | MEASURED: `passages` (sector-template), `citations` (continuation), `fields.*.value/absent` (dossier) -- report-derived text; class of the rest not read | report-derived, unclassed | WITHHOLD (v1's whole-prefix SERVE admitted these) |
 | 13 | `amgt/harvest/state/` | MEASURED: filing_attempt, freshness_snapshot, pull_log | operational | WITHHOLD |
@@ -48,10 +48,13 @@ differences are one narrowed row (8), one class now read (23), and five measured
 | 23 | `drafting/v1/` | MEASURED: AI-drafted `sections[].sentences[]` and `evidence_records[].passage` (verbatim SEC filing passages, 774 chars in the sample), `quoted_spans` | derived (AI-drafted) with verbatim SEC passages | WITHHOLD (class now read; rides call C-SEC) |
 | 24 | `lib/local-publications/`, `social/v1/_measurement/` | MEASURED: a code archive (.zip); a vendor-job cost and delivery measurement | not data | WITHHOLD |
 
-**Count: 11 SERVE rows (rows 1-11; row 8 narrowed to six tables), 13 WITHHOLD (rows 12-24; row 12b is the split of row 8).** Two widening calls were at
-Andrew in v1 (rows 19, 22); v2 names them C-SEC and C-BBG and ties more rows to each.
+**Count after the rulings (v3), 24 of 24 rows:** 8 SERVE now (rows 1, 4, 5, 7, 8, 9, 10, 11; row 8 is six tables), 1 SERVE when its view exists (row 3), 2 HELD for Andrew
+on the Bloomberg licence (rows 2, 6), 13 WITHHOLD (rows 12-24; row 12b is the split of row 8). C-SEC is closed by F1 as to `filings/v1` (row 19 stays WITHHOLD as plumbing);
+C-BBG is the one card at Andrew (rows 2, 6, 22).
 
 ## Flags -- measured findings the CTO decides (each row stays as the ruling put it until the CTO says)
+
+**v3: all five are ruled (section "CTO RULINGS" at the end); the table keeps the measured finding, the rulings carry the decision.**
 
 | id | finding (MEASURED) | rows | the call |
 |---|---|---|---|
@@ -66,8 +69,9 @@ publisher text, the producer drops the column; if it counts as the article link'
 
 ## The grant, as the V1 rule needs it
 
-- Grant an asset-manager principal `s3:GetObject` on the SERVE prefixes ONLY, as prefix conditions: rows 1-7 and 9-11 whole, and row 8 as the six table prefixes
-  `amgt/harvest/gold/<table>/`, never `amgt/harvest/gold/`. No bucket-wide read, and no `ListBucket` outside those prefixes.
+- Grant an asset-manager principal `s3:GetObject` on the SERVE-NOW prefixes ONLY, as prefix conditions: `packs/`, `filings/v1/`, `posture/v1/`, `publication-links/v1/`,
+  `identity/v1/`, `crosswalk/v1/`, `universe/v1/` whole, and row 8 as the six table prefixes `amgt/harvest/gold/<table>/`, never `amgt/harvest/gold/`. `management/v1/` is
+  added when its view prefix exists and is named here; `scores/v1/`, `peers/v1/` and `derived/` are added only on Andrew's Bloomberg word. No bucket-wide read, and no `ListBucket` outside those prefixes.
 - **Negative arms (FWD of O3):**
   - the same principal is refused on a WITHHOLD prefix (`wsj/harvest/`) and on a withheld gold table (`amgt/harvest/gold/research-dossier/`);
   - a non-research principal is refused on `packs/`.
@@ -103,10 +107,12 @@ more than `input_ledger.json`; the Bloomberg and Lusha licence terms; which prin
 ## Owners
 
 - The list: AMGT_HARVST (`2.0.0_SA_COO~W1`), with AMGT_RESAPP for `packs/`.
-- The flags F1-F5 and the calls C-SEC, C-BBG: `1.0.0_SA_CTO~DELL1`, then Andrew.
+- The rulings F1-F5 (section "CTO RULINGS" below) and the one card C-BBG: `1.0.0_SA_CTO~DELL1`, then Andrew.
+- The derived link view (url, title, publisher, date, no body; F3): AMGT_HARVST, a staged enrichment item for the first issuance after the round-84 L10, not cut mid-round.
+- The management view without `lusha_enrichment` (F4): AMGT_RESAPP's management writer, as an added output.
 - The catalog rows and the grant: site Z, NFRA_MCPINDEX and NFRA_OPLGTW, under `1.0.0_SA_CTO~Z`.
 
--- 1.0.0_SA_CTO~DELL1 (v1), 2.0.0_SA_COO~W1 (v2, measured)
+-- 1.0.0_SA_CTO~DELL1 (v1), 2.0.0_SA_COO~W1 (v2 measured; v3 rulings applied)
 
 ## CTO RULINGS on F1-F5 (`1.0.0_SA_CTO~DELL1`, 2026-10-13 ~18:4xZ), on `2.0.0_SA_COO~W1`'s measured v2 @cbf1689562
 
