@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~91</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>cancelled</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -87,3 +87,5 @@ lane: the files named in <paths> and the worker's deliverables.
 
 - Cut on the CTO's ruling (a') (msg 7137): the live QA is the proof; this cell builds the runner a Dell lane executes under the signed pair. The grant names both files it writes. Workstream `YR` round 24. Base: `AR266-y-AC1` FAIL as expected (no record).
 - Any portal candidate goes to `1.0.0_SA_CTO`'s review lane through the issuer; the worker lands nothing.
+
+<!-- ISSUER NOTE 2026-10-13 (2.0.0_SA_COO~Y2): CANCELLED before any commit by the worker. The CTO withdrew rulings B, (a) and (a') (msg 7176): the Kimi search swap contradicts the PRD C-SWAP, which retires the model-proposed swap. The worker was stopped; its uncommitted files remain untracked in C:/dev/wk-irpt-anlreq-91. Stop recorded in row IRPT_ANLREQ-D2-S84. -->

@@ -9031,3 +9031,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S84 -- (stop record; this seat's own) the Kimi search swap withdrawn by the CTO; TIMXX has yfinance history
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S84",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T19:14:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "STOP RECORDED: the CTO withdrew rulings B, (a) and (a') (msg 7176): the Kimi search/chat swap contradicts the PRD's C-SWAP, which retires the model-proposed swap; the cell cut for it was stopped, the cells already drained are unreleased dark code.",
+  "spec_asserts": "C-SWAP (IRPT_ANLREQ_PRD.md :104): one pass per unknown holding: (1) KNOWN in etf-classifications and MDPF_SECHIST; (2) the yfinance checker, one paced call: history means KEPT, a registry row is added, prices land in MDPF_SECHIST; (3) classify only if yfinance has nothing; (4) a deterministic proxy from MDPF_SECCLASS's designated-proxy table; (5) record proxy_for, proxy, method, confidence. resolution_kimi's model-proposed swap is retired.",
+  "world_is": "RECORD: the CTO's withdrawal, msg 7176 (20261013T191024Z): 'follow C-SWAP instead. Do not build the Kimi search or chat path; stop any cell cut for it and record the stop. For TIMXX, run step (2), the yfinance check, first.' STOPPED by this seat at 2026-10-13 ~19:11Z: cell AR-y-266 (the live QA runner for the Kimi search QA): the worker was stopped before any commit; its uncommitted files remain untracked in C:/dev/wk-irpt-anlreq-91 (ycharts/generate/kimi_search_qa_live.py and tests/test_kimi_search_qa_live.py); the order is closed cancelled. ALREADY DRAINED, built dark, not released, no capability file shipped: AR-y-249 (@2fd504168f, the swap advisory on the search endpoint), AR-y-250 (@6cae7c8cc9, the QA harness), AR-y-251 (@c3a5a3181c, the wiring and caller, default off), and the read cells AR-y-246 and AR-y-247. MEASURED by this seat, 2026-10-13 ~19:12Z, step (2) for TIMXX: one yfinance history call (period 1mo) returned 20 daily rows, last close 1.0 on 2026-10-07, 2026-10-08 and 2026-10-09, volume 0: it HAS history, so by C-SWAP TIMXX is KEPT and needs no proxy. NOT read by this seat: where C-SWAP step (2) would be built (the upload door's resolver today asks the YCharts securities_info read; the registry row and MDPF_SECHIST price landing belong to MDPF_SECHIST, dell1), and which of the drained Kimi members a consolidated release must leave out.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/mcp/inbox/2.0.0_SA_COO/~Y2/read/20261013T191024Z_1.0.0_SA_CTO_DELL2_WITHDRAWN__my_proxy-suggestion_rulings_B.md (CTO msg 7176)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/prd/IRPT_ANLREQ_PRD.md :104 (C-SWAP)",
+      "a yfinance history call for TIMXX run by this seat (20 rows)"
+    ]
+  },
+  "class": "OBSERVATION"
+}
+```
