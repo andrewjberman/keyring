@@ -7633,3 +7633,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W144-S3 -- the surprise-row gate refused one commit on an index read ERROR for a tracked adjudication file, and the same commit landed unchanged on retry
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W144-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~144",
+  "surfaced_at": "2026-10-13T21:00:22Z",
+  "one_line": "The first safe-commit of TO-DB-b-178's deliverable was refused by the surprise-row gate: 'org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/adjudications/ADJUDICATION_v8.md unreadable in the index (ERROR)'. The file is tracked (blob 734c676d52), no index.lock existed, and the gate's own probe and git show both succeeded when run by hand. The same commit, unchanged and with no override, landed on the retry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The row gate fails closed on a genuine read error and admits a clean commit whose read succeeds (surprise-row-gate.py _blob_read: ERROR only when git cannot answer).",
+  "world_is": "The refusal printed the gate's ERROR state for ADJUDICATION_v8.md; .tools/surprise-row-gate.py _blob_read runs git ls-files -s then git show :path with a 60 second timeout. Measured after the refusal: git ls-files -s and git show :path both returned rc 0 for the file, and no index.lock was present in the worktree git dir. The retry of the identical staging set (the deliverables folder, the investigation file and the order) committed as a8d44d9210. The cause of the one transient ERROR was not identified; no override was used.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "/c/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~144/commit_ws.txt (first refusal, lines 29-31)",
+      "/c/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~144/commit_ws2.txt (retry, landed as a8d44d9210)",
+      ".tools/surprise-row-gate.py:1991-2036 (_blob_read) @a8d44d9210 parent",
+      "git ls-files -s on org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/adjudications/ADJUDICATION_v8.md: blob 734c676d52"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
