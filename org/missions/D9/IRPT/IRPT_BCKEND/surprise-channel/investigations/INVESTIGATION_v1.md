@@ -29882,3 +29882,150 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Recorded for the issuer; not graded by this order's criteria."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W346-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~346",
+  "surfaced_at": "2026-10-13T02:40:00Z",
+  "one_line": "IB170-4-AC1 cannot pass as written: its substring grep matches the producer own new section_id 2.annualized_return.c1, so every faithful mirror (the wire copy AC3 requires included) fails it, and PerformanceReport return_units DECIMAL_FRACTION (a producer value) matches in 12 more files.",
+  "spec_asserts": "AC1: no .json/.ts/.tsx file under the portal fixtures/ folder or the two named test fixture files carries annualized_return or DECIMAL_FRACTION (at base 29 files do). Step 1 of the order requires the portal wire copy sections to equal the producer fixture sections.",
+  "world_is": "The producer AnalysisReport.valid.json section_id is 2.annualized_return.c1, which contains the substring annualized_return, so AC1 fails on any mirror that satisfies AC3. DECIMAL_FRACTION is also the producer own PerformanceReport return_units value (measurement_basis), carried by 12 portal fixtures; it is not the section figure and was not changed. Measured after the section edits: 29 files still match (17 with a section token: 11 carry the new section_id, 6 still carry the old form; 12 with return_units only).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/fixtures/AnalysisReport.valid.json@fba6052830 instance.sections[0].section_id is 2.annualized_return.c1",
+      "infra/aws/lambda/investor-reporting/_contracts/fixtures/PerformanceReport.valid.json@fba6052830 return_units is DECIMAL_FRACTION",
+      "p170_cells.py . IB170-4-AC1 at portal@a5cadfd7: FAIL: 29 file(s) still carry annualized_return or DECIMAL_FRACTION"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Issuer to amend the AC1 token list (the old section_type and old section units) or scope the grep to the section block. This worker did not edit the check."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W346-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~346",
+  "surfaced_at": "2026-10-13T02:40:00Z",
+  "one_line": "fe-s-15/gen-fixtures.ts does not reproduce its committed job.*.json at HEAD: a regeneration drops the unprojected_grant block and adds status.internal_correlation_id; the five job files were left at HEAD bytes and still carry the old section.",
+  "spec_asserts": "Step 2: regenerate each file a generator writes; a regeneration that changes a figure other than the section figure is a STOP condition (change nothing more, file a row).",
+  "world_is": "Ran fe-s-15/gen-fixtures.ts in the worktree. job.ready.json diff: the four section lines, plus the removal of unprojected_grant (count 0, denominator 1, kinds {}) and status.internal_correlation_id corr-8f21 added. The same drift in the other four job files. The two smoke maps it writes (fe-s-15-clean, fe-s-15-needs-correction) regenerate section-only and were kept. The five job files were restored to HEAD bytes and not hand-edited.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-15/gen-fixtures.ts@cf52fdbf writes fixtures/fe-s-15/job.*.json from the wire copy",
+      "portal/src/pages/InvestorReporting/fixtures/fe-s-15/job.ready.json@cf52fdbf carries the unprojected_grant block the regenerated file drops",
+      "git --no-pager diff --ignore-cr-at-eol --numstat in the portal worktree before restore: 6 10 for each of the five job files"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A later run of this generator silently drops unprojected_grant and adds internal_correlation_id, so the job fixtures and the generator need one owner to reconcile them."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W346-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~346",
+  "surfaced_at": "2026-10-13T02:40:00Z",
+  "one_line": "fe-s-18/gen-fixtures.ts cannot run at HEAD (it reads a bare holdings key that the committed wire map does not carry), so its maps were not regenerated; its partial run drifted fe-s-18-frozen.json beyond the section, which was restored, and that file still carries the old section.",
+  "spec_asserts": "Steps 2 and 4: regenerate with the generator named by the header; holdings-no-answer.json is generator-written (its commit 05bfc442) and step 4 orders a same-form edit of it.",
+  "world_is": "bun run fe-s-18/gen-fixtures.ts failed: JSON Parse error, Unexpected identifier undefined, at gen-fixtures.ts:424 (clone(wire[HOLDINGS_KEY])). HOLDINGS_KEY is the bare prefix /api/scoped/investor-reporting/holdings/ (gen-fixtures.ts:220); fixtures/smoke/fe-s-13-wire.json carries the hashed key /api/scoped/investor-reporting/holdings/3a7bd3e2... The partial run rewrote fixtures/smoke/fe-s-18-frozen.json with roughly 235 added and 106 removed lines (not section-only); restored. Section-only edits (numstat 4/4 each) were made to fixtures/smoke/fe-s-18-holdings-observed.json, -target.json, -missing-attribution.json and __tests__/fe-s-32/holdings-no-answer.json, because the fe-s-32 relation test requires the observed map and the no-answer map to share the section.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-18/gen-fixtures.ts@cf52fdbf line 424 clone(wire[HOLDINGS_KEY]) and line 220 HOLDINGS_KEY bare prefix",
+      "portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-13-wire.json@cf52fdbf line 382 holds the hashed holdings key",
+      "bun test src/pages/InvestorReporting before the sibling edit: fe-s-32 holdings-in-a-browser NO-ANSWER relation FAIL (analysis member differs from observed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "fixtures/smoke/fe-s-18-frozen.json is the one fixture left at the old section form; it needs the generator fixed first."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W346-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~346",
+  "surfaced_at": "2026-10-13T02:40:00Z",
+  "one_line": "The producer ExportBundle fixture and its portal mirrors still name selected_sections S-RET-1, which the producer AnalysisReport no longer carries as a section_id; left unchanged because the mirror agrees with the producer.",
+  "spec_asserts": "Steps 1 and 2 move the section to the extractor form; the export bundle selected section reference is not in the list of changed members.",
+  "world_is": "portal fixtures/wire/ExportBundle.valid.json and fixtures/wire/requests/submit-export.request.json carry selected_sections [S-RET-1, S-ALLOC-2]; the producer ExportBundle.valid.json carries the same S-RET-1 reference.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/fixtures/ExportBundle.valid.json@fba6052830 selected_sections contains S-RET-1",
+      "portal/src/pages/InvestorReporting/fixtures/wire/ExportBundle.valid.json@cf52fdbf line 15 selected_sections S-RET-1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W346-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~346",
+  "surfaced_at": "2026-10-13T02:40:00Z",
+  "one_line": "The portal generators write LF into a core.autocrlf=true working tree, so a regenerated fixture shows as modified on line endings alone; the files were restored to CRLF before the commit.",
+  "spec_asserts": "Step 2: run each generator the way its header says, then regenerate.",
+  "world_is": "git config core.autocrlf is true with no .gitattributes; the untouched fixtures on disk are CRLF; committed blobs are LF. fe-s-13/gen-corpus.ts writes LF (writeFileSync at lines 263, 317, 417 and 440): 22 request records and five fe-s-14 smoke maps differed from HEAD by line endings only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal config core.autocrlf reads true in the worktree at portal@cf52fdbf",
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-corpus.ts@cf52fdbf lines 263 317 417 440 writeFileSync with LF"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W346-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~346",
+  "surfaced_at": "2026-10-13T02:40:00Z",
+  "one_line": "The five token-citing portal tests carry the old tokens only in inline synthetic bodies, and none asserts a changed fixture value, so no test was edited (AC2 stays 21 pass, 0 fail).",
+  "spec_asserts": "Step 3: tests asserting the old tokens are updated to the new tokens only where they assert the fixture value; a rendered-word assertion keeps its assertion and the printed words are re-read.",
+  "world_is": "In iv-e-101, -105, -106, -115 and -122 the old tokens are local literals whose assertions are rendered words (Computation validation, Source: Opal Capital Analysis, the iv-e-115 pinned title and unit) or mapping behaviour. iv-e-105 reads default.json for its status envelope only, not its sections. Probe (.scratch/ib495_probe.tsx, RetainedSections on the wire section): the old form prints 0.0712 percent and the new form prints 7.12 percent; the heading (2. Unnamed section of the source report) and unit (percent) words are unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-101.opal-report-words.test.tsx@cf52fdbf lines 22-25 inline opalSection literal",
+      "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-105.opal-document-words.test.tsx@cf52fdbf line 28 reads default.json for the status envelope",
+      "bun test of the five tests at the final state: 21 pass, 0 fail (IB170-4-AC2 PASS)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
