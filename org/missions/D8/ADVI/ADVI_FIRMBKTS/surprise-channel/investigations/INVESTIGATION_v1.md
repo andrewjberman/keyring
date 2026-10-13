@@ -6353,3 +6353,56 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Decisions owed: (a) whether the one-event probe is wanted at all given the verdict is reached by inference, and if so how the manifest's standing access policy is reconciled with the CTO's word (the issuer's call; the next runner-up window is 23:00Z); (b) the fix cell (round 7) under its own never-widen pair; (c) whether the 33 SS4c and the dtype PutMetricData AccessDenied lines want their own row owner. Nothing was sent, written or changed by this seat."
 }
 ```
+
+## Rows filed by 0.9.0_WK_ADVI_FIRMBKTS~69
+
+Rows are appended after the earlier rows; each is one fenced json object.
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W69-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~69",
+  "surfaced_at": "2026-10-13T08:16:07Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL1",
+  "one_line": "The commit gate on this device reports the hashed account-id list ABSENT, so the commit of gold_dispatch.sh was NOT checked for client account ids; the order names no such check.",
+  "spec_asserts": "The order names no commit-time client-data check; the commit was expected to go through safe-commit with the gates clean.",
+  "world_is": "safe-commit printed 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty)'. The commit f313505d5cfbaa696d83dcc87f560d4858583aa1 went through with rc=0. The staged diff is a bash function body with no account ids.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/gold_dispatch.sh@f313505d5cfbaa696d83dcc87f560d4858583aa1",
+      ".tools/safe-commit.sh commit output for f313505d5c (client-data-check WARN line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recurring condition already carried by earlier rows in this channel. Left alone, commits from this device pass without the client account-id check until the list is placed or OPAL_ACCOUNT_ID_HASHES is set. No read or write was made to the list itself."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W69-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~69",
+  "surfaced_at": "2026-10-13T08:16:07Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The pre-commit risk reflex printed HOLD on gold_dispatch.sh against a freshness-gate claim about the COT script; the cited claim does not concern the function this order edits.",
+  "spec_asserts": "The order names only the emit_chain_complete function in gold_dispatch.sh as the edit surface; no pre-commit citation review is named.",
+  "world_is": "comp-pulse diff printed [HOLD] for data/black_diamond/scripts/gold/gold_dispatch.sh and a second HOLD for data/cot/scripts/gold/gold_dispatch.sh, both citing docs/references/FRESHNESS_GATE_MANIFEST_20260717.md:74 (row R2, check_freshness keyed on the BD bucket, at the COT script lines 174-177). The cited row is about the COT script, not emit_chain_complete. The commit proceeded.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/references/FRESHNESS_GATE_MANIFEST_20260717.md@f313505d5cfbaa696d83dcc87f560d4858583aa1 (line 74, row R2)",
+      "data/black_diamond/scripts/gold/gold_dispatch.sh@f313505d5cfbaa696d83dcc87f560d4858583aa1 (emit_chain_complete, lines 836-860)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The reflex matched on the file basename. The citation was read before the commit as the reflex asked; no action taken on the COT script."
+}
+```
