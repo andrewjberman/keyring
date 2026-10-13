@@ -170,3 +170,9 @@ condition on a check.
 |---|---|---|
 | IRPT_ANLREQ round 19 (Y, YR) | Release live (my digest read bNPCG2Oe, 0 errors). L9: 13 AC2J PASS on a sampled read (4 records), AR194-y-AC4J FAIL (the r19.1 backstop turns back 'Acct Market Value' with 8-digit integers and 'Acct CUSIP'; probed), AR200-y-AC1 re-grade accepted; 53 dismissed, 6 OPEN, 3 ARMED. Slug sent | c219042317 |
 | IRPT_BCKEND round 175 | ADJUDICATION_v76 + REMEDIATION_v52: five portal rows closed on the DEV landing (I read DEV's log for every candidate); the per-firm package census graduates ARMED. Slug sent | 4da44f29d1 |
+
+## Addendum, 2026-10-13 07:50Z to 07:55Z (msg 6857)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 176 | ADJUDICATION_v77 + REMEDIATION_v53: the live per-firm packages are not HEAD, 4 live members equal no historical blob (provenance to the CTO); the minimal-pair ruling agreed; 5 dismissed (incl. v52 W359-S1), 2 ARMED. Slug sent | c5de16f70d |
