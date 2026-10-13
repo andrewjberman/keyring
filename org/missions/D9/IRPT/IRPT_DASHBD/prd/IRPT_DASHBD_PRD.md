@@ -5,7 +5,7 @@
  "project": "IRPT_DASHBD",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.11",
+ "prd_version": "v0.12",
  "step": 4,
  "brief_ref": "docs/briefs/reporting-dashboard-backend-brief-20260930.md@0ee065b116",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"],
@@ -408,6 +408,15 @@ S09's table, S12's news tables, S14's union-find). Relied-on work has no row by 
     and it lands in `dim_return_method` as `tieout_tolerance` with the ruling's record cited. Andrew's word, when he gives one,
     is recorded and supersedes the ruling; the ENDPOINT text is unchanged (an ENDPOINT edit would re-open the half for a
     wording gain of nothing), and its ACCEPT line is read with this ruling.
+11a. **The tie-out's flow convention is MEASURED, not stated (v0.12, 2026-10-13, round-89 analysis).** Black Diamond's help names
+    a default and an alternative but not the firm's setting. DB-b-166 computed both over the 88 stored flow-bearing segments:
+    - the vendor default (an addition at the start of its day, a withdrawal at the end) closes 76 that the all-end convention misses;
+    - the all-end convention closes none that the default misses;
+    - neither closes 12.
+
+    The tie-out reads Black Diamond under `BD_DEFAULT`, citing `IRPT_DASHBD_ROUND88_B_DRAIN_END_20261013.md` @b460309b74. A
+    disagreeing day that the default explains has "flow timing" as its stated reason. The 12 still owe their own reasons under
+    FWD-8's ACCEPT line. The ENDPOINT text is unchanged.
 12. **Q1, the coverage vocabulary is decided in the contract file, with its record.** `IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json`
     (round 1, workstream B) carries the rule-24 four-postulate record and word-boundary census for every enum it declares. The
     CVO's finding is accepted: C-COVERAGE's list mixes three intents. The contract splits them: `history_scope` (FULL,
