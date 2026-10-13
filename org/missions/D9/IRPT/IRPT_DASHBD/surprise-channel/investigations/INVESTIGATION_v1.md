@@ -7345,3 +7345,30 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W134-S2 -- the client account-id check does not run on this box: the hashed list is absent, so commits pass unchecked
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W134-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~134",
+  "surfaced_at": "2026-10-13T14:58:30Z",
+  "one_line": "The client-data check for account identifiers did not run on the commit of tieout_day_read.py at 9f2d9ee3f6: the hashed account-id list is absent at the box's default path and OPAL_ACCOUNT_ID_HASHES is unset, so the gate prints WARN and the commit lands unchecked for account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "Every commit that lands through safe-commit.sh is checked for client account identifiers by the commit gate's client-data-check, and a commit that carries an account identifier does not land; the repo carries counts only, never an account identifier.",
+  "world_is": "On this box, commit 9f2d9ee3f6 (IRPT_DASHBD worktree wk-IRPT_DASHBD-134) printed 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids'. The measured state at 2026-10-13T14:58:20Z: the default path is absent and OPAL_ACCOUNT_ID_HASHES is unset. The committed module carries no account identifier (checked by reading it; the gate did not check it). Every later commit from this box is exposed to the same unchecked state until the list is placed or the variable is set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output of commit 9f2d9ee3f6 on branch wk-IRPT_DASHBD-134: the client-data-check WARN line, 'this commit was NOT checked for client account ids'",
+      "test -f on the default path C:\\Users\\Test\\.opal\\account_id_hashes.txt, measured 2026-10-13T14:58:20Z: ABSENT",
+      "test -n on OPAL_ACCOUNT_ID_HASHES, measured 2026-10-13T14:58:20Z: UNSET"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

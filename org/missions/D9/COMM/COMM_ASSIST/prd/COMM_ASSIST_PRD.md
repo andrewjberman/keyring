@@ -5,10 +5,10 @@
  "project": "COMM_ASSIST",
  "directive": "D9",
  "fabric": "site-z",
- "prd_version": "v0.4",
+ "prd_version": "v0.5",
  "step": 4,
  "brief_ref": "docs/briefs/nfra-ctlpln-seat-roles-and-inbound-work-pipeline-brief-20261007.md@779f5428bc",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5"],
  "status": "RATIFIED"
 }
 ```
@@ -70,6 +70,19 @@ move is recorded in NFRA_CTLPLN's addendum v0.21. FWD-3 and FWD-4 are new, on An
                     by a sent mail. Andrew, 2026-10-11 ~03:2xZ, "Yes." to call sitez-20261011T012754Z-c719 (record
                     org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261011_032xZ_OPEN_CALLS_ANSWERED_ITEMS_1_TO_9.md
                     @5e10dd2dc5, item 1)
+
+  FWD-5  An ad hoc request (a bug fix or the like) that reaches Andrew over Teams or Outlook carries a placement
+         bid, and nothing is placed until he approves it over the same channel (v0.5)
+         DONE WHEN  EXERCISED -- one real ad hoc request bid, approved by Andrew in a reply, and taken up by the
+                    placed seat
+         ACCEPT     the text names the request, the proposed box and seat, and why that box; Andrew's reply over
+                    COMM_ASSIST is the only approval; a refused or unanswered bid places nothing; a registered
+                    project's work never rides this path
+         SOURCE     Andrew 2026-10-13 ~14:0xZ, VERBATIM: "The "bid" is not for active registered projects, it is for
+                    ad hoc bug fixes and etc that come in over teams/outlook via the COMMS_ASSIST channel, which needs
+                    to be approved at my discretion over that COMMS_ASSIST channel." (record
+                    org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261013_140xZ_FOUR_OPEN_CALLS_ANSWERED_DEVPLN_TAILNET_SSH_BDFEE_CTLPLN_SCOPE.md,
+                    row 4; NFRA_CTLPLN FWD-13 as written is DROPPED, ADDENDUM v0.29 @aca7293eed)
 ```
 
 ## CONTRACTS
@@ -117,3 +130,16 @@ One ENDPOINT line is added: FWD-4's QUALIFIED line, on Andrew's "Yes." to call s
 analysis, un-park condition 3). The client branch is read when an organic client-firm mail arrives, and no cell is cut for
 it. The internal branch is unchanged. Nothing else moves. Because this changes ENDPOINT, the ratified-text half re-signs at
 `3.0.0_SA_CVO~Z`.
+
+## v0.5 (1.0.0_SA_CTO~Z, 2026-10-13 ~15:0xZ) -- FWD-5: the ad hoc placement bid, approved by Andrew over the channel
+
+**Input.** Andrew-direct ~14:0xZ, row 4 (quoted in FWD-5's SOURCE line). Relayed by the laptop `1.0.0_SA_CTO` msg 108766
+through `0.0.0_AB_MSTR~Z` msg 33648, with the ask to append the outcome at this PRD's next unused id. NFRA_CTLPLN FWD-13 as
+written is DROPPED there (ADDENDUM v0.29).
+
+**Relation to FWD-1.** FWD-1 carries a recommendation text and a placement on the box with the most room. FWD-5 makes the
+placement a BID that Andrew approves, scopes it to ad hoc work only, and makes his reply the only approval. FWD-1's
+"most room" measurement is the bid's evidence, not its authority.
+
+**Sign-off.** ENDPOINT changes, so the ratified-text half re-opens for `3.0.0_SA_CVO~Z`. The brief half is Andrew's own
+word, recorded verbatim.
