@@ -30029,3 +30029,124 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W350-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~350",
+  "surfaced_at": "2026-10-13T03:27:00Z",
+  "one_line": "REFUSED per the order's refusal clause: fe-s-18/gen-fixtures.ts cannot reproduce the committed fe-s-18 maps. The committed maps are mutually inconsistent, and the HEAD generator rewrites a committed map before it throws.",
+  "spec_asserts": "Step 2: repair the generator so each run reproduces every fixtures/smoke/fe-s-18-*.json it writes, section lines included. Refusal clause: STOP and file a row if a generator cannot reproduce a committed file without changing a figure beyond those named, or if two committed files no single generator can both reproduce.",
+  "world_is": "(a) Committed fe-s-18-frozen.json at portal cf52fdbf carries directory/resolve verified_request_firm_id F-49F; committed fe-s-18-holdings-observed.json, -target.json, -missing-attribution.json and __tests__/fe-s-32/holdings-no-answer.json carry fir_4f9c1a7b2e6d03518ca47b90 for the same key. gen-fixtures.ts holdingsMap copies the frozen map's keys into every holdings map, so no single run writes both. (b) Regenerating from fe-s-13-wire.json, with the holdings key resolved by prefix, changes figures the order does not name: committed maps key routes by bare prefix (performance/, analysis/, holdings/, export/, status/), the wire copy by hash or id; status operation is status-summary committed and status-job in the wire; export covered_account_ids is absent committed; the wire's narrative/perf-9 key is copied in extra. (c) The HEAD generator writes fe-s-18-frozen.json at gen-fixtures.ts:331 before it throws in holdingsMap; IB171-5-AC1 therefore dirties a committed fixture on every run. The prefix-resolved trial rewrote frozen (231 added, 102 removed lines, CR ignored) and each holdings map (232 lines). Reverted; no fe-s-18 change is in commit 69f69895.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-18/gen-fixtures.ts@cf52fdbf holdingsMap copies frozen keys; write of fe-s-18-frozen.json at line 331 precedes the HOLDINGS_KEY read",
+      "portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json@cf52fdbf directory/resolve verified_request_firm_id F-49F; bare keys performance/, analysis/, holdings/, export/, status/",
+      "portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json@cf52fdbf directory/resolve verified_request_firm_id fir_4f9c1a7b2e6d03518ca47b90",
+      "portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-13-wire.json@cf52fdbf status operation status-job; export covered_account_ids present",
+      "IB171-5-AC1 run at 69f69895 (workspace): FAIL: fe-s-18 did not run ... gen-fixtures.ts:435:18"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Which side is the truth (the committed frozen map or the wire copy) is for the fe-s-18 fixture owner and the COO to decide; the fe-s-18 generator is unchanged by this worker."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W350-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~350",
+  "surfaced_at": "2026-10-13T03:27:00Z",
+  "one_line": "The order says AnalysisReport.valid.json no longer carries S-RET-1; it does. Only S-ALLOC-2 is absent, so the alignment drops S-ALLOC-2 and keeps S-RET-1.",
+  "spec_asserts": "Step 3: set selected_sections to the section ids that exist in fixtures/wire/AnalysisReport.valid.json; today it names S-RET-1 and S-ALLOC-2, which the AnalysisReport no longer carries.",
+  "world_is": "portal fixtures/wire/AnalysisReport.valid.json section_id list at cf52fdbf is [S-RET-1] (1 of 1). ExportBundle.valid.json and requests/submit-export.request.json named [S-RET-1, S-ALLOC-2] at cf52fdbf and name [S-RET-1] at 69f69895. IB171-5-AC2 PASS: 2 of 2 selected ids resolve.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/fixtures/wire/AnalysisReport.valid.json@cf52fdbf section_id S-RET-1 only",
+      "portal/src/pages/InvestorReporting/fixtures/wire/ExportBundle.valid.json@cf52fdbf lines 14-17 selected_sections S-RET-1, S-ALLOC-2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W350-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~350",
+  "surfaced_at": "2026-10-13T03:27:00Z",
+  "one_line": "IB171-5-AC3 cannot pass as written: its old-section scan matches section_type annualized_return, which the current AnalysisReport copy carries, so 15 fixtures match, including that copy.",
+  "spec_asserts": "AC3: the five token-citing portal tests still pass and no AnalysisReport old section is back (a scan of the portal fixtures for the old section).",
+  "world_is": "p171_cells.py IB171-5-AC3 prints 'FAIL: 15 fixture(s) carry the old AnalysisReport section again' after its five-test gate passed (the gate was reached, so the tests passed). The 15 include wire/AnalysisReport.valid.json, whose current section is S-RET-1 with section_type annualized_return, plus the fe-s-15 job files, fe-s-13-wire.json, smoke/default.json, smoke/fe-s-21-queued.json and the fe-s-18 maps. The pattern cannot separate the old section from the current one.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/fixtures/wire/AnalysisReport.valid.json@cf52fdbf section_type annualized_return on S-RET-1",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r171/p171_cells.py IB171-5-AC3 regex section_type annualized_return over fixtures/**/*.json",
+      "IB171-5-AC3 run at 69f69895 (workspace): FAIL: 15 fixture(s) carry the old AnalysisReport section again"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W350-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~350",
+  "surfaced_at": "2026-10-13T03:27:00Z",
+  "one_line": "The producer ExportBundle.valid.json still names S-RET-1 and S-ALLOC-2; the portal mirror now names S-RET-1 only, so the fe-s-13 producer-fixtures test lists a new disagreement on ExportBundle.selected_sections.",
+  "spec_asserts": "Step 3: leave the producer fixture and file ONE observation row saying the producer fixture needs the same alignment (outside this grant).",
+  "world_is": "The producer fixture infra/aws/lambda/investor-reporting/_contracts/fixtures/ExportBundle.valid.json, read at the worktree HEAD, names selected_sections [S-RET-1, S-ALLOC-2]; this order left it unchanged. The portal mirror at 69f69895 names [S-RET-1]. bun test of __tests__/fe-s-13/producer-fixtures.test.ts now also lists 'ExportBundle.selected_sections: the copy and the source disagree'; the HoldingsSnapshot.nodes item was already present at base.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/fixtures/ExportBundle.valid.json selected_sections [S-RET-1, S-ALLOC-2]",
+      "portal/src/pages/InvestorReporting/fixtures/wire/ExportBundle.valid.json@69f69895 selected_sections [S-RET-1]",
+      "bun test src/pages/InvestorReporting at 69f69895: producer fixtures test message lists ExportBundle.selected_sections"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W350-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~350",
+  "surfaced_at": "2026-10-13T03:27:00Z",
+  "one_line": "The order's base count (1216 pass, 27 skip, 1 fail) does not match the base measured at portal cf52fdbf: 1213 pass, 27 skip, 4 fail.",
+  "spec_asserts": "Run bun test src/pages/InvestorReporting once and report its counts against the base run (1216 pass, 27 skip, 1 fail at the last round's base; the one fail is pre-existing).",
+  "world_is": "Full folder at portal cf52fdbf (the three changed files restored to cf52fdbf): 1213 pass, 27 skip, 4 fail, 1244 tests across 393 files. At 69f69895: the same 1213 pass, 27 skip, 4 fail. The four failures, identical at both states: IVE26-AC3 (dsgn-irptv1/iv-e-26.wire-regen.test.ts), IVE98 (dsgn-irptv1/iv-e-98.generators-drift.test.ts), 'producer fixtures' (fe-s-13/producer-fixtures.test.ts), F14-AC3 (fe-s-14/allowlist.test.ts). Count-neutral for this commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test src/pages/InvestorReporting at portal cf52fdbf and at 69f69895 (output counts 1213 / 27 / 4)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
