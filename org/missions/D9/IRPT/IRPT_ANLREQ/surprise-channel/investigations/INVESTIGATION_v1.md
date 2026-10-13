@@ -9740,3 +9740,76 @@
   }
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W104-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~104",
+  "surfaced_at": "2026-10-13T20:53:39Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "one_line": "The AR-y-283 partner view (portal commit e82daf4c98 on wk-IRPT_ANLREQ-104-portal) moves the TicketCenter folder from 89 pass 0 fail to 90 pass 10 fail; all 10 failures sit in analysis-submit-silence.test.tsx, which mounts a firm caller on the path the cell replaces.",
+  "spec_asserts": "AR-y-283 step 4: the whole TicketCenter folder passes with the change (counts printed); criterion (f): an internal caller's page is unchanged and the existing tests for it all pass. The order does not name the firm-caller suite as superseded.",
+  "world_is": "MEASURED at portal e82daf4c98 (wk-IRPT_ANLREQ-104-portal): bun test src/pages/TicketCenter gives 90 pass, 10 fail of 100. All 10 fail in analysis-submit-silence.test.tsx with 'no button New Ticket on the page', because its useAuth mock (analysis-submit-silence.test.tsx:86, isInternal false) is a firm caller, which the page now renders as the partner view (TicketCenter.tsx partner branch). On origin/DEV a577cba5 the same folder gives 89 pass 0 fail, and the suite passes 10 of 10. The suite was NOT edited. Whether it is re-pointed to an internal caller or its firm-caller cases are retired is the issuer's or the CTO's call.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "src/pages/TicketCenter/__tests__/analysis-submit-silence.test.tsx:86 (useAuth isInternal false) at portal e82daf4c98",
+      "src/pages/TicketCenter/TicketCenter.tsx partner = !internal and the if (partner) return branch at portal e82daf4c98",
+      "bun test src/pages/TicketCenter: portal e82daf4c98 90 pass 10 fail of 100; origin/DEV a577cba5 89 pass 0 fail of 89"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W104-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~104",
+  "surfaced_at": "2026-10-13T20:53:39Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The partner list reads a package_state word that no served vocabulary defines in this tree: the cell names the field but not its values, and the server folder holds no package_state at HEAD.",
+  "spec_asserts": "AR-y-283 wire shapes: each list item carries package_state, and criterion (c) asks the partner list to render a package-state word. The order fixes no value set for it.",
+  "world_is": "MEASURED: a grep of infra/aws/lambda/ticket_center in worktree wk-irpt-anlreq-104 (base 0c27245bc9) returns 0 matches for package_state; the folder holds lambda_function.py and 22 test files. The candidate renders an absent state as 'Not yet packaged' and a served word with its underscores read as spaces (packageStateWord in TicketCenter.tsx). The served vocabulary belongs to the list route's owner; the candidate invents none.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center grep package_state: 0 matches in worktree wk-irpt-anlreq-104 at 0c27245bc9",
+      "src/api/endpoints/tickets.ts PartnerRequestItem.package_state at portal e82daf4c98",
+      "src/pages/TicketCenter/TicketCenter.tsx packageStateWord at portal e82daf4c98"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W104-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~104",
+  "surfaced_at": "2026-10-13T20:53:39Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The portal repository has no committer identity configured, so safe-commit refused the first portal commit (rc=128, Committer identity unknown); the retry set GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL for that one call.",
+  "spec_asserts": "AR-y-283 step 5 and the portal rule: commit the candidate in the portal worktree the way an earlier candidate branch was made (its commit line names the worker serial as author).",
+  "world_is": "MEASURED: safe-commit.sh run from C:/dev/wk-portal-104 exited rc=128 with 'Committer identity unknown' and 'unable to auto-detect email address'; git config user.name and user.email are unset there. The retry, with the serial as author and as committer, landed commit e82daf4c98 LOCAL on wk-IRPT_ANLREQ-104-portal, and the repository confirms the author. No git config was written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh run in portal worktree C:/dev/wk-portal-104: rc=128, Committer identity unknown (first attempt)",
+      "git -C C:/dev/ajb_workspace/portal log -1 923f7d69: author line names 0.9.0_WK_IRPT_ANLREQ~90",
+      "portal commit e82daf4c98 on wk-IRPT_ANLREQ-104-portal, author 0.9.0_WK_IRPT_ANLREQ~104"
+    ]
+  }
+}
+```
