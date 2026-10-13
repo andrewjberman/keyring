@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "laptop",
- "written_at": "2026-10-13T22:30:03Z",
+ "written_at": "2026-10-13T22:31:07Z",
  "written_by": "1.0.0_SA_CTO",
  "rows": [
   {
@@ -781,7 +781,14 @@
      ]
     }
    },
-   "closed": null
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-13T22:31:07Z",
+    "by": "1.0.0_SA_CTO",
+    "reason": "a CLAUDE.md law edit: Andrew's word only"
+   }
   }
  ]
 }
