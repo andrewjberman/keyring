@@ -8531,3 +8531,110 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "The read is cheap and preventive: if the live seats' parents are transient wrappers, the cause is the spawn path (the same S9117 class) and the fix is the detached spawn; if the parents are stable, the next candidate is an idle-session exit at the limit prompt, read from the next ending's last stderr line (headless stdout/stderr should be captured to a file per seat from now on -- a log sink, not an alert). Not a cell this round; folds into the round-12 seat-boundary cell."
 }
 ```
+
+## NFRA_CTLPLN-W77-S1 -- the measured Deny set missed a fifth Deny that reaches the Dell group (routes-fn, rendered from HCL)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W77-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~77",
+  "surfaced_at": "2026-10-13T18:13:10Z",
+  "one_line": "The cell's MEASURED Deny list named only JSON statements in the root; a fifth Deny reaches the Dell group from HCL: DenyRoutesToPrivilegedRolesFunctions, rendered by modules/routes_policy and attached by routes.tf. The ruling removes it, so the apply destroys its policy and attachment.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/routes.tf@0b8380acf8c3: resource aws_iam_policy.dell_agent_routes_fn (policy = module.routes_policy.functions_policy_json) and aws_iam_group_policy_attachment.dell_agent_routes_fn attach it to cloudops-dell-agents-group",
+      "infra/aws/terraform/nfra-ctlpln-identity/modules/routes_policy/main.tf@0b8380acf8c3 lines 59-62: Sid DenyRoutesToPrivilegedRolesFunctions, Effect Deny, on the lambda write actions of the routes-fn function set",
+      "The cell's MEASURED list (the Deny statements in the root) omits it; the cell asks for HCL to be read, which found it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ab-1 ruling: every Deny that reaches the Dell users is removed EXCEPT DenyCloudTrailWrites, DenyS3DeletesOnProductionData, DenyTableAndDatabaseDeletes (dell_deploy_policy.json) and DenyAuditTrailBucketWrites (dell_create_policy.json).",
+  "world_is": "A fifth Deny reaches the group through the module. This cell removed aws_iam_policy.dell_agent_routes_fn and its group attachment from routes.tf; the module still renders the document, as STEP D did for the hosts Deny. The apply (CT-ab-2) plans exactly two destroys for this: the policy and its attachment (group policies 9 -> 8).",
+  "notes": "check_admin_parity.py counts a module Deny only where a root .tf attaches that module output, so a re-attached functions document would show in its denies= list. The apply pair should read the destroy as intended."
+}
+```
+
+## NFRA_CTLPLN-W77-S2 -- tests/ renderers and decision tables still encode the removed Denies; a --write would reinstate them
+
+```json
+{
+  "id": "NFRA_CTLPLN-W77-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~77",
+  "surfaced_at": "2026-10-13T18:13:10Z",
+  "one_line": "tests/derive_ssm_documents.py renders DenyShellDocuments and DenyStartSessionOnShellScriptDocument into dell2_ssm_policy.json, so its --write reinstates both removed Denies and its --check now reports drift. derive_respol_actions.py, derive_protected_functions.py and simulate_policy.py reason from the removed Denies too.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C (the CT-ab-1 apply pair): change the renderer's Deny statements before any --write; until then, do not run derive_ssm_documents.py --write or derive_respol_actions.py --write",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/derive_ssm_documents.py@0b8380acf8c3 lines 465-467: st.append of Sid DenyShellDocuments and DenyStartSessionOnShellScriptDocument; line 34 POLICY = dell2_ssm_policy.json; usage line 23: --write renders that file",
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/derive_respol_actions.py@0b8380acf8c3 line 104: an action is 'already denied explicitly ... by dell_deploy_policy.json' (reason c); line 35 reads dell_iam_roles_policy.json for the narrow iam: Deny",
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/derive_protected_functions.py@0b8380acf8c3 line 39: SID = DenyProtectedFunctions, its add and remove logic on dell_deploy_policy.json",
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py: 23 references to the removed Deny Sids (decision tables); render_routes_policy.py: 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The tests/ renderers reproduce the committed policy documents byte for byte (the --check contract).",
+  "world_is": "After CT-ab-1 the committed dell2_ssm_policy.json and dell_deploy_policy.json lack the removed Denies, and the renderers still emit them: a --write reverses the ruling, a --check fails. This cell edits only check_identity.py and check_admin_parity.py under tests/ (the order's named grant).",
+  "notes": "dell_respol_policy.json reasons (in_allow false, reason c) also cite the removed deploy Denies; the Allow is unaffected because the admin group grants those actions anyway, but the data's reasons are stale."
+}
+```
+
+## NFRA_CTLPLN-W77-S3 -- three IAM policy descriptions still state removed Denies; kept because a description change replaces the live policy
+
+```json
+{
+  "id": "NFRA_CTLPLN-W77-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~77",
+  "surfaced_at": "2026-10-13T18:13:10Z",
+  "one_line": "The descriptions of cloudops-dell-agent-deploy-policy, cloudops-dell-agent-iam-roles-policy and cloudops-dell2-agent-ssm-policy still say what the removed Denies refused. This cell keeps them byte for byte, as the repository's own comments require.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/iam.tf@0b8380acf8c3 line 41 (deploy description), line 78 (iam-roles description), line 191 (ssm description)",
+      "infra/aws/terraform/nfra-ctlpln-identity/iam.tf@0b8380acf8c3 lines 187-188 and 201-203: 'an IAM policy description forces replacement' (the repository's assertion; the provider schema was not read in this cell)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A policy description states what its document grants or refuses.",
+  "world_is": "The three descriptions now name Denies that no longer exist. An edit would change a ForceNew field (per the repository's comment), replacing a live policy that is attached to the group or to a user, so the description is a separate, deliberate act."
+}
+```
+
+## NFRA_CTLPLN-W77-S4 -- aws_iam_user_group_membership is authoritative for a user's group set; each resource lists the Dell group too
+
+```json
+{
+  "id": "NFRA_CTLPLN-W77-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~77",
+  "surfaced_at": "2026-10-13T18:13:10Z",
+  "one_line": "The order asks for aws_iam_user_group_membership listing the admin group. Its documented semantics make it authoritative over a user's whole group set, so a list naming only the admin group would plan to remove each Dell user from cloudops-dell-agents-group. Each new resource lists both groups.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/iam.tf (this cell): aws_iam_user_group_membership.dell1_admin and dell2_admin list aws_iam_group.dell_agents.name and AdministratorAccessOpalCapital",
+      "infra/aws/terraform/nfra-ctlpln-identity/iam.tf@0b8380acf8c3 lines 29-33: aws_iam_group_membership.dell_agents keeps the users in cloudops-dell-agents-group (kept unchanged)",
+      "The provider's documented semantics for aws_iam_user_group_membership were not re-read in this cell (no provider schema or plan run: no credentials, no plan by rule)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Both Dell users are members of AdministratorAccessOpalCapital by an aws_iam_user_group_membership; the users stay in their own group.",
+  "world_is": "Each resource lists both groups, so the membership set is the same as the group-side resource states. CT-ab-2's plan should show two membership updates that add the admin group and no removal from cloudops-dell-agents-group."
+}
+```
