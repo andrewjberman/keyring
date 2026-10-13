@@ -95,6 +95,8 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~F
 
 **AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-13 ~06:5xZ):** step 2 carries the CTO's ruling on whose session the driven request uses (ROUND_ANALYSIS.round4.md ADDENDUM 1: the UI walker service account, `--firm 49financial`, never Andrew's; the precondition is that the request crosses the validator). The status reads `pending` again (an uncommitted `parked` in the shared tree, set when no session was in hand, is superseded by the ruling). A criterion is unchanged. The issuer amends its own pending order; no gate limb grades it (the criteria and the `<placeholders>` are untouched).
 
+**PARKED (2.0.0_SA_COO~B1, 2026-10-13 ~07:4xZ), owner `1.0.0_SA_CTO~DELL1`:** step 1 (organic) read 17 lines on the two paths, all `tier=internal` (admin bypass), 0 non-admin (row `D1-S41`); step 2 (the CTO's walker account) is itself role admin, userType Dev, so it cannot give the non-admin read (row `D1-S42`; ROUND_ANALYSIS.round4.md ADDENDUM 1 item 2, second branch). **Un-park condition:** the first organic non-admin validator line on those paths (the watch continues from dell1, hourly), or a non-admin session a seat holds. FWD-4 rests meanwhile on the offline replay `FB-h-3`.
+
 <status>parked</status>
 <round>5</round>
 <workstream>VALIDATOR</workstream>
