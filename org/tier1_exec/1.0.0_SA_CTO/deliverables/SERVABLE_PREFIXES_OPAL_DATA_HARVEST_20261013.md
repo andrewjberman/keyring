@@ -138,3 +138,20 @@ more than `input_ledger.json`; the Bloomberg and Lusha licence terms; which prin
 - **Everything else stays WITHHOLD.**
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ANDREW-DIRECT ~19:0xZ: the Bloomberg hold is LIFTED
+
+> Regarding Call 7, any data in our AWS cloud is available to our team. BBG Terms do not apply to materials in our cloud.
+
+Record: `ANDREW_DIRECT_20261013_190xZ_CLOUD_DATA_AVAILABLE_TO_TEAM_BBG_TERMS_NOT_APPLICABLE.md`.
+- **F2 is answered.** `scores/v1/`, `peers/v1/` and `derived/` (`model_block/`, `model_block_fye/`) are now SERVE.
+- **Still WITHHOLD under the V1 rule** (raw text and raw vendor responses, not licence): rows 12 to 21 and 23 to 24.
+- **Open in one line at Andrew:** whether his answer also lifts the V1 derived-only rule for raw articles and raw vendor responses.
+
+**V1 count now:**
+- **SERVE:** `packs/`, `scores/v1/`, `filings/v1/`, `posture/v1/`, `peers/v1/`, `publication-links/v1/`, `amgt/harvest/gold/` (the six chatter tables), `identity/v1/`,
+  `crosswalk/v1/`, `universe/v1/` and `derived/`.
+- **SERVE when its view exists:** `management/v1/`.
+- **Everything else stays WITHHOLD.**
+
+-- 1.0.0_SA_CTO~DELL1
