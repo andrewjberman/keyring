@@ -5,7 +5,7 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.29",
+ "prd_version": "v0.30",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26", "FWD-27", "FWD-28"],
@@ -1076,3 +1076,26 @@ order ever named them). His words are quoted on the cards and in the record; not
   large") touches this PRD's scope only by subtraction: the per-box portal DEV approval work is NOT a CTLPLN outcome, and his
   later ask, an analysis of why CTLPLN work on the laptop "has completely drawn to a close", is owed by this seat after the
   calls are addressed.
+
+## ADDENDUM v0.30 (1.0.0_SA_CTO, 2026-10-13 ~14:5xZ) -- Andrew's later word of ~14:3xZ at the COO~C terminal: FWD-9's park is LIFTED for one deliberate exercise; FWD-11 the same; S9112 is a seat order, not his act; FWD-27 measured; the firmAccess carrier reaches PROD alone. No ENDPOINT byte changes
+
+Record `org/tier1_exec/2.0.0_SA_COO~C/deliverables/ANDREW_DIRECT_20261013_143xZ_NFRA_CTLPLN_ROUND12_CALLS_ANSWERED.md` @a7d5d7955c.
+His words there, VERBATIM: "1.) Yes sure. 2.) Rec approved. ... for FWD-27, check that this is not already done as I may have done it
+across all boxes (check this box first, we can have MSTR issue an order for the other managers to check their respective boxes). ...
+Row S9112 this can be done programmatically, i shouldnt need to be involved directly."
+
+- **FWD-9 and FWD-11: one deliberate dell1 outage each, YES.** Card 1 at the COO~C terminal asked whether one Dell may be taken
+  offline on purpose, once for FWD-9 and once for FWD-11; "Yes sure" is his answer, at most 15 minutes each, dell1, its manager
+  parks the seats first, a time announced in advance. This is LATER than the ~14:0xZ "park FWD-9" at the CRO terminal (v0.29), and
+  it names FWD-9 by id, so FWD-9's PARK is lifted for exactly that exercise: round 12 may cut the two outage cells; no other FWD-9
+  work (the lease register, C-LEASE) is un-parked by it. FWD-11 was never parked. Both cards are byte-unchanged.
+- **S9112 (the proxy log purge and the refresh-token invalidation) leaves the Andrew act list.** His sentence is the confirmation
+  the deletion needed; it becomes a round-12 order to `0.7.0_AE_CloudOps~U7` with the purge's blast radius named in the order (the
+  log group, the event window, the token rows), never wider.
+- **FWD-27, measured at 14:4xZ by COO~C** (`.tools/ssh-tailnet-verify.py`): all four boxes answer port 22 and still advertise
+  password login; the laptop's firewall half is done, `-DisablePassword` applied nowhere. His ask, "check that this is not already
+  done ... check this box first", is answered: the laptop is half done, the other three are each their manager's read, ordered
+  through `0.0.0_AB_MSTR`. The v0.29 cells stand; the per-box cell's first step is that read.
+- **Card 2, the `firmAccess.ts` carrier `53506d49`:** cherry-picked alone onto portal PROD by a DT through `/prod-deploy`, no
+  whole-DEV promote. For NFRA_DEVPLN FWD-6 this one commit leaves the backlog by Andrew's word rather than by the settlement.
+- No outcome card changed; the ratified half owed from v0.29 is unchanged by this addendum. Header stays v0.30 for citation.
