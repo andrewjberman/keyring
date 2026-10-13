@@ -6406,3 +6406,32 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "The reflex matched on the file basename. The citation was read before the commit as the reflex asked; no action taken on the COT script."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-j-3, the dispatcher precondition)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S45",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-13T08:23:30Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-j-3 NOT deployed: FB-j-2's emit_chain_complete assigns `out=$(aws events put-events ...)` as a plain statement under the dispatcher's `set -e` (line 57), so when the call fails the dispatcher exits at that line, before the WARN prints and before the CDN invalidation, the recon harness and SHUTDOWN_ARMED, and the measurement is lost with it.",
+  "spec_asserts": "TO-FB-j-3 precondition and FB-j-2: the WARN changes to carry rc and 300 characters of CLI text 'and nothing else'; the emit is non-fatal ('Non-fatal: put-events failure logs a WARN and returns 0 so the chain close output still prints cleanly', dispatcher comment lines 829-830).",
+  "world_is": "gold_dispatch.sh line 57 is `set -e`. The deployed function tests the call inside an `if` condition (immune to errexit); the FB-j-2 function (HEAD 71b706df6e, f313505d5c) is `local out rc txt` then `out=$(aws events put-events --entries ... 2>&1); rc=$?` as simple statements. Reproduced with the dispatcher's own option and a stand-in aws that returns 255 with the CLI's 'You must specify a region' text (act's harness, j3_precondition/): OLD function prints the WARN and the next statement runs (exit 0); NEW function prints nothing and the shell exits 255 at the assignment. In the real chain close that skips, in order after the emit: the CDNCOHT post-chain invalidation (portal freshness), the WP-10b recon harness, and the SHUTDOWN_ARMED line (the watchdog still stops an idle instance). The issuer's r7_emit_test.sh extracts and sources the function alone with no `set -e`, so its 3 of 3 does not cover the dispatcher's option. The order's own object diff is clean: deployed to repo is 2 hunks, 7 changed lines, inside emit_chain_complete only. Nothing was written to S3, no ledger entry opened.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/j3_precondition/run_output.txt",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/j3_precondition/harness.sh",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/j3_precondition/fn_new.sh",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/j3_precondition/fn_old.sh",
+      "data/black_diamond/scripts/gold/gold_dispatch.sh lines 57 and 836-857"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Smallest correction (the DS lane's file, a new worker cell, not this seat's edit): keep the call inside a conditional so errexit cannot fire, e.g. `out=$(aws events put-events --entries \"file://$entries_file\" 2>&1) && rc=0 || rc=$?`, then the same grep and the same WARN text. Re-test it under `set -e` (harness.sh here, arm 2 must print the WARN with rc=255 and then reach the next statement). The order then deploys the corrected file unchanged otherwise. The order stays pending; nothing deployed."
+}
+```
