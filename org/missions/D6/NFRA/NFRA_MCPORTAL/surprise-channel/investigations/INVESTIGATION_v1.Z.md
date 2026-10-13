@@ -1642,3 +1642,30 @@
   "notes": "For 2.0.0_SA_COO~MP and 1.0.0_SA_CTO~Z: section 6 of org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MQ/NEVER_WIDEN_ASK_MP-z-5.md puts the same three options to each half -- (a) accept the 7 with their causes named; (b) grade '0 failed' at box/sitez HEAD, already measured at 87/0, and require on the release tree only that no test NEWLY fails against the base's own pre-release run; (c) something else, including refusing the act. This seat neither repaired nor waived the criterion. GENERAL, beyond this cell: every later GW release cut on a release-chain base inherits mechanism (1) -- any test that reads a repo path outside infra/aws/ec2/opal-gateway/ cannot pass on a release tree. Worth one clause in the GW decomposition rather than a row per release."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S46",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~MQ",
+  "surfaced_at": "2026-10-13T21:07:44Z",
+  "one_line": "Amendment 2's sparse list is missing /data/transcripts/scripts/teams/ -- deploy-to-ec2.sh reads meeting_allowlist.json from there and REFUSES (no upload) before the base guard, so a GW release cut on that list cannot deploy. The complete set of repo reads the two deploy scripts make is six paths; they are enumerated here so the next cell pays no round-trips.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "spec_asserts": "NFRA_MCPORTAL.TO-MP-z-5 AMENDMENT 2, first bullet (row Z-S43): the NO-CONE list `/.tools/ /org/ /lib/ /infra/logic/ /infra/aws/terraform/ /infra/aws/lambda/ci/ /infra/aws/lambda/mcportal/ /infra/aws/ec2/` plus the 12 root-level tracked blobs, with `/infra/aws/ec2/` called out as whole 'because the deploy scripts and the gateway app are both under it'. That sentence is true and still insufficient: the deploy scripts READ OUTSIDE their own directory.",
+  "world_is": "The act refused on the first attempt: `ERROR: REFUSED (no upload): meeting_allowlist.json unreadable at /c/tmp/mp-z5-rel/data/transcripts/scripts/teams/meeting_allowlist.json` (deploy-to-ec2.sh line 36, which builds TRANSCRIPT_MEETING_ALLOWLIST for the host .env). THIS IS A CONE GAP, NOT A VINTAGE GAP, and the two are worth telling apart because they have different fixes: `git ls-tree -r --name-only HEAD -- <path>` reads 1 at the release base 185dc04888 AND 1 at box/sitez, while the file is simply not on disk -- so widening the cone fixes it, whereas Z-S45's absent org/ files read 0 at the base and no cone can produce them. FAIL-CLOSED AND MEASURED AS SUCH: the refusal fires BEFORE the base guard and before any upload, and the world was read after it to confirm -- the release key ec2/opal-gateway/opal-gateway-64b3e54658.tar.gz returns 404 Not Found (never created); opal-gateway-latest.tar.gz still carries git-ref 185dc048881da2030efa11f4d0bfb8704b500c66, ETag b486e614fc122cf854f0d063bd198e4e, LastModified 2026-10-12T12:51:38Z; the rollback key opal-gateway-185dc04888.tar.gz is untouched at the same ETag, LastModified 2026-10-12T12:51:35Z. THE COMPLETE ENUMERATION, so the next cell pays one round-trip and not six: the only repo paths deploy-to-ec2.sh and safe-ec2-deploy.sh read outside the gateway dir are data/transcripts/scripts/teams/meeting_allowlist.json (line 36), mcportal (line 50 -- handled, the script cuts its own detached worktree from the main repo when absent), infra/aws/ec2/EC2_MANIFEST.json (lines 57, 114), infra/aws/ec2/opal-gateway (line 210), .tools/halt-gate-check.sh (safe-ec2-deploy line 167) and .tools/safe-commit.sh (line 264); lib/ is reached indirectly by the ADVI_MARKET_UPDATE_S3_ROOT precondition's lib.opal_naming.address() call. Adding the single pattern /data/transcripts/scripts/teams/ resolved all six, with the census re-read at 5 gateway files and 0 outside, and the tree still clean at the release commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the refusal line quoted verbatim from the first act attempt, 2026-10-13 ~21:0xZ, C:/tmp/mp-z5-rel",
+      "ls-tree at the base = 1 and at box/sitez = 1 for the missing path, against on-disk = no: the cone-vs-vintage discriminator",
+      "post-refusal world reads: release key 404, -latest git-ref unchanged at 185dc04888, rollback key ETag unchanged",
+      "the six repo reads enumerated from the two scripts by anchored pattern over $WORKSPACE_ROOT/ and $_main/, not by recollection"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For 2.0.0_SA_COO~MP: Amendment 2's list wants one more pattern, /data/transcripts/scripts/teams/, for any GW cell that RUNS the deploy (a build-only or commit-only cell does not need it). Together with Z-S43 (the commit gates) and Z-S44 (pass the list on stdin, never argv) this makes the GW sparse recipe complete as measured. No criterion is affected: the refusal happened before any upload, nothing in the world moved, and z5.AC1/AC2 do not read how the worktree was cut."
+}
+```

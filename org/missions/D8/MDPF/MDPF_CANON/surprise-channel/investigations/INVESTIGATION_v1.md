@@ -1210,3 +1210,27 @@
   "notes": "Consequence for FWD-9: the cent-exact Client sum holds against a date's own dated ts object (21 of 21) and not against the newest (3 of 21). The grade and the client-facing PROD card must state which object the sum is read against; the card carries this difference (CTO msg 5109). No served object moved."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S22",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-13T21:12:32Z",
+  "one_line": "The MDPF portal publisher's role cannot read its own prior-run pointer (platinum/mdpf/_manifests/latest.json: s3:GetObject AccessDenied), so its 'unchanged means no write' check never fires and all 18 scope/type pairs are rewritten every run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "opal-assets-mdpf-portal-publisher/lambda_function.py: a pair whose source is unchanged since the prior run records status 'unchanged' and issues no put_object; the pointer latest.json is read once per run for that comparison.",
+  "world_is": "Measured 2026-10-13T21:12:32Z, read-only. Manifest s3://opal-data-portal-v2/platinum/mdpf/_manifests/2026-10-13/20261013T135047Z-4fca44fb.json: prior_pointer_note = AccessDenied on s3:GetObject of platinum/mdpf/_manifests/latest.json for assumed-role opal-assets-mdpf-egress-publisher-role/opal-assets-mdpf-portal-publisher; rows 18, every row status 'published' (0 'unchanged'), all_present true, missing_pairs []. The pointer object exists (LastModified 2026-10-13T13:50:54Z). Surfaced by the CN-j-1 draft fork; the issuer re-read the manifest. Effect: each daily run rewrites every served platinum leaf with the same data bytes and a newer _provenance.written_at; nothing served is wrong. It matters to any change that adds leaves (CN-j-1 adds four): they also republish daily.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-portal-v2/platinum/mdpf/_manifests/2026-10-13/20261013T135047Z-4fca44fb.json (prior_pointer_note, rows)",
+      "infra/aws/lambda/opal-assets/opal-assets-mdpf-portal-publisher/lambda_function.py (the unchanged check)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not fixed here: the role's grant is IAM (a Terraform pair of its own), not in any MDPF_CANON cell. The IAM simulation the fork cites was not re-run by the issuer (this identity holds no SimulatePrincipalPolicy grant yet); the manifest AccessDenied text is the evidence."
+}
+```

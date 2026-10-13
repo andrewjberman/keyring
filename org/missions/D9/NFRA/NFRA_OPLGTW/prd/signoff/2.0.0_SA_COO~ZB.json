@@ -1,13 +1,13 @@
 {
   "prd": "NFRA_OPLGTW_PRD.md",
-  "prd_version": "v2.7",
-  "prd_pin": "27ba6b619192a97c36b235aba205a017609095c6",
+  "prd_version": "v2.8",
+  "prd_pin": "ecdab3c7d0eeba6790cb67adea8447807ca83b76",
   "half": "brief",
-  "half_hash": "c4c3da5d6f6fd8d5a2ee4de87e167aa3403d8cf0b2517fecbe7588d76b4ad7d0",
-  "endpoint_hash": "c156933868ca9c5e91bfbbd654345ac56820d269df71a6755309a6abbf845f52",
+  "half_hash": "2059e86212c55eae8d51ffe2da8ec160321c30b0d41fbe73cbc198a4c716c976",
+  "endpoint_hash": "3e21377844131942e8c46cba113903f0a4b5fc1bd47262bf686e625566b58e9d",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/2.0.0_SA_COO~ZB/deliverables/L4R_REVIEW_NFRA_OPLGTW_v2.7_BRIEF_HALF.md@6f37c187c9",
+  "review_ref": "org/tier1_exec/2.0.0_SA_COO~ZB/deliverables/L4R_REVIEW_NFRA_OPLGTW_v2.7_BRIEF_HALF.md@62390fd367",
   "signed_by": "2.0.0_SA_COO~ZB",
-  "signed_at": "2026-10-13T20:59:55Z",
+  "signed_at": "2026-10-13T21:05:22Z",
   "substitute_for": "4.0.0_SA_CRO"
 }

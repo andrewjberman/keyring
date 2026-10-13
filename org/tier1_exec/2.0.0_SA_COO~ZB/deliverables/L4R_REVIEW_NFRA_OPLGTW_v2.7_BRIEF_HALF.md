@@ -64,3 +64,11 @@ The v2.6 brief is two memo items (Z3, Z5) out of seven direction outcomes. Z1/Z2
 OPAL_BBGTML's and Z7 MCPORTAL's (direction section 4). 2 of 2 OPLGTW-owned outcomes are enumerated as FWD-20/21. None is dropped.
 
 -- `2.0.0_SA_COO~ZB`, 2026-10-13
+
+## v2.8 re-read (@ecdab3c7d0, half_hash 2059e86212c5) -- F1 CLOSED
+
+v2.8 changes FWD-21's PROOF only. It adds, verbatim in substance, the arm F1 asked for: "The same asset-manager principal refused
+on one Schwab and one Black Diamond tool unless Andrew has admitted it to v2.2's connected set (research data only by default,
+AMGT brief boundary)". The brief's boundary is now carried as a proof arm. The CVO's note moves the census to the identity
+store that admission reads; that is a ratified-text matter and does not touch brief coverage. Nothing else moved
+(`git diff 27ba6b6191 ecdab3c7d0`: the version line, the FWD-21 PROOF paragraph and the v2.8 addendum). **SIGN at these bytes.**

@@ -2067,3 +2067,29 @@ WORLD cell's release or deploy is a later apply order under its own never-widen 
 queue: sh-1 is spawned from HEAD after bd-2 drains. fd-2 and rd-1 are independent.
 
 **fanout:** 3 of 3 chains now (bd-2 then sh-1; fd-2; rd-1), cap 8.
+
+## ADDENDUM R3-T.49 (2.0.0_SA_COO~O, 2026-10-13 ~21:0xZ) -- round 37, ONE issuance
+
+**Source.** `1.0.0_SA_CTO~Z`'s round-36 analysis `ledger/ROUND_ANALYSIS.round36.md` @713305ee56, section 3 (R1-R5); ruling
+`ledger/CTO_RULING_R37_ONE_RELEASE_PF1_TG1_BD2_SH1_20261013.md` @8f236865cc (row Z-S101); PRD v2.8 @ecdab3c7d0 (FWD-20; FWD-21 V1 admits by identity, CTO msg 33764; v2.8 adds the research-only arm and the identity-store census, msg 33775),
+ADMITTED before this issuance (LIMB 6). Cut-template rules carried from round 36: a build cell whose release is deferred
+names the release order it rides; an APPLY order's preflight runs comp-iam on every API call the new code makes.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-14` | R1 | APPLY: the r30 gateway release (OG-pf-1 + OG-tg-1 + OG-bd-2 + OG-sh-1), re-cut on the live ref after NFRA_MCPORTAL MP-z-5's ledger closes; only the six cell commits' hunks; served read of each cell. | WORLD | ~AE | worker |
+| `OG-ap-15` | R2 | APPLY: the per-family DLQ drain releases (OG-fd-1 + OG-fd-2) for schwab, etf, orion, eclipse, blackdiamond; built off trunk, each family signed alone (schwab's drain-ahead-of-lanes disclosed, blackdiamond's held modules named), graded on its next scheduled sweep. | WORLD | ~AE | worker |
+| `OG-cd-1` | R3 | `app/family_depth.py` `read()`: per-family schedule (live EventBridge), last sweep and depth (backfill-status + earliest silver partition), every value claimed; read-only; its read-grant file and ask. Rides release `OG-ap-16` (cut after OG-ap-14's ledger closes). | WORLD | ~65 | worker |
+| `OG-hv-1` | R4 | Gateway `harvest_list` / `harvest_read` (READ, SAFE): Opal principals on the 24 prefixes of list v4 @7e0da2dfee, non-Opal and off-list refused before any S3 call; the asset-manager principal census; the ask. Rides `OG-hv-2`. | WORLD | ~64 | worker |
+| `OG-hv-2` | R4 | APPLY: one builder-named read policy on the 24 harvest prefixes, then OG-hv-1's gateway release on the live ref, then the served read; the real asset manager's call is owed (judgment, CVO). | WORLD | ~AE | worker |
+| `OG-gd-1` | R5 | READ: each FWD-1..8 PROOF split into arms; every instrument-runnable arm run against live state with its claim; the rest recorded as owed acts; no grade word (the CTO grades at the round-37 analysis). | SERVED | ~66 | worker |
+
+**Chains (edges are data or queue dependencies).**
+- Gateway queue, one release at a time: MP-z-5 (NFRA_MCPORTAL) -> `OG-ap-14` -> `OG-hv-2` -> `OG-ap-16` (next round).
+  NFRA_MCPINDEX MX-r-11 and MCPORTAL MP-n-4 interleave by their issuers' asks.
+- `OG-hv-1` -> `OG-hv-2` (hv-2 releases hv-1's code).
+- `OG-ap-14` and `OG-ap-15` share the applier `0.7.0_AE_CloudOps~Z`, as ONE queue: ap-15 Phase A runs first, while
+  ap-14 waits on MP-z-5.
+- `OG-cd-1` and `OG-gd-1` are independent.
+
+**fanout:** 4 of 4 chains (applier ~Z: ap-15 / ap-14 / hv-2; hv-1; cd-1; gd-1), cap 8.
