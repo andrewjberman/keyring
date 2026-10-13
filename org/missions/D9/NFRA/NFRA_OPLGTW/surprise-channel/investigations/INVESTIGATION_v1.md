@@ -12900,3 +12900,78 @@ name the one known failure instead of silently inheriting it.
   "notes": "Issuer defect class: a cell 'ships in rN' with no release order cut is invisible to every round-close check, because the build order is complete. Carry to the cut template: a build cell whose release is deferred names the release order it rides at the cut."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W66-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~66",
+  "surfaced_at": "2026-10-13T21:52:51Z",
+  "one_line": "The gateway's own offline suites do not all pass at b81f633517: 5 test ids fail standing alone in 4 files (plus 1 in tests/acceptance), and 5 more ids (4 in test_schwab_c3_rules.py, 1 in test_data_entitlement_guard.py) fail only when run in the same pytest process as their neighbours.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~66/evidence/suite_isolation_reruns.txt (each file run alone, timeout 120): test_browser_oidc.py::test_oga3_ac01 'assert 404 == 405'; test_data_entitlement_guard.py::test_ogz1_ac08 route-set mismatch (57 == 57 and {...} == {...}); test_schwab_export_stream.py::test_ogx4_ac03 ServiceError 'memory'; test_schwab_host_inputs.py 2 ids ('22 == 19', '54 == 52'); all 4 files re-run alone, same ids fail.",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~66/evidence/suite_fwd3_failures.txt context and suite_fwd3_denials.txt: test_schwab_c3_rules.py passes 4 of 4 alone but 4 ids fail ('Unknown tool: schwab_query') when run after the data-entitlement files in one process; test_data_entitlement_guard.py::test_ogz1_ac02 fails only in the combined run.",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~66/evidence/suite_acceptance_local.txt and evidence/suite_a12_alone.txt: tests/acceptance 14 passed, 1 failed (test_ogv2_a12, fails run alone too: a set of (synthetic row, column) cells differs by one, the A12 prompt-like-text-in-data check)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO OG-gd-1 section 1 item 2 names the gateway's offline suites as the instrument for refusal logic; the release practice (tests/run_release_suites.sh) assumes a named suite passes.",
+  "world_is": "Used as the FWD-3, FWD-4, FWD-5, FWD-1 and FWD-2 'inferred' instruments, each failing id is recorded in GD1_GRADE_READ.json under the arm it bears on. Cause not read (a stale route list, a tree-dependent line count, a box with too little memory, and a module-state order dependency are the visible candidates). Every other file run passed (denominator in the suite_*.txt files).",
+  "notes": "Read-only; no test or source was edited. The combined-run failures are an isolation defect in the suites, not evidence the refusal logic is wrong, since the same ids pass alone."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W66-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~66",
+  "surfaced_at": "2026-10-13T21:52:51Z",
+  "one_line": "For the one call that the acknowledged Schwab sink recorded as failed (INVALID_REQUEST, 2026-10-08 15:13:33Z), the main audit lake's record of the same schwab_query call reads outcome 'ok'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~66/evidence/lake_main_window_7d.txt: 3 schwab_query calls on 2026-10-08, all outcome ok.",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~66/evidence/lake_schwab_ack_1008.txt: of the 3 schwab_query records, 1 is event_type failed, error_code INVALID_REQUEST, at 15:13:33Z; 2 are release_authorized."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The PRD's FWD-8 reading of 'who used which master' assumes the main lake and the Schwab sink agree on a call's outcome.",
+  "world_is": "They disagree on 1 of 3 calls. The main lake's 'ok' is the tool wrapper returning, the sink's 'failed' the integration's refusal; a reader of the main lake alone counts a refused query as served. Noted for the audit-read arm of FWD-8; no change made.",
+  "notes": "Counts only; no value was copied."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W66-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~66",
+  "surfaced_at": "2026-10-13T21:52:51Z",
+  "one_line": "The runbook section 5 audit-read command (ops/schwab_status.py) cannot run off the gateway host: it ends in an uncaught RoleConfigError traceback because SCHWAB_READER_ROLE_ARN is unset.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~66/evidence/runbook_s5_schwab_status.txt: 'python ops/schwab_status.py --since-days 7' from the repo root, exit=1, RoleConfigError: SCHWAB_READER_ROLE_ARN is not set to an IAM role ARN (schwab_status.py:253 via aws_roles.py:135)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Runbook section 5: 'Run, from the repository root: cd infra/aws/ec2/opal-gateway; python ops/schwab_status.py' and it 'prints three sections' (HEALTH, CLOSURE, ERROR).",
+  "world_is": "Off the host, with the box's own read credentials, it prints no section. The FWD-8 audit-read arm is therefore recorded as owed to an operator on the host, with the lake reads in this record standing in for the ERROR section as inferred.",
+  "notes": "Read-only; the command writes nothing."
+}
+```
