@@ -31939,3 +31939,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "STATE: (1) IB-pr-515: the S139 hold on the CTO half is lifted by Andrew's word to the extent of Call 1 only (the dell2 CTO may sign). It does not by itself release the apply: the apply is cut to 0.7.0_AE_CloudOps~IB2 only after the CTO half is signed at packet sha256 3c369b9086b3 AND the portal point is measured (PROD selectionRequest.ts / the read of ACCOUNT rows with a null accountId = 0, or a portal fix) AND the artifact re-measure (open_deploys marker on every live worktree, live CodeSha256 tvrsQ+w82..., step 0). S139 stays ARMED for that reason. (2) IB-pr-456: Andrew submits the BEFORE record via PROD and sends the execution ID; until it arrives the release's steps 2 and 3 wait on it; no principal is named and nothing is added to the allow list. If the execution ID is not the BEFORE record the release read expects, I say so and ask. Nothing applied by this row."
 }
 ```
+
+## IRPT_BCKEND-D2-S141 -- IB-pr-515's apply gates are met at the artifact; the apply is cut as round 182
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S141",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T17:18:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2 at the apply's direct proof, with 1.0.0_SA_CTO~DELL2 reading it",
+  "one_line": "IB-pr-515's three apply gates are met at the artifact (both halves signed at 3c369b9086b3; the portal condition (a) read at 0 null accountId over 9,441 ACCOUNT entries; no open deploy marker names the function on 15 readable worktrees; live CodeSha256 still tvrsQ+w82...); the apply is cut as round 182 to 0.7.0_AE_CloudOps~IB2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO half signed @01d0a01db9 (msg 7098) at packet sha256 3c369b9086b3453fdb40efcc94655eb17933d2c65c35f248dd6255cb21db6888 (re-hashed by me this turn: equal); COO half signed at the same sha256.",
+      "Condition 3(a), run by me: the built handler.py (sha256 d73af1c77aa3cd1d09ecaeb20ace35d776c98c88e15519236786a06725ad1387, equal to the built member and the repo blob at 8168a663b8) tail_account_entries() over the three landed directories read by GET to scratch (opal-data-bd 4,738 entries, opal-data-cot 271, opal-data-inf 295; pointers dated 2026-10-12): 7,694 + 884 + 863 = 9,441 ACCOUNT entries, 0 with a null, empty or absent permitted_scope.scope_ids[0]; positive control (a synthetic entry with an empty account id) reads 1. The portal adapter sets accountId = scope_ids[0] for kind ACCOUNT (adapt.ts:630-631, :680), identical on origin/PROD and origin/DEV.",
+      "Marker scan by me: 15 readable worktrees (wk-cotbkf-159 is not a git repository), 271 .open_deploys files read from HEAD, 0 name irpt-directory-search or directory-search; live CodeSha256 re-read tvrsQ+w820jp1pxiUoYrhiKCZGVnViUTbBsDUbJEG3w= (last modified 2026-10-13T12:34:28Z)."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "STATE: nothing applied. The apply gates measured now: halves signed (yes), portal condition (a) (0), markers (0 of 271 on 15 trees), live digest (unchanged). W365-S1's stale OPEN marker no longer appears on any readable worktree. D2-S139 stays ARMED: the apply changes what a client-facing search returns, and the direct proof after it (one synthetic tail search through the deployed function) is the first read of the served behaviour; I disarm S139 and this row at that proof, or state why not. The step-0 MATCH is re-read by the apply seat at its own start. The scratch copies of the landed directories (client-derived counts only; no tracked file) sit in my scratchpad outside the repo."
+}
+```
