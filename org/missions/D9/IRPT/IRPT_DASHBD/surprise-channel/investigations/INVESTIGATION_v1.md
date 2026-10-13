@@ -7218,3 +7218,53 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W133-S4 -- withdraws IRPT_DASHBD-D2-W133-S3: the round-89 checker exempts the sha256 and commit members from the digit scan
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W133-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~133",
+  "surfaced_at": "2026-10-13T14:04:43Z",
+  "one_line": "Correction to row S3: the digit-run limb of DB89-1-AC1 does not refuse the record's rule.sha256, because checks/r89/p89_round89.py skips every key ending in sha256 and the key commit before scanning for runs of 8 or more digits. S3's premise is false; S3 is withdrawn, not the criterion.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row S3 asserted that the digit-run limb refuses the record's rule.sha256 (the sha256 of RULE.md, which holds the 8-digit run 41859941), so the criterion cannot PASS as written.",
+  "world_is": "checks/r89/p89_round89.py line 37 excludes keys ending in sha256 and the key commit from long_digit_runs (lines 33-44), and line 117 scans the record with that function. A scratch copy with only the population accounts range relaxed prints 'DB89-1-AC1 PASS' with rc 0, so the digit limb passes on this record. The official run still prints 'FAIL: population' (rc 1) on the accounts range, recorded in S2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "checks/r89/p89_round89.py lines 33-44 and 117: long_digit_runs skips keys ending in sha256 and the key commit; the record is scanned through it",
+      "scratch diagnostic .scratch/p89_diag_relaxed_accounts.py (not committed; only the accounts range check replaced by False), run at worktree HEAD with the record: 'DB89-1-AC1 PASS', rc 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W133-S5 -- population.accounts under both readings: 84 over the 88 flow segments (the rule's text), 11 over the 12 neither segments (the checker's range)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W133-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~133",
+  "surfaced_at": "2026-10-13T14:04:43Z",
+  "one_line": "For row S2: the same population gives 84 distinct accounts over the 88 flow-bearing segments and 11 over the 12 neither segments; the checker's 1-to-12 range admits only the second reading, which the committed RULE.md does not state.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "RULE.md section 2 (commit 99d37085ba): population.accounts = distinct accounts among the 88 flow-bearing gradable segments. checks/r89/p89_round89.py line 82: accounts int 1..12.",
+  "world_is": "Counts from .scratch/accounts_both_readings.py (python -I, reusing the module's helpers, counts only): flow segments 88 with 84 distinct accounts; neither segments 12 with 11 distinct accounts. The record carries 84 under the rule's reading and was not changed to 11; the reading to use is for the issuer to decide.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I .scratch/accounts_both_readings.py, rc 0: 'flow segments 88; distinct accounts among them 84' and 'neither segments 12; distinct accounts among them 11'",
+      "checks/r89/p89_round89.py line 82 and RULE.md section 2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
