@@ -56,6 +56,15 @@ back, 33,000 to 35,500 cells against 37,439 filed), deterministic, valid, nothin
 
 Run each invocation from the worktree root. At the base: `WIN-BAD no file ...`; `WIN-REAL-BAD arm1 ... (no file ...active_set.py)`.
 
+
+### AMENDED 2026-10-13 ~22:0xZ (issuer; no gate limb graded it, no new order added) -- the ruling on securities OUTSIDE the active set (CTO msg 5227)
+
+The ruling is "draws limited to that set over those windows". **A security NOT in the active set is HELD BACK, never kept at its old window.** This replaces the sentence in item 3 that says such a security keeps its current window and is counted in `unclipped_cusips`:
+a CUSIP with no row in the active set (by CUSIP; a row with a blank CUSIP is matched by ticker when the request entry carries a `symbol`) goes into `held_back` with the reason
+`not held by an active Cottonwood account under any identifier the files carry (draws are limited to the active set, CTO msg 5227)`, the `--build` line's `unclipped_cusips` is retired, and `securities` counts only the CUSIPs left in the request.
+The issuer measured the case: B1's 4 CUSIPs outside the set are bonds and T-bills with no symbol (118 cells together, last trades from 2023-08 to 2026-05); the expected real line is therefore `securities` 609, `held_back` 5 (those 4 and the P2 fund),
+cells about 34,223. The real check `dq_t57_real.py` is already amended to 609 and 5; test 3's name stays and its body asserts the hold-back of a name outside the set instead of the old unclipped behaviour.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below plus your deliverables folder and this order's file. Scaffolding goes under `.scratch/`, uncommitted.
