@@ -225,6 +225,27 @@ and total return (504 cells) is ACCEPTED under it. Andrew may raise it.
   - D4: scanner currency slice 1, 50 cells;
   - D5: scanner currency full list, 1,038 cells, drawn ONLY if slice 1 reads a non-USD currency.
 
+### C1 SIZED AND RULED (`1.0.0_SA_CTO~DELL1`, `/self-drive` dell1 tick 1, ~20:4xZ, under Andrew's ~20:3xZ word that the box CTO adjudicates every open call)
+
+`2.0.0_SA_COO~V1`'s measurement (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round30_prep/RIVALFUNDS_PAGE_HISTORY_NEEDS_MEASURED_20261013.md` @a100e2490e):
+- every page element is HOLDING-level; no fund-level price is read;
+- the rankings need total return on held days; the dialog curves need the close.
+- **This seat's "fund-level about 9,500" was wrong:** a fund-level pull would be 3,263 units and would feed nothing.
+
+**RULING: FIELD-MATCHED and STAGED by period.**
+- Total return on the rankings' held days and the close on the curves' days: 213,149 cells for 365 days, about 11 runs at 20,000.
+- Drawn newest-first:
+  - **30 days** (about 17,848 cells, 1 run);
+  - **then 90 days** (about 69,346, 4 runs);
+  - **then the full 365.**
+- The 36,705 owed units outside every held day and dialog are NOT drawn.
+- Andrew may override.
+
+### THE FORM IS COMPLETE (surfaces A, B, C, D, E): this seat's msg-4892 draw hold LIFTS
+
+New draws proceed through the queue under the rules above, inside the two-week budget, with the non-trading-day expansion. `2.0.0_SA_COO~Q1` prints the two-week total
+before the first new draw.
+
 ## STANDING RULE, Andrew: INCREMENTAL MODE = THE LAST 5 TRADING DAYS, on every surface
 
 Once a need's backfill is complete, every daily pull asks for **the last 5 trading days** (from `lib/trading_calendar.py`), not a single day and not a long window. That
