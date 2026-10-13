@@ -6411,3 +6411,30 @@
   "notes": "Form only. The ruling between the literal reading and the built reading is the CTO's (round-19 analysis item 2) at L9. The record is org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~59/r19/CLOSED_LISTS_RULE24.json, field count_header_rule."
 }
 ```
+
+
+## IRPT_ANLREQ-D2-S68 -- (disarm row; this seat's own) the reader's release is read back in both places; nine ARMED rows of this seat are closed
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S68",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T07:03:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "DISARMS rows D2-W51-S13, D2-W51-S16, D2-W52-S29, D2-W52-S35, D2-W52-S37, D2-W55-S15, D2-W55-S16, D2-W55-S19, D2-W55-S27: the reader's release landed in both places and was read back; each row's hazard is closed by a read named below.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Each named row is ARMED with this seat as disarm owner (W51-S13: release pins off the trunk; W51-S16: the release builds against the unpatched map; W52-S29: a stored two-account sheet answers NORMALIZED on a same-token re-POST; W52-S35: the re-count of templates stored since Y9 and the re-open of a pinned-stored template; W52-S37: six door-closure members differ between pins and HEAD; W55-S15/S16: the full recipe carries SECTION_BOUNDS on and a different capture library; W55-S19: the bindings' queue and table names unchecked live; W55-S27: the st32 script's OLD is the st31 root).",
+  "world_is": "MEASURED by this seat 2026-10-13. Lambda: irpt-ycharts-generate CodeSha256 bNPCG2Oe1oQM/ztjggmrdDbdl83CAmUEcPnBFxlj2Rk= (read from AWS at ~06:4xZ), 104 members equal to the AR-y-201 release manifest, exactly uploads.py and template_reader.py moved against the previous package (closes W51-S13: pins e93258c650 and da7b3b10bc; W51-S16 and W52-S37: the build is at base 5d8b0390ed with RELEASE_MAP_PATCH_R2.diff and moves two members). Resident: 0485393f3a-r19 installed 06:09:33Z; V1 'sha256sum -c rc=0 lines not OK: 0 of 297 checked' and the delta of AR-y-200 (4 of 298: the two reader members, the bindings' member_overrides, SHA256SUMS) -- extract.py and the capture library are among the unchanged (closes W55-S15 and W55-S16: SECTION_BOUNDS is not reached, the host library reads a1c28801... unmoved; W55-S19: the bindings carry st32's queue and table names unchanged and the moved resident polled irpt-generation 3 times in 60 s with 0 tracebacks; W55-S27: OLD=0485393f3a-st32 in the host script, a diff of 17 lines). Stored population: TO-READS-Y10 at 2026-10-13T05:35:03Z, 56 template inputs, 0 turned back, 0 with a stored reader version; the earlier Y9 count equal (closes W52-S29 and the count of W52-S35; its re-open arm is the AR-y-191 matrix, RUN in process). NOT covered: the live door reads D1 to D4 (ABSENT by the CTO's ruling); the rows W52-S33 and W52-S36 stay ARMED -- RELEASED, NOT SHOWN LIVE -- until a live D1/D2 lands in Andrew's staff act 2e30.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get-function irpt-ycharts-generate and the downloaded zip's 104 members, compared by this seat with the AR-y-201 release manifest",
+      "org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_anlreq_r19/D2_V1_INSTALL_R19.txt and its proof (VALID, run by this seat)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~ANL/deliverables/Y10_stored_input_count_r19_window.json (READS9-OK with --result, run by this seat)"
+    ]
+  }
+}
+```
