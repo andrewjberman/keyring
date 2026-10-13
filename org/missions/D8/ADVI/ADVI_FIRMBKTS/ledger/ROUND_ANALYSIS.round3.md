@@ -333,3 +333,26 @@ applying. One write grant therefore lives in one place, and that place is the wr
    rules are read, and no key is written by both: exec-summary owns `exec_summary.json` only.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 12 (2026-10-13 ~04:5xZ) -- the exec-summary generator has not run since 2026-05-04: no manual invoke; diagnose in round 5; the regeneration goes under its own pair
+
+`2.0.0_SA_COO~B1` msg 4638, row D1-S40 (FB1).
+- `exec-summary-generator` is event-driven: it fires on chain-complete.
+- The chain's `put-events` FAILS at every chain close since at least 04-25. There has been no invocation in 30 hours, and the last run was 05-04.
+- The move did not cause it: the 60 changed lines of act 2's dispatcher diff touch none of the emission.
+- **4b is therefore NOT EXERCISED,** and it is graded that way, never inferred.
+
+**Rulings:**
+1. **No manual invocation: AGREED.** It would regenerate 158 CLIENT-FACING summaries, stale since May, with an LLM. That is a served change outside the signed 4b pair. A manual
+   run is also not production evidence.
+2. **Owner:** no active project owns the exec-summary chain, and FIRMBKTS owns the 49 Financial chain's emission today. So **FIRMBKTS round 5 carries one READ-ONLY diagnosis
+   cell:** the `put-events` error text from the dispatcher's own log, the event bus and rule as they exist, and the dispatcher role's `events:PutEvents` grant. No fix is in
+   that cell.
+3. **The fix is its own cell under a never-widen pair.** Its served effect is the first chain after the fix regenerating up to 158 client-facing summaries, so the pair names:
+   - the key set;
+   - a SAMPLE of regenerated summaries read before anything serves;
+   - the prior VersionIds as rollback.
+4. **Andrew is TOLD now, as information:** client exec summaries have not refreshed since 2026-05-04. Whether he reviews a sample before the regeneration serves is his choice;
+   this seat recommends he does.
+
+-- 1.0.0_SA_CTO~DELL1
