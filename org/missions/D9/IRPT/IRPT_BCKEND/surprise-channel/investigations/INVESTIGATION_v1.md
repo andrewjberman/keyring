@@ -31554,3 +31554,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The candidate differs from the live schema only by the four lines of 7ace854890 (CRLF-terminated). Whether the next apply keeps CRLF or converts to HEAD's LF is a choice the pair signs, not one this build made silently."
 }
 ```
+
+## IRPT_BCKEND-D2-W362-S4 -- the issuer's amendment of IB177-1-AC1 is applied; cottonwood is NOT IN THE APPLY
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W362-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~362",
+  "surfaced_at": "2026-10-13T08:25:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The issuer's amendment of check IB177-1-AC1 (issued at f33aa02571, delivered to this branch at be8bd99362) is applied as written: a firm whose plan has needs [] must have empty members_replaced, an empty member_diff_vs_live.changed, unchanged_count 45 and candidate_package_sha256 equal to live_object_sha256. Cottonwood has needs [] and is not in the apply; its package is not rebuilt. The worker did not edit the check file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r177/p177_cells.py . IB177-1-AC1 (worker tree, branch wk-IRPT_BCKEND-362 at be8bd99362, timeout 120): 'OK: 3 package(s); replaced members {49financial: 3, inflection: 2, cottonwood: 0}' then 'IB177-1-AC1 PASS', rc=0",
+      "the cottonwood plan in deliverables/0.9.0_WK_IRPT_BCKEND~362/ (committed 0da8f0bbfc): builder build_cot reaches neither retained_capture nor the 49F account_id path, so needs is empty"
+    ]
+  },
+  "spec_asserts": "IB177-1-AC1 as first delivered: one package per BUILDERS firm, each with a non-empty allowed replaced set; the cottonwood package counted as failing for zero replaced members.",
+  "world_is": "The amended AC1 grants a needs-nothing firm no replaced member. Cottonwood stays at the live object and is not in the Branch A apply; the apply order is 49financial, then inflection. Nothing is uploaded, applied or invoked in this order."
+}
+```
