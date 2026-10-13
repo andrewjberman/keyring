@@ -3749,161 +3749,6 @@
 }
 ```
 
-## IRPT_ANLREQ-D2-W51-S10 -- (heading added by the issuer at the drain of TO-AR-y-185, which lost this row in its first merge; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W51-S10",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
-  "surfaced_at": "2026-10-13T00:08:53Z",
-  "one_line": "AR-y-185: the worktree is behind the shared head. Its lambda-source-map.json (blob 78e79160) and _authz/served.py (blob 1d55a27a) are older than the read ref 9f43f29de8 (map a5cc836a, served.py d1bf60c9). The eight served.py pins agree in both; the record reads the ref.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "git rev-parse 9f43f29de8:infra/aws/lambda/ci/lambda-source-map.json = a5cc836ae7c4a27ee2bd2c8e37ac3cc6405fb913; worktree (HEAD c0e2b493d4) = 78e79160bdbd44db0f1cff2dfb39c348c7caa825",
-      "git rev-parse 9f43f29de8:infra/aws/lambda/investor-reporting/_authz/served.py = d1bf60c9f907e5bbbbda6c4de5f22f4ad224ee64 (last changed at 564e604838, AR-y-184); worktree = 1d55a27aaefccdb2051c9e5973febdb08d253797",
-      "At the ref, 17 map entries differ from the worktree copy, all eight packagers among them, in loaders.py pins and artifact_sha256 only; the eight served.py pins (361c44fa9d, 74a62fb46c) are identical in both",
-      "read_at block and not_read of org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~51/r18/SERVED_PY_PACKAGERS.json"
-    ]
-  },
-  "spec_asserts": "Read first (the order): the map and the status rule are in the worktree; a file absent from the worktree, or stale against the current head, may be read at the shared tree head.",
-  "world_is": "The worktree and the shared head hold different bytes for the map and for _authz/served.py, and the head moves during a seat's reads. The census read one ref, 9f43f29de8, and cites it; the worktree copies were read and not used.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-```
-
-## IRPT_ANLREQ-D2-W51-S11 -- (heading added by the issuer at the drain of TO-AR-y-185, which lost this row in its first merge; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W51-S11",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
-  "surfaced_at": "2026-10-13T00:08:53Z",
-  "one_line": "AR-y-185: the Y185-READ check proves that each named function has a non-empty pin field. It does not prove that the pin is a commit or that the pinned bytes equal the map's sha256, so a PASS of AR185-y-AC1 verifies no pin.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r18/ar18_checks.py at worktree commit c0e2b493d4, y185-read branch of main(): it tests `not funcs[name].get(\"pin\")` and the presence of the three top-level members",
-      "this seat's run: y185-read printed Y185-READ-OK over 8 of 8 names; the same seat verified each of the eight pins by git show plus sha256 against the map (all eight match), outside the checker"
-    ]
-  },
-  "spec_asserts": "AR185-y-AC1 (checker y185-read): the record names each of the eight functions with its pin and how it packages served.py, and states the map denominator, the claim and what was not read.",
-  "world_is": "The checker tests the presence of a non-empty pin and of a non-empty how_it_packages_served_py per name. A record that names a wrong or non-existent commit as a pin would print Y185-READ-OK.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-```
-
-## IRPT_ANLREQ-D2-W51-S12 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W51-S12",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
-  "surfaced_at": "2026-10-13T01:59:58Z",
-  "one_line": "AR-y-192 'Read first' names row IRPT_ANLREQ-D2-W52-S28 in INVESTIGATION_v1.md. The worktree copy (branch wk-IRPT_ANLREQ-51 at a204eefd51) has no such row; the shared-tree head 537391d103 has it at line 4085.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "grep -n W52-S28 on the worktree copy of org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md: no hit (the file ends at IRPT_ANLREQ-D2-W51-S11, 3798 lines)",
-      "git -C C:/dev/ajb_workspace show 537391d103:org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md carries the row at line 4085 (id IRPT_ANLREQ-D2-W52-S28, surfaced_by 0.9.0_WK_IRPT_ANLREQ~52, 2026-10-12T23:07:22Z)"
-    ]
-  },
-  "spec_asserts": "AR-y-192 WORKER FACE, 'Read first': row IRPT_ANLREQ-D2-W52-S28 in org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md, read in this worktree.",
-  "world_is": "The row exists at the shared-tree head, not in the worktree branch, which was cut before the rows minted after a204eefd51. The row was read at the shared-tree head at 537391d103 and nothing was copied into the worktree for it. The worktree copy of the file is the one this worker appends to, per the append-only rule.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-```
-
-## IRPT_ANLREQ-D2-W51-S13 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W51-S13",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
-  "surfaced_at": "2026-10-13T01:59:58Z",
-  "one_line": "AR-y-192 premise: the reader pair's release pins are the r14 census pins (uploads.py 4215d98f26, template_reader.py d95cf11106). Both are off the trunk: 114c77fb01 reverted them and e93258c650 and da7b3b10bc re-landed and widened the pair. A release cut from the r14 pins would ship the reverted reader.",
-  "class": "BLOCKING",
-  "hazard_standing": "ARMED",
-  "disarm_owner": "2.0.0_SA_COO~Y2",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "UPLOAD_DOOR_RELEASE_CENSUS.json (0.9.0_WK_IRPT_ANLREQ~53/r14, read at f166732b43) functions_that_package_the_reader[0].repin_the_release_needs names 4215d98f26319f25df1678783fe1b3d6a9006a2c and d95cf11106206babd2dda9c502ec60aa5c15c84f",
-      "git -C C:/dev/ajb_workspace show --stat 114c77fb01: revert, 7 files, 24 insertions and 509 deletions; e93258c650 (AR-y-162, 8 files) and da7b3b10bc (AR-y-181, 2 files) re-land and widen the pair after it",
-      "at REF 537391d103: intake/uploads.py blob 35df2aa46146 (sha256 176682cb1545435eec084376b3c37a578ca70d05f9ad5a376c0f2275f62b05ea, = e93258c650); intake/template_reader.py blob fbc6c33af050 (sha256 83ab9b45d59065f53c640803df9fd07a0ddfcc97d89c13540c20622a6bf7bd58, = da7b3b10bc)"
-    ]
-  },
-  "spec_asserts": "AR-y-192 items 1, 2 and 4 and the r14 census repin_the_release_needs: the reader pair the release moves is uploads.py at 4215d98f26 and template_reader.py at d95cf11106; the CTO ruling 20261013 section 1 says the pinned pair runs in a scratch tree before it is cut (AR-y-191 record not yet landed).",
-  "world_is": "Those pins are no longer on the trunk. The planned moves in the AR-y-192 census name the trunk pair at 537391d103 (uploads.py e93258c650, template_reader.py da7b3b10bc), each checked by name against its pinned neighbours. Which pair the round cuts, and whether the scratch run ran that pair, is the issuer's call; no r19 scratch record exists at 537391d103 to confirm it.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-```
-
-## IRPT_ANLREQ-D2-W51-S14 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W51-S14",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
-  "surfaced_at": "2026-10-13T01:59:58Z",
-  "one_line": "The native member acceptance.py moved at HEAD after the r14 census read: 06557b6618 (IB-pr-478, 16 lines added) is its head, so a rebuild from HEAD ships a blob the census never built (census built abbdab4935, head sha256 0c4acec625).",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "git log f166732b43..537391d103 -- infra/aws/lambda/investor-reporting/ycharts/generate: one commit, 06557b6618, touching acceptance.py (16 insertions)",
-      "census changed_members_detail acceptance.py built_sha256 abbdab4935097ea5d595c0e4abcde9cea977b12b15440b0ee70caa9eeb22895d equals the blob at 74bbdbb322; the blob at 06557b6618 hashes to 0c4acec625b7 (git show, sha256)",
-      "the other three natives (submission.py, submission_service.py, durable_job.py) have the same head blob as the census built, at 74bbdbb322, 2f7cc7be42 and 3acafb3f45"
-    ]
-  },
-  "spec_asserts": "The r14 census (changed_members_detail) and the W53-S9 row describe the four native members at the census head f166732b43: acceptance.py built from 74bbdbb322.",
-  "world_is": "At the shared head 537391d103 acceptance.py is at 06557b6618. The planned pin for acceptance.py (1eed34a8c0, the live blob) holds 06557b6618 and 74bbdbb322 and 2f7cc7be42 back from this release, which is an issuer decision the census states and does not make.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-```
-
-## IRPT_ANLREQ-D2-W51-S15 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W51-S15",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
-  "surfaced_at": "2026-10-13T01:59:58Z",
-  "one_line": "The resident builder's DIRS list at HEAD has twelve folders, ycharts/research among them; the r14 census quoted the list at :37-38 without it, so the r14 description of what a resident rebuild packages is stale.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "git show 537391d103:infra/aws/lambda/investor-reporting/reports/build_resident_package.py line 37: DIRS = [_scope, _ids, _keys, _authz, _contracts, intake, ops, reports, ycharts/generate, ycharts/session, ycharts/extract, ycharts/research]",
-      "UPLOAD_DOOR_RELEASE_CENSUS.json resident_runtime.how_built (r14): DIRS at :37-38 listed as eleven folders without ycharts/research"
-    ]
-  },
-  "spec_asserts": "The r14 census resident_runtime.how_built: a resident tarball is built from one backend pin over the eleven listed folders.",
-  "world_is": "The builder at 537391d103 packages twelve folders; ycharts/research is in the resident package the census did not describe. The resident release record must name the current DIRS list, not the r14 one.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-```
-
 ## IRPT_ANLREQ-D2-W52-S16 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
 
 ```json
@@ -4182,202 +4027,6 @@
 ]
 ```
 
-## IRPT_ANLREQ-D2-W52-S26 -- the Read-first reader and tests are under infra/aws/lambda/investor-reporting, not at the worktree root the order names
-
-```json
-[
-{
-  "id": "IRPT_ANLREQ-D2-W52-S26",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
-  "surfaced_at": "2026-10-12T23:07:22Z",
-  "one_line": "TO-AR-y-174 names its Read-first files as intake/template_reader.py, intake/uploads.py and intake/tests/test_stored_input_contract.py, relative to the worktree root. They sit under infra/aws/lambda/investor-reporting/. The root path does not exist; the reads used the investor-reporting path.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "comp-find --name 'template_reader*' in C:/dev/wk-irpt-anlreq-52: 1 hit, infra/aws/lambda/investor-reporting/intake/template_reader.py (79285 files scanned)",
-      "grep -n READER_VERSION intake/template_reader.py at the worktree root (HEAD dec1c4624b): No such file or directory"
-    ]
-  },
-  "spec_asserts": "TO-AR-y-174 Read first: intake/template_reader.py, intake/uploads.py and intake/tests/test_stored_input_contract.py, relative to the worktree root.",
-  "world_is": "The three files are at infra/aws/lambda/investor-reporting/intake/ (template_reader.py blob 42037c84f452 at HEAD). Nothing was created or moved to match the order; the reads used the investor-reporting path.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-]
-```
-
-## IRPT_ANLREQ-D2-W52-S27 -- the AR-y-171 drain named in the spawn amendment is not an ancestor of this worker's HEAD; the same reader content is at ccbed3339b
-
-```json
-[
-{
-  "id": "IRPT_ANLREQ-D2-W52-S27",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
-  "surfaced_at": "2026-10-12T23:07:22Z",
-  "one_line": "The spawn amendment names the AR-y-171 drain as b09e84971f. That commit is not an ancestor of this worker's HEAD (dec1c4624b) and is on box/dell2 only. The repair is in this history as ccbed3339b, and the reader blob is byte-identical at both (42037c84f452), so the trace ran on the named content.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "git merge-base --is-ancestor b09e84971f HEAD: not an ancestor; git branch --contains b09e84971f: box/dell2 only (merge-base 53b8f242cf)",
-      "git merge-base --is-ancestor ccbed3339b HEAD: ancestor; git log -- infra/aws/lambda/investor-reporting/intake/template_reader.py: ccbed3339b is the latest commit touching it",
-      "git rev-parse b09e84971f:infra/aws/lambda/investor-reporting/intake/template_reader.py and git hash-object of the worktree file: both 42037c84f452"
-    ]
-  },
-  "spec_asserts": "The spawn amendment: AR-y-171 is merged @b09e84971f, and the trace runs on that repaired reader (r17.1).",
-  "world_is": "The repaired reader is on this worker's HEAD as ccbed3339b, with the same content as b09e84971f on box/dell2. The two commits are not ancestors of one another on this branch. The content identity is measured by blob; the commit identity is not shared. Not blocking.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-]
-```
-
-## IRPT_ANLREQ-D2-W52-S28 -- the deployed Lambda's reader pin is a third version (3f29017cfc, no version member), outside the round-16 and repaired pair
-
-```json
-[
-{
-  "id": "IRPT_ANLREQ-D2-W52-S28",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
-  "surfaced_at": "2026-10-12T23:07:22Z",
-  "one_line": "The source map pins irpt-ycharts-generate's template_reader.py at 3f29017cfc and its uploads.py at f09b802cdc, both before the AR-y-142 and AR-y-162 changes. The 3f29017cfc reader writes no reader_version member. So the Lambda's reader is neither the round-16 reader (aaf156e8eb) that the trace calls old, nor the repaired one; the four traced pairs do not cover the Lambda as it is pinned today.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "infra/aws/lambda/ci/lambda-source-map.json lines 4542-4564 (irpt-ycharts-generate entry at line 3988): uploads.py pin f09b802cdc, template_reader.py pin 3f29017cfc (sha256 76795b75...)",
-      "git show 3f29017cfc:infra/aws/lambda/investor-reporting/intake/template_reader.py | grep -c reader_version: 0; the same blob has no READER_VERSION (0); aaf156e8eb has 2"
-    ]
-  },
-  "spec_asserts": "The cell and the spawn amendment treat the mixed state as a Lambda and a resident running two reader versions (round-16 and repaired), so the trace of those two covers the release question.",
-  "world_is": "The deployed Lambda's pinned reader is a third version, 3f29017cfc, with no version member. Its inputs are not compared on re-open under any running version, and the four pairs do not include it. The release pair's precondition must name the pin the Lambda moves from.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-]
-```
-
-## IRPT_ANLREQ-D2-W52-S29 -- a two-account sheet stored by the round-16 door reads NORMALIZED on a same-token re-POST under the repaired reader, while a fresh token is turned back
-
-```json
-[
-{
-  "id": "IRPT_ANLREQ-D2-W52-S29",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
-  "surfaced_at": "2026-10-12T23:07:22Z",
-  "one_line": "Under the repaired reader, a two-account Account-Number sheet that the round-16 door stored answers NORMALIZED on a same-token re-POST, while a fresh-token POST of the same bytes is turned back with ACCOUNT_COLUMN_SEVERAL_VALUES. A stored normalization row is answered without judging the file again.",
-  "class": "OBSERVATION",
-  "hazard_standing": "ARMED",
-  "disarm_owner": "2.0.0_SA_COO~Y2",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "MIXED_VERSION_TRACE.json case old/new repair_header_two_values: writer door NORMALIZED; repost under the repaired reader NORMALIZED; re-open ACCEPTED with no comparison",
-      "MIXED_VERSION_TRACE.json case new/new repair_header_two_values: writer door NEEDS_CORRECTION ACCOUNT_COLUMN_SEVERAL_VALUES",
-      "intake/uploads.py:397-399 (prior_normalization answered by _answer) and :493-499 (_answer returns the stored NORMALIZED row before any read), at HEAD ccbed3339b"
-    ]
-  },
-  "spec_asserts": "The round-16 and round-17 account rule: the account-column finding turns a two-account file back at the door (one account per file), so a two-account file does not reach a portfolio.",
-  "world_is": "A two-account file stored by the round-16 door stays NORMALIZED for its token and opens under the repaired reader, because the stored row is answered and the re-open does not compare (C-STOREDINPUT). The repaired rule refuses new POSTs; it does not reach rows already stored. ARMED at the release pair: the stored row stays usable after the release unless the pair counts and disposes of it.",
-  "disposition": "UNDER_INVESTIGATION",
-  "notes": "Form only. Arms at the release pair, which the issuer cuts; the disarm owner is named so the pair's counting step can carry it."
-}
-]
-```
-
-## IRPT_ANLREQ-D2-W52-S30 -- the round-14 census's refusal on re-open was measured before the stored-input contract; in mixed-version re-opens under the contract nothing is refused
-
-```json
-[
-{
-  "id": "IRPT_ANLREQ-D2-W52-S30",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
-  "surfaced_at": "2026-10-12T23:07:22Z",
-  "one_line": "The round-14 census says every accepted multi-sheet, two-account and total-row input is refused on re-open after the release (TEMPLATE_ORIGINAL_BINDING). That was measured at HEAD f166732b43, before the stored-input contract. Under the contract the in-process mixed re-opens accept 8 of 8 with no comparison, and the same-version re-opens accept 8 of 8 with the comparison passing.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~53/r14/UPLOAD_DOOR_RELEASE_CENSUS.json (accepted_yesterday_turned_back_today; measured_matrix_in_process) at dec1c4624b, tree_head_at_read f166732b43",
-      "infra/aws/lambda/investor-reporting/intake/uploads.py:638-641 at ccbed3339b: the full re-read is compared only when stored_version == READER_VERSION",
-      "r17/MIXED_VERSION_TRACE.json (in-process, 28 cases): 16 of 16 stored templates re-opened ACCEPTED; compare_runs_on_reopen false in all 8 mixed cases"
-    ]
-  },
-  "spec_asserts": "The census's claim that after the release every stored input whose re-read differs is refused on each re-open (its FATAL finding for the release pair).",
-  "world_is": "At HEAD with the contract, the refusal needs the stored version to equal the running one and the re-read to differ. Mixed-version re-opens are not compared, so the census's refusal is a pre-contract result. The census is not marked superseded, so the CTO's analysis should read it with this row beside it.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-]
-```
-
-## IRPT_ANLREQ-D2-W52-S31 -- identifier spellings outside the ruled vocabulary are still unmatched after the widening: Account Numbers, Subaccounts, Accnt, Account Nos, Account Seqno, Account Serial
-
-```json
-[
-{
-  "id": "IRPT_ANLREQ-D2-W52-S31",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
-  "surfaced_at": "2026-10-13T00:00:19Z",
-  "one_line": "After the AR-y-181 widening, the rule still does not match identifier-like headers whose spelling sits outside the ruled vocabulary: Account Numbers (plural tail), Subaccounts (plural account word), Accnt, Account Nos, Account Seqno and Account Serial. A multi-account file under one of them passes as one account, the same costly direction as S24.",
-  "class": "OBSERVATION",
-  "hazard_standing": "ARMED",
-  "disarm_owner": "2.0.0_SA_COO~Y2",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "infra/aws/lambda/investor-reporting/intake/template_reader.py@da7b3b10bc (ACCOUNT_WORDS, ACCOUNT_TAIL_WORDS, _is_account_header)",
-      "scratch run .scratch/subtract_r18.py (uncommitted) over a declared grid of 2200 headers against template_reader.py@da7b3b10bc: 'account numbers' False, 'subaccounts' False, 'accnt' False, 'account nos' False, 'account seqno' False, 'account serial' False; 1542 unmatched of 2200"
-    ]
-  },
-  "spec_asserts": "Point 2 of IRPT_ANLREQ.TO-AR-y-181 and the CTO ruling on S24: widen the named modifiers, account word and tail words only, each with its census line; subaccounts only if justified. The rule must not miss an account-identifier header (the costly direction).",
-  "world_is": "The ruled vocabulary does not cover the plural tail numbers, the plural account word subaccounts, the spelling accnt, or the tails nos, seqno and serial. Subaccounts was not added (no census form carries it, so it is not justified from the census). Measured by subtraction, not fixed: a further widening is a ruling for the issuer or the CTO, not a worker choice.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-]
-```
-
-## IRPT_ANLREQ-D2-W52-S32 -- the COUNT exclusion keys on the header words alone: a real account column headed No. of Accounts would pass as one account
-
-```json
-[
-{
-  "id": "IRPT_ANLREQ-D2-W52-S32",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
-  "surfaced_at": "2026-10-13T00:00:19Z",
-  "one_line": "The whole-cell exclusion for No. of Accounts (plural) reads only the header words, not the values. A file whose column is headed No. of Accounts but holds account identifiers, not one count, is not turned back, so a multi-account file under that header passes as one account.",
-  "class": "OBSERVATION",
-  "hazard_standing": "ARMED",
-  "disarm_owner": "1.0.0_SA_CTO",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "infra/aws/lambda/investor-reporting/intake/template_reader.py@da7b3b10bc (COUNT_PLURAL_WORDS and the no. of branch of _is_account_header)",
-      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r18/ACCOUNT_HEADER_POPULATION.json (count_forms: No. of Accounts, No. of accts)"
-    ]
-  },
-  "spec_asserts": "AR-y-181 criterion AR181-y-AC3J (judgment, L9): the COUNT exclusion cannot hide a real account column; and the CTO ruling on S24: No. of Accounts is a COUNT, a whole-cell exclusion when the account word after no. of is plural.",
-  "world_is": "The exclusion is decided by the header text alone, because a count column and an account-identifier column can carry the same header. The worker cannot decide from the code whether a real file uses that header for account identifiers. Measured, not decided: the exclusion as ruled stands; whether it hides a real account column is for the L9 judgment.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-]
-```
-
 ## IRPT_ANLREQ-D2-W53-S10 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
 
 ```json
@@ -4565,6 +4214,146 @@
 }
 ```
 
+## IRPT_ANLREQ-D2-W52-S26 -- the Read-first reader and tests are under infra/aws/lambda/investor-reporting, not at the worktree root the order names
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S26",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-12T23:07:22Z",
+  "one_line": "TO-AR-y-174 names its Read-first files as intake/template_reader.py, intake/uploads.py and intake/tests/test_stored_input_contract.py, relative to the worktree root. They sit under infra/aws/lambda/investor-reporting/. The root path does not exist; the reads used the investor-reporting path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find --name 'template_reader*' in C:/dev/wk-irpt-anlreq-52: 1 hit, infra/aws/lambda/investor-reporting/intake/template_reader.py (79285 files scanned)",
+      "grep -n READER_VERSION intake/template_reader.py at the worktree root (HEAD dec1c4624b): No such file or directory"
+    ]
+  },
+  "spec_asserts": "TO-AR-y-174 Read first: intake/template_reader.py, intake/uploads.py and intake/tests/test_stored_input_contract.py, relative to the worktree root.",
+  "world_is": "The three files are at infra/aws/lambda/investor-reporting/intake/ (template_reader.py blob 42037c84f452 at HEAD). Nothing was created or moved to match the order; the reads used the investor-reporting path.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S27 -- the AR-y-171 drain named in the spawn amendment is not an ancestor of this worker's HEAD; the same reader content is at ccbed3339b
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S27",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-12T23:07:22Z",
+  "one_line": "The spawn amendment names the AR-y-171 drain as b09e84971f. That commit is not an ancestor of this worker's HEAD (dec1c4624b) and is on box/dell2 only. The repair is in this history as ccbed3339b, and the reader blob is byte-identical at both (42037c84f452), so the trace ran on the named content.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor b09e84971f HEAD: not an ancestor; git branch --contains b09e84971f: box/dell2 only (merge-base 53b8f242cf)",
+      "git merge-base --is-ancestor ccbed3339b HEAD: ancestor; git log -- infra/aws/lambda/investor-reporting/intake/template_reader.py: ccbed3339b is the latest commit touching it",
+      "git rev-parse b09e84971f:infra/aws/lambda/investor-reporting/intake/template_reader.py and git hash-object of the worktree file: both 42037c84f452"
+    ]
+  },
+  "spec_asserts": "The spawn amendment: AR-y-171 is merged @b09e84971f, and the trace runs on that repaired reader (r17.1).",
+  "world_is": "The repaired reader is on this worker's HEAD as ccbed3339b, with the same content as b09e84971f on box/dell2. The two commits are not ancestors of one another on this branch. The content identity is measured by blob; the commit identity is not shared. Not blocking.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S28 -- the deployed Lambda's reader pin is a third version (3f29017cfc, no version member), outside the round-16 and repaired pair
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S28",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-12T23:07:22Z",
+  "one_line": "The source map pins irpt-ycharts-generate's template_reader.py at 3f29017cfc and its uploads.py at f09b802cdc, both before the AR-y-142 and AR-y-162 changes. The 3f29017cfc reader writes no reader_version member. So the Lambda's reader is neither the round-16 reader (aaf156e8eb) that the trace calls old, nor the repaired one; the four traced pairs do not cover the Lambda as it is pinned today.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json lines 4542-4564 (irpt-ycharts-generate entry at line 3988): uploads.py pin f09b802cdc, template_reader.py pin 3f29017cfc (sha256 76795b75...)",
+      "git show 3f29017cfc:infra/aws/lambda/investor-reporting/intake/template_reader.py | grep -c reader_version: 0; the same blob has no READER_VERSION (0); aaf156e8eb has 2"
+    ]
+  },
+  "spec_asserts": "The cell and the spawn amendment treat the mixed state as a Lambda and a resident running two reader versions (round-16 and repaired), so the trace of those two covers the release question.",
+  "world_is": "The deployed Lambda's pinned reader is a third version, 3f29017cfc, with no version member. Its inputs are not compared on re-open under any running version, and the four pairs do not include it. The release pair's precondition must name the pin the Lambda moves from.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S29 -- a two-account sheet stored by the round-16 door reads NORMALIZED on a same-token re-POST under the repaired reader, while a fresh token is turned back
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S29",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-12T23:07:22Z",
+  "one_line": "Under the repaired reader, a two-account Account-Number sheet that the round-16 door stored answers NORMALIZED on a same-token re-POST, while a fresh-token POST of the same bytes is turned back with ACCOUNT_COLUMN_SEVERAL_VALUES. A stored normalization row is answered without judging the file again.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MIXED_VERSION_TRACE.json case old/new repair_header_two_values: writer door NORMALIZED; repost under the repaired reader NORMALIZED; re-open ACCEPTED with no comparison",
+      "MIXED_VERSION_TRACE.json case new/new repair_header_two_values: writer door NEEDS_CORRECTION ACCOUNT_COLUMN_SEVERAL_VALUES",
+      "intake/uploads.py:397-399 (prior_normalization answered by _answer) and :493-499 (_answer returns the stored NORMALIZED row before any read), at HEAD ccbed3339b"
+    ]
+  },
+  "spec_asserts": "The round-16 and round-17 account rule: the account-column finding turns a two-account file back at the door (one account per file), so a two-account file does not reach a portfolio.",
+  "world_is": "A two-account file stored by the round-16 door stays NORMALIZED for its token and opens under the repaired reader, because the stored row is answered and the re-open does not compare (C-STOREDINPUT). The repaired rule refuses new POSTs; it does not reach rows already stored. ARMED at the release pair: the stored row stays usable after the release unless the pair counts and disposes of it.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. Arms at the release pair, which the issuer cuts; the disarm owner is named so the pair's counting step can carry it."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S30 -- the round-14 census's refusal on re-open was measured before the stored-input contract; in mixed-version re-opens under the contract nothing is refused
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S30",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-12T23:07:22Z",
+  "one_line": "The round-14 census says every accepted multi-sheet, two-account and total-row input is refused on re-open after the release (TEMPLATE_ORIGINAL_BINDING). That was measured at HEAD f166732b43, before the stored-input contract. Under the contract the in-process mixed re-opens accept 8 of 8 with no comparison, and the same-version re-opens accept 8 of 8 with the comparison passing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~53/r14/UPLOAD_DOOR_RELEASE_CENSUS.json (accepted_yesterday_turned_back_today; measured_matrix_in_process) at dec1c4624b, tree_head_at_read f166732b43",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py:638-641 at ccbed3339b: the full re-read is compared only when stored_version == READER_VERSION",
+      "r17/MIXED_VERSION_TRACE.json (in-process, 28 cases): 16 of 16 stored templates re-opened ACCEPTED; compare_runs_on_reopen false in all 8 mixed cases"
+    ]
+  },
+  "spec_asserts": "The census's claim that after the release every stored input whose re-read differs is refused on each re-open (its FATAL finding for the release pair).",
+  "world_is": "At HEAD with the contract, the refusal needs the stored version to equal the running one and the re-read to differ. Mixed-version re-opens are not compared, so the census's refusal is a pre-contract result. The census is not marked superseded, so the CTO's analysis should read it with this row beside it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
 ## IRPT_ANLREQ-D2-W54-S7 -- the actor and renderer arms of test_final_release_refuses_changed_actor_owner_or_service_identity bite on a second identity comparison, not on the named principal comparison
 
 ```json
@@ -4725,333 +4514,7 @@
 }
 ```
 
-## IRPT_ANLREQ-D2-W52-S33 -- the Lambda's pinned reader (3f29017cfc) has no account check and no total-row check: two-account and total-row sheets return no finding
 
-```json
-[
-{
-  "id": "IRPT_ANLREQ-D2-W52-S33",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
-  "surfaced_at": "2026-10-13T00:17:35Z",
-  "one_line": "The Lambda's pinned reader (template_reader.py at 3f29017cfc) has no account check and no total-row check. Reader-level, in process: it returns no finding on the two-account sheets or on the total-row sheet, so the file's rows are held with the account column ignored, and the total row is held as a holding named TOTAL.",
-  "class": "OBSERVATION",
-  "hazard_standing": "ARMED",
-  "disarm_owner": "2.0.0_SA_COO~Y2",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "infra/aws/lambda/investor-reporting/intake/template_reader.py@3f29017cfc (read_template emits no ACCOUNT_COLUMN_SEVERAL_VALUES, TOTAL_ROW_PRESENT or HEADER_ROW_REPEATED and the file has no account word; read through git show, sha256 76795b75)",
-      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r18/MIXED_VERSION_TRACE_THIRD_READER.json@872d2363ed (lambda_pinned reader-level codes empty for two_value_account_sheet, repair_header_two_values, brokerage_two_account and total_row_sheet; reader_symbols AAA, BBB and TOTAL)"
-    ]
-  },
-  "spec_asserts": "CTO round-18 ruling on S24, org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_ANLREQ_Y_ROUND_18_20261012.md section 1: a multi-account file read as one account puts wrong holdings into a client's report. AR-y-186 step 2 names the Lambda's reader as one of the readers the trace runs.",
-  "world_is": "The reader the Lambda carries (map pin 3f29017cfc, with uploads at f09b802cdc) accepts the four multi-account and total-row sheets with no finding. The Lambda's own door answer for them was not run; it is INFERRED from the empty finding list. The in-world run cannot run this reader (HEAD's uploads.py raises ImportError on READER_VERSION), so the measurement is reader-level.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-]
-```
-
-## IRPT_ANLREQ-D2-W52-S34 -- a single-file move of the release pair fails in a measured way (uploads-only raises ImportError; reader-only refuses the pinned-stored templates)
-
-```json
-[
-{
-  "id": "IRPT_ANLREQ-D2-W52-S34",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
-  "surfaced_at": "2026-10-13T00:17:35Z",
-  "one_line": "HEAD's uploads.py imports READER_VERSION, so with the pinned reader every template answer raises ImportError (24 of 24 cases in the world). The pinned uploads read_input compares every member with no version gate, so with r18.1 it refuses all 8 templates stored by the pinned reader (computed in process).",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "infra/aws/lambda/investor-reporting/intake/uploads.py@3b7f901bb2 (line 633 imports READER_VERSION inside the read_input template branch; line 639 compares under it)",
-      "infra/aws/lambda/investor-reporting/intake/uploads.py@f09b802cdc has no READER_VERSION and its read_input (lines 533-541) compares the full re-read with the stored template; read through git show",
-      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r18/MIXED_VERSION_TRACE_THIRD_READER.json@872d2363ed (in-world ImportError in 24 of 24 pinned-involved cases; computed pinned-uploads REFUSED for 8 of 8 lambda_pinned-stored templates under new)"
-    ]
-  },
-  "spec_asserts": "AR-y-186 step 3 asks what a person sees when the Lambda is on its third reader and the resident on the new one. CTO round-18 ruling item 5 says the reader's release pair moves as one pair, with S28's third reader included.",
-  "world_is": "The release pair's start state is uploads f09b802cdc with reader 3f29017cfc, and both files must move in one deploy. Neither single-file move is safe as measured. Not run: the Lambda's own door, and the resident's installed pin, which the trace did not read.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-]
-```
-
-## IRPT_ANLREQ-D2-W52-S35 -- a template stored by the pinned reader is accepted unchanged under r18.1 (no version member, no re-read), so the widening does not reach inputs already stored
-
-```json
-[
-{
-  "id": "IRPT_ANLREQ-D2-W52-S35",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
-  "surfaced_at": "2026-10-13T00:17:35Z",
-  "one_line": "Under the r18.1 read_input gate a template stored by the pinned reader is accepted unchanged on re-open, because a template with no reader_version member is not compared. A multi-account file the pinned reader stored as one account's rows therefore stays accepted on re-open after the widening, with no re-read.",
-  "class": "OBSERVATION",
-  "hazard_standing": "ARMED",
-  "disarm_owner": "2.0.0_SA_COO~Y2",
-  "grounding": {
-    "status": "INFERRED",
-    "evidence": [
-      "infra/aws/lambda/investor-reporting/intake/uploads.py@3b7f901bb2 (lines 633-641: stored_version = template.get reader_version, default before-C-STOREDINPUT; the full re-read is compared only when it equals READER_VERSION)",
-      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r18/MIXED_VERSION_TRACE_THIRD_READER.json@872d2363ed (computed headGate ACCEPTED, not compared, for 8 of 8 lambda_pinned-stored templates; the in-world writer door cannot run with the pinned reader)"
-    ]
-  },
-  "spec_asserts": "AR-y-186 step 3: say whether any input accepted under one reader can be refused under the other at re-open. CTO round-18 ruling on S24 names no migration for inputs already stored under the pinned reader.",
-  "world_is": "The gate does not compare a template with no version member, so an input stored by the pinned reader is accepted on re-open under r18.1. The 8 of 8 result is computed on the two reader outputs in process, not run through the world. The stored population of the Lambda and the resident was not read.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-]
-```
-
-## IRPT_ANLREQ-D2-W54-S4 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W54-S4",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
-  "surfaced_at": "2026-10-12T22:42:02Z",
-  "disposition": "UNDER_INVESTIGATION",
-  "class": "BLOCKING",
-  "hazard_standing": "INERT",
-  "one_line": "With the AR-y-172 reader change, five _authz tests outside the order's write grant now fail, so the folder is rc=1 and AC2 cannot pass inside <paths>",
-  "spec_asserts": "The order's AC2 (y172-keep) requires the whole _authz folder to pass with at least 320. Its <paths> grants served.py, test_allowed_firm_ids.py, the new test file and this channel only. The cell says a test that ASSUMED a no-row caller is admitted changes with its reason, inside the grant.",
-  "world_is": "Measured at the worktree working tree over base 43e1e85895: python -m pytest _authz/tests gives 332 passed, 5 failed, 337 collected (320 base + 17 new), rc=1. The five, all outside <paths> and not edited here: test_interactive_entry.py::test_other_creator_record_reaches_compute_with_real_viewer[prospect-owner-v1], [custody-owner-v1]; test_interactive_entry.py::test_opal_prospect_create_is_prospect_not_custody_or_partner; test_interactive_entry.py::test_foreign_creator_input_keeps_both_identities_for_submitter_contract (their Entry is built with no load_service_profile, so the default profile read decides; an internal caller selecting 49financial gets FIRM_BINDING where the test asserts admission); test_svc_custody_statement.py::test_svc_custody_statement_does_not_change_opal_or_dev_admission (fixture _ALL_ROW = {'allowedFirmIds': 'ALL'} carries no status, so an internal caller selecting inflection is refused). The status rule refuses both shapes by design; whether the fixtures or the grant change is the issuer's decision.",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "infra/aws/lambda/investor-reporting/_authz/served.py:1157-1162 (working tree over 43e1e85895)",
-      "infra/aws/lambda/investor-reporting/_authz/tests/test_interactive_entry.py:25-37 @43e1e85895 (failing arms; no load_service_profile injected)",
-      "infra/aws/lambda/investor-reporting/_authz/tests/test_svc_custody_statement.py:53-63 @43e1e85895 (_ALL_ROW fixture and its loader)",
-      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-172.internal-reader-status-active.md (ACCEPTANCE AC2, paths)"
-    ]
-  }
-}
-```
-
-## IRPT_ANLREQ-D2-W54-S5 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W54-S5",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
-  "surfaced_at": "2026-10-12T22:42:02Z",
-  "disposition": "UNDER_INVESTIGATION",
-  "class": "OBSERVATION",
-  "hazard_standing": "ARMED",
-  "disarm_owner": "1.0.0_SA_CTO",
-  "one_line": "The narrative test file reports 13 passed after the reader change, but it runs the PINNED served.py (staged_from pin 361c44fa9d), not the worktree file, so its green run says nothing about AR-y-172 on narrative",
-  "spec_asserts": "The AR-y-163 read (INTERNAL_READER_NO_ROW_READ.json, proposed_cell.what) says narrative needs its own decision after the change: its two call sites catch the raise, so a no-row narrative caller who selects another firm would be REFUSED where it is held to its own firm today. A green narrative run is not evidence of narrative unchanged.",
-  "world_is": "narrative/tests/test_served_error_path.py _stage() takes each bundled member from the git blob at the staged_from pin in infra/aws/lambda/ci/lambda-source-map.json (functions.irpt-narrative: served.py at pin 361c44fa9d40992c8cacfd625cc789536f84b920) and reads the worktree file only for members with no staged row. Measured: narrative/tests/test_no_row_unknown.py gives 13 passed, rc 0, at the working tree over 43e1e85895. By code reading only, not run: narrative/entry.py _held_to_verified_firm (:218) now receives a raise from _internal_allowed_firms for a no-row or non-active caller; the except at :221 returns the event to the shared boundary, which refuses FIRM_BINDING; the base dropped the selection and served the caller's own firm, class UNKNOWN. The narrative arm norow_none_selecting_other cannot fail until the pin moves to a commit that carries this served.py. The pin bump and its census are cell AR-y-173, not this order.",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-narrative.staged_from, served.py pin 361c44fa9d40992c8cacfd625cc789536f84b920 @43e1e85895",
-      "infra/aws/lambda/investor-reporting/narrative/tests/test_served_error_path.py:80-97 @43e1e85895 (_stage reads the git blob at the pin)",
-      "infra/aws/lambda/investor-reporting/narrative/entry.py:204-222 @43e1e85895 (_held_to_verified_firm)",
-      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~53/r16/INTERNAL_READER_NO_ROW_READ.json (proposed_cell.what)"
-    ]
-  }
-}
-```
-
-## IRPT_ANLREQ-D2-W54-S6 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W54-S6",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
-  "surfaced_at": "2026-10-12T22:58:56Z",
-  "disposition": "UNDER_INVESTIGATION",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "one_line": "The _authz internal arms built with no load_service_profile read the default profile reader (a DynamoDB query), not an offline fake; the amended four arms now inject one, but the six test_final_release_refuses_changed_actor_owner_or_service_identity arms still take that reader and now pass by refusal at the fence, not by their identity check",
-  "spec_asserts": "The order's preflight and bounds say the _authz tests run offline (no AWS, no network). AMENDMENT 1 says the four test_interactive_entry arms take status active on the row they read; the six test_final_release arms are not in the amendment and were meant to stay without a row.",
-  "world_is": "Read at base a13729590f: canonical_profile_reads.py:70-73 get_user issues self._ddb.query(TableName='opal-users-v2', IndexName='email-index') and served.py:1151-1156 builds boto3.client('dynamodb') when no loader is injected; test_interactive_entry.py and test_final_release arms build Entry without load_service_profile. In this worktree the amended arms now use a monkeypatched get_user (active_internal_row fixture) and make no query. Not measured: whether the baseline run reached AWS (no live call was made by this worker for this row). By code reading only, not run: a test_final_release arm's caller now gets None from the default reader, served.py:1157-1160 raises, the caller's except at served.py:1235-1237 refuses FIRM_BINDING before compute runs, and the test's assertion (ok False and no data) passes on that refusal, not on the changed actor, owner or renderer it names.",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py:70-73 @a13729590f (get_user query)",
-      "infra/aws/lambda/investor-reporting/_authz/served.py:1151-1160 @a13729590f (_internal_allowed_firms default reader and status rule)",
-      "infra/aws/lambda/investor-reporting/_authz/served.py:1233-1237 @a13729590f (internal branch try/except refuse)",
-      "infra/aws/lambda/investor-reporting/_authz/tests/test_interactive_entry.py:24-95 @a13729590f (active_internal_row fixture and the test_final_release arms)"
-    ]
-  }
-}
-```
-
-## IRPT_ANLREQ-D2-W54-S10 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W54-S10",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
-  "surfaced_at": "2026-10-13T01:05:54Z",
-  "disposition": "UNDER_INVESTIGATION",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "one_line": "Row S7 and the AR-y-183 cell place the second refusal of the actor and renderer arms at interactive_access.py:110. Measured with the named check pinned: the actor arms are refused at line 110 (principal != live current()), but the renderer arms are not. On renderer headers the live current() at interactive_access.py:109 raises, and authorize_current returns False at lines 120-121. Both routes are recorded as 'issued record not currently authorized' (owner_reads.py:33) or 'prospect input not currently authorized' (prospect.py:87). The owner arms have no second comparison.",
-  "spec_asserts": "AR-y-183 cell and row IRPT_ANLREQ-D2-W54-S7: each of the six final-release arms is caught by its named identity comparison, and the second comparison that also refuses the actor and renderer arms is interactive_access.py:110 (principal != current).",
-  "world_is": "Measured in _authz/tests/test_final_release_bites.py, step 2a of each actor and renderer test (the named check pinned, the live comparison left in). Read actor: refused at owner_reads.py:33, raised from retained() at owner_reads.py:40, after the live comparison at interactive_access.py:110 returned False. Read renderer: refused at owner_reads.py:33; current() raised at interactive_access.py:109 and was caught at :120-121. Prospect actor and prospect renderer: refused at prospect.py:87. Owner read and owner prospect: the payload escapes once the retained-owner comparison is pinned, so no second comparison exists for them. Not measured: any other arm of the folder.",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py:108-121 @16795233f6 (authorize_current: 109 live current(), 110 principal comparison, 120-121 except returns False)",
-      "infra/aws/lambda/investor-reporting/_scope/owner_reads.py:33-41 @16795233f6 (retained() refusal at 33; post-compute retained() at 40; owner raise at 41)",
-      "infra/aws/lambda/investor-reporting/_scope/prospect.py:87-95 @16795233f6 (authorization refusal at 87; actor comparison 92-93; owner comparison 94-95)",
-      "infra/aws/lambda/investor-reporting/_authz/tests/test_final_release_bites.py @f722a48d92 (step 2a of the actor and renderer tests)"
-    ]
-  }
-}
-```
-
-## IRPT_ANLREQ-D2-W54-S11 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W54-S11",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
-  "surfaced_at": "2026-10-13T01:05:54Z",
-  "disposition": "UNDER_INVESTIGATION",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "one_line": "The read arms of test_final_release_refuses_changed_actor_owner_or_service_identity pass authorize = lambda *a: True to read_entry, which reads as the test deciding the retained-record grant. For an internal caller served replaces that argument with InteractiveAccess.authorize_current, so the injected lambda is never called in those arms; the refusal and the grant both come from authorize_current.",
-  "spec_asserts": "test_interactive_entry.py:87-103 (the read arms): the authorize argument of the read entry is the retained-record grant under test.",
-  "world_is": "served.py:59-62 @16795233f6: authorizer = self.authorize_record_owner, then replaced by InteractiveAccess(...).authorize_current when verified_internal_subject(headers) is not None. For the opal caller the test's lambda is therefore dead in the read arms. Measured by the new file: with the named owner-read check pinned, the read actor arm is refused at owner_reads.py:33 through authorize_current. Not checked: whether other test modules rely on the injected authorizer for an internal caller.",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "infra/aws/lambda/investor-reporting/_authz/served.py:59-62 @16795233f6 (authorizer replaced for an internal subject)",
-      "infra/aws/lambda/investor-reporting/_authz/tests/test_interactive_entry.py:84-104 @16795233f6 (the six arms; lambda *a: True passed as the authorizer in the read mode)"
-    ]
-  }
-}
-```
-
-## IRPT_ANLREQ-D2-W54-S12 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W54-S12",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
-  "surfaced_at": "2026-10-13T01:05:54Z",
-  "disposition": "UNDER_INVESTIGATION",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "one_line": "A mutant run in a scratch copy of infra/aws/lambda/investor-reporting raises IdRefused at _ids/ids.py:136 in every test until IRPT_FIRM_REGISTRY names the worktree's data/firm_registry.json. The order's mutant instruction asks for a scratch copy and does not name the variable.",
-  "spec_asserts": "AR-y-183 cell and preflight: a mutant is run in a scratch copy outside the product tree; no registry requirement is stated.",
-  "world_is": "Measured: the copy with no variable set gives 6 failed, all IdRefused at _ids/ids.py:136 (the walk is bounded upward from _ids and the copy has no data/firm_registry.json above it). With IRPT_FIRM_REGISTRY set to the worktree file: the unmutated copy gives 6 passed; source mutants give 2 failed (owner_reads.py:38 removed), 3 failed (owner_reads.py:40 removed), 2 failed (prospect.py:92 removed), 3 failed (prospect.py:94 removed). Not measured: the rest of the _authz folder under a copy.",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "infra/aws/lambda/investor-reporting/_ids/ids.py:114-139 @16795233f6 (registry resolution: env variable, then bounded walk upward, then beside the module; IdRefused at 136)",
-      "data/firm_registry.json @16795233f6 (the file the walk finds from inside the worktree)"
-    ]
-  }
-}
-```
-
-
-## IRPT_ANLREQ-D2-S65 -- (disarm row; this seat's own, allocated on the main index)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-S65",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "2.0.0_SA_COO~Y2",
-  "surfaced_at": "2026-10-13T01:12:44Z",
-  "one_line": "DISARMS row IRPT_ANLREQ-D2-W52-S24: the account-header rule now matches Brokerage Account, IRA Account, Joint Account, Subaccount, Account Seq and Account Sequence, so a multi-account file under any of them is turned back; the residual spellings outside the ruled vocabulary are carried by row IRPT_ANLREQ-D2-W52-S31.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "spec_asserts": "CTO round-18 ruling (CTO_ROUND_ANALYSIS_IRPT_ANLREQ_Y_ROUND_18_20261012.md section 1 row D2-W52-S24): WIDEN before the release pair, not a stated limit. The owner of the ARMED row (this seat) disarms it when the widening is on the trunk.",
-  "world_is": "MEASURED by this seat 2026-10-13 on the shared tree after the drain a665d34dd3: ar18_checks y181-rule prints Y181-RULE-OK over 28 identifier forms (the six named in S24 among them), 2 count forms, 10 attribute forms, 7 non-account forms and 6 negative controls committed before the rule (015af53b8f, rule da7b3b10bc); y181-keep prints Y181-KEEP-OK (331 intake tests pass, READER_VERSION irpt-template-reader.r18.1). The reader is unreleased, so the hazard was never live; it is disarmed where it was armed. NOT covered: identifier spellings outside the ruled vocabulary (Account Numbers, Subaccounts, Accnt, Account Nos, Seqno, Serial), carried by row W52-S31 (ARMED, this seat), and a real identifier column headed No. of Accounts, carried by row W52-S32 (ARMED, the CTO).",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "a665d34dd3 (the drain of TO-AR-y-181)",
-      "ar18_checks.py y181-rule and y181-keep run by this seat on the shared tree",
-      "CTO round-18 analysis section 1"
-    ]
-  },
-  "disposition": "UNDER_INVESTIGATION"
-}
-```
-
-## IRPT_ANLREQ-D2-W52-S36 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-[
-{
-  "id": "IRPT_ANLREQ-D2-W52-S36",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
-  "surfaced_at": "2026-10-13T02:00:34Z",
-  "one_line": "Run in a scratch tree on the Lambda's pinned pair (uploads f09b802cdc, reader 3f29017cfc), the door answers NORMALIZED with no finding and total_dollars 600 on total_row_sheet: the file's TOTAL row is held as a holding and counted into the total (AAA 100, BBB 200, TOTAL 300).",
-  "class": "OBSERVATION",
-  "hazard_standing": "ARMED",
-  "disarm_owner": "2.0.0_SA_COO~Y2",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "infra/aws/lambda/investor-reporting/intake/uploads.py@f09b802cdc (create answers NORMALIZED from the reader rows with no total-row check)",
-      "infra/aws/lambda/investor-reporting/intake/template_reader.py@3f29017cfc (emits no TOTAL_ROW_PRESENT on the pinned reader; the TOTAL line is returned as a row)",
-      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r19/START_STATE_SCRATCH_RUN.json (door_cases: total_row_sheet, pinned pair: NORMALIZED, total_dollars 600, row_count 3, symbols AAA BBB TOTAL)"
-    ]
-  },
-  "spec_asserts": "AR-y-191 step 2: run the door on the four sheets and record each answer with its evidence. Round-18 row S33 asserts that the pinned reader holds the total row as a holding named TOTAL; it did not record the total the door reports for that file.",
-  "world_is": "RUN in process on the pinned pair: NORMALIZED, no finding, total 600 for a file whose own total row reads 300, so the door's total includes the total row. The same run holds the two-account sheets as NORMALIZED with total 300 and no account on any row (S33, now RUN). The measured figures are the scratch run's; the deployed Lambda's bytes were not read.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-]
-```
-
-## IRPT_ANLREQ-D2-W52-S37 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-[
-{
-  "id": "IRPT_ANLREQ-D2-W52-S37",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
-  "surfaced_at": "2026-10-13T02:00:34Z",
-  "one_line": "The planned release move names uploads.py and template_reader.py as the two files that go to HEAD and r18.1. Of the upload door's 27-member import closure, six members differ between their map pins and HEAD: uploads.py and template_reader.py, and also ids.py, loaders.py, repository.py and served.py.",
-  "class": "OBSERVATION",
-  "hazard_standing": "ARMED",
-  "disarm_owner": "2.0.0_SA_COO~Y2",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "infra/aws/lambda/ci/lambda-source-map.json@2da5c7b2c2 (irpt-ycharts-generate staged_from pins: ids.py 3f29017cfc, loaders.py 0642c9d004, repository.py 605c4cd4ac, served.py 74a62fb46c)",
-      "infra/aws/lambda/investor-reporting/_ids/ids.py@2da5c7b2c2 and infra/aws/lambda/investor-reporting/_authz/loaders.py@2da5c7b2c2 and infra/aws/lambda/investor-reporting/reports/repository.py@2da5c7b2c2 and infra/aws/lambda/investor-reporting/_authz/served.py@2da5c7b2c2 (each differs from its pin; sha256 per member in r19/START_STATE_SCRATCH_RUN.json door_closure_members_differing_from_head)",
-      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r19/START_STATE_SCRATCH_RUN.json (door_closure_members_differing_from_head)"
-    ]
-  },
-  "spec_asserts": "AR-y-191 step 3: the re-open runs use the pinned pair and the pair after the planned move (uploads.py and template_reader.py at the head, r18.1). CTO round-18 ruling item 5, as recorded in S34: the release pair moves as one pair.",
-  "world_is": "The two-file move is the pair the cell names. The door's closure at HEAD differs from its pins in six members, not two. The moved-pair run in the scratch tree keeps the other four at their pins, so it is not the HEAD-complete world; the HEAD-complete world was not run. Whether the four move with the pair is for the release census (AR-y-192) and the CTO, not decided here.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-]
-```
 
 ## IRPT_ANLREQ-D2-W55-S4 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
 
@@ -5468,160 +4931,6 @@
 }
 ```
 
-## IRPT_ANLREQ-D2-W54-S13 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W54-S13",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
-  "surfaced_at": "2026-10-13T03:03:21Z",
-  "disposition": "UNDER_INVESTIGATION",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "one_line": "TO-AR-y-197 reads each member with git show <pin>:infra/aws/lambda/investor-reporting/<member>; for infra/logic/registry/name_rulings.json that path does not exist at either pin, so the member was read at infra/logic/registry/name_rulings.json instead (the path the delta's source field names).",
-  "spec_asserts": "TO-AR-y-197 READ FIRST: for each member, git show <pin>:infra/aws/lambda/investor-reporting/<member>, with the four members named as _authz/served.py, infra/logic/registry/name_rulings.json, ops/status.py and ycharts/generate/resident_worker.py.",
-  "world_is": "Control: git ls-tree 069b8f797e -- infra/logic/registry/name_rulings.json returns blob d0752edf6e; git ls-tree 069b8f797e -- infra/aws/lambda/investor-reporting/infra/logic/registry/name_rulings.json returns nothing; the same negative control at 0485393f3a returns nothing. The delta's own source field for this member is infra/logic/registry/name_rulings.json. The other three members are under the investor-reporting prefix as the cell says.",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "infra/logic/registry/name_rulings.json @069b8f797e (blob d0752edf6ee15355a1c782675f800bd00b667a04) and @0485393f3a (blob 4cef897c32a243034a0359a9d9b35d40f691dfca)",
-      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/r19/RESIDENT_PACKAGE_DELTA.json (differing, source field for infra/logic/registry/name_rulings.json)"
-    ]
-  }
-}
-```
-
-## IRPT_ANLREQ-D2-W54-S14 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W54-S14",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
-  "surfaced_at": "2026-10-13T03:03:21Z",
-  "disposition": "UNDER_INVESTIGATION",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "one_line": "The cell lists resident_installed.py among the resident's entry points beside resident_main.py and resident_worker.py; the file is at infra/aws/lambda/investor-reporting/reports/resident_installed.py and ycharts/generate/ holds no resident_installed.py. The trace followed the factory from its real location (resident_main.py:46 imports it by module name).",
-  "spec_asserts": "TO-AR-y-197 cell: the resident's entry point is ycharts/generate/resident_main.py, resident_installed.py or resident_worker.py, traced from there.",
-  "world_is": "At 069b8f797e: ycharts/generate/ contains resident_main.py and resident_worker.py; reports/resident_installed.py defines build_resident_runtime at line 344 and sets its sys.path at lines 4-8 (_scope, _ids, _keys, _authz, _contracts, intake, ops, reports, ycharts/generate, ycharts/session, lib). The installer (install-resident.sh) names the factory by module:function, so the module location is set by sys.path, not by the entry directory.",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "infra/aws/lambda/investor-reporting/reports/resident_installed.py @069b8f797e (line 344 def build_resident_runtime; lines 4-8 sys.path)",
-      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py @069b8f797e (line 46 importlib.import_module of the factory module)"
-    ]
-  }
-}
-```
-
-## IRPT_ANLREQ-D2-W54-S15 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W54-S15",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
-  "surfaced_at": "2026-10-13T03:03:21Z",
-  "disposition": "UNDER_INVESTIGATION",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "one_line": "The resident's static import closure reaches _authz/served.py only through a function-level chain that no resident path calls; if a caller of resolve_custody_profile_fields were added on the resident, served.py would load (running its import-time _earn_the_mark) and Entry.handle's status rule and log line would be in the resident's reach. No gate or cell names this edge.",
-  "spec_asserts": "TO-AR-y-197 AC2J (judgment): a member the resident does not reach is shown not reached rather than assumed; the pair's reading of served.py rests on the static trace.",
-  "world_is": "Chain at 069b8f797e: reports/resident_installed.py:376 (lazy) -> _scope/canonical_profile_reads.py:15 (module level) -> _scope/maintained_sources.py:332 (lazy, in snapshot_custody_profile_sources, def 313) -> _scope/custody.py:25 (lazy, in current_custody_principal, def 24) -> _authz/served.py:323. snapshot_custody_profile_sources has one caller, resolve_custody_profile_fields (maintained_sources.py:380-386), which has no caller in the closure; CustodyAccess (custody.py:45) is never instantiated in the closure. served.py:1384 runs _earn_the_mark() at import.",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "infra/aws/lambda/investor-reporting/_scope/maintained_sources.py @069b8f797e (lines 313, 332, 380, 386)",
-      "infra/aws/lambda/investor-reporting/_scope/custody.py @069b8f797e (lines 24-25, 45, 61, 64)",
-      "infra/aws/lambda/investor-reporting/_authz/served.py @069b8f797e (line 1384 GUARD_WIRING_PROVEN = _earn_the_mark())"
-    ]
-  }
-}
-```
-
-## IRPT_ANLREQ-D2-W51-S21 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W51-S21",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
-  "surfaced_at": "2026-10-13T03:02:16Z",
-  "one_line": "The source-map row direction the AR-y-198 cell names is reversed at the shared head read now: the head map pins _authz/loaders.py for irpt-ycharts-generate at 69679b90e3 again (sha256 a2283dc8), not 0642c9d004.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "git show 95406de7f3:infra/aws/lambda/ci/lambda-source-map.json, functions.irpt-ycharts-generate.staged_from loaders.py row: pin 69679b90e3dc52b670d33fddd96d06be1deaac90, sha256 a2283dc8436dc048343bb105b07cd56e93aa0fe038f90457d1b57a882eb887fa",
-      "the worktree copy at 2107dfe618 (infra/aws/lambda/ci/lambda-source-map.json) carries pin 0642c9d00454 and sha256 93f2f02a1bd40d01 for the same row",
-      "git rev-parse 069b8f797e:infra/aws/lambda/investor-reporting/_authz/loaders.py = a89958a0e7215de27837eacf709bc759accfc4c8, the blob of 69679b90e3; the blob of 0642c9d004 is b39e8809b39fabbfd71ebc8f808ea7d56aa572b2"
-    ]
-  },
-  "spec_asserts": "AR-y-198 cell: the source-map row for irpt-ycharts-generate _authz/loaders.py moved from 69679b90e3 to 0642c9d004 between the round-19 base and the head (row W51-S20 names head 731a72ecb2).",
-  "world_is": "At the shared head 95406de7f3 the row carries pin 69679b90e3 and sha256 a2283dc8, equal to the base 5d8b0390ed. The release pin 069b8f797e carries the 69679b90e3 blob. The head row has moved more than once; the AR-y-198 verdict is read from the blobs and the owner's commit, not from the row.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-```
-
-## IRPT_ANLREQ-D2-W51-S22 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W51-S22",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
-  "surfaced_at": "2026-10-13T03:02:16Z",
-  "one_line": "No NFRA_CTLPLN release record ships the bytes the AR-y-198 cell calls the CTLPLN release: every CTLPLN artifact row for lib/opal_naming.py and infra/logic/registry/firm_pages.json reads COMMITTED-NOT-DEPLOY-SCOPE.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~70/NFRA_CTLPLN.TO-CT-w-8.firm-pages-note-field-and-comments.proof_of_spec.json (artifacts_produced: lib/opal_naming.py 6ae365f583 and firm_pages.json e76206bdcb, deployed_state COMMITTED-NOT-DEPLOY-SCOPE, 'No deploy, no AWS call.')",
-      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~65/ proofs of CT-w-1 (firm_pages.json 9efa1021ce; lib/opal_naming.py a99d7e584c and 22169e24fb) and CT-w-4 (lib/opal_naming.py c5d1415676): each COMMITTED-NOT-DEPLOY-SCOPE",
-      "RESIDENT_PACKAGE_DELTA.json only_in_new: infra/logic/registry/firm_pages.json (NFRA_CTLPLN, last_commit_in_range e76206bdcb)"
-    ]
-  },
-  "spec_asserts": "AR-y-198 cell and CTO round-19 section 4 point 2: NFRA_CTLPLN's lib/opal_naming.py and firm_pages.json are compared to a version the owner already released (the CTLPLN release, a Lambda artifact its pair shipped).",
-  "world_is": "No CTLPLN record ships these bytes; the owner's proofs say never deployed. firm_pages.json is new in the release build. Both members read NOT_EQUAL to any owner-released version in the AR-y-198 record, and go to NFRA_CTLPLN through 0.0.0_AB_MSTR~DELL2 before the pair is signed.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-```
-
-## IRPT_ANLREQ-D2-W51-S23 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W51-S23",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
-  "surfaced_at": "2026-10-13T03:02:16Z",
-  "one_line": "The bytes the eight act-4 artifacts carry for ADVI_FIRMBKTS scopes.json and exemptions.json are not recorded: act 4 checked loaders.py only, and the source-map rows for those two members still carry pre-act pins and values.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act4_irpt/member.out: the member check covers loaders.py only (8 of 8 equal to the flip blob)",
-      "shared head source map: scopes.json staged_from rows of irpt-status (pin 80a79a746284) and irpt-ycharts-generate (pin 3f29017cfcd2) carry sha256 8fcd28d3 (8 rows in total); exemptions.json rows carry sha256 56c38d7e (9 rows in total); commit e274a0e60c touched only the loaders.py rows (16 insertions, 16 deletions)",
-      "git log 0485393f3a..069b8f797e: scopes.json changed only at 69679b90e3; exemptions.json changed at 3a6d8aa89d and 61cc536c29"
-    ]
-  },
-  "spec_asserts": "AR-y-198 cell: the owner's released versions of the ADVI_FIRMBKTS members are read from the Lambda artifacts their own pairs shipped (act 4's eight).",
-  "world_is": "The act-4 record attests loaders.py only. The stale source-map values for scopes.json (8fcd28d3) and exemptions.json (56c38d7e) match neither the release pin (6ce64167, 5241338b) nor the live pin (3a5f96e4, 9ea684d5). Whether the eight shipped artifacts carry the flip's scopes.json and the trunk exemptions.json is not recorded, and the AR-y-198 verdicts for those two members are CANNOT_TELL until it is.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-```
-
 ## IRPT_ANLREQ-D2-W55-S15 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
 
 ```json
@@ -5813,3 +5122,857 @@
 }
 ```
 
+## IRPT_ANLREQ-D2-W51-S10 -- (heading added by the issuer at the drain of TO-AR-y-185, which lost this row in its first merge; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S10",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T00:08:53Z",
+  "one_line": "AR-y-185: the worktree is behind the shared head. Its lambda-source-map.json (blob 78e79160) and _authz/served.py (blob 1d55a27a) are older than the read ref 9f43f29de8 (map a5cc836a, served.py d1bf60c9). The eight served.py pins agree in both; the record reads the ref.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse 9f43f29de8:infra/aws/lambda/ci/lambda-source-map.json = a5cc836ae7c4a27ee2bd2c8e37ac3cc6405fb913; worktree (HEAD c0e2b493d4) = 78e79160bdbd44db0f1cff2dfb39c348c7caa825",
+      "git rev-parse 9f43f29de8:infra/aws/lambda/investor-reporting/_authz/served.py = d1bf60c9f907e5bbbbda6c4de5f22f4ad224ee64 (last changed at 564e604838, AR-y-184); worktree = 1d55a27aaefccdb2051c9e5973febdb08d253797",
+      "At the ref, 17 map entries differ from the worktree copy, all eight packagers among them, in loaders.py pins and artifact_sha256 only; the eight served.py pins (361c44fa9d, 74a62fb46c) are identical in both",
+      "read_at block and not_read of org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~51/r18/SERVED_PY_PACKAGERS.json"
+    ]
+  },
+  "spec_asserts": "Read first (the order): the map and the status rule are in the worktree; a file absent from the worktree, or stale against the current head, may be read at the shared tree head.",
+  "world_is": "The worktree and the shared head hold different bytes for the map and for _authz/served.py, and the head moves during a seat's reads. The census read one ref, 9f43f29de8, and cites it; the worktree copies were read and not used.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S11 -- (heading added by the issuer at the drain of TO-AR-y-185, which lost this row in its first merge; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S11",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T00:08:53Z",
+  "one_line": "AR-y-185: the Y185-READ check proves that each named function has a non-empty pin field. It does not prove that the pin is a commit or that the pinned bytes equal the map's sha256, so a PASS of AR185-y-AC1 verifies no pin.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r18/ar18_checks.py at worktree commit c0e2b493d4, y185-read branch of main(): it tests `not funcs[name].get(\"pin\")` and the presence of the three top-level members",
+      "this seat's run: y185-read printed Y185-READ-OK over 8 of 8 names; the same seat verified each of the eight pins by git show plus sha256 against the map (all eight match), outside the checker"
+    ]
+  },
+  "spec_asserts": "AR185-y-AC1 (checker y185-read): the record names each of the eight functions with its pin and how it packages served.py, and states the map denominator, the claim and what was not read.",
+  "world_is": "The checker tests the presence of a non-empty pin and of a non-empty how_it_packages_served_py per name. A record that names a wrong or non-existent commit as a pin would print Y185-READ-OK.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S12 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S12",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T01:59:58Z",
+  "one_line": "AR-y-192 'Read first' names row IRPT_ANLREQ-D2-W52-S28 in INVESTIGATION_v1.md. The worktree copy (branch wk-IRPT_ANLREQ-51 at a204eefd51) has no such row; the shared-tree head 537391d103 has it at line 4085.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "grep -n W52-S28 on the worktree copy of org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md: no hit (the file ends at IRPT_ANLREQ-D2-W51-S11, 3798 lines)",
+      "git -C C:/dev/ajb_workspace show 537391d103:org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md carries the row at line 4085 (id IRPT_ANLREQ-D2-W52-S28, surfaced_by 0.9.0_WK_IRPT_ANLREQ~52, 2026-10-12T23:07:22Z)"
+    ]
+  },
+  "spec_asserts": "AR-y-192 WORKER FACE, 'Read first': row IRPT_ANLREQ-D2-W52-S28 in org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md, read in this worktree.",
+  "world_is": "The row exists at the shared-tree head, not in the worktree branch, which was cut before the rows minted after a204eefd51. The row was read at the shared-tree head at 537391d103 and nothing was copied into the worktree for it. The worktree copy of the file is the one this worker appends to, per the append-only rule.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S13 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S13",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T01:59:58Z",
+  "one_line": "AR-y-192 premise: the reader pair's release pins are the r14 census pins (uploads.py 4215d98f26, template_reader.py d95cf11106). Both are off the trunk: 114c77fb01 reverted them and e93258c650 and da7b3b10bc re-landed and widened the pair. A release cut from the r14 pins would ship the reverted reader.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "UPLOAD_DOOR_RELEASE_CENSUS.json (0.9.0_WK_IRPT_ANLREQ~53/r14, read at f166732b43) functions_that_package_the_reader[0].repin_the_release_needs names 4215d98f26319f25df1678783fe1b3d6a9006a2c and d95cf11106206babd2dda9c502ec60aa5c15c84f",
+      "git -C C:/dev/ajb_workspace show --stat 114c77fb01: revert, 7 files, 24 insertions and 509 deletions; e93258c650 (AR-y-162, 8 files) and da7b3b10bc (AR-y-181, 2 files) re-land and widen the pair after it",
+      "at REF 537391d103: intake/uploads.py blob 35df2aa46146 (sha256 176682cb1545435eec084376b3c37a578ca70d05f9ad5a376c0f2275f62b05ea, = e93258c650); intake/template_reader.py blob fbc6c33af050 (sha256 83ab9b45d59065f53c640803df9fd07a0ddfcc97d89c13540c20622a6bf7bd58, = da7b3b10bc)"
+    ]
+  },
+  "spec_asserts": "AR-y-192 items 1, 2 and 4 and the r14 census repin_the_release_needs: the reader pair the release moves is uploads.py at 4215d98f26 and template_reader.py at d95cf11106; the CTO ruling 20261013 section 1 says the pinned pair runs in a scratch tree before it is cut (AR-y-191 record not yet landed).",
+  "world_is": "Those pins are no longer on the trunk. The planned moves in the AR-y-192 census name the trunk pair at 537391d103 (uploads.py e93258c650, template_reader.py da7b3b10bc), each checked by name against its pinned neighbours. Which pair the round cuts, and whether the scratch run ran that pair, is the issuer's call; no r19 scratch record exists at 537391d103 to confirm it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S14 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S14",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T01:59:58Z",
+  "one_line": "The native member acceptance.py moved at HEAD after the r14 census read: 06557b6618 (IB-pr-478, 16 lines added) is its head, so a rebuild from HEAD ships a blob the census never built (census built abbdab4935, head sha256 0c4acec625).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log f166732b43..537391d103 -- infra/aws/lambda/investor-reporting/ycharts/generate: one commit, 06557b6618, touching acceptance.py (16 insertions)",
+      "census changed_members_detail acceptance.py built_sha256 abbdab4935097ea5d595c0e4abcde9cea977b12b15440b0ee70caa9eeb22895d equals the blob at 74bbdbb322; the blob at 06557b6618 hashes to 0c4acec625b7 (git show, sha256)",
+      "the other three natives (submission.py, submission_service.py, durable_job.py) have the same head blob as the census built, at 74bbdbb322, 2f7cc7be42 and 3acafb3f45"
+    ]
+  },
+  "spec_asserts": "The r14 census (changed_members_detail) and the W53-S9 row describe the four native members at the census head f166732b43: acceptance.py built from 74bbdbb322.",
+  "world_is": "At the shared head 537391d103 acceptance.py is at 06557b6618. The planned pin for acceptance.py (1eed34a8c0, the live blob) holds 06557b6618 and 74bbdbb322 and 2f7cc7be42 back from this release, which is an issuer decision the census states and does not make.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S15 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S15",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T01:59:58Z",
+  "one_line": "The resident builder's DIRS list at HEAD has twelve folders, ycharts/research among them; the r14 census quoted the list at :37-38 without it, so the r14 description of what a resident rebuild packages is stale.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 537391d103:infra/aws/lambda/investor-reporting/reports/build_resident_package.py line 37: DIRS = [_scope, _ids, _keys, _authz, _contracts, intake, ops, reports, ycharts/generate, ycharts/session, ycharts/extract, ycharts/research]",
+      "UPLOAD_DOOR_RELEASE_CENSUS.json resident_runtime.how_built (r14): DIRS at :37-38 listed as eleven folders without ycharts/research"
+    ]
+  },
+  "spec_asserts": "The r14 census resident_runtime.how_built: a resident tarball is built from one backend pin over the eleven listed folders.",
+  "world_is": "The builder at 537391d103 packages twelve folders; ycharts/research is in the resident package the census did not describe. The resident release record must name the current DIRS list, not the r14 one.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W52-S31 -- identifier spellings outside the ruled vocabulary are still unmatched after the widening: Account Numbers, Subaccounts, Accnt, Account Nos, Account Seqno, Account Serial
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S31",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-13T00:00:19Z",
+  "one_line": "After the AR-y-181 widening, the rule still does not match identifier-like headers whose spelling sits outside the ruled vocabulary: Account Numbers (plural tail), Subaccounts (plural account word), Accnt, Account Nos, Account Seqno and Account Serial. A multi-account file under one of them passes as one account, the same costly direction as S24.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py@da7b3b10bc (ACCOUNT_WORDS, ACCOUNT_TAIL_WORDS, _is_account_header)",
+      "scratch run .scratch/subtract_r18.py (uncommitted) over a declared grid of 2200 headers against template_reader.py@da7b3b10bc: 'account numbers' False, 'subaccounts' False, 'accnt' False, 'account nos' False, 'account seqno' False, 'account serial' False; 1542 unmatched of 2200"
+    ]
+  },
+  "spec_asserts": "Point 2 of IRPT_ANLREQ.TO-AR-y-181 and the CTO ruling on S24: widen the named modifiers, account word and tail words only, each with its census line; subaccounts only if justified. The rule must not miss an account-identifier header (the costly direction).",
+  "world_is": "The ruled vocabulary does not cover the plural tail numbers, the plural account word subaccounts, the spelling accnt, or the tails nos, seqno and serial. Subaccounts was not added (no census form carries it, so it is not justified from the census). Measured by subtraction, not fixed: a further widening is a ruling for the issuer or the CTO, not a worker choice.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S32 -- the COUNT exclusion keys on the header words alone: a real account column headed No. of Accounts would pass as one account
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S32",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-13T00:00:19Z",
+  "one_line": "The whole-cell exclusion for No. of Accounts (plural) reads only the header words, not the values. A file whose column is headed No. of Accounts but holds account identifiers, not one count, is not turned back, so a multi-account file under that header passes as one account.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py@da7b3b10bc (COUNT_PLURAL_WORDS and the no. of branch of _is_account_header)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r18/ACCOUNT_HEADER_POPULATION.json (count_forms: No. of Accounts, No. of accts)"
+    ]
+  },
+  "spec_asserts": "AR-y-181 criterion AR181-y-AC3J (judgment, L9): the COUNT exclusion cannot hide a real account column; and the CTO ruling on S24: No. of Accounts is a COUNT, a whole-cell exclusion when the account word after no. of is plural.",
+  "world_is": "The exclusion is decided by the header text alone, because a count column and an account-identifier column can carry the same header. The worker cannot decide from the code whether a real file uses that header for account identifiers. Measured, not decided: the exclusion as ruled stands; whether it hides a real account column is for the L9 judgment.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S33 -- the Lambda's pinned reader (3f29017cfc) has no account check and no total-row check: two-account and total-row sheets return no finding
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S33",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-13T00:17:35Z",
+  "one_line": "The Lambda's pinned reader (template_reader.py at 3f29017cfc) has no account check and no total-row check. Reader-level, in process: it returns no finding on the two-account sheets or on the total-row sheet, so the file's rows are held with the account column ignored, and the total row is held as a holding named TOTAL.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py@3f29017cfc (read_template emits no ACCOUNT_COLUMN_SEVERAL_VALUES, TOTAL_ROW_PRESENT or HEADER_ROW_REPEATED and the file has no account word; read through git show, sha256 76795b75)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r18/MIXED_VERSION_TRACE_THIRD_READER.json@872d2363ed (lambda_pinned reader-level codes empty for two_value_account_sheet, repair_header_two_values, brokerage_two_account and total_row_sheet; reader_symbols AAA, BBB and TOTAL)"
+    ]
+  },
+  "spec_asserts": "CTO round-18 ruling on S24, org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_ANLREQ_Y_ROUND_18_20261012.md section 1: a multi-account file read as one account puts wrong holdings into a client's report. AR-y-186 step 2 names the Lambda's reader as one of the readers the trace runs.",
+  "world_is": "The reader the Lambda carries (map pin 3f29017cfc, with uploads at f09b802cdc) accepts the four multi-account and total-row sheets with no finding. The Lambda's own door answer for them was not run; it is INFERRED from the empty finding list. The in-world run cannot run this reader (HEAD's uploads.py raises ImportError on READER_VERSION), so the measurement is reader-level.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S34 -- a single-file move of the release pair fails in a measured way (uploads-only raises ImportError; reader-only refuses the pinned-stored templates)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S34",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-13T00:17:35Z",
+  "one_line": "HEAD's uploads.py imports READER_VERSION, so with the pinned reader every template answer raises ImportError (24 of 24 cases in the world). The pinned uploads read_input compares every member with no version gate, so with r18.1 it refuses all 8 templates stored by the pinned reader (computed in process).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/uploads.py@3b7f901bb2 (line 633 imports READER_VERSION inside the read_input template branch; line 639 compares under it)",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py@f09b802cdc has no READER_VERSION and its read_input (lines 533-541) compares the full re-read with the stored template; read through git show",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r18/MIXED_VERSION_TRACE_THIRD_READER.json@872d2363ed (in-world ImportError in 24 of 24 pinned-involved cases; computed pinned-uploads REFUSED for 8 of 8 lambda_pinned-stored templates under new)"
+    ]
+  },
+  "spec_asserts": "AR-y-186 step 3 asks what a person sees when the Lambda is on its third reader and the resident on the new one. CTO round-18 ruling item 5 says the reader's release pair moves as one pair, with S28's third reader included.",
+  "world_is": "The release pair's start state is uploads f09b802cdc with reader 3f29017cfc, and both files must move in one deploy. Neither single-file move is safe as measured. Not run: the Lambda's own door, and the resident's installed pin, which the trace did not read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S35 -- a template stored by the pinned reader is accepted unchanged under r18.1 (no version member, no re-read), so the widening does not reach inputs already stored
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S35",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-13T00:17:35Z",
+  "one_line": "Under the r18.1 read_input gate a template stored by the pinned reader is accepted unchanged on re-open, because a template with no reader_version member is not compared. A multi-account file the pinned reader stored as one account's rows therefore stays accepted on re-open after the widening, with no re-read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/uploads.py@3b7f901bb2 (lines 633-641: stored_version = template.get reader_version, default before-C-STOREDINPUT; the full re-read is compared only when it equals READER_VERSION)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r18/MIXED_VERSION_TRACE_THIRD_READER.json@872d2363ed (computed headGate ACCEPTED, not compared, for 8 of 8 lambda_pinned-stored templates; the in-world writer door cannot run with the pinned reader)"
+    ]
+  },
+  "spec_asserts": "AR-y-186 step 3: say whether any input accepted under one reader can be refused under the other at re-open. CTO round-18 ruling on S24 names no migration for inputs already stored under the pinned reader.",
+  "world_is": "The gate does not compare a template with no version member, so an input stored by the pinned reader is accepted on re-open under r18.1. The 8 of 8 result is computed on the two reader outputs in process, not run through the world. The stored population of the Lambda and the resident was not read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W54-S4 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-12T22:42:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "With the AR-y-172 reader change, five _authz tests outside the order's write grant now fail, so the folder is rc=1 and AC2 cannot pass inside <paths>",
+  "spec_asserts": "The order's AC2 (y172-keep) requires the whole _authz folder to pass with at least 320. Its <paths> grants served.py, test_allowed_firm_ids.py, the new test file and this channel only. The cell says a test that ASSUMED a no-row caller is admitted changes with its reason, inside the grant.",
+  "world_is": "Measured at the worktree working tree over base 43e1e85895: python -m pytest _authz/tests gives 332 passed, 5 failed, 337 collected (320 base + 17 new), rc=1. The five, all outside <paths> and not edited here: test_interactive_entry.py::test_other_creator_record_reaches_compute_with_real_viewer[prospect-owner-v1], [custody-owner-v1]; test_interactive_entry.py::test_opal_prospect_create_is_prospect_not_custody_or_partner; test_interactive_entry.py::test_foreign_creator_input_keeps_both_identities_for_submitter_contract (their Entry is built with no load_service_profile, so the default profile read decides; an internal caller selecting 49financial gets FIRM_BINDING where the test asserts admission); test_svc_custody_statement.py::test_svc_custody_statement_does_not_change_opal_or_dev_admission (fixture _ALL_ROW = {'allowedFirmIds': 'ALL'} carries no status, so an internal caller selecting inflection is refused). The status rule refuses both shapes by design; whether the fixtures or the grant change is the issuer's decision.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1157-1162 (working tree over 43e1e85895)",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_interactive_entry.py:25-37 @43e1e85895 (failing arms; no load_service_profile injected)",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_svc_custody_statement.py:53-63 @43e1e85895 (_ALL_ROW fixture and its loader)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-172.internal-reader-status-active.md (ACCEPTANCE AC2, paths)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S5 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-12T22:42:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "one_line": "The narrative test file reports 13 passed after the reader change, but it runs the PINNED served.py (staged_from pin 361c44fa9d), not the worktree file, so its green run says nothing about AR-y-172 on narrative",
+  "spec_asserts": "The AR-y-163 read (INTERNAL_READER_NO_ROW_READ.json, proposed_cell.what) says narrative needs its own decision after the change: its two call sites catch the raise, so a no-row narrative caller who selects another firm would be REFUSED where it is held to its own firm today. A green narrative run is not evidence of narrative unchanged.",
+  "world_is": "narrative/tests/test_served_error_path.py _stage() takes each bundled member from the git blob at the staged_from pin in infra/aws/lambda/ci/lambda-source-map.json (functions.irpt-narrative: served.py at pin 361c44fa9d40992c8cacfd625cc789536f84b920) and reads the worktree file only for members with no staged row. Measured: narrative/tests/test_no_row_unknown.py gives 13 passed, rc 0, at the working tree over 43e1e85895. By code reading only, not run: narrative/entry.py _held_to_verified_firm (:218) now receives a raise from _internal_allowed_firms for a no-row or non-active caller; the except at :221 returns the event to the shared boundary, which refuses FIRM_BINDING; the base dropped the selection and served the caller's own firm, class UNKNOWN. The narrative arm norow_none_selecting_other cannot fail until the pin moves to a commit that carries this served.py. The pin bump and its census are cell AR-y-173, not this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-narrative.staged_from, served.py pin 361c44fa9d40992c8cacfd625cc789536f84b920 @43e1e85895",
+      "infra/aws/lambda/investor-reporting/narrative/tests/test_served_error_path.py:80-97 @43e1e85895 (_stage reads the git blob at the pin)",
+      "infra/aws/lambda/investor-reporting/narrative/entry.py:204-222 @43e1e85895 (_held_to_verified_firm)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~53/r16/INTERNAL_READER_NO_ROW_READ.json (proposed_cell.what)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S6 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-12T22:58:56Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The _authz internal arms built with no load_service_profile read the default profile reader (a DynamoDB query), not an offline fake; the amended four arms now inject one, but the six test_final_release_refuses_changed_actor_owner_or_service_identity arms still take that reader and now pass by refusal at the fence, not by their identity check",
+  "spec_asserts": "The order's preflight and bounds say the _authz tests run offline (no AWS, no network). AMENDMENT 1 says the four test_interactive_entry arms take status active on the row they read; the six test_final_release arms are not in the amendment and were meant to stay without a row.",
+  "world_is": "Read at base a13729590f: canonical_profile_reads.py:70-73 get_user issues self._ddb.query(TableName='opal-users-v2', IndexName='email-index') and served.py:1151-1156 builds boto3.client('dynamodb') when no loader is injected; test_interactive_entry.py and test_final_release arms build Entry without load_service_profile. In this worktree the amended arms now use a monkeypatched get_user (active_internal_row fixture) and make no query. Not measured: whether the baseline run reached AWS (no live call was made by this worker for this row). By code reading only, not run: a test_final_release arm's caller now gets None from the default reader, served.py:1157-1160 raises, the caller's except at served.py:1235-1237 refuses FIRM_BINDING before compute runs, and the test's assertion (ok False and no data) passes on that refusal, not on the changed actor, owner or renderer it names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py:70-73 @a13729590f (get_user query)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1151-1160 @a13729590f (_internal_allowed_firms default reader and status rule)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1233-1237 @a13729590f (internal branch try/except refuse)",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_interactive_entry.py:24-95 @a13729590f (active_internal_row fixture and the test_final_release arms)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S10 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S10",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-13T01:05:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Row S7 and the AR-y-183 cell place the second refusal of the actor and renderer arms at interactive_access.py:110. Measured with the named check pinned: the actor arms are refused at line 110 (principal != live current()), but the renderer arms are not. On renderer headers the live current() at interactive_access.py:109 raises, and authorize_current returns False at lines 120-121. Both routes are recorded as 'issued record not currently authorized' (owner_reads.py:33) or 'prospect input not currently authorized' (prospect.py:87). The owner arms have no second comparison.",
+  "spec_asserts": "AR-y-183 cell and row IRPT_ANLREQ-D2-W54-S7: each of the six final-release arms is caught by its named identity comparison, and the second comparison that also refuses the actor and renderer arms is interactive_access.py:110 (principal != current).",
+  "world_is": "Measured in _authz/tests/test_final_release_bites.py, step 2a of each actor and renderer test (the named check pinned, the live comparison left in). Read actor: refused at owner_reads.py:33, raised from retained() at owner_reads.py:40, after the live comparison at interactive_access.py:110 returned False. Read renderer: refused at owner_reads.py:33; current() raised at interactive_access.py:109 and was caught at :120-121. Prospect actor and prospect renderer: refused at prospect.py:87. Owner read and owner prospect: the payload escapes once the retained-owner comparison is pinned, so no second comparison exists for them. Not measured: any other arm of the folder.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py:108-121 @16795233f6 (authorize_current: 109 live current(), 110 principal comparison, 120-121 except returns False)",
+      "infra/aws/lambda/investor-reporting/_scope/owner_reads.py:33-41 @16795233f6 (retained() refusal at 33; post-compute retained() at 40; owner raise at 41)",
+      "infra/aws/lambda/investor-reporting/_scope/prospect.py:87-95 @16795233f6 (authorization refusal at 87; actor comparison 92-93; owner comparison 94-95)",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_final_release_bites.py @f722a48d92 (step 2a of the actor and renderer tests)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S11 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S11",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-13T01:05:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The read arms of test_final_release_refuses_changed_actor_owner_or_service_identity pass authorize = lambda *a: True to read_entry, which reads as the test deciding the retained-record grant. For an internal caller served replaces that argument with InteractiveAccess.authorize_current, so the injected lambda is never called in those arms; the refusal and the grant both come from authorize_current.",
+  "spec_asserts": "test_interactive_entry.py:87-103 (the read arms): the authorize argument of the read entry is the retained-record grant under test.",
+  "world_is": "served.py:59-62 @16795233f6: authorizer = self.authorize_record_owner, then replaced by InteractiveAccess(...).authorize_current when verified_internal_subject(headers) is not None. For the opal caller the test's lambda is therefore dead in the read arms. Measured by the new file: with the named owner-read check pinned, the read actor arm is refused at owner_reads.py:33 through authorize_current. Not checked: whether other test modules rely on the injected authorizer for an internal caller.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:59-62 @16795233f6 (authorizer replaced for an internal subject)",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_interactive_entry.py:84-104 @16795233f6 (the six arms; lambda *a: True passed as the authorizer in the read mode)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S12 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S12",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-13T01:05:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A mutant run in a scratch copy of infra/aws/lambda/investor-reporting raises IdRefused at _ids/ids.py:136 in every test until IRPT_FIRM_REGISTRY names the worktree's data/firm_registry.json. The order's mutant instruction asks for a scratch copy and does not name the variable.",
+  "spec_asserts": "AR-y-183 cell and preflight: a mutant is run in a scratch copy outside the product tree; no registry requirement is stated.",
+  "world_is": "Measured: the copy with no variable set gives 6 failed, all IdRefused at _ids/ids.py:136 (the walk is bounded upward from _ids and the copy has no data/firm_registry.json above it). With IRPT_FIRM_REGISTRY set to the worktree file: the unmutated copy gives 6 passed; source mutants give 2 failed (owner_reads.py:38 removed), 3 failed (owner_reads.py:40 removed), 2 failed (prospect.py:92 removed), 3 failed (prospect.py:94 removed). Not measured: the rest of the _authz folder under a copy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_ids/ids.py:114-139 @16795233f6 (registry resolution: env variable, then bounded walk upward, then beside the module; IdRefused at 136)",
+      "data/firm_registry.json @16795233f6 (the file the walk finds from inside the worktree)"
+    ]
+  }
+}
+```
+
+
+## IRPT_ANLREQ-D2-S65 -- (disarm row; this seat's own, allocated on the main index)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S65",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T01:12:44Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W52-S24: the account-header rule now matches Brokerage Account, IRA Account, Joint Account, Subaccount, Account Seq and Account Sequence, so a multi-account file under any of them is turned back; the residual spellings outside the ruled vocabulary are carried by row IRPT_ANLREQ-D2-W52-S31.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO round-18 ruling (CTO_ROUND_ANALYSIS_IRPT_ANLREQ_Y_ROUND_18_20261012.md section 1 row D2-W52-S24): WIDEN before the release pair, not a stated limit. The owner of the ARMED row (this seat) disarms it when the widening is on the trunk.",
+  "world_is": "MEASURED by this seat 2026-10-13 on the shared tree after the drain a665d34dd3: ar18_checks y181-rule prints Y181-RULE-OK over 28 identifier forms (the six named in S24 among them), 2 count forms, 10 attribute forms, 7 non-account forms and 6 negative controls committed before the rule (015af53b8f, rule da7b3b10bc); y181-keep prints Y181-KEEP-OK (331 intake tests pass, READER_VERSION irpt-template-reader.r18.1). The reader is unreleased, so the hazard was never live; it is disarmed where it was armed. NOT covered: identifier spellings outside the ruled vocabulary (Account Numbers, Subaccounts, Accnt, Account Nos, Seqno, Serial), carried by row W52-S31 (ARMED, this seat), and a real identifier column headed No. of Accounts, carried by row W52-S32 (ARMED, the CTO).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "a665d34dd3 (the drain of TO-AR-y-181)",
+      "ar18_checks.py y181-rule and y181-keep run by this seat on the shared tree",
+      "CTO round-18 analysis section 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W52-S36 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S36",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-13T02:00:34Z",
+  "one_line": "Run in a scratch tree on the Lambda's pinned pair (uploads f09b802cdc, reader 3f29017cfc), the door answers NORMALIZED with no finding and total_dollars 600 on total_row_sheet: the file's TOTAL row is held as a holding and counted into the total (AAA 100, BBB 200, TOTAL 300).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/uploads.py@f09b802cdc (create answers NORMALIZED from the reader rows with no total-row check)",
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py@3f29017cfc (emits no TOTAL_ROW_PRESENT on the pinned reader; the TOTAL line is returned as a row)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r19/START_STATE_SCRATCH_RUN.json (door_cases: total_row_sheet, pinned pair: NORMALIZED, total_dollars 600, row_count 3, symbols AAA BBB TOTAL)"
+    ]
+  },
+  "spec_asserts": "AR-y-191 step 2: run the door on the four sheets and record each answer with its evidence. Round-18 row S33 asserts that the pinned reader holds the total row as a holding named TOTAL; it did not record the total the door reports for that file.",
+  "world_is": "RUN in process on the pinned pair: NORMALIZED, no finding, total 600 for a file whose own total row reads 300, so the door's total includes the total row. The same run holds the two-account sheets as NORMALIZED with total 300 and no account on any row (S33, now RUN). The measured figures are the scratch run's; the deployed Lambda's bytes were not read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S37 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S37",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-13T02:00:34Z",
+  "one_line": "The planned release move names uploads.py and template_reader.py as the two files that go to HEAD and r18.1. Of the upload door's 27-member import closure, six members differ between their map pins and HEAD: uploads.py and template_reader.py, and also ids.py, loaders.py, repository.py and served.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json@2da5c7b2c2 (irpt-ycharts-generate staged_from pins: ids.py 3f29017cfc, loaders.py 0642c9d004, repository.py 605c4cd4ac, served.py 74a62fb46c)",
+      "infra/aws/lambda/investor-reporting/_ids/ids.py@2da5c7b2c2 and infra/aws/lambda/investor-reporting/_authz/loaders.py@2da5c7b2c2 and infra/aws/lambda/investor-reporting/reports/repository.py@2da5c7b2c2 and infra/aws/lambda/investor-reporting/_authz/served.py@2da5c7b2c2 (each differs from its pin; sha256 per member in r19/START_STATE_SCRATCH_RUN.json door_closure_members_differing_from_head)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r19/START_STATE_SCRATCH_RUN.json (door_closure_members_differing_from_head)"
+    ]
+  },
+  "spec_asserts": "AR-y-191 step 3: the re-open runs use the pinned pair and the pair after the planned move (uploads.py and template_reader.py at the head, r18.1). CTO round-18 ruling item 5, as recorded in S34: the release pair moves as one pair.",
+  "world_is": "The two-file move is the pair the cell names. The door's closure at HEAD differs from its pins in six members, not two. The moved-pair run in the scratch tree keeps the other four at their pins, so it is not the HEAD-complete world; the HEAD-complete world was not run. Whether the four move with the pair is for the release census (AR-y-192) and the CTO, not decided here.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W54-S13 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S13",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-13T03:03:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-AR-y-197 reads each member with git show <pin>:infra/aws/lambda/investor-reporting/<member>; for infra/logic/registry/name_rulings.json that path does not exist at either pin, so the member was read at infra/logic/registry/name_rulings.json instead (the path the delta's source field names).",
+  "spec_asserts": "TO-AR-y-197 READ FIRST: for each member, git show <pin>:infra/aws/lambda/investor-reporting/<member>, with the four members named as _authz/served.py, infra/logic/registry/name_rulings.json, ops/status.py and ycharts/generate/resident_worker.py.",
+  "world_is": "Control: git ls-tree 069b8f797e -- infra/logic/registry/name_rulings.json returns blob d0752edf6e; git ls-tree 069b8f797e -- infra/aws/lambda/investor-reporting/infra/logic/registry/name_rulings.json returns nothing; the same negative control at 0485393f3a returns nothing. The delta's own source field for this member is infra/logic/registry/name_rulings.json. The other three members are under the investor-reporting prefix as the cell says.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/name_rulings.json @069b8f797e (blob d0752edf6ee15355a1c782675f800bd00b667a04) and @0485393f3a (blob 4cef897c32a243034a0359a9d9b35d40f691dfca)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/r19/RESIDENT_PACKAGE_DELTA.json (differing, source field for infra/logic/registry/name_rulings.json)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S14 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S14",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-13T03:03:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cell lists resident_installed.py among the resident's entry points beside resident_main.py and resident_worker.py; the file is at infra/aws/lambda/investor-reporting/reports/resident_installed.py and ycharts/generate/ holds no resident_installed.py. The trace followed the factory from its real location (resident_main.py:46 imports it by module name).",
+  "spec_asserts": "TO-AR-y-197 cell: the resident's entry point is ycharts/generate/resident_main.py, resident_installed.py or resident_worker.py, traced from there.",
+  "world_is": "At 069b8f797e: ycharts/generate/ contains resident_main.py and resident_worker.py; reports/resident_installed.py defines build_resident_runtime at line 344 and sets its sys.path at lines 4-8 (_scope, _ids, _keys, _authz, _contracts, intake, ops, reports, ycharts/generate, ycharts/session, lib). The installer (install-resident.sh) names the factory by module:function, so the module location is set by sys.path, not by the entry directory.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py @069b8f797e (line 344 def build_resident_runtime; lines 4-8 sys.path)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py @069b8f797e (line 46 importlib.import_module of the factory module)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S15 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S15",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-13T03:03:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The resident's static import closure reaches _authz/served.py only through a function-level chain that no resident path calls; if a caller of resolve_custody_profile_fields were added on the resident, served.py would load (running its import-time _earn_the_mark) and Entry.handle's status rule and log line would be in the resident's reach. No gate or cell names this edge.",
+  "spec_asserts": "TO-AR-y-197 AC2J (judgment): a member the resident does not reach is shown not reached rather than assumed; the pair's reading of served.py rests on the static trace.",
+  "world_is": "Chain at 069b8f797e: reports/resident_installed.py:376 (lazy) -> _scope/canonical_profile_reads.py:15 (module level) -> _scope/maintained_sources.py:332 (lazy, in snapshot_custody_profile_sources, def 313) -> _scope/custody.py:25 (lazy, in current_custody_principal, def 24) -> _authz/served.py:323. snapshot_custody_profile_sources has one caller, resolve_custody_profile_fields (maintained_sources.py:380-386), which has no caller in the closure; CustodyAccess (custody.py:45) is never instantiated in the closure. served.py:1384 runs _earn_the_mark() at import.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/maintained_sources.py @069b8f797e (lines 313, 332, 380, 386)",
+      "infra/aws/lambda/investor-reporting/_scope/custody.py @069b8f797e (lines 24-25, 45, 61, 64)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py @069b8f797e (line 1384 GUARD_WIRING_PROVEN = _earn_the_mark())"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S21 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S21",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T03:02:16Z",
+  "one_line": "The source-map row direction the AR-y-198 cell names is reversed at the shared head read now: the head map pins _authz/loaders.py for irpt-ycharts-generate at 69679b90e3 again (sha256 a2283dc8), not 0642c9d004.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 95406de7f3:infra/aws/lambda/ci/lambda-source-map.json, functions.irpt-ycharts-generate.staged_from loaders.py row: pin 69679b90e3dc52b670d33fddd96d06be1deaac90, sha256 a2283dc8436dc048343bb105b07cd56e93aa0fe038f90457d1b57a882eb887fa",
+      "the worktree copy at 2107dfe618 (infra/aws/lambda/ci/lambda-source-map.json) carries pin 0642c9d00454 and sha256 93f2f02a1bd40d01 for the same row",
+      "git rev-parse 069b8f797e:infra/aws/lambda/investor-reporting/_authz/loaders.py = a89958a0e7215de27837eacf709bc759accfc4c8, the blob of 69679b90e3; the blob of 0642c9d004 is b39e8809b39fabbfd71ebc8f808ea7d56aa572b2"
+    ]
+  },
+  "spec_asserts": "AR-y-198 cell: the source-map row for irpt-ycharts-generate _authz/loaders.py moved from 69679b90e3 to 0642c9d004 between the round-19 base and the head (row W51-S20 names head 731a72ecb2).",
+  "world_is": "At the shared head 95406de7f3 the row carries pin 69679b90e3 and sha256 a2283dc8, equal to the base 5d8b0390ed. The release pin 069b8f797e carries the 69679b90e3 blob. The head row has moved more than once; the AR-y-198 verdict is read from the blobs and the owner's commit, not from the row.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S22 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S22",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T03:02:16Z",
+  "one_line": "No NFRA_CTLPLN release record ships the bytes the AR-y-198 cell calls the CTLPLN release: every CTLPLN artifact row for lib/opal_naming.py and infra/logic/registry/firm_pages.json reads COMMITTED-NOT-DEPLOY-SCOPE.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~70/NFRA_CTLPLN.TO-CT-w-8.firm-pages-note-field-and-comments.proof_of_spec.json (artifacts_produced: lib/opal_naming.py 6ae365f583 and firm_pages.json e76206bdcb, deployed_state COMMITTED-NOT-DEPLOY-SCOPE, 'No deploy, no AWS call.')",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~65/ proofs of CT-w-1 (firm_pages.json 9efa1021ce; lib/opal_naming.py a99d7e584c and 22169e24fb) and CT-w-4 (lib/opal_naming.py c5d1415676): each COMMITTED-NOT-DEPLOY-SCOPE",
+      "RESIDENT_PACKAGE_DELTA.json only_in_new: infra/logic/registry/firm_pages.json (NFRA_CTLPLN, last_commit_in_range e76206bdcb)"
+    ]
+  },
+  "spec_asserts": "AR-y-198 cell and CTO round-19 section 4 point 2: NFRA_CTLPLN's lib/opal_naming.py and firm_pages.json are compared to a version the owner already released (the CTLPLN release, a Lambda artifact its pair shipped).",
+  "world_is": "No CTLPLN record ships these bytes; the owner's proofs say never deployed. firm_pages.json is new in the release build. Both members read NOT_EQUAL to any owner-released version in the AR-y-198 record, and go to NFRA_CTLPLN through 0.0.0_AB_MSTR~DELL2 before the pair is signed.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S23 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S23",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T03:02:16Z",
+  "one_line": "The bytes the eight act-4 artifacts carry for ADVI_FIRMBKTS scopes.json and exemptions.json are not recorded: act 4 checked loaders.py only, and the source-map rows for those two members still carry pre-act pins and values.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act4_irpt/member.out: the member check covers loaders.py only (8 of 8 equal to the flip blob)",
+      "shared head source map: scopes.json staged_from rows of irpt-status (pin 80a79a746284) and irpt-ycharts-generate (pin 3f29017cfcd2) carry sha256 8fcd28d3 (8 rows in total); exemptions.json rows carry sha256 56c38d7e (9 rows in total); commit e274a0e60c touched only the loaders.py rows (16 insertions, 16 deletions)",
+      "git log 0485393f3a..069b8f797e: scopes.json changed only at 69679b90e3; exemptions.json changed at 3a6d8aa89d and 61cc536c29"
+    ]
+  },
+  "spec_asserts": "AR-y-198 cell: the owner's released versions of the ADVI_FIRMBKTS members are read from the Lambda artifacts their own pairs shipped (act 4's eight).",
+  "world_is": "The act-4 record attests loaders.py only. The stale source-map values for scopes.json (8fcd28d3) and exemptions.json (56c38d7e) match neither the release pin (6ce64167, 5241338b) nor the live pin (3a5f96e4, 9ea684d5). Whether the eight shipped artifacts carry the flip's scopes.json and the trunk exemptions.json is not recorded, and the AR-y-198 verdicts for those two members are CANNOT_TELL until it is.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S22 -- the order's step 1 scratch commit of the two reader paths was refused by the owned-paths lane gate; the build used the builder's --override instead
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S22",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T04:01:49Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-200 step 1 asks for ONE local scratch commit carrying the two release reader blobs; the pre-commit owned-paths gate refused it for this serial, so no commit exists and the build took the reader blobs through the builder's --override.",
+  "spec_asserts": "AR-y-200 step 1: in a throwaway worktree cut at st32 pin 0485393f3a, replace intake/uploads.py and intake/template_reader.py with the release pin blobs and make ONE local scratch commit; step 3: the scratch commit is the pin source for the package files.",
+  "world_is": "A git commit in C:/dev/ar200-55-wt (detached at 0485393f3a) was refused: owned-paths VIOLATION for intake/template_reader.py and intake/uploads.py, lane IRPT_Y_ACCESS_INTEGRATION_P, agent 0.9.0_WK_IRPT_ANLREQ~55 not in permitted_agents (this order's <paths> is the grant and names only the investigation file). No commit was made (HEAD stays 0485393f3a); no hook was bypassed. The builder's documented --override REPO_PATH=PIN (build_resident_package.py lines 168-170 and 228-236) packages each named member from another commit and records it in provenance.member_overrides; the build used it with --pin 0485393f3a and produced 297 members (the st32 count).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the git commit output in C:/dev/ar200-55-wt: the owned-paths VIOLATION lines for both reader paths (this session)",
+      "build_resident_package.py at blob e1e58c2d94a8d0b6fc4c16320fa385bf39e5d8a8, lines 168-170 and 228-236 (--override)",
+      "r19/RESIDENT_TWO_MEMBER_RELEASE.json scratch_commit and delta_vs_st32_rebuild"
+    ]
+  },
+  "notes": "OBSERVATION. The override is the builder's own mechanism and the commit was not forced. If the CTO wants the scratch commit itself, that is a grant question for the issuer; the worker does not override the gate."
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S23 -- the order's premise that the bindings carry the host root path does not hold: the st32 bindings name no root, so the two-member build needs no new HOST_ROOT
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S23",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T04:01:49Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The st32 bindings contain no install root; the root name lives in the host script (NEW), the cutover receipt (package_root) and the unit file, so a release tarball is root-agnostic and the host script's NEW must differ from the live root.",
+  "spec_asserts": "AR-y-200 step 5: the host script creates $R/$NEW from the tarball and the bindings carry the host root path; state what NEW must be for the bindings to point at the new root, and whether the build must therefore be made with a new HOST_ROOT.",
+  "world_is": "reports/resident_bindings.json of st32 (sha256 55d24940...) has no key that names /opt/irpt-resident or NEW: capture.wrapper_path and capture.library_path name /opt/investor-reporting-ycharts (the host app directory), census, opal_map and schema_directory are relative. NEW is the host script's variable (resident_host_install_0485393f3a-st32.sh line 5); ROOT=$R/$NEW (lines 7, 9); the receipt receives package_root=$ROOT (line 66); install-resident.sh takes package_root as its argument (installer line 8) and writes WorkingDirectory, PYTHONPATH and ExecStart from it (lines 56-59). Line 20 runs rm -rf on $ROOT, so NEW must not equal the live 0485393f3a-st32. Proposed NEW: 0485393f3a-r19.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/irpt-release-st32/0485393f3a-st32.tar.gz member ./reports/resident_bindings.json (extracted to the scratch folder and read)",
+      "C:/dev/irpt-release-st32/resident_host_install_0485393f3a-st32.sh lines 5-9, 20, 66, 97",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/install-resident.sh lines 8, 56-59 (read via INSTALL_SEMANTICS_SCRATCH_PROOF.json installer_lines_read)"
+    ]
+  },
+  "notes": "OBSERVATION. The two-member build carries no HOST_ROOT; the name is a host-script decision for the pair. The bindings' provenance.member_overrides is the only bindings change."
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S24 -- the cell's @e93258c650 and @da7b3b10bc name commits, not blobs; the release pin's blobs of the two readers are 35df2aa4 and fbc6c33a
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S24",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T04:01:49Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cell's '@<hash>' for the two reader members resolves to the commit that last changed each file, not to the blob the release carries; the blobs at the release pin are read directly and the build uses those.",
+  "spec_asserts": "AR-y-200 step 1: replace uploads.py and template_reader.py with their blobs at the release pin 069b8f797e (uploads.py @e93258c650, template_reader.py @da7b3b10bc).",
+  "world_is": "git rev-parse 069b8f797e:infra/aws/lambda/investor-reporting/intake/uploads.py = 35df2aa46146069d14fb0bfbaa4109214c180f60; ...template_reader.py = fbc6c33af050bc94284b51f8a489d9a6bd646576. e93258c650 and da7b3b10bc are commits (the last changes: build(IRPT_ANLREQ AR-y-162 ...) and feat(IRPT_ANLREQ.TO-AR-y-181 points 2-3 ...)); e93258c650:<uploads.py> resolves to the same blob as 069b8f797e:<uploads.py>. The content hashes of the two members at the release pin match the Lambda release bytes named in the cell.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse of both pins and both commits (this session)",
+      "git show <blob> | sha256sum (uploads.py 176682cb..., template_reader.py 83ab9b45...) equal to the build's member bytes"
+    ]
+  },
+  "notes": "OBSERVATION. Notation only; no consequence for the build."
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S25 -- test_correction_words::test_correction_words_are_the_envelopes_words fails on the two-member build: ops/status.py at st32 bytes lacks 24 CORRECTION_WORDS that the release uploads.py declares
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S25",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T04:01:49Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "one_line": "A named reader test fails on the built package: the release uploads.py declares 24 correction words that the st32 ops/status.py does not, and the CTO's held-member ruling leaves ops/status.py at st32 bytes. AC1 is not met.",
+  "spec_asserts": "CTO round-19 analysis section 4 item 5 (msg 6770): the release built with the four held members at st32 bytes passes the reader's import and acceptance tests in the scratch tree; a reader member that cannot run without a newer copy goes to its owner first. AR-y-200 step 6: a reader test that fails on a member at st32 bytes goes to the minimal import set or to the CTO; never widen silently.",
+  "world_is": "The test asserts uploads.CORRECTION_WORDS == status.CORRECTION_WORDS (test_correction_words.py line 44; it imports status from ops at line 41). The build's uploads.py (release bytes, sha256 176682cb...) declares 24 entries more than the st32 ops/status.py (blob 836e83e5...; CORRECTION_WORDS at line 86). ops/status.py is imported by neither reader member (51 import names resolve at st32 bytes). Diagnostic control in a copy with the release status.py (blob c98ed753...) in place: 9 of 9 pass. Decision taken: not added to the minimal import set, because the ruling says the release carries the reader members and what imports them, and the test import is not a reader import.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r19/recipe_evidence/two_member_tests_output.txt (test_correction_words.py: 1 failed, 8 passed)",
+      "uploads.py line 53 comment: the words are the ones the status envelope declares (ops/status.py::CORRECTION_WORDS)",
+      "CTO_ROUND_ANALYSIS_IRPT_ANLREQ_Y_ROUND_19_20261013.md section 4 items 5 and the status.py note (shared tree)"
+    ]
+  },
+  "notes": "BLOCKING for AC1 on this order. ARMED: left alone, the release installs a reader whose declared correction words are not the words the status envelope declares, which the uploads.py comment says it must match. Disarm: the CTO decides whether ops/status.py moves to release bytes (with its owner's read) or the test is re-scoped; the worker does not move it."
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S26 -- test_the_readers_output_on_the_fixtures_is_pinned_to_its_version fails: the builder packages no csv or xlsx fixture, so the reader digest runs over a different fixture set
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S26",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T04:01:49Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The reader's fixture digest test fails on the built package because the package carries none of the nine csv and xlsx fixtures the digest reads; the reader bytes are not implicated (the same test passes with the fixtures restored).",
+  "spec_asserts": "AR-y-200 step 6: the reader's named tests run against the extracted package; a test that needs data the package does not carry, because the test file is the head's, is NOT a pass; say which.",
+  "world_is": "reader_digest() reads every .csv and .xlsx under intake/fixtures/holdings (test_stored_input_contract.py lines 171-172): nine release files (seven csv, two xlsx). The builder admits only .py, .json, .sh and .md (build_resident_package.py line 80), so the built package carries FIXTURE_MANIFEST.json, generate_rt11_specimens.py and security_mapping.json from that folder and none of the nine. The st32 package has the same gap. Diagnostic control in a copy with the nine release files restored: 5 of 5 pass, the digest equals the pin.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r19/recipe_evidence/two_member_tests_output.txt (test_stored_input_contract.py: 1 failed, 4 passed)",
+      "git ls-tree 069b8f797e intake/fixtures/holdings (nine csv and xlsx files listed)",
+      "build_resident_package.py line 80 (wanted())"
+    ]
+  },
+  "notes": "BLOCKING for AC1 on this order. Not served behaviour: the resident does not read these fixtures. Disposition for the CTO: the package carries the data, or this test is re-pinned against the packaged set. The worker does neither."
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S27 -- the st32 host script's OLD is the st31 root; a pair that copies the script without changing OLD would roll back to the wrong root
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S27",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T04:01:49Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "one_line": "Line 112 of the st32 host script re-installs $OLD, which line 6 sets to the st31 root 19b02b2971-st31; the root running now is 0485393f3a-st32, so the rollback of a next pair must set OLD to 0485393f3a-st32.",
+  "spec_asserts": "AR-y-200 step 5: state what the rollback at line 112 re-installs.",
+  "world_is": "resident_host_install_0485393f3a-st32.sh line 6 OLD=19b02b2971-st31; line 18 tests test -d $R/$OLD; lines 110-111 restore the library and the receipt; line 112 runs install_root $OLD. Line 5 NEW=0485393f3a-st32 is the root the unit runs. A next pair's script that keeps line 6 would, on a failed cutover, re-install the st31 root and not the st32 root the service ran before the attempt.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/irpt-release-st32/resident_host_install_0485393f3a-st32.sh lines 5, 6, 18, 110-112",
+      "r19/RESIDENT_TWO_MEMBER_RELEASE.json root_naming.rollback_line_112"
+    ]
+  },
+  "notes": "ARMED for the next pair's script: disarm by setting OLD to the live root's name in the pair's host script, which the pair's COO writes. The worker wrote no host script."
+}
+```
