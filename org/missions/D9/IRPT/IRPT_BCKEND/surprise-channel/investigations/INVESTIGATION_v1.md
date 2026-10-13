@@ -32042,3 +32042,52 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISARMED, with the INERT evidence above. D2-S139 (the hold and the portal consumer point): the hold was lifted by Andrew's word at this seat (D2-S140), the portal condition read 0 null accountId over 9,441 ACCOUNT entries (D2-S141), and the person's served search now works, so the apply no longer changes a client-facing search before it is cleared; its disarm owners were the laptop CTO or Andrew, and Andrew's own smoke result is the evidence. D2-S141 and D2-S143: mine, disarmed on the same read. NOT disarmed here: W349-S1, W361-S1, W348-S2 (unchanged, ARMED, owner me). What is NOT shown: the same search by a CLIENT login on PROD (the PROD promote is held, dell1-e7f2); this read was Andrew's on localhost:5174 against the deployed function. Ledger irpt-dirsearch-tail-accounts-20261013 is asked to close at IB2 (my message citing msg 7140)."
 }
 ```
+
+## IRPT_BCKEND-D2-S145 -- Andrew's smoke: model-sleeve Holdings shows no class breakdown; the CTO ruled it is computed from the model's target mix
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S145",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T18:17:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Andrew's smoke: on a 49F SmartX-model account the Holdings tab says it is 'Held at the model's target, not position-level' and 'not broken down by asset class', while the table lists the model's target mix by class; the CTO ruled the class breakdown is computed from the model's target weights and labelled 'by the model's target mix'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 7145, 2026-10-13T18:16Z, relaying Andrew's smoke (~18:1xZ) of portal DEV; relayed, not reproduced by this seat",
+      "portal/src/pages/InvestorReporting/tabs/holdings/classTotals.ts:61 and :66 (WHOLE_REMAINDER_SENTENCE and TARGET_REMAINDER_LABEL, the page's own words; read by this seat in the DEV checkout)"
+    ]
+  },
+  "spec_asserts": "When positions are model-level, the class breakdown is computed from the model's target weights and labelled 'by the model's target mix', never left empty (CTO ruling, msg 7145).",
+  "world_is": "RECORDED, not cut: the CTO's ruling queues it behind the O1/O2 acceptance release (pivot direction), not ahead of it. READ so far: the page's two sentences live in the portal's classTotals.ts (:61, :66); NOT read: which side holds the model's target weights (the snapshot the builder writes, or a portal read), so whether the cell is a builder change, a portal candidate or both is not yet known. The cell is cut in the first issuance after the O1/O2 release, as a measure-first read of that question; owner me."
+}
+```
+
+## IRPT_BCKEND-D2-S146 -- Andrew's smoke: the cash row's ticker reads 'Cash'; it should read CASH
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S146",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T18:17:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Andrew's smoke: the cash row's ticker reads 'Cash'; it should read CASH (CTO ruling, msg 7145).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 7145, 2026-10-13T18:16Z, relaying Andrew's smoke (~18:1xZ) of portal DEV; relayed, not reproduced by this seat"
+    ]
+  },
+  "spec_asserts": "The cash row's ticker reads CASH.",
+  "world_is": "RECORDED, not cut: queued behind the O1/O2 acceptance release with S145. NOT read: where the string 'Cash' is produced (the model sleeve data, the snapshot builder or the portal), so the owner of the change is unknown. Cut as part of the S145 measure-first read; owner me."
+}
+```
