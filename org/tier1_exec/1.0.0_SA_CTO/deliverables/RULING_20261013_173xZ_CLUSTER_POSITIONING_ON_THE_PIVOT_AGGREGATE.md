@@ -25,8 +25,9 @@ No new seat is needed.
 | laptop | NFRA_CTLPLN round 12 as issued (tailnet, fence, gates); NFRA_DEVPLN (`~DV`); COMM_ASSIST through muse (`~CA`). 3 COOs = the limit. | Laptop CloudOps `~ANL`/`~FBL` stand down when the Dell admin-group grant is read back on each Dell. | Pare-down closes already recorded; SPMOVE parked. |
 
 Ruled here without a further word, because Andrew's memo or a standing law already decides it:
-- Security Analysis PROD promote (call `e7f2`): the page is staff-only, so the push law needs no word. dell1 promotes after it
-  checks that the bundle changes no client-facing page.
+- Security Analysis PROD promote: the page is staff-only, so the push law needs no word. CORRECTED ~18:0xZ: call `e7f2` is a
+  whole-DEV promote that also carries client-facing changes, so the promote is a Security Analysis feature branch cut from the
+  last PROD release under NFRA_DEVPLN, approved by the dell1 CTO. A promote of DEV as a whole stays held until NFRA_DEVPLN lands.
 - "news" in the laptop memo means muse: his written word at ~14:3xZ.
 - Billing: custodian fees feed the EXISTING Fee Summary panel; no second panel on PROD ("we don't want to duplicate").
 - Former Cottonwood clients are excluded from every vendor draw, not ranked last ("we don't need to waste quota on this").
