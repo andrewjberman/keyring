@@ -7268,3 +7268,28 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W133-S6 -- the commit-time client-data check could not run on the DB-b-167 completion commit (hashed account-id list absent)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W133-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~133",
+  "surfaced_at": "2026-10-13T14:12:21Z",
+  "one_line": "The client-data check in the commit gate did not run on the DB-b-167 completion commit f2ffc7aca1: the hashed account-id list is absent at its default path, so the commit was not checked for account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-167 BOUNDS: no client data in what you write (counts, day offsets and words only), and every commit passes the commit gate via .tools/safe-commit.sh (CLAUDE.md section 6, rule 14).",
+  "world_is": "safe-commit f2ffc7aca1 printed WARN: client-data-check: hashed account-id list ABSENT at the default path under the operator's .opal directory, and stated the commit was NOT checked for client account ids. The commit holds two files: the proof instance and the order file. A digit-run scan of those two files finds one run inside a sha256 hex string in the instance and three runs of the stored-evidence folder date in the order; that scan is not an account-id check, and the list-based check did not run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit f2ffc7aca1 on 2026-10-13: the client-data-check WARN line, and the SKIP-style statement that the commit was not checked",
+      "grep -cE '[0-9]{8}' on the two committed files: 1 line in the proof instance (inside a sha256 hex string), 3 lines in the order file (the stored-evidence folder name)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
