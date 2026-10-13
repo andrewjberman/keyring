@@ -221,3 +221,9 @@ Quiet stretch 08:37Z to 13:04Z: watcher re-armed at each expiry; delivery ledger
 | item | result | commit |
 |---|---|---|
 | IRPT_BCKEND round 179 | ADJUDICATION_v80: W345-S3 closed (0/0 after a named S3-path build; caveats kept); 3 dismissed; nothing graduates. Noted: v0.53 half already SIGNED current. Slug sent | 7eff6094d3 |
+
+## Addendum, 2026-10-13 15:29Z to 15:35Z (msg 7027)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_DASHBD round 90 | ADJUDICATION_v54 + REMEDIATION_v37: FWD-8 NOT REALIZED for 7 accounts at day grain; D2-W136-S1 to the CTO; 4 dismissed (incl. v36 D2-W133-S1). The vendor pull checked against CTO msg 6986 (no per-use word for a non-Bloomberg vendor). Slug sent | 322f6b77f8 |
