@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~55</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-12</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -54,6 +54,8 @@ You are `0.9.0_WK_IRPT_ANLREQ~55`.
 `AR200-y-AC2J` (judgment, graded at L9, never by you): the tests were run against the extracted package (not the repository), the import set is minimal and each member in it is justified by an import line, and the root naming is read from the host script and the bindings.
 
 <expected_criteria>AR200-y-AC1 AR200-y-AC2J</expected_criteria>
+
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-13, after the CTO's msg 6778 and the signed pair).** `AR200-y-AC1` now accepts the two failures the CTO ACCEPTED as named limits in the one two-leg pair -- S26 (`test_the_readers_output_on_the_fixtures_is_pinned_to_its_version`: the nine csv and xlsx fixtures are not packaged; 5 of 5 pass with them restored) and S25 (`test_correction_words_are_the_envelopes_words`: the held `ops/status.py` lacks 24 words the release `uploads.py` declares) -- provided each is in `tests.failures_explained` and `tests.failed` equals the number explained; any other failure still fails. The check is `ar19_checks.py y200-two`; the issuer's run prints `Y200-TWO-OK` on the worker's record. The worker's proof instance recorded AC1 as FAIL at the time; that row is left as the worker wrote it and the compile packet carries this amendment for the L9 grade. The release this order built was applied under the signed pair (resident 0485393f3a-r19, 2026-10-13T06:09:33Z). Gate limb that graded this amendment: none stated by the gate (the issuer amends its own order's criteria; the CTO reads it at the round-20 analysis).
 
 ## BOUNDS
 

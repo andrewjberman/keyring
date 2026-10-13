@@ -107,7 +107,7 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMB
 
 **ISSUER NOTES:** CTO round-4 analysis section 3 item 2 (offline half) and ADDENDUM context: the canonical key exists and reads byte-equal at the act-3 manifest; no live request has read it on the accounts or relationship paths (27 v23 lines, none). The replay is the offline arm; the live arm is `FB-h-5`. Class LOCAL: reads of two keys the validator already reads; the harness is a record, no product file is written. The maps hold client identifiers: the order forbids any copy into the tree and the record carries counts and hashes only. If the harness cannot drive `index.mjs` without a change to a product file, the worker files a BLOCKING row and the issuer re-cuts (a shim is not a licence to edit the handler).
 
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <workstream>VALIDATOR</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-h-3</to_id>

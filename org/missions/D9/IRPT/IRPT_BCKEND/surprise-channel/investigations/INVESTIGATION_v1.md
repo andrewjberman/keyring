@@ -31214,3 +31214,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "CLOSED: W357-S4 (iv-e-148 six_class (d) failed after a regeneration to the contract's enum) and W357-S5 (the adapter folds multi_asset to unclassified): superseded, the wire generator now subtracts the retired set {multi_asset} and the adapter logs a served retired token; the worker's own row S6 asks the CVO to close them. RULED OBSERVATIONS: W356-S1 (validate_snapshot is called in run_firm, which main reaches; my wording), W356-S2 (land writes a local file before its validate hook when called directly with upload off; no production path does, and it is not an S3 write; the S3 path is validated at publication.py:232 and run_firm), W356-S3 (the combined pytest of test_runner_jsonschema_tolerance.py with the builder tests stops at collection: the file removes .tools from sys.path then imports safe_deploy_core; a pre-existing import-order defect in a test I do not own, no repair cut), W357-S7 (the regenerated wire header sha256 line moved with the contract), W357-S8 (IVE26-AC3 and IVE98 pass in the worker tree; the folder failures there are producer fixtures and F14-AC3). STILL ARMED: W345-S3, W348-S2, W346-S2, W346-S3, W350-S1 as in D2-S126 and S127; the portal candidates 346, 350, 353, 355 and 357 await the DEV review lane."
 }
 ```
+
+## IRPT_BCKEND-D2-S129 -- DISARM EVIDENCE for W346-S2, W346-S3 and W350-S1 (the portal generators): landed on DEV as e50a1379
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S129",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T06:52:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARM EVIDENCE, filed by the disarm owner the turn it was read: W346-S2, W346-S3 and W350-S1 (the fe-s-15 and fe-s-18 portal generators drifting from their committed bytes) are disarmed: the repairs LANDED on portal DEV as e50a1379.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR~DELL2 receipt msg 6834 (under CTO msg 6831): pushed exactly e50a1379d670add33051b9657ba011817061c711 to origin/DEV, rc 0, CI success; my own ls-remote of origin DEV reads e50a1379d670 (read this turn).",
+      "on the combined head the generators reproduce their committed outputs: IB171-5-AC1 (fe-s-15), IB172-2-AC1 and IB173-2-AC1 (fe-s-18) PASS; the full IR suite reads 1225 pass, 27 skip, 2 fail against DEV's own 1218/27/5, the two failures (F14-AC3, producer fixtures) being DEV's own."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "DISARMED: W346-S2 (fe-s-15 generator), W346-S3 and W350-S1 (fe-s-18 generator): the generator at portal DEV now reproduces its committed bytes, so a run no longer dirties a committed fixture. PROD is untouched (rides the held promote dell1-e7f2). STILL ARMED: W345-S3 (the temp-file fix is in merged code; the host bundle that runs the live builder is not redeployed; its census is IB-pr-507) and W348-S2 (the irpt-holdings schema at HEAD also enables include=target and narrows three enums: not re-pinned)."
+}
+```
