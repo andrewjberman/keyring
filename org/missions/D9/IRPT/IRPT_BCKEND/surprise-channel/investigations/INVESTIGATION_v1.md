@@ -30953,3 +30953,84 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The named command is a no-op on this tree and cannot grade exhaustiveness; the typecheck that covers src is -p tsconfig.app.json. The tsc gate for IB-pr-506 therefore needs the app project named explicitly."
 }
 ```
+
+## IRPT_BCKEND-D2-W357-S3 -- closes IRPT_BCKEND-D2-W357-S1: AMENDMENT 1 grants the account_id member, and the regeneration now matches the grant
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W357-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~357",
+  "surfaced_at": "2026-10-13T06:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "CLOSES W357-S1. Re-seated under AMENDMENT 1 (218f56524d, granting multi_asset and the optional account_id node member), the regeneration at portal cf52fdbf changes HoldingsSnapshot.ts by exactly the granted pair plus the source sha256 header line. The other 28 generated files are content-identical to HEAD (stat-dirty only). The S1 refusal is closed by the amendment; this row records the closure, nothing else.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun run src/pages/InvestorReporting/__tests__/fe-s-13/gen-all.ts at portal cf52fdbf: rc=0, 'gen-wire: 25 of 25 documents, 19 of 24 routes responses; gen-consumed: 11 of 11 contracts'",
+      "git -C portal diff --stat after regeneration: one file changed (HoldingsSnapshot.ts), 7 insertions, 6 deletions; hunks = sha256 header line, five asset_class unions gaining 'multi_asset', one added 'readonly account_id?: string' at line 108 inside the nodes block beside model_code",
+      "git -C portal ls-files --eol for the wire folder: index is LF for all 28 files; the 27 non-regenerated files differ from HEAD by stat only (git diff --quiet exits 0 for the content)"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-506 AMENDMENT 1: the regeneration may differ from HEAD by exactly two things in the generated files: the multi_asset member of the asset_class union, and the optional account_id node member.",
+  "world_is": "The regeneration matches the amended grant exactly. No other generated file changed content."
+}
+```
+
+## IRPT_BCKEND-D2-W357-S4 -- BLOCKING: the granted regeneration reddens iv-e-148 six_class (d), a test that passes at the base, so the refusal clause fired and the portal change is NOT committed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W357-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~357",
+  "surfaced_at": "2026-10-13T06:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "bun test of iv-e-148.multi-asset-class-readers.test.ts after the granted regeneration: six_class (d) 'the wire type admits no retired token at any class enum' FAILS (expected 0 lines carrying 'multi_asset', received 5). Test (d) passes at the base, where the wire copy carries 0 multi_asset (portal HEAD blob count 0). IVE48-AC1 passes after the regeneration (its arm 1 reads the wire union equal to the contract enum). Per the refusal clause (a test other than IVE48-AC1 that passes at the base fails after the change) the order stops here: no further step, no portal commit, no criteria run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-148.multi-asset-class-readers.test.ts src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-48.new-classes.test.tsx at portal cf52fdbf plus the granted regeneration: '7 pass, 1 fail, 8 tests across 2 files'; the fail is 'six_class (d) ... Expected: 0 Received: 5' at iv-e-148.multi-asset-class-readers.test.ts:95",
+      "git -C portal show HEAD:src/pages/InvestorReporting/contracts/wire/HoldingsSnapshot.ts: multi_asset count 0 (positive control: the five 'readonly asset_class' enum lines are present at HEAD)",
+      "The test's own header (Andrew-direct 2026-10-07, quoted in the file): 'there should be no multi-asset class. There are 6 classes'; the file pins arms (b) Object.keys(ASSET_CLASS_COLOR) equal the six plus Other and Unclassified, (c) no seventh key in ASSET_CLASS, (d) no retired token in any wire class enum. The contract re-gained multi_asset through 506096fc9a (restore MDPF_SECCLASS~90), so the contract and this test now disagree",
+      "tsc at portal cf52fdbf after regeneration: rc=0, 0 'error TS' lines (baseline also 0); the typecheck does not see the test regression"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-506 BOUNDS refusal clause: STOP, file a row, change nothing more, if a portal test other than IVE48-AC1 that passes at the base fails after the change; and the order's AMENDMENT 1 grant of the wire regeneration.",
+  "world_is": "The grant is correct for the wire copy (it matches the contract) but the wire copy now contradicts iv-e-148 (d), a passing test whose assertion encodes the 2026-10-07 six-class ruling. Both cannot hold at once: either the wire copy follows the contract (IVE48-AC1 green, iv-e-148 (d) red) or it does not (the reverse). That ruling is the CTO's to make; the worker has not edited iv-e-148 and does not. The regenerated HoldingsSnapshot.ts remains UNCOMMITTED in the worktree; HEAD is unchanged."
+}
+```
+
+## IRPT_BCKEND-D2-W357-S5 -- BLOCKING: the premise that the holdings tab keys its class map on the wire union fails; multi_asset reaches the tab only through two files outside the grant
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W357-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~357",
+  "surfaced_at": "2026-10-13T06:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-506 step 2 names HoldingAssetClass and ASSET_CLASS_COLOR in tabs/holdings/assetClass.ts as the places keyed on the asset_class union. They are not: HoldingAssetClass is the display class, keyed on the SERVED union (HoldingsNode.assetClass, contracts/index.ts:819, camelCase, no multi_asset member), and the wire-to-served map ASSET_CLASS_FOR_WIRE (contracts/adapt.ts:1128, read at :1154 and :1244-1275) folds any token it does not carry to 'unclassified'. So multi_asset reaches the tab as Unclassified today. A distinct label needs an edit to contracts/index.ts and contracts/adapt.ts, both outside <paths>. Adding 'Multi-asset' to HoldingAssetClass inside the grant would still break iv-e-148 arm (b) and the 2026-10-07 six-class ruling. typecheck shows zero places keyed on the wire union (0 errors after regeneration), so the exhaustiveness the order asks for is not a compile fact here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tr -d CR on portal/src/pages/InvestorReporting/contracts/index.ts:819 at cf52fdbf: assetClass?: 'equity' | 'fixedIncome' | 'alternatives' | 'structured' | 'commodities' | 'cash' | 'unclassified' | 'other'",
+      "portal/src/pages/InvestorReporting/contracts/adapt.ts:1154 at cf52fdbf: out.assetClass = ASSET_CLASS_FOR_WIRE[node.asset_class] ?? 'unclassified'; ASSET_CLASS_FOR_WIRE (:1128) has no multi_asset key",
+      "tabs/holdings/assetClass.ts:30-44 at cf52fdbf: HoldingAssetClass and ASSET_CLASS_COLOR carry the six display classes plus Other and Unclassified; CLASS_FOR_SERVED (:66) is keyed on the served union",
+      "iv-e-148 (b) asserts Object.keys(ASSET_CLASS_COLOR) equals the six plus Other and Unclassified; the test's ASSET_CLASS registry arm (c) asserts no seventh key",
+      "tsc -p tsconfig.app.json after regeneration: 0 error TS lines (no exhaustive switch or Record fails on the new member)"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-506 step 2: everything keyed or exhaustive over the asset_class union must cover multi_asset, with a plain fallback label; BOUNDS: if making a type exhaustive needs a file outside the paths, STOP and name it.",
+  "world_is": "The wire union is the only place multi_asset is spelled as a key; the portal's served and display layers never see it as a key. Covering it end to end is a decision between the CTO's six-class ruling (iv-e-148) and the round-174 ruling that the wire union follows the contract, and it needs contracts/index.ts and contracts/adapt.ts in a grant. The worker has changed no tab file and no adapter file."
+}
+```
