@@ -127,3 +127,10 @@ My miss: round-17 rows D2-W54-S4, S5, S6 had no disposition at my round-17 compi
 | item | result | commit |
 |---|---|---|
 | IRPT_BCKEND round 169 | ADJUDICATION_v70 + REMEDIATION_v46: live read matched on the measured branch (my read: abep4h7R, 2 fresh computes, 0 TypeError, 0 AccessDenied since 01:18Z); D2-S114 closed in its stated form, residual carried by my row D2-S121 (CTO); 15 dismissed; ARMED 0. Slug sent | 5cb27e610e |
+
+## Addendum, 2026-10-13 02:53Z to 03:02Z (msg 6762)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND PRD v0.51 + v0.52 ratified half | SIGNED at 57ebf643...; I read PATH_MANIFEST's IB-rt-7 rule (v1 HoldingsSnapshot admits an optional field) and diffed the schema (one added property). Condition: the old node schema has additionalProperties false and snapshot.py validates at serve, so both packaged copies re-pin before the builder writes | review cab1de19b0, stamped |
+| IRPT_BCKEND round 170 | ADJUDICATION_v71 + REMEDIATION_v47: 10 dismissed, 6 OPEN, 4 ARMED (incl. W345-S3, the live 49F temp file with client account numbers). Slug sent | df840ac108 |
