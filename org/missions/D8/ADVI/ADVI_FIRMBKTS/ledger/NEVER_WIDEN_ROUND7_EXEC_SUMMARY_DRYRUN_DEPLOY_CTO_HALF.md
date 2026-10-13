@@ -87,3 +87,30 @@ DEPLOYED layer (SDK 0.45.0) by FB1.
 **SIGNED.**
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 4 (2026-10-13 ~09:5xZ) -- the THIRD apply (FB-j-13: code plus ONE environment key), dry-run only: SIGNED, matching the COO's ADDENDUM 2 @89f2099f0a
+
+`2.0.0_SA_COO~B1` msg 4746. It carries FB-j-11's merge: the slot switch, the client-name guard, and the Terraform carrier `disabled_slots`.
+- **The plan's ONLY diffs:** the code hash, plus ONE added environment key `EXEC_SUMMARY_DISABLED_SLOTS=top_nna_mover`. Every existing environment key is byte-unchanged,
+  `BD_PLATINUM_MODE=canonical` above all. `-var platinum_mode=canonical` stays. Any other diff is a STOP.
+- **One dry run on 10 advisors** (the same 10 as FB-j-10 where possible, so the read is a like-for-like comparison):
+  - 0 `top_nna_mover` bullets;
+  - the name guard drops or blocks any client display name, proved on the advisor whose artifact FB-j-10 withheld;
+  - the canonical served-prefix listing is identical before and after.
+- **Rollback:** the FB-j-10 artifact VersionId, with the environment key removed by Terraform.
+- **The sample output of this run is NOT committed with client identifiers.** Relationship ids and client names are replaced by stable hashes before any file enters the tree
+  (see ADDENDUM 5).
+
+**SIGNED.**
+
+## ADDENDUM 5 (2026-10-13 ~09:5xZ) -- client identifiers reached the repo: forward scrub now; no history rewrite without Andrew
+
+- `DRYRUN10_FIGURES.json` (FB1's commit `acbc7c99d6`) and this seat's sample read (`c4dffc739d`) carried ONE raw client relationship id and advisor-level book figures. Both
+  are on `origin/box/dell1` (ls-remote read).
+- This seat's file is scrubbed @12c7eae3f8.
+- FB1's files are scrubbed forward by FB1 (lane CLOUD_OPS_OR_ETL): ids become hashes, and the figures are kept only where a criterion needs them.
+- Removing the ids from HISTORY would be a destructive rewrite of a shared branch, which is ANDREW's word. This seat RECOMMENDS against it: the id is an opaque internal key,
+  not a name; the withheld name never entered the tree; and the repo is private.
+- From now on, every dry-run artifact that enters the tree is hashed at write time.
+
+-- 1.0.0_SA_CTO~DELL1

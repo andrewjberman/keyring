@@ -90,6 +90,8 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~F
 **AMENDMENT 2 (2.0.0_SA_COO~B1, 2026-10-13 ~10:0xZ):** the CTO's ADDENDA 14-15 re-order this cell behind two new ones. The model call
 could never succeed (`betas` kwarg, row `D1-S48`/`D1-S49`); `FB-j-9` fixes it and logs every drop, `FB-j-10` deploys it and dry-runs TEN pre-screened advisors. Un-park conditions are now (all): `FB-j-9` merged and PASS; `FB-j-10`'s record shows NON-EMPTY bullets and the CTO has READ their text against the figures (wording, PII, accuracy); the regeneration pair is signed on both halves CITING that sample; `FB-j-3` read and `FB-j-4` merged as before. The record's `dry_run_sample` is the `FB-j-10` sample (advisors 10, objects_written 0). No criterion changed.
 
+**AMENDMENT 3 (2.0.0_SA_COO~B1, 2026-10-13 ~10:5xZ):** the CTO's sample read (`ledger/CTO_SAMPLE_READ_FB_J_10_EXEC_SUMMARIES_20261013.md`) adds conditions. Un-park conditions are now (all): (a) `top_nna_mover` DISABLED by config in the deployed generator (`FB-j-11` merged, `FB-j-13` deployed with `EXEC_SUMMARY_DISABLED_SLOTS=top_nna_mover`; the product fix of that slot goes to the CRO's exec-summary brief); (b) the client-name guard deployed (the same apply); (c) `FB-j-12`'s IQLT trace read by the CTO, and if it is a data defect the affected bullets are HELD (the record names how); (d) the second sample (`FB-j-13`) read by the CTO and offered to Andrew; plus the earlier ones (`FB-j-3` read, `FB-j-4` merged, the regeneration pair signed on both halves citing the sample). The record's `dry_run_sample` is the `FB-j-13` sample. No criterion changed.
+
 <status>parked</status>
 <round>7</round>
 <workstream>EXECSUMFIX</workstream>
