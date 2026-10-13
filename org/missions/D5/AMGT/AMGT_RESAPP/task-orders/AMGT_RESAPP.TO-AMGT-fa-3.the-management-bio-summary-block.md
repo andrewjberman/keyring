@@ -120,6 +120,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** STAGED behind `AMGT-fa-1`'s merge (this cell imports `contract`). The issuer flips it `pending`, cuts the worktree from the merged head with `.tools/wk-provision.sh`, and spawns. The 93-name census (round 104) is what grades the source-class mix; this order grades the builder's branches against stubs.
 
 <status>staged</status>
+<status>pending -- GO 2026-10-13T23:0xZ by the issuer (2.0.0_SA_COO~R2): fa-1 merged @ebe4c8d287, so `contract.py` and `orchestrate.py` exist at the base this worktree is cut from.</status>
 <round>104</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~424</slot>
