@@ -6907,3 +6907,56 @@
   }
 }
 ```
+
+## IRPT_ANLREQ-D2-W66-S2 -- the head's irpt-status files already hold the release bytes, so the release run is the head as it is
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W66-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~66",
+  "surfaced_at": "2026-10-13T12:07:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO-AR-y-217 step 5 stages the release served.py and status.py in place of the head ones, but at the worktree HEAD the head ones already are the release bytes (served.py 30c0eb88, status.py 8df461a0), so the release run is the head as it is and only the control swaps the live bytes in",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-217 step 5: run the ops/tests folder with the release served.py and status.py staged in place of the head ones (the head ones differ from the release), and record the same run with the ORIGINAL live served.py and status.py as the control.",
+  "world_is": "At fecc3f6e81 the files infra/aws/lambda/investor-reporting/_authz/served.py and ops/status.py are the release blobs (sha256 30c0eb88ec38 and 8df461a0d395, the same as the release zip members). The live Lambda package holds the pre-rule blobs (served.py ada9bf5b, status.py cb3b2ea6, from pin 361c44fa9d). So the head is not the pre-rule state, and the 'staged in place of the head ones' step is a no-op for the release run. Measured: ops tests on the release bytes 313 passed, 22 skipped, 0 failed; with the live bytes 310 passed, 3 failed (test_report_ticket_binding.py), 22 skipped. The control therefore carries the failures that the release clears.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show fecc3f6e81:infra/aws/lambda/investor-reporting/_authz/served.py | sha256sum = 30c0eb88ec38a7dd... (the release blob 564e60483858a3cc5c51ffea6aed0f76ff291abe)",
+      "git show fecc3f6e81:infra/aws/lambda/investor-reporting/ops/status.py | sha256sum = 8df461a0d3957949... (the blob of e93258c650b369df46e22210d94add7cbb0d1749)",
+      "aws lambda get-function --function-name irpt-status: CodeSha256 JmOhV/ep4mR1mt2NKKqyUlohgO3mlDw1GEM4eAWYKdw=; the downloaded package holds served.py ada9bf5b and status.py cb3b2ea6 (scratch .scratch/r20/irpt-status/live_zip)",
+      "scratch logs .scratch/r20/irpt-status/tests_ops_release.log and tests_ops_control_live.log"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W66-S3 -- the control ran in the detached base checkout, not in a scratch copy of the tree
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W66-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~66",
+  "surfaced_at": "2026-10-13T12:07:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO-AR-y-217 step 5 asks for the tests in a scratch copy of the tree; the run used the throwaway detached base checkout C:/dev/wk66-release/base instead, swapping the two live blobs into its files for the control and restoring the release blobs after, the method W65-S3 already recorded as the only one that runs",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-217 step 5: the ops tests run 'in a scratch copy of the tree'; the control is the same run with the original live served.py and status.py.",
+  "world_is": "A folder copy is not used, because a copy outside the checkout fails at collection (IRPT_ANLREQ-D2-W65-S3). The release run ran in the detached base checkout as it is (its served.py and status.py are the release bytes already). The control copied the live blobs (361c44fa9d served.py and status.py) over those two files, ran the folder and then copied the release blobs back from git (sha256 re-read: 30c0eb88 and 8df461a0). The parity control ran the same way. The checkout is a git worktree that is not removed, since no recursive delete was permitted to this worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git worktree add --detach C:/dev/wk66-release/base 5d8b0390ed; HEAD is 5d8b0390ed after the add (the base commit of the cell)",
+      "after the control run and the restore: sha256sum of _authz/served.py 30c0eb88ec38 and ops/status.py 8df461a0d395 (scratch logs parity.log and parity_control_live_status.log)",
+      "prior evidence IRPT_ANLREQ-D2-W65-S3 (folder copy fails at collection)"
+    ]
+  }
+}
+```
