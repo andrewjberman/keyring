@@ -91,7 +91,9 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~F
 
 **AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-13 ~09:0xZ):** section 1a names the route act 4b used (build script, `r4_execeq.py --zip`, the scoped plan with `-var platinum_mode=canonical`) and the COO half is authored (`ledger/NEVER_WIDEN_ROUND7_EXEC_SUMMARY_DRYRUN_DEPLOY_COO_HALF.md`). Still parked: the CTO's half. No criterion changed.
 
-<status>parked</status>
+**AMENDMENT 2 (2.0.0_SA_COO~B1, 2026-10-13 ~09:1xZ) -- UN-PARKED:** both halves are signed at the current bytes: the COO half at c811a75e60 (`ledger/NEVER_WIDEN_ROUND7_EXEC_SUMMARY_DRYRUN_DEPLOY_COO_HALF.md`) and the CTO's half at 1cefc87595 (`ledger/NEVER_WIDEN_ROUND7_EXEC_SUMMARY_DRYRUN_DEPLOY_CTO_HALF.md`: read and accepted; Branch A and B as the COO half; ONE added sequencing condition, below). `FB-j-5` is merged at 39ba2f99f5. **The CTO's added condition, stated here for the actor:** this deploy changes no trigger. The trigger is `FB-j-4` (the region on the put-events call): once it deploys, the next chain invokes the generator NON-dry and serves up to 158 client-facing summaries; so `FB-j-4` does not deploy until THIS order's sample has been READ by the CTO and the regeneration pair (`FB-j-7`) is signed on both halves citing it. Your sample record is that read's input: name the advisor ids, and leave the artifacts where the CTO reads them.
+
+<status>pending</status>
 <round>7</round>
 <workstream>EXECSUMFIX</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-j-6</to_id>
