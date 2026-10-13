@@ -7143,3 +7143,153 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W133-S1 -- 7 of the 12 neither-convention segments stay UNEXPLAINED under the closed list (FWD-8 unmet for 7 accounts)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W133-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~133",
+  "surfaced_at": "2026-10-13T14:01:11Z",
+  "one_line": "Applying RULE.md (committed 99d37085ba, before the read) to the 12 segments that neither flow convention closes leaves 7 UNEXPLAINED, in 7 accounts of one segment each; the closed list explains 5.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IRPT_DASHBD.TO-DB-b-167: each of the 12 segments neither convention closes owes one reason from the closed list that, corrected alone, closes it within 0.35 pp; a segment left UNEXPLAINED is filed as one surprise row and FWD-8 is unmet for its account.",
+  "world_is": "tieout/tieout_neither_reasons.py at 600f5a0df6, run on a copy of the stored tables, prints: 88 flow-bearing gradable segments, 12 neither, uncorrected closes 0. By reason: BD_ACCRUED_INCOME 4, FLOW_ABSENT_ONE_SIDE 1, MISSING_PRICE 0, FLOW_ON_NON_TRADING_DAY 0, INCOME_OFF_FLOW_DAY 0, UNEXPLAINED 7 (sum 12). UNEXPLAINED is 7 segments in 7 accounts, one segment each. combined_only 0. demoted_to_unexplained 7. The BD_ACCRUED_INCOME identity holds on all 12, its correction closes 4 and leaves 7; FLOW_ABSENT_ONE_SIDE holds on 1 and closes it; the MISSING_PRICE, FLOW_ON_NON_TRADING_DAY and INCOME_OFF_FLOW_DAY tests hold on none of the 12.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 python -I org/missions/D9/IRPT/IRPT_DASHBD/tieout/tieout_neither_reasons.py (no record path), at worktree commit 600f5a0df6, rc 0: 'flow_segments 88; neither 12', 'uncorrected_closes_among_12 0', 'by_reason {... UNEXPLAINED: 7} (sum 12)', 'unexplained accounts 7; unexplained segments per account [1, 1, 1, 1, 1, 1, 1]'",
+      "RULE.md at commit 99d37085ba (written and committed before any row of the 12 was read; code and column names only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W133-S2 -- DB89-1-AC1 population limb: RULE.md defines accounts over the 88 flow segments (84), the checker requires 1..12
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W133-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~133",
+  "surfaced_at": "2026-10-13T14:02:20Z",
+  "one_line": "DB89-1-AC1 prints FAIL on its population limb: the record's population.accounts is 84 by RULE.md's own definition (accounts among the 88 flow segments), and the checker requires an int from 1 to 12; the order does not define the field.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-167 record spec: population {flow_segments 88, neither_segments 12, accounts}, with no definition of accounts. RULE.md section 2 (commit 99d37085ba), committed before the read: population.accounts = distinct accounts among the 88 flow-bearing gradable segments. checks/r89/p89_round89.py: population flow_segments 88, neither_segments 12, accounts int 1..12.",
+  "world_is": "The record written by tieout_neither_reasons.py at 600f5a0df6 carries population accounts 84. The checker prints 'FAIL: population {accounts: 84, flow_segments: 88, neither_segments: 12} (must reproduce 88 flow segments and 12 neither-closes segments)', rc 1. The rule's definition and the checker's range cannot both hold for this record; the rule was not edited after the read and the record was not changed to fit the checker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 python checks/r89/p89_round89.py . DB89-1-AC1 at worktree HEAD 600f5a0df6 plus the record: 'FAIL: population {'accounts': 84, 'flow_segments': 88, 'neither_segments': 12} ...', 'DB89-1-AC1 FAIL', rc 1",
+      "checks/r89/p89_round89.py line 82: pop.get('accounts') must satisfy 1 <= accounts <= 12; RULE.md section 2 population.accounts defined over the 88"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W133-S3 -- DB89-1-AC1 digit-run limb: the record's rule.sha256 (sha256 of the committed RULE.md) carries an 8-digit run, the same defect class as W132-S1
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W133-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~133",
+  "surfaced_at": "2026-10-13T14:02:20Z",
+  "one_line": "DB89-1-AC1 cannot PASS as written: the record must carry rule.sha256 = sha256 of the committed RULE.md, and that value holds the 8-digit run 41859941, which the criterion's no-run-of-8-digits limb refuses.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-167 BOUNDS and record spec: rule.sha256 is the sha256 of the committed bytes of RULE.md; DB89-1-AC1: the record holds no run of 8 or more digits.",
+  "world_is": "RULE.md at commit 99d37085ba has sha256 fc50363af10dfad3d0088a4220c68132b8a02c41859941e8ab30c7be53361f55, which contains the 8-digit run 41859941. The record line 62 holds that value, and grep for 8 or more digits returns one match. The code sha256 (0cb1529c...) has no such run. This is the defect class of W132-S1 (round 88), recurring on the rule file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git cat-file blob 99d37085ba:org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~133/RULE.md | sha256sum = fc50363af10dfad3d0088a4220c68132b8a02c41859941e8ab30c7be53361f55",
+      "grep -o '[0-9]\\{8,\\}' on NEITHER_12_REASONS.json returns 41859941 (line 62, rule.sha256), rc 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W133-S4 -- withdraws IRPT_DASHBD-D2-W133-S3: the round-89 checker exempts the sha256 and commit members from the digit scan
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W133-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~133",
+  "surfaced_at": "2026-10-13T14:04:43Z",
+  "one_line": "Correction to row S3: the digit-run limb of DB89-1-AC1 does not refuse the record's rule.sha256, because checks/r89/p89_round89.py skips every key ending in sha256 and the key commit before scanning for runs of 8 or more digits. S3's premise is false; S3 is withdrawn, not the criterion.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row S3 asserted that the digit-run limb refuses the record's rule.sha256 (the sha256 of RULE.md, which holds the 8-digit run 41859941), so the criterion cannot PASS as written.",
+  "world_is": "checks/r89/p89_round89.py line 37 excludes keys ending in sha256 and the key commit from long_digit_runs (lines 33-44), and line 117 scans the record with that function. A scratch copy with only the population accounts range relaxed prints 'DB89-1-AC1 PASS' with rc 0, so the digit limb passes on this record. The official run still prints 'FAIL: population' (rc 1) on the accounts range, recorded in S2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "checks/r89/p89_round89.py lines 33-44 and 117: long_digit_runs skips keys ending in sha256 and the key commit; the record is scanned through it",
+      "scratch diagnostic .scratch/p89_diag_relaxed_accounts.py (not committed; only the accounts range check replaced by False), run at worktree HEAD with the record: 'DB89-1-AC1 PASS', rc 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W133-S5 -- population.accounts under both readings: 84 over the 88 flow segments (the rule's text), 11 over the 12 neither segments (the checker's range)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W133-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~133",
+  "surfaced_at": "2026-10-13T14:04:43Z",
+  "one_line": "For row S2: the same population gives 84 distinct accounts over the 88 flow-bearing segments and 11 over the 12 neither segments; the checker's 1-to-12 range admits only the second reading, which the committed RULE.md does not state.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "RULE.md section 2 (commit 99d37085ba): population.accounts = distinct accounts among the 88 flow-bearing gradable segments. checks/r89/p89_round89.py line 82: accounts int 1..12.",
+  "world_is": "Counts from .scratch/accounts_both_readings.py (python -I, reusing the module's helpers, counts only): flow segments 88 with 84 distinct accounts; neither segments 12 with 11 distinct accounts. The record carries 84 under the rule's reading and was not changed to 11; the reading to use is for the issuer to decide.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I .scratch/accounts_both_readings.py, rc 0: 'flow segments 88; distinct accounts among them 84' and 'neither segments 12; distinct accounts among them 11'",
+      "checks/r89/p89_round89.py line 82 and RULE.md section 2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W133-S6 -- the commit-time client-data check could not run on the DB-b-167 completion commit (hashed account-id list absent)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W133-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~133",
+  "surfaced_at": "2026-10-13T14:12:21Z",
+  "one_line": "The client-data check in the commit gate did not run on the DB-b-167 completion commit f2ffc7aca1: the hashed account-id list is absent at its default path, so the commit was not checked for account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-167 BOUNDS: no client data in what you write (counts, day offsets and words only), and every commit passes the commit gate via .tools/safe-commit.sh (CLAUDE.md section 6, rule 14).",
+  "world_is": "safe-commit f2ffc7aca1 printed WARN: client-data-check: hashed account-id list ABSENT at the default path under the operator's .opal directory, and stated the commit was NOT checked for client account ids. The commit holds two files: the proof instance and the order file. A digit-run scan of those two files finds one run inside a sha256 hex string in the instance and three runs of the stored-evidence folder date in the order; that scan is not an account-id check, and the list-based check did not run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit f2ffc7aca1 on 2026-10-13: the client-data-check WARN line, and the SKIP-style statement that the commit was not checked",
+      "grep -cE '[0-9]{8}' on the two committed files: 1 line in the proof instance (inside a sha256 hex string), 3 lines in the order file (the stored-evidence folder name)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
