@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "laptop",
- "written_at": "2026-10-13T20:28:23Z",
+ "written_at": "2026-10-13T20:38:24Z",
  "written_by": "1.0.0_SA_CTO",
  "rows": [
   {
@@ -566,7 +566,14 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-13T20:38:24Z",
+    "by": "1.0.0_SA_CTO",
+    "reason": "Andrew's own words conflict (~18:0xZ replacement vs ~14:4xZ decision 2a); his to resolve, REC (a)"
+   }
   }
  ]
 }
