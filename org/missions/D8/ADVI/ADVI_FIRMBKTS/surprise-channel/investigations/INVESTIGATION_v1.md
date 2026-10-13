@@ -6695,3 +6695,29 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "For the CTO's read of the sample (his ruling): the served advisor view would show a client's name in that line if the artifact were written. FB-j-7 and FB-j-4 stay behind that read."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-j-14, the scrub)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S51",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-13T09:54:07Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "FB-j-10's sample files carried one relationship id in raw form (5 occurrences) because my write-time check looked for client NAMES only; scrubbed forward in the FB-j-14 commit.",
+  "spec_asserts": "TO-FB-j-10 step 9 and bound 2: print no client name; withhold text that carries one. It named no rule for relationship ids.",
+  "world_is": "Measured by a byte read of the two committed files: 1 distinct z-prefixed id of 9 characters, 2 occurrences in DRYRUN10_ARTIFACTS.json and 3 in DRYRUN10_FIGURES.json, the same id in both, inside the top_nna_mover bullets and their figures; the files were already on origin when the order arrived. My step-9 check matched display_name / client-name / account-name / owner / household string fields only, so an id-shaped token passed it. FB-j-14 replaced every standalone occurrence by h_ plus 12 hex of sha256 (same replacement throughout, no other byte changed, line endings kept) in commit 05e9e30f98; the mapping is written nowhere; the raw form remains in the history of the earlier commit (no rewrite, Andrew's word). Not scanned: any other identifier shape (an account number, a custodian id): only the z-pattern was read for, so zero other shapes is not established.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/DRYRUN10_ARTIFACTS.json",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/DRYRUN10_FIGURES.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "From FB-j-13 on, sample files are written with ids hashed at write time (order FB-j-14 item 2); the generator's own PII guard is a separate question (D1-S50)."
+}
+```
