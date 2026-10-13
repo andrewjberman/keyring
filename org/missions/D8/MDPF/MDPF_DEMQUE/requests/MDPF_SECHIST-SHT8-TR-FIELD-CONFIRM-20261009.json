@@ -1,5 +1,8 @@
 {
   "request_id": "MDPF_SECHIST-SHT8-TR-FIELD-CONFIRM-20261009",
+  "need_class": "non_client",
+  "need_date": "2026-10-09",
+  "window_start": "2026-10-08",
   "standing": false,
   "tier": 1,
   "reason": "Confirm the field mnemonic SH-t-8 added to the daily pull's history request (TOT_RETURN_INDEX_GROSS_DVDS, constant TOTAL_RETURN_LEVEL_FIELD in integrations/bloomberg/pipeline/etf_daily_pull.py @89fe7615bf) before its site-Z take: the worker could make no Bloomberg call, so the name is unverified (row MDPF_SECHIST-D1-W7-S1). If the Terminal rejects it the pull drops the column silently and FWD-9's money-market windows stay blank.",

@@ -1,5 +1,8 @@
 {
   "request_id": "MDPF_SECHIST-SHT8-TR-FIELD-HISTORY-20261009",
+  "need_class": "non_client",
+  "need_date": "2026-10-09",
+  "window_start": "2026-09-28",
   "standing": false,
   "tier": 1,
   "reason": "Follow-up to MDPF_SECHIST-SHT8-TR-FIELD-CONFIRM-20261009: the field is valid (reference read TOT_RETURN_INDEX_GROSS_DVDS = 1.000389 for SALXX; negative control FUND_TOTAL_RETURN_1D INVALID_FIELD; 2.0.0_SA_COO~Q1 msg 2649) but HISTORY for the single day 2026-10-08 came back empty, the same-day money-market pattern in the CRO substrate note section 2. This reads the field's history over prior settled days to decide whether SH-t-8 (route 2a) can be taken at site Z (1.0.0_SA_CTO~DELL1 msgs 2646, 2650).",

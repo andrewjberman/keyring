@@ -1,5 +1,8 @@
 {
   "request_id": "AMGT_RESAPP-S14-CRNCY-SCANNER-US-SLICE1",
+  "need_class": "non_client",
+  "need_date": "2026-10-11",
+  "window_start": null,
   "channel": "reference",
   "reason": "Row AMGT_RESAPP-D1-S14 / CTO~DELL1 round-88 analysis item 2, ruled msg 3434: a peer member's price currency has no source in any store (the scanner carries no currency field; the model-block pool holds CRNCY only for held names). Round 90 replaces each member's plain reason with the currency this request returns. decomposition s.97a. SLICE1: see securities_note; filed by the issuer on COO~Q1's rescope question (msg 4870).",
   "securities": [

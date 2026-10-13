@@ -1,5 +1,8 @@
 {
   "request_id": "AMGT_RESAPP-493c-ICT-IDENTITY",
+  "need_class": "non_client",
+  "need_date": "2026-10-09",
+  "window_start": null,
   "channel": "reference",
   "reason": "Row Z-S369 / Z-S377: decides whether ICT_US_Equity stays a key apart from ICT_PM_Equity (one key or two). deliverables/2.0.0_SA_COO~Z/round79/reads/Z_S369_ICT_POOL_READ.md section 3.",
   "securities": [

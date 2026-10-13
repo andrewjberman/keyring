@@ -1,5 +1,8 @@
 {
   "request_id": "SITEZ-SIGNIN-PREFLIGHT-REFDATA-20261009",
+  "need_class": "non_client",
+  "need_date": "2026-10-09",
+  "window_start": null,
   "tier": 1,
   "reason": "The ONE site-Z Terminal sign-in pre-flight before 10:45Z serving the 11:00Z ETFS_RIVALS vehicle, MDPF_SECHIST's 11:00Z pull and the AMGT 13:00Z fire: bbg_credentials.py --check, bloomberg_health, then ONE reference_data read (integrations/bloomberg/READ_HERE.md section 2). bloomberg_health and the port read are not draws; the reference_data read is. Booked as a tier-1 production draw (C-RESERVE: production is ledgered as a RESERVE draw).",
   "page": "production daily pulls (pre-flight)",
