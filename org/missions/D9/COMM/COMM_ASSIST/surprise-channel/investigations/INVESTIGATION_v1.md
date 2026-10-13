@@ -694,3 +694,30 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "A refresh that rewrites only its named files leaves an answers/ folder untouched, so the two do not collide."
 }
 ```
+
+## COMM_ASSIST-S3 -- NFRA_CTLPLN round 12 has no cell that reads muse's key on dell2
+
+```json
+{
+  "id": "COMM_ASSIST-S3",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~CA",
+  "surfaced_at": "2026-10-13T19:07:29Z",
+  "one_line": "NFRA_CTLPLN round 12 has no cell that reads muse's key on dell2, and the CTO direction makes that a precondition of grading FWD-6 (muse to dell2 over tailnet SSH by key).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_COO_CA_COMM_ASSIST_MUSE_20261013.md section 2 point 5: before FWD-6 is graded, round 12's SSH cell must read back muse's key on dell2; if it does not cover muse to dell2, file a surprise row naming it",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-ab-7.ssh-tools-kbdint-and-replan.md THE CELL: scoped to the verify tool's password grading, the -i key choice and the enable script's default rule; the word muse occurs 0 times in it (case-sensitive count)",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/ round-12 orders TO-CT-ab-1,3,4,5,7,8,9,11,12 listed by name; none names muse (the one case-insensitive hit in ab-1 is the substring in 'IamUsers')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Direction section 2 point 5: round 12's SSH cell reads back muse's key on dell2, so FWD-6's exercise (muse to dell2 over tailnet SSH by key) rests on a measured key.",
+  "world_is": "Round 12's SSH cell (CT-ab-7) fixes how the laptop verifies and enables SSH on the boxes; it does not install or read back muse's public key on dell2. Whether muse's key is already in dell2's administrators_authorized_keys is not measured here; row W8-S7 found the key in no repo file.",
+  "notes": "CA-h-2 (host act on dell2) includes one SSH read from muse; its order will carry the key read-back as its own first step unless NFRA_CTLPLN adds the cell first. Owner of the gap: 1.0.0_SA_CTO."
+}
+```
