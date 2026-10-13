@@ -1051,6 +1051,95 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "spec_asserts": "The HG-t-10 half step 6 and the HG-t-14 retime say the 13:25Z fire runs after its inputs land and serves holdings_as_of == as_of for the day.",
     "world_is": "Today's Bloomberg T-1 partition had not landed by 13:33Z, so the scheduled fire failed three times and the day serves the prior day's characteristics, as any failed day did. Whether the Bloomberg pull for 2026-10-12 failed, is queued or runs later is not read; Bloomberg pulls go only through their queue and are not this seat's.",
     "notes": "No manual re-invoke: a run off the producer's own clock needs a never-widen half. Not caused by the exercise (it touched rebalancer bronze, silver and the sentinel target only). The CVO takes it at L9 with D1-S14 and D1-S15; a re-run on the partition's arrival is the CTO's call."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W14-S1",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~14",
+    "surfaced_at": "2026-10-13T14:30:00Z",
+    "one_line": "The round-3 census says the deployed Teams transport is a stub that raises GatewayToolsAbsent by design, so no run has completed. At HEAD the deployed Lambda passes a bearer and makes a live GET; GatewayToolsAbsent is raised only when no bearer is passed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/transcripts-pull/handler.py:41-42 read at HEAD: the gateway arm reads the bearer from Secrets Manager and returns GatewayTransport(base_url, bearer=bearer)",
+        "data/transcripts/scripts/teams/gateway_client.py:221 read at HEAD: _token raises GatewayToolsAbsent only when no bearer is held; :224-228 the _get performs the live GET with the bearer",
+        "infra/aws/lambda/transcripts-pull/handler.py:9-10 read at HEAD: the docstring still says the gateway transport is the stub that raises GatewayToolsAbsent (stale wording)",
+        "data/transcripts/scripts/teams/pull.py:318-321 read at HEAD: the stub message is the CLI no-bearer path (GatewayTransport() with no bearer)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The round-3 census teams row: as deployed the transport raises GatewayToolsAbsent by design, so no run has completed and the answer rests on source and STATUS, not on a run (cites handler.py:9-10).",
+    "world_is": "The deployed handler builds a live transport with a bearer, so the stub is the no-bearer CLI path and the docstring is stale. Whether the gateway route answers 200 or 503 needs_login was not read (no vendor call). The teams disposition in FWD6_SEVEN_DISPOSITIONS_R4.md is NAMED-REASON on the needs_login path, not on the stub.",
+    "notes": "Not chased. Read-only grading only; no code touched. The docstring fix is the owner's, not this worker's."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W14-S2",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~14",
+    "surfaced_at": "2026-10-13T14:30:00Z",
+    "one_line": "The census names the act that refills the SI2 standing session for the three SDD pulls as the run-capture.ps1 task SchwabSddCapture. That task writes Secrets Manager schwab/sdd/session; the puller reads Credential Manager SDDSecure, and no in-repo code writes SDDSecure.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1:229 read at HEAD: CredReadW('SDDSecure') is the credential the puller reads; :270-272 says a human must re-establish the session on the box",
+        "infra/aws/ec2/canonical-schwab-si2/schwab_sdd_session_capture.py:8 and :10 read at HEAD: the capture writes a session blob to Secrets Manager (schwab/sdd/session) and never drives a login",
+        "infra/aws/ec2/canonical-schwab-si2/run-capture.ps1:29 read at HEAD: schtasks /Create /TN SchwabSddCapture runs the capture as the Administrator console user",
+        "Grep of infra/aws/ec2/canonical-schwab-si2 at HEAD for CredWrite, cmdkey and SDDSecure returns only reads of SDDSecure (sdd-daily-pull.ps1, sdd-backfill-08335338.ps1); no writer"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The round-3 census rows for schwab-canonical-si2-08403355, 08242234 and 08335338 name the act as re-establishing the SI2 standing session via run-capture.ps1 task SchwabSddCapture.",
+    "world_is": "In repo code the capture task refreshes Secrets Manager, not the SDDSecure credential the puller reads. The act that writes SDDSecure is not in the repo. The SI2 desktop sign-in is the person's act the capture reads; whether the named task refreshes SDDSecure is not read here. The three rows stay NAMED-REASON on sdd-daily-pull.ps1:272, with the named act corrected in their because-cells.",
+    "notes": "No AWS act. The CVO or the owner of the SI2 box names the act that writes SDDSecure."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W14-S3",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~14",
+    "surfaced_at": "2026-10-13T14:30:00Z",
+    "one_line": "The task order's example row for astn-wsjft-3am-run grades NAMED-REASON on the premise that the next 3 AM run reads the new cookie. The code gives no catch-up for a missed day, so the pull does not refill and the disposition is RE-ATTEMPT-DESIGNED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "tools/astn_wsjft/scripts/run.py:88 and :144 read at HEAD: _fresh keeps articles published within 12 hours of now, and the run applies it to the raw set",
+        "tools/astn_wsjft/scripts/run.py:133 read at HEAD: a failed FT fetch is a warning, and no retry is scheduled",
+        "tools/astn_wsjft/ARCHITECTURE.md:58 read at HEAD: the session is harvested out-of-band by harvest_ft_session.js when it expires"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order's example row: a failed FT fetch is a warning and the next 3 AM run reads the new cookie (tools/astn_wsjft/scripts/run.py:53), which the order presents as a NAMED-REASON shape.",
+    "world_is": "The next run reads the new cookie going forward, but a missed day is not refilled: the 12-hour window and the absence of any lookback drop the missed window's articles. A pull that does not refill is RE-ATTEMPT-DESIGNED under the order's own rule.",
+    "notes": "The example row was a shape, not an answer, as the order says. The disposition in FWD6_SEVEN_DISPOSITIONS_R4.md is RE-ATTEMPT-DESIGNED with the design written in the row."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W14-S4",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~14",
+    "surfaced_at": "2026-10-13T14:30:00Z",
+    "one_line": "infra/aws/terraform/transcripts/pull.tf says it is DESIRED ONLY and never applied, but the teams-global-transcripts-pull-hourly rule is live and ENABLED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/transcripts/pull.tf:1-3 read at HEAD: this file is planned, never applied by the order that wrote it",
+        "aws events describe-rule --name teams-global-transcripts-pull-hourly read 2026-10-13 (read-only): State ENABLED, cron(0 13-22 ? * MON-FRI *); outlook-global-transcripts-pull-daily also ENABLED, cron(30 23 * * ? *)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "pull.tf header: the clock and writer are planned and not applied; the apply is a later release act with a change-management entry.",
+    "world_is": "The live rule exists and is ENABLED. Either the apply happened outside this file's history or the header is stale. Which is true was not read further.",
+    "notes": "Not chased. The disposition of the teams row does not depend on the header."
   }
 ]
 ```
