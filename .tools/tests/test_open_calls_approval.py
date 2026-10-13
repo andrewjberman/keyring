@@ -5,10 +5,15 @@ Runs the tool as a subprocess against a TEMPORARY state root (OPAL_STATE_ROOT). 
 when OPAL_STATE_ROOT is set, and OPAL_OPENCALLS_CLOUD=0 is set as well. The real org/devices/state lists are never written.
 The measurement (`scope`) reads the real repository read-only, as the tool always does.
 
+DP-b-5 (amended): `add --kind approval` requires --portal, so every approval add here passes --portal pointing at a
+TEMPORARY git repository (a PROD release, a DEV-only commit, and one own commit per branch cut from PROD). Nothing is fetched.
+
 Last line: OPEN-CALLS-APPROVAL-TEST cases=<k>/<n> ok=<True|False>
 """
 import json
 import os
+import shutil
+import stat
 import subprocess
 import sys
 import tempfile
@@ -20,10 +25,47 @@ SERIAL = "0.9.0_WK_NFRA_DEVPLN~1"
 CTO = "1.0.0_SA_CTO"
 PRD = "org/missions/D0/NFRA/NFRA_DEVPLN/prd/NFRA_DEVPLN_PRD.md"
 CONTEXT = "Created by the approval-kind test; gates the portal merge-forward cell under test here."
+EMPTY_TREE = "4b825dc642cb6eb9a060e54bf8d69288fbee4904"   # git's empty tree: every repository holds it
+# the branches the approval adds below name, each cut from PROD with one own commit (cand/laptop/<slug>)
+FIXTURE_SLUGS = ("t-cf", "t-cto", "t-oi", "t-dec", "t-to", "t-nd")
+
+
+def git(repo, *args):
+    """stdout of one git command in the temporary portal; a failure is a test error, not a verdict."""
+    p = subprocess.run(["git", "-C", repo, "-c", "user.name=test", "-c", "user.email=test@opal.agent", "-c", "commit.gpgsign=false"]
+                       + list(args), capture_output=True, text=True, encoding="utf-8", errors="replace")
+    if p.returncode != 0:
+        raise RuntimeError("git %s rc=%d: %s" % (" ".join(args), p.returncode, p.stderr.strip()))
+    return p.stdout.strip()
+
+
+def make_commit(repo, parent, message):
+    args = ["commit-tree", EMPTY_TREE, "-m", message]
+    if parent:
+        args += ["-p", parent]
+    return git(repo, *args)
+
+
+def build_portal(repo):
+    """PROD = p1; DEV = p1 + d1 (a DEV-only commit); each cand/laptop/<slug> = p1 + one own commit (a PROD cut)."""
+    os.makedirs(repo)
+    git(repo, "init", "-q")
+    p1 = make_commit(repo, None, "PROD release")
+    d1 = make_commit(repo, p1, "DEV only")
+    git(repo, "update-ref", "refs/remotes/origin/PROD", p1)
+    git(repo, "update-ref", "refs/remotes/origin/DEV", d1)
+    for slug in FIXTURE_SLUGS:
+        git(repo, "update-ref", "refs/heads/cand/laptop/" + slug, make_commit(repo, p1, "own commit for " + slug))
+
+
+def _force(func, path, _exc):
+    """A read-only git object on Windows: clear the flag, then remove. Only inside this test's own temporary directory."""
+    os.chmod(path, stat.S_IWRITE)
+    func(path)
 
 
 class Env:
-    """A temporary state root and ruling file. Every file this run creates is removed by name, then the directories."""
+    """A temporary base holding a state root, a ruling file and a fixture portal. cleanup() removes that base."""
 
     def __init__(self):
         self.base = tempfile.mkdtemp(prefix="opalcalls_approval_")
@@ -31,7 +73,9 @@ class Env:
         self.box_dir = os.path.join(self.state, BOX)
         self.list = os.path.join(self.box_dir, "open_calls.json")
         self.ruling = os.path.join(self.base, "RULING.md")
+        self.portal = os.path.join(self.base, "portal")
         self.files, self.dirs = [], [self.box_dir, self.state, self.base]
+        build_portal(self.portal)
         self.write(self.ruling, "ruling for the approval-kind test\n")
 
     def write(self, path, text):
@@ -43,16 +87,8 @@ class Env:
         return path
 
     def cleanup(self):
-        for f in self.files + [self.list, self.list + ".tmp"]:
-            try:
-                os.remove(f)
-            except OSError:
-                pass
-        for d in self.dirs:
-            try:
-                os.rmdir(d)
-            except OSError:
-                pass
+        # the whole temporary base: the state root, the fixture portal and the unreadable-store directory
+        shutil.rmtree(self.base, onerror=_force)
 
 
 def run(env, args, serial=SERIAL):
@@ -82,7 +118,7 @@ def row_for(env, branch):
 def add_approval(env, branch, klass, serial=SERIAL):
     return run(env, ["add", "--kind", "approval", "--project", "NFRA_DEVPLN", "--box", BOX, "--branch", branch,
                      "--purpose", "test feature for the approval kind", "--pages", "portal/a.tsx,portal/b.tsx",
-                     "--class", klass, "--how", "open the page and look at it"], serial)
+                     "--class", klass, "--how", "open the page and look at it", "--portal", env.portal], serial)
 
 
 def close_approval(env, cid, ruled_by, decision, serial=SERIAL):
@@ -102,12 +138,14 @@ def main():
         cases.append((label, bool(ok)))
 
     try:
-        # 1. add makes an OPEN approval row; head_sha and commits are null (DP-b-5 computes them)
+        # 1. add makes an OPEN approval row; head_sha is the fixture branch tip and commits its own count (DP-b-5 computes them)
         rc, out, _err = add_approval(env, "cand/laptop/t-cf", "client-facing")
         r = row_for(env, "cand/laptop/t-cf")
-        check("add makes an OPEN approval row (head_sha and commits null, pages split)",
+        fx_head = git(env.portal, "rev-parse", "refs/heads/cand/laptop/t-cf")
+        fx_commits = int(git(env.portal, "rev-list", "--count", "origin/PROD..refs/heads/cand/laptop/t-cf"))
+        check("add makes an OPEN approval row (head_sha = fixture tip, commits = fixture own count, pages split)",
               rc == 0 and "kind=approval" in out and r is not None and r["state"] == "OPEN"
-              and r["approval"]["head_sha"] is None and r["approval"]["commits"] is None
+              and r["approval"]["head_sha"] == fx_head and r["approval"]["commits"] == fx_commits
               and r["approval"]["pages"] == ["portal/a.tsx", "portal/b.tsx"] and r["approval"]["class"] == "client-facing"
               and r["subject"] == "approval: cand/laptop/t-cf")
         cid = r["id"] if r else "none"
@@ -168,10 +206,10 @@ def main():
         rc_c, _o, err_c = add_approval(env, "cand/laptop/x-cls", "secret")
         rc_b, _o, err_b = run(env, ["add", "--kind", "approval", "--project", "NFRA_DEVPLN", "--box", BOX,
                                     "--branch", "cand/laptop", "--purpose", "p", "--pages", "a", "--class", "test-only",
-                                    "--how", "h"])
+                                    "--how", "h", "--portal", env.portal])
         rc_m, _o, err_m = run(env, ["add", "--kind", "approval", "--project", "NFRA_DEVPLN", "--box", BOX,
                                     "--branch", "cand/dell1/x1", "--purpose", "p", "--pages", "a", "--class", "test-only",
-                                    "--how", "h"])
+                                    "--how", "h", "--portal", env.portal])
         check("a bad class, a bad branch and a branch of another box are refused (rc 2, field named, nothing written)",
               rc_c == 2 and "--class" in err_c and rc_b == 2 and "--branch" in err_b and rc_m == 2 and "--branch" in err_m
               and len(rows(env)) == before)
