@@ -1,0 +1,29 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261013T010322Z-2b72",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "laptop",
+ "from_serial": "2.0.0_SA_COO~B1",
+ "to_serial": "0.7.0_AE_CloudOps~FBL",
+ "subject": "FB-f-21 CLIENT-FACING: Inflection fence admits perf adapter (1 policy, 3 stmts); run NOW",
+ "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-21.inflection-fence-admit-apply.md",
+ "opened_at": "2026-10-13T01:03:22Z",
+ "state": "ACKED",
+ "sent": {
+  "at": "2026-10-13T01:04:14Z",
+  "bus_message_id": "70057fc5-8cc2-4a77-a182-ea1bee072a8d"
+ },
+ "ack": {
+  "at": "2026-10-13T01:06:22Z",
+  "by": "0.7.0_AE_CloudOps~FBL",
+  "bus_message_id": "3217196a-685f-4dfc-a534-5e8f6fd857a6"
+ },
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
