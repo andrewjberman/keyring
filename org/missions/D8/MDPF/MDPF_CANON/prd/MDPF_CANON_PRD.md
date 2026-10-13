@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v2.14",
+ "prd_version": "v2.15",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -199,13 +199,14 @@ CONTRACTS changed, so both halves are owed again.
                       model line that is not canonical, ETF or ALT, INCLUDING,
                       at Global, FWD-3's pooled "Other Models" line, which it
                       replaces (no separate "Other Models" series remains);
-                    - "ETF Strategies" (`ETF Strategies`): the stacked member
-                      is `pfde` (= `sma_additive_aua`) ONLY. The two FWD-3
-                      carries `opal_div_sma` and `opal_growth_sma` (held by no
-                      firm, frozen at 2026-07-17 counts) are NOT stacked: their
-                      dollars already sit inside `non_model_aua` through the
-                      49F residual, and no measured rule carves them out, so
-                      none is invented;
+                    - "ETF Strategies" (`ETF Strategies`, matching Total
+                      Assets): `pfde` (= `sma_additive_aua`) PLUS the two
+                      carve-out SMA lines `opal_div_sma` and `opal_growth_sma`.
+                      Those two sit INSIDE `non_model_aua`, so they are carved
+                      OUT of it by their own served `by_model` values (exact
+                      members, not an estimate; measured equal to the Client
+                      gap to the cent: 21,121,201.38 on 2026-10-09 and
+                      22,794,766.25 on 2026-08-27);
                     - "ALT Strategies" (`ALT Strategies`): the stacked member is
                       `tax_additive_aua` ONLY, the headline component (`tax` in
                       `by_model` is the same dollars, equal to the cent, and is
@@ -214,16 +215,28 @@ CONTRACTS changed, so both halves are owed again.
                       category-views object it is split into "Client
                       Supervised" (`Client - Opal Supervised`), "Client
                       Unsupervised" (`Client - Opal Unsupervised`) and "Other
-                      AUA" (the remainder, `non_model_aua` minus the two). On a
-                      date WITHOUT one it is ONE series, "Other AUA", and the
-                      two Client chips draw nothing. Membership is from
+                      AUA" (the remainder: `non_model_aua` minus the two Client
+                      chips minus the two carve-out SMA lines, drawn only when
+                      not zero). On a date WITHOUT one it is ONE series, "Other
+                      AUA" (`non_model_aua` minus the two carve-out SMA lines),
+                      and the two Client chips draw nothing. The Client chips
+                      read the dated category-views objects through a
+                      READ-ONLY served history route over the existing objects
+                      in `opal-data-assets/portal/gold/mdpf/global/
+                      category-views/` (no new data, no back-cast; its own cell
+                      under its own never-widen pair). The grade is read with
+                      that route live. Membership is from
                       `data/mdpf/scripts/gold/mdpf_category_registry.py`
                       VIEW_TREE (Client: the `fee_taking` axis, :150-157) and
                       the issuer's map (`deliverables/2.0.0_SA_COO~D1/round7/
                       FWD9_GROUPING_READ.md` :28-32). Colors are
                       `portal/src/components/CategoryViewTree.tsx` `L1_COLOR`
                       (:87-95), with Custom = `PALETTE.fuchsia500`, the
-                      "Models" card hover color;
+                      "Models" card hover color, EXCEPT "ALT Strategies", which
+                      stays `vermilion500` on the Trend (Andrew-direct
+                      2026-10-01 ~19:4xZ, "we canonically use vermillion for
+                      alts", pinned by `ModelPortfolios.taxsma-color.test.ts`;
+                      his 2026-10-13 words name only the Custom color);
                     (2) THE SUMS. On each drawn date every grouped series
                     equals the sum of its served members to the cent (abs
                     diff <= 0.01): the time series' `by_model` for Custom,
@@ -231,7 +244,9 @@ CONTRACTS changed, so both halves are owed again.
                     Client chips. The whole stack sums to
                     `opal_aggregate_aua` to the cent (CN-d-3's property, kept;
                     the Total is model + non-model + `sma_additive_aua` +
-                    `tax_additive_aua`), EXCEPT on a date where FWD-3's fold
+                    `tax_additive_aua`; the carve-outs are drawn once, under
+                    ETF, never also inside Other AUA), EXCEPT on a date where
+                    FWD-3's fold
                     suppresses the pooled "Other Models" line at Global (fewer
                     than 2 firms hold it). There the stack is BELOW the Total
                     by exactly the suppressed amount, read from the fold's own
@@ -601,5 +616,18 @@ reaching dell1 at the next integrator pass. It was read here from `origin/box/de
 - (a) ETF stacks `pfde` only. The two carries are not drawn, and are not carved out of Other AUA, since no measured rule exists and none is estimated.
 - (b) ALT stacks `tax_additive_aua` only.
 - (c) The sum-to-Total arm states the fold-suppression exception, read from the fold's record.
+
+-- 1.0.0_SA_CTO~DELL1
+
+**v2.15 (2026-10-13 ~19:2xZ), on `2.0.0_SA_COO~D1`'s three FWD-9 forks (msgs 5086-5088):**
+- **Fork 2: ETF Strategies = `pfde` plus the two carve-out SMA lines, carved out of `non_model_aua`.** This REVERSES v2.14 (a). The issuer measured the CVO's 21-23M Client gap
+  equal, to the cent, to the two carve-out lines on both sampled dates. So a measured rule exists: the carve-outs are exact served members, and ETF then matches Total
+  Assets' grouping. The stack still sums to the Total.
+- **Fork 1: the Client chips need a served history route.** It is a READ-ONLY route over the existing dated objects: no new data, and not the "new served key for history"
+  ruling (i) refused, which was a back-cast. It is cut as its own cell under its own pair, and FWD-9 is graded with it live. The cell may ship the chips as-of only first;
+  that interim is not the grade.
+- **Fork 3: ALT on the Trend stays `vermilion500`.** Andrew's 2026-10-01 word, "we canonically use vermillion for alts", is his latest on alts; the 10-13 instruction pins
+  only the Custom color, and "the Total Assets colors" for the four chips was the recorder's reading. The pin test stands. **Noted for Andrew** (no change here): Total Assets
+  itself colors ALT `green400` (2026-09-15), which disagrees with his 10-01 canon.
 
 -- 1.0.0_SA_CTO~DELL1
