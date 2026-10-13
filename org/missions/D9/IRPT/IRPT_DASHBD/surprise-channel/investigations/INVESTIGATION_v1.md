@@ -8224,3 +8224,82 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W146-S1 -- the tab and export components cannot render the real private sample: buildReportModel throws on the account window_status the sample does not carry
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W146-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~146",
+  "surfaced_at": "2026-10-13T23:47:50Z",
+  "one_line": "The tab and export components cannot render the real private sample: buildReportModel throws a TypeError on the account entries' window_status, because the sample is shaped to the contract's document layout and the components read a different FilledReport shape.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO DB-b-180 (round 96): the tab and export components render the real 49 Financial household sample, built to the contract's document layout, into a local HTML and a local PDF; a component that cannot render the real sample is filed as a row with its exact error, and the worker stops.",
+  "world_is": "buildReportModel throws TypeError: undefined is not an object (evaluating 'a.window_status.last_12_months') at reportModel.ts line 288 (activityGrid, account rows) on the real sample, so no output and no record exist. The sample's household.accounts entries carry account_key and last_four and no account_id, last4, first_data_date or window_status; its window statuses sit under a top-level windows key (the contract's document also names windows) and its rows under a top-level rows key; its per-account member values are plain objects keyed by account key where reportModel.ts reads {by_row}. The same harness on the synthetic fixture passes: 117 data-member ids per HTML, 15 PDF pages, headless Edge rc 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "harness run on the real sample (render_sample.ts, portal@091ae64e95): rc 1, HARNESS-ERROR: TypeError: undefined is not an object (evaluating 'a.window_status.last_12_months'); the run log is in the private evidence folder for 0.9.0_WK_IRPT_DASHBD~146",
+      "portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts@091ae64e95 lines 285-290 (activityGrid reads a.window_status on each account entry) and lines 46-51 (AccountEntry: account_id, last4, first_data_date, window_status)",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@cbcff9a601 top-level document.windows names the window keys; the sample key set was read by a count-only probe (keys only, no values)",
+      "control: the same harness on the synthetic fixture (scratch control folder, made-up data) exits 0 with 117 member ids in each HTML, 0 absent cells without words, 15 PDF pages and Edge rc 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W146-S2 -- the build record and the proof checker count the sample's absent members on different definitions (73 against 62)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W146-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~146",
+  "surfaced_at": "2026-10-13T23:47:50Z",
+  "one_line": "The build record and the proof checker count the sample's absent members on different definitions: the build record states 73 absent, the checker's count of top-level absent markers is 62.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB96-1-AC1 requires the record's absent_members_in_sample to equal the sample's count of absent members as the checker computes it; the round-94 build record (0.9.0_WK_IRPT_DASHBD~141) states members total 117, filled 44, absent 73.",
+  "world_is": "The sample holds 62 top-level absent markers. Of its 36 per-account object members, 11 have every account entry absent: counted as absent they give 73 absent and 44 filled, the build record's reading. The checker counts only the top-level 62, so a record stating 73 fails the check and a record stating 62 contradicts the build record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "count-only probe of the private sample (scratch absent_count.py run at the worktree): 62 top-level absent markers, 36 per-account object members, 11 with every entry absent",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~141/HOUSEHOLD_SAMPLE_BUILD.json@cbcff9a601 members {total 117, filled 44, absent 73}",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r96/p96_round96.py@cbcff9a601 line 92 counts top-level values only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W146-S3 -- DB96-1-AC1 cannot pass as written: its no-run-of-eight-digits rule and its private-path rule contradict each other, because the private output folder name carries an eight-digit date
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W146-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~146",
+  "surfaced_at": "2026-10-13T23:47:50Z",
+  "one_line": "DB96-1-AC1 cannot pass as written: its no-run-of-eight-digits rule and its private-path rule contradict each other, because the private output folder name carries an eight-digit date.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB96-1-AC1 (TO DB-b-180) requires the three outputs under the private folder, and the record to hold no run of eight or more digits; the record carries the output paths.",
+  "world_is": "The checker's long_digit_runs walks every record string except keys named *sha256, commit and portal_commit, and the prefix it requires for output paths contains an eight-digit run, so every record whose paths pass the prefix test fails the digit test. No record with outputs can print PASS as the checker is written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p96_round96.py@cbcff9a601 line 19 (PRIV_OUT carries the eight-digit folder), line 23 (RUN is a run of eight or more digits), lines 40-51 (the walk skips only keys ending sha256, commit and portal_commit), line 76 (outputs path must start with PRIV_OUT), line 103 (the digit test)",
+      "static check run at the worktree: the eight-digit run matches the checker's own PRIV_OUT prefix, and the RUN pattern in the checker is the one quoted"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
