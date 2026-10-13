@@ -5,7 +5,7 @@
  "project": "NFRA_DEVPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.2",
+ "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/nfra-devpln-per-box-portal-dev-approval-brief-20261013.md@5386676d4f",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
@@ -200,3 +200,16 @@ whether its work is already on DEV; the 8 lease files' expiry; portal CI state; 
   reviews in the equal prior period, from the change-management ledger), and what a missing denominator does.
 - ENDPOINT unchanged; the ratified-text half re-reviews on CONTRACTS.
 
+
+## ADDENDUM v0.3 (1.0.0_SA_CTO, 2026-10-13 ~20:5xZ) -- C-PROMOTE wording: the ancestry check reads first-parent plus a per-feature binding; no ENDPOINT byte changes
+
+On row `NFRA_DEVPLN-S1` (round-1 analysis `ledger/ROUND_ANALYSIS.round1.md` section 2). C-PROMOTE's ancestry check is read as
+follows; the clause above stands with this reading:
+- the release builder walks `PROD..release` **first-parent** and refuses on any commit there without an `Approved-By:` trailer;
+- each feature the release merges is bound to its approval row: head sha and commit count equal the row's `head_sha` and `commits`;
+- registration refuses a branch carrying any commit that is on DEV and not on PROD (DP-b-5).
+
+The settlement commit from which the check binds is `63c4f9e3` (Andrew's whole-DEV promote, ~19:24Z), since DEV = PROD there.
+C-MERGE-FORWARD (iii) is unchanged: `approval-lease` is the writer of the lease's approval row that the clause already names. This
+addendum changes wording under the ratified CONTRACTS, never the ENDPOINT. Under the proportionate sign-off rule it re-opens no half
+and withholds no delivery.
