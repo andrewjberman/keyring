@@ -9042,3 +9042,83 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The events are gone and the group reads 0 before the cut. A rotation path exists (the OP-s-10 runbook), but a single rotation does not invalidate these tokens, since the rotated-out key moves to the previous slot and still verifies; invalidation needs the rotation plus retiring the previous slot. Neither was done by this order. The 16 in-window refresh_token lines (10 device_trust) remain acceptable until the expiries above. The ruling's use-read for the no-path branch (proxy access log by source address, status only) was not run, since a path exists."
 }
 ```
+
+## NFRA_CTLPLN-W89-S1 -- CT-ac-3 cannot read unchanged_today=True under the ruled attribution
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~89",
+  "surfaced_at": "2026-10-13T22:25:56Z",
+  "id": "NFRA_CTLPLN-W89-S1",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "CT-ac-3 cannot read unchanged_today=True under the ruled attribution: the 49financial render without scoped rows still lacks the irpt-performance-adapter-role admission and its three DenyPerformanceAdapter statements, which 057cfa8a1c removed when the adapter became a scoped registry row. The residual is neither an unscoped principal admitted since d5516cb074^ nor the grants change, so the check prints it UNATTRIBUTED and unchanged_today stays False.",
+  "spec_asserts": "TO CT-ac-3 ruling (d) and criterion CTac3-AC1: unchanged_today reads True only when the only differences from the render at d5516cb074^ are the principals admitted unscoped since that commit and the grants change.",
+  "world_is": "Check run at worktree branch wk-NFRA_CTLPLN-89 (base 4d7f557af9 plus the CT-ac-3 edits): unchanged_today=False. The printed residual is on opal_data_49financial: admitted only before [stub-adapter-role]; statements only before (Sid) DenyForeignFirmPrincipals (its admitted list differs by that one ARN), DenyPerformanceAdapterAnyOtherAction, DenyPerformanceAdapterReadsOutsideTheHoldingsGold, DenyPerformanceAdapterListingOutsideTheHoldingsGold. The cottonwood and inflection policies are EQUAL after the two named attributions. The pinned fence file at 06c783b92b and at d5516cb074^ carries 3 DenyPerformanceAdapter statements and 5 adapter references; HEAD carries 0 and 0. Commit 057cfa8a1c (FB-g-22, ADVI act 3b) removes those statements and the aws_iam_role.irpt_performance_adapter data source from infra/aws/terraform/shared-infra/s3-49financial.tf and adds 94 lines to infra/logic/registry/exemptions.json, making the adapter a SCOPED row on opal-data-49financial. The stripped registry removes every scoped row, so the stripped render has neither the adapter admission nor its denies.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 06c783b92b:infra/aws/terraform/shared-infra/s3-49financial.tf (3 DenyPerformanceAdapter lines, 5 adapter references)",
+      "git show 057cfa8a1c -- infra/aws/terraform/shared-infra/s3-49financial.tf (3 removed DenyPerformanceAdapter lines, removed data source and adapter ARN references)",
+      "worktree run output .scratch/run4.txt (UNATTRIBUTED residual line; opal_data_49financial DIFFERENT line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Ruling owed by the issuer, not decided by this worker: (1) accept the act 3b migration of the adapter block into a scoped row as a third attributed cause with its own attribution, or (2) re-baseline the before roots to the adapter-migrated state, or (3) define the stripped state so the adapter row is compared against the pre block. The check was not widened to absorb the residual. Simulator arms answered 31 of 31 (sim_ok=31/31), refusals 5 of 5, scoped renders 32 of 32 under the rulings."
+}
+```
+
+## NFRA_CTLPLN-W89-S2 -- The check's premises are stale for the current registry
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~89",
+  "surfaced_at": "2026-10-13T22:25:56Z",
+  "id": "NFRA_CTLPLN-W89-S2",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The check's premises are stale for the current registry: it states the registry holds no scoped row (AMENDMENT 7), a fixed three Deny statements per row, and a selector substitution that applies to every before root. The registry holds 10 real scoped rows and a grants object, the Deny count per row follows from its actions, and HEAD's selector reads restricted_prefix_hosts, which the pre-rows registry does not carry.",
+  "spec_asserts": "ADVI_FIRMBKTS-D1-S43 notes and ruling (b): substitute the pinned CRM-scope selector with HEAD's in the scratch copy; the check docstring AMENDMENT 7 (the registry holds no scoped row now).",
+  "world_is": "git show d5516cb074^:infra/logic/registry/scopes.json carries no restricted_prefix_hosts field: its firm rows are cottonwood (masters z09) and inflection (managed by s3-lgic-firm-buckets.tf, no masters). With HEAD's selector the before_pre root selects zero rows and the console fails, so the substitution is applied to the two before roots over today's registry (before_strip, before_today), and before_pre keeps the pinned selector, which resolves to cottonwood there. Expected Deny statements are computed per row from its actions (AnyOtherAction always; ObjectsOutsidePrefix with an object action; ListingOutsidePrefix with ListBucket): 32 for the with-state registry, 23 for today's. Refusal arms 3 and 4 retired: c64a667818 (FB-g-21) made a prefix member not ending in / an exact object key, and 8114bac9cf (FB-g-23) admitted s3:PutObject to the closed scoped set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show d5516cb074^:infra/logic/registry/scopes.json (no restricted_prefix_hosts field)",
+      "git show c64a667818 and git show 8114bac9cf (commit messages)",
+      "worktree run outputs .scratch/run2.txt and .scratch/run4.txt (selector line; expected Deny count line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The docstring of check_fence_scoped_rows.py is updated to the rulings in the same commit; its AMENDMENT 7 paragraph is not rewritten and is stale."
+}
+```
+
+## NFRA_CTLPLN-W89-S3 -- The lgic firm-bucket fence (s3-lgic-firm-buckets.tf) never appends module.opal_name.fence_
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~89",
+  "surfaced_at": "2026-10-13T22:25:56Z",
+  "id": "NFRA_CTLPLN-W89-S3",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The lgic firm-bucket fence (s3-lgic-firm-buckets.tf) never appends module.opal_name.fence_scoped_allow_statements: a scoped row on an lgic bucket renders its Deny with no Allow on that bucket. Measured on the with-state render: inflection carries 0 of the 4 Allow statements the module renders for it, and cottonwood 0 of 2.",
+  "spec_asserts": "infra/aws/terraform/modules/opal_name/main.tf (the fence_scoped_allow_statements comment): each scoped row renders an Allow from the same row as its Deny; infra/aws/terraform/shared-infra/s3-49financial.tf (ADVI act 3b, round 4) appends the module's Allow statements beside the Denies.",
+  "world_is": "s3-lgic-firm-buckets.tf references module.opal_name.fence_scoped_statements (line 172) and never fence_scoped_allow_statements; the only reference to the Allow output in shared-infra is s3-49financial.tf line 141. The real scoped row on opal-data-inflection (irpt-performance-adapter-role, GetObject and ListBucket on irpt/inflection/gold/holdings_performance_daily/, commit 61cc536c29) therefore renders its Deny on the inflection policy without its Allow. The 49financial policy carries all 15 of its module Allow statements.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "text search of infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf for fence_scoped_allow_statements (no match) and of s3-49financial.tf (line 141 match)",
+      "worktree run output .scratch/run4.txt (Allow statements rendered versus present at the tail, per bucket)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Observed by the check's tail arm and not judged for significance by this worker. The check reports it and does not fail on it, since no ruling asked for that arm."
+}
+```
