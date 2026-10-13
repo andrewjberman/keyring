@@ -8531,3 +8531,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "The read is cheap and preventive: if the live seats' parents are transient wrappers, the cause is the spawn path (the same S9117 class) and the fix is the detached spawn; if the parents are stable, the next candidate is an idle-session exit at the limit prompt, read from the next ending's last stderr line (headless stdout/stderr should be captured to a file per seat from now on -- a log sink, not an alert). Not a cell this round; folds into the round-12 seat-boundary cell."
 }
 ```
+
+## NFRA_CTLPLN-S9121 -- crossbox-call.py merge refuses the receiving box's own ACK (ack written with bus_message_id null) and leaves a half-merged file
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9121",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-13T18:30:00Z",
+  "one_line": "`crossbox-call.py merge --id XB-20261013T180327Z-ba46 --ref origin/box/dell1` printed REFUSED (ack has unknown key(s) none / missing key(s) bus_message_id) but still rewrote the laptop copy with an ack lacking bus_message_id; the receiving box's copy carries ack {at, by, bus_message_id: null}, which the merge drops the null key from.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show origin/box/dell1:org/devices/crossbox/XB-20261013T180327Z-ba46.json (dell1 @5d849cade3): state ACKED, ack {at 2026-10-13T18:09:37Z, by 1.0.0_SA_CTO~DELL1, bus_message_id null}",
+      "laptop run 18:2xZ: merge -> REFUSED twice; git diff then showed ack {at, by} with no bus_message_id key; file restored by git checkout (no commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~C (a round-12 recut cell or the round-13 enrichment list: merge carries the receiving side's ack with bus_message_id null as the schema allows, and a refusal writes nothing)",
+  "spec_asserts": "crossbox-call.py header: `merge` folds the other box's copy into this one so both copies reach CLOSED-BOTH by git carrying the file; every reader refuses a key it does not know.",
+  "world_is": "merge drops the null bus_message_id from the receiving box's ack, then its own validator refuses the result, after the write has already happened. An ACK that exists on the receiving box cannot be folded on the sending box until the receiver's CROSSBOX-ACK line arrives on the bus.",
+  "notes": "Found while confirming Andrew's ask that dell1 and dell2 ack the pivot packets. Workaround in use: the box-sync carries dell1's copy; MSTR~DELL1 is asked to put the ACK line on the bus."
+}
+```
