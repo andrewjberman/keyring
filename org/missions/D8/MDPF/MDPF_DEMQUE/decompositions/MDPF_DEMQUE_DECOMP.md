@@ -493,3 +493,9 @@ the P1 window to the frontier intersected with held; `0.9.0_WK_MDPF_DEMQUE~36`, 
 (`demand_queue.validate`, `extend_frontier._request`, the device queue copies of the in-flight IRPT and ADVI requests) is a separate cell `DQ-t-45`, cut after
 `DQ-t-44` merges, so that no nightly draw is refused mid-flight. The qualification table is `deliverables/2.0.0_SA_COO~Q1/QUEUE_QUALIFICATION_20261013.md`
 @ac96e00cbd; the form is `org/tier1_exec/1.0.0_SA_CTO/deliverables/DEMQUE_QUEUE_FORM_ANDREW_20261013.md`.
+
+**Round 9 amendment 10 (issuer, 2026-10-13 ~15:2xZ):** CTO msg 4904: hold CARD-A P1 entirely, the 16-name block included, until three counts are read and printed:
+how many P1 names Yahoo can price, how many have Black Diamond units and market value on their held dates (an exact price, no vendor draw), and the residual
+Bloomberg-only set with its cells. One cell, `DQ-t-46` (`p1_coverage.py`, read only, no vendor call; `0.9.0_WK_MDPF_DEMQUE~37`, worker, LOCAL, workstream
+P1COVER, depends on DQ-t-43). Inputs located by the issuer: Cottonwood bucket `s3://opal-data-cot/` `gold/canonical/holdings/YYYY-MM-DD.parquet` (daily from
+2026-04-22) and `silver/cot_holdings.parquet` (units, market_value, cusip; snapshot 2026-06-09); earlier history is for the worker to find and name.
