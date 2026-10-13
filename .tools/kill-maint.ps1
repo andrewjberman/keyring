@@ -42,6 +42,9 @@ param(
   # laptop 2026-10-08: a live inbox-watch reads parent DEAD), so ancestry cannot tell a live Monitor from a leaked
   # one. The harness kills every Monitor at 1800 s; past 1800 s + 60 s no live Monitor owns it.
   [int]$MonitorCapSeconds = 1860,
+  # scripts mode: a tree started by the Windows Task Scheduler (root parented to the Schedule service host) is exempt
+  # from ORPHAN/NATIVE while younger than this (6 h); past it the tree is a candidate again.
+  [int]$ScheduledCapSeconds = 21600,
   [int[]]$OnlyPid,           # restrict targets to these PIDs (operator spot-kill; the exercise harness)
   [string]$LivenessPath = '',# default: <workspace>/org/mcp/liveness.json beside this script's .tools/
   [string]$AuditLog = '',    # default: <workspace>/org/mcp/agent-spawn-audit.log (one KILL-MAINT line per stopped tree)
@@ -250,6 +253,24 @@ if ($commonDir -and (Test-Path (Join-Path $commonDir 'detached-jobs'))) {
     if ($pc -and $pc.ToUniversalTime() -gt $declAt.AddSeconds(10)) { $markerNotes.Add(("REUSED {0} (pid {1} started after the marker; {2})" -f $mf.Name, $wp, $label)); continue }
     foreach ($x in (Get-Subtree $wp)) { [void]$declaredSet.Add([int]$x); $declaredBy[[int]$x] = $label }
     $markerNotes.Add(("LIVE {0} (pid {1}; {2})" -f $mf.Name, $wp, $label))
+  }
+}
+# SCHEDULED: a job the Windows Task Scheduler started (its root's parent is the Schedule service host) is a deliberate
+# job, never an ORPHAN. Measured 2026-10-13 03:39Z on dell1: the "Opal MDPF_DEMQUE daily draw" task (state Running, 72 h
+# limit) read as five ORPHAN targets at 69 minutes, past the Monitor cap. Exempt while younger than -ScheduledCapSeconds
+# (a runaway past the cap is a target again); the subtree and its MSYS descendants ride the DECLARED propagation below.
+$schedPid = 0
+try { $schedSvc = Get-CimInstance Win32_Service -Filter "Name='Schedule'" -ErrorAction Stop; $schedPid = [int]$schedSvc.ProcessId } catch { $schedPid = 0 }
+if ($schedPid -gt 0) {
+  $nowSch = (Get-Date).ToUniversalTime()
+  foreach ($sp in @($all | Where-Object { [int]$_.ParentProcessId -eq $schedPid -and $_.Name -match '^(bash|sh|python|pythonw|powershell|pwsh|cmd)\.exe$' })) {
+    $sc = $sp.CreationDate
+    if (-not $sc) { continue }
+    $ageSch = [int]($nowSch - $sc.ToUniversalTime()).TotalSeconds
+    if ($ageSch -gt $ScheduledCapSeconds) { $markerNotes.Add(("SCHEDULED-EXPIRED pid {0} ({1}s old, cap {2}s)" -f $sp.ProcessId, $ageSch, $ScheduledCapSeconds)); continue }
+    $labSch = ("SCHEDULED Task Scheduler job pid {0} started {1:HH:mm}Z" -f $sp.ProcessId, $sc.ToUniversalTime())
+    foreach ($x in (Get-Subtree ([int]$sp.ProcessId))) { [void]$declaredSet.Add([int]$x); $declaredBy[[int]$x] = $labSch }
+    $markerNotes.Add(("LIVE {0}" -f $labSch))
   }
 }
 # MSYS descendants of a declared PID (Git Bash fork/exec breaks the Windows parent chain; MSYS keeps it)
