@@ -6616,3 +6616,29 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Consequences for the regeneration pair (FB-j-7): (1) deploying FB-j-4 as it stands would, at the next chain close, invoke the generator NON-dry for up to 194 advisors, drop every slot, and REWRITE served exec_summary.json for all of them with empty bullets (the objects are 305 bytes today and already empty, so the visible text does not regress, but 36 new empty objects appear, 5 advisors have no positions, and the model-path calls and failure metrics run for 194 x ~5 slots); (2) the cause of the model-path failure must be surfaced before any non-dry run: the one-line step is to log the exception class and its first 200 characters in _build_slot's two except branches (the form FB-j-2 used for the CLI), deployed under a pair, then one dry run. This seat did not read or use the Anthropic key and made no model call. D1-S47's disposition should be read through this row."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-j-8, the cause)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S49",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-13T09:10:41Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The model-path drop of D1-S48 is confirmed offline: lambda_function.py:211 passes betas= to client.messages.create, which the deployed layer's SDK 0.45.0 does not accept (TypeError before any network call).",
+  "spec_asserts": "TO-FB-j-8 amendment 1: a zero-bullet control closes AC1 when second_dry_run carries slots_dropped and control_failed_cause.",
+  "world_is": "Read-only, no network, no model call: the call at lambda_function.py lines 185-211 is client.messages.create(model, max_tokens, system, messages, betas=['prompt-caching-2024-07-31']); layer anthropic-sdk-deps:1 (created 2026-04-27, python3.12) holds anthropic/_version.py 0.45.0 and resources/messages/messages.py whose Messages.create parameters are max_tokens, messages, model, metadata, stop_sequences, stream, system, temperature, tool_choice, tools, top_k, top_p, extra_headers, extra_query, extra_body, timeout; betas exists only on resources/beta/messages/messages.py. A function with that signature called with betas= raises TypeError: Messages.create() got an unexpected keyword argument 'betas' (reproduced). The git history names the commit that restored the tree (0e6b76b0e1, 3 months ago). The dropped-slot metrics (42 and 39) equal the offline fired-slot sums; this class explains each drop; the function's log holds none of it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/SLOT_PRESCREEN.md",
+      "infra/aws/lambda/exec-summary-generator/lambda_function.py lines 185-211"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Fix is a code cell under a pair (not this seat's): call client.beta.messages.create(..., betas=[...]) or drop betas= (prompt caching is generally available on the plain endpoint); then ONE dry run, which should return bullets and is the positive control FB-j-7 needs. Until then no non-dry invocation (FB-j-4's trigger) should deploy. The generator has therefore not been able to produce a bullet since the layer's SDK version met this call."
+}
+```
