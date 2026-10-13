@@ -105,7 +105,7 @@ list (the same locations, fresh ids, `round6/READING_KEY.json` held by the issue
 unchanged and named in the packet. The face is round 5's: the table sentence is the fix. Graded: all four fields equal the key at 150 of 150
 (`r6_fwd1.py agree`). The issuer writes the proof instance from the grader's output on ingest and flips the status in its own commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <workstream>FWD1READ</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-i-1</to_id>
