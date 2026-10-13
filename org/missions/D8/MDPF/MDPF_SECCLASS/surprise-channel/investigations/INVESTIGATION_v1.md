@@ -7388,3 +7388,29 @@ by dell1 or by this seat.
   "world_is": "A $50 gap is inside the amended tolerance, so the named negative cannot fail criterion 2 and the strict check cannot pass for it. The amendment does not state a magnitude for this negative; the instrument uses tolerance plus $1 and prints it in the selftest as 'key gap = tolerance $250 + $1 on 10-04'."
 }
 ```
+
+## MDPF_SECCLASS-D1-S33 -- SC-e-91's first fire read back: the named bounds hold; eight earlier dates moved that the pair never named; the runner writes the canonical bucket
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S33",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-13T01:26Z",
+  "one_line": "SC-e-91's first scheduled fire (launch 2026-10-12T23:00:11Z) read back: the two named Reach bounds hold (10-08 falls $629,530.84 against $629,530.89; 10-09 falls $653,857.47 against $653,857.12, $0.35 over, inside the code's six-place rounding), the chain ran 7,915 s (inside the STOP rule), C_06 wall 186 s, 796 relationships and 5,907 holdings as the dry run predicted; BUT the retained pass also restated EIGHT earlier dates the pair never named (2026-09-30..10-07: $34.8M, $33.8M, $96.7M, $92.5M, $92.9M, $88.8M, $89.3M and $0.62M out of Unclassified into the canonical classes, totals held, no new class key), which restated the partner page's Q3 and September bars; and the runner writes the CANONICAL bucket since the FB-f-9 mode move, so the legacy-location leg-P handle and instruments missed it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/LEGG_E91_FIRST_FIRE_READ_20261013.json (the read, from the canonical firm bucket's previous and new VersionIds of mix_daily_summary.json and platinum/firm/mix_summary.json)",
+      "chain log gold/logs/chain_full_20261012_230043.log: `C06-RETAINED-ONLY relationships_read=3793 of 3793 relationships_rewritten=796 holdings_moved=5907`, `[PERF] C_06 wall=186.0s`, `PARALLEL CHAIN COMPLETE Finished: 2026-10-13T01:12:06Z`",
+      "lib/platinum_dest.py with BD_PLATINUM_MODE=canonical maps gold/entities/clients/ -> opal-data-49financial advi/49financial/platinum/entities/clients/, gold/views/mix_daily_summary.json and platinum/firm/mix_summary.json likewise; gold/client_timeseries/ stays in opal-data-bd (1,592 keys modified there)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The SC-e-91 pair named the Reach range at 2026-10-09 and 2026-10-08 and said the act moves AT MOST the listed share of a date's Unclassified; a fall beyond either named bound is a STOP and a rollback.",
+  "world_is": "Both named falls are at their bounds to the cent (the $0.35 over on 10-09 is 0.00005 percent of the bound and inside the six-place rounding the code carries, row D1-W85-S6: ruled not a STOP by the issuer, to the CTO for confirmation). The same mechanism moved eight dates the Reach section never measured, by $0.6M to $96.7M each, totals held and no class outside the canonical set appeared; the e97 re-derive would move the same dates further to the rebuild. The measured 'before' of the e97 radius (served Unclassified $76M-$153M on 09-30..10-06, the bars' before) is therefore stale: the page's Q3 and September bars already read the post-SC-e-91 state."
+}
+```

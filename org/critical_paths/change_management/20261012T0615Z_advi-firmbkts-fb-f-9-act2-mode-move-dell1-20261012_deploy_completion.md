@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-12T06:15:17.547213+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261013T012700Z
 **Deploy:** ADVI_FIRMBKTS TO-FB-f-9 phase B (window act 2, the GO @f5da2fc917 AMENDMENT 13): ship the 19 dormant gold .py objects, then gold_dispatch.sh (the switch), to s3://opal-data-bd/code/gold/; MOVE_TS recorded; pair COO half @12b22ef020 + ADDENDA 1 to 3 (ADDENDUM 2 @3c47103dc7, ADDENDUM 3), CTO half @03c1c6f001 + ADDENDA 1 to 4; rollback = the export and the guard removed by re-uploading the recorded prior gold_dispatch.sh version; ROLLS BACK THE SAME HOUR if act 4 cannot land before the next scheduled chain (Mon 23:00Z fallback); a hand run of E_24 exports BD_PLATINUM_MODE=canonical or it writes the legacy home (E_24 now refuses an unset mode, FB-g-7)
 **Authored by:** 0.7.0_AE_CloudOps~FB1
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -16,9 +16,9 @@
 | L2 | s3-prefix | s3://opal-data-bd/code/gold/ 19 .py objects (14 writers + 5 lib) shipped through .tools/safe-deploy.sh and read back (step 3) | 19 of 19 equal git show HEAD:<path>, sha256 per key | step 3: 19 of 19 .py objects equal git show HEAD:<path> (sha256) read 2026-10-12T06:21:27Z; shipped through .tools/safe-deploy.sh in two runs (run 1 shipped 1 of 19 because this lane's path list carried CRs; run 2 shipped the 18 remaining, 18 DEPLOYED 18 VERIFY OK); 18 prior VersionIds and 2 new keys recorded in the entry | CLOSED 20261012T062338Z |
 | L3 | s3-prefix | s3://opal-data-bd/code/gold/gold_dispatch.sh -- the switch (step 4), aws s3 cp --sse AES256 then cmp, MOVE_TS read after the copy returned | cmp equal, 0 bytes above 127, MOVE_TS printed, ownership-map baseline re-printed | step 4: gold_dispatch.sh HEAD blob 370c95552e 75897 bytes copied 06:22:06Z with --sse AES256, new VersionId JTxOlFbqGVj9SOajf2YKlMVo.E3Sv35K, cmp read-back EQUAL, 0 bytes above 127; MOVE_TS=2026-10-12T06:22:08Z (S3 LastModified 06:22:09Z); prior object VersionId VikjYXAEPXBxYRenSPh6YfD_PuuHLvTM git blob 631d6e6f4a; ownership-map legacy baseline re-printed unchanged (FcsnGhU7Rt280E9rmDacateI5WiK8S28) | CLOSED 20261012T062339Z |
 | L4 | verify | AC1 deployed-equal 20 of 20 and the legacy-quiet read old-home --since MOVE_TS (it must name exec_summary.json among the classes it covers) | the two outputs quoted | AC1 deployed-equal: DEPLOY EQUAL: 20 of 20 objects equal the repository at HEAD (06:22:38Z); old-home --since 2026-10-12T06:22:08Z: OLD HOME QUIET: 0 keys of 11 classes modified (the 11 include platinum/advisors/ which holds exec_summary.json); AC2 0 of 11 because no chain has run, not graded | CLOSED 20261012T062339Z |
-| L5 | activation | the first SCHEDULED production chain AFTER act 4 (step 5): exit, run log with no ValueError and no NoSuchKey on a served read (a read after the issuer's act 4, not before) | the chain evidence |  | OPEN |
-| L6 | verify | AC2 new-home 11 of 11 since MOVE_TS and AC3 old-home 0 keys of 11 classes since MOVE_TS, read after that chain | the outputs of r3_act2_reads.py quoted |  | OPEN |
-| L7 | git | proof instance written and TO-FB-f-9 status flipped complete in one commit | commit hash |  | OPEN |
+| L5 | activation | the first SCHEDULED production chain AFTER act 4 (step 5): exit, run log with no ValueError and no NoSuchKey on a served read (a read after the issuer's act 4, not before) | the chain evidence | first SCHEDULED chain after act 4: bd-gold-nightly-fallback cron(0 23 ? * MON-SAT *) -> bd-gold-trigger mode=incremental; runner i-01003b035d2988dfb running 23:00:16Z (launch 23:00:11Z), stopped User initiated 01:18:35Z; run log chain-only lines (53070, 23:00:23Z-01:15:42Z) end === COMPLETE (exit code: 0) ===, ValueError 0, Traceback 0, AccessDenied 0, NoSuchKey 2 = the standing handled AUA certification absence (same line every log date since 2026-09-20, input read not a served class); chain exit record itself not readable from dell1 | CLOSED 20261013T012700Z |
+| L6 | verify | AC2 new-home 11 of 11 since MOVE_TS and AC3 old-home 0 keys of 11 classes since MOVE_TS, read after that chain | the outputs of r3_act2_reads.py quoted | AC1 DEPLOY EQUAL: 20 of 20 objects equal the repository at a9f4bac7b5; AC2 NEW HOME: 11 of 11 served classes written since 2026-10-12T06:22:08Z (also 11 of 11 since 22:55:00Z); AC3 OLD HOME QUIET: 0 keys of 11 classes modified since 2026-10-12T06:22:08Z | CLOSED 20261013T012700Z |
+| L7 | git | proof instance written and TO-FB-f-9 status flipped complete in one commit | commit hash | proof instance ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.phaseB.proof_of_spec.json written and TO-FB-f-9 status flipped complete in the close commit (hash is this commit) | CLOSED 20261013T012700Z |
 
 ## Log
 
@@ -27,6 +27,10 @@
 - 20261012T062338Z LEG L2 closed: step 3: 19 of 19 .py objects equal git show HEAD:<path> (sha256) read 2026-10-12T06:21:27Z; shipped through .tools/safe-
 - 20261012T062339Z LEG L3 closed: step 4: gold_dispatch.sh HEAD blob 370c95552e 75897 bytes copied 06:22:06Z with --sse AES256, new VersionId JTxOlFbqGVj9
 - 20261012T062339Z LEG L4 closed: AC1 deployed-equal: DEPLOY EQUAL: 20 of 20 objects equal the repository at HEAD (06:22:38Z); old-home --since 2026-10-12
+- 20261013T012700Z LEG L5 closed: first SCHEDULED chain after act 4: bd-gold-nightly-fallback cron(0 23 ? * MON-SAT *) -> bd-gold-trigger mode=incremental
+- 20261013T012700Z LEG L6 closed: AC1 DEPLOY EQUAL: 20 of 20 objects equal the repository at a9f4bac7b5; AC2 NEW HOME: 11 of 11 served classes written sin
+- 20261013T012700Z LEG L7 closed: proof instance ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.phaseB.proof_of_spec.json written and TO-FB-f-9 status fli
+- 20261013T012700Z CLOSED -- all 7 legs proven
 
 ## STEP 0 AND STEP 2 READS (0.7.0_AE_CloudOps~FB1, 2026-10-12T06:16:03Z; the GO is AMENDMENT 13 @f5da2fc917)
 
@@ -131,3 +135,27 @@ also refuses an unset mode, `FB-g-7`).
   **If act 4 cannot land before the next scheduled chain (Monday 23:00Z fallback), this act rolls back the same hour:** re-upload
   `gold_dispatch.sh` VersionId `VikjYXAEPXBxYRenSPh6YfD_PuuHLvTM` through `aws s3api copy-object` or `aws s3 cp` of that version's bytes, read back with `cmp`.
 - **Not done by this lane, as ordered:** no gold script, no dispatcher run, no SSM command, no delete, no copy of data.
+
+## STEPS 5 TO 7 -- THE FIRST SCHEDULED CHAIN AFTER ACT 4, AND THE CLOSE (0.7.0_AE_CloudOps~FB1, 2026-10-13T01:26:25Z)
+
+- **Which chain.** Act 4 landed 15:15:10Z (IRPT units 14:03:43Z-14:13:46Z, edge 15:12:43Z-15:15:10Z). The first SCHEDULED chain after it:
+  EventBridge `bd-gold-nightly-fallback` `cron(0 23 ? * MON-SAT *)` (ENABLED, read at step 2) -> `bd-gold-trigger`, whose log reads
+  `Starting instance in mode=incremental` and `Mode marker written: s3://opal-data-bd/gold/trigger-mode.json -- mode=incremental`. Runner
+  `i-01003b035d2988dfb`: `stopped` at 22:50:15Z (previous launch 12:45:16Z, not a scheduled chain), `running` 23:00:16Z (launch 23:00:11Z),
+  `stopped` `User initiated` 01:18:35Z. SSM commands to the runner in the window: 0 (it executes on boot). No run was started by this seat.
+- **The chain's exit and log reading, with its limit stated.** The exit record is not readable from dell1; the log's own closing line is.
+  Log `logs/gold-layer/.../gold_incremental_2026-10-13_20261013_011542.log` (657,303,967 bytes) is CUMULATIVE from January, so its whole-file
+  pattern counts are history. The chain's own lines (stamped from 2026-10-12T22:55Z, 53,070 lines, 23:00:23Z to 01:15:42Z): last marker
+  `=== COMPLETE (exit code: 0) ===`; `ValueError` 0; `Traceback` 0; `AccessDenied` 0; `FAILED` 0; `NoSuchKey` 2, both the handled
+  `AUA certification absent (...NoSuchKey...) -- using gold totals` of `D_00` and `D_00b` (an INPUT read through `platinum_source()`, not a served
+  class): the same line appears on every log date since 2026-09-20 (2 to 8 per day, 0 OK reads), so it is a standing condition and not new
+  with the move; the one `ERROR` match is `validation complete -- PASS=0 WARN=0 FAIL=0 SKIP=1 ERROR=0`. `act2_chain/chain_log_reading.txt`.
+- **AC1** `DEPLOY EQUAL: 20 of 20 objects equal the repository at a9f4bac7b5` (AMENDMENT 14's commit). **AC2** `NEW HOME: 11 of 11 served classes
+  written since 2026-10-12T06:22:08Z`; re-read since 22:55:00Z, before the chain's launch: also 11 of 11, so every class was written by the scheduled chain.
+  **AC3** `OLD HOME QUIET: 0 keys of 11 classes modified since 2026-10-12T06:22:08Z`. Literal runs: `act2_chain/ac1_ac2_ac3_literal.txt`.
+- **Ownership maps after the chain (recorded, no rollback per COO msg 4561):** legacy VersionId `FcsnGhU7Rt280E9rmDacateI5WiK8S28`
+  (LastModified 2026-10-12T05:22:13Z, frozen), canonical VersionId `8h3MAzxs_fBxuVXmLkunXwTcRAfMwcVP` (LastModified 2026-10-13T00:24:07Z, written
+  by the chain), both 474,841 bytes, different content by design.
+- **Close.** `MOVE_TS` = 2026-10-12T06:22:08Z; 20 prior VersionIds recorded (19 `.py` objects and `gold_dispatch.sh`, `evidence/act2_move/objects_before_20_keys.json`);
+  the dispatcher's prior VersionId `VikjYXAEPXBxYRenSPh6YfD_PuuHLvTM` was never needed. The act's rollback clock is released: act 4 landed before
+  the next chain.

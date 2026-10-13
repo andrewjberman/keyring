@@ -136,3 +136,31 @@ build's OWN dry run. This addendum re-signs on that radius, each figure re-run h
 12. **Order of acts** is unchanged from condition 2: SC-e-91's leg G first.
 
 `2.0.0_SA_COO~M1`
+
+
+---
+
+## ADDENDUM 2 -- WHERE THE RUNNER WRITES, and what SC-e-91's first fire already moved (issuer, 2026-10-13 ~01:4xZ; answers row MDPF_SECCLASS-D1-S33)
+
+SC-e-91's leg G was read on the first scheduled fire (`LEGG_E91_FIRST_FIRE_READ_20261013.json`; CTO msg 4601: no STOP). Two facts from it change how
+this half is carried out. Neither changes the two files signed, the digests or conditions 1 to 12; they change WHICH OBJECTS the conditions name.
+1. **Every key this half names by its legacy key is read and rolled back at its CANONICAL destination.** Since the FB-f-9 mode move
+   (2026-10-12 06:18Z) the gold runner runs with `BD_PLATINUM_MODE=canonical`; `data/black_diamond/scripts/gold/lib/platinum_dest.py` `source(key)` maps
+   the served classes (`gold/entities/clients/*`, `gold/views/mix_daily_summary.json`, `platinum/firm/mix_summary.json`,
+   `gold/artifacts/firm_mix_views.json`, `firm_mix_views_daily.json`, the advisor mix files) to bucket `opal-data-49financial` under
+   `advi/49financial/platinum/...`; `gold/client_timeseries/*` (the legacy copies) and the watermark stay in `opal-data-bd`. Condition 3 (leg P)
+   enumerates BOTH destinations: the canonical prefixes and the legacy copies, with VersionIds, before the next fire. The e91b leg P covered the
+   legacy keys only; the canonical prior versions exist by time (the 49F bucket is versioned) and were used for the leg-G read. Conditions 6 and
+   9 to 10 are graded on the canonical objects. `r24_legg_read.py` (SC-e-99, amendment 2) does this through `source()`.
+2. **The page the CTO half's conditions 3 and 6 name as "before" is no longer the pre-SC-e-91 page.** The first fire already moved ten firm days,
+   eight of them never named (09-30..10-07, $0.6M to $96.7M of Unclassified into the canonical classes each; totals held). The request's per-date
+   `served` columns, the bars' `before` and the advisor table's `served_total` are pre-SC-e-91. **The targets are unchanged** (the `rebuilt`
+   figures, the bars' `after`, the advisor table's `rebuilt_total`): they come from the partitions and the producer's rules, not from the served
+   state. Where this half or the CTO's says "before", read the live canonical object at the ship (the leg-P copy), and print it beside the request's.
+3. **What SC-e-91 met of e97's acceptance, read at the canonical objects after the first fire** (`E97_CLAUSES_AFTER_E91_FIRST_FIRE_20261013.json`):
+   none. Unclassified on 09-30..10-06 is $41.5M to $60.1M against a bound of $53,010.45 (moved 35 to 60 percent of the way and not within the
+   bound on any date); the W86-S5 gap is still $6.48M to $6.50M; the totals differ from the AUA on 14 of 15 dates (SC-e-91 moves classes, not totals);
+   `restated_through` is absent. 2026-10-07 is inside the re-derive window (09-25..10-09) and outside the CTO's Unclassified clause (09-30..10-06); its
+   remainder is now $381,648 against a rebuild of $32,455. So `TO-SC-e97b` ships whole.
+
+`2.0.0_SA_COO~M1`

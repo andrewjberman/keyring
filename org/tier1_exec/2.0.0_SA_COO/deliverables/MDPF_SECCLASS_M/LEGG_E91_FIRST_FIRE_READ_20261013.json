@@ -1,0 +1,100 @@
+{
+ "claim": "measured: SC-e-91 leg G, first scheduled fire after the 2026-10-12T09:55:03Z ship. Read 2026-10-13 from the canonical destination (BD_PLATINUM_MODE=canonical on the runner since the FB-f-9 mode move): bucket opal-data-49financial, key advi/49financial/platinum/views/mix_daily_summary.json, VersionId ZuygB9ZtOGqSqiaE.3gV_ae70lhbSZeF (LastModified 2026-10-13T00:23:32Z) against the previous version VyuLE19UQIHCSF6bkM9Brja6Lz___8RF (2026-10-12T07:29:12Z); and platinum/firm/mix_summary.json VersionId l_Ch9mqN5wIdAEAOC0xmIdH3ht2.jOhd (00:45:57Z) against MkgiFxUGLLC0pTSdmgV1bTD2lyQNBdlH (2026-10-12T07:31:34Z).",
+ "fire": {
+  "launch": "2026-10-12T23:00:11Z",
+  "chain_finished": "2026-10-13T01:12:06Z",
+  "launch_to_chain_end_seconds": 7915,
+  "baseline_launch_to_last_sample_seconds_at_least": 7766.7,
+  "stop_rule_limit_seconds": "about 10,200 (baseline + 30 min)",
+  "stop_rule_exceeded": false
+ },
+ "c06": {
+  "wall_seconds": 186.0,
+  "peak_mb": 6349,
+  "rc": 0,
+  "log_line": "C06-RETAINED-ONLY relationships_read=3793 of 3793 relationships_rewritten=796 holdings_moved=5907 firm_days_adjusted=5907 advisor_days_adjusted=5062",
+  "dry_run_prediction": "796 rewrites, 5,907 moves (the issuer's R23 dry run against the stored JSONs): reproduced exactly"
+ },
+ "reach_named_dates": {
+  "2026-10-09": {
+   "fall": 653857.47,
+   "bound": 653857.12,
+   "over_by": 0.35
+  },
+  "2026-10-08": {
+   "fall": 629530.84,
+   "bound": 629530.89,
+   "under_by": 0.05
+  }
+ },
+ "dates_moved_not_named_by_the_pair": {
+  "2026-09-30": {
+   "remainder_before": 76259877.65,
+   "remainder_after": 41474650.27,
+   "fall": 34785227.39,
+   "named_bound": null,
+   "total_held": true
+  },
+  "2026-10-01": {
+   "remainder_before": 75964048.04,
+   "remainder_after": 42127268.51,
+   "fall": 33836779.53,
+   "named_bound": null,
+   "total_held": true
+  },
+  "2026-10-02": {
+   "remainder_before": 150433862.6,
+   "remainder_after": 53761121.27,
+   "fall": 96672741.33,
+   "named_bound": null,
+   "total_held": true
+  },
+  "2026-10-03": {
+   "remainder_before": 152418257.84,
+   "remainder_after": 59944546.47,
+   "fall": 92473711.36,
+   "named_bound": null,
+   "total_held": true
+  },
+  "2026-10-04": {
+   "remainder_before": 152995165.84,
+   "remainder_after": 60062257.66,
+   "fall": 92932908.17,
+   "named_bound": null,
+   "total_held": true
+  },
+  "2026-10-05": {
+   "remainder_before": 148224563.78,
+   "remainder_after": 59432696.88,
+   "fall": 88791866.9,
+   "named_bound": null,
+   "total_held": true
+  },
+  "2026-10-06": {
+   "remainder_before": 140161790.57,
+   "remainder_after": 50902543.56,
+   "fall": 89259247.0,
+   "named_bound": null,
+   "total_held": true
+  },
+  "2026-10-07": {
+   "remainder_before": 998762.85,
+   "remainder_after": 381648.33,
+   "fall": 617114.52,
+   "named_bound": null,
+   "total_held": true
+  }
+ },
+ "census_new_class_keys": [],
+ "firm_days_changed": 10,
+ "advisor_keys_same": true,
+ "advisor_days_changed": 298,
+ "page": {
+  "D_04_mix_Unclassified_before": 1846332.7278449535,
+  "D_04_mix_Unclassified_after": 1192475.2546796799,
+  "data_as_of": "2026-10-09"
+ },
+ "total_held_all_changed_days": true,
+ "legacy_copies": "1,592 keys modified under opal-data-bd gold/client_timeseries/ (796 relationships x JSON+views); the new-format keys were written to the canonical bucket under advi/49financial/platinum/entities/clients/; gold/entities/clients/ in opal-data-bd was not written (the first read of this fire with the legacy-location instrument read NO-CHANGE for that reason)",
+ "idempotence_leg": "NOT YET READ: the second fire is the 04:00Z launch; the count must be taken on the canonical prefix advi/49financial/platinum/entities/clients/ and gold/client_timeseries/"
+}
