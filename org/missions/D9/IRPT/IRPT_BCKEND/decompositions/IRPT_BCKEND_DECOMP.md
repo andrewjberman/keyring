@@ -3619,3 +3619,17 @@ Checks `deliverables/2.0.0_SA_COO~P2/checks/r177/p177_cells.py`, dry-run at the 
 | `IB-pr-511` | READ-ONLY provenance of the three package objects (S3 metadata, CloudTrail PutObject) and the evidence archive of the four unattributed live members | FWD-3 | SERVED (a read of the objects that decide what the host runs) | none | P177-b |
 
 fanout: 2 of 2 chains, cap 8, reason: two disjoint write sets (the candidate packages and packet; the provenance record and the archive), both reading the same three live objects and writing none. Two worker spawns (slots ~362 and ~363).
+
+## 170. ROUND 178, WORKSTREAM ~P (2026-10-13 ~08:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's RE 6867 = "cut the apply order with that step", the round-177 analysis (msg 6863) and the signed pair IB-pr-510)
+
+The pair IB-pr-510 is signed by both halves at the packet sha256 `c2b7275939d0` (COO half @aa1ffa367e, CTO half @eec092e994). The CTO asked for the apply order with one added step: the applier confirms, BEFORE any write, that the runner role is admitted by the bucket policies of `opal-data-49financial` (which carries two PutBucketPolicy writes by another fabric's agent user, 2026-10-11) and `opal-data-inflection`; not admitted = STOP, and the policy goes to ADVI_FIRMBKTS through `0.0.0_AB_MSTR`. The apply is gated by the host's next SCHEDULED Online; no seat starts the host for it (CTO round-176 and round-177 rulings); its first read is the leftover temp-file COUNT.
+
+CUT now: `IB-pr-512` (the apply, to `0.7.0_AE_CloudOps~IB2`, which is live and idle). The CTO's formal round-178 analysis has not arrived at this writing; this cell is cut on the CTO's explicit RE 6867 and is the only act the signed pair leaves open. NOT cut: the `irpt-directory-search` apply (the signed pair, after the CVO's re-sign), the repair of the no-op report validator in the ycharts generate composition (row W352-S1), and any cell that depends on the apply's first read (the leftover-file count may produce a human act, a delete of client-bearing temp files, raised then).
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r178/p178_cells.py`, dry-run at the base: IB178-1 AC1, AC2, AC3 FAIL (no record); a synthetic apply record built from the IB-pr-510 record's live and candidate values and the packet's stamp passes all three (removed).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-512` | the APPLY of the signed pair: two per-firm holdings packages put at the host's next scheduled Online, digest-gated, step 0 on the bucket policies first, then the first read | FWD-3 | WORLD (writes two S3 objects the host runs; rollback per key) | the signed pair (done); the host's scheduled Online (a clock the order waits on without starting it) | P178-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one applier, one act. Not a spawn: the order is addressed to a live seat.
