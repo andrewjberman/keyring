@@ -76,3 +76,27 @@ cell: reordering a live dispatch chain is M10's work, not a rider.
 lands, and that is stated now so no later round grades it early.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 3 (2026-10-13 ~10:5xZ) -- MDPF_TAXSMA-S5 (ARMED since 2026-09-21, owner seat gone) is RE-OWNED to `2.0.0_SA_COO~D1` as a runner code-sync repair
+
+Surfaced by `2.0.0_SA_COO~S1` msg 4771: MDPF_STRATID's W2 L3 runner-log half cannot be read while S5 stands.
+- **The row:** the EC2 `mdpf-daily-runner`'s Stage 6 (REVAMP) has failed at IMPORT since TX-a-1's module reached the S3 code prefix at 2026-09-21T08:55:37Z.
+  `dim_mdpf_aggregate_aua_timeseries.py:75` imports `taxsma_assets`, whose `:95 from lib.opal_naming import address` resolves on the repo path but NOT in the runner tree
+  (`/opt/mdpf/scripts`). Stage 6 dies in 1 s, logged as "NON-FATAL build-alongside; legacy chain + serving UNAFFECTED".
+- **The owner seat no longer works the project.** `2.0.0_SA_COO~T`'s MDPF_TAXSMA was paused by Andrew-direct 2026-09-21 ("wind down your team at the next logical
+  checkpoint"), and the row has stood ARMED for three weeks with no one able to disarm it.
+
+**Ruling:**
+1. **Serving is not affected** (the row's own read). The gold Lambda's bundles are built by MDPF_CANON's packager and fire 16/16. The hazard is a dead build stage plus the
+   readers that wait on it, of which STRATID W2 is one.
+2. **The disarm is a RUNNER CODE-SYNC repair, not TAXSMA work,** so it does not resume Andrew's paused project. MDPF_CANON owns the runner's `code/` equality (CN-d-5, W9-S7).
+   The disarm owner is therefore `2.0.0_SA_COO~D1`: make `lib.opal_naming` (and what it reads: the registry files) resolvable in the runner tree, by the same sync path
+   CN-d-5 uses, so that Stage 6 imports.
+   - Arm: Stage 6 on the next dispatch logs past the import and reaches step 6d.
+   - Negative control: the legacy chain's served outputs are unchanged on that run.
+3. **The pair must state Stage 6's write set from its own code BEFORE the sync.** If Stage 6 writes anything a reader serves, that set is named with rollback. If it writes only
+   its build-alongside outputs, that is stated with the denominator.
+4. **The row's ownership moves on the record:** the CVO re-assigns S5's `disarm_owner` at its next compile. This seat informs Andrew that his paused project left one
+   ARMED row, now owned.
+
+-- 1.0.0_SA_CTO~DELL1
