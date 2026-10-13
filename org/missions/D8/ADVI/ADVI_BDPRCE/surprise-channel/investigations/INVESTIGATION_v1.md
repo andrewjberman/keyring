@@ -427,3 +427,110 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "The file is not in this worktree's history; a section was created here so the rows exist on the branch. The drain's union must carry the W1 and W2 sections alongside this one. The id form follows the channel header for dell1; the W3 form in the task order is equivalent to the schema pattern, which admits both."
 }
 ```
+
+## ADVI_BDPRCE-D1-W4-S1 -- The served client detail objects are dated 2026-10-09, one trading day behind the T-1 date 2026-10-12
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W4-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~4",
+  "surfaced_at": "2026-10-13T14:51:45Z",
+  "one_line": "The served client detail objects in opal-data-49financial carry data_as_of 2026-10-09 in 24 of 26 sampled objects, while the task order's served T-1 date for a 2026-10-13 read is 2026-10-12; the shape-b premise at the served date therefore did not apply.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "opal-data-49financial advi/49financial/platinum/entities/clients/0/detail.json, VersionId VzILgp.KR2G8UFNcDbZLo3GcSkNmFnPC, LastModified 2026-10-13T05:39:43Z, data_as_of 2026-10-09 (read live, get-object, 2026-10-13T14:3xZ)",
+      "range reads (bytes 0-300) of 26 detail objects sampled every 140th key of the served listing: data_as_of 2026-10-09 in 24, 2026-07-13 in 1, 2026-06-24 in 1",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~4/THREAD_TRACE.md section Premise notes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order section 1a steps 1-2: the served T-1 object is the one the portal reads at the default T-1 date, and shape b is expected to be the normal case at the served T-1 date because the newest two daily price files carry no transaction_observed row.",
+  "world_is": "The served detail objects carry the as-of date 2026-10-09, a day with transaction_observed rows in both silver/prices/2026-10-09.parquet and canonical_prices.parquet. The holding read for BP-a-4 is therefore a direct (shape a) candidate on 2026-10-09, not a chain on 2026-10-12. The key carries no date; the as-of date lives only in the body."
+}
+```
+
+## ADVI_BDPRCE-D1-W4-S2 -- Untickered holdings in the served detail carry lot prices that match no canonical price row on the object's as-of date
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W4-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~4",
+  "surfaced_at": "2026-10-13T14:51:45Z",
+  "one_line": "Of 586 untickered non-cash lots in 26 sampled client detail objects, 61 carry a current_price that equals no canonical_prices row for that asset on the as-of date; for VANGUARD MORNINGSTAR GROWTH ETF the value 83.78 matches no canonical row for the asset on any date.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "served detail objects read live (get-object, 26 keys from the served listing); lot fields account_id, asset_name, ticker, current_price; the object carries no price_quality or source field per lot",
+      "silver/prices/canonical_prices.parquet version V7JNX.GmPYQcEVMywtMRnjk.fSdQl1WA read live: 12,649,131 rows; no row for VANGUARD MORNINGSTAR GROWTH ETF at 83.78 on any date; the 2026-10-09 row is 91.983333 (transaction_observed)",
+      "account ref e49c43de6ac7 (sha256 prefix of the account id, held in the data directory, not in the checkout): lot 3 quantity 1.0, current_price 83.78, acquired 2026-10-09, ticker null; the same account carries lots 1 and 2 at 83.78",
+      "B_01.holdings_lots.py:1333 and :2627 set current_price from the price table and the Schwab RPS override path at :2215-2288; the rps_injection and scoped_override price sources are not in the served lot"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order section 1a step 2: a served holding's price is a canonical row (transaction_observed, carry_forward or linear_interpolation) at the served date, with the anchor equal to the served price for shape b.",
+  "world_is": "61 of 586 sampled untickered lots carry a price that no canonical row on the as-of date reproduces; 83.78 appears in no canonical row for the asset on any date. The lot object does not say which source priced the lot, so the price cannot be traced from the served object alone. Those lots are excluded from the thread candidates and are not counted as chain or direct candidates."
+}
+```
+
+## ADVI_BDPRCE-D1-W4-S3 -- On 2026-10-09 the daily price file and the canonical file carry different transaction_observed prices for one asset, and the trace tool's stable pick serves the daily one
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W4-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~4",
+  "surfaced_at": "2026-10-13T14:51:45Z",
+  "one_line": "VANGUARD MORNINGSTAR GROWTH ETF on 2026-10-09 has transaction_observed 92.216667 in silver/prices/2026-10-09.parquet and 91.983333 in canonical_prices.parquet; the served lot and the trade median follow the canonical value, and trace_price.py reports match false because its stable pick is the daily row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver/prices/2026-10-09.parquet version LhM3NuODjCiM_VUkEQiojppZtVu4Jf7y read live: one row for the asset, price 92.21666666666665, source transaction_observed",
+      "silver/prices/canonical_prices.parquet version V7JNX.GmPYQcEVMywtMRnjk.fSdQl1WA read live: one row for the asset on 2026-10-09, price 91.98333333333333, source transaction_observed",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~4/TRACE_2026-10-09.json: served_rows (tie true), recomputed_price 91.98333333333333 from 123 rows, match false",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~4/THREAD_TRACE.json served_price 91.98333333333333 (the served lot value)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order section 1a step 3 and the trace README: trace_price.py reports the served row, its rule and a recompute with a match flag, and a same-date tie is reported as a tie that the tool does not resolve as B_01's choice.",
+  "world_is": "The served lot carries the canonical value, so the tie was resolved toward canonical for this holding, while the tool's emulated stable pick names the daily file. The daily value 92.216667 is not the median of the same day's trades (91.983333). The record therefore cites the canonical row and states the tie in THREAD_TRACE.md."
+}
+```
+
+## ADVI_BDPRCE-D1-W4-S4 -- The shape-counting census was a 26-object sample of 3,510 served client detail objects, not an enumeration
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W4-S4",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~4",
+  "surfaced_at": "2026-10-13T14:51:45Z",
+  "one_line": "Task order section 1b asks for the number of direct and chain candidates; the served home holds 3,510 client detail objects of about 4 MB each, so the counts (64 direct, 63 chain lots) come from a 26-object sample and are not a population count.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "listing of advi/49financial/platinum/entities/clients/ in opal-data-49financial: 18,230 objects, of which 3,510 are */detail.json (paged list-objects-v2, auto-paginated, counted client-side)",
+      "client detail objects read in full: 26 (4.45 MB for object 0); 586 untickered non-cash lots in those 26",
+      "THREAD_TRACE.md section Why this holding"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order section 1a step 2: state how many candidates there were of each shape.",
+  "world_is": "A full census of untickered lots across 3,510 objects of about 4 MB was not run within the bound. The counts in THREAD_TRACE.json shape_counts are sample counts; the first fitting candidate in file order is the first fitting lot of the first sampled object, which the file-order rule accepts."
+}
+```
