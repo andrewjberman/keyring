@@ -29,3 +29,12 @@
 ## Dependency chains and fan-out
 
 Nine independent chains (each cell is its own; the staged applies follow their builds). `fanout: 9 of 9 chains, cap 8, reason: seven laptop worker cells (the cap's 8 holds them), plus one dell1 seat cell and one laptop CloudOps seat cell that take no worker slot`
+
+## Recut 1 (2026-10-13, issuer 2.0.0_SA_COO~C): disarm the three ARMED rows this round's own builds minted
+
+Authority: a recut covers its affected cells (the spine's recut rule); the rows' `disarm_owner` is this seat (`NFRA_CTLPLN-W78-S3`, `NFRA_CTLPLN-W77-S2`) or this seat once the CTO rules (`NFRA_CTLPLN-W78-S1`). The CTO is told at the drain-end message. No existing cell changes. Not cut here: `NFRA_CTLPLN-S9121` (crossbox merge writes before it validates; hazard INERT) goes to the round-13 enrichment list; `CT-ab-2` (the apply of `CT-ab-1`) stays staged under its signed pair.
+
+| cell | what | serves | risk | workstream / round | issued to |
+|---|---|---|---|---|---|
+| `CT-ab-11` | rows `NFRA_CTLPLN-W78-S1` and `-S3`: `.tools/seat-boundary.ps1` and `.tools/kill-agent.ps1` accept an underscore in the third serial segment (so `0.9.0_WK_NFRA_CTLPLN~78` is a serial), and the boundary judges `codex.exe` as well as `claude.exe`; the test file gains the cases. | FWD-21, FWD-25 | LOCAL | SEATKILL / 2 | `0.9.0_WK_NFRA_CTLPLN~84` |
+| `CT-ab-12` | row `NFRA_CTLPLN-W77-S2`: `derive_ssm_documents.py`, `derive_respol_actions.py` and `derive_protected_functions.py` under `nfra-ctlpln-identity/tests/` stop rendering the Denies `CT-ab-1` removed, so a `--write` cannot reverse the ruling and each `--check` agrees with the committed documents. | FWD-10 | WORLD (path floor; no apply) | DELLADMIN / 2 | `0.9.0_WK_NFRA_CTLPLN~85` |
