@@ -86,7 +86,7 @@ Rows: id `NFRA_OPLGTW-Z-S<k>` (the next free), fabric `site-z`, disarm_owner `2.
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OG-ap-12"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r35/checks/ap12.AC1.sh; echo "exit=$?"</invocation><expect>(?s)entries at HEAD [1-9]\d*; status CLOSED=yes; sentinel at HEAD=no.*sqs:ChangeMessageVisibility on arn:aws:sqs:us-east-1:313476888478:opal-assets-silver-dlq: allowed.*live CodeSha256 equals the OG-ap-11 build: yes.*RESULT: PASS.*exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OG-ap-12"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r35/checks/ap12.AC2.sh; echo "exit=$?"</invocation><expect>(?s)foreign_survived_schwab_sweep=True; foreign_absent_from_schwab_report=True; schwab_drained_and_reported=True; sweep_was_scheduled=True.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-ap-12"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r35/checks/ap12.AC2.sh; echo "exit=$?"</invocation><expect>(?s)sweep_was_scheduled=True; foreign_survived_schwab_sweep=True; depth 2 -. 1; schwab_drained_by_queue=True.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 - `AC1`: the grant is live and schwab runs the per-family build. `AC2`: on the real scheduled sweep, schwab keeps only
@@ -110,6 +110,17 @@ the ONE `<status>` tag to `complete` only if both PASS.
     (`uibjggn...`, `b3e481b261`); ledger `nfra-oplgtw-ap12-dlq-visibility` is still OPEN, past its 4 h window.
   - The schwab leg runs outside [21:15,23:35)Z and before [09:15,11:35)Z, so the 2026-10-13 12:15Z sweep grades it.
   - Gate limb: GATE (viii) on the modified order (placeholders NONE).
+- A2 (issuer, 2026-10-13 ~12:5xZ, row Z-S100, 0.7.0_AE_CloudOps~Z msg 33621): AC2's REPORT clause had no referent. A
+  scheduled sweep's `drain_dlq` report is a return value that EventBridge discards: 0 prints, no dlq field in the one S3
+  write, 0 run-log writers in 425 files. This was the issuer's criterion defect. AC2 is AMENDED to read the behaviour
+  from the QUEUE:
+  - the scheduled run;
+  - the foreign record returned by a post-sweep non-destructive receive;
+  - depth 2 at plant and 1 after, so the schwab record was drained.
+
+  The check file `ap12.AC2.sh` is rewritten to match. A control with the depth held at 2 reads not-drained. Persisting
+  the report (run_sweep writes its dlq dict into backfill-status) is NOT this order: it goes to the next round's
+  enrichment list as a build cell for every family. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 - Pre-cut (2026-10-12 ~13:08Z), both FAIL as expected:
   - ap12.AC1: no ledger; simulate implicitDeny; live code = the OG-ap-11 build.
   - ap12.AC2: grade absent.

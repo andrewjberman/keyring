@@ -46,7 +46,7 @@ Quoted from the endpoint record. The ids are permanent.
 
   FWD-3  Any served price traces to its rule and inputs (DONE WHEN 2)
          DONE WHEN  EXERCISED -- for a sample spanning every price source (override, trade median, interpolation, vendor), the trace names the rule and
-                    inputs and the recompute equals the served value; the sample size is set in the PRD
+                    inputs and the recompute equals the served value; the sample is set in DEC-10
          ACCEPT     an analyst can trace ANY served price, not only the thread's
          SOURCE     O1; DONE WHEN 2
 
@@ -145,6 +145,16 @@ Quoted from the endpoint record. The ids are permanent.
   - ADVI_FIRMBKTS's served 49F home is `opal-data-49financial` since act 2. Every served read and write here goes to the canonical home, never the legacy one.
   - The exec-summary position slots stay disabled until FWD-8 serves (FIRMBKTS sample read ADDENDUM 1).
   - Any restatement of past client-facing figures reaches a PROD page only on Andrew's word (brief V.5).
+
+- **DEC-10 FWD-3's sample:** drawn from the served 49 Financial price objects of the latest frontier date and four earlier trading dates (five dates,
+  each read from `lib/trading_calendar.py`).
+  - **Per price source:** at least 30 prices from each of override, trade median, interpolation and vendor. If a source holds fewer than 30 across the five dates,
+    ALL of them are taken and the shortfall is printed.
+  - **Total:** at least 150 prices.
+  - **The draw is DETERMINISTIC:** rows ordered by `sha256(asset_id|date|"ADVI_BDPRCE-FWD3")` and the first N taken per source, so any seat reproduces the same sample.
+  - **Plus every price of FWD-1's thread holding.**
+  - The trace PASSES only on 100 pct: every sampled recompute equals its served value to the cent. Any miss is named with its rule and inputs, and FWD-3 stays NOT
+    REALIZED until it is fixed or explained.
 
 ## PROJECT ARC AND DEFINED OUTCOME
 
