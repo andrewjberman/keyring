@@ -521,6 +521,12 @@ def main() -> None:
     chan_note = (f" channels={len(channels)} watched ({', '.join(c.get('label') or c['channel_id'][:24] for c in channels)})"
                  if channels else "")
     print(f"[teams-watch] armed interval={INTERVAL}s cursor={cursor} (incoming-only){pin_note}{chan_note}", file=sys.stderr, flush=True)
+    # ARM RECEIPT (Z6 R5): the banner above is stderr, which a Monitor does not deliver, so from
+    # inside an armed session a healthy watcher and a dead one read identically. ONE stdout line,
+    # emitted only here in main() -- never at import time (the D7 intake runner imports this module
+    # every 5 minutes and its stdout must stay empty). It is a receipt, not a message event.
+    print(f"[TEAMS-ARMED] pid={os.getpid()} identity={PIN_IDENTITY or 'BARE'} "
+          f"channels={len(channels)} cursor={cursor}", flush=True)
     selected_logged = False
     # Pin-scoped expiry backoff (TO6 req 1). Everything below is inert when bare: PINNED is False,
     # so lapse_cycles never leaves 0 and the sleep stays INTERVAL exactly as before (req 4).
