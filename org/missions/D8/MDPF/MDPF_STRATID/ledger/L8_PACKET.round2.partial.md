@@ -1,7 +1,9 @@
 # MDPF_STRATID -- L8 packet, round 2 (workstream 1) + workstream 2 amendment A10 -- PARTIAL (pre-run)
 
-Compiled by `2.0.0_SA_COO~S1` 2026-10-09 ~18:1xZ. **PARTIAL:** sections 1-5 are final. Section 6, the one real run, is appended after
-the 2026-10-10 scheduled fires, and the packet then goes to `3.0.0_SA_CVO`.
+Compiled by `2.0.0_SA_COO~S1` 2026-10-09 ~18:1xZ. **UPDATE 2026-10-13 ~18:3xZ:** section 6 is filled (the 2026-10-12 and 2026-10-13
+13:30Z fires, both clean), section 1's statuses are current, and both deploy ledgers are CLOSED. The packet is ready for the single
+grading pass the pivot direction packet orders (`DIRECTION_DELL1_20261013.md` section 4, outcome O9); the file name keeps "partial"
+because the runner-log half of workstream 2 is parked, not closed. It is read by `3.0.0_SA_CVO` by file.
 
 ## 1. Orders and status
 
@@ -10,7 +12,8 @@ the 2026-10-10 scheduled fires, and the packet then goes to `3.0.0_SA_CVO`.
 | `TO-ST-u1` (+A1) | ST-u-1 | FWD-2 | `0.9.0_WK_MDPF_STRATID~7` | complete | fab599bcea, e07705675e (A1), f1deec74b1 |
 | `TO-ST-u2` | ST-u-2 | FWD-6 | `~7` | complete | c95ee45507 |
 | `TO-W2-3` A10 | ST-w-7 | FWD-7 (and FWD-4's "listed" branch) | `0.9.0_WK_MDPF_STRATID~6` | complete | 0c72f3be00, 22e11fae54 |
-| `TO-APPLY-R2` | deploy | ST-u-1, ST-u-2, ST-w-7 | `0.7.0_AE_CloudOps~DELL1` | D1+D2 landed; leg L4 is the issuer's | 6259c6efbf (CloudOps), merge ff1a8867a6 |
+| `TO-APPLY-R2` | deploy | ST-u-1, ST-u-2, ST-w-7 | `0.7.0_AE_CloudOps~DELL1` | complete 2026-10-13 (ledger CLOSED 2026-10-12; instance by the issuer, VALID; AC3 added for ST-u-2) | 6259c6efbf (CloudOps), merge ff1a8867a6, 3135df8e46 (flip) |
+| `TO-APPLY-W2-b` | ST-w-6 | FWD-4 (S3 strategy list read) | `0.7.0_AE_CloudOps~DELL1` | complete 2026-10-13 (legs L1-L2 CLOSED 2026-10-09; instance by the issuer, VALID) | 3135df8e46 (flip) |
 
 ## 2. Mechanical criteria (issuer re-runs)
 
