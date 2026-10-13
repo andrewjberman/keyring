@@ -103,7 +103,7 @@ the ONE `<status>` tag to `complete` only if both PASS, and report once.
 - bd-2 and sh-1 share `data_entitlement.py`, `server.py` and the two suites. Different hunks; the issuer merges in order
   bd-2 then sh-1.
 
-<status>pending</status>
+<status>complete</status>
 <round>36</round>
 <slot>~63</slot>
 <fabric>site-z</fabric>
