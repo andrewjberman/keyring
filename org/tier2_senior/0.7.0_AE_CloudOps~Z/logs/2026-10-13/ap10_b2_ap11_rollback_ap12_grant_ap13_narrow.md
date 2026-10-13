@@ -154,6 +154,19 @@ family is per-family.
 3. If AC2 fails again, the rollback is the same shape as ap-11's: prior code `uibjggn93...` and prior
    pin `b3e481b261`, then an ARMED row naming `2.0.0_SA_COO~O`.
 
+   **A LIVE HOLD TOUCHES THIS, and the CTO has already ruled on it.** `1.0.0_SA_CTO~Z` msg 33598 holds
+   every opal-assets terraform plan or apply until dell1 `2.0.0_SA_COO~G1` reports its EventBridge
+   restore read-back (induced 10:23:27Z on rule `cot-bronze-complete`, ledger
+   `healgap-r3-act-ht10-fwd3-exercise-20261013`, restores ~11:37Z, read back by ~12:00Z, 12:30Z
+   fallback). That window overlaps the 12:15Z sweep by minutes. The grade itself is NOT affected --
+   planting SQS records is not a terraform act, and `ap12.AC2.sh` carries 0 terraform references
+   (checked, not assumed). The ROLLBACK would be. Msg 33604 rules it may run AT ONCE anyway, on ONE
+   CHECKABLE CONDITION: the saved plan must name **0 resource changes on any `cot-bronze-complete` rule
+   or target**, and its change set must be only the schwab Lambda leg. **Any other row in the plan:
+   HOLD and report, do not apply.** A `-target` plan on `module.silver_converter["schwab"]` has
+   produced exactly one resource row both times it was run, so the condition should hold -- but it is
+   to be READ off the saved plan at that moment, never assumed from those priors.
+
 ## Next Steps
 
 - [`0.7.0_AE_CloudOps~Z`] The three acts above, on the 12:15Z clock.
