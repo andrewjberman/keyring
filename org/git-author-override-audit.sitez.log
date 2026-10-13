@@ -2138,3 +2138,18 @@
 2026-10-13T09:12:53Z LOCK-WAIT  0.7.0_AE_CloudOps~ZW  3s
 2026-10-13T09:13:06Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=61.64  took=274ed2cd24 hold=6.02s graded=0/7 pushed=c4ec6c221e  phases: t_fetch=2.50s t_merge_cloud=28.98s t_land=6.05s t_push=11.36s
 2026-10-13T09:13:07Z LANDED-2P  0.7.0_AE_CloudOps~ZW  c4ec6c221e  paths=2  validate=51.29s  wait=6.46s  hold=2.86s  build=1.61s  ref=0.79s  post-commit=9.48s  attempt=1
+2026-10-13T09:16:38Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-13T09:16:51Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-13T09:17:12Z LANDED-2P  0.0.0_AB_MSTR~Z  10538b0f68  paths=1  validate=52.04s  wait=0.15s  hold=2.32s  build=1.51s  ref=0.49s  post-commit=8.15s  attempt=1
+2026-10-13T09:17:34Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=17.33  took=already-current pushed=10538b0f68  phases: t_fetch=4.09s t_push=8.32s
+2026-10-13T09:21:48Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=14c13a077140 paths=1:org/devices/crossbox/XB-20261013T073105Z-9b01.json
+2026-10-13T09:21:53Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=14c13a077140 paths=1:org/devices/crossbox/XB-20261013T073105Z-9b01.json
+2026-10-13T09:22:04Z LANDED-2P  0.0.0_AB_MSTR~Z  e7ebcc1be5  paths=1  validate=28.10s  wait=0.15s  hold=1.59s  build=0.78s  ref=0.42s  post-commit=4.86s  attempt=1
+2026-10-13T09:22:06Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=3  secs=0.24  skipped=overlap holder=1670400
+2026-10-13T09:22:27Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=4.66  graded=n/a  args=(--verify-merge 76d095c14e386cf26e417412d1b4bd933c5cab03)  first=(none)
+2026-10-13T09:22:41Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=38.19  took=1559908d0a hold=3.88s graded=1/21 pushed=76d095c14e  phases: t_fetch=1.71s t_merge_cloud=16.97s t_land=3.91s t_push=7.51s
+2026-10-13T09:29:22Z PASS  0.7.0_AE_CloudOps~ZW  2  (all paths in-lane) act=dcc242848c19 paths=2:org/devices/crossbox/XB-20261012T204423Z-6082.json|org/devices/crossbox/XB-20261013T073105Z-9b01.json
+2026-10-13T09:29:27Z PASS  0.7.0_AE_CloudOps~ZW  2  (all paths in-lane) act=dcc242848c19 paths=2:org/devices/crossbox/XB-20261012T204423Z-6082.json|org/devices/crossbox/XB-20261013T073105Z-9b01.json
+2026-10-13T09:29:39Z LANDED-2P  0.7.0_AE_CloudOps~ZW  9d146d1e13  paths=2  validate=19.67s  wait=0.16s  hold=1.71s  build=0.81s  ref=0.84s  post-commit=5.52s  attempt=1
+2026-10-13T09:32:37Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=9.59  graded=n/a  args=(--verify-merge c276b6d9a7d0375725cd664d70e82fc791c0bb54)  first=(none)
+2026-10-13T09:32:49Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=44.88  took=85aa984b98 hold=2.72s graded=0/8 pushed=c276b6d9a7  phases: t_fetch=1.91s t_merge_cloud=22.67s t_land=2.75s t_push=7.72s
