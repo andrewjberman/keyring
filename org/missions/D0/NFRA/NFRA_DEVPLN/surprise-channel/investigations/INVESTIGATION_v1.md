@@ -136,3 +136,108 @@
   "world_is": "Until each box syncs this commit, its old tool refuses the list of any box holding an approval row (REFUSED, rc 3 on list), and the cluster copy reads REFUSED on those boxes. No version gate is built in this order. The issuer sequences the merge so that no approval row is written before every box that reads the list has synced; that act is the disarm."
 }
 ```
+
+## NFRA_DEVPLN-W1-S5 -- the DP-b-5 AC2 branch is a stale PROD cut with no DEV commit beneath it, so the overlap rule as written registers it and does not refuse it
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S5",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-13T19:27:10Z",
+  "one_line": "DPb5-AC2 expects the real branch origin/wk-dsgn-irptv1-r25-61-prodcut (+34 over DEV) to be refused dev-overlap; its only commits over origin/PROD are 2 and neither is in origin/DEV, so the rule in BUILD item 1 registers it with commits=2.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_DEVPLN/task-orders/NFRA_DEVPLN.TO-DP-b-5.registration-facts-and-lease.md BUILD item 1 (overlap = commits in origin/PROD..<branch> also in origin/PROD..origin/DEV) and criterion DPb5-AC2 (expect result=REFUSED reason=dev-overlap)",
+      "run at wk-NFRA_DEVPLN-1 (.tools/open-calls.py at this worktree, portal checkout wk-NFRA_DEVPLN-1-portal): python .tools/open-calls.py add --kind approval --check-only --project NFRA_DEVPLN --box dell1 --branch origin/wk-dsgn-irptv1-r25-61-prodcut --purpose x --pages x --class client-facing --how x --portal portal -> 'APPROVAL-REGISTER result=OK row=- head_sha=fc876722f5af6e92f8f045982e1b1d7ad73755f7 commits=2 check-only=yes', rc 0",
+      "git -C portal: rev-list --count origin/PROD..origin/wk-dsgn-irptv1-r25-61-prodcut = 2 (fc876722, 418600b2, both subject 'feat(IRPT, DSGN_IRPTV1 IV-e-111): PROD cut'); git cherry origin/DEV on the branch marks both '+' (no equivalent patch in DEV); origin/DEV..branch = 34; merge-base(branch, origin/PROD) = 37aa1247 (an older PROD commit, not the PROD tip 15c97549); origin/PROD is not an ancestor of origin/DEV (rc 1), and origin/DEV..origin/PROD = 33"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DPb5-AC2 says the branch is '+34 over DEV' and that its registration is refused for the DEV overlap; BUILD item 1 defines overlap as the commits of origin/PROD..<branch> that are also in origin/PROD..origin/DEV.",
+  "world_is": "The branch was cut from an older PROD commit (37aa1247), so its own history over PROD is 2 commits that DEV does not hold; the 34 commits over DEV are PROD history that DEV lacks (DEV does not contain PROD), not DEV commits beneath the feature. Under the defined overlap the count is 0 and the tool registers it (result=OK, commits=2). Refusing it would need a different rule (for example, counting DEV..<branch>), and that rule would refuse every PROD cut because DEV does not contain PROD. The tool was built to BUILD item 1 and AC2 was run as written: it prints result=OK, not result=REFUSED. The CTO or issuer rules whether AC2 names another branch or the overlap definition changes. Nothing was written: the run was --check-only and the live list hash was unchanged."
+}
+```
+
+## NFRA_DEVPLN-W1-S6 -- BUILD item 1 makes --portal required on add --kind approval, and the DP-b-1 approval test calls add without it, so that test now fails at its first add
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S6",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-13T19:27:10Z",
+  "one_line": "The DP-b-5 order makes --portal required for add --kind approval (refused rc 3, reason=portal-required); the DP-b-1 approval test adds rows with no --portal and expects rc 0, so .tools/tests/test_open_calls_approval.py now fails (traceback at case 3, row_for None).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~DV",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_DEVPLN/task-orders/NFRA_DEVPLN.TO-DP-b-5.registration-facts-and-lease.md BUILD item 1: '--portal ... (required for this kind; without it: APPROVAL-REGISTER result=REFUSED reason=portal-required, rc 3)'",
+      "the worker's inherited state (this order's preamble): '.tools/tests/test_open_calls_approval.py passes 13/13; ... build on them without breaking that test'",
+      "run at wk-NFRA_DEVPLN-1: python .tools/tests/test_open_calls_approval.py -> Traceback ... line 125 in main: cid = row_for(env, 'cand/laptop/t-cto')['id'] -> TypeError: 'NoneType' object is not subscriptable; DP-b-1 test helper add_approval (lines 82-85) passes no --portal"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BUILD item 1 requires --portal on every add --kind approval; the inherited note requires the DP-b-1 approval test to stay green.",
+  "world_is": "Both cannot hold as written. The DP-b-5 change is built to BUILD item 1, so the DP-b-1 test's add calls are refused: case 1 reads no row, and case 3 raises at line 125 and the run stops there. The test file is outside this order's paths (.tools/open-calls.py, .tools/tests/test_open_calls_register.py), so it was not edited. Until the issuer amends the DP-b-1 test (pass a temporary --portal) or the requirement, the approval test is red on this branch. Nothing is written by the refused adds, so the live lists are not affected. The disarm is the issuer's: amend the DP-b-1 test or rule the requirement."
+}
+```
+
+## NFRA_DEVPLN-W1-S7 -- approval-lease takes a --project the order's flag list does not name
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S7",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-13T19:27:10Z",
+  "one_line": "BUILD item 3 lists approval-lease flags without --project, but the row needs a project for its scope and add requires --project; built: --project defaults to NFRA_DEVPLN.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task order DP-b-5 BUILD item 3: 'approval-lease --branch <b> --box ... --purpose ... --pages ... --class ... --how ... --portal <path> --lease-file <path>' (no --project)",
+      ".tools/open-calls.py at this worktree: cmd_add requires --project; approval rows carry project and scope (ROW_REQUIRED includes scope)",
+      ".tools/open-calls.py approval-lease subparser: --project default NFRA_DEVPLN; --portal and --lease-file are not argparse-required, so their refusals print reason=portal-required and reason=lease-not-live with rc 3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "approval-lease takes the listed flags and writes a CLOSED approval row for this seat's live FAST lease.",
+  "world_is": "The built command accepts the listed flags and an optional --project (default NFRA_DEVPLN, the project that owns the approval kind), and --asked-by defaults to OPAL_AGENT_SERIAL. A call that omits --project gets NFRA_DEVPLN, not a refusal. The CTO may rule the default or require the flag."
+}
+```
+
+## NFRA_DEVPLN-W1-S8 -- the older open-calls suite is red at base: its fork add omits --context, which the tool has required since the 2026-10-09 context rule
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S8",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-13T19:27:10Z",
+  "one_line": "python .tools/tests/test_open_calls.py reads cases=0/2 at HEAD e2c9f07062: its base_add carries no --context, so add refuses rc 2 and the list it reads is never written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run at wk-NFRA_DEVPLN-1: python .tools/tests/test_open_calls.py -> FileNotFoundError at line 103 (rows()), 'OPEN-CALLS-TEST cases=0/2 ok=False'",
+      ".tools/tests/test_open_calls.py base_add (line 116): add --project NFRA_CTLPLN --asked-by ... --source ... with no --context",
+      "run at wk-NFRA_DEVPLN-1: python .tools/open-calls.py add --project NFRA_CTLPLN --asked-by 1.0.0_SA_CTO --source docs/none.md --subject 'own-box call' --orders <path> -> 'ERROR: --context is required for a fork call', rc 2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The suite's first case expects a fork add without --context to write this box's list and read OWN-BOX.",
+  "world_is": "The fork add refuses without --context on HEAD (the check is in cmd_add, unchanged by DP-b-5), so the suite's case 1 never writes its list and the suite exits red. The failure predates DP-b-5. The suite is outside this order's paths, so it was not edited."
+}
+```
