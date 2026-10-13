@@ -150,3 +150,9 @@ condition on a check.
 | item | result | commit |
 |---|---|---|
 | IRPT_BCKEND round 172 | ADJUDICATION_v73 + REMEDIATION_v49: IB-pr-501 confirms my round-171 correction; 6 dismissed, 2 OPEN, no new ARMED. Slug sent | 26dbe40a10 |
+
+## Addendum, 2026-10-13 05:36Z to 05:42Z (msg 6806)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 173 | ADJUDICATION_v74 + REMEDIATION_v50: serve path carries account_id; 6 dismissed, 2 to the CTO (serve-time validation; IVE48 and the frozen v1 enum narrowed @01e843ce2e and restored @506096fc9a, read from history). Slug sent | 2165761665 |
