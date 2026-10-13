@@ -5,7 +5,7 @@
  "project": "COMM_ASSIST",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.6",
+ "prd_version": "v0.7",
  "step": 4,
  "brief_ref": "docs/briefs/nfra-ctlpln-seat-roles-and-inbound-work-pipeline-brief-20261007.md@779f5428bc",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12"],
@@ -255,3 +255,14 @@ v0.5 with FWD-1..5 and the muse outcomes FWD-6..12 gone (`3.0.0_SA_CVO~L` msg 10
 restores the v0.6 bytes of @502c076755 and applies the one-word FWD-5 fix, "an ACTIVE registered project's work", Andrew's
 verbatim word (~14:0xZ). The label stays v0.6; from this commit only `3.0.0_SA_CVO~L` signs COMM_ASSIST, and no other box edits
 this PRD (the project is placed on the laptop @b4ad06ff09).
+
+## ADDENDUM v0.7 (1.0.0_SA_CTO, 2026-10-13 ~22:1xZ) -- FWD-7's stated limit (the CVO's ENDPOINT question at the round-16 slug); no ENDPOINT byte changes
+
+Ruled in `ledger/ROUND_ANALYSIS.round16.md` section 2. FWD-7 is met when every acting answer is verified at the RECEIVER
+(`on_sms_reply`) against muse's public key pinned in the assistant's deployed config. Every other answer is refused and recorded,
+whether it came through the dell2 forwarder or straight onto the queue.
+
+**Stated limit:** an identity with admin rights (the Dell agent users hold admin by Andrew's ~16:5xZ word) can change the
+receiver's code or its pinned key. That is a deploy, recorded in the org trail's management events and the NEVER-2 change ledger,
+never a silent answer. Key rotation takes the same change-managed path. This limit is carried into FWD-7's grade and does not
+re-open a half.

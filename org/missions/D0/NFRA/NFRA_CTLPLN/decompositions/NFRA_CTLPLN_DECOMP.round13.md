@@ -27,3 +27,17 @@
 ## Dependency chains and fan-out
 
 Three chains (`CT-ac-1` then `CT-ac-4`; `CT-ac-2`; `CT-ac-3`). `fanout: 3 of 3 chains, cap 8, reason: three laptop worker cells with disjoint write sets; the census cell queues behind the batch on one chain and goes to the seated CloudOps lane`
+
+## Recut 1 (2026-10-13 ~22:1xZ, issuer 2.0.0_SA_COO~C): the FWD-11 outage cell, un-parked by MSTR msg 108944; S9120 and FWD-27 reads recorded
+
+Authority: a recut covers its affected cells; the carried line "FWD-11, then FWD-9" named its own un-park condition (a Tier-2 seat and a window), met by 1.0.0_SA_CTO~DELL1 msg 5262 via MSTR msg 108944. No existing cell changes.
+
+| cell | what | serves | risk | workstream / round | issued to |
+|---|---|---|---|---|---|
+| `CT-ac-5` | FWD-11: dell1's state recorded before (S0) and after (S1) the manager's deliberate restart window Wed 2026-10-14 05:15-05:30Z (slot 06:15-06:45Z if it slips): which round was where, nothing lost, nothing redone; the restart is the manager's act, not the seat's. | FWD-11 | WORLD (a deliberate dell1 outage; this seat reads and publishes only) | RESTART / 1 | `0.7.0_AE_CloudOps~CT1` (dell1; re-seated by `0.0.0_AB_MSTR~DELL1` for the FWD-11 and FWD-9 orders only) |
+
+**Carried lines, updated by the reads that arrived (MSTR msgs 108943, 108948):**
+- **FWD-9's outage (05:45-06:00Z):** owner `1.0.0_SA_CTO`. Condition: it names what dell1 HOLDS that another box then takes. C-LEASE (the lease register) stays parked and "the Dells take no vendor lease", so a cell cannot be cut until that is named; the window is booked.
+- **FWD-27 read-back:** key login WORKS from the laptop on dell1, dell2 and site Z (printed hostnames `DESKTOP-HK1UU7N`, `DESKTOP-N8RJV0A`, `Opal_Bloomberg`); the verify tool grades `key=MISMATCH` only because `org/devices/DEVICES.json` aliases lack those hostnames (asked of the CTO, msg 108945). `password_arm` reads `KBDINT-NO-PROMPT` on all three. Self-probes from site Z and dell2 read `key=DENIED` because those boxes hold no client key: a vantage gap, not a defect. Muse's key on dell2 is not yet read. Owner `1.0.0_SA_CTO` (the register) then `0.0.0_AB_MSTR~DELL2` (the muse key).
+- **S9120: CLOSED as a condition not met.** The dell2 read (MSTR msg 108948): 14 seats, every `claude.exe` has parent `powershell.exe` whose parent is `WindowsTerminal.exe`; 0 of 14 under a transient wrapper. No cell.
+- **S9119 (the broker heartbeat writer):** the read did not name a writer (dell2 `liveness.json` has 14 entries, each pid a seat's `server.py`; 14 orphaned `agent-poller.py` run with no liveness line; the original writer's entries for `~CB2`, `~TR2`, `~DELL2` are gone). Owner `0.0.0_AB_MSTR~DELL2`. Condition: a read taken while one of those three seats is live names the writer; until then no cell.

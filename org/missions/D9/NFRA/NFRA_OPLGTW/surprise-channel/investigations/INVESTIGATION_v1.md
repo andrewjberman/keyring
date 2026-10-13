@@ -12900,3 +12900,154 @@ name the one known failure instead of silently inheriting it.
   "notes": "Issuer defect class: a cell 'ships in rN' with no release order cut is invisible to every round-close check, because the build order is complete. Carry to the cut template: a build cell whose release is deferred names the release order it rides at the cut."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~64",
+  "surfaced_at": "2026-10-13T21:48:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_OPLGTW-Z-W64-S1",
+  "one_line": "No roster or record names the Opal asset-manager principals, so every row of HV1_PRINCIPALS.json reads asset_manager 'unknown' and the FWD-21 driven call has no named principal to drive.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN comp-find -i 'asset.manage(r|ment) team' --files --limit 40 from the worktree: 38 hits across 77677 files scanned [corpus=all]; the 26 files listed are PRDs, briefs, a daily report and AMGT evidence -- the team is described as an audience; none lists its principals.",
+      "RAN a Grep for 'asset manag*' within 200 chars of an @opalinvest.com address over *.{yaml,yml,json,md,csv,py}: 1 file (research_transcripts/schema/series.json), a meeting-series schema, not a roster.",
+      "READ the 4 principal_profile records of gateway-access-state-table (scan, begins_with POLICY#): attributes email, grant_revision, oid, pk, probe, profile_kind, record_type, rev_by, revision, sk, status, tid -- no role or team field.",
+      "READ org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md:263-264 (v2.6) 'Asset-manager principals are named from the grant store, never guessed' against :1039-1040 (v2.8) 'the principal census reads the identity store ... never the grant store': the identity store (family heads) carries tid/oid/email/status only."
+    ]
+  },
+  "spec_asserts": "TO NFRA_OPLGTW.TO-OG-hv-1 section 1 item 5: asset_manager comes from a NAMED source only; if none names them, write 'unknown' and file a BLOCKING row.",
+  "world_is": "The census was written with asset_manager 'unknown' on all 8 principals (3 in the identity store, 8 in the 30-day audit lake). The release can be signed on the tools; naming the asset managers needs a source the issuer or Andrew supplies (a roster of addresses, or a profile role field), after which the census is re-read.",
+  "notes": "Names were not mapped to addresses: AMGT_RESAPP_PRD.md:121 names a Head of Asset Management in prose, and a name-to-address inference is the guess the order forbids."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~64",
+  "surfaced_at": "2026-10-13T21:48:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_OPLGTW-Z-W64-S2",
+  "one_line": "The harvest tools ride tools._run, which fetches a delegated Graph token the tools do not use, and app/audit.py (outside this order's paths) has no args allowlist row for them, so their audit args are omitted and the key rides in detail.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/opal-gateway/app/tools.py:167-171 @4e26a29872: _run calls _user_token() before fn(token) and returns needs_login when get_token raises NeedsLogin.",
+      "READ infra/aws/ec2/opal-gateway/app/audit.py:79-145 @e488418898: _ARGS_ALLOWLIST has no 'harvest_list' or 'harvest_read'; _safe_args then returns {'_omitted': ...} for a tool not declared.",
+      "RAN test_oghv1_ac04 (the real served MCP surface, tools.get_token stubbed by the guard harness): both tools dispatched for an unprofiled Opal principal and for an outsider."
+    ]
+  },
+  "spec_asserts": "TO NFRA_OPLGTW.TO-OG-hv-1 section 1 item 2: every call writes one audit record with the tool, the key or prefix, the verdict and the bytes; the tools are registered beside list_shared_folder.",
+  "world_is": "Each call writes two records: harvest_read.py's own (key or prefix in detail, bytes_returned, principal; outcome denied on a refusal) and _run's 'ok' record with args omitted. An Opal user with no delegated Graph consent would receive needs_login from a tool that never calls Graph. Neither blocks the criteria; a row of the audit allowlist and a token-free chokepoint are the owner's choice.",
+  "notes": "The release order may want to read both before the live driven call."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~64",
+  "surfaced_at": "2026-10-13T21:48:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_OPLGTW-Z-W64-S3",
+  "one_line": "31 percent of the gateway audit lake's rows over the last 30 UTC days carry an empty user, so the 30-day principal count of the census covers only the attributed rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN a full read of s3://opal-mcp-audit/audit/dt=<day>/ for the 30 UTC days before today with 48 threads: 110848 objects, 0 get failures, 0 unparsed lines; 34407 rows had an empty user, 8 distinct non-empty users (all opalinvest.com) for the remaining rows.",
+      "READ HV1_PRINCIPALS.json denominator.audit_lake_rows_with_empty_user_excluded = 34407 (W/ deliverables of 0.9.0_WK_NFRA_OPLGTW~64)."
+    ]
+  },
+  "spec_asserts": "TO NFRA_OPLGTW.TO-OG-hv-1 section 1 item 5: audit_lake_principals_30d is the distinct principals of the lake's 30 days.",
+  "world_is": "audit_lake_principals_30d = 8 is a count of distinct non-empty user values; the rows with an empty user cannot be attributed to a principal from the lake, so the number is a floor for the 30-day principals, not a total.",
+  "notes": "Row counts are over rows (one per object-line), not over principals."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W66-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~66",
+  "surfaced_at": "2026-10-13T21:52:51Z",
+  "one_line": "The gateway's own offline suites do not all pass at b81f633517: 5 test ids fail standing alone in 4 files (plus 1 in tests/acceptance), and 5 more ids (4 in test_schwab_c3_rules.py, 1 in test_data_entitlement_guard.py) fail only when run in the same pytest process as their neighbours.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~66/evidence/suite_isolation_reruns.txt (each file run alone, timeout 120): test_browser_oidc.py::test_oga3_ac01 'assert 404 == 405'; test_data_entitlement_guard.py::test_ogz1_ac08 route-set mismatch (57 == 57 and {...} == {...}); test_schwab_export_stream.py::test_ogx4_ac03 ServiceError 'memory'; test_schwab_host_inputs.py 2 ids ('22 == 19', '54 == 52'); all 4 files re-run alone, same ids fail.",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~66/evidence/suite_fwd3_failures.txt context and suite_fwd3_denials.txt: test_schwab_c3_rules.py passes 4 of 4 alone but 4 ids fail ('Unknown tool: schwab_query') when run after the data-entitlement files in one process; test_data_entitlement_guard.py::test_ogz1_ac02 fails only in the combined run.",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~66/evidence/suite_acceptance_local.txt and evidence/suite_a12_alone.txt: tests/acceptance 14 passed, 1 failed (test_ogv2_a12, fails run alone too: a set of (synthetic row, column) cells differs by one, the A12 prompt-like-text-in-data check)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO OG-gd-1 section 1 item 2 names the gateway's offline suites as the instrument for refusal logic; the release practice (tests/run_release_suites.sh) assumes a named suite passes.",
+  "world_is": "Used as the FWD-3, FWD-4, FWD-5, FWD-1 and FWD-2 'inferred' instruments, each failing id is recorded in GD1_GRADE_READ.json under the arm it bears on. Cause not read (a stale route list, a tree-dependent line count, a box with too little memory, and a module-state order dependency are the visible candidates). Every other file run passed (denominator in the suite_*.txt files).",
+  "notes": "Read-only; no test or source was edited. The combined-run failures are an isolation defect in the suites, not evidence the refusal logic is wrong, since the same ids pass alone."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W66-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~66",
+  "surfaced_at": "2026-10-13T21:52:51Z",
+  "one_line": "For the one call that the acknowledged Schwab sink recorded as failed (INVALID_REQUEST, 2026-10-08 15:13:33Z), the main audit lake's record of the same schwab_query call reads outcome 'ok'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~66/evidence/lake_main_window_7d.txt: 3 schwab_query calls on 2026-10-08, all outcome ok.",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~66/evidence/lake_schwab_ack_1008.txt: of the 3 schwab_query records, 1 is event_type failed, error_code INVALID_REQUEST, at 15:13:33Z; 2 are release_authorized."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The PRD's FWD-8 reading of 'who used which master' assumes the main lake and the Schwab sink agree on a call's outcome.",
+  "world_is": "They disagree on 1 of 3 calls. The main lake's 'ok' is the tool wrapper returning, the sink's 'failed' the integration's refusal; a reader of the main lake alone counts a refused query as served. Noted for the audit-read arm of FWD-8; no change made.",
+  "notes": "Counts only; no value was copied."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W66-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~66",
+  "surfaced_at": "2026-10-13T21:52:51Z",
+  "one_line": "The runbook section 5 audit-read command (ops/schwab_status.py) cannot run off the gateway host: it ends in an uncaught RoleConfigError traceback because SCHWAB_READER_ROLE_ARN is unset.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~66/evidence/runbook_s5_schwab_status.txt: 'python ops/schwab_status.py --since-days 7' from the repo root, exit=1, RoleConfigError: SCHWAB_READER_ROLE_ARN is not set to an IAM role ARN (schwab_status.py:253 via aws_roles.py:135)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Runbook section 5: 'Run, from the repository root: cd infra/aws/ec2/opal-gateway; python ops/schwab_status.py' and it 'prints three sections' (HEALTH, CLOSURE, ERROR).",
+  "world_is": "Off the host, with the box's own read credentials, it prints no section. The FWD-8 audit-read arm is therefore recorded as owed to an operator on the host, with the lake reads in this record standing in for the ERROR section as inferred.",
+  "notes": "Read-only; the command writes nothing."
+}
+```
