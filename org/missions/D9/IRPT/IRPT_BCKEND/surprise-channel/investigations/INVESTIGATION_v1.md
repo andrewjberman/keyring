@@ -29490,3 +29490,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The deployed function cannot compute an Inflection answer for these two references: it is refused at the retained-index read with AccessDenied before the changed path. That is a different fault from the nine-ref import smoke of IB-pr-487 (PathARetiredForFirm and VendorEgressRefused, refusals by design): here the references reach the retained compute and an AWS permission fails. Whether the function role lost access to the index (table or its key), whether the index read was ever permitted for the call shape the portal and this seat use, or whether the denial is specific to these two references, is not established. Nothing was deployed, rolled back, granted or written; no retained revision persisted (0 of 2 invokes); live CodeSha256 unchanged. Branch B was not triggered and was not taken: its triggers are a 5xx or TypeError, a failed arm or a figure differing from its before-read, and none of them occurred. Needs from the issuer: a ruling on who reads the function role's access to the retained index (this seat's grant forbids reading irpt-requests and changing IAM), and whether the CTO's refusal of kms:Decrypt for this seat is related. Not established: the denied API call and resource; the cause of the 00:04:48Z AccessDenied lines (caller not identified)."
 }
 ```
+
+## IRPT_BCKEND-D2-S117 -- CAUSE RECORD for IRPT_BCKEND-D2-S116: the Inflection AccessDenied is ADVI_FIRMBKTS act 4's bucket-fence change, not the IB-pr-482 release; the live read is HELD
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S117",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T00:39:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "CAUSE RECORD for row IRPT_BCKEND-D2-S116, written on the CTO's reads: the function's own log reads s3:ListBucket on opal-data-inflection denied by an explicit deny in the bucket policy (not DynamoDB; pointer_get was only the lap in which the first read ran); ADVI_FIRMBKTS act 4 (dell1) moved the adapter's Inflection reads onto that bucket's fence at 14:03Z to 14:13Z on 10-12; IB-pr-482's release (22:35Z) sits on top of it and is not the cause. IB-pr-490's Inflection read is HELD until dell1's fix is live.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the CTO's reads, msgs 6701 and 6703 of 2026-10-13: the function log since 00:00Z reads 'not authorized to perform: s3:ListBucket on resource opal-data-inflection with an explicit deny in a resource-based policy'; the bucket policy's DenyForeignFirmPrincipals admits only role/*-inf-* plus a named list, and irpt-performance-adapter-role is not in it (not re-read by this seat).",
+      "the ledger of the act that moved the reads: org/critical_paths/change_management/20261012T1340Z_advi-firmbkts-fb-f-11-act4-irpt-leg-20261012_deploy_completion.md (ADVI_FIRMBKTS act 4, dell1; the loaders flip of 14:03Z to 14:13Z on 10-12; the function's LastModified 2026-10-12T14:11:01Z is that act).",
+      "this seat read the function role's policy 2026-10-13T00:3xZ: irpt-performance-retained-policy allows s3 reads of opal-data-inflection holdings-gold under an inflection prefix, and DynamoDB leg is allowed; an IAM allow cannot beat an explicit bucket-policy deny, which agrees with the CTO's read."
+    ]
+  },
+  "spec_asserts": "CTO msg 6703: hold IB-pr-490's Inflection read until dell1's fix is live; record it on D2-S116 with the ledger path; no rollback or policy edit by ~P.",
+  "world_is": "Inflection performance answers are refused for any caller of the deployed function (the portal path and the direct invokes alike) until dell1's fix lands; our release's changed path remains UNEXERCISED-LIVE. Owner of the hold: 2.0.0_SA_COO~P2. Condition that lifts it: dell1's fix is live, which this seat reads by re-running IB169-3-AC2 (a computed, non-refused irpt_retained_phases line after the fix) and by IB2's retry of the invokes on the issuer's go-message. Nothing was rolled back, granted or edited by this seat or IB2. Not measured: when dell1's fix lands; whether the Inflection Performance tab on PROD is failing for client logins (flagged to the CTO)."
+}
+```
