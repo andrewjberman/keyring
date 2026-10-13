@@ -30690,3 +30690,53 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "STILL ARMED: W346-S2 (fe-s-15 generator), W346-S3 and W350-S1 (fe-s-18 generator): the repairs exist only on the portal branches wk-IRPT_BCKEND-350-portal @69f69895 and wk-IRPT_BCKEND-353-portal @e1cd356e2f, so the generator at portal DEV still dirties a committed fixture on every run; they disarm when those candidates land on DEV (the CTO review lane). RULED OBSERVATIONS: W352-S1 (a no-op one-argument report validator in the ycharts generate composition; the function is deployed unwired to live; a later repair cell, owner me) and W352-S2 (the ycharts packaged schema copy is not the bytes at the commit its source-map note names; the next re-pin cell reads which bytes it takes); W353-S1 (the order's status wording was wrong at key level; ruled, my wording), S2 (the base generator would have rewritten five statuses with internal_correlation_id: repaired), S3 (the two directory answers name different firm ids, each as committed), S4 (no test names the prehistory output; the smoke-classification test reads it), S5 (the committed frozen export envelope lacks facts.covered_account_ids that the portal ExportReceipt type declares required: a portal-owned inconsistency, asked of the CTO in the round-172 slug)."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W354-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~354",
+  "surfaced_at": "2026-10-13T05:08:45Z",
+  "one_line": "The order's invocation snapshot.project(snapshot, scope, include=()) does not exist at the pinned packaged snapshot.py: project takes (snapshot, scope) only, so the offline replay (IB-pr-503) called it with two arguments.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show b26847ea0422:infra/aws/lambda/investor-reporting/holdings/snapshot.py: def project(snapshot, scope) at line 332; no include parameter in the file",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~354/replay_503.py calls S.project(loaded, scope); the run returned the served slice with no TypeError (record IB173-1_holdings_passthrough_replay.json)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO IB-pr-503 step 3: run snapshot.project(snapshot, scope, include=()) after load_snapshot through a stub S3.",
+  "world_is": "The packaged project has no include parameter at the pin the source map names; the replay used project(snapshot, scope), the packaged signature, and the record says so.",
+  "notes": "Filed, not fixed: the invocation text in the order does not match the packaged code, and the order's wording was not edited. The verdicts are read from the packaged signature, not from the order's include argument."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W354-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~354",
+  "surfaced_at": "2026-10-13T05:08:45Z",
+  "one_line": "The packaged irpt-holdings serve path validates nothing against the v1 HoldingsSnapshot schema: an ACCOUNT node carrying account_id or unknown_member is passed through and served, and the schema would refuse both (additionalProperties false on the node), because validate_slice (snapshot.py:115) has no serve caller.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show b26847ea0422:infra/aws/lambda/investor-reporting/holdings/snapshot.py: validate_slice at line 115, load_snapshot 158, project 332, kept.append(json.loads(json.dumps(n))) at line 356; the scratch tree grep finds validate_slice( only at its definition",
+      "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json at 4cc72587d633 (packaged as contracts/HoldingsSnapshot.schema.json, sha256 fde5dd4171...): additionalProperties false at the node level",
+      "replay_503.py run 2026-10-13 (IB173-1_holdings_passthrough_replay.json observations): validate_slice on the served slice reads \"Additional properties are not allowed ('account_id' was unexpected)\" and \"Additional properties are not allowed ('unknown_member' was unexpected)\""
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The v1 HoldingsSnapshot contract names the members a node may carry (additionalProperties false), and the handler validates the slice it serves against that contract (snapshot.py validate_slice docstring: the served slice is validated against the contract).",
+  "world_is": "The serve path passes account_id and unknown_member through with no schema check; the v1 schema refuses both on an ACCOUNT node. The synthetic replay snapshot also omits other required members (as_of_timestamp, level, provenance, denominator), which the serve path does not require either. The 49 Financial builder's additive account_id would land schema-invalid bytes that the served path does not refuse.",
+  "notes": "ARMED because the 49 builder is about to write account_id. It disarms when the issuer (2.0.0_SA_COO~P2) holds the account_id write or the v1 contract admits the member by a CTO ruling; a serve-side change is not implied. The replay itself makes no claim about correctness of the schema, only that the serve path does not run it."
+}
+```
