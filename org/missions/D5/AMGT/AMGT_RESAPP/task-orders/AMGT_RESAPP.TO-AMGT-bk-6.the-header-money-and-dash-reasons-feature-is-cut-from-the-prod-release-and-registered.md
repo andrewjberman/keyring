@@ -13,7 +13,7 @@
 <preflight>
 comp-schedule: DECLARED-NOT-APPLICABLE -- a branch in the portal repository and one registry row; nothing scheduled.
 comp-iam: DECLARED-NOT-APPLICABLE -- no AWS call; git, bun and the open-calls tool only.
-comp-adversary: RUN at the cut -- `r103_feature_surface_check.py --selftest` reads YES (7 arms) and, run with `--base 10e7664d --head 3dcbb6ef` over the CANDIDATE branch, reads `YES (4 files: 4 page, 0 shared named, 0 forbidden, 0 unnamed)` given a receipt naming Security Analysis as Opal-internal; over DEV whole it reads NO. EGRESS CLASS, declared: NONE beyond `git fetch origin` (read) in the nested portal repository.
+comp-adversary: RUN at the cut -- `r103_feature_surface_check.py --selftest` reads YES (7 arms) and, run with `--base 10e7664d --head 3dcbb6ef` over the DEV-BASED candidate reads `NO (14 files: 4 page, 0 shared named, 10 forbidden, 0 unnamed)` (the candidate carries the DEV commits that PROD lacks: ten files of the Ticket Center), which is WHY it is re-cut onto PROD; the same check over the re-cut four-file branch is AC3 and must read YES (the control arm for a branch with only its own commits). The old `YES` claim in an earlier draft of this line was not measured and is withdrawn. EGRESS CLASS, declared: NONE beyond `git fetch origin` (read) in the nested portal repository.
 </preflight>
 
 **Your worktree:** `C:/dev/wk-resapp-417` (branch `wk-AMGT_RESAPP-417`, cut from the issuance commit). Work and commit only there. The shell's working directory resets between calls: start EVERY shell call with `cd C:/dev/wk-resapp-417`; a call that starts elsewhere resolves `git rev-parse --show-toplevel` to the base checkout and answers for the wrong tree.
