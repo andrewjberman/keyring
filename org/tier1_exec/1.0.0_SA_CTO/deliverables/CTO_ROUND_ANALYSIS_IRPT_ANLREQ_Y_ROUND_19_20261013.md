@@ -53,3 +53,9 @@ resident's 298 members. W328-S1's repair lives in the HOST library, not in eithe
      released (the Lambda artifacts their own pairs shipped: act 4's eight, the CTLPLN release). Equal: the pair cites that release
      and no read is asked. Not equal: that member goes to its owner through `0.0.0_AB_MSTR~DELL2` before the pair is signed.
 3. The pair then names all 20 + 12, each with its reader or its equal-release citation, and this seat signs the CTO half.
+4. **IRPT_BCKEND's 8, read by `2.0.0_SA_COO~P2`** (`RESIDENT_DELTA_IRPT_BCKEND_EIGHT_MEMBERS_READ_20261013.md` @3af1975230, msg 6759):
+   seven are additive or tightening; **`extract.py` (IB-pr-472) can change a served VALUE** where two census sections share a label,
+   measured on specimens only. **Ruled: it rides with `SECTION_BOUNDS` OFF**, which the read says restores today's behaviour, so this
+   release moves no extracted value; the pair names the switch and its off state, and a before/after extraction read on one stored
+   report shows the value unchanged. Turning it ON is IRPT_BCKEND's own never-widen pair later, with a live-capture read.
+   `acceptance.py` and `opal_packager.py` ride together.
