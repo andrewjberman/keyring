@@ -55,6 +55,9 @@ Mirror `_read_drafting_document` and `read_drafted_sections` (read them first, a
 - `read_ai_fill(security_key) -> dict` (public, importable): returns `{"status", "reason", "source", "read_completed", "as_of", "generated_at", "producer", "blocks"}`. `security_key` None -> `status` ABSENT, `reason` `"identity UNRESOLVED -- no measured security key to read an AI fill document by"`, `source` `"none"`, `read_completed` True, `blocks` `{}`. No document -> ABSENT with the reader's reason, source and read_completed, `blocks` `{}`, `as_of`/`generated_at`/`producer` None. A document that fails validation -> INVALID, the validator's reason, `read_completed` True, `source` the reader's, `blocks` `{}` (nothing is served half-validated). A valid document -> SERVED, `reason` None, `blocks` the document's blocks UNCHANGED, `as_of`, `generated_at`, `producer` from the document.
 - The wiring: in `read_thesis_bundle`, after `bundle.update(read_drafted_sections(resolved_key))`, add `bundle["ai_fill"] = read_ai_fill(resolved_key)`. That is the only edit outside the new region. Do NOT call `read_ai_fill` from any overlay function. Leave the covered-no-block answer path as it is.
 
+### `lib/research/api/tests/conftest.py` (AMENDMENT 1: one line)
+The package's autouse fixture `empty_pool_roots` points `AMGT_POOL_ROOT` and `AMGT_DRAFTING_ROOT` at empty directories so no test reaches the live bucket. Add the same for the new reader, as one more line in that fixture: `monkeypatch.setenv(scoped_amgt.ENV_AIFILL_ROOT, str(tmp_path_factory.mktemp("empty_aifill")))`. Nothing else in the file moves. (Measured by the first worker: without it the existing thesis tests made 29 live GETs of the fill key across 44 passing tests.) Your own tests that exercise the S3 seam delete the variable with `monkeypatch.delenv` and patch `_s3_client`, as the conftest docstring says.
+
 ### `lib/research/api/tests/test_ai_fill_serve.py`
 Your own pytest module (this directory has `__init__.py` and a `conftest.py`; follow its neighbours): the local-root reads (served, absent, unparseable), each INVALID case, the UNRESOLVED key, the pool read with a fake `_s3_client` (the exact bucket and key, a slash key, NoSuchKey, another error), one GET and no LIST, `read_thesis_bundle` carrying `ai_fill` (monkeypatch its heavy readers the way a neighbouring test does, or assert on the source line if no neighbour shows how), and the prefix constant. Python 3.9, ASCII.
 
@@ -63,7 +66,7 @@ Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: i
 ## 2. BOUNDS
 
 
-1. Write ONLY `lib/research/api/scoped_amgt.py` and `lib/research/api/tests/test_ai_fill_serve.py`. The generator, the generated prefixes module and `test_harvest_prefixes.py` are cell fa-9's (already merged): you edit none of them. In `scoped_amgt.py` your edits are the constants and functions of the new region and the one wiring line; another seat edits other regions of the same file in parallel: do not touch, reformat, reorder or rename anything else.
+1. Write ONLY `lib/research/api/scoped_amgt.py`, `lib/research/api/tests/test_ai_fill_serve.py` and `lib/research/api/tests/conftest.py` (AMENDMENT 1: the ONE line below). The generator, the generated prefixes module and `test_harvest_prefixes.py` are cell fa-9's (already merged): you edit none of them. In `scoped_amgt.py` your edits are the constants and functions of the new region and the one wiring line; another seat edits other regions of the same file in parallel: do not touch, reformat, reorder or rename anything else.
 2. You never deploy, never `terraform apply`, never `aws lambda update-function-code`, never write S3 (the S3 client in your tests is a fake), and you change no overlay function.
 3. `scoped_amgt.py` gains no import of `lib.opal_naming`, `lib.research.harvest.store` or `lib.research.aifill` (the Lambda package is the module's own surface plus `_harvest_prefixes`).
 - Leave `lib/research/management/`, `lib/research/filings/`, `lib/research/posture/` and every existing module untouched.
@@ -76,6 +79,7 @@ Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: i
 <paths>
 lib/research/api/scoped_amgt.py
 lib/research/api/tests/test_ai_fill_serve.py
+lib/research/api/tests/conftest.py
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -101,6 +105,8 @@ Report once:
 The `<status>` flip is the issuer's.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**AMENDMENT 1 (2026-10-13 ~23:3xZ, the issuer, after worker ~422's report; no gate limb graded it: the order is open and `<placeholders>NONE` stands):** the first worker's row W422-S1 (ARMED, disarm owner the issuer) measured that `conftest.py` set no `AMGT_AIFILL_ROOT`, so existing thesis tests reached the live fill key (29 GETs). The cut omitted the hermetic default the two neighbouring roots have. `conftest.py` joins `<paths>` for that one line. Rows S2 (the validator enforces the contract's block rules beyond the face's list: accepted, it is the same contract) and S3 (the naming gate WARNs on the display literal `s3://{0}/{1}`: a WARN, not a refusal) are observations.
 
 **ISSUER NOTES:** STAGED behind `AMGT-fa-9`'s merge (the generated constant `_hp.AI_FILL_GOLD_PREFIX`): the first cut of this order carried the generator edit in its own `<paths>`, which the L6 gate graded as an infrastructure path with a WORLD floor against LOCAL, so the edit became fa-9 and this order stays LOCAL. The serve is written against the contract, not against `lib.research.aifill`, so the Lambda package never needs the aifill package (a deploy-leg fact: `scoped_amgt.py` and the regenerated `_harvest_prefixes.py` are the packaged members that change). Shared surface with `~R1`: `scoped_amgt.py` (different regions; the drain merges through `safe-merge.sh` and re-runs the whole api suite) and the function itself (ONE applier at a time: `~R1`'s round 104 applies first, msg 5213; this order is merged but NOT applied). Two criteria: AC1 the behaviour, AC2 the neighbour suite.
 
