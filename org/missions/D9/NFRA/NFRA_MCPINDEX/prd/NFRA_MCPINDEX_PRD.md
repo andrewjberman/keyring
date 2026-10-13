@@ -3,7 +3,7 @@
   "project": "NFRA_MCPINDEX",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v0.8",
+  "prd_version": "v0.9",
   "step": 4,
   "brief_ref": "docs/briefs/opal-mcp-tool-index-brief-20260917.md@826ac6925a",
   "endpoint_outcomes": [
@@ -25,7 +25,9 @@
     "FWD-16",
     "FWD-17",
     "FWD-18",
-    "FWD-19"
+    "FWD-19",
+    "FWD-20",
+    "FWD-21"
   ],
   "status": "DRAFT"
 }
@@ -292,6 +294,34 @@ FWD-19  The operations lead's trade reconciliation and billing are answerable in
          SOURCE     Andrew-direct 2026-10-09 ~05:0xZ (record @709da7cded, line 9); option A
                     record @1740ba55ec; fixtures tools/ops_kit/fixtures/ @cc539738c6
 
+FWD-20  Every tool the gateway serves names its catalog index, that index's history depth and its freshness (v0.9)
+         DONE WHEN  EXERCISED -- a census over the DEPLOYED gateway's served tools reads N tools
+                    served and N naming a catalog entry (or a GAP entry), each entry carrying its
+                    history depth (earliest served date) and its freshness (latest served date)
+         ACCEPT     the tool list is read from the deployed gateway's definitions, never a hand-kept
+                    list; freshness is read at answer time (FWD-13's rule); depth and freshness each
+                    carry a claim (measured / inferred / absent), and "absent" is said, never blank;
+                    the values are readable by NFRA_MCPORTAL through the existing catalog read
+         PROOF      the census with its denominator printed; for one tool, the depth and freshness
+                    compared with the served artifact by a second instrument
+         SOURCE     Andrew's site Z voice memo 2026-10-13 ("We need to be able to see all indexes for
+                    all vendor slash channels ... the depth and breadth of channels and indexes and
+                    tools available per vendor"), via the laptop CTO's direction XB-20261013T185926Z-4d72 Z4
+
+FWD-21  An asset manager's research question routes to the servable harvest data (v0.9)
+         DONE WHEN  EXERCISED -- opal_discover for "harvested news articles and chatter" and for
+                    "security analysis research pack" each return catalogued datasets, not
+                    catalogued: false; the Schwab positive control still returns its datasets
+         ACCEPT     one catalog row per SERVE prefix in the servable-prefix list v3 @0b2778751a,
+                    named exactly as listed (row 8 is six table prefixes, never
+                    amgt/harvest/gold/ whole); a WITHHOLD prefix gets no data row; the existing
+                    catalog read tools are used first (build ladder step 2), and a prefix no
+                    existing tool can read is a GAP entry naming its owner
+         PROOF      the three discover calls; the catalog's harvest rows counted against the
+                    list's 11 SERVE rows (denominator printed)
+         SOURCE     Andrew's AMGT voice memo 2026-10-13 ("set up the MCP index for that bucket ...
+                    so that the asset managers can use that with their cloud"), via XB-4d72 Z4/Z5
+
 ## CONTRACTS
 
 **C1 -- ONE catalog, versioned, EXACTLY ONE writer -- and naming that writer is S1's FIRST ACT, because today nothing
@@ -535,3 +565,41 @@ surface: new reader modules and new catalog entries.
 **Sign-off.** ENDPOINT and CONTRACTS change. The ratified-text half re-opens for `3.0.0_SA_CVO~Z`. The input is an
 Andrew-direct record and no CRO brief, so the brief half is owed by `4.0.0_SA_CRO~Z`, or by a live COO that does not
 hold the round (rule 27).
+
+### v0.9 addendum (2026-10-13 ~19:3xZ, 1.0.0_SA_CTO~Z) -- one short round: tool-to-index links, and the harvest bucket (FWD-20, FWD-21)
+
+**Input.**
+- Andrew's site Z and AMGT voice memos, 2026-10-13 morning, verbatim in the laptop CTO's direction
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_SITEZ_20261013.md` sections 1.1 and 1.2
+  (cross-box ORDER XB-20261013T185926Z-4d72, acked 19:12Z). He names this project one of "the three that matter".
+- The laptop CTO's positioning ruling @f469cb665f: ONE short MCPINDEX round; FWD-19 and FWD-11 stay parked.
+- The servable-prefix list v3: `org/tier1_exec/1.0.0_SA_CTO/deliverables/SERVABLE_PREFIXES_OPAL_DATA_HARVEST_20261013.md`
+  @0b2778751a (`1.0.0_SA_CTO~DELL1` rulings F1-F5). It includes Andrew-direct ~19:0xZ ("any data in our AWS cloud is
+  available to our team"), which makes 11 rows SERVE.
+- Brief: the CRO's alignment reports for site Z and AMGT, cited in the direction's section 7.
+
+**Contract changes:**
+
+1. **The `opal-data-harvest` bucket is in scope (FWD-21).** Before this, the PRD did not mention the harvest bucket.
+   - Data rows are cut for the list's SERVE rows only. WITHHOLD prefixes, and any new top-level prefix not yet classed
+     on the list, get no data row.
+   - The V1 rule holds: derived layers and article links, never raw publisher text.
+2. **The grant is not this project's.** Asset-manager principals and the research `s3:GetObject` grant (with its two
+   negative arms) are NFRA_OPLGTW's next-round act (direction Z5). This project writes catalog rows only. C1's single
+   writer of `infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml` is unchanged.
+3. **Tool-to-index links come from the deployed gateway (FWD-20).** The served-tool list is read from the gateway's
+   deployed definitions (`services.opal-gateway.deployed_commit` in `infra/aws/ec2/EC2_MANIFEST.json`), never the trunk
+   and never a hand-kept list. NFRA_MCPORTAL shows the result. MC Portal's own FWD-20 and FWD-21 are a DIFFERENT
+   project's outcomes with the same numbers.
+4. **Both cells write the one catalog file.** The decomposition sequences them or merges them into one cell. Two
+   parallel writers of `DATA_CATALOG.yaml` are refused.
+5. **No new resource names.** If one is needed, it is `lib/opal_naming.py` output (CLAUDE.md rule 30).
+
+**Order.** One round, cut by `2.0.0_SA_COO~MI` (seated 19:1xZ for this round): FWD-20, then FWD-21, or one cell
+covering both. The project parks at ROUND_CLOSE after it. The round-9 un-park conditions (a)-(c) stand for everything
+else. `0.7.0_AE_CloudOps~MI` keeps its MX-s-19 read on 2026-10-19/20.
+
+**Sign-off.**
+- ENDPOINT and CONTRACTS change, so the ratified-text half re-opens for `3.0.0_SA_CVO~Z`.
+- The brief half is the CRO's alignment reports on Andrew's memos, accepted as written (rule 27, PROPORTIONATE
+  SIGN-OFF).
