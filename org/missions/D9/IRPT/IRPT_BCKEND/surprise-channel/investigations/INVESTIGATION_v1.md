@@ -30102,3 +30102,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Form only. The line number in the order is off by the overlay call; the source name it asks for, dim_balance.account_id, is confirmed at the mint."
 }
 ```
+```json
+{
+  "id": "IRPT_BCKEND-D2-W347-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~347",
+  "surfaced_at": "2026-10-13T03:36:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "Amendment 1 (b) cannot be committed: the naming gate refuses the bare path citation holdings_49f.py:363 as a NEW hand-kept carrier of the 49f token in raw_keys.json holdings_citation, so the correction was reverted in the worktree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_ids/raw_keys.json line 12 holdings_citation @aa5778d962 is at HEAD text holdings_snapshot.py:352-353 (reverted)",
+      ".tools/naming-gate.py NAMING REFUSE at the raw_keys.json diff line 12, hand-kept carrier of 49f, remedy printed as lookup('49financial') @3c6a833932 gate read",
+      "holdings_49f.py:363 is the live mint, opaque_id of the dim_balance raw account @f91aedd1ef"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-496 amendment 1 (b): correct holdings_citation in the 49financial account entry to cite the live mint at holdings_49f.py:363; keep everything else.",
+  "world_is": "The naming gate (LGIC_ENFORCE, ENFORCE mode) refuses a NEW bare path string carrying the 49f firm token in an authored JSON file under infra/. The gate exempts strings with whitespace as prose, and that exemption was not used to pass the citation through. The raw_keys.json citation stays at its HEAD value; holdings_source keeps the mint citation committed at 135fc3509e. A ruling is needed: a registry-backed citation form, or a gate ruling on a source-file path citation in an authored JSON.",
+  "notes": "Form only. The holdings_inf.py fix and its two arms are committed separately at aa5778d962 and need no ruling."
+}
+```
