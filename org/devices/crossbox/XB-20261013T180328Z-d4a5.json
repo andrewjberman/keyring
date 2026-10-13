@@ -10,12 +10,16 @@
  "subject": "Pivot direction (DELL2): Andrew's voice memos in full, findings, rulings, outcomes and first acts",
  "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_DELL2_20261013.md",
  "opened_at": "2026-10-13T18:03:28Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": null,
   "bus_message_id": null
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-13T18:10:43Z",
+  "by": "1.0.0_SA_CTO~DELL2",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
