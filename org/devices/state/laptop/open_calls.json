@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "laptop",
- "written_at": "2026-10-12T13:57:34Z",
+ "written_at": "2026-10-13T15:38:23Z",
  "written_by": "1.0.0_SA_CTO",
  "rows": [
   {
@@ -302,6 +302,68 @@
     "ruled_by": "cluster-lead",
     "xadj": null
    }
+  },
+  {
+   "id": "laptop-20261013T153821Z-44eb",
+   "project": "COMM_ASSIST",
+   "subject": "Have anyone @mention you in one of the 8 watched Teams channels once (COMM_ASSIST FWD-3 / round-15 D2)",
+   "asked_by": "1.0.0_SA_CTO",
+   "source": "org/missions/D9/COMM/COMM_ASSIST/project.json",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-13T15:38:21Z",
+   "kind": "act",
+   "context": "Moved from site Z row sitez-20261012T210024Z-288f on the project's move to the laptop (placement @b4ad06ff09; handover packet CTO~Z msg 33656). FWD-3 is APPLIED and its poll healthy; no real @mention since the 10-11 18:49Z gateway release. Gates the round-15 close (CA-g-1).",
+   "rec": "Andrew's act: one @mention in a watched channel; no seat can produce it.",
+   "scope": {
+    "measured_at": "2026-10-13T15:38:21Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "laptop-20261013T153823Z-e435",
+   "project": "COMM_ASSIST",
+   "subject": "Have one Opal colleague (not you) email you the test text in COMM_ASSIST_DECOMP.round13.md cell CA-e-1, or name a mailbox a seat may send from",
+   "asked_by": "1.0.0_SA_CTO",
+   "source": "org/missions/D9/COMM/COMM_ASSIST/project.json",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-13T15:38:23Z",
+   "kind": "act",
+   "context": "Moved from site Z row sitez-20261011T030519Z-058e on the project's move to the laptop (placement @b4ad06ff09). FWD-4's internal branch is APPLIED and never exercised; no seat can send from an Opal mailbox other than Andrew's (0.0.3_BG_BBGTerminal declined under its seat hold, msg 33123).",
+   "rec": "Andrew's act: one colleague mail, or name a mailbox a seat may send from.",
+   "scope": {
+    "measured_at": "2026-10-13T15:38:23Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": null
   }
  ]
 }
