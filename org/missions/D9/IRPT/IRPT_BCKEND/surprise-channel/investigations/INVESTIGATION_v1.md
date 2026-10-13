@@ -31034,3 +31034,80 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The wire union is the only place multi_asset is spelled as a key; the portal's served and display layers never see it as a key. Covering it end to end is a decision between the CTO's six-class ruling (iv-e-148) and the round-174 ruling that the wire union follows the contract, and it needs contracts/index.ts and contracts/adapt.ts in a grant. The worker has changed no tab file and no adapter file."
 }
 ```
+
+## IRPT_BCKEND-D2-W357-S6 -- closes IRPT_BCKEND-D2-W357-S4 and IRPT_BCKEND-D2-W357-S5: superseded by the CTO's six-class ruling (AMENDMENT 2); INERT
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W357-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~357",
+  "surfaced_at": "2026-10-13T06:25Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Requests the CVO close S4 and S5. Both were refusals under the withdrawn direction (the wire union moved to the contract's enum, multi_asset included). AMENDMENT 2 (CTO RE 6818, round-174 analysis section 3 @cbcc4a88b8) keeps six classes: the generator subtracts the RETIRED set {multi_asset}, iv-e-148 is unchanged and passes, IVE48-AC1 names the retired set, and the adapter folds a served multi_asset to unclassified with one log line.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@63b31b0c __tests__/fe-s-13/gen-wire.ts: RETIRED_ENUM_MEMBERS = new Set(['multi_asset']) subtracted in the renderType enum branch; contracts/wire/HoldingsSnapshot.ts multi_asset count 0 (grep -c)",
+      "checks/r174/p174_cells.py IB174-2-AC1 at the worker run: 'OK: IVE48-AC1 and iv-e-148 pass; iv-e-148 is unchanged' rc=0; iv-e-148 sha256 (LF-normalised) equals the pinned a61839fa...",
+      "bun test of src/pages/InvestorReporting: 1219 pass, 2 fail (producer fixtures; F14-AC3), the two pre-existing tests; IVE48-AC1 and iv-e-148 green"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Worker request to the CVO: disposition S4 and S5 as superseded by the six-class ruling (Andrew-direct 2026-10-07; RE 6818). The adjudicates carrier is the CVO's field and is not used by the worker.",
+  "spec_asserts": "TO-IB-pr-506 AMENDMENT 2: file a short row closing S4 and S5 once the six-class direction is in force.",
+  "world_is": "The six-class direction is in force: the portal wire keeps six classes, the contract's retired member is subtracted by the generator, and iv-e-148 is untouched and green."
+}
+```
+
+## IRPT_BCKEND-D2-W357-S7 -- OBSERVATION: the regenerated HoldingsSnapshot.ts header carries a new source sha256 (provenance line only); INERT
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W357-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~357",
+  "surfaced_at": "2026-10-13T06:25Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "gen-all.ts regeneration changed HoldingsSnapshot.ts in two places: the granted optional account_id on the ACCOUNT node (AMENDMENT 1) and the header 'Source sha256' line (7c221b13... to c7890367...), which follows the current schema bytes. No other generated file changed (consumed.ts, index.ts, responses.ts and the other 24 documents are byte-identical in content).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@63b31b0c contracts/wire/HoldingsSnapshot.ts: git diff --ignore-cr-at-eol shows 3 changed lines: the Source sha256 header line and the added 'readonly account_id?: string' line, nothing else",
+      "gen-all.ts output 'gen-wire: 25 of 25 documents' followed by 'gen-consumed: 11 of 11 contracts'; git diff --stat over contracts/wire/ lists HoldingsSnapshot.ts only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 and AMENDMENT 2: the regeneration may differ from HEAD by the account_id member only, and any other difference is a row.",
+  "world_is": "The only content difference is the granted account_id member. The header sha is a provenance line that every regeneration of a changed schema rewrites; it is recorded here so the reviewer sees it rather than inferring it."
+}
+```
+
+## IRPT_BCKEND-D2-W357-S8 -- OBSERVATION: at the worker run two of the five base failures named in the order pass (IVE26-AC3, IVE98); the folder reads 2 fail, not 4
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W357-S8",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~357",
+  "surfaced_at": "2026-10-13T06:25Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's base reading (1212 pass, 5 fail: IVE26-AC3, IVE48-AC1, IVE98, producer fixtures, F14-AC3) and the four pre-existing names do not match the run after the change: bun test of src/pages/InvestorReporting reads 1219 pass, 27 skip, 2 fail over 1248 tests, and the two failing tests are producer fixtures and F14-AC3. IVE26-AC3 and IVE98 pass in this run. No file on their path changed except the wire copy, adapt.ts, gen-wire.ts and iv-e-48.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test src/pages/InvestorReporting at portal@63b31b0c (run 77.00s): 'Ran 1248 tests across 394 files', failing lines '✗ producer fixtures > every copied fixture carries the same CONSUMED CONTENT as its source' and '✗ F14-AC3 -- the refusals still refuse, and the edit is three lines'",
+      "p174_cells.py IB174-2-AC2 at the worker run: 'OK: the folder reads 1219 pass, 2 fail' rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-pr-506 AC2 preamble: the base reads 1212 pass, 5 fail, the four pre-existing failures are IVE26-AC3, IVE98, producer fixtures and F14-AC3.",
+  "world_is": "After the change the folder reads 2 fail: the producer fixtures and F14-AC3. IVE26-AC3 and IVE98 pass here, and the worker did not measure the base in this worktree, so the cause of the difference is not settled. The criterion (at least 1214 pass, at most 4 fail) is met."
+}
+```
