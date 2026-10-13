@@ -8282,3 +8282,139 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W81-S1 -- the portal worktree had no node_modules; the candidate linked the main checkout's install by a directory junction
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W81-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~81",
+  "surfaced_at": "2026-10-13T18:06:32Z",
+  "one_line": "A fresh portal worktree carries no node_modules, so the candidate's tests and typecheck could run only through a junction to the main checkout's install.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-portal-81/node_modules is a directory junction to C:/dev/ajb_workspace/portal/node_modules (mklink /J, 2026-10-13); the target listing holds 313 entries and react, happy-dom and @happy-dom/global-registrator resolve from it.",
+      "The portal .gitignore line 11 lists node_modules, so the junction is not a tracked change; the worktree status shows only the three src/ paths of commit 1742505086408bc7120e3f36b9e3ced6dfc2fd02 (branch wk-IRPT_ANLREQ-81-portal, origin/DEV f6ef1d25 base)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AR-y-248 step 1 and step 3: make a worktree outside the product tree from origin/DEV, and run the portal's test folder and bun run typecheck in it. The order names no install step and no dependency source.",
+  "world_is": "A fresh worktree has no installed packages. The worker linked C:/dev/wk-portal-81/node_modules to the main checkout's install with a directory junction (no network install, the main checkout unchanged); bun test and bun run typecheck then ran against the same packages as the main checkout."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W81-S2 -- the portal repository has no committer identity for this worker; the commit named the serial on the command line only
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W81-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~81",
+  "surfaced_at": "2026-10-13T18:06:32Z",
+  "one_line": "A plain git commit in the portal worktree stopped at 'Committer identity unknown'; the candidate was committed with the serial as committer set on the command line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git commit --author ... -F <msgfile> in C:/dev/wk-portal-81 returned 'Committer identity unknown' and 'unable to auto-detect email address' with rc=128 before any commit was written.",
+      "The commit 1742505086408bc7120e3f36b9e3ced6dfc2fd02 was then made with GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL set to 0.9.0_WK_IRPT_ANLREQ~81 on that command only; git log shows author and committer both 0.9.0_WK_IRPT_ANLREQ~81. No git config was written.",
+      "git rev-parse --verify wk-IRPT_ANLREQ-63-portal in C:/dev/ajb_workspace/portal returned unknown revision; the branch the order names for its log has no local ref."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AR-y-248 step 4: commit in the portal worktree the way an earlier candidate branch was made (git -C ... log of wk-IRPT_ANLREQ-63-portal); if a hook or a rule of the portal repository refuses the commit, stop and file a row with the refusal text.",
+  "world_is": "The portal repository has no committer identity for a worker worktree, and the named earlier branch has no local ref. The commit went through with the identity given on the command line; no portal rule or hook refused it."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W81-S3 -- the hint sentence as the proxy input's placeholder is wider than the input; its full words also sit on the title attribute and the hint line
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W81-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~81",
+  "surfaced_at": "2026-10-13T18:06:32Z",
+  "one_line": "The 163-character hint sentence used as the proxy input placeholder is clipped in the w-28 input; the full words are still reachable on the title attribute and the hint line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ProspectComposer.tsx in commit 1742505086408bc7120e3f36b9e3ced6dfc2fd02: the proxy input has className w-28 and placeholder={PROXY_HINT} title={PROXY_HINT}; PROXY_HINT is 163 characters (wc -c of the sentence).",
+      "The hint line element data-slot upload-proxy-hint renders the same sentence under the Name a proxy heading; test (f) of prospect-suggested-swaps.test.tsx reads both and passes."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AR-y-248 step 2(d): the proxy input's placeholder and a hint line under Name a proxy say what to type, in the words the read record proposes, used as written. Contract C13 forbids clipped text unless the element carries its full text.",
+  "world_is": "A 163-character placeholder cannot show in a 7rem input; the placeholder clips visually. The full words are on the input's title attribute and in the hint line, so the clip has a recovery path. The candidate uses the words as written; the layout choice is open for the L9 reader."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W81-S4 -- the swap reader also rejects an item whose source is not the provider-verified constant, and an item that repeats the file's own ticker
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W81-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~81",
+  "surfaced_at": "2026-10-13T18:06:32Z",
+  "one_line": "The suggestions reader treats an item with another source, or one that repeats the file's own ticker, as none; the order listed only the absent, null, non-list and no-symbol cases.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "prospect.ts swapSuggestions in commit 1742505086408bc7120e3f36b9e3ced6dfc2fd02: an item is skipped when its source is not KIMI_SWAP_PROVIDER_VERIFIED, when its symbol is not ticker-shaped, or when its symbol equals the finding's value case-insensitively.",
+      "The cell text fixes the wire source as KIMI_SWAP_PROVIDER_VERIFIED for each member item, so a verified-only reader reads the same shape the server sends."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AR-y-248 step 2(a): read the optional suggestions member; absent, not a list, or an item without a string symbol is treated as none, never an error, never a thrown exception.",
+  "world_is": "The reader applies two more rejections, the provider source and the own-ticker repeat, and it caps the list at three. The order's listed cases are all handled, and the extra rejections only remove items; no item the order named as shown is hidden."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W81-S5 -- the portal verification law's rendered screenshot was not produced for the candidate's new visual text
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W81-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~81",
+  "surfaced_at": "2026-10-13T18:06:32Z",
+  "one_line": "The portal CLAUDE.md requires a rendered screenshot read against DESIGN.md before a visual change commits; the candidate has clause-cited choices but no screenshot.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-portal-81/CLAUDE.md, section 'Verification law -- LOOK AT THE PAGE, REJECT BY CLAUSE' (read at origin/DEV f6ef1d25): render the page, open the PNG, check it against DESIGN.md; the screenshot is the exercised path.",
+      "Commit 1742505086408bc7120e3f36b9e3ced6dfc2fd02 adds a visible hint line, a suggested label and a navy-bordered Use button to ProspectComposer.tsx; the record cites C3, C8, C9, C10, C11 and C13 from the contract text, with no render."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AR-y-248 step 1: read the portal's CLAUDE.md and DESIGN.md first; new text follows their clauses, and each visual choice cites its clause number in the record.",
+  "world_is": "The clauses were read and cited, but the portal's rendering law (screenshot via scripts/ui-smoke.mjs or the frontend-dev skill) binds a visual change too and is not in this order's face. No screenshot was produced; the visual judgment stays open for the L9 reader."
+}
+]
+```

@@ -32017,3 +32017,101 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "RULED (issuer, inside my own decomposition; amendment commit states the gate limb): (1) THE DEFECT IS MINE: I read handler.py:462 for the fixture path and did not read which function the deployed Handler names; the packet's own direct-invoke section said 'API-shaped event for an Opal principal', which the guard admits only with a verified principal's headers. (2) NO RESTORE: the function is healthy (a well-formed refusal envelope, no 5xx or TypeError), the applied digest equals the signed one, one member changed, the re-plan reads 0 changes, and Branch B's trigger is 'a direct-invoke arm that fails' (none ran and none disagreed). (3) THE PROOF IS AMENDED (order 516 AMENDMENT 1, check AC3): the deployed handler.py member sha256 equals the built member whose four replay arms the packet shows, and a log-group read since the apply counts zero 5xx or TypeError with the invocations counted; the second invoke is struck; no principal is forged and no live directory is read. (4) WHAT STAYS OPEN: nothing has yet read the SERVED tail search. A tail search by a person on a served page (an Opal staff sign-in on portal DEV) is that read; no seat can sign in, so it is an act only a person can take, filed as an open-calls act. The CTO half's condition 4 named the synthetic invoke; I asked the CTO to rule whether the offline arms plus the health proof suffice in its place. D2-S139 and D2-S141 stay ARMED until the person's read or that ruling. (5) SIDE FINDING (IB2's): the seat-gates crossbox check printed STOP-in-ENFORCE on the generic token 'directory' against an ACKED open call XB-20261011T062718Z-c908 and on the order's own ledger sentinel; it ran in WARN mode and proceeded; not mine to fix, recorded here."
 }
 ```
+
+## IRPT_BCKEND-D2-S144 -- DISARM of D2-S139, D2-S141 and D2-S143: Andrew's tail search works on the deployed function
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S144",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T18:13:22Z",
+  "disposition": "GRADUATED",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARMED: D2-S139, D2-S141 and D2-S143 -- Andrew's own tail search on his localhost:5174 smoke worked after the irpt-directory-search apply; the served read they waited on is met.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 7140, 2026-10-13T18:12Z, relaying Andrew's smoke-list item 1.8 verbatim: 'last 4 digit search does work.' (a relay; the CTO committed the smoke item as be5085e3af)",
+      "live function CodeSha256 rXHDDz/ZhY2pZFuLDcrPisAs69IuTd6p8Rwflxhvwyw= equal to the signed digest, re-read by me at ~17:50Z; IB182-1 AC1-AC3 PASS on the merged tree (IB2 record 8df634fac5)"
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "DISARMED, with the INERT evidence above. D2-S139 (the hold and the portal consumer point): the hold was lifted by Andrew's word at this seat (D2-S140), the portal condition read 0 null accountId over 9,441 ACCOUNT entries (D2-S141), and the person's served search now works, so the apply no longer changes a client-facing search before it is cleared; its disarm owners were the laptop CTO or Andrew, and Andrew's own smoke result is the evidence. D2-S141 and D2-S143: mine, disarmed on the same read. NOT disarmed here: W349-S1, W361-S1, W348-S2 (unchanged, ARMED, owner me). What is NOT shown: the same search by a CLIENT login on PROD (the PROD promote is held, dell1-e7f2); this read was Andrew's on localhost:5174 against the deployed function. Ledger irpt-dirsearch-tail-accounts-20261013 is asked to close at IB2 (my message citing msg 7140)."
+}
+```
+
+## IRPT_BCKEND-D2-S145 -- Andrew's smoke: model-sleeve Holdings shows no class breakdown; the CTO ruled it is computed from the model's target mix
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S145",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T18:17:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Andrew's smoke: on a 49F SmartX-model account the Holdings tab says it is 'Held at the model's target, not position-level' and 'not broken down by asset class', while the table lists the model's target mix by class; the CTO ruled the class breakdown is computed from the model's target weights and labelled 'by the model's target mix'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 7145, 2026-10-13T18:16Z, relaying Andrew's smoke (~18:1xZ) of portal DEV; relayed, not reproduced by this seat",
+      "portal/src/pages/InvestorReporting/tabs/holdings/classTotals.ts:61 and :66 (WHOLE_REMAINDER_SENTENCE and TARGET_REMAINDER_LABEL, the page's own words; read by this seat in the DEV checkout)"
+    ]
+  },
+  "spec_asserts": "When positions are model-level, the class breakdown is computed from the model's target weights and labelled 'by the model's target mix', never left empty (CTO ruling, msg 7145).",
+  "world_is": "RECORDED, not cut: the CTO's ruling queues it behind the O1/O2 acceptance release (pivot direction), not ahead of it. READ so far: the page's two sentences live in the portal's classTotals.ts (:61, :66); NOT read: which side holds the model's target weights (the snapshot the builder writes, or a portal read), so whether the cell is a builder change, a portal candidate or both is not yet known. The cell is cut in the first issuance after the O1/O2 release, as a measure-first read of that question; owner me."
+}
+```
+
+## IRPT_BCKEND-D2-S146 -- Andrew's smoke: the cash row's ticker reads 'Cash'; it should read CASH
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S146",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T18:17:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Andrew's smoke: the cash row's ticker reads 'Cash'; it should read CASH (CTO ruling, msg 7145).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 7145, 2026-10-13T18:16Z, relaying Andrew's smoke (~18:1xZ) of portal DEV; relayed, not reproduced by this seat"
+    ]
+  },
+  "spec_asserts": "The cash row's ticker reads CASH.",
+  "world_is": "RECORDED, not cut: queued behind the O1/O2 acceptance release with S145. NOT read: where the string 'Cash' is produced (the model sleeve data, the snapshot builder or the portal), so the owner of the change is unknown. Cut as part of the S145 measure-first read; owner me."
+}
+```
+
+## IRPT_BCKEND-D2-S147 -- CORRECTION to D2-S145: the breakdown is one vendor-agnostic mechanism over the served rows
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S147",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T18:23:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "CORRECTS D2-S145's ruling text: the Holdings class breakdown is ONE mechanism over the served rows' own class values, vendor-agnostic (an 'Opal Shape' in the gold layer), with no model-target special case; D2-S146 (CASH) stands.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 7148, 2026-10-13T18:22Z, correcting its msg 7145 item (1); the CTO's record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_182xZ_VENDOR_AGNOSTIC_OPAL_SHAPE_IN_GOLD.md @d630aeda77 quotes Andrew: 'one simple mechanism regardless what data vendor it is sourced from ... make an Opal Shape for anything that is served, that is the purpose of a Gold layer' (relayed; not read in full by this seat)"
+    ]
+  },
+  "spec_asserts": "The class breakdown sums the served rows' own class values, whatever produced them, with no model-target branch and no reader that branches on vendor (CTO msg 7148).",
+  "world_is": "SUPERSEDES the 'computed from the model's target weights' wording in D2-S145's spec_asserts (an append-only channel: S145 stays as written and this row governs). Still RECORDED, not cut: queued behind the O1/O2 acceptance release. The measure-first cell I will cut after that release reads the served rows' class values and where a model-sleeve account's rows get theirs, so that one mechanism over the gold rows serves every vendor; whether that is a builder change, a portal candidate or both is NOT yet read. Owner me."
+}
+```
