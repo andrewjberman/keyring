@@ -8931,3 +8931,129 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W86-S1 -- the cell names portal/src/lib/chartColors.ts as the home of MODEL_PORTFOLIO_COLORS; the map is in modelPortfolioColors.ts
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W86-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~86",
+  "surfaced_at": "2026-10-13T19:01:04Z",
+  "one_line": "AR-y-261 names portal/src/lib/chartColors.ts as the home of MODEL_PORTFOLIO_COLORS; the map is declared in portal/src/lib/modelPortfolioColors.ts, and chartColors.ts names it in comments only.",
+  "spec_asserts": "AR-y-261 step 2 says the portal's own model list is portal/src/lib/chartColors.ts MODEL_PORTFOLIO_COLORS, and asks the worker to read it there.",
+  "world_is": "At portal commit 53506d4903 (the gitlink this worktree pins; an ancestor of the base portal HEAD cf52fdbf), MODEL_PORTFOLIO_COLORS is declared at src/lib/modelPortfolioColors.ts:18 and its Ultra-Short Term entry at :55-62. src/lib/chartColors.ts holds PALETTE and mentions MODEL_PORTFOLIO_COLORS only in comments (:129, :134, :646). The read was made with git show of the pinned commit; nothing was changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@53506d4903 src/lib/modelPortfolioColors.ts:18 read by git -C C:/dev/ajb_workspace/portal show 53506d4903:src/lib/modelPortfolioColors.ts",
+      "portal@53506d4903 src/lib/chartColors.ts:129,134,646 (comments only) read by the same git show"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W86-S2 -- the worktree's portal/ submodule is an empty directory; portal facts were read from the pinned object store
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W86-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~86",
+  "surfaced_at": "2026-10-13T19:01:04Z",
+  "one_line": "The worktree's portal/ submodule is not populated, so every portal read in AR-y-261 was made from the base checkout's object store at the pinned gitlink, not from the worktree.",
+  "spec_asserts": "The worktree carries the portal/ product files the cell names as READ paths (portal/src/pages/TicketCenter/AnalysisRequestParts.tsx, comparisonCatalogue.ts, modelPortfolioColors.ts, ModelPortfolios.tsx).",
+  "world_is": "C:/dev/wk-irpt-anlreq-86/portal is an empty directory; the superproject pins portal at 53506d4903 (git ls-files -s portal: mode 160000). Reads used git -C C:/dev/ajb_workspace/portal show 53506d4903:<path> and git grep on that commit (read-only; no fetch, clone, checkout or submodule update). 53506d4903 is an ancestor of the base portal HEAD cf52fdbf, and git diff --stat between the two commits is empty for the six key files. No tree was rebuilt or extracted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -s portal in C:/dev/wk-irpt-anlreq-86 prints 160000 53506d4903aeabac675d87b7fe208fc9945c8ce7 portal; ls -la portal lists no files",
+      "git -C C:/dev/ajb_workspace/portal merge-base --is-ancestor 53506d4903 cf52fdbf returned success; diff --stat over the six key files returned rc 0 with no output"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W86-S3 -- Ultra Short-Term is not in the catalogue's source, so no filter can drop it; the CTO ruling assumes it is
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W86-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~86",
+  "surfaced_at": "2026-10-13T19:01:04Z",
+  "one_line": "The served comparison catalogue is built from templates.json, which holds four model entries and no Ultra Short-Term entry; the form cannot show what the catalogue never serves.",
+  "spec_asserts": "The served comparison catalogue lists every Opal model in the catalogue, Ultra Short-Term included (CTO ruling msg 7151, item 1, relayed in AR-y-261).",
+  "world_is": "The catalogue's model source is infra/aws/lambda/investor-reporting/ycharts/generate/templates.json comparison_catalog.entries, which holds opal_long_term (:103), opal_short_term (:134), opal_intermediate_term (:165) and opal_ultra_long_term (:196). A Grep of the investor-reporting tree finds no Ultra Short-Term or UST model entry. build_catalogue (comparison_catalogue.py:184-200) served those four entries in an offline run (rc 0; 4 entries; no Ultra-Short label). The source's own _meta.claim and verification_requirements require a separate vendor identity verification and firm permission before an entry is added, and forbid inferring a vendor ID from a label. So the fix is not a repo-only edit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "templates.json key lines 103,134,165,196 read by grep -n on the worktree file; comparison_catalogue.py:184-200 run offline via python -c from ycharts/generate (rc 0, 4 entries)",
+      "templates.json _meta.claim and comparison_catalog.verification_requirements read at the worktree file"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W86-S4 -- the estate's model order is written three times, and the served catalogue order is not that order
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W86-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~86",
+  "surfaced_at": "2026-10-13T19:01:04Z",
+  "one_line": "AR-y-261 asks for the estate's one definition of the model order; three copies exist and agree on the five names, and the served catalogue order and the form do not follow them.",
+  "spec_asserts": "The estate holds one definition of the Opal model order, which the form can use for canonical order (AR-y-261 step 4).",
+  "world_is": "Three copies agree on one order: portal src/pages/ModelPortfolios.tsx:88-94 (MODEL_ORDER), portal src/lib/modelPortfolioColors.ts:250-258 (getAllModelColors), and infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-model-portfolio-benchmarks/lambda_function.py:66 (MODEL_CODES = UST, ST, INT, LT, ULT). The served catalogue order is Long, Short, Intermediate, Ultra Long (templates.json :103, :134, :165, :196), and the form renders served order (portal AnalysisRequestParts.tsx:112-121). The holdings tab orders sub-asset classes (portal HoldingsBreakdownTable.tsx:129-176), not models.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@53506d4903 src/pages/ModelPortfolios.tsx:88-94 and src/lib/modelPortfolioColors.ts:250-258 read by git show of the pinned commit",
+      "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-model-portfolio-benchmarks/lambda_function.py:66 and :72-78 read at the worktree"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-S84 -- (stop record; this seat's own) the Kimi search swap withdrawn by the CTO; TIMXX has yfinance history
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S84",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T19:14:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "STOP RECORDED: the CTO withdrew rulings B, (a) and (a') (msg 7176): the Kimi search/chat swap contradicts the PRD's C-SWAP, which retires the model-proposed swap; the cell cut for it was stopped, the cells already drained are unreleased dark code.",
+  "spec_asserts": "C-SWAP (IRPT_ANLREQ_PRD.md :104): one pass per unknown holding: (1) KNOWN in etf-classifications and MDPF_SECHIST; (2) the yfinance checker, one paced call: history means KEPT, a registry row is added, prices land in MDPF_SECHIST; (3) classify only if yfinance has nothing; (4) a deterministic proxy from MDPF_SECCLASS's designated-proxy table; (5) record proxy_for, proxy, method, confidence. resolution_kimi's model-proposed swap is retired.",
+  "world_is": "RECORD: the CTO's withdrawal, msg 7176 (20261013T191024Z): 'follow C-SWAP instead. Do not build the Kimi search or chat path; stop any cell cut for it and record the stop. For TIMXX, run step (2), the yfinance check, first.' STOPPED by this seat at 2026-10-13 ~19:11Z: cell AR-y-266 (the live QA runner for the Kimi search QA): the worker was stopped before any commit; its uncommitted files remain untracked in C:/dev/wk-irpt-anlreq-91 (ycharts/generate/kimi_search_qa_live.py and tests/test_kimi_search_qa_live.py); the order is closed cancelled. ALREADY DRAINED, built dark, not released, no capability file shipped: AR-y-249 (@2fd504168f, the swap advisory on the search endpoint), AR-y-250 (@6cae7c8cc9, the QA harness), AR-y-251 (@c3a5a3181c, the wiring and caller, default off), and the read cells AR-y-246 and AR-y-247. MEASURED by this seat, 2026-10-13 ~19:12Z, step (2) for TIMXX: one yfinance history call (period 1mo) returned 20 daily rows, last close 1.0 on 2026-10-07, 2026-10-08 and 2026-10-09, volume 0: it HAS history, so by C-SWAP TIMXX is KEPT and needs no proxy. NOT read by this seat: where C-SWAP step (2) would be built (the upload door's resolver today asks the YCharts securities_info read; the registry row and MDPF_SECHIST price landing belong to MDPF_SECHIST, dell1), and which of the drained Kimi members a consolidated release must leave out.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/mcp/inbox/2.0.0_SA_COO/~Y2/read/20261013T191024Z_1.0.0_SA_CTO_DELL2_WITHDRAWN__my_proxy-suggestion_rulings_B.md (CTO msg 7176)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/prd/IRPT_ANLREQ_PRD.md :104 (C-SWAP)",
+      "a yfinance history call for TIMXX run by this seat (20 rows)"
+    ]
+  },
+  "class": "OBSERVATION"
+}
+```
