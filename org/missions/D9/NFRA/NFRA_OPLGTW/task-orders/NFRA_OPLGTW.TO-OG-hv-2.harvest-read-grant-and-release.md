@@ -120,6 +120,13 @@ Rows: id `NFRA_OPLGTW-Z-S<k>` (the next free), fabric `site-z`, disarm_owner `2.
   Claude, asks for one covered name and gets its pack and chatter through the gateway. That is the user's (or Andrew's) act,
   owed, never simulated here; record it UNVERIFIABLE-BY-INSTRUMENT naming the CVO and the act owed. An asset manager with
   no work Claude account goes on the site Z open-calls list as Andrew's act.
+  **A1 (CTO ruling msg 33823, call `sitez-20261013T215753Z-232a`):** no asset manager is named on record yet.
+  - FWD-21's FIRST live read runs on Andrew's own work Claude as a STAND-IN Opal principal. It proves the harvest read
+    path: one covered name's pack and chatter.
+  - It cannot grade the research-only arm, because Andrew is master_admin and Schwab and Black Diamond are allowed to
+    him.
+  - The CVO grades AC3 PARTIAL with that arm named, never PASS, until a named asset manager runs the same proof.
+  - The negative arms (a non-Opal principal refused; an off-list prefix refused) are AC2's and do not wait.
 
 ## 5. WHEN YOU ARE DONE
 
@@ -133,6 +140,10 @@ the ONE `<status>` tag to `complete` only if AC1 and AC2 PASS. Report once per p
 - Round 37, R4 (FWD-21, PRD v2.7 @27ba6b6191). Cut only after `prd-signoff.py status NFRA_OPLGTW` reads ADMITTED. Rides behind R1 in
   the gateway queue; OG-hv-1 must be drained before PHASE A (edge hv-1 -> hv-2; edge ap-14 -> hv-2). Its order against OG-cd-1's release is the decomposition's.
 - Pre-cut: hv2.AC1 and hv2.AC2 base FAIL as expected (records absent).
+
+- A1 (issuer, 2026-10-13 ~23:0xZ): AC3's text carries the CTO's stand-in ruling (msg 33823). The Andrew-as-stand-in read
+  is owed by Andrew; the named asset manager stays open on call 232a. No mechanical criterion moves.
+  Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>
