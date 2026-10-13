@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-12T21:00:24Z",
+ "written_at": "2026-10-13T02:15:38Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1684,6 +1684,104 @@
      "resources": [],
      "shared": []
     }
+   },
+   "closed": null
+  },
+  {
+   "id": "sitez-20261013T021451Z-39fc",
+   "project": "NONE",
+   "subject": "Restart 0.7.0_AE_CloudOps~ZW now, for dell1's XB-6082 (HVST-bz-1 runner re-pin)? ~ZV and ~ZC stay off until work arrives",
+   "asked_by": "1.0.0_SA_CTO~Z",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261012_205xZ_SITEZ_PORTFOLIO_SEVEN_PROJECT_RULINGS.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-13T02:14:51Z",
+   "kind": "fork",
+   "context": "Three site Z seats doing dell work ended ~21:xZ 10-12 (usage limit or closed). XB-6082 waits in ~ZW's inbox; dell1's COO~W1 says it may wait for your resume. ~ZV and ~ZC owe nothing.",
+   "rec": "Yes for ~ZW only: it carries live dell1 work, so dell is not curtailed; ~ZV and ~ZC restart the day an order names them, which saves usage.",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-13T02:14:51Z"
+   },
+   "closed": null
+  },
+  {
+   "id": "sitez-20261013T021453Z-8aba",
+   "project": "NFRA_OPLGTW",
+   "subject": "Does 'Dell boxes should not be curtailed' reach OG-ap-13 (the dell agents' read of gateway/teams/bearer, removed 01:1xZ 10-13)? (a) yes, revert it; (b) no, keep it",
+   "asked_by": "1.0.0_SA_CTO~Z",
+   "source": "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/RECEIPT_OG-ap-13_sitez-ffaf_20261013.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-13T02:14:53Z",
+   "kind": "fork",
+   "context": "Your word was given about IAMROLES round 10. OG-ap-13 was already ruled YES by the laptop CTO (sitez-ffaf) and applied: 0 reads in 90 days, and the key reads your Teams chats.",
+   "rec": "(b) keep it: the dell agents lose nothing they use, and a standing read of your own messages is closed. A revert is one put-role-policy if you choose (a).",
+   "scope": {
+    "measured_at": "2026-10-13T02:14:53Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-assets",
+     "infra/aws/terraform/opal-gateway"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of AMGT_RESAPP placed on dell1 (infra/aws/lambda/ci/lambda-source-map.json)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda/ci/lambda-source-map.json)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of IRPT_ANLREQ placed on dell2 (infra/aws/lambda/ci/lambda-source-map.json)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of IRPT_BCKEND placed on dell2 (infra/aws/lambda/ci)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/halt-gate-check.sh is on the shared branch (.tools)",
+      ".tools/halt-gate-worker-order-test.sh is on the shared branch (.tools)",
+      "bucket opal-data-assets is marked shared (infra/logic/registry/tiers.json homes marked shared)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "sitez-20261013T021538Z-2da6",
+   "project": "NONE",
+   "subject": "Merge TO-GUARD-4 (OPAL_BBGTML, closed project): the custom-CIX recency check ported into the T-zero Bloomberg tripwire, built and proved on branch rv-bbgtml-guard4?",
+   "asked_by": "1.0.0_SA_CTO~Z",
+   "source": "org/tier2_senior/0.7.0_AE_CloudOps~RV/task_orders/OPAL_BBGTML.TO-GUARD-4.tzero-tripwire-cix-recency-port.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-13T02:15:38Z",
+   "kind": "fork",
+   "context": "Your no-modify order on integrations/bloomberg/ was lifted for GUARD-3's two edits only, so this third file needs your word. AC1 PASS, five arms (3b65362444); not merged by instruction.",
+   "rec": "Yes: it catches a stale custom CIX series at T-zero, the same check GUARD-3 already runs live, and it touches no Bloomberg call or schedule.",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-13T02:15:38Z"
    },
    "closed": null
   }
