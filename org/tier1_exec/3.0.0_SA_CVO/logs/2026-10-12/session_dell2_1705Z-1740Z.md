@@ -227,3 +227,9 @@ Quiet stretch 08:37Z to 13:04Z: watcher re-armed at each expiry; delivery ledger
 | item | result | commit |
 |---|---|---|
 | IRPT_DASHBD round 90 | ADJUDICATION_v54 + REMEDIATION_v37: FWD-8 NOT REALIZED for 7 accounts at day grain; D2-W136-S1 to the CTO; 4 dismissed (incl. v36 D2-W133-S1). The vendor pull checked against CTO msg 6986 (no per-use word for a non-Bloomberg vendor). Slug sent | 322f6b77f8 |
+
+## Addendum, 2026-10-13 15:42Z to 15:48Z (msg 7033)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 180 | ADJUDICATION_v81 + REMEDIATION_v55: account_id live end to end (7639 of 7640); 2 dismissed; D2-W364-S1 (the directory read via the opal-data-bd alias; my head-object read it present) graduates. Slug sent | 277aaf946e |
