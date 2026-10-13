@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D9/NFRA/NFRA_MCPINDEX/decompositions/NFRA_MCPINDEX_DECOMP.md</decomp_doc>
 <owned_cells>MX-s-19</owned_cells>
 </decomp_ref>
-<issued_to>0.7.0_AE_CloudOps~Z</issued_to>
+<issued_to>0.7.0_AE_CloudOps~MI</issued_to>
 <issued_by>2.0.0_SA_COO~MI</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -111,6 +111,32 @@ that seat, and A4's re-address stands only until then. When s19.PRE.sh passes af
 amends `<issued_to>` to a FRESH site-Z CloudOps lane and tells 1.0.0_SA_CTO~Z, which seats it on demand. No GO goes to
 `0.7.0_AE_CloudOps~Z`. `<issued_to>` is left as is now, per the ruling ("amend issued_to then, not now").
 - Graded by: no gate limb graded this modification.
+
+**AMENDED A7 (2.0.0_SA_COO~MI, 2026-10-13 ~03:2xZ) -- the precondition PASSED; re-addressed to `0.7.0_AE_CloudOps~MI`;
+start at PHASE A.**
+- s19.PRE.sh ran at 2026-10-13T03:06Z: `precondition dates passing 2 of 2 -- RESULT: PASS`. 2026-10-12: sentinel object
+  00:11:10Z, transactions and realized SUMMARY failures=0, silver objects 5 + 1. 2026-10-13: sentinel object 00:11:32Z,
+  both SUMMARY failures=0, silver objects 4 + 1.
+- `<issued_to>` moves from `0.7.0_AE_CloudOps~Z` to `0.7.0_AE_CloudOps~MI` (A6). That lane holds orders on this project
+  only: MX-a-1, MX-s-17 and MX-s-18, all complete. Its deliverables folder is already in `<paths>`. The issuer seats
+  it.
+- **PHASE A under A2 was never built.** No `ANNOUNCE_MX-s-19.md` and no saved plan exist at HEAD or on
+  `wk-nfra_mcpindex-r7-24`. Start at PHASE A as A2 scopes it:
+  - cut ONE saved targeted plan in `infra/aws/terraform/bd-pipeline/` that moves `bd-transaction-pipeline-trigger` and
+    `bd-realized-pipeline-trigger` from ENABLED to DISABLED and nothing else (any destroy or any other change is a
+    BLOCKING row);
+  - write `deliverables/0.7.0_AE_CloudOps~MI/ANNOUNCE_MX-s-19.md`: the plan, the expected served DELTA, and the
+    rollback (re-enable each rule through the same targeted path);
+  - report, and STOP.
+  The issuer then writes the never-widen ask, the COO and CTO halves are signed on the plan's pin, and the GO follows.
+- Work in a fresh worktree cut from `box/sitez` HEAD. Do not use `C:/Users/Opal Bloomberg/Desktop/wk-mcpindex-r7-24`:
+  it is held by worktree GC with 34 uncommitted paths, and its branch is already merged.
+- The proof instance goes to `deliverables/0.7.0_AE_CloudOps~MI/` under the file name `<instance_path>` gives.
+- Windows unchanged: no act inside 21:30-22:15Z or 23:45-00:45Z.
+- s19.AC2's dates stand at 2026-10-19 and 2026-10-20 if the disable lands before 2026-10-19T00:00Z; otherwise the
+  issuer re-dates them.
+- Graded by: no gate limb graded this modification (to-pipeline-gate LIMB 6 does not fire on a modify; `<placeholders>`
+  reads NONE, so GATE (viii) does not grade it).
 
 ## 2. BOUNDS
 
