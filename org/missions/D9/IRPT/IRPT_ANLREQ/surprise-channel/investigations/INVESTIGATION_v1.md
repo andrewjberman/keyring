@@ -4435,3 +4435,138 @@
 }
 ```
 
+
+## IRPT_ANLREQ-D2-W55-S1 -- an internal caller whose profile lookup raises, or whose firm is outside the bucket registry, gets no INTERNAL-CALLER-CLASS line
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-12T23:58:56Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A call whose profile lookup raises, or whose selected firm is outside the bucket registry, has no users-row class, so the AR-y-184 line is not printed for it. The cell's once-per-call reading is not met for those calls, and a census must read them from the answer, not from the line.",
+  "spec_asserts": "TO-AR-y-184 point 1: ONE line, written once per such call, in the branch for an INTERNAL non-service caller that selects a firm other than its verified firm, with class one of row_present, row_absent, row_non_active. The cell names no fourth class.",
+  "world_is": "At ac3f6d75c5, served.py handle() runs the bucket_for ValueError refusal before the internal else branch, so that call never reaches the line. In the else branch the reader appends the class to seen only after the row is read; a load_service_profile or CanonicalProfileReaders exception before that append leaves seen empty, and _caller_class_line returns without printing. No fourth token was added. No test in test_caller_class_log.py exercises a lookup exception or an unregistered firm; the four named tests cover the three classes only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1151-1156 @ac3f6d75c5 (the profile lookup that can raise before any row is read)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1216-1223 @ac3f6d75c5 (the bucket_for refusal before the internal else branch)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1233-1236 @ac3f6d75c5 (the reader call and its fail-closed except)"
+    ]
+  }
+}
+```
+
+
+## IRPT_ANLREQ-D2-W55-S2 -- the cell asks for the file's logging idiom, but served.py prints JSON; the line follows the cell's plain key=value form
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-12T23:58:56Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cell says to copy the logging idiom at served.py lines 81-108, but the prints there emit JSON objects with an event key. The cell's form is a plain key=value line, so the new line is plain text printed with print() to the same function stream. A census that parses JSON from that stream will skip it and must match the literal prefix.",
+  "spec_asserts": "TO-AR-y-184 point 1: 'in the file's existing logging idiom (read how served.py logs at lines 81-108 and copy it), of the form INTERNAL-CALLER-CLASS class=<...> outcome=<...>'.",
+  "world_is": "At ac3f6d75c5, served.py lines 83 and 85 (_internal_sink) and line 107 (_record, via errors.public_line) print json.dumps objects. The new helper _caller_class_line prints the plain text INTERNAL-CALLER-CLASS class=%s outcome=%s. Both the cell's form and the file's stream are honoured; the JSON shape of the idiom is not.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:81-86 @ac3f6d75c5 (_internal_sink prints json.dumps objects)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:107-108 @ac3f6d75c5 (_record prints errors.public_line)"
+    ]
+  }
+}
+```
+
+
+## IRPT_ANLREQ-D2-W55-S3 -- outcome= reads the selection gate's verdict, not the answer: a row_present caller logged admitted can still be answered FIRM_BINDING by a later check
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-12T23:58:56Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cell defines outcome=admitted|refused without saying what it measures past the selection gate. The line is set to the gate's own verdict, so a caller logged outcome=admitted can still receive FIRM_BINDING from a later check in handle, and the line does not reproduce every FIRM_BINDING.",
+  "spec_asserts": "TO-AR-y-184 point 1: 'outcome=<admitted|refused>', and the line 'changes NO served answer, status code or envelope (the refusal reasons stay exactly as they are)'.",
+  "world_is": "At ac3f6d75c5, after the selection block, handle() calls firm_claims_match(event, verified) and refuses FIRM_BINDING on a mismatch (served.py lines 1240-1245). The gate's outcome is printed before that check runs. The line's refused value comes from the gate only (an allowedFirmIds narrowing, or a row read that raised); a census of answers must read the envelope.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1231-1239 @ac3f6d75c5 (the selection gate whose verdict outcome= carries)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1240-1245 @ac3f6d75c5 (the later firm_claims_match refusal that the line does not reflect)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W52-S31 -- identifier spellings outside the ruled vocabulary are still unmatched after the widening: Account Numbers, Subaccounts, Accnt, Account Nos, Account Seqno, Account Serial
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S31",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-13T00:00:19Z",
+  "one_line": "After the AR-y-181 widening, the rule still does not match identifier-like headers whose spelling sits outside the ruled vocabulary: Account Numbers (plural tail), Subaccounts (plural account word), Accnt, Account Nos, Account Seqno and Account Serial. A multi-account file under one of them passes as one account, the same costly direction as S24.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py@da7b3b10bc (ACCOUNT_WORDS, ACCOUNT_TAIL_WORDS, _is_account_header)",
+      "scratch run .scratch/subtract_r18.py (uncommitted) over a declared grid of 2200 headers against template_reader.py@da7b3b10bc: 'account numbers' False, 'subaccounts' False, 'accnt' False, 'account nos' False, 'account seqno' False, 'account serial' False; 1542 unmatched of 2200"
+    ]
+  },
+  "spec_asserts": "Point 2 of IRPT_ANLREQ.TO-AR-y-181 and the CTO ruling on S24: widen the named modifiers, account word and tail words only, each with its census line; subaccounts only if justified. The rule must not miss an account-identifier header (the costly direction).",
+  "world_is": "The ruled vocabulary does not cover the plural tail numbers, the plural account word subaccounts, the spelling accnt, or the tails nos, seqno and serial. Subaccounts was not added (no census form carries it, so it is not justified from the census). Measured by subtraction, not fixed: a further widening is a ruling for the issuer or the CTO, not a worker choice.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S32 -- the COUNT exclusion keys on the header words alone: a real account column headed No. of Accounts would pass as one account
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S32",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-13T00:00:19Z",
+  "one_line": "The whole-cell exclusion for No. of Accounts (plural) reads only the header words, not the values. A file whose column is headed No. of Accounts but holds account identifiers, not one count, is not turned back, so a multi-account file under that header passes as one account.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py@da7b3b10bc (COUNT_PLURAL_WORDS and the no. of branch of _is_account_header)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r18/ACCOUNT_HEADER_POPULATION.json (count_forms: No. of Accounts, No. of accts)"
+    ]
+  },
+  "spec_asserts": "AR-y-181 criterion AR181-y-AC3J (judgment, L9): the COUNT exclusion cannot hide a real account column; and the CTO ruling on S24: No. of Accounts is a COUNT, a whole-cell exclusion when the account word after no. of is plural.",
+  "world_is": "The exclusion is decided by the header text alone, because a count column and an account-identifier column can carry the same header. The worker cannot decide from the code whether a real file uses that header for account identifiers. Measured, not decided: the exclusion as ruled stands; whether it hides a real account column is for the L9 judgment.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+

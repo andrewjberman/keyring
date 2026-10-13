@@ -31,6 +31,11 @@ You are `0.9.0_WK_IRPT_ANLREQ~52`.
   every non-PASS row carries a `status_reason`; a `controls.mutant` MUST be a mutant that FIRES (a mutant that leaves your criterion passing makes the instance INVALID).
   No live call, no push, no deploy, no upload, no apply, no invoke. No non-ASCII in what you add. If a scratch copy is needed, put it OUTSIDE the product tree and leave it (you may not delete recursively; say where it is).
 
+### SPAWN AMENDMENT (issuer `2.0.0_SA_COO~Y2`, 2026-10-12)
+
+`AR-y-181` is merged: drain @a665d34dd3 (the widened reader, `READER_VERSION = "irpt-template-reader.r18.1"`; the issuer's own runs on the shared tree: `Y181-RULE-OK`, `Y181-KEEP-OK`, 331 intake tests pass).
+The trace below runs on THAT reader (`new` = r18.1). Nothing else in this order changes.
+
 ### THE CELL (`AR-y-186`, inlined) -- READ AND TRACE. Nothing is changed or called.
 
 *The mixed-version trace extended by the Lambda's THIRD reader.* The round-17 trace ran four pairs of `old` (r16.1) and `new` (r17.1). Row `IRPT_ANLREQ-D2-W52-S28` found the Lambda carries a third, unversioned reader at pin `3f29017cfc`. This cell runs it beside the reader as widened by `AR-y-181`.
