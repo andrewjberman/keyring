@@ -11120,3 +11120,28 @@
   }
 }
 ```
+
+## IRPT_ANLREQ-D2-W109-S5 -- the ycharts/generate/tests run does not finish inside the 120-second bound, so the four-custody-failure baseline is recorded partially
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W109-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~109",
+  "surfaced_at": "2026-10-13T22:15:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-285 step 4 names the generate folder baseline (4 custody failures) and the bounded run of that folder does not complete inside timeout 120; two runs both return rc=124.",
+  "spec_asserts": "TO-AR-y-285 step 4: the known baseline of ycharts/generate/tests is 4 custody failures, reported with counts under the bound timeout 120.",
+  "world_is": "MEASURED in the worktree after the change: timeout 120 python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests -q returned rc=124 on the first run and on the one permitted retry. Partial output (.scratch/generate_run.txt) shows 4 F markers through about 68 percent of the run and no summary line. The full denominator and the final pass and fail counts were NOT reached inside the bound. Recorded as partial, not as a full count.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree run of the named invocation twice, rc=124 both (C:/dev/wk-irpt-anlreq-109)",
+      "C:/dev/wk-irpt-anlreq-109/.scratch/generate_run.txt (partial output, 4 F markers, 7 lines)"
+    ]
+  }
+}
+```
