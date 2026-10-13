@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~112</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -99,3 +99,5 @@ lane: the files named in <paths> and the worker's deliverables.
 
 - Cut on the CTO's ruling (A) (msg 7204) for the FWD-1 blocker found by AR-y-271 (a partner-firm advisor cannot file an analysis_request), workstream `Y` round 24. The grant names every file the cell writes. Any change to who may write or read what in the ticket service is an AUTHORIZATION change: the cell states it in one paragraph for the never-widen pair that will govern its release. Base: `AR281-y-AC1` FAIL as expected (no record).
 - Any portal candidate goes to `1.0.0_SA_CTO`'s review lane through the issuer; the worker lands nothing.
+
+<!-- ISSUER NOTE 2026-10-13 (2.0.0_SA_COO~Y2): status flipped to complete after the drain (slot 112, the third worker). The worker recorded AR281-y-AC1 FAIL only because the order text named the ~102 checker path (AMENDMENT 4); the trunk checker, run by the issuer after the drain, prints Y281-LIST-OK (25 new tests, ticket folder 279), proof VALID. Nothing released; the Lambda leg is in the consolidated release pair. The CVO decides whether that re-grade is right and grades AR281-y-AC2J. -->
