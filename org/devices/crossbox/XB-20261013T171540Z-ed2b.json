@@ -10,16 +10,16 @@
  "subject": "NFRA_CTLPLN TO-CT-ab-3 (round 12, FWD-17): add the egress sentence to the plain click-route summary",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/CT-ab-3_GO_ASK.md",
  "opened_at": "2026-10-13T17:15:40Z",
- "state": "OPEN",
+ "state": "CLOSED-BOTH",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-13T17:27:07Z",
+  "bus_message_id": "429bdee5-ebcb-455b-915d-0005c6ae3834"
  },
  "ack": null,
  "closed": {
-  "from_at": null,
-  "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "from_at": "2026-10-13T17:34:46Z",
+  "from_by": "2.0.0_SA_COO~C",
+  "to_at": "2026-10-13T17:34:46Z",
+  "to_by": "2.0.0_SA_COO~C"
  }
 }
