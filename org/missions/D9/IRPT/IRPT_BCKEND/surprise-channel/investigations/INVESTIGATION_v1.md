@@ -30740,3 +30740,135 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "ARMED because the 49 builder is about to write account_id. It disarms when the issuer (2.0.0_SA_COO~P2) holds the account_id write or the v1 contract admits the member by a CTO ruling; a serve-side change is not implied. The replay itself makes no claim about correctness of the schema, only that the serve path does not run it."
 }
 ```
+
+## IRPT_BCKEND-D2-W355-S1 -- the fe-s-18 generator rewrites four committed fixtures outside the IB-pr-504 grant once the frozen envelope gains the member
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W355-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~355",
+  "surfaced_at": "2026-10-13T05:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "IB-pr-504: keeping facts.covered_account_ids in exportEnvelope() makes the fe-s-18 generator rewrite FOUR committed fixtures, not only fixtures/smoke/fe-s-18-frozen.json: fixtures/smoke/fe-s-18-holdings-observed.json, fe-s-18-holdings-target.json, fe-s-18-holdings-missing-attribution.json and __tests__/fe-s-32/holdings-no-answer.json each gain the same five-line covered_account_ids hunk, because holdingsMap() and the no-answer map clone the frozen export key. The order grants only frozen.json, but its criterion IB173-2-AC1 requires the smoke, fe-s-16 and fe-s-32 folders to reproduce byte-equal, so AC1 cannot PASS under the grant. The four files were NOT committed and were restored to their committed bytes (CRLF kept) after each run. Until they are committed, the generator at portal DEV dirties four committed fixtures on every run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@cdffa5dd41 src/pages/InvestorReporting/__tests__/fe-s-18/gen-fixtures.ts: holdingsMap() clones every frozen key (lines 502-512) and the no-answer map clones the observed map (lines 546-548) (native Read)",
+      "portal worktree after bun run gen-fixtures.ts at portal@cdffa5dd41: git status lists M for __tests__/fe-s-32/holdings-no-answer.json and fixtures/smoke/fe-s-18-holdings-{missing-attribution,observed,target}.json; each diff is the same covered_account_ids hunk at line 437 (git diff --ignore-cr-at-eol --stat)",
+      "checks/r173/p173_cells.py IB173-2-AC1 run from the workspace root: FAIL: the fe-s-18 generator drifts from the committed bytes (holdings-no-answer.json, fe-s-18-holdings-missing-attribution.json, ...); rc 1",
+      "TO-IB-pr-504 <paths> names only __tests__/fe-s-18/gen-fixtures.ts and fixtures/smoke/fe-s-18-frozen.json at workspace HEAD 54e10ac801"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-504 grants two portal paths (the generator and the frozen map) and states the only expected output change is the one added list in the frozen map; IB173-2-AC1 requires the smoke, fe-s-16 and fe-s-32 fixture folders to be byte-equal after a generator run.",
+  "world_is": "The generator writes the same one added list into four further committed fixtures (three holdings maps and the fe-s-32 no-answer map), so a generator run changes four files outside the grant and AC1 FAILs. Those four are not committed by this order. The frozen map alone is committed at portal cdffa5dd41; the committed holdings and no-answer maps still lack the member while the frozen export carries it. Disarm: the issuer grants those four paths in a follow-on order, or the CTO rules that the committed holdings maps stay as they are and the generator stops writing them."
+}
+```
+
+## IRPT_BCKEND-D2-W355-S2 -- the full InvestorReporting portal run reads 1212 pass, 27 skip, 5 fail against the order's base of 1213, 27, 4
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W355-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~355",
+  "surfaced_at": "2026-10-13T05:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "bun test src/pages/InvestorReporting at portal cdffa5dd41 reads 1212 pass, 27 skip, 5 fail (1244 tests across 393 files), against the order's base of 1213 pass, 27 skip, 4 fail. The five failing tests are IVE26-AC3 (dsgn-irptv1/iv-e-26.wire-regen.test.ts), IVE48-AC1 (dsgn-irptv1/iv-e-48.new-classes.test.tsx), IVE98 (dsgn-irptv1/iv-e-98.generators-drift.test.ts), producer fixtures (fe-s-13/producer-fixtures.test.ts, HoldingsSnapshot.nodes copy drift) and F14-AC3 (fe-s-14/allowlist.test.ts, firmAccess.ts numstat 35 added). None of the five reads fe-s-18-frozen.json or the export key. The same five files fail with the base frozen bytes put back (e1cd356e2f), so the frozen change flips none of them; the full base run was not repeated, so which test is the fifth against base is not established.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test src/pages/InvestorReporting from portal worktree at cdffa5dd41: 1212 pass, 27 skip, 5 fail, Ran 1244 tests across 393 files (log .scratch/bun_test_ir.log in the worker worktree)",
+      "bun test of the five files with fe-s-18-frozen.json at e1cd356e2f bytes (CRLF restored, then HEAD bytes restored): 9 pass, 5 fail; the same five names fail (log .scratch/five_at_base.log)",
+      "grep (native Grep) of dsgn-irptv1, fe-s-13 and fe-s-14 for fe-s-18, frozen, smoke/fe-s-18: no match in iv-e-26, iv-e-48, iv-e-98, fe-s-13/producer-fixtures, fe-s-14/allowlist"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-504 states the base as 1213 pass, 27 skip, 4 fail, the four pre-existing.",
+  "world_is": "At the cell's commit the folder reads 1212 pass, 27 skip, 5 fail. The five named failures are present with the base frozen bytes, so none is attributable to the frozen export change. The base count of four was not reproduced and the difference of one pass is not attributed to a test; a full base run would settle it and was not made."
+}
+```
+
+## IRPT_BCKEND-D2-W355-S3 -- closes IRPT_BCKEND-D2-W355-S1: AMENDMENT 1 granted the four fixtures and they are committed in the portal repo
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W355-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~355",
+  "surfaced_at": "2026-10-13T05:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "CLOSES IRPT_BCKEND-D2-W355-S1 (the four generator-rewritten fixtures were outside the grant). The issuer's AMENDMENT 1 (2.0.0_SA_COO~P2) granted fixtures/smoke/fe-s-18-holdings-observed.json, fe-s-18-holdings-target.json, fe-s-18-holdings-missing-attribution.json and __tests__/fe-s-32/holdings-no-answer.json. The generator was re-run and each file gained only the covered_account_ids list (five-line hunk, git diff --ignore-cr-at-eol); committed at portal c8c668c0 (4 files, 16 insertions, 4 deletions). Run after the commit: IB173-2-AC1 PASS rc=0, so the S1 hazard is disarmed by the amendment; S1 itself is not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@c8c668c0 git show --stat: the four fixture paths, 16 insertions, 4 deletions (LOCAL on wk-IRPT_BCKEND-355-portal)",
+      "python checks/r173/p173_cells.py . IB173-2-AC1 run from the workspace root under timeout 120: 'IB173-2-AC1 PASS', rc=0",
+      "git -C portal status --short after the run: clean (the generator reproduces the committed bytes)"
+    ]
+  },
+  "spec_asserts": "The TO's grant names only gen-fixtures.ts and fe-s-18-frozen.json; IB173-2-AC1 requires the smoke, fe-s-16 and fe-s-32 folders to be byte-equal after a generator run.",
+  "world_is": "The grant now covers the four fixtures (AMENDMENT 1). They are committed at portal c8c668c0, and the generator run leaves no drift in the smoke, fe-s-16 and fe-s-32 folders. Disposition INERT: the S1 hazard no longer holds at this commit."
+}
+```
+
+## IRPT_BCKEND-D2-W355-S4 -- base finding for IRPT_BCKEND-D2-W355-S2: a linked scratch base at e1cd356e2f does not reproduce 1213/27/4, and all five failures also occur there
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W355-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~355",
+  "surfaced_at": "2026-10-13T05:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Base run for S2: a detached scratch worktree at portal e1cd356e2f (outside the workspace; node_modules, workspace infra and docs linked by junction) reads 1087 pass, 27 skip, 21 fail over 1135 tests. The 16 extra failures are mostly ENOENT on workspace org/ paths that the scratch cannot see, so the scratch is not the stated base (1213/27/4). The five failures at the head commit (IVE26-AC3, IVE48-AC1, IVE98, producer fixtures, F14-AC3) also fail at e1cd356e2f with the same messages (HoldingsSnapshot drift, wire union with multi_asset, FIRMACCESS +35). So no failure is new to the frozen change. Which test accounts for the order's one-pass difference is not settled.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test src/pages/InvestorReporting at scratch e1cd356e2f with infra and docs linked: 1087 pass, 27 skip, 21 fail, Ran 1135 tests across 393 files (scratch output, not kept in the worktree)",
+      "the five head failures in that run print the same messages as at c8c668c0: gen-wire HoldingsSnapshot regeneration drift, wire union != contract enum, HoldingsSnapshot.nodes copy drift, FIRMACCESS DIFF +35 -36",
+      "scratch worktree removed (git -C portal worktree remove --force; prune; list shows none); junctions removed with rmdir, targets intact"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-504 states the base as 1213 pass, 27 skip, 4 fail, the four pre-existing, and asks for one base run at e1cd356e2f to settle the fifth failure.",
+  "world_is": "The one base run possible in a scratch tree does not reproduce the stated base, because the portal tests read workspace-level paths outside the portal (org/, infra/, docs/). Inside those limits, the fifth failure is not one the frozen change introduces: all five head failures are also present at e1cd356e2f. The stated base count of four and the one-pass difference remain unexplained."
+}
+```
+
+## IRPT_BCKEND-D2-W355-S5 -- safe-commit.sh refuses a commit in the portal repo (committer identity unknown); the portal commit was made with plain git commit as the order directs
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W355-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~355",
+  "surfaced_at": "2026-10-13T05:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's step 2 directs a plain git commit in the portal repo, while the worker standard routes every commit through .tools/safe-commit.sh. The attempt through safe-commit.sh run from portal/ (with the order's author value) stopped with 'Committer identity unknown ... fatal: unable to auto-detect email address' and rc=128, after unstaging its own four-file set; nothing was committed by it. The four-file portal commit c8c668c0 was then made with plain git commit, the author and committer set by environment to 0.9.0_WK_IRPT_BCKEND~355, as the order directs. The workspace commit d096d7d5ba used safe-commit.sh normally. Which route a portal-repo commit should take is not settled by this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh run from C:/dev/wk-IRPT_BCKEND-355/portal with --author 0.9.0_WK_IRPT_BCKEND~355 and four fixture paths: stderr 'Committer identity unknown' and 'fatal: unable to auto-detect email address (got Test@DESKTOP-N8RJV0A.(none))', then 'ERROR: safe-commit did NOT commit (rc=128)'; git status afterwards showed the four files unstaged and no staged diff",
+      "git -C portal log -1 after the plain commit: c8c668c0bc42f2f85d9e6c50764494e5d4ff2b2e, author and committer 0.9.0_WK_IRPT_BCKEND~355 <0.9.0_WK_IRPT_BCKEND~355@opal.agent>; git -C portal status --short empty",
+      "workspace commit d096d7d5ba through .tools/safe-commit.sh from the workspace root: rc=0, 3 files, author 0.9.0_WK_IRPT_BCKEND~355"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-504 step 2 directs a plain git -C portal commit with the same author and committer values; the worker standard says every commit is made through .tools/safe-commit.sh.",
+  "world_is": "safe-commit.sh does not commit from a portal repo under this worker's environment: it reads the committer identity from the git config of the box, which is unset for the portal repo, and it does not take the author value as committer. The portal commit exists (c8c668c0) with the required identity, made by the route the order names. The wrapper's pre-commit gates printed before the refusal; commit-gate reported it checked 0 of 4 files (non-py frontend paths), so no gate validated the portal commit."
+}
+```
