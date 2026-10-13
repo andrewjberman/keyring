@@ -971,3 +971,79 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "Rows for one target date sit in a later file. The probe therefore reads the union of the four partitions and the date key decides. Reading only the file named for the date would drop them."
 }
 ```
+
+## ADVI_BDPRCE-D1-W10-S1 -- The S3 template is not byte-equal to the repo copy: S3 is CRLF at 14,419 bytes, the repo blob is LF at 13,920 bytes; they are equal after CRLF normalisation and as parsed JSON.
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W10-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~10",
+  "surfaced_at": "2026-10-13T19:56:21Z",
+  "one_line": "The S3 template is not byte-equal to the repo copy: S3 is CRLF at 14,419 bytes, the repo blob is LF at 13,920 bytes; they are equal after CRLF normalisation and as parsed JSON.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-bd/code/bronze/templates/unrealized.json VersionId VgzqQbd.3F3sAlllb6SWsjKZ2XvXgAfE: head-object and get-object by VersionId, 2026-10-13, ContentLength 14419, 499 CRLF and 0 bare LF; copy at C:/dev/wk-bdprce-r2-10-data/s3_unrealized_template.json (outside the checkout)",
+      "git cat-file -s HEAD:data/black_diamond/scripts/bronze/templates/unrealized.json = 13920, 499 bare LF and 0 CRLF; S3 bytes with CRLF replaced by LF equal the repo blob (checked by .scratch/make_template.py, 2026-10-13)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-b-6 section 1a(1) and its round-1 measurement: the S3 template equals the repo copy, 14,419 bytes, VersionId VgzqQbd.3F3sAlllb6SWsjKZ2XvXgAfE.",
+  "world_is": "The S3 copy still carries VersionId VgzqQbd.3F3sAlllb6SWsjKZ2XvXgAfE at 14,419 bytes, but the repo copy at HEAD is 13,920 bytes with LF line endings. The two differ in line endings only and are equal as parsed JSON. The patched template is built from the S3 bytes."
+}
+```
+
+## ADVI_BDPRCE-D1-W10-S2 -- The mandated lot key (account_id, asset_id, open_date, unit_cost) folds 15,553 export rows on the recorded export; in most colliding groups the rows differ on Relationship ID.
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W10-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~10",
+  "surfaced_at": "2026-10-13T19:56:21Z",
+  "one_line": "The mandated lot key (account_id, asset_id, open_date, unit_cost) folds 15,553 export rows on the recorded export; in most colliding groups the rows differ on Relationship ID.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "UNREALIZED_DAILY_2026-10-09.xlsx (opal-data-bd forwardfill_v2/unrealized/, VersionId Wf2Pct313A.w7y1GpuSf2f7FfiKUVats, sha256 5700843f9e661364910a5bbb9d9d4b60521775922539f47b066a10d80039ef5b) read by get-object 2026-10-13: 500,000 rows, 484,447 distinct lot keys, 14,696 colliding groups holding 30,418 rows (.scratch/lotstats.py)",
+      "same read: colliding groups where Relationship ID differs 14,514 of 14,696; Market Value differs 187; Inherited Date differs 1; Asset Name differs 0; Open Date null in 7,384 rows"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-b-6 section 1a(2)(b): de-duplicate on the LOT (account_id, asset_id, open_date, unit_cost), never on the position, so each tax lot survives as a row.",
+  "world_is": "On the recorded export the mandated key is not one row per tax lot: 15,553 rows fold into 14,696 groups, mostly rows that differ on Relationship ID. The key ignores Relationship ID and Inherited Date and treats a null Open Date as a value. Applied as written, the lot table holds 484,447 rows where the export holds 500,000. Whether the 15,553 folded rows are distinct lots is not determined by this fixture. Armed for the apply: the apply amendment's author decides the key before any template switch."
+}
+```
+
+## ADVI_BDPRCE-D1-W10-S3 -- The recorded unrealized export holds exactly 500,000 data rows, a round count; the fixture cannot show that the export is complete.
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W10-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~10",
+  "surfaced_at": "2026-10-13T19:56:21Z",
+  "one_line": "The recorded unrealized export holds exactly 500,000 data rows, a round count; the fixture cannot show that the export is complete.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "UNREALIZED_DAILY_2026-10-09.xlsx Sheet1 read by pandas 2026-10-13: shape (500000, 15); 15 columns, none of them Units or Cost Basis",
+      "data/black_diamond/scripts/silver/merge-daily-incremental.py:1145 at HEAD: 'Unrealized is a daily SNAPSHOT -- each file is the full picture of open positions.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Silver step docstring, data/black_diamond/scripts/silver/merge-daily-incremental.py:1145 at HEAD: each unrealized file is the full picture of open positions.",
+  "world_is": "The export holds exactly 500,000 rows, which matches a row cap. The fixture cannot establish whether the export is complete. The read of :1138-1215 shows no row-count check in the step. The premise binds the legacy table and the lot table alike."
+}
+```

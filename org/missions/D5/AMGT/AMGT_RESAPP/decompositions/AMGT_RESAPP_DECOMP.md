@@ -10781,3 +10781,11 @@ The asset-manager grant serves `management/v1` only through a view that omits `l
   the whole page; its only Model-tab pointer is `layout:clipped` (151 text elements cut off sideways by their container). A dry run of two names, not the walk.
 - **bj-12** (the F4 view) is still not cut: the writer is `lib/research/management/enrich.py` (`management_key`, `write_document`; `batch.py` only calls it), not `batch.py` as s.112g said, and the
   address must come from `lib/opal_naming.py address()`, which has no management view row yet (a registry row, a packaged member). Its face is cut next, from that reading.
+
+### 112j. ADDENDUM 5 -- `AMGT-bj-12` (THE LUSHA-FREE VIEW) IS WITHDRAWN, NEVER CUT, 2026-10-13 ~20:1xZ
+
+CTO msg 5132: Andrew-direct (call 8 of `ANDREW_DIRECT_20261013_200xZ_NINE_OPEN_CALLS_ANSWERED_FIRMBKTS_DEMQUE_BRIEF_HARVEST.md`): harvested data is available to Opal users only, through gateway
+entitlements, with no interim holds. The view without `lusha_enrichment` (F4) was for a wider audience that is not in scope. `bj-12` was placed (s.112b, s.112g) and never cut as an order, so there
+is no file to withdraw: it leaves the rectangle. The issuer's question of 20:08Z (omit only `lusha_enrichment`, or also the three Lusha-derived officer fields `profile_url`, `lusha_title`,
+`enrichment`) is moot with it and is carried only as a fact for any later wider audience: the writer sets those three beside the top-level `lusha_enrichment`
+(`lib/research/management/enrich.py` `attach_profiles`).
