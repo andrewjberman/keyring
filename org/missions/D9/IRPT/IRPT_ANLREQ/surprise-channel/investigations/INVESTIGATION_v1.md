@@ -9740,3 +9740,111 @@
   }
 }
 ```
+
+## IRPT_ANLREQ-D2-W103-S1 -- AR-y-282: the requiresDev pattern is a per-user claim test, not a DEV-environment test, so the partner-reach gate uses the build flag
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W103-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~103",
+  "surfaced_at": "2026-10-13T21:05:00Z",
+  "one_line": "The requiresDev pattern tests claims.userType === 'Dev', a per-user claim, not a DEV-environment flag; the portal has no runtime DEV-vs-PROD discriminator, so the AR-y-282 candidate gates partner reach on the build flag import.meta.env.DEV, and whether the deployed DEV site is a dev build is unmeasured.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-282 step 1: reuse the existing pattern for how the build or runtime tells DEV from PROD, never invent one. Step 3: 'On DEV only ... the marking uses the existing requiresDev pattern or the one the read shows.' AC2J: 'partner reach exists on DEV only and PROD is byte-for-byte as before'.",
+  "world_is": "MEASURED at portal a577cba5: requiresDev and requireDev test claims.userType !== 'Dev' (App.tsx:351; ProtectedRoute.tsx:120). userType is parsed from the auth claim (AuthContext.tsx:121-122: 'Dev' iff userData.userType === 'Dev'), which is set per user on production as well, so a requiresDev gate on the route would open PROD to any partner user carrying the claim. No src/ file reads an environment or hostname discriminator: the only DEV-named read is import.meta.env.DEV (.env.production sets no DEV flag). The candidate 46a49e57 uses import.meta.env.DEV (firmAccess.ts isPartnerDevReach): false in a vite build, so PROD grants nothing. NOT MEASURED: whether the deployed DEV site is built in dev mode; if it is not, the candidate grants nothing on deployed DEV either. A CTO ruling on the DEV discriminator is needed before any landing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@a577cba5:src/App.tsx:339 and :351 (requiresDev nav tests on claims.userType)",
+      "portal@a577cba5:src/components/ProtectedRoute.tsx:119-120 (requireDev tests claims.userType)",
+      "portal@a577cba5:src/contexts/AuthContext.tsx:121-122 (userType is the per-user claim 'Dev' or null)",
+      "portal@a577cba5:.env.production (no DEV or environment discriminator key)",
+      "portal@46a49e57:src/lib/firmAccess.ts (isPartnerDevReach reads import.meta.env.DEV)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W103-S2 -- AR-y-282: the face cuts the candidate from origin/DEV, but the portal rule CONTRIBUTING-BOXES.md says a feature branch is cut from the last PROD release, and that file is not on DEV
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W103-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~103",
+  "surfaced_at": "2026-10-13T21:05:00Z",
+  "one_line": "The face cuts wk-IRPT_ANLREQ-103-portal from origin/DEV, but CONTRIBUTING-BOXES.md step 1 says cut from the last PROD release, never from DEV; that file is absent from origin/DEV and exists only on the candidate branch origin/cand/laptop/contributing-boxes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-282 step 1: 'git worktree add C:/dev/wk-portal-103 -b wk-IRPT_ANLREQ-103-portal origin/DEV', and 'commit the way an earlier candidate branch was made'; the workspace law says a portal change follows portal/CONTRIBUTING-BOXES.md.",
+  "world_is": "MEASURED: origin/DEV tip is a577cba5 (fetched). git show 07f065e6:CONTRIBUTING-BOXES.md (reachable only as remotes/origin/cand/laptop/contributing-boxes) says step 1: cut from the last PROD release, never from DEV; step 2: a branch cut from DEV is re-cut onto the PROD release by its owner before it is registered. The candidate was cut from origin/DEV as the face states; the PROD re-cut is owed by the owner before the open-calls registration and was not done here. Nothing was registered, pushed or landed; the upstream the worktree inherited was unset.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@07f065e6:CONTRIBUTING-BOXES.md steps 1 and 2, and 'The one line'",
+      "portal origin/DEV: git show origin/DEV:CONTRIBUTING-BOXES.md returns no such path at a577cba5",
+      "portal@46a49e57 (the candidate commit, parent a577cba5)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W103-S3 -- AR-y-282: on a dev build the partner reach lands the Ticket Center before its list is server-scoped, so landing the candidate early exposes other firms' tickets
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W103-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~103",
+  "surfaced_at": "2026-10-13T21:05:00Z",
+  "one_line": "On a dev build AR-y-282 lets a known partner firm reach /ticket-center, but the board is unscoped until AR-y-281 (server-side firm scope) and AR-y-283 (the partner view) land; landing the candidate before them shows partner users every firm's tickets.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "AR-y-282 cell: 'this cell only opens the door, DEV only'; the CTO ruling (A): 'that reach shows only the Analysis Request form and the caller's OWN firm's tickets, from a SERVER-SCOPED list (the board is unscoped today)'.",
+  "world_is": "MEASURED at portal a577cba5: listTickets takes no firm parameter (src/api/endpoints/tickets.ts:129; the comment at firmAccess.ts:109-111 cites :69, a stale line). With candidate 46a49e57 a partner user on a dev build passes ProtectedRoute and the nav filter and reaches the page and its unscoped list. Disarm: do not merge wk-IRPT_ANLREQ-103-portal to DEV until AR-y-281 and AR-y-283 have landed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@a577cba5:src/api/endpoints/tickets.ts:129 (listTickets, no firm parameter)",
+      "portal@a577cba5:src/lib/firmAccess.ts:105-114 (the comment: the board is unscoped; granting needs server-side firm scoping first)",
+      "portal@46a49e57:src/lib/firmAccess.ts and src/App.tsx (the dev-build reach)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W103-S4 -- AR-y-282: the Ticket Center page treats a userType Dev user as internal, so a partner firm's superadmin would see internal controls on a dev build
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W103-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~103",
+  "surfaced_at": "2026-10-13T21:05:00Z",
+  "one_line": "TicketCenter reads internal as isInternal() || isDev(); isDev() is userType === 'Dev' with no firm check, so a partner firm user carrying the Dev claim is treated as internal inside the page, against AR-y-282 AC2J.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "AR-y-282 AC2J: 'a superadmin at a partner firm is not treated as internal'; AR-y-283 owns the partner view inside the page.",
+  "world_is": "MEASURED at portal a577cba5: src/pages/TicketCenter/TicketCenter.tsx:188 is 'const internal = auth.isInternal() || auth.isDev()'; AuthContext.tsx isDev() (about :800-802) returns claims.userType === 'Dev' with no firm check. The route refusal is unaffected, because requireInternal checks firmId. The page predicate is AR-y-283's surface and is not changed by 46a49e57. Hazard: once 283 is on a dev build, a partner Dev-claim user sees the internal view.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@a577cba5:src/pages/TicketCenter/TicketCenter.tsx:188",
+      "portal@a577cba5:src/contexts/AuthContext.tsx:800-802 (isDev is userType === 'Dev', no firm check)",
+      "portal@a577cba5:src/components/ProtectedRoute.tsx:119 (requireInternal checks firmId, not userType)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
