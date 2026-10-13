@@ -30479,3 +30479,58 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The portal reader for a directory-search element reads permitted_scope.scope_kind and permitted_scope.scope_ids[0] (adapt.ts:630-631). It does not read an entry_id member. Its declared wire type is DirectoryEntry rows with permitted_scope, while the function returns results[] rows with a top-level entry_id. Whatever maps one to the other is not in this order's paths and was not read. For the synthesized ACCOUNT entries the reader's entryId is the one account id in scope_ids, so two entries of a shared tail carry two distinct ids; that is a fact about the reader, not a defect of this change."
 }
 ```
+
+## IRPT_BCKEND-D2-W352-S1 -- the installed generate composition passes a one-argument no-op as the report-kind validator, and the repository calls it with two arguments
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W352-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~352",
+  "surfaced_at": "2026-10-13T04:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The installed generate composition passes lambda _: None as the report-kind validator (generate_installed.py:306). The repository and the publisher call validate(kind, report) with two arguments, so the no-op is never a schema validator, and the two-argument call would raise TypeError. Measured by reading only; no live path measured, because the handler is deployed unwired-to-live (generate.tf:13). No armed hazard.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "wk-IRPT_BCKEND-352 infra/aws/lambda/investor-reporting/reports/generate_installed.py:306 'lambda _: None, reporting_policy=reporting_policy,' (read; sha256 fc67f9ad99659d65 equals the pinned 0ee21c796f member)",
+      "pinned reports/repository.py at pin 605c4cd4 (git show, ycharts staged set): line 127 'self.validate = validate'; lines 148 and 209 'if self.validate(report_kind, record[\"report\"]) is False:' and 'if self.validate(record[\"report_kind\"], record[\"report\"]) is False:' (read)",
+      "wk-IRPT_BCKEND-352 infra/aws/lambda/investor-reporting/ycharts/generate/publisher.py:191 and :258 'if self.reports.validate(\"ANALYSIS\", report) is False:' (read)",
+      "wk-IRPT_BCKEND-352 infra/aws/terraform/investor-reporting/ycharts/generate.tf:13 '# IT IS DEPLOYED UNWIRED-TO-LIVE.' (read)"
+    ]
+  },
+  "spec_asserts": "reports/repository.py ReportRepository (pin 605c4cd4), docstring: 'validate(kind, report) must raise on an invalid typed report' (lines 117-122); the installed composition supplies the registered validator.",
+  "world_is": "generate_installed.py:306 supplies a callable of ONE argument as that validator, and the repository and publisher call it with TWO arguments (kind, report). A one-argument lambda called with two arguments raises TypeError when reached (inferred from the call signatures, not executed). The 'is False' test at lines 148 and 209 could never refuse anything, since None is not False. The validator is therefore not a schema check on this path. Not executed; no function invoked."
+}
+```
+
+## IRPT_BCKEND-D2-W352-S2 -- the ycharts-packaged HoldingsSnapshot copy is not the commit its source-map note names; three byte-states of one contract name
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W352-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~352",
+  "surfaced_at": "2026-10-13T04:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The source-map note for irpt-ycharts-generate names HoldingsSnapshot.schema.json at commit a69fe8e33e, but the staged pin 3f29017cfc packages sha256 0236991c, while git show a69fe8e33e gives sha256 3795c927 and the worktree docs copy gives 5d9e7fe1. The read used the staged pin, the build input. Read-only; no function touched. No armed hazard.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-ycharts-generate._deploy_note: 'contracts/HoldingsSnapshot.schema.json -> a69fe8e33e (TO-IB-pr-212)' (read)",
+      "same map, staged_from entry repo_path docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json pin 3f29017cfcd28c6be36841c61f1b9b313c1f8d29 sha256 0236991ce32eeb69614a704ecb07a6dc00aaa27095efa5754f40539fc80126eb; git show at that pin reproduces the recorded sha256 (measured)",
+      "git show a69fe8e33e:docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json sha256 3795c92733953581 (measured, read-only)",
+      "positive control: git show 4cc72587d6:docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json sha256 fde5dd4171793c7f equals the irpt-holdings staged sha256 (measured)",
+      "wk-IRPT_BCKEND-352 docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json sha256 5d9e7fe165e2326f (measured)"
+    ]
+  },
+  "spec_asserts": "lambda-source-map.json irpt-ycharts-generate _deploy_note: 'HOLDINGS CONTRACT (2026-09-29 ...): contracts/HoldingsSnapshot.schema.json -> a69fe8e33e (TO-IB-pr-212)'.",
+  "world_is": "The copy the function packages (staged pin 3f29017cfc) is not the bytes at the commit the note names (a69fe8e33e); the packaged copy also differs from the current worktree docs copy, and irpt-holdings packages a third byte-state (pin 4cc72587d6). Two packaged copies of one contract name sit at different pins. This read uses the staged pin, as the build input, and makes no claim about which copy is the intended contract."
+}
+```
