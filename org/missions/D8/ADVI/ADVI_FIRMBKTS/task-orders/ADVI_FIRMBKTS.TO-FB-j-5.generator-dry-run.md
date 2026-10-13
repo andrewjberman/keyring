@@ -28,7 +28,7 @@ they serve. You add the sample path; the production path stays byte-unchanged in
 1. `lambda_handler` reads `event.get('dry_run')` and `event.get('advisor_ids')`.
 2. When `dry_run` is truthy: `advisor_ids` MUST be a list of 1 to 10 strings (else return `{'statusCode': 400, 'error': ...}` BEFORE any read or
    model call); the handler processes ONLY those advisors with `process_advisor(..., upload=False)` (the function already supports it),
-   makes NO S3 write of any kind, no CloudWatch metric emission, and returns `{'statusCode': 200, 'dry_run': True, 'artifacts': {advisor_id:
+   makes NO S3 write of any kind and emits no HANDLER-level metric (the per-call token metrics inside the model path stay: a dry run calls the model, so those tokens are real), and returns `{'statusCode': 200, 'dry_run': True, 'artifacts': {advisor_id:
    artifact, ...}, 'advisors_processed': n, 'firm_id': ...}`.
 3. When `dry_run` is absent or falsy the handler behaves exactly as at the base: the same advisors, `upload=True`, the same metrics, the same
    return value, byte for byte.
@@ -64,7 +64,7 @@ org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION
 
 <proof_of_spec>
 Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~70/ADVI_FIRMBKTS.TO-FB-j-5.generator-dry-run.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="FB-j-5"><invocation>cd /c/dev/wk-firmbkts-70/infra/aws/lambda/exec-summary-generator &amp;&amp; timeout 110 python -m pytest tests/test_dry_run.py -q 2&gt;&amp;1 | tail -1</invocation><expect>^3 passed</expect></criterion>
+  <criterion id="AC1" cell_refs="FB-j-5"><invocation>cd /c/dev/wk-firmbkts-70/infra/aws/lambda/exec-summary-generator &amp;&amp; timeout 110 python -m pytest tests/test_dry_run.py -q 2&gt;&amp;1 | sed "s/\x1b\[[0-9;]*m//g" | tail -1</invocation><expect>^3 passed</expect></criterion>
   <criterion id="AC2" cell_refs="FB-j-5"><invocation>cd /c/dev/wk-firmbkts-70 &amp;&amp; git diff --stat $(git merge-base HEAD box/dell1) HEAD -- infra/aws/lambda/exec-summary-generator | tail -1</invocation><expect>^ 2 files changed</expect></criterion>
   <criterion id="AC3" cell_refs="FB-j-5"><invocation>cd /c/dev/wk-firmbkts-70 &amp;&amp; timeout 60 python C:/dev/ajb_workspace/org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_scope.py --root /c/dev/wk-firmbkts-70 --allow infra/aws/lambda/exec-summary-generator/lambda_function.py --allow infra/aws/lambda/exec-summary-generator/tests/test_dry_run.py --allow org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~70/ --allow org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md</invocation><expect>^ROUND 4 SCOPE: OK [0-9]+ changed, 0 outside, 0 required missing$</expect></criterion>
 </proof_of_spec>
@@ -79,7 +79,9 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMB
 
 **ISSUER NOTES:** the CTO's ADDENDUM 1 item 1 (YES; "serve, then read, then roll back" refused): arms are "a dry run writes 0 objects; a non-dry invocation is byte-unchanged in behaviour"; Terraform-deployed under its own pair (FB-j-6). The dry-run path stays as the QA route for every later regeneration. The test is the worker's (it needs the generator's internals); AC1 expects exactly 3 passed. Class WORLD by the path floor.
 
-<status>pending</status>
+**AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-13 ~09:2xZ):** (a) AC1 strips ANSI colour before the match (the host sets FORCE_COLOR; the worker's row W70-S2; the same trap round 4 recorded and the issuer failed to carry into this face). (b) Section 1a item 2: the worker's row W70-S1 found that `_call_llm` and `_build_slot` emit per-call token metrics, so "no CloudWatch metric emission" cannot hold on a real dry run without threading a flag through the model path. The CTO's arm is "a dry run writes 0 objects (bucket listing before and after)"; the per-call metrics count real model tokens and are kept; only the handler-level metrics are suppressed (as built). The worker's handler is accepted as built; no code change is owed. The criteria are otherwise unchanged. Issuer amends its own pending order; GATE viii reads `<placeholders>NONE</placeholders>` and no token.
+
+<status>complete</status>
 <round>7</round>
 <workstream>EXECSUMFIX</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-j-5</to_id>
