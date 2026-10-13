@@ -11018,3 +11018,77 @@
   "notes": "Recorded so that the L9 grader can judge the authorization change on its full effect."
 }
 ```
+
+## IRPT_ANLREQ-D2-W112-S1 -- AR-y-281: a fourth client LIST 403 pin (DEV_PARTNER, test_authz_matrix.py:256) sat outside the earlier pin census; edited in-grant to 200
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W112-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~112",
+  "surfaced_at": "2026-10-13T22:25:34Z",
+  "one_line": "The pin census that named the client LIST pins missed the DEV_PARTNER assertion at test_authz_matrix.py:256; it asserts a client-human's LIST is refused and it moved to 200 with the firm-scoped list, keeping its stated predicate.",
+  "spec_asserts": "AR-y-281 amendment 1: edit each pinning test only where it asserts that a client-human's LIST is refused; keep every other assertion; list each edit with before and after text.",
+  "world_is": "MEASURED at commit cbdfe204a0: test_authz_matrix.py:256 now asserts GET /api/scoped/tickets for DEV_PARTNER (userType Dev, firm 49financial, allowedFirmIds ALL) is 200. Before the build it asserted 403 under the message 'allowedFirmIds=ALL at a partner firm is NOT internal (D8 predicate)'. That predicate still holds: the caller is a client-human, so its LIST is the firm-scoped one; only the outcome moved. The earlier census listed :246, :182-191 and :290-299 only. Recorded as a pinning edit in r23/LIST_SCOPED.json.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/tests/test_authz_matrix.py@cbdfe204a0 :256 (read this turn; asserts 200 with the AR-y-281 comment)",
+      "infra/aws/lambda/ticket_center/tests/test_authz_matrix.py@df215447fa :256 (the trunk line: asserts 403 with the D8 predicate message)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W112-S2 -- AR-y-281: two same-answer pins compare two client LIST answers across two fresh ticket tables; the second setup needed the same ticket re-seeded
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W112-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~112",
+  "surfaced_at": "2026-10-13T22:25:34Z",
+  "one_line": "Under a 200 client answer, test_no_row_refuses.py and test_status_active.py compare a before and an after answer across a second P.setup() that returns a fresh empty table, so the seeded ticket was re-seeded on the second setup; the equality assertion is unchanged.",
+  "spec_asserts": "AR-y-281 amendment 1: edit each pinning test only where it asserts a client-human's LIST is refused; keep every other assertion; list each edit with before and after text.",
+  "world_is": "MEASURED in the folder run at the build: test_no_row_refuses.py:142-143 and test_status_active.py:176-177 call P.setup() a second time and that table holds no ticket; the first answer held one ticket and the second none, so the equality failed. The fix re-seeds the same analysis ticket with _analysis_ticket(t) on the second setup line. Under the old 403 both answers were equal, so the defect could not show. The setup line sits outside the refusal assertion, so it is recorded here rather than silently.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/tests/test_no_row_refuses.py@cbdfe204a0 :142-143 (read this turn)",
+      "infra/aws/lambda/ticket_center/tests/test_status_active.py@cbdfe204a0 :176-177 (read this turn)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W112-S3 -- safe-commit ran the client account-id check as ABSENT on this box (hashed list not present); the commit landed unchecked for that gate
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W112-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~112",
+  "surfaced_at": "2026-10-13T22:25:34Z",
+  "one_line": "The client-data-check inside safe-commit printed WARN because the hashed account-id list is not at its expected local path, so commit cbdfe204a0 was not checked for client account ids; the commit itself returned rc 0.",
+  "spec_asserts": "Worker face step 4: commit the six paths through .tools/safe-commit.sh with the commit gates it runs (commit-gate on each .py, then the commit).",
+  "world_is": "MEASURED at commit cbdfe204a0: safe-commit printed 'WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there)'. The commit returned rc 0 and the other gates printed OK. The six paths are Lambda and test code; the gate that did not run is the one that checks account ids. Not resolved here: the list is an environment file outside the grant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit cbdfe204a0 (the WARN line, measured in this session; commit rc 0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
