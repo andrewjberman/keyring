@@ -7733,3 +7733,85 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W144-S1 -- the export status read answers UNEXPECTED: the portal chain reads it correctly, and the failing call is the export-receipt read refused by the producer's boundary envelope
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W144-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~144",
+  "surfaced_at": "2026-10-13T20:44:34Z",
+  "one_line": "Andrew's smoke (DB-b-178, S20): the export is created and then the status read answers 'The export's status could not be read (UNEXPECTED)'. The portal chain reads that answer correctly; the failing call is the export-receipt read, which the producer refuses in a boundary envelope (ok false, status public_reason_code UNEXPECTED). Portal side false, not fixed here: the route and the producer answer are outside this grant.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "An export a person starts completes and downloads, or fails with a stated cause; the export modal fits its content without side scrolling (TO-DB-b-178 worker face, export chain).",
+  "world_is": "Chain read at portal HEAD f1893eb40d, hop by hop: ExportButton.tsx:231-290 handleSubmit -> submitUnderGate -> submit-export ack; a QUEUED/RUNNING ack with no receipt starts pollExportReceipt (ExportButton.tsx:263) -> submit.ts:312 api.getExportReceipt -> investor-reporting.ts:1456-1463 getExportReceipt (route GET export-receipt, route table investor-reporting.ts:244) -> send() investor-reporting.ts:1053-1125. The refusal branch investor-reporting.ts:1091-1092 throws IrRequestError carrying publicReasonCode when parseIrEnvelope reports refused. envelope.ts:338 sets boundaryRefusal from body.ok === false and envelope.ts:359 sets refused. UNEXPECTED is not in IR_REFUSAL_REASON_CODES (envelope.ts:161), so only a boundary refusal reaches that throw with UNEXPECTED. The poll rejection reaches ExportButton.tsx:276, which names it through submit.ts:377-382 exportReceiptFailureWords: 'The export's status could not be read (UNEXPECTED). It may still finish'. No live request was made and the producer body is not in this checkout, so the exact producer body is INFERRED from the branch that prints the words. The modal width (42 rem before, 75 rem after) is fixed in the candidate and is not part of this row.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/export/ExportButton.tsx:263-278 (poll call and rejection named) @f1893eb40d",
+      "portal/src/pages/InvestorReporting/export/submit.ts:377-382 (exportReceiptFailureWords) @f1893eb40d",
+      "portal/src/api/endpoints/investor-reporting.ts:1091-1092 (refused envelope throws IrRequestError with publicReasonCode) @f1893eb40d",
+      "portal/src/pages/InvestorReporting/contracts/envelope.ts:161,338,359 (refusal codes, boundary refusal, refused flag) @f1893eb40d",
+      "1.0.0_SA_CTO~DELL2 msg 7139 (Andrew's smoke, relayed); no live request made by this seat"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W144-S2 -- FDRXX is classed Fixed Income by the producer's canonical classifier: the class is assigned outside the portal, at etf_classifier.py:144
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W144-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~144",
+  "surfaced_at": "2026-10-13T20:44:34Z",
+  "one_line": "Andrew's smoke (DB-b-178, S21): FDRXX shows the class Fixed Income on the report. The portal assigns no class by symbol; it reads the served asset_class. The class is assigned in the producer: data/black_diamond/scripts/gold/lib/etf_classifier.py:144 returns the canonical table row's asset_class verbatim for the ticker. Left unchanged here (outside the DEV-only candidate's grant).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A money-market fund such as FDRXX carries the class CASH on the Opal report (TO-DB-b-178 worker face, item 3).",
+  "world_is": "assignment_site: data/black_diamond/scripts/gold/lib/etf_classifier.py line 144 (classify: return item.get('asset_class') or self.UNKNOWN), with the same read at line 229 (classify_with_identity, identity_hop ticker). The ticker override data/black_diamond/scripts/gold/lib/ticker_overrides.py:305 maps the custodian name 'FIDELITY PHILLIPS STREET TRUST GOVT CASH RESV' to FDRXX (a name-to-ticker map, not a class). The portal side (portal/src/pages/InvestorReporting/tabs/holdings/assetClass.ts assetClassOf, lines 84-86) reads the served asset_class and has no money-market rule; CASH_ROW_SYMBOLS is CASH and FCASH only (SecurityList.tsx:128). The canonical table row for FDRXX is not in this checkout and was not read (no AWS call); Andrew's smoke reports it serves fixed_income. The remedy belongs to the canonical classifier table or the producer, not this candidate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/lib/etf_classifier.py:123-144 and 207-229 @f1893eb40d",
+      "data/black_diamond/scripts/gold/lib/ticker_overrides.py:305 @f1893eb40d",
+      "portal/src/pages/InvestorReporting/tabs/holdings/assetClass.ts:84-86 @f1893eb40d",
+      "portal/src/pages/InvestorReporting/tabs/holdings/SecurityList.tsx:128 @f1893eb40d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W144-S3 -- the surprise-row gate refused one commit on an index read ERROR for a tracked adjudication file, and the same commit landed unchanged on retry
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W144-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~144",
+  "surfaced_at": "2026-10-13T21:00:22Z",
+  "one_line": "The first safe-commit of TO-DB-b-178's deliverable was refused by the surprise-row gate: 'org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/adjudications/ADJUDICATION_v8.md unreadable in the index (ERROR)'. The file is tracked (blob 734c676d52), no index.lock existed, and the gate's own probe and git show both succeeded when run by hand. The same commit, unchanged and with no override, landed on the retry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The row gate fails closed on a genuine read error and admits a clean commit whose read succeeds (surprise-row-gate.py _blob_read: ERROR only when git cannot answer).",
+  "world_is": "The refusal printed the gate's ERROR state for ADJUDICATION_v8.md; .tools/surprise-row-gate.py _blob_read runs git ls-files -s then git show :path with a 60 second timeout. Measured after the refusal: git ls-files -s and git show :path both returned rc 0 for the file, and no index.lock was present in the worktree git dir. The retry of the identical staging set (the deliverables folder, the investigation file and the order) committed as a8d44d9210. The cause of the one transient ERROR was not identified; no override was used.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "/c/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~144/commit_ws.txt (first refusal, lines 29-31)",
+      "/c/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~144/commit_ws2.txt (retry, landed as a8d44d9210)",
+      ".tools/surprise-row-gate.py:1991-2036 (_blob_read) @a8d44d9210 parent",
+      "git ls-files -s on org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/adjudications/ADJUDICATION_v8.md: blob 734c676d52"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
