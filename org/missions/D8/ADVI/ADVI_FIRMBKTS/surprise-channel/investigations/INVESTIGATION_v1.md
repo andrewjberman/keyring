@@ -7123,3 +7123,76 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Read-only calls were unaffected. No write was made by the shim. Disarm: none (INERT)."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W79-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~79",
+  "surfaced_at": "2026-10-13T22:10:00Z",
+  "one_line": "The Cottonwood Black Diamond scope is not inside opal-data-bd: the live IAM grants and the repository place it in opal-data-assets under blackdiamond/cottonwood/.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep of infra/aws for opal-data-bd within 120 characters of cottonwood: 2 hits, both prose (infra/aws/terraform/cot-pipeline/ssm.tf:310; infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py:870)",
+      "Grep of data/ for the same pattern: 2 hits, both prose (data/cot/scripts/gold/README_FIRM_NATIVE_DIVERGENCE.md:47,64)",
+      "iam get-role-policy cot-rebalancer-runner-role/cot-rebalancer-runner-write-cot stmt0: arn:aws:s3:::opal-data-assets/blackdiamond/cottonwood/bronze/* (measured)",
+      "infra/aws/lambda/investor-reporting/PATH_MANIFEST.json:3031 (s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_allocations/)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FB-k-4 section 1a lists the Cottonwood scope inside opal-data-bd as a legacy home to inventory, next to opal-data-cot.",
+  "world_is": "No live grant or repository path places a Cottonwood key inside opal-data-bd. The Cottonwood Black Diamond tree is opal-data-assets/blackdiamond/cottonwood/ (bronze, silver fact_holdings and fact_allocations). The inventory records it under opal-data-assets with legacy_touch false."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W79-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~79",
+  "surfaced_at": "2026-10-13T22:10:00Z",
+  "one_line": "Cottonwood holdings have two live homes: the edge router resolves cottonwood to opal-data-cot, while the IRPT holdings reader reads opal-data-cottonwood.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "iam get-role-policy irpt-holdings-role/irpt-holdings-firm-read stmt0-1: GetObject and GetObjectVersion on arn:aws:s3:::opal-data-cottonwood/irpt/cottonwood/platinum/holdings/ (measured)",
+      "iam get-role-policy irpt-holdings-role/irpt-holdings-firm-read stmt2: opal-data-cot investor-reporting/directory/* and platinum/cottonwood/ownership_map.json (measured)",
+      "infra/aws/lambda-edge/_shared/firm-config.mjs:77-80: cottonwood bucket opal-data-cot (measured)",
+      "comp-find --corpus aws over the S3_BUCKET nodes: opal-data-cottonwood present, drift=DECLARED (measured)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FB-k-4 section 1a items 1 and 3 treat opal-data-cot as the Cottonwood serving home and inventory the IRPT Lambdas against it.",
+  "world_is": "IRPT holdings for Cottonwood come from opal-data-cottonwood, the destination-named bucket for the move, and only the directory and ownership map come from opal-data-cot. Both homes are in live use."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W79-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~79",
+  "surfaced_at": "2026-10-13T22:10:00Z",
+  "one_line": "bd-cot-freshness-probe is in the repository with a read of opal-data-cot, but no live Lambda of that name exists.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda list-functions: 237 functions, none named bd-cot-freshness-probe (measured)",
+      "infra/aws/lambda/cot-pipeline/bd-cot-freshness-probe/lambda_function.py:44-46 (BD_DATA_BUCKET default opal-data-cot) and :56 (SERVED_AUA_KEY platinum/firm/timeseries_overview.json) (measured)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FB-k-4 section 1a item 1 asks for the Lambda functions that touch the buckets, read from the live plane.",
+  "world_is": "The repository holds a freshness probe that reads the served Cottonwood AUA key, and the live account does not run it under that name. The inventory records it as a repository-only row with trigger not determined."
+}
+```
