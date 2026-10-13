@@ -25,8 +25,9 @@ through its manager. "Touches only its fabric" is a MEASUREMENT here, never a ju
     python .tools/open-calls.py publish          # put this box's current list to the cluster copy, unchanged
     python .tools/open-calls.py close --id <id> --by <serial> --ruling <path> [--crossbox <crossbox id>]
                                       [--ruled-by andrew|cto]
-    python .tools/open-calls.py close --id <id> --ruled-by andrew|cto --ruling-file <path> --decision approved|declined
-                                      # an approval row only: --decision is required there and refused on any other kind
+    python .tools/open-calls.py close --id <id> --ruled-by andrew|cto --ruling-file <path> --decision approved|declined|withdrawn
+                                      # an approval row only: --decision is required there and refused on any other kind;
+                                      # withdrawn (DP-e-1) ends an OPEN duplicate row that is NOT a decision; a closed row is refused
     python .tools/open-calls.py approval-status --branch cand/<box>/<slug> [--store-dir <dir>]   # ONE line, rc 2 if unreadable
     python .tools/open-calls.py hold --id <id> --by <serial> --reason <one line>     # held for Andrew; the scan skips it
     python .tools/open-calls.py lift --id <id> --by <serial> --ruling <path>         # a hold lifted on a ruling (kept on the row)
@@ -122,6 +123,10 @@ FULL_SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 WAIVER_SHA_RE = re.compile(r"^[0-9a-fA-F]{4,40}$")   # a commit name in hex: never a count, a range or a wildcard
 APPROVAL_CLASSES = ("client-facing", "opal-internal", "test-only")
 APPROVAL_DECISIONS = ("approved", "declined")
+# `withdrawn` (NFRA_DEVPLN round 4, cell DP-e-1): ends an OPEN approval row that is NOT a decision on the feature (a branch
+# registered twice). approval-status skips a withdrawn row when it picks the row for a branch; the close writes it as `decision`.
+APPROVAL_WITHDRAWN = "withdrawn"
+APPROVAL_CLOSE_DECISIONS = APPROVAL_DECISIONS + (APPROVAL_WITHDRAWN,)
 APPROVAL_RULED_BY = ("andrew", "cto")
 APPROVAL_BRANCH_RE = re.compile(r"^cand/([^/\s]+)/([A-Za-z0-9][A-Za-z0-9._-]*)$")
 # `escalation` (optional, Andrew-direct 2026-10-09 ~00:0xZ; .tools/open-calls-scan.py): the box CTO's answer to the scan when it
@@ -503,8 +508,8 @@ def validate_doc(doc, device: str, where: str) -> dict:
         closed = row.get("closed")
         if closed is not None and (not isinstance(closed, dict) or set(closed) - CLOSED_KEYS):
             raise BadFile("%s: row %s `closed` carries a key this reader does not know" % (where, row["id"]))
-        if isinstance(closed, dict) and "decision" in closed and closed["decision"] not in APPROVAL_DECISIONS:
-            raise BadFile("%s: row %s `closed.decision` %r is not approved/declined" % (where, row["id"], closed["decision"]))
+        if isinstance(closed, dict) and "decision" in closed and closed["decision"] not in APPROVAL_CLOSE_DECISIONS:
+            raise BadFile("%s: row %s `closed.decision` %r is not approved/declined/withdrawn" % (where, row["id"], closed["decision"]))
     return doc
 
 
@@ -526,8 +531,8 @@ def check_approval_row(row: dict, where: str) -> None:
     if not isinstance(ap["pages"], list) or not isinstance(ap["branch"], str) or not APPROVAL_BRANCH_RE.match(ap["branch"]):
         raise BadFile("%s: row %s approval.pages must be a list and approval.branch cand/<box>/<slug>" % (where, row["id"]))
     closed = row.get("closed")
-    if row["state"] == "CLOSED" and not (isinstance(closed, dict) and closed.get("decision") in APPROVAL_DECISIONS):
-        raise BadFile("%s: row %s is CLOSED without a decision (approved/declined)" % (where, row["id"]))
+    if row["state"] == "CLOSED" and not (isinstance(closed, dict) and closed.get("decision") in APPROVAL_CLOSE_DECISIONS):
+        raise BadFile("%s: row %s is CLOSED without a decision (approved/declined/withdrawn)" % (where, row["id"]))
 
 
 def read_list(device: str) -> dict:
@@ -1329,14 +1334,19 @@ def cmd_close(args) -> int:
                 except BadFile:
                     continue
         raise Refused("REFUSED: no call %s on this box's list (%s)" % (args.id, path))
-    if row["state"] == "CLOSED":
-        raise Refused("REFUSED: call %s is already CLOSED" % args.id)
     approval = row.get("kind") == "approval"
     decision = getattr(args, "decision", None)
+    if decision == APPROVAL_WITHDRAWN and approval and row["state"] == "CLOSED":
+        # DP-e-1: a withdraw ends only an OPEN row. Refused rc 2 here, before any write, naming the decision it would overwrite.
+        print("REFUSED: row %s is already closed (%s); a withdraw ends only an OPEN row" % (
+            args.id, (row.get("closed") or {}).get("decision") or "-"), file=sys.stderr)
+        return 2
+    if row["state"] == "CLOSED":
+        raise Refused("REFUSED: call %s is already CLOSED" % args.id)
     if approval:
         # an approval row: the decision is required; the closing identity is Andrew's word or this box's CTO serial
-        if decision not in APPROVAL_DECISIONS:
-            raise Refused("REFUSED: call %s is an approval row: --decision approved|declined is required" % args.id)
+        if decision not in APPROVAL_CLOSE_DECISIONS:
+            raise Refused("REFUSED: call %s is an approval row: --decision approved|declined|withdrawn is required" % args.id)
         if (getattr(args, "ruled_by", "cto") or "cto") not in APPROVAL_RULED_BY:
             raise Refused("REFUSED: an approval is ruled by andrew or cto, not %s" % args.ruled_by)
         if getattr(args, "xadj", None):
@@ -1509,7 +1519,9 @@ def cmd_approval_status(args) -> int:
     except BadFile as exc:
         print(line("UNREADABLE", "-", "-", "-", "-", "-", "-", "-", why=str(exc)))
         return 2
-    rows = [r for r in doc["rows"] if r.get("kind") == "approval" and r["approval"]["branch"] == branch]
+    # a withdrawn row (DP-e-1) is not a decision and is skipped: the newest NON-withdrawn row wins
+    rows = [r for r in doc["rows"] if r.get("kind") == "approval" and r["approval"]["branch"] == branch
+            and (r.get("closed") or {}).get("decision") != APPROVAL_WITHDRAWN]
     if not rows:
         print(line("ABSENT", "-", "-", "-", "-", "-", "-", "-"))
         return 0
@@ -1864,8 +1876,9 @@ def build_parser() -> argparse.ArgumentParser:
     # --by is required for a fork or act; an approval row takes its closing identity from --ruled-by (checked in cmd_close)
     cls.add_argument("--by")
     cls.add_argument("--ruling", "--ruling-file", dest="ruling", required=True)
-    cls.add_argument("--decision", choices=APPROVAL_DECISIONS,
-                     help="approval rows only (required there, refused on any other kind): approved | declined")
+    cls.add_argument("--decision", choices=APPROVAL_CLOSE_DECISIONS,
+                     help="approval rows only (required there, refused on any other kind): approved | declined | withdrawn "
+                          "(withdrawn ends an OPEN duplicate row, not a decision; refused on a closed row)")
     cls.add_argument("--crossbox", help="id of the cross-box file for this call, when its text does not carry the call id")
     cls.add_argument("--xadj", help="id of the RULED cross-adjudication file (.tools/xadj.py) this close rests on")
     cls.add_argument("--ruled-by", choices=RULED_BY, default="cto",

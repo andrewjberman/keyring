@@ -855,3 +855,29 @@
   "world_is": "The limb is not in round 4. The correct file is .tools/portal-hooks/pre-push (plus a separate checker script). It becomes the first cell of round 5 unless the CTO rules an audited pipeline override into round 4 on his own word; the issuer takes neither route on its own."
 }
 ```
+
+## NFRA_DEVPLN-W1-S13 -- the worktree's portal gitlink is recorded at 4d601023 but its nested checkout sits at 24877b67, so git status shows portal modified before any edit
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S13",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-13T22:54:33Z",
+  "one_line": "At the start of DP-e-1 the worktree HEAD records portal at 4d6010234e, but the nested portal checkout (branch wk-NFRA_DEVPLN-1-portal) is at 24877b67b7 and git diff reports portal as modified; the portal is read only for this order, so it was left as found and not committed",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree HEAD portal (worktree /c/Users/AndrewBerman/Desktop/ajb_wk/devpln-1, HEAD 7dbc992996): 160000 commit 4d6010234ed2eb1d0a1c1782b4bf782b7e019993 portal",
+      "git -C portal rev-parse HEAD: 24877b67b7a175bcfe73c779f69c0bf7c3c639c8 (branch wk-NFRA_DEVPLN-1-portal; git -C portal log: 24877b67 Merge cand/laptop/contributing-boxes into DEV)",
+      "git -C portal merge-base --is-ancestor 4d6010234ed2eb1d0a1c1782b4bf782b7e019993 24877b67b7a175bcfe73c779f69c0bf7c3c639c8: ancestor (the checkout is ahead of the recorded pin); git -C portal status --short: 0 lines (the nested checkout is clean)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face says the portal checkout is READ ONLY for this worker and the worktree carries the order's paths only; a portal change is made on a cand branch cut from the last PROD release.",
+  "world_is": "The worktree's recorded gitlink for portal is 4d6010234e, one commit behind-or-equal to a nested checkout at 24877b67b7 that is ahead of it on the wk-NFRA_DEVPLN-1-portal branch, so the parent index reports portal as modified with no edit by this worker. The cell touches no portal file, so DP-e-1 is unaffected; the gitlink mismatch is not repaired by this worker."
+}
+```
