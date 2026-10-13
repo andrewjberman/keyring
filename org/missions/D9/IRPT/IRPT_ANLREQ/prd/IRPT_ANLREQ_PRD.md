@@ -5,7 +5,7 @@
  "project": "IRPT_ANLREQ",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.4",
+ "prd_version": "v0.5",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_223xZ_ANALYSIS_REQUEST_END_TO_END_ONE_PROJECT_CLOSER_TRACE.md@2b21a349d1",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
@@ -25,14 +25,19 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
 ## ENDPOINT (step 2, /endpoint --forward)
 
 ```
-  FWD-1  One Analysis Request goes from the Ticket Center form to a finished package on the same open ticket, with no person in between
-         DONE WHEN  EXERCISED -- on DEV, a seat files ONE request through the form (analysis type, Opal-model checkboxes, other ETFs, holdings Excel) for a
-                    49financial client with an eligible advisor; with nobody touching it, the ticket ends up carrying the report, the branded Opal PDF with
-                    the investment commentary, and the original Excel, each opened from the ticket page; Alyssa's own first real request grades it again
-                    (the organic arm)
-         ACCEPT     an Opal person opens the still-open ticket and finds the report, the branded PDF with the commentary and the advisor's original Excel,
-                    without asking anyone and without anyone having forwarded a file
-         SOURCE     Andrew 2026-10-08 ~22:3xZ; CRO trace hops 1-9
+  FWD-1  One Analysis Request goes from the Ticket Center form to FOUR attachments on the same open ticket, with no person in between (v0.5)
+         DONE WHEN  EXERCISED -- on DEV, a SYNTHETIC partner-firm advisor (minted and deleted under a never-widen pair) signs in, opens the Ticket
+                    Center, fills the Analysis Request form and uploads a holdings CSV or XLSX. The form carries the variant the advisor chose
+                    (Overview, Comparison, Multi-Comp), the Opal-model checkboxes and other tickers. The firm comes from the signed-in user, not a
+                    choice. Nobody touches anything after Submit. The still-OPEN ticket then carries four attachments, each opened from the ticket
+                    page by an Opal person: (1) the advisor's original upload, (2) the form as filled, (3) the Opal-generated report (the Opal
+                    producer, not YCharts), (4) the AI commentary draft. Andrew's own filing and Alyssa's first real request grade it again (the
+                    organic arm, never the gate)
+         ACCEPT     an Opal person opens the still-open ticket and finds the four items, without asking anyone and without anyone having forwarded
+                    a file; the branded Opal PDF with the commentary inside is a later enrichment, not FWD-1
+         SOURCE     Andrew 2026-10-08 ~22:3xZ; Andrew's dell2 voice memo 2026-10-13 ("they should see the CSV or XLSX that the advisor uploaded.
+                    They should see the form ... the generated report ... the commentary that we AI generated ... That is the deliverable");
+                    call 2 approved ~17:4xZ (synthetic advisor); pivot direction XB-20261013T180328Z-d4a5 O1
 
   FWD-2  The form fits the request and catches a bad request before it files
          DONE WHEN  EXERCISED -- the form offers the analysis types and the Opal models as checkboxes plus a field for other ETFs; a mistyped ETF is caught
@@ -227,3 +232,31 @@ FWD-2's ACCEPT changed, so the CVO's ratified-text half re-opens too.
 - **Acts only Andrew can do:** none new.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.5 (2026-10-13 ~19:0xZ, 1.0.0_SA_CTO~DELL2) -- the pivot direction's O1, written into the ENDPOINT
+
+Authority: crossbox ORDER `XB-20261013T180328Z-d4a5`, body `org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_DELL2_20261013.md`
+(ACCEPTED by Andrew ~17:4xZ), section 2 O1 and section 8 act 4; Andrew's dell2 voice memo (section 1.1 there, verbatim).
+
+1. **FWD-1 is re-worded (above).** The package is four separate items (original upload, the form as filled, the Opal report, the
+   commentary draft), and the branded PDF is out of FWD-1. The driven arm is a synthetic partner-firm advisor; `2e30`, the Opal-staff
+   filing, is SUPERSEDED. The ratified-text half re-opens on this ENDPOINT change, so `3.0.0_SA_CVO` re-signs it.
+2. **FWD-1 is the only open thread.** No reader-hardening round opens unless it is a hop of FWD-1. AR-y-242..252 and AR-y-261..265
+   finish, because Andrew raised them in his own test.
+3. **Constraints that bind the form** (Andrew's memo):
+   - C-FIRM: the firm is the signed-in user's, and a multi-firm partner user never chooses a firm outside its own domain; the staff
+     picker stays out of the advisor path.
+   - The variant the advisor selects is the variant produced (not inferred from the comparison count).
+   - Opal staff do not file in the Ticket Center.
+4. **The hop cells, cut at the next issuance by `2.0.0_SA_COO~Y2` (the ONE driver, C-ABSORB):**
+   - J1: the form sends `commentary_requested` (the backend half is IRPT_BCKEND IB-pr-456).
+   - J2: the request id is recorded on a partner-firm filer's ticket (the SUBMIT-FORM path or a named service does it; the advisor
+     never needs the REPORT route).
+   - J3: the C-SWITCH release for ticket-filed requests (`~G2`), ruled in `CTO_DELL2_PIVOT_FIRST_ACTS_20261013.md` act 2, with the
+     principal read first.
+   - J5: the packager principal is named, and it runs after the commentary.
+   - J6: the form is the fourth attachment (a package kind for it).
+   - J4: the orchestration stays client-side for V1, as ruled here. Either way FWD-4 holds: a failed hop shows on the ticket. Andrew's
+     silent submit (AR-y-265) is the first proof of that.
+5. **Commentary model:** ship on the wired Kimi K3 so the chain is proved. Andrew's "Astra" is one card on dell2's list; it becomes
+   a setting once the first draft lands.
