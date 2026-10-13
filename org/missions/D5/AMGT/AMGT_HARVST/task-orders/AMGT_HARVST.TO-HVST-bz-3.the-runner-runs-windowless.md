@@ -109,3 +109,20 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 <round>84</round>
 <slot>dell1</slot>
 <fabric>dell1</fabric>
+
+**COMPLETE 2026-10-13 ~07:3xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Built:** worker ~138, branch `wk-AMGT_HARVST-138` @ca38d22541 (build 31f2854a37, proof ca38d22541). Proof VALID rc 0, re-run by this seat in the worktree and
+  again at the shared tree with `--governing-order`.
+- **Merged:** 995adcaeaa on box/dell1 by `safe-merge.sh` (6 files, 0 dropped, 0 foreign), under the COO half @4ed2d30312 and the CTO half @42064bd87b.
+- **AC1 PASS** `7 passed` (re-run in the worktree and on the merged tree). **AC2 PASS** `61 passed` (re-run, both). Full suite: 4 failed before and after
+  in a CLEAN checkout of the merge (the same four: `test_ah1_fixture_solve[bbg]` and three in `test_aw1_origin_load_wait`), 792 -> 799 passed. The
+  SHARED tree reads 5 failed because of one file's CRLF on disk (row D1-S13, INERT); the merge did not touch it. The mutant arm fired.
+- **What it proves:** the cycle runner completes a cycle under a REAL `pythonw.exe` launched DETACHED with no standard handles, and the unguarded `Tee`
+  ends the same cycle as `AttributeError`. The installer's `-Windowless` names the `pythonw.exe` beside `python.exe`; its default is unchanged.
+- **What it does NOT prove, and the CTO's half carries to `HVST-bz-4`'s pair:** (1) the real collector spawn under `pythonw` (the test uses a fake
+  driver); (2) `cycle_runner.log` written under the windowless launch at site Z; (3) the task action reading `pythonw` in `schtasks /query /xml`;
+  (4) no console window existing. Those, read at site Z, are what disarm Z-S115. THIS merge disarms nothing served.
+- **Rows:** D1-W138-S1 INERT (the conftest subprocess poison needs `allow_real_session` on the real-process tests), D1-W138-S2 INERT (a pythonw child
+  with captured pipes is not the no-console condition; the test launches it DETACHED_PROCESS). D1-S13 INERT (above), filed by this seat.
+
+<status>complete</status>
