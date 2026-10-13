@@ -6960,3 +6960,34 @@
   }
 }
 ```
+
+### IRPT_ANLREQ-D2-S71 -- build-and-upload.sh reports "UPLOAD NOT VERIFIED" (rc 1) after an upload that landed byte-correct, so an applier reading rc or the ERROR line sees a failed upload when the object is good
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S71",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-13T13:35:00Z",
+  "one_line": "At bases e274a0e60c, 5d8b0390ed and 4067c2dd5b, `build-and-upload.sh` (without BUILD_ONLY) prints `ERROR: UPLOAD NOT VERIFIED` and exits 1 for all eight R20 packagers on this box although each new object version is in S3 with the right size and content-sha256 metadata: its own `aws s3api head-object --query` verify call dies with `'int' object has no attribute 'items'` (the CLI on its PATH), the script reads that error text as the head-object result, and the source map is not updated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-APPLY-R20 units, 8 of 8: upload rc=1 with ERROR: UPLOAD NOT VERIFIED; the new latest version of each key listed by list-object-versions and downloaded by VersionId: size and sha256 equal the BUILD_ONLY digest (units/upload_*.txt under org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r20/)",
+      "the same head-object --query '[ContentLength, Metadata.\"content-sha256\"]' run by hand through the .tools/aws shim fails: aws: [ERROR]: 'int' object has no attribute 'items'",
+      "infra/aws/lambda/ci/build-and-upload.sh:693-706 @e274a0e60c (the verify block; the ERROR branch does `continue`, so the source-map write at :710 is skipped)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-APPLY-R20 step 4: the same build WITHOUT BUILD_ONLY uploads one new object version, then read the object back. The script's rc is the natural oracle for an upload.",
+  "world_is": "On this box the script's rc=1 does not mean the upload failed: the object landed. An applier who trusts rc alone retries the upload (a second wrong or duplicate version) or stops a good unit. This seat read each upload back by VersionId and sha256 and did not rely on rc. INFERRED, not read: the workers of D2-S69 ran the same script and would have met the same verify block.",
+  "notes": "owner of any fix: the lane that owns infra/aws/lambda/ci/build-and-upload.sh (a verify via s3api list-object-versions or a head-object without the --query would not hit the CLI error). Not fixed here: outside this order's write surface."
+}
+```
+
+- **owner:** `2.0.0_SA_COO~Y2` (issuer; routes the script fix)
+- **disarm_owner:** n/a -- INERT
+- **state:** OBSERVATION / INERT
