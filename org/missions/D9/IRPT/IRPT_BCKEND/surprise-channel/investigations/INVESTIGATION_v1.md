@@ -31835,3 +31835,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "RESULT: the account_id member is live end to end on the builder side: 7639 of 7640 (99.99%) 49F ACCOUNT nodes carry it, every one in the landed directory, the one without has no directory candidate; the pre-release snapshot carried none; the node total grew 7634 to 7640 between the two builds (new accounts; not examined). RULED: W364-S2 (publication.py caps selected part reads at 64 and refuses a full-firm read of the 200-part served publication): by design, not a hazard: the serving entry points read only the selected accounts' parts, the cap bounds a per-request read, and the count needed a full in-memory walk by an operator script that runs the same read_exact and account-group checks; ARMED withdrawn to INERT by this ruling. OBSERVATION W364-S1 (carried to the CTO): the builder's own directory read finds the landed directory in the bucket its firm_bucket_map names (opal-data-bd, investor-reporting/directory/latest.json, population 7694) while the canonical address() of the same directory names opal-data-49financial, where no object exists; the account_id counts stand on the builder's read path; whether the directory-search function reads the canonical home or the builder's one is the first thing the directory-search apply's step 0 must establish, because its reach count depends on it. STILL ARMED: W361-S1, W348-S2."
 }
 ```
+
+## IRPT_BCKEND-D2-W365-S1 -- open-deploy marker copy OPEN against a CLOSED exercise ledger (IB-pr-515 step 2)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W365-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~365",
+  "surfaced_at": "2026-10-13T16:11:09Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-515 step 2: the exercise ledger md reads CLOSED but its .open_deploys marker reads OPEN on two worktree HEADs; the apply must measure the artifact before it waits on that ledger.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/change_management/20261013T1521Z_irpt-status-rule-exercise-20261013_deploy_completion.md@8168a663b8 line 3: Status CLOSED -- closed 20261013T154403Z (names irpt-directory-search in its Deploy line).",
+      "org/critical_paths/.open_deploys/irpt-status-rule-exercise-20261013.json@HEAD of worktree wk-irpt-anlreq-73 and of worktree wk-irpt-dashbd-137 (same blob 6fc2e06d): status OPEN.",
+      "The other 34 ledgers naming irpt-directory-search (35 in all, change_management at 8168a663b8) read CLOSED; no other open marker names the function across 50 worktrees (141 unique marker blobs read)."
+    ]
+  },
+  "spec_asserts": "TO IB-pr-515 step 2 and docs/deployment/MDPF_RUNNER_CODE_SYNC.md SEQUENCING: list every deploy ledger naming irpt-directory-search with its status; the apply waits for the ledger to read CLOSED.",
+  "world_is": "The ledger md of the status-rule exercise reads CLOSED (20261013T154403Z), but its .open_deploys marker reads OPEN in the HEAD of two worktrees (wk-irpt-anlreq-73, wk-irpt-dashbd-137). Read only: no deploy, no marker edit. The apply's gate must measure the artifact, not either copy alone.",
+  "notes": "Filed by the build-only recensus. Not disarmed here; no hazard to served values is shown. Step 0 itself MATCHED (function and builder both read opal-data-bd, opal-data-cot, opal-data-inf under investor-reporting/directory), so no home-mismatch row was needed."
+}
+```
