@@ -409,3 +409,34 @@ Filed by 2.0.0_SA_COO~Z on the route of 0.0.0_AB_MSTR~Z (msg 32095) from 0.0.3_B
   "notes": "Surfaced, not chased. A sibling of Z-S10 in the same engine (.claude/skills/teams-assist/teams-watch.py), not the same fault: S10 is the identity claim, this row is the token lifetime. The engine's owner per Z-S10 is 0.5.0_AE_OpalETL~Z, not registered at filing (get_agent_status 2026-10-08 ~23:3xZ). Disarm: an order to that seat for a refresh before expiry (or a re-select that is checked each cycle), cut by this seat when that seat is seated. Until then the compensating act is the terminal seat's own direct poll_addressed_teams_messages read, which is what found the dropped message."
 }
 ```
+
+### OPAL_BBGTML-Z-S14 -- the intake's FETCH token expired 2026-09-19, so the identity pin fix (repair 4) cannot reach its backlog gate: the read returns FETCH_FAILED 403, an UNKNOWN, not a zero
+
+Filed by 2.0.0_SA_COO~ZB while preparing the Z6 repairs 2-5 issuance (CTO ruling @61e3067f5c, disposition 4).
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S14",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~ZB",
+  "surfaced_at": "2026-10-13T20:32:45Z",
+  "one_line": "The D7 intake's fetch credential (secret opal/ticketing/svc-analyst-intake, a portal service JWT) expired 2026-09-19T20:03:28Z; the portal API answers the fetch HTTP 403, so the backlog read that gates repair 4 returns UNKNOWN, and the pin fix alone would move the scheduled task from exit 2 to exit 5, not to a working intake.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~ZB",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-13 ~20:30Z: python org/tier1_exec/2.0.0_SA_COO~ZB/deliverables/z6_checks/r4_backlog_read.py (dry-run production pass, send stub that raises) printed cursor created_at='2026-08-20T20:18:09.873Z', then 'FETCH_FAILED HTTPError: HTTP Error 403: Forbidden -- no row examined, cursor unchanged', BACKLOG: UNKNOWN, rc=3.",
+      "MEASURED the same minute, claims only, token value never printed: the secret's JWT exp = 2026-09-19T20:03:28Z, iat 2026-08-20T20:03:28Z; secret metadata minted_by '0.7.0_AE_CloudOps (D7 TO-D final, CTO~Z ruling (b))', rotate_by 2026-09-10T20:03:28Z, expires_at 2026-09-19T20:03:28Z, iss opal-portal-auth, aud opal-portal-api.",
+      "MEASURED: %USERPROFILE%/opal_ticket_intake/runner.log carries 844 'exit 5' lines; its last FETCH_FAILED line (24401) reads the same 403.",
+      "READ, runner.py main(): svc_fetch_factory only reads the secret; gateway_send_factory's pin refusal (exit 2) fires BEFORE run_once ever calls the fetch, so since 2026-09-18 the identity refusal has masked the expired fetch token."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO ruling @61e3067f5c disposition 4: FIRST read the intake cursor and the count of tickets opened since 2026-09-03; land the oid pin only on a zero backlog or Andrew's word. The trace (OPAL_BBGTML_Z6_TRACE_20261013_Z.md Q3) left the fetch leg NOT MEASURED.",
+  "world_is": "The backlog cannot be read at all: the fetch credential is 24 days expired and the API refuses it. The gate's input does not exist until the service token is re-minted, and a re-mint is a key act (prior service-token mints ran as never-widen pairs: TCKT_VNEXT NEVER_WIDEN_PAIR_SVC_COMMENTARY_MINT) that the Z6 ruling does not cover.",
+  "notes": "Repair 4 is NOT cut in the Z6 issuance; it is parked on this row. Un-park condition: a CTO ruling on who re-mints opal/ticketing/svc-analyst-intake and under which project, then the re-run of r4_backlog_read.py reads a number. Asked of 1.0.0_SA_CTO~Z in one message. The row's ARMED standing is the client-facing hazard the ruling named: whoever re-mints the token without the pin fix gets exit 2 still; whoever re-mints it WITH the pin fix landed gets a first good pass that may post the whole backlog since cursor 2026-08-20T20:18Z into the client ticket channel. So the re-mint and the pin must be one act behind the backlog read."
+}
+```
