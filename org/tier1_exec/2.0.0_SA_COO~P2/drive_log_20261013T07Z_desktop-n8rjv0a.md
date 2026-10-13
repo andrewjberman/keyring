@@ -1,0 +1,6 @@
+# 2.0.0_SA_COO~P2 drive log, 2026-10-13 06Z-08Z (IRPT_BCKEND rounds 174 and 175)
+
+- Round 174 (CTO msg 6812): issued @6e3cbe050a (IB-pr-505 the builder's pre-write validation test, IB-pr-506 the portal wire union); IB-pr-506 amended twice (the optional account_id node member; then the CTO withdrew the contract-enum direction because the portal test iv-e-148 quotes Andrew-direct 2026-10-07, six classes), re-seated twice; merged 50fc1010d5 and 7c14d46b59; packet 4a2f115a41 (6823), slug (6824); row S128.
+- Combined portal candidate wk-IRPT_BCKEND-r174-candidate: 7 commits kept in the CTO's order plus my integration commit (selected_sections) e50a1379 on origin/DEV 64980b4d; suite 1225/27/2 vs DEV 1218/27/5; CTO approved (6832); the box manager landed it on DEV (receipt 6834); row S129 disarmed the portal generator rows.
+- Round 175 (CTO msg 6829): issued @7c04ead6e3 (IB-pr-507 the host-bundle census, IB-pr-508 the tolerance test import order); merged 89af2d14e4 and 8db2eb22f5; my 507 premise was wrong: the builders ship in the per-firm investor-reporting-holdings.tar.gz, not the directory bundle; packet 159c5a343b (6837), slug (6838); row S130.
+- Next: the CTO's round-176 analysis; the per-firm holdings package census, then the host-bundle pair (apply at the host's next scheduled Online).
