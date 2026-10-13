@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "laptop",
- "written_at": "2026-10-13T15:38:23Z",
+ "written_at": "2026-10-13T17:03:57Z",
  "written_by": "1.0.0_SA_CTO",
  "rows": [
   {
@@ -361,6 +361,74 @@
      "placement": [],
      "resources": [],
      "shared": []
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "laptop-20261013T170357Z-2793",
+   "project": "IRPT_BCKEND",
+   "subject": "IB-pr-515 (directory search returns an account by its tail; portal throws on a null accountId ACCOUNT row, search.ts:277): Andrew deals with it on the laptop -- his words 'I will deal with this on the laptop device, not here'",
+   "asked_by": "1.0.0_SA_CTO",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_CFD4_IB_PR_515_HELD_ON_ANDREWS_WORD_AND_CC32_FWD8_TIEOUT_YES_WITH_NAMED_RESIDUE_20261013.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-13T17:03:57Z",
+   "kind": "act",
+   "context": "Carried from dell2 fork cfd4 on the cluster-lead ruling (tick 34): the pair's CTO half stays unsigned on dell2; after his dealing the laptop CTO signs if an apply is still owed, conditioned on 0 null-accountId rows or the search.ts fix.",
+   "rec": "His act, no decision: when he turns to it on the laptop, this seat reads the null-accountId rows with him.",
+   "scope": {
+    "measured_at": "2026-10-13T17:03:57Z",
+    "paths": "hit",
+    "placement": "hit",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/investor-reporting/export",
+     "infra/aws/terraform/investor-reporting",
+     "infra/aws/terraform/investor-reporting/api",
+     "infra/aws/terraform/investor-reporting/directory",
+     "infra/aws/terraform/investor-reporting/performance",
+     "infra/aws/terraform/investor-reporting/ycharts",
+     "infra/aws/terraform/investor-reporting/narrative",
+     "infra/aws/terraform/investor-reporting/ops",
+     "infra/aws/terraform/investor-reporting/holdings",
+     "infra/aws/terraform/mdpf-pipeline",
+     "infra/aws/terraform/shared-infra",
+     "infra/aws/terraform/modules/opal_name",
+     "infra/aws/terraform/portal-auth",
+     "infra/aws/terraform/investor-reporting/core"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_FIRMBKTS placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [
+      "project IRPT_BCKEND is placed on dell2, this box is laptop"
+     ],
+     "resources": [
+      "root infra/aws/terraform/shared-infra declares cross-firm-secret-deny, also declared by root infra/aws/terraform/portal-auth named by ADVI_FIRMBKTS on dell1",
+      "root infra/aws/terraform/shared-infra declares BDPipelinePermissions, DriftProducerCompPutAndSourceZip, DriftProducerWritesAndDataDeny (+110), also declared by root infra/aws/terraform/shared-infra named by MDPF_SECCLASS on dell1",
+      "root infra/aws/terraform/shared-infra declares cloudwatch-metrics, also declared by root infra/aws/terraform/bd-pipeline named by NFRA_MCPINDEX on sitez",
+      "root infra/aws/terraform/portal-auth declares /aws/lambda/auth-validator-edge, /aws/lambda/cache-control-injector, /aws/lambda/opal-portal-authorizer (+53), also declared by root infra/aws/terraform/portal-auth named by ADVI_FIRMBKTS on dell1",
+      "root infra/aws/terraform/portal-auth declares cross-firm-secret-deny, also declared by root infra/aws/terraform/shared-infra named by MDPF_SECCLASS on dell1"
+     ],
+     "shared": [
+      ".tools/safe_deploy_core.py is on the shared branch (.tools)",
+      ".tools/safe-deploy.sh is on the shared branch (.tools)",
+      ".tools/tests is on the shared branch (.tools)",
+      ".tools/bundles is on the shared branch (.tools)",
+      ".tools/ds-precommit-check.py is on the shared branch (.tools)",
+      "bucket opal-data-assets is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
     }
    },
    "closed": null

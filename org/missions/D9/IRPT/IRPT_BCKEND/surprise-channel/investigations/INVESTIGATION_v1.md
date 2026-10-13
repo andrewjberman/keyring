@@ -31913,3 +31913,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "STATE: the IB-pr-515 pair has my COO half SIGNED (packet sha256 3c369b9086b3...) and the CTO half UNSIGNED; nothing is applied; irpt-directory-search stays at CodeSha256 tvrsQ+w82... . HELD: the apply (no seat applies; no order to IB2 is cut); the CTO~DELL2 half and the round-181 analysis; I add no cell on the account_id / directory-search line until the laptop CTO or Andrew speaks (the scope is the relayed words' own: this line; I do not widen it to the rest of IRPT_BCKEND, which has no open order). OPEN (the CTO's instruction): the portal point: if PROD's selectionRequest.ts:18 throws on an ACCOUNT-kind row, the apply must NOT precede a portal fix; I have read the DEV checkout's file only and not whether PROD serves the same code; the check belongs to the portal consumers' owner (DSGN_IRPTV1) and the PROD promote (held, dell1-e7f2). This row is ARMED because the apply, if run, would change what a client-facing search returns before that is cleared; it disarms when the laptop CTO or Andrew releases the hold AND the portal question is answered."
 }
 ```
+
+## IRPT_BCKEND-D2-S140 -- Andrew answered calls cfd4 and b6fa: the dell2 CTO may sign the IB-pr-515 CTO half; Andrew submits the IB-pr-456 BEFORE record via PROD himself
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S140",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T17:00:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2 (me) once the portal point is measured, or 1.0.0_SA_CTO~DELL2",
+  "one_line": "Andrew, at this seat, answered open calls cfd4 and b6fa: the box CTO (1.0.0_SA_CTO~DELL2) may sign the CTO half of IB-pr-515, and he will submit the IB-pr-456 BEFORE record himself via PROD and give the execution ID; the S139 hold on the CTO half is lifted, the apply still waits on the portal point.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Andrew, direct in this session, 2026-10-13 ~17:0xZ, verbatim: 'Your CTO on this box can handle Call 1. FOr Call 2, I can submit it now, I will submit via PROD and give you the execution ID'. Call 1 = who signs the CTO half of IB-pr-515 (a laptop CTO / b 1.0.0_SA_CTO~DELL2); Call 2 = IB-pr-456 (a Andrew submits one analysis request himself as the BEFORE record / b agent principal on the Opal-producer allow list).",
+      "CTO~DELL2 msg 7084 (acked), ~16:59Z, relays a ~16:57Z Andrew word recorded by G2 ('B is approved, you can use an agent/service account to run these opes') and asks for an IB-pr-456 ADDENDUM 2 naming one service principal. Andrew's later word above chooses (a) for this release's BEFORE record, so I write no ADDENDUM 2 and add no principal to resident_worker.py:121's allow list."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "STATE: (1) IB-pr-515: the S139 hold on the CTO half is lifted by Andrew's word to the extent of Call 1 only (the dell2 CTO may sign). It does not by itself release the apply: the apply is cut to 0.7.0_AE_CloudOps~IB2 only after the CTO half is signed at packet sha256 3c369b9086b3 AND the portal point is measured (PROD selectionRequest.ts / the read of ACCOUNT rows with a null accountId = 0, or a portal fix) AND the artifact re-measure (open_deploys marker on every live worktree, live CodeSha256 tvrsQ+w82..., step 0). S139 stays ARMED for that reason. (2) IB-pr-456: Andrew submits the BEFORE record via PROD and sends the execution ID; until it arrives the release's steps 2 and 3 wait on it; no principal is named and nothing is added to the allow list. If the execution ID is not the BEFORE record the release read expects, I say so and ask. Nothing applied by this row."
+}
+```

@@ -39,3 +39,11 @@ bytes; ratified-text half_hash `cf94d73bb2f21ec95babf614481ac1cdc9ef325b36591713
 **Note for the CTO:** two CVO lanes signed this project's ratified half within 20 minutes (`~L` at v0.6, `~Z` at v0.5 re-cut).
 Each stamp made the other read STALE and refused the L6 gate. Since the CTO placed COMM_ASSIST on the laptop (@b4ad06ff09), one
 signer (`~L`) is the stable choice. The tool still routes to `~Z` as the last signer.
+
+## Addendum ~16:5xZ -- the stamp at e7bde907ba (08eb013f09), and what it covers beyond @88aa6e2037
+
+The stamp binds half_hash `ad2003c6513d...`, not the `cf94d73bb2f2...` this review read at 9aa0e9523a. A diff of the ratified
+sections between those two pins shows one difference only: the CTO's "### v0.6 RESTORED at HEAD" history paragraph (8 lines), which
+the half's section split counts inside the ratified half. It changes no outcome, no ACCEPT and no contract. This seat read it after
+stamping. A stamp should follow the read, not precede it; the correction is recorded here and the stamp stands. Note (not
+blocking): that paragraph is history inside the ratified half; move it to the addendum section at the next edit.
