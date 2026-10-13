@@ -2510,6 +2510,87 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "data/mdpf/scripts/demque/test_demque_drawer_cusip_entries.py test 1 (this branch)"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W50-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~50",
+    "surfaced_at": "2026-10-13T22:38:24Z",
+    "one_line": "The order's proof call 'incremental_equal.py --n 10 --tr' cannot select 10 names: the stratified sampler is cut for n=50, so the 50-name proof ran as five --piece I/K chunks of one selection.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/batch_equality.py _select raises unless the QUOTA sums to n (QUOTA = 19+16+11+4 = 50) @502c991c40",
+        "data/mdpf/scripts/demque/incremental_equal.py _piece_of and the --piece flag (this branch)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DQ-t-58 build item 7: run incremental_equal.py --n 10 --tr --out <part> five times, distinct names per piece, and merge the parts.",
+    "world_is": "--n 10 exits at _select with 'this proof is cut for n=50'. The worker selected the 50-name stratified sample once and ran --n 50 --tr --piece I/K for I = 1..5 (10 names each, distinct cusips, merged by a scratch script; 50 of 50 distinct). The split arm rides piece 1/5 only."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W50-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~50",
+    "surfaced_at": "2026-10-13T22:38:24Z",
+    "one_line": "Two names whose served lock reads LOCKED (claim held) get REJECTED:LOW_TRADE_AGREEMENT from a fresh lock.check over today's trades; the append carries the served lock and extends its valid_to.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/0.9.0_WK_MDPF_DEMQUE~50/INCREMENTAL_WIRED_EQUALITY_REPORT.json no_split_arm.lock_record (6 differences over 50 names, all on LCEYX and FTHSX)",
+        "data/mdpf/scripts/demque/lock.py check (unchanged) run by incremental_equal.py _relock over the full history on the same trades"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "COO half, pair A: the append carries claim, trades_through, state, observations and run_id unchanged; whether a full re-lock would differ is measured by incremental_equal.py and reported (never assumed); a name with no trade in its appended window is appended without a re-lock and listed.",
+    "world_is": "LCEYX and FTHSX: served lock state LOCKED, claim held, trades_through null. A fresh lock.check over the full history on the same trades gives REJECTED:LOW_TRADE_AGREEMENT, claim measured (LCEYX trades_through 2020-02-24; FTHSX trades_through 2026-06-02). Neither name has a trade in its appended window, so the wired draw appends both without a re-lock and extends their valid_to to the frontier. No full re-pull runs for a name without a split or restatement, so nothing in the wired path re-checks them."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W50-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~50",
+    "surfaced_at": "2026-10-13T22:38:24Z",
+    "one_line": "At 22:21Z on 2026-10-13 Yahoo held no 2026-10-13 bar for the sampled mutual funds; 19 of 50 proof names appended 4 rows where the window has 5 trading days.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "yahoo_pull.pull('ACTSX') at 2026-10-13T22:2xZ (scratch check): status OK, last price date 2026-10-12",
+        "INCREMENTAL_WIRED_EQUALITY_REPORT.json no_split_arm.names tr_rows (19 names at 4, 31 at 5)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DQ-t-58 build item 1 and the COO half: the window is the last five trading days ending at the last closed session (lib/trading_calendar.py; before 21:00 UTC today's bar is not final).",
+    "world_is": "The 2026-10-13 session counts as closed at 22:21Z, but Yahoo had published no 10-13 bar for ACTSX at that time. Both the full path and the incremental path see the same 4 rows, so the equality holds. The gap is one trading day; it is not measured to close on a later night (the next request starts at the stored max by construction)."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W50-S4",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~50",
+    "surfaced_at": "2026-10-13T22:38:24Z",
+    "one_line": "price_store.index read its 326 names one at a time (50.5 s measured), too slow for the 100-second subprocess limit on the live --spot run in dq_t58_equal.py; index() now reads them in a 16-thread pool with the same rows and order (4.0 s).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "scratch timing of price_store.index over the served store, sequential: 50.5 s, 326 rows; Bloomberg load tr_compare.load_bloomberg 2.8-3.3 s, 37 partitions",
+        "data/mdpf/scripts/demque/price_store.py index and _index_row (this branch); test_demque_store.py index tests pass unchanged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DQ-t-58 AC2: the live spot check 'incremental_equal.py --spot 5 --tr' runs inside dq_t58_equal.py's 100-second subprocess timeout.",
+    "world_is": "A sequential index read alone used half the timeout. The index is a read only; the parallel read changes its speed, not its rows or order. The nightly write_index call runs the same function."
   }
 ]
 ```
