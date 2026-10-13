@@ -51,3 +51,28 @@ definitions, 1 CloudFront distribution (7 origins, 30 behaviours), 169 repo file
 runner content, the live Lambda@Edge version, IAM and SNS, object-level listings.
 - `D1-W76-S1`: the order's premise (an Inflection scope inside `opal-data-bd`) does not hold: the census holds 0 such tokens and 0 of 247 `opal-data-bd` mapping rows are Inflection. Inflection's legacy
   home is `opal-data-inf` alone (3,127 of 3,451 mapping rows). The plan treats `opal-data-bd` as the shared lake, not an Inflection home.
+
+## FB-k-2 findings (Inflection serving layer; merged ff86b62216; record `deliverables/0.9.0_WK_ADVI_FIRMBKTS~77/PLANINV_INFLECTION_SERVING.json`)
+
+97 rows, 80 touch the legacy home. 237 live Lambdas (238 graph nodes: `D1-W77-S5`, the difference unidentified); 303 IAM roles scanned, 40 with an Allow on `opal-data-inf` and 20 deny-only;
+CloudFront distribution with 30 behaviours (0 on the Inflection origin); 17 SNS topics (3 matched); 26 SES identities (2 Inflection, addresses withheld). Rows for the plan:
+- `D1-W77-S1`: a second live watcher on the prohibited key (the S3 notification to `inf-portal-publisher`); the PRD names only the `mdpf-feeder-accelerator` rule (see the CTO's ruling above).
+- `D1-W77-S2`: **`exec-summary-trigger` is ENABLED live** (the issuer read it: pattern `chain-complete` from `bd-pipeline.gold-chain`), but Terraform declares only a DISABLED placeholder and no Terraform
+  declares the live rule: the plan must bring it under Terraform (a drift to name, not a move to start).
+- `D1-W77-S3`: the served graph cannot answer IAM-grant or Lambda-environment questions for the bucket; the live read found the 40 roles above.
+- `D1-W77-S4`: no Inflection scope in `opal-data-bd` (0 mapping rows, 0 IAM statements), agreeing with `D1-W76-S1`.
+Not read (16 items in the record): the orion JWT contents (by rule), line-level code of the pull Lambdas and IRPT source, the edge router rewrite template beyond its firm map, the auth-validator and
+public-data-router packages, subscription endpoints and SES addresses, EC2 instance-profile consumers, the second CloudFront distribution.
+
+## FB-k-3 findings (Cottonwood pipeline layer; merged df59f3fb58; record `deliverables/0.9.0_WK_ADVI_FIRMBKTS~78/PLANINV_COTTONWOOD_PIPELINE.json`)
+
+42 rows, 23 touch the legacy home (13 rules, 2 schedules, 13 Lambdas, 4 SSM tasks, 9 repository scripts, 1 bucket configuration). 156 rules with all targets read, 34 schedules, 237 Lambdas (environment
+read for 27), 1,741 repository files naming `opal-data-cot`. Rows: `D1-W78-S1` (the Cottonwood scope inside `opal-data-bd` is empty; the legacy home is `opal-data-cot`; see `D1-W79-S1` for where the
+Black Diamond Cottonwood scope really is), `S2` (`characteristics.json` header says zero writers but the object was modified 2026-10-13T15:56:02Z: a writer exists), `S3` (a graph Lambda,
+`cot-satellites-registry-producer-daily`, absent live), `S4` (`cot-etf-ownership-daily` names `opal-data-cot` in `SRC_BUCKET` but its code does not read it). Not read (14 entries): ECS and Step Functions
+contents, 210 Lambdas, the `mdpf-gold-lambda` source and trigger, live code bytes, EC2 state and crontabs, object bodies, the other 32 schedules.
+
+## PLANINV status at 22:4xZ
+
+FB-k-1 to FB-k-5 all merged and complete (5 of 5). Three questions the plan must close, from the unknowns above: the Cottonwood canonical home (two live homes, `D1-W79-S2`), the Door 6 successor
+(CTO msg 5260), and the `exec-summary-trigger` rule under Terraform (`D1-W77-S2`).
