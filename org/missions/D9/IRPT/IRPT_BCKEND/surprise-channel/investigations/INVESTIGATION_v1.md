@@ -30055,3 +30055,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The mismatch is a LATENT defect of the product's mixed pin set, not a live fault: it cannot raise a TypeError in either function while render_ports is never passed, and the release it rides (a schema copy; a search handler) neither creates nor reaches it. The census rule of IB171-3 and IB171-4 is amended (commit of this row): attribute mismatches may not exceed the live zip's and every built line must be a live line; a NEW mismatch or any signature mismatch is still a STOP. The pin pair's repair is a separate later cell (owner 2.0.0_SA_COO~P2), never inside these releases. W347-S1 (holdings_inf.py leaks the same temp file) is NOT disarmed by this row: it stays ARMED; the order IB-pr-496 is amended to grant holdings_inf.py and the worker is re-seated."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S124",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-13T03:43:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-IB-pr-497 STOPPED at step 3: the one runner host is not Online in SSM (EC2 state stopped, SSM instance list empty), so the temp-file count was not taken and no record was written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function-configuration on irpt-holdings: 6 env var names, none ending RUNNER_INSTANCE_ID; on irpt-directory-refresh: IRPT_DIRECTORY_RUNNER_INSTANCE_ID; on irpt-holdings-refresh-lambda: IRPT_HOLDINGS_RUNNER_INSTANCE_ID. The two runner variables hold the same single instance (1 distinct host of 2 values read).",
+      "infra/aws/lambda/investor-reporting/holdings_refresh/refresh_dispatch.py lines 3 and 16: the daily holdings producer sends its SSM command to that host and runs holdings_snapshot.py there.",
+      "aws ssm describe-instance-information filtered to that host: 0 rows; the same call unfiltered: 4 rows (control: the read works). aws ec2 describe-instances state: stopped."
+    ]
+  },
+  "spec_asserts": "Step 3: if the host is not Online in SSM, STOP and file a row with the error code, write no record. Refusal clause: never improvise a second command.",
+  "world_is": "hosts_read 0 of 1. No SSM command was sent, nothing was started, no record file was written. The count of leftover Tax-snapshot temp files is NOT ESTABLISHED. Two points for the issuer: (1) the order's step 1 names irpt-holdings, which carries no runner variable; the holdings build is handed to the runner by irpt-holdings-refresh-lambda, read here as the intended function; (2) starting the host is outside this order's grant (the directory refresh starts it on its own schedule). To take the read the host must be Online: the issuer amends the grant to allow one start-and-stop of that host, or re-issues the order for a window when the daily runner is up."
+}
+```
