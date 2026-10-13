@@ -1,0 +1,696 @@
+{
+ "request_id": "MDPF_SECHIST-CARD-A-B1-FUND-TYPE",
+ "channel": "reference",
+ "vendor": "bloomberg",
+ "tier": 2,
+ "need_class": "client",
+ "window_start": null,
+ "page": "client performance (Cottonwood), B1 $1.00 money market fund check",
+ "fields": [
+  "FUND_TYP"
+ ],
+ "reason": "Andrew-direct 2026-10-13 ~20:0xZ: one fund-type field per Cottonwood cash equivalent; a fund skips Bloomberg history only when its price is held at $1.00 (CTO msg 5130)",
+ "securities": [
+  {
+   "cusip": "02007G4L4"
+  },
+  {
+   "cusip": "02007GCY7"
+  },
+  {
+   "cusip": "02007GK69"
+  },
+  {
+   "cusip": "02007GQ89"
+  },
+  {
+   "cusip": "02007GR88"
+  },
+  {
+   "cusip": "02007GS53"
+  },
+  {
+   "cusip": "02007GT52"
+  },
+  {
+   "cusip": "02007GXB4"
+  },
+  {
+   "cusip": "02554BDW8"
+  },
+  {
+   "cusip": "029728CG5"
+  },
+  {
+   "cusip": "033537BC4"
+  },
+  {
+   "cusip": "04225AAE8"
+  },
+  {
+   "cusip": "045491TX5"
+  },
+  {
+   "cusip": "05580A2D5"
+  },
+  {
+   "cusip": "05580AN34"
+  },
+  {
+   "cusip": "05581W2G9"
+  },
+  {
+   "cusip": "05584CDY9"
+  },
+  {
+   "cusip": "05584CPQ3"
+  },
+  {
+   "cusip": "05600XJM3"
+  },
+  {
+   "cusip": "05600XJW1"
+  },
+  {
+   "cusip": "05600XQA1"
+  },
+  {
+   "cusip": "05610LHM9"
+  },
+  {
+   "cusip": "05610LHV9"
+  },
+  {
+   "cusip": "05612LBD3"
+  },
+  {
+   "cusip": "05612LHJ4"
+  },
+  {
+   "cusip": "05612LHS4"
+  },
+  {
+   "cusip": "06051VK39"
+  },
+  {
+   "cusip": "06051XDV1"
+  },
+  {
+   "cusip": "06051XDY5"
+  },
+  {
+   "cusip": "06051XER9"
+  },
+  {
+   "cusip": "06051XEW8"
+  },
+  {
+   "cusip": "06051XXM9"
+  },
+  {
+   "cusip": "062163BX7"
+  },
+  {
+   "cusip": "06268LAB3"
+  },
+  {
+   "cusip": "06418CJZ0"
+  },
+  {
+   "cusip": "06418CNF9"
+  },
+  {
+   "cusip": "06426KCE6"
+  },
+  {
+   "cusip": "065284GL9"
+  },
+  {
+   "cusip": "065680KZ2"
+  },
+  {
+   "cusip": "065680NK2"
+  },
+  {
+   "cusip": "065680NT3"
+  },
+  {
+   "cusip": "065680PD6"
+  },
+  {
+   "cusip": "066329DR1"
+  },
+  {
+   "cusip": "06647MAT4"
+  },
+  {
+   "cusip": "066519JV2"
+  },
+  {
+   "cusip": "066519SP5"
+  },
+  {
+   "cusip": "066519TZ2"
+  },
+  {
+   "cusip": "066519VA4"
+  },
+  {
+   "cusip": "066519WN5"
+  },
+  {
+   "cusip": "06654BHC8"
+  },
+  {
+   "cusip": "06740KRY5"
+  },
+  {
+   "cusip": "06740KSG3"
+  },
+  {
+   "cusip": "07371BGG0"
+  },
+  {
+   "cusip": "07371BGQ8"
+  },
+  {
+   "cusip": "07371BMZ1"
+  },
+  {
+   "cusip": "07371DQZ3"
+  },
+  {
+   "cusip": "07371DUZ8"
+  },
+  {
+   "cusip": "080522AC9"
+  },
+  {
+   "cusip": "09248U213"
+  },
+  {
+   "cusip": "140420G53"
+  },
+  {
+   "cusip": "17312Q4N6"
+  },
+  {
+   "cusip": "17312QM71"
+  },
+  {
+   "cusip": "17669MAW7"
+  },
+  {
+   "cusip": "17669MBK2"
+  },
+  {
+   "cusip": "200339FL8"
+  },
+  {
+   "cusip": "20376TAA8"
+  },
+  {
+   "cusip": "20415WAN6"
+  },
+  {
+   "cusip": "22412VAF4"
+  },
+  {
+   "cusip": "227563CW1"
+  },
+  {
+   "cusip": "22766AKH7"
+  },
+  {
+   "cusip": "23062KBV3"
+  },
+  {
+   "cusip": "23322GF77"
+  },
+  {
+   "cusip": "23322GL47"
+  },
+  {
+   "cusip": "23322GN94"
+  },
+  {
+   "cusip": "23322GZH3"
+  },
+  {
+   "cusip": "293404AB5"
+  },
+  {
+   "cusip": "30191KAF8"
+  },
+  {
+   "cusip": "30257JBT1"
+  },
+  {
+   "cusip": "312629AA6"
+  },
+  {
+   "cusip": "31607A877"
+  },
+  {
+   "cusip": "316175108"
+  },
+  {
+   "cusip": "316175207"
+  },
+  {
+   "cusip": "31617H102"
+  },
+  {
+   "cusip": "31617H201"
+  },
+  {
+   "cusip": "31617H508"
+  },
+  {
+   "cusip": "316777XV8"
+  },
+  {
+   "cusip": "316777ZC8"
+  },
+  {
+   "cusip": "319042GL5"
+  },
+  {
+   "cusip": "31925YDG4"
+  },
+  {
+   "cusip": "31985HDE3"
+  },
+  {
+   "cusip": "31986HAK1"
+  },
+  {
+   "cusip": "31987FCJ5"
+  },
+  {
+   "cusip": "31987FCP1"
+  },
+  {
+   "cusip": "32021SKB1"
+  },
+  {
+   "cusip": "32022RZR1"
+  },
+  {
+   "cusip": "321082AB5"
+  },
+  {
+   "cusip": "32110YH99"
+  },
+  {
+   "cusip": "332135LB6"
+  },
+  {
+   "cusip": "335857EJ3"
+  },
+  {
+   "cusip": "336177AY6"
+  },
+  {
+   "cusip": "33648GCE1"
+  },
+  {
+   "cusip": "33649EAP2"
+  },
+  {
+   "cusip": "33732TCB6"
+  },
+  {
+   "cusip": "33847GJH6"
+  },
+  {
+   "cusip": "34387AFT1"
+  },
+  {
+   "cusip": "351593AJ7"
+  },
+  {
+   "cusip": "35907XEW3"
+  },
+  {
+   "cusip": "38148PN29"
+  },
+  {
+   "cusip": "38149M6E8"
+  },
+  {
+   "cusip": "38149MAP8"
+  },
+  {
+   "cusip": "38150V5J4"
+  },
+  {
+   "cusip": "38150V6Q7"
+  },
+  {
+   "cusip": "38150VAX7"
+  },
+  {
+   "cusip": "38150VHG7"
+  },
+  {
+   "cusip": "38150VND7"
+  },
+  {
+   "cusip": "38150VPE3"
+  },
+  {
+   "cusip": "38150VQH5"
+  },
+  {
+   "cusip": "38150VTF6"
+  },
+  {
+   "cusip": "38150VTV1"
+  },
+  {
+   "cusip": "38150VV55"
+  },
+  {
+   "cusip": "38150VXD6"
+  },
+  {
+   "cusip": "40963QAK9"
+  },
+  {
+   "cusip": "429882FY4"
+  },
+  {
+   "cusip": "434207AA4"
+  },
+  {
+   "cusip": "45340KGH6"
+  },
+  {
+   "cusip": "46657VTB6"
+  },
+  {
+   "cusip": "46659CHT0"
+  },
+  {
+   "cusip": "47804GJN4"
+  },
+  {
+   "cusip": "48128FCD2"
+  },
+  {
+   "cusip": "490846AH5"
+  },
+  {
+   "cusip": "49306SH25"
+  },
+  {
+   "cusip": "49306SH58"
+  },
+  {
+   "cusip": "49306SK54"
+  },
+  {
+   "cusip": "49306SN44"
+  },
+  {
+   "cusip": "52470R847"
+  },
+  {
+   "cusip": "5380366K5"
+  },
+  {
+   "cusip": "5380366P4"
+  },
+  {
+   "cusip": "538036H31"
+  },
+  {
+   "cusip": "538036K94"
+  },
+  {
+   "cusip": "53957NAE1"
+  },
+  {
+   "cusip": "54889MAD6"
+  },
+  {
+   "cusip": "554479EG6"
+  },
+  {
+   "cusip": "554479EJ0"
+  },
+  {
+   "cusip": "554479FC4"
+  },
+  {
+   "cusip": "60425SKR9"
+  },
+  {
+   "cusip": "608919437"
+  },
+  {
+   "cusip": "61768E3Z4"
+  },
+  {
+   "cusip": "624786FR5"
+  },
+  {
+   "cusip": "63518VAA2"
+  },
+  {
+   "cusip": "653344BN0"
+  },
+  {
+   "cusip": "654062MJ4"
+  },
+  {
+   "cusip": "67118MAH2"
+  },
+  {
+   "cusip": "682325DY8"
+  },
+  {
+   "cusip": "68371GDG4"
+  },
+  {
+   "cusip": "69355NBZ7"
+  },
+  {
+   "cusip": "69355NEF8"
+  },
+  {
+   "cusip": "69355NER2"
+  },
+  {
+   "cusip": "69506YVP1"
+  },
+  {
+   "cusip": "69506YVR7"
+  },
+  {
+   "cusip": "70337MHP6"
+  },
+  {
+   "cusip": "71019PBV5"
+  },
+  {
+   "cusip": "71104AAT0"
+  },
+  {
+   "cusip": "72345SHR5"
+  },
+  {
+   "cusip": "72346RBL5"
+  },
+  {
+   "cusip": "72347BAF3"
+  },
+  {
+   "cusip": "726547BE1"
+  },
+  {
+   "cusip": "726547CD2"
+  },
+  {
+   "cusip": "726547CG5"
+  },
+  {
+   "cusip": "726547CS9"
+  },
+  {
+   "cusip": "74349KDX5"
+  },
+  {
+   "cusip": "743837DV5"
+  },
+  {
+   "cusip": "743837ED4"
+  },
+  {
+   "cusip": "75524KPW8"
+  },
+  {
+   "cusip": "75524KQD9"
+  },
+  {
+   "cusip": "768825BF7"
+  },
+  {
+   "cusip": "77957T305"
+  },
+  {
+   "cusip": "78658Q5J8"
+  },
+  {
+   "cusip": "78658Q5M1"
+  },
+  {
+   "cusip": "78658Q7A5"
+  },
+  {
+   "cusip": "78658RKQ3"
+  },
+  {
+   "cusip": "78658RPP0"
+  },
+  {
+   "cusip": "814661AC8"
+  },
+  {
+   "cusip": "82869AFN0"
+  },
+  {
+   "cusip": "856188CA3"
+  },
+  {
+   "cusip": "856528EM2"
+  },
+  {
+   "cusip": "856528ER1"
+  },
+  {
+   "cusip": "856528ES9"
+  },
+  {
+   "cusip": "857894ZR3"
+  },
+  {
+   "cusip": "868221AB8"
+  },
+  {
+   "cusip": "87164DVS6"
+  },
+  {
+   "cusip": "872308GB1"
+  },
+  {
+   "cusip": "89388CJX7"
+  },
+  {
+   "cusip": "89678LGJ0"
+  },
+  {
+   "cusip": "90355GAX4"
+  },
+  {
+   "cusip": "90355GHN9"
+  },
+  {
+   "cusip": "90421MDK6"
+  },
+  {
+   "cusip": "909557KU3"
+  },
+  {
+   "cusip": "909557LE8"
+  },
+  {
+   "cusip": "90983WCD1"
+  },
+  {
+   "cusip": "90984P6J9"
+  },
+  {
+   "cusip": "912796CS6"
+  },
+  {
+   "cusip": "912796CX5"
+  },
+  {
+   "cusip": "912796Y37"
+  },
+  {
+   "cusip": "912796YJ2"
+  },
+  {
+   "cusip": "912796YV5"
+  },
+  {
+   "cusip": "912796Z44"
+  },
+  {
+   "cusip": "912796Z51"
+  },
+  {
+   "cusip": "912796ZD4"
+  },
+  {
+   "cusip": "912796ZP7"
+  },
+  {
+   "cusip": "912797GE1"
+  },
+  {
+   "cusip": "912797JU2"
+  },
+  {
+   "cusip": "912797KA4"
+  },
+  {
+   "cusip": "912797KT3"
+  },
+  {
+   "cusip": "912797KU0"
+  },
+  {
+   "cusip": "912797RG4"
+  },
+  {
+   "cusip": "919853GY1"
+  },
+  {
+   "cusip": "919853KU4"
+  },
+  {
+   "cusip": "922906201"
+  },
+  {
+   "cusip": "922906300"
+  },
+  {
+   "cusip": "923450DD9"
+  },
+  {
+   "cusip": "92834ABU9"
+  },
+  {
+   "cusip": "928784EN3"
+  },
+  {
+   "cusip": "938828DZ0"
+  },
+  {
+   "cusip": "95763PRB9"
+  },
+  {
+   "cusip": "95763PTL5"
+  },
+  {
+   "cusip": "95763PXR7"
+  },
+  {
+   "cusip": "96153WAK8"
+  }
+ ]
+}

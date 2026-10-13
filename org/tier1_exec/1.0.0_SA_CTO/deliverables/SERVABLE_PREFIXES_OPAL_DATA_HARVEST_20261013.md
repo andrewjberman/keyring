@@ -1,4 +1,4 @@
-# SERVABLE_PREFIXES -- `opal-data-harvest`, harvest V1 for asset managers (`1.0.0_SA_CTO~DELL1` v1 2026-10-13 ~18:3xZ; v2 measured by `2.0.0_SA_COO~W1`; v3 = v2 with the CTO rulings F1-F5 applied, ~18:5xZ; v3 updated ~19:1xZ for Andrew's Bloomberg word)
+# SERVABLE_PREFIXES -- `opal-data-harvest`, harvest V1 for asset managers (`1.0.0_SA_CTO~DELL1` v1 2026-10-13 ~18:3xZ; v2 measured by `2.0.0_SA_COO~W1`; v3 = v2 with the CTO rulings F1-F5 applied, ~18:5xZ; v3 updated ~19:1xZ for Andrew's Bloomberg word; v4 ~20:2xZ: every prefix SERVE to Opal principals)
 
 **For:** site Z's NFRA_MCPINDEX round (catalog rows) and NFRA_OPLGTW (the asset-manager research grant), through `0.0.0_AB_MSTR`. Cluster direction
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_DELL1_20261013.md` O3.
@@ -9,6 +9,32 @@ the served layers: packs, chatter, scores, management, filings outputs.
 **What changed in v2:** v1 classed every prefix from its name and opened no object. v2 opened ONE object (or one Parquet footer) per top-level prefix and per
 `amgt/harvest/gold/` table, and recorded the field NAMES and types only (no value was printed or copied). Counts are unchanged (11 SERVE, 13 WITHHOLD); the
 differences are one narrowed row (8), one class now read (23), and five measured flags on SERVE rows (section "Flags") that are the CTO's calls, not decided here.
+
+## v4 -- CURRENT (read this first): all 24 prefixes SERVE to Opal principals, raw included
+
+**Source:** Andrew-direct ~20:0xZ, call 8: "Yes that is available for opal users only for now, which will be managed via opalgateway entitlements. There should be no undue
+holds on that in the interim, those policies merely need to be designed and expanded upon between the NFRA_OPLGTW and NFRA_MCPINDEX projects." Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_200xZ_NINE_OPEN_CALLS_ANSWERED_FIRMBKTS_DEMQUE_BRIEF_HARVEST.md`. CTO msg 5131.
+
+| what | v4 |
+|---|---|
+| the 24 top-level prefixes (listed 2026-10-13 ~18:2xZ, 24 of 24) | **SERVE** to Opal principals: `amgt/`, `barrons/`, `bloomberg/`, `crosswalk/`, `derived/`, `drafting/`, `filings/`, `ft/`, `identity/`, `issuer-site/`, `lib/`, `management/`, `packs/`, `peers/`, `posture/`, `publication-links/`, `publications/`, `raw/`, `scores/`, `sec/`, `seeking-alpha/`, `social/`, `universe/`, `wsj/` |
+| the seven `amgt/harvest/gold/` research-* tables that v2 split out (row 12b) | **SERVE** (inside `amgt/`) |
+| `management/v1/` and the F4 Lusha-free view | **SERVE** as stored; the view is NOT needed for the Opal grant (it stays an RESAPP option if a narrower principal is ever added) |
+| a non-Opal principal | **REFUSED on every prefix** (the negative arm stays) |
+| entitlement policy: which Opal users, which prefixes | designed between NFRA_OPLGTW and NFRA_MCPINDEX; nothing here holds the grant in the interim |
+
+**Grant, as v4 needs it:** `s3:GetObject` on the 24 prefixes for an Opal principal, as prefix conditions (so a prefix created after the 18:2xZ listing is not admitted by
+accident; it is added here first, a one-line change, never a hold). The negative arms for the FWD of O3 are: an Opal asset-manager principal reads one object under
+`packs/` and one under `wsj/harvest/`; a non-Opal principal is refused on both.
+
+**Measured notes the policy design may want (field names and sizes only; from the v2 sample of 1 per prefix):** `wsj/`, `barrons/`, `bloomberg/`, `ft/` and
+`seeking-alpha/` bronze objects are whole HTML pages (one sampled at 815,570 B); `publications/v1` and the silver tables carry `text` and `body_blocks`; `lib/` is a code
+archive (.zip) and `social/v1/_measurement/` a vendor-job cost record, neither research data; `posture/` and `universe/` carry Opal model-book membership. None of these
+is a reason to hold; they are inputs to who-among-Opal-users, which is the policy design's question.
+
+**What the sections below are now:** the v1 to v3 classing and the CTO rulings, kept as the measured record. Where they say WITHHOLD, HELD or "SERVE when its view
+exists", v4 overrides the V1 column for every row.
 
 ## How this was read
 
@@ -153,5 +179,17 @@ Record: `ANDREW_DIRECT_20261013_190xZ_CLOUD_DATA_AVAILABLE_TO_TEAM_BBG_TERMS_NOT
   `crosswalk/v1/`, `universe/v1/` and `derived/`.
 - **SERVE when its view exists:** `management/v1/`.
 - **Everything else stays WITHHOLD.**
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ANDREW-DIRECT ~20:0xZ: ALL prefixes are available to OPAL USERS; the derived-only V1 rule is lifted for them
+
+> 8.) Yes that is available for opal users only for now, which will be managed via opalgateway entitlements. There should be no undue holds on that in the interim, those policies merely need to be designed and expanded upon between the NFRA_OPLGTW and NFRA_MCPINDEX projects.
+
+Record: `ANDREW_DIRECT_20261013_200xZ_NINE_OPEN_CALLS_ANSWERED_FIRMBKTS_DEMQUE_BRIEF_HARVEST.md`.
+- **Every one of the 24 prefixes is SERVE to Opal principals**, raw articles and raw vendor responses included.
+- F4's Lusha-free view is NO LONGER NEEDED for the Opal grant (Opal users only).
+- **The negative arm stays:** a non-Opal principal is refused on every prefix.
+- Entitlement policy (who among Opal users, which prefixes) is designed between NFRA_OPLGTW and NFRA_MCPINDEX. Nothing here holds the grant in the interim.
 
 -- 1.0.0_SA_CTO~DELL1

@@ -190,6 +190,40 @@ distributions (dividends, interest), not price alone. Yahoo is admitted only thr
 stay on price. If a back year of total return is ever needed, it is derived from the stored `PX_LAST` year plus `DVD_HIST_ALL` (about 100 bulk requests), with dividends
 reinvested on the ex-date close, the porting test's formula.
 
+### Andrew, ~20:0xZ: three queue rulings (record `ANDREW_DIRECT_20261013_200xZ_NINE_OPEN_CALLS_ANSWERED_FIRMBKTS_DEMQUE_BRIEF_HARVEST.md`)
+
+- **$1.00 money market funds:** YES. One fund-type field per Cottonwood cash equivalent (about 227 cells); a fund skips Bloomberg only when its price is held at $1.00.
+- **CORRECTION, and the non-trading-day rule:** "We did not hit our limit this morning". The 10-13 miss was Bloomberg not logged in, with no `0.0.3_BG_BBGTerminal` fallback
+  online. **History pulls on non-trading days are EXPANDED commensurately, cell by cell, with the trading-day allowance those days do not use.** MDPF_DEMQUE organizes it.
+  A quota-limit claim is made only on evidence.
+- **Surface E has NO oversized requests:** a CAP on what can be turned around, and a request above it is refused at intake, never split. It is designed in MDPF_DEMQUE surface E
+  together with NFRA_OPLGTW. This replaces this seat's "split over up to 5 days" proposal.
+
+### Surface B: COMPLETE
+
+- B1: Cottonwood from Bloomberg at depth (c), on the client's income basis (total return for the 11 bonds), the 8 funds added, $1.00 funds checked.
+- B2: Yahoo only through the 10 bps porting test; stored Yahoo prices read UNVERIFIED until ported.
+- Former clients (P3) excluded; open matches (P2) wait (DQ-t-52).
+
+### Surface E: the starting cap
+
+The cap is the day's surface E reserve (10 percent of that day's history allowance, about 267 cells). A request above it is refused at intake naming the cap, enforced by
+NFRA_OPLGTW. Andrew may raise it; one security's full year of price and total return is about 500 cells.
+
+### Surface C and D (Andrew, ~20:1xZ)
+
+> C1 yes measure that now. D1 to D5 approve recommended yes.
+
+- **C1, Rival Funds history still owed: MEASURE FIRST.** `2.0.0_SA_COO~V1` lists exactly what each chart and table on the Rival Funds page reads, at which grain (fund-level or
+  holding-level) and how far back. The owed set is then sized to that, before anything is drawn. Today's owed set is about 185,000 cells, or about 370,000 with total return.
+  At fund level only it would be about 9,500.
+- **D1 to D5 APPROVED as listed:**
+  - D1: the TR comparison remainder, 1,004 cells;
+  - D2: ABNB model data to 2016, 989 cells;
+  - D3: the ICT identity check, 1 cell;
+  - D4: scanner currency slice 1, 50 cells;
+  - D5: scanner currency full list, 1,038 cells, drawn ONLY if slice 1 reads a non-USD currency.
+
 ## STANDING RULE, Andrew: INCREMENTAL MODE = THE LAST 5 TRADING DAYS, on every surface
 
 Once a need's backfill is complete, every daily pull asks for **the last 5 trading days** (from `lib/trading_calendar.py`), not a single day and not a long window. That

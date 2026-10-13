@@ -44,7 +44,10 @@ Three earlier cells are merged into your worktree (read them first):
    followed (canonical or daily), and where a same-date tie exists, state how R1's tie order (`SOURCE_RANK`, then a stable sort) decides it and whether that agrees with the row the lot read.
    If the day has no trade for the asset, take the carry-forward shape: the recompute is the last observed R1 price on `observation_date`, and `recompute_equals_served` compares that price with the served one.
 4. **One price.** Show that every lot of the asset in that object carries the same `current_price`.
-5. **Do not choose dishonestly.** If no candidate passes, report the counts at each condition and file a BLOCKING row; never relax a condition. If the module is absent from your tree, stop and file a BLOCKING row.
+5. **R1 must price the holding.** The round-2 probe found that some served prices come from non-trade rows (Transfer In) that R1 excludes, so a candidate counts only when R1 variant A prices it from
+   Buy or Sale rows on the date (shape a) or its carry-forward is R1's own last observed trade price with that trade's date (shape b); count the candidates that fall away because the served price
+   comes from non-trade rows. A candidate whose served price R1 does not reproduce is not a thread; report the count.
+6. **Do not choose dishonestly.** If no candidate passes, report the counts at each condition and file a BLOCKING row; never relax a condition. If the module is absent from your tree, stop and file a BLOCKING row.
 
 ### 1b. The record: `org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~12/THREAD2.json`
 
@@ -99,7 +102,7 @@ the sources checked, the tie, candidate counts at each condition, AC1, AC2 and t
 **ISSUER NOTES:** round-1 analysis item 3; closes `W4-S9` and the tie of `W4-S5` for the exemplar; FWD-1's grade is the CTO's on the issuer's re-open. STAGED at the cut: un-parks when `BP-b-1`, `BP-b-3` and `BP-b-4` are merged and PASS; its worktree is cut from that HEAD.
 The module is imported by a read-only order: nothing is deployed and no writer imports it.
 
-<status>staged</status>
+<status>pending</status>
 <round>2</round>
 <workstream>THREAD2</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-b-8</to_id>

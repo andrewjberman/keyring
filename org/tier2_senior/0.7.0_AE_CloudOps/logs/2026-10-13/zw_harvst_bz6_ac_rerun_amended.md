@@ -36,8 +36,10 @@ a `--runtime-root` that does not exist prints `present=False ... VALID=False`, r
 order's expect regex does NOT match it. Four of four arms behaved -- AC1 MATCH, AC2 MATCH, AC1-vs-control NO MATCH,
 AC2-vs-control NO MATCH -- and each was tested by running the regex, never by eye.
 
-**Corroboration from outside the script, and what the reboot proved.** Site Z rebooted at about 17:51Z between the
-15:1xZ/15:2xZ mints and this read. `wsj.dpapi` (11478B, mtime 15:11Z) and `barrons.dpapi` (20614B, mtime 15:20Z) are
+**Corroboration from outside the script, and what the reboot proved.** This box booted at 18:57:31Z
+(`LastBootUpTime`, measured), between the 15:1xZ/15:2xZ mints and this 19:2xZ read. The reboot was ANNOUNCED for about
+17:51Z and did not happen then; a sibling read of mine at 18:25Z had already measured no boot, so the announced time
+is not the measured one and this log uses the measured one. `wsj.dpapi` (11478B, mtime 15:11Z) and `barrons.dpapi` (20614B, mtime 15:20Z) are
 still the only two files in `secrets/`, their mtimes still match the two `captured_at` values the reads print, and
 `age_days` has advanced 0.0 -> 0.2. That is the clock moving across one reboot, not a second mint: this re-run made no
 sign-in, and the saved sessions are reboot-durable. The vault files' CONTENT was never opened -- existence, size and
@@ -92,3 +94,53 @@ a 321-byte command is exactly how a faithful record goes foreign to its order.
 **Shared-tree note.** HEAD moved under this session mid-task (`549c4f26c7` -> `3a79d5e130`, the box's scheduled
 `box-sync`). The amendment's presence was therefore re-read by content at the new HEAD, not assumed from the earlier
 read.
+
+---
+
+## Addendum, 2026-10-13T19:55Z -- HVST-bz-7's two records arrived, and neither is a pass
+
+**archetype:** DIAGNOSE
+
+Next Step 2 above said bz-7 was on an organic wait with both publishers printing `NONE`. That is now stale, and the
+record it was waiting for says something more interesting than a pass or a fail.
+
+Both publishers have ended a cycle since the windowless cut, and **both ended `STOPPED=sign_in_refused`** -- after
+bz-6 gave each of them a saved session that still reads `VALID=True`. bz-7's AC1 does NOT match. Per that order's
+step 3 this is a RECORDED RESULT and not a pass: row **`AMGT_HARVST-Z-S119`** filed (BLOCKING / INERT, `disarm_owner`
+`2.0.0_SA_COO~W1`), the order STAYS OPEN, and nothing was driven to move a line.
+
+**One `STOPPED=` token, two different behaviours.** The detail string is identical for both
+(`SignInRefused: 401 under --no-sign-in: no refresh`), which is exactly why the records were opened rather than the
+line graded:
+
+| | wsj `20261013T173708Z` | barrons `20261013T184606Z` |
+|---|---|---|
+| ran | 17:37:08Z -> 18:46:05Z (**69 min**) | 18:46:06Z -> 18:46:27Z (**21 s**) |
+| collected / pairs done | **35 / 35** (`no_new_articles` x35), uploads 1 | **0 / 0** |
+| never started | 206 | 241 |
+| failed on | `security-d7660d8c73fc8217`, after 35 good pairs | `security-b0fe721e1f2a0d8b`, its FIRST key |
+
+**The negative arm is measured, not assumed.** Each publisher's three cycles BEFORE bz-6 (2026-10-12 07:18Z, 07:48Z,
+19:16Z) each lasted ONE SECOND with `collected=0`, `pairs_done=0`, `never_started=241`. So bz-6's session measurably
+changed wsj (1 s / 0 pairs -> 69 min / 35 pairs) and measurably did not change barrons' pair count. "Both still
+`sign_in_refused`" is true and is the least informative true sentence available about these two records.
+
+**What it is not.** Not the operator and not the reboot: both run summaries read `interrupted=false` and
+`stopped_by_operator=false`, and both cycles ENDED before the box booted at 18:57:31Z. Not a two-vault mismatch: the
+registered task's `--runtime-root` and live PID 8792's `--runtime-root` are both exactly the path bz-6 minted into and
+AC1/AC2 read. The runner auto-restarted 17 s after boot and is cycling bbg now, so the pass order is intact.
+
+**The coexistence is the finding.** barrons was refused at 18:46Z and still read `VALID=True` at 19:28:40Z, 42 minutes
+LATER, off the same unchanged vault file. `VALID=True` is a LOCAL predicate -- present + subscriber +
+network_auth_corroborated + age -- and carries no claim about what the vendor will accept. A session that is valid at
+mint and 401s 69 minutes later is a REFRESH problem wearing a sign-in refusal's name; whether bz-6's endpoint can be
+met by a saved session at all while the runner forbids refresh is the issuer's call, and the row asks it.
+
+**Also corrected here:** this log and the bz-6 instance first said site Z "rebooted at about 17:51Z". That was the
+ANNOUNCED time. `LastBootUpTime` reads **18:57:31Z**, and a sibling read of mine at 18:25Z had already measured no
+boot. Both carriers now use the measured time. The substance is unchanged -- a boot did fall between the mints and the
+re-run, and both saved sessions survived it.
+
+bz-7's step 2 is done for both publishers: each `.cycle.json` copied byte for byte with its SHA-256 and length beside
+the source's (`round84/bz7_wsj_cycle_record.json`, `round84/bz7_barrons_cycle_record.json`), and the read appended to
+`round84/bz7_read.out` as a third section.

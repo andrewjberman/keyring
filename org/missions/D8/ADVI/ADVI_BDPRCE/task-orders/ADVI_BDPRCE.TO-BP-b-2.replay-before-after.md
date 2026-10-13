@@ -37,6 +37,10 @@ Before any served price may move, Andrew sees a named before/after list. You pro
 4. **The named reasons.** Per changed row: old price and old source, new price (variants A and B), the distinct trade count behind it, counts of excluded rows by type, and flags `dividend_dominated` (old
    median was 1.0 from cash rows), `repeat_weighted` (old median differs from the distinct median) and `estimated_row`. The 64 rows round 1 left UNEXPLAINED and the 19 recomputing to 1.0 must each appear
    with their R1 price.
+   Round 2's rule probe (`org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~5/RULE_PROBE.md`) found that some served prices come from NON-TRADE rows: the round-1 thread asset's
+   served 168.94 on 2026-10-09 is the price of four `Transfer In` rows (no Buy or Sale that day), and `BLACKROCK INC COM` on 2026-09-22 has only `Dividend` and `Dividend Reinvestment` rows.
+   So for each changed row also record `old_price_types`: the `transaction_type` values of the rows that reproduce the old served price (recompute the old median per row type group; `none` when no
+   group reproduces it) and count the changed rows by that field. Under variant A such assets are `NOW_CARRY_FORWARD`; say how many, and how many variant B prices instead.
 5. **Determinism and the past-date arm.** Run the whole replay twice and show equal md5; and for 20 changed rows show that the result for a past date reads that date's trades only.
 
 ### 1b. The record: `org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~6/REPLAY.json`, plus `BEFORE_AFTER.csv`
@@ -88,7 +92,7 @@ the three largest movers (asset name, old, new), the estimated-rows count, deter
 **ISSUER NOTES:** round-1 analysis item 1 (second half); FWD-7 DEC-7 (the named list). STAGED at the cut: un-parks when `BP-b-1` is merged and PASS at the merged HEAD; its worktree is cut from that HEAD so the module is in it.
 The dollar effect on the latest snapshot and the downstream readers are `BP-b-7`'s (the join), which consumes this list and the census extract.
 
-<status>staged</status>
+<status>pending</status>
 <round>2</round>
 <workstream>REPLAY</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-b-2</to_id>

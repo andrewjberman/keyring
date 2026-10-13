@@ -1,0 +1,21 @@
+{
+  "allowance_gap": null,
+  "basis_note": "227 Cottonwood cash equivalents (Asset_Type Cash Equivalent among the 606 priced P1 names) x 1 reference field FUND_TYP = 227 cells on the reference channel; bbg_quote.py --quote, no Bloomberg call; the finish rests on the held reference allowance. NOT drawn: the hold stands until Andrew's form is complete. The mnemonic FUND_TYP is the issuer's reading of 'fund-type field'; site Z confirms it at the draw (an invalid mnemonic returns an error row and costs at most these 227 cells).",
+  "cells": {
+    "bloomberg_reference": 227
+  },
+  "cells_remaining": 227,
+  "claims": {
+    "ceiling": "held",
+    "reserve": "held"
+  },
+  "finish_date": "2026-10-23",
+  "finish_date_claim": "held",
+  "frozen_by": "2.0.0_SA_COO~Q1",
+  "label": "full-request quote",
+  "page": "client performance (Cottonwood), B1 $1.00 money market fund check",
+  "quoted_at": "2026-10-13T20:11:55Z",
+  "quoted_for_today": "2026-10-13",
+  "request_id": "MDPF_SECHIST-CARD-A-B1-FUND-TYPE",
+  "securities_count": 227
+}
