@@ -1550,6 +1550,28 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "trading_days_between 2026-04-22..2026-10-12 = 120 days, missing gold daily files on trading days = 0"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W37-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~37",
+    "surfaced_at": "2026-10-13T15:35:38Z",
+    "one_line": "The DQ-t-46 output key bd_units_value, which the AC2 check reads, is a refused naming token; the naming gate refuses it, so the module prints blackdiamond_units_value and AC2 reads COVER-REAL-BAD.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "spec_asserts": "DQ-t-46 cell and AC2 (dq_t46_real.py): p1_coverage.py prints one JSON line carrying the key bd_units_value and per-CUSIP bd_held_days; the worker face names the block Black Diamond units and value.",
+    "world_is": "org/standards/NAMING_SCHEMA.json refused_tokens: bd is refused in every slot (the vendor is blackdiamond; the firm is 49financial). The naming gate refused the first commit of the module (13 graded lines, every bd carrier and the bucket alias). The module as committed at aa3b2100ee prints blackdiamond_units_value and blackdiamond_held_days; dq_t46_real.py at aa3b2100ee returns COVER-REAL-BAD arms=ints,bd,residual. The check was not edited and the key was not kept.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit naming limb, first attempt 2026-10-13: NAMING-GATE REFUSE 13 graded (bd carriers at p1_coverage.py lines 139-154 and test lines 45-72; bucket alias at line 54); second attempt after the rename: committed aa3b2100ee",
+        "dq_t46_real.py run at aa3b2100ee 2026-10-13 (rc 1): COVER-REAL-BAD arms=ints,bd,residual; the check reads d.get bd_units_value",
+        "org/standards/NAMING_SCHEMA.json refused_tokens.bd: refused in EVERY slot; the vendor is blackdiamond"
+      ]
+    }
   }
 ]
 ```
