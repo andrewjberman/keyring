@@ -6005,3 +6005,58 @@
   "notes": "Disarmed by AR-y-201 (re-pins the four holds to the live bytes and shows the release differs from the live package in exactly the two reader members) and by the never-widen pair naming the new pins. The resident leg is not affected (its base is the st32 root). The two-leg pair is not written on the AR-y-193 patch."
 }
 ```
+
+
+## IRPT_ANLREQ-D2-W56-S1 -- the same native paths are staged by three other entries of the source map, which AR-y-201 does not re-pin
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W56-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~56",
+  "surfaced_at": "2026-10-13T04:33:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The four native paths of irpt-ycharts-generate (ycharts/generate/acceptance.py and the other three) are also staged by three other function entries of the source map at their own pins; AR-y-201 moves and holds only the irpt-ycharts-generate entry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-201 cell: the four native holds are the irpt-ycharts-generate staged_from rows; the release re-pins the rows of that one entry and the trunk map is not edited.",
+  "world_is": "At infra/aws/lambda/ci/lambda-source-map.json (worktree HEAD 1343bc5f27) the path infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py is also staged by irpt-status (line 5482), irpt-commentary-draft-store-lambda (line 6612) and irpt-commentary-composition-read-lambda (line 6751), each at its own pin; the HEAD map has no irpt-ycharts-generate row for these paths. Those pins were not read for their live bytes and are not moved by this order. Whether those three functions' live packages carry the live acceptance.py bytes (138da769bd) is NOT read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json@1343bc5f27: grep of ycharts/generate/acceptance.py gives lines 5482, 6612, 6751 (all three inside staged_from lists of the entries irpt-status, irpt-commentary-draft-store-lambda, irpt-commentary-composition-read-lambda)",
+      "python -I json read of the HEAD map at 1343bc5f27: functions whose staged_from carries ycharts/generate/acceptance.py = ['irpt-status', 'irpt-commentary-draft-store-lambda', 'irpt-commentary-composition-read-lambda'] plus irpt-ycharts-generate"
+    ]
+  },
+  "notes": "Observation only. The release map patch (RELEASE_MAP_PATCH_R2.diff) touches the irpt-ycharts-generate entry alone (set_hold_rows.py asserts one match inside that entry). Nothing in this order packages or deploys the other three entries."
+}
+```
+
+## IRPT_ANLREQ-D2-W56-S2 -- the AR-y-193 live-equivalent baseline is not the live package; the same four holds at the live pins rebuild the live CodeSha256 exactly
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W56-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~56",
+  "surfaced_at": "2026-10-13T04:33:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "AR-y-193's LIVE_EQUIVALENT baseline (package sha256 c285a7a7...) is not the live package: its four native holds carry the r14 census pins. Rebuilt at the same base 5d8b0390ed with the holds at the live pins, the package is byte-identical to the live zip (CodeSha256 NeAB50...).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "AR-y-193 AMENDMENT 1: the comparison baseline is a LIVE-EQUIVALENT build (the four native holds, reader pins unmoved), its native members equal the live members; RELEASE_MAP_PATCH.diff is the map patch of the release.",
+  "world_is": "MEASURED 2026-10-13: the live zip (CodeSha256 NeAB50CNXWvM5Y6nsba220QmsEiASbVbXcZVRYe4MUM=, 615247 bytes) has acceptance.py 138da769, submission_service.py 24b793e8, durable_job.py afba08fe; AR-y-193's live-equivalent zip (c285a7a7...) carries the census values 06425d47, d07a8281, b5192fa2. A BUILD_ONLY build at 5d8b0390ed with the four holds at 2f7cc7be42 / 1eed34a8c0 / 2f7cc7be42 / 3acafb3f45 gives package sha256 base64 NeAB50CNXWvM5Y6nsba220QmsEiASbVbXcZVRYe4MUM= and 0 members differing from live. RELEASE_MAP_PATCH.diff (AR-y-193) pins three of the four holds to commits whose blobs are not the live bytes; the superseding patch is RELEASE_MAP_PATCH_R2.diff (git hash df4d740e08).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~51/r19/RELEASE_BUILD_RECORD.json live_equivalent_baseline.package_sha256 = c285a7a7da26c8f295d4fe2152b4d72d40797274ff7f62f33a9041825eaa3b9e",
+      "lambda get-function irpt-ycharts-generate Configuration.CodeSha256 read 2026-10-13T04:21:17Z = NeAB50CNXWvM5Y6nsba220QmsEiASbVbXcZVRYe4MUM=; downloaded zip sha256 base64 equal; 104 members",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~56/r19/LAMBDA_LEG_LIVE_REBASE.json holds_only_control: package_sha256_build_only_base64 NeAB50CNXWvM5Y6nsba220QmsEiASbVbXcZVRYe4MUM=, live_equivalent_differs_from_live []"
+    ]
+  },
+  "notes": "Disarm (ARMED): the owner records RELEASE_MAP_PATCH.diff as superseded by RELEASE_MAP_PATCH_R2.diff (deliverables of 0.9.0_WK_IRPT_ANLREQ~56/r19) so that no future leg applies the AR-y-193 pins. Related to IRPT_ANLREQ-D2-S66, which this order's measurements confirm; this row adds the baseline's package hash and the zip-level reproduction, and does not edit S66."
+}
+```
