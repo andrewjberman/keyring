@@ -32554,3 +32554,82 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The ledger the source map cites as this function's deploy record is CLOSED but does not name the function in its text, so the text scan of step 2 does not return it. It is listed in the arms record by the source map field, status CLOSED."
 }
 ```
+
+## IRPT_BCKEND-D2-W368-S1 -- The built irpt-export-render zip carries a signature mismatch, so IB-pr-519's zero-mismatch gate and refusal clause stop the census
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W368-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~368",
+  "surfaced_at": "2026-10-13T22:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The rebuilt irpt-export-render zip, with its one re-pinned schema member, reads signature_closure mismatched=1, the same mismatch the live zip reads, so the order stops before the census.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~368/IB185-1_stop_evidence.txt@b924fade4e",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~368/IB185-1_signature_built.txt@b924fade4e: MISMATCH served:1026 calls interactive_access.InteractiveAccess unknown keyword profile_reader; signature_closure mismatched=1 attr_mismatched=0",
+      "infra/aws/lambda/investor-reporting/_authz/served.py@564e604838 line 1026: InteractiveAccess(lambda: request.headers, tenant, then profile_reader=reads.user on the next line",
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py@83e8b9577a line 45: def __init__(self, read_headers, data_firm, *, ordinary_authorizer=None)"
+    ]
+  },
+  "spec_asserts": "IB-pr-519 step 7 and criterion IB185-1-AC1: the signature closure reads 0 mismatches on the built zip and on the live zip; the refusal clause stops the order on any signature mismatch.",
+  "world_is": "The built zip and the live zip both carry the same single signature mismatch (mismatched=1 on each; attr_mismatched=0 on each). The census was not run; the order is STOPPED at step 7 with the change set otherwise exactly ExportReceipt.schema.json (66 of 66 members, the one differing member is that schema, built digest equal to the repo blob at the pin). The source map was reverted; sha256 equal before and after."
+}
+```
+
+## IRPT_BCKEND-D2-W368-S2 -- The live irpt-export-render zip calls InteractiveAccess with a keyword its packaged class does not accept, on the CREATE_INPUT served path
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W368-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~368",
+  "surfaced_at": "2026-10-13T22:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The deployed irpt-export-render bytes pass profile_reader= to InteractiveAccess, whose packaged constructor takes no such keyword, on the CREATE_INPUT branch of served.py.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live zip CodeSha256 K74JEIjw0NKmy4YfEo7Sb7LcRxEII+/yaYtaKJ3qnD8= (get-function-configuration, read-only): signature_closure on the live zip reads mismatched=1, the identical MISMATCH line as the built zip (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~368/IB185-1_signature_live.txt@b924fade4e)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py@564e604838 line 1026-1027 (CREATE_INPUT branch)",
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py@83e8b9577a line 45"
+    ]
+  },
+  "spec_asserts": "The served CREATE_INPUT path of irpt-export-render constructs InteractiveAccess with keywords the packaged class accepts.",
+  "world_is": "Read from the bytes of the deployed zip: the call passes profile_reader=, the packaged constructor has no such parameter and no **kwargs, so construction on that branch raises TypeError. Not exercised: no invoke was made by this worker. The defect is inside the function currently serving, so it stays ARMED until its owner disarms it."
+}
+```
+
+## IRPT_BCKEND-D2-W368-S3 -- The source map's deploy_ledger for irpt-export-render names a CLOSED ledger whose text never names the function
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W368-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~368",
+  "surfaced_at": "2026-10-13T22:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The source-map deploy_ledger for irpt-export-render is irpt-status-rule-all-eight-20261013, a CLOSED ledger with zero occurrences of irpt-export-render, so a text scan for the function does not return it. Same form as D2-S4 of W367 for irpt-ycharts-generate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json@8313f6d827: functions.irpt-export-render.deploy_ledger = irpt-status-rule-all-eight-20261013",
+      "org/critical_paths/change_management/20261013T1225Z_irpt-status-rule-all-eight-20261013_deploy_completion.md@4f6d6acb87: Status CLOSED; zero occurrences of irpt-export-render in the file"
+    ]
+  },
+  "spec_asserts": "IB-pr-519 step 2: the deploy ledgers that name irpt-export-render are listed with their status, and each open marker naming it is read.",
+  "world_is": "The ledger the source map cites as this function's deploy record is CLOSED and does not name the function in its text. The text scan of step 2 found 49 ledgers naming the function, all CLOSED; the cited ledger is not among them. The record of the function's last deploy therefore cannot be found by a text scan."
+}
+```
