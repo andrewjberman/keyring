@@ -18,7 +18,7 @@ REQ = os.path.join("org", "missions", "D8", "MDPF", "MDPF_DEMQUE", "requests")
 QUEUE = os.path.expanduser(os.path.join("~", ".opal", "demque", "queue"))
 
 
-def _line(cmd, timeout=55):
+def _line(cmd, timeout=40):
     r = subprocess.run([sys.executable] + cmd, capture_output=True, text=True, timeout=timeout, check=False)
     ls = [x for x in r.stdout.splitlines() if x.strip().startswith("{")]
     if r.returncode != 0 or not ls:
@@ -39,7 +39,7 @@ def main() -> int:
         print("arm1 %s checked=%s accepted=%s refused=%s" % (label, a.get("checked"), a.get("accepted"), [x.get("request_id") for x in a.get("refused") or []]))
         if not isinstance(a.get("checked"), int) or a["checked"] < floor or a.get("refused") != [] or a.get("accepted") != a["checked"]:
             return _bad("arm1 %s refused or too few checked: %s" % (label, json.dumps(a)[:300]))
-    b, e = _line([os.path.join(D, "extend_frontier.py"), "--plan"], timeout=58)
+    b, e = _line([os.path.join(D, "extend_frontier.py"), "--plan"], timeout=105)  # AMENDED 2026-10-13: the plan reads the price index, measured 77 s
     if b is None:
         return _bad("arm2 " + e)
     print("arm2 need_class=%s window_start=%s frontier=%s symbols=%s" % (b.get("need_class"), b.get("window_start"), b.get("frontier"), b.get("symbols")))

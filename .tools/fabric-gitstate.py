@@ -18,7 +18,11 @@ THE RECORD, s3://opal-313476888478-globgrph/fabric/activity/v1/gitstate/box=<B>/
   behind_trunk        commits on trunk_head and not on box_head
 Each list carries its full count and at most CAP shas (capped=true when cut). A commit of this box in neither list is on
 the trunk, as of `at`. A ref this box cannot read is null and named in `unread`, never an empty list.
-LAST line: FABRIC-GITSTATE box=<B> unpushed=<n> pushed_not_on_trunk=<n> behind_trunk=<n> put=<yes|no:<why>>
+THE INTEGRATE POINTER, <PREFIX>/box=<B>/last_integrate.json = {"at","rc","note"}: written on --mode integrate ONLY (a box,
+manual or dry pass never writes or deletes it), same bucket, PREFIX and client as the record; rc is the --rc box-sync
+passed in, at is the stamped record's own at, note is the record's pass note cut to 200 chars. A failed pointer put fails
+nothing else. Five conditions: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/CONSENT_NFRA_MCPORTAL_C17_E1_LAST_INTEGRATE_POINTER_20261013.md
+LAST line: FABRIC-GITSTATE box=<B> unpushed=<n> pushed_not_on_trunk=<n> behind_trunk=<n> put=<yes|no:<why>> pointer=<n/a|yes|no:<Exc>>
 """
 from __future__ import annotations
 
@@ -92,6 +96,15 @@ def put(doc, now):
     base = "%s/box=%s" % (PREFIX, doc["box"])
     for key in ("%s/%s.json" % (base, now.strftime("%Y%m%dT%H%M%SZ")), "%s/latest.json" % base):
         s3.put_object(Bucket=BUCKET, Key=key, Body=body, ContentType="application/json")
+    if doc["pass"]["mode"] != "integrate":
+        return "n/a"
+    try:
+        ptr = {"at": doc["at"], "rc": doc["pass"]["rc"], "note": str(doc["pass"]["note"])[:200]}
+        pbody = (json.dumps(ptr, indent=1, ensure_ascii=True) + chr(10)).encode("ascii")
+        s3.put_object(Bucket=BUCKET, Key="%s/last_integrate.json" % base, Body=pbody, ContentType="application/json")
+        return "yes"
+    except Exception as exc:  # noqa: BLE001
+        return "no:%s" % type(exc).__name__
 
 
 def main(argv):
@@ -111,17 +124,20 @@ def main(argv):
     if args.dry_run:
         print(json.dumps(doc, indent=1)[:4000])
         verdict = "no:dry-run"
+        pointer = "n/a"
     else:
         try:
-            put(doc, now)
+            pointer = put(doc, now)
             verdict = "yes"
         except Exception as exc:  # noqa: BLE001
             verdict = "no:%s" % type(exc).__name__
+            pointer = "n/a"
 
     def n(k):
         return "?" if doc[k] is None else doc[k]["count"]
-    print("FABRIC-GITSTATE box=%s unpushed=%s pushed_not_on_trunk=%s behind_trunk=%s put=%s" % (
-        box, n("unpushed"), n("pushed_not_on_trunk"), "?" if doc["behind_trunk"] is None else doc["behind_trunk"], verdict))
+    print("FABRIC-GITSTATE box=%s unpushed=%s pushed_not_on_trunk=%s behind_trunk=%s put=%s pointer=%s" % (
+        box, n("unpushed"), n("pushed_not_on_trunk"), "?" if doc["behind_trunk"] is None else doc["behind_trunk"], verdict,
+        pointer))
     return 0 if verdict in ("yes", "no:dry-run") else 1
 
 
