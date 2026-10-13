@@ -559,3 +559,11 @@ ledger at run time and the dell1 quote staying at zero carried over; surface E h
 (TR remainder 1,004 cells, ABNB 989, ICT 1, scanner slice 1 50, the full scanner list 1,038 only if slice 1 reads non-USD). Two cells: `DQ-t-54` (the carry-over, `standing_drawer.py --carry-over`;
 `0.9.0_WK_MDPF_DEMQUE~46`, workstream CARRYOVER) and `DQ-t-55` (the surface E cap, `surface_e_intake.py`; `0.9.0_WK_MDPF_DEMQUE~47`, workstream SURFACEECAP). CORRECTION to my own message 5133: I priced the cap off
 the 2,673-a-day averaged rate (about 267); the cap is 10 percent of the measured history ceiling, 5,858, so 585 cells, and a one-security one-year two-field request (504 cells) is accepted under it.
+
+**Round 9 close of DQ-t-55 and amendment 19 (issuer, 2026-10-13 ~21:xxZ):** DQ-t-55 merged @450bf78800 (the surface E cap: 10 percent of the measured 5,858 history ceiling = 585 cells, refused at intake naming the
+cap; a one-security one-year two-field request, 504 cells, accepted). The CTO lifted the draw hold (msg 5165): the form is complete. The issuer measured that the standing drawer returns ONE open request (the TR comparison):
+B1 (CUSIP entries with `dates` and per-entry `fields`), the porting test (CUSIP single-day entries) and the fund-type check (a `reference` request) are not drawable by it. CTO msg 5174: one drawer, one queue; teach it
+all three. One cell, `DQ-t-56` (`standing_drawer.py`: `bloomberg_id` with a `/cusip/` form probed with one row first, `dates` entries drawn by identity, per-entry `fields`, the `reference` channel, the priority gate on client
+requests, `--open` and `--plan` for requests without a request-level window; `0.9.0_WK_MDPF_DEMQUE~48`, worker, LOCAL, workstream DRAWERENTRIES, depends on DQ-t-54 which edits the same file, so it is spawned after that merge).
+The porting test request is filed and frozen (326 CUSIPs, 3,195 cells, `MDPF_SECHIST-CARD-A-PORTING-TEST`). The two-week total is `TWO_WEEK_TOTAL_BY_SURFACE_20261013.md`: about 62,700 cells wanted against 23,432 at the
+day rate; the fit with the expansion is UNMEASURED until the 2026-10-17 receipt prints production's unused cells (CTO msg 5174).
