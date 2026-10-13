@@ -128,3 +128,30 @@ This order touches none of them.
 <workstream>WINDOWLESS-SITEZ</workstream>
 <slot>site-z</slot>
 <fabric>dell1</fabric>
+
+**COMPLETE 2026-10-13 ~09:1xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** `0.7.0_AE_CloudOps~ZW` @2e5995b738 (on origin/CLOUD and in box/dell1), under the pair COO @b0267c5443 (ADDENDUM 1) and CTO @469a566fa1
+  (ADDENDUM 1). The 1c69 cycle ended BY ITS OWN STOP FILE: stop file 07:56:19Z, record `20261013T055243Z` `stopped_by_operator` 07:59:03Z (2 min 44 s; asked
+  242, new 0, failed 0), C-g deleted 08:06:50Z, `-Plan -Windowless` read first, registered once, started once 08:09:08Z. No key, no kill, no rollback.
+- **AC1 PASS** `WorkingDirectory` = `...\wk-harvest-runner-pin-995adcaeaa`. **AC2 PASS** `Execute` ends `pythonw.exe` (`schtasks /query /xml`:
+  `<Command>C:\Program Files\Python314\pythonw.exe</Command>`). **AC3 PASS** `bz4_console.out` reads `MainWindowHandle=0` and `CONHOST_CHILD=NONE`.
+  Proof instance VALID rc 0, 3 PASS rows, re-run by this seat in two checkouts with `--governing-order`.
+- **R1-R4 all TRUE, read at +7.3 and +17.9 minutes by epoch arithmetic:** R1 the log written on a ~2.9 min cadence; R2 the task action `pythonw.exe`; R3 no
+  `conhost.exe` child (control: a console `python.exe`, PID 7068, reads 1); R4 the checkpoint `done` 2 -> 6 with 0 `AttributeError`/`OSError`/`WinError` lines,
+  and the real collector read as a live `pythonw.exe` child (PID 4164, no window). **Caveat the seat itself printed:** `MainWindowHandle=0` does NOT
+  discriminate (a console `python.exe` reads 0 too); the conhost-child count does. **A near-miss it caught:** a datetime subtraction against a
+  `Z`-suffixed literal read +252 min instead of +12 and would have taken the signed rollback on a healthy runner.
+- **Branch G.** One runner (PID 50360, `pythonw.exe`) from `995adcaeaa`; the old pins stay locked; step 6 graded as it read (default age 0 EXEMPT, the
+  labelled exercise declared), as in bz-1.
+- **What it proves, and what it does not:** a windowless runner writes its log and spawns the real collector; no console window exists to select. It does
+  NOT yet show a COMPLETED cycle under `pythonw` (about 19:10Z): the first one is the CVO's read of the prevention end to end.
+- **Rows, ruled by the issuer:**
+  - `AMGT_HARVST-Z-S116` (OBSERVATION, INERT; who flips the ARMED clock): answered. The clock is the CVO's, in the next `adjudications/ADJUDICATION_v7x.md`;
+    the disarm WORD is this seat's, sent 09:01Z with the evidence read.
+  - `AMGT_HARVST-Z-S117` (the plant trigger counted two operator-truncated stops): **accepted**; only COMPLETED cycles (`STOPPED=none`) count as
+    failure-free, bz-5 amended @cea877dfc9.
+  - `AMGT_HARVST-Z-S115` (ARMED, disarm owner this seat): the disarm condition is MET and its word is with the CVO. It stays ARMED in the clock until he writes it.
+- **My own defects in this cell, recorded:** my half's start condition (c) was this seat's own and held an ARMED hazard for a read that did not gate the
+  act; I withdrew it by ADDENDUM 1 and the CTO accepted it before the act started.
+
+<status>complete</status>
