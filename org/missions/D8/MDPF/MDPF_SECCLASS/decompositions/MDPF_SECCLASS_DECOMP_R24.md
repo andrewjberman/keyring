@@ -58,3 +58,20 @@ no L8-L10; the issuer's real run of it is the leg G read at the fire, which is t
 `TO-SC-e91b` (leg G, mine, item 1); `TO-SC-e97b` (staged on HOLD, item 2); `TO-DEPLOY-e57e61` (HELD, item 3); the page sentence (the CTO's
 condition 5: a PORTAL change on a partner-facing page, PROD only on Andrew's word, the data correction does not wait for it): not in the CTO's
 round-23 list, so it is not cut; I will ask the CTO for it as an item when the e97 ship has read back.
+
+## ADDENDUM 1 -- cell `SC-e-100` (CTO round-23 analysis ADDENDUM 2, msg 4622, 2026-10-13 ~04:4xZ)
+
+`1.0.0_SA_CTO~DELL2` found (msg 6784, relayed by `0.0.0_AB_MSTR~DELL1` msg 4620) that this project's `TO-SC-e62` release port (`01e843ce2e`, 2026-10-07) removed
+`multi_asset` from the FROZEN v1 HoldingsSnapshot schema: 5 enums in each of 3 copies. v1 is additive-only. The CTO of this project added to round 24:
+**restore it byte-minimally (the 15 member lines) and add a test that the producer emits `multi_asset` on 0 rows; six-class enforcement stays at the producer;
+no served change, and it goes ahead of e97b.** The relay named this seat as the owner of the port: confirmed (worker ~51, my order).
+- **Cell `SC-e-100`**, WORLD by the gate's path floor (an `infra/aws/lambda` path; nothing is deployed), direct act, slot ~90, workstream `~M1.schema` (the gate keys one issuance per round to the workstream, and its own rule gives a second workstream its own round): three schema files, one new test, and (only if it encoded the narrowed enum) one helper in an existing test.
+  Criteria: `R24_CHECKS/r24_multi_asset_restore_check.py` (the 15 member lines restored at their position and nothing else changed, byte for byte against trunk),
+  the new test, and the four sibling holdings test files. Nothing is deployed: the `_contracts` copy ships with the lambda package, whose rebuild is
+  IRPT_BCKEND's act and is named, not taken.
+- **Fault, mine:** I signed the e62 pair without asking whether any copy of a FROZEN contract carries what the producer's six-class rule refuses; the
+  producer's refusal is the right enforcement and the contract's enum was never the place. The port was a worker's mechanical reproduction of e62's
+  blobs (the commit message says so), and e62's enum narrowing was in the source commit.
+- **Write set:** the three schema paths, `data/assets/scripts/gold/investor_reporting/tests/test_holdings_multi_asset_v1_enum.py`, the helper of
+  `test_holdings_publish_gate.py` if it must change, and the surprise channel: disjoint from SC-e-99's.
+- **Chains:** one cell, one chain, in its own workstream's round 24; fan-out 1 of 1 chain, cap 8 there (SC-e-99 is the other workstream's issuance, done).
