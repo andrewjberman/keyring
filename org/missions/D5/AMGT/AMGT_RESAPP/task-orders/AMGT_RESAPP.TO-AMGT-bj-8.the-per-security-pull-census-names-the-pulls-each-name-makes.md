@@ -50,7 +50,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~409/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
-## 4. PROOF OF SPEC (literal; timeout 1500)
+## 4. PROOF OF SPEC (literal; each invocation is bounded by its own `timeout 590`; set your shell tool's timeout to 600000 ms)
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AMGT-bj-8"><invocation>cd C:/dev/wk-resapp-409 &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round103_prep/checks/r103_pull_census.py" --selftest | tail -3; echo "exit=${PIPESTATUS[0]}"</invocation><expect>`arms passed 4 of 4`, `R103 PULL CENSUS ARMS: YES`; and exit=0</expect></criterion>

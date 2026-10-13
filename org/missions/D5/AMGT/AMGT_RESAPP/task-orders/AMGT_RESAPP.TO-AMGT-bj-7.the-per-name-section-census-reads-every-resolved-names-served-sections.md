@@ -58,12 +58,12 @@ org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~408/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
-## 4. PROOF OF SPEC (literal; timeout 1500)
+## 4. PROOF OF SPEC (literal; each invocation is bounded by its own `timeout 590`; set your shell tool's timeout to 600000 ms)
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AMGT-bj-7"><invocation>cd C:/dev/wk-resapp-408 &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round103_prep/checks/r103_section_census.py" --selftest | tail -3; echo "exit=${PIPESTATUS[0]}"</invocation><expect>`arms passed 7 of 7`, `R103 CENSUS ARMS: YES`; and exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="AMGT-bj-7"><invocation>cd C:/dev/wk-resapp-408 &amp;&amp; PYTHONPATH="$(pwd)" timeout 1400 python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round103_prep/checks/r103_section_census.py" --where deployed --workers 4 --out "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~408/census_sections.json" > "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~408/census_sections.txt" 2>&amp;1; echo "exit=$?"; tail -2 "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~408/census_sections.txt"</invocation><expect>`exit=0` and the last line `R103 SECTION CENSUS: RAN N of N names (0 read failures)` with both N equal (the resolved names, 95 at the cut)</expect></criterion>
-  <criterion id="AC3" cell_refs="AMGT-bj-7"><invocation>cd C:/dev/wk-resapp-408 &amp;&amp; PYTHONPATH="$(pwd)" timeout 1400 python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round92_prep/checks/r92_minor_unit_census.py" --where deployed | tail -4; echo "exit=${PIPESTATUS[0]}"</invocation><expect>the line `R92 MINOR-UNIT CENSUS: YES`; and exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-bj-7"><invocation>cd C:/dev/wk-resapp-408 &amp;&amp; PYTHONPATH="$(pwd)" timeout 590 python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round103_prep/checks/r103_section_census.py" --where deployed --workers 4 --out "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~408/census_sections.json" > "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~408/census_sections.txt" 2>&amp;1; echo "exit=$?"; tail -2 "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~408/census_sections.txt"</invocation><expect>`exit=0` and the last line `R103 SECTION CENSUS: RAN N of N names (0 read failures)` with both N equal (the resolved names, 95 at the cut)</expect></criterion>
+  <criterion id="AC3" cell_refs="AMGT-bj-7"><invocation>cd C:/dev/wk-resapp-408 &amp;&amp; PYTHONPATH="$(pwd)" timeout 590 python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round92_prep/checks/r92_minor_unit_census.py" --where deployed | tail -4; echo "exit=${PIPESTATUS[0]}"</invocation><expect>the line `R92 MINOR-UNIT CENSUS: YES`; and exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -85,6 +85,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** FWD-40 (a) as ratified in v0.44 asks for sections filled or reasoned and 0 CONFIRMED broken values. This order produces the census and the candidates; the grade is the CVO's (judgment on screenshots) and the walk (`AMGT-bj-11`) confirms or clears candidates. READ-ONLY, so its class is LOCAL. STAGED behind `AMGT-bj-2`: the census invokes the function, and the driven first request must be alone (no other reader) until RA1 reports. The issuer flips it pending at `bj-2`'s completion. The three `_absent_reason` keys are companions, not sections (the instrument skips them).
 
 <status>staged</status>
+<status>pending -- GO 2026-10-13T19:1xZ by the issuer (2.0.0_SA_COO~R1): RA1 released the function at 19:11Z (msg 5085; `AMGT-bj-2` applied 18:55Z, AaACnKtr.., first cold request 3,770 ms NOT MET, the apply stands). Run AC1 to AC3 as written. The function is read by this order alone until it reports: `AMGT-bj-8` stays staged behind it so its per-name timings are not taken under this order's load.</status>
 <round>103</round>
 <workstream>V1</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~408</slot>
