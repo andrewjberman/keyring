@@ -440,7 +440,7 @@ and D1-C-S21. To 1.0.0_SA_CTO~DELL1: the FAULT-84 grain edges, three instruments
     "owner": "2.0.0_SA_COO~B1",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B1",
       "round": "v4"
     },
@@ -449,7 +449,7 @@ and D1-C-S21. To 1.0.0_SA_CTO~DELL1: the FAULT-84 grain edges, three instruments
       "owner": "2.0.0_SA_COO~B1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_FIRMBKTS-D1-W12-S2",
@@ -778,7 +778,7 @@ and D1-C-S21. To 1.0.0_SA_CTO~DELL1: the FAULT-84 grain edges, three instruments
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v4"
     },
@@ -787,7 +787,7 @@ and D1-C-S21. To 1.0.0_SA_CTO~DELL1: the FAULT-84 grain edges, three instruments
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_FIRMBKTS-S12",
@@ -804,7 +804,7 @@ and D1-C-S21. To 1.0.0_SA_CTO~DELL1: the FAULT-84 grain edges, three instruments
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v4"
     },
@@ -813,7 +813,7 @@ and D1-C-S21. To 1.0.0_SA_CTO~DELL1: the FAULT-84 grain edges, three instruments
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_FIRMBKTS-D1-S17",
@@ -835,9 +835,9 @@ and D1-C-S21. To 1.0.0_SA_CTO~DELL1: the FAULT-84 grain edges, three instruments
       "round": "v4"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO~DELL1",
-      "at": null
+      "at": "2026-10-13T06:10:00Z"
     },
     "closed": false
   },
@@ -934,16 +934,16 @@ and D1-C-S21. To 1.0.0_SA_CTO~DELL1: the FAULT-84 grain edges, three instruments
     "owner": "0.7.0_AE_CloudOps",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "0.7.0_AE_CloudOps",
       "round": "v4"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "0.7.0_AE_CloudOps",
-      "at": null
+      "at": "2026-10-13T06:10:00Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_FIRMBKTS-D1-C-S21",
