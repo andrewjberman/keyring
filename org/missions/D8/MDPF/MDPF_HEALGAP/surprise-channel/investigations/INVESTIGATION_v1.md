@@ -1163,6 +1163,28 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "spec_asserts": "The order names the rule's printed name as opal_name builder output (rule 30): etfs-cot-satellites-characteristics-producer-reattempt-hourly; its refusal clause says a gate refusing a name is a stop, written as a surprise row, with no check weakened.",
     "world_is": "The naming limb cannot decide the cadence of a multi-hour window (14-23) and refuses the new name as a hole; the ratchet refuses growth. The HCL the criteria grade (AC1-AC3: T16-OK, T16IAM-OK, GATE-OK on the worktree; T16-BAD, T16IAM-BAD, GATE-BAD on base copies) lands through no commit, so the reattempt cannot reach the drain from this branch as written.",
     "notes": "Not worked around: no --force, no GIT_COMMIT_AUTHOR_OVERRIDE, no edit to the schedule expression or the name (AC1 names cron(25 14-23 * * ? *) and the printed name), no edit to any check. The uncommitted diff stays in the worktree for the COO. Owed from the naming-rule owner: a schedule the cadence reader decides (the gate prints 'not a list of single hours'), or a name that ends in the cadence word. Disposition for the COO and the CVO at L9; the two files are the only code change."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W15-S1",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~15",
+    "surfaced_at": "2026-10-13T17:36:07Z",
+    "one_line": "tools/astn_wsjft/scripts/store.py at base carries an unused 'import re' that ruff F401 refuses, so the universal commit gate blocked the issuer's reference patch from being committed as delivered; the one-line import removal is in commit 1eaea051c4.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "tools/astn_wsjft/scripts/store.py:9 read at fe216d8d06 (git show HEAD:path): 'import re' and no 're.' use anywhere in the file",
+        "ruff check --select F401 on git show fe216d8d06:tools/astn_wsjft/scripts/store.py (scratch copy): Found 1 error, re imported but unused",
+        "safe-commit of 3 code files before the fix: commit-gate BLOCKED ruff check failed on tools/astn_wsjft/scripts/store.py; after the fix: commit-gate clean for 3 of 3 file(s), commit 1eaea051c4 LOCAL on wk-MDPF_HEALGAP-15"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's build step applies the issuer's t18_tools.patch unchanged and runs the two criteria; a patch that does not apply or a criterion that reads BAD is a stop, written as a surprise row, with no check weakened.",
+    "world_is": "Both patches applied cleanly and both criteria read GATE-OK on the patched tree. The commit gate (universal, fail-closed, --force does not bypass) then refused store.py on a lint defect that predates the patch. The fix is one unused import line in a file the grant names; no behaviour changed, and the gates were re-run GATE-OK (rc=0) after it. Owed to the issuer: the patch set as delivered does not pass the commit gate at base, so the drain should expect this one-line delta.",
+    "notes": "Not worked around by --force or GIT_COMMIT_AUTHOR_OVERRIDE. No check edited. A mutant control (dedupe removed in a scratch copy via HG_T18_RUN) fired GATE-BAD F and rc=1, so arm F is live."
   }
 ]
 ```
