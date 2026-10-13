@@ -5895,3 +5895,30 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Recorded because a gate that cannot run on this device is a missing capability, not a clean pass. The fix (placing or pointing the list) is outside this order's bounds and is not made here."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-h-5 amended, the walker session)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S42",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-13T06:49:02Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "the CTO's session for FB-h-5 (the dormant Opal UI walker service account) is itself an admin-bypass identity at the validator, so a walker request cannot exercise the non-admin ownership read; the route also needs write authority this seat does not hold.",
+  "spec_asserts": "TO-FB-h-5 amended @f21abbf184 step 2 (CTO msg 4662): drive ONE accounts-path request by the dormant Opal UI walker service account with --firm 49financial, never Andrew's, because an admin's decisions are not the non-admin ones FWD-4 needs; PRECONDITION: its request must cross auth-validator-edge.",
+  "world_is": "Read 2026-10-13T06:5xZ, no arm, no write: opal-users-v2 USER#usr_opal_ui_walker PROFILE reads role=admin, userType=Dev, firmId=opal-capital, status=disabled (projection of those four attributes; the hash and the lease were not read). The validator's admin bypass is `role === 'admin' OR firmRole === 'admin' OR tier === 'internal' OR userType === 'Dev'` (auth-validator-edge/index.mjs lines 35 and 401-406): the walker meets two of the four, so its request passes the validator's bypass before any ownership-map read and writes the same line class as the 17 organic tier=internal lines (row ADVI_FIRMBKTS-D1-S41). The skill's own header says the row is role admin, internal, Dev, 'a superadmin reach for as long as a session lives'. The FWD-4 premise (a non-admin decision) is therefore not met by this account for the same reason it is not met by Andrew's. Separately, arm needs a write to opal-users-v2 and SSM /opal/ui-walker/password (the skill's prerequisite: the laptop profile; the Dells hold GetParameter only), which this identity does not hold, and the walker refuses any base URL but localhost:5174 (a local dev:live build).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda-edge/auth-validator-edge/index.mjs lines 35 and 401-406",
+      ".claude/skills/ui-walk/ui_walker_account.py header (the safety model)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/round5/h5_validator_reads.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No arm was attempted, no session touched. A non-admin identity at the validator needs role not admin, firmRole not admin, tier not internal and userType not Dev, with a partner profile and an advisorKey in the ownership map: an advisor-tier user of a client firm. Owner of the un-park stays 1.0.0_SA_CTO~DELL1 (a seat's non-admin session, or Andrew supplies one, or the first organic advisor-tier line on those paths; 418 advisor-tier lines exist today, none on them)."
+}
+```
