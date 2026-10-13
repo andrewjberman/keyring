@@ -1622,3 +1622,19 @@ our inputs are whole but Black Diamond computes differently is a tie-out disagre
 (d) counts, offsets and sizes only in the repo.
 
 **fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~138` (`DB-b-172`).
+
+
+## 95. ROUND 93, WORKSTREAM B (2026-10-13 ~17:0xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ROUND-93 ANALYSIS and msg 7081)
+
+Round 92 is terminal (MAY-CLOSE; the CVO's REMEDIATION_v39 @063bf7a3df; row `IRPT_DASHBD-D2-W138-S1` asks for the endpoint card). The analysis accepts `BD_EXCLUDES_SERVED_INCOME` as a stated reason, decides account 5 by ONE number (PRD 11b: a window inside 0.35 pp after its reasoned days are corrected meets the clause and its remaining days are not graded one by one), and sends the
+endpoint question (FWD-8 accepted with named exceptions) to Andrew as one card. Nothing else is cut until he answers.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. ledger leg L7, carried: the 2026-10-14 11:41Z fire, `l5b_read.py`; close `irpt-dashbd-thresholds-swap-20261013` or restore rollback `8ELUDq...` the same session | the issuer's own act, no cell | FWD-8 | the 11:41Z fire | none |
+| 2. account 5's corrected window: the window return after its 4 reasoned days are corrected (the 3 UNEXPLAINED days stay as served), by the window method of `RULE_EXCL.md` section 5 unchanged, against 0.35 pp; one figure, read from stored local files | `DB-b-173` | FWD-8 | `~138`'s rule and record, `~134`'s pull, the stored tables (read) | R93-1 |
+
+`DB-b-173` takes the DIRECT-ACT path (one cell, LOCAL, a few dozen product lines, no L2, L4-R, L8 to L10): one order, a worker executes, it drains, the close is the issuer's own run of the figure. It reads local files only: zero S3, zero vendor calls.
+**Decision inside this decomposition (the issuer's, stated):** the figure is `|G_c - R_c| * 100` for the fifth account of the round-90 plan order, with `G_c = G` (no Black Diamond-side correction is taken for that account) and `R_c` the product of the corrected served daily returns; the uncorrected gap is printed beside it as the negative arm.
+
+**fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~139` (`DB-b-173`, direct act).
