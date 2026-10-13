@@ -6996,3 +6996,54 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Not this worker's to resolve: a registry row or a naming ruling is outside the write grant and a hand-typed workaround is the refused shape. Disarm is a CTO ruling on the canonical ownership-map name and whether a registry row admits it. Until then the code commit stays BLOCKED and AC-level proof records the state."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W25-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~25",
+  "surfaced_at": "2026-10-11T12:26:16Z",
+  "one_line": "TO-FB-g-2 cannot be committed in its spec form: the commit-time naming gate (LGIC_ENFORCE DEC-6, ENFORCE) refuses the order's literal names in the appended grant (policy name advi-49f-platinum-canonical-rw; the literal ARN arn:aws:s3:::opal-data-49financial/advi/49financial/platinum/*; the prefix advi/49financial/platinum/*) as hand-typed carriers of 49financial. Conforming them changes the strings the order and its checker pin. Worker did not force, override or substitute lookup(); the draft stays modified and uncommitted in the worktree.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh --author 0.9.0_WK_ADVI_FIRMBKTS~25 ... -F .scratch/msg_fb_g2_iam.txt -- infra/aws/terraform/bd-pipeline/iam.tf, worktree /c/dev/wk-firmbkts-25 (branch wk-ADVI_FIRMBKTS-25, HEAD f30d22f82c), 2026-10-11 ~12:25Z: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' and 'NAMING-GATE: REFUSE 4 graded'",
+      "naming-gate lines: 'NAMING REFUSE infra/aws/terraform/bd-pipeline/iam.tf:1288 advi-49f-platinum-canonical-rw -> advi-49f-platinum-canonical-rw-policy' (NEW, out-of-pattern as IAM_POLICY); 'NAMING REFUSE ...:1298 arn:aws:s3:::opal-data-49financial/advi/49financial/platinum/* -> lookup(49financial)'; 'NAMING REFUSE ...:1307 advi/49financial/platinum/* ' (CONFORMANT as S3Key, but a NEW hand-kept carrier); 'NAMING OUT-OF-PATTERN ...:1304 arn:aws:s3:::opal-data-49financial' (WARN)",
+      "CLAUDE.md section 4 rule 30: every S3 address is lib/opal_naming.py address() output and every resource name is name() output; a builder refusal is a missing registry row to add, never a hand-typed workaround; a deliberate departure is an R20 register entry Andrew acknowledges",
+      "r4_grant.py --arms grant --root /c/dev/wk-firmbkts-25 (2026-10-11 ~12:22Z): 4 of 4 arms PASS on the draft; G1 pins the name and G2 pins the exact ARN set and prefix, so a conformed name or lookup() form reads FAIL on the checker"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-FB-g-2 section 1a: the appended resource carries the exact name advi-49f-platinum-canonical-rw, the exact literal ARNs and the exact prefix; section 5: commit infra/aws/terraform/bd-pipeline/iam.tf via safe-commit.",
+  "world_is": "The commit-time naming gate in ENFORCE mode refuses the three literal strings as NEW hand-typed carriers of 49financial and of the IAM policy name pattern. The same file already carries hand-typed opal-data-portal-v2/platinum/advi/49financial/* at line 1270 (pre-existing, outside the graded diff). The grant cannot be committed in the form the order and its checker pin; a ruling is needed on the naming form (a registry row, an R20 entry, or a changed pinned string) before the cell can be committed.",
+  "notes": "Needs a ruling from 2.0.0_SA_COO~B1 (issuer), with the naming owner if a registry row is the route. Until then the draft is uncommitted; no AWS call, plan or apply was made. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W25-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~25",
+  "surfaced_at": "2026-10-11T12:26:16Z",
+  "one_line": "TO-FB-g-2 AC2 (write-surface bound) cannot read ROUND 4 SCOPE: OK in this worktree: git reads the submodule portal as modified, because its checked-out HEAD 8ed372cb72659b96a5cfb4000a20b8ae315b9be7 differs from the index gitlink c96efe1714784162c4134450da33ce6fd6226b60. The worker edited only infra/aws/terraform/bd-pipeline/iam.tf and did not checkout, reset or commit portal; the scope check reads portal as CHANGED outside the three paths.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git status --porcelain=v1 -- portal (worktree /c/dev/wk-firmbkts-25, 2026-10-11 ~12:24Z): ' M portal'; git -C portal status --short: empty (submodule clean); git ls-files -s portal: '160000 c96efe1714784162c4134450da33ce6fd6226b60 0 portal'; git -C portal rev-parse HEAD: 8ed372cb72659b96a5cfb4000a20b8ae315b9be7",
+      "r4_scope.py --root /c/dev/wk-firmbkts-25 --allow infra/aws/terraform/bd-pipeline/iam.tf --allow .../deliverables/0.9.0_WK_ADVI_FIRMBKTS~25/ --allow .../INVESTIGATION_v1.md --require infra/aws/terraform/bd-pipeline/iam.tf: 'CHANGED infra/aws/terraform/bd-pipeline/iam.tf', 'CHANGED portal <-- OUTSIDE', 'ROUND 4 SCOPE: FAIL 2 changed, 1 outside, 0 required missing', exit=1",
+      "the primary checkout's git status at session start also lists ' M portal' (box/dell1), so the submodule pointer drift is present on the estate's trees"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-FB-g-2 AC2: r4_scope.py with the three allowed paths reads ROUND 4 SCOPE: OK, i.e. the changed set is inside the write surface.",
+  "world_is": "The worktree's portal gitlink is out of step with its checkout, so the scope check counts a path the worker never wrote. Any commit that includes the portal path would move the recorded pointer; the worker commits only explicit paths and did not include it.",
+  "notes": "Not cleared by the worker: no checkout, reset or commit of portal. A ruling is needed on whether AC2 reads the gitlink as out-of-scope drift or the submodule pointer is re-synced by the integrator. Disarm: none (INERT)."
+}
+```
