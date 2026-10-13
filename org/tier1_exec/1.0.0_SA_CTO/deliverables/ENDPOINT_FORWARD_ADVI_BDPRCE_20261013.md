@@ -48,7 +48,7 @@ Author `1.0.0_SA_CTO~DELL1`, 2026-10-13 ~12:5xZ. Placement: DELL1, directive D8,
          SOURCE     O3; ADVI_FIRMBKTS-D1-S33
 
   FWD-6  A past date's figure reads that date's trades
-         DONE WHEN  EXERCISED -- the reading (instant or strict) is RULED at L4 from the producer's intent; then each served reader keys on that reading,
+         DONE WHEN  EXERCISED -- each served reader keys on trade_date, not the transactions file day (DEC-6),
                     with a moved trade as the arm (S34)
          ACCEPT     a past date's gain or price is built from the trades of that date
          SOURCE     O4; ADVI_FIRMBKTS-D1-S34
