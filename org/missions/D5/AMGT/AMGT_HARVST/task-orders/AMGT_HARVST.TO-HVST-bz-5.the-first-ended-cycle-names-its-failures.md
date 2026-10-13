@@ -41,8 +41,10 @@ most, by the existence of the file only.
 3. **Read the line, do not grade it past what it says.** `FAILED=<n> NAMED=<m>`: `m` equals `n` and `n` is at least 1 means every failure names its
    reason. The script reads the first ended record that HOLDS a failure; when none does it prints the newest ended record with `FAILED=0`, which is
    NOT the close. **`FAILED=0`: do NOT plant a failure, re-queue a pair or touch the state dir to make the read pass.** Keep the order OPEN and read
-   again at the next ended record (it may be a stopped one: `STOPPED=` says so). After TWO consecutive ended records with `FAILED=0`, file ONE row
-   naming both readings and stop: a planted pair is a separate order under its own pair.
+   again at the next ended record. **Count only COMPLETED cycles** (`STOPPED=none` in the line) toward "failure-free": a record that an operator stop
+   (or any other stop) ended is TRUNCATED, never counts as failure-free (it sampled a part of a cycle, and the stop was this programme's own act), and
+   a truncated record that DOES hold a failure still serves the read. After TWO consecutive COMPLETED records with `FAILED=0`, file ONE row naming
+   both readings and stop: a planted pair is a separate order under its own pair (CTO half, ADDENDUM 1 @469a566fa1).
 4. Anything odd: one row `AMGT_HARVST-Z-S<next free Z number>`, then keep working. Do not stop, start, or re-register the task.
 
 <paths>
