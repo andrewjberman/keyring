@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.51",
+ "prd_version": "v0.52",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -165,7 +165,7 @@ Source: brief II.3, eleven contracts, proposed canonical, versioned. BK owns ide
 | `PerformanceReport` | BCKEND B11 | FNTEND | B11 | source/provider/tenant lineage; requested and actual dates; currency/method/fee/accrual/annualization; summary/period returns, daily cumulative series, account detail; optional benchmark/value facts only when supported |
 | `AnalysisRequest` | BCKEND B5/B6/B7 (intake); B2 (`resolved`, v0.10) | FNTEND | B5, B6, B7, B2 | immutable tenant/request/revision + ingestion-gate/destination-policy revision; verified original-sender evidence; message/attachment refs; normalized holdings with source fields and units; variant + ordered comparisons; settings; findings/corrections; stage + release policy/state; **(v0.10, UI_CONTRACT.md) the browser REQUEST half: `request_id` (a stable idempotency key per click, preserved across transport retries; changed inputs = a new request/revision), `client_id`, `account_ids` (exact permitted ids; an account NUMBER is a display label, never a vendor identity), `snapshot_id` (the immutable normalized holdings snapshot, shown with its as-of; never a "latest" fetched mid-job), `variant` (`auto` resolves from the comparison count; explicit allowed, inconsistent rejected), `comparison_keys` (0-5 OPAQUE catalog keys in order; vendor ids never shown to the browser), `report_title` (optional; else derived from client/account label + comparison names), profile overrides only where policy allows; the `resolved` half (server-only); the RESULTS half (vendor portfolio id, effective settings, receipt, PDF hash/pages/bytes, timestamps, incidents, status) is never accepted from the browser as evidence of ownership** |
 | `AnalysisReport` | BCKEND B9/B10 | FNTEND | B9, B10 | request/attempt + vendor artifact hash; effective inputs/settings; typed sections with units/dates/source coordinates; disclosures; extraction validation; released revision + protected PDF reference **(contract v2, ADDENDUM v0.28)** a `provider` member, `YCHARTS` or `OPAL_ENGINE`; under `OPAL_ENGINE`: Opal artifact hash + run record reference in place of the vendor artifact hash; effective inputs/settings with the as-of date of each input and no vendor read-back; typed sections with units/dates and, per section, status, reason, method and coverage in place of source coordinates; computation validation in place of extraction validation |
-| `HoldingsSnapshot` | BCKEND B12 | FNTEND | B12 | scope + source-set revision; business/as-of clocks; unique custody totals; node hierarchy; namespaced model/security ids; observed/assigned/target basis; amount + denominator; parent/total percentages; provenance; coverage/remainders; drill refs |
+| `HoldingsSnapshot` | BCKEND B12 | FNTEND | B12 | scope + source-set revision; business/as-of clocks; unique custody totals; node hierarchy; namespaced model/security ids; ACCOUNT nodes: optional `account_id` (the directory's id; v0.52); observed/assigned/target basis; amount + denominator; parent/total percentages; provenance; coverage/remainders; drill refs |
 | `NarrativePacket` | BCKEND B13 | FNTEND, B14 | B13 | performance revision; event policy/version; dated peak/trough/recovery/movement events; cited historical evidence with cutoffs; validated prose; coverage; generation/model/prompt versions |
 | `ExportBundle` | BCKEND B14 | B14 render; FNTEND F8 (preview -- a preview never calls the vendor again) | B14 | immutable authorized report revisions + selected sections; a narrative packet for a client report, or the retained Analysis report revision for an Analysis export, or the custody report revision for a custody-report export (exactly one, never null; ADDENDUMS v0.24, v0.29); approved asset hashes; template/renderer/disclosure versions; render options; no live vendor request during render |
 | `ExportReceipt` | BCKEND B14 | FNTEND | B14 | export/bundle hash; artifact hash/location server-side; page/validation facts; **the non-empty list of account ids the export covers (ADDENDUM v0.30)**; created/released timestamps; job state; authorized download route; no vendor signed URL in FE |
@@ -1371,5 +1371,20 @@ Items 3 to 7 are independent of 1 and 2 and start at the same issuance.
    (analysis section 3a, @8e856de9a5).
 
 Items 1, 3 and 4 are independent of 2 and start at the same issuance.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.52 -- `HoldingsSnapshot` carries an optional `account_id` on ACCOUNT nodes (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Author:** `1.0.0_SA_CTO~DELL2`, 2026-10-13 ~02:3xZ, on `2.0.0_SA_COO~P2` msg 6750 (row W344-S4) and DSGN_IRPTV1 round-32 analysis
+  section 2a (@6e207a4225). IB-pr-493 (@8242617d82) added the member to the builder, the three schema copies, the fixture and
+  `raw_keys.json`; the schema says it is GENERATED from this table, so a regeneration would drop a member the table does not name.
+- **The CONTRACTS row** for `HoldingsSnapshot` (above) now names it: ACCOUNT nodes carry an OPTIONAL `account_id`, the directory's
+  opaque account id, absent when no directory has landed or no candidate key matches. Required-ness of every member is unchanged.
+- **v1 stays within its own rule:** the frozen v1 copy (`docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json`) admits an
+  optional additive member and forbids a required-ness change (`PATH_MANIFEST.json` IB-rt-7 entry, the same rule IB-rt-7 used); the
+  diff is one optional property, `required` byte-identical. This differs from v0.50's PerformanceReport error, which carried no such rule.
+- **Served:** an added member, so it ships under the producer cell's never-widen pair (last-four ACCOUNT entry, `account_id`, and the
+  49F node/account mismatch count), as ruled.
 
 -- 1.0.0_SA_CTO~DELL2
