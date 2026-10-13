@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~89</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-12</issued_date>
-<status>in_progress</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -98,8 +98,8 @@ negatives=<n of n>`.
 <criterion id="SC24-e99-AC1" cell_refs="SC-e-99"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R24_CHECKS/r24_legg_read.py selftest</invocation><expect>R24-SELFTEST ok=True</expect></criterion>
 `SC24-e99-AC1` -- every positive fixture grades ok and every negative fixture fails on exactly its own criterion.
 
-<criterion id="SC24-e99-AC2" cell_refs="SC-e-99"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R24_CHECKS/r24_legg_read.py e91</invocation><expect>E91-LEGG state=NO-CHANGE-SINCE-BASELINE</expect></criterion>
-`SC24-e99-AC2` -- run against the LIVE served objects as they are today (no fire has run the shipped C_06), the e91 instrument reads the baseline versions and prints the no-change state, exit 3, writing nothing.
+<criterion id="SC24-e99-AC2" cell_refs="SC-e-99"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R24_CHECKS/r24_legg_read.py e91 --fire-start 2026-10-12T23:00:00Z --since 2026-10-12T23:00:00Z</invocation><expect>E91-LEGG state=CHANGED ok=True d10_09_fall=653857.47 d10_08_fall=629530.84</expect></criterion>
+`SC24-e99-AC2` -- AMENDMENT 2 item 6 (the live control; it replaces the face's bare-e91 no-change row): the e91 instrument with the first fire's start on the canonical destination prints the CHANGED line with both named falls, and `keys_modified_since=3184` (1,592 canonical + 1,592 legacy).
 
 <criterion id="SC24-e99-AC3" cell_refs="SC-e-99"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R24_CHECKS/r24_legg_read.py e97</invocation><expect>E97-ACCEPT shipped=False ok=False</expect></criterion>
 `SC24-e99-AC3` -- run against the live served objects as they are today (the ship has not happened, no `restated_through`), the e97 instrument prints shipped=False and ok=False, exit 3, writing nothing.
@@ -202,7 +202,7 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 
 <proof_of_spec>
 Criterion ids: SC24-e99-AC1, SC24-e99-AC2, SC24-e99-AC3. Write the instance at
-`org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~88/MDPF_SECCLASS.TO-SC-e99.legg-read-instruments.proof_of_spec.json`.
+`org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~89/MDPF_SECCLASS.TO-SC-e99.legg-read-instruments.proof_of_spec.json` (the ~89 folder is this session's deliverables grant; the prior instance under ~88 is left as it was, row MDPF_SECCLASS-D1-W89-S7).
 Validate it BEFORE the flip with `python .tools/proof-of-spec-check.py <instance> SC24-e99-AC1,SC24-e99-AC2,SC24-e99-AC3`.
 </proof_of_spec>
 
