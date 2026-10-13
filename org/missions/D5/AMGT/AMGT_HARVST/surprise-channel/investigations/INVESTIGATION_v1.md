@@ -9135,5 +9135,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "notes": "Not blocking: the marker is the sanctioned opt-out and changes no network or registration behaviour; the test still registers nothing, because -Plan returns before Register-ScheduledTask.",
       "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W139-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~139",
+      "surfaced_at": "2026-10-13T21:51:02Z",
+      "one_line": "The proof-of-spec checker cannot resolve the governing task order for AMGT_HARVST.TO-HVST-bz-9 from the worker face: the face names the to_id but no TO path, and no tracked task order declares that id, so the instance is INVALID (rc=1) on the alignment limb although its six artifacts resolve at their pins and its two criteria pass.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO-HVST-bz-9 worker face, proof of spec: the instance names to_id AMGT_HARVST.TO-HVST-bz-9.a-refused-pair-carries-its-evidence-and-the-driver-refreshes-once; one acceptance row per criterion; .tools/proof-of-spec-check.py decides rc. The face gives no decomp_ref.to_ref path for the governing order.",
+      "world_is": "Measured at worktree C:/dev/wk-harvst-139, HEAD dd5fc764d8 plus the channel row commit 04e164af17. python .tools/proof-of-spec-check.py on the instance with AC1,AC2: rc=1, violations=1, 'alignment-frame: governing TO UNRESOLVED -- decomp_ref.to_ref ... does not resolve to a file'; with to_ref empty the checker reads 'no TO declares id=AMGT_HARVST.TO-HVST-bz-9.a-refused-pair-carries-its-evidence-and-the-driver-refreshes-once (scanned 6349 TO file(s))'. The seat did not read any task order or other org file to find the path (the order-file policy), so whether the TO is absent or declares its id differently is UNKNOWN here; the instance's own schema is satisfied, and the only violation is this resolution.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "python .tools/proof-of-spec-check.py <instance> AC1,AC2 at dd5fc764d8 -- rc=1, violations=1, the governing-TO UNRESOLVED line (the checker output is in the worker report)",
+          ".tools/proof-of-spec-check.py@732412e179:_resolve_governing_to -- the to_ref path first, else a tracked file declaring id=<to_id>",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~139/ (the instance, committed with this row's pin)"
+        ]
+      },
+      "notes": "Not closed here: the order stays open on its proof (rc=1) and the seat does not flip its status. The issuer should name the governing TO path in the face, or confirm the to_id; the instance's decomp_ref.to_ref is a placeholder that says so, and it should be replaced by the real path once known.",
+      "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
