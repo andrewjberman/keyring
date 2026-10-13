@@ -1,0 +1,21 @@
+{
+  "allowance_gap": null,
+  "basis": "bbg_quote.py --quote on the request file at the dell1 base, no Bloomberg call: 50 securities x 1 reference field = 50 cells under the reference channel's held daily allowance and production reserve. First slice of AMGT_RESAPP-S14-CRNCY-SCANNER-US, filed by 2.0.0_SA_COO~R1 (msg 4877); the full request stays filed and undrawn. Frozen before it runs (PRD C-QUOTE); it has not drawn.",
+  "cells": {
+    "bloomberg_reference": 50
+  },
+  "cells_remaining": 50,
+  "channel": "reference",
+  "claim": "held",
+  "claims": {
+    "ceiling": "held",
+    "reserve": "held"
+  },
+  "finish_date": "2026-10-14",
+  "finish_date_claim": "held",
+  "frozen_by": "2.0.0_SA_COO~Q1",
+  "quoted_at": "2026-10-13T14:08:19Z",
+  "quoted_for_today": "2026-10-13",
+  "request_id": "AMGT_RESAPP-S14-CRNCY-SCANNER-US-SLICE1",
+  "runs_at": "site Z, the Terminal, by the queue's producer"
+}

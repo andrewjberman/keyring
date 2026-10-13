@@ -9,5 +9,5 @@
  "name": "A source that recovers, an ingest that re-runs: the Cottonwood Rebalancer bronze heals itself the same day a lapsed vendor login fails the morning pull",
  "generated_from": "org/missions/D8/MDPF/MDPF_HEALGAP/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-11T03:41:52Z"
+ "generated_at": "2026-10-13T14:15:26Z"
 }

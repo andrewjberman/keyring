@@ -1427,6 +1427,26 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "requests/IRPT_BCKEND-AS-TRADED-CLOSES-878.json at the commit that re-spells the three symbols; ~/.opal/demque/ledger.jsonl read: 0 rows for the id"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-S15",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~Q1",
+    "surfaced_at": "2026-10-13T14:11:32Z",
+    "one_line": "rank.py --probe reads PRICE_NEED_FOR_SECHIST.csv, which the CTO containment ruling moved out of the repo, so the probe cannot run; the daily draw does not depend on it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "PRD C-IDENTITY / FWD-9: the need file feeds the ranking; rank.py NEED_FILE and lock.py NEED_CSV name org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~27/PRICE_NEED_FOR_SECHIST.csv.",
+    "world_is": "2026-10-13T14:11:32Z: the file is absent from the tree; ADVI_COTBKF~27's MOVED_ACCOUNT_DATA.md lists it (sha256 abbae517..., 256,054 bytes, byte-copied outside the repo, round 51 CB-ay-1, ruling @0e8209c33c) and only PRICE_NEED_FOR_SECHIST.json (a census summary) remains. In demque/, only rank.need_rows (the --probe path) reads it; lock.NEED_CSV is a constant with no reader. The scheduled draw, the extension and the lock do not read it. DQ-t-43 derives per-security windows from the silver transactions instead.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Glob of org/missions/D8/ADVI/ADVI_COTBKF/deliverables/**/PRICE_NEED_FOR_SECHIST*: only the .json at ~27",
+        "grep of demque/*.py for NEED_FILE / NEED_CSV / need_rows: rank.py:42,155,171 and lock.py:32 only"
+      ]
+    }
   }
 ]
 ```

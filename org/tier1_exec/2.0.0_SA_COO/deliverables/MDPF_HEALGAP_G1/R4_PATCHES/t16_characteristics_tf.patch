@@ -1,0 +1,89 @@
+diff --git a/infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf b/infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf
+index c8dc017cd1..b39b6f265d 100644
+--- a/infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf
++++ b/infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf
+@@ -162,6 +162,23 @@ resource "aws_iam_role_policy" "cot_satellites_characteristics_producer_s3" {
+           }
+         }
+       },
++      {
++        # HG-t-16 (MDPF_HEALGAP round 4): the re-attempt fire LISTS this one key to read its LastModified and skip a day
++        # that is already written. A listing is the only read that tells an absent key (empty) from a grant fault (403): an
++        # s3:prefix condition is populated on a LIST request only, so a HEAD or GET on this key would read 403 either way.
++        # StringEquals, not StringLike: exactly the output key, nothing under platinum/satellites/ beside it. NO GetObject
++        # is granted on the output (the producer never reads back what it wrote, CTO PRD ruling 13c); a listing returns
++        # the key and its LastModified, never its bytes.
++        Sid       = "ListSatellitesCharacteristicsKey"
++        Effect    = "Allow"
++        Action    = ["s3:ListBucket"]
++        Resource  = ["arn:aws:s3:::${local.cot_bucket}"]
++        Condition = {
++          StringEquals = {
++            "s3:prefix" = ["platinum/satellites/characteristics.json"]
++          }
++        }
++      },
+       {
+         # The two objects the return rule READS, by leaf name. The date and the ticker are the
+         # only wildcards: history_topup.parquet is the daily series and history.csv is the
+@@ -382,6 +399,60 @@ resource "aws_lambda_permission" "events_cot_satellites_characteristics_producer
+   source_arn    = aws_cloudwatch_event_rule.cot_satellites_characteristics_producer_daily.arn
+ }
+ 
++# -----------------------------------------------------------------------------
++# THE RE-ATTEMPT (HG-t-16, MDPF_HEALGAP round 4, CTO round-3 analysis section 2 and 3 item 1).
++#
++# The scheduled fire above stays on its own clock and keeps its loud failure: on a day the Bloomberg
++# T-1 partition has not landed by 13:25Z it raises NoSuchKey and the served object is the previous
++# day's, honestly dated by its own as_of. This rule is FWD-1's own pattern for that case: an hourly
++# re-attempt that serves the day when the partition lands, and does nothing on a complete day.
++#
++# THE HANDLER DECIDES, on the target input {"require_partition": true} only (the scheduled event
++# carries no such key and runs as it always has):
++#   SKIP-COMPLETE      characteristics.json was written today (UTC) -> nothing runs.
++#   PARTITION-ABSENT   bbg/<T-1>/characteristics.parquet or run_manifest.json is not listed -> one log
++#                      line, nothing runs, no raise (a raise would burn two async retries an hour).
++#   otherwise          the producer runs exactly as the scheduled fire runs it.
++# AccessDenied on either listing raises: a grant fault is never read as "absent".
++#
++# WINDOW cron(25 14-23 * * ? *): ten fires, 14:25Z-23:25Z, each 600 s past the registry producer's
++# stamp-gated 13:15Z fire's declared worst case (see the schedule derivation above) and after the
++# scheduled fire. A partition that lands after 23:25Z is served by the next day's scheduled fire,
++# which resolves its own T-1; the object stays honestly dated meanwhile.
++#
++# NAME from the opal_name builder (rule 30): etfs-cot-satellites-characteristics-producer-reattempt-hourly.
++# -----------------------------------------------------------------------------
++module "reattempt_rule_name" {
++  source    = "../modules/opal_name"
++  system    = "etfs"
++  scope     = "cottonwood"
++  function  = "satellites-characteristics-producer"
++  qualifier = "reattempt"
++  kind      = "hourly"
++}
++
++resource "aws_cloudwatch_event_rule" "cot_satellites_characteristics_producer_reattempt" {
++  name                = module.reattempt_rule_name.name
++  description         = "HG-t-16: hourly re-attempt 14:25Z-23:25Z; serves the day only when the T-1 Bloomberg partition has landed and characteristics.json was not already written today."
++  schedule_expression = "cron(25 14-23 * * ? *)"
++  state               = "ENABLED"
++}
++
++resource "aws_cloudwatch_event_target" "cot_satellites_characteristics_producer_reattempt" {
++  rule      = aws_cloudwatch_event_rule.cot_satellites_characteristics_producer_reattempt.name
++  target_id = "CotSatellitesCharacteristicsProducerReattempt"
++  arn       = module.cot_satellites_characteristics_producer.function_arn
++  input     = jsonencode({ require_partition = true })
++}
++
++resource "aws_lambda_permission" "events_cot_satellites_characteristics_producer_reattempt" {
++  statement_id  = "EventBridgeCotSatellitesCharacteristicsProducerReattempt"
++  action        = "lambda:InvokeFunction"
++  function_name = module.cot_satellites_characteristics_producer.function_name
++  principal     = "events.amazonaws.com"
++  source_arn    = aws_cloudwatch_event_rule.cot_satellites_characteristics_producer_reattempt.arn
++}
++
+ # NO ALARM, NO SNS TOPIC, NO SNS SUBSCRIPTION, NO SES SEND, NO FRESHNESS CHECKER, NO MONITOR
+ # -- standing moratorium (Andrew-direct 2026-07-28), restated in this cell's task order. The
+ # CloudWatch log and the artifact's own as_of ARE the record, and the consumer computes its
