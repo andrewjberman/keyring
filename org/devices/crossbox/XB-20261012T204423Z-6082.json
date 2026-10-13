@@ -10,7 +10,7 @@
  "subject": "AMGT_HARVST HVST-bz-1: re-pin runner to 1c69fa35a3 (supersedes 5f49); lock both pins",
  "body_path": "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-bz-1.the-runner-repinned-to-the-bx3-merge.md",
  "opened_at": "2026-10-12T20:44:23Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-12T20:45:47Z",
   "bus_message_id": "7cb5701f-915a-4952-b841-9560f675d7f7"
@@ -23,7 +23,7 @@
  "closed": {
   "from_at": "2026-10-13T06:46:50Z",
   "from_by": "2.0.0_SA_COO~W1",
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-13T09:28:25Z",
+  "to_by": "0.7.0_AE_CloudOps~ZW"
  }
 }
