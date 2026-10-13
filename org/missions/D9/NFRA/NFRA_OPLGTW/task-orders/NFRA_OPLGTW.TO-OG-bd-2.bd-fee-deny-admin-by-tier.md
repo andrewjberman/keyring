@@ -96,7 +96,7 @@ ONE `<status>` tag to `complete` only if both PASS, and report once.
     the path separator.
   - bd2.AC2 base FAIL as expected: the ask is absent.
 
-<status>pending</status>
+<status>complete</status>
 <round>36</round>
 <slot>~60</slot>
 <fabric>site-z</fabric>
