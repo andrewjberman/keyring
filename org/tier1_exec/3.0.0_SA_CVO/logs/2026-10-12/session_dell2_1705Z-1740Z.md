@@ -255,3 +255,10 @@ Quiet stretch 08:37Z to 13:04Z: watcher re-armed at each expiry; delivery ledger
 | IRPT_DASHBD round 92 | ADJUDICATION_v56 + REMEDIATION_v39: FWD-8 NOT REALIZED for 3 accounts (10 UNEXPLAINED days), met for 83. Spot-check: per-account sums 23 = 13 + 10, test_held_days 13, rule d8a3f1fa58 committed before the record. v38 D2-W137-S1 closed; D2-W138-S1 to CTO~DELL2 for the endpoint card. Slug sent 16:47:07Z | 063bf7a3df |
 
 Correction: the round-92 rows carry surfaced_at 16:48:00Z; the clock read 16:45:56Z before the write, so the stamp is about 2 minutes early of the true time. The rows are immutable, so the correction is recorded here.
+
+## Addendum, 2026-10-13 17:54Z to 18:30Z (msgs 7120, 7146)
+
+| item | result | commit |
+|---|---|---|
+| Law edit relay, CLAUDE.md rule 33 (msg 7120) | Acked; paths posted from now on carry a file:/// URI, plus the repo-relative form when bound for another box | -- |
+| IRPT_BCKEND round 182 (~P) | ADJUDICATION_v83 (C-S366), no remediation file: irpt-directory-search live at the signed digest (my read, 18:23Z); Andrew's lifting of the hold read in open calls cfd4/b6fa (ruled_by andrew); 5 dismissed incl. v56 D2-S139; D2-S145 to -S147 stay with the issuer. Not shown: a client login on PROD. Slug sent 18:30:28Z | 8a628274ca |
