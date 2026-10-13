@@ -107,9 +107,17 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Merge: at the chain end with `safe-merge.sh`, under a never-widen pair (COO half at the drain, and the CTO's producer half), into `lib/opal_data_harvest`.
 - Slot ~139, worktree `C:/dev/wk-harvst-139`, branch `wk-AMGT_HARVST-139-r85`.
 
+**COMPLETE 2026-10-13 ~22:3xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~139` (haiku, high), branch `wk-AMGT_HARVST-139-r85`, build `dd5fc764d8`, head `5309953230`; merged `44aadb7f1d` through `safe-merge.sh` under the pair COO `a3eba883d4` + CTO producer half `9eef371300`. Review by this seat: the whole diff of the five lib files read against the order.
+- **AC1 PASS:** `24 passed` (worker; re-run by this seat in the worker's worktree `24 passed in 2.86s` and on the merged tree `24 passed in 2.75s`). **AC2 PASS:** `76 passed` (worker; this seat on the merged tree `76 passed in 28.29s`; base `76 passed`). Proof instance VALID rc 0 with `--governing-order` after the issuer set its one field
+  `decomp_ref.to_ref` (the worker's face could not name the order path; row `AMGT_HARVST-D1-W139-S3`), 2 rows, invocation-alignment 2/2, 6 artifacts resolved at their pins.
+- **Condition C-b:** the full `lib/opal_data_harvest` suite on a clean checkout of the merge: `4 failed, 823 passed, 3 skipped` (the same four as the base: `test_ah1_fixture_solve[bbg]` and three in `test_aw1_origin_load_wait`), against `4 failed, 799 passed` before. In the SHARED tree it reads 5 failed: the fifth, `test_bn1_names_made_whole`, is the CRLF-on-disk state of one tracked file (row `AMGT_HARVST-D1-S13`), not this change.
+- **What this does NOT prove:** that the refresh works against the real vendor (no sign-in was made; the tests inject the refresher), and that a refreshed session survives a cycle. Both are `HVST-bz-10` (the first refresh under the windowless runner) and `HVST-bz-11` (the close read). With the flag OFF, the default and the only state this merge creates, the run only records.
+- Rows from the worker: `D1-W139-S1` (the run record stores no `no_sign_in` key; the refusal rides a conditional key) and `D1-W139-S2` (the installer test needs the `allow_real_session` marker), both OBSERVATION / INERT, no action; `D1-W139-S3` answered by the field set above. Worktree and branch wiped.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>85</round>
 <slot>dell1</slot>
 <fabric>dell1</fabric>
