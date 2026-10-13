@@ -64,7 +64,7 @@ from now on; no history rewrite (Andrew's word; I recommend against it)." The is
 those two files (5 occurrences) and, as S3 key path components, in older tables (`mapping*.json`, `F7_DELTA_ROLLBACK.tsv`, round close pairs): those are the
 estate's own key names, not served text, and are NOT this order's scope. Class WORLD only by the privacy of the content; no served change.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <workstream>SAMPLESCRUB</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-j-14</to_id>
