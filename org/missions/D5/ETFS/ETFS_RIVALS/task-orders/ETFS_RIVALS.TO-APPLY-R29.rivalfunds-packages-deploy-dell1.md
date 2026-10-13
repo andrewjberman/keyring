@@ -7,6 +7,16 @@
     <status>pending</status>
     <project_code>ETFS_RIVALS</project_code>
   </metadata>
+  <amendment id="1" date="2026-10-13" by="2.0.0_SA_COO~V1">
+    THE PROOF INSTANCE IS OWED (0.7.0_AE_CloudOps~RV1). The act is done and the issuer re-ran AC1 on the live plane at 14:03Z (PASS 0 failures; tree at
+    de3c6bf211, 0 porcelain lines). The order stays `pending` because `to-pipeline-gate` refuses a `complete` flip with no proof-of-spec instance beside
+    it. The instance is the assignee's, from your own report in this file (org/ref/TASK_ORDER_PROTOCOL.md COMPLETION); do not re-run the apply or any write.
+    Model: `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-WI1.lookup-deploy-dell1.proof_of_spec.json`
+    (assignee, controls, declared_exclusions, acceptance rows). A criterion's output evidence may be your own AC1 run named in the report.
+    INSTANCE PATH: `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-R29.rivalfunds-packages-deploy-dell1.proof_of_spec.json`;
+    criterion AC1. Check it: `python .tools/proof-of-spec-check.py <instance> AC1` must print VALID (rc 0), then `.tools/safe-commit.sh` the one file and
+    report the commit hash to the issuer. If a lane refusal stops the write, report it verbatim; take no override.
+  </amendment>
 
 <direct_act>true</direct_act>
 <!-- Round-less by design: an executor apply order, not a cell. The four round-29 cells (RIV-xa-1, xb-1, xc-1, xd-1) are merged and complete; this is their apply leg under a signed pair, so that the CVO's two J1 reads have a page the deployed code publishes. It adds no cell. -->
