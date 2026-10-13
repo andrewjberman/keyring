@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-13T19:09:05Z",
+ "written_at": "2026-10-13T20:07:19Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1817,6 +1817,32 @@
     "roots": [],
     "evidence": {},
     "measured_at": "2026-10-13T02:15:38Z"
+   },
+   "closed": null
+  },
+  {
+   "id": "sitez-20261013T200719Z-763e",
+   "project": "NONE",
+   "subject": "OPAL_BBGTML: sign the Bloomberg Terminal in at site Z before 07:00 ET tomorrow (10-14); it is signed out since the 14:57 ET reboot",
+   "asked_by": "1.0.0_SA_CTO~Z",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_OPAL_BBGTML_Z6_REPAIR_DISPOSITIONS_20261013_Z.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-13T20:07:19Z",
+   "kind": "act",
+   "context": "The 14:57 ET reboot left no wintrv.exe running. bbcomm holds port 8194, so the 07:00 ET unattended fallback will refuse to sign in and the daily pull exits 50 again (AMGT induction at 09:00 too). Gates the Bloomberg agent (XB-4d72 Z6).",
+   "rec": "",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-13T20:07:19Z"
    },
    "closed": null
   }
