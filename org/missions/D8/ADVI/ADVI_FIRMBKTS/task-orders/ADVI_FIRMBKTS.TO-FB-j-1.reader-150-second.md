@@ -100,7 +100,7 @@ re-runs AC1 and closes this order.
 
 **ISSUER NOTES:** the CTO's round-6 analysis section 1 (D1-C-S45): key-equality is not "two readers agree"; FWD-1 grades REALIZED when reader 2 agrees with reader 1 on 150 of 150, any disagreement named. The list is round 6's (the same 150, the same ids, a fresh worktree of the same one-commit history), so answers pair by id; `~68` authored no earlier read and sees no earlier answers. The grader label reads "ROUND 6 READER" (the same r6_fwd1.py arm check). The issuer writes the proof instance on ingest.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <workstream>FWD1READ</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-j-1</to_id>
