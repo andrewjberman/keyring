@@ -51,16 +51,23 @@ FT news (Bright Data pull, summary, SES email) is turned off by DISABLING its sc
 Do NOT touch the Lambda, IAM, the bucket `opal-data-astn`, the SNS topic, SES, the EC2 instance or any other resource. Do NOT run an untargeted `terraform apply`.
 Write every file in `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round84/`. Anything odd: one row `AMGT_HARVST-D1-S<next free D1 number>`, then keep working.
 
-## 2a. AMENDMENT 1 (issuer, 2026-10-13 ~20:5xZ, after your branch-P STOP of ~20:41Z, row D1-S14): ONE READ-ONLY PROBE, NO APPLY
+## 2a. AMENDMENT 1 (issuer, 2026-10-13 ~20:5xZ, after your branch-P STOP of ~20:41Z, row D1-S14; the pair is re-signed, see the halves' ADDENDUM 1): PROBE FIRST, THEN APPLY ONE OF TWO PLANS
 
-Your STOP was right: a targeted plan includes the schedule's dependencies, and their pending diffs (the Lambda code from commit 1eaea051c4 and the instance `user_data`) are not this act. Do NOT apply the 0/3/0 plan, and do NOT land the other two diffs.
-The signed halves cover only a plan that reads 0 to add / 1 to change / 0 to destroy; this amendment changes nothing in them and starts no apply. Do exactly this, and nothing else, in the same worktree:
-1. `terraform version`; save as `bz8_tfversion.out`.
-2. Read whether `terraform plan -help` lists `-exclude`; save the line (or its absence) in `bz8_tfversion.out`.
-3. If `-exclude` is accepted: `terraform -chdir=infra/aws/terraform/astn-pipeline plan -target=aws_scheduler_schedule.astn_run -exclude=aws_lambda_function.orchestrator -exclude=aws_instance.astn` (use the resource addresses exactly as the 0/3/0 plan names them), WITHOUT `-out`; save as `bz8_plan_excl.out`.
-   Report the `Plan:` line, whether any destroy or replace appears, and whether the only change is `state: "ENABLED" -> "DISABLED"` on `aws_scheduler_schedule.astn_run`. If `-exclude` is not accepted, say so and stop.
-4. Report to the issuer with the file paths. NO `-out`, NO apply, NO `safe-apply`, NO edit of the live schedule, NO other change. The ledger `astn-3am-off-20261013` stays OPEN.
-Any apply waits on a re-signed pair that names the method; the issuer asks the CTO.
+Your STOP was right: a targeted plan includes the schedule's dependencies, and their pending diffs (the Lambda build from commit 1eaea051c4 and the instance `user_data`) are not this act. Both halves are now re-signed
+(CTO @0e1ec395b4, COO addendum at the commit named in the message that sends this) for TWO plans only. Do exactly this, in the same worktree, in this order:
+1. `terraform version`; save as `bz8_tfversion.out`. Read whether `terraform plan -help` lists `-exclude`; save the line (or its absence) in the same file.
+2. **PREFERRED (read it first):** if `-exclude` is accepted, run `terraform -chdir=infra/aws/terraform/astn-pipeline plan -target=aws_scheduler_schedule.astn_run -exclude=aws_lambda_function.orchestrator -exclude=aws_instance.astn -out=bz8_excl.tfplan`
+   (resource addresses exactly as the 0/3/0 plan names them); save as `bz8_plan_excl.out`. It is APPLICABLE only if it reads exactly `Plan: 0 to add, 1 to change, 0 to destroy` and the one change is
+   `state: "ENABLED" -> "DISABLED"` on `aws_scheduler_schedule.astn_run`.
+3. **FALLBACK, only if `-exclude` is not accepted or the step-2 plan reads anything else:** the targeted plan with `-out=bz8.tfplan` (your existing `bz8_plan.out` shape). It is APPLICABLE only if it reads exactly
+   `0 to add, 3 to change, 0 to destroy` and the three changes are exactly: `aws_scheduler_schedule.astn_run` `state` ENABLED to DISABLED; `aws_lambda_function.orchestrator` `source_code_hash` only; `aws_instance.astn`
+   `user_data` hash only. Any other attribute, a replace or a destroy is a STOP with no apply.
+4. **Before the apply, re-read the instance:** `.tools/aws ec2 describe-instances --instance-ids i-059405dfefcb4b44a --query "Reservations[].Instances[].State.Name" --output text`. If it reads anything but `stopped`
+   (the provider stops and restarts a running instance to change `user_data`), do NOT apply the fallback; take the preferred plan only, or STOP with a row.
+5. Apply the ONE applicable saved plan with `.tools/safe-apply.sh -chdir=infra/aws/terraform/astn-pipeline apply <that plan file>`; save `bz8_apply.out`. If the apply stops partway, finish it or roll the landed change back
+   (each rollback is one targeted plan and a `safe-apply`, per the CTO's addendum) before the 07:00Z fire; do not leave it half-landed, and keep the ledger open until then.
+6. Read AC1-AC3 below, save them, close the ledger legs and `python .tools/deploy_ledger.py close --slug astn-3am-off-20261013`, and report to the issuer with the file paths.
+NO untargeted apply, NO `aws scheduler update-schedule` or other CLI edit of a managed resource, NO apply of a plan that is not one of the two above.
 
 <paths>
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round84/
