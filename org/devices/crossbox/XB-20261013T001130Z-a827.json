@@ -10,7 +10,7 @@
  "subject": "IRPT_ANLREQ TO-READS-Y9: read-only stored-input count re-run on the r18.1 reader; counts and dates only",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps~ANL/task_orders/IRPT_ANLREQ.TO-READS-Y9.stored-input-count-r18-laptop.md",
  "opened_at": "2026-10-13T00:11:30Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-13T00:12:10Z",
   "bus_message_id": "f3625505-a9dc-4bce-926f-04a93e1bf79a"
@@ -21,9 +21,9 @@
   "bus_message_id": "ae6e26f4-f9ae-4d5c-92d7-c8ad3d211213"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "from_at": "2026-10-13T00:33:35Z",
+  "from_by": "2.0.0_SA_COO~Y2",
+  "to_at": "2026-10-13T00:32:09Z",
+  "to_by": "0.7.0_AE_CloudOps~ANL"
  }
 }
