@@ -31657,3 +31657,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISARMED: W361-S3 (4 live members equal to no historical blob): they equal historical blobs once CRLF is read as LF, 0 lines apart; a packaging artifact (CRLF-stored copies), not a hand edit and not another tree; the cause of the CRLF is not measured. RULED: the packages are built from the LIVE bytes plus only 135fc3509e, 7ace854890 and aa5778d962 (49financial 3 members, inflection 2, cottonwood none and not in the apply); W362-S1 (my check demanded a replaced member for every firm: amended f33aa02571), S2 (the apply restamps the S3 metadata: in the packet and the COO half), S3 (the live schema copy is CRLF; the candidate keeps CRLF). RAISED: W363-S2: two PutBucketPolicy writes by the IAM user cloudops-dell1-agent-user on opal-data-49financial (2026-10-11T15:27:29Z and 16:07:36Z), after the package upload; the policy bodies were not read; the apply principal needs PutObject on that bucket, so the apply order must read the current policy before its first write; asked of the CTO. STILL ARMED: W361-S1 (a careless re-cut would ship unrelated changes: fenced by the packet), W345-S3 (disarms on the first leftover-count read after the apply), W348-S2."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S133",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-13T14:26:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "39 tracked files of this seat's own deliverables folder (committed 13 hours ago) are missing from the shared working tree, uncommitted; the folder did not exist on disk when TO-IB-pr-512 began, so a path-wide commit read as a 40-file mass deletion and was refused.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree -r --name-only HEAD on org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2: 39 files; git status --short on the same folder: 39 ' D' entries and 2 '??' (this order's two new files)",
+      "last commits touching the folder: b86e6e8f9d and 84f7bce350, both authored by this serial, about 13 hours before the read (TO-IB-pr-490)",
+      "ls of the folder before this seat created it with mkdir -p: No such file or directory"
+    ]
+  },
+  "spec_asserts": "Row ids are for anything odd; the commit carries the order's files only and deletes nothing.",
+  "world_is": "The cause is not known to this seat: not a deletion this seat made in this session. Left as found. The closeout commit of TO-IB-pr-512 names its two files by path and does not carry the 39 deletions, because the mass-deletion gate refused them as unattributed and they are not this order's act. If the removal was intended, whoever intended it commits it with attribution; if not, git checkout of the folder restores all 39 from HEAD."
+}
+```
