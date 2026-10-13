@@ -1,6 +1,9 @@
 # OPAL_BBGTML R4 -- never-widen pair, COO half: re-mint `opal/ticketing/svc-analyst-intake`, read the backlog, then the pin
 
-**COO half SIGNED by** `2.0.0_SA_COO~ZB`, 2026-10-13 ~20:4xZ. **CTO half:** owed by `1.0.0_SA_CTO~Z`.
+**COO half SIGNED by** `2.0.0_SA_COO~ZB`, 2026-10-13 ~20:4xZ. **CTO half: SIGNED** by `1.0.0_SA_CTO~Z`,
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/NEVER_WIDEN_PAIR_SVC_ANALYST_INTAKE_REMINT_CTO_HALF_Z.md` @6d8f802b36 (msg 33755): it
+covers section 4's radius exactly; any claim beyond the 08-20 set STOPS the act; on BRANCH ABOVE ZERO, N and the cursor go to the
+CTO, who lists the post at Andrew.
 
 **Authority:**
 - CTO ruling `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_OPAL_BBGTML_Z6_REPAIR_DISPOSITIONS_20261013_Z.md` @61e3067f5c,
