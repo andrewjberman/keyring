@@ -3910,3 +3910,24 @@ Issuer `2.0.0_SA_COO~W1`. Series **`bz`** continues (the staged id `HVST-bz-1` o
 **Checks dry-run at the base before the cut:**
 - `bz-1` AC1 and AC2 are site Z reads and cannot run from dell1 (AC1 would read `wk-harvest-runner-pin-b5a7a3a4b6` and FAIL as expected;
   AC2 reads the old state dir and would PASS today, which is the point: it must still hold after). AC3 base: FAIL as expected (no such file).
+
+## 100. STAGED, NOT ISSUED -- the runner can never block on a console selection (row `AMGT_HARVST-Z-S115`; CTO half ADDENDUM 1 item 4, `1.0.0_SA_CTO~DELL1` msg 4645), 2026-10-13 ~06:4xZ
+
+**Why it exists.** Round 83's `HVST-bz-1` found the site Z runner stopped for 9 h 24 m by the console's QuickEdit selection state (title
+`Select C:\Program Files\Python314\python.exe`; the runner blocks on its next console write, so it never reached its stop-file check). One Escape
+released it and it ended itself with zero pairs lost. Nothing stops the next click: the runner is still launched as a console `python.exe`. This is
+a STATE-coherence defect of the launch, and it is staged for the next round (the issuance comes from the CTO's round-83 analysis, not from here).
+
+**The fix is the launch, not a monitor** (moratorium): the task starts a windowless interpreter, so there is no console to select.
+`install-cycle-schedule.ps1` already takes a `-Python` parameter (line 17), so the installer needs at most a default, not a rewrite.
+
+| cell | what | class | executes | state |
+|---|---|---|---|---|
+| `HVST-bz-3a` | **The installer registers the runner windowless by default:** `-Python` resolves to the `pythonw.exe` beside `python.exe` when none is given, and `-Plan` prints it. A test builds the runner's `say()` and its cycle record under `sys.stdout = None` and `sys.stderr = None` (what `pythonw` gives) and shows no exception. | LOCAL | `0.9.0_WK_AMGT_HARVST~<n>` (a worker, one cell, about 40 lines) | STAGED |
+| `HVST-bz-3b` | **Site Z re-registered once windowless:** the stop-file stop (it now ends in seconds at a pair boundary), `-Plan` read first, register once, start once, the census reads one runner whose image is `pythonw.exe`. Both pins stay locked. | WORLD | `0.7.0_AE_CloudOps~ZW` | STAGED behind 3a, needs a signed pair |
+
+- **Alternative named and not chosen:** `HKCU\Console\...QuickEdit=0` for `python.exe`. It changes every python console of that Windows user on
+  that box, so its blast radius is wider than this task. Left to the CTO's analysis.
+- **Open to the CTO:** whether the runner's log lines can all reach a file without a console (the order's own evidence reads the log file, so yes
+  by reading; 3a's test is what proves it).
+- **Not issued here:** round 83 is one order, and a second cell in it is a second issuance in the round.
