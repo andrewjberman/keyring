@@ -3986,3 +3986,26 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S20",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T02:36:14Z",
+  "one_line": "The shared head 731a72ecb2 carries a different map row for irpt-ycharts-generate than the base 5d8b0390ed: the _authz/loaders.py pin moves 69679b90e3 to 0642c9d004 and its sha256 a2283dc8 to 93f2f02a, so a build cut from HEAD is not the base member set.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 5d8b0390ed:infra/aws/lambda/ci/lambda-source-map.json and git show 731a72ecb2:infra/aws/lambda/ci/lambda-source-map.json, read as functions.irpt-ycharts-generate.files: 88 rows at each commit, 87 identical; the one differing row is infra/aws/lambda/investor-reporting/_authz/loaders.py (pin 69679b90e3 at base, 0642c9d004 at HEAD; sha256 a2283dc8 at base, 93f2f02a at HEAD)",
+      "the entry's top-level keys artifact_sha256 and staged_from also differ between the two commits",
+      "the baseline and the release builds at 5d8b0390ed carry loaders.py sha256 a2283dc8436dc048343bb105b07cd56e93aa0fe038f90457d1b57a882eb887fa (RELEASE_BUILD_RECORD.json member_manifest)"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1 says the executor must build the release from a commit that carries the same members as the three builds, named base_commit 5d8b0390ed.",
+  "world_is": "HEAD 731a72ecb2 is not that commit for this function: its map pins a different loaders.py. The three builds were cut at 5d8b0390ed and are unaffected. No build from HEAD was run by this worker; the packaged member at HEAD is measured from the map only.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
