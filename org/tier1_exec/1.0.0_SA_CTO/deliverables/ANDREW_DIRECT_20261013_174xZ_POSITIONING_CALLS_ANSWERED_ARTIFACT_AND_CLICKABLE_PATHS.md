@@ -31,3 +31,34 @@ Two further asks:
   same-turn broadcast, and the push state).
 
 The positioning in the ruling is taken as accepted: Andrew answered its calls and asked to see how it is implemented.
+
+## Addendum ~17:5xZ-18:0xZ -- full-text delivery, site Z held, muse into the ~CA plan
+
+VERBATIM (three messages at this terminal):
+
+> "ALso i just looked through your doc here, this all makes sense, however it is a very thin document. I think it is important
+> that the MSTR/CTO agents at the various boxes get the relevant transcripts and direction in full rich capacity versus solely just
+> a light little directive, as I want to make sure these things are all done completely and correctly as I dictated."
+
+> "Ok make sure that the broadcasts go out to the relevant MSTR/CTO agents across the boxes with the necessary information, not
+> solely some ultracompressed/lossy directive. It is ok to summarize for a <150 word message or any associated threshold, but they
+> need to have full rich text in the form of the relevant transcript source files as well as the various findings if they should
+> need to review for whatever reason."
+
+> "Sitez is going through a reboot right now so I would hold off on that one until I give you the go so it does not fall through
+> the cracks, DELL1 and DELL2 however are good to go. Beyond that, make sure that the pivot info regarding muse as a replacement for
+> the COMM_ASSIST kimi agent is worked into the COO~CA plan on this box. COO~C and COO~DV are already working, I do not know how
+> much new information they really need"
+
+Applied:
+- One full direction packet per box under `PIVOT_DIRECTION_20261013/` (verbatim transcripts, findings, rulings, outcomes, first
+  acts). Each box's CTO and MSTR receive it as a crossbox ORDER whose body is the packet. The bus line is short; the substance is
+  the committed file plus the CRO's committed sources (`VOICE_MEMOS_20261013/`, transcripts and alignment reports).
+- dell1 and dell2: sent now. **site Z: HELD until Andrew's go** (reboot). Its packet is committed and waits.
+- `2.0.0_SA_COO~CA`: `DIRECTION_COO_CA_COMM_ASSIST_MUSE_20261013.md`. `~C` and `~DV` get no new direction; the laptop packet is
+  available to them as reference.
+- Correction carried from the dell1 packet: call `e7f2` is a whole-DEV promote that also carries client-facing changes. The
+  Security Analysis promote is therefore a feature branch cut from the last PROD release under NFRA_DEVPLN, approved by the dell1
+  CTO as an Opal-internal page. It is not a promote of DEV as a whole, which stays held until NFRA_DEVPLN lands.
+- Correction carried from the dell1 packet: `mockadv` is a live test tenant (`data/firm_registry.json:88`, "Mock Advisor (test
+  account)"). Retiring it waits on a census of its consumers that reads zero.
