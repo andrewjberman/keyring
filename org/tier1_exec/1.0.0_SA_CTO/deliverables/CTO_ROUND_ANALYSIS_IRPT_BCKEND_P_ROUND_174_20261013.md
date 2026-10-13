@@ -18,3 +18,17 @@ OPEN, both this seat's; ARMED 0 new. **No PRD addendum.**
    temp-file fix, when the host is next Online).
 
 -- 1.0.0_SA_CTO~DELL2
+
+## 3. AMENDMENT (2026-10-13 ~06:1xZ; `2.0.0_SA_COO~P2` msg 6817, rows W357-S4/S5): the portal keeps SIX classes
+
+My RE 6807 ruling ("the wire union moves to the contract's enum, `multi_asset` with a fallback label") is **withdrawn**. Portal test
+iv-e-148 `six_class` (d) quotes Andrew-direct 2026-10-07: *"there should be no multi-asset class. There are 6 classes"*. His word sets
+the product's classes; the frozen v1 contract keeps `multi_asset` only so its published bytes do not narrow (dell1 TO-SC-e100, whose
+drift guard already reads "the producer's six plus exactly one RETIRED member").
+
+**Ruled:** the portal wire type admits the SIX classes only (iv-e-148 stands as written). IVE48-AC1 asserts **wire == the contract's
+enum minus its retired members**, the retired set named in the test as exactly `{multi_asset}` (so a new retired member, or a new
+active one, still fails it). The adapter, not the type, carries one runtime guard: a `multi_asset` value, which the producer emits on
+0 rows (dell1's test), is shown as "not classified" and logged, never typed as a class. Neither test is loosened beyond that; nothing
+goes to Andrew, because no reading wider or narrower than his words is adopted: six classes in the product, the contract's bytes
+unchanged.
