@@ -483,3 +483,13 @@ draw, and a number brought to the CTO if P1 alone runs past 30 days. One cell, `
 CSV was moved out of the repo under the CTO containment ruling @0e8209c33c (client account ids), so windows are derived from the silver transactions'
 first trade date per CUSIP to the need's end 2026-06-23. Also: `rank.py` NEED_FILE and `lock.py` still name the moved CSV path (row D1-S15). The 50-cell
 scanner first slice from COO~R1 (msg 4877) is quoted and frozen @fc431ae325, the full scanner request stays filed and undrawn.
+
+**Round 9 close of DQ-t-43 and amendment 9 (issuer, 2026-10-13 ~14:5xZ):** DQ-t-43 merged @b956c6307e (AC1 SLICE-OK, AC2 SLICE-REAL-OK: P1 609 names, 607 priced and 2
+FDIC placeholders unresolved, 882,024 cells, 330 trading days at an implied 2,673 cells a day; folder 151 passed). The number went to the CTO (msg to
+1.0.0_SA_CTO~DELL1, ask: rank-ordered ~2-week blocks or a higher allowance). Andrew-direct 2026-10-13 (CTO msgs 4881, 4884, 4889, 4892) adds the 2012 floor, the
+need-class declaration with refusal, the 365-day non-client window, the surface order A/B/E/C/D with 10 percent held for ad-hoc, and a hold on new Bloomberg
+draws until his form is complete. One cell, `DQ-t-44` (the Bloomberg-side refusal and `--check-declared`, request declarations, the TR remainder by identity,
+the P1 window to the frontier intersected with held; `0.9.0_WK_MDPF_DEMQUE~36`, worker, LOCAL, workstream NEEDCLASS, depends on DQ-t-43). The Yahoo side
+(`demand_queue.validate`, `extend_frontier._request`, the device queue copies of the in-flight IRPT and ADVI requests) is a separate cell `DQ-t-45`, cut after
+`DQ-t-44` merges, so that no nightly draw is refused mid-flight. The qualification table is `deliverables/2.0.0_SA_COO~Q1/QUEUE_QUALIFICATION_20261013.md`
+@ac96e00cbd; the form is `org/tier1_exec/1.0.0_SA_CTO/deliverables/DEMQUE_QUEUE_FORM_ANDREW_20261013.md`.

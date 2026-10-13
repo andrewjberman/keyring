@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-13T03:16:22Z",
+ "written_at": "2026-10-13T14:31:20Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1567,7 +1567,7 @@
    "source": "org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/remediations/REMEDIATION_v17.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-11T22:47:36Z",
    "kind": "fork",
    "context": "The BD fee tool serves 49financial fee data and is open to any principal with no profile, unlike every Schwab tool (row W45-S2, CTO ruling @135719d313). OG-bd-1's caller census found 2 live unprofiled callers, so the deny was correctly NOT shipped (row Z-W57-S2, ARMED). Admission is Andrew's act (C8).",
@@ -1601,7 +1601,14 @@
      ]
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-13T14:31:20Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261013_140xZ_FOUR_OPEN_CALLS_ANSWERED_DEVPLN_TAILNET_SSH_BDFEE_CTLPLN_SCOPE.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   },
   {
    "id": "sitez-20261012T022939Z-ffaf",
