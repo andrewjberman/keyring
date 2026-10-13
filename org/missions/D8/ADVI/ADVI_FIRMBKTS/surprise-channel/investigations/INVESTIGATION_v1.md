@@ -5819,3 +5819,79 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Not caused by the move (the log shows it on every date from April). Act 4b's deployed generator (canonical mode, CodeSha256 fdPwodukz88d...) has therefore never been exercised; its read path was graded by r4_execeq only. No fix is in this lane's permitted set; ADDENDUM 4 item 3 classes a generator failure as a BLOCKING row fixed forward, with the stale summaries as the named cost (stale since 2026-05-04, not one day). Decision owed by the issuer: who fixes the put-events failure, and whether one manual invocation of the generator is authorised to exercise 4b (the order said not to invoke it)."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-h-5, validator live read)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S41",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-13T06:43:35Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "no non-admin session in hand for the validator's ownership read: the 17 organic lines on /platinum/accounts/ and /books/relationship/ since the edge leg are all tier=internal (admin bypass), so the validator's canonical ownership read has not been exercised by a non-admin request.",
+  "spec_asserts": "TO-FB-h-5 step 1: take an organic non-admin line on /platinum/accounts/ or /books/relationship/ since 2026-10-12T15:15:10Z; step 2: a driven request only with a signed non-admin session already in hand, none minted; otherwise a BLOCKING row, status parked, and report.",
+  "world_is": "Read 2026-10-13T06:41Z: auth-validator-edge log groups in 7 regions, 9136 lines, Version 23 only. Auth OK lines by tier and path class since 15:15:10Z: advisor 303 on firm paths and 115 on other paths, 0 on accounts or relationship; internal 15 on accounts and 2 on relationship, 592 on firm and 1045 on other; service 2 on other; total 2074. The validator admits tier=internal as an admin bypass (index.mjs lines 35 and 401-406) before any ownership-map read, so the 17 lines are not ownership reads. The four events ownership_map_fetch_failed, ownership_map_schema_mismatch, advisor_not_in_ownership_map and advisor_scoping_denied: 0 each. This seat holds no signed non-admin session and mints none (order bound 2.2), so step 2 is not taken. The record VALIDATOR_LIVE_READ.json is committed at 0a817c97a03447ca1b0536d7b3e0b288128c21db and the grader reads FAIL no non-admin request on an accounts or relationship path was read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/round5/VALIDATOR_LIVE_READ.json",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/round5/h5_validator_reads.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the un-park: 1.0.0_SA_CTO~DELL1. Condition: a non-admin session exists in a seat's hands, or Andrew supplies one; at that point the order re-opens with one request on an accounts path. An organic non-admin line may also arrive on its own (advisor lines exist on other paths today); the read can be repeated without a session. Standing watch: none added (no monitor)."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~64 (FB-h-4 validator spec expectation, 2026-10-13)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W64-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~64",
+  "surfaced_at": "2026-10-13T06:41:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's test (i) wording 'every other firm's bucket is false' cannot hold for mockadv, which shares the 49financial bucket; the spec was implemented as 'every bucket that differs from the 49financial bucket is absent from the list'.",
+  "spec_asserts": "The order's section 1a.1 states test (i) as: the list is the generated one, it is frozen, it contains the 49financial scope's bucket, and it contains NO other FIRM_CONFIG bucket ('every other firm's bucket is false').",
+  "world_is": "FIRM_CONFIG mockadv has bucket 'opal-data-49financial', the same bucket as the 49financial scope (firm-config.mjs lines 67-86 at 69679b90e3), so mockadv's bucket is the engaged one and reads true, not false. The clause 'every other firm's bucket is false' is therefore not literally true for mockadv; the spec skips any firm whose bucket equals the 49financial bucket, so the intent (no other bucket in the list) is tested and the shared-bucket firm is not asserted false.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda-edge/_shared/firm-config.mjs@69679b90e3 lines 67-86: 49financial and mockadv both carry bucket 'opal-data-49financial'",
+      "infra/aws/lambda-edge/auth-validator-edge/tests/ownership_key.spec.mjs@7c6522bfe4 test (i) as implemented"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a product defect and not a failing assertion: the expectation is read at its intent. The issuer may amend the order's wording. The shared bucket is already recorded as a tenancy hazard in firm-config.mjs lines 38-50."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W64-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~64",
+  "surfaced_at": "2026-10-13T06:41:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "On this device safe-commit's client-data check did not run: the hashed account-id list is absent, so the spec commit 7c6522bfe4 was not checked for client account ids.",
+  "spec_asserts": "The order and CLAUDE.md 14a require the commit to go through .tools/safe-commit.sh; the order names no client-data precondition and no account-id list.",
+  "world_is": "safe-commit printed 'WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty)'. The committed change is one .mjs test file with no account identifiers, so the exposure is nil on inspection, but the check itself did not run on this device.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for commit 7c6522bfe4 on worktree wk-ADVI_FIRMBKTS-64: 'WARN: client-data-check: hashed account-id list ABSENT ... this commit was NOT checked for client account ids'",
+      "commit 7c6522bfe4 changed one file: infra/aws/lambda-edge/auth-validator-edge/tests/ownership_key.spec.mjs (11 insertions, 2 deletions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded because a gate that cannot run on this device is a missing capability, not a clean pass. The fix (placing or pointing the list) is outside this order's bounds and is not made here."
+}
+```

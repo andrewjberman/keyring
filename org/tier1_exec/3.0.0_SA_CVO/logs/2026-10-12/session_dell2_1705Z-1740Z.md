@@ -156,3 +156,10 @@ condition on a check.
 | item | result | commit |
 |---|---|---|
 | IRPT_BCKEND round 173 | ADJUDICATION_v74 + REMEDIATION_v50: serve path carries account_id; 6 dismissed, 2 to the CTO (serve-time validation; IVE48 and the frozen v1 enum narrowed @01e843ce2e and restored @506096fc9a, read from history). Slug sent | 2165761665 |
+
+## Addendum, 2026-10-13 06:35Z to 06:43Z (msg 6823)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND PRD v0.53 ratified half | SIGNED at 9e7c58ce...; the builder's validate-before-write read at the call site (run_firm :3133/:3158 before land :3181) | review d08f9f408e, stamped |
+| IRPT_BCKEND round 174 | ADJUDICATION_v75 + REMEDIATION_v51: 12 dismissed (incl. v50's D2-W354-S2), 1 OPEN, no new ARMED. Slug sent | 3a0d407fe6 |
