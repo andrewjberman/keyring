@@ -38,6 +38,8 @@ able to write its feature's row already approved. Work in the portal repo checke
    `seat` equal to `$OPAL_AGENT_SERIAL` (`APPROVAL-REGISTER result=REFUSED reason=lease-not-live`, rc 3); then the same portal checks as item 1; then writes the row already CLOSED:
    `decision` `approved`, `by` = `FAST lease <lease file basename>`, `ruled_by` `lease`, `ruling` = the lease path. `approval-status` then reads it `APPROVED valid=yes`.
 
+4. (Amended.) `DP-b-1`'s test `.tools/tests/test_open_calls_approval.py` adds approval rows without `--portal`, which item 1 now refuses. Update it so every add passes `--portal` pointing at a small temporary fixture repository (reuse the fixture builder in your register test, or move it to a shared helper inside your two test files); the test keeps all 13 of its cases and stays green.
+
 ### RULES FOR THIS CELL
 
 Tests run in temporary git repositories and a temporary `--store-dir`, never against the live lists or S3 (use the same cluster-copy skip `DP-b-1` used). The real portal repo is read only, with git read commands. No push,
@@ -52,15 +54,18 @@ FOUND SOMETHING ODD OFF-TASK? Append ONE row to the investigation file named in 
 is refused `dev-overlap` and writes nothing; a missing branch is refused; an empty branch is refused; no `--portal` is refused; a live lease for `$OPAL_AGENT_SERIAL` writes an APPROVED row; an expired lease, a lease
 for another seat and a lease with `mode` `HOLD` are each refused and write nothing; `--check-only` writes nothing.
 
-<criterion id="DPb5-AC2" cell_refs="DP-b-5"><invocation>python .tools/open-calls.py add --kind approval --check-only --project NFRA_DEVPLN --box dell1 --branch origin/wk-dsgn-irptv1-r25-61-prodcut --purpose x --pages x --class client-facing --how x --portal portal</invocation><expect>APPROVAL-REGISTER result=REFUSED reason=dev-overlap</expect></criterion>
-`DPb5-AC2` -- the seam against the REAL portal repo and a real branch (+34 over DEV): refused for the DEV overlap, nothing written.
+<criterion id="DPb5-AC2" cell_refs="DP-b-5"><invocation>python .tools/open-calls.py add --kind approval --check-only --project NFRA_DEVPLN --box dell1 --branch origin/DEV --purpose x --pages x --class client-facing --how x --portal portal</invocation><expect>APPROVAL-REGISTER result=REFUSED reason=dev-overlap</expect></criterion>
+`DPb5-AC2` -- the seam against the REAL portal repo: `origin/DEV` is a DEV-cut tip by definition (about 201 commits over PROD, all of them DEV-only), so it is refused for the DEV overlap, nothing written. (Amended by the issuer: the first named branch, wk-dsgn-irptv1-r25-61-prodcut, is itself cut from PROD and overlaps nothing.)
+
+<criterion id="DPb5-AC3" cell_refs="DP-b-5"><invocation>python .tools/tests/test_open_calls_approval.py</invocation><expect>ok=True</expect></criterion>
+`DPb5-AC3` -- `DP-b-1`'s own test stays green after `--portal` became required for the approval kind (amended by the issuer: row W1-S6).
 </proof_of_spec>
 
-<expected_criteria>DPb5-AC1,DPb5-AC2</expected_criteria>
+<expected_criteria>DPb5-AC1,DPb5-AC2,DPb5-AC3</expected_criteria>
 
 Each invocation runs from the worktree root under `timeout 120`. Write the proof instance to
 `org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~1/NFRA_DEVPLN.TO-DP-b-5.registration-facts-and-lease.proof_of_spec.json`, validate it with
-`python .tools/proof-of-spec-check.py <instance> DPb5-AC1,DPb5-AC2`, and flip `<status>` to `complete` only when every mechanical criterion passes and the instance is VALID.
+`python .tools/proof-of-spec-check.py <instance> DPb5-AC1,DPb5-AC2,DPb5-AC3`, and flip `<status>` to `complete` only when every mechanical criterion passes and the instance is VALID.
 
 <decomp_ref>
 <decomp_doc>org/missions/D0/NFRA/NFRA_DEVPLN/decompositions/NFRA_DEVPLN_DECOMP.round1.md</decomp_doc>
@@ -70,6 +75,7 @@ Each invocation runs from the worktree root under `timeout 120`. Write the proof
 <paths>
 .tools/open-calls.py
 .tools/tests/test_open_calls_register.py
+.tools/tests/test_open_calls_approval.py
 org/missions/D0/NFRA/NFRA_DEVPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
