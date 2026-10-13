@@ -1,0 +1,32 @@
+{
+  "project_code": "NFRA_DEVPLN",
+  "macro_code": "NFRA",
+  "directive": "D0",
+  "fabric": "laptop",
+  "pipeline": "per-box-portal-dev-approval",
+  "status": "active",
+  "dep_stage": "REGISTERED",
+  "created": "2026-10-13",
+  "registered_under_tree": "2026-10-13",
+  "placement": "LAPTOP",
+  "pods": [],
+  "related": [
+    "NFRA_CTLPLN",
+    "COMM_ASSIST",
+    "DSGN_IRPTV1",
+    "AMGT_RESAPP"
+  ],
+  "name": "Per-box portal DEV work, approved before it reaches DEV, so PROD carries only approved features: each box builds in its own worktree and branch, Andrew approves a feature in one act, the promote ships a chosen set",
+  "description": "Made a laptop project by Andrew-direct 2026-10-13 ~14:0xZ at the 4.0.0_SA_CRO terminal, VERBATIM: 'get this brief sorted and folded in as a laptop project NFRA_DEVPLN. I want it separated from CTLPLN because CTLPLN is getting too large' (record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261013_140xZ_FOUR_OPEN_CALLS_ANSWERED_DEVPLN_TAILNET_SSH_BDFEE_CTLPLN_SCOPE.md). Commissioning words ~13:5xZ via 2.0.0_SA_COO~C: 'each Box has its own worktree and it must get approval on before merging forward to DEV. that way we can do PROD promotes with only approved DEV features.' Home D0: the portal DEV/PROD limbs of the push gate are agent infrastructure. Placed on the laptop, the control plane, beside NFRA_CTLPLN, which keeps box roles and the gate's general rules.",
+  "brief_ref": "docs/briefs/nfra-devpln-per-box-portal-dev-approval-brief-20261013.md",
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_DEVPLN_ENDPOINT_FORWARD_20261013.md",
+  "prds": [],
+  "prd_lineage": [],
+  "decompositions": [],
+  "decomposition_lineage": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": "UNSEATED at registration; seating a COO lane on the laptop is 0.0.0_AB_MSTR's after Andrew confirms the DONE WHEN lines"
+  },
+  "blocking": "L2: Andrew confirms or re-words the seven DONE WHEN lines in the endpoint record; the whole-DEV portal promote (dell1 open call e7f2) holds until this project's FWD-6 settlement, on his ~14:0xZ answer (the REC 'hold until this brief lands' was not refused)."
+}
