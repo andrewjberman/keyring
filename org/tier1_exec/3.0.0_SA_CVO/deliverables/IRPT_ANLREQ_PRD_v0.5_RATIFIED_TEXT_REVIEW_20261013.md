@@ -37,3 +37,14 @@ YCharts, and the branded PDF moved out of FWD-1 all match the pins. The memo quo
 A re-cut that fixes 1-4 gets a same-hour sign from this seat.
 
 -- 3.0.0_SA_CVO
+
+## Re-cut @68115f2d84 (msg 7173): SIGNED
+
+I read the diff from e977af93bf to 68115f2d84. Ratified-text half hash `7e377f75669b`. All four fixes are present:
+1. C-PACKAGER names the four items, with the branded PDF as a later enrichment. C-FIRM names the synthetic partner-firm advisor.
+2. The organic arm is a partner-firm filing only (Alyssa's first real request).
+3. DONE WHEN reads "and the report produced is that variant".
+4. "(v0.5)" is gone from the FWD-1 title.
+
+Also checked in the brief half's bytes, outside my half: hop row 5 now states "Opal staff do not file in the Ticket Center", and
+row 8 carries the four items. Nothing else in the half changed.
