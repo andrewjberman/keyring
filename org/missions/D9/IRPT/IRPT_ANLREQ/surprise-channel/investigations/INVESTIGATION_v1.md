@@ -9057,3 +9057,121 @@
   "class": "OBSERVATION"
 }
 ```
+
+
+## IRPT_ANLREQ-D2-W95-S1..S5 -- AR-y-274 (C-FIRM) worker rows: the own-firm source, the server membership check, the worktree-depth suite artifact, the missing portal rule file, and the staff catalogue read
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W95-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~95",
+  "surfaced_at": "2026-10-13T20:07:58Z",
+  "one_line": "AR-y-274 says to use the field the served directory context names for the signed-in user's own firm, and to STOP and record the question if no single such field exists. Two single fields exist and neither is the one the order names: the candidate uses the JWT firm claim claims.firmId; the served context's verifiedRequestFirm is discarded by the loader.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-274 step 2 and step 3: read where the served context names the caller's own firm (firm_source with file:line); for a partner caller with more than one allowed firm the form derives the firm from the caller's own profile, using the field the served context names; if no single such field exists, STOP and record the question for the CTO through the issuer.",
+  "world_is": "portal@4d601023 src/pages/InvestorReporting/contracts/index.ts:427-441 names verifiedRequestFirm (wire verified_request_firm_id, 'the firm the SERVER verified for this request'), and src/pages/InvestorReporting/contracts/adapt.ts:754-755 sets permittedFirms from permitted_firm_catalogue with selectable true for every member (adapt.ts:712). The loader src/pages/TicketCenter/TicketCenter.tsx:89-106 reads permittedFirms only and discards verifiedRequestFirm. The own firm the candidate uses is auth.claims.firmId: src/contexts/AuthContext.context.ts:25 and :32 (the JWT claim), src/contexts/AuthContext.tsx:139 (parsed from /auth/me) and :818-824 (canAccessFirm). The ticket service's submit path derives its firm from the same identity (infra/aws/lambda/ticket_center/lambda_function.py:1121, actor firmId). No STOP was taken: a single field does exist in each source, and the choice is recorded here for the CTO's ruling.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@4d601023 src/pages/InvestorReporting/contracts/index.ts:427-441 (ResolvedScope: permittedFirms, verifiedRequestFirm)",
+      "portal@4d601023 src/pages/InvestorReporting/contracts/adapt.ts:708-712 and :754-755 (firmFromWire selectable true; permittedFirms and verifiedRequestFirm)",
+      "portal@4d601023 src/pages/TicketCenter/TicketCenter.tsx:89-106 (loadAllowedFirms reads permittedFirms only)",
+      "portal@4d601023 src/contexts/AuthContext.context.ts:25-32 and src/contexts/AuthContext.tsx:139 and :818-824 (the JWT firmId claim and canAccessFirm)",
+      "4b1e07dabc infra/aws/lambda/ticket_center/lambda_function.py:1121 (submit_form firm = actor firmId)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Candidate 6d117bfe858024808aeb1a768cf72ac0f8145f1f on wk-IRPT_ANLREQ-95-portal uses claims.firmId, guarded by membership in the allowed list (an own firm off the list is no filing firm). The CTO may rule the served verifiedRequestFirm the field instead; that is a loader change (the loader must carry the verified firm) and a neighbour-test change, so it is not made here."
+},
+{
+  "id": "IRPT_ANLREQ-D2-W95-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~95",
+  "surfaced_at": "2026-10-13T20:07:58Z",
+  "one_line": "The ticket service's analysis-request path takes answers.firm from the body and checks it only against the caller's allowedFirmIds list, not against the caller's own firm; the submit-form path pins the firm to the caller's own firmId. C-FIRM's own-domain rule is therefore a portal-side rule only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-274 (C-FIRM): a multi-firm partner user never chooses a firm outside its own domain; the request never carries a firm the caller's profile does not allow.",
+  "world_is": "infra/aws/lambda/ticket_center/lambda_function.py:1168-1188 (the analysis path: req_firm = answers firm, then _create_firm_allowed) and :352-357 (_create_firm_allowed = _firm_allowed and _in_profile_scope) and :344-349 (_firm_allowed = membership in the actor's allowedFirmIds). The submit path at :1121 derives firm = actor firmId and forbids body firm fields (:1113). So the server enforces the allowed LIST, not the own firm, for analysis requests; a body naming any other member of allowedFirmIds is accepted. The portal change stops the choice in the browser only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "4b1e07dabc infra/aws/lambda/ticket_center/lambda_function.py:1168-1188 (analysis path answers firm checked by _create_firm_allowed)",
+      "4b1e07dabc infra/aws/lambda/ticket_center/lambda_function.py:344-357 (_firm_allowed and _create_firm_allowed)",
+      "4b1e07dabc infra/aws/lambda/ticket_center/lambda_function.py:1113 and :1121 (submit path: firm from actor firmId, body firm refused)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Read only: the ticket service is outside this order's grant. Whether a server pin to the own firm is wanted is a CTO question. Whether any partner user holds more than one allowedFirmIds member was NOT READ (no live call in this order)."
+},
+{
+  "id": "IRPT_ANLREQ-D2-W95-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~95",
+  "surfaced_at": "2026-10-13T20:07:58Z",
+  "one_line": "The dsgn-irptv1 suite's 10 failures and 2 errors are path artifacts of the worktree location: its fixtures resolve two levels up from the portal root, which a worktree at C:/dev/wk-portal-95 does not have. The counts are identical before and after the change, so they carry no signal about AR-y-274.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-274 step 4: the whole dsgn-irptv1 suite with counts both ways, the known failures named, read against the change.",
+  "world_is": "Run from C:/dev/wk-portal-95 at portal@4d601023: 381 tests across 240 files, 371 pass, 10 fail, 2 errors; the same 15 signature lines before and after the change. Every signature is an ENOENT for a path resolved from the portal root by two levels up: C:\\dev\\docs\\contracts\\investor-reporting\\v1\\routes.json (8 times), C:\\dev\\docs\\contracts\\investor-reporting\\v1\\HoldingsSnapshot.schema.json, C:\\dev\\infra\\aws\\lambda\\investor-reporting\\_contracts\\AnalysisReport.v2.schema.json (2), C:\\dev\\org\\standards\\IRPT_DASHBD_SERIES_CONTRACT.json and IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json. The suite reads green or red by checkout location, not by code.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@4d601023 src/pages/InvestorReporting/__tests__/dsgn-irptv1/ (the suite; run with bun test from C:/dev/wk-portal-95)",
+      "run output at C:/dev/wk-irpt-anlreq-95/.scratch/dsgn_base.txt and dsgn_after.txt (uncommitted scratch, the signatures compared equal)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts both ways: DEV tip 371 pass, 10 fail, 2 errors; candidate 371 pass, 10 fail, 2 errors. Not a regression of AR-y-274. A checkout at the workspace depth would be needed to read the suite as a gate."
+},
+{
+  "id": "IRPT_ANLREQ-D2-W95-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~95",
+  "surfaced_at": "2026-10-13T20:07:58Z",
+  "one_line": "The portal rule the workspace names, portal/CONTRIBUTING-BOXES.md, is not in the portal tree; the same rule also names a cand/<box>/<slug> branch cut from the last PROD release, while this order names wk-IRPT_ANLREQ-95-portal cut from origin/DEV.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The workspace portal rule: a portal change is made on a cand/<box>/<slug> branch cut from the last PROD release, never pushed to DEV, and portal/CONTRIBUTING-BOXES.md is the rule to read before touching portal/. The order: branch wk-IRPT_ANLREQ-95-portal from origin/DEV; read the portal's own CLAUDE.md and DESIGN.md first.",
+  "world_is": "git ls-tree -r --name-only origin/DEV in the portal repository lists no file matching CONTRIBUTING (0 matches at portal@4d601023), so the rule file is absent from the tree this candidate is cut from. The candidate followed the order: wk-IRPT_ANLREQ-95-portal cut from origin/DEV, the same shape as the earlier candidates (wk-IRPT_ANLREQ-89-portal and the others). The portal CLAUDE.md (read) and DESIGN.md (read) were followed for the visual clauses.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@4d601023 (git ls-tree -r --name-only origin/DEV, zero CONTRIBUTING matches)",
+      "portal@4d601023 CLAUDE.md (portal-local law, read in full)",
+      "6d117bfe858024808aeb1a768cf72ac0f8145f1f (the candidate, cut from origin/DEV, not pushed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Branch name and base follow the order, not the workspace rule. The issuer or CTO may rule which governs; the candidate is not pushed either way."
+},
+{
+  "id": "IRPT_ANLREQ-D2-W95-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~95",
+  "surfaced_at": "2026-10-13T20:07:58Z",
+  "one_line": "For Opal staff the Analysis Request form no longer reads firms, so the comparison catalogue is read with no selected tenant where it was read for the chosen firm before. The order says keep every other behaviour; this is a consequence of removing the staff picker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-274: for an Opal-internal caller the staff picker is removed from the Analysis Request path and the form says in one sentence that staff open requests from the queue; keep every other behaviour.",
+  "world_is": "portal@4d601023 src/pages/TicketCenter/TicketCenter.tsx passes catalogueFirm (the picked firm) to fetchCatalogue; src/pages/InvestorReporting/tabs/analysis/comparisonCatalogue.ts:27-30 sends selected_tenant only when a tenant is given. With the picker gone, staff have filingForm.firm '' and the catalogue read is unscoped (no selected_tenant). Partner callers are unchanged in kind: the read now carries the own firm instead of the picked one.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@4d601023 src/pages/InvestorReporting/tabs/analysis/comparisonCatalogue.ts:27-30 (selected_tenant only when a tenant is given)",
+      "portal@4d601023 src/pages/TicketCenter/TicketCenter.tsx (catalogueFirm from filingForm.firm; the read effect)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Staff cannot submit (the submit is off), so the unscoped read has no filing consequence. Recorded so the L9 grader can judge the staff path on the candidate's own terms."
+}
+]
+```
