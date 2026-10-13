@@ -6878,3 +6878,107 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## DSGN_IRPTV1-D2-W72-S1 -- IV-e-123: the page holds no producer-independent account id per ACCOUNT node, so the step-3 node-to-account map cannot be built in tabs/holdings/ on the current wire
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W72-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~72",
+  "surfaced_at": "2026-10-12T23:45:57Z",
+  "one_line": "IV-e-123 product branch: the wire carries no account id per ACCOUNT node distinct from its node ref, so the step-3 page map has no source in tabs/holdings/",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IV-e-123 worker face step 3: if any enumerated producer path is not equal, map the node ref to the account id in the page BEFORE the focus post (tabs/holdings/, pickedAccountRef and the focus read), with one test and one mutant.",
+  "world_is": "The only per-node account reference on the wire is drill_refs[0].ref_id (portal adapt.ts:1219, drillRef). Every producer sets that ref_id to the node's own minted id (holdings_49f.py:349, holdings_inf.py:357, holdings_snapshot.py:1377, 1448, 1542, 1658, 1749, 2464). The directory account id (adapt.ts:680, entryId) is paired to no node on the wire. A page-side map therefore has no producer-independent source; the map needs a producer field, which sits under infra/ and data/assets/ (read-only in this grant).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal cf52fdbf00f2 src/pages/InvestorReporting/contracts/adapt.ts:1219 (drillRef from drill_refs[0].ref_id) and :680 (accountId = entryId)",
+      "data/assets/scripts/gold/investor_reporting/holdings_49f.py:349 and holdings_inf.py:357 (ref_id = account_id = node id) @516f3accf9",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py:1377,1448,1542,1658,1749,2464 (ref_id = node id) @516f3accf9",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~72/NODE_ID_READ.json (page_maps_node_ref false, product_change true)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## DSGN_IRPTV1-D2-W72-S2 -- IV-e-123: 49financial's live holdings builder keys ACCOUNT nodes on the Schwab custody key; the directory keys the same account on the gold dim_account key; the declared raw key names the SmartX key
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W72-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~72",
+  "surfaced_at": "2026-10-12T23:45:57Z",
+  "one_line": "49financial: the live builder mints ACCOUNT node ids from the Schwab dim_balance key while the directory mints account ids from gold dim_account; the declared raw key (raw_keys.json) names the SmartX field the live builder does not read",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "_ids/raw_keys.json firms.49financial.account (lines 9-19): the raw key is the crosswalk account id zero-padded to 10 digits, and holdings_source is smartx fact_allocation_account_map.account_number (line 11). The order worker face reads a node id as equal to the account id where the two agree.",
+  "world_is": "build_49f_actual reads the Schwab dim_balance account_id as the custody key (holdings_49f.py:294, 331, 339, 347). The directory mints 49F accounts from gold dim_account (directory_runner.py:337, 567, 592, 597), and directory_runner.py:37-56 describes the two as two custodial key spaces reconciled by a per-account dim_account_xref match_method. A node id equals the account id only where the two strings are equal. The allocation join (holdings_49f.py:352, overlay.get(raw_account)) is a string match, not a shared mint input. Unequal accounts are refused at serve (holdings/snapshot.py:442-443) or withheld (holdings/resolve.py:512). Not measured against live data: no AWS call in this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_49f.py:294,331,339,347 (Schwab dim_balance custody key) @516f3accf9",
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:37-56,337,567,592,597 (gold dim_account; two custodial key spaces) @516f3accf9",
+      "infra/aws/lambda/investor-reporting/_ids/raw_keys.json:9-19 (declared SmartX raw key, line 11) @516f3accf9",
+      "infra/aws/lambda/investor-reporting/holdings/snapshot.py:441-443 and holdings/resolve.py:512 (fail-closed equality and withholding) @516f3accf9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## DSGN_IRPTV1-D2-W72-S3 -- IV-e-123: the valid contract fixture HoldingsSnapshot.valid.json carries an ACCOUNT node whose node_id differs from its ACCOUNT drill ref
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W72-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~72",
+  "surfaced_at": "2026-10-12T23:45:57Z",
+  "one_line": "contract fixture HoldingsSnapshot.valid.json: ACCOUNT node N-1 carries drill ref ACCOUNT A-0001, so the schema-valid example does not hold node id equal to account id",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IV-e-123 worker face premise: the ACCOUNT node id is the account id on every served path.",
+  "world_is": "The valid fixture models node_id N-1 with drill_refs[0] = {ref_kind ACCOUNT, ref_id A-0001} (HoldingsSnapshot.valid.json:41, 75-77). It is a fixture. No producer in the enumerated set builds this shape: every producer sets ref_id equal to node_id (row S1 evidence).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/fixtures/HoldingsSnapshot.valid.json:41 and :75-77 @516f3accf9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## DSGN_IRPTV1-D2-W72-S4 -- IV-e-123: raw_keys.json cites mint lines in holdings_snapshot.py that no longer carry the cited mints
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W72-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~72",
+  "surfaced_at": "2026-10-12T23:45:57Z",
+  "one_line": "raw_keys.json holdings citations (holdings_snapshot.py 352-353, 451, 462, 615-618) do not match the mints at this head; the live 49F and INF mints are not cited",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "_ids/raw_keys.json names holdings_citation for 49financial (line 12), inflection (line 35) and cottonwood (line 57) as the mint sites of the declared raw key.",
+  "world_is": "At 516f3accf9 the mints sit at holdings_snapshot.py 1342 and 1366 (legacy 49F), 1603 and 1652 (legacy INF), and 2431 and 2458 (COT). The live 49F mint is holdings_49f.py:339 and the live INF mint is holdings_inf.py:349; neither is cited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_ids/raw_keys.json:12,35,57 @516f3accf9",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py:1342,1366,1603,1652,2431,2458 @516f3accf9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

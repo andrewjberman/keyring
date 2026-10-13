@@ -53,6 +53,16 @@ Row D2-W70-S4 (`org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigation
 <criterion id="IV124-AC1" cell_refs="IV-e-124"><invocation>python "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D2/checks/r32/p32_round32.py" . IV124-AC1</invocation><expect>IV124-AC1 PASS</expect></criterion>
 `IV124-AC1` -- the unsupported-card reason on a vendor report is a plain sentence with no producer status word, an Opal report is unchanged, a rendered test and a mutant hold it, and a screenshot was read. Base: FAIL (no record).
 
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-13 ~00:2xZ; gate limb: none graded it, this is a modification of an existing order).** Your first report found three existing tests
+outside the grant that pin the OLD vendor wording this cell exists to change: `__tests__/dsgn-irptv1/iv-e-101.opal-report-words.test.tsx` line 72 (the sentence "the producer's
+extraction validation is UNCERTIFIED; 2 value(s) could not be confirmed" on an uncertified vendor wire), and `__tests__/fe-s-6/sections.test.ts` lines 78 and 100 (the card block holds
+'UNCERTIFIED' and '2 value(s) could not be confirmed'; the no-verdict card holds 'no extraction verdict is stated for this report'). Both files are now in your `<paths>`. Re-golden
+ONLY those wording assertions to the new sentences (the new count sentence, and a plain sentence of your own for the no-verdict case in the same register, with no producer token), keep every
+other assertion in both files unchanged, and keep every UNSUPPORTED-marker assertion (a section with no verdict still reads UNSUPPORTED). Do not weaken or delete an assertion; replace the
+expected string only. Say in the record which three assertions moved. Your portal work is committed on your portal branch (91d682d6, 45d0cdc6): continue from it. Re-run the whole-scope suite:
+`suite_after.new_failing_ids` must be [] and its fail count no greater than base (1). Re-record `UNSUPPORTED_REASON.json`, re-run IV124-AC1, validate the proof instance, flip this order's
+`<status>` to complete only when the criterion PASSES. Row W73-S1 (BLOCKING, ARMED, disarm owner the issuer) is answered by this amendment: file no further blocking row for the same fact.
+
 <expected_criteria>IV124-AC1</expected_criteria>
 
 ## BOUNDS
@@ -70,6 +80,8 @@ org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~73/
 portal/src/pages/InvestorReporting/tabs/analysis/
 portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-124.*
 portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-122.vendor-validation-and-source.test.tsx
+portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-101.opal-report-words.test.tsx
+portal/src/pages/InvestorReporting/__tests__/fe-s-6/sections.test.ts
 org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D13/DSGN/DSGN_IRPTV1/task-orders/DSGN_IRPTV1.TO-IV-e-124.unsupported-card-reason-in-words.md
 </paths>
