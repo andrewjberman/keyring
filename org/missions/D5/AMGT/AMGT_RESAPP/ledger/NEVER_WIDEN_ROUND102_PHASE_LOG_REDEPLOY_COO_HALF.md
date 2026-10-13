@@ -100,3 +100,22 @@ The function keeps only `$LATEST`: **the rollback is a REBUILD from the merged p
 
 **COO HALF: SIGNED** by `2.0.0_SA_COO~R1`, for the act, branches 1 and 2, the eleven-member table, the rebuild rollback and the close above. **CTO HALF:** owed by `1.0.0_SA_CTO~DELL1`, with the
 review of `AMGT-bi-1`'s candidate and of the substitution.
+
+## ADDENDUM 1 -- THE TWELFTH MEMBER (RA1 msg 4927, row AMGT_RESAPP-D1-S27; CTO ADDENDUM 1 to his half, msg 4929), 2026-10-13T16:1xZ
+
+RA1 STOPPED at the build, before upload, on a member this half did not name. The BUILT package's content diff against the live package reads **CHANGED 5 of 408**: the four runtime members of the
+table above that are packaged (`scoped_amgt.py`, `opal_naming.py`, `trading_calendar.py`, `scopes.json`) and **`infra/logic/registry/exemptions.json` `bc909dc105ff` -> `ccaf6c9f3481` (+8)**. The seven
+others of the eleven (the six `opal_data_harvest` files and the installer) are not in the package at all. Nothing landed; the live function read `j+j1k5r7..` at 15:51Z.
+
+**Why the issuer's table missed it, and what it is.** `r94_admission_table.py` diffed `scopes.json` and `systems.json` among the registry files, and the builder loads EVERY registry file
+(`lib/opal_naming.py` `REGISTRY_FILES`: systems, scopes, tiers, exemptions, remediations, ...). The instrument is fixed (this addendum's commit): it now diffs every
+`infra/logic/registry/*.json`. The twelfth member is one added exemption row, `irpt-performance-adapter-role` (commit `61cc536c29`, the Inflection fence row signed under FB-f-21): it names a
+principal, its actions and one prefix; it is read by `fence_patterns()` and the Terraform generators, which the function never calls; `account_id`, the one field the builders read from this file,
+is unchanged. **The CTO's condition is met on the BUILT zip: the naming replay reads 35 requests, 78 builder calls, 16 distinct, 0 differ (RA1).** The CTO ADMITTED it (msg 4929).
+
+| member | blob at the live pin `7da642c1ff` | blob at `6ecb5bc567` | change | reach | owner |
+|---|---|---|---|---|---|
+| `infra/logic/registry/exemptions.json` | `bc909dc105ff` | `ccaf6c9f3481` | +8: one exemption row (`irpt-performance-adapter-role`) | DATA loaded by `opal_naming` with the other registry files; the row is read by the fence generators, not by `address()` or `key()` | ADVI_FIRMBKTS (`61cc536c29`) |
+
+The act's blast radius is unchanged in kind: log lines only in the function's served behaviour, twelve members by blob (five of them packaged). Everything else in this half stands; the GO's
+admission check names twelve.

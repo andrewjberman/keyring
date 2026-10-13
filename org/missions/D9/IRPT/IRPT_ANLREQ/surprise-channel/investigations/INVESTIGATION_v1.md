@@ -7498,3 +7498,30 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S75 -- (disarm row; this seat's own) four round-21 rows disarmed, the ci script's exit 1 explained and proved
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S75",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T16:09:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARMS rows IRPT_ANLREQ-D2-W67-S1 (allowlist vs three tests), W64-S6 (BUILD_ONLY at a base without the guard), W61-S2 (map deployed_code_sha256 vs live) and W69-S1 (the exercise's admitted arm reads client directory data); answers D2-S71 (the cause of the ci script's exit 1) with a live proof.",
+  "spec_asserts": "W67-S1: AR221-y-AC1 and AC2 could not both pass without a ruling on 'ext'. W64-S6: a BUILD_ONLY run at a base older than the guard uploads for real. W61-S2: the three group-A functions' map deployed_code_sha256 differs from live. W69-S1: the admitted arm opens client data, a new never-widen half is owed or the arm is dropped. D2-S71: build-and-upload.sh exits 1 after a good upload and the cause is not established.",
+  "world_is": "MEASURED/RECORD this session (2026-10-13 ~16:10Z). W67-S1: the issuer ruled amendment 1 (header Client Primary Acct, one negative-control test names Acct Ref Ext) and AR-y-221 drained @d20800082a; this seat re-ran y221-allowlist (negatives 16, positives 5, 26 backstop tests pass) and y221-keep (365 of floor 364), proof VALID. W64-S6: every later order requires the guard count before a build (AR-y-228 printed 8 at 4067c2dd5b; TO-APPLY-R20 and TO-SCRATCH-R21/R21b required it); no BUILD_ONLY run since D2-S70 reached an upload; AR-y-228's two builds never reached aws s3 cp (its record). W61-S2: the trunk map rows for irpt-performance-adapter, irpt-narrative and irpt-status now carry deployed_code_sha256 equal to artifact_sha256 and to the live CodeSha256 the release-20 applier read (NdwQsZ4Y..., vBzPCvn9..., vlGh380Q...; map record 8aebb08499). W69-S1: the CTO signed the exercise pair's CTO half at decdd94c48 choosing (A) (the admitted arm as one read-only GET, status and body sha256 only); the exercise ran (TO-EXERCISE-R21, ledger CLOSED, proof VALID) and the active arm was admitted with one class line row_present on RequestId 366c206c. D2-S71: TO-SCRATCH-R21 (applier AQ2, real run) showed the cause: the script merged stderr (2>&1) into each compared head-object value and a .tools/aws shim WARN line was prefixed to it; AR-y-229 (@25e92d4daa) takes stdout alone; TO-SCRATCH-R21b (real run, worktree made the same way, the WARN reproduced on stderr) exited 0 and printed write VERIFIED; scratch object read back equal in size and sha256 (this seat re-read ContentLength 363594); no function key moved. NOT covered: the original release-20 error text ('int' object has no attribute 'items') was not reproduced by any run, so it is the same class by its effect and not shown to be the same line; the two scratch objects under investor-reporting/_ar222_scratch/ are kept (a delete needs Andrew's word).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ar21_checks.py y221-allowlist, y221-keep and the AR-y-221 proof, run by this seat in C:/dev/wk-irpt-anlreq-67",
+      "lambda-source-map.json at HEAD (deployed_code_sha256 fields of the three functions), read by this seat",
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r21/ (SCRATCH_RUN.txt, SCRATCH2_RUN.txt, SCRATCH2_READBACK.txt, EXERCISE_RESULT.txt, EXERCISE_REQUEST_IDS.txt)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_ANLREQ_R21_STATUS_RULE_DRIVEN_EXERCISE_CTO_HALF.md"
+    ]
+  }
+}
+```
