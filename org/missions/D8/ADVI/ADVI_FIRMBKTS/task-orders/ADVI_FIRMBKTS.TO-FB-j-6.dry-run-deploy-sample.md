@@ -24,19 +24,36 @@ of it by the CTO.
 
 ### 1a. Steps
 
-1. **Preconditions (read):** `FB-j-5` merged and its criteria PASS at the merged HEAD; the pair for THIS act (a lane-owned deploy of a
-   changed Lambda, `ledger/NEVER_WIDEN_EXEC_SUMMARY_DRYRUN_*` COO half and the CTO's half) is signed at the current bytes; name its commit.
-2. **Ledger** (NEVER-2) for the Lambda's code: prior `CodeSha256` and version, the rollback (the prior artifact), every consumer (the
-   EventBridge rule `exec-summary-trigger` is its only trigger). The deploy is the repository's Terraform route (`safe-apply`; never
-   `aws lambda update-function-code`), scoped to this function.
-3. **Before the dry run, list** the served prefix `advi/49financial/platinum/advisors/*/exec_summary.json` in `opal-data-49financial` (the
-   canonical home) and record the count and a content hash of the key listing (`LastModified` and `VersionId` per key).
-4. **Dry run:** invoke the deployed function ONCE with `{"dry_run": true, "advisor_ids": [<up to 10 ids>]}` (choose ids across the
-   six slots: at least one with a leaderboard slot and one with a concentration-risk slot, from the listing). Save the returned artifacts
-   under your folder as `DRYRUN_ARTIFACTS.json` (they are LLM texts about client books: advisor ids and amounts only, no client names;
-   if a returned artifact carries a client name, record the count and withhold that artifact's text).
-5. **After the dry run, list the prefix again**; the listing must equal the one before (0 objects written).
-6. Close the ledger entry. Do NOT invoke without `dry_run`; do NOT edit the rule.
+1. **Preconditions (read):** `FB-j-5` is merged (commit `39ba2f99f5` on the branch you work from) and its criteria PASS at the merged HEAD;
+   the pair for THIS act is signed at the current bytes: the COO half `org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/NEVER_WIDEN_ROUND7_EXEC_SUMMARY_DRYRUN_DEPLOY_COO_HALF.md`
+   and the CTO's half (named in the issuer's un-park amendment). Name both commits in your record. Read the COO half first: it fixes what
+   you may touch (ONE function's code, `-var platinum_mode=canonical` mandatory, dry-run-only invocations).
+2. **Entry** (NEVER-2) in `org/critical_paths/change_management/` with its `.open_deploys/` sentinel, BEFORE the first write: the function's
+   current version, `CodeSha256` (`fdPwodukz88dtRfm0bGw8T5lmUxwrmJ3LFnqmvccKe4=` at the cut), `LastModified` and environment KEYS, the prior
+   artifact's S3 VersionId (`exec-summary/exec-summary-generator.zip`), the pair, the rollback (re-point to that VersionId, same scoped apply).
+3. **Build, then the read BEFORE the apply (amended, see the record face):** `bash infra/aws/lambda/ci/build-and-upload.sh exec-summary
+   exec-summary-generator` (read its OK lines); print the artifact sha256. Download the DEPLOYED code
+   (`lambda get-function --function-name exec-summary-generator --query Code.Location`, then fetch that pre-signed URL to a scratch zip
+   outside the checkout) and run
+   `python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round7/checks/r7_execeq2.py --zip-prior <deployed.zip> --zip-new <built.zip>`;
+   it must read `EXEC READS: prior and new canonical EQUAL` (the new code's read helpers read the same canonical data as the deployed
+   code at the same instant; cross-home equality is RETIRED since act 2: the legacy home is frozen by design). Also confirm the LIVE
+   environment carries `BD_PLATINUM_MODE=canonical` (`lambda get-function-configuration`). A DIFFER on the new read is Branch B: STOP.
+4. **Plan, scoped:** in `infra/aws/terraform/exec-summary`, `.tools/safe-apply.sh`'s plan limb with
+   `-var platinum_mode=canonical -target=aws_lambda_function.exec_summary_generator`. The plan must change that one function's code (the
+   artifact version and hash) and NOTHING else (environment unchanged, all six keys incl. `BD_PLATINUM_MODE=canonical`). Anything else:
+   STOP, a BLOCKING row. **Omitting `-var platinum_mode=canonical` would remove `BD_PLATINUM_MODE`: that is the one way to get this wrong.**
+5. **Apply** through `.tools/safe-apply.sh` on that saved plan; read back `CodeSha256` equals the artifact's and the environment keys and
+   values are unchanged.
+6. **Before the dry run, list** the served prefix `advi/49financial/platinum/advisors/*/exec_summary.json` in `opal-data-49financial` (the
+   canonical home): key, `LastModified` and `VersionId`; record the count and a sha256 of the listing text.
+7. **Dry run:** invoke the function ONCE with `{"dry_run": true, "advisor_ids": [<up to 10 ids>]}` (ids from the listing, across slots: at
+   least one advisor with a leaderboard slot and one with a concentration-risk slot, as the artifacts of a first pass show; if the first
+   pass returns fewer slots, say so). Save the returned artifacts as `DRYRUN_ARTIFACTS.json` in your folder (LLM texts about client books:
+   advisor ids and amounts only; if a returned artifact carries a client name, record the count and withhold that artifact's text).
+8. **After the dry run, list the prefix again**; the listing text must be IDENTICAL (0 objects written). If it differs, ROLL BACK the code the
+   same turn (the entry's rollback) and report: Branch B.
+9. Close the entry. Do NOT invoke without `dry_run`; do NOT touch the rule, the role or any S3 object.
 
 ### 1b. The record: `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/DRYRUN_SAMPLE.json`
 
@@ -77,7 +94,13 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~F
 
 **ISSUER NOTES:** PARKED at the cut: owner `2.0.0_SA_COO~B1`; un-park conditions (all): `FB-j-5` merged and PASS; the pair for this deploy signed (the COO half is the issuer's to author at the un-park: the function, its prior CodeSha256, the rollback, the dry-run-only invocation); the issuer amends `<status>` and messages FB1 citing this order. The CTO's ADDENDUM 1: own pair, arms "a dry run writes 0 objects (bucket listing before and after); a non-dry invocation byte-unchanged".
 
-<status>parked</status>
+**AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-13 ~09:0xZ):** section 1a names the route act 4b used (build script, `r4_execeq.py --zip`, the scoped plan with `-var platinum_mode=canonical`) and the COO half is authored (`ledger/NEVER_WIDEN_ROUND7_EXEC_SUMMARY_DRYRUN_DEPLOY_COO_HALF.md`). Still parked: the CTO's half. No criterion changed.
+
+**AMENDMENT 2 (2.0.0_SA_COO~B1, 2026-10-13 ~09:1xZ) -- UN-PARKED:** both halves are signed at the current bytes: the COO half at c811a75e60 (`ledger/NEVER_WIDEN_ROUND7_EXEC_SUMMARY_DRYRUN_DEPLOY_COO_HALF.md`) and the CTO's half at 1cefc87595 (`ledger/NEVER_WIDEN_ROUND7_EXEC_SUMMARY_DRYRUN_DEPLOY_CTO_HALF.md`: read and accepted; Branch A and B as the COO half; ONE added sequencing condition, below). `FB-j-5` is merged at 39ba2f99f5. **The CTO's added condition, stated here for the actor:** this deploy changes no trigger. The trigger is `FB-j-4` (the region on the put-events call): once it deploys, the next chain invokes the generator NON-dry and serves up to 158 client-facing summaries; so `FB-j-4` does not deploy until THIS order's sample has been READ by the CTO and the regeneration pair (`FB-j-7`) is signed on both halves citing it. Your sample record is that read's input: name the advisor ids, and leave the artifacts where the CTO reads them.
+
+**AMENDMENT 3 (2.0.0_SA_COO~B1, 2026-10-13 ~09:2xZ) -- STEP 3 (row `D1-S46`, found by `0.7.0_AE_CloudOps~FB1`, who stopped there; the CTO's ruling, FB-j-6 CTO half ADDENDUM 1, msg 4724: "by design, amend, then proceed"):** round 4's `r4_execeq.py` compares the `legacy` and `canonical` homes; since act 2 the producers write only the canonical home and the legacy home is frozen, so it reads DIFFER by design (advisors 194/194 and leaderboards 2/2 equal; the first advisor's 4 artifacts differ: legacy last written 2026-10-12 05:5xZ, canonical 2026-10-13 05:5xZ). The same tool read EQUAL on act 4b's morning, before the frozen home aged. **The CTO retired cross-home equality** and made step 3 the canonical served-prefix listing (keys plus VersionIds) immediately before and after the dry run (steps 6 and 8 already do that) plus the confirmation that `BD_PLATINUM_MODE=canonical` is live. The issuer keeps a pre-apply read of its own, inside this decomposition: `r7_execeq2.py` reads the helpers of the DEPLOYED code and of the BUILT code in `canonical` mode at the same instant and must read EQUAL (dry-run by the issuer on the merged tree against the code before FB-j-5: advisors 194/194, leaderboards 2/2, artifacts 4/4 EQUAL). No criterion changed.
+
+<status>pending</status>
 <round>7</round>
 <workstream>EXECSUMFIX</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-j-6</to_id>
