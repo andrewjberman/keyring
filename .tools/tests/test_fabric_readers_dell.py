@@ -21,8 +21,8 @@ by path), on three of the six ids (-D2-W3-S2, -Z-S4, -d1-S1): three more cases. 
 two infix slots drawn from 20 tokens) compares the checker, the watcher, file_stop_row and the gate's ID_RE, and must agree on every id. Sweep (AMENDMENT 4): `ID-GRAMMAR-SWEEP` over every tracked file for the old
 grammar's signature and for a hand-written row-id pattern; `old_grammar_left` is the count of live readers outside the grant.
 Schema arm (5): one PRD header instance per fabric value validated against org/standards/PRD_HEADER.schema.json
-(4 admitted) and one with dell3 (refused). Enum arm: the schema's fabric enum equals FABRIC_ENUM read from the source of
-.tools/to-pipeline-gate.py. Gate arm: `python .tools/surprise-row-gate.py --self-test` result line.
+(4 admitted) and one with dell3 (refused). Enum arm: the schema's fabric enum equals the gate's FABRIC_ENUM (register-derived
+since NFRA_CTLPLN.TO-CT-ab-8; the gate source must still assign it, AST). Gate arm: `python .tools/surprise-row-gate.py --self-test` result line.
 
 LAST line: FABRIC-READERS ids_ok=<a>/9 schema_ok=<b>/5 rowschema_ok=<c>/12 readers_ok=<r>/9 old_grammar_left=<d> enum_equal=<True|False>
            gate_selftest=<ok|fail> ok=<True|False>
@@ -57,9 +57,18 @@ def load_gate():
 
 
 def enum_from_source():
+    """The gate's FABRIC_ENUM (NFRA_CTLPLN.TO-CT-ab-8: register-derived, so no literal is parsed). The gate's source must
+    still assign it at module level (AST, fail closed to None); the value is the gate's runtime FABRIC_ENUM."""
     with open(TOGATE, encoding="utf-8") as fh:
-        m = re.search(r"^FABRIC_ENUM\s*=\s*(\(.*?\))\s*$", fh.read(), re.M)
-    return list(ast.literal_eval(m.group(1))) if m else None
+        tree = ast.parse(fh.read())
+    assigned = any(isinstance(n, ast.Assign) and any(isinstance(t, ast.Name) and t.id == "FABRIC_ENUM" for t in n.targets)
+                   for n in tree.body)
+    if not assigned:
+        return None
+    spec = importlib.util.spec_from_file_location("to_pipeline_gate_enum_read", TOGATE)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return list(mod.FABRIC_ENUM)
 
 
 def id_cases(gate, enum, reg_copy, missing):

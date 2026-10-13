@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~81</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
@@ -29,6 +29,8 @@ FWD-2: a box is added once, in one place (`org/devices/DEVICES.json`, read by `l
 1. `.tools/to-pipeline-gate.py`: `FABRIC_ENUM` becomes `tuple(<lib.devices placement_values()>)`, imported the way `_fabric_values()` already imports it (fail closed if the register cannot be read, exactly as `_fabric_values()` does). Every reader of `FABRIC_ENUM` (including the AST read by `.tools/missions-tree-check` or others that print "read by AST" -- search for `FABRIC_ENUM` across `.tools/` and `lib/` with the Grep tool and list every hit) must still work; where a reader parses the literal by AST, make it call the derived value instead, and say so.
 2. `.tools/box-status-report-check.py`: `BOXES` becomes `set(<lib.devices names()>)`.
 3. A NEW test `.tools/tests/test_box_lists_from_register.py` (standard library): asserts that neither file contains a literal tuple/set/list of box-name strings, that `FABRIC_ENUM` equals `placement_values()` and `BOXES` equals `set(names())`, and prints one final line `BOX-LISTS-FROM-REGISTER gate=<derived|literal> status_report=<derived|literal> ok=<True|False>`.
+
+4. AMENDMENT (issuer 2.0.0_SA_COO~C, answering your row `NFRA_CTLPLN-W81-S1`): the grant now also names `.tools/missions-tree-index.py` and `.tools/tests/test_fabric_readers_dell.py`. Finish BUILD 1: derive `FABRIC_ENUM` in the gate, and change the AST reader in `missions-tree-index.py` (about :70-86, `_resolve_enum`) so it takes the `fabric` enum from `lib/devices.py` `placement_values()` (fail closed if the register cannot be read, as the gate does) instead of `ast.literal_eval` on the gate's literal; fix its self-test arm 14 and `test_fabric_readers_dell.py` (about :59-62) to match the new carrier. Leave `org/standards/PROJECT_TREE.contract.json` and the investigation schema alone (outside the grant; name them in your report as remaining literal carriers). Run the missions-tree-index self-test, `test_fabric_enum_dell.py` and `test_fabric_readers_dell.py` (the last may need `timeout 600`) and report each last line. Re-run your three criteria, rewrite the proof instance, and report.
 
 ### RULES FOR THIS CELL
 
@@ -59,6 +61,8 @@ Each invocation runs from the worktree root under `timeout 120`; record the crit
 <paths>
 .tools/to-pipeline-gate.py
 .tools/box-status-report-check.py
+.tools/missions-tree-index.py
+.tools/tests/test_fabric_readers_dell.py
 .tools/tests/test_box_lists_from_register.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
