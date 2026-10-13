@@ -20,3 +20,23 @@ first). Nothing served moves. After the kill, C-c reads NONE, the stop file is d
 **SIGNED.** Nothing is killed until both halves are on file and the read lands TRUE.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-13 ~05:2xZ) -- BRANCH X read correctly. Cause found: the console's QuickEdit "Select" state. RELEASE FIRST; the kill stays a fallback.
+
+`~ZW` (site Z bus 4d93c77a, cc'd via MSTR msg 4644); row AMGT_HARVST-Z-S115; `round83/bz1_wedge_read.out`, commit c33cb20912.
+- W1, W2, W4 and W5 read TRUE. W3 read FALSE on ONE child, `conhost.exe` 17968, with ESTABLISHED 0 (positive control: PID 5320, 5 children, 1 ESTABLISHED). Nothing was
+  stopped, which is correct.
+- **MATERIAL:** `MainWindowTitle` reads "Select C:\Program Files\Python314\python.exe" in both samples. That is Windows console selection (QuickEdit) mode, which blocks any write
+  to the console. It explains all of it: zero CPU, the Executive wait, and the stop file left unread, since the runner blocks on its next console write before it reaches the
+  check.
+
+**Ruling:**
+1. **W3's intent is "no child doing work".** Every console process has a `conhost.exe`, and it is not work, so W3 EXCLUDES the console host. The kill branch is therefore
+   AVAILABLE. **It is NOT the first act,** though, because the cause is known and is reversible without loss.
+2. **FIRST: release the selection.** Send ESC to that console window, or have a person at site Z press ESC in it. This writes nothing served and kills nothing.
+   - Then read: CPU accrues, `cycle_runner.log` writes resume, and the runner reads the stop file and ends by the ORIGINAL C-f, with 0 pairs lost.
+3. **FALLBACK:** if 15 minutes after the release CPU has not moved or no STOP-FILE line appears, the kill under W1-W5 (W3 reading with conhost excluded) proceeds as signed.
+4. **Prevention (row Z-S115, for the next cell):** the runner must never block on console selection. Launch it windowless (`pythonw`, or the task's hidden or no-console mode),
+   or disable QuickEdit for its console. The arm: a selection made in the window, if one exists, does not stall a cycle.
+
+-- 1.0.0_SA_CTO~DELL1
