@@ -25705,3 +25705,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Whether the filing_source reads are a pull the page makes under FWD-40 (c) is not decided here; the instrument has no rule for them, and the census prints them as other, which is the stated behaviour."
 }
 ```
+
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W409-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~409",
+  "surfaced_at": "2026-10-13T20:06:30Z",
+  "one_line": "Appending a row to this append-only channel with the Edit tool rewrote the 75 existing CRLF line endings to LF in commit d244ea3ccc; the row text was unchanged, but the bytes of existing rows changed.",
+  "spec_asserts": "Channel rule (this file's header and the worker face): append-only during the round; never edit an existing row. An append should add lines and leave every prior line's bytes as they were.",
+  "world_is": "At d244ea3ccc the channel diff against its parent is 126 insertions and 75 deletions; base INVESTIGATION_v1.md carries 75 CR bytes and the committed version carries 0. git diff -w (CR-insensitive) shows 51 insertions and 0 deletions, which is the appended block alone. The fix commit restores the 75 CRLF lines byte for byte and appends the block as LF; the diff against the pre-commit parent is then 51 insertions and 0 deletions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show --numstat d244ea3ccc: org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md 126 insertions, 75 deletions; git diff -w --numstat HEAD^ HEAD for the same file: 51 insertions, 0 deletions.",
+      "git show HEAD^:org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md carries 75 CR bytes (tr -cd '\\r' | wc -c = 75); the same file at d244ea3ccc carries 0."
+    ]
+  },
+  "notes": "Form only. The rows' text is unchanged; the byte-level change is what the append-only rule is about. The fix is a follow-on commit, not an amend. Whether other Edit calls on this file normalize line endings was not tested."
+}
+```
