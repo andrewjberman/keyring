@@ -48,6 +48,31 @@ These are the differences:
 6. **Also the manifest.** After the apply, record the new `deployed_commit` in `infra/aws/ec2/EC2_MANIFEST.json`
    (plane 2), as MX-r-10 did. AC2's census and the (a)/(b)/(c) partition are then read against the commit the host serves.
 
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-13 ~21:4xZ, at the MX-c-8 drain @212f2370a3) -- AC3 re-cut to what MX-c-8
+measured; PHASE A starts at MP-z-5's ledger close.**
+- **AC3, the issuer's defect.** As cut, `c10_second.py` picked an (a) entry whose `history_depth` AND `freshness` both read
+  `measured` on one prefix basis. MX-c-8 measured `history_depth` as `absent` on all 11 (a) tools, because each served
+  object is one overwritten file whose key carries no date (row Z-W33-S1). A measured `freshness` names its object
+  through the catalog `row`, with the bucket root as its basis (the naming gate, row Z-W33-S5). So the pick read
+  `none` in every world, and AC3 could never pass.
+  - Now the pick resolves the served KEY through `freshness.row`.
+  - FRESHNESS must be on or before the listed object's date.
+  - A depth `absent` is CONFIRMED only when exactly one object sits at a dateless key, so no history is listable.
+  - Planted arms: freshness after the object's date gives DISAGREE (FAIL); a second object at the key gives REFUTED
+    (FAIL).
+  - Issuer's run at 212f2370a3: `etfs_get_positioning`, `platinum/etfs/positioning_data.json`, latest 2026-10-13 =
+    catalog 2026-10-13 AGREE; depth absent CONFIRMED (1 object). RESULT: PASS.
+  - AC3 is the FWD-20 PROOF's second-instrument read. It does not depend on the release, so it is graded again after
+    PHASE B against the deployed catalog's bytes.
+  - Gate limb that graded this modification: none. `.tools/to-pipeline-gate.py` LIMB 6 does not fire on a
+    modification, and this order declares `<placeholders>NONE`, so GATE (viii) does not grade it.
+- **PHASE A starts only when `NFRA_MCPORTAL.TO-MP-z-5`'s NEVER-2 ledger reads CLOSED.** MP-z-5 went pending at
+  ~19:38Z (81e079ba4b), so its release is in flight, and a deploy-only commit cut before it lands would be void at the
+  slot (the MX-r-10 A1 v1 -> v2 lesson). The issuer continues you with this order at that close, naming the live ref
+  to read.
+- AC3's expectation now reads: `PICK one (a) tool; listing rc=0; GRADE ... AGREE; depth ... CONFIRMED (or AGREE when
+  measured) -- RESULT: PASS -- exit=0`.
+
 ## 2. BOUNDS
 
 1. No change to any source file. This order ships what MX-c-8 committed, and nothing else.
@@ -77,7 +102,7 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
   <expected_criteria>AC1,AC2,AC3</expected_criteria>
   <criterion id="AC1" cell_refs="MX-r-11" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round10/checks/r11.AC1.sh; echo "exit=$?"</invocation><expect>entry files at HEAD>=1; sentinel at HEAD=no; listed OPEN/HELD=0; SCAN DENOMINATOR printed -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="MX-r-11" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round10/checks/r11.AC2.sh; echo "exit=$?"</invocation><expect>/health=200; on the host the PARTITION sums N of N with every member valid (index rc=0) and discover reads good 3 of 3 (discover rc=0) -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC3" cell_refs="MX-r-11" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round10/checks/r11.AC3.sh; echo "exit=$?"</invocation><expect>PICK one (a) tool; listing rc=0; GRADE ... AGREE (earliest equals the catalog depth, the catalog freshness is not after the latest) -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="MX-r-11" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round10/checks/r11.AC3.sh; echo "exit=$?"</invocation><expect>PICK one (a) tool; listing rc=0; GRADE ... AGREE; depth ... CONFIRMED (or AGREE when measured) -- RESULT: PASS -- exit=0</expect></criterion>
   <instance_path>org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MI/NFRA_MCPINDEX.TO-MX-r-11.catalog-tool-index-release.proof_of_spec.json</instance_path>
 </proof_of_spec>
 
