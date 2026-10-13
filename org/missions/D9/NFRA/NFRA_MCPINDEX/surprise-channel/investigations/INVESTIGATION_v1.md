@@ -6731,6 +6731,28 @@ carries none.
     },
     "spec_asserts": "MX-c-8 bound 3: a NEW failing ID against the MX-x-6 baseline is the cell's to fix.",
     "world_is": "The baseline is stale on this device: 7 IDs that fail at base read as NEW. A delta-graded drain would refuse on them every round unless they are listed as known."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W33-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~33",
+    "surfaced_at": "2026-10-13T22:06:46Z",
+    "one_line": "The plane-2 record `EC2_MANIFEST.json` services.opal-gateway.deployed_commit on box/sitez reads 185dc048881d, while the host (byte census 107 of 107) and S3 -latest serve 64b3e54658: MP-z-5's record naming 64b3e54658 sits on its release branch rel-nfra-mcportal-gw (4d9261146b), not yet drained. The MX-r-11 item 6 manifest record has no base to land on until that drain.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show box/sitez merge into wk-NFRA_MCPINDEX-33: EC2_MANIFEST.json opal-gateway deployed_commit=185dc048881da2030efa11f4d0bfb8704b500c66, deployed_at 2026-10-12T12:52:14Z, mcportal_commit bc37107.",
+        "git show rel-nfra-mcportal-gw:infra/aws/ec2/EC2_MANIFEST.json: deployed_commit=64b3e54658060859b81d6bcd48dc7000615f865d, previous_deployed_commit=185dc048881d, mcportal_commit=0e02a1f, deployed_at 2026-10-13T21:07:58Z; git merge-base --is-ancestor rel-nfra-mcportal-gw box/sitez reads not-drained.",
+        "Host read SSM a59986ac-4f4d-4f52-842b-ebef572407ef 21:55:43Z: 107 of 107 files byte-identical to the tree at 64b3e54658; S3 -latest git-ref 64b3e54658060859b81d6bcd48dc7000615f865d."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-r-11 item 6: after the apply, record the new deployed_commit in EC2_MANIFEST.json (plane 2), as MX-r-10 did, with previous_deployed_commit the live ref read from the host.",
+    "world_is": "Until rel-nfra-mcportal-gw drains to box/sitez, the box/sitez manifest names 185dc04888 as previous. PHASE B's applier should write previous_deployed_commit=64b3e54658 and mcportal_commit as the pin the deploy resolves (0e02a1f at the deploy tree), and expect a merge on the manifest at the MP-z-5 drain.",
+    "notes": "disarm_owner 2.0.0_SA_COO~MI (INERT, no disarm needed): the host is the authority, so no pin in the ANNOUNCE rests on the manifest."
   }
 ]
 ```
