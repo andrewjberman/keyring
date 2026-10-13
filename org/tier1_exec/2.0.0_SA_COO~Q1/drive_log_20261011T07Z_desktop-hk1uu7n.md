@@ -52,3 +52,8 @@
 - Containment: re-sweep of this project's 245 commits found account ids in six files; three redacted in place @84bb84909c, two moved out @121391fb80 (audited overrides), record @44261c0f23.
 - Disarmed: W36-S2 (bbg_backfill unreachable), W37-S1/S3, W38-S2. Armed rows left open: W24-S1 (disarmed earlier, row not edited), W35-S3 (MSTR restored the hash list, word sent to the CVO).
 - Next: the 10-13 22:30 ET Yahoo run on the merged code (new refusal rule live); t-48 report, then the SERVED wiring under its own pair; P1 depth per Andrew's card; ABNB draws only when the form is complete; t-34 AC2 by 10-17.
+
+### 2026-10-13 ~17:50Z -- A4 research price axis total-return field, forward only (tick 161)
+- COO~R1 (AMGT_RESAPP bj-5, msg 4978): price_axis_pull.py also requests DAY_TO_DAY_TOT_RETURN_GROSS_DVDS over the last 5 trading days. Quoted +500 history cells a day (about 100 companies x 5 days x 1 field), A4 about 1,000 a day, claim held; not a queue file (surface A production).
+- Back year of the new field: about 25,100 cells (9 days). COO~R1 (msg 4982): FORWARD ONLY for now; the app's rankings stay on PX_LAST; the back year is the CTO's call on Andrew's TWR rule, filed the same hour if he says yes.
+- Merged this afternoon: t-47 @2989e78de8, t-48 @9de742d8f9, t-49 @567a058ddb, t-50 @911d2806c8 (B1 request filed and priced @ee5ad75db7: 614 securities, 37,514 cells, finish 2026-11-07 on non-trading-day fires). In flight: t-51 (porting test always 5 intervals, worker ~43).
