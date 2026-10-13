@@ -7293,3 +7293,55 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W135-S1 -- the commit-time client-data check did not run on the DB-b-170 module commit 8c6dcce508 (hashed account-id list absent)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W135-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~135",
+  "surfaced_at": "2026-10-13T14:38:12Z",
+  "one_line": "The client-data check in the commit gate did not run on the DB-b-170 module commit 8c6dcce508: the hashed account-id list is absent at its default path, so the commit was not checked for account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-170 BOUNDS: no client data in what you write (counts only), and every commit passes the commit gate via .tools/safe-commit.sh (CLAUDE.md section 6, rule 14).",
+  "world_is": "safe-commit 8c6dcce508 printed WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt, and stated the commit was NOT checked for client account ids. The commit holds one file, tieout/tieout_noflow_reasons.py (220 lines). The module prints counts only and writes its record only to the deliverables folder. A digit-run scan of the module finds one line, the RULE.md sha256 hex constant; that scan is not an account-id check, and the list-based check did not run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 8c6dcce508 on 2026-10-13: the client-data-check WARN line and the statement that the commit was not checked for client account ids",
+      "grep -cE on the committed module and on NOFLOW_2_REASONS.json: 1 line each, both the RULE.md sha256 hex constant (module line 25; the record's rule sha256 key)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W134-S1 -- DB-b-168 stops at plan: the estate's helpers hold no firm-neutral performanceSeries body for 49F
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W134-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~134",
+  "surfaced_at": "2026-10-13T14:42:05Z",
+  "one_line": "TO-DB-b-168 step 1 cannot be built as written: the estate has no firm-neutral performanceSeries request-body helper for 49F. The only series body is inline in bd_selected.requests_for, which refuses every mapping that is not the Cottonwood firm, so the order's plan (ONE series body per account) is not built and the module is not written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-168 step 1: build ONE performanceSeries request body per account for its segment window with the estate's own helper (read bd_adapter.py adapt and parse_series, tenants.py for the route, and the opal-assets lambda for the body helper); a LOCAL RESTATEMENT of a request body is refused by the adapter's docstring; if the estate has no series-body helper, file a surprise row and stop.",
+  "world_is": "At 7e571758b1 the body helpers the order names hold period and cost bodies only: lambda_function.py body_performance_period (line 216), body_cost_basis (282), body_allocation (293). The series body is not among them. bd_adapter.py adapt() calls transport.request('performanceSeries', ..., None, ...) at line 285, so the adapter passes no series body on the 49F path, and bd_live.py request() refuses a non-dict body. bd_selected.py requests_for (line 61) builds the one series body (dateRange, perfFrequency 0, Account grouping) inline, and its first check refuses any mapping whose firm_id is not tenants._CANONICAL_COT. Calling it for 49F would need a Cottonwood mapping, which is refused. A grep for performanceSeries over lib/ and infra/logic/ returns no file. No DRY_RUN lift, no session load, no vendor call, no S3 call was made: the plan was not run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/bd_selected.py@7e571758b1:61-62 (requests_for: inline series body; Cottonwood-only gate)",
+      "infra/aws/lambda/investor-reporting/performance/bd_adapter.py@7e571758b1:285 (adapt passes None as the performanceSeries body)",
+      "infra/aws/lambda/opal-assets/opal-assets-bd49f-reporting-pull/lambda_function.py@7e571758b1:216,282,293 (the body helpers present: period, cost basis, allocation; no series)",
+      "Native grep performanceSeries|seriesPoints over infra/aws: a series request body is built only in bd_selected.py; the other hits are the adapter's parser, route tables, tests and fixtures. Native grep performanceSeries over lib/ and infra/logic/: no file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

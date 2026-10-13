@@ -81,6 +81,26 @@ frontier and declares client. Report the whole folder `pytest data/mdpf/scripts/
 
 Run each invocation from the worktree root. At the base: `CLASS-BAD no file ...`; `bbg_quote.py: error: unrecognized arguments: --check-declared ...`.
 
+
+### AMENDED 2026-10-13 ~15:4xZ (issuer; no gate limb graded it, no new order added) -- rulings on rows D1-W36-S1 to S9, and the re-seated slot
+
+Your first pass (commits `0b5d4015f1`, `d8588dab05`) stands as inherited state. The grant above now ALSO names ten more files. Rulings:
+- **S1 (ABNB refused): the refusal STANDS.** The producer's `HIST_START` 2016-01-01 is beyond 365 days of the need date; the queue refuses and never trims. The request stays
+  declared as read and UNDRAWN until the CTO or Andrew rule. The real check's arm 1 now allows exactly this one refusal (reason must name 365 days).
+- **S2 (bbg_backfill, ARMED, disarmed by the issuer):** its CLI is unreachable (`--apply` plus date 2026-10-10 only; evidence
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/DISARM_EVIDENCE_D1_W36_S2_20261013.md`). In `bbg_backfill.run()` add the same stored-row identity check
+  as the standing drawer (skip every (security, date) already stored in the output folders), so the function is safe on its own; update its tests accordingly.
+- **S3 to S6:** update the named failing tests in the files now granted: add the declarations a stub needs (`need_class`, `window_start`, `need_date` as the
+  rule requires), move pinned TR-window figures to the re-windowed request's real figures, update the card-A assertions to the 2012 floor and the frontier end, and
+  change the drawer test to the identity remainder (16 cells, not quoted minus drawn). Change ONLY what the failures require; every other assertion stays.
+- **S7 (held rule):** find the transaction type code meanings (search `docs/` and the Commonwealth silver transactions' own mapping; name your source). Classify each
+  code as adds-to or removes-from a position; `by` and `trfi`/`li`-type codes add, `sl` and `trfo`/`lo`-type codes remove, only where the source says so. Any code you cannot
+  classify leaves the name HELD and the printed `held_claim` `inferred`.
+- **S8:** out of this cell (the Yahoo side, t-45).
+- **S9:** the TR quote file is re-frozen by the issuer at the merge.
+- **The investigation file:** the HEAD copy carried account ids at one line (row D1-S13, now redacted at `84bb84909c` on box/dell1). Merge `box/dell1` into
+  your branch first (a MERGE, never a rebase) so the file is clean, then append your rows; do not edit an existing row.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below plus your deliverables folder and this order's file. Scaffolding goes under `.scratch/`, uncommitted.
@@ -109,6 +129,16 @@ org/missions/D8/MDPF/MDPF_DEMQUE/requests/AMGT_RESAPP-107a-ABNB-MODEL-BLOCK.json
 org/missions/D8/MDPF/MDPF_DEMQUE/requests/ETFS_RIVALS-HISTORY-OWED-DAILY.json
 org/missions/D8/MDPF/MDPF_DEMQUE/requests/MDPF_SECHIST-CARD-A-COT-BBG-HISTORY.json
 org/missions/D8/MDPF/MDPF_DEMQUE/requests/DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS.json
+data/mdpf/scripts/demque/bbg_backfill.py
+data/mdpf/scripts/demque/test_demque_bbg_backfill.py
+data/mdpf/scripts/demque/test_demque_ceiling.py
+data/mdpf/scripts/demque/test_demque_nontrading.py
+data/mdpf/scripts/demque/test_demque_quote_remaining.py
+data/mdpf/scripts/demque/test_demque_refreeze.py
+data/mdpf/scripts/demque/test_demque_reserve.py
+data/mdpf/scripts/demque/test_demque_reserve_ledger.py
+data/mdpf/scripts/demque/test_demque_standing_drawer_close.py
+data/mdpf/scripts/demque/test_demque_tier_quote.py
 org/missions/D8/MDPF/MDPF_DEMQUE/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 

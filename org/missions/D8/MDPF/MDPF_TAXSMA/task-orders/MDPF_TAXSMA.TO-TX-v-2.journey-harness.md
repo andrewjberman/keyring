@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_TAXSMA~5</issued_to>
 <issued_by>2.0.0_SA_COO~T</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>pending</status>
+<status>cancelled -- RETIRED 2026-10-13 by 0.0.0_AB_MSTR (integrator) on Andrew-direct ~13:4xZ: unseated laptop work closes; this order's assignee holds no session. Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_134xZ_LAPTOP_PARE_DOWN_UNSEATED_CLOSES_EXCEPT_SPMOVE.md @4750e84345; ledger LD-0645. Prior status: pending</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md` @671925aecc (ADMITTED) | **Contract:** `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json` | **Decomp cell:** `TX-v-2` | **serves:** FWD-1 .. FWD-8 (S14) | **slot:** ~5, queue position 2
 

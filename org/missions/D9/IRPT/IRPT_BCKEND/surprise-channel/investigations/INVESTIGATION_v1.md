@@ -31657,3 +31657,77 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISARMED: W361-S3 (4 live members equal to no historical blob): they equal historical blobs once CRLF is read as LF, 0 lines apart; a packaging artifact (CRLF-stored copies), not a hand edit and not another tree; the cause of the CRLF is not measured. RULED: the packages are built from the LIVE bytes plus only 135fc3509e, 7ace854890 and aa5778d962 (49financial 3 members, inflection 2, cottonwood none and not in the apply); W362-S1 (my check demanded a replaced member for every firm: amended f33aa02571), S2 (the apply restamps the S3 metadata: in the packet and the COO half), S3 (the live schema copy is CRLF; the candidate keeps CRLF). RAISED: W363-S2: two PutBucketPolicy writes by the IAM user cloudops-dell1-agent-user on opal-data-49financial (2026-10-11T15:27:29Z and 16:07:36Z), after the package upload; the policy bodies were not read; the apply principal needs PutObject on that bucket, so the apply order must read the current policy before its first write; asked of the CTO. STILL ARMED: W361-S1 (a careless re-cut would ship unrelated changes: fenced by the packet), W345-S3 (disarms on the first leftover-count read after the apply), W348-S2."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S133",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-13T14:26:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "39 tracked files of this seat's own deliverables folder (committed 13 hours ago) are missing from the shared working tree, uncommitted; the folder did not exist on disk when TO-IB-pr-512 began, so a path-wide commit read as a 40-file mass deletion and was refused.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree -r --name-only HEAD on org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2: 39 files; git status --short on the same folder: 39 ' D' entries and 2 '??' (this order's two new files)",
+      "last commits touching the folder: b86e6e8f9d and 84f7bce350, both authored by this serial, about 13 hours before the read (TO-IB-pr-490)",
+      "ls of the folder before this seat created it with mkdir -p: No such file or directory"
+    ]
+  },
+  "spec_asserts": "Row ids are for anything odd; the commit carries the order's files only and deletes nothing.",
+  "world_is": "The cause is not known to this seat: not a deletion this seat made in this session. Left as found. The closeout commit of TO-IB-pr-512 names its two files by path and does not carry the 39 deletions, because the mass-deletion gate refused them as unattributed and they are not this order's act. If the removal was intended, whoever intended it commits it with attribution; if not, git checkout of the folder restores all 39 from HEAD."
+}
+```
+
+## IRPT_BCKEND-D2-S134 -- DISPOSITION after the round-178 drain: the apply verified; W345-S3 still armed; S133 was my deletion
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S134",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T14:38:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISPOSITION after the round-178 drain: TO-IB-pr-512 (the apply of the signed pair) verified by the issuer; W345-S3 stays ARMED with the reason that the leftover count was taken BEFORE any build; row IB2-S133 (39 missing records) was MY deletion and is restored.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer re-run in the merged tree: IB178-1 AC1, AC2, AC3 PASS (IB2's close commit 5e13705967); round-close-check MAY-CLOSE (orders=1).",
+      "independent reads by this seat: head-object of the three package keys now reads 49financial VersionId UHOCIkWj3QiIzNucG1VjNnk_AufIg6oD (member-count 44), inflection PzhCs97qVBXkZcIjaOklHmzWiFsOFafM (44), cottonwood oyIYMVdh_l2zCg5ZWvn3ISPPS6_9Q82_ (unchanged, the rollback VersionId of the packet); ec2 describe-instances: running since 2026-10-13T13:30:36Z; ssm list-command-invocations since 13:30Z: the three 'irpt holdings refresh <firm> 2026-10-13' invocations at 10:15 ET (14:15Z) all Success, the two 'first read count' invocations at 09:37 ET (13:37Z) Success.",
+      "the packages put are the packet's candidates (IB-pr-510, sha256 c2b7275939d0..., both halves signed)."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "VERIFIED: the minimal packages for 49financial and inflection are live (new VersionIds above), put at a scheduler start (CloudTrail StartInstances 13:30:36Z by irpt-directory-refresh-role, per IB2), cottonwood untouched, and the 14:15Z holdings refreshes ran for all three firms with Success. STILL ARMED: W345-S3: the 49F builder's leftover-file fix is now on the host, but IB2's first read (counts 0 and 0 at ~13:37Z) PRECEDED every build on the new packages, so the count AFTER a build is not measured; the next cell (IB-pr-513, drafted) repeats the same read-only count after the 14:15Z builds if the host is still Online, else at the next scheduled Online; a task order cannot join round 178 once its issuance is at HEAD (the gate: ONE ISSUER PER ROUND), so it is cut in round 179. RULED: IB2's command_run omits -printf and a stderr redirect because MY check rejected any '>' character; the literal command is a read-only find piped to wc -l (command_run_literal): the check was crude, not the act; W345-S3 evidence does not rest on it. CORRECTED: IB2's row S133 said 39 tracked records in its deliverables folder were missing from the working tree 'not its act': the deletion was MINE: my positive control of the IB178-1 check created and then removed that folder with rm -r, which held 39 tracked records; restored with git restore from HEAD (clean status, 41 files). Nothing else in the folder was modified. STILL ARMED: W361-S1, W348-S2."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S135",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-13T14:52:09Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-IB-pr-513: the count is 0 and 0 after the 14:15Z builds, but its positive control (the build's own snapshot-path log line) cannot be obtained, and the order's AC2 check can never pass.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the two read-only counts at 2026-10-13T14:47:12Z (host running, SSM Success, response code 0): 49financial 0, inflection 0; the 49financial build is invocation 4f958436-de78-4b44-bdfd-c1da2d014ac0, 14:15:25Z to 14:20:49Z, on package version UHOCIkWj3QiIzNucG1VjNnk_AufIg6oD (latest since 13:35:24Z; inferred, the command fetches without a version id)",
+      "the builder prints no such line: holdings_49f.py has no print or log statement; SSM kept the first 24000 characters of that invocation's stdout (487 lines), 0 lines name retained_capture, snapshot, taxsma, membership or temp; get-command CloudWatchOutputEnabled false, no S3 output bucket",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r178/p178_cells.py line 77: cat -A shows the AC2 regex written with literal 0x08 bytes (^H) where \b was meant, so re.search for find between two backspace characters cannot match any command_run; AC2 fails for every record"
+    ]
+  },
+  "spec_asserts": "AC1 needs a non-empty snapshot_path_log_line with a log_source; AC2 needs command_run to be a read-only find piped to wc -l.",
+  "world_is": "AC1 FAIL (no log line exists in any source this order grants), AC2 FAIL (the check's regex cannot match), AC3 PASS (0 and 0). Nothing was invented to pass AC1: snapshot_path_log_line is left empty with its note. The order stays pending for the issuer's ruling: either accept the count with the positive control taken from the served manifest's retained-input receipt (an S3 read outside this grant), or a driven or later scheduled build captured with an output sink; and repair the check's \b bytes."
+}
+```

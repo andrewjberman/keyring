@@ -1,5 +1,5 @@
 diff --git a/infra/aws/lambda/cot-pipeline/cot-satellites-characteristics-producer/lambda_function.py b/infra/aws/lambda/cot-pipeline/cot-satellites-characteristics-producer/lambda_function.py
-index 2645e2526f..f938a622ce 100644
+index 2645e2526f..5d5c99fb80 100644
 --- a/infra/aws/lambda/cot-pipeline/cot-satellites-characteristics-producer/lambda_function.py
 +++ b/infra/aws/lambda/cot-pipeline/cot-satellites-characteristics-producer/lambda_function.py
 @@ -50,8 +50,11 @@ from __future__ import annotations
@@ -14,7 +14,7 @@ index 2645e2526f..f938a622ce 100644
  # THE ZIP MIRRORS THE REPO -- see build_package.py "THE LAYOUT" for the measurement.
  # The producer computes `parents[4]` to find the repo root (the same arithmetic
  # satellites_weights.py uses), so /var/task must BE the repo root: mirrored, parents[4]
-@@ -69,9 +72,47 @@ logger = logging.getLogger()
+@@ -69,9 +72,54 @@ logger = logging.getLogger()
  logger.setLevel(logging.INFO)
  
  
@@ -31,17 +31,24 @@ index 2645e2526f..f938a622ce 100644
 +def _reattempt_skip(event: dict):
 +    """HG-t-16: on {"require_partition": true} only, return a skip result or None (None = run the producer).
 +
-+    Bucket and keys come from the producer module's own constants and the day from its own calendar rule; nothing is
-+    typed here. The scheduled fire's event carries no such key, so it makes no S3 call at all."""
++    Three tests in this order: holdings.json final today (the registry's stamp-gated 13:15Z fire has run), the output
++    older than it (the day is not yet written), the T-1 partition landed. Buckets and keys come from the producer
++    module's own constants and the day from its own calendar rule; nothing is typed here. The scheduled fire's event
++    carries no such key, so it makes no S3 call at all."""
 +    if not event.get("require_partition"):
 +        return None
 +    s3 = boto3.client("s3")
 +    day = producer.resolve_bbg_as_of()
-+    out = _listed(s3, producer.OUT_BUCKET, producer.OUT_KEY)
 +    today = datetime.now(timezone.utc).date()
-+    if out and out[0]["LastModified"].astimezone(timezone.utc).date() == today:
-+        logger.info("SKIP-COMPLETE bbg_as_of=%s: s3://%s/%s was written %s", day, producer.OUT_BUCKET,
-+                    producer.OUT_KEY, out[0]["LastModified"])
++    holdings = _listed(s3, producer.HOLDINGS_BUCKET, producer.HOLDINGS_KEY)
++    if not holdings or holdings[0]["LastModified"].astimezone(timezone.utc).date() != today:
++        logger.info("HOLDINGS-NOT-FINAL bbg_as_of=%s: s3://%s/%s was not written today", day, producer.HOLDINGS_BUCKET,
++                    producer.HOLDINGS_KEY)
++        return {"rc": 0, "skipped": "holdings-not-final", "bbg_as_of": day}
++    out = _listed(s3, producer.OUT_BUCKET, producer.OUT_KEY)
++    if out and out[0]["LastModified"] >= holdings[0]["LastModified"]:
++        logger.info("SKIP-COMPLETE bbg_as_of=%s: s3://%s/%s (%s) is at least as new as its holdings (%s)", day,
++                    producer.OUT_BUCKET, producer.OUT_KEY, out[0]["LastModified"], holdings[0]["LastModified"])
 +        return {"rc": 0, "skipped": "complete", "bbg_as_of": day}
 +    missing = [k for k in (producer.BBG_CHARACTERISTICS_KEY % day, producer.BBG_MANIFEST_KEY % day)
 +               if not _listed(s3, producer.BBG_BUCKET, k)]

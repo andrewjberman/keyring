@@ -10513,3 +10513,68 @@ fanout:
   no_s3_deletes: true
   egress: none; no Bloomberg call in any order
 ```
+
+---
+
+## 110. ROUND 102 -- THE OVERLAY'S PER-PHASE TIMING LOG LINES (A BUILD, ITS STAGED APPLY AND THE DRIVEN COLD REQUEST); THE WEEKDAY STEADY STATE DRIVEN (A READ); THE PORTAL SUITE'S SIX RED TESTS, THREE REPAIRED AND THREE NAMED FOR A CONTRACT DECISION. One worker build, one staged seat order, two worker orders.
+
+**Issuer:** `2.0.0_SA_COO~R1` on dell1. **Input:** the CTO~DELL1 round-101 analysis `ledger/ROUND_ANALYSIS.round101.md` (msg 4864) section 3, after the CVO's slug (msg 4861, `ADJUDICATION_v122`
+@9db293845a, MAY-CLOSE). **Prefix:** `bi` (round 102). Round 101 delivered the calendar rule (bh-1, applied by bh-2: `42z0tn68..` -> `j+j1k5r7IY1ZCh9NijT8GSLaqEL3FhamwT8V3tYofCk=`, 2026-10-13T13:16:29Z, no
+served byte moved), and showed that the snapshot is not the lever on the cold first request (20.05 s with a current snapshot, 22.39 s before; one pair of requests, an inference) and that the first full
+weekday carried no organic traffic.
+
+### 110a. MEASURED AT THE CUT
+
+- **The cold overlay is still 20 to 24 s on Lambda and is un-attributed.** Cold ASML_NA overlay handler time on `j+j1k5r7..`: 20.01 s (Init 662 ms, 2026-10-13T14:19Z) and 23.89 s (Init 556 ms, 14:29Z). The
+  existing instrumentation names no phase of the overlay: `read_security_overlay` (scoped_amgt.py :3599-:3755) calls, in one request, the model-block read, four `read_point_record` reads, the check face,
+  `read_feed`, `read_description`, `_research_coverage`, `read_posture`, `read_peer_set`, `_overlay_provenance`, `_overlay_top_band` and `_overlay_input_provenance`; only `_phase_log` for rankings and chatter
+  exists. A candidate with fourteen phase lines was built and dry-run locally (blob 02627c18a0ea, +32 -9; 14 of 14 arms; status and body byte-equal to the base; inner phases 1,467 ms against
+  1,469 ms). **A phase's cost on Lambda is not read from the local run**: rounds 99 and 100 put 3.5 times between them.
+- **The weekday steady state, driven on the live function (the issuer's dry-run, YES):** `/freshness` 0.24 s answered from the snapshot (`snapshot` present, no `snapshot_fallback`, generated_at equal to
+  the stored object's), overlay 0.75 s and 0.91 s warm, each request 65 s after the last. On a weekday the 24-hour rule also served the snapshot, so this does not show the weekend arm.
+- **There are no organic cold requests to wait for** (`AMGT-bh-4`: 625 invocations in the first full weekday, 623 the issuer's own measurement and 1 the cold probe; the weekend's 45,646 were seats'
+  sweeps). The CTO's "a day of real cold requests" is therefore a DRIVEN request: the first request on a freshly replaced package is cold by construction.
+- **The portal suite is red in six files (D1-S18's real denominator):** 462 files, 1,419 tests, 1,386 pass, 27 skip, 6 fail (193 s). Three are undisputed (a stale citation, a stale pin, a lagging
+  fixture copy) and were repaired on a scratch candidate (13 of 13 pass); three are wire-drift tests (iv-e-26, iv-e-48, iv-e-98) that regeneration turns green and that turn `iv-e-148` arm (d) red,
+  because the frozen v1 `HoldingsSnapshot` schema carries `multi_asset` again (506096fc9a, MDPF_SECCLASS TO-SC-e100) against Andrew's 2026-10-07 "no multi-asset class". CI itself (lint, provenance
+  guard, typecheck, build) reads green and runs none of them; the regenerated candidate typechecks (rc 0).
+
+### 110b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-bi-1` | the overlay prints one `AMGT_PHASE` line per phase (a build, log lines only) | `~401` | worker (build) | LOCAL | `scoped_amgt.py` | the cold request's attribution |
+| `AMGT-bi-2` | the apply carrying it, and the FIRST request after it driven alone and read by phase -- STAGED seat order | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | the function's code; ledger; one request file | the cold request's attribution (item 1's close) |
+| `AMGT-bi-3` | READ the weekday steady state driven on the live function | `~402` | worker (read-only) | LOCAL | one output file | item 2 |
+| `AMGT-bi-4` | the portal suite's six red tests: three repaired (a candidate), three named with the decision | `~403` | worker (portal DEV candidate) | LOCAL | three portal files; one table file | item 3 (D1-S18) |
+| `AMGT-bi-5` | ss-7 / pp-4 on the DEMQUE answer; the reader-side EXPIRED criterion -- CARRIED, no order | -- | -- | -- | -- | item 4 |
+
+**Uncovered, with its owner:** the contract decision of section 110a (the CTO; Andrew's word is in it); the portal PROD promote (call `dell1-20261011T033643Z-e7f2`) and the API's drop of the top-level
+`fiscal_year_figures` (Andrew, then a later pair); FWD-16 and the model API key (Andrew); the cold request's REMEDY (no cell until `AMGT-bi-2`'s table names the phase: the CTO's
+round-100 ADDENDUM 2(b)); `AMGT_RESAPP-S14-CRNCY-SCANNER-US-SLICE1` (queued at site Z, finish 2026-10-14; the answer is pp-4's input).
+
+### 110c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: the analysis's four items. Item 1 -> bi-1 + bi-2; item 2 -> bi-3; item 3 -> bi-4 (three of its six tests; the other three are named for the decision); item 4 -> bi-5 (carried).
+  Printed denominator 4 of 4 items placed (1 build, 1 staged apply, 2 reads, 1 portal candidate, 1 carried).
+- **(ii) Same grain.** bi-1 one product file by a prepared patch; bi-2 one code leg and one request; bi-3 two instruments run once each; bi-4 three files.
+- **(iii) Intent coherence.** bi-1 changes no served byte; bi-2 serves it and reads the request by phase; bi-3 reads the weekday steady state; bi-4 repairs only what is not a decision.
+- **(iv) What a cell does NOT move.** bi-1 and bi-2 move log lines and no response field; bi-3 writes one output file and invokes the function seven times; bi-4 leaves the wire folder, the
+  generators and the four wire-class tests exactly as they are.
+
+### 110d. EDGES AND FAN-OUT
+```
+bi-2 after bi-1 merged and reviewed, after its pair        (the apply is spent on a build the CTO has read)
+bi-3 independent; its requests must not overlap bi-2's apply (staged, so they do not)
+bi-4 independent (portal repository only)
+bi-5 on the DEMQUE answer and the first status.json reader
+fanout:
+  cap: 8
+  orders_total: 4          (bi-1, bi-3, bi-4 worker orders; bi-2 a staged seat order)
+  chains_total: 4          (bi-1 -> bi-2 ; bi-3 ; bi-4 ; bi-5)
+  wave_0: [bi-1 ~401, bi-3 ~402, bi-4 ~403]
+  wave_1 staged: [bi-2 RA1 (after bi-1's merge, the CTO's review and its pair)]
+  portal_ref: 0a06280a (the nested repository's DEV HEAD at the cut)
+  no_s3_deletes: true
+  egress: none; no Bloomberg call in any order
+```
