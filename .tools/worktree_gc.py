@@ -185,7 +185,10 @@ def classify(wt: dict, trunk: str, clean_h: float, held_h: float, live: set[str]
                    f"refs/heads/{trunk}", f"refs/remotes/origin/{trunk}", "refs/heads/box/", "refs/remotes/origin/box/"],
                   cwd=path).stdout.split()
     merged = bool(holders)
-    unmerged = 0 if merged else int((git(["rev-list", "--count", f"{trunk}..{head}"], cwd=path).stdout.strip() or "0"))
+    # Count against origin's trunk: on a box branch nobody advances the local trunk ref, so it can sit thousands of
+    # commits behind and inflate the unmerged count and the owner read (dell2 2.0.0_SA_COO~Y2, msg 6850).
+    base = f"origin/{trunk}"
+    unmerged = 0 if merged else int((git(["rev-list", "--count", f"{base}..{head}"], cwd=path).stdout.strip() or "0"))
     row.update({"idle_h": idle_h, "dirty": len(dirty), "unmerged": unmerged})
     if idle_raw < clean_h:
         row.update({"class": "ACTIVE", "reason": "a modified file was edited within the clean window"})
@@ -200,7 +203,7 @@ def classify(wt: dict, trunk: str, clean_h: float, held_h: float, live: set[str]
     # HELD: find the owner
     owner = ""
     if not merged:
-        author = git(["log", "-1", "--format=%an", f"{trunk}..{head}"], cwd=path).stdout.strip()
+        author = git(["log", "-1", "--format=%an", f"{base}..{head}"], cwd=path).stdout.strip()
         mm = SERIAL_RX.search(author)
         owner = mm.group(1) if mm else ""
     if not owner:
