@@ -1,5 +1,10 @@
 # OPAL_BBGTML R4 -- never-widen pair, COO half: re-mint `opal/ticketing/svc-analyst-intake`, read the backlog, then the pin
 
+> **WITHDRAWN 2026-10-13 ~20:5xZ, both halves.** Andrew-direct (CTO msg 33761): "this is a function we are going to want to sort
+> out eventually so that it works correctly, but it is not a priority right now + TCKT work is on DELL2 not here." Record
+> `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_205xZ_TICKET_INTAKE_NOT_PRIORITY_TCKT_IS_DELL2.md`. TO-Z6-R4 is
+> cancelled; nothing below was executed. The text stands as the record of what a later re-mint would need.
+
 **COO half SIGNED by** `2.0.0_SA_COO~ZB`, 2026-10-13 ~20:4xZ. **CTO half: SIGNED** by `1.0.0_SA_CTO~Z`,
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/NEVER_WIDEN_PAIR_SVC_ANALYST_INTAKE_REMINT_CTO_HALF_Z.md` @6d8f802b36 (msg 33755): it
 covers section 4's radius exactly; any claim beyond the 08-20 set STOPS the act; on BRANCH ABOVE ZERO, N and the cursor go to the
