@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~89</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run: FENCE-SCOPED rows_today=42 unchanged_today=True scoped_rendered=32/32 sim_ok=31/31 refusals_ok=5/5 unknown_key_refused_by=validator+module ok=True, no override; ATTRIBUTED relocation irpt-performance-adapter-role: 057cfa8a1c (ruling (f), exact-set match); BASELINE-SUBSTITUTION printed; arms 3 and 4 RETIRED with commits c64a667818 and 8114bac9cf; the 31 simulator calls answered; proof instance VALID on the committed state. Rows W89-S2 and W89-S3 (the pre-rows scopes lack restricted_prefix_hosts; the lgic fence files never append fence_scoped_allow_statements, inflection carries 0 of 4) are round-14 items.</status_reason>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
