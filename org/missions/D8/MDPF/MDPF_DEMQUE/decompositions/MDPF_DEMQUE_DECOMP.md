@@ -545,3 +545,8 @@ resolves; do not start a new Bloomberg draw until Andrew's form is complete. Mea
 device queue copy of the IRPT request was cut to P1 (630) by the issuer (original kept in the scratchpad; the repo copy stays as filed). One cell, `DQ-t-52` (`priority_gate.py`, `rank.py`
 refusal, the extension tiers and the daily draw skip P2 and P3, fail closed; `0.9.0_WK_MDPF_DEMQUE~44`, worker, LOCAL, workstream PRIGATE). The SECCLASS sync cell and the P1 windows to each
 account's held dates (the active-account set dell2 publishes) are later cells; this cell does not add them.
+
+**Round 9 amendment 17 (issuer, 2026-10-13 ~18:xxZ):** CTO msg 5025 (cluster packet O6/O7): B1's CUSIPs classified: 613 P1, 1 P2 (ABNFX, held back), 0 P3 (@13722430d4); the `rank.py` P3
+refusal is DQ-t-52 (in flight). The DEMQUE half of the SECCLASS sync (`C-DEMQUE-SECCLASS-SYNC`, PRD addendum): one cell, `DQ-t-53` (`secclass_sync.py --prove`, read only: one real
+security's key printed equal on the request row, the unresolved entry and the `etf-classifications` row, plus the negative arm; `--coverage` of landed fund names; `0.9.0_WK_MDPF_DEMQUE~45`,
+worker, LOCAL, workstream SECCLASSSYNC). Measured by the issuer: the table's one hash key is `ticker`, so the key a human reads across the three places is the symbol string.
