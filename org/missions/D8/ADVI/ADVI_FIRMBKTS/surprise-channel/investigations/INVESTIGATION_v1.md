@@ -7047,3 +7047,135 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Not cleared by the worker: no checkout, reset or commit of portal. A ruling is needed on whether AC2 reads the gitlink as out-of-scope drift or the submodule pointer is re-synced by the integrator. Disarm: none (INERT)."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W77-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~77",
+  "surfaced_at": "2026-10-13T22:23:46Z",
+  "one_line": "The prohibited key opal-data-inf/gold/meta/pipeline-complete.json has a second live watcher: an S3 notification on opal-data-inf routes its creation to inf-portal-publisher, and the PRD names only the mdpf-feeder-accelerator rule as its watcher.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B1 (carries the second watcher into the FWD-9 plan; the FWD-7 ruling governs the key itself)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api get-bucket-notification-configuration --bucket opal-data-inf (live): LambdaFunctionConfigurations = 2; inf-portal-publisher on ObjectCreated:* with prefix gold/meta/ and suffix pipeline-complete.json (record org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~77/PLANINV_INFLECTION_SERVING.json, row INF-EDGE-05)",
+      "aws events describe-rule --name mdpf-feeder-accelerator (live): State ENABLED; S3 Object Created on opal-data-inf key gold/meta/pipeline-complete.json; list-targets-by-rule: 1 target MdpfFeederTrigger",
+      "infra/aws/lambda/inf-gold-trigger/lambda_function.py:24 defines COMPLETE_KEY = 'gold/meta/pipeline-complete.json' and no other use of it appears in that file (grep of the file at 5760dbcc38db)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/prd/ADVI_FIRMBKTS_PRD.md:275-276 (DEC-12) names one watcher: the prohibited key is watched by the mdpf-feeder-accelerator rule (pin 5760dbcc38db)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ADVI_FIRMBKTS_PRD.md DEC-12 (lines 275-276): the prohibited key opal-data-inf/gold/meta/pipeline-complete.json is watched by the mdpf-feeder-accelerator rule.",
+  "world_is": "The same key is also watched by a live S3 notification from opal-data-inf to Lambda inf-portal-publisher (ObjectCreated under gold/meta/ with suffix pipeline-complete.json). The notification configuration is a singleton per bucket (PRD DEC-7).",
+  "notes": "Form only: no notification was changed, no key was read or moved. The move plan needs both watchers named for this key."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W77-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~77",
+  "surfaced_at": "2026-10-13T22:23:46Z",
+  "one_line": "The exec-summary trigger is live as an ENABLED rule named exec-summary-trigger on the bd-pipeline.gold-chain chain-complete event; the Terraform declares only a DISABLED cron placeholder, and no Terraform in the tree declares the live rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "owner of exec-summary-generator (not named in the order); surfaced to 2.0.0_SA_COO~B1 for the plan",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/exec-summary/main.tf:224-233 (pin 5760dbcc38db): rule exec-summary-trigger-placeholder, schedule cron(30 4 * * ? *), description 'PLACEHOLDER ... DO NOT enable until TO 7'",
+      "aws events describe-rule --name exec-summary-trigger-placeholder (live): ResourceNotFoundException; the placeholder is not deployed",
+      "aws events describe-rule --name exec-summary-trigger (live): State ENABLED; EventPattern detail-type chain-complete, source bd-pipeline.gold-chain; list-targets-by-rule: 1 target exec-summary-generator",
+      "Grep of infra/aws/terraform for exec-summary-trigger and chain-complete (pin 5760dbcc38db): no resource declares the live name; hits are the placeholder lines and a comment at bd-pipeline/iam.tf:677"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "infra/aws/terraform/exec-summary/main.tf:224-233 (pin 5760dbcc38db): the exec-summary EventBridge rule is the DISABLED placeholder exec-summary-trigger-placeholder; DO NOT enable until TO 7.",
+  "world_is": "Live: no rule of the placeholder name. An ENABLED rule exec-summary-trigger on the gold chain-complete event invokes exec-summary-generator, and no Terraform in the tree declares that rule.",
+  "notes": "Form only; no rule was changed. The generator defaults to firm 49financial (lambda_function.py:565) and its destinations are 49financial only (platinum_dest_view.py:5-15), which the inventory records as legacy_touch false for inflection."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W77-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~77",
+  "surfaced_at": "2026-10-13T22:23:46Z",
+  "one_line": "The served graph cannot answer the IAM-grant or Lambda-environment question for the Inflection bucket: a bucket-name query matches only the bucket policy node, while the live IAM read finds 40 roles with an Allow on opal-data-inf.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B1 (the move plan's grant column is read from the live IAM account read, not from the graph)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find --corpus aws 'opal-data-inf' IAM_POLICY (live graph read): DENOMINATOR 1 hit across 633 aws nodes scanned; the one hit is the bucket policy node arn:aws:s3:::opal-data-inf#policy",
+      "comp-find --corpus aws 'opal-data-inf' LAMBDA: DENOMINATOR 0 hits across 238 aws nodes scanned, while the live list-functions (saved capture) shows opal-data-inf in the environment of the inf-* and irpt-* functions",
+      "aws iam get-account-authorization-details --filter Role LocalManagedPolicy (live): 303 roles scanned, 40 with an Allow on opal-data-inf (scripts/planinv_iam_grants.py over the saved capture)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-k-2.inflection-serving.md section 2 bound 2: read AWS through the served graph first"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO FB-k-2 bound 2: AWS is read through the served graph first; comp-find --corpus aws lists CloudNodes with a printed denominator, and grants are read as list role, action class, resource.",
+  "world_is": "The graph's IAM_POLICY search matched only the bucket policy for the Inflection bucket, and its LAMBDA search matched no environment value; the grant and environment reads had to be taken live from IAM and Lambda.",
+  "notes": "Form only. The inventory records each grant with claim measured from the live IAM read, and the graph answers were recorded as denominators (record denominators, comp-find lines)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W77-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~77",
+  "surfaced_at": "2026-10-13T22:23:46Z",
+  "one_line": "The task order names an Inflection scope inside opal-data-bd; no source in this read holds one: the mapping table has 0 opal-data-bd rows with an inflection prefix, no IAM statement names one, and the one bd-scope Lambda maps 49financial only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v4.json (3451 rows): opal-data-bd 247 rows; a scan of the prefix field finds 0 rows with an inflection or inf prefix",
+      "aws iam get-account-authorization-details (saved capture): a scan for statements naming opal-data-bd with an inflection or inf scope finds 0",
+      "infra/aws/lambda/exec-summary-generator/platinum_dest_view.py:5-15 (pin 5760dbcc38db): the bd destinations are opal-data-49financial only",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-k-2.inflection-serving.md section 1a names the scope the inventory must cover"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO FB-k-2 section 1a: the inventory covers what touches opal-data-inf or the Inflection scope inside opal-data-bd.",
+  "world_is": "No read found an Inflection scope in opal-data-bd. The firm's data sits in opal-data-inf and in the new bucket, and bd is reached in this read only by 49financial code paths.",
+  "notes": "Form only. The inventory keeps the opal-data-bd side at zero rows for the firm and says so in the denominators (mapping_v4 bd rows with an inflection prefix: 0)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W77-S5",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~77",
+  "surfaced_at": "2026-10-13T22:23:46Z",
+  "one_line": "The served graph holds 238 LAMBDA nodes while the live list-functions returns 237 functions; the one-node difference is not identified in this read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find --corpus aws '.' LAMBDA (vintage 2026-10-13 21:02:47 UTC): DENOMINATOR 238 hits across 238 aws nodes scanned",
+      "aws lambda list-functions --output json (auto-paginated, saved capture): 237 functions",
+      "the record denominators (record org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~77/PLANINV_INFLECTION_SERVING.json) carry both numbers; the difference was not chased (out of the slice)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The served graph and the live Lambda plane agree on the function population, so a sweep denominator taken from either reads the same count.",
+  "world_is": "At the graph vintage (21:02:47 UTC) the graph counts 238 LAMBDA nodes; at the live read the plane lists 237 functions. One node is in one count and not the other.",
+  "notes": "Form only. Recorded so the issuer can re-read the denominator against the plane before the move plan relies on either count."
+}
+```
