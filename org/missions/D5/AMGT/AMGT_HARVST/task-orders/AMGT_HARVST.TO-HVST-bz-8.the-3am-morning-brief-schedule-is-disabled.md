@@ -69,6 +69,19 @@ Your STOP was right: a targeted plan includes the schedule's dependencies, and t
 6. Read AC1-AC3 below, save them, close the ledger legs and `python .tools/deploy_ledger.py close --slug astn-3am-off-20261013`, and report to the issuer with the file paths.
 NO untargeted apply, NO `aws scheduler update-schedule` or other CLI edit of a managed resource, NO apply of a plan that is not one of the two above.
 
+## 2b. AMENDMENT 2 (issuer, 2026-10-13 ~21:0xZ, after the apply of ~20:48Z): THE INSTANCE THE PROVIDER STARTED -- A READ NOW, A STOP ONLY ON ANDREW'S RELAYED YES
+
+The apply read `Apply complete! Resources: 0 added, 3 changed, 0 destroyed.` and the provider STARTED `i-059405dfefcb4b44a` (tag `astn-wsjft-scraper`) to change its `user_data`: stopped at 20:46:51Z, launched 20:48:11Z. Both halves' first
+reading ("starts nothing") was wrong; the CTO's ADDENDUM 2 and the COO half's ADDENDUM 2 record it. An EC2 stop is Andrew's confirmation to give, so:
+1. **Now, read only:** that no pipeline process runs on the box. `.tools/aws ssm send-command --instance-ids i-059405dfefcb4b44a --document-name AWS-RunShellScript --parameters 'commands=["ps -eo pid,etime,comm --sort=-etime | head -40"]'`
+   then `get-command-invocation` for its output; save as `bz8_instance_ps.out`. Print process NAMES only (`comm`), never arguments. If SSM does not reach the box, say so and stop; do not try another route.
+   Record in `bz8_instance_ps.out` whether any of `python`, `python3`, `node`, `chrome`, `Xvfb` or `run.py` runs.
+2. **Only after the issuer's message states Andrew's relayed YES (it names this step):** ONE `.tools/aws ec2 stop-instances --instance-ids i-059405dfefcb4b44a`, then a read-back that `describe-instances` reads `stopped`
+   (poll, with a stated cap of 10 minutes); save as `bz8_instance_stop.out`. If the issuer's message does not state the yes, take no stop.
+3. Close the ledger legs (record the start as a finding and the stop or its absence), commit the proof_of_spec instance, and report. The ledger `astn-3am-off-20261013` closes only after the read-back, or stays OPEN with the
+   instance named if the yes has not arrived; the seat then stands down and the issuer re-engages it.
+Nothing else is touched: no Terraform apply, no change to the Lambda or the schedule.
+
 <paths>
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round84/
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/
