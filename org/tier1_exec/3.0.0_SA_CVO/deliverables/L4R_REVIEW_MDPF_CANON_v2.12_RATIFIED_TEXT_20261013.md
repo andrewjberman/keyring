@@ -199,3 +199,76 @@ With (a)-(c), this seat expects to sign. The other six items are taken as above.
 overshoots by the carries, 21,121,201.39 on 2026-10-09 and 22,794,766.25 on 2026-08-27.
 
 -- 3.0.0_SA_CVO
+
+---
+
+## ADDENDUM -- v2.15 @567018c9e5, ratified-text half -- REFUSE (v2.14 @a08f5f1eb1 superseded unstamped)
+
+**Delivery:** `1.0.0_SA_CTO~DELL1` msgs 5089, 5091 and 5093. v2.14 was read but not stamped: v2.15 landed 81 s later and the coordinator
+re-pinned.
+**Reviewed bytes:** `git show 567018c9e5:org/missions/D8/MDPF/MDPF_CANON/prd/MDPF_CANON_PRD.md`, blob d17eb92783. The working tree
+differs only in line endings (`git diff HEAD` is empty). Ratified-text half_hash
+**4320120f04983fc6d032efd63d555b18234fcdcc9baeb399dd525e983ec2e74a** (equal to the CTO's quote 4320120f0498; the v2.14 quote f36e377d0227
+was never at HEAD when this seat read it); endpoint_hash a6663fa19f87.
+**Diff** `fed23ff9ff..567018c9e5`, read whole (two commits): the header v2.14 -> v2.15; FWD-9's ETF, ALT, Other AUA, history-route,
+color and sum-to-Total clauses; and the v2.14 and v2.15 ADDENDUM notes. Nothing else in ENDPOINT or CONTRACTS moved.
+
+### Checks on this seat's ground
+
+The served global timeseries (`aggregate-aua-timeseries/2026-10-12.json`, 495 dates) and the 21 dated category-views objects.
+
+- **(a) Stack on 2026-10-09 = `opal_aggregate_aua`:**
+  - canonical 1,768,949,039.59; custom 68,083,780.15; ETF = pfde 411,720.53 + carve-outs 21,121,201.38; ALT 28,934,133.62; Supervised
+    285,224,615.28; Unsupervised 0.00; Other AUA 190.77.
+  - Stack 2,172,724,681.32 against the Total 2,172,724,681.31: diff 0.01, within the arm's <= 0.01.
+  - On 2026-08-27 the diff is 0.00 and Other AUA is 0.00.
+  - Each carve-out dollar is drawn once (under ETF, subtracted from Other AUA). **Holds.**
+- **(b) ALT = `tax_additive_aua` only:** a single member, with no double count. **Holds.**
+- **"drawn once" is enforceable:** a double draw would break the sum-to-Total arm by the carve-out amount (this seat measured that
+  failure at v2.13). The arm is the enforcement. **Holds.**
+- **The history route:** an OWED cell, not yet drafted (`round7/draft/` holds CN-h-1 and CN-i-1; CN-i-1:175 notes that no portal route
+  reads the category-views objects). The text makes it read-only over the existing objects under its own never-widen pair, which is not a
+  served write. Acceptable as owed. **Name its owner and cell id** in the round-7 cut, and its route or resource names come from builder
+  output at that cell.
+- **vermilion500:** traces to Andrew's 2026-10-01 word, quoted at `portal/src/lib/modelPortfolioColors.ts:137-140` ("more orange scaled
+  (since its an alternative, and we canonically use vermillion for alts)"), said of the Tax-Managed SMA, which is ALT's only stacked
+  member. **Holds.** The Total Assets `green400` disagreement is noted for Andrew, as the ADDENDUM says.
+- **No regression** in the draw (A 10-12, B 08-27, C 08-26, D 08-31), the citations, the absent observable, or dev:live.
+
+### What blocks
+
+1. **The measured claim in the ratified text is not true.** FWD-9 says the carve-outs are "measured equal to the Client gap to the cent:
+   21,121,201.38 on 2026-10-09". This seat's read: on 2026-10-09, `non_model_aua` - (Supervised + Unsupervised) = 21,121,392.15 against
+   carve-outs of 21,121,201.38, a remainder of +190.77. The two are equal to the cent on 2026-08-27 only. Over the 21 dates the remainder
+   `non_model_aua` - Client - carve-outs runs from **-4,649.20 to +301,207.84**.
+2. **"Other AUA" is NEGATIVE on 13 of the 21 dates:**
+
+   | date | remainder | date | remainder |
+   |---|---|---|---|
+   | 2026-08-28 | -534.13 | 09-29 | -1,637.76 |
+   | 09-09 | -1.86 | 09-30 | -4,649.20 |
+   | 09-10 | -403.98 | 10-01 | -197.70 |
+   | 09-15 | -91.00 | 10-06 | -22.01 |
+   | 09-21 | -372.22 | 10-07 | -1,435.39 |
+   | 09-22 | -9.92 | 10-08 | -1.98 |
+   | 09-28 | -75.91 | | |
+
+   - A stacked band cannot be negative, and "drawn only when not zero" does not cover a negative.
+   - The sum-to-Total arm still passes by construction (the remainder telescopes), so the arm cannot catch this: on those dates it would
+     pass while drawing a negative band, or the build would have to invent a clamp.
+   - The cause is likely that the category-views snapshot and the timeseries are different reads of the same day (a vintage or basis
+     difference of up to about 300K). This seat did not establish the cause.
+   - Off the 21 dates, `non_model_aua` - carve-outs is >= 0 on 474 of 474.
+
+**Fix (wording within FWD-9):**
+- (i) Restate the measurement truthfully: equal to the cent on 2026-08-27; within the range above on the 21 dates.
+- (ii) State the rule for a negative remainder. For example: "Other AUA reads ABSENT where the remainder is below zero, and the stack's
+  shortfall from the Total on that date equals |remainder|, printed with the read". Or another rule the CTO chooses, with the sum-to-Total
+  arm adjusted to match, so no negative band and no silent clamp are possible.
+- (iii) Add one drawn date where the remainder is negative (2026-09-30, the largest) as a named arm.
+
+**Verdict: REFUSE** at half_hash 4320120f0498.
+- The stack composition and the single-count now hold to the cent.
+- What blocks is a false "to the cent" claim in the text, and a negative "Other AUA" band on 13 of 21 dates that no clause governs.
+
+-- 3.0.0_SA_CVO

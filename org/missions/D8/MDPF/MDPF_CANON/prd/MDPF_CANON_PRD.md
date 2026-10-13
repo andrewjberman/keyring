@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v2.15",
+ "prd_version": "v2.16",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -204,9 +204,12 @@ CONTRACTS changed, so both halves are owed again.
                       carve-out SMA lines `opal_div_sma` and `opal_growth_sma`.
                       Those two sit INSIDE `non_model_aua`, so they are carved
                       OUT of it by their own served `by_model` values (exact
-                      members, not an estimate; measured equal to the Client
-                      gap to the cent: 21,121,201.38 on 2026-10-09 and
-                      22,794,766.25 on 2026-08-27);
+                      members, not an estimate). Measured against the Client
+                      gap: equal to the cent on 2026-08-27 only. Over the 21
+                      dated objects the remainder after the carve-out runs
+                      from -4,649.20 to +301,207.84 (the category-views
+                      snapshot and the time series are different reads of the
+                      same day; cause not established);
                     - "ALT Strategies" (`ALT Strategies`): the stacked member is
                       `tax_additive_aua` ONLY, the headline component (`tax` in
                       `by_model` is the same dollars, equal to the cent, and is
@@ -216,8 +219,12 @@ CONTRACTS changed, so both halves are owed again.
                       Supervised" (`Client - Opal Supervised`), "Client
                       Unsupervised" (`Client - Opal Unsupervised`) and "Other
                       AUA" (the remainder: `non_model_aua` minus the two Client
-                      chips minus the two carve-out SMA lines, drawn only when
-                      not zero). On a date WITHOUT one it is ONE series, "Other
+                      chips minus the two carve-out SMA lines). It is drawn
+                      only when ABOVE zero. Where it is zero or BELOW zero it
+                      reads ABSENT: no band is drawn, there is no clamp, and
+                      the amount below zero is printed with the read as that
+                      date's basis difference. On a date WITHOUT one it is ONE
+                      series, "Other
                       AUA" (`non_model_aua` minus the two carve-out SMA lines),
                       and the two Client chips draw nothing. The Client chips
                       read the dated category-views objects through a
@@ -245,7 +252,10 @@ CONTRACTS changed, so both halves are owed again.
                     `opal_aggregate_aua` to the cent (CN-d-3's property, kept;
                     the Total is model + non-model + `sma_additive_aua` +
                     `tax_additive_aua`; the carve-outs are drawn once, under
-                    ETF, never also inside Other AUA), EXCEPT on a date where
+                    ETF, never also inside Other AUA), EXCEPT (i) on a dated
+                    object where the Other AUA remainder is below zero: there
+                    the stack EXCEEDS the Total by exactly |remainder|,
+                    printed, and (ii) on a date where
                     FWD-3's fold
                     suppresses the pooled "Other Models" line at Global (fewer
                     than 2 firms hold it). There the stack is BELOW the Total
@@ -257,8 +267,12 @@ CONTRACTS changed, so both halves are owed again.
                     category-views date; date C is the trading day before
                     2026-08-27; date D is the first trading day between
                     2026-08-27 and the frontier with no category-views
-                    object. B, and A when it carries an object, are the
-                    present arms; C and D are the absent arms;
+                    object; date E is 2026-09-30, the dated object with the
+                    most negative remainder (-4,649.20). B, and A when it
+                    carries an object, are the present arms; C and D are the
+                    absent arms; E is the negative-remainder arm (Other AUA
+                    absent, the excess printed and equal to |remainder| to the
+                    cent);
                     (4) ABSENT, on C and D: no Client bar or area segment is
                     drawn, the tooltip carries no Client row (or one reading
                     "absent", never "$0"), and the legend chips stay with no
@@ -629,5 +643,14 @@ reaching dell1 at the next integrator pass. It was read here from `origin/box/de
 - **Fork 3: ALT on the Trend stays `vermilion500`.** Andrew's 2026-10-01 word, "we canonically use vermillion for alts", is his latest on alts; the 10-13 instruction pins
   only the Custom color, and "the Total Assets colors" for the four chips was the recorder's reading. The pin test stands. **Noted for Andrew** (no change here): Total Assets
   itself colors ALT `green400` (2026-09-15), which disagrees with his 10-01 canon.
+
+-- 1.0.0_SA_CTO~DELL1
+
+**v2.16 (2026-10-13 ~19:2xZ), on `3.0.0_SA_CVO`'s REFUSAL of v2.15** (review ADDENDUM @dbba589a4c):
+- (i) The measurement is restated truthfully: the gap equals the carve-outs to the cent on 2026-08-27 only, and lies within -4,649.20 to +301,207.84 over the 21 dates.
+- (ii) A negative remainder reads ABSENT, with no clamp, and its size is printed as the date's basis difference. The sum-to-Total arm states that the stack exceeds the Total by
+  exactly |remainder| there.
+- (iii) Date E (2026-09-30) is a named arm.
+- **Noted for a later cell, not FWD-9:** why the category-views snapshot and the time series disagree by up to about 300K on the same day. Cause not established.
 
 -- 1.0.0_SA_CTO~DELL1
