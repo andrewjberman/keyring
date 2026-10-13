@@ -31681,3 +31681,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The cause is not known to this seat: not a deletion this seat made in this session. Left as found. The closeout commit of TO-IB-pr-512 names its two files by path and does not carry the 39 deletions, because the mass-deletion gate refused them as unattributed and they are not this order's act. If the removal was intended, whoever intended it commits it with attribution; if not, git checkout of the folder restores all 39 from HEAD."
 }
 ```
+
+## IRPT_BCKEND-D2-S134 -- DISPOSITION after the round-178 drain: the apply verified; W345-S3 still armed; S133 was my deletion
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S134",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T14:38:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISPOSITION after the round-178 drain: TO-IB-pr-512 (the apply of the signed pair) verified by the issuer; W345-S3 stays ARMED with the reason that the leftover count was taken BEFORE any build; row IB2-S133 (39 missing records) was MY deletion and is restored.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer re-run in the merged tree: IB178-1 AC1, AC2, AC3 PASS (IB2's close commit 5e13705967); round-close-check MAY-CLOSE (orders=1).",
+      "independent reads by this seat: head-object of the three package keys now reads 49financial VersionId UHOCIkWj3QiIzNucG1VjNnk_AufIg6oD (member-count 44), inflection PzhCs97qVBXkZcIjaOklHmzWiFsOFafM (44), cottonwood oyIYMVdh_l2zCg5ZWvn3ISPPS6_9Q82_ (unchanged, the rollback VersionId of the packet); ec2 describe-instances: running since 2026-10-13T13:30:36Z; ssm list-command-invocations since 13:30Z: the three 'irpt holdings refresh <firm> 2026-10-13' invocations at 10:15 ET (14:15Z) all Success, the two 'first read count' invocations at 09:37 ET (13:37Z) Success.",
+      "the packages put are the packet's candidates (IB-pr-510, sha256 c2b7275939d0..., both halves signed)."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "VERIFIED: the minimal packages for 49financial and inflection are live (new VersionIds above), put at a scheduler start (CloudTrail StartInstances 13:30:36Z by irpt-directory-refresh-role, per IB2), cottonwood untouched, and the 14:15Z holdings refreshes ran for all three firms with Success. STILL ARMED: W345-S3: the 49F builder's leftover-file fix is now on the host, but IB2's first read (counts 0 and 0 at ~13:37Z) PRECEDED every build on the new packages, so the count AFTER a build is not measured; the next cell (IB-pr-513, drafted) repeats the same read-only count after the 14:15Z builds if the host is still Online, else at the next scheduled Online; a task order cannot join round 178 once its issuance is at HEAD (the gate: ONE ISSUER PER ROUND), so it is cut in round 179. RULED: IB2's command_run omits -printf and a stderr redirect because MY check rejected any '>' character; the literal command is a read-only find piped to wc -l (command_run_literal): the check was crude, not the act; W345-S3 evidence does not rest on it. CORRECTED: IB2's row S133 said 39 tracked records in its deliverables folder were missing from the working tree 'not its act': the deletion was MINE: my positive control of the IB178-1 check created and then removed that folder with rm -r, which held 39 tracked records; restored with git restore from HEAD (clean status, 41 files). Nothing else in the folder was modified. STILL ARMED: W361-S1, W348-S2."
+}
+```
