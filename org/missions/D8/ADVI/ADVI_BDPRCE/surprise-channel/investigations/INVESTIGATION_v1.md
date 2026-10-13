@@ -534,3 +534,157 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "A full census of untickered lots across 3,510 objects of about 4 MB was not run within the bound. The counts in THREAD_TRACE.json shape_counts are sample counts; the first fitting candidate in file order is the first fitting lot of the first sampled object, which the file-order rule accepts."
 }
 ```
+
+## ADVI_BDPRCE-D1-W4-S5 -- On 2026-10-09 the daily price file and the canonical file disagree on one untickered asset's source: carry_forward against transaction_observed
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W4-S5",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~4",
+  "surfaced_at": "2026-10-13T15:10:00Z",
+  "one_line": "EXXONMOBIL HOLDINGS CORP COM SHS on 2026-10-09 has carry_forward 162.155 in silver/prices/2026-10-09.parquet and transaction_observed 168.94 in canonical_prices.parquet; the served lot carries 168.94, the canonical value.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver/prices/2026-10-09.parquet version LhM3NuODjCiM_VUkEQiojppZtVu4Jf7y read live by trace_price.py run_live: one row for the asset, price 162.155, source carry_forward",
+      "silver/prices/canonical_prices.parquet version V7JNX.GmPYQcEVMywtMRnjk.fSdQl1WA read live by trace_canonical_only.py: one row for the asset on 2026-10-09, price 168.94, source transaction_observed",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~4/TRACE_2026-10-09_thread.json served_rows (tie true, stable pick the daily row); TRACE_2026-10-09_thread_canonical.json served_rows (canonical only, recompute 168.94)",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~3/GAP_ROWS.csv line 1608: 2026-10-09 EXXONMOBIL HOLDINGS CORP COM SHS 168.94 EQUAL"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order section 1a step 3: the trace names one served row per (asset, date) and the rule that produced it; the daily and canonical files agree on the source of a served row.",
+  "world_is": "The two price objects carry different sources for the same asset and date (carry_forward against transaction_observed). The served lot follows the canonical row. The daily row is not reproduced by any trade on 2026-10-09 for this asset (the trade partition gives 168.94 for the asset, the daily value is 162.155)."
+}
+```
+
+## ADVI_BDPRCE-D1-W4-S6 -- trace_price.py names the daily row as the carry-forward input of the wrong date and reports zero trades for a tie it does not resolve as the served lot does
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W4-S6",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~4",
+  "surfaced_at": "2026-10-13T15:10:00Z",
+  "one_line": "trace_price.py run_live on EXXONMOBIL HOLDINGS CORP COM SHS at 2026-10-09 takes the daily row (stable pick), reports carry_forward with trades 0, and names 2026-10-08 at 168.2864 as its carry-forward input; the daily value 162.155 equals the 2026-09-28 canonical row, not the 2026-10-08 row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~4/TRACE_2026-10-09_thread.json: source carry_forward, trades 0, match false, rule_inputs carry_forward_input 2026-10-08 at 168.2864",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~3/GAP_ROWS.csv line 872 (2026-09-28 canonical 162.155 EQUAL) and line 1524 (2026-10-08 canonical 168.2864 EQUAL)",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~2/trace_price.py trace_asset_date:174-227: winner = same.iloc[0] (stable pick), trades read only when the winner is transaction_observed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "trace_price.py README: for carry_forward the tool names the nearest earlier canonical row as the input, and a same-date tie is reported as a tie with a stable pick.",
+  "world_is": "For this tie the stable pick is the daily row, whose carry-forward value matches a row two trading days earlier than the one the tool names. The tool's rule attribution for that daily row is therefore not the rule that produced it. The canonical row, which the lot carries, is traced only by a call with the canonical object alone (trace_canonical_only.py, which calls the instrument's trace_asset_date unchanged)."
+}
+```
+
+## ADVI_BDPRCE-D1-W4-S7 -- The 2026-10-09 trade partition holds four rows of one transaction id for one asset
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W4-S7",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~4",
+  "surfaced_at": "2026-10-13T15:10:00Z",
+  "one_line": "silver/transactions/2026-10-09.parquet holds four rows with one transaction_id for EXXONMOBIL HOLDINGS CORP COM SHS, all at the same unit value 168.94; the rule keeps repeats, so the trade count of the thread is four rows and one trade.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver/transactions/2026-10-09.parquet read live by trace_canonical_only.py: rows_used 4, distinct_trade_ids 1, median_distinct 168.94, recomputed_price 168.94 (TRACE_2026-10-09_thread_canonical.json)",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~2/TRACE_README.md: the daily path does not de-duplicate on transaction_id"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order section 1b: trade_ids are the transaction ids behind the price (by trade id), and the recompute is the median over them.",
+  "world_is": "The median is unaffected here (all four rows carry 168.94), but the thread rests on one distinct trade repeated four times. Whether the duplicate rows are a writer effect or a source effect is not measured."
+}
+```
+
+## ADVI_BDPRCE-D1-W4-S8 -- A served lot's market value does not equal its quantity times its current price
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W4-S8",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~4",
+  "surfaced_at": "2026-10-13T15:10:00Z",
+  "one_line": "Two open lots of EXXONMOBIL HOLDINGS CORP COM SHS in one client object (account ref 420deb1a5526) carry quantity 73, current_price 168.94 and market_value 5000.7866; the product of quantity and price is about 12332.6, and the market value implies a unit value of about 68.50.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "opal-data-49financial advi/49financial/platinum/entities/clients/<normal key, sample position 58>/detail.json at VersionId ZCjWpzPR1n2uZl849onevhS.pIvSQhVA, read live by the BP-a-4 sample script (lots 2 and 3 of the asset; quantity 73.0, current_price 168.94, market_value 5000.7866 each)",
+      "the same object, all 110 open lots read live at the same VersionId: 103 satisfy quantity times current_price equals market_value within 1 percent; 7 do not (the two Exxon lots and five lots of other assets)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The served lot carries current_price, quantity and market_value for one holding; the market value is the quantity times the current price.",
+  "world_is": "Measured on one client object: 7 of 110 lots break the identity, two of them the Exxon lots. The scope across the served home is not measured (outside the cell's bounds). For those lots a valuation read from market_value would differ from one read from quantity times price."
+}
+```
+
+## ADVI_BDPRCE-D1-W4-S9 -- A holding with a null served ticker and no ticker-lookup entry is a listed-name security, so the operational no-public-ticker rule does not separate it from a listed holding
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W4-S9",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~4",
+  "surfaced_at": "2026-10-13T15:10:00Z",
+  "one_line": "The task order's no-public-ticker rule (served ticker null OR no config/ticker_lookup.json entry) selects EXXONMOBIL HOLDINGS CORP COM SHS as the first fitting holding; the name reads as a listed common stock, and the record cannot tell from the served object whether it has a public ticker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "config/ticker_lookup.json of opal-data-bd (VersionId PD_UeAZIKoYt0z0Rj9NIQyjqRGMKXYPq, 10,206 entries): exact-name match for the asset returns no entry",
+      "served lot ticker null in the same object (BP-a-4 sample, sample position 58)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order section 1a step 2: a holding with NO public ticker, where the served ticker is null, empty or UNKNOWN, or the asset has no entry in config/ticker_lookup.json.",
+  "world_is": "The operational rule is satisfied and the outcome sentence (a security with no public ticker) is not established by the rule. The first fitting holding is a common-stock name. The thread record states the rule used and does not claim the asset has no listing."
+}
+```
+
+## ADVI_BDPRCE-D1-W4-S10 -- Some served client detail objects carry a data_as_of months before the served as-of date
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W4-S10",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~4",
+  "surfaced_at": "2026-10-13T15:10:00Z",
+  "one_line": "Of 120 sampled normal client detail objects in advi/49financial/platinum/entities/clients/, nine carry data_as_of before 2026-10-09 (six at 2026-04-02, one each at 2026-06-24, 2026-07-20 and 2026-10-07); none of the nine holds an untickered holding.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "opal-data-49financial client detail objects read live by the BP-a-4 sample script: 120 normal objects (stride sample of 3,509 normal detail.json keys); data_as_of counts 2026-10-09: 111, 2026-04-02: 6, 2026-07-20: 1, 2026-06-24: 1, 2026-10-07: 1",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/surprise-channel/investigations/INVESTIGATION_v1.md ADVI_BDPRCE-D1-W4-S1 (served detail dated 2026-10-09, not T-1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order section 1a step 1: the served T-1 object is the one the portal reads at the default T-1 date, and it carries the holdings for the served date.",
+  "world_is": "The served home holds client objects whose as-of date is months old, alongside objects dated 2026-10-09. The served T-1 object is therefore not uniform across client objects; the thread uses each object's own data_as_of."
+}
+```
