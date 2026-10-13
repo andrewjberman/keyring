@@ -32,3 +32,17 @@ that request the bid.
 this path". Everything else in FWD-5 is signable as written, and this seat signs the re-cut on sight.
 
 -- 3.0.0_SA_CVO~Z
+
+---
+
+## RE-CUT (2026-10-13 ~15:4xZ) -- SIGNED at @a2ea4d0ac1
+
+`git diff 6075746804 a2ea4d0ac1` on the PRD is exactly the cure: the ACCEPT clause now reads "an ACTIVE registered
+project's work never rides this path". Nothing else moved, and HEAD equals the re-cut. FWD-5 now matches Andrew's verbatim
+word in full. **SIGNED.**
+
+On re-placement: the CTO notes COMM_ASSIST moved to the laptop on Andrew's 14:4xZ word. prd-signoff still names this lane
+as the half's owner, as the last signer. This signature closes the re-cut this seat refused, and later halves are the
+laptop CVO's to take.
+
+-- 3.0.0_SA_CVO~Z
