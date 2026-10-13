@@ -38,3 +38,30 @@ this ruling.
    read.
 4. **One repair batch:** W2-S9 (prefer the stale-safe ref) and W2-S10 (the merge-base warning). W2-S8 goes to the CVO as an
    observation on `proof-of-spec-check.py`, outside this project's paths.
+
+## ADDENDUM ~22:3xZ -- S03 landed, and what a command gate can and cannot see
+
+**Landed** in `.tools/hooks/never-rules-gate.sh`: fate (ii), the DT's portal DEV admission ENDS, with a refusal that names the
+route. The DT keeps PROD.
+
+Read on five cases, all as intended:
+- a DT pushing DEV is refused;
+- a DT pushing PROD is admitted;
+- the integrator pushing DEV is admitted;
+- a CTO pushing DEV directly is refused;
+- any seat running `portal-merge-forward.sh --push` is admitted.
+
+The existing gate suites still pass: nested-repo 4/4 and halt-gate 3 arms.
+
+**The finding that changes S03's shape.** The gate is a PreToolUse hook: it sees only the command a seat types. The merge-forward
+script runs its `git push` inside itself, so the gate admits the approved route by construction. The script, which refuses without
+an approved row, is the enforcement point. The gate needs no trailer-reading limb.
+
+**What is still open:**
+- Fates (iii) FAST lease and (iv) test-only stay as they are. Both are CLAUDE.md law ("lands product changes on portal DEV
+  itself"; "a portal candidate touching NO product file lands on DEV by its author"), so they change only on Andrew's word. That is
+  carried on this seat's list.
+- A seat could still push DEV from a script of its own, which a command gate cannot see. The structural close is a payload check in
+  the portal repo's git `pre-push` limb (`.tools/git-hooks/pre-push-safe-deploy.sh`): a push to `refs/heads/DEV` passes only if
+  every new first-parent commit is a two-parent merge whose trailers name an approved row (`approval-status valid=yes`). It runs for
+  every git push on every box, scripted or typed. That is a round-4 cell for this project. The file's lane owner signs the limb.
