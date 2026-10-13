@@ -674,3 +674,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## NFRA_DEVPLN-W2-S8 -- proof-of-spec-check's POST-COMMIT pin-drift line names 066fd5d7e2 as the commit that changed the register test row's file, and git says it did not
+
+```json
+{
+  "id": "NFRA_DEVPLN-W2-S8",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~2",
+  "surfaced_at": "2026-10-13T21:18:04Z",
+  "one_line": "On the proof instance for DP-r-1, the checker's artifact-resolution/pin-drift line reports 1 row whose pinned version had a line removed or changed by 066fd5d7e2 (the proof-instance commit). The row is .tools/tests/test_open_calls_register.py pinned at 6b9bc6662b, the one-line repair. Git shows 066fd5d7e2 adds only the instance file (118 insertions) and touches no tool or test file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "proof-of-spec-check artifact-resolution: a pinned row's graded content is read at its pin, and POST-COMMIT drift is announced when the pinned version was changed by the instance commit (AMGT_CORPUS-Z-S70 class).",
+  "world_is": "The checker returned VALID rc=0 with 5/5 rows and 0 violations; its drift announcement attributes a change to a commit that does not touch the cited file. git log -- .tools/tests/test_open_calls_register.py lists 6b9bc6662b then 7bff1eab9b, and 066fd5d7e2 is an ancestor of 6b9bc6662b, so the attribution is not the instance commit's diff. The announcement is advisory (ANNOUNCED, not asserted) and did not change the verdict.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "proof-of-spec-check run on org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~2/NFRA_DEVPLN.TO-DP-r-1.repair-batch.proof_of_spec.json: artifact-resolution/pin-drift names .tools/tests/test_open_calls_register.py@6b9bc6662b, 1 line changed by 066fd5d7e2",
+      "git show --stat 066fd5d7e2: 1 file changed, 118 insertions, the instance JSON only",
+      "git log --oneline -3 -- .tools/tests/test_open_calls_register.py at HEAD: 6b9bc6662b, 7bff1eab9b"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
