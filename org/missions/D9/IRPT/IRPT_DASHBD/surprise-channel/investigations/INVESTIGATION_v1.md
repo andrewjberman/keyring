@@ -7889,3 +7889,104 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W143-S1 -- The export document has no source in the render bundle: the hookup into PrintDocument needs a FilledReport the bundle does not carry
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W143-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~143",
+  "surfaced_at": "2026-10-13T21:49:25Z",
+  "one_line": "The order says the export document goes through the portal's existing print render and is wired by the issuer at the merge; the print render passes a RenderBundle, which carries no FilledReport, so PerformanceReportDocument has no bundle-side source to be fed from.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-177 says the export document goes through the portal's existing print render (render/Page.tsx, render/PrintEntry.tsx, render/print.css, render/performance/PerformanceDocument.tsx) and that the wiring of PerformanceReportDocument into ExportModal and the print entry is the issuer's hookup, named by the worker.",
+  "world_is": "PrintDocument (render/PrintEntry.tsx:398) and export/Preview.tsx:296 render PerformanceDocument with a RenderBundle. The RenderBundle carries performanceReport or dashboardPerformance, never a FilledReport (the contract's document layout keyed by member id). No file names a function that turns a bundle into a FilledReport, so the hookup needs a source decision the order does not name. Nothing in the criterion depends on it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/render/PrintEntry.tsx:398 at portal base 47673668: PrintDocument renders PerformanceDocument with bundle",
+      "portal/src/pages/InvestorReporting/export/Preview.tsx:296 at portal base 47673668: the preview renders PerformanceDocument with bundle",
+      "portal/src/pages/InvestorReporting/render/performance/report/PerformanceReportDocument.tsx at portal commit 091ae64e: the new document takes a FilledReport and a firmWord, and is not wired"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W143-S2 -- The portal's page frame requires a report-state band the filled report cannot supply, so the document uses the print classes in its own frame
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W143-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~143",
+  "surfaced_at": "2026-10-13T21:49:25Z",
+  "one_line": "The existing page primitive PageSheet requires a reportState (FE-s-31) read off an availability block; a FilledReport carries none, so the document lays its sheets with the same print.css classes in its own frame and prints no report-state band.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-177 says the document is laid out for print through the portal's existing page primitives.",
+  "world_is": "PageSheet (render/Page.tsx:379) has a REQUIRED prop reportState: ReportStateChrome, built by reportStateChrome(report) from availability.state and sourceTimestamps. A FilledReport has neither, and inventing a state would print a READY band the report never stated. The new frame reuses the classes ir-page, ir-page-performance-landscape-letter, ir-page-head, ir-logo-clearspace, ir-logo, ir-identity, ir-page-foot and ir-page-number, and prints 'Page n of N' itself (PageSheet prints 'n / N').",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/render/Page.tsx:379 at portal base 47673668: PageSheet props include reportState: ReportStateChrome as required",
+      "portal/src/pages/InvestorReporting/render/Page.tsx:402 at portal base 47673668: the footer prints pageNumber / pageCount"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W143-S3 -- A section taller than one letter sheet is not split by the document, and the Page n of N count is not measured for a real household
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W143-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~143",
+  "surfaced_at": "2026-10-13T21:49:25Z",
+  "one_line": "The document makes one sheet per section (one per account for the two per-account sections) and never splits a sheet across letter pages; the Page n of N count is correct only while each sheet fits its page, which is measured on the synthetic fixture alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-177 says every page carries the baseline footer (Page n of N) and the export lays the same eight sections out for print.",
+  "world_is": "The synthetic fixture renders 10 sheets (screenshot export_document_full.png in the worker folder): the eight sections, with the two per-account sections one sheet per account. In the worker's screenshot, read at reduced resolution, each sheet's footer sits at its own sheet foot and no content visibly runs into the next sheet. A real household of 11 accounts, or a long Holdings Overview, has not been rendered, and no splitting rule exists in the document, so a sheet taller than one letter page would print across pages under a footer count that does not see it.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/render/performance/report/documentSheets.ts at portal commit 091ae64e: one sheet per section, per-account sheets for account_overview and gain_loss_review_by_account",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~143/export_document_full.png read by the worker: 10 sheets, footers present, disclosure last"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W143-S4 -- The contract carries no household display name, so the footer names the household by a label word
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W143-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~143",
+  "surfaced_at": "2026-10-13T21:49:25Z",
+  "one_line": "The baseline footer reads '<household> Performance Report'; the contract's cover.household_name is ABSENT on the synthetic fixture, so every footer reads 'Household Performance Report' until a name source exists.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-177 says the baseline's footer is printed on every page: '<household or account> Performance Report', 'As of <date>', 'Page n of N'.",
+  "world_is": "cover.household_name is ABSENT in the contract (source: the client summary carries ids only, no name), and the fixture repeats that. The footer's household part is therefore the label 'Household' (documentSheets.ts HOUSEHOLD_FALLBACK_LABEL), and an account page's part is 'Account ending <last4>' from the account list. The as-of date is measured: cover.as_of_date is present in the fixture.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at workspace base ea67c3f456: cover.household_name carries an absent reason and no sourced value",
+      "portal/src/pages/InvestorReporting/dashboard/report/fixtures/syntheticReport.ts at portal base 47673668: cover.household_name is absent in the synthetic fixture"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
