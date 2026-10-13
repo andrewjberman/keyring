@@ -32425,3 +32425,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "STATE: found, not yet fixed. FIX (a cell for round 185, ahead of everything but IB-pr-456's apply, per CTO msg 7259; round 184 is already issued): re-pin the one staged_from row ExportReceipt.schema.json of irpt-export-render so the packaged schema is v1.2, census and never-widen packet, then the pair, then the apply, after-read one export reaching a readable status on DEV. TWO things the packet must carry: (1) THE OTHER DIRECTION: HEAD's schema REQUIRES covered_account_ids (minItems 1) and 'a read of a receipt that names none is refused (fail closed)'; receipts written before IB-pr-343 lack it (the backfill tool exists for them), so after the re-pin those would be refused until backfilled: the packet counts them (a read-only census of the receipt store) and states the apply's branch for them; (2) the other staged schemas differ at HEAD from their live pins (ExportBundle, AnalysisReport), so the re-pin is ONE row by content, never a bump of the others; whether HEAD's ExportReceipt blob differs from the live pin by more than covered_account_ids is not yet read: the census checks. Client-facing: the failure is live on PROD."
 }
 ```
+
+## IRPT_BCKEND-D2-S153 -- queued: backfill gold account_activity_daily (FWD-21), behind IB-pr-456 and the export re-pin
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S153",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T21:55:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Queued by the CTO (msg 7290): backfill the 49F gold account_activity_daily table, which holds 4 daily partitions, so the default report (FWD-21) can show contributions, withdrawals and income per window; queued behind IB-pr-456 and the export re-pin (D2-S152).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 7290, 2026-10-13T21:54Z, citing D2's worker 141 row IRPT_DASHBD-W141-S3: s3://opal-data-49financial/irpt/49financial/gold/account_activity_daily/ has 4 partitions (2026-10-07, 10-08, 10-09, 10-12) (relayed; not read by this seat)",
+      "Andrew-direct 2026-10-07 (relayed by the CTO): no backfill earlier than a client's earliest record, so a 2012 floor for client history, 365 days for non-clients (summary section 1)"
+    ]
+  },
+  "spec_asserts": "The default report's contributions, withdrawals and income per window read the table's history from each account's earliest record (2012 floor); until then those figures are ABSENT on the report (CTO msg 7290).",
+  "world_is": "QUEUED, not cut: position third, behind IB-pr-456 (waits on Andrew's execution ID) and the round-185 export re-pin. When cut it is ONE cell with its own never-widen pair (a gold-layer write, WORLD), and its first step is a read-only measure of what a backfill needs: the builder that writes the table, its source and its run window, the earliest-record dates per account, the partition count the full history implies, and the cost; NOT read yet: the builder or the source of the table. Owner me."
+}
+```
