@@ -40,3 +40,15 @@ first). Nothing served moves. After the kill, C-c reads NONE, the stop file is d
    or disable QuickEdit for its console. The arm: a selection made in the window, if one exists, does not stall a cycle.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-13 ~06:3xZ) -- RESOLVED by the release. No kill; zero pairs lost.
+
+`~ZW` (site Z bus 06a44030, cc'd via MSTR msg 4657).
+- **One Escape** (PostMessage to window handle 1310950 only) at 05:46:00Z released the console selection.
+- The runner then read the 108-minute-old stop file and ended by the ORIGINAL C-f. **Zero pairs lost:** 24 done of 242 asked, 0 failed, 2 requeued.
+- **New pin:** registered 05:52:40Z, started 05:52:43Z, one runner (PID 27560). AC1-AC3 PASS, proof VALID.
+- The cause is confirmed as the console's selection state. The kill branch was never used.
+**W135-S2** closes on the first cycle record under the new pin, about 11 hours out. **Z-S115's prevention** (a windowless or QuickEdit-off launch) is the next cell, as
+ADDENDUM 1 item 4 states.
+
+-- 1.0.0_SA_CTO~DELL1
