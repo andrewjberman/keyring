@@ -7679,3 +7679,57 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+## IRPT_DASHBD-D2-W141-S1 -- No store the builder may read groups the accounts of one 49 Financial client: the client summary keys accounts by issued id and the gold account tables by custodian id, and no named store maps one to the other
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W141-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~141",
+  "surfaced_at": "2026-10-13T20:52:00Z",
+  "one_line": "No gold or platinum store the order names groups several accounts of one 49 Financial client: the platinum client summary keys its accounts by issued id and the gold account tables by custodian id, and no named store maps one to the other, so no household can be built and DB94-2-AC1 cannot pass.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-175 step 2: choose ONE household of two or more accounts, assembled through whatever the gold and platinum stores of firm 49 Financial really carry (the directory or dimension tables the sibling contracts document); step 2 closes: if NO way to group several accounts into one household exists with the stores you may read, file a surprise row naming exactly what is missing and stop.",
+  "world_is": "Read-only, measured at commit base 0c27245bc9 on 2026-10-13 (LIST and GET only). (a) s3://opal-data-49financial/irpt/49financial/platinum/reporting/client=<id>/summary.json carries accounts[].account_id in the issued form (acc_ plus hex) and a series_object that names only the file series.json.gz, with no path to a custodian prefix. (b) platinum/reporting/account=<custodian>/ carries manifest.json (account_id in the custodian form, no client or issued id, no household key) and series.json.gz (no id of any kind). (c) gold account_activity_daily, account_return_daily, account_class_daily and the two account_lot tables key on account_id in the custodian form; their column lists in the sibling contracts carry no household, client or issued-id column. (d) The gold prefix holds dim_return_method only as a dimension, and no gold or platinum prefix of irpt/49financial holds an issued-id to custodian map. (e) The investor-reporting directory (investor-reporting/directory/ per infra/aws/lambda/investor-reporting/directory/refresh.py) is the store that holds the issued identity set; no IRPT sibling contract gives its address, the TO names no such store, and it is under no prefix of opal-data-49financial (top level: _campaign, _code, advi, gold, irpt, mdpf), so it was not read. Consequence: zero of the four window identity checks are possible; the household sample record was not written; the builder was not run to completion.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_CLIENT_SUMMARY_CONTRACT.json at base 0c27245bc9: summary.accounts account_id is the issued opaque account id; address platinum/reporting/client=<client_id>/summary.json",
+      "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json at base 0c27245bc9: columns list has account_id in the custodian form and no household or issued-id column",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at base 0c27245bc9: members pvs.* and act.* source the activity contract by account_id; cover.household_name ABSENT (no sibling holds the household's directory identity)",
+      "infra/aws/lambda/investor-reporting/directory/refresh.py at base 0c27245bc9: read grant is <bucket>/investor-reporting/directory/* (the directory store, not a gold or platinum prefix)",
+      "S3 LIST of opal-data-49financial/irpt/49financial/platinum/reporting/ and of .../gold/ and of the bucket top level, run by 0.9.0_WK_IRPT_DASHBD~141 on 2026-10-13; the probed client summary and account manifest key shapes were read in the private folder only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W141-S2 -- The one custodian-to-household crosswalk found is ADVI_BILLING's gold table, which no IRPT sibling names and this order does not grant; it was not read
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W141-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~141",
+  "surfaced_at": "2026-10-13T20:52:30Z",
+  "one_line": "org/standards/ADVI_BILLING_HOUSEHOLD_CROSSWALK_CONTRACT.json documents a gold household_crosswalk keyed by custodian account number that could group the accounts, but it sits in the ADVI_BILLING scope (advi/49financial/gold) which the IRPT sibling contracts do not name and the order does not grant; the issuer decides whether it is readable.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-175 step 2 names the gold and platinum stores of firm 49 Financial named in the sibling contracts' addresses, and the directory or dimension tables the sibling contracts document; a route the order did not name is a defect to stop on, not a route to take.",
+  "world_is": "org/standards/ADVI_BILLING_HOUSEHOLD_CROSSWALK_CONTRACT.json (read at base 0c27245bc9) documents lib/opal_naming address advi/49financial/gold/household_crosswalk/date=<run date>/household_crosswalk.parquet, one row per Schwab custodian account (schwab_account_number, 10 digits, the same form as the IRPT gold account_id), with bd_relationship_id and opal_relationship_id (rel_ plus hex, from gold dim_relationship) as household-level keys. The advi/ prefix exists in opal-data-49financial. It was not listed beyond the bucket top level and was not read; this row names it so the issuer can grant or refuse a read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/ADVI_BILLING_HOUSEHOLD_CROSSWALK_CONTRACT.json at base 0c27245bc9: address, grain, columns schwab_account_number, bd_relationship_id, opal_relationship_id",
+      "S3 LIST of the bucket top level opal-data-49financial by 0.9.0_WK_IRPT_DASHBD~141 on 2026-10-13 shows the advi/ prefix"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
