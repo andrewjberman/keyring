@@ -69,7 +69,7 @@ org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION
 
 <proof_of_spec>
 Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/round5/ADVI_FIRMBKTS.TO-FB-h-8.fence-instrument-utf8-fixture.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="FB-h-8"><invocation>cd C:/dev/ajb_workspace &amp;&amp; env -u PYTHONIOENCODING -u PYTHONUTF8 timeout 118 python infra/aws/terraform/shared-infra/tests/check_fence_scoped_rows.py 2&gt;&amp;1 | tail -1</invocation><expect>^FENCE-SCOPED rows_today=[0-9]+ unchanged_today=True scoped_rendered=[0-9]+/[0-9]+ sim_ok=[0-9]+/[0-9]+ refusals_ok=7/7 unknown_key_refused_by=validator\+module ok=True$</expect></criterion>
+  <criterion id="AC1" cell_refs="FB-h-8"><invocation>cd C:/dev/ajb_workspace &amp;&amp; env -u PYTHONIOENCODING -u PYTHONUTF8 timeout 118 python infra/aws/terraform/shared-infra/tests/check_fence_scoped_rows.py 2&gt;&amp;1 | tail -1</invocation><expect>^FENCE-SCOPED rows_today=[0-9]+ unchanged_today=(True|False) scoped_rendered=[0-9]+/[0-9]+ sim_ok=[0-9]+/[0-9]+ refusals_ok=[0-7]/7 unknown_key_refused_by=(validator\+module|validator|module|none) ok=(True|False)$</expect></criterion>
   <criterion id="AC2" cell_refs="FB-h-8"><invocation>cd C:/dev/ajb_workspace &amp;&amp; timeout 60 python -c "import sys,glob;bad=[p for p in glob.glob('infra/aws/terraform/shared-infra/tests/check_fence_scoped_rows.py')+glob.glob('infra/aws/terraform/shared-infra/tests/derive_fence_row_shape.py') if any(ord(c)&gt;127 for c in open(p,encoding='utf-8').read())];print('NONASCII-FILES',len(bad))"</invocation><expect>^NONASCII-FILES 0$</expect></criterion>
 </proof_of_spec>
 
@@ -83,7 +83,9 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~F
 
 **ISSUER NOTES:** CTO msg 4653 (round 5 item 7): MSTR msg 4652 reproduced it; the file is lane CLOUD_OPS_OR_ETL, so the CTO orders it to FB1. D1-S28 is the CVO's ROUTED row (round-4 analysis section 2: "every reader and writer becomes explicit encoding utf-8 per the non-ASCII law, and the init failure gets a scratch-root fixture; close ok=True at HEAD with no environment override"). Class WORLD by the path floor (an infrastructure path); test-only. Risk the issuer names: the simulator arms may be denied to the dell1 identity (the round-4 close recorded IAM simulate refused on dell1); the order says what to do and does not let the seat weaken the instrument.
 
-<status>pending</status>
+**AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-13 ~07:0xZ) -- AC1 NOW CLOSES ON THE ENCODING FIX ONLY (the CTO's ruling, msg 4674):** the instrument cannot read `ok=True` for four further reasons that change what an arm asserts (row D1-S43: the simulator is denied to the dell1 identity, the pinned selector picks two rows, two refusal arms no longer match the validator, `grants` is a new top-level field). The CTO ruled (a): this order closes as the encoding fix at 38f8179f10, and D1-S43 goes to the instrument's owner (NFRA_CTLPLN, laptop) through MSTR. AC1 now asks that the instrument RUNS TO ITS LAST LINE with no environment override (it crashed with a cp1252 UnicodeEncodeError at the base); the line's ok value is the owner's. An ENDPOINT-neutral criterion edit of a pending order by its issuer on the CTO's ruling; GATE viii reads `<placeholders>NONE</placeholders>` and no token.
+
+<status>complete</status>
 <round>5</round>
 <workstream>FENCEINSTR</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-h-8</to_id>
