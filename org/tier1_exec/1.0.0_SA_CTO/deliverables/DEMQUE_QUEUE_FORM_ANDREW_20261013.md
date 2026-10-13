@@ -93,6 +93,10 @@ security, every day. Instead:
 Once a need's backfill is complete, every daily pull asks for **the last 5 trading days** (from `lib/trading_calendar.py`), not a single day and not a long window. That
 covers holidays, a missed run and late vendor corrections. A security with a gap wider than 5 trading days gets a targeted refill for just that gap, never a wider
 standing window. It applies to every surface (A through E) after its backfill is covered.
+- **Yahoo reading** (this seat, on `2.0.0_SA_COO~Q1` msg 4935): a 5-day window saves no Yahoo request (one request per symbol either way). The rule still applies:
+  - the last 5 trading days normally;
+  - a FULL re-pull of a name only when a split or another restatement lands, as the targeted refill.
+  It is a served change under its own pair.
 
 ## FOR SITE Z (the Bloomberg device): changes to carry, appended as decided
 
