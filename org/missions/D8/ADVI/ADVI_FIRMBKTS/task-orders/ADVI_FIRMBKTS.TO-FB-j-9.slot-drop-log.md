@@ -97,7 +97,7 @@ offline candidate cause (reproduced with the installed SDK 0.45.0, no network): 
 because `messages.create` has no `betas` parameter; it is the candidate this logging will confirm or refute on the deployed layer. Deploy and the
 measuring dry run are `FB-j-10` (staged). Class WORLD by the path floor (a Lambda code path), though this cell deploys nothing.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <workstream>SLOTDROPLOG</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-j-9</to_id>
