@@ -1528,3 +1528,20 @@ cloud-ops seat `0.7.0_AE_CloudOps~IB2` (the pair's condition 6; it applied REFRE
 | `DB-b-165` | the pair's apply: the gold Lambda release over live i2r7CbVr with ONE staged file re-pinned (the thresholds file, 24-key blob to the tracked six-key file), ledger first, one targeted safe-apply, one dry-run invoke read against the 85 percent lines | WORLD | both halves SIGNED; REFRESH 4's first fire read (met) |
 
 **fanout:** 1 of 1 chain, cap 8. No worker: the order goes to `0.7.0_AE_CloudOps~IB2`. The first-fire read after THIS release (the pair's condition 4) is the issuer's open ledger leg.
+
+## 90. ROUND 88, WORKSTREAM B (2026-10-13 ~13:3xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ROUND-88 ANALYSIS @e53edd32d7 section 4 and msg 6931)
+
+Round 87 is terminal and MAY-CLOSE; the CTO's after-read of the swap is PASS @bc4c810b8f. Black Diamond's published flow timing is read (`BD_FLOW_TIMING_HELP_READ_20261013.md`
+@e2274fcdd4): additions at the start of the day, withdrawals and no-addition days at the end; the alternative, on request, is all flows at the end. The analysis fixes two items.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. ledger leg L7: the first scheduled fire after the swap (2026-10-14 11:41Z), read with `l5b_read.py`; close `irpt-dashbd-thresholds-swap-20261013` or restore rollback `8ELUDq...` the same session | the issuer's own act, no cell | FWD-8 (the thresholds the page reads) | the 11:41Z fire | none |
+| 2. the tie-out decided by computing both flow conventions over the stored tie-out set, graded at 0.35 pp, with the reader's known 50 of 51 (START) and 0 of 51 (END) as controls | `DB-b-166` | FWD-8 / C-FLOWTIME | the stored per-segment tables of `~108` (read, never edited) | R88-1 |
+
+`DB-b-166` is a read, LOCAL: zero vendor calls and zero secret reads (the stored responses already hold Black Diamond's figures; a window the stored set cannot decide is a surprise row, and
+the issuer decides about any new vendor read), no served byte moves. The decision rule is written in the criterion before the count: `BD_DEFAULT` iff only the vendor-default convention ties
+some flow segment the all-end one misses and the reverse never happens; `END` the mirror; `BOTH_TIE_INDISTINGUISHABLE` iff no segment tells them apart; `MIXED_NEITHER_DECIDES` iff each misses a
+segment the other hits. The last two are not a FAIL of the cell; they are a surprise row and a wider window. The negative arm is the convention not chosen missing at least one flow segment.
+
+**fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~132` (worker), a new slot.
