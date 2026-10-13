@@ -5,7 +5,9 @@ read with the six transcripts and today's six Andrew-direct records. **Asked by:
 identify how best to proceed across all boxes"). **State read 17:31Z:** since the aggregate, the Dell admin-group grant is ruled
 (@d2f79ea8dd), NFRA_DEVPLN v0.2 and COMM_ASSIST v0.6 are signed, and NFRA_CTLPLN round 12 is issued (@f94216ea59, frozen).
 
-**Status: PROPOSED.** The box acts in section 2 go out on Andrew's go. Section 3 lists the calls only he can make.
+**Status: ACCEPTED** ~17:4xZ (`ANDREW_DIRECT_20261013_174xZ_POSITIONING_CALLS_ANSWERED_ARTIFACT_AND_CLICKABLE_PATHS.md`):
+calls 1, 2, 5 and 6 are approved; call 3 is done by Andrew (password off) with the laptop account deferred; calls 4 and 7 are
+re-asked with an explanation. `mockadv` changes to RETIRE after a consumer census reads zero.
 
 ## 1. The read
 
