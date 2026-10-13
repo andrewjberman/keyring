@@ -25855,3 +25855,473 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not worked around: the name was not renamed, derived or hidden, and the naming gate was not bypassed. The disposition is the issuer's: a registry row for the live function (infra/logic/registry is outside this order's write grant) or an R20 register entry Andrew acknowledges. Held files, both STAGED-AWAITING-GATE in the proof instance: lib/research/aifill/inputs.py and lib/research/aifill/tests/test_model_inputs.py."
 }
 ```
+```json
+{
+  "id": "AMGT_RESAPP-D1-W426-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~426",
+  "surfaced_at": "2026-10-13T23:10:23Z",
+  "one_line": "check_fa5_text_blocks.py prints 20 arms, not the 21 the face names, so the AC1 expectation of at least 21 arms cannot be met by the check as shipped.",
+  "spec_asserts": "AMGT-fa-5 face: section 4 AC1 expect reads the line AIFILL FA-5 ARMS: YES (N of N) with N at least 21; the preflight names the check as a prepared acceptance check of 21 arms.",
+  "world_is": "round104_aifill_prep/checks/check_fa5_text_blocks.py at fd17076e15 defines 20 arms (17 arms.run calls and one loop of 3 arms.raises). The run on the cell's committed modules printed AIFILL FA-5 ARMS: YES (20 of 20), exit=0, with zero FAIL lines. The check sits outside this cell's write surface and was not edited.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa5_text_blocks.py@fd17076e15: the arms.run and arms.raises calls, 17 plus a loop of 3",
+      "the AC1 run in worktree C:/dev/wk-resapp-426: last lines ARM no I/O imports; sources are ASCII PASS [], then AIFILL FA-5 ARMS: YES (20 of 20), exit=0"
+    ]
+  },
+  "notes": "Form only. The arm-count expectation is the issuer's to amend or the check's to extend; the worker did not change either."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W422-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~422",
+  "surfaced_at": "2026-10-13T22:56:04Z",
+  "one_line": "conftest.py is hermetic for the pool and the drafted read but not for the AI fill read: every existing thesis-bundle test that does not patch _s3_client now issues a live GET of the fill key.",
+  "spec_asserts": "The worker face (AMGT-fa-7, section 1) asks for one wiring line in read_thesis_bundle and a new test module, and says the S3 client in the tests is a fake. The test tree's convention (lib/research/api/tests/conftest.py docstring: no test in this package reaches the pool unless it says so) sets AMGT_POOL_ROOT and AMGT_DRAFTING_ROOT to empty directories and nothing else.",
+  "world_is": "The fill read has no empty-root default in the test tree, so with AMGT_AIFILL_ROOT unset it calls the real _s3_client() for every thesis bundle. Measured in this worktree with a probe plugin that logs and refuses each GET (not committed): 29 GET lines for ai_fill keys at opal-data-harvest across 44 passing tests in test_corrected_overlay_wiring.py, test_fiscal_scope_contract.py, test_dossier_fields.py, test_team_cases.py and test_r79_hookups.py. The suite stays green (AC2 new 0) because a failed read returns ABSENT, so the leak is silent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/tests/conftest.py at e8d65751f4, lines 52-56: the autouse empty_pool_roots fixture sets ENV_POOL_ROOT and ENV_DRAFTING_ROOT and no AIFILL root.",
+      "lib/research/api/scoped_amgt.py lines 3279-3331 (_read_ai_fill_document) in the worker commit: with ENV_AIFILL_ROOT unset it calls _s3_client().get_object(Bucket=crosswalk.POOL_BUCKET, Key=...).",
+      "Measured 2026-10-13 in worktree C:/dev/wk-resapp-422: .scratch/probe_aifill.log holds 29 GET lines to opal-data-harvest amgt/harvest/gold/ai_fill/security_key=.../ai_fill.json over 44 passed tests in five modules."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm owner 2.0.0_SA_COO~R2: an empty AMGT_AIFILL_ROOT default in conftest.py (outside this order's write surface) closes the leak. Not fixed here because conftest.py is not in this order's paths."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W422-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~422",
+  "surfaced_at": "2026-10-13T22:56:04Z",
+  "one_line": "read_ai_fill's validator enforces the aifill/v1 block rules beyond the face's enumerated validator list (citation mix, text length and ASCII, model_call search count, opal ref charset).",
+  "spec_asserts": "The worker face, section 1, enumerates the validator's rules (the NONE block, the text, reason and citation rules, a web url, an opal ref, a WEB_SEARCH web citation). Its inlined contract text says every cell of the workstream writes against the full block rules.",
+  "world_is": "The contract text also states that OPAL_SOURCE has no web citation, WEB_SEARCH has no opal citation and model_call.web_search_requests >= 1, text is at most 1200 ASCII characters with no double asterisks, an opal ref carries no underscore or brackets and does not start with thesis. or overlay., and a NONE reason carries no underscore. The validator in scoped_amgt.py (_validate_ai_fill_block, lines 3332-3407) enforces these too. A conforming document is unaffected; a non-conforming one the enumerated list alone would have served is INVALID instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/scoped_amgt.py lines 3332-3407 in the worker commit: _validate_ai_fill_block enforces the rules beyond the enumerated list.",
+      "The worker face, section 1, 'The contract every cell of this workstream writes against' block rules (face lines 35-38)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The extra rules follow the inlined contract text; the enumerated list was not narrowed. Whether the validator should be exactly the enumerated list is the issuer's call."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W422-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~422",
+  "surfaced_at": "2026-10-13T23:01:42Z",
+  "one_line": "The naming gate reads the display literal s3://{0}/{1} in the fill reader's reason text as an S3 address and returns WARN (RAISE as S3Key, K1) on the commit of the serve.",
+  "spec_asserts": "The worker face, section 1, specifies the fill reader's reason text as 'no AI fill document at s3://<bucket>/<key>: <ErrClass>: <err>'. The standing rule (CLAUDE.md rule 30) says every S3 address is lib/opal_naming.py address() output and a naming-gate refusal is a missing registry row to add.",
+  "world_is": "At commit 0b89670d1a the naming gate reports 'NAMING RAISE lib/research/api/scoped_amgt.py:3309 s3://{0}/{1} -> (rule or registry defect)' and 'NAMING-GATE: WARN 1 graded'. The literal builds only the reason string; the key the reader GETs is _hp.AI_FILL_GOLD_PREFIX + crosswalk.security_key_partition + ai_fill.json, and no address literal is typed. The commit was not refused.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit-gate and naming-gate output of the code commit 0b89670d1a (safe-commit run, 2026-10-13): 'NAMING RAISE lib/research/api/scoped_amgt.py:3309 s3://{0}/{1}' and 'NAMING-GATE: WARN 1 graded'.",
+      "lib/research/api/scoped_amgt.py line 3309 in commit 0b89670d1a: where = \"s3://{0}/{1}\".format(bucket, key) inside _read_ai_fill_document."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The gate treats display text as an address. The drafting reader carries the same display text shape (pre-existing, not in this diff, not graded here). Whether the naming gate should read a reason string is the issuer's and naming owner's call; the face's wording was kept."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W422-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~422",
+  "surfaced_at": "2026-10-13T23:15:46Z",
+  "one_line": "The measured premise of the conftest amendment (29 live fill-key GETs across 44 passing thesis tests without the line) does not reproduce under the probe's counting; the effect reproduces with the same sign: 42 GET attempts across 37 tests with the variable unset, 0 with the line.",
+  "spec_asserts": "The worker face, section 1 (conftest AMENDMENT 1), records the first worker's measurement as 29 live GETs of the fill key across 44 passing thesis tests without the line, and asks the worker to confirm with a probe that existing thesis tests no longer GET the fill key.",
+  "world_is": "A probe (deliverables folder, probe_aifill/probe_aifill_gets.py) counts each botocore GetObject whose Key contains ai_fill, per test nodeid, and blocks each call before it is sent. Over lib/research/api/tests excluding test_ai_fill_serve.py (973 tests: 969 passed, 4 failed, the base 4 failing): with the line committed at 505cc189de, 0 GETs across 0 tests (probe_out_with_line.json). With AMGT_AIFILL_ROOT removed at each test body as a negative control, 42 GETs across 37 tests (probe_out_unset.json). The predecessor's evidence does not record its counting method, so the 29-across-44 figure is not reproduced; the zero with the line is confirmed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "probe_aifill/probe_out_with_line.json and probe_aifill/probe_out_unset.json in the deliverables folder of this order (0.9.0_WK_AMGT_RESAPP~422), written by probe_aifill/probe_aifill_gets.py at the commit that carries this row.",
+      "pytest run B on the same suite with the variable unset: 4 failed, 969 passed, the same 4 base failures as AC2 at 505cc189de."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The direction and the zero are confirmed by the probe; the count is the probe's own method. Whether the 29-across-44 figure should be restated in the record is the issuer's call (disarm owner 2.0.0_SA_COO~R2)."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W424-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~424",
+  "surfaced_at": "2026-10-13T23:07:50Z",
+  "one_line": "The fa-3 acceptance arm 'OPAL citations are plain-words source labels (team pack, officer list)' requires an officer-list citation, but the served ASML fixture's CEO officer row has role_start and tenure_years both null, so the spec's officer fact (taken only when one of them is not null) is absent and the arm cannot pass.",
+  "spec_asserts": "AMGT-fa-3 face, section 1, step 1 of build_block for mgmt_bio: the CEO officer row is a fact 'when role_start or tenure_years is not None'. Acceptance check check_fa3_mgmt_bio.py, arm 'OPAL citations are plain-words source labels (team pack, officer list)', requires any opal citation whose ref contains 'officer'.",
+  "world_is": "served_inputs_ASML_NA_Equity.json thesis.management.officers[0] (Christophe Fouquet, role 'President/CEO/Chairman Mgmt Brd') carries role_start null and tenure_years null, so the builder emits no officer fact and the OPAL citations are the team-pack citation alone. The module follows the spec literally; the check reads 13 of 14 arms with that one FAIL. No spec or check edit was made; the decision belongs to the issuer.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/fixtures/served_inputs_ASML_NA_Equity.json thesis.management.officers[0].role_start and .tenure_years are null @0a4abb922c (base HEAD of worktree wk-AMGT_RESAPP-424).",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa3_mgmt_bio.py opal_citations arm requires any('officer' in ref.lower()) @0a4abb922c; check output in worktree .scratch/ac1_out.txt reads 'FAIL' on that arm and 'AIFILL FA-3 ARMS: NO (13 of 14)'."
+    ]
+  },
+  "notes": "Form only. Filed by the worker; the issuer owns the disposition and the disarm owner is 2.0.0_SA_COO~R2 (hazard INERT, no disarm required)."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W424-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~424",
+  "surfaced_at": "2026-10-13T23:21:21Z",
+  "one_line": "The mgmt_bio test module carries one non-ASCII character (an en dash, in a string literal at line 202), against the bound that source files are ASCII-only; the acceptance arm that checks ASCII reads only the builder file, so it does not see it.",
+  "spec_asserts": "AMGT-fa-3 face, section 2 (bounds), item 1: Python 3.9 syntax and ASCII-only source files, non-ASCII written as unicode escapes. Applied to the two files the cell writes: lib/research/aifill/block_mgmt_bio.py and lib/research/aifill/tests/test_block_mgmt_bio.py.",
+  "world_is": "lib/research/aifill/tests/test_block_mgmt_bio.py holds 3 non-ASCII bytes (one en dash, U+2013, in the string of test_web_text_is_folded_to_plain_ascii at line 202) @b2a160c355. The builder block_mgmt_bio.py holds 0 non-ASCII bytes. The check arm 'the source file is ASCII' in check_fa3_mgmt_bio.py reads open(B.__file__) only, so it reads PASS while the test module is non-ASCII. The module passes its 23 tests (Python 3.9 reads UTF-8 source by default), so no runtime effect was seen. Not changed: the face changes its tests only when an arm fails, and no arm failed. The issuer decides whether the test literal is re-written as an escape and whether the arm should cover the test module.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/tests/test_block_mgmt_bio.py line 202 holds an en dash in a string literal @b2a160c355 (byte count 3 non-ASCII via python read of the committed file, worktree C:/dev/wk-resapp-424 at HEAD 421021150e).",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa3_mgmt_bio.py lines 132-135 (ascii_source) open B.__file__ only @421021150e; the AC1 full run reads 'ARM the source file is ASCII PASS' and 0 FAIL lines."
+    ]
+  },
+  "notes": "Form only. Filed by the worker; the issuer owns the disposition. The builder and its tests are unchanged from b2a160c355."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W416-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~416",
+  "surfaced_at": "2026-10-13T22:58:57Z",
+  "one_line": "The cell names StatTile.tsx as the page's dash tile, but StatTile is mounted nowhere on the page; the live header's dash tiles are HeaderCards.tsx ABSENT tiles, so the visible reason was added to both.",
+  "spec_asserts": "AMGT-bk-3 (round 104): the dash tile is StatTile.tsx (formatStatValue returns null and the reason shows on hover only), and its body shows the reason in visible words under the dash; the CVO's bare `--` header tiles are the page's header tiles.",
+  "world_is": "portal@24877b67: a native Grep for '<StatTile' under src/pages/SecurityAnalysis finds no element use, only StatTile.tsx's own definition. SecurityOverlay.tsx:298 mounts HeaderCards, whose ABSENT tile body is a bare `--` with the reason only in title and aria-label. Both tiles now carry a visible data-stat-reason line: StatTile.tsx (unmounted, as the cell names) and HeaderCards.tsx (the live tile).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "native Grep '<StatTile' over C:/dev/wk-resapp-416/portal/src/pages/SecurityAnalysis at portal@24877b67: definition only, no element use",
+      "portal@24877b67 components/SecurityOverlay.tsx:298 renders <HeaderCards bundle={bundle} />; components/HeaderCards.tsx ABSENT tile (line 178) body is a bare `--`"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. No decision here on whether StatTile should be mounted. The cell's stated edit was made in both files."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W416-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~416",
+  "surfaced_at": "2026-10-13T22:58:57Z",
+  "one_line": "The cell says an unresolved-unit tile's body reads `--`; in StatTile the body was the UNIT_NOT_RESOLVED_WORDS text served as a value, and only the header tile read `--`.",
+  "spec_asserts": "AMGT-bk-3 (2): a tile whose body reads `--` includes one whose unit is unresolved; harness check (e) requires that tile to hold UNIT_NOT_RESOLVED_WORDS in data-stat-reason.",
+  "world_is": "portal@24877b67 StatTile.tsx formatStatValue returns UNIT_NOT_RESOLVED_WORDS (non-null) for a money format with an UNRESOLVED unit, so StatTile printed the words in a SERVED tile with no dash. HeaderCards.tsx resolveFigure treats that return as null, so the header tile was the `--` tile. After the change, StatTile treats the words as the absent reason (a dash with the words beneath), matching the header. formatStatValue itself is unchanged, because PeersTab.tsx, ModelTab.tsx and WhatChangedPanel.tsx read its return value.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "native Read portal@24877b67 components/StatTile.tsx lines 79-82 (formatStatValue unresolved-unit branch returns UNIT_NOT_RESOLVED_WORDS)",
+      "native Read portal@24877b67 components/HeaderCards.tsx lines 44-50 (resolveFigure maps that return to null, so the header tile is ABSENT)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The unit-unresolved dash in StatTile was chosen to match the cell's stated outcome and the header's existing behaviour."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W416-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~416",
+  "surfaced_at": "2026-10-13T22:58:57Z",
+  "one_line": "The cell says tooltips are untouched but also names HeaderCards.tsx line 84, which builds the tooltip's full-value row with the currency code; that row now uses the same $ form, and figureTooltipRows was not touched.",
+  "spec_asserts": "AMGT-bk-3 (1): 'The tooltips (figureTooltipRows) and every served value are untouched', and HeaderCards.tsx (about line 84) is named as a formatter that prints <code> <amount> and must print $ for USD.",
+  "world_is": "portal@24877b67 HeaderCards.tsx fullValueWords (line 84) prints `${currency} ${num}` into the tooltip's full-value row (tooltipRows, line 115). figureTooltipRows in StatTile.tsx carries the value and unit only, with no currency code. The change follows the explicit naming of line 84; data-full-value and every served value are unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "native Read portal@24877b67 components/HeaderCards.tsx lines 76-85 (fullValueWords builds the currency prefix) and line 115 (tooltipRows full-value row)",
+      "native Read portal@24877b67 components/StatTile.tsx figureTooltipRows (value and unit rows only, no currency code)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The reading applied: the explicit line-84 naming governs, and the tooltip function the cell names is not edited."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W416-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~416",
+  "surfaced_at": "2026-10-13T23:01:40Z",
+  "one_line": "The portal branch is wk-AMGT_RESAPP-416-portal cut from DEV 24877b67, not the cand/<box>/<slug> branch cut from the PROD release that CONTRIBUTING-BOXES.md names; the order says never push, so the branch is committed locally and its registration is left to the issuer.",
+  "spec_asserts": "The worker face: a portal change is made on a cand/<box>/<slug> branch cut from the last PROD release, never pushed to DEV, and the issuer registers it for approval; portal/CONTRIBUTING-BOXES.md step 2 says a branch cut from DEV is re-cut onto the PROD release by its owner before it is registered.",
+  "world_is": "The order names the branch wk-AMGT_RESAPP-416-portal from DEV 24877b67 and bounds the worker to never push. The commit lands LOCAL on that branch. No re-cut onto the PROD release was done, and no open-calls.py registration was run. The branch name and base are as the order issued them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "native Read portal/CONTRIBUTING-BOXES.md (steps 1-4 and 'Reach DEV, reach PROD'): cand/<box>/<slug> cut from the last PROD release; a DEV-cut branch is re-cut by its owner before registration",
+      "order bounds: branch wk-AMGT_RESAPP-416-portal from DEV 24877b67; never push; the issuer registers the change (open-calls.py add --kind approval)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. Whether the issuer re-cuts the branch onto the PROD release before registering it is the issuer's decision, not decided here."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W423-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~423",
+  "surfaced_at": "2026-10-13T22:35:38Z",
+  "one_line": "The face's reading order names portal/CONTRIBUTING-BOXES.md, which is absent at the cut base 63c4f9e3; the file exists only in history (07f065e6) and reaches PROD through origin/PROD 10e7664d.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cd portal && git ls-tree -r --name-only HEAD | grep -i contributing: no output, rc=1, at HEAD 63c4f9e3 (nested worktree of AMGT_RESAPP-423-portal).",
+      "ls C:/dev/ajb_workspace/portal/CONTRIBUTING-BOXES.md: No such file or directory (base checkout).",
+      "git log --all --oneline -- CONTRIBUTING-BOXES.md: b5222d78 (docs(portal): declined-arm example) and 07f065e6 (docs(portal): CONTRIBUTING-BOXES.md, NFRA_DEVPLN DP-b-4). git cat-file -e DEV:CONTRIBUTING-BOXES.md: rc=128 (absent on local DEV).",
+      "git merge-base --is-ancestor 63c4f9e3 origin/PROD: rc=0; origin/PROD = 10e7664d 'merge feature cand/laptop/contributing-boxes into release/20261013T205139Z'. git show 07f065e6:CONTRIBUTING-BOXES.md read (57 lines); the branch was cut from 63c4f9e3 as ordered and the file was not copied in."
+    ]
+  },
+  "spec_asserts": "Face section 1 and Method: 'read portal/CONTRIBUTING-BOXES.md first' before any change under portal/; the portal rule the face cites is that file.",
+  "world_is": "At the face base 63c4f9e3 the file is absent from the tree. Its text is on origin/PROD only through the later release merge 10e7664d, and it is not an ancestor of the cut base. The rule was read from commit 07f065e6 and followed for the branch shape (cand/<box>/<slug>, no push, register by the issuer); the branch was cut from 63c4f9e3 as the face orders.",
+  "notes": "Form only. The face's read-first step cannot be performed at its named path at its named base; the rule text was read at the commit that carries it."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W423-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~423",
+  "surfaced_at": "2026-10-13T22:35:38Z",
+  "one_line": "The face names PROD 63c4f9e3 as the last release, but origin/PROD is now 10e7664d (a descendant of 63c4f9e3) and the local PROD ref is 18364342 (an ancestor of 63c4f9e3); the branch was cut from 63c4f9e3 as ordered.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal rev-parse origin/PROD: 10e7664d (git log -1 origin/PROD: 'merge feature cand/laptop/contributing-boxes into release/20261013T205139Z').",
+      "git merge-base --is-ancestor 63c4f9e3 origin/PROD: rc=0 (the face base is an ancestor of origin/PROD); git merge-base --is-ancestor origin/PROD 63c4f9e3: rc=1.",
+      "git rev-parse PROD (local ref): 18364342 ('AV-zzq-1: strip a repeated leading heading label'); git log --oneline 63c4f9e3..PROD: 0 commits, so the local PROD ref is behind 63c4f9e3 and was not used.",
+      "Nested worktree HEAD before the switch: 63c4f9e3 (wk-AMGT_RESAPP-423-portal); the new branch cand/dell1/aifill-blocks was cut from that HEAD."
+    ]
+  },
+  "spec_asserts": "Face section 1 Method and section 4 AC1/AC2: 'cut from the last PROD release' = 63c4f9e3 ('cd portal && git switch -c cand/dell1/aifill-blocks (from PROD 63c4f9e3)'); AC1 --base 63c4f9e3 and AC2 base 63c4f9e3. CONTRIBUTING-BOXES: the last PROD release is read with git -C portal rev-parse origin/PROD.",
+  "world_is": "The two readings name different commits: origin/PROD has moved to 10e7664d, which carries the cand/laptop/contributing-boxes merge on top of 63c4f9e3. The face's base is followed. A branch cut from origin/PROD would carry commits the AC base does not contain, so the AC base and the rule's named release disagree.",
+  "notes": "Form only. The local PROD ref trailing 63c4f9e3 is recorded as measured; no ref was moved."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W423-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~423",
+  "surfaced_at": "2026-10-13T22:35:38Z",
+  "one_line": "The portal rule (CONTRIBUTING-BOXES step 3) says to push the feature branch to origin, while the face bound says never push; the face was followed and nothing was pushed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 07f065e6:CONTRIBUTING-BOXES.md, Build step 3: 'Push the branch to origin under that name. Nothing of it is on DEV until approved.'",
+      "Face section 1 and Bounds 1: 'NEVER push'; the face's Method step 3: 'NEVER push'.",
+      "Worker standing rule: commit on the worktree branch only; never push, merge, rebase, checkout or clean. No push command was run on cand/dell1/aifill-blocks."
+    ]
+  },
+  "spec_asserts": "CONTRIBUTING-BOXES step 3: 'Push the branch to origin under that name.' Face Bounds 1 and Method 3: 'never push'.",
+  "world_is": "The portal rule asks for an origin push of the candidate branch and the order forbids it. The face is this order's bound and was followed; whether the approval registration needs the branch on origin is not decided here.",
+  "notes": "Form only. The issuer registers the branch for approval (face section 1); the rule's registration step is not run by this worker."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W423-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~423",
+  "surfaced_at": "2026-10-13T22:51:32Z",
+  "one_line": "Face placement for mgmt_bio and mgmt_recent reads 'below the CEO profile and tenure lines and above the roster', which no single position in ExecManagementTab satisfies; the blocks were placed above the roster, before the management body, because they must also draw when the management object is ABSENT.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tabs/ExecManagementTab.tsx at the base 63c4f9e3: ManagementBody renders the officer table (the roster) first, then the lusha line, the 'What is not on file' fold holding the tenure pool line, and CeoProfile last. The CEO profile and tenure lines therefore sit BELOW the roster in the SERVED branch.",
+      "ManagementBody's non-SERVED branch (management_status ABSENT) prints PanelEmpty and a read-detail fold only: no CEO profile line and no tenure line are drawn, yet the face requires the two blocks to draw when the management block is ABSENT.",
+      "Placement chosen: a sibling of ResearchTeamManagement, directly before ManagementBody, inside the tab-panel div (AiFillBlock mgmt_bio then mgmt_recent with always)."
+    ]
+  },
+  "spec_asserts": "Face section 2 item 2: 'mgmt_bio ... and mgmt_recent ... rendered with always, in the tab's normal flow below the CEO profile and tenure lines and above the roster, and ALSO when the management block is ABSENT'.",
+  "world_is": "In the current tab the roster precedes the CEO profile and tenure lines, so 'below the CEO profile and tenure lines' and 'above the roster' cannot both hold; and in the ABSENT state the CEO and tenure lines do not exist, so a placement below them cannot draw there. The blocks were placed above the roster (the only position that satisfies the ABSENT clause and the 'above the roster' clause together). Reordering the existing roster and CEO lines was not done: it is outside the surrounding-page-unchanged bound.",
+  "notes": "Form only. The placement the issuer intends is not decided here; the report names the file line where each block renders."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W423-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~423",
+  "surfaced_at": "2026-10-13T22:51:32Z",
+  "one_line": "The page's new import of components/AiFillBlock breaks three existing harnesses (execText, drafting, execFallback) whose loaders resolve only a fixed list of relative names, so R103's regression count is nonzero and AC2 cannot be met without editing a harness the face forbids.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Base run (63c4f9e3, every __harness__ file run bare): execText, drafting and execFallback exit 0. Branch run (cand/dell1/aifill-blocks, uncommitted tree): execText rc=1, drafting rc=1, execFallback rc=1, each with 'Error: Cannot find module ../components/AiFillBlock' (require stack: portal/package.json).",
+      "execText.harness.cjs load(name) (line ~76-93) and drafting.harness.cjs load(name) (line ~122) return req(name) for any relative name not in their list; req is createRequire(portal/package.json), so a relative name resolves from the portal root and fails. tabs.harness.cjs resolves relative names generically and is unaffected (rc 0).",
+      "Diagnostic only, in a scratch copy outside the harness folder with ONE added resolver line: execText 5 of 5 checks pass (EXECTEXT CHECKS 5/5); drafting 8 of 8 pass (CHECKS-OK 8 of 8). So the sole cause is the unresolved import name, not the rendered markup.",
+      "Face Bounds 3: existing harnesses are not edited; face Method/acceptance: existing harnesses must not regress; AC2 runs r103_feature_green_v2.sh, which counts a harness that fails on the branch and passes at the base as a REGRESSION."
+    ]
+  },
+  "spec_asserts": "Face section 1 item 5 and section 2 item 3: the existing harnesses (tabs, execText, execPattern, thesisLadder, drafting, ...) must not regress; existing harnesses are not edited; the component file is components/AiFillBlock.tsx imported by the tabs.",
+  "world_is": "The loaders of execText, drafting and execFallback cannot resolve the new relative import, so those three harnesses exit 1 on the branch. Every other harness keeps its base exit code. The branch is committed as the face's layout; the regression needs either a loader edit in those harnesses (outside this order's write grant) or a different import layout the loaders already resolve.",
+  "notes": "Form only. Decision for the issuer: permit a one-line resolver entry in the three harness loaders, or re-decide the component layout. No harness was edited by this worker."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W423-S6",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~423",
+  "surfaced_at": "2026-10-13T22:51:32Z",
+  "one_line": "The face's gap rule ('the sentence the tab prints for MANAGEMENT_HEADING / PILLARS_HEADING when the pack states none') does not say whether the 'dossier not carried' sentence counts as a pack that states none; the fill was drawn after it, and not after the failed-read sentence.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tabs/ExecManagementTab.tsx ResearchTeamManagement: the no-dossier branch prints 'The research team on management: not in this security's data.' (the heading sentence); the failed-read branch prints 'The research team's dossier could not be read (...)' which carries no heading.",
+      "tabs/ThesisTab.tsx ResearchTeamPillars: the no-dossier branch prints the pillars heading sentence; the failed-read branch prints the dossier-could-not-be-read sentence with no heading.",
+      "Harness arms team_view_beside_gap_only and pillars_beside_gap_only drive the empty-pack sentence (dossier with no status) and the stated-passage case; neither drives the no-dossier case."
+    ]
+  },
+  "spec_asserts": "Face section 2 item 2: mgmt_team_view 'rendered (not always) directly after the sentence the tab already prints for MANAGEMENT_HEADING when the pack states no management passage, and only there'; item 3 the same for PILLARS_HEADING.",
+  "world_is": "Both the not-carried sentence and the empty-pack sentences print the heading, and the fill follows all of them; the failed-read sentence prints no heading and draws no fill. Whether 'not carried' is a pack that states none is an interpretation this worker made, not a rule the face names.",
+  "notes": "Form only. The interpretation is recorded so the issuer can narrow it; no arm tests the not-carried case."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W423-S7",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~423",
+  "surfaced_at": "2026-10-13T23:15:30Z",
+  "one_line": "On the portal amendment commit the pre-commit instruments reported PARTIAL_OR_BLIND: the risk reflex scanned 0 of 3 files against a 192.7h-old danger map, and commit-gate checked 0 of 3 files, so the three .cjs harness edits reached the portal index with no scanning instrument.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Portal commit 85d5749f (cand/dell1/aifill-blocks, LOCAL) made by .tools/safe-commit.sh from C:/dev/wk-resapp-423/portal. Its output printed: '[risk-reflex] danger map: 192.7h old !! STALE', 'ANSWER STATE: PARTIAL_OR_BLIND', 'WITHIN BUDGET: scanned 0 of 3 file(s)'.",
+      "The same output printed '[commit-gate] WARN: commit-gate checked 0 of 3 file(s) -- NOTHING WAS CHECKED' and states that this gate reads only .py / .sh / .tf / org/projects/*.json, so the .cjs files fall through unexamined.",
+      "The risk reflex also printed that the nested portal toplevel carries no .tools/comp-pulse and executed the baked path C:/dev/ajb_workspace/.tools/comp-pulse instead."
+    ]
+  },
+  "spec_asserts": "The order's commit line: commit in the nested portal worktree with the outer .tools/safe-commit.sh; the standing rule that a frontend artifact is validated by its language-appropriate instrument (the face names the harness runs, bun run typecheck and bun run lint).",
+  "world_is": "The commit gate and the risk reflex both answered for zero of the three files committed. The validation of the commit rests on the node runs of the three harnesses (rc 0 each) and on AC1 and AC2 run on the committed bytes, not on the commit gate.",
+  "notes": "Form only. Recorded so the CVO can see the pre-commit gate state for portal frontend commits. No gate was changed and no command was re-run to clear the reflex."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W423-S8",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~423",
+  "surfaced_at": "2026-10-13T23:15:30Z",
+  "one_line": "The base harness count disagrees between two instruments: r103_feature_green_v2.sh reads base 15 of 21 at PROD 63c4f9e3, while the predecessor's bare run of every __harness__ file at that base read 18 of 21 exit 0; AC2 meets its expect on the script's own denominator and the two counts are not reconciled.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC2 on the committed portal bytes (portal 85d5749f) printed 'typecheck rc 0 | lint rc 0 | harness 19 of 22 pass | base 15 of 21 | regressions 0: none | pre-existing: assembled.harness.cjs exportCompare.harness.cjs timelineFourStates.harness.cjs' and 'R103 FEATURE GREEN: YES (...)', exit 0.",
+      "Predecessor proof instance at 4b5678b3ee, compiler_tools entry 'every __harness__ file run bare (portal)': bare run at the cut base tree reads 18 of 21 exit 0, with assembled, exportCompare and timelineFourStates non-zero; the entry records that the script's base 15 of 21 was not reconciled with it."
+    ]
+  },
+  "spec_asserts": "AC2 expect: 'R103 FEATURE GREEN: YES (typecheck rc 0, lint rc 0, harness P of T pass, base Q of U, regressions 0, pre-existing: names)' with T one more than U, and P at least Q plus 1; the base figure is the script's own detached base run at 63c4f9e3.",
+  "world_is": "The script's base run finds 6 of 21 harnesses not passing at 63c4f9e3 (21 minus 15), where a bare run of the same tree finds 3 non-zero exits (18 of 21). The discrepancy is between two readings of the base tree and was not explained by this worker.",
+  "notes": "Form only. AC2's expect is met on the script's rule; the reconciliation is the issuer's. No harness and no script was edited to make the two counts agree."
+}
+```

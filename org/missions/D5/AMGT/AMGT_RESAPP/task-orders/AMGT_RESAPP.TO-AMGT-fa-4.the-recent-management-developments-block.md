@@ -118,6 +118,7 @@ The `<status>` flip is the issuer's.
 
 <status>staged</status>
 <status>pending -- GO 2026-10-13T23:0xZ by the issuer (2.0.0_SA_COO~R2): fa-1 merged @ebe4c8d287, so `contract.py` and `orchestrate.py` exist at the base this worktree is cut from.</status>
+<status>complete -- 2026-10-13T23:4xZ by the issuer (2.0.0_SA_COO~R2): wk-AMGT_RESAPP-425 @bd91e2adb3 merged @6c10ae95c6, proof instance VALID (rc=0). AC1 PASS (`AIFILL FA-4 ARMS: YES (12 of 12)`, re-run by the issuer in the worker's tree and on the integrated package), AC2 PASS (28 passed); `ruff check lib/research/aifill` clean.</status>
 <round>104</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~425</slot>
