@@ -13,6 +13,10 @@ through its manager. "Touches only its fabric" is a MEASUREMENT here, never a ju
                                     --portal <portal repo path> [--check-only]
                                     # DP-b-5: head_sha and commits are COMPUTED from the portal (origin/PROD, origin/DEV); a branch
                                     # cut from DEV (overlap above 0) is refused; --check-only runs the checks and writes nothing
+                                    # [--waive-overlap <sha[,sha...]> --waiver-ref <ruling file>]: the DEV-overlap refusal is waived
+                                    # for exactly the named commits (full or abbreviated shas); every overlap commit must be named,
+                                    # and a named sha outside the overlap is refused. The row stores approval.waiver {shas, ref}.
+                                    # --check-only resolves <branch> as origin/<b>, else local <b>, else any commit-ish (a bare sha).
     python .tools/open-calls.py approval-lease --branch cand/<box>/<slug> --box <box> --purpose <text> --pages <p1,p2>
                                     --class <class> --how <text> --portal <portal repo path> --lease-file <path> [--project NFRA_DEVPLN]
                                     # DP-b-5: a live FAST lease of this seat (mode FAST, expires_epoch ahead, seat = OPAL_AGENT_SERIAL)
@@ -111,6 +115,11 @@ CLOSED_KEYS = {"at", "by", "ruling", "crossbox", "ruled_by", "xadj", "decision"}
 # a portal feature waiting for Andrew's yes or no. The row carries an `approval` object; closing it writes `decision`
 # (approved|declined). head_sha and commits are computed from the portal repository at registration (DP-b-5, register_facts).
 APPROVAL_KEYS = {"box", "branch", "purpose", "pages", "class", "how", "head_sha", "commits"}
+# approval.waiver (the CTO's named DEV-overlap waiver): present only on a row registered with --waive-overlap; {shas, ref}.
+APPROVAL_OPTIONAL_KEYS = {"waiver"}
+WAIVER_KEYS = {"shas", "ref"}
+FULL_SHA_RE = re.compile(r"^[0-9a-f]{40}$")
+WAIVER_SHA_RE = re.compile(r"^[0-9a-fA-F]{4,40}$")   # a commit name in hex: never a count, a range or a wildcard
 APPROVAL_CLASSES = ("client-facing", "opal-internal", "test-only")
 APPROVAL_DECISIONS = ("approved", "declined")
 APPROVAL_RULED_BY = ("andrew", "cto")
@@ -502,9 +511,16 @@ def validate_doc(doc, device: str, where: str) -> dict:
 def check_approval_row(row: dict, where: str) -> None:
     """An approval row is kind approval with the approval object, and a CLOSED one carries its decision."""
     ap = row.get("approval")
-    if row.get("kind") != "approval" or not isinstance(ap, dict) or set(ap) != APPROVAL_KEYS:
+    if row.get("kind") != "approval" or not isinstance(ap, dict) or not (
+            APPROVAL_KEYS <= set(ap) <= APPROVAL_KEYS | APPROVAL_OPTIONAL_KEYS):
         raise BadFile("%s: row %s is not a well-formed approval row (kind approval, approval keys %s)" % (
             where, row["id"], "/".join(sorted(APPROVAL_KEYS))))
+    if "waiver" in ap:
+        w = ap["waiver"]
+        if (not isinstance(w, dict) or set(w) != WAIVER_KEYS or not isinstance(w["shas"], list) or not w["shas"]
+                or not all(isinstance(s, str) and FULL_SHA_RE.match(s) for s in w["shas"])
+                or not isinstance(w["ref"], str) or not w["ref"].strip()):
+            raise BadFile("%s: row %s approval.waiver must be {shas: [full shas], ref: <path>}" % (where, row["id"]))
     if ap["class"] not in APPROVAL_CLASSES:
         raise BadFile("%s: row %s approval.class %r is not one of %s" % (where, row["id"], ap["class"], "/".join(APPROVAL_CLASSES)))
     if not isinstance(ap["pages"], list) or not isinstance(ap["branch"], str) or not APPROVAL_BRANCH_RE.match(ap["branch"]):
@@ -853,14 +869,63 @@ def portal_git(portal: str, *args) -> tuple:
 
 
 def portal_commit(portal: str, ref: str):
-    """The full sha a ref names as a commit, or None."""
+    """The full sha a ref names as a commit, or None. A name that starts with '-' is never handed to git as an option."""
+    if not ref or ref.startswith("-"):
+        return None
     rc, out = portal_git(portal, "rev-parse", "--verify", "--quiet", ref + "^{commit}")
     return out.strip() if rc == 0 and out.strip() else None
 
 
-def register_facts(portal: str, branch: str) -> dict:
-    """head, commits, overlap and ref of a candidate branch against the portal's origin/PROD and origin/DEV. Read-only.
-    The branch is read as origin/<branch>, else as the local branch <branch>, else as the remote-tracking name <branch>.
+def waiver_tokens(args) -> list:
+    """The shas --waive-overlap names, as typed (None when no waiver is given). A ref without a waiver is refused (rc 2).
+    Each entry must be a hex commit name; anything else (a count, a range, a wildcard, HEAD~1) is refused waiver-sha-invalid."""
+    raw = getattr(args, "waive_overlap", None)
+    if raw is None:
+        if (getattr(args, "waiver_ref", None) or "").strip():
+            raise Refused("--waiver-ref is given without --waive-overlap: a ruling file excuses only the commits it names")
+        return None
+    tokens = [t.strip() for t in raw.split(",") if t.strip()]
+    if not tokens:
+        raise RegisterStop("waiver-sha-invalid", "sha=(none named)")
+    for t in tokens:
+        if not WAIVER_SHA_RE.match(t):
+            raise RegisterStop("waiver-sha-invalid", "sha=%s" % t)
+    return tokens
+
+
+def waiver_ref_rel(ref) -> str:
+    """The ruling file a waiver rests on, as a repository-relative path. RegisterStop(waiver-ref-missing) when it is absent."""
+    ref = (ref or "").strip()
+    if not ref:
+        raise RegisterStop("waiver-ref-missing", "ref=(none given)")
+    cands = [ref] if os.path.isabs(ref) else [os.path.join(os.getcwd(), ref), os.path.join(ROOT, ref)]
+    if not any(os.path.isfile(c) for c in cands):
+        raise RegisterStop("waiver-ref-missing", "ref=%s" % ref)
+    return rel_to_root(ref, ROOT)
+
+
+def resolve_waiver(portal: str, tokens: list, overlap: list) -> list:
+    """The full shas of the named waiver, every one of them a commit of the overlap set (in the order named, no repeats).
+    RegisterStop(waiver-sha-unresolved) for a name that is no commit; (waiver-sha-not-in-overlap) for one that is not in the
+    overlap set, so a waiver can never excuse a commit it does not name."""
+    named = []
+    for t in tokens:
+        sha = portal_commit(portal, t)
+        if sha is None:
+            raise RegisterStop("waiver-sha-unresolved", "sha=%s" % t)
+        if sha not in overlap:
+            raise RegisterStop("waiver-sha-not-in-overlap", "sha=%s" % sha)
+        if sha not in named:
+            named.append(sha)
+    return named
+
+
+def register_facts(portal: str, branch: str, waive=None, any_commit: bool = False) -> dict:
+    """head, commits, overlap and waived of a candidate branch against the portal's origin/PROD and origin/DEV. Read-only.
+    The branch is read as origin/<branch>, else as the local branch <branch>, else as the remote-tracking name <branch>;
+    with any_commit (--check-only) also as any commit-ish, a bare sha. waive is the list of named shas (or None).
+    With no waiver any overlap refuses dev-overlap. With a waiver every overlap commit must be named (else dev-overlap with
+    unwaived=<k>), and each named sha must be an overlap commit (else waiver-sha-not-in-overlap).
     Raises RegisterStop with the reason when the branch cannot be registered."""
     rc, _out = portal_git(portal, "rev-parse", "--git-dir")
     if rc != 0:
@@ -869,7 +934,10 @@ def register_facts(portal: str, branch: str) -> dict:
     if prod is None or dev is None:
         raise RegisterStop("portal-refs-missing", "origin/PROD=%s origin/DEV=%s" % (prod or "absent", dev or "absent"))
     head = None
-    for cand in ("refs/remotes/origin/" + branch, "refs/heads/" + branch, "refs/remotes/" + branch):
+    names = ["refs/remotes/origin/" + branch, "refs/heads/" + branch, "refs/remotes/" + branch]
+    if any_commit:
+        names.append(branch)
+    for cand in names:
         head = portal_commit(portal, cand)
         if head:
             break
@@ -883,18 +951,36 @@ def register_facts(portal: str, branch: str) -> dict:
     if not own:
         raise RegisterStop("empty", "commits=0")
     in_dev = set(dev_out.split())
-    overlap = sum(1 for c in own if c in in_dev)
-    if overlap:
-        raise RegisterStop("dev-overlap", "overlap=%d commits=%d" % (overlap, len(own)))
-    return {"head": head, "commits": len(own), "overlap": overlap}
+    over = [c for c in own if c in in_dev]
+    if waive is None:
+        if over:
+            raise RegisterStop("dev-overlap", "overlap=%d commits=%d" % (len(over), len(own)))
+        named = []
+    else:
+        named = resolve_waiver(portal, waive, over)
+        unwaived = [c for c in over if c not in named]
+        if unwaived:
+            raise RegisterStop("dev-overlap", "overlap=%d commits=%d unwaived=%d" % (len(over), len(own), len(unwaived)))
+    return {"head": head, "commits": len(own), "overlap": len(over), "waived": named}
 
 
 def approval_register_facts(args, ap: dict) -> dict:
-    """The portal facts for one registration. RegisterStop(portal-required) when --portal is not given."""
+    """The portal facts for one registration, and the waiver it stores (None without one). RegisterStop(portal-required)
+    when --portal is not given; waiver-ref-missing is read before the portal."""
     portal = (getattr(args, "portal", None) or "").strip()
     if not portal:
         raise RegisterStop("portal-required")
-    return register_facts(portal, ap["branch"])
+    waive = waiver_tokens(args)
+    waiver = None
+    if waive is not None:
+        waiver = {"ref": waiver_ref_rel(getattr(args, "waiver_ref", None))}
+    facts = register_facts(portal, ap["branch"], waive=waive, any_commit=bool(getattr(args, "check_only", False)))
+    if waiver is not None:
+        waiver["shas"] = facts["waived"]
+        facts["waiver"] = waiver
+    else:
+        facts["waiver"] = None
+    return facts
 
 
 def approval_append(args, ap: dict, asked_by: str, source: str, closed=None) -> tuple:
@@ -935,14 +1021,17 @@ def cmd_add_approval(args) -> int:
     except RegisterStop as stop:
         return register_refused(stop.reason, stop.extra)
     if args.check_only:
-        print("%s result=OK row=- head_sha=%s commits=%d check-only=yes" % (REGISTER, facts["head"], facts["commits"]))
+        print("%s result=OK row=- head_sha=%s commits=%d check-only=yes waived=%d" % (
+            REGISTER, facts["head"], facts["commits"], len(facts["waived"])))
         return 0
     ap["head_sha"], ap["commits"] = facts["head"], facts["commits"]
+    if facts["waiver"] is not None:
+        ap["waiver"] = facts["waiver"]
     asked_by = (args.asked_by or "").strip() or writer_serial("")
     if not asked_by:
         raise Refused("--asked-by is required (no OPAL_AGENT_SERIAL to take it from)")
     cid, written, doc, res, notes = approval_append(args, ap, asked_by, (args.source or "").strip() or ap["branch"])
-    print("%s result=OK row=%s head_sha=%s commits=%d" % (REGISTER, cid, facts["head"], facts["commits"]))
+    print("%s result=OK row=%s head_sha=%s commits=%d waived=%d" % (REGISTER, cid, facts["head"], facts["commits"], len(facts["waived"])))
     print("ADDED id=%s kind=approval file=%s open=%d" % (cid, written, sum(1 for r in doc["rows"] if r["state"] == "OPEN")))
     print_scope(res, notes)
     return 0
@@ -988,6 +1077,8 @@ def cmd_approval_lease(args) -> int:
     except RegisterStop as stop:
         return register_refused(stop.reason, stop.extra)
     ap["head_sha"], ap["commits"] = facts["head"], facts["commits"]
+    if facts["waiver"] is not None:
+        ap["waiver"] = facts["waiver"]
     asked_by = (getattr(args, "asked_by", None) or "").strip() or writer_serial("")
     if not asked_by:
         raise Refused("--asked-by is required (no OPAL_AGENT_SERIAL to take it from)")
@@ -995,7 +1086,7 @@ def cmd_approval_lease(args) -> int:
     closed = {"at": now_utc(), "by": "FAST lease %s" % os.path.basename(args.lease_file), "ruling": lease_rel, "crossbox": None,
               "ruled_by": "lease", "xadj": None, "decision": "approved"}
     cid, _written, _doc, res, notes = approval_append(args, ap, asked_by, lease_rel, closed=closed)
-    print("%s result=OK row=%s head_sha=%s commits=%d" % (REGISTER, cid, facts["head"], facts["commits"]))
+    print("%s result=OK row=%s head_sha=%s commits=%d waived=%d" % (REGISTER, cid, facts["head"], facts["commits"], len(facts["waived"])))
     print("CLOSED id=%s by=%s ruled_by=lease ruling=%s decision=approved" % (cid, closed["by"], lease_rel))
     print_scope(res, notes)
     return 0
@@ -1005,7 +1096,8 @@ def cmd_add(args) -> int:
     if args.kind == "approval":
         return cmd_add_approval(args)
     stray = [f for f, v in (("--box", args.box), ("--branch", args.branch), ("--purpose", args.purpose), ("--pages", args.pages),
-                            ("--class", args.klass), ("--how", args.how), ("--portal", args.portal)) if v is not None]
+                            ("--class", args.klass), ("--how", args.how), ("--portal", args.portal),
+                            ("--waive-overlap", args.waive_overlap), ("--waiver-ref", args.waiver_ref)) if v is not None]
     if args.check_only:
         stray.append("--check-only")
     if stray:
@@ -1756,6 +1848,10 @@ def build_parser() -> argparse.ArgumentParser:
     add.add_argument("--portal", help="approval (required): the portal repository; origin/PROD, origin/DEV and the branch are read")
     add.add_argument("--check-only", action="store_true", dest="check_only",
                      help="approval: run the registration checks and print the APPROVAL-REGISTER line; write nothing")
+    add.add_argument("--waive-overlap", dest="waive_overlap",
+                     help="approval: comma-separated full or abbreviated shas excused from the DEV-overlap refusal (named, never a count)")
+    add.add_argument("--waiver-ref", dest="waiver_ref",
+                     help="approval: the ruling file that names the waived commits (required with --waive-overlap; must exist)")
     lst = sub.add_parser("list", help="print the list(s) with each file's age")
     grp = lst.add_mutually_exclusive_group()
     grp.add_argument("--device")
@@ -1804,6 +1900,9 @@ def build_parser() -> argparse.ArgumentParser:
     alz.add_argument("--portal", help="the portal repository (required: refused reason=portal-required without it)")
     alz.add_argument("--lease-file", help="the FAST lease JSON (mode FAST, expires_epoch, seat)")
     alz.add_argument("--asked-by", help="defaults to OPAL_AGENT_SERIAL")
+    alz.add_argument("--waive-overlap", dest="waive_overlap",
+                     help="comma-separated full or abbreviated shas excused from the DEV-overlap refusal (named, never a count)")
+    alz.add_argument("--waiver-ref", dest="waiver_ref", help="the ruling file that names the waived commits (required with --waive-overlap)")
     sco = sub.add_parser("scope", help="measure whether a call touches only this box")
     sco.add_argument("--project")
     sco.add_argument("--orders", nargs="+", default=[])

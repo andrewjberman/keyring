@@ -725,3 +725,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## NFRA_DEVPLN-W1-S12 -- the cited ruling names three merges, not the four waived commits; the waiver ref is checked for existence only
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S12",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-13T22:01:38Z",
+  "one_line": "The CTO ruling cited as --waiver-ref names three merges (62d455f5 through a577cba5) and not the four commits the waiver names; the tool checks only that the ref file exists",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261013_213xZ_LAPTOP_E846_7D95_BB8B.md@f3cc33dddc lines 29-34: the three IRPT_ANLREQ merges 62d455f5 through a577cba5; WAIVED for exactly these three named merge shas; No other DEV-only commit is admitted this way. Only 62d455f5 is named literally; 923f7d69, 794b7df4 and 9ef6a359 do not appear in the file (grep, worktree)",
+      "DP-d-1 order, AC2: the waiver names 923f7d69,794b7df4 and cites this ruling; the check-only run returned APPROVAL-REGISTER result=OK row=- head_sha=794b7df495d2baa3d2f887f148f4389e729ca07d commits=2 check-only=yes waived=2 rc 0",
+      ".tools/open-calls.py@worktree waiver_ref_rel(): the --waiver-ref check is os.path.isfile only; the ruling's text is not read, so a ref that names none of the waived shas is accepted"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DP-d-1 cell: the CTO ruled the DEV-overlap refusal WAIVED for exactly four named commits, 923f7d69, 794b7df4 (feature head), 9ef6a359 and 62d455f5, and the waiver is referenced by a ruling file.",
+  "world_is": "The cited ruling CTO_RULING_20261013_213xZ_LAPTOP_E846_7D95_BB8B.md names three IRPT_ANLREQ merges, 62d455f5 through a577cba5, and says the waiver is for exactly those three named merge shas. Only 62d455f5 appears literally in it; the four-commit set is the issuer's reading recorded in the decomposition, not the ruling's text. The waiver tool accepts any existing ref file, so AC2 registers the 794b7df4 waiver on a ruling that does not name two of its shas. Nothing was registered by this cell (check-only only)."
+}
+```
