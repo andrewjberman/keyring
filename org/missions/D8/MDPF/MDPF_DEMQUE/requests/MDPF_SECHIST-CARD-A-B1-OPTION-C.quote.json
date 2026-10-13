@@ -4,20 +4,21 @@
   "basis": "history backfill quoted over NON-trading days (weekends and NYSE holidays, lib/trading_calendar.py is_trading_day) at the measured ceiling per day; a trading day's backfill allowance is 0 (production draws history on trading days); counted only on days a scheduled drawer fires (drawer_schedule.py)",
   "basis_note": "Option C depth (flow dates plus month-ends before 2026-04-22, daily after), floor max(first held, 2012-01-01); PX_LAST with the client's income rows from the transactions, TOT_RETURN_INDEX_GROSS_DVDS for the 11 long-held bonds; the 8 funds Yahoo rejected joined; 0 one-dollar funds skipped, 194 UNREAD cash equivalents pulled. Frozen before it runs; NOT drawn (the hold stands until Andrew's form is complete). The finish counts only days a scheduled drawer fires (non-trading days).",
   "cells": {
-    "bloomberg_history": 37514
+    "bloomberg_history": 37439
   },
-  "cells_remaining": 37514,
+  "cells_remaining": 37439,
   "claims": {
     "ceiling": "measured",
     "reserve": "held"
   },
+  "correction": "2026-10-13 ~18:3xZ, issuer: ABNFX (024071300) is match-open (P2) and is held back from the request (dell1 pivot packet: P2 draws only after its match resolves); 37,514 cells before, 37439 after.",
   "finish_date": "2026-11-07",
   "finish_date_claim": "measured",
   "frozen_by": "2.0.0_SA_COO~Q1",
   "label": "full-request quote",
   "page": "client performance (Cottonwood), via MDPF_SECHIST's one series per security",
-  "quoted_at": "2026-10-13T17:47:06Z",
+  "quoted_at": "2026-10-13T18:20:48Z",
   "quoted_for_today": "2026-10-13",
   "request_id": "MDPF_SECHIST-CARD-A-B1-OPTION-C",
-  "securities_count": 614
+  "securities_count": 613
 }

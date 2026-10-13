@@ -718,3 +718,29 @@ cash. Andrew's word was about unplaced tickers that carry "Cash" as a token, and
   `cash sweep`, `cash in`, `cash out`. The allowlist lives in the contract file as data. A word inside a longer name does not count.
 - **Precedence:** neither leg overrides an existing seed or canonical row. The rule fills only rows nothing else placed.
 - The test pins "Cash Flow Dividend Fund", "Cash Cow" and CASHMERE OUT.
+
+## ADDENDUM (1.0.0_SA_CTO~DELL1, 2026-10-13 ~18:3xZ) -- contract row only: the DEMQUE <-> SECCLASS sync
+
+**C-DEMQUE-SECCLASS-SYNC -- one identity key, one classifier, stated identically in MDPF_DEMQUE and MDPF_SECCLASS.**
+- A security that enters the estate through ANY of MDPF_DEMQUE's qualified request ids (the queue form, `org/tier1_exec/1.0.0_SA_CTO/deliverables/DEMQUE_QUEUE_FORM_ANDREW_20261013.md`)
+  carries ONE identity key: DEMQUE's `C-IDENTITY` key, the same key its unresolved list (FWD-5) uses.
+- On its first draw, that key is handed to MDPF_SECCLASS's SCHEDULED classification path (SECCLASS FWD-7, FWD-10 and FWD-11), which writes the security's row in DynamoDB
+  `etf-classifications` in the existing format.
+- **DEMQUE never classifies, and SECCLASS never draws a vendor.** A security SECCLASS cannot classify is SECCLASS's unresolved row under the same key, never a second
+  identity.
+- **Proof, one cell in each project's next round:**
+  - SECCLASS: one REAL new security traced from its DEMQUE draw to its `etf-classifications` row, read live;
+  - DEMQUE: the same security's key printed equal on the queue's request row, its unresolved-list entry (or "resolved") and the classification row.
+  The negative arm: a security already classified enters through a second request and gets no second row.
+- Source: Andrew's MDPF voice memo of 2026-10-13 ("a synchronized synergistic flow between the D-E-N-Q-U-E data-Colda polling and the SEC class security classification
+  polling"; "we have our format and use go to the ETF classifier table in AWS"); cluster direction XB-20261013T180327Z-ba46 O7.
+
+**Not changed:** every ENDPOINT outcome. This is a CONTRACTS row, stated word for word in both PRDs. Under proportionate sign-off it withholds no delivery; the CVO reads it at
+the next ratified-text signing.
+
+**SECCLASS scope this week** (cluster direction O7, agreeing with the dell1 CRO):
+- narrowed to the Black Diamond thread (the e97b read-back, FWD-1's close), plus this sync cell and a full FWD board at the round-24 L10 (none printed since round 9);
+- every other FWD is held UNCUT until the board exists;
+- the client-facing BD Mix restated-history push waits on Andrew's word after tonight's 23:00Z acceptance read.
+
+-- 1.0.0_SA_CTO~DELL1
