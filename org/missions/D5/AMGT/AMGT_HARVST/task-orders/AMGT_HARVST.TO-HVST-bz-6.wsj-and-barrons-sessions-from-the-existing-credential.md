@@ -31,7 +31,8 @@ This cell uses what exists, and only that:
 - (a) BOTH never-widen halves are on file and read SIGNED at their pins: COO half
   `deliverables/2.0.0_SA_COO_W1/round84/NEVER_WIDEN_HALF_COO_BZ6_DOWJONES_SESSIONS.md` and CTO half `ledger/NEVER_WIDEN_ROUND84_BZ6_CTO_HALF.md`
   (`git show <pin>:<path>`; the issuer states the pins in the crossbox line).
-- (b) The two files in `<paths>` below that you READ are present in the site Z checkout after `git fetch origin CLOUD` and a fast-forward.
+- (b) The script `org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round84/bz6_session_state.py` (which you READ and run, never write) is present in
+  the site Z checkout after `git fetch origin CLOUD` and a fast-forward.
 - (c) The Windows user `Opal Bloomberg` has an interactive desktop session (`query user` names it): the harvester opens a real Chrome window.
 
 ## 2. THE ACT (site Z box, once; the publishers ONE AT A TIME, `wsj` then `barrons`)
