@@ -51,6 +51,8 @@ You are `0.9.0_WK_IRPT_ANLREQ~74`.
 
 <expected_criteria>AR242-y-AC1 AR242-y-AC2J</expected_criteria>
 
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-13 ~17:5xZ, after the worker's report; row `IRPT_ANLREQ-D2-W74-S2`).** The candidate names the file but the state line below it still reads "No file chosen yet." while a file is set and no review has run: the very contradiction Andrew's test reported ("no sign of the upload"). Change the state line ONLY for the case a file is set and the state is `NOTHING_CHOSEN`: it reads `File chosen. Select Review portfolio to read it.` (find the button's words in the component and use them exactly); `UPLOAD_STEP_STATE_LABELS` and `uploadStepStateFor` keep their values for every other state. Add one test (file set, no result: the line reads as above, and never reads "No file chosen yet."), run it on the DEV tip without the change (it must FAIL) and with it, and add a second commit on the same portal branch; update the record's `commit`, `tests`, `before_arm` and `what_a_person_sees`. Also: the checker `y242-portal` now reads `r22/` (fixed @bddbded002), so the record stays where it is. Gate limb that graded this amendment: none (the issuer amends its own order).
+
 ## BOUNDS
 
 - **Grant:** exactly the `<paths>` below, plus `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~74/` and this order's file (status flip only). If a test OUTSIDE the grant fails because of your change, STOP: file a BLOCKING row naming it; the issuer amends the grant.
