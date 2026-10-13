@@ -31887,3 +31887,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "RULED: (1) step 0 reads MATCH: the function (IRPT_DIRECTORY_BUCKET_MAP: opal-data-bd, opal-data-cot, opal-data-inf under investor-reporting/directory, role grants on the same) and the 49F builder read the same directory homes; no home moves. (2) The gap to the canonical address() (opal-data-49financial holds no directory object) is recorded as THIS one row for its migration project (CTO RE 7037; rule 30, R19): it is not a rider on this release and nothing here depends on it. (3) W365-S1 (the exercise ledger's .open_deploys marker still reads OPEN on two worktree HEADs while its change_management ledger reads CLOSED, 15:44Z): the apply measures the artifact on every live worktree before it waits; a stale marker is a clean-up for the trees that hold it. (4) CARRIED, a consumer condition set by me in the COO half: the portal's pick path throws for an ACCOUNT-kind row that is not narrowed (header/selectionRequest.ts:18); the CTO half is asked to confirm that the portal build serving clients handles an ACCOUNT-kind search row before the apply, because this release makes the function return such rows for tail queries. STILL ARMED: W349-S1 (the latent served.py/enforce.py mismatch, now at served:876, unreachable here), W361-S1, W348-S2."
 }
 ```
+
+## IRPT_BCKEND-D2-S139 -- HELD by Andrew's word: the directory-search apply and the r181 analysis wait for the laptop CTO; the portal consumer point is open
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S139",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T16:24:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (laptop) or Andrew",
+  "one_line": "HELD by Andrew's word (relayed by 1.0.0_SA_CTO~DELL2, msg 7066): the irpt-directory-search apply and the IRPT_BCKEND round-181 analysis wait for the laptop CTO or Andrew; the portal consumer point (selectionRequest.ts:18 throws for an unnarrowed ACCOUNT-kind row) must be cleared before the apply.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO~DELL2 msg 7066, 2026-10-13 ~16:23Z: 'At ~15:5xZ Andrew interrupted my round-181 analysis with those words ... I will deal with this on the laptop device, not here ... Until he says otherwise I write no IRPT_BCKEND half or analysis. Your IB-pr-515 pair waits for the laptop CTO or his word; apply nothing.' (quoted from the relay; the words 'I will deal with this on the laptop device, not here' are Andrew's per the relay.)",
+      "portal/src/pages/InvestorReporting/header/selectionRequest.ts:8-18 at the shared checkout: an ACCOUNT-kind row that is not narrowed throws 'Choose a client, relationship or account.' (read by this seat); the refreshed packet's consumer table cites it."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "STATE: the IB-pr-515 pair has my COO half SIGNED (packet sha256 3c369b9086b3...) and the CTO half UNSIGNED; nothing is applied; irpt-directory-search stays at CodeSha256 tvrsQ+w82... . HELD: the apply (no seat applies; no order to IB2 is cut); the CTO~DELL2 half and the round-181 analysis; I add no cell on the account_id / directory-search line until the laptop CTO or Andrew speaks (the scope is the relayed words' own: this line; I do not widen it to the rest of IRPT_BCKEND, which has no open order). OPEN (the CTO's instruction): the portal point: if PROD's selectionRequest.ts:18 throws on an ACCOUNT-kind row, the apply must NOT precede a portal fix; I have read the DEV checkout's file only and not whether PROD serves the same code; the check belongs to the portal consumers' owner (DSGN_IRPTV1) and the PROD promote (held, dell1-e7f2). This row is ARMED because the apply, if run, would change what a client-facing search returns before that is cleared; it disarms when the laptop CTO or Andrew releases the hold AND the portal question is answered."
+}
+```
