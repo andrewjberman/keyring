@@ -47,6 +47,13 @@ v0.10 and dell1's answer ... It is re-cut after item 2."); the PRD `org/missions
 4. Every other entry is left alone unless a record moved. Update `as_of`; append one item to `revisions` (round 80); rewrite
    `OPEN_CORRECTIONS.md` to match. Keep the file's indentation as it is. No string `record absent` in the file.
 
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~C2`, 2026-10-13T13:2xZ) -- both records are now in the tree** (merges 7b6def6fe8 for `FUND_CLOSES_READ_BACK.json`, 409f039d8a for
+`THREE_EQUITIES.json`). Where a record's number differs from this order's words, write the RECORD's number and put the difference under `unreconciled`: item 2 says "the 14 funds
+classed" and `FUND_CLOSES_READ_BACK.json` has all 15 funds with trade units and only 7 with a dell1 column (8 `not_landed`); `THREE_EQUITIES.json` lists 5 securities off 1.0, not 3, and
+sets `served_day_with_split_sized_error` true (APH, 48 minted account-days; row ADVI_COTBKF-D2-W155-S1, carried to the CTO the same hour). Carry both facts and the cause
+`not_established` exactly as the records word them; `widens_c_basis` as the record holds it. The channel rows ADVI_COTBKF-D2-W155-S1 to S4 and ADVI_COTBKF-D2-W156-S1 to S5 may be
+cited by id; do not restate their bodies.
+
 **Rules.** Print each number from its record before you write it. A number no record holds is `NOT_MEASURED` with the record looked
 in. Where two records disagree, both go under `unreconciled`. No opinion on whether a correction should be made. No account id; a
 security by its ticker.

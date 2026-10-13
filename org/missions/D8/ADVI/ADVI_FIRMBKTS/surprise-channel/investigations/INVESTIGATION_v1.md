@@ -6894,3 +6894,30 @@ Rows are appended after the earlier rows; each is one fenced json object.
 }
 ```
 
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-j-3, what the runner runs)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S54",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-13T13:21:19Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The bd-gold-layer-runner also runs the ADVI 49f scheduled-floor chain (about every 3 hours); two runner runs after the FB-j-3 deploy were that chain, not the BD gold dispatcher, so runner activity is not the FB-j-3 'next chain' signal.",
+  "spec_asserts": "TO-FB-j-3 step 4: read the first chain that closes after the deploy (the nightly fallback cron(0 23 ? * MON-SAT *) or an S3-triggered run), in gold/logs/ and the cumulative logs/gold-layer/gold_incremental_*.log.",
+  "world_is": "Read-only. Runner i-01003b035d2988dfb was started at 09:46:59Z and 12:45:16Z (stopped 09:53Z and 12:51Z) by principal advi-49f-gold-dispatch-role (CloudTrail StartInstances). The Lambda advi-49f-gold-dispatch logged Event {run_class production, source advi.49f.scheduled-floor} and dispatched SSM document advi-49f-chain-dispatch (plugin runAdvi49fChain, rc 0); the invocation's stdout opens 'CHAIN START date=2026-10-12 mode=production workdir=/tmp/49f_chain_work stages=18', a different chain from gold_dispatch.sh. Neither run wrote a gold_incremental log or a gold/logs object (listed both prefixes; the runner telemetry shows scripts S_00, A_00, A_02 only). The last gold_incremental object is 2026-10-13 06:18:11Z, before the deploy at 08:37:35Z. My earlier watcher keyed on the runner's state transition and read both runs as 'a chain after the deploy'; the stdout and the invoker say otherwise. No BD gold chain has run since the deploy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudTrail StartInstances 09:46:59Z and 12:45:16Z on the instance",
+      "/aws/lambda/advi-49f-gold-dispatch log 12:45:15Z",
+      "SSM command ce052cb7-b353-46fa-b545-8eca45f531a4 stdout head"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "FB-j-3 stays open for the 23:00Z fallback or an S3-triggered BD chain. A watcher now waits for a gold_incremental or gold/logs .log object newer than the deploy, not for runner state. The 49f chain's own end-of-run WARN lines (if any) are not FB-j-3's measurement."
+}
+```

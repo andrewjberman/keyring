@@ -7700,3 +7700,28 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S134",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-13T13:15:42Z",
+  "one_line": "Disarm of D2-W155-S1 and D2-W155-S3 (disarm_owner 2.0.0_SA_COO~C2): the wrong served prices they report (APH at 0.50 of the store on 48 minted account-days; HON minted vs partitions) sit in the minted table and the 47 early partitions, whose hazard is already held by D2-S131 and its ruling (no rebuild of a partition dated before 2026-06-08, no consumer attached to the minted table); the APH finding went to the CTO the same hour",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md rows ADVI_COTBKF-D2-S131 (hazard_standing INERT: the minted table has no reader) and ADVI_COTBKF-D2-W155-S1, -S3",
+      "org/missions/D8/ADVI/ADVI_COTBKF/prd/ADVI_COTBKF_PRD.md line 322: row D2-S131 stays BLOCKING and its ruling stays in force",
+      "CTO message 20261013T131415Z_2.0.0_SA_COO_C2__ADVI_COTBKF_r80__SAME-HOUR__APH_served_ (delivered to 1.0.0_SA_CTO~DELL2 at 13:14Z)",
+      "merge 409f039d8a carries the worker record THREE_EQUITIES.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An ARMED hazard disarms same-turn via its disarm_owner (CLAUDE.md section 2); a held, SERVED day carrying a split-sized error goes to the CTO the same hour (round-80 analysis section 3 item 1).",
+  "world_is": "The defects stay OPEN for the round-81 analysis; the cause is NOT established (no build over store step equals a split ratio). NOT re-measured by this seat at this turn: whether any reader is attached to the minted table, and whether any rebuild of the early partitions is scheduled; the disarm rests on the S131 ruling being in force, not on a fresh census."
+}
+```
