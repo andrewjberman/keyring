@@ -103,7 +103,7 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMB
 
 **ISSUER NOTES:** the CTO's sample read (`ledger/CTO_SAMPLE_READ_FB_J_10_EXEC_SUMMARIES_20261013.md`): defects 1 and 2, rulings (a) and (b). The disabled slot is the product defect (one placeholder `rel_id "0"` pools unrelated flows under one fake client; raw relationship ids are printed); the fix of the slot goes to the CRO's exec-summary brief, not here. The guard is the CTO's (b): it is needed before ANY slot that can name a client serves. The environment carrier mirrors `platinum_mode` so the deploy (`FB-j-13`) is a scoped plan whose only added key is `EXEC_SUMMARY_DISABLED_SLOTS`. Class WORLD by the path floor.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <workstream>SLOTSWITCH</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-j-11</to_id>
