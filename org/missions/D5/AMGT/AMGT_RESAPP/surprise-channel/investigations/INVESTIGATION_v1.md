@@ -25501,3 +25501,156 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only, no significance judged. The issuer decides whether the 93 denominator is printed by a later instrument or stated beside the 95 by the CVO at grading; the worker has not run or edited any instrument to add it."
 }
 ```
+
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W410-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~410",
+  "surfaced_at": "2026-10-13T19:22:39Z",
+  "one_line": "origin/DEV moved from c1d36723 (the order's pin) to 4d601023 between issuance and this run; the preflight's NO (196 files) count was measured at c1d36723.",
+  "spec_asserts": "AMGT_RESAPP.TO-AMGT-bj-9 preflight and step 1: origin/DEV is c1d367231c, and the whole-DEV surface reads NO (196 files: 17 page, 0 shared named, 170 forbidden, 9 unnamed) at that pin.",
+  "world_is": "git fetch origin DEV in the nested portal repo reports c1d36723..4d601023 DEV -> origin/DEV. origin/DEV resolves to 4d601023 at this run. The page was taken from 4d601023 (17 files).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal git fetch origin DEV output (run 2026-10-13T19:22Z): 'c1d36723..4d601023  DEV -> origin/DEV'; git rev-parse --short origin/DEV = 4d601023",
+      "portal branch feature/amgt-security-analysis-v1 commit e80be8ce0272c85bc291ba4688f49bfc430e5a12 takes src/pages/SecurityAnalysis from origin/DEV 4d601023 (17 files)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The whole-DEV NO count was not re-measured at 4d601023. The feature branch's own surface check reads YES (17 files: 17 page, 0 shared named, 0 forbidden, 0 unnamed)."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W410-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~410",
+  "surfaced_at": "2026-10-13T19:22:39Z",
+  "one_line": "AC2 is red: harness assembled.harness.cjs exits 2 under the suite's bare node-file call because it requires --payload and --ranked arguments the suite never passes.",
+  "spec_asserts": "r103_feature_green.sh runs every src/pages/SecurityAnalysis/__harness__/*.harness.{cjs,mjs} as node <file> with no argument, and the round-103 order expects every harness to exit 0 (AC2: harness H of H).",
+  "world_is": "node src/pages/SecurityAnalysis/__harness__/assembled.harness.cjs prints 'ERROR: --payload <thesis bundle file> and --ranked <ranked payload file> are both required' and exits 2. AC2 reads 'harness 18 of 21 | failing: assembled.harness.cjs exportCompare.harness.cjs timelineFourStates.harness.cjs' and 'R103 FEATURE GREEN: NO (typecheck rc 0, lint rc 0, harness 18 of 21)'.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC2 output on branch commit e80be8ce0272 (worktree C:/dev/wk-resapp-410/.scratch/ac2_full.txt): 'typecheck rc 0 | lint rc 0 | harness 18 of 21 | failing: assembled.harness.cjs exportCompare.harness.cjs timelineFourStates.harness.cjs'",
+      "direct run (C:/dev/wk-resapp-410/.scratch/h_assembled.txt): rc=2, 'ERROR: --payload <thesis bundle file> and --ranked <ranked payload file> are both required'; the harness header names both arguments as required at line 35 and line 57-58"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The harness is taken as DEV bytes at 4d601023 and is not edited on the branch. Whether the suite call or the harness is amended is the issuer's call. The promote of this branch stays red until this row is dispositioned."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W410-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~410",
+  "surfaced_at": "2026-10-13T19:22:39Z",
+  "one_line": "AC2 is red: harness exportCompare.harness.cjs exits 2 under the suite's bare node-file call because it requires a --pack or --rich argument the suite never passes.",
+  "spec_asserts": "r103_feature_green.sh runs every src/pages/SecurityAnalysis/__harness__/*.harness.{cjs,mjs} as node <file> with no argument, and the round-103 order expects every harness to exit 0 (AC2: harness H of H).",
+  "world_is": "node src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs prints 'usage: exportCompare.harness.cjs --pack <path> | --rich <path> [--fixture <path>]' and exits 2. It is one of the three failing harnesses in the AC2 run (harness 18 of 21).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC2 output on branch commit e80be8ce0272 (C:/dev/wk-resapp-410/.scratch/ac2_full.txt): 'failing: assembled.harness.cjs exportCompare.harness.cjs timelineFourStates.harness.cjs'",
+      "direct run (C:/dev/wk-resapp-410/.scratch/h_exportCompare.txt): rc=2, usage line as above; argument parse at the harness's lines 40-43"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The harness is taken as DEV bytes at 4d601023 and is not edited on the branch. Whether the suite call or the harness is amended is the issuer's call."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W410-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~410",
+  "surfaced_at": "2026-10-13T19:22:39Z",
+  "one_line": "AC2 is red: harness timelineFourStates.harness.cjs exits 1 with MODULE_NOT_FOUND for './timelinePrices', a file that exists on DEV and PROD.",
+  "spec_asserts": "r103_feature_green.sh expects every Security Analysis harness to exit 0 on the feature branch (AC2: harness H of H). The harness renders the actual TimelinePanel.tsx as its own instrument.",
+  "world_is": "node src/pages/SecurityAnalysis/__harness__/timelineFourStates.harness.cjs exits 1: 'Error: Cannot find module ./timelinePrices', requireStack = [package.json]. TimelinePanel.tsx imports withPrices from ./timelinePrices (line 46 on origin/DEV). The file src/pages/SecurityAnalysis/components/timelinePrices.ts exists on origin/DEV 4d601023 and on PROD 15c9754975. The requireStack names the package root, so the harness resolves the relative import from the package root, not from the component's directory.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "direct run (C:/dev/wk-resapp-410/.scratch/h_timelineFourStates.txt): 'Error: Cannot find module ./timelinePrices', requireStack [package.json]",
+      "git ls-tree origin/DEV and HEAD 15c9754975: src/pages/SecurityAnalysis/components/timelinePrices.ts present in both",
+      "git grep origin/DEV: components/TimelinePanel.tsx:46 'import { withPrices } from ./timelinePrices'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not measured: whether this harness passes on PROD 15c9754975. The harness is taken as DEV bytes and is not edited on the branch. Whether the harness resolver or the component import is amended is the issuer's call."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W410-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~410",
+  "surfaced_at": "2026-10-13T19:22:39Z",
+  "one_line": "safe-commit in the nested portal repo refused the branch commit with 'unable to auto-detect email address' (rc 128) until GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL were set for that one call.",
+  "spec_asserts": "AMGT_RESAPP.TO-AMGT-bj-9 step 6: commit the branch in the nested worktree via .tools/safe-commit.sh with the given --author line; no committer identity step is specified.",
+  "world_is": "The portal repository has no committer identity configured. safe-commit's first attempt printed 'fatal: unable to auto-detect email address (got Test@DESKTOP-HK1UU7N.(none))' and did not commit. The second attempt, with the committer identity set in the environment for that call only, committed e80be8ce0272 (17 files) and the repository reads its author as 0.9.0_WK_AMGT_RESAPP~410. The repository config was not changed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first safe-commit attempt output (portal repo, rc=128): 'fatal: unable to auto-detect email address'",
+      "second attempt (C:/dev/wk-resapp-410/.scratch/commit_branch.txt): rc=0; '[feature/amgt-security-analysis-v1 e80be8ce] feat(AMGT_RESAPP bj-9 ...)'; 17 files changed",
+      "git log -1 --format='%H~%an~%s' HEAD = e80be8ce0272c85bc291ba4688f49bfc430e5a12~0.9.0_WK_AMGT_RESAPP~410"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The workaround is per-call environment only and does not persist. The first refusal left the index unchanged ('Unstaged 0 file(s)')."
+}
+```
+
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W410-S6",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~410",
+  "surfaced_at": "2026-10-13T19:25:30Z",
+  "one_line": "AC3 walk cannot start: port 5174 is held by another session's vite server (PID 10248), so bun run dev --port 5174 fell back to 5175 and the walk was not run.",
+  "spec_asserts": "AMGT_RESAPP.TO-AMGT-bj-9 AC3 and section 2 bound 4: build the branch with bun run dev --port 5174, open ASML_NA_Equity, VLO_US_Equity and UBSG_SW_Equity, visit each tab, save screenshots; the dev server uses port 5174 only.",
+  "world_is": "netstat at 2026-10-13T19:25Z: TCP [::1]:5174 LISTENING pid 10248, whose command line is node vite.js --port 5174 --strictPort under C:\\Users\\Test\\AppData\\Local\\Temp\\claude\\C--dev-ajb-workspace\\686ad2f5-55a8-497a-948b-c6b759e206a9\\scratchpad\\portal-smoke. My bun run dev --port 5174 printed 'Port 5174 is in use, trying another one' and listened on 5175 (pid 31328, my worktree's vite). I stopped pid 31328 and its child 31376 with taskkill. Pid 10248 was not touched. No screenshot exists. The recheck at 19:25:06Z still showed 10248 on 5174.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-resapp-410/.scratch/devserver.log: 'Port 5174 is in use, trying another one...' then 'Local: http://localhost:5175/'",
+      "netstat -ano and Win32_Process command lines (read 2026-10-13T19:24Z to 19:25Z): pid 10248 on 5174 (other session's portal-smoke vite); pid 31328 on 5175 (this worktree's vite, terminated)",
+      "port recheck 2026-10-13T19:25:06Z: [::1]:5174 LISTENING 10248"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here: when port 5174 is free, the walk runs on the branch with bun run dev --port 5174 --strictPort. A walk that fell back to another port, or one served by pid 10248, would walk a tree other than this branch. The fallback to 5175 by vite itself was not refused, which is why this row carries the --strictPort point. Egress for the walk is NONE beyond the local server; a playwright walk would block non-localhost requests."
+}
+```
