@@ -117,6 +117,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** STAGED behind `AMGT-fa-1`'s merge. "Do not serve raw publisher article text through the gateway in V1" (cluster direction): this builder sends headlines and links only, by construction. The 90-day window and the keyword pattern are the issuer's first cut; a miss on the 93-name census is round 104's input.
 
 <status>staged</status>
+<status>pending -- GO 2026-10-13T23:0xZ by the issuer (2.0.0_SA_COO~R2): fa-1 merged @ebe4c8d287, so `contract.py` and `orchestrate.py` exist at the base this worktree is cut from.</status>
 <round>104</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~425</slot>

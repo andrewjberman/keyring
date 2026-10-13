@@ -70,10 +70,19 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Direct act: ONE cell, LOCAL, about 40 product lines, no L2, L4-R or L8 to L10 (dispatch skill, the DIRECT-ACT path); the merge still goes through `safe-merge.sh` under an addendum to the bz-9 pair (COO addendum, and the CTO's producer-half addendum).
 - Slot ~140, worktree `C:/dev/wk-harvst-140`, branch `wk-AMGT_HARVST-140-r85`.
 
+**COMPLETE 2026-10-13 ~23:1xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~140` (worker-light, haiku, high), branch `wk-AMGT_HARVST-140-r85`, build `cb4cdc7ad1`, head `e9b759200e`; merged `3d88eccbc3` through `safe-merge.sh` under the COO half `edd78f4c0d` and the CTO's ADDENDUM 1 `5cace36910` to his bz-9 half. Review by this seat: the whole driver diff and the test changes read against the order.
+- **AC1 PASS:** `3 passed` (worker; this seat in the worker's worktree `3 passed in 0.65s` and on a clean checkout of the merge `3 passed in 1.67s`). **AC2 PASS:** `100 passed` (worker; this seat on the clean checkout `100 passed in 25.81s`; base `100 passed`).
+  Proof instance VALID rc 0 with `--governing-order`, 2 rows, invocation-alignment 2/2 (worker; re-run by this seat in the shared tree at the merged HEAD).
+- **Condition C-b:** the full `lib/opal_data_harvest` suite on a CLEAN checkout of the merge: `4 failed, 826 passed, 3 skipped` (the same four known failures), against `4 failed, 823 passed` before. **C-e:** of 152 local `wk-*` branches, 1 (this one) differed from `HEAD` in the two lib files.
+- **Row D1-S16 answered:** under `--refresh-once` only `wsj` and `barrons` can spend a refresh; `sa`, `ft` and `bbg` record their refusal and never refresh (the loop test, and a mutant with the constant widened fails it for exactly those three), so the Bloomberg-side branch of `SessionManager._refresh` (credential `google/andrew-goldengate/credentials`) is unreachable from the driver.
+- **What this does NOT prove:** that a refresh works against the real vendor under the windowless runner (no sign-in was made; the tests inject the refresher). That is `HVST-bz-10`'s first refresh, and `HVST-bz-11` reads whether the session then survives a cycle.
+- Worker row `D1-W140-S1` (the shared `drive_once()` helper's default moved from `sa` to `wsj`, which also renamed the publisher in two non-refresh arms; their assertions are unchanged and pass): OBSERVATION / INERT, no action. Worktree and branch wiped; its one audit-log line carried to the shared log.
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <direct_act>true</direct_act>
-<status>issued</status>
+<status>complete</status>
 <round>85</round>
 <workstream>REFRESH-REPAIR</workstream>
 <slot>dell1</slot>
