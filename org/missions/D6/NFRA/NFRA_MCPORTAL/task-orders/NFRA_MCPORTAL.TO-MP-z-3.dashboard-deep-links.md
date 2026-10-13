@@ -137,5 +137,5 @@ Under 100 product lines: worker-light. No gate. Lives through MP-z-5.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
-<status>in_progress</status>
+<status>complete</status>
 <!-- REOPENED by the issuer 2026-10-13 ~10:5xZ: AMENDMENT 1 (the catch-all turned POST /mcp from 307 into 405); the same worker continues. -->

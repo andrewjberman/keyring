@@ -1467,6 +1467,52 @@
 
 ```json
 {
+  "id": "NFRA_MCPORTAL-Z-W15-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~15",
+  "surfaced_at": "2026-10-13T10:43:57Z",
+  "one_line": "The ordered catch-all Route('/{path:path}') after Mount('/mcp') would have swallowed Starlette's redirect_slashes (bare /mcp 307 to /mcp/); the handler replays it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order section 1: the catch-all placed last 'shadows no existing route'; only a path nothing else matches reaches it.",
+  "world_is": "Starlette redirect_slashes fires only when NO route matches. Mount('/mcp') matches '/mcp/...' only, so bare '/mcp' had no match and was redirected 307 to '/mcp/'. A catch-all matches it fully, so first run of the order's own test (/mcp resolving to the mcp app) failed: /mcp resolved to the catch-all, which would have answered 404 to any client posting to bare /mcp. Handled inside the ordered handler (server.py dashboard_deep_link): for an unlisted path it tries the alternate trailing-slash form against every other route and answers 307 if one fully matches, else the plain 404. Test test_existing_routes_keep_their_endpoint asserts /mcp/ resolves to mcp_app and bare /mcp yields 307 to /mcp/ (direct handler call, because GuardMiddleware answers 401 to an unauthenticated /mcp). Order criterion text left as written; the 'resolve /mcp' arm uses /mcp/.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/server.py dashboard_deep_link at e42d2c35c3",
+      "pytest run before the redirect replay: AssertionError /mcp resolved to Route('/{path:path}', name='dashboard_deep_link')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W15-S2",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~15",
+  "surfaced_at": "2026-10-13T11:16:15Z",
+  "one_line": "Starlette Route(path, func) with no methods= defaults to GET+HEAD only, so 'accept every method' needs an explicit list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 1: 'Route(\"/{path:path}\", dashboard_deep_link) with no methods= (or the full method list)' accepts every method.",
+  "world_is": "A function endpoint with methods=None gets methods {GET,HEAD}; POST /no-such-page through TestClient answered 405 while the direct handler call answered 404 (first run: 6 of 7). Fixed in app/server.py by the explicit list GET,HEAD,POST,PUT,PATCH,DELETE,OPTIONS, the 'full method list' alternative the amendment names. A direct-handler-only test would not have seen it, so test_unknown_path_any_method_404 also drives the real client.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest run before the fix: assert 405 == 404 at test_unknown_path_any_method_404 via app_mods.client.post",
+      "infra/aws/ec2/opal-gateway/app/server.py Route list in the worker commit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
   "id": "NFRA_MCPORTAL-Z-W13-S1",
   "project": "NFRA_MCPORTAL",
   "fabric": "site-z",
