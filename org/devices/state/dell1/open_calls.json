@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-13T08:09:42Z",
+ "written_at": "2026-10-13T09:50:03Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -2061,6 +2061,59 @@
     "measured_at": "2026-10-13T08:05:11Z"
    },
    "closed": null
+  },
+  {
+   "id": "dell1-20261013T095002Z-825f",
+   "project": "ADVI_FIRMBKTS",
+   "subject": "One opaque client relationship id and advisor-level book figures reached git history (acbc7c99d6, c4dffc739d, on origin). Rewrite history to remove them, or forward-scrub only? REC forward-scrub only",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/NEVER_WIDEN_ROUND7_EXEC_SUMMARY_DRYRUN_DEPLOY_CTO_HALF.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-13T09:50:02Z",
+   "kind": "fork",
+   "context": "Exec-summary dry-run sample files; the files are scrubbed forward (12c7eae3f8, FB1 hashing its own). The withheld client NAME never entered the tree. A history rewrite of shared box/CLOUD branches is destructive git, so it is yours.",
+   "rec": "Forward-scrub only: the id is an opaque internal key, not a name, and the repo is private; a rewrite of shared branches costs every box a forced resync for little gain. Every dry-run artifact is now hashed at write time.",
+   "scope": {
+    "measured_at": "2026-10-13T09:50:02Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/portal-auth",
+     "infra/aws/terraform/exec-summary"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/portal-auth declares /aws/lambda/auth-validator-edge, /aws/lambda/cache-control-injector, /aws/lambda/opal-portal-authorizer (+53), also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/portal-auth declares cross-firm-secret-deny, also declared by root infra/aws/terraform/shared-infra named by IRPT_BCKEND on dell2"
+     ],
+     "shared": [
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-13T09:50:03Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "Destructive git on shared branches is Andrew's word"
+   }
   }
  ]
 }
