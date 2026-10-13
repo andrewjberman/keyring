@@ -7815,3 +7815,115 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W79-S1 -- the QA harness and its test file are outside the order's grant (<paths> names only this channel file)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W79-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~79",
+  "surfaced_at": "2026-10-13T17:54:44Z",
+  "one_line": "AR-y-246 asks for two new files, infra/aws/lambda/investor-reporting/ycharts/generate/kimi_search_qa.py and ycharts/generate/tests/test_kimi_search_qa.py, but the order's <paths> grants only this investigations file, so neither file was written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task-orders/IRPT_ANLREQ.TO-AR-y-246.kimi-search-qa-receipt-harness.md:59-61 -- <paths> lists only org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md",
+      "task-orders/IRPT_ANLREQ.TO-AR-y-246.kimi-search-qa-receipt-harness.md:38 and :39 -- the cell names the two new infra and test paths",
+      "ar21_checks.py y246-qa run at C:/dev/wk-irpt-anlreq-79 (HEAD 85f43d3456): 'FAIL: no ycharts/generate/kimi_search_qa.py' and 'Y246-QA-FAIL' rc=1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-246 cell step 2 and BOUNDS: write ycharts/generate/kimi_search_qa.py and ycharts/generate/tests/test_kimi_search_qa.py; the grant is exactly <paths> plus the deliverables folder and the order file; a path the order lacks is a BLOCKING row.",
+  "world_is": "Neither new file is in the grant. Writing them would edit outside <paths>, so they were not written. AC1 cannot pass until the issuer amends the grant. Filed BLOCKING; the issuer amends the grant."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W79-S2 -- the cell's premise fails: one request with tools and tool_choice cannot produce a schema answer on the pinned model, so the QA would mint no receipt
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W79-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~79",
+  "surfaced_at": "2026-10-13T17:54:44Z",
+  "one_line": "The estate's own web-search QA (Y5P2 findings, 9 runs) measured that a single send with a built-in search tool cannot yield a swap answer: kimi-k3 rejects the tool echo, and every model answers the first send with tool_calls, which _parse refuses; a request_fields-only capability cannot pass the live QA the cell describes.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/Y5P2/KIMI_WEB_SEARCH_QA_FINDINGS_20261003.md:22-24 -- kimi-k3 returns tool_calls for $web_search, then 400 'Invalid request: tokenization failed' on the echo, in 3 shapes",
+      "KIMI_WEB_SEARCH_QA_FINDINGS_20261003.md:39-41 -- every model answers the first send with tool_calls; KimiAdvisory.call sends once and _parse requires finish_reason stop; a request_fields-only search_capability cannot pin web search",
+      "KIMI_WEB_SEARCH_QA_FINDINGS_20261003.md:27-29 and :42-43 -- kimi-k2.6 accepts the echo but answers outside the schema (KIMI_SCHEMA_INVALID, KIMI_BADJSON); JSON mode returns 500",
+      "infra/aws/lambda/investor-reporting/intake/resolution_kimi.py:73-74 -- _parse raises KIMI_FINISH_UNSUPPORTED for any finish_reason other than stop; :159-166 -- the gate admits request_fields keyed only tools and tool_choice"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-246 cell step 2: each QA case runs through KimiAdvisory.call('swap') with the candidate request_fields (tools, tool_choice only) and verified True inside the QA run; a candidate that passes every case mints a receipt.",
+  "world_is": "The measured estate record says the single-send design does not reach a schema answer on kimi-k3 (the advisory's model), nor on kimi-k2.6 in the two shapes tried. A harness built as specified would mint no receipt against the live port. The premise needs the CTO's ruling (a bounded tool loop, or the held options b or c that the QA findings list) before the harness is built."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W79-S3 -- the injection cases in the symbol position cannot reach the model: prompt_for refuses any symbol outside the SYMBOL pattern before send, and call() raises rather than returning a failure
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W79-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~79",
+  "surfaced_at": "2026-10-13T17:54:44Z",
+  "one_line": "The cell asks for two prompt-injection strings in the symbol position; validate_symbols refuses any string with spaces or other characters outside the symbol pattern before any send, and it raises ResolutionRefused from call(), so the harness must catch that and count it, and injection cases must be symbol-shaped to reach the model.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/security_resolution.py:17 -- SYMBOL = [A-Za-z0-9$^][A-Za-z0-9$^:._/-]{0,99} fullmatch",
+      "security_resolution.py:32-35 -- validate_symbols raises ResolutionRefused('SYMBOLS_INVALID') for any non-matching string",
+      "intake/resolution_kimi.py:42 and :153 -- prompt_for calls validate_symbols on the symbol before the try block, so call() raises and returns no failure dict"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-246 cell step 2: the QA cases include two prompt-injection strings in the symbol position that must not change the output shape.",
+  "world_is": "Free-text injection strings never reach send. Symbol-shaped injection strings do. The harness design has to take both facts into account. Recorded here; not a verdict on the cell."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W79-S4 -- the ycharts generate test folder shows 4 failures at this HEAD in the custody tests (no change by this worker)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W79-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~79",
+  "surfaced_at": "2026-10-13T17:54:44Z",
+  "one_line": "timeout 120 python -m pytest ycharts/generate/tests at worktree HEAD 85f43d3456 returns 540 passed, 4 failed, 30 skipped, 1 xfailed (rc=1); the four failures are in test_custody_entry.py and test_custody_retained.py, and this worker changed no file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest run at C:/dev/wk-irpt-anlreq-79/infra/aws/lambda/investor-reporting: '4 failed, 540 passed, 30 skipped, 1 xfailed, 68 subtests passed in 118.68s' rc=1",
+      "FAILED ycharts/generate/tests/test_custody_entry.py (2 tests) and test_custody_retained.py (2 parametrized cases of test_installed_custody_factory_runs_guarded_entry_with_actual_sdk_profiles)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-246 cell step 3: run the ycharts/generate/tests folder and record its counts, with the known pre-existing collection limit noted if it applies.",
+  "world_is": "The folder collected in full in this worktree (no fitz collection limit observed) and 4 custody tests fail on the untouched branch. Their cause was not read; out of this order's scope."
+}
+]
+```
