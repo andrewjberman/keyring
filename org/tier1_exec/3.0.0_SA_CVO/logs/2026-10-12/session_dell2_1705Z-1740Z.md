@@ -296,3 +296,12 @@ Correction: C-S367 carries surfaced_at 20:56:00Z; the clock read 20:54:57Z befor
 | item | result | commit |
 |---|---|---|
 | IRPT_BCKEND round 184 (~P) | ADJUDICATION_v85 (C-S368), no remediation file: build only (IB-pr-518, irpt-ycharts-generate rebuilt with the catalogue release); live CodeSha256 hpNfkhLt unchanged (my read). 5 dismissed; D2-S145 to -S147, S150, S152, S153 stay with the issuer. For the unsigned pair: name the form's model checkbox reorder for every firm, and that recipe.py does not ship. Slug sent | 0cda29474c |
+
+## Addendum, 2026-10-13 22:37Z to 22:55Z (msgs 7325, 7326)
+
+| item | result | commit |
+|---|---|---|
+| ADVI_COTBKF round 82 | L9: CB82cd1-AC3 FAIL on one clause (273 of 300 reverse-match 'none' rows carry no reason; my count from REVERSE_MATCH.csv), CB82cd2-AC2 PASS (route_not_live; served objects equal the scratch copy), CB82cd3-AC3 PASS. ADJUDICATION_v59 (C-S66) dismisses 9 incl. W163-S1 folded into v50's ARMED rows; no remediation row while round 83 runs. Raw account numbers in the two committed CSVs are on origin/CLOUD (read), covered by Andrew's 2026-10-09 word and the CTO's KEEP. Slug sent | e819f0fc64 |
+| IRPT_DASHBD round 95 | ADJUDICATION_v57 (C-S68): contract 0.2.0 read (117 members, 8 sections, lineage kept); 1 dismissed; W145-S1 open for a CTO ruling, to graduate at round 94. Round 93 was a direct act (no CVO packet). Slug sent | 055198dca0 |
+
+Correction: ADJUDICATION_v57 (IRPT_DASHBD) carries surfaced_at 22:53:00Z; the clock read 22:52:43Z before the write, so the stamp is 17 seconds ahead. The row is immutable; recorded here.
