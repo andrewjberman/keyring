@@ -138,12 +138,14 @@ def main():
         cases.append((label, bool(ok)))
 
     try:
-        # 1. add makes an OPEN approval row; head_sha and commits are null (DP-b-5 computes them)
+        # 1. add makes an OPEN approval row; head_sha is the fixture branch tip and commits its own count (DP-b-5 computes them)
         rc, out, _err = add_approval(env, "cand/laptop/t-cf", "client-facing")
         r = row_for(env, "cand/laptop/t-cf")
-        check("add makes an OPEN approval row (head_sha and commits null, pages split)",
+        fx_head = git(env.portal, "rev-parse", "refs/heads/cand/laptop/t-cf")
+        fx_commits = int(git(env.portal, "rev-list", "--count", "origin/PROD..refs/heads/cand/laptop/t-cf"))
+        check("add makes an OPEN approval row (head_sha = fixture tip, commits = fixture own count, pages split)",
               rc == 0 and "kind=approval" in out and r is not None and r["state"] == "OPEN"
-              and r["approval"]["head_sha"] is None and r["approval"]["commits"] is None
+              and r["approval"]["head_sha"] == fx_head and r["approval"]["commits"] == fx_commits
               and r["approval"]["pages"] == ["portal/a.tsx", "portal/b.tsx"] and r["approval"]["class"] == "client-facing"
               and r["subject"] == "approval: cand/laptop/t-cf")
         cid = r["id"] if r else "none"
