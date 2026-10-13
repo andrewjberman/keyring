@@ -198,3 +198,5 @@ through MP-z-5.
 <status>complete</status>
 <status>in_progress</status>
 <!-- REOPENED by the issuer 2026-10-13 ~16:3xZ: AMENDMENT 1 (Andrew-direct readability of Control Plane and Open Calls); slot ~14 re-seated on mcportal 6fbd25e. -->
+<status>complete</status>
+<!-- AMENDMENT 1 complete: mcportal 0e02a1f; AC1 PASS 7 of 7, AC2 PASS, AC3 recorded UNVERIFIABLE-BY-INSTRUMENT for 3.0.0_SA_CVO~Z. -->
