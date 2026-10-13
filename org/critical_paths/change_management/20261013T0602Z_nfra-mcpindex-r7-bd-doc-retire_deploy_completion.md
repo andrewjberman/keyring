@@ -1,0 +1,27 @@
+# Deploy Completion Record
+**Date opened:** 2026-10-13T06:02:58.191914+00:00
+**Status:** OPEN
+**Deploy:** MX-s-19 PHASE B: disable bd-transaction-pipeline-trigger and bd-realized-pipeline-trigger (ENABLED->DISABLED, 0 destroys) via safe-apply of the saved plan mx-s-19.tfplan sha256 f69eae52...e1680. Halves: COO @283971a650, CTO @8e059baa90 (NEVER_WIDEN_ASK_MX-s-19_20261013.md), GO @4c154baf3b. Window 192h BY DESIGN: leg L5 is s19.AC2 on the acceptance dates 2026-10-19 and 2026-10-20, so the entry stays OPEN ~7 days and that is the ask's own instruction, not drift. Rollback per rule: eventbridge.tf:111 / :220 back to ENABLED, plan the single -target (0/1/0), safe-apply, read back ENABLED + the pinned cron.
+**Authored by:** 0.7.0_AE_CloudOps~MI
+**Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
+**Window:** 192.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
+
+---
+
+## Manifest (every leg must carry proof before CLOSE)
+
+| leg | kind | target | proof required | proof | state |
+|---|---|---|---|---|---|
+| L1 | activation | safe-apply of the saved plan: both aws_cloudwatch_event_rule state ENABLED->DISABLED | Apply complete! Resources: 0 added, 2 changed, 0 destroyed with rc=0, plus the safe-apply invocation line | safe-apply at 2026-10-13T06:06Z from worktree wk-mcpindex-r7-s19-mi, saved plan mx-s-19.tfplan sha256 f69eae52ebc6483947c3ea0bac98e1bb00bab94f52f25a168530b7be23ec1680 (re-read equal at the act). Output verbatim: 'Apply complete! Resources: 0 added, 2 changed, 0 destroyed.', pipeline rc=0. Both resources 'Modifying... / Modifications complete after 0s': aws_cloudwatch_event_rule.bd_realized_pipeline [id=bd-realized-pipeline-trigger] and .bd_transaction_pipeline [id=bd-transaction-pipeline-trigger]. comp-tagauthz gate PASSED (0 candidates overwrite an access-granting tag); tombstone-gate CLEAN (0 creates vs 7 tombstones). State LOCKING LEFT ON for the apply (only the plan was cut -lock=false), because 20 live worktrees share this bd-pipeline S3 state. Pre-apply mail guard was the broker read, not HALTGT, which cannot halt a ~lane seat: get_delivery_state read 8 of 8 rows READ, 0 non-READ, no STOP/HALT. | CLOSED 20261013T061134Z |
+| L2 | verify | describe-rule on both rules reads State DISABLED with ScheduleExpression unchanged | printed State + ScheduleExpression for bd-realized-pipeline-trigger and bd-transaction-pipeline-trigger | describe-rule read back 2026-10-13T06:07Z: bd-realized-pipeline-trigger State=DISABLED Cron=cron(45 21 ? * MON-FRI *); bd-transaction-pipeline-trigger State=DISABLED Cron=cron(53 21 ? * MON-FRI *). Both schedules EQUAL to the ask's section 0 pins, so the act moved State and nothing else. Nothing deleted: list-targets-by-rule still reads one target each, bd-realized-trigger and bd-transactions-trigger respectively. | CLOSED 20261013T061134Z |
+| L3 | verify | re-plan the same two targets reads 0-diff | the plan summary line, expecting no changes | Re-plan of the SAME two targets from the same worktree and TF_DATA_DIR, 2026-10-13T06:07Z: 'No changes. Your infrastructure matches the configuration.' / 'and found no differences, so no changes are needed.' 0-diff confirmed. | CLOSED 20261013T061134Z |
+| L4 | verify | s19.AC1 as re-cut by A8 reads WRITER CENSUS 4 of 4 RESULT PASS exit=0 | the check's stdout including the two trigger rule lines showing 0 ENABLED | s19.AC1 as re-cut by A8, run post-apply 2026-10-13T06:08Z: 'trigger bd-transactions-trigger: 1 rule(s) [bd-transaction-pipeline-trigger DISABLED], 0 ENABLED'; same shape for bd-realized-trigger; 'OK:' on all four tables each at 1 writer lambda:bd-silver-merge; 'WRITER CENSUS: 4 of 4 BD silver tables have exactly 1 writer'; RESULT: PASS, exit=0. The denominator MOVED across the act: the same check read 2 of 4 FAIL exit=1 pre-apply (run by this seat at 05:4xZ and again at the base at 04:3xZ), so the criterion discriminates rather than passing by construction. | CLOSED 20261013T061134Z |
+| L5 | verify | s19.AC2 reads the acceptance dates 2026-10-19 and 2026-10-20, 2 of 2 PASS | the check's stdout; THIS LEG IS WHY THE ENTRY STAYS OPEN |  | OPEN |
+
+## Log
+
+- 20261013T060258Z OPENED by 0.7.0_AE_CloudOps~MI with 5 leg(s)
+- 20261013T061134Z LEG L1 closed: safe-apply at 2026-10-13T06:06Z from worktree wk-mcpindex-r7-s19-mi, saved plan mx-s-19.tfplan sha256 f69eae52ebc6483947
+- 20261013T061134Z LEG L2 closed: describe-rule read back 2026-10-13T06:07Z: bd-realized-pipeline-trigger State=DISABLED Cron=cron(45 21 ? * MON-FRI *); b
+- 20261013T061134Z LEG L3 closed: Re-plan of the SAME two targets from the same worktree and TF_DATA_DIR, 2026-10-13T06:07Z: 'No changes. Your infrastruct
+- 20261013T061134Z LEG L4 closed: s19.AC1 as re-cut by A8, run post-apply 2026-10-13T06:08Z: 'trigger bd-transactions-trigger: 1 rule(s) [bd-transaction-p
