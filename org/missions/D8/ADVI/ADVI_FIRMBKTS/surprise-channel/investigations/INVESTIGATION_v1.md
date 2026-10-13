@@ -5895,3 +5895,161 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Recorded because a gate that cannot run on this device is a missing capability, not a clean pass. The fix (placing or pointing the list) is outside this order's bounds and is not made here."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-h-5 amended, the walker session)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S42",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-13T06:49:02Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "the CTO's session for FB-h-5 (the dormant Opal UI walker service account) is itself an admin-bypass identity at the validator, so a walker request cannot exercise the non-admin ownership read; the route also needs write authority this seat does not hold.",
+  "spec_asserts": "TO-FB-h-5 amended @f21abbf184 step 2 (CTO msg 4662): drive ONE accounts-path request by the dormant Opal UI walker service account with --firm 49financial, never Andrew's, because an admin's decisions are not the non-admin ones FWD-4 needs; PRECONDITION: its request must cross auth-validator-edge.",
+  "world_is": "Read 2026-10-13T06:5xZ, no arm, no write: opal-users-v2 USER#usr_opal_ui_walker PROFILE reads role=admin, userType=Dev, firmId=opal-capital, status=disabled (projection of those four attributes; the hash and the lease were not read). The validator's admin bypass is `role === 'admin' OR firmRole === 'admin' OR tier === 'internal' OR userType === 'Dev'` (auth-validator-edge/index.mjs lines 35 and 401-406): the walker meets two of the four, so its request passes the validator's bypass before any ownership-map read and writes the same line class as the 17 organic tier=internal lines (row ADVI_FIRMBKTS-D1-S41). The skill's own header says the row is role admin, internal, Dev, 'a superadmin reach for as long as a session lives'. The FWD-4 premise (a non-admin decision) is therefore not met by this account for the same reason it is not met by Andrew's. Separately, arm needs a write to opal-users-v2 and SSM /opal/ui-walker/password (the skill's prerequisite: the laptop profile; the Dells hold GetParameter only), which this identity does not hold, and the walker refuses any base URL but localhost:5174 (a local dev:live build).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda-edge/auth-validator-edge/index.mjs lines 35 and 401-406",
+      ".claude/skills/ui-walk/ui_walker_account.py header (the safety model)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/round5/h5_validator_reads.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No arm was attempted, no session touched. A non-admin identity at the validator needs role not admin, firmRole not admin, tier not internal and userType not Dev, with a partner profile and an advisorKey in the ownership map: an advisor-tier user of a client firm. Owner of the un-park stays 1.0.0_SA_CTO~DELL1 (a seat's non-admin session, or Andrew supplies one, or the first organic advisor-tier line on those paths; 418 advisor-tier lines exist today, none on them)."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~63 (FB-h-3 offline replay, 2026-10-13)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W63-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~63",
+  "surfaced_at": "2026-10-13T06:46:59Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Two of my pre-harness probe runs reached the render-key Secrets Manager secret, outside the order's two-S3-read bound; the mock I used did not bind.",
+  "spec_asserts": "Order section 2 BOUNDS 1: reads only, two S3 get-object calls. Order section 1b step 1: mock jwtPublicKeys.mjs; no production key, secret or token is read.",
+  "world_is": "Probe 1 (.scratch/probe_mock.mjs, bun run) and probe 2 (a probe file in the deliverables folder, since deleted) each imported render_auth.mjs and called getRenderKeySlots() under a Secrets Manager mock keyed by a bare specifier. The mock did not bind (probe 2 counted 0 mock sends), so getRenderKeySlots() reached the real SecretsManagerClient and returned slots without throwing: one GetSecretValue on opal/auth/irpt-render-jwt-public-key per probe. Inferred from the non-throw outcome; not measured in CloudTrail. No secret value was printed or written to the tree.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/lambda-edge/auth-validator-edge/render_auth.mjs@b39d4a70f6 (getRenderKeySlots sends GetSecretValueCommand for RENDER_PUBLIC_KEY_SECRET_ID when its cache is empty)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~63/replay_harness.mjs@4b8bd3b056 (stubs Secrets Manager and seeds the render cache, so the replay makes no such call)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The replay itself made no Secrets Manager call: the render cache is seeded before each request. Whether the two probe reads need a CloudTrail check is for the issuer to decide; the reads were read-only and touched a public-key secret."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~63 (FB-h-3 offline replay, 2026-10-13)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W63-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~63",
+  "surfaced_at": "2026-10-13T06:46:59Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's mock list does not cover the render branch: auth-validator-edge calls Secrets Manager before the human path whenever its render-key cache is empty.",
+  "spec_asserts": "Order section 1b step 1: replace @aws-sdk/client-s3 and lambda/lib/authkeys/jwtPublicKeys.mjs; the handler is otherwise driven as it is.",
+  "world_is": "index.mjs evaluateRenderBranch (lines 257-260, called at line 353) calls getRenderKeySlots() before the human path. render_auth.mjs getRenderKeySlots() (lines 58-72) sends GetSecretValueCommand for opal/auth/irpt-render-jwt-public-key when its cache is empty or older than 300 s. Mocking jwtPublicKeys.mjs does not cover that call. The replay closes it by calling __setRenderKeySlotsForTest before each request, so a human token fails the render audience check (verifyRenderTokenWithSlots, lines 159-170) and falls through to the human path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda-edge/auth-validator-edge/index.mjs@b39d4a70f6 lines 257-260 and 353",
+      "infra/aws/lambda-edge/auth-validator-edge/render_auth.mjs@b39d4a70f6 lines 58-72 and 159-170"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Any later replay or test of the human path must seed or mock the render key the same way, or it reads Secrets Manager."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~63 (FB-h-3 offline replay, 2026-10-13)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W63-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~63",
+  "surfaced_at": "2026-10-13T06:46:59Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The handler caches each firm's ownership map at module scope for 60 s, so back-to-back runs in one process reuse the first map; the harness steps the clock between runs.",
+  "spec_asserts": "Order section 1b steps 4-5: three runs (legacy, canonical, perturbed canonical) through the handler, each serving its own map.",
+  "world_is": "index.mjs getOwnershipMap (lines 161-194) keeps ownershipMapCache keyed by firmId with expiresAt = Date.now() + 60 s. A second run within 60 s returns the first run's map with no S3 read. The harness advances Date.now by 120 s before the canonical and control runs, asserts that each run made at least one GetObject, and asserts that the canonical run requested exactly one Bucket and Key.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda-edge/auth-validator-edge/index.mjs@b39d4a70f6 lines 161-166 and 177-194",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~63/replay_harness.mjs@4b8bd3b056 (clock step and per-run GetObject assertions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Any replay that neither steps the clock nor re-imports the handler per run measures the first map three times."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~63 (FB-h-3 offline replay, 2026-10-13)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W63-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~63",
+  "surfaced_at": "2026-10-13T06:50:53Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "AC2 names the base checkout's deliverables path for REPLAY_RESULT.json, but the record is committed in my worktree; AC2 fails verbatim as ABSENT.",
+  "spec_asserts": "Order section 4 AC2: r5_checks.py replay --file C:/dev/ajb_workspace/org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~63/REPLAY_RESULT.json. Order section 5: commit REPLAY_RESULT.json in the deliverables folder (the worktree's paths grant).",
+  "world_is": "The deliverables folder and REPLAY_RESULT.json exist only in the worktree C:/dev/wk-firmbkts-63, committed at 4b8bd3b056. The base checkout C:/dev/ajb_workspace has no 0.9.0_WK_ADVI_FIRMBKTS~63 folder and I did not write into it. Verbatim AC2 printed FAIL ABSENT or unreadable: FileNotFoundError (rc=1). The same checker on the worktree copy printed REPLAY record ok pairs=2127 mismatches=0 control_mismatches=1 bytes_equal=False (rc=0); that is a diagnostic, not the criterion verdict.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~63/REPLAY_RESULT.json@4b8bd3b056 (the worktree copy the checker reads on the diagnostic run)",
+      "C:/dev/ajb_workspace/org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round5/checks/r5_checks.py replay run verbatim: FAIL ABSENT or unreadable (rc=1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "AC2 stays FAIL on the instance; the order is not flipped. The issuer decides whether the checker path is to be re-pointed at the worktree copy or the record is to be copied to the base checkout; I did not do either."
+}
+```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-h-8, the fence-scoped check)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S43",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-13T06:54:01Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-h-8: the cp1252 crash is fixed, but the fence-scoped check cannot read ok=True for four further reasons that are not the two named: the simulator is denied to this identity (31 of 31 arms), the pinned fence file's CRM selector fails over today's registry, two refusal arms no longer match the validator (5 of 7), and unchanged_today and scoped_rendered read stale against the registry's new `grants` field.",
+  "spec_asserts": "TO-FB-h-8 section 1: two named failures (cp1252 print, before_strip init at one(list)); close on FENCE-SCOPED ... refusals_ok=7/7 ... ok=True with no environment override; section 2.2: a failure for any other reason is a BLOCKING row naming the failing arm; section 1b rule 1: an arm's meaning is not weakened; rule 2: a denied simulator is reported, never stubbed.",
+  "world_is": "Edits committed at 38f8179f10056a0ddaf8d66fe21d389e8068b720: out() replaces non-ASCII, the two git ls-tree reads carry encoding utf-8. The other three tests/ files already read and write with explicit utf-8 and hold 0 non-ASCII bytes. Last line at that HEAD, no override: FENCE-SCOPED rows_today=42 unchanged_today=False scoped_rendered=0/0 sim_ok=0/0 refusals_ok=0/7 unknown_key_refused_by=none ok=False. Reasons, each measured: (1) the named second failure is real but its cause is not `lgic_managed_firm_buckets` being an object: the PINNED fence file (06c783b92b, s3-lgic-firm-buckets.tf line 194) selects `lgic_crm_scope = one([for k,s in local.lgic_managed_firm_buckets : s if length(lookup(s, 'masters', [])) > 0])`, which returns ONE row over the pre-rows registry (before_pre passes) and two rows over today's registry, so one() fails the init of before_strip and before_today ('local.lgic_managed_firm_buckets is object with 2 attributes' is the diagnostic's value dump); HEAD's own file uses restricted_prefix_hosts and says masters 'stopped being unique'. An experiment in a scratch driver (no repository file touched) that gave those two roots HEAD's selector lets them init. (2) With (1) worked around: sim_ok=0/31: iam:SimulateCustomPolicy is AccessDenied to user/cloudops-dell1-agent-user (direct call: 'no identity-based policy allows the iam:SimulateCustomPolicy action'); arms 1-8 and C1-C4 on three buckets all ERROR; not stubbed (rule 2). (3) refusals_ok=5/7: case 3 (a prefix without the trailing /) and case 4 (actions with s3:PutObject) are NOT refused by opal_naming.validate at HEAD (0 refusals, the control is clean), while case 1, 2, 5, 6, 7 are, so the instrument's arms 3 and 4 assert rules the validator no longer carries. (4) The registry's exemptions.json gained a top-level `grants` object (key opal-data-49financial) since the commit before the first scoped row: rows_since reports `top-level field grants changed`, so unchanged_today reads False, and scoped_rendered reads 17/39 (13 scoped rows x 3 expected, 17 rendered).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/round5/ADVI_FIRMBKTS.TO-FB-h-8.fence-instrument-utf8-fixture.proof_of_spec.json",
+      "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf (lines 191-198 at HEAD)",
+      "git show 06c783b92b:infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf (line 194)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No arm was weakened and the simulator was not stubbed. Decisions owed by the issuer: (a) route the 31 simulator arms to the laptop lane (rule 2); (b) rule what the before roots do when the pinned fence file's selector no longer picks one row (give them HEAD's selector, or retire the pinned arm, or re-pin): any of the three changes what the arm asserts; (c) rule arms 3 and 4 against the validator's current rules (did the grants field retire them?), and (d) whether `grants` is an admitted top-level field for unchanged_today. This seat made no further edit to the check."
+}
+```

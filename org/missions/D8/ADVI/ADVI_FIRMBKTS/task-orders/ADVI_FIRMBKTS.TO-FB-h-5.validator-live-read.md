@@ -95,7 +95,7 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~F
 
 **AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-13 ~06:5xZ):** step 2 carries the CTO's ruling on whose session the driven request uses (ROUND_ANALYSIS.round4.md ADDENDUM 1: the UI walker service account, `--firm 49financial`, never Andrew's; the precondition is that the request crosses the validator). The status reads `pending` again (an uncommitted `parked` in the shared tree, set when no session was in hand, is superseded by the ruling). A criterion is unchanged. The issuer amends its own pending order; no gate limb grades it (the criteria and the `<placeholders>` are untouched).
 
-<status>pending</status>
+<status>parked</status>
 <round>5</round>
 <workstream>VALIDATOR</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-h-5</to_id>
