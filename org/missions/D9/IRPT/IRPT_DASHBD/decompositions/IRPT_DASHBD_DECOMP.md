@@ -1604,3 +1604,37 @@ already landed in `s3://opal-data-assets/blackdiamond/49financial/silver_legacy/
 row, on which the issuer decides about a vendor read; (c) the criterion binds the 23 days and the per-account counts to `~136`'s committed record, so the population cannot drift; (d) rows are described by counts, multiples and day offsets, never by security, lot, account or amount in the repo.
 
 **fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~137` (`DB-b-171`).
+
+
+## 94. ROUND 92, WORKSTREAM B (2026-10-13 ~16:4xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ROUND-92 ANALYSIS @a862a037f3 section 3 and msg 7063)
+
+Round 91 is terminal (MAY-CLOSE; the CVO's REMEDIATION_v38 @5e23f18556; row `IRPT_DASHBD-D2-W137-S1` owed to the CTO). The analysis rules: (1) Reading B of `BD_INCOME_PER_LOT` (at least two income rows whose sum is a whole multiple of the served income) is the reading of record, and it takes no day; (2) a day on which
+our inputs are whole but Black Diamond computes differently is a tie-out disagreement, recorded with its reason or `UNEXPLAINED`; the served figure stands and no `day_quality` member is added; (3) one more read, built on the measured pattern (on 8 of the 12 multiple-income days the gap equals minus the served income over the prior value): a new reason written before the read.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. ledger leg L7, carried: the 2026-10-14 11:41Z fire, `l5b_read.py`; close `irpt-dashbd-thresholds-swap-20261013` or restore rollback `8ELUDq...` the same session | the issuer's own act, no cell | FWD-8 | the 11:41Z fire | none |
+| 2. the `BD_EXCLUDES_SERVED_INCOME` read over the 23 days: test (the gap is minus the served income over the prior value, within 0.01 pp), correction (remove that income from the served day's return and recompute the window), taken only if the window re-closes within 0.35 pp; the other days re-tested under the full list, Reading B included, after those days are corrected | `DB-b-172` | FWD-8 | `~137`'s module, rule addendum and record (read) | R92-1 |
+| 3. the FWD-8 grade in the drain-end; if any account stays open, its days go to the CTO once more and the next ruling is on the endpoint (accept FWD-8 with those accounts named as known oracle gaps: a DONE WHEN change, carried to Andrew as a card) | the issuer's own act, no cell | FWD-8 | `DB-b-172` drained | R92-1 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the closed list of this cell is the analysis's new reason FIRST, then round 91's four with `BD_INCOME_PER_LOT` read as Reading B, then `UNEXPLAINED`: `BD_EXCLUDES_SERVED_INCOME`, `BD_INCOME_PER_LOT`, `DUPLICATE_ROW`, `BOOKING_DATE_DIFFERS`, `MISSING_IN_LEDGER`, `UNEXPLAINED`;
+(b) "the same stored rows" is read as the same two S3 stores `~137` read (the day test itself needs only the stored daily table and the stored gold income); the cell imports `~137`'s module by path, does not edit it, and re-reads the rows for the re-test of the other days; (c) the measured "8 of 12" is the worker's, not verified by this seat: the cell records the number of days its test holds on and whether it equals 8;
+(d) counts, offsets and sizes only in the repo.
+
+**fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~138` (`DB-b-172`).
+
+
+## 95. ROUND 93, WORKSTREAM B (2026-10-13 ~17:0xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ROUND-93 ANALYSIS and msg 7081)
+
+Round 92 is terminal (MAY-CLOSE; the CVO's REMEDIATION_v39 @063bf7a3df; row `IRPT_DASHBD-D2-W138-S1` asks for the endpoint card). The analysis accepts `BD_EXCLUDES_SERVED_INCOME` as a stated reason, decides account 5 by ONE number (PRD 11b: a window inside 0.35 pp after its reasoned days are corrected meets the clause and its remaining days are not graded one by one), and sends the
+endpoint question (FWD-8 accepted with named exceptions) to Andrew as one card. Nothing else is cut until he answers.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. ledger leg L7, carried: the 2026-10-14 11:41Z fire, `l5b_read.py`; close `irpt-dashbd-thresholds-swap-20261013` or restore rollback `8ELUDq...` the same session | the issuer's own act, no cell | FWD-8 | the 11:41Z fire | none |
+| 2. account 5's corrected window: the window return after its 4 reasoned days are corrected (the 3 UNEXPLAINED days stay as served), by the window method of `RULE_EXCL.md` section 5 unchanged, against 0.35 pp; one figure, read from stored local files | `DB-b-173` | FWD-8 | `~138`'s rule and record, `~134`'s pull, the stored tables (read) | R93-1 |
+
+`DB-b-173` takes the DIRECT-ACT path (one cell, LOCAL, a few dozen product lines, no L2, L4-R, L8 to L10): one order, a worker executes, it drains, the close is the issuer's own run of the figure. It reads local files only: zero S3, zero vendor calls.
+**Decision inside this decomposition (the issuer's, stated):** the figure is `|G_c - R_c| * 100` for the fifth account of the round-90 plan order, with `G_c = G` (no Black Diamond-side correction is taken for that account) and `R_c` the product of the corrected served daily returns; the uncorrected gap is printed beside it as the negative arm.
+
+**fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~139` (`DB-b-173`, direct act).

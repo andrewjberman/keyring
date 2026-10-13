@@ -115,3 +115,13 @@ component stays; PROD is untouched; CI run 38407021744 is in progress.
 The local smoke build is moved to f6ef1d25. The promote is ready on Andrew's word once CI passes.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 6 (2026-10-13 ~16:3xZ) -- PROD's base moved by one comments-only cherry-pick
+
+Per the laptop COO~C (msg 108801, relayed by MSTR msg 4939). Portal PROD moved `37aa1247ee` -> `15c9754975`: the Andrew-approved cherry-pick of `53506d49` (record
+`a7d5d7955c`), pushed by `0.2.0_DT_PortfolioAnalytics~PD`. Receipt: `org/critical_paths/change_management/20261013T1459Z_portal-prod-cherrypick-53506d49-20261013_deploy_completion.md`
+@8ebb7ea325.
+- **Pages changed: none.** It is one file, `src/lib/firmAccess.ts`, comments only; the `FIRM_ALLOWED_PATHS` sets are equal (4 firms, 35 pairs).
+- **For e7f2:** the promote diff is now read against PROD `15c9754975`, and ADDENDUM 1's shared change 1 is already on PROD. Nothing else in this breakdown changes.
+
+-- 1.0.0_SA_CTO~DELL1

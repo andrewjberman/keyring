@@ -71,13 +71,98 @@ security, every day. Instead:
 
 **DECISION, Andrew: ACWI and IWM do NOT need full holdings depth** (about 2,200 and 2,000 holdings a day today).
 
--- open for Andrew to confirm: this seat proposes the TOP 25 holdings by weight, daily, for those two broad index ETFs only.
+**ACWI and IWM: REMOVED from the rival-funds holdings pull** (Andrew, ~16:2xZ: "we do not need to track these for Rivalfunds, we do not need holdings data for these in any context, they arent even displayed on Rivalfunds").
+
+#### A4 Research app daily pull (AMGT_RESAPP, `integrations/bloomberg/research/price_axis_pull.py`, about 9:00 am ET at site Z): APPROVED, with its recommendation
+
+> Approved as well as recommendations for A4. In general I think the last 5 trading days is a good incrememntal strategy as a means to cover potential trading holidays/missed data for whatever reason/etc, across the various surfaces once we move to incremental mode (after backfill is already covered for the relevant needs). I also aree with model data depth on financials back to 2016. Regarding ACWI and IWM, we do not need to track these for Rivalfunds, we do not need holdings data for these in any context, they arent even displayed on Rivalfunds.
+
+1. **Who uses it:** the research app (each covered company's 30, 90 and 365-day price rankings and breakout flags).
+2. **Priority:** A, fourth.
+3. **History depth:** `WINDOW_DAYS` 30 is re-pulled daily today. It becomes INCREMENTAL (the rule below); the stored year is extended by `price_series_persist.py`.
+4. **Field breadth:** `PX_LAST` only.
+5. **Securities:** every covered company (about 100, counted at the next run).
+6. **Schedule:** daily, trading days, after the 7:00 am ET job.
+7. **Budget:** about 3,000 history cells a day today, about 500 under the incremental rule.
+
+**DECISION, Andrew: research-app model data (`model_block_pull.py`, `HIST_START` 2016-01-01) keeps fiscal-year financials back to 2016.** This is a named exception to the
+365-day non-client rule: a company model needs several fiscal years. The pull is one-time per newly covered company (about 1,000 cells; ABNB is 989).
+
+#### A5 ETF breakdown pull (`integrations/bloomberg/pipeline/etf_constituents_pull.py`, the 7:00 am ET job's last leg): APPROVED as is
+
+> A5 is good as is.
+
+1. **Who uses it:** the Positioning page (each Opal ETF's sector and country breakdown, and its holding weights).
+2. **Priority:** A, fifth.
+3. **History depth:** today only. Bloomberg returns no history for these derived fields (measured 2026-08-24), so a missed day is lost and cannot be refilled. **This is the one
+   named exception to the 5-day incremental rule.**
+4. **Field breadth:**
+   - reference: `NAME`, `TOTAL_NUMBER_OF_HOLDINGS_IN_PORT`, `FUND_PCT_TOP_TEN_HOLD`;
+   - bulk: `HB_INDUSTRY_SECTOR_ALLOCATION`, `HB_GEO_CNTRY_ALLOC`;
+   - one BQL `holdings().weights` query per fund.
+5. **Securities:** the 4 Opal ETFs (DIVZ, IDVZ, PFDE, PFOE).
+6. **Schedule:** daily at 7:00 am ET, trading days.
+7. **Budget:** about 20 reference cells and about 170 holding rows a day.
+
+### Surface B: client history (Andrew, 2026-10-13 ~16:4xZ)
+
+> I would prefer to rely on BBG for this generally rather than yahoo finance because I don't trust resolution for yahoo finance. There should be a "porting" mechanism, where if the reformulated yahoo finance pricing (price + dividend/interest/etc, i believe they call it "adj close" or something like that), is within 10bps of the bloomberg price on some several test intervals, then we can use the yahoo finance price.
+
+**DECISION, Andrew: BLOOMBERG IS THE DEFAULT SOURCE FOR CLIENT HISTORY. A security may use Yahoo only after it passes a PORTING TEST against Bloomberg.**
+- The comparison is Yahoo's adjusted close (split and distribution adjusted) against Bloomberg on the same security.
+- It must agree within 10 bps on several test intervals.
+- The exact test is proposed by this seat below. It stays OPEN until Andrew confirms it.
+
+**Proposed porting test** (this seat, for Andrew's confirmation):
+- **Compare returns, never levels.** Yahoo's adjusted close is re-based backward at every dividend, so its LEVEL moves while its returns do not.
+  - Interval return, Yahoo: `adjclose(end) / adjclose(start) - 1`.
+  - Interval return, Bloomberg: `TOT_RETURN_INDEX_GROSS_DVDS(end) / TOT_RETURN_INDEX_GROSS_DVDS(start) - 1`.
+- **Pass:** the two returns differ by at most 10 bps (0.10 percentage points) on EVERY test interval. One miss fails the security.
+- **Intervals:** 5 per security, a deterministic sha256 draw over the security's own held window, with lengths of 1 month, 1 quarter and 1 year plus 2 drawn lengths. No
+  interval may start before the security's first held date.
+- **Cost:** at most 10 Bloomberg cells per security (2 endpoints by 5 intervals).
+- **A pass ports the security to Yahoo.** It is re-tested only when Yahoo restates the security (a split or another corporate action). A fail keeps the security on
+  Bloomberg at the B1 depth.
+
+**CONFIRMED, Andrew (~16:5xZ):** the porting test as proposed above, and Yahoo-sourced client prices already stored read **UNVERIFIED** until their security passes.
+
+> The premise is that we always need to account for TWR pricing on ALL surfaces, so if Yahoo can accomodate that and its proven to be accurate within some interval, then great, we can manage that. Moving to your recs, yes that is correct.
+
+**STANDING RULE, Andrew: TIME-WEIGHTED RETURN (TWR) PRICING ON EVERY SURFACE.** Every price series a surface keeps must support a total-return (TWR) reading: price plus
+distributions (dividends, interest), not price alone. Yahoo is admitted only through the porting test, which compares total returns.
+
+**This seat's census against that rule** (field lists as carded above; "n/a" is a series that is not a priced security):
+
+| item | total return today | gap |
+|---|---|---|
+| A1 models pull | daily and monthly `DAY_TO_DAY_TOT_RETURN_GROSS_DVDS` on indices and model ETFs; macro levels n/a | none |
+| A2 ETF pull | `DAY_TO_DAY_TOT_RETURN_GROSS_DVDS` and the total-return level | none |
+| A3 rival funds, today's data | `DAY_TO_DAY_TOT_RETURN_GROSS_DVDS`, plus dividend history | none |
+| A3 rival funds, history still owed | the close only | **GAP**: add the total return field |
+| A4 research price axis | `PX_LAST` only | **GAP**: add the total return field (about 500 cells a day at 5 days) |
+| A5 ETF breakdown | n/a (allocations, not prices) | none |
+| B1 Cottonwood history | `PX_LAST` only | **OPEN**: the basis is a decision (below) |
+| B2 Yahoo client history | the close, and adjusted close where stored | the porting test |
+
+
+## STANDING RULE, Andrew: INCREMENTAL MODE = THE LAST 5 TRADING DAYS, on every surface
+
+Once a need's backfill is complete, every daily pull asks for **the last 5 trading days** (from `lib/trading_calendar.py`), not a single day and not a long window. That
+covers holidays, a missed run and late vendor corrections. A security with a gap wider than 5 trading days gets a targeted refill for just that gap, never a wider
+standing window. It applies to every surface (A through E) after its backfill is covered.
+- **Yahoo reading** (this seat, on `2.0.0_SA_COO~Q1` msg 4935): a 5-day window saves no Yahoo request (one request per symbol either way). The rule still applies:
+  - the last 5 trading days normally;
+  - a FULL re-pull of a name only when a split or another restatement lands, as the targeted refill.
+  It is a served change under its own pair.
 
 ## FOR SITE Z (the Bloomberg device): changes to carry, appended as decided
 
 | # | change | file | source decision |
 |---|---|---|---|
 | Z1 | Fund-only fields (`FUND_EXPENSE_RATIO`, `FUND_TOTAL_ASSETS`, `TOTAL_NUMBER_OF_HOLDINGS_IN_PORT`, `TRACKING_ERROR`) are requested only for funds | `integrations/bloomberg/pipeline/etf_daily_pull.py`, the `CHAR` request | A2, Andrew 2026-10-13 |
-| Z3 | Dividends: one 365-day `DVD_HIST_ALL` pull per security on first entry, then a daily window of the last few trading days (replacing the 730-day daily re-pull) | `data/etfs/scripts/rivalfunds/enrichment_bloomberg.py` (`DEFAULT_WINDOW_DAYS`, `build_plan`) | A3, Andrew 2026-10-13 |
-| Z4 | ACWI and IWM: not full holdings depth (the depth is to be confirmed; proposed top 25 by weight, daily) | `data/etfs/scripts/rivalfunds/collector_bloomberg.py` (the BQL holdings query) | A3, Andrew 2026-10-13 |
+| Z3 | Dividends: one 365-day `DVD_HIST_ALL` pull per security on first entry, then the last 5 trading days daily (replacing the 730-day daily re-pull) | `data/etfs/scripts/rivalfunds/enrichment_bloomberg.py` (`DEFAULT_WINDOW_DAYS`, `build_plan`) | A3 plus the incremental rule, Andrew 2026-10-13 |
+| Z4 | ACWI and IWM REMOVED from the rival-funds holdings pull entirely (not displayed; no holdings needed in any context) | `data/etfs/scripts/rivalfunds/collector_bloomberg.py` and the rival-funds universe | A3, Andrew 2026-10-13 |
+| Z5 | The research price axis pulls the last 5 trading days daily (not 30), with stored history extended by `price_series_persist.py` and a targeted refill for any wider gap | `integrations/bloomberg/research/price_axis_pull.py` (`WINDOW_DAYS` for the daily pull) | A4 plus the incremental rule, Andrew 2026-10-13 |
+| Z6 | INCREMENTAL MODE everywhere: once a need's backfill is complete, daily pulls ask for the last 5 trading days | every site Z daily pull (the ETF pull's history top-up, rival funds, research, the models pull) | the standing rule, Andrew 2026-10-13 |
 | Z2 | `DEPTH_START_DAYS` 372 becomes 365 (non-client need: 365 days before the need; the trading calendar resolves the first business day) | `integrations/bloomberg/pipeline/etf_daily_pull.py` | backfill law ADDENDUM 2 item 4 |
+| Z7 | Client-history porting test (Yahoo adjusted close against Bloomberg total-return index, 5 intervals, 10 bps, at most 10 cells per security), drawn through the queue under surface B | the DEMQUE drawer (the request is filed by `2.0.0_SA_COO~Q1`) | Surface B, Andrew 2026-10-13 (the test is pending his confirmation) |
