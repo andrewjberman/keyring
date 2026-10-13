@@ -1185,3 +1185,28 @@
   "notes": "STOPPED as the order says; no further act. No rollback taken: the objects are write-once creates a code rollback would not remove, the same two-object pattern followed the real run on the CN-d-1 code, and a rollback would put the pre-fold code on tomorrow's first folded fire. The four keys and the prior package (artifact VersionId qUUF7ZdR5eqGOL.5j8fJgrR2RAMhcviU, MDPF_GOLD_COMMIT 88e974ca10) stay recorded in ledger mdpf-canon-r6-fold-deploy-dell1-20261013 for the issuer's call before 2026-10-14T12:45Z. Whether a consumer reads 'latest object under date=' and can pick up a second snapshot is not measured here."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S21",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-13T19:27:52Z",
+  "one_line": "The global category-views snapshot of a date and the NEWEST global time series disagree on that same date by -4,649.20 to +301,207.84 over the 21 dated category-views objects (18 of 21 nonzero), because the served time series restates its own history; against each date's own dated time-series object the remainder is 0.00 on 21 of 21. Cause of the restatement not established.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD v2.13-v2.16 FWD-9 DONE WHEN (2): on each drawn date every grouped series equals the sum of its served members to the cent, and the stack sums to opal_aggregate_aua; the Client chips are read from that date's category-views node and Other AUA is the remainder non_model_aua minus the two chips minus the carve-out ETF members.",
+  "world_is": "Measured 2026-10-13T19:27:52Z, read-only. 21 dated objects portal/gold/mdpf/global/category-views/2026-08-27.json .. 2026-10-12.json; per date remainder = non_model_aua - nodes.Client.children['Client - Opal Supervised'].aum - ['Client - Opal Unsupervised'].aum - (opal_div_sma + opal_growth_sma). Against the newest aggregate-aua-timeseries (2026-10-09.json at the read): min -4,649.20, max +301,207.84, nonzero on 18 of 21. Against each date's OWN dated aggregate-aua-timeseries object: 0.00 on 21 of 21. Between a date's own dated ts object and the newest ts on the SAME as-of date: non_model_aua differs on 18 of 21 dates (range -4,649.20 .. +301,207.84, the same numbers as the remainder), model_aua on 20 (range -301,207.84 .. +24,107,399.71), opal_aggregate_aua on 18 (+405,856.99 .. +24,514,901.22); the carve-out members and the additive terms do not differ. The +301,207.84 on non_model_aua is matched by -301,207.84 on model_aua on the same date (a reclassification between buckets); the +24.1M model_aua and +24.5M aggregate restatements are history that a later object carries and the earlier did not. The cause of either restatement was not established here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/portal/gold/mdpf/global/category-views/ (21 dated objects)",
+      "s3://opal-data-assets/portal/gold/mdpf/global/aggregate-aua-timeseries/<date>.json (own-date objects) and the newest key, compared on the same as-of date",
+      "CTO msg 5109 (the +301,207.84 and -4,649.20 figures) reproduced by the issuer"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Consequence for FWD-9: the cent-exact Client sum holds against a date's own dated ts object (21 of 21) and not against the newest (3 of 21). The grade and the client-facing PROD card must state which object the sum is read against; the card carries this difference (CTO msg 5109). No served object moved."
+}
+```
