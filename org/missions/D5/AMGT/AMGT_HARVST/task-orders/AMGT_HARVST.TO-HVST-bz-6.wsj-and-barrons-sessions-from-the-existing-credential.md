@@ -62,12 +62,16 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 ## PROOF OF SPEC (each invocation LITERAL, on the site Z box, from the repo root)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="HVST-bz-6"><invocation>python org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round84/bz6_session_state.py wsj --runtime-root "C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-c1be67f53c/.runtime/harvest-cycle/runtime"</invocation><expect>(?m)^STATE wsj present=True subscriber=True network_auth_corroborated=True .* VALID=True$</expect></criterion>
-  <criterion id="AC2" cell_refs="HVST-bz-6"><invocation>python org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round84/bz6_session_state.py barrons --runtime-root "C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-c1be67f53c/.runtime/harvest-cycle/runtime"</invocation><expect>(?m)^STATE barrons present=True subscriber=True network_auth_corroborated=True .* VALID=True$</expect></criterion>
+  <criterion id="AC1" cell_refs="HVST-bz-6"><invocation>python -c "import sys, runpy; sys.argv = ['bz6_session_state.py', 'wsj', '--runtime-root', 'C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-c1be67f53c/.runtime/harvest-cycle/runtime']; runpy.run_path('org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round84/bz6_session_state.py', run_name='__main__')"</invocation><expect>(?m)^STATE wsj present=True subscriber=True network_auth_corroborated=True .* VALID=True$</expect></criterion>
+  <criterion id="AC2" cell_refs="HVST-bz-6"><invocation>python -c "import sys, runpy; sys.argv = ['bz6_session_state.py', 'barrons', '--runtime-root', 'C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-c1be67f53c/.runtime/harvest-cycle/runtime']; runpy.run_path('org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round84/bz6_session_state.py', run_name='__main__')"</invocation><expect>(?m)^STATE barrons present=True subscriber=True network_auth_corroborated=True .* VALID=True$</expect></criterion>
 </proof_of_spec>
 
 - The checker reads `<expect>` as a regular expression. Both criteria are site Z reads and cannot run from dell1. The script is READ ONLY without `--mint`, so the
   criterion's own invocation makes no sign-in.
+- **Amendment (issuer, round 84, Z-S118):** the invocations above ran the script BY PATH, which puts the script's own directory on `sys.path[0]` and never the
+  repo root, so its `from lib.opal_data_harvest...` import raised `ModuleNotFoundError` on every box (measured by `0.7.0_AE_CloudOps~ZW`, before and after the act). `python -c`
+  keeps `sys.path[0]` at the cwd (the repo root, per the heading) and `runpy.run_path` runs the SAME script bytes as `__main__`; the script is unedited and its expected
+  line is unchanged. Probed on dell1 against a nonexistent runtime root: the old form raises, the new form prints `... present=False ... VALID=False` rc 0.
 - **Dry-run at the base (issuer, against a fake vault, `test_bz6_session_state.py`, 6 passed):** an absent session prints `present=False ... VALID=False`, so
   AC1 and AC2 do NOT match (FAIL as expected); a valid planted envelope prints `VALID=True` and matches; no cookie, username or token appears in any output.
 - INSTANCE NAMED EXACTLY
