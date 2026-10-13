@@ -9035,6 +9035,58 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "notes": "THIS IS HVST-bz-7's STEP 3 RESULT, filed as that step directs: 'COMPLETED=False or a STOPPED= other than none (for example sign_in_refused) is a RECORDED RESULT, not a pass: file ONE row naming the line and the publisher, and keep the order open.' bz-7 STAYS OPEN and nothing was driven to move a line -- no sign-in, no mint, no re-queue, no task or process touched, no plant. ASK FOR THE ISSUER, two parts, both cheap: (i) bz-7's own issuer notes already name the remedy shape ('A refusal is answered by a bz-6-shaped re-mint order under its own pair'), and that order is the issuer's to cut, not this seat's -- but the measurement above says a plain re-mint would answer barrons and only postpone wsj, whose session was ACCEPTED and then expired mid-cycle under --no-sign-in with no refresh. (ii) The deeper question is whether bz-6's endpoint can be met by a saved session at all while the runner forbids refresh: a session that is valid at mint and 401s 69 minutes later is a REFRESH problem wearing a sign-in refusal's name. Both are the issuer's calls. WHAT THIS ROW DOES NOT CLAIM: no vendor-side cause is read here (lock, challenge, rotation and ordinary cookie expiry are all consistent with what was measured), and the 242-key plan was not inspected.",
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-S14",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~HV1",
+     "surfaced_at": "2026-10-13T20:37Z",
+     "one_line": "HVST-bz-8's targeted plan reads 0 to add, 3 to change, 0 to destroy, not 0/1/0: besides the schedule's state flip it carries aws_lambda_function.orchestrator source_code_hash and aws_instance.astn user_data, so under the order's STOP rule (branch P) NO apply was taken and the schedule still reads ENABLED.",
+     "class": "BLOCKING",
+     "hazard_standing": "INERT",
+     "disarm_owner": "2.0.0_SA_COO~W1",
+     "spec_asserts": "TO-HVST-bz-8 step 3: 'It must read exactly Plan: 0 to add, 1 to change, 0 to destroy, and the one change must be state: ENABLED -> DISABLED on aws_scheduler_schedule.astn_run. Anything else (a replace, a second change, a destroy...) is a STOP: no apply, one row naming the line, keep working.' The CTO half and the COO half both sign for 0/1/0 only (branch P = any other reading is a STOP).",
+     "world_is": "Measured 2026-10-13 ~20:36Z on dell1, terraform v1.15.8, worktree cut from a6c3b949e6 plus the one-attribute edit (532f6f04cf), backend s3. terraform -chdir=infra/aws/terraform/astn-pipeline plan -target=aws_scheduler_schedule.astn_run read: Plan: 0 to add, 3 to change, 0 to destroy. The three updates in place: (1) aws_scheduler_schedule.astn_run state ENABLED -> DISABLED (the ordered change); (2) aws_lambda_function.orchestrator source_code_hash gXzCrCaEvIPd8M7z1FtGJQ33hYrxq8g/h4Ud2obIpL0= -> RcBxw9W48ZOwoj+5+Uvi1nb4L6VrexgsBFXh9vPmjUU= (and last_modified known after apply); (3) aws_instance.astn user_data 751e88e41765141b8c791d2b06421391c0f1e6b6 -> 07717eecbd90ea6f9e7e22c6e17db77e42fa9451. The targeted plan includes (2) and (3) because they are dependencies of the schedule. Cause of (2), measured: the Lambda's live last_modified is 2026-07-13T07:48:22Z and commit 1eaea051c4 (2026-10-13, MDPF_HEALGAP HG-t-18, ASTN FT same-day re-attempt) changed infra/aws/lambda/astn-wsjft-orchestrator/lambda_function.py after it, so applying would deploy that code to the live Lambda. Cause of (3), NOT established: instance.tf was last changed 2026-07-08 (1502fdd6f9) and is LF in the index and the worktree, so no edit to instance.tf explains the hash. Nothing was applied: aws scheduler get-schedule still reads State ENABLED and ScheduleExpression cron(0 3 * * ? *) at 20:37Z, so the 07:00Z fire on 2026-10-14 runs unless this is resolved first. Local environment note: the module's lock pins hashicorp/archive 2.8.0, but this box's CLI config reads only the kit mirror (C:/tmp/kit-tf-recv/kit-terraform-pack-20261007), which holds archive 2.8.1; init failed 'previously-selected version 2.8.0 is no longer available'. To init, the archive block was removed from the WORKTREE copy of .terraform.lock.hcl (uncommitted, aws stays at 5.100.0), so the plan ran with archive 2.8.1. That substitution is not isolated as a cause of (2), because the exact zip hash cannot be recomputed under 2.8.0 here; the code commit alone is a sufficient cause (inferred).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round84/bz8_plan.out -- the whole plan output, 74 lines, 'Plan: 0 to add, 3 to change, 0 to destroy.' at line 57",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round84/bz8_init.out -- the init after the archive lock block was dropped in the worktree copy, rc=0",
+       "git log --since=2026-07-01 -- infra/aws/terraform/astn-pipeline (5 commits, none after 2026-07-17 0ee89c9826, which touched only orchestrator.tf deletions) and git log -1 -- infra/aws/lambda/astn-wsjft-orchestrator (1eaea051c4)",
+       "git ls-files --eol infra/aws/terraform/astn-pipeline/instance.tf infra/aws/lambda/astn-wsjft-orchestrator/lambda_function.py (both i/lf w/lf)",
+       ".tools/aws scheduler get-schedule --name astn-wsjft-3am-run --query [State,ScheduleExpression] -> ENABLED cron(0 3 * * ? *) at 20:37Z",
+       "Worktree C:/dev/wk-hv1-bz8, branch wk-hv1-bz8-astn-off: edit commit 532f6f04cf (unmerged), ledger astn-3am-off-20261013 OPEN with the EDIT, APPLY and VERIFY legs not closed; bz8.tfplan saved in the module dir, uncommitted"
+      ]
+     },
+     "notes": "BLOCKING / INERT: nothing is armed and nothing moved; the order stops at its own branch-P rule and the question returns to the issuer. The seat did NOT narrow the plan by any other route (no CLI update-schedule, no untargeted apply, no apply of the 0/3/0 plan): the signed halves cover 0/1/0 only, and an apply of this plan would also deploy HG-t-18's new Lambda code and change the instance user_data, neither named in either half. Options the issuer and CTO can weigh (not decided here): (a) re-sign both halves for the 0/3/0 with its blast radius named; (b) have the owners land the Lambda code and the user_data change first so the plan reads 0/1/0; (c) amend the order to say how the dependency diffs are to be kept out of the plan. Time matters: the next fire is 07:00Z on 2026-10-14. The ledger entry astn-3am-off-20261013 stays OPEN and reads KNOWN-HELD on the issuer's ruling; the order asked for an APPLY leg kind 'tf-schedule', which deploy_ledger.py does not accept, so the leg is kind 'activation' ('trigger arm', nearest valid).",
+     "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-S15",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~HV1",
+     "surfaced_at": "2026-10-13T20:58Z",
+     "one_line": "The signed 0/3/0 apply of HVST-bz-8 STARTED the stopped EC2 instance i-059405dfefcb4b44a (aws_instance.astn, user_data change): it read stopped at 20:46:51Z and has run since 20:48:11Z, which both never-widen halves had assumed would not happen; a process-name read shows no pipeline process on it.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "disarm_owner": "2.0.0_SA_COO~W1",
+     "spec_asserts": "COO half ADDENDUM 1: 'A user_data change on a stopped instance is an attribute edit; it starts nothing... the seat re-reads the state in the minute before the apply and STOPS if it reads running.' CTO half ADDENDUM 1: 'The instance is stopped between runs, and user_data executes only at first boot, so the in-place change runs nothing.' Both halves ruled on the attribute, not on how the provider applies it.",
+     "world_is": "Measured 2026-10-13. Before the apply: describe-instances State.Name stopped at 20:46:51Z (the order's step-4 read, taken inside the minute before the apply). The apply (bz8_apply.out, 'aws_instance.astn: Modifying... Modifications complete after 24s'; 'Apply complete! Resources: 0 added, 3 changed, 0 destroyed.') then left the instance running: describe-instances read running with LaunchTime 2026-10-13T20:48:11+00:00 and a public IP 54.211.50.5 (the post-apply plan's only change is the astn_public_ip output, bz8_plan_post.out). Process names, read over SSM (bz8_instance_ps.out, CommandId f56b1d55-dc22-4f92-9ee9-1ea1cf883ccb): 94 processes, 28 non-kernel, all listed, none of python, python3, node, chrome, Xvfb or run.py; only stock Amazon Linux services and the SSM agent. The order's literal ps command (head -40 sorted by elapsed time) printed 39 kernel threads and so could not grade the question; that read is kept in the file and labelled UNDETERMINED, and the second read is a variation on the same SSM route, names only. user_data is bootstrap-only per instance.tf ('a launch never auto-runs the pipeline'); this was a start, not a first boot, so user_data did not run again (inferred; the cloud-init log was not read). The instance tag says it is not exempt from the auto-shutdown enforcer.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round84/bz8_apply.out -- the instance modification lines and 'Apply complete! Resources: 0 added, 3 changed, 0 destroyed.'",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round84/bz8_instance_ps.out -- both reads, the first labelled UNDETERMINED with its cap, the second with the 94 / 28 denominators",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round84/bz8_plan_post.out -- Changes to Outputs: astn_public_ip empty to 54.211.50.5",
+       ".tools/aws ec2 describe-instances --instance-ids i-059405dfefcb4b44a --query Reservations[0].Instances[0].[State.Name,LaunchTime] -> running 2026-10-13T20:48:11+00:00 (read 20:49:41Z)",
+       "infra/aws/terraform/astn-pipeline/instance.tf user_data comment and tags comment (bootstrap only; not exempt from the auto-shutdown enforcer)",
+       "CTO ADDENDUM 2 @73c46aad4b and COO ADDENDUM 2 @a17342cf74, which record the start as a premise error"
+      ]
+     },
+     "notes": "INERT: nothing pipeline-shaped runs on the host; the cost is a t3.medium running and a public IP, until the auto-shutdown enforcer or a stop. An EC2 stop is Andrew's confirmation (CLAUDE.md Agent Autonomy), so no seat stopped it; the issuer ruled no stop and the CTO carded it to Andrew with a recommendation of yes. Lesson for the next pair touching an aws_instance user_data: the provider stops a running instance to modify user_data and STARTS a stopped one afterwards, so the blast radius must name the start. The first ledger entry astn-3am-off-20261013 was closed at 20:51Z under message 5182 before message 5183 asked to keep it open; the tool has no reopen, so a second entry astn-instance-started-20261013 (STOP and VERIFY legs) stays OPEN for the instance.",
+     "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```

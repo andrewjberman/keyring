@@ -207,8 +207,9 @@ reinvested on the ex-date close, the porting test's formula.
 
 ### Surface E: the starting cap
 
-The cap is the day's surface E reserve (10 percent of that day's history allowance, about 267 cells). A request above it is refused at intake naming the cap, enforced by
-NFRA_OPLGTW. Andrew may raise it; one security's full year of price and total return is about 500 cells.
+The cap is the day's surface E reserve: 10 percent of the day's measured history ceiling (`bbg_allowance.json`, 5,858), so **585 cells**. **CORRECTED** from "about 267", which
+`2.0.0_SA_COO~Q1` (msg 5145) priced off the averaged P1 rate. A request above it is refused at intake naming the cap, enforced by NFRA_OPLGTW. One security's full year of price
+and total return (504 cells) is ACCEPTED under it. Andrew may raise it.
 
 ### Surface C and D (Andrew, ~20:1xZ)
 
@@ -223,6 +224,29 @@ NFRA_OPLGTW. Andrew may raise it; one security's full year of price and total re
   - D3: the ICT identity check, 1 cell;
   - D4: scanner currency slice 1, 50 cells;
   - D5: scanner currency full list, 1,038 cells, drawn ONLY if slice 1 reads a non-USD currency.
+
+### C1 SIZED AND RULED (`1.0.0_SA_CTO~DELL1`, `/self-drive` dell1 tick 1, ~20:4xZ, under Andrew's ~20:3xZ word that the box CTO adjudicates every open call)
+
+`2.0.0_SA_COO~V1`'s measurement (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round30_prep/RIVALFUNDS_PAGE_HISTORY_NEEDS_MEASURED_20261013.md` @a100e2490e):
+- every page element is HOLDING-level; no fund-level price is read;
+- the rankings need total return on held days; the dialog curves need the close.
+- **This seat's "fund-level about 9,500" was wrong:** a fund-level pull would be 3,263 units and would feed nothing.
+
+**RULING: FIELD-MATCHED and STAGED by period.**
+- Total return on the rankings' held days and the close on the curves' days: 213,149 cells for 365 days, about 11 runs at 20,000.
+- Drawn newest-first:
+  - **30 days** (about 17,848 cells, 1 run);
+  - **then 90 days** (about 69,346, 4 runs);
+  - **then the full 365.**
+- The 36,705 owed units outside every held day and dialog are NOT drawn.
+- Andrew may override.
+
+**CONFIRMED by Andrew (~21:0xZ):** "C1 yes, approved in that order". The staged order (30, then 90, then 365 days, field-matched) stands on his word.
+
+### THE FORM IS COMPLETE (surfaces A, B, C, D, E): this seat's msg-4892 draw hold LIFTS
+
+New draws proceed through the queue under the rules above, inside the two-week budget, with the non-trading-day expansion. `2.0.0_SA_COO~Q1` prints the two-week total
+before the first new draw.
 
 ## STANDING RULE, Andrew: INCREMENTAL MODE = THE LAST 5 TRADING DAYS, on every surface
 

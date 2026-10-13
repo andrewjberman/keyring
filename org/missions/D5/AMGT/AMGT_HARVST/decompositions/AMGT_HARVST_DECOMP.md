@@ -3978,3 +3978,20 @@ session to the box's own DPAPI vault (`SessionVault`). The runner is `--no-sign-
   username or token, and a refusal names the exception class only) and `bz7_publisher_cycles.py` (base and control arms dry-run).
 - **Fan-out:** 0 workers (two seat orders), 2 chains, cap 8: bz-7 needs bz-6's instance.
 - **Not orders:** a re-mint after a recorded `sign_in_refused` (its own order under its own pair, cut on the record); Seeking Alpha, FT and Bloomberg.
+
+## 103. ROUND 84, workstream BRIEFOFF -- the 3 AM WSJ/FT morning brief is turned off (`1.0.0_SA_CTO~DELL1` msg 5131, Andrew-direct ~20:0xZ call 7), 2026-10-13 ~20:3xZ
+
+Andrew: "No let's turn that off we don't need that." The CTO: disable `astn-wsjft-3am-run` under a pair; nothing deleted; rollback = re-enable.
+
+**Measured at the cut (2026-10-13 ~20:2xZ):** the schedule is live, `State ENABLED`, `cron(0 3 * * ? *)` America/New_York, target Lambda `astn-wsjft-orchestrator`, input `{"mode":"run"}`, last modified 2026-06-25.
+Denominator: 1 scheduler schedule and 0 EventBridge rules carry the `astn` prefix. Terraform: 1 writer, `aws_scheduler_schedule.astn_run` at `infra/aws/terraform/astn-pipeline/orchestrator.tf` line 175,
+`state = "ENABLED"`. The next fire is 03:00 ET (07:00Z), so the act must land before then to spare tonight's run. The project record `org/projects/ASTN_WSJFT.json` is CLOSED (2026-08-25).
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-bz-8` | `bz-8` | **The schedule `astn-wsjft-3am-run` reads `DISABLED`** with its expression, target and input unchanged, and the Terraform source says the same (no drift): one attribute edited, a targeted plan that reads exactly 0 to add / 1 to change / 0 to destroy, a targeted `safe-apply`. Nothing is deleted; the Lambda, IAM, bucket, SNS and EC2 instance are not touched. | WORLD | seat `0.7.0_AE_CloudOps~HV1` | CUT (workstream BRIEFOFF); needs a signed pair before it is sent |
+
+- **Fan-out:** 0 workers (one seat order), 1 chain of 1, cap 8. It shares no file with bz-7 (the only open round-84 order) and no edge with the runner.
+- **Why a workstream and not the next round:** the schedule fires nightly; a cell cut after the round-84 L10 would let more runs go. Disjoint boundary (an AWS scheduler and one Terraform line, no harvest code, no site Z), disjoint write surface, a different `~lane` (`HV1`), one issuer.
+- **Not orders:** deleting the schedule, the Lambda or the bucket; the dormant FT-reattempt code (stays as recorded); any change to the digest content or its recipients.
+- **Checks dry-run at the base before the cut:** AC1 base FAIL as expected (the live schedule reads `ENABLED`); AC2 base PASS as expected (the expression reads `cron(0 3 * * ? *)`, which is also its after-state: an unchanged-field control); AC3 base FAIL as expected (the source reads `"ENABLED"`).

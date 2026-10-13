@@ -9741,6 +9741,79 @@
 }
 ```
 
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W104-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~104",
+  "surfaced_at": "2026-10-13T20:53:39Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "one_line": "The AR-y-283 partner view (portal commit e82daf4c98 on wk-IRPT_ANLREQ-104-portal) moves the TicketCenter folder from 89 pass 0 fail to 90 pass 10 fail; all 10 failures sit in analysis-submit-silence.test.tsx, which mounts a firm caller on the path the cell replaces.",
+  "spec_asserts": "AR-y-283 step 4: the whole TicketCenter folder passes with the change (counts printed); criterion (f): an internal caller's page is unchanged and the existing tests for it all pass. The order does not name the firm-caller suite as superseded.",
+  "world_is": "MEASURED at portal e82daf4c98 (wk-IRPT_ANLREQ-104-portal): bun test src/pages/TicketCenter gives 90 pass, 10 fail of 100. All 10 fail in analysis-submit-silence.test.tsx with 'no button New Ticket on the page', because its useAuth mock (analysis-submit-silence.test.tsx:86, isInternal false) is a firm caller, which the page now renders as the partner view (TicketCenter.tsx partner branch). On origin/DEV a577cba5 the same folder gives 89 pass 0 fail, and the suite passes 10 of 10. The suite was NOT edited. Whether it is re-pointed to an internal caller or its firm-caller cases are retired is the issuer's or the CTO's call.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "src/pages/TicketCenter/__tests__/analysis-submit-silence.test.tsx:86 (useAuth isInternal false) at portal e82daf4c98",
+      "src/pages/TicketCenter/TicketCenter.tsx partner = !internal and the if (partner) return branch at portal e82daf4c98",
+      "bun test src/pages/TicketCenter: portal e82daf4c98 90 pass 10 fail of 100; origin/DEV a577cba5 89 pass 0 fail of 89"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W104-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~104",
+  "surfaced_at": "2026-10-13T20:53:39Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The partner list reads a package_state word that no served vocabulary defines in this tree: the cell names the field but not its values, and the server folder holds no package_state at HEAD.",
+  "spec_asserts": "AR-y-283 wire shapes: each list item carries package_state, and criterion (c) asks the partner list to render a package-state word. The order fixes no value set for it.",
+  "world_is": "MEASURED: a grep of infra/aws/lambda/ticket_center in worktree wk-irpt-anlreq-104 (base 0c27245bc9) returns 0 matches for package_state; the folder holds lambda_function.py and 22 test files. The candidate renders an absent state as 'Not yet packaged' and a served word with its underscores read as spaces (packageStateWord in TicketCenter.tsx). The served vocabulary belongs to the list route's owner; the candidate invents none.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center grep package_state: 0 matches in worktree wk-irpt-anlreq-104 at 0c27245bc9",
+      "src/api/endpoints/tickets.ts PartnerRequestItem.package_state at portal e82daf4c98",
+      "src/pages/TicketCenter/TicketCenter.tsx packageStateWord at portal e82daf4c98"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W104-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~104",
+  "surfaced_at": "2026-10-13T20:53:39Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The portal repository has no committer identity configured, so safe-commit refused the first portal commit (rc=128, Committer identity unknown); the retry set GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL for that one call.",
+  "spec_asserts": "AR-y-283 step 5 and the portal rule: commit the candidate in the portal worktree the way an earlier candidate branch was made (its commit line names the worker serial as author).",
+  "world_is": "MEASURED: safe-commit.sh run from C:/dev/wk-portal-104 exited rc=128 with 'Committer identity unknown' and 'unable to auto-detect email address'; git config user.name and user.email are unset there. The retry, with the serial as author and as committer, landed commit e82daf4c98 LOCAL on wk-IRPT_ANLREQ-104-portal, and the repository confirms the author. No git config was written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh run in portal worktree C:/dev/wk-portal-104: rc=128, Committer identity unknown (first attempt)",
+      "git -C C:/dev/ajb_workspace/portal log -1 923f7d69: author line names 0.9.0_WK_IRPT_ANLREQ~90",
+      "portal commit e82daf4c98 on wk-IRPT_ANLREQ-104-portal, author 0.9.0_WK_IRPT_ANLREQ~104"
+    ]
+  }
+}
+```
+
 ## IRPT_ANLREQ-D2-W97-S1 -- (AR-y-276) the authorizer does not carry allowedFirmIds in the token; the portal authorizer computes it
 
 ```json
@@ -10426,4 +10499,319 @@
     "disposition": "UNDER_INVESTIGATION"
   }
 ]
+```
+
+## IRPT_ANLREQ-D2-W101-S1 -- (AR-y-280 step 3) the PACKAGE body carries no request id, so the packager cannot write the top-level report_ref the drafter reads
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W101-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~101",
+  "surfaced_at": "2026-10-13T20:39:34Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "Step 3 of AR-y-280 was STOPPED: the PACKAGE route has no request id to write as the top-level report_ref.request_id that the commentary drafter reads; the packager sends report_id, not request_id.",
+  "spec_asserts": "AR-y-280 step 3: package_ticket writes the top-level report_ref as {request_id, revision, recorded_by, recorded_at} ONCE (a second write refused), bound to the requester firm; if the PACKAGE body does not carry the request id today, STOP and file a BLOCKING row naming what the packager would have to send.",
+  "world_is": "MEASURED at HEAD 6c728045fb: PACKAGE accepts only PACKAGE_REF_FIELDS, firm and prior_attached_at (infra/aws/lambda/ticket_center/lambda_function.py:138), and writes them under package (:1538). The packager attach payload is {report_ref, pdf_ref, original_ref, commentary_ref, firm} (infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:208-209); its report_ref is the READY job receipt's report_id (opal_packager.py:168), and no request id is sent. The drafter reads top-level report_ref.request_id (lambda_function.py commentary_draft_ticket, :1595). So nothing writes that member on the packager's path. To close it the packager must send request_id in the PACKAGE body (a new member of PACKAGE_ALLOWED_FIELDS, bound to the request the ticket records), and its _attach payload (opal_packager.py:208-209, outside the grant of AR-y-280) must carry it; the top-level write then takes it once. Until then a ticket cannot receive a commentary draft through the drafter route.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:138 (PACKAGE_ALLOWED_FIELDS) and :1538 (pkg = {k: body[k] for k in PACKAGE_REF_FIELDS})",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:168 (report_ref = receipt report_id) and :208-209 (the attach payload, no request id)",
+      "infra/aws/lambda/ticket_center/lambda_function.py commentary_draft_ticket :1595 (ref = cur.get report_ref, read for request_id)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W101-S2 -- (AR-y-280 step 4k) the premise that a test pins the analysis_request submit refusal does not hold; the pinned refusal is for ticket_type other
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W101-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~101",
+  "surfaced_at": "2026-10-13T20:39:34Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order says the old test at test_analysis_request.py :131-133 pins the refusal of answers and attachment for this type; it pins the refusal for ticket_type other, so no edit was needed.",
+  "spec_asserts": "AR-y-280 step 4(k): the existing ticket service folder passes with the ONE edit of the old test that pinned the refusal for this type; the acceptance text allows at most one named edit.",
+  "world_is": "MEASURED at HEAD 6c728045fb: infra/aws/lambda/ticket_center/tests/test_analysis_request.py:131-133 posts ticket_type other with answers to /submit as CLIENT and asserts 400. No test in the folder posts an analysis_request to /submit and asserts a refusal. The new fields are admitted for analysis_request only, so the folder passes with 221 tests and zero edits to any existing file (206 at HEAD plus 15 new).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/tests/test_analysis_request.py:131-133 (ticket_type other, answers, assert 400)",
+      "infra/aws/lambda/ticket_center/tests/test_submit_analysis_request.py (15 tests, all pass with the change at commit 336168cde3)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W101-S3 -- (AR-y-280 step 2) the ticket service cannot tell whether an attachment's upload belongs to the caller's firm; the submit path admits a foreign input reference once analysis_request is admitted
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W101-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~101",
+  "surfaced_at": "2026-10-13T20:39:34Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "one_line": "The attachment check is a shape check only: a client-human can name another firm's input_id on the submit path and the ticket is written under the caller's own firm.",
+  "spec_asserts": "AR-y-280 step 2: refuse an attachment whose upload belongs to another firm if the service can tell; if it cannot, say so in authorization_change and do not invent a check.",
+  "world_is": "MEASURED at HEAD 6c728045fb: _validate_attachment (infra/aws/lambda/ticket_center/lambda_function.py:744-758) checks the keys, a non-empty upload_id and the input_id pattern ^portfolio_[0-9a-f]{64}$; the module reads no upload, input or owner record anywhere (the only occurrences of upload_id are in that function). CREATE has the same check. The service therefore CANNOT tell whether input_id belongs to the caller's firm, and no check was invented. The submit path is reached by client-humans (MATRIX SUBMIT-FORM, :167), so once analysis_request is released to partner firms a partner can file a ticket that references another firm's input. Whether the downstream reader enforces the input owner was not read. Stated in authorization_change of r23/SUBMIT_ANALYSIS_REQUEST.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:744-758 (_validate_attachment: shape only)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:167 (SUBMIT-FORM admits CLIENT)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~101/r23/SUBMIT_ANALYSIS_REQUEST.json (authorization_change)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W101-S4 -- a ticket filed on the submit path has no human creator, so the REPORT creator branch can never admit it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W101-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~101",
+  "surfaced_at": "2026-10-13T20:39:34Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A client-submitted analysis_request carries created_by svc-ticket-form, so REPORT's creator branch (no claim) cannot admit any human for it; REPORT is internal-only and the assignee branch must claim first.",
+  "spec_asserts": "The J2 record's one-step filing (the form files the ticket and requests the report with no claim) is served by REPORT's creator branch, which admits the ticket's created_by caller.",
+  "world_is": "MEASURED at HEAD 6c728045fb and unchanged by AR-y-280: submit_form stamps created_by as SVC_TICKET_FORM (lambda_function.py, submit path). report_ticket admits the creator branch only when created_by equals the caller email (is_creator), and MATRIX REPORT is INTERNAL only (lambda_function.py:174). A client-submitted ticket therefore has no creator who can record a report without a claim. Not changed by this order; surfaced for the CVO and the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:174 (MATRIX REPORT frozenset INTERNAL)",
+      "infra/aws/lambda/ticket_center/lambda_function.py report_ticket, is_creator branch (created_by equals the caller email)",
+      "infra/aws/lambda/ticket_center/lambda_function.py submit_form (created_by=SVC_TICKET_FORM)"
+    ]
+  }
+}
+```
+
+### IRPT_ANLREQ-D2-S85 -- TO-READS-R193 step 1 names a commit at which the count script's self-test cannot pass
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S85",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-13T21:20:00Z",
+  "one_line": "TO-READS-R193 step 1 asks for the count script's --self-test to exit 0 in a worktree detached at a665d34dd3 (the r18.1 reader); it exits 1 there (read_the_same 0 not 1, read_differently 7 not 6, by_cause all OTHER:NON_FINDING_DIFFERENCE), and exits 0 at 35c3c4bd45, the base commit Y9 AMENDMENT 1 used; so the order's step 1 is unmeetable as written and the live counting run was not made.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r22/R0D_STEP0_AND_STOP.json, member step1: self_test_at_a665d34dd3 exit 1 with its first failures; control_self_test_at_35c3c4bd45 exit 0",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r16/count_stored_inputs.py:446-453 and the self_test: the new reader is hard-wired to d95cf11106 and the checkout's reader is the old one",
+      "org/tier2_senior/0.7.0_AE_CloudOps~ANL/task_orders/IRPT_ANLREQ.TO-READS-Y9.stored-input-count-r18-laptop.md AMENDMENT 1: the same defect, resolved by running the self-test at the base reader"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-READS-R193 step 1: the script's --self-test exits 0 in a throwaway worktree detached at a665d34dd3 ('the self-test takes the checkout's own reader as the old reader'). A self-test failure is a STOP.",
+  "world_is": "The self-test takes the checkout's reader as the old reader but its expected counts are written for the BASE reader as old (35c3c4bd45) against the hard-wired new reader d95cf11106; with r18.1 as old the stored-template differences collapse into one cause. The same self-test at 35c3c4bd45 exits 0 on this box, so the script and the box are sound. Step 0 of the order passed first (identity, one decrypt of 214395 bytes with the digest equal, delete simulated explicitDeny). No stored-input count was taken.",
+  "notes": "owner of the amendment: 2.0.0_SA_COO~Y2 (the issuer amends its own order). The ask is whether step 1 may be met by the self-test at 35c3c4bd45, as under Y9 AMENDMENT 1."
+}
+```
+
+- **owner:** `2.0.0_SA_COO~Y2`
+- **disarm_owner:** n/a -- INERT
+- **state:** OBSERVATION / INERT
+
+## IRPT_ANLREQ-D2-W106-S1 -- yfinance is not in the repo's resident or Lambda dependency records, so release_needs carries it and the module injects its history port
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W106-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~106",
+  "surfaced_at": "2026-10-13T21:04:04Z",
+  "one_line": "AR-y-292 step 1 asks whether yfinance is a member of the resident and the irpt-ycharts-generate Lambda package. Neither is shown by the repo: the resident's host pydeps are unread, and the Lambda's layers do not list yfinance, so the default history port raises CHECKER_UNAVAILABLE on those hosts and the module injects the port.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-292 step 1: read whether yfinance is importable in the resident host's Python and in the irpt-ycharts-generate Lambda package, with file:line; if it is not a member, state the missing dependency in release_needs and build with the history port injected, adding no dependency.",
+  "world_is": "Resident: RESIDENT_RECIPE_AND_DELTA.json names the host pydeps (/opt/investor-reporting-ycharts/pydeps, host script line 44) as host-origin with names NOT RECORDED; the membership is NOT READ. Lambda: infra/aws/terraform/investor-reporting/ycharts/generate.tf:396-399 attaches irpt-common and AWSSDKPandas-Python312:16; infra/aws/lambda/layers/irpt-common/requirements.txt pins jsonschema, attrs, jsonschema-specifications, referencing, rpds-py and typing_extensions with no yfinance; no requirements*.txt exists under infra/aws/lambda/investor-reporting (Glob, 0 files); the AWS-managed layer's contents are not in the repo. yfinance 1.2.0 is importable on dell2 only. No dependency was added.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/ycharts/generate.tf:396-399 (layers) @d2c68580a1",
+      "infra/aws/lambda/layers/irpt-common/requirements.txt (pinned closure, no yfinance) @d2c68580a1",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/r19/RESIDENT_RECIPE_AND_DELTA.json (host_origin_names, pydeps names MISSING) @d2c68580a1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The module is built to the interface with the port injected. The release needs the resident pydeps listing (host read, YC2) and the Lambda layer contents before a live upload can check a symbol."
+},
+{
+  "id": "IRPT_ANLREQ-D2-W106-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~106",
+  "surfaced_at": "2026-10-13T21:04:04Z",
+  "one_line": "With yfinance errors raised, a symbol Yahoo answers 404 (ALPPL, ZZQXJVK) raises HTTPError and reads CHECK_FAILED/EXCEPTION, never NOT_KEPT, so the clean-empty NOT_KEPT path is not produced for a nonexistent quote.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-292 ruling: NOT_KEPT is a clean empty answer; an exception reads CHECK_FAILED and is never treated as absent. The read record measured ALPPL, BREIT and CCCQ as zero rows with no exception.",
+  "world_is": "One read-only call per symbol through the real default port with hide_exceptions False, dell2, yfinance 1.2.0, 2026-10-13: TIMXX returned 20 rows, last close 1.0, KEPT (0.517 s); ALPPL raised HTTPError 404 (0.615 s), CHECK_FAILED EXCEPTION; ZZQXJVK raised HTTPError 404 (0.510 s), CHECK_FAILED EXCEPTION. The zero-rows-without-exception reading in the read record is the hidden-config behaviour; with the config honoured the same 404 raises. The ruling is applied as written; whether a 404 HTTPError should count as a clean NOT_KEPT is the CTO's to rule.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~106/r23/YFINANCE_CHECKER.json measurement block (committed with this row)",
+      "yfinance 1.2.0 scrapers/history.py:80-98 and :268-273 (raise when hide_exceptions is False) @site-packages",
+      "measurement script C:/dev/wk-irpt-anlreq-106/.scratch/measure_yfinance_checker.py run 2026-10-13"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Safe direction: the symbol stays unknown and is never read as absent. The finding will say check failed for holdings Yahoo calls not found."
+},
+{
+  "id": "IRPT_ANLREQ-D2-W106-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~106",
+  "surfaced_at": "2026-10-13T21:04:04Z",
+  "one_line": "The default port's error-shaped-empty-frame fallback reads yfinance.shared._ERRORS, a private module dict; the signal is verified on yfinance 1.2.0 (dell2) only, and dell1 runs 1.7.0, which is not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-292 interface: the default port classifies an error-shaped empty frame from the error signal, never as absent; the hidden-error frame is built from what the measurement showed for ALPPL.",
+  "world_is": "yfinance 1.2.0 shared.py:24 defines _ERRORS, and scrapers/history.py:97, :123, :272 and :480 write shared._ERRORS[ticker] on the hidden-error path. The port reads that dict after an empty frame and raises ErrorFrame when an entry exists; with no observable signal it raises ErrorFrame too, so an empty frame is never read as absent. No public accessor for the signal was found. The hidden-error fake in test_yfinance_check.py mirrors these lines. yfinance 1.7.0 (dell1) was not read, so the private name is unverified there.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "yfinance 1.2.0 shared.py:24 and scrapers/history.py:97,123,272,480 (site-packages, read on dell2 2026-10-13)",
+      "infra/aws/lambda/investor-reporting/intake/yfinance_check.py default_history @d2c68580a1 (module written by this order)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "If a later yfinance renames _ERRORS, the fallback fails safe: an empty frame raises ErrorFrame rather than reading NOT_KEPT."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W103-S1 -- AR-y-282: the requiresDev pattern is a per-user claim test, not a DEV-environment test, so the partner-reach gate uses the build flag
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W103-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~103",
+  "surfaced_at": "2026-10-13T21:05:00Z",
+  "one_line": "The requiresDev pattern tests claims.userType === 'Dev', a per-user claim, not a DEV-environment flag; the portal has no runtime DEV-vs-PROD discriminator, so the AR-y-282 candidate gates partner reach on the build flag import.meta.env.DEV, and whether the deployed DEV site is a dev build is unmeasured.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-282 step 1: reuse the existing pattern for how the build or runtime tells DEV from PROD, never invent one. Step 3: 'On DEV only ... the marking uses the existing requiresDev pattern or the one the read shows.' AC2J: 'partner reach exists on DEV only and PROD is byte-for-byte as before'.",
+  "world_is": "MEASURED at portal a577cba5: requiresDev and requireDev test claims.userType !== 'Dev' (App.tsx:351; ProtectedRoute.tsx:120). userType is parsed from the auth claim (AuthContext.tsx:121-122: 'Dev' iff userData.userType === 'Dev'), which is set per user on production as well, so a requiresDev gate on the route would open PROD to any partner user carrying the claim. No src/ file reads an environment or hostname discriminator: the only DEV-named read is import.meta.env.DEV (.env.production sets no DEV flag). The candidate 46a49e57 uses import.meta.env.DEV (firmAccess.ts isPartnerDevReach): false in a vite build, so PROD grants nothing. NOT MEASURED: whether the deployed DEV site is built in dev mode; if it is not, the candidate grants nothing on deployed DEV either. A CTO ruling on the DEV discriminator is needed before any landing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@a577cba5:src/App.tsx:339 and :351 (requiresDev nav tests on claims.userType)",
+      "portal@a577cba5:src/components/ProtectedRoute.tsx:119-120 (requireDev tests claims.userType)",
+      "portal@a577cba5:src/contexts/AuthContext.tsx:121-122 (userType is the per-user claim 'Dev' or null)",
+      "portal@a577cba5:.env.production (no DEV or environment discriminator key)",
+      "portal@46a49e57:src/lib/firmAccess.ts (isPartnerDevReach reads import.meta.env.DEV)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W103-S2 -- AR-y-282: the face cuts the candidate from origin/DEV, but the portal rule CONTRIBUTING-BOXES.md says a feature branch is cut from the last PROD release, and that file is not on DEV
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W103-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~103",
+  "surfaced_at": "2026-10-13T21:05:00Z",
+  "one_line": "The face cuts wk-IRPT_ANLREQ-103-portal from origin/DEV, but CONTRIBUTING-BOXES.md step 1 says cut from the last PROD release, never from DEV; that file is absent from origin/DEV and exists only on the candidate branch origin/cand/laptop/contributing-boxes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-282 step 1: 'git worktree add C:/dev/wk-portal-103 -b wk-IRPT_ANLREQ-103-portal origin/DEV', and 'commit the way an earlier candidate branch was made'; the workspace law says a portal change follows portal/CONTRIBUTING-BOXES.md.",
+  "world_is": "MEASURED: origin/DEV tip is a577cba5 (fetched). git show 07f065e6:CONTRIBUTING-BOXES.md (reachable only as remotes/origin/cand/laptop/contributing-boxes) says step 1: cut from the last PROD release, never from DEV; step 2: a branch cut from DEV is re-cut onto the PROD release by its owner before it is registered. The candidate was cut from origin/DEV as the face states; the PROD re-cut is owed by the owner before the open-calls registration and was not done here. Nothing was registered, pushed or landed; the upstream the worktree inherited was unset.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@07f065e6:CONTRIBUTING-BOXES.md steps 1 and 2, and 'The one line'",
+      "portal origin/DEV: git show origin/DEV:CONTRIBUTING-BOXES.md returns no such path at a577cba5",
+      "portal@46a49e57 (the candidate commit, parent a577cba5)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W103-S3 -- AR-y-282: on a dev build the partner reach lands the Ticket Center before its list is server-scoped, so landing the candidate early exposes other firms' tickets
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W103-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~103",
+  "surfaced_at": "2026-10-13T21:05:00Z",
+  "one_line": "On a dev build AR-y-282 lets a known partner firm reach /ticket-center, but the board is unscoped until AR-y-281 (server-side firm scope) and AR-y-283 (the partner view) land; landing the candidate before them shows partner users every firm's tickets.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "AR-y-282 cell: 'this cell only opens the door, DEV only'; the CTO ruling (A): 'that reach shows only the Analysis Request form and the caller's OWN firm's tickets, from a SERVER-SCOPED list (the board is unscoped today)'.",
+  "world_is": "MEASURED at portal a577cba5: listTickets takes no firm parameter (src/api/endpoints/tickets.ts:129; the comment at firmAccess.ts:109-111 cites :69, a stale line). With candidate 46a49e57 a partner user on a dev build passes ProtectedRoute and the nav filter and reaches the page and its unscoped list. Disarm: do not merge wk-IRPT_ANLREQ-103-portal to DEV until AR-y-281 and AR-y-283 have landed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@a577cba5:src/api/endpoints/tickets.ts:129 (listTickets, no firm parameter)",
+      "portal@a577cba5:src/lib/firmAccess.ts:105-114 (the comment: the board is unscoped; granting needs server-side firm scoping first)",
+      "portal@46a49e57:src/lib/firmAccess.ts and src/App.tsx (the dev-build reach)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W103-S4 -- AR-y-282: the Ticket Center page treats a userType Dev user as internal, so a partner firm's superadmin would see internal controls on a dev build
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W103-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~103",
+  "surfaced_at": "2026-10-13T21:05:00Z",
+  "one_line": "TicketCenter reads internal as isInternal() || isDev(); isDev() is userType === 'Dev' with no firm check, so a partner firm user carrying the Dev claim is treated as internal inside the page, against AR-y-282 AC2J.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "AR-y-282 AC2J: 'a superadmin at a partner firm is not treated as internal'; AR-y-283 owns the partner view inside the page.",
+  "world_is": "MEASURED at portal a577cba5: src/pages/TicketCenter/TicketCenter.tsx:188 is 'const internal = auth.isInternal() || auth.isDev()'; AuthContext.tsx isDev() (about :800-802) returns claims.userType === 'Dev' with no firm check. The route refusal is unaffected, because requireInternal checks firmId. The page predicate is AR-y-283's surface and is not changed by 46a49e57. Hazard: once 283 is on a dev build, a partner Dev-claim user sees the internal view.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@a577cba5:src/pages/TicketCenter/TicketCenter.tsx:188",
+      "portal@a577cba5:src/contexts/AuthContext.tsx:800-802 (isDev is userType === 'Dev', no firm check)",
+      "portal@a577cba5:src/components/ProtectedRoute.tsx:119 (requireInternal checks firmId, not userType)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
 ```

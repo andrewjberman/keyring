@@ -1615,3 +1615,57 @@
   "notes": "For 2.0.0_SA_COO~MP: one clause on Amendment 2 fixes it for every later GW cell -- 'pass the list on stdin (`printf '%s\n' <patterns> | git sparse-checkout set --stdin`), never as argv, because MSYS rewrites a leading-slash argument'. No criterion is affected; z5.AC1/AC2 do not read how the worktree was cut. `MSYS_NO_PATHCONV=1` is the other fix but it is a blunt env override and CLAUDE.md scopes it narrowly, so --stdin is the narrower one."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S45",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~MQ",
+  "surfaced_at": "2026-10-13T20:41:03Z",
+  "one_line": "MP-z-5 step 1's 'Run, on the release tree, ... 0 failed' cannot be met: the release tree reads 67 passed / 7 failed while the SAME payload bytes read 87 passed / 0 failed on box/sitez HEAD. All 7 are properties of the release BASE's non-payload tree. The act is held on the never-widen pair's disposition.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "spec_asserts": "NFRA_MCPORTAL.TO-MP-z-5 section 1 step 1: 'Run, on the release tree, tests/test_admin_gateway_breakdown.py tests/test_dashboard_deep_links.py tests/test_admin*.py tests/test_owner_gate.py: 0 failed.'",
+  "world_is": "CONTROLLED PAIR, payload held constant (identical module and test bytes in both trees): on C:/tmp/mp-z5-hookup at box/sitez HEAD b15b776bba the named set reads 87 passed, 0 failed, 3 warnings in 4.98s; on the release tree C:/tmp/mp-z5-rel at base 185dc04888 the same set reads 67 passed, 7 failed in 6.33s. Base varied, outcome flipped, so the failures belong to the BASE TREE, not to this release. TWO MECHANISMS, each measured. (1) FIVE failures (test_admin_fabric.py::test_roster_equals_devices_register, test_admin_fabric_calls.py::test_real_capture_calls and ::test_request_accepted_by_open_calls_scan, test_admin_fabric_gitstate.py::test_real_capture_gitstate, test_admin_fabric_overlap.py::test_real_capture_overlap) raise FileNotFoundError on repo data files that DO NOT EXIST IN THE BASE COMMIT: `git ls-tree -r --name-only 185dc04888 -- org/devices/DEVICES.json` = 0 and at box/sitez = 1; same for org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/cp2/fixtures/s3_capture_20261009T0728Z.json (base 0, box/sitez 1). POSITIVE CONTROL that this is a real vintage gap and not a sparse-checkout miss: org/missions/DIRECTIVES.yaml and org/ORG_CHART.md both read 1 at the base and 1 at box/sitez, and the sparse cone is /org/ whole. Those four test files are NOT modified by this release (the whole-repo census is 6 paths and none of them is a test_admin_fabric* file). A release branch is cut from the previous live base and carries only gateway files forward, so its org/ tree is frozen at the release chain's vintage -- these tests can never pass on any release tree, for any payload. (2) TWO failures (test_admin_gateway_breakdown.py::test_channel_with_no_holder_is_empty_list and ::test_holders_match_the_dispatch_chain) are MP-z-1's own tests encoding the post-OG-tg-1 world. app/identity_scope.py differs between the base and box/sitez: the base still carries _SEED = {'opalbloomberg@opalinvest.com': frozenset({'whoami', 'poll_addressed_teams_messages', 'list_chats', ...})}, which the trunk emptied on 2026-10-09 (NFRA_OPLGTW OG-tg-1, Andrew-direct ~03:2xZ, record ANDREW_DIRECT_20261009_032xZ_OPAL_GATEWAY_BBG_MIRRORS_OPALGATEWAY.md). 'whoami' is one of the test world's three m365 tools, so on the base that principal IS a real scoped-allowlist holder and admin_gateway_breakdown reports it; the test asserts the trunk's one-holder answer. The handler is therefore TRUTHFUL about the live base and the test is the thing that moved. NEGATIVE CONTROL that located the cause: swapping ONLY infra/aws/ec2/opal-gateway/identity_tool_allowlist.txt to the trunk's version (the base carries two live opalbloomberg rows the trunk removed in the same ruling) did NOT fix either test -- 2 failed, unchanged -- so the cause is the SEED in identity_scope.py, not the allowlist file. The allowlist was restored and the census re-read at 5 files.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "87 passed / 0 failed at C:/tmp/mp-z5-hookup (box/sitez HEAD b15b776bba) and 67 passed / 7 failed at C:/tmp/mp-z5-rel (base 185dc04888), same payload bytes, same invocation",
+      "git ls-tree -r --name-only at both refs for org/devices/DEVICES.json (0 vs 1) and the cp2 fixture (0 vs 1), with DIRECTIVES.yaml and ORG_CHART.md as the 1-vs-1 positive control",
+      "git diff 185dc04888 box/sitez -- app/identity_scope.py: the _SEED entry for opalbloomberg@opalinvest.com, 'whoami' included, removed by OG-tg-1",
+      "allowlist-swap negative control: 2 failed before and 2 failed after, allowlist restored, census re-read = 5 files"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For 2.0.0_SA_COO~MP and 1.0.0_SA_CTO~Z: section 6 of org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MQ/NEVER_WIDEN_ASK_MP-z-5.md puts the same three options to each half -- (a) accept the 7 with their causes named; (b) grade '0 failed' at box/sitez HEAD, already measured at 87/0, and require on the release tree only that no test NEWLY fails against the base's own pre-release run; (c) something else, including refusing the act. This seat neither repaired nor waived the criterion. GENERAL, beyond this cell: every later GW release cut on a release-chain base inherits mechanism (1) -- any test that reads a repo path outside infra/aws/ec2/opal-gateway/ cannot pass on a release tree. Worth one clause in the GW decomposition rather than a row per release."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S46",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~MQ",
+  "surfaced_at": "2026-10-13T21:07:44Z",
+  "one_line": "Amendment 2's sparse list is missing /data/transcripts/scripts/teams/ -- deploy-to-ec2.sh reads meeting_allowlist.json from there and REFUSES (no upload) before the base guard, so a GW release cut on that list cannot deploy. The complete set of repo reads the two deploy scripts make is six paths; they are enumerated here so the next cell pays no round-trips.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "spec_asserts": "NFRA_MCPORTAL.TO-MP-z-5 AMENDMENT 2, first bullet (row Z-S43): the NO-CONE list `/.tools/ /org/ /lib/ /infra/logic/ /infra/aws/terraform/ /infra/aws/lambda/ci/ /infra/aws/lambda/mcportal/ /infra/aws/ec2/` plus the 12 root-level tracked blobs, with `/infra/aws/ec2/` called out as whole 'because the deploy scripts and the gateway app are both under it'. That sentence is true and still insufficient: the deploy scripts READ OUTSIDE their own directory.",
+  "world_is": "The act refused on the first attempt: `ERROR: REFUSED (no upload): meeting_allowlist.json unreadable at /c/tmp/mp-z5-rel/data/transcripts/scripts/teams/meeting_allowlist.json` (deploy-to-ec2.sh line 36, which builds TRANSCRIPT_MEETING_ALLOWLIST for the host .env). THIS IS A CONE GAP, NOT A VINTAGE GAP, and the two are worth telling apart because they have different fixes: `git ls-tree -r --name-only HEAD -- <path>` reads 1 at the release base 185dc04888 AND 1 at box/sitez, while the file is simply not on disk -- so widening the cone fixes it, whereas Z-S45's absent org/ files read 0 at the base and no cone can produce them. FAIL-CLOSED AND MEASURED AS SUCH: the refusal fires BEFORE the base guard and before any upload, and the world was read after it to confirm -- the release key ec2/opal-gateway/opal-gateway-64b3e54658.tar.gz returns 404 Not Found (never created); opal-gateway-latest.tar.gz still carries git-ref 185dc048881da2030efa11f4d0bfb8704b500c66, ETag b486e614fc122cf854f0d063bd198e4e, LastModified 2026-10-12T12:51:38Z; the rollback key opal-gateway-185dc04888.tar.gz is untouched at the same ETag, LastModified 2026-10-12T12:51:35Z. THE COMPLETE ENUMERATION, so the next cell pays one round-trip and not six: the only repo paths deploy-to-ec2.sh and safe-ec2-deploy.sh read outside the gateway dir are data/transcripts/scripts/teams/meeting_allowlist.json (line 36), mcportal (line 50 -- handled, the script cuts its own detached worktree from the main repo when absent), infra/aws/ec2/EC2_MANIFEST.json (lines 57, 114), infra/aws/ec2/opal-gateway (line 210), .tools/halt-gate-check.sh (safe-ec2-deploy line 167) and .tools/safe-commit.sh (line 264); lib/ is reached indirectly by the ADVI_MARKET_UPDATE_S3_ROOT precondition's lib.opal_naming.address() call. Adding the single pattern /data/transcripts/scripts/teams/ resolved all six, with the census re-read at 5 gateway files and 0 outside, and the tree still clean at the release commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the refusal line quoted verbatim from the first act attempt, 2026-10-13 ~21:0xZ, C:/tmp/mp-z5-rel",
+      "ls-tree at the base = 1 and at box/sitez = 1 for the missing path, against on-disk = no: the cone-vs-vintage discriminator",
+      "post-refusal world reads: release key 404, -latest git-ref unchanged at 185dc04888, rollback key ETag unchanged",
+      "the six repo reads enumerated from the two scripts by anchored pattern over $WORKSPACE_ROOT/ and $_main/, not by recollection"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For 2.0.0_SA_COO~MP: Amendment 2's list wants one more pattern, /data/transcripts/scripts/teams/, for any GW cell that RUNS the deploy (a build-only or commit-only cell does not need it). Together with Z-S43 (the commit gates) and Z-S44 (pass the list on stdin, never argv) this makes the GW sparse recipe complete as measured. No criterion is affected: the refusal happened before any upload, nothing in the world moved, and z5.AC1/AC2 do not read how the worktree was cut."
+}
+```

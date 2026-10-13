@@ -48,15 +48,19 @@ def main() -> int:
     if not (isinstance(ceil, int) and ceil > 0 and a.get("carried_over") == 0 and a.get("claim") == "absent" and a.get("room") == ceil):
         return _bad("arm2 expected carried_over 0, claim absent, room == ceiling")
     d = tempfile.mkdtemp(prefix="dq_t54_led_")
-    spends = {"2026-10-12": 1000, "2026-10-13": 0, "2026-10-14": ceil + 500, "2026-10-15": 0, "2026-10-16": 0}
+    # AMENDED 2026-10-13 (issuer, rows D1-W46-S1 and S2): a ledger file is written for every trading day meant to be READ (a spent-nothing day is a "rows": 0 line, so it is told
+    # apart from a missing ledger); Thursday 2026-10-15 has NO file on purpose: an ABSENT day carries 0 and is listed in absent_days.
+    spends = {"2026-10-12": 1000, "2026-10-13": 0, "2026-10-14": ceil + 500, "2026-10-16": 0}
     for day, n in spends.items():
         with open(os.path.join(d, "bbg_budget_%s.jsonl" % day), "w", encoding="utf-8") as fh:
-            if n:
-                fh.write(json.dumps({"at": day + "T11:00:00Z", "mode": "daily", "rows": n, "batch_id": "t54"}) + "\n")
+            fh.write(json.dumps({"at": day + "T11:00:00Z", "mode": "daily", "rows": n, "batch_id": "t54"}) + "\n")
     b, e = _run(["--budget-dir", d])
     if b is None:
         return _bad("arm1 " + e)
-    expect = (ceil - 1000) + 0 + ceil + ceil
+    # Mon c-1000, Tue c, Wed overspent 0, Thu ABSENT 0, Fri c
+    expect = (ceil - 1000) + ceil + 0 + 0 + ceil
+    if b.get("absent_days") != ["2026-10-15"]:
+        return _bad("arm1 absent_days should list 2026-10-15, got %s" % b.get("absent_days"))
     print("arm1 synthetic ledger: carried_over=%s expected=%s room=%s claim=%s" % (b.get("carried_over"), expect, b.get("room"), b.get("claim")))
     if b.get("carried_over") != expect or b.get("room") != ceil + expect or b.get("claim") == "absent":
         return _bad("arm1 carried_over/room mismatch")

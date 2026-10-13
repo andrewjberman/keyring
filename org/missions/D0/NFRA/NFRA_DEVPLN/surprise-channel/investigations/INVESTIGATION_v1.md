@@ -597,3 +597,28 @@
   "world_is": "Both cannot hold as written. The fixture change makes the adds succeed, and the successful add writes the computed head and commits, so case 1's null assertion is false. Making AC3 green would need that assertion changed, which the order forbids, so the assertion is left as written and the test stays red (12/13). The fixture change is in place in .tools/tests/test_open_calls_approval.py. The disarm is the issuer's: rule whether case 1 is the DP-b-1 placeholder (now computed) and amend its expectation, or keep it. Nothing was written to the live lists; the test runs on OPAL_STATE_ROOT."
 }
 ```
+
+## NFRA_DEVPLN-W1-S11 -- DP-c-1 names ruff on "the tool and its test", but its paths grant only the tool; the test is the tool's own --selftest
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S11",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-13T20:59:41Z",
+  "one_line": "DP-c-1 asks for ruff clean on the tool and its test, but its <paths> name only .tools/portal-dev-approval-read.py and no separate test file is named or exists; the test is the tool's own --selftest, and ruff ran on the tool alone",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_DEVPLN/task-orders/NFRA_DEVPLN.TO-DP-c-1.dev-approval-read.md 5b69a3c295 RULES FOR THIS CELL ('Ruff clean on the tool and its test') and <paths> (.tools/portal-dev-approval-read.py, the investigation file, the order)",
+      ".tools/portal-dev-approval-read.py 5b69a3c295-UNCOMMITTED: selftest() is the test, run as python .tools/portal-dev-approval-read.py --selftest -> DEV-APPROVAL-SELFTEST cases=7/7 ok=True; ruff check .tools/portal-dev-approval-read.py -> All checks passed!"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DP-c-1 RULES FOR THIS CELL: ruff clean on the tool and its test; the paths block grants the tool file only.",
+  "world_is": "No separate test file exists or is granted for this cell. The worker put the test inside the tool as --selftest (7 cases, exit 0) and ran ruff on the tool file only; a standalone test file would have needed a path outside the grant."
+}
+```

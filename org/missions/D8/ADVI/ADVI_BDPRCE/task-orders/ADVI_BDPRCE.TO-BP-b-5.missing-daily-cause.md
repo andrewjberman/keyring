@@ -84,7 +84,7 @@ what stays NOT_DETERMINED and why, AC1, AC2 and the FULL commit hash.
 
 **ISSUER NOTES:** round-1 analysis item 5; closes the cause condition of `W3-S2`, `W4-S1`, `W4-S10` (owner CTO). The fix is not this cell's. Read-only; class LOCAL.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <workstream>CAUSE</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-b-5</to_id>

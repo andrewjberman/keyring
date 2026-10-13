@@ -1047,3 +1047,208 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "The export holds exactly 500,000 rows, which matches a row cap. The fixture cannot establish whether the export is complete. The read of :1138-1215 shows no row-count check in the step. The premise binds the legacy table and the lot table alike."
 }
 ```
+
+## ADVI_BDPRCE-D1-W9-S1 -- The round-1 premise that an EventBridge rule and cron drive bd-price-update does not hold: it is invoked by the silver merge on an S3 sentinel
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W9-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~9",
+  "surfaced_at": "2026-10-13T20:15:48Z",
+  "one_line": "bd-price-update has no EventBridge rule and no cron; no rule targets it in the live account. It runs only when bd-silver-merge invokes it, and bd-silver-merge runs only on the bronze sentinel S3 event.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws events list-targets-by-rule --rule bd-price-update (us-east-1): ResourceNotFoundException, no rule of that name; of the 45 bd-related rules listed, none targets the function bd-price-update",
+      "infra/aws/terraform/bd-pipeline/s3-notifications.tf:68-73 at HEAD 6f20fe54c6: BronzeCompleteSilverMerge, prefix bronze/, suffix _BRONZE_COMPLETE.json, function bd-silver-merge; live get-bucket-notification-configuration (scratch copy, 2026-10-13T20:0xZ) matches",
+      "data/black_diamond/scripts/silver/merge-daily-incremental.py:675-707 invoke_price_update, InvocationType Event, payload date = max processed partition date"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-b-5 section 1 item 1: the daily price Lambda bd-price-update writes the daily file, and the question asks for the Lambda's EventBridge rule and its cron.",
+  "world_is": "There is no cron for the daily price file. The file is written only after a complete bronze sentinel, which bd-49f-runner writes. The schedule question resolves to the runner's chain, not to a price-update schedule. The cause record follows the real trigger chain."
+}
+```
+
+## ADVI_BDPRCE-D1-W9-S2 -- The pre-2026-10-07 bd-49f-runner printed "OK: bronze sentinel emitted" after the shared module had withheld the sentinel, so its self-report and S3 disagree
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W9-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~9",
+  "surfaced_at": "2026-10-13T20:15:48Z",
+  "one_line": "On 2026-10-05 and 2026-10-06 the runner logged WARN bronze sentinel NOT emitted and then OK bronze sentinel emitted; S3 holds no bronze/<date>/_BRONZE_COMPLETE.json for either date, so the OK line was false and the silver chain never fired.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws logs filter-log-events on /aws/lambda/bd-49f-runner, 2026-10-05T00:00-01:00Z: 'WARN: bronze sentinel NOT emitted -- 1 object(s) present but NOT content-complete' then 'OK: bronze sentinel emitted for 2026-10-05'; the same pattern on 2026-10-06 (request 6e3026c2-3392-4a92-89cc-0b5d8e7f8653)",
+      "aws s3api head-object bronze/2026-10-05/_BRONZE_COMPLETE.json: 404; list-object-versions --prefix bronze/2026-10-05/: zero versions, zero delete markers; control bronze/2026-10-04/_BRONZE_COMPLETE.json present (2026-10-04T00:13:34Z)",
+      "git show 3709ae40d6^:infra/aws/lambda/bd-pipeline/bd-49f-runner/lambda_function.py lines 206-207 print the OK line after mod.emit_bronze_sentinel with no completeness check; the deployed package before 2026-10-07T00:50:44Z was that revision"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "bd-49f-runner at HEAD (from commit 3709ae40d6): the OK line prints only after a head_object reads the sentinel key back, and a withheld sentinel is logged as withheld.",
+  "world_is": "The defect is fixed in the deployed code from 2026-10-07 (deployed md5 968b33e2 equals the repo file). Six run dates before that fix have no sentinel and no daily price file. Nothing in the current code re-emits a sentinel for a past run date, so the gaps persist until a later cell backfills them."
+}
+```
+
+## ADVI_BDPRCE-D1-W9-S3 -- The served client detail data_as_of equals the newest date of gold/timeseries/account_performance (2026-10-09), and the producer has no T-1 rule, so the one-day lag is not by design
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W9-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~9",
+  "surfaced_at": "2026-10-13T20:15:48Z",
+  "one_line": "data_as_of in the served client detail objects is the input's max date, which stops at 2026-10-09 with no rows for 2026-10-10 or 10-11. The producer applies no trading-day offset, so the lag is inherited from the ledger, not a documented T-1 rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/D_02.advisor_client_detail.py:2874 latest_date = acct['date'].max(); :2937 'data_as_of': latest_date.strftime; acct loaded from ACCOUNT_PERFORMANCE at :473-507 at HEAD 6f20fe54c6",
+      "pyarrow read of opal-data-bd gold/timeseries/account_performance.parquet (column date only): rows 7,871,793, max_date 2026-10-09, 2,473 distinct dates; weekend rows 2026-09-19 and 2026-09-20 present, none for 2026-10-10 or 2026-10-11",
+      "census of opal-data-49financial advi/49financial/platinum/entities/clients/ (3,510 detail.json; counts only): data_as_of 2026-10-09 on 3,267, older on 243"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-b-5 section 1a item 2: the lag is by design (a documented T-1 rule) or a defect, stated from the code and lib/trading_calendar.py.",
+  "world_is": "lib/trading_calendar.py gives T-1 = 2026-10-12 and expected_last_trading_day(2026-10-13) = 2026-10-13. The producer does not call it. Why account_performance stops at 2026-10-09 (the C_03 ledger upstream) is not established by this cell."
+}
+```
+
+## ADVI_BDPRCE-D1-W9-S4 -- Two instrument traps: a rail denial on a repo grep blocked the whole Bash call, and a get-object to /dev/stdout returned empty bodies with no error
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W9-S4",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~9",
+  "surfaced_at": "2026-10-13T20:15:48Z",
+  "one_line": "A recursive repo grep under infra/ was denied by the comp-rail hook (F1 blind recursive search), and the denial blocked the whole Bash call, not only the search; a get-object to /dev/stdout returned empty bodies with no error.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PreToolUse denial deny_id 20261013T194328Z-1f13f679 on a Bash call that also carried a live aws s3api get-bucket-notification-configuration; the AWS read did not run and the call returned the rail message only",
+      "aws s3api get-object --version-id ... /dev/stdout returned empty bodies for 21 versions (2026-09-13 to 2026-10-08) under Git Bash; the same reads to a file under C:/dev/wk-bdprce-r2-9-data/ returned the bodies"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task order bounds: a raw S3 listing the rail denies is re-run with a trailing '# rail-checked: <why>' comment, and a read that cannot finish reports claim absent for what was not read.",
+  "world_is": "The denial named no rail-checked override path for a repo grep, and its remainder line ran nothing. A read to /dev/stdout under Git Bash is an empty-body hazard that looks like a clean empty result. Every read in this cell was re-run to a file and printed from there."
+}
+```
+
+## ADVI_BDPRCE-D1-W12-S1 -- The served 2026-10-09 price of ALLSPRING CORE BOND CIT CLASS E2 is written by a linear_interpolation row, which R1 clause 5 bans as an output source
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W12-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~12",
+  "surfaced_at": "2026-10-13T20:34:54Z",
+  "one_line": "The served 2026-10-09 price of ALLSPRING CORE BOND CIT CLASS E2 is written by a linear_interpolation row, which R1 clause 5 bans as an output source; the value equals R1's carry-forward.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~12/TRACE_BP-b-8.json: followed canonical_row source linear_interpolation price 10.3525; daily_row source carry_forward price 10.3525",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~12/recompute_R1_BP-b-8.py output: R1 carry-forward 10.3525 observed 2026-10-02 from distinct trades 742108391 and 742108404",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/ledger/CTO_RULING_R1_THE_PRICE_RULE_20261013.md clause 5: interpolation is banned; no trade on the date gives the last observed price carried with its observation date"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO ruling R1 clause 5 (ledger/CTO_RULING_R1_THE_PRICE_RULE_20261013.md): interpolation is banned; with no trade on the date, the last observed price is carried WITH its observation date.",
+  "world_is": "The served price for the holding on 2026-10-09 has a canonical row whose source is linear_interpolation (flat at 10.3525) and a daily partition row whose source is carry_forward (10.3525). The value agrees with R1's carry from the 2026-10-02 trades; the writing rule in the served row is the banned interpolation. The writer of this specific canonical row is not identified here; the trace names the bd_price_update.py backfill path as the interpolation source."
+}
+```
+
+## ADVI_BDPRCE-D1-W12-S2 -- No Buy or Sale row prices the private-pool names on 2026-10-09, so the natural private-fund exemplar falls away at the R1 condition
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W12-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~12",
+  "surfaced_at": "2026-10-13T20:34:54Z",
+  "one_line": "No Buy or Sale row prices the private-pool names on 2026-10-09; their 2026 rows are Transfer In, Valuation, Interest and Dividend, so the natural private-fund exemplar falls away at R1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-bdprce-r2-12-data/bp_b8_scan_rows.csv (silver/transactions 2026-01-01..2026-10-10, five columns, asset rows only): SHAW PARK PRIVATE MARKET S 2021 LP 0 Buy/Sale rows; KKR FS INCOME TRUST CLASS I 0; KKR PRIVATE EQUITY CONGLOMERATE CLASS U 0; BLACKSTONE REIT INCOME TRUST CLASS I 0; CNL STRATEGIC CAPITAL CLASS A 0; AQR TA DELPHI PLUS FUND LLC 0",
+      "R1 variant A on 2026-10-09 over partitions 2026-10-08..10-10 (bp_b8_shapeb / bp_b8_shapea probes): 229 of 1,861 finalist object-asset groups priced on the date, 8 equal to served, 221 unequal; 0 of the unlisted groups priced on the date"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-b-8 section 1a(5): a candidate counts only when R1 variant A prices it from Buy or Sale rows on the date (shape a) or its carry-forward is R1's last observed trade price (shape b); the natural exemplar is a private fund, structured note or model sleeve.",
+  "world_is": "The private-pool holdings in the lot extract carry no Buy or Sale row in the 2026 window; their served prices come from Transfer In, Valuation or interpolated canonical rows that R1 excludes or bans. Of the 371 unlisted finalist groups (198 names), 338 have no Buy or Sale in the window, so R1 cannot price them from the 2026 window. The chosen holding is a collective investment trust with Buy trades in the window; of the 33 unlisted names with 2026 Buy or Sale rows, 20 groups have an R1 carry equal to the served price and 13 do not."
+}
+```
+
+## ADVI_BDPRCE-D1-W12-S3 -- The no-ticker-in-any-source test also passes public funds and ETFs, and the dimension's symbol column holds CUSIPs and BD identifiers, not tickers
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W12-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~12",
+  "surfaced_at": "2026-10-13T20:34:54Z",
+  "one_line": "The no-ticker-in-any-source test also passes public funds and ETFs, and the dimension symbol column holds CUSIPs and BD identifiers rather than tickers, so the test alone does not establish an unlisted holding.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-bdprce-r2-12-data/bp_b8_sources_rows.json: AMERICAN FUNDS AMERICAN MUTUAL F2, AMERICAN FUNDS EUPAC F2, DIMENSIONAL US VECTOR EQUITY ETF, FLEXSHARES STOXX GLOBAL BROAD INFRASTRUCTURE INDEX FUND, TORTOISE GLOBAL WATER FUND: lookup null, canonical ticker empty, YF/OPAL/TC absent, dimension ticker empty",
+      "C:/dev/wk-bdprce-r2-12-data/bp_b8_sources_rows.json: dimension symbol for ALLSPRING CORE BOND CIT CLASS E2 is 01988T753 (a CUSIP), dimension ticker NaN"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-b-8 section 1a(2): the asset is truly unlisted only if NONE of the named sources gives a ticker; the exemplar is a security with no public ticker.",
+  "world_is": "Named public mutual-fund share classes and listed ETFs return no ticker from any of the named sources, so the source test separates them from private instruments only by the asset's name and kind, which the brief asks the analyst to judge. The dimension's symbol column carries CUSIPs, BD identifiers and Schwab identifiers, not tickers. The chosen holding's kind is judged from its name (CIT) and its dimension row, and no ticker is asserted for it."
+}
+```
+
+## ADVI_BDPRCE-D1-W12-S4 -- trace_price_v2 follows the interpolated canonical row and reports no trade ids, so it cannot show R1's carry-forward trades for this holding
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W12-S4",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~12",
+  "surfaced_at": "2026-10-13T20:34:54Z",
+  "one_line": "trace_price_v2 follows the interpolated canonical row and reports trade_ids empty for this holding, so R1's carry-forward trades come from a separate recompute.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~12/TRACE_BP-b-8.json: follows_served true, followed_source canonical, rule linear_interpolation, trade_ids [], rows_used 0, claim absent",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~12/recompute_R1_BP-b-8.py: R1 carry-forward 10.3525 observed 2026-10-02, distinct trade ids 742108391 and 742108404"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-b-8 section 1a(3): run trace_price_v2.py with the lot's current_price as the served price and record what it followed; for a day with no trade, the recompute is the last observed R1 price on observation_date.",
+  "world_is": "The trace is an as-built instrument: it reports the followed row and its own rule, not R1's carry-forward. It cannot name the trades behind an R1 carry, so the record's trade_ids come from recompute_R1_BP-b-8.py and the trace is cited for the served row only."
+}
+```

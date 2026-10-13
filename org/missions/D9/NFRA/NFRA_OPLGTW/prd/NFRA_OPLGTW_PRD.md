@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v2.5",
+  "prd_version": "v2.8",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -24,7 +24,9 @@
     "FWD-16",
     "FWD-17",
     "FWD-18",
-    "FWD-19"
+    "FWD-19",
+    "FWD-20",
+    "FWD-21"
   ],
   "status": "RATIFIED"
 }
@@ -231,6 +233,44 @@ ACCEPT: The 08403355 history is backfilled to the earliest roster inception amon
 PROOF: The backfill's enumerate record, then one pre-collection date answered.
 
 SOURCE: as FWD-14: "we will have to do a backfill uh, on whatever the contents are of this new Schwab master"; brief O7, IV.C, G-5.
+
+FWD-20  — Each served family's poll cadence and backfill depth are one read (v2.6)
+
+DONE WHEN: EXERCISED — one read lists every vendor family the deployed gateway serves. For each family it gives the
+sweep's schedule, its last sweep, and its history depth (earliest served date), each with the date read. NFRA_MCPORTAL
+can display the read.
+
+ACCEPT: The family list comes from the deployed definitions, never a hand-kept list. The schedule is read live from
+the AWS schedule, never typed. The depth comes from `backfill-status` and from the served data's earliest date. Every
+value carries a claim (measured / inferred / absent). The read is read-only: no alert, alarm or monitor rides on it
+(standing moratorium).
+
+PROOF: One family's cadence against its live schedule. One family's depth against `backfill-status` and the served
+data's earliest date.
+
+SOURCE: Andrew's site Z voice memo 2026-10-13, "the depth and breadth of the polls available ... what backfill or scope
+out those tools work", via direction XB-20261013T185926Z-4d72 Z3.
+
+FWD-21  — An Opal asset manager reads the harvest bucket from their own Claude through the gateway (v2.6)
+
+DONE WHEN: EXERCISED — a real Opal asset-manager principal's driven call returns one covered name's research pack and
+chatter from `opal-data-harvest`. A non-Opal principal is refused on every prefix.
+
+ACCEPT: Andrew-direct 2026-10-13 ~20:0xZ (call 8): ALL 24 prefixes of the servable list v4 @7e0da2dfee SERVE to Opal
+principals, raw included. Non-Opal principals are refused on every prefix. V1 admits by IDENTITY, through OG-tg-1's
+Opal-user predicate (the opalinvest domain, no #ext# guest); a non-Opal principal or an off-list prefix is refused
+before any S3 call, and the grant writer writes nothing for V1. A per-person harvest grant comes with NFRA_MCPORTAL's
+control outcome (direction Z2), through the one existing grant writer. Asset-manager principals are named from the
+grant store, never guessed. An asset manager with no work Claude account is Andrew's act. NFRA_MCPINDEX catalogs the
+prefixes.
+
+PROOF: The driven call. A non-Opal principal refused on `packs/` and on `wsj/harvest/`. The same asset-manager
+principal refused on one Schwab and one Black Diamond tool unless Andrew has admitted it to v2.2's connected set
+(research data only by default, AMGT brief boundary). A census of the asset-manager principals, read from the
+identity store that admission actually reads (the grant store holds no harvest record), denominator printed.
+
+SOURCE: Andrew's AMGT voice memo 2026-10-13, "figure out the, open gateway mechanics for how to connect the ... open
+dash data dash harvest folders ... so that the asset managers can use that with their cloud"; widened by his call 8.
 
 ## CONTRACTS
 
@@ -952,3 +992,52 @@ separate tool with its own grant. It is not admitted here.
 
 **Sign-off.** This adds CONTRACTS text (C4) for a widening that the three OG-rl-16 halves already signed. The ENDPOINT is
 untouched. Under proportionate sign-off the CVO's ratified-text half reads this wording; no delivery is withheld.
+
+### v2.6 addendum (2026-10-13 ~20:3xZ, 1.0.0_SA_CTO~Z) -- the panel's cadence and depth read (FWD-20), and harvest for Opal asset managers (FWD-21)
+
+**Input.**
+- Andrew's site Z and AMGT voice memos, 2026-10-13, verbatim in
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_SITEZ_20261013.md` sections 1.1-1.2
+  (cross-box ORDER XB-20261013T185926Z-4d72, outcomes Z3 and Z5).
+- Andrew-direct ~20:0xZ (call 8, relayed by MSTR~Z msg 33727): all 24 harvest prefixes SERVE to Opal principals, raw
+  included. This widens the direction's V1 rule (derived layers and links only) on his own word.
+- Brief: the CRO's site Z and AMGT alignment reports, section 7 of the direction.
+
+**Contract changes:**
+1. **FWD-20 is a read for NFRA_MCPORTAL, not a panel of this project's own.** It adds no second panel, alert or
+   monitor. Display and control are MC Portal's FWD-20 and FWD-21.
+2. **FWD-21 widens the gateway's reach to `opal-data-harvest`, for Opal principals only.** The C2 owner gate and the
+   Opal-users-only rule (v2.3 item 4, Andrew 10-09: "should not even respond at all" outside Opal) apply unchanged. No
+   new resource name is typed: any new name is `lib/opal_naming.py` output (CLAUDE.md rule 30). The grant is written by
+   the existing grant writer.
+3. **Order.** Both come after the r30 release (OG-pf-1 + OG-tg-1 + OG-bd-2 + OG-sh-1;
+   `ledger/CTO_RULING_R37_ONE_RELEASE_PF1_TG1_BD2_SH1_20261013.md`), which follows NFRA_MCPORTAL MP-z-5. The project
+   closes only after Andrew reads MC Portal FWD-20 (his 10-12 condition).
+
+**Sign-off.**
+- ENDPOINT changes, so the ratified-text half re-opens for `3.0.0_SA_CVO~Z`.
+- The brief half is the CRO's alignment reports on Andrew's memos, accepted as written (rule 27, PROPORTIONATE
+  SIGN-OFF).
+
+### v2.7 addendum (2026-10-13 ~20:5xZ, 1.0.0_SA_CTO~Z) -- FWD-21 V1 admits by identity
+
+On `2.0.0_SA_COO~O` msg 33760. v2.6's FWD-21 ACCEPT said both "Opal principals" (Andrew's call 8) and "Grants go through
+the existing grant writer". The writer has no harvest scope today; its records cover the Schwab/BD data-grant family.
+Ruled for V1:
+- Admission is by IDENTITY (OG-tg-1's Opal-user predicate), which is Andrew's words exactly. No grant-writer build is
+  needed.
+- The one-writer rule binds once a per-person harvest grant exists, at MC Portal's control outcome.
+
+ENDPOINT text changes, so the ratified-text half re-opens for `3.0.0_SA_CVO~Z`. The brief half is unchanged in
+substance.
+
+### v2.8 addendum (2026-10-13 ~21:0xZ, 1.0.0_SA_CTO~Z) -- FWD-21 PROOF: the research-only arm and the census's store
+
+On two notes delivered with the v2.7 signatures:
+- **`2.0.0_SA_COO~ZB` F1** (msg 33767): restores the AMGT brief's "research data only" boundary as a proof arm. An
+  asset manager is refused a Schwab and a Black Diamond tool unless Andrew admits it to v2.2's connected set.
+- **`3.0.0_SA_CVO~Z`** (msg 33770): the principal census reads the identity store that admission uses, never the grant
+  store. Also carried for R4's release pair: the gateway role's own S3 read on `opal-data-harvest` is a widening and is
+  named as one in that pair.
+
+PROOF text changes, so both halves re-open at these bytes.

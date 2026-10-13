@@ -6548,6 +6548,29 @@ carries none.
     "spec_asserts": "A re-write of a served partition does not drop rows that are not served elsewhere.",
     "world_is": "The partition key follows the source file's date, not return_date, so one return_date can sit under two keys. The shrink removed the duplicate.",
     "notes": "Not measured: whether return_date 2026-10-09 rows now overlap between the 2026-10-09 partition (6,278 rows) and the 2026-10-10 partition (123 rows). That is a dedup question for bd-silver-merge's owner, not MX-s-19's path."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S105",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-10-13T20:18Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Andrew-direct ~20:0xZ (call 8, relayed bus eab3e634, MSTR~Z msg 33727): ALL 24 opal-data-harvest prefixes SERVE to Opal principals, raw included; non-Opal principals are refused on every prefix. The servable list v4 @7e0da2dfee (box/dell1) supersedes v3 @0b2778751a. Round 10 (issued @0fa3174d89) cuts FWD-21 against v3's 11 SERVE rows, so it drains as cut and the other 13 prefixes land at the round-10 analysis.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRD v0.9 FWD-21 ACCEPT, as admitted @e581c26ab4: 'one catalog row per SERVE prefix in the servable-prefix list v3 @0b2778751a ... a WITHHOLD prefix gets no data row'.",
+        "v0.9 addendum contract item 1: 'The V1 rule holds: derived layers and article links, never raw publisher text.'",
+        "MSTR~Z msg 33727 (relay of 2.0.0_SA_COO~W1 via 0.0.0_AB_MSTR~DELL1): 'ALL 24 harvest prefixes SERVE to Opal principals, raw included ... The entitlement policy is site Z's to design.' The v4 commit 7e0da2dfee is not yet on box/sitez (git cat-file reads not a valid object, 20:1xZ)."
+      ]
+    },
+    "spec_asserts": "FWD-21 catalogs the 11 SERVE rows of list v3 and gives WITHHOLD prefixes no data row.",
+    "world_is": "Andrew's word makes all 24 prefixes servable to Opal principals, so 13 prefixes the admitted PRD withholds are now servable.",
+    "notes": "Not a defect of round 10: the round is FROZEN and drains as cut (rule 27). 1.0.0_SA_CTO~Z answers at the round-10 analysis with a PRD addendum widening FWD-21 to list v4 (all 24 prefixes, row 8 as its table prefixes), once v4 reaches box/sitez, and the issuer cuts the 13 added rows in round 11. The matching grant change (all 24 to Opal principals, non-Opal refused) is NFRA_OPLGTW's round 37 (Z5). The issuer disarms by citing that analysis."
   }
 ]
 ```
