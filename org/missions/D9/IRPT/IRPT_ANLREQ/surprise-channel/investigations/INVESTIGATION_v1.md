@@ -10888,3 +10888,133 @@
   }
 }
 ```
+
+## IRPT_ANLREQ-D2-W108-S1 -- the order's record folder (r26) is not the folder the checker reads (r23)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W108-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~108",
+  "surfaced_at": "2026-10-13T21:35:03Z",
+  "one_line": "The order names deliverables/0.9.0_WK_IRPT_ANLREQ~108/r26/PACKAGE_REQUEST_ID_SERVER.json as the record, but the checker that grades AC1 loads the record from the r23 folder of the same worker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-284 step 5 and the proof block: the record is written to r26/PACKAGE_REQUEST_ID_SERVER.json under deliverables/0.9.0_WK_IRPT_ANLREQ~108/.",
+  "world_is": "ar21_checks.py sets D23 = D.replace('/r21/', '/r23/') and D26 = D23 (lines 27-29 at 844d025f4a), and the y284-pkg-server branch (line 634) loads D26 % '108' + 'PACKAGE_REQUEST_ID_SERVER.json', so the checker reads .../~108/r23/PACKAGE_REQUEST_ID_SERVER.json. The worker wrote the record at r26 as the order says and a byte-identical copy at r23 so that the checker can read it; both copies sit in the worker's own deliverables folder.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py@844d025f4a:27-29 (D23 and D26 are the r23 folder)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py@844d025f4a:634 (the y284-pkg-server load)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The checker is the issuer's instrument and was not edited (outside the grant). The issuer may rule which folder governs."
+}
+```
+
+## IRPT_ANLREQ-D2-W108-S2 -- the checker prints Y284-PKG-SERVER-OK, not the token the order expects (Y284-PKG-OK)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W108-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~108",
+  "surfaced_at": "2026-10-13T21:35:03Z",
+  "one_line": "The order's expect for AR284-y-AC1 is the token Y284-PKG-OK; the checker's own token for y284-pkg-server is Y284-PKG-SERVER, so its success line is Y284-PKG-SERVER-OK, which does not contain the expected string.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-284 AC1 invocation: the checker prints Y284-PKG-OK on success.",
+  "world_is": "ar21_checks.py TOKENS maps y284-pkg-server to 'Y284-PKG-SERVER' (line 41) and finish() prints TOKEN then -OK or -FAIL (line 69). The worker did not edit the checker and reports the output verbatim.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py@844d025f4a:41 (TOKENS y284-pkg-server)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py@844d025f4a:69 (finish prints TOKEN-OK)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The issuer may amend the expect or the token. Until then the AC1 row records the output as printed."
+}
+```
+
+## IRPT_ANLREQ-D2-W108-S3 -- report_ref.revision has two writers with two types (REPORT stores a string, PACKAGE an integer)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W108-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~108",
+  "surfaced_at": "2026-10-13T21:35:03Z",
+  "one_line": "The top-level report_ref.revision is a string when REPORT writes it and an integer when the new PACKAGE request_id path writes it, as the interface in the order specifies.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-284 interface: request_revision is an integer 0..1000000 and the top-level report_ref it writes carries that integer; the same member has the keys report_ticket stores.",
+  "world_is": "report_ticket accepts revision as a string or null and stores it as given (lambda_function.py@844d025f4a:1451-1460). package_ticket on the new path stores an integer (lambda_function.py@8151b5626f, the report_ref write in package_ticket). The keys match; the type of revision does not. No reader in ticket_center reads report_ref.revision: the readers at @844d025f4a (lines 1442, 1595-1596, 1613) read presence or request_id only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py@844d025f4a:1451-1460 (REPORT revision is a string or null)",
+      "infra/aws/lambda/ticket_center/lambda_function.py@8151b5626f package_ticket (revision is the integer request_revision)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No reader is broken today. A future reader that compares revision as a string would see an integer from this path."
+}
+```
+
+## IRPT_ANLREQ-D2-W108-S4 -- REPORT's assignee branch can replace a request id that PACKAGE recorded
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W108-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~108",
+  "surfaced_at": "2026-10-13T21:35:03Z",
+  "one_line": "The never-overwrites rule holds for PACKAGE, but REPORT's assignee branch sets report_ref unconditionally on an in_progress ticket, so the assignee can replace a request id that PACKAGE recorded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-284 judgment: a different request id is refused and never overwrites; the request id is written once by the named principal only.",
+  "world_is": "report_ticket's assignee branch (lambda_function.py@844d025f4a:1461-1471) builds a condition without attribute_not_exists(report_ref), so an assignee's REPORT on an in_progress ticket with an attachment replaces the stored top-level report_ref. PACKAGE refuses a different id (REPORT_REF_ALREADY_RECORDED_OTHER) but cannot stop a later REPORT. Not changed by this order; surfaced for the issuer and the L9 grader.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py@844d025f4a:1461-1471 (assignee branch, SET report_ref with no report_ref guard)",
+      "infra/aws/lambda/ticket_center/lambda_function.py@8151b5626f package_ticket (the 409 for a different id)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Design question for the issuer: whether the assignee's REPORT may replace a PACKAGE-recorded id. Left as it is."
+}
+```
+
+## IRPT_ANLREQ-D2-W108-S5 -- a PACKAGE-recorded report_ref closes the creator branch of REPORT
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W108-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~108",
+  "surfaced_at": "2026-10-13T21:35:03Z",
+  "one_line": "After PACKAGE records a top-level report_ref with a request id, the creator branch of REPORT refuses a report on that ticket with REPORT_ALREADY_RECORDED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-284 'no other route changes': the creator branch of REPORT keeps its behaviour.",
+  "world_is": "report_ticket's creator branch returns 409 REPORT_ALREADY_RECORDED when cur.report_ref is set (lambda_function.py@844d025f4a:1442-1443). A ticket that PACKAGE attached with request_id now has a report_ref, so the creator's one-step REPORT is refused on it. This is the consequence of recording once; the REPORT route itself is not changed by this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py@844d025f4a:1442-1443 (creator branch: a recorded report_ref refuses)",
+      "infra/aws/lambda/ticket_center/lambda_function.py@8151b5626f package_ticket (writes report_ref when request_id is present)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded so that the L9 grader can judge the authorization change on its full effect."
+}
+```
