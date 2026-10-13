@@ -11119,3 +11119,55 @@
   "notes": "Recorded so that the L9 grader can judge the authorization change on its full effect."
 }
 ```
+
+## IRPT_ANLREQ-D2-W110-S1 -- (AR-y-293 KEPT freeze) the holding cannot keep the client's name: the template projection carries no name
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W110-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~110",
+  "surfaced_at": "2026-10-13T22:03:10Z",
+  "one_line": "AR-y-293 step 3 says a KEPT holding keeps the client's own ticker AND name; the freeze has no name to keep, because the template reader's row carries only the ticker and the amount.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-293 step 3 and AC2J: 'a KEPT holding keeps the client's own ticker and name'.",
+  "world_is": "MEASURED at the wk-IRPT_ANLREQ-107 HEAD after amendment 2: template_reader.read_template on 'Ticker,Dollars' returns rows with keys ['amount', 'basis', 'cells', 'row', 'symbol'] and no name field; portfolio.freeze_template_portfolio builds the KEPT row from original (the template row) and security_id = the client's symbol. The client's ticker is kept; no name is kept, because none is read from the file. The name is not in the frozen KEPT row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py (read_template row keys, measured)",
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py:571 (KEPT row, method KEPT_BY_HISTORY; name not carried)",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_kept_holding.py (test_the_client_ticker_is_kept_on_the_holding_and_the_found_path_is_unchanged asserts the ticker only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W110-S2 -- (AR-y-293 amendment 2 merge) a merge over a dirty overlap needs a file-level revert; the stash that would park the work is blocked
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W110-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~110",
+  "surfaced_at": "2026-10-13T22:03:10Z",
+  "one_line": "The coordinator-directed merge of amendment 2 (461a5fa3df) into the worktree holding uncommitted KEPT edits could not run as written: git refuses a merge that touches a dirty file, and the shared-worktree rule blocks the git stash that would park it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The coordinator's note: merge 461a5fa3df before the commit, a conflict in the order or investigations file kept on both sides, nothing else changes.",
+  "world_is": "MEASURED: the merge overlaps one dirty file (intake/security_resolution.py, 48 upstream lines). The stash was refused by the shared-worktree blast rule. The work was saved to .scratch/backup, the one file was reverted to its committed HEAD content, the merge ran (auto-merged the investigations file, no conflict), and the saved hunks were re-applied with patch (4 hunks, offsets 16 to 30 lines, no reject). The other five edited files were not touched by the merge and were verified byte-equal to their backups. The uncommitted state is not yet committed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge 461a5fa3df in C:/dev/wk-irpt-anlreq-107 (merge commit after 5af9243b49)",
+      "intake/security_resolution.py diff against the merged HEAD: 88 insertions, 2 deletions",
+      "a suite run on the merged tree with the edits: 429 passed, 1 skipped, rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
