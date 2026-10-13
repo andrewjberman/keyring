@@ -75,7 +75,7 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMB
 
 **ISSUER NOTES:** row `D1-C-S33` (the CVO; the CTO's round-4 analysis section 2): test-only, as `FB-g-37` did for the router and the guard. Class WORLD by the path floor (an infrastructure path), though the cell writes a test file only. The deployed validator v23 is unaffected.
 
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <workstream>VALIDATOR</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-h-4</to_id>
