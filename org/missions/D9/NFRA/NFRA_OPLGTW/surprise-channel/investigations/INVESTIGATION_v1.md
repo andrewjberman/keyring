@@ -12712,3 +12712,32 @@ name the one known failure instead of silently inheriting it.
   "notes": "FOR THE ISSUER: the description text is still worth having, and the safe way to get it is a SEPARATE deliberate act that accepts a replacement with the attachment cycle planned for -- or simply leaving it, since the comment now carries the explanation at more length than a description field could. I did not treat this as a reason to stop: the order's own bounds say to refuse what cannot be met as written, file a row and keep working, and the plan bar is the safety property while the description is cosmetic. GENERAL FORM WORTH KEEPING: when an order states both an EDIT and a PLAN-SHAPE bar, the bar is the signed constraint and the edit is the means; if the means breaks the bar, the means is what gives way. An immutable-field edit hiding inside a 'just update the description' instruction is the kind of thing that reads as trivial and plans as destructive."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S99",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-13T00:33:13Z",
+  "one_line": "OG-ap-13 is BLOCKED at step 2 before any world act: the owned-paths gate refuses this seat on both census-source files, because infra/aws/terraform/nfra-ctlpln-identity/tests/ is claimed by lane NFRA_CTLPLN_FAST_C and 0.7.0_AE_CloudOps~Z is not in its permitted_agents. The laptop CTO's consent opened the ACT; it did not open the WRITE SURFACE. Nothing was applied, nothing is staged, and the edit is preserved as a patch outside the repo.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit refused rc=1, verbatim: 'VIOLATION: infra/aws/terraform/nfra-ctlpln-identity/tests/derive_vendor_secrets.py -- lane=NFRA_CTLPLN_FAST_C (CTO grantor ...); agent=0.7.0_AE_CloudOps~Z not in permitted_agents', and the same for vendor_secrets_census.json. 'ERROR: safe-commit did NOT commit (rc=1)' and 'everything was staged in a PRIVATE index, so the shared index holds nothing from this call' -- confirmed: git diff --cached is empty.",
+      "THE ORDER'S <paths> DOES NOT GRANT THIS SEAT THE SURFACE, and that is the mechanism rather than an oversight. ADHC_OWNPTH.005 (owned-paths-validate.py:114-123) admits a serial to the paths its non-terminal order names ONLY for the spine-v3 worker form ^0\\.9\\.0_WK_<CODE>~<n>$. Tested: 0.7.0_AE_CloudOps~Z does not match that pattern; 0.9.0_WK_NFRA_OPLGTW~59 does. So an order's <paths> is a worker's grant, not an AE seat's.",
+      "The gate uses longest-match-wins glob semantics, so the lane's claim on that directory beats anything else. Note for whoever fixes it: the lane's DESCRIPTION is about the device register ('org/devices/** ... and ONE new reader, lib/devices.py'), which has nothing to do with this terraform tests directory -- so the lane's glob is apparently broader than the scope its own text states.",
+      "THE WORK ITSELF IS DONE AND VERIFIED, only uncommittable: --reclass printed 'granted before=97' and 'after=96: added 0; removed 1 (gateway/teams/bearer)'; grant.arns 97 -> 96 removing exactly gateway/teams/bearer-93ZHiU with ZERO additions; by_class PLATFORM-KEY 31 -> 30 and the other two classes byte-identical; exactly one decision moved; commit-gate rc=0; --from-file re-derivation ok=True platform_key=30 other=19 granted=96; render_routes_policy ok=True header_ok=True.",
+      "The cross-fabric CONSENT is real and was verified in its own bytes (row sitez-20261012T022939Z-ffaf, SELF_DRIVE_CLUSTER_TICK1_RULINGS_20261012.md:11, naming this fabric's applier and both half commits). It is a ruling about the act, not an entry in the path registry, and the gate reads only the registry."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-13 <paths> names infra/aws/terraform/nfra-ctlpln-identity/tests/, and step 2 tells this seat to edit tests/derive_vendor_secrets.py and regenerate tests/vendor_secrets_census.json. The bounds forbid overriding a gate.",
+  "world_is": "The owned-paths gate refuses this seat on exactly those two files. Both instructions cannot hold at once: I can edit the files but cannot commit them, and applying from an uncommitted source would be applying config that is not in the repo. So the act stops BEFORE the apply, which is the safe side -- the policy is untouched, still v4 with 31 ARNs, and the ledger nfra-oplgtw-tb1-bearer-narrow is OPEN with 0 legs proven and NOTHING STRANDED.",
+  "notes": "THREE WAYS OUT, all the issuer's or the CTO's, none mine. (a) Add 0.7.0_AE_CloudOps~Z to lane NFRA_CTLPLN_FAST_C's permitted_agents -- the lane names the CTO as grantor, and this is the smallest change; it is also the one that deserves a second look, since that lane's glob covers more than its description claims. (b) Take COO half Condition A's OTHER branch and have NFRA_CTLPLN's own issuer cut the edit -- the half already contemplates exactly this, '(b) cut by NFRA_CTLPLN's own issuer'. (c) The audited GIT_COMMIT_AUTHOR_OVERRIDE lane escape, which this order's bounds forbid ('override a gate') and which I did not use. The gate's own rationale comment records the precedent for why not: v3's first drain 'committed both real surfaces its order named through the audited override because no lane admitted it', and ADHC_OWNPTH.005 was written to make that unnecessary FOR WORKERS -- it was never extended to AE seats. GENERAL FORM WORTH KEEPING: A RULING THAT APPROVES AN ACT DOES NOT CREATE THE WRITE SURFACE FOR IT. Consent, lane membership and an order's <paths> are three different registries, and a cross-fabric act needs the first and one of the other two. The edit is preserved at ap13_source_edit.patch (12405 bytes, 2 files) outside the repo, so whoever gets the surface can apply it rather than redo it."
+}
+```
