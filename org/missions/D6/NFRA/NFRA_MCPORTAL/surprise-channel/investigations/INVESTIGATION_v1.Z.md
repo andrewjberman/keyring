@@ -1588,3 +1588,30 @@
   "notes": "For 2.0.0_SA_COO~MP: TO-MP-z-5 (the gateway release, STAGED) and any later GW cell touching a .tf will hit the same four. The pattern list above is measured, not predicted -- it is the one commit a667941f52 actually landed on. Suggest the order carry it instead of the MP-k-2 list."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S44",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~MQ",
+  "surfaced_at": "2026-10-13T19:56:35Z",
+  "one_line": "Amendment 2's sparse list, pasted as ARGV into Git Bash, is silently rewritten by MSYS path conversion into C:/Program Files/Git/<dir>/ -- the set command exits 0, the worktree LOOKS populated, and the cone is empty. Pipe the list to `git sparse-checkout set --stdin` instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "spec_asserts": "NFRA_MCPORTAL.TO-MP-z-5 AMENDMENT 2, first bullet (row Z-S43): \"Use: `/.tools/ /org/ /lib/ /infra/logic/ /infra/aws/terraform/ /infra/aws/lambda/ci/ /infra/aws/lambda/mcportal/ /infra/aws/ec2/` plus the 12 root-level tracked blobs\". The list is correct; the amendment does not say how to pass it.",
+  "world_is": "Passed as argv in Git Bash (`git sparse-checkout set /.tools/ /org/ ...`), MSYS converts every leading-slash token to a Windows path. Measured in C:/tmp/mp-z5-hookup at b15b776bba: `git sparse-checkout list` returned `C:/Program Files/Git/.tools/`, `C:/Program Files/Git/org/`, `C:/Program Files/Git/lib/`, `C:/Program Files/Git/infra/logic/`, `C:/Program Files/Git/infra/aws/terraform/`, `C:/Program Files/Git/infra/aws/lambda/ci/`, `C:/Program Files/Git/infra/aws/lambda/mcportal/`, `C:/Program Files/Git/infra/aws/ec2/` -- all eight DIRECTORY patterns destroyed. rc=0, no warning, no stderr. THE FAILURE DOES NOT LOOK LIKE ONE: `ls -A` at the worktree root printed .tools/ org/ lib/ infra/ data/ docs/ tools/ users/ and 12 more directories, so the tree reads populated at a glance. The directories exist because the 12 ROOT-LEVEL BLOBS are gitignore-style patterns with NO slash, and such a pattern matches at EVERY level -- CLAUDE.md, README.md, requirements.txt and .gitignore exist under hundreds of directories, so those files alone were checked out and created the directory skeleton. Counts of REGULAR FILES under each: .tools 3, org 100, lib 3, infra 136. After re-setting the identical list through `--stdin` (no argv, no conversion): .tools 525, org 63376, lib 758, infra 1626, and admin_api.py, server.py, safe-ec2-deploy.sh, opal_naming.py, devices.py, safe-commit.sh, commit-gate.sh and deploy_ledger.py all resolve. The mangled cone would have failed EVERY gate Z-S43 enumerates, one round-trip each, with messages naming absent paths -- i.e. it presents as Z-S43 recurring rather than as its own defect, which is why it is worth a row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "`git sparse-checkout list` output quoted verbatim above, C:/tmp/mp-z5-hookup, 2026-10-13 ~19:5xZ",
+      "file counts before/after the --stdin re-set: .tools 3->525, org 100->63376, lib 3->758, infra 136->1626",
+      "negative control for the skeleton: pytest.ini and CLAUDE.md resolved while infra/aws/ec2/opal-gateway/app/admin_api.py did not, under the SAME rc=0 set",
+      "CLAUDE.md Git section already names the class (MSYS_NO_PATHCONV=1 for slashed args) but scopes it to TF imports/ARN args and `git show <ref>:<path>`; sparse-checkout is not in that list"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For 2.0.0_SA_COO~MP: one clause on Amendment 2 fixes it for every later GW cell -- 'pass the list on stdin (`printf '%s\n' <patterns> | git sparse-checkout set --stdin`), never as argv, because MSYS rewrites a leading-slash argument'. No criterion is affected; z5.AC1/AC2 do not read how the worktree was cut. `MSYS_NO_PATHCONV=1` is the other fix but it is a blunt env override and CLAUDE.md scopes it narrowly, so --stdin is the narrower one."
+}
+```
