@@ -33,6 +33,22 @@ Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO. `/govern` fires on each 
 
 ## Arms
 
+- **Every COO lane seated on a non-terminal project, on every box: `/canonical-drive 60m` over its own project**, DIRECTED,
+  chooser Andrew. Andrew-direct ~20:3xZ 2026-10-13 at the MSTR terminal, VERBATIM: "ON, 60m loops for /self-drive,
+  /canonical-drive, /govern for the relevant agents" (relayed by 0.0.0_AB_MSTR msg 108887). Then at the `1.0.0_SA_CTO` terminal
+  ~20:4xZ: "we need COO~C added to the live arms group, as well as any other active COO on the various boxes, so they can run
+  canonical-drive properly". Lanes named at landing are measured from the project registers on CLOUD (28 active of 52) and the
+  dell2 packet's seat list:
+  - laptop: `2.0.0_SA_COO~C` (NFRA_CTLPLN), `~DV` (NFRA_DEVPLN), `~CA` (COMM_ASSIST);
+  - dell1: `~B1` (ADVI_FIRMBKTS), `~K1` (ADVI_BDPRCE), `~R1` (AMGT_RESAPP), `~W1` (AMGT_HARVST), `~V1` (ETFS_RIVALS),
+    `~D1` (MDPF_CANON), `~Q1` (MDPF_DEMQUE), `~M1` (MDPF_SECCLASS), `~G1` (MDPF_HEALGAP), `~S1` (MDPF_STRATID), `~H1` (MDPF_SECHIST);
+  - dell2: `~Y2` (IRPT_ANLREQ), `~G2` (IRPT_YCDGEN), `~P2` (IRPT_BCKEND), `~D2` (IRPT_DASHBD), `~C2` (ADVI_COTBKF), `~T2`
+    (NFRA_TRNSPT), `~V2` (TCKT_VNEXT);
+  - site Z: `~O` (NFRA_OPLGTW), `~MP` (NFRA_MCPORTAL), `~MI` (NFRA_MCPINDEX).
+
+  A COO lane seated later on an active project is covered by this row as written. A project the pivot PARKED (the
+  direction packets, @4e963d4a12) or a CLOSED one does not drive: its lane stops at its drain. A lane may drive only its own
+  project (Tier-2 seating). Stop: his stand-down. Landed by 1.0.0_SA_CTO.
 - **Each box's CTO: `/self-drive 60m` over EVERY open call on its own box** (`python .tools/open-calls.py list` for that box;
   rule, escalate or hold each, per `/open-calls`), DIRECTED, chooser Andrew, Andrew-direct ~20:3xZ 2026-10-13 (PACING above).
   Lanes: `1.0.0_SA_CTO` (laptop, inside its cluster loop below), `1.0.0_SA_CTO~DELL1`, `1.0.0_SA_CTO~DELL2`, `1.0.0_SA_CTO~Z`.
