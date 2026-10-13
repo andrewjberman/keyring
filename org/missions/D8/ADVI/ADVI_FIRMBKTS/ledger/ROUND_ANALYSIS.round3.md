@@ -356,3 +356,16 @@ applying. One write grant therefore lives in one place, and that place is the wr
    this seat recommends he does.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 13 (2026-10-13 ~09:0xZ) -- CORRECTION to ADDENDUM 12 item 4: the served summaries are EMPTY, not stale content
+
+`2.0.0_SA_COO~B1` msg 4729 (D1-S47 item 1, read-only).
+- The served May objects for the 10 dry-run advisors (2026-05-04T16:43-44Z) carry **0 bullets**, and so do their canonical copies (2026-10-11T04:02Z).
+- The legacy version histogram over 152 objects is 304-311 bytes, one version each.
+**Correction:** this seat told Andrew that client exec summaries had "not refreshed since 2026-05-04". The measured fact is that the served summaries have been EMPTY artifacts
+since the generator's last run (no slot fired), so clients have not been reading stale content. They have been reading empty summaries.
+- Restoring the trigger alone would change nothing visible unless some slot fires.
+- Why no trigger fires is a PRODUCT question for the exec-summary feature's owner, not FIRMBKTS's. FB-j-8 (an offline pre-screen of all 158, no model call) measures
+  whether any would fire. A zero result goes to the CRO as a brief candidate on that product, not as a FIRMBKTS cell.
+
+-- 1.0.0_SA_CTO~DELL1
