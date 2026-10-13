@@ -2324,6 +2324,27 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "survey of requests/ and ~/.opal/demque/queue at b3c92c8830 (7 queue files, all need_class client; the requests/ no-CUSIP counts above)"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W47-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~47",
+    "surfaced_at": "2026-10-13T20:26:48Z",
+    "one_line": "The DQ-t-55 order names the surface E CLI key set as {day, history_allowance, cap, cells, verdict, message}; the built CLI line also carries claim and remaining_reserve.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO MDPF_DEMQUE.TO-DQ-t55 step 4: the CLI prints ONE JSON line {day, history_allowance, cap, cells, verdict, message}; step 1: a non-measured ceiling claim is carried by the result; step 2: an ACCEPT carries remaining_reserve.",
+    "world_is": "surface_e_intake.py at b079e76bd6 prints {cap, cells, claim, day, history_allowance, message, remaining_reserve, verdict}. claim is carried because step 1 says the result carries it; remaining_reserve because step 2 and the test name print it. A consumer that matches the exact listed key set sees two extra keys. dq_t55_real.py reads keys by name and is unaffected. The order does not fix the ACCEPT message text; the builder wrote it. The REFUSE message is the order's exact text.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/surface_e_intake.py check() and main() at branch wk-MDPF_DEMQUE-47 commit b079e76bd6",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t55.surface-e-intake-cap.md WORKER FACE step 4 (CLI key list) at commit 1cd9c6f1ab",
+        "python data/mdpf/scripts/demque/surface_e_intake.py --cost --securities 1 --trading-days 252 --fields 2 --day 2026-10-14 printed the 8-key line, rc=0"
+      ]
+    }
   }
 ]
 ```

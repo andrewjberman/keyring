@@ -7944,3 +7944,135 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D2-W161-S1 -- CB-cd-1: the near-match file the FWD-8 reader names is absent; the crosswalk carries 22 awaiting-a-person rows, not 21
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W161-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~161",
+ "surfaced_at": "2026-10-13T20:19:00Z",
+ "one_line": "CB-cd-1: near_matches.csv (the FWD-8 reader input) is absent from both the worktree and the base checkout, so the 21 awaiting-a-person count is not reproduced; the crosswalk holds 22 AWAITING_PERSON rows and the reverse match used those.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~49/ENDPOINT_READ_20261009.md@04b9a0bbed line 14 (FWD-8: 21 near matches awaiting a person)",
+   "data/assets/scripts/analysis/commonwealth_fwd8_read.py@04b9a0bbed line 18 (NEAR_REL = 0.9.0_WK_ADVI_COTBKF~14/near_matches.csv)",
+   "path check 2026-10-13: near_matches.csv not found under C:/dev/wk-cotbkf-161 nor under C:/dev/ajb_workspace at the 0.9.0_WK_ADVI_COTBKF~14 deliverables path",
+   "crosswalk.csv (s3 commonwealth/cottonwood/silver/crosswalk/date=2026-06-23/): 1,533 rows, reason_code AWAITING_PERSON on 22 rows, candidates parse on 22 of 22"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-cd-1 and the FWD-8 record name 21 near matches awaiting a person, read through commonwealth_fwd8_read.py, which reads 0.9.0_WK_ADVI_COTBKF~14/near_matches.csv.",
+ "world_is": "near_matches.csv is not present in either tree; the applied crosswalk carries 22 AWAITING_PERSON rows (not 21). CB-cd-1 derived its near class from those 22 rows; 12 of the 769 current accounts fall in the near class."
+}
+```
+
+## ADVI_COTBKF-D2-W161-S2 -- CB-cd-1: Commonwealth-side identifiers are raw, not acct# tokens; the cell keyed them by a salted SHA-256
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W161-S2",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~161",
+ "surfaced_at": "2026-10-13T20:19:00Z",
+ "one_line": "CB-cd-1: the Commonwealth silver tables carry raw account identifiers, not acct# tokens; no crosswalk token exists for the Commonwealth side, so the active-set keys for those accounts are salted SHA-256 tokens.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "task order org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-cd-1.active-set-and-reverse-match.md@04b9a0bbed (account_key rule, item 2)",
+   "crosswalk.csv 2026-06-23: 0 of 1,533 commonwealth_account values in acct# form; account_links.csv: 0 of 1,450 old_account values in acct# form",
+   "transactions date=2026-06-23 first part: 0 of 35,917 Account_Number values in acct# form; all 14 parts read, 1,533 accounts, all in the crosswalk",
+   "data/assets/scripts/analysis/commonwealth_fwd8_read.py@04b9a0bbed render() writes the raw commonwealth_account into its output markdown (caller-chosen --out path)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-cd-1 item 2: account_key is the crosswalk's own pseudonymous token (the acct#... form the Commonwealth silver tables already use) wherever one exists; otherwise a salted SHA-256.",
+ "world_is": "The Commonwealth silver tables use raw identifiers and no acct# form exists in the crosswalk or links. The Black Diamond side carries crosswalk tokens for 471 current accounts; 528 further listed accounts have the same token form and are not in the crosswalk, so they are salted. The salt is kept only in the worktree .scratch folder."
+}
+```
+
+## ADVI_COTBKF-D2-W161-S3 -- CB-cd-1: account_links reaches no Black Diamond account except through the crosswalk, so the account_links match class is empty
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W161-S3",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~161",
+ "surfaced_at": "2026-10-13T20:19:00Z",
+ "one_line": "CB-cd-1: account_links is Commonwealth-to-Commonwealth; the reverse match's account_links class has 0 rows, and the 85 current accounts with an inbound link are classed crosswalk_matched with the links carried in the joined windows.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "task order ADVI_COTBKF.TO-CB-cd-1 item 3 (match_basis classes crosswalk_matched, account_links, near_match_waiting_on_a_person, none)",
+   "account_links.csv 2026-06-23: 212 LINKED rows; 89 of their new_account values are crosswalk MATCHED accounts, 123 are NOT_MATCHED, 0 are absent from the crosswalk",
+   "CB-cd-1 reverse match 2026-10-13: crosswalk_matched 457, account_links 0, near 12, none 300 of 769 current accounts; accounts_with_inbound_link 85"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-cd-1 item 3 presents account_links as a match basis for the reverse match, read from the same tables as the crosswalk.",
+ "world_is": "Links join Commonwealth accounts to Commonwealth accounts. The only Black Diamond bridge is the crosswalk, so every current account reached by a link is reached through its crosswalk-matched predecessor. The cell kept the crosswalk account as the predecessor and carried the linked older accounts in the windows."
+}
+```
+
+## ADVI_COTBKF-D2-W161-S4 -- CB-cd-1: the Commonwealth transaction table ends 2026-06-22, so the 90-day transaction alternative is structurally empty
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W161-S4",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~161",
+ "surfaced_at": "2026-10-13T20:19:00Z",
+ "one_line": "CB-cd-1: the Commonwealth transactions end 2026-06-22, some 16 weeks before the 2026-10-12 current mark, so the 90-day transaction alternative holds 0 accounts and cannot separate the definitions.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "task order ADVI_COTBKF.TO-CB-cd-1 item 1 (alternative: has any transaction dated in the last 90 days)",
+   "s3 commonwealth/cottonwood/silver/transactions/date=2026-06-23/: 14 parts, 1,416,497 rows, Trade_Date 2013-04-03..2026-06-22; rows on or after 2026-07-15: 0",
+   "silver/holdings snapshots: latest 2026-10-12 (88 dated keys 2026-06-08..2026-10-12)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-cd-1 item 1 defines the alternatives against the current mark and asks how many accounts differ between the primary and each alternative.",
+ "world_is": "No Commonwealth transaction is dated after 2026-06-22, so the transaction alternative is an empty set (alt_90d_transactions 0; differs from primary by 769). The definition comparison is only meaningful for the snapshot alternative (106 accounts differ)."
+}
+```
+
+## ADVI_COTBKF-D2-W161-S5 -- CB-cd-1: the gold canonical holdings schema carries bd_units and schwab_units beside units, so BD-only is not established by schema
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W161-S5",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~161",
+ "surfaced_at": "2026-10-13T20:19:00Z",
+ "one_line": "CB-cd-1: the gold canonical holdings carry source, bd_units and schwab_units columns, and 47 dated keys carry no CUSIP value on any row; the cell read only the columns it needed and did not establish that units is BD-only in every row.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "task order ADVI_COTBKF.TO-CB-cd-1 BD side (gold/canonical/holdings/{date}.parquet named as Black Diamond holdings)",
+   "s3 opal-data-cot gold/canonical/holdings/2026-10-12.parquet: columns include source, bd_units, schwab_units beside units (schema read 2026-10-13)",
+   "CB-cd-1 gold read 2026-10-13: 135 dated keys 2026-04-22..2026-10-12; 47 dated keys carry no CUSIP value on any row"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-cd-1 names gold/canonical/holdings as the Black Diamond side of the firm's own bucket.",
+ "world_is": "The gold canonical schema holds more than one custodian's unit columns. The cell projected account_id, asset_name, units, cusip, ticker and cash_equivalent only, so the BD-side windows are measured on the units column as the table carries it; whether that column is BD-only per row is not established by this read."
+}
+```
