@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "dell1",
-  "prd_version": "v0.41",
+  "prd_version": "v0.43",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -47,7 +47,9 @@
     "FWD-36",
     "FWD-37",
     "FWD-38",
-    "FWD-39"
+    "FWD-39",
+    "FWD-40",
+    "FWD-41"
   ],
   "status": "RATIFIED"
 }
@@ -1103,9 +1105,68 @@ disputable, by rule, and carry no technical language.*
                     page counts nothing.
          SOURCE     DSGN FWD-5 ACCEPT ("a word cloud from its own coverage");
                     CVO~Z msg 28981
+
+  FWD-40 Security Analysis V1: all 93 names complete, correct, clean and fast on PROD
+         DONE WHEN  EXERCISED -- over the 93 names of AMGT_CORPUS FWD-19's
+                    population (printed, with the 95 covered names and the 105
+                    pack prefixes reported beside it, every difference named):
+                    (a) a per-name census read from the PROD-served payload:
+                    every section of every name shows content OR a stated
+                    reason, and 0 BROKEN VALUES. A broken value is any hit of
+                    the ui-walk classes `unconnected-field`, `raw-code` and
+                    `format:money`, or of the minor-unit census (qq-1's
+                    instrument); "raw code" is as FWD-5 uses the term;
+                    (b) DRIVEN ON DEMAND: the first OVERLAY request on a newly
+                    published version of the API Lambda (cold by
+                    construction), driven alone after the day's 12:30Z
+                    snapshot write, completes in under 3 s of HANDLER time
+                    (the REPORT Duration, which the per-phase log lines sum
+                    to), with Init printed beside it and the feed phase's
+                    share printed. The current build's 20 s is the negative
+                    arm. The first organic request of a trading day is a
+                    CORROBORATING read, not the grade;
+                    (c) a per-security pull census: for each name, which pulls
+                    it makes (corpus, filings, management, news, price,
+                    scanner) and the time each takes;
+                    (d) a browser walk of 10 names, drawn by sha256 of the
+                    walk date over the 93, on a LOCAL build of the PROD
+                    release commit (`bun run dev --port 5174`) against the
+                    live services, screenshots read (the estate's walker
+                    refuses a non-localhost base)
+         ACCEPT     An analyst opens any of the 93 and the page is full, clean
+                    and fast.
+         SOURCE     Andrew voice memo 2026-10-13 (AMGT); cluster direction
+                    XB-20261013T180327Z-ba46 O1; Andrew ~17:4xZ ("loading quite
+                    quickly ... worth exploring the individual security pulls")
+
+  FWD-41 Thin text blocks are filled for all 93, from Opal sources first, else a
+         cited web search
+         DONE WHEN  EXERCISED -- for every one of the 93, each of these FIVE
+                    blocks (portal `src/pages/SecurityAnalysis/` at PROD
+                    15c9754975) serves content with its SOURCE CLASS (Opal source /
+                    web search / none, with a reason) and its citations:
+                    (1) Exec Management: a management bio summary (new);
+                    (2) Exec Management: a recent-developments block (new);
+                    (3) Exec Management: "The research team on management"
+                    (`ExecManagementTab.tsx` MANAGEMENT_HEADING) where the pack
+                    states none;
+                    (4) Thesis: "The research team's thesis pillars"
+                    (`ThesisTab.tsx` PILLARS_HEADING) where the pack states
+                    none;
+                    (5) the header company description (`HeaderBrief.tsx`, the
+                    description empty-state) where none is held.
+                    A web-search fill is a model call on the EXISTING Anthropic
+                    path with its server-side web search tool, never OpenAI,
+                    marked machine-written (FWD-9's marking). A census of the
+                    93 by 5 blocks prints the source class per cell, and the CVO
+                    reads five names on PROD for correctness
+         ACCEPT     Every name shows something useful in the key text blocks,
+                    and the analyst can see where it came from.
+         SOURCE     Andrew voice memo 2026-10-13 (AMGT); Andrew ~17:4xZ ("We can
+                    use anthropic path"); cluster direction O2
 ```
 
-**BAR DISTRIBUTION: 19 of 20 are `EXERCISED`; only `FWD-9` is `APPLIED`.**
+**BAR DISTRIBUTION (the original 20, restated at v0.43): 19 of 20 are `EXERCISED`; only `FWD-9` is `APPLIED`. FWD-21 to FWD-41 each state their own bar in their block.**
 
 ⚠ **THIS IS THE MOST IMPORTANT SINGLE FACT FOR L5. Nineteen outcomes cannot be closed by any
 build.** **No cell may claim an `EXERCISED` outcome REALIZED on the strength of its own artifact.**
@@ -2859,3 +2920,53 @@ button exists, given a scheduled morning pull and no intraday data.
   act, not from the page.
 - **L4-R:** an ENDPOINT change, so the ratified-text half is re-owed to `3.0.0_SA_CVO~Z`. The brief half is accepted (written by
   the CRO).
+
+## ADDENDUM F, v0.42, 2026-10-13 -- Security Analysis V1 and the AI fill (`1.0.0_SA_CTO~DELL1`, on Andrew's voice memo and the cluster direction)
+
+**Authority:**
+- Andrew's AMGT voice memo of 2026-10-13: "at least get the 93 research pages completely loaded in here ... that all information is displaying correctly that the user
+  interface is clean and easy to use, that the pages load fast"; "fill in these gaps with dedicated ... calls that do the AI analysis to fill out obvious text sections".
+- His answers at ~17:4xZ: "We can use anthropic path, that's fine"; "it is loading quite quickly for AMGT already but worth exploring the individual security pulls".
+- The cluster direction packet `org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_DELL1_20261013.md` sections O1 and O2 (crossbox
+  XB-20261013T180327Z-ba46).
+
+**New outcomes:** `FWD-40` (V1: the 93 names complete, clean and under 3 s on the first request of the day) and `FWD-41` (the AI fill), defined in the ENDPOINT section
+above (one carrier).
+
+**What follows from them:**
+- **V1 = the 93.** The population is AMGT_CORPUS FWD-19's 93 names. The 95 covered names and 105 pack prefixes are reported beside it, never silently merged.
+- **The PROD promote of the Security Analysis work** is ONE FEATURE cut from the last PROD release (NFRA_DEVPLN C-FEATURE). It is approved by `1.0.0_SA_CTO~DELL1` as
+  Opal-internal (the route is `requireInternal`), with a push receipt naming every page changed and its class. It is NEVER the live DEV whole, and it never carries
+  `AdvisorBookFeePanel` or the `/portfolios` change.
+- **The cold-start target is under 3 s of handler time on a driven first overlay** (FWD-40 (b)), replacing the 4 s this seat's round-102 analysis set for the feed cell.
+  - The remedy is the FEED phase, which is 18.8 s of the 20 s.
+  - Keep-warm is DROPPED (v0.43, on `3.0.0_SA_CVO`'s refusal): a warmed instance never yields "a container that has served nothing", and round 102 measured the 20 s on
+    the first OVERLAY, even on a warm container.
+- **The AI fill reuses what exists** (build ladder step 2):
+  - `lib/research/management/ceo_search.py`, `lib/research/filings/analyze.py` and `lib/research/posture/judge.py` (all Anthropic);
+  - FWD-17's roster with tenure;
+  - harvest news as a recent-developments source.
+  Re-enabling site Z's disabled `OpalResearch-ExecManagement` / `OpalResearch-FilingsAnalyzer` tasks, or replacing them, is the cut's choice. A site Z producer change
+  needs `1.0.0_SA_CTO~Z`'s half.
+- **Not a V1 gate:** the scanner-currency slice (`AMGT_RESAPP-S14-CRNCY-SCANNER-US`). It stays on the DEMQUE form's surface D.
+
+**What this addendum does NOT do:**
+- It promotes no client-facing page and serves no raw publisher text.
+- It adds no vendor beyond the existing Anthropic path.
+- It builds no alert or monitor; a keep-warm is not a monitor.
+- It changes no existing outcome or contract.
+
+**L4-R:** an ENDPOINT change, so the ratified-text half is re-owed to `3.0.0_SA_CVO`. The brief half is accepted (Andrew's own memo, carried by the cluster packet).
+
+-- 1.0.0_SA_CTO~DELL1
+
+**v0.43 (2026-10-13 ~18:4xZ), on `3.0.0_SA_CVO`'s REFUSAL of v0.42's ratified half** (`org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_AMGT_RESAPP_v0.42_RATIFIED_TEXT_20261013.md`
+@1e185d91e4). Its five wording fixes inside FWD-40 and FWD-41 are all taken:
+1. (b) is driven on demand (a newly published version, cold by construction) and measured as HANDLER time; the organic first request is a corroborating read.
+2. Keep-warm is dropped.
+3. "Broken values" is defined by its instruments.
+4. (d)'s sample (10 names, sha256-drawn) and its build (a local build of the PROD commit) are stated.
+5. FWD-41's five blocks are listed, pinned to PROD 15c9754975.
+The BAR DISTRIBUTION line is restated. No other outcome or contract changed.
+
+-- 1.0.0_SA_CTO~DELL1

@@ -10646,3 +10646,66 @@ fanout:
   no_s3_deletes: true
   egress: none; no Bloomberg call in any order (bj-5 is code; the run is the queue's at site Z)
 ```
+
+## 112. ROUND 103 RE-POINTED TO V1 -- THE CTO'S ADDENDUM 1 (PRD v0.42, FWD-40 AND FWD-41). The cold start under 3 s stays in flight; the 93-name census, the per-security pull census, the Security Analysis feature cut and the site Z read are placed; the AI fill is another lane's workstream.
+
+**Issuer:** `2.0.0_SA_COO~R1` on dell1. **Input:** `ledger/ROUND_ANALYSIS.round102.md` ADDENDUM 1 @6eda215ac4 (msg 5021), which SUPERSEDES that analysis's section 2, on the cluster direction
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_DELL1_20261013.md` O1 and O2. **Authority to move a frozen round:** the CTO's own addendum names it ("If round 103 is already
+issued, `2.0.0_SA_COO~R1` amends its own orders to this list"); s.111 is not edited, this section places what moved. **State at the re-point:** `bj-1` (merged @c558bffbcc), `bj-4`
+(merged @b45da94bfc) and `bj-5` (merged @760f0e806d) are complete and STAND; `bj-2` is staged and its target is amended to FWD-40 (b); `bj-3` is withdrawn (deferred).
+
+### 112a. WHAT ADDENDUM 1 CHANGES, ITEM BY ITEM (printed denominator: its six items)
+
+| addendum item | placement | where |
+|---|---|---|
+| 1. the Security Analysis feature promote (FWD-40) | NEW cell `AMGT-bj-9` (a branch cut and its proof) -- the promote itself is the CTO's approval and the portal release seat's act | s.112b |
+| 2. the 93-name census and the per-security pull census (FWD-40 (a), (c)) | NEW cells `AMGT-bj-7` (the completeness census) and `AMGT-bj-8` (the pull census, STAGED behind `bj-2`) | s.112b |
+| 3. the cold start under 3 s (FWD-40 (b)) | `AMGT-bj-1` merged and `AMGT-bj-2` staged: the apply and its driven first request; the target is the first request UNDER 3 s with the feed phase's share printed (amended, @e27dc3972d). The cheaper second remedy (one warm instance) is NOT cut: it is the CTO's to name if the driven request misses | `bj-1`, `bj-2` |
+| 4. the AI fill (FWD-41) | A SEPARATE `~lane` WORKSTREAM on `2.0.0_SA_COO~G1` once seated (MSTR seats; the CTO names the lane). NOT cut here; its boundary is s.112c | s.112c |
+| 5. cleared from the round | steady-state window (`bj-3`) and the admission tool: `bj-3` withdrawn; `bj-4` was already merged and stands; `qq-2` reads COMPLETE (its last status element, merged @9d4236533c 2026-10-11 -- the roster read the first, a stale `pending` left beside it); scanner-currency slice is not a V1 gate (it stays on the DEMQUE form, queued at site Z); `bj-5` stands | -- |
+| 6. site Z's failing `amgt-induction-daily` (rc 4, 2026-10-13) | NEW cell `AMGT-bj-10` (a READ of why it fails); a site Z change needs `1.0.0_SA_CTO~Z`'s half and is not in the cell | s.112b |
+
+### 112b. THE RECTANGLE ADDED (bj-1 to bj-5 stand as s.111b read; bj-3 withdrawn)
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-bj-7` | READ the 93 names' served overlay payloads: per name, per section, content or a stated reason; raw codes and broken values counted; the 93 printed against the 95 covered and the 105 pack prefixes, every difference named (an instrument and its one run) | `~408` | worker (instrument) | LOCAL | one instrument, one output | FWD-40 (a) |
+| `AMGT-bj-8` | READ, per name, which pulls the overlay makes (corpus, filings, management, news, price, scanner) and the time each takes, from the phase and segment log lines of one driven request per name -- STAGED until `bj-2` completes (the applied build is the one measured) | `~409` | worker (instrument) | LOCAL | one instrument, one output | FWD-40 (c) |
+| `AMGT-bj-9` | cut a portal feature branch from the last PROD release (`15c9754975`) carrying ONLY the Security Analysis commits and the shared files they need, each shared file named with its other readers; typecheck, lint and the SA suite green on it; a `bun run dev --port 5174` build walked on three names; a receipt naming every page changed and its class. The Model tab's raw-code labels are fixed or the one commit is reverted on the branch | `~410` | worker (portal) | LOCAL | the branch in the nested portal repository (`--portal-ref`), one receipt file | FWD-40 promote |
+| `AMGT-bj-10` | READ why site Z's `amgt-induction-daily` exits rc 4: the task's definition, its last runs' output, the first failing line and its cause; one file naming the cause and the owner of the change | `~411` | worker (read-only) | LOCAL | one output file | item 6 |
+
+**Uncovered, with its owner:** the browser walk of a drawn sample on PROD (FWD-40 (d)) -- after `bj-9`'s promote, `/ui-walk` by a worker, screenshots read by the CVO; the promote itself and the CTO's
+Opal-internal approval of `bj-9` (the CTO, then the portal release seat); the CVO's read of five names (FWD-41); the AI fill (`~G1`); the Terminal sign-in (Andrew); the carried items of s.111b.
+
+### 112c. THE AI FILL'S BOUNDARY (so the two workstreams collide on nothing)
+
+`2.0.0_SA_COO~G1` owns FWD-41: `lib/research/management/`, `lib/research/filings/analyze.py`, `lib/research/posture/judge.py`, the FWD-17 roster reader, and any new producer. THIS workstream owns
+`lib/research/api/scoped_amgt.py`, the function `opal-amgt-scoped-api`'s deploys, the overlay's phase lines and the V1 censuses. **Two shared surfaces, each serialized:** (1) the function's code package
+has ONE applier at a time: the AI fill's serve change is its own pair and its own redeploy AFTER `bj-2`'s, from a pin that includes `bj-1`'s blob `84002d3fd559`; (2) the Security Analysis page's
+files (`bj-9`'s branch): a text-block change the AI fill needs on the page waits for `bj-9`'s promote or rides its own feature cut, never `bj-9`'s branch.
+
+### 112d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: ADDENDUM 1's six items. Item 1 -> bj-9; item 2 -> bj-7 + bj-8; item 3 -> bj-1 + bj-2; item 4 -> the `~G1` workstream (placed, not cut); item 5 -> bj-3 (withdrawn),
+  bj-4 and bj-5 (stand), qq-2 (complete); item 6 -> bj-10. Printed denominator: 6 of 6 items placed, one of them to another seat.
+- **(ii) Same grain.** bj-7 and bj-8 each one instrument and one output; bj-9 one branch and one receipt; bj-10 one read.
+- **(iii) Intent coherence.** bj-7 and bj-8 and bj-10 write no served byte and call nothing that writes; bj-9 changes a branch, never DEV and never PROD.
+- **(iv) What a cell does NOT move.** None of bj-7 to bj-10 moves the function, the store or a PROD page; bj-9 stops at the receipt; the promote is a later act under the CTO's approval.
+
+### 112e. EDGES AND FAN-OUT
+```
+bj-7 independent (reads the served payload; the apply of bj-2 moves no served byte, so the census reads the same before and after)
+bj-8 after bj-2 complete (the applied build is the one measured)
+bj-9 independent (portal worktree; after the new orders' L6 gate clears)
+bj-10 independent
+all four NEW orders after the ratified-text half of v0.42 is SIGNED by 3.0.0_SA_CVO (the L6 gate refuses a newly added order against a stale half; bj-2's amendment is a modification and is not refused)
+fanout:
+  cap: 8
+  orders_total: 4 new (bj-7, bj-8, bj-9, bj-10) beside 5 issued (bj-1, bj-2, bj-3 withdrawn, bj-4, bj-5)
+  chains_total: 4          (bj-1 -> bj-2 -> bj-8 ; bj-7 ; bj-9 ; bj-10)
+  wave_re-point: [bj-7 ~408, bj-9 ~410, bj-10 ~411]
+  wave_staged: [bj-8 ~409 (after bj-2 complete)]
+  portal_ref: <the nested portal repository's PROD release 15c9754975 for bj-9; read at the cut>
+  no_s3_deletes: true
+  egress: none; no Bloomberg call in any order
+```

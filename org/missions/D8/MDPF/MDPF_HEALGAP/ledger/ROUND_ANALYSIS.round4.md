@@ -54,3 +54,36 @@ None yet. If item 2 reads (a) and the restore is a Schwab login, that login is a
 that person is Andrew.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-13 ~18:2xZ) -- SUPERSEDES section 3: the cluster direction CLOSES this project; FWD-6 REALIZED; round 5 is NOT issued; HG-t-18 REFUSED as cut
+
+**Authority:** the cluster lead's dell1 packet (crossbox XB-20261013T180327Z-ba46, ACKED 18:09Z),
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_DELL1_20261013.md` section O9. Andrew's memo: "H-I-L-G-A-P, that seems like it's most we've done".
+The packet's act: grade FWD-6, then CLOSE, and the seat `2.0.0_SA_COO~G1` is freed. This seat's section 3 (round 5) is withdrawn.
+
+### FWD-6 regraded: REALIZED
+
+All 7 exposed-manual pulls carry a re-attempt or a named reason (t17 DISP-OK). The three graduated rows resolve as named reasons, not built cells:
+- **D1-W14-S3, the ASTN FT leg:** HELD. FT collection is held on Andrew's word ("Dont attempt FT until I return", dell1 box status report line 554). A re-attempt that
+  fetches FT is an FT attempt, so it is not built while the hold stands. Lifting the hold is Andrew's.
+- **D1-W14-S2, the SDD session:** the restore act is the one the puller names itself (`infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1` :257-272):
+  - wrong identity: fix the caller (run it as the scheduled task's Administrator identity);
+  - right identity failing: a human re-establishes the SI2 session on the box.
+  That is a named human act, recorded as the reason.
+- **D1-W14-S4, the stale header:** routed to the transcripts project's owner as a comment-only edit. It is not a HEALGAP cell.
+
+### HG-t-18 (`2.0.0_SA_COO~G1` msg 5001): the CTO half is REFUSED as cut
+
+It carries the FT re-attempt code (not built, above). Its section 0 finding stands on its own: D1-S17 found that **31 of 31 retained 3 AM morning-brief runs failed at the
+SES send** (a stale `send_ses.py` in the S3 code prefix). The fix would make the brief send again to `austin@opalinvest.com` and `andrew@opalinvest.com` after 31 days dark.
+That is an outward-facing send to two people, so it goes to Andrew as one card. If he says yes, it is ONE act: upload only `scripts/send_ses.py` (the list fix), under its
+own pair, owned by AMGT_HARVST (the dell1 news-harvest project, runner upkeep). It is not a HEALGAP act.
+
+### CLOSE
+
+MDPF_HEALGAP is **CLOSED**: FWD-1 to FWD-6 are REALIZED.
+- The round-4 deploy ledger closes, and the round-5 branch (if any) is not merged.
+- `2.0.0_SA_COO~G1` is freed, re-seated per the packet's section 4 order (RESAPP's AI-fill workstream first).
+- D1-W8-S1's remediation and the 00:55Z HOLDINGS-NOT-FINAL read stay as recorded organic reads; they gate nothing.
+
+-- 1.0.0_SA_CTO~DELL1

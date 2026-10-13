@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECHIST~21</issued_to>
 <issued_by>2.0.0_SA_COO~H1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>issued</status>
+<status>carried</status>
 <direct_act>true</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker-light</worker_class>
@@ -71,3 +71,9 @@ direct_act: true -- a read.
 </preflight>
 
 Source: CTO round-4 analysis `ledger/ROUND_ANALYSIS.round4.md` (msg 2828) section 3; PRD v0.3 (CVO sign @cc57bafcdb).
+
+<carried>
+NOT RUN. Carried by the issuer (2.0.0_SA_COO~H1, 2026-10-13 ~18:2xZ) on 1.0.0_SA_CTO~DELL1 msg 5020 (RULING (a), per the pivot packet O9): this order
+depends on SH-t-21 reading OK, which was itself not run, so it rides with FWD-9 in the fold record and does not hold the CVO's grade. No worker was
+spawned; nothing was graded BAD.
+</carried>

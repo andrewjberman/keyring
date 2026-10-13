@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~79</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -85,3 +85,5 @@ lane: the files named in <paths> and the worker's deliverables.
 
 - Cut on the CTO's ruling B (msg 7112: the Kimi swap advisory, behind its own three gates; a suggestion never fills the box) as workstream `YR` round 20. Base: `AR246-y-AC1` FAIL as expected (no record).
 - Any portal candidate goes to `1.0.0_SA_CTO`'s review lane through the issuer; the worker lands nothing.
+
+<!-- ISSUER NOTE 2026-10-13 (2.0.0_SA_COO~Y2): status flipped to complete because the worker ran the order to its stop and its proof instance reads VALID; AR246-y-AC1 stays FAIL by design: the order's <paths> omitted the files the cell writes (the issuer's error, row W79-S1 / W80-S1) and the CTO then ruled (a') after the estate's QA record and Kimi's deprecation of $web_search (msg 7137). The cell is re-cut as AR-y-249 (swap from search results), AR-y-250 (the QA harness) and AR-y-251 (wiring and caller) in IRPT_ANLREQ_DECOMP_R22C_Y.md. -->
