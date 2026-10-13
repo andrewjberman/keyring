@@ -988,3 +988,27 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Not changed here: the footer is the first-text format and the order names no footer change. The issuer decides the wording. The mail item's approve and redraft replies work regardless of the footer."
 }
 ```
+
+```json
+{
+  "id": "COMM_ASSIST-W14-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~14",
+  "surfaced_at": "2026-10-13T23:36:01Z",
+  "one_line": "The CA-i-8 base-footer control cannot be run from a scratch copy of the data subtree: the footer check imports the mail harness and its import chain reaches the ldo runtime, lib, infra/logic/registry and org/standards.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r17/checks/check_i8_footer.py@35a3560b52: ROOT = Path.cwd(); sys.path gains ROOT/infra/aws/terraform/modules/ldo/runtime; the harness is loaded by ROOT-relative path",
+      "scratch run in the worktree (untracked .scratch/mut, base mail_requests.py from 35a3560b52, HEAD 31fa72418c): data/ copied, then lib/, infra/logic/registry/ and org/standards/ copied, each step failing on the next missing module (lib.opal_naming, then systems.json, then NAMING_SCHEMA.json, then ldo) -- I8-FOOTER ok=False reason=ModuleNotFoundError: No module named 'ldo'; no footer text was read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The CA-i-8 order says the issuer's check prints ok=False at the base, and the proof schema requires a mutant control that fires on the base arm.",
+  "world_is": "The check can only read a base footer when the whole repo import chain is present, so a scratch copy of the data subtree cannot run it; the base reading is the issuer's r17 measurement, not this worker's. The worktree run at HEAD 31fa72418c is unaffected (I8-FOOTER ok=True).",
+  "notes": "Not fixed here: the check and the order are not this worker's to change. Measuring a base control needs a full-tree scratch or a base worktree. The proof's mutant entry carries this limit."
+}
+```
