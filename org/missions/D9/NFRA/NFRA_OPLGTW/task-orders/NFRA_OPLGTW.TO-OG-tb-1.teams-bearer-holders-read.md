@@ -76,7 +76,7 @@ rows pin to the commit that carried them. The order stays `pending` (the narrowi
 **ISSUER NOTES:**
 - Round 35, E3. Pre-cut: tb1.AC1 base FAIL as expected (TB1_READ.json absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>35</round>
 <slot>~59</slot>
 <fabric>site-z</fabric>

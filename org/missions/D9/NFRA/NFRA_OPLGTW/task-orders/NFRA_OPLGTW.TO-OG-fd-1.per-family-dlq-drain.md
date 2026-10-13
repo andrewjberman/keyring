@@ -101,7 +101,7 @@ to the commit that carried them. Phase A leaves the order `pending`. Report once
 - Round 35, E1. Pre-cut: fd1.AC1 base FAIL as expected (named tests 0 of 3; the existing suite rc=0, so the harness
   runs). A copy-equality limb was dropped at the cut: copies 0 of 4 equal; they are snapshots, not mirrors.
 
-<status>pending</status>
+<status>complete</status>
 <round>35</round>
 <slot>~58</slot>
 <fabric>site-z</fabric>
