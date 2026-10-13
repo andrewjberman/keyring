@@ -6543,3 +6543,29 @@
   }
 }
 ```
+
+## IRPT_ANLREQ-D2-W61-S6 -- the source tree at 5d8b0390ed already carries the status-rule served.py, while the live package carries the older pinned bytes
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W61-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~61",
+  "surfaced_at": "2026-10-13T07:44:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "git show 5d8b0390ed:_authz/served.py is the rule blob 30c0eb88, not the pinned blob 361c44fa9d carries (ada9bf5b); a test run in a base tree tests the rule bytes, so the earlier 'original served.py' control of the calendar test was not a control",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-212 step 4 control: the function's tests run against the packaged served.py, and an original (pre-rule) served.py is the control arm.",
+  "world_is": "At 5d8b0390ed the tree file _authz/served.py has sha256 30c0eb88ec38a7dd (the rule blob), while the packaged row pin 361c44fa9d carries ada9bf5bcfd10739 (no rule). The earlier control run labelled 'original served.py' copied the tree file and so ran the rule bytes; a re-run with the pinned bytes (ada9bf5) in the same tree gives the same calendar result: 1 failed, 277 passed (full performance/tests), 1 failed 6 passed (the calendar file). The release bytes equal the tree bytes, so the release tests ran the packaged served.py.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 5d8b0390ed:infra/aws/lambda/investor-reporting/_authz/served.py, sha256 30c0eb88ec38a7dd (.scratch/r20/served_at_5d8b.py, this run)",
+      "git show 361c44fa9d40992c8cacfd625cc789536f84b920:infra/aws/lambda/investor-reporting/_authz/served.py, sha256 ada9bf5bcfd10739 (.scratch/r20/served_361c44_pin.py, this run)",
+      ".scratch/r20/irpt-performance-adapter/tests_control_calendar_pin361c44_served.log and tests_perf_pin361c44_full_control.log (the correct control, this run)"
+    ]
+  }
+}
+```
