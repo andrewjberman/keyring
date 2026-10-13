@@ -87,6 +87,9 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~F
 
 **AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-13 ~09:3xZ):** the CTO's ruling on `D1-S47` adds step 5b and the record fields `advisors_with_bullets_before` and `bullet_regressions` (the grader requires the latter to be 0). A further un-park condition: `FB-j-8`'s record read (it measures whether any advisor fires a slot today; if none does, the regeneration rewrites empty artifacts with empty ones and the pair is to say so). FB-j-4 stays blocked behind this order's pair.
 
+**AMENDMENT 2 (2.0.0_SA_COO~B1, 2026-10-13 ~10:0xZ):** the CTO's ADDENDA 14-15 re-order this cell behind two new ones. The model call
+could never succeed (`betas` kwarg, row `D1-S48`/`D1-S49`); `FB-j-9` fixes it and logs every drop, `FB-j-10` deploys it and dry-runs TEN pre-screened advisors. Un-park conditions are now (all): `FB-j-9` merged and PASS; `FB-j-10`'s record shows NON-EMPTY bullets and the CTO has READ their text against the figures (wording, PII, accuracy); the regeneration pair is signed on both halves CITING that sample; `FB-j-3` read and `FB-j-4` merged as before. The record's `dry_run_sample` is the `FB-j-10` sample (advisors 10, objects_written 0). No criterion changed.
+
 <status>parked</status>
 <round>7</round>
 <workstream>EXECSUMFIX</workstream>
