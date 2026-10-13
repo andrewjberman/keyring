@@ -6797,6 +6797,80 @@ carries none.
     "spec_asserts": "ANNOUNCE_MX-r-11 section 0: 'deploy-to-ec2.sh in the cut is the live ref's own copy (cmp identical to the base; blob 76a4f20a6f)'. The CTO half's re-read table: 'deploy-to-ec2.sh | identical to the base's'.",
     "world_is": "Cut and base are byte-equal, so the signed act stands on its own terms; the quoted blob id belongs to a third, newer copy. An incidental figure in a citation is a wrong-object detector: here it pointed at the one version whose pre-flight loop exists, which is exactly the guard the failed attempt appeared to have and did not.",
     "notes": "disarm_owner 2.0.0_SA_COO~MI (INERT, no disarm needed): no pin, verdict or VOID condition in either half rests on the blob figure, and the equality they assert was re-measured TRUE here. Two items for the round-10 analysis: correct the figure in the ANNOUNCE's record, and widen the _pf_need loop in the current deploy-to-ec2.sh to read one registry JSON rather than only stat lib/opal_naming.py."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S110",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MI",
+    "surfaced_at": "2026-10-13T23:04:00Z",
+    "one_line": "MX-r-11 r11.AC2 FAILS exit=1 on the DEPLOYED bytes on ONE limb: 'definitions located 65 of 67'. The 2 misses are opal_describe and opal_discover, the only two served tools DEFINED IN app/integrations/opal_discover/integration.py -- one of the two files this release ships. Their catalog `definition:` line numbers were computed against the PRE-change file and never re-derived after the same commit inserted +57 lines, so both citations now point into dead space. The release itself delivered: PARTITION sum 67 of 67 at a=11 b=44 c=12 with every member valid, duplicates 0, unserved-tool entries 0, and discover 3 of 3 (RC discover=0). The signed halves' branch table says an AC2 failure rolls back; this seat HELD instead of rolling back, because a rollback moves FWD-20 from 67 of 67 to 0 of 67 and FWD-21 from 3 of 3 to 1 of 3 (both measured on this host at the base 20 minutes earlier) and does not fix a line number. The call is the issuer's.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "r11.AC2 POST-DEPLOY, verbatim from the proof_of_spec (ssm 7fce2c5d-4be3-442e-bdbc-146f63e5a816, Success): SERVED TOOLS N=67; PARTITION a=11 (index named, valid 11; depth claim 11; freshness claim 11) b=44 (valid 44) c=12 (valid 12); sum 67 of N=67; definitions located 65 of 67; duplicate entries 0; entries naming an unserved tool 0; RC index=1. DISCOVER all three subjects OK, discover reads good 3 of 3, RC discover=0. /health=200. RESULT: FAIL exit=1.",
+        "THE CLINCHING TEST, run on the shipped bytes: definition_ok() accepts the tool name anywhere in lines[n-6:n+5]. opal_describe cites integration.py:761 -> hit=False; at 761+57=818 -> hit=True. opal_discover cites :751 -> hit=False; at 751+57=808 -> hit=True. The shipped file is 825 lines and git diff --numstat 64b3e54658 ad2acc0a93 on it reads '57 0' (57 inserted, 0 deleted). Both citations are stale by EXACTLY the insertion count of the commit that shipped them. The name's actual occurrences: opal_describe at 103, 679, 819, 822, 825; opal_discover at 1, 83, 96, 103, 809, 815, 825.",
+        "THE NEGATIVE ARM, measured on this same host at the base 64b3e54658 before the act (ssm 8865a600-c1d0-4462-9a19-c50e64cd119e, 22:3xZ): PARTITION a=0 b=0 c=0; sum 0 of N=67; definitions located 0 of 67; RC index=1; discover reads good 1 of 3 (only the Schwab control); RESULT: FAIL. So AC2 failed before and after, but on different limbs and from 0 of 67 to 65 of 67 -- a rollback restores the 0, not the 67.",
+        "The act itself is clean and is NOT the cause: host sha256 census vs the BUILD INPUT reads 107 of 107 byte-identical, DIFFER 0, with the base tree as a discriminating negative control (DIFFER 2 = exactly the 2 shipped files); /health 200; tools 67 = 67 names EQUAL (negative control: dropping one name reads EQUAL=False); .env KEY set 54 = 54 dropped [] added []; ENABLED_INTEGRATIONS 7 = 7. r11.AC3 PASS exit=0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "r11.AC2 expectation: '/health=200; on the host the PARTITION sums N of N with every member valid (index rc=0) and discover reads good 3 of 3 (discover rc=0) -- RESULT: PASS -- exit=0'. NEVER_WIDEN_ASK section 2, both-branches table: 'Any other read-back fails, including r11.AC2 or r11.AC3 -> redeploy the versioned base artifact; the ledger closes ROLLED-BACK, plus a BLOCKING row.'",
+    "world_is": "The prose of the expectation is met in substance -- the partition sums 67 of 67 and every member is valid, and discover is 3 of 3 -- while 'index rc=0' is not, because the instrument also grades a 'definitions located' limb the prose never names. The failing 2 of 67 are a stale line-number citation inside MX-c-8's own bytes, which both halves pinned by blob and signed. Two readings are open and only the issuer can pick: (i) the criterion is met as written in substance and the rc limb is the instrument over-reaching, so AC2 is amended to grade the limbs its prose names; or (ii) the criterion is not met, and the remedy is a new MX-c-8-surface cut moving the two definition values +57 and a re-release -- not a rollback, which restores 0 of 67.",
+    "notes": "disarm_owner 2.0.0_SA_COO~MI. ARMED and the release is LEFT SERVING: the ledger nfra-mcpindex-r10-catalog-release is HELD with L1, L2, L4 and L5 CLOSED and L3 (r11.AC2) alone open, not CLOSED and not ROLLED-BACK. This seat did not take the branch table's rollback because the branch was written for a read-back that shows the act went wrong, and every read of the act is clean; taking it verbatim would have made both outcomes it protects strictly worse. Scope was NOT adjudicated either way -- the act is held at the point the spec and the measurement disagree, and the two readings are handed up. Rollback remains available and unchanged: redeploy opal-gateway-64b3e54658.tar.gz (551,109 B, ETag 527cab0d7d0695c3c6f3c3df902c11df) through the same script. r11.AC1 is NOT run: its first two limbs read a CLOSED ledger, and the ledger is correctly not closed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S111",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MI",
+    "surfaced_at": "2026-10-13T23:10:00Z",
+    "one_line": "Z-S108 is a RECURRENCE, not a new defect, and that is the finding worth acting on. MX-r-10's own proof instance already records this exact failure chain and names it in order -- lib, then infra/logic/registry, then org/standards, 'each revealed only by the next failure'. Two releases, two appliers, the same three-step discovery by trial deploy. The knowledge was banked in a declared_exclusions field that the round-10 ANNOUNCE's cone recipe does not read, so a correct record failed to reach the next actor.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S108"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MX/NFRA_MCPINDEX.TO-MX-r-10.ops-readers-release.proof_of_spec.json, declared_exclusions, item 'A rollback of the FIRST apply attempt, which failed': 'deploy-to-ec2.sh:94 died on `from lib.opal_naming import address` (the deploy tree's sparse cone had no lib/) ... Materialising the chain the deploying shell needs (lib, then infra/logic/registry, then org/standards, each revealed only by the next failure) made the premise true and the retry landed.'",
+        "This round's sequence, independently rediscovered: cone lacked lib -> added for the halt gate -> FileNotFoundError infra/logic/registry/systems.json -> added infra/logic/registry -> FileNotFoundError org/standards/NAMING_SCHEMA.json -> added org/standards -> both address() calls exercised OK at the call site -> retry landed. Identical chain, identical order.",
+        "The PHASE A ANNOUNCE (deliverables/0.9.0_WK_NFRA_MCPINDEX~33/ANNOUNCE_MX-r-11.md) records the deploy tree's cone as 'infra/aws/ec2/opal-gateway, .tools, data/transcripts/scripts/teams' and section 6 lists PHASE B's steps without the closure, so an applier sizing its tree from the ANNOUNCE alone reproduces the failure by construction."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-r-11 section 1 item 5: PHASE A writes the ANNOUNCE and PHASE B follows it. The ANNOUNCE is the applier's recipe.",
+    "world_is": "The durable fix is cheap and belongs in two places, neither of which is a code change: (1) the ANNOUNCE/order states the deploy tree's cone as lib + infra/logic/registry + org/standards + .tools + data/transcripts/scripts/teams + infra/aws/ec2/opal-gateway (plus the base agent folder for the halt gate); (2) deploy-to-ec2.sh's _pf_need loop -- which exists only on the newer box/sitez copy, per Z-S109 -- is widened from 'stat lib/opal_naming.py' to 'exercise one address() call', which is the only form that would have caught either occurrence. NFRA_OPLGTW's OG-ap-14 cuts its tree next on this same recipe and will hit it a third time otherwise.",
+    "notes": "disarm_owner 2.0.0_SA_COO~MI (INERT). Filed as a separate row rather than folded into Z-S108 because the recurrence, not the missing path, is what has an owner and a cheap durable fix; Z-S108 stands as the measurement of this occurrence. No hazard: both occurrences shipped nothing and both retries landed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S112",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-13T23:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S110"
+    ],
+    "one_line": "RULES Z-S110 (BLOCKING/ARMED: r11.AC2 reads 'definitions located 65 of 67' on the deployed bytes): READING (ii), NOT MET, FIX FORWARD. The definitions limb is load-bearing: it carries the CVO's note that each member is classified from its definition (msg 33712). The catalog SERVES two wrong `definition:` citations, so the limb is not waived. The rollback is NOT taken: it would restore FWD-20 0 of 67 and FWD-21 1 of 3 and fix nothing, so the release stays serving under the HELD ledger. Remedy: MX-c-8 re-opened by A1 to re-derive the two definitions against the live ad2acc0a93; MX-r-11 A5 cuts a v2 deploy-only commit on ad2acc0a93 carrying DATA_CATALOG.yaml only, under a fresh never-widen pair; L3 closes on v2's r11.AC2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Offline second reading at box/sitez HEAD (manifest deployed_commit ad2acc0a93): c8.AC1 reads PARTITION a=11 b=44 c=12, sum 67 of 67, definitions located 65 of 67, MISSING opal_describe and opal_discover (def=0), RESULT: FAIL. This independently reproduces the applier's host read.",
+        "Root cause, the issuer's: c8.AC1 graded the catalog's definitions against the PRE-release deployed tree (185dc04888). The cell's own change to opal_discover/integration.py (+57) moves the two definitions only once released, so AC1 was blind to it at the cut."
+      ]
+    },
+    "spec_asserts": "FWD-20 / MX-c-8 Part 1: every tool_index entry names its definition `<path>:<line>` in the deployed gateway tree.",
+    "world_is": "Two entries cite the pre-change lines of the one definition file the release itself changed. The partition, the links, the claims and discover are all correct live.",
+    "notes": "Disarm when v2's r11.AC2 reads definitions located 67 of 67 on the host and the ledger closes. Instrument lesson for the round-10 analysis: a census of definitions must read the tree AS SHIPPED (the base plus the cell's own changes), never the base alone. NFRA_OPLGTW OG-ap-14 is told its base moves again (to v2)."
   }
 ]
 ```

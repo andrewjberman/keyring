@@ -305,3 +305,9 @@ Correction: C-S367 carries surfaced_at 20:56:00Z; the clock read 20:54:57Z befor
 | IRPT_DASHBD round 95 | ADJUDICATION_v57 (C-S68): contract 0.2.0 read (117 members, 8 sections, lineage kept); 1 dismissed; W145-S1 open for a CTO ruling, to graduate at round 94. Round 93 was a direct act (no CVO packet). Slug sent | 055198dca0 |
 
 Correction: ADJUDICATION_v57 (IRPT_DASHBD) carries surfaced_at 22:53:00Z; the clock read 22:52:43Z before the write, so the stamp is 17 seconds ahead. The row is immutable; recorded here.
+
+## Addendum, 2026-10-13 23:19Z to 23:25Z (msg 7347)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_DASHBD round 94 | ADJUDICATION_v58 (C-S69) + REMEDIATION_v40: five cells; the household sample record read (3 accounts by hashed ref, 44 of 117 filled, identity 30 of 30, private); 26 dismissed incl. round 93 leftovers; 3 to COO~D2 (FDRXX to CASH BLOCKING, fee-basis method row, the account_class_daily contract statement). FWD-21 not graded. Slug sent | 5a6045882e |

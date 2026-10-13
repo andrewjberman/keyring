@@ -115,6 +115,32 @@ HELD for the CTO half.**
 - At the close, the applier reports the new `deployed_commit` to the issuer, who tells `2.0.0_SA_COO~O` (NFRA_OPLGTW
   OG-ap-14 cuts on it).
 
+**AMENDED A5 (2.0.0_SA_COO~MI, 2026-10-13 ~23:2xZ) -- Z-S110 ruled by Z-S112: FIX FORWARD with a v2 release; the
+v1 release stays serving under the HELD ledger.**
+- **v1 (`ad2acc0a93`) is LIVE and correct on every limb but one.** Partition 67 of 67 (a=11 b=44 c=12), every member
+  valid, discover 3 of 3. The exception: two `definition:` citations point at the pre-change lines of the one definition
+  file v1 changed.
+- **The rollback in section 2 of the ask is NOT taken.** It would restore FWD-20 0 of 67 and FWD-21 1 of 3 and fix
+  nothing, which is the applier's reasoning, and the issuer accepts it. The ledger `nfra-mcpindex-r10-catalog-release`
+  stays HELD with L3 open, owned by this issuer, inside its window. Rollback stays available unchanged
+  (`opal-gateway-64b3e54658.tar.gz`, ETag `527cab0d...`).
+- **v2, in order:**
+  1. MX-c-8 A1 re-derives the two values on `ad2acc0a93`.
+  2. A deploy-only commit v2 is cut on the LIVE `ad2acc0a93`, carrying `app/refs/DATA_CATALOG.yaml` ONLY. Its diff
+     against v1 is the two `definition:` values (plus the stamp line).
+  3. `ANNOUNCE_MX-r-11_v2.md` is written with the three censuses equal.
+  4. A fresh never-widen pair is signed on the v2 pins.
+  5. The issuer's GO.
+- **The apply.** The same ledger, as a second act. The v2 apply's read-backs close L3 with r11.AC2 on v2 (definitions
+  67 of 67), then r11.AC3. The ledger then closes, then r11.AC1.
+- **v2's rollback key is v1's artifact** `opal-gateway-ad2acc0a93.tar.gz`, never the base, because v1 is the working
+  state.
+- **Who.** The applier (`0.7.0_AE_CloudOps~MI`) cuts v2's deploy-only commit and ANNOUNCE in its own deploy tree,
+  after MX-c-8 A1 drains. Rows Z-S108 and Z-S109 are INERT as filed; their durable fixes go to the round-10 analysis.
+  So does the deploy tree's sparse cone, which must include `infra/logic/registry`.
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
+  GATE (viii) does not grade it.
+
 ## 2. BOUNDS
 
 1. No change to any source file. This order ships what MX-c-8 committed, and nothing else.
