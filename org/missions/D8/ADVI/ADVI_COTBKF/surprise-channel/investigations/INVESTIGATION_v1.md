@@ -7944,3 +7944,52 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+```json
+{
+  "id": "ADVI_COTBKF-D2-W162-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~162",
+  "surfaced_at": "2026-10-13T20:26:42Z",
+  "one_line": "The 'Planned, not applied' sentence on the reporting-read route (lambda-source-map.json:6485) is stale: the Lambda, its route and its integration are deployed and registered, and the sentence is cited by round 81 as the reason the read route is not live.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CONSUMER_READ.json (round 81, 0.9.0_WK_ADVI_COTBKF~158) and the CTO round-82 ruling 1 take the read route as planned, not applied, read from lambda-source-map.json:6485; the cell asks the route to be read from deployed configuration.",
+  "world_is": "irpt-49f-reporting-read-lambda is Active (LastModified 2026-10-13T13:07:19Z, CodeSha256 equal to deployed_code_sha256 at lambda-source-map.json:6492); API 7k3ed8px20 carries route GET /api/scoped/investor-reporting/reporting/{account_id}/{which} (route 3smc8xr) on integration 904xvoc, AWS_PROXY, invoking that Lambda. The note's own neighbours (:6488 to :6492) record the deploy. The sentence is stale against live state. The same stale sentence sits at :6023 for reporting-publish (its own record :6027 is 2026-10-05; live LastModified 2026-10-03T17:22:27Z; CodeSha256 equal).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json:6485 @04b9a0bbed (the sentence) and :6488-6492 (deploy fields)",
+      "aws lambda get-function-configuration irpt-49f-reporting-read-lambda rc=0 (State Active, LastModified 2026-10-13T13:07:19.000+0000)",
+      "aws apigatewayv2 get-routes 7k3ed8px20 rc=0 (121 routes, no NextToken; route key matched once, id 3smc8xr) and get-integration 904xvoc rc=0",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~162/ROUTE_READ.json hop 3 and planned_not_applied_reading"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "ADVI_COTBKF-D2-W162-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~162",
+  "surfaced_at": "2026-10-13T20:26:42Z",
+  "one_line": "The second hop named in the round-82 analysis (gold account_return_daily -> reporting-publish -> dashboard) does not reach Cottonwood: the deployed publish reads 49financial gold only, the Cottonwood-scoped publish function is absent, and the read Lambda is firm-locked to 49financial.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO_ROUND_ANALYSIS_ADVI_COTBKF_ROUND_82 section 2 ruling 1 and CONSUMER_READ.json name the route ARD -> gold account_return_daily -> reporting-publish -> dashboard as the one whose liveness decides W155-S1.",
+  "world_is": "The Cottonwood gold partition exists (opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=2026-06-22, LastModified 2026-10-11T07:17:06Z), but handler.py resolves only the declared custody source schwab_08335338, which is firm 49financial (sources.json; handler.py:87-103), and reads opal-data-49financial gold. The Cottonwood master z09 is not a declared source (sources.json _commonwealth_delivery is method-fields-only). get-function-configuration irpt-cot-reporting-publish-lambda returned ResourceNotFoundException (rc=254); the positive control irpt-49f-reporting-publish-lambda was found. reporting-read locals.tf:37-38 is firm 49financial. Route verdict recorded as route_not_live at hop 2; the disarm decision is the CTO's and the COO's, not this row's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py:87-103 and :111-126 @04b9a0bbed (firm 49financial, gold read)",
+      "data/assets/scripts/gold/irpt_reporting/sources.json:6-10 and :123-130 @04b9a0bbed (one custody source; _commonwealth_delivery underscore-prefixed)",
+      "infra/aws/terraform/investor-reporting/reporting-publish/locals.tf:38-61 and reporting-read/locals.tf:37-48 @04b9a0bbed",
+      "aws lambda get-function-configuration irpt-cot-reporting-publish-lambda rc=254 ResourceNotFoundException; irpt-49f-reporting-publish-lambda rc=0 State Active",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~162/ROUTE_READ.json hops 1-3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
