@@ -211,7 +211,14 @@ function Set-FakeBackend {
             $script:Fake.Receipts = @($script:Fake.Receipts) + $text
             return ('FAKE:' + $name)
         }
-        'Do.AddCapability'   = { $script:Fake.Cap = $true; $script:Fake.Svc = @{ Present = $true; Status = 'Stopped'; Start = 'Manual' } }
+        'Do.AddCapability'   = {
+            $script:Fake.Cap = $true
+            $script:Fake.Svc = @{ Present = $true; Status = 'Stopped'; Start = 'Manual' }
+            # the real install creates the default firewall rule, ENABLED (Private, remote Any, port 22)
+            if (@($script:Fake.Rules | Where-Object { $_.DisplayName -eq $script:DefRule }).Count -eq 0) {
+                $script:Fake.Rules = @($script:Fake.Rules) + [pscustomobject]@{ DisplayName = $script:DefRule; Enabled = $true; RemoteAddress = 'Any' }
+            }
+        }
         'Do.SetAuto'         = { $script:Fake.Svc.Start = 'Automatic' }
         'Do.StartSshd'       = { $script:Fake.Svc.Status = 'Running' }
         'Do.StopSshd'        = { $script:Fake.Svc.Status = 'Stopped' }
@@ -241,17 +248,24 @@ function New-Fake {
         [string[]]$KeyLines = @(),
         [string]$PwLine = '#PasswordAuthentication yes',
         [string]$TailAddr = 'absent',
-        [bool]$DefEnabled = $true
+        [bool]$DefEnabled = $true,
+        [bool]$Installed = $true
     )
     $cfg = @('Port 22', $PwLine, 'Subsystem sftp sftp-server.exe', 'Match Group administrators', '       AuthorizedKeysFile __PROGRAMDATA__/ssh/administrators_authorized_keys')
-    $rules = @([pscustomobject]@{ DisplayName = $script:DefRule; Enabled = $DefEnabled; RemoteAddress = 'Any' })
+    # a box that has never had the OpenSSH capability holds no default rule either (the install creates it)
+    $rules = @()
+    if ($Installed) {
+        $rules = @([pscustomobject]@{ DisplayName = $script:DefRule; Enabled = $DefEnabled; RemoteAddress = 'Any' })
+    }
     if ($TailAddr -ne 'absent') {
         $rules += [pscustomobject]@{ DisplayName = $script:TailRule; Enabled = $true; RemoteAddress = $TailAddr }
     }
+    $svc = @{ Present = $true; Status = 'Stopped'; Start = 'Manual' }
+    if (-not $Installed) { $svc = @{ Present = $false; Status = 'absent'; Start = 'absent' } }
     $script:Fake = @{
         Elevated  = $true
-        Cap       = $true
-        Svc       = @{ Present = $true; Status = 'Stopped'; Start = 'Manual' }
+        Cap       = [bool]$Installed
+        Svc       = $svc
         Rules     = $rules
         Shell     = ''
         KeyExists = ($KeyLines.Count -gt 0)
@@ -392,8 +406,9 @@ function Add-Act {
     [void]$List.Add([pscustomobject]@{ Step = $Step; Op = $Op; OpArgs = $OpArgs; Text = $Text; Set = $Set })
 }
 
-# Builds the ordered action list from the BEFORE observation. Apply runs it; -Plan prints it; Pred is the
-# predicted AFTER (each action's Set applied in order).
+# Builds the ordered action list from an observation. Apply plans from the BEFORE read and RE-PLANS from a fresh read
+# right after A.service installs the capability (Invoke-SshEnable), because the install creates the default rule.
+# -Plan prints it; Pred is the predicted AFTER (each action's Set applied in order).
 function New-Plan {
     param($Obs, [string]$Kind, $Keys, [bool]$DisablePass)
     $acts = New-Object System.Collections.ArrayList
@@ -613,6 +628,9 @@ function Invoke-SshEnable {
     if ($Mode -eq 'plan') {
         if ($pl.Acts.Count -eq 0) { Say 'WOULD CHANGE: nothing' }
         foreach ($a in @($pl.Acts)) { Say ('WOULD ' + $a.Text) }
+        if (@($pl.Acts | Where-Object { $_.Op -eq 'Do.AddCapability' }).Count -gt 0) {
+            Say 'NOTE: the install creates the default firewall rule; apply re-reads after A.service and disables it in B if enabled'
+        }
         if ($pl.Refuse -ne '') { Say ('WOULD REFUSE: ' + $pl.Refuse) }
         $changed = @($pl.Acts | ForEach-Object { [string]$_.Text })
         $json = Build-Receipt -Mode 'plan' -Device $Device -Before $obs.Pub -After $pl.Pred -Changed $changed
@@ -631,13 +649,27 @@ function Invoke-SshEnable {
     $changedDone = @()
     $failed = $false
     $errMsg = ''
-    foreach ($a in @($pl.Acts)) {
+    $queue = @($pl.Acts)
+    $qi = 0
+    while ($qi -lt $queue.Count) {
         if ($failed) { break }
+        $a = $queue[$qi]
+        $qi = $qi + 1
         try {
             $ret = Invoke-Op -Name $a.Op -OpArgs $a.OpArgs
             $changedDone += [string]$a.Text
             Say ('DID ' + $a.Text)
             if ($a.Op -eq 'Do.WriteSshdConfig') { Say ('BACKUP ' + [string]$ret) }
+            if ($a.Op -eq 'Do.AddCapability') {
+                # step A just created the install's default firewall rule (enabled). The BEFORE plan cannot see it,
+                # so re-read the live state and re-plan the rest; step B then disables that rule. Once only: the
+                # capability's own act is never re-queued.
+                $obsR = Get-Observed
+                $pl = New-Plan -Obs $obsR -Kind $Kind -Keys $keys -DisablePass $DisablePass
+                $queue = @($pl.Acts | Where-Object { $_.Op -ne 'Do.AddCapability' })
+                $qi = 0
+                Say ('REPLAN after A.service default_rule_enabled=' + [string]$obsR.Pub['default_rule_enabled'] + ' remaining=' + [string]$queue.Count)
+            }
         } catch {
             $failed = $true
             $errMsg = $_.Exception.Message
@@ -751,8 +783,17 @@ function Invoke-SelfTest {
         ($r.Exit -eq 0) -and (-not $rec.Contains($blobA)) -and $rec.Contains('SHA256:') -and $rec.Contains('"mode":"apply"')
     })
 
+    # 7. fresh install (no capability, no default rule): the default rule step A creates is disabled by step B
+    $results += (Invoke-Case 7 'fresh-install-default-rule-disabled' {
+        New-Fake -Installed $false
+        $r = Invoke-SshEnable -Mode 'apply' -Kind 'enable' -Device 'selftest' -Dir 'FAKE-DIR' -Items @() -DisablePass $false
+        $dr = @($script:Fake.Rules | Where-Object { $_.DisplayName -eq $script:DefRule })
+        $tr = @($script:Fake.Rules | Where-Object { $_.DisplayName -eq $script:TailRule })
+        ($r.Exit -eq 0) -and (@($script:MutLog) -contains 'Do.AddCapability') -and (@($script:MutLog) -contains 'Do.DisableRule') -and ($dr.Count -eq 1) -and (-not [bool]$dr[0].Enabled) -and ($tr.Count -eq 1) -and ([bool]$tr[0].Enabled)
+    })
+
     $k = @($results | Where-Object { $_ -eq $true }).Count
-    $n = 6
+    $n = 7
     $all = (($k -eq $n) -and ($parseCount -eq 0))
     Say ('SSH-ENABLE-SELFTEST cases=' + $k + '/' + $n + ' ok=' + [string]$all)
     if ($all) { return 0 }
