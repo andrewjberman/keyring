@@ -1,7 +1,7 @@
 """MDPF_DEMQUE round 9, DQ-t-44 criterion AC2 (the REAL request files and the REAL drawn rows, S3 read only, no Bloomberg call, nothing written).
 Three arms, each one command; every arm must hold:
   (1) `bbg_quote.py --check-declared` over org/missions/D8/MDPF/MDPF_DEMQUE/requests prints ONE JSON line {"checked": N, "refused": [{"request_id",
-      "why"}], "accepted": N}; every `requests/*.json` that carries a `securities` list and a Bloomberg vendor must be checked, and `refused` must be [].
+      "why"}], "accepted": N}; every `requests/*.json` that carries a `securities` list and a Bloomberg vendor must be checked; `refused` must be [] or only the ABNB model block with a reason naming the 365-day rule (amended 2026-10-13).
   (2) `standing_drawer.py --plan --request DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS` prints ONE JSON line {"request_id", "window_start", "remaining_cells",
       "securities": [...]} with window_start 2025-10-09, remaining_cells 1004 and securities exactly ["MO US Equity", "XOM US Equity"].
   (3) `card_a_slice.py --priority P1 --out <scratch> --quote` prints a window_end that is the last trading day on or before today (never 2026-06-23),
@@ -39,7 +39,13 @@ def main() -> int:
     if a is None:
         return _bad("arm1 " + e)
     print("arm1 checked=%s accepted=%s refused=%s" % (a.get("checked"), a.get("accepted"), [x.get("request_id") for x in a.get("refused") or []]))
-    if not isinstance(a.get("checked"), int) or a["checked"] < 8 or a.get("refused") != [] or a.get("accepted") != a["checked"]:
+    # AMENDED 2026-10-13 (issuer, after row D1-W36-S1): the ABNB model block's producer window (HIST_START 2016-01-01) is beyond the 365-day non-client rule, so the
+    # queue correctly REFUSES it until the CTO or Andrew rules; it is the only refusal allowed, and its reason must name the 365-day rule.
+    refused = a.get("refused") or []
+    allowed = {"AMGT_RESAPP-107a-ABNB-MODEL-BLOCK"}
+    ids = {x.get("request_id") for x in refused}
+    if (not isinstance(a.get("checked"), int) or a["checked"] < 8 or not ids <= allowed
+            or any("365" not in str(x.get("why")) for x in refused) or a.get("accepted") != a["checked"] - len(refused)):
         return _bad("arm1 refused or too few checked: %s" % json.dumps(a)[:300])
     b, e = _line([os.path.join(D, "standing_drawer.py"), "--plan", "--request", "DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS"])
     if b is None:

@@ -86,7 +86,7 @@ monitor. Under its own pair, with served bytes byte-equal. Close: ONE driven col
 The candidate was built and dry-run at the cut (blob 02627c18a0ea). A phase's cost on Lambda is NOT read from the local run (local timings ran 3.5 times faster than Lambda and did not transfer in rounds
 99 and 100); the close is bi-2's driven request. STAGED successor: bi-2 (the apply and the request), after this cell's merge, the CTO's review and its pair.
 
-<status>pending</status>
+<status>complete -- 2026-10-13T15:2xZ by the issuer (2.0.0_SA_COO~R1): wk-AMGT_RESAPP-401 @b19294e267 (feat 9f71130afe) merged @6ecb5bc567, proof instance VALID (rc=0). AC1 re-run by the issuer on the worker's tree: arms passed 14 of 14, R102 OVERLAY PHASE LOG: YES; AC2: exactly lib/research/api/scoped_amgt.py, blob 02627c18a0ea (+32 -9). NOT SERVED: the live function still carries 9f72b58aa87e. THE MERGED PIN IS NOT A ONE-MEMBER PIN: r94_admission_table.py 6ecb5bc567 --pin 7da642c1ff reads 11 members whose bytes differ (scoped_amgt.py, and ten others landed by other seats since the live pin: lib/opal_naming.py +183 -3, lib/trading_calendar.py +22 -1, infra/logic/registry/scopes.json 1 line, six lib/opal_data_harvest files and install-cycle-schedule.ps1). r102_member_reach.py drives 20 route shapes from that tree: only scoped_amgt.py, opal_naming.py and trading_calendar.py are LOADED by the handler; the six harvest files are NOT LOADED; r94_naming_replay.py --pin 7da642c1ff reads YES (35 requests, 78 builder calls, 0 differ). THE PAIR FOR bi-2 therefore names all 11 members by blob with their reach, not one.</status>
 <round>102</round>
 <slot>0.9.0_WK_AMGT_RESAPP~401</slot>
 <fabric>dell1</fabric>
