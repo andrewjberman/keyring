@@ -8821,6 +8821,34 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ]
      },
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-Z-S114",
+     "project": "AMGT_HARVST",
+     "fabric": "site-z",
+     "surfaced_by": "0.7.0_AE_CloudOps~ZW",
+     "surfaced_at": "2026-10-13T04:16Z",
+     "one_line": "HVST-bz-1's signed stop path cannot complete: the site Z cycle runner (PID 21512) is ALIVE but WEDGED -- zero CPU accrued across three samples 30 minutes apart, one thread in Wait/Executive, no write for 7h57m -- so it never reaches the stop-file check, no cycle record is ever written, and the post-stop census can never read NONE while it lives.",
+     "class": "BLOCKING",
+     "hazard_standing": "INERT",
+     "disarm_owner": "2.0.0_SA_COO~W1",
+     "spec_asserts": "TO-HVST-bz-1 section 1 and both never-widen halves (COO half C-f; CTO half by-3 bullet 2): the running cycle is NOT killed -- it ends by its own stop file, which the runner reads between pairs, then writes a cycle record reading stopped_by_operator, and only then does step 2 proceed. C-c then requires the post-stop census of cycle_runner/backfill_driver processes to read NONE.",
+     "world_is": "The stop file was created at 2026-10-13T03:57:25Z from the task's own --stop-file argument (its parent directory did not exist and needed mkdir -p). 19 minutes later cycle_runner.log carries 0 STOP-FILE lines and its last write is still 2026-10-12T20:19:44Z. Cycle 20261012T191641Z has no .cycle.json and its checkpoint reads stopped_by_operator=False. PID 21512 read CPU 26.984375 s at 03:46Z, 03:47Z and 04:16Z -- identical to the clock tick, zero accrued -- with one thread (1888) in ThreadState=Wait WaitReason=Executive in all three, WS 4.3 MB. Its last write of any kind was 2026-10-12T20:22:35Z (a completed run_record_persisted), against a measured ~2.5 min job cadence over the 24 preceding JOB lines: it wedged AT a job boundary. In the running bytes cycle_runner.py:294 is a plain Path.exists() check reached only at :320 (between publishers) and :329 (between passes), so a process that accrues no CPU reaches neither. Therefore C-f cannot be satisfied by the signed means and C-c cannot read NONE while PID 21512 lives. This seat did not kill it: Stop-ScheduledTask would terminate the task tree, which is exactly the kill both halves forbid by name, and overriding a signed condition is the widening the pair exists to prevent.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round83/bz1_stopped.out (the three CPU samples, the thread wait state, the 0 STOP-FILE count)",
+       "Get-Process 21512 CPU/Threads/WaitReason read 2026-10-13T03:46Z, 03:47Z and 04:16Z on the site Z box",
+       "C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-c1be67f53c/.runtime/harvest-cycle/state/cycle_runner.log -- last line 2026-10-12T20:19:44Z, 0 STOP-FILE lines",
+       "C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-c1be67f53c/.runtime/harvest-cycle/runtime/last-run.json finished_at 2026-10-12T20:22:35.117986+00:00",
+       "state/cycles/bbg/20261012T191641Z.checkpoint.json: stopped_by_operator=False, stopped={}; no 20261012T191641Z.cycle.json exists",
+       "C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-b5a7a3a4b6/lib/opal_data_harvest/cycle_runner.py:294, :320, :329 (the RUNNING bytes)",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round81/NEVER_WIDEN_HALF_COO_RUNNER_REPIN_1c69fa35a3.md C-c and C-f",
+       "org/missions/D5/AMGT/AMGT_HARVST/ledger/NEVER_WIDEN_ROUND81_BY2_BY3_CTO_HALVES.md (by-3 section, bullet 2)"
+      ]
+     },
+     "notes": "UNBLOCKED WORK DONE ANYWAY, nothing served moved: the ledger harvst-bz1-runner-repin-20261012 is OPEN; the new pin wk-harvest-runner-pin-1c69fa35a3 exists at P with rev-parse 1c69fa35a34370a14cd03f741cfd0538f1e89faf and a discriminating positive control on <old> (C-a); all three harvest pins now read a locked line (C-e), which also closes row Z-S111's GC hazard for this runner -- <old> and the state pin were already locked by 0.0.0_AB_MSTR~Z on 2026-10-10. AC3 PASSES at the bytes. AC1 and AC2 remain unsatisfiable until the task is re-registered, which is what this row blocks. THE CALL FOR THE ISSUER AND THE SIGNERS: whether a wedged runner may be terminated (its pairs are already persisted in the cycle checkpoint, so the loss is bounded to the one in-flight pair) or whether C-f is to be amended. The scheduled task is untouched and still armed at <old>; the stop file is left in place, so a runner that unwedges stops cleanly and the act can then proceed as written.",
+     "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
