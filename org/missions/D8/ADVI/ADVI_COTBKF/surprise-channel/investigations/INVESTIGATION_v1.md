@@ -8182,3 +8182,78 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D2-W165-S1 -- The per-day price file carries no price origin (source is dropped at security_day_prices)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W165-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~165",
+  "surfaced_at": "2026-10-13T22:56:38Z",
+  "one_line": "security_day_prices merges each security-day to a min and max price and drops the store's source label, so the per-day file (cusip, date, price, store) cannot say which price is Yahoo-sourced; the dry run rebuilt the label from the store caches.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commonwealth_daily_valuation.py@68c10c2f6c:403-406 (groupby min and max; source not in the group)",
+      ".scratch/dryrun/dryrun_summary.json positive_control_price_table (both 2124908, store_mismatch 0, only_r34 0, only_new 0)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ce-2 item 4: the dry run over the local copies (r34/after/security_day_price.parquet) with the changed code counts the figure rows that read UNVERIFIED under the Yahoo rule, which needs each price's origin.",
+  "world_is": "At HEAD the store's source column is in PRICE_COLS but is not carried past the merge (commonwealth_daily_valuation.py@68c10c2f6c:403-406); the written per-day file has four columns and the local r34 copy has no source. The worktree change appends source. The counts were produced by re-deriving the source per security-day from the price caches under fwd3/price_cache and the as-traded input r34_price_input.parquet. Positive control: store and presence equal on 2124908 of 2124908 rows (.scratch/dryrun/dryrun_summary.json).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W165-S2 -- month_grades existing values not re-derived on the local copies (performance input is outside the grant)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W165-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~165",
+  "surfaced_at": "2026-10-13T22:56:38Z",
+  "one_line": "The month_grades existing values were not re-derived against the served object: the grade rows need Commonwealth's reported performance, an s3 prefix (commonwealth_monthly_grade.performance_prefix, line 45@68c10c2f6c) outside this worker's read grant, so the dry run's existing-values check covers account_day_value and daily_returns only.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commonwealth_monthly_grade.py@68c10c2f6c:45-48 (performance_prefix is an s3 address)",
+      "commonwealth_fwd3_serve.py grade_table (additive porting_verdict column; test passing in the worktree)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ce-2 item 4: the number of figure rows whose existing values change must be 0 for each of the three tables, under both rules.",
+  "world_is": "The appended porting_verdict leaves grade_table's existing columns equal with and without the map on a fixture (test_daily_and_grade_tables_keep_their_existing_columns_under_the_appended_one, passing). The served month rows were not compared with a re-derivation. PORTING_VERDICT_RECORD marks month_grades existing_values_changed as NOT_MEASURED.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W165-S3 -- The r28 split repair cannot be replayed offline: 37077 security-day prices differ by a split factor
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W165-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~165",
+  "surfaced_at": "2026-10-13T22:56:38Z",
+  "one_line": "The r34 per-day price values carry the r28 split repair from dell1's split store, which the offline dry run cannot read; 37077 security-days over 34 CUSIPs differ from the rebuilt price, each by a split factor (30 CUSIPs one constant ratio, 4 vary by day).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".scratch/split_ratio_check.py output: 34 CUSIPs with a price mismatch, 30 with one constant ratio, 37077 rows of 2115525",
+      "commonwealth_daily_valuation.py@68c10c2f6c load_store_splits (S3 read of dell1's split store)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ce-2 item 4 and its positive control: the dry run re-derives the round-82 values from the local copies with the changed code.",
+  "world_is": "The re-derivation reproduces every account-day value (worst absolute difference 0.0 over 1691729 account-days) because it reads the r34 file's prices; the source labels and store ids are exact (store_mismatch 0). apply_splits was not replayed: its split history is read from S3 (load_store_splits in commonwealth_daily_valuation.py@68c10c2f6c). The counts depend only on presence and source, which are exact.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
