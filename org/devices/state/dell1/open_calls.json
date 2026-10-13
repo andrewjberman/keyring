@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-13T12:20:21Z",
+ "written_at": "2026-10-13T12:22:22Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -2127,6 +2127,39 @@
     "at": "2026-10-13T10:06:05Z",
     "by": "1.0.0_SA_CTO~DELL1",
     "reason": "held for andrew by 1.0.0_SA_CTO~DELL1 at 2026-10-13T09:50:03Z: Destructive git on shared branches is Andrew's word"
+   }
+  },
+  {
+   "id": "dell1-20261013T122221Z-09ea",
+   "project": "NONE",
+   "subject": "Capped 49F lots (about 13 pct, no custodian position record): show their per-lot value and gain as UNVERIFIED until exact custodian units and cost are sourced, instead of any estimate? REC yes",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_121xZ_BD_PRICING_RULES_DONE_WHEN_CONFIRMED_AND_CAP_CLARIFICATION.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-13T12:22:21Z",
+   "kind": "fork",
+   "context": "Andrew-direct 10-13: estimation is too risky for exact performance reporting. The 2026-04-17 cap fits estimated lot values to Black Diamond's exact account total; the BD unrealized export has value and unit cost per lot but no share quantity, so it cannot make them exact alone.",
+   "rec": "Yes: account totals stay exact (they already match BD); per-lot value, gain and any per-position performance on those lots read unverified, never an estimate; the pricing project's first cell sources exact units and cost (a quantity/cost-basis column in the BD export, or custodian coverage).",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-13T12:22:21Z"
+   },
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-13T12:22:22Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "Valuation basis of an Andrew-approved design is his word"
    }
   }
  ]
