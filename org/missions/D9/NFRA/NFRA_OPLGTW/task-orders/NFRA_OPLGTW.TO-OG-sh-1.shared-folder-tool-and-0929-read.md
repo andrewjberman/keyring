@@ -65,6 +65,8 @@ infra/aws/ec2/opal-gateway/app/server.py
 infra/aws/ec2/opal-gateway/tests/test_og_sh1.py
 infra/aws/ec2/opal-gateway/tests/test_data_entitlement_guard.py
 infra/aws/ec2/opal-gateway/tests/test_data_entitlement_family.py
+infra/aws/ec2/opal-gateway/app/destructive_ops.py
+infra/aws/ec2/opal-gateway/tests/test_entitlement_admin.py
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -89,6 +91,11 @@ the ONE `<status>` tag to `complete` only if both PASS, and report once.
 <!-- ===================== RECORD FACE ===================== -->
 
 **ISSUER NOTES:**
+- A1 (issuer, 2026-10-13 ~17:5xZ, on worker ~63's report): `<paths>` is widened by two files the classification needs.
+  - `app/destructive_ops.py`: the tool must join `SAFE_TOOLS`, or `classify()` fails closed.
+  - `tests/test_entitlement_admin.py`: its tool-count assertion moves 62 -> 63.
+
+  Gate limb: GATE (viii) on the modified order (placeholders NONE).
 - Round 36, E4. The read's result goes to dell2 `1.0.0_SA_CTO~DELL2` through MSTR (the issuer relays it).
 - Pre-cut:
   - sh1.AC1 base FAIL as expected: the test file is absent; the baseline limb reads 0 new.
