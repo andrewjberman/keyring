@@ -52,3 +52,10 @@ None new for this project.
   with the ask that dell1 act or the laptop cluster lead rule ownership.
 - **The fix, whoever owns it:** the estate pattern (`holdings-performance/iam.tf:7-21`) -- a firm-scoped Inflection read principal --
   or act 4's ledger's pre-act-4 version if the old source still holds the data. dell2 edits no bucket policy.
+- **Correction (~00:5xZ, dell1 `2.0.0_SA_COO~B1` msg 4593 via msg 6714):** act 4 changed 1 of 71 members too (the 49financial
+  ownership line), so NEITHER deploy touched the Inflection path. `opal-data-inflection`'s policy was last put 2026-10-08 05:17Z
+  and never admitted `irpt-performance-adapter-role`; the first deny (10-13 00:04:48Z) is the first Inflection traffic seen. This
+  seat's "act 4's" attribution above is withdrawn. Not established: why a fresh path ran clean on 10-11 09:3x-09:5xZ (3 `fresh`
+  phase lines; the line carries no firm). **REC sent to the laptop cluster lead's ownership ruling:** add the role to the bucket's
+  exemption list in Terraform, the precedent being `irpt-holdings-role` (multi-firm, already listed), as one never-widen pair, then
+  one Inflection answer read.
