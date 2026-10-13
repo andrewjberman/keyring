@@ -25730,3 +25730,156 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The rows' text is unchanged; the byte-level change is what the append-only rule is about. The fix is a follow-on commit, not an amend. Whether other Edit calls on this file normalize line endings was not tested."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W423-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~423",
+  "surfaced_at": "2026-10-13T22:35:38Z",
+  "one_line": "The face's reading order names portal/CONTRIBUTING-BOXES.md, which is absent at the cut base 63c4f9e3; the file exists only in history (07f065e6) and reaches PROD through origin/PROD 10e7664d.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cd portal && git ls-tree -r --name-only HEAD | grep -i contributing: no output, rc=1, at HEAD 63c4f9e3 (nested worktree of AMGT_RESAPP-423-portal).",
+      "ls C:/dev/ajb_workspace/portal/CONTRIBUTING-BOXES.md: No such file or directory (base checkout).",
+      "git log --all --oneline -- CONTRIBUTING-BOXES.md: b5222d78 (docs(portal): declined-arm example) and 07f065e6 (docs(portal): CONTRIBUTING-BOXES.md, NFRA_DEVPLN DP-b-4). git cat-file -e DEV:CONTRIBUTING-BOXES.md: rc=128 (absent on local DEV).",
+      "git merge-base --is-ancestor 63c4f9e3 origin/PROD: rc=0; origin/PROD = 10e7664d 'merge feature cand/laptop/contributing-boxes into release/20261013T205139Z'. git show 07f065e6:CONTRIBUTING-BOXES.md read (57 lines); the branch was cut from 63c4f9e3 as ordered and the file was not copied in."
+    ]
+  },
+  "spec_asserts": "Face section 1 and Method: 'read portal/CONTRIBUTING-BOXES.md first' before any change under portal/; the portal rule the face cites is that file.",
+  "world_is": "At the face base 63c4f9e3 the file is absent from the tree. Its text is on origin/PROD only through the later release merge 10e7664d, and it is not an ancestor of the cut base. The rule was read from commit 07f065e6 and followed for the branch shape (cand/<box>/<slug>, no push, register by the issuer); the branch was cut from 63c4f9e3 as the face orders.",
+  "notes": "Form only. The face's read-first step cannot be performed at its named path at its named base; the rule text was read at the commit that carries it."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W423-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~423",
+  "surfaced_at": "2026-10-13T22:35:38Z",
+  "one_line": "The face names PROD 63c4f9e3 as the last release, but origin/PROD is now 10e7664d (a descendant of 63c4f9e3) and the local PROD ref is 18364342 (an ancestor of 63c4f9e3); the branch was cut from 63c4f9e3 as ordered.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal rev-parse origin/PROD: 10e7664d (git log -1 origin/PROD: 'merge feature cand/laptop/contributing-boxes into release/20261013T205139Z').",
+      "git merge-base --is-ancestor 63c4f9e3 origin/PROD: rc=0 (the face base is an ancestor of origin/PROD); git merge-base --is-ancestor origin/PROD 63c4f9e3: rc=1.",
+      "git rev-parse PROD (local ref): 18364342 ('AV-zzq-1: strip a repeated leading heading label'); git log --oneline 63c4f9e3..PROD: 0 commits, so the local PROD ref is behind 63c4f9e3 and was not used.",
+      "Nested worktree HEAD before the switch: 63c4f9e3 (wk-AMGT_RESAPP-423-portal); the new branch cand/dell1/aifill-blocks was cut from that HEAD."
+    ]
+  },
+  "spec_asserts": "Face section 1 Method and section 4 AC1/AC2: 'cut from the last PROD release' = 63c4f9e3 ('cd portal && git switch -c cand/dell1/aifill-blocks (from PROD 63c4f9e3)'); AC1 --base 63c4f9e3 and AC2 base 63c4f9e3. CONTRIBUTING-BOXES: the last PROD release is read with git -C portal rev-parse origin/PROD.",
+  "world_is": "The two readings name different commits: origin/PROD has moved to 10e7664d, which carries the cand/laptop/contributing-boxes merge on top of 63c4f9e3. The face's base is followed. A branch cut from origin/PROD would carry commits the AC base does not contain, so the AC base and the rule's named release disagree.",
+  "notes": "Form only. The local PROD ref trailing 63c4f9e3 is recorded as measured; no ref was moved."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W423-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~423",
+  "surfaced_at": "2026-10-13T22:35:38Z",
+  "one_line": "The portal rule (CONTRIBUTING-BOXES step 3) says to push the feature branch to origin, while the face bound says never push; the face was followed and nothing was pushed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 07f065e6:CONTRIBUTING-BOXES.md, Build step 3: 'Push the branch to origin under that name. Nothing of it is on DEV until approved.'",
+      "Face section 1 and Bounds 1: 'NEVER push'; the face's Method step 3: 'NEVER push'.",
+      "Worker standing rule: commit on the worktree branch only; never push, merge, rebase, checkout or clean. No push command was run on cand/dell1/aifill-blocks."
+    ]
+  },
+  "spec_asserts": "CONTRIBUTING-BOXES step 3: 'Push the branch to origin under that name.' Face Bounds 1 and Method 3: 'never push'.",
+  "world_is": "The portal rule asks for an origin push of the candidate branch and the order forbids it. The face is this order's bound and was followed; whether the approval registration needs the branch on origin is not decided here.",
+  "notes": "Form only. The issuer registers the branch for approval (face section 1); the rule's registration step is not run by this worker."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W423-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~423",
+  "surfaced_at": "2026-10-13T22:51:32Z",
+  "one_line": "Face placement for mgmt_bio and mgmt_recent reads 'below the CEO profile and tenure lines and above the roster', which no single position in ExecManagementTab satisfies; the blocks were placed above the roster, before the management body, because they must also draw when the management object is ABSENT.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tabs/ExecManagementTab.tsx at the base 63c4f9e3: ManagementBody renders the officer table (the roster) first, then the lusha line, the 'What is not on file' fold holding the tenure pool line, and CeoProfile last. The CEO profile and tenure lines therefore sit BELOW the roster in the SERVED branch.",
+      "ManagementBody's non-SERVED branch (management_status ABSENT) prints PanelEmpty and a read-detail fold only: no CEO profile line and no tenure line are drawn, yet the face requires the two blocks to draw when the management block is ABSENT.",
+      "Placement chosen: a sibling of ResearchTeamManagement, directly before ManagementBody, inside the tab-panel div (AiFillBlock mgmt_bio then mgmt_recent with always)."
+    ]
+  },
+  "spec_asserts": "Face section 2 item 2: 'mgmt_bio ... and mgmt_recent ... rendered with always, in the tab's normal flow below the CEO profile and tenure lines and above the roster, and ALSO when the management block is ABSENT'.",
+  "world_is": "In the current tab the roster precedes the CEO profile and tenure lines, so 'below the CEO profile and tenure lines' and 'above the roster' cannot both hold; and in the ABSENT state the CEO and tenure lines do not exist, so a placement below them cannot draw there. The blocks were placed above the roster (the only position that satisfies the ABSENT clause and the 'above the roster' clause together). Reordering the existing roster and CEO lines was not done: it is outside the surrounding-page-unchanged bound.",
+  "notes": "Form only. The placement the issuer intends is not decided here; the report names the file line where each block renders."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W423-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~423",
+  "surfaced_at": "2026-10-13T22:51:32Z",
+  "one_line": "The page's new import of components/AiFillBlock breaks three existing harnesses (execText, drafting, execFallback) whose loaders resolve only a fixed list of relative names, so R103's regression count is nonzero and AC2 cannot be met without editing a harness the face forbids.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Base run (63c4f9e3, every __harness__ file run bare): execText, drafting and execFallback exit 0. Branch run (cand/dell1/aifill-blocks, uncommitted tree): execText rc=1, drafting rc=1, execFallback rc=1, each with 'Error: Cannot find module ../components/AiFillBlock' (require stack: portal/package.json).",
+      "execText.harness.cjs load(name) (line ~76-93) and drafting.harness.cjs load(name) (line ~122) return req(name) for any relative name not in their list; req is createRequire(portal/package.json), so a relative name resolves from the portal root and fails. tabs.harness.cjs resolves relative names generically and is unaffected (rc 0).",
+      "Diagnostic only, in a scratch copy outside the harness folder with ONE added resolver line: execText 5 of 5 checks pass (EXECTEXT CHECKS 5/5); drafting 8 of 8 pass (CHECKS-OK 8 of 8). So the sole cause is the unresolved import name, not the rendered markup.",
+      "Face Bounds 3: existing harnesses are not edited; face Method/acceptance: existing harnesses must not regress; AC2 runs r103_feature_green_v2.sh, which counts a harness that fails on the branch and passes at the base as a REGRESSION."
+    ]
+  },
+  "spec_asserts": "Face section 1 item 5 and section 2 item 3: the existing harnesses (tabs, execText, execPattern, thesisLadder, drafting, ...) must not regress; existing harnesses are not edited; the component file is components/AiFillBlock.tsx imported by the tabs.",
+  "world_is": "The loaders of execText, drafting and execFallback cannot resolve the new relative import, so those three harnesses exit 1 on the branch. Every other harness keeps its base exit code. The branch is committed as the face's layout; the regression needs either a loader edit in those harnesses (outside this order's write grant) or a different import layout the loaders already resolve.",
+  "notes": "Form only. Decision for the issuer: permit a one-line resolver entry in the three harness loaders, or re-decide the component layout. No harness was edited by this worker."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W423-S6",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~423",
+  "surfaced_at": "2026-10-13T22:51:32Z",
+  "one_line": "The face's gap rule ('the sentence the tab prints for MANAGEMENT_HEADING / PILLARS_HEADING when the pack states none') does not say whether the 'dossier not carried' sentence counts as a pack that states none; the fill was drawn after it, and not after the failed-read sentence.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tabs/ExecManagementTab.tsx ResearchTeamManagement: the no-dossier branch prints 'The research team on management: not in this security's data.' (the heading sentence); the failed-read branch prints 'The research team's dossier could not be read (...)' which carries no heading.",
+      "tabs/ThesisTab.tsx ResearchTeamPillars: the no-dossier branch prints the pillars heading sentence; the failed-read branch prints the dossier-could-not-be-read sentence with no heading.",
+      "Harness arms team_view_beside_gap_only and pillars_beside_gap_only drive the empty-pack sentence (dossier with no status) and the stated-passage case; neither drives the no-dossier case."
+    ]
+  },
+  "spec_asserts": "Face section 2 item 2: mgmt_team_view 'rendered (not always) directly after the sentence the tab already prints for MANAGEMENT_HEADING when the pack states no management passage, and only there'; item 3 the same for PILLARS_HEADING.",
+  "world_is": "Both the not-carried sentence and the empty-pack sentences print the heading, and the fill follows all of them; the failed-read sentence prints no heading and draws no fill. Whether 'not carried' is a pack that states none is an interpretation this worker made, not a rule the face names.",
+  "notes": "Form only. The interpretation is recorded so the issuer can narrow it; no arm tests the not-carried case."
+}
+```
