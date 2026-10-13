@@ -3495,3 +3495,20 @@ Checks `deliverables/2.0.0_SA_COO~P2/checks/r169/p169_cells.py`, dry-run at the 
 | `IB-pr-491` | the producer's two `AnalysisReport` contract fixtures send a section the extractor can send (row D2-W63-S1) | FWD-3 | WORLD (the gate floor for an `infra/` path) | none | P169-b |
 
 fanout: 2 of 2 chains, cap 8, reason: chain P169-a is a queue (cells 1 and 2 to worker slot ~341, cell 3 to `0.7.0_AE_CloudOps~IB2` after the walk is drained); chain P169-b is one fixture cell (worker slot ~342).
+
+## 162. ROUND 170, WORKSTREAM ~P (2026-10-13 ~02:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6739 = ROUND-170 ANALYSIS section 4, and the CTO's DSGN_IRPTV1 round 32 and 33 analyses section 2a and 1)
+
+The CTO's list is carried, nothing new: (1) the PRODUCER pair for DSGN_IRPTV1 rows D2-S28, D2-W69-S1 and D2-W72-S2: a last-four search returns the ACCOUNT entry, each 49 Financial ACCOUNT node carries an `account_id` member (the directory's id, additive), and the pair's packet carries a read-only COUNT of 49F accounts whose node id differs from the directory's account id, per state (served / refused / withheld), denominator printed, no id in any file; (2) the fixture follow-up of row D2-W63-S1: the portal's wire copy and generated fixtures; (3) C-VALUEFACTS's rename APPLY, which waits for the portal reader on PROD (`e7f2`, Andrew's held promote), so nothing is cut for it. D2-S121 (the left-out branch, offline-proven only) is non-blocking and cuts no cell: this seat reads the first organic Inflection answer with `days_with_return_left_out` above 0 at its next tick that sees one.
+
+The producer item is cut as THREE build cells, not one: the search producer (`irpt-directory-search`, a Lambda), the node member (the gold-runner builder plus the HoldingsSnapshot contract and its fixture, whose staged copies two Lambdas pin), and the read-only count. Their APPLIES and the never-widen pair are NOT cut now: a served member added to a contract needs its own pair (COO half and CTO half), and the staged schema copies make the source-map pins of `irpt-holdings` and `irpt-ycharts-generate` stale the moment the docs copy changes (the apply order re-pins them first, as IB-pr-487 did).
+
+Checks `deliverables/2.0.0_SA_COO~P2/checks/r170/p170_cells.py`, dry-run at the base: IB170-1 AC1 FAIL, AC2 FAIL, AC3 PASS (a bound: the existing directory suite reads 173 passed, 10 failed, 28 errors at base); IB170-2 AC1 FAIL, AC2 FAIL, AC3 PASS (a bound: 22 builder tests and 24 contract tests pass); IB170-3 AC1-AC3 FAIL; IB170-4 AC1 FAIL (29 files carry the old tokens), AC2 PASS (a bound: 21 portal tests pass), AC3 FAIL. IB170-1-AC2 was also run against a throwaway reference implementation of the behaviour: PASS.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-492` | the directory search producer returns an ACCOUNT entry when the query matches an account's tail (and resolve accepts that entry) | FWD-3 | WORLD (the gate floor for an `infra/` path; build only, no deploy) | none | P170-a |
+| `IB-pr-493` | an additive `account_id` member on each 49F ACCOUNT node: the builder, `HoldingsSnapshot` schema (three copies), fixture, `raw_keys.json` | FWD-3 | WORLD (floor; build only) | none | P170-b |
+| `IB-pr-494` | the read-only COUNT of 49F accounts whose node id differs from the directory's, per state | FWD-3 | SERVED (a read of served custody and directory data; counts only) | none | P170-c |
+| `IB-pr-495` | the portal's AnalysisReport wire copy and generated fixtures carry the extractor's section form (a portal candidate for DEV; its PROD rides `e7f2`) | FWD-3 | LOCAL | none (the producer fixtures are merged: IB-pr-491) | P170-d |
+
+fanout: 4 of 4 chains, cap 8, reason: four disjoint write sets (the directory Lambda folder; the gold-runner builder and contract files; a records-only count; the portal fixtures folder), no edge between them.
