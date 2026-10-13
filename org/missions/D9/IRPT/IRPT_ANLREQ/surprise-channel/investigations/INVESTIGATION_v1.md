@@ -7815,3 +7815,470 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W74-S1 -- the AR-y-242 checker reads the candidate record at r21; the face writes it at r22
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W74-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~74",
+  "surfaced_at": "2026-10-13T17:33:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The AR-y-242 acceptance invocation reads the portal candidate record at deliverables/0.9.0_WK_IRPT_ANLREQ~74/r21/, while the worker face (step 5) says to write it at r22/. The record is written at r22 as the face says, so the criterion cannot find it.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR242-y-AC1 invokes ar21_checks.py y242-portal --root <worktree>; the face step 5 names r22/PORTAL_FILE_NAME_CANDIDATE.json as the record.",
+  "world_is": "ar21_checks.py:25 sets D to deliverables/0.9.0_WK_IRPT_ANLREQ~%s/r21/ and :301 calls portal_candidate on D % '74' + 'PORTAL_FILE_NAME_CANDIDATE.json', so the checker looks for r21/PORTAL_FILE_NAME_CANDIDATE.json. The record exists at r22/ only. The checker sits in the issuer's deliverables folder (deliverables/2.0.0_SA_COO~Y2/checks/r21/), outside this worker's grant, so the worker did not edit it and did not write a second copy at r21.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-74/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py:25 (D = .../~%s/r21/) and :301 (y242-portal)",
+      "the task order IRPT_ANLREQ.TO-AR-y-242 face step 5 (r22/PORTAL_FILE_NAME_CANDIDATE.json) at the worktree's task-orders/ folder",
+      "portal commit f5e92987f37e524e58b91185f60649e5be988a0d on branch wk-IRPT_ANLREQ-74-portal (portal repository), record at deliverables/0.9.0_WK_IRPT_ANLREQ~74/r22/PORTAL_FILE_NAME_CANDIDATE.json"
+    ]
+  },
+  "notes": "The round-20 analogue (AR-y-214) wrote its record under r20/, matching its checker's folder. For AR-y-242 the two round numbers differ (r21 checker, r22 face). Whether the record moves to r21 or the checker reads r22 is the issuer's call; the criterion stays FAIL until one of them changes."
+}
+```
+
+## IRPT_ANLREQ-D2-W74-S2 -- the upload state line reads "No file chosen yet." while a file is chosen and no review has run
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W74-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~74",
+  "surfaced_at": "2026-10-13T17:33:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "After the AR-y-242 change the upload step shows the file name line, but the status line beneath it still reads 'No file chosen yet.' whenever a file is set and no answer has come back yet (the NOTHING_CHOSEN state).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-242: the face names the chosen file in every state of the upload step and the native 'No file chosen' text is gone; the order says keep the existing state line.",
+  "world_is": "ProspectComposer.tsx:60 UPLOAD_STEP_STATE_LABELS.NOTHING_CHOSEN = 'No file chosen yet.', and uploadStepStateFor (:52-57) returns NOTHING_CHOSEN whenever no answer exists and no resolve is running, including when a file is set. The markup for that state therefore carries 'No file chosen' beside 'File: <name>' (commit f5e92987f37e524e58b91185f60649e5be988a0d). The candidate's test (c) scopes the 'No file chosen' assertion to answered states for this reason.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal worktree C:/dev/wk-portal-74 at f5e92987: ProspectComposer.tsx:52-60 (uploadStepStateFor and UPLOAD_STEP_STATE_LABELS)",
+      "bun test run of the candidate (before and after): the NOTHING_CHOSEN state with a file set renders 'No file chosen yet.' (seen in the before-arm markup output, C:/dev/wk-irpt-anlreq-74/.scratch/anlreq74_before_arm.txt)"
+    ]
+  },
+  "notes": "Form only. The label is an existing portal string and the order said keep the state line, so the candidate does not change it. Whether it should read differently while a file is chosen is for the issuer and the CTO review lane."
+}
+```
+
+## IRPT_ANLREQ-D2-W74-S3 -- the reference branch wk-IRPT_ANLREQ-63-portal named by the face does not exist in the portal repository
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W74-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~74",
+  "surfaced_at": "2026-10-13T17:33:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The AR-y-242 face says to read the commit convention from the log of branch wk-IRPT_ANLREQ-63-portal. No such branch exists in the portal repository; the AR-y-214 candidate is commit f6446051, reachable from other branches.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-242 step 1: commit the way an earlier candidate branch was made (git -C ... log of wk-IRPT_ANLREQ-63-portal).",
+  "world_is": "git -C C:/dev/ajb_workspace/portal branch --list 'wk-IRPT_ANLREQ-63*' returns nothing. The AR-y-214 candidate commit f644605182 (author 0.9.0_WK_IRPT_ANLREQ~63, message 'candidate on wk-IRPT_ANLREQ-63-portal, not landed') is in the portal history and was used as the convention read: author serial, subject form, Co-Authored-By trailer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/ajb_workspace/portal branch --list 'wk-IRPT_ANLREQ-63*' (empty output)",
+      "git -C C:/dev/wk-portal-74 show --stat f6446051 (subject and author read)"
+    ]
+  },
+  "notes": "Form only. The candidate branch is wk-IRPT_ANLREQ-74-portal as the face names; no other branch was touched."
+}
+```
+
+## IRPT_ANLREQ-D2-W74-S4 -- the portal's verification law asks for a rendered screenshot before a visual change is committed; the face asks for none
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W74-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~74",
+  "surfaced_at": "2026-10-13T17:33:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The portal's CLAUDE.md verification law says to render a visual change and read the screenshot (/frontend-dev, scripts/ui-smoke.mjs) before committing it. The AR-y-242 face asks only for tests and a record, so commit f5e92987 carries no screenshot; the trigger styling is checked by reading DESIGN.md clauses and by static markup.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-242 step 1: read the portal's CLAUDE.md and DESIGN.md first and cite the clause number for each visual choice; step 5 lists not_read including a browser render if none was run.",
+  "world_is": "C:/dev/wk-portal-74/CLAUDE.md 'Verification law -- LOOK AT THE PAGE, REJECT BY CLAUSE' (lines 75-84) names a screenshot, read against DESIGN.md, as the exercised path, and says the checklist without the screenshot is care, not a control. No browser render was run in this order (not_read in PORTAL_FILE_NAME_CANDIDATE.json).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-portal-74/CLAUDE.md:75-84 (Verification law)",
+      "C:/dev/wk-irpt-anlreq-74/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~74/r22/PORTAL_FILE_NAME_CANDIDATE.json (not_read)"
+    ]
+  },
+  "notes": "Form only. The candidate is a LOCAL commit on its branch, not landed or pushed. A screenshot is the gate a landing would need, for the CTO review lane or the issuer to decide."
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-W78-S1 -- the portal worktree has no git identity; the amendment commit needed the committer set on the command
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W78-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~78",
+  "surfaced_at": "2026-10-13T17:48:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The first attempt to commit the amendment on the portal branch failed with 'Committer identity unknown' (rc=128, no commit made); the commit that landed (73f9d64c) carries the committer set on the command line for this one commit, not from the repository's configuration.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-242 amendment, final paragraph: commit the second commit on the same portal branch, made the way f5e92987 was made; the record names the full sha.",
+  "world_is": "C:/dev/wk-portal-74 has no user.name and no user.email in git config (read with git config --get, both empty); the precedent f5e92987 carries author and committer 0.9.0_WK_IRPT_ANLREQ~74 (git log --format). The amendment commit 73f9d64c carries author and committer 0.9.0_WK_IRPT_ANLREQ~78 via GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL set for that command only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-portal-74 git config --get user.name and user.email: empty (read in this session)",
+      "portal commit f5e92987f37e524e58b91185f60649e5be988a0d: author and committer 0.9.0_WK_IRPT_ANLREQ~74 (git log --format)",
+      "portal commit 73f9d64ca079c0ae41ef9b0412029233318f497d: author 0.9.0_WK_IRPT_ANLREQ~78 (git show --format)"
+    ]
+  },
+  "notes": "Form only. The commit is LOCAL on wk-IRPT_ANLREQ-74-portal, not pushed. The issuer or the CTO review lane decides whether a worker shell should carry an identity for portal commits."
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-W78-S2 -- the precedent commit path for the portal repository is a bare git commit, which the workspace rules forbid
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W78-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~78",
+  "surfaced_at": "2026-10-13T17:48:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The amendment face says to commit in the portal worktree the way f5e92987 was made, and that path is a plain git commit with --author and -F; the workspace rule names safe-commit.sh and forbids a bare git commit, and no safe-commit route for the portal repository is named in the face.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-242 amendment, final paragraph: make the second commit on the same portal branch the way f5e92987 was made; the workspace CLAUDE.md section 6 says commit via .tools/safe-commit.sh and never a bare git commit.",
+  "world_is": "The portal repository has no core.hooksPath (read with git config --get) and no .githooks directory, so no portal-side commit gate ran on 73f9d64c. The commit was made with git commit --author and -F <file> from C:/dev/wk-portal-74, as f5e92987 was. The workspace .tools/safe-commit.sh lives in the workspace repository and was not run against the portal repository.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-portal-74 git config --get core.hooksPath: empty; no .githooks directory (read in this session)",
+      "portal commit 73f9d64ca079c0ae41ef9b0412029233318f497d (the amendment, made with git commit)",
+      "C:/dev/ajb_workspace/CLAUDE.md section 6 (commit via safe-commit; never a bare git commit)"
+    ]
+  },
+  "notes": "Form only. The commit is LOCAL on the candidate branch and nothing is pushed. Whether a portal candidate commit should pass the workspace safe-commit route is for the issuer and the CTO to decide."
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-W78-S3 -- the lane gate refuses this worker's commit of the r22 record, which sits in the first worker's deliverables folder
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W78-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~78",
+  "surfaced_at": "2026-10-13T17:50:52Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The amendment's record update (r22/PORTAL_FILE_NAME_CANDIDATE.json under the first worker's deliverables folder 0.9.0_WK_IRPT_ANLREQ~74) is refused by the lane gate for serial 0.9.0_WK_IRPT_ANLREQ~78: the order's <paths> names only this channel file, so the record and the proof instance under ~74 cannot be committed by this worker and stay uncommitted in the worktree.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-242 amendment, step 6: update the record r22/PORTAL_FILE_NAME_CANDIDATE.json in 0.9.0_WK_IRPT_ANLREQ~74/ and commit it in the workspace worktree; the face's BOUNDS grant includes org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~74/. The face also says to fix the proof instance in ~74/ and re-run the proof check.",
+  "world_is": "The order's <paths> block at HEAD names only org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md. safe-commit (lane TREE_DELIVERABLES, ADHC_OWNPTH.005) refused the commit with: VIOLATION: org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~74/r22/PORTAL_FILE_NAME_CANDIDATE.json -- agent=0.9.0_WK_IRPT_ANLREQ~78 not in permitted_agents; no NON-TERMINAL task order at HEAD issued_to this serial names this path. Nothing was committed (git log -1 is d5ee6545a4). The record was edited in the worktree only (uncommitted); the proof instance was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit refusal, this session, commit attempt for r22/PORTAL_FILE_NAME_CANDIDATE.json (rc=1; HEAD still d5ee6545a4)",
+      "C:/dev/wk-irpt-anlreq-74 org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-242.prospect-upload-names-the-file.md <paths> block (names only the channel file)"
+    ]
+  },
+  "notes": "Form only. Not worked around: no author override and no path outside the lane. The issuer can widen the grant to the ~74 folder for a continuation worker, or name the record's owner; the checker y242-portal reads r22 under ~74 (D22 in ar21_checks.py), so the record must stay there."
+}
+```
+
+## IRPT_ANLREQ-D2-W77-S1 -- the r22 record and the W75 rows are not in this worktree (read from the base checkout)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W77-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~77",
+  "surfaced_at": "2026-10-13T17:51:01Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's premise read-first (the r22 worker record of slot 75 and rows W75-S1..S4) is absent from worktree wk-IRPT_ANLREQ-77; both were read read-only from the base checkout.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-77 at bddbded002: the path org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~75/r22/ does not exist; grep of the worktree INVESTIGATION_v1.md for W75-S gives 0 hits",
+      "C:/dev/ajb_workspace (box/dell2) carries deliverables/0.9.0_WK_IRPT_ANLREQ~75/r22/PORTAL_PRICE_DATE_CANDIDATE.json (untracked there at read time) and INVESTIGATION_v1.md rows IRPT_ANLREQ-D2-W75-S1..S4 (base commit 398c0c0644 touches the channel file); bddbded002 is not a descendant of 398c0c0644 (git merge-base --is-ancestor)"
+    ]
+  },
+  "spec_asserts": "Face read-first: the worker record deliverables/0.9.0_WK_IRPT_ANLREQ~75/r22/PORTAL_PRICE_DATE_CANDIDATE.json and rows IRPT_ANLREQ-D2-W75-S1 and -S3 in the channel, navigated from the worktree the order names.",
+  "world_is": "The worktree branch wk-IRPT_ANLREQ-77 is at bddbded002, older than box/dell2 at 553c860ec5, and lacks the W75 drain commits. The record and the rows exist only in the base checkout. The cell was built on the record's read (server_reads, intake/portfolio.py:208-212, uploads.py:419-421 and 586-587 at 2d244d2ff0) with the base copy, without any rebase, merge or checkout. Nothing was copied into the worktree beyond this row.",
+  "notes": "Recorded for the issuer: the worktree lineage is the reason, not a decision of this worker. No rebuild, extraction or reconstruction of the tree was done."
+}
+```
+
+## IRPT_ANLREQ-D2-W77-S2 -- the resident recipe's builder is not the in-tree reports/ builder; the calendar member lives in a builder outside this grant
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W77-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~77",
+  "surfaced_at": "2026-10-13T17:51:01Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The release-19 recipe names org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py (EXTRA_FILES at :62) as its builder; the in-tree reports/build_resident_package.py has no EXTRA_FILES list and adds lib/opal_naming.py once at :75. Adding lib/trading_calendar.py to the resident package is one member in the recipe's builder, which is outside this order's grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/r19/RESIDENT_RECIPE_AND_DELTA.json recipe_source[0] (the builder blob e1e58c2d94 at aaa458aa4f)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py:55, :62 (EXTRA_FILES = lib/opal_naming.py, data/firm_registry.json, org/standards/NAMING_SCHEMA.json), :218 (for path in EXTRA_FILES)",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:37-38 (DIRS includes intake), :75 (add lib/opal_naming.py) at the worktree HEAD bddbded002"
+    ]
+  },
+  "spec_asserts": "Face step 1: the resident package is built by reports/build_resident_package.py and the release-19 recipe record; the calendar's membership is answered from those two.",
+  "world_is": "The recipe record's builder is a different file (IRPT_MVP_P, blob e1e58c2d94) from the in-tree reports/ builder. The intake/ directory ships in both (the resident includes intake; tests and fixtures excluded). lib/trading_calendar.py ships in neither. Either builder needs one added member: a one-line entry in the recipe builder's EXTRA_FILES, or one add() line in reports/build_resident_package.py. The recipe builder is outside this order's grant and was read only.",
+  "notes": "Packaging answer recorded in r22/PRICE_DATE_DEFAULT.json. The release cell that carries the member is the issuer's act."
+}
+```
+
+## IRPT_ANLREQ-D2-W77-S3 -- the calendar's fallback table ends in 2027: from 2028 an upload with a Shares unit and no price date raises instead of pricing
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W77-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~77",
+  "surfaced_at": "2026-10-13T17:51:01Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "one_line": "The server default for a Shares price date reads lib/trading_calendar.py, whose hardcoded NYSE table covers 2010-2027 and raises CalendarCoverageError for a prior day in a later year when pandas_market_calendars is absent (the irpt-ycharts-generate entry carries no such package). The default then fails loud from 2028-01-02 instead of answering.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py:_require_covered and CalendarCoverageError (the fail-closed raise for a year outside FALLBACK_FIRST_YEAR..FALLBACK_LAST_YEAR); the header line 'Regenerate NYSE_HOLIDAYS_FALLBACK ... before 2028.'",
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py:36-67 (_trading_calendar, default_price_date) at this cell's change; no catch of CalendarCoverageError is added, by design"
+    ]
+  },
+  "spec_asserts": "Cell AR-y-245: when no price date is sent for a Shares unit, the server takes the prior trading day from the estate's one calendar source.",
+  "world_is": "Measured by reading, not running: the generated fallback set spans 2010-2027 (FALLBACK_LAST_YEAR = 2027). The default computes prev_trading_day(today), which checks the prior calendar day, so for today 2028-01-02 onward it raises CalendarCoverageError; the default does not catch it, so a CSV upload with a Shares unit and no price date, or a template upload of basis SHARES, raises from the upload path until the table is regenerated or pandas_market_calendars is packaged. The irpt-ycharts-generate entry in infra/aws/lambda/ci/lambda-source-map.json has no pandas_market_calendars member and no layer; the resident host was not read. The calendar's own header names the regeneration duty. Not run.",
+  "notes": "The disarm is the regeneration of the table (lib/tests/gen_nyse_closures.py --write, LAST_YEAR extended) or the packaging of pandas_market_calendars, owned by the calendar's own lane. The disarm owner named here is the issuing seat of the cell that introduced the dependency."
+}
+```
+
+## IRPT_ANLREQ-D2-W79-S1 -- the QA harness and its test file are outside the order's grant (<paths> names only this channel file)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W79-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~79",
+  "surfaced_at": "2026-10-13T17:54:44Z",
+  "one_line": "AR-y-246 asks for two new files, infra/aws/lambda/investor-reporting/ycharts/generate/kimi_search_qa.py and ycharts/generate/tests/test_kimi_search_qa.py, but the order's <paths> grants only this investigations file, so neither file was written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task-orders/IRPT_ANLREQ.TO-AR-y-246.kimi-search-qa-receipt-harness.md:59-61 -- <paths> lists only org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md",
+      "task-orders/IRPT_ANLREQ.TO-AR-y-246.kimi-search-qa-receipt-harness.md:38 and :39 -- the cell names the two new infra and test paths",
+      "ar21_checks.py y246-qa run at C:/dev/wk-irpt-anlreq-79 (HEAD 85f43d3456): 'FAIL: no ycharts/generate/kimi_search_qa.py' and 'Y246-QA-FAIL' rc=1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-246 cell step 2 and BOUNDS: write ycharts/generate/kimi_search_qa.py and ycharts/generate/tests/test_kimi_search_qa.py; the grant is exactly <paths> plus the deliverables folder and the order file; a path the order lacks is a BLOCKING row.",
+  "world_is": "Neither new file is in the grant. Writing them would edit outside <paths>, so they were not written. AC1 cannot pass until the issuer amends the grant. Filed BLOCKING; the issuer amends the grant."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W79-S2 -- the cell's premise fails: one request with tools and tool_choice cannot produce a schema answer on the pinned model, so the QA would mint no receipt
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W79-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~79",
+  "surfaced_at": "2026-10-13T17:54:44Z",
+  "one_line": "The estate's own web-search QA (Y5P2 findings, 9 runs) measured that a single send with a built-in search tool cannot yield a swap answer: kimi-k3 rejects the tool echo, and every model answers the first send with tool_calls, which _parse refuses; a request_fields-only capability cannot pass the live QA the cell describes.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/Y5P2/KIMI_WEB_SEARCH_QA_FINDINGS_20261003.md:22-24 -- kimi-k3 returns tool_calls for $web_search, then 400 'Invalid request: tokenization failed' on the echo, in 3 shapes",
+      "KIMI_WEB_SEARCH_QA_FINDINGS_20261003.md:39-41 -- every model answers the first send with tool_calls; KimiAdvisory.call sends once and _parse requires finish_reason stop; a request_fields-only search_capability cannot pin web search",
+      "KIMI_WEB_SEARCH_QA_FINDINGS_20261003.md:27-29 and :42-43 -- kimi-k2.6 accepts the echo but answers outside the schema (KIMI_SCHEMA_INVALID, KIMI_BADJSON); JSON mode returns 500",
+      "infra/aws/lambda/investor-reporting/intake/resolution_kimi.py:73-74 -- _parse raises KIMI_FINISH_UNSUPPORTED for any finish_reason other than stop; :159-166 -- the gate admits request_fields keyed only tools and tool_choice"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-246 cell step 2: each QA case runs through KimiAdvisory.call('swap') with the candidate request_fields (tools, tool_choice only) and verified True inside the QA run; a candidate that passes every case mints a receipt.",
+  "world_is": "The measured estate record says the single-send design does not reach a schema answer on kimi-k3 (the advisory's model), nor on kimi-k2.6 in the two shapes tried. A harness built as specified would mint no receipt against the live port. The premise needs the CTO's ruling (a bounded tool loop, or the held options b or c that the QA findings list) before the harness is built."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W79-S3 -- the injection cases in the symbol position cannot reach the model: prompt_for refuses any symbol outside the SYMBOL pattern before send, and call() raises rather than returning a failure
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W79-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~79",
+  "surfaced_at": "2026-10-13T17:54:44Z",
+  "one_line": "The cell asks for two prompt-injection strings in the symbol position; validate_symbols refuses any string with spaces or other characters outside the symbol pattern before any send, and it raises ResolutionRefused from call(), so the harness must catch that and count it, and injection cases must be symbol-shaped to reach the model.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/security_resolution.py:17 -- SYMBOL = [A-Za-z0-9$^][A-Za-z0-9$^:._/-]{0,99} fullmatch",
+      "security_resolution.py:32-35 -- validate_symbols raises ResolutionRefused('SYMBOLS_INVALID') for any non-matching string",
+      "intake/resolution_kimi.py:42 and :153 -- prompt_for calls validate_symbols on the symbol before the try block, so call() raises and returns no failure dict"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-246 cell step 2: the QA cases include two prompt-injection strings in the symbol position that must not change the output shape.",
+  "world_is": "Free-text injection strings never reach send. Symbol-shaped injection strings do. The harness design has to take both facts into account. Recorded here; not a verdict on the cell."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W79-S4 -- the ycharts generate test folder shows 4 failures at this HEAD in the custody tests (no change by this worker)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W79-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~79",
+  "surfaced_at": "2026-10-13T17:54:44Z",
+  "one_line": "timeout 120 python -m pytest ycharts/generate/tests at worktree HEAD 85f43d3456 returns 540 passed, 4 failed, 30 skipped, 1 xfailed (rc=1); the four failures are in test_custody_entry.py and test_custody_retained.py, and this worker changed no file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest run at C:/dev/wk-irpt-anlreq-79/infra/aws/lambda/investor-reporting: '4 failed, 540 passed, 30 skipped, 1 xfailed, 68 subtests passed in 118.68s' rc=1",
+      "FAILED ycharts/generate/tests/test_custody_entry.py (2 tests) and test_custody_retained.py (2 parametrized cases of test_installed_custody_factory_runs_guarded_entry_with_actual_sdk_profiles)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-246 cell step 3: run the ycharts/generate/tests folder and record its counts, with the known pre-existing collection limit noted if it applies.",
+  "world_is": "The folder collected in full in this worktree (no fitz collection limit observed) and 4 custody tests fail on the untouched branch. Their cause was not read; out of this order's scope."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W80-S1 -- AR-y-247's grant names only the investigation file, so the code the cell requires is outside the worker's write surface and AC1 cannot be met
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W80-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~80",
+  "surfaced_at": "2026-10-13T17:53:44Z",
+  "one_line": "The TO-AR-y-247 <paths> grants only surprise-channel/investigations/INVESTIGATION_v1.md, but the cell's wiring (infra/aws/lambda/investor-reporting/ycharts/session/resident_session.py kimi_advisory), caller (infra/aws/lambda/investor-reporting/intake/upload_suggestions.py suggest_for) and the new test file (infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_swap_suggestions.py) are not granted; no code was edited, so AC1 is BLOCKED until the issuer amends the grant.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task-orders/IRPT_ANLREQ.TO-AR-y-247.swap-suggestions-wired-and-called.md lines 59-61: <paths> holds only org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md (worktree HEAD 85f43d3456)",
+      "task-orders/IRPT_ANLREQ.TO-AR-y-247.swap-suggestions-wired-and-called.md line 39 (cell step 3) and line 40 (cell step 4) name upload_suggestions.py suggest_for and the new ycharts/generate/tests/test_swap_suggestions.py",
+      "ycharts/session/resident_session.py:133-137 kimi_advisory() is where step 2 lands; the file is outside <paths>"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-247 Bounds: the grant is exactly the <paths> plus the ~80 deliverables folder and the order's status flip; a path the worker needs that it lacks is a BLOCKING row on that criterion, never an override.",
+  "world_is": "The three code paths the cell needs are not in the grant. The worker wrote no code and no test. AC1 cannot pass: the swap test file does not exist and the r22 record is filed only as its own deliverable. AC2J is judgment and has no change to grade."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W80-S2 -- the cell's file paths are shorthand; the code lives under infra/aws/lambda/investor-reporting, and resident_session.py sits in ycharts/session, not ycharts/generate
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W80-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~80",
+  "surfaced_at": "2026-10-13T17:53:44Z",
+  "one_line": "TO-AR-y-247 names intake/resolution_kimi.py, intake/upload_suggestions.py, ycharts/generate/resident_worker.py, ycharts/generate/resident_session.py and ycharts/generate/kimi_port.py relative to no root; in the worktree they are under infra/aws/lambda/investor-reporting/ (ycharts/session/resident_session.py for the session), and the opal_ai submodule directory is empty here, so it is not the place to look.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree -r --name-only HEAD (worktree) lists intake/upload_suggestions.py only as infra/aws/lambda/investor-reporting/intake/upload_suggestions.py; git ls-tree HEAD opal_ai shows a 160000 submodule pin 90ca424f and the worktree opal_ai directory holds no files",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py:23-24 sets IR = infra/aws/lambda/investor-reporting and INTAKE = IR + /intake",
+      "Grep KimiAdvisory( over infra/aws/lambda/investor-reporting/ycharts returns ycharts/session/resident_session.py:137 and ycharts/generate/tests/test_y4_check_gate.py:138 only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-247 Read first and cell step 1: the named files are the resident's and the suggestion lane's code, read at their paths.",
+  "world_is": "The files exist at the prefixed paths and were read there (read-only). The unprefixed names in the order do not resolve from the worktree root, so a worker taking them literally finds no file."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W80-S3 -- no existing mechanism carries a search capability into the resident at start; resident_session.kimi_advisory passes none and the only read-at-start carrier is a Secrets Manager key
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W80-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~80",
+  "surfaced_at": "2026-10-13T17:53:44Z",
+  "one_line": "TO-AR-y-247 step 1 asks for the one existing mechanism by which the resident reads a search capability at start; none was found: kimi_advisory (resident_session.py:133-137) reads only the Kimi key by name through kimi_port.secret_reader (kimi_port.py:19, :65-69), which returns a key string, not a capability dict with verified, qa_receipt_sha256 and request_fields. The carrier must be named by the CTO; the worker invents none.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/session/resident_session.py:133-137 kimi_advisory(): KimiAdvisory(send=kimi_send(secret_reader(self.secrets_client)), telemetry=journal_telemetry), no search_capability argument",
+      "intake/resolution_kimi.py:141-145 KimiAdvisory.__init__ takes search_capability=None and deep-copies it; :159-165 swap returns KIMI_WEB_SEARCH_UNVERIFIED unless the dict has model, verified true, qa_receipt_sha256 and request_fields",
+      "ycharts/generate/kimi_port.py:19 KIMI_SECRET_ID = astn/kimi/api-key; :65-69 secret_reader returns a SecretString read by name"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-247 Read first step 1: record how_the_capability_would_arrive as one existing mechanism, or say there is none; no secret or environment variable of the worker's invention.",
+  "world_is": "KimiAdvisory already accepts and gates the capability; the resident has no existing read-at-start carrier for it. The wiring has no value to read until the CTO names the carrier and the QA receipt exists (AR-y-246)."
+}
+]
+```
