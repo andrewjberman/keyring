@@ -56,6 +56,15 @@ No writer keeps an older copy of the rule.
 The gain or loss an advisor sees on an open lot compares a market value and a cost basis stated on the same footing. If one side is
 scaled for unit-count doubt, the other side is too; otherwise the gain is shown as unverified. A lot whose units held their value does
 not appear as a large loss because only its market value was compressed (PART IV.8). Added on `1.0.0_SA_CTO~DELL1` msg 4754.
+**Basis RULED by Andrew (2026-10-13 ~12:2xZ):** a capped lot's per-lot value and gain read UNVERIFIED, never an estimate, until exact
+custodian units and cost are sourced. Account totals stay exact. Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_122xZ_CAPPED_LOTS_UNVERIFIED_SHARE_COUNT_SOURCES_PORTAL_SMOKE_WSJ_CREDS.md`, item 1.
+
+### O8 -- An advisor sees each lot's units and cost as the custodian reports them
+
+The units and cost basis on a served lot come from an exact source: Black Diamond's own per-lot units and cost, or the custodian's lot
+file where one exists. They do not come from a reconstruction out of transaction history. A lot with no exact source reads unverified
+(O7). Once exact data is sourced, the cap has nothing left to estimate (PART IV.9). Added on `1.0.0_SA_CTO~DELL1` msg 4798.
 
 ---
 
@@ -165,7 +174,21 @@ Each item is a finding from what was read. Code was read at `origin/box/dell1` @
      consistent.
    - On the served 2026-10-09 holdings object, 64,629 of 492,998 open lots (13%) are compressed, across 3,057 accounts and 1,007
      tickers.
-9. **No existing project owns these rules.** A register read of every `org/missions/D*/*/*/project.json` whose name names pricing
+9. **Exact units and cost exist and are not used.** Source: the CTO's lineage record
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/BD_SHARE_COUNT_LINEAGE_AND_EXACT_SOURCES_20261013.md` @0eb039db9f. The first two items
+   are re-verified by that seat at the cited lines.
+   - Black Diamond's unrealized export, already pulled daily, offers "Units" (measure 15) and "Cost Basis" (measure 16). Both read
+     `isSelected: false` in the 49 Financial template (`data/black_diamond/scripts/bronze/templates/unrealized.json`) and `true` in
+     Cottonwood's.
+   - The silver step `process_unrealized_xlsx_to_parquet` (`data/black_diamond/scripts/silver/merge-daily-incremental.py:1205-1210`)
+     de-duplicates on `(account_id, asset_name)`. It keeps the first row and drops every later tax lot of a position.
+   - Other exact or partial sources go unused: the Snapshot export (query type 1, which Cottonwood ingests and 49 Financial does not),
+     the Schwab ULN/RLD lot files (exact `quantity` and `cost_basis`, used by B_02 but not by B_01), and Schwab master 0833 RPS (never
+     converted).
+   - Two unit paths are estimates today and fall under Andrew's constraint (PART V.8):
+     - synthetic injection, which divides leftover value by our own price;
+     - the cap design's treatment of `scoped_override` as a unit authority, when only the price was overridden.
+10. **No existing project owns these rules.** A register read of every `org/missions/D*/*/*/project.json` whose name names pricing
    returned no Black Diamond pricing project.
 
 ---
@@ -188,7 +211,13 @@ These are named, not sequenced. Sequencing is step 5.
    scaling cost with market value, stating the gain on uncapped values, or marking the gain unverified on capped lots.
    **Constraint from Andrew (2026-10-13, same record as PART VIII):** "any 'estimation' is highly risky for performance reporting
    that needs to be exact". A basis that keeps an estimated value in a served performance figure is out of pattern unless he says
-   otherwise. He has asked for clarification of the cap concept before choosing; the CTO gives it.
+   otherwise. **Resolved ~12:2xZ:** capped lots read UNVERIFIED until exact data is sourced (O7).
+10. The 49 Financial unrealized template has Units and Cost Basis switched on. Its S3 copy, which the runner reads, matches the repo
+    before the change. The silver de-duplication key includes the lot. Neither change moves a served figure by itself. Both are
+    reversible configuration (lineage record section 4, item 1).
+11. A ruling on unit authority: where exact custodian units exist they replace FIFO for valuation; Schwab stays authoritative where
+    present; a lot with neither stays unverified. It is measured first against FIFO, per lot, with the denominator printed
+    (lineage record section 4, items 2-3).
 9. The executive-summary position slots that rest on capped market values stay disabled until O7's correction is served. This is the
    CTO's ruling in ADVI_FIRMBKTS (`CTO_SAMPLE_READ_FB_J_10_EXEC_SUMMARIES_20261013.md` ADDENDUM 1).
 
@@ -223,7 +252,8 @@ Status ages; do not cut outcomes from it.
 5. It does not establish which portal pages, and which client logins, render these prices. O5's blast radius has to be measured per
    fix.
 6. It did not read the dell2 IRPT_DASHBD records directly. Their figures are as relayed in the ADVI_FIRMBKTS rows.
-7. It does not choose O7's basis, and does not claim the capped lots' units are held or not held. FB-j-12 left that unit-count
+7. O7's basis is Andrew's ruling, not this brief's choice. The brief does not claim the capped lots' units are held or not held, and
+   does not claim how far FIFO units differ from Black Diamond's; that is measured by the lineage plan's first read. FB-j-12 left that unit-count
    question open. It also does not measure the dollar size of the gain misstatement across the 64,629 lots.
 8. It sets no numeric bar. Tolerances and sample sizes are the PRD's to set once the mechanics are known.
 
@@ -231,7 +261,7 @@ Status ages; do not cut outcomes from it.
 
 ## PART VIII -- DONE WHEN (CONFIRMED by Andrew as written, 2026-10-13 ~12:1xZ)
 
-Andrew's answer, verbatim, was "Yes as written" (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_121xZ_BD_PRICING_RULES_DONE_WHEN_CONFIRMED_AND_CAP_CLARIFICATION.md`, item 1). Line 4 names the basis for capped lots, which he has not yet chosen (PART V.8).
+Andrew's answer, verbatim, was "Yes as written" (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_121xZ_BD_PRICING_RULES_DONE_WHEN_CONFIRMED_AND_CAP_CLARIFICATION.md`, item 1). Line 4's basis for capped lots is his ~12:2xZ ruling: they read unverified until exact data exists (O7).
 
 1. **Rule on record:** every served Black Diamond price for 49 Financial is produced by a rule written down in one place.
 2. **Traceability:** an analyst can trace any served price to that rule and its inputs.
@@ -253,6 +283,8 @@ Andrew's answer, verbatim, was "Yes as written" (`org/tier1_exec/1.0.0_SA_CTO/de
                     org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/CTO_SAMPLE_READ_FB_J_10_EXEC_SUMMARIES_20261013.md ADDENDUM 1
                     org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~75/IQLT_TRACE.{md,json} (@e6c4d46700)
                     docs/architecture/GOLD_B01_TIERED_UNIT_CONFIDENCE_CAP.md (approved design, 2026-04-17)
+                    org/tier1_exec/1.0.0_SA_CTO/deliverables/BD_SHARE_COUNT_LINEAGE_AND_EXACT_SOURCES_20261013.md (@0eb039db9f)
+                    org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_121xZ_*.md and ANDREW_DIRECT_20261013_122xZ_CAPPED_LOTS_*.md
   PRIOR ART         SOURCE_RANK + upsert_canonical (bd_price_update.py:65-71, :587-603); scoped overrides;
                     E_05/E_06/E_12/E_16 pricing diagnostics; FB-h-7 offline replicas; versioned opal-data-bd
   MEASURED AT       2026-10-13T07:05:55Z (FB-h-7); 2026-10-13T09:59:36Z (FB-j-12); code read at origin/box/dell1 @60c9b52ff0
