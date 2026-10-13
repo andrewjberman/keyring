@@ -12900,3 +12900,79 @@ name the one known failure instead of silently inheriting it.
   "notes": "Issuer defect class: a cell 'ships in rN' with no release order cut is invisible to every round-close check, because the build order is complete. Carry to the cut template: a build cell whose release is deferred names the release order it rides at the cut."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W65-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~65",
+  "surfaced_at": "2026-10-13T21:41:00Z",
+  "one_line": "OG-cd-1 item 1 derives the channel-to-family link from the catalog's dataset s3:// roots, but DATA_CATALOG.yaml carries no s3:// root for any dataset; the link was derived from catalog entity ids instead (claim inferred).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:1359-1363 (silver_datasets header): 'no S3 key, no precomputed artifact; each row is resolved live through its own producer + tools'.",
+      "RAN a pattern read of 's3://' over DATA_CATALOG.yaml: 0 matches in 2114 lines; the only bucket field is line 43 'bucket: opal-data-portal-v2' (the portal store, not a silver root).",
+      "READ app/family_depth.py default_channels()/read(): tools -> read_tool rows and spec.tool_catalog_refs -> entity ids; the entity id's leading token (schwab_dim_asset -> schwab) is matched to a family's sources. Result recorded in W/CD1_LIVE_READ.json: blackdiamond_fees links to BOTH families with source blackdiamond (blackdiamond and bd49finsurance), although the gateway's blackdiamond tool reads opal-data-bd silver/fees, not opal-data-assets."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "TO OG-cd-1 item 1: 'Use the catalog's dataset roots in app/refs/DATA_CATALOG.yaml (each read tool's dataset s3:// root) against each family's bronze/silver source prefix. It is never a typed table.'",
+  "world_is": "The catalog holds no dataset s3:// root; the derived link is by entity-id leading token against the family's source names, labelled inferred in every row's `link` leaf. It over-links blackdiamond_fees to the 49F insurance family and cannot see that the gateway's blackdiamond store is another bucket.",
+  "notes": "A precise link needs the catalog (NFRA_MCPINDEX is its only writer) or each IntegrationSpec to declare its dataset store and prefix; the issuer decides whether to ask for that."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W65-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~65",
+  "surfaced_at": "2026-10-13T21:41:30Z",
+  "one_line": "OG-cd-1 says every leaf value is {value, claim, read_at, source}, but the issuer's AC2 check reads depth.backfill_status_keys as a plain list of s3:// URIs; the module returns that one field as a plain list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/cd1.AC2.sh: python snippet 'ks=(f[0].get(\"depth\",{}).get(\"backfill_status_keys\") or []) ... print(ks[0] ...)' then 'aws s3 cp \"$key\" -'; a {value,...} dict there would raise KeyError at ks[0].",
+      "READ app/family_depth.py _family_values(): backfill_status_keys is a list of s3:// URIs; the per-key outcome (readable or the reason) rides in the backfill_frontier and last_sweep leaves' `source`."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "TO OG-cd-1 item 1: 'every leaf value is {value, claim, read_at, source}' and `backfill_status_keys` is one of the depth fields.",
+  "world_is": "The AC2 check dictates a plain list for backfill_status_keys, so it is the one identifier-list field without a claim wrapper; the list names keys, and each key's read outcome is claimed in the sibling leaves. Other sources the module cannot read read as absent with the reason, as asked."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W65-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~65",
+  "surfaced_at": "2026-10-13T21:58:00Z",
+  "one_line": "OG-cd-1 asks silver_families.json to be generated from silver.tf, but the commit-time naming gate REFUSES the scope names a faithful copy carries (49financial, cottonwood, inflection and the <source>/<scope> forms), so the file carries sources only and the read discovers scopes live.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN bash .tools/safe-commit.sh on the first build (JSON with silver_source_scopes copied): naming-gate REFUSE 'silver_families.json:7 49financial -> lookup', ':17 cottonwood', ':27 inflection', ':58 inflection' (NEW hand-kept carrier, context rule); a second build holding '<source>/<scope>' prefixes was REFUSED as SECRET: 'eclipse/inflection', 'trueshares/DIVZ', 'pathfinder/PFOE' and others.",
+      "READ .tools/naming-gate.py:22-28 (THE CONTEXT RULE): a firm or product token is permitted only in registry files, generated registry blocks, and name()/key()/address()/lookup() arguments; a generated COPY of silver.tf is none of these.",
+      "READ app/family_depth.py _prefixes_of(): the scopes of each source are the children of '<source>/' that hold a '<child>/silver/' tier, listed live; families sharing a source (blackdiamond and bd49finsurance) are flagged in the leaf's `source` and their claims read inferred."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "TO OG-cd-1 item 1: 'Read it [silver.tf local.silver_families] at build time into ONE generated file, app/refs/silver_families.json'; the scopes for the keys are the family's.",
+  "world_is": "The families and sources are carried (7 families, 8 sources, the rule-name template, the bucket); the per-family scope maps are not, because the gate admits no hand-kept scope literal outside the registry. The module lists each source's children live, so a scope the sweep does not serve but which holds a silver tier would be read as the family's, and two families on one source cannot be told apart; both are labelled inferred. The IAM list condition needs the eight source prefixes typed in family_depth_read_iam.tf (locals, drift noted in the ask).",
+  "notes": "A precise per-family scope list needs a registry carrier (lookup) the deployed gateway does not ship; the issuer decides whether to cut that."
+}
+```
