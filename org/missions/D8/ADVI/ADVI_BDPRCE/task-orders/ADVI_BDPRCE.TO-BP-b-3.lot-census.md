@@ -89,7 +89,7 @@ the market-value identity count, the extract's sha256 and path, AC1, AC2 and the
 
 **ISSUER NOTES:** round-1 analysis item 2; closes the census condition of W4-S2 and W4-S9; its extract is the input of `BP-b-7` (dollar effect) and `BP-b-8` (candidates). The count of lots off quantity x price also bears on W4-S8 and FWD-8.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <workstream>CENSUS</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-b-3</to_id>
