@@ -8928,6 +8928,59 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "notes": "INERT: it cannot move a served byte; it fails one test in the shared tree only. It would also fail the next merge's C-b read there. A pre-existing line-ending state of one file in the shared tree, not a regression of bz-3. Not repaired here (no write to another round's deliverable); the owner of that file's checkout normalises it, or the next issuer reads the clean-checkout count.",
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-Z-S116",
+     "project": "AMGT_HARVST",
+     "fabric": "site-z",
+     "surfaced_by": "0.7.0_AE_CloudOps~ZW",
+     "surfaced_at": "2026-10-13T08:30Z",
+     "one_line": "HVST-bz-4's disarm condition for row Z-S115 is MET (R1-R4 all TRUE, AC1-AC3 all PASS), but WHO flips the clock has three sources and two answers, and the ARMED clock is not in the plane this seat may write: the bz-4 order's record face says the disarm owner is this seat, the CTO relay says 2.0.0_SA_COO~W1 owns it, and Z-S115 itself still reads hazard_standing INERT with disarm_owner 2.0.0_SA_COO~W1 in the INVESTIGATION plane, so the graduated ARMED clock lives in the REMEDIATION plane, which CLAUDE.md reserves to the CVO and which this order's <paths> does not name.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "disarm_owner": "2.0.0_SA_COO~W1",
+     "spec_asserts": "TO-HVST-bz-4 record face: 'Row Z-S115 (ARMED, disarm owner this seat): disarmed when R1 to R4 read TRUE and AC1 to AC3 PASS.' CLAUDE.md section 2: 'An ARMED hazard disarms same-turn via the row's disarm_owner', and 'REMEDIATION rows stay the CVO's'. The bz-4 order's <paths> names the INVESTIGATION file and this seat's round84 folder; it does not name surprise-channel/remediations/.",
+     "world_is": "The act is done and the condition is satisfied, measured: R1 TRUE (log written at 08:15:14Z then a new line at 08:26:54Z, cadence ~2.9 min), R2 TRUE (<Command>C:\\Program Files\\Python314\\pythonw.exe</Command> in schtasks /query /xml, saved as round84/bz4_task.xml), R3 TRUE (MainWindowHandle 0, title empty, 0 conhost children, with the control noted below), R4 TRUE (checkpoint done length 2 at +7.3 min and 6 at +17.9 min, growth 4 against a required 3, zero AttributeError/OSError/WinError lines, and the real collector spawn read as a live windowless child PID 4164). AC1 PASS, AC2 PASS (negative control: the regex does not match 'python.exe'), AC3 PASS. BUT the clock: read at 08:3xZ, the INVESTIGATION row AMGT_HARVST-Z-S115 reads hazard_standing=INERT, disposition=UNDER_INVESTIGATION, disarm_owner=2.0.0_SA_COO~W1, and carries NO disarm block (398 rows scanned, both Z-S114 and Z-S115 checked). So the ARMED standing asserted by the CTO's graduation (@bcb24fcac3, ROUND_ANALYSIS.round83.md section 2) is NOT in the investigation plane and must be in the remediation plane. This seat therefore did NOT flip anything: it does not edit a remediation row (the CVO's), the gate's monotone-advance limb admits an ARMED->DISARMED advance only on a remediation row's own disarm block, and the surprise-row gate's mutation limb forbids editing a row at HEAD. Also noted so it is not lost: the two failure-free records that this act produced are themselves an artifact, which row Z-S117 carries.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round84/bz4_reads.out (R1-R4 with both reads and the clock note)",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round84/bz4_console.out (R3 and the control that corrects the handle signal)",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round84/bz4_register.out (AC1 and AC2 with the negative control)",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round84/bz4_task.xml (R2, the saved task XML)",
+       "A read of all 398 investigation rows at 08:3xZ: Z-S115 hazard_standing=INERT, disarm_owner=2.0.0_SA_COO~W1, no disarm block",
+       "org/mcp/inbox/0.7.0_AE_CloudOps/~ZW/read/20261013T065714Z_1.0.0_SA_CTO_Z_RELAY__issuer_interim_rule_for_your_orde.md ('COO~W1 owns the disarm')",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-bz-4.site-z-runner-registered-windowless.md, ISSUER NOTES ('disarm owner this seat')",
+       ".tools/surprise-row-gate.py:2549-2556 (the monotone advance is defined on a remediation row's disarm clock)"
+      ]
+     },
+     "notes": "THE ASK is one line: name the single owner of Z-S115's clock and the plane it lives in, and if it is this seat, name the file, because the order's <paths> does not include surprise-channel/remediations/ and this seat will not write outside its declared surface to flip a clock. The substantive condition is not in question -- it is met and evidenced above. Nothing is pending on the act: branch G, the windowless runner stays, step 8's rollback was never reached, and the old pin 1c69fa35a3 remains locked as the rollback.",
+     "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-Z-S117",
+     "project": "AMGT_HARVST",
+     "fabric": "site-z",
+     "surfaced_by": "0.7.0_AE_CloudOps~ZW",
+     "surfaced_at": "2026-10-13T08:30Z",
+     "one_line": "The 'two consecutive failure-free records' that trigger bz-5's PLANTED arm are ALREADY satisfied, but both records are OPERATOR-TRUNCATED stops this seat caused, not healthy complete cycles -- every bbg cycle that actually ran to completion carried failures (2, 4 and 8) -- so the trigger would fire on an artifact of the stops rather than on any evidence that organic failures stopped occurring.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "disarm_owner": "2.0.0_SA_COO~W1",
+     "spec_asserts": "The CTO half's ADDENDUM 1 for round 84 (ledger/NEVER_WIDEN_ROUND84_BZ4_CTO_HALF.md @469a566fa1): \"'rows only after two failure-free records' ends in a DRIVEN arm, not just a row. After two failure-free records, one PLANTED failing pair (a ticker known to fail, one pair) is queued once ... No FWD waits indefinitely on an organic failure. The organic one remains the negative arm.\" The COO half's ADDENDUM 1 (@b0267c5443) says of the same point: \"No plant is authorised by either order.\"",
+     "world_is": "Censused at 08:3xZ over the state dir, DENOMINATOR 8 .cycle.json records (the first read printed 0 and was instrument failure, not absence -- native Python cannot open an MSYS /c/... path; the printed denominator is what caught it). Newest first: 20261013T055243Z failed=0 stopped=stopped_by_operator; 20261012T191641Z failed=0 stopped=stopped_by_operator; 20261012T075353Z failed=2 stopped=None completed=True; 20261012T072307Z failed=1 stopped=bot_check; 20261011T221218Z failed=4 stopped=bot_check; 20261011T093924Z failed=4 stopped=None completed=True; 20261010T221526Z failed=8 stopped=None completed=True; 20261010T204810Z failed=6. So consecutive failure-free from the newest = 2, and the trigger reads ALREADY MET. BUT BOTH of those records are stopped_by_operator, and this seat caused both stops: the 05:46:00Z one releasing the QuickEdit wedge under bz-1, and the 07:59:03Z one under bz-4's own C-f. Of the three records that ended on their own (completed=True), ALL THREE carry failures: 2, 4 and 8. A truncated cycle asks fewer pairs before it is cut, so failure-free is the expected reading of a short cycle, not a signal about the failure rate. SECOND, AND SEPARATE: the two halves disagree on the plant in their own words -- the CTO authorises one planted pair after two failure-free records, the COO says no plant is authorised by either order -- and that fork is now live rather than hypothetical because the count is already 2.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "A census of all 8 bbg .cycle.json records in state/cycles/bbg at 2026-10-13T08:3xZ, denominator printed, failed and stopped read per record",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round84/bz4_stopped.out (the 07:59:03Z stop this seat caused, failed=0 recorded there)",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round83/bz1_console_release.out (the 05:46:00Z stop this seat caused)",
+       "git show 469a566fa1:org/missions/D5/AMGT/AMGT_HARVST/ledger/NEVER_WIDEN_ROUND84_BZ4_CTO_HALF.md ADDENDUM 1 (the planted arm)",
+       "git show b0267c5443:org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round84/NEVER_WIDEN_HALF_COO_BZ4_WINDOWLESS_REPIN.md ADDENDUM 1 ('No plant is authorised by either order')"
+      ]
+     },
+     "notes": "No act taken and none proposed here: HVST-bz-5 is this seat's order, its own start condition is not met (no ended record since the 08:09:08Z windowless start), and NOTHING in either order authorises this seat to queue a planted pair. TWO THINGS FOR THE ISSUER, both cheap: (1) decide whether operator-truncated records count toward the two-failure-free trigger -- the recommendation is that they should NOT, because the first cycle that ran to completion under the new pin is the honest test and the three completed cycles on record all carried failures; (2) settle the plant between the halves, since they currently read opposite. If the answer is that only completed cycles count, the count is 0 and bz-5 simply waits for the first windowless cycle to end, which needs no plant and no further pair.",
+     "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
