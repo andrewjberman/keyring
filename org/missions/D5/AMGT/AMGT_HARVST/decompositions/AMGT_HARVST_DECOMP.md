@@ -4019,3 +4019,18 @@ STOP status. `auth.SessionManager.refresh(publisher)` is the existing sign-in. S
 - **Why bz-10 is not cut in this issuance:** its pin is bz-9's merge commit, which does not exist yet (the same shape as bz-3 -> bz-4).
 - **Not orders:** a re-mint (round 84's finding was that a plain re-mint postpones wsj and leaves barrons untouched); FT; the servable-prefix list work (a standing deliverable).
 - **Checks dry-run at the base before the cut:** bz-9 AC1 base FAIL as expected (`no tests ran`: the file does not exist); bz-9 AC2 base PASS as expected (`76 passed`).
+
+## 105. ROUND 85 -- a repair inside bz-9's own scope: the refresh is limited to wsj and barrons (row `AMGT_HARVST-D1-S16`, this seat), 2026-10-13 ~22:5xZ
+
+Found reading `credentials.py` and `auth.py` beside the merged bz-9 (`44aadb7f1d`) before sending the bz-10 pair: `REFUSAL_CLASSES` maps `sign_in_refused` to `expired` for every publisher and `refresh_wanted()` tests only the class and the checkpoint budget, so under `--refresh-once` a `bbg` job refused as expired would spend
+its one refresh through the non-Dow-Jones branch of `SessionManager._refresh`, whose credential is `google/andrew-goldengate/credentials`: an automated headful Google sign-in that ruling (A) never named. The flag is OFF and unregistered, so nothing has fired. The issuer rules inside its own decomposition; this narrows bz-9, it adds no capability.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-bz-12` | `bz-12` | **`refresh_wanted()` admits only `wsj` and `barrons`** (one module constant); a refusal of any other publisher is recorded as before and never refreshed; the bz-9 tests that used another publisher for the refresh arms move to `wsj` or `barrons`; a loop over EVERY publisher of `credentials.PUBLISHERS` proves only those two refresh, and a mutant with the constant widened fails it. | LOCAL (direct act, about 40 product lines) | worker `0.9.0_WK_AMGT_HARVST~140` | CUT |
+| `HVST-bz-10` | (re-pinned) | **Site Z re-registered with `-Windowless -RefreshOnce`**: its pin is now bz-12's merge, not `44aadb7f1d`. | WORLD | seat `0.7.0_AE_CloudOps~ZW` | STAGED on bz-12's merge pin (its draft is not issued) |
+| `HVST-bz-11` | (with bz-10) | **The close read**, unchanged. | LOCAL (read) | seat `0.7.0_AE_CloudOps~ZW` | STAGED with bz-10 |
+
+- **Fan-out:** 1 worker, 1 chain of 1, cap 8 (bz-12 only).
+- **Why a new order and not an edit of bz-9:** bz-9 is complete and merged; its record stays as written.
+- **Checks dry-run at the base before the cut:** bz-12 AC1 base FAIL as expected (`no tests ran`: the file does not exist); AC2 base PASS as expected.
