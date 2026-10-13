@@ -5,7 +5,7 @@
  "project": "IRPT_DASHBD",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.12",
+ "prd_version": "v0.13",
  "step": 4,
  "brief_ref": "docs/briefs/reporting-dashboard-backend-brief-20260930.md@0ee065b116",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"],
@@ -417,6 +417,17 @@ S09's table, S12's news tables, S14's union-find). Relied-on work has no row by 
     The tie-out reads Black Diamond under `BD_DEFAULT`, citing `IRPT_DASHBD_ROUND88_B_DRAIN_END_20261013.md` @b460309b74. A
     disagreeing day that the default explains has "flow timing" as its stated reason. The 12 still owe their own reasons under
     FWD-8's ACCEPT line. The ENDPOINT text is unchanged.
+11b. **How FWD-8's ACCEPT is read at two grains (v0.13, 2026-10-13, round-90 analysis).**
+    - **Window grain:** a window, meaning an account and a stored segment, that agrees within 0.35pp meets the agreement clause.
+      Days inside it are not graded one by one.
+    - **Day grain:** a window outside 0.35pp meets FWD-8 only if every day that differs inside it carries a stated reason from the
+      closed list, and correcting that cause re-closes the window.
+    - **Population:** all 90 stored segments count, the 2 with no flow day included. Their reason is read by a tracked cell, not by
+      scratch.
+    - **The day read:** Black Diamond's daily figures are read through IRPT's existing per-account call. That is no new pull, and
+      a vendor API other than Bloomberg needs no per-use word under the workspace's autonomy law.
+    - **What remains:** a day still UNEXPLAINED after that read is graded NOT REALIZED for its account, and the CTO rules on it then.
+    The ENDPOINT text is unchanged.
 12. **Q1, the coverage vocabulary is decided in the contract file, with its record.** `IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json`
     (round 1, workstream B) carries the rule-24 four-postulate record and word-boundary census for every enum it declares. The
     CVO's finding is accepted: C-COVERAGE's list mixes three intents. The contract splits them: `history_scope` (FULL,
