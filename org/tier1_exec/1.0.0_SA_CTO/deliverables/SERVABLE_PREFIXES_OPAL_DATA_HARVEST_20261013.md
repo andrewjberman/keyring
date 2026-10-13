@@ -1,59 +1,109 @@
-# SERVABLE_PREFIXES -- `opal-data-harvest`, harvest V1 for asset managers (`1.0.0_SA_CTO~DELL1`, 2026-10-13 ~18:3xZ)
+# SERVABLE_PREFIXES -- `opal-data-harvest`, harvest V1 for asset managers (`1.0.0_SA_CTO~DELL1` v1 2026-10-13 ~18:3xZ; v2 measured by `2.0.0_SA_COO~W1`, ~18:5xZ)
 
 **For:** site Z's NFRA_MCPINDEX round (catalog rows) and NFRA_OPLGTW (the asset-manager research grant), through `0.0.0_AB_MSTR`. Cluster direction
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_DELL1_20261013.md` O3.
 
-**The V1 rule** (cluster ruling, section 1.4 item 6; Andrew may widen it): serve DERIVED layers and article LINKS only, never raw publisher text.
+**The V1 rule** (cluster ruling, section 1.4 item 6; Andrew may widen it): serve DERIVED layers and article LINKS only, never raw publisher text. The ruling names
+the served layers: packs, chatter, scores, management, filings outputs.
 
-**How this was read:**
-- `aws s3api list-objects-v2 --bucket opal-data-harvest --delimiter /`, 2026-10-13 ~18:2xZ. **24 top-level prefixes, 24 classified below.**
-- One more level was read for each prefix, and two levels for `amgt/`, `wsj/`, `publications/`, `publication-links/`, `social/`, `drafting/`, `lib/`, `scores/`
-  and `bloomberg/`.
-- **Claim:** each class is INFERRED from the prefix's name, its layer (bronze/silver/gold, v1) and the owning code's naming. No object's content was opened.
-  Every SERVE row's first catalog act reads one object and confirms the class before the row is published.
+**What changed in v2:** v1 classed every prefix from its name and opened no object. v2 opened ONE object (or one Parquet footer) per top-level prefix and per
+`amgt/harvest/gold/` table, and recorded the field NAMES and types only (no value was printed or copied). Counts are unchanged (11 SERVE, 13 WITHHOLD); the
+differences are one narrowed row (8), one class now read (23), and five measured flags on SERVE rows (section "Flags") that are the CTO's calls, not decided here.
+
+## How this was read
+
+- `aws s3api list-objects-v2 --bucket opal-data-harvest --delimiter /`, 2026-10-13 ~18:2xZ and again ~18:4xZ: **24 top-level prefixes, 24 classified below**
+  (the v1 count and the v2 count agree, one page each, 24 of 24 under the 1,000-key page).
+- Content read: one object per prefix, the first key returned (a SAMPLE of 1, never a census of the prefix). `packs/` was sampled on 4 of 105 names.
+- **Claim vocabulary:** MEASURED = a field name or size read from an object; INFERRED = the prefix name, layer and owning code only. Where a row says MEASURED, the
+  sample is the one object named in the evidence table, so it bounds the row to that object's class and no further.
 
 ## The 24 prefixes
 
-| # | prefix | content (one level down) | class | V1 |
+| # | prefix | content (measured where marked) | class | V1 |
 |---|---|---|---|---|
-| 1 | `packs/` | one prefix per covered name (105 at the cluster read) | derived (the research pack) | **SERVE** |
-| 2 | `scores/v1/` | per-name scores | derived | **SERVE** |
-| 3 | `management/v1/` | management outputs (FWD-17 roster) | derived | **SERVE** |
-| 4 | `filings/v1/` | filings analysis outputs | derived | **SERVE** |
-| 5 | `posture/v1/` | posture judgments | derived | **SERVE** |
-| 6 | `peers/v1/` | peer sets | derived | **SERVE** |
-| 7 | `publication-links/v1/` | per-name article links (`BA/`, `COST/`, `HD/`, ...) | article links | **SERVE** |
-| 8 | `amgt/harvest/gold/` | the gold chatter | derived | **SERVE** |
-| 9 | `identity/v1/` | security identity | reference (lookup) | **SERVE** |
-| 10 | `crosswalk/v1/` | the identity crosswalk | reference (lookup) | **SERVE** |
-| 11 | `universe/v1/` | the covered universe | reference (lookup) | **SERVE** |
-| 12 | `amgt/harvest/bronze/`, `amgt/harvest/silver/` | collected and normalised articles | raw publisher text | WITHHOLD |
-| 13 | `amgt/harvest/state/` | harvester state | operational | WITHHOLD |
-| 14 | `wsj/harvest/` (bronze, silver) | WSJ articles | raw publisher text | WITHHOLD |
-| 15 | `barrons/harvest/` | Barron's articles | raw publisher text | WITHHOLD |
-| 16 | `ft/harvest/` | FT articles (collection held on Andrew's word) | raw publisher text | WITHHOLD |
-| 17 | `seeking-alpha/harvest/` | Seeking Alpha articles | raw publisher text | WITHHOLD |
-| 18 | `issuer-site/harvest/` | issuer web pages | raw publisher text | WITHHOLD |
-| 19 | `sec/harvest/` | SEC filing text | raw text (public domain) | WITHHOLD in V1. **The first widening candidate:** filings are public, so this is Andrew's word to widen |
-| 20 | `publications/v1/` (`barrons/`, `bbg/`, `ft/`, `sa/`, `wsj/`) | per-publication article bodies | raw publisher text | WITHHOLD |
-| 21 | `bloomberg/harvest/`, `raw/` (`raw/bloomberg/`, `raw/seekingalpha/`) | vendor responses as received | raw vendor data | WITHHOLD (Bloomberg's licence as well as the V1 rule) |
-| 22 | `derived/` (`model_block/`, `model_block_fye/`) | the model block, from Bloomberg | derived from Bloomberg | WITHHOLD in V1: the Bloomberg licence's scope for redistribution to user Claude sessions is UNREAD. Andrew's call to open it |
-| 23 | `drafting/v1/` | per-name JSON drafts (`ASML_NA_Equity.json`, ...) | UNREAD | WITHHOLD until one object is read and classed |
-| 24 | `lib/local-publications/`, `social/v1/_measurement/` | a code library; a measurement folder only | not data | WITHHOLD |
+| 1 | `packs/` | one prefix per covered name (105); MEASURED on 4 names: `input_ledger.json` only (input_class, source, outcome, stamp, detail) | derived (input ledger) | **SERVE** |
+| 2 | `scores/v1/` | per-name scores; MEASURED: divergence, `peers_v`, `inputs.model_block_key` | derived from the Bloomberg model block | **SERVE per ruling, FLAG F2** |
+| 3 | `management/v1/` | management outputs (FWD-17 roster); MEASURED: roster, `lusha_enrichment`, `ceo_public_profile` (url, title, snippet) | derived, with vendor and web fields | **SERVE per ruling, FLAG F4** |
+| 4 | `filings/v1/` | MEASURED: `<accession>.source.json` carries `excerpt.text` (70,023 chars) and `<accession>.analysis.json` carries `passage_map[].text` (549 passages) | derived items plus verbatim SEC filing text | **SERVE per ruling, FLAG F1** |
+| 5 | `posture/v1/` | posture judgments; MEASURED: verdict, reason, and `membership` (books, weight_by_book) | derived (model-book membership inside) | **SERVE, FLAG F5** |
+| 6 | `peers/v1/` | peer sets; MEASURED: measures, country map, `csc_columns` | derived from the Bloomberg model block | **SERVE per ruling, FLAG F2** |
+| 7 | `publication-links/v1/` | per-name article links; MEASURED (291 B): security_key, company, ticker, article_key, publisher, first_discovered_at. **No url, no title** | article link INDEX | **SERVE, FLAG F3** |
+| 8 | `amgt/harvest/gold/` -- ONLY these six tables: `article_security_mention`, `article_sentiment`, `chatter_daily`, `chatter_event`, `chatter_window`, `candidate_universe` | MEASURED: counts, tiers, scores, tone, hashes, keys; `chatter_event` carries `lead_headline` (string) | derived (the chatter) | **SERVE (these six only)** |
+| 9 | `identity/v1/` | security identity; MEASURED: crosswalk residue, cross-references | reference (lookup) | **SERVE** |
+| 10 | `crosswalk/v1/` | the identity crosswalk; MEASURED: security_key, bloomberg, display_ticker | reference (lookup) | **SERVE** |
+| 11 | `universe/v1/` | the covered universe; MEASURED: names with `books` and `weight_by_book` | reference (lookup, model-book membership inside) | **SERVE, FLAG F5** |
+| 12 | `amgt/harvest/bronze/`, `amgt/harvest/silver/` | MEASURED: bronze `research-report-extract/extract.json` holds `paragraphs[].text`; silver `research-report` holds metadata only (author, fund, sector, period) | raw report text (bronze); report metadata (silver) | WITHHOLD |
+| 12b | `amgt/harvest/gold/` -- the other seven tables: `research-backlog`, `research-continuation`, `research-dossier`, `research_dossier`, `research-fund-form`, `research-model-typecast`, `research-sector-template` | MEASURED: `passages` (sector-template), `citations` (continuation), `fields.*.value/absent` (dossier) -- report-derived text; class of the rest not read | report-derived, unclassed | WITHHOLD (v1's whole-prefix SERVE admitted these) |
+| 13 | `amgt/harvest/state/` | MEASURED: filing_attempt, freshness_snapshot, pull_log | operational | WITHHOLD |
+| 14 | `wsj/harvest/` (bronze, silver) | MEASURED: silver `article` carries `text`, `body_blocks`, `title`, `url` | raw publisher text | WITHHOLD |
+| 15 | `barrons/harvest/` | same shape as 14 (silver `article`; bronze `article`, `news_listing`) | raw publisher text | WITHHOLD |
+| 16 | `ft/harvest/` | same shape as 14; collection held on Andrew's word | raw publisher text | WITHHOLD |
+| 17 | `seeking-alpha/harvest/` | MEASURED: silver `article` (publishOn, themes, ...), bronze `analysis`, `article`, `news`, `report`, `symbol`; state `job_record` | raw publisher text | WITHHOLD |
+| 18 | `issuer-site/harvest/` | MEASURED: silver `filing_source` (url, document_sha256, document_text_chars); no text column | issuer page metadata | WITHHOLD |
+| 19 | `sec/harvest/` | MEASURED: bronze `company_tickers`; silver `filing_source` (metadata, `object_json`) | SEC text and metadata (public domain) | WITHHOLD in V1. **The first widening candidate:** see call C-SEC |
+| 20 | `publications/v1/` (`barrons/`, `bbg/`, `ft/`, `sa/`, `wsj/`) | MEASURED: url, title, `body_blocks`, `text` (4,616 chars in the sample) | raw publisher text | WITHHOLD |
+| 21 | `bloomberg/harvest/`, `raw/` (`raw/bloomberg/`, `raw/seekingalpha/`) | MEASURED: `raw/bloomberg` histdata mnemonics; `raw/seekingalpha` symbol payload | raw vendor data | WITHHOLD (Bloomberg's licence as well as the V1 rule) |
+| 22 | `derived/` (`model_block/`, `model_block_fye/`) | MEASURED: figures (mnemonic, value, vintage, source), cases | derived from Bloomberg | WITHHOLD in V1: the Bloomberg licence's scope for redistribution to user Claude sessions is UNREAD. Andrew's call to open it (C-BBG) |
+| 23 | `drafting/v1/` | MEASURED: AI-drafted `sections[].sentences[]` and `evidence_records[].passage` (verbatim SEC filing passages, 774 chars in the sample), `quoted_spans` | derived (AI-drafted) with verbatim SEC passages | WITHHOLD (class now read; rides call C-SEC) |
+| 24 | `lib/local-publications/`, `social/v1/_measurement/` | MEASURED: a code archive (.zip); a vendor-job cost and delivery measurement | not data | WITHHOLD |
 
-**Count: 11 SERVE, 13 WITHHOLD (2 of them Andrew's calls to widen: rows 19 and 22).**
+**Count: 11 SERVE rows (rows 1-11; row 8 narrowed to six tables), 13 WITHHOLD (rows 12-24; row 12b is the split of row 8).** Two widening calls were at
+Andrew in v1 (rows 19, 22); v2 names them C-SEC and C-BBG and ties more rows to each.
+
+## Flags -- measured findings the CTO decides (each row stays as the ruling put it until the CTO says)
+
+| id | finding (MEASURED) | rows | the call |
+|---|---|---|---|
+| F1 | `filings/v1` objects embed verbatim SEC filing text (`excerpt.text`, `passage_map[].text`). Row 19 withholds the same text under `sec/harvest/` as "the first widening candidate". The ruling serves "filings outputs", so the intent is the DERIVED items, not the text | 4, 19, 23 | C-SEC: one word from Andrew covers all three, OR the grant for row 4 is cut to a derived-only view. A prefix grant cannot split `analysis.json` (its `passage_map` is inside the derived file) |
+| F2 | `scores/v1` and `peers/v1` are computed from the model block (`inputs.model_block_key`, `peers_v`), which row 22 withholds for the Bloomberg licence. The two reasonings disagree | 2, 6, 22 | C-BBG: serve scores and peers and withhold the block (v1), OR hold rows 2 and 6 with row 22 until the licence is read |
+| F3 | `publication-links/v1` records carry no url and no title; the url lives only in `publications/v1` and the silver articles, both WITHHOLD. An asset manager would receive article keys, not links | 7 | Whether a derived link view (url, publisher, date, no body) is cut as an enrichment item, or the keys are enough for V1 |
+| F4 | `management/v1` carries a vendor field (`lusha_enrichment`) and a third-party web snippet (`ceo_public_profile.snippet`). The Lusha licence's redistribution scope is unread | 3 | Serve as is, or strip the two fields at the producer |
+| F5 | `posture/v1` and `universe/v1` carry Opal's own model-book membership (`books`, `weight_by_book`: DIVZ, IDVZ, PFDE, PFOE) | 5, 11 | Confirm asset managers may see book membership; the negative arm (non-research principal refused) already covers outsiders |
+
+Also noted, not a verdict change: `chatter_event.lead_headline` is a publisher headline string inside a SERVE table (row 8). If a headline counts as raw
+publisher text, the producer drops the column; if it counts as the article link's title, it stays.
 
 ## The grant, as the V1 rule needs it
 
-- Grant an asset-manager principal `s3:GetObject` on the 11 SERVE prefixes ONLY, as prefix conditions. No bucket-wide read, and no `ListBucket` outside those prefixes.
+- Grant an asset-manager principal `s3:GetObject` on the SERVE prefixes ONLY, as prefix conditions: rows 1-7 and 9-11 whole, and row 8 as the six table prefixes
+  `amgt/harvest/gold/<table>/`, never `amgt/harvest/gold/`. No bucket-wide read, and no `ListBucket` outside those prefixes.
 - **Negative arms (FWD of O3):**
-  - the same principal is refused on a WITHHOLD prefix (`wsj/harvest/`);
+  - the same principal is refused on a WITHHOLD prefix (`wsj/harvest/`) and on a withheld gold table (`amgt/harvest/gold/research-dossier/`);
   - a non-research principal is refused on `packs/`.
 - Every catalog row names its prefix exactly as above. A new top-level prefix is WITHHOLD until classed here.
+- First catalog act per SERVE row: read one object and confirm the class (v2 has done it once per row; the sample is 1).
+
+## Evidence (field names only; no value was printed)
+
+| row | object read (key under `s3://opal-data-harvest/`) | size |
+|---|---|---|
+| 1 | `packs/1299_HK_Equity/input_ledger.json` (and the first key of `ASML_NA_Equity`, `BABA_US_Equity`, `COST_US_Equity`: the same single file) | 4,277 B |
+| 2 | `scores/v1/2317_TT_Equity.json` | 3,432 B |
+| 3 | `management/v1/ASML_NA_Equity/2026-09-18.json` | 1,698 B |
+| 4 | `filings/v1/ASML_NA_Equity/000162828026011378.source.json` and `.analysis.json` | 73,776 B and 376,279 B |
+| 5 | `posture/v1/ASML_NA_Equity/2026-09-16.json` | 4,548 B |
+| 6 | `peers/v1/1299_HK_Equity/2026-10-11T0707Z.json` | 49,806 B |
+| 7 | `publication-links/v1/COST/barrons/55682270...json` | 291 B |
+| 8 | Parquet footers of `article_security_mention`, `article_sentiment`, `chatter_daily`, `chatter_event`, `chatter_window`; JSON of `candidate_universe` | 1 part each |
+| 12b | `research-backlog`, `research-continuation`, `research-dossier`, `research_dossier`, `research-fund-form`, `research-model-typecast`, `research-sector-template` (first key of each) | 1 object each |
+| 12 | `amgt/harvest/bronze/research-report-extract/.../extract.json`; `amgt/harvest/silver/research-report/...parquet` footer | 72,797 B; 39,382 B |
+| 14-17 | the first silver `article` Parquet footer of wsj, bloomberg, barrons, ft, seeking-alpha | 28-125 KB |
+| 18-19 | `issuer-site/harvest/silver/filing_source/...parquet` and `sec/harvest/silver/filing_source/...parquet` footers; `sec/harvest/bronze/company_tickers/...json` | 283,596 B; 808,344 B; 800,703 B |
+| 20 | `publications/v1/sa/5666ee64...json` | 10,205 B |
+| 21 | `raw/bloomberg/992_HK_Equity/20260916T201811Z/histdata.json`; `raw/seekingalpha/BA_US/20260911T040253Z/symbol.json` | 6,963 B; 17,945 B |
+| 22 | `derived/model_block/1299_HK_Equity/20260926T001811Z/model_block.json` | 262,166 B |
+| 23 | `drafting/v1/COST_US_Equity.json` | 89,893 B |
+| 24 | `lib/local-publications/0.1.0/6aef3ceee43976dc/local-publications-0.1.0.zip`; `social/v1/_measurement/2026-09-15.json` | 143,769 B; 12,088 B |
+| 9-11 | `identity/v1/2026-09-17-coverage-residue-crossref.json`; `crosswalk/v1/2026-09-15.json`; `universe/v1/2026-09-15.json` | 47,229 B; 188,380 B; 185,928 B |
+
+**Not measured:** the other objects under each prefix (a sample of 1 per row); the Parquet bodies (footers only); whether any pack beyond the four sampled holds
+more than `input_ledger.json`; the Bloomberg and Lusha licence terms; which principals exist at NFRA_OPLGTW.
 
 ## Owners
 
 - The list: AMGT_HARVST (`2.0.0_SA_COO~W1`), with AMGT_RESAPP for `packs/`.
+- The flags F1-F5 and the calls C-SEC, C-BBG: `1.0.0_SA_CTO~DELL1`, then Andrew.
 - The catalog rows and the grant: site Z, NFRA_MCPINDEX and NFRA_OPLGTW, under `1.0.0_SA_CTO~Z`.
 
--- 1.0.0_SA_CTO~DELL1
+-- 1.0.0_SA_CTO~DELL1 (v1), 2.0.0_SA_COO~W1 (v2, measured)
