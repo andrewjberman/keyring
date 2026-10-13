@@ -3893,3 +3893,96 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S16",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T02:22:14Z",
+  "one_line": "The release build against the unpatched map moves six members, not the two the census planned: the four native holds differ from the baseline; the census hold is relative to the live package, not to the current map.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RELEASE_BUILD_RECORD.json disagreement: acceptance.py, submission.py, submission_service.py, durable_job.py, uploads.py, template_reader.py differ between patch and baseline",
+      "RELEASE_BUILD_RECORD.json native_members_release_vs_census_live: all four true (release member equals the census live_member_sha256)",
+      "baseline zip members equal the HEAD blobs: acceptance.py 0c4acec625, submission.py 18aba4f079, submission_service.py 24b793e8ab, durable_job.py afba08fefb",
+      "ar19_checks.py y193-build rc=1: FAIL the planned members and the members that differ are not the same set"
+    ]
+  },
+  "spec_asserts": "The AR-y-193 spawn amendment and cell: the four native members are PINNED at the commits the live package matches, so the release moves ONLY the two reader members, and the planned set equals the measured set.",
+  "world_is": "Measured against the current map with no patch, the four pinned natives differ (HEAD blobs versus pinned blobs 06425d4731, 82c47bd021, d07a8281bb, b5192fa2a1), so the release moves six members. The census 'moves nothing' holds against the live package only. Any normal build of irpt-ycharts-generate from the unpatched map packages the four pending HEAD natives 06557b6618, 74bbdbb322, 2f7cc7be42 and 3acafb3f45 that the census holds back.",
+  "notes": "The worker did not change the planned list or the baseline to make the check agree. The issuer decides whether the planned list names the four holds or the baseline is the live-hold package. The trunk map is unedited. Disarm: the issuer lands the map patch or holds normal builds of this function.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S17",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T02:22:14Z",
+  "one_line": "BUILD_ONLY keeps its zip at one fixed path per function; the second build (baseline) replaced the first (patch), so the release package survives only as a copy taken between the two builds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/build-and-upload.sh line 411: ZIP_PATH=\"${TMPDIR:-/tmp}/lambda-artifact-${FN_NAME}.zip\" (a fixed name per function)",
+      "build_patch.log BUILD_ONLY line sha256=WnJlFFzELuJsZfWM5NG+qASMAM+ZBMjFVmvBV7b8FjU=; build_baseline.log BUILD_ONLY line sha256=p/pwRXJd+daoVKIhRimGzlxhHHLs2E4lGsz+eZVNBns= at the same path"
+    ]
+  },
+  "spec_asserts": "BUILD_ONLY keeps the zip at $ZIP_PATH so a release census can diff it (build-and-upload.sh lines 657-660).",
+  "world_is": "ZIP_PATH is one name per function, so a second BUILD_ONLY of the same function replaces the first zip. Two builds for a baseline need a copy taken between them; the copies are in .scratch/r19 of this worktree.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S18",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T02:22:14Z",
+  "one_line": "The worker branch wk-IRPT_ANLREQ-51 does not contain the shared-tree drain commits 5743c86349 and 069b8f797e; its map differs from the shared map, so the throwaway worktrees were cut from the shared head 5d8b0390ed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor 5743c86349 97dadd5cda returns rc=1 on the worker branch; the same test on the shared tree HEAD 5d8b0390ed returns 0",
+      "sha256 of infra/aws/lambda/ci/lambda-source-map.json: worker branch c181684c4d, shared HEAD a8c55c584d (the census value)",
+      "worker branch commit 97dadd5cda carries the same subject as shared fba6052830 under a different hash"
+    ]
+  },
+  "spec_asserts": "The order cuts throwaway worktrees from the current head of the SHARED tree (commit fba6052830 or later), and the spawn amendment names AR-y-192 merged at 5743c86349.",
+  "world_is": "The worker's own branch was cut before those drain commits. The shared tree carries them. The builds used the shared head 5d8b0390ed, whose map equals the census read at 537391d103 (no diff in the map between the two).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S19",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T02:22:14Z",
+  "one_line": "The release build's manifest-index gate printed SKIP, not a pass: the BUILD_MANIFEST.json staged into this package declares no declared_blobs, so no vendored member was checked against a committed-blob index.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "build_patch.log line: 'SKIP: manifest-index gate -- this BUILD_MANIFEST declares no declared_blobs ... (not a pass)'",
+      "the staged_from gate printed 'sha256 verified' for each staged row of the map entry (92 rows), so the pinned members were checked by declared sha256 instead"
+    ]
+  },
+  "spec_asserts": "The release build proves the package it reports; a gate that prints SKIP reports that it checked nothing.",
+  "world_is": "The index gate verified nothing in this build; the staged_from sha256 gate verified the declared rows. The packaged members outside staged_from were not checked against any committed-blob index.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
