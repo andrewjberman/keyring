@@ -1,0 +1,129 @@
+{
+ "read_at": "2026-10-13T01:3xZ",
+ "object": "opal-data-49financial advi/49financial/platinum/views/mix_daily_summary.json VersionId ZuygB9ZtOGqSqiaE.3gV_ae70lhbSZeF (after SC-e-91's first fire)",
+ "unclassified_bound": 53010.445702642115,
+ "clauses": {
+  "1_unclassified_09-30..10-06_at_most_bound": {
+   "met_dates": [],
+   "not_met": [
+    [
+     "2026-09-30",
+     41474650.27
+    ],
+    [
+     "2026-10-01",
+     42127268.51
+    ],
+    [
+     "2026-10-02",
+     53761121.27
+    ],
+    [
+     "2026-10-03",
+     59944546.47
+    ],
+    [
+     "2026-10-04",
+     60062257.66
+    ],
+    [
+     "2026-10-05",
+     59432696.88
+    ],
+    [
+     "2026-10-06",
+     50902543.56
+    ]
+   ]
+  },
+  "2_w86_s5_remainder_zero_10-03..05": {
+   "rows": [
+    [
+     "2026-10-03",
+     6480424.81,
+     false
+    ],
+    [
+     "2026-10-04",
+     6488756.24,
+     false
+    ],
+    [
+     "2026-10-05",
+     6502294.55,
+     false
+    ]
+   ],
+   "met": false
+  },
+  "3_total_equals_AUA_15_of_15": {
+   "met_dates": [
+    "2026-10-09"
+   ],
+   "not_met": [
+    [
+     "2026-09-25",
+     -32079997.99
+    ],
+    [
+     "2026-09-26",
+     -224041973.12
+    ],
+    [
+     "2026-09-27",
+     -223812108.95
+    ],
+    [
+     "2026-09-28",
+     -246650838.07
+    ],
+    [
+     "2026-09-29",
+     -156381570.16
+    ],
+    [
+     "2026-09-30",
+     -149473963.54
+    ],
+    [
+     "2026-10-01",
+     -150330435.07
+    ],
+    [
+     "2026-10-02",
+     -28215020.75
+    ],
+    [
+     "2026-10-03",
+     -5203.6
+    ],
+    [
+     "2026-10-04",
+     -48507.12
+    ],
+    [
+     "2026-10-05",
+     1825338.25
+    ],
+    [
+     "2026-10-06",
+     1348850.6
+    ],
+    [
+     "2026-10-07",
+     1491834.79
+    ],
+    [
+     "2026-10-08",
+     1933181.74
+    ]
+   ]
+  },
+  "4_restated_through_present": {
+   "present": false,
+   "value": null
+  }
+ },
+ "10_07_note": "2026-10-07 is inside e97's re-derive window (09-25..10-09) but outside the CTO's Unclassified clause (09-30..10-06); its remainder after SC-e-91 is 381648.33 (rebuild target 32,455.34)",
+ "verdict": "NO clause of e97's acceptance is met by SC-e-91's first fire; clause 1 moved 35-60 percent of the way (Unclassified on 09-30..10-06 is still $41M-$60M against a bound of $53,010.45)."
+}

@@ -39,3 +39,29 @@ analysis until 20:5xZ. The issuer's next round waited on it. That is this seat's
 None. This is a served-data correction under a never-widen pair, not a portal PROD push.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-13 ~01:3xZ) -- e91 leg G first-fire read: no STOP. The eight unnamed dates are a RADIUS MISS, accepted on e97's signed radius and read against it now.
+
+`2.0.0_SA_COO~M1` msg 4600; `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/LEGG_E91_FIRST_FIRE_READ_20261013.json`; row D1-S33.
+- **The chain:** 7,915 s, inside SC1's STOP rule.
+- **10-08:** falls $629,530.84, at the bound of .89.
+- **10-09:** falls $653,857.47 against a bound of .12, which is **$0.35 over**. That is inside the code's six-place weight rounding, since 1e-6 of a firm book of about $2B is about
+  $2,000 of granularity. **CONFIRMED: no STOP, no rollback.**
+- **NOT named by the e91 pair, and moved:** 09-30..10-07, $0.6M to $96.7M per date. Firm totals held, no new class, the Q3 bar is already restated, and the writes went to the
+  canonical bucket.
+  - **That is a radius miss.** The e91 half, this seat's included, named 10-08 and 10-09 only. The shipped C_06 re-ran over its retained dates, and the producer's own rule
+    says so. The halves were not read from that rule.
+  - **Not rolled back:**
+    - the moves are the reclassification that e97's pair, RE-SIGNED as ADDENDUM 2, authorizes over exactly 09-30..10-06, with firm totals equal to AUA;
+    - totals held on all 8 dates;
+    - a rollback (leg P's 29,547 pre-fire VersionIds) would restore the legacy Unclassified figure e97 removes next. That is churn, not safety.
+  - **Read NOW against e97's acceptance clauses** (round-23 analysis 2.2) on those dates:
+    - Unclassified at most $53,010.45 per date;
+    - W86-S5 at $0;
+    - totals equal AUA;
+    - `restated_through` present.
+    The clauses e91 already met are recorded MET. e97b is then re-scoped to the remainder only, or CANCELLED if nothing remains. 10-07 lies outside e97's window, so its move
+    is named here: the same reclassification, totals held.
+  - **The lesson, for every future C_06 pair:** the radius is the producer's retained-date window, read from its rule, never the dates the change is aimed at.
+
+-- 1.0.0_SA_CTO~DELL1

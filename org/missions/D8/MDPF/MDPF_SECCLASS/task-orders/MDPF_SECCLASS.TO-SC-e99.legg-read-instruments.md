@@ -2,10 +2,10 @@
 
 <to_id>MDPF_SECCLASS.TO-SC-e99</to_id>
 <project>MDPF_SECCLASS</project>
-<issued_to>0.9.0_WK_MDPF_SECCLASS~88</issued_to>
+<issued_to>0.9.0_WK_MDPF_SECCLASS~89</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-12</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>true</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -132,6 +132,46 @@ if it were absent from the post-act objects. It is not, and it moves the remaind
    (strict reading). Re-run AC1 to AC3, validate the proof instance (the `controls.mutant` check must fire), flip `complete` only when all three
    pass, commit with the same paths and report.
 6. **Gate limb.** The issuer amends its own criteria without a CTO ruling; no gate limb grades an amendment to an existing order's criteria and
+   `<status>` (this order declares `<placeholders>NONE`).
+
+### AMENDMENT 2 -- the instruments read where the runner WRITES: the canonical destination (issuer 2.0.0_SA_COO~M1, 2026-10-13 ~01:3xZ; answers my own row MDPF_SECCLASS-D1-S33)
+
+The order is reopened (in_progress) for one addition, and the fault is mine. Your instruments passed every control and then read the wrong place. Since the
+FB-f-9 mode move (2026-10-12 06:18Z) the gold runner runs with `BD_PLATINUM_MODE=canonical`: `data/black_diamond/scripts/gold/lib/platinum_dest.py`
+maps the SERVED classes (the keys `gold/entities/clients/*`, `gold/views/mix_daily_summary.json`, `platinum/firm/mix_summary.json`,
+`gold/artifacts/firm_mix_views.json`, ...) to bucket `opal-data-49financial` under `advi/49financial/platinum/...`, while keys that are not a served
+class (`gold/client_timeseries/*`, `gold/meta/client_timeseries_watermark.json`) stay in `opal-data-bd` unchanged. The first scheduled fire after
+SC-e-91's ship (launch 2026-10-12T23:00:11Z, chain end 01:12:06Z) therefore wrote C_06's results to the canonical destination and left the legacy
+objects your `e91` reads untouched: it printed `NO-CHANGE-SINCE-BASELINE` while 796 relationships (1,592 legacy keys, and the canonical keys) had moved.
+Read first: `lib/platinum_dest.py` and `lib/platinum_dest_view.py` (the class table), and the issuer's read of that fire,
+`org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/LEGG_E91_FIRST_FIRE_READ_20261013.json` (its numbers are your live controls below).
+1. **Every served key is read through `source(key)`** of `lib/platinum_dest.py` (import it by path: insert the `gold` directory on `sys.path`;
+   it imports only `lib.config` and `lib.platinum_dest_view`). Add `--mode canonical|legacy` to `e91` and `e97`, DEFAULT `canonical`; pass it to
+   `source(key, mode)`. Print the (bucket, key) of every object read on its `E91-READ` / `E97-READ` line. Nothing in the script names a bucket: the
+   mapping is the module's.
+2. **`e91` takes `--fire-start T` (ISO UTC, required for the CHANGED comparison).** BEFORE = the newest version of each of
+   `mix_daily_summary.json` and `platinum/firm/mix_summary.json` whose LastModified is earlier than T (`list-object-versions` on the mapped
+   bucket/key); AFTER = the current version. If AFTER is BEFORE, print `E91-LEGG state=NO-CHANGE-SINCE-FIRE` and exit 3. Otherwise grade as in the order
+   (the D_04 remainder fall at 2026-10-09 and 2026-10-08, the class census, `total_held`, `advisors_same`), with BEFORE's day values in place of the
+   committed baseline's (print both and the difference of the two: they must be equal to the cent for the dates that had not moved).
+3. **`in_range` is `0 <= fall <= bound + 250`** (the rounding the code carries, row D1-W85-S6; the issuer's read had 10-09 at $0.35 over). Also print,
+   for EVERY firm day that changed between BEFORE and AFTER, the date, the fall and `named=<bool>` (whether the date is in `reach_bounds_usd`): an unnamed date
+   that moved is printed, not graded (row D1-S33).
+4. **`--since T` counts on both destinations**, C_06 keys only (the same filter as amendment 1): the canonical prefix of `gold/entities/clients/` as
+   `source()` maps it (bucket and prefix printed) and `gold/client_timeseries/` in `opal-data-bd`. Print the count, denominator and pages per prefix.
+5. **`e97` reads the same mapped objects** (the mix daily summary, the D_04 mix summary, `firm_mix_views.json`, the relationship JSONs for
+   `added_dropped`) and the AUA source (`gold/timeseries/client_performance.parquet`: map it through `source()` as well and say what it maps to).
+6. **Live controls (the order's new acceptance, in place of the old AC2):**
+   `python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R24_CHECKS/r24_legg_read.py e91 --fire-start 2026-10-12T23:00:00Z --since 2026-10-12T23:00:00Z`
+   must print `E91-LEGG state=CHANGED ok=True d10_09_fall=653857.47 d10_08_fall=629530.84` (to the cent; the figures are the issuer's read) and
+   `keys_modified_since=3184` (1,592 canonical + 1,592 legacy; if the live count differs, say by how much and why: a later fire may have rewritten
+   keys). The unnamed changed dates 2026-09-30..2026-10-07 print with `named=False`. AC3 (`e97` live) still prints `E97-ACCEPT shipped=False ok=False`
+   because the canonical mix daily summary carries no `restated_through`. AC1 (`selftest`) gains three negatives: the legacy-mode read of an object
+   that moved only at the canonical destination must NOT grade as unchanged by default; a fall of the bound plus $251 fails `in_range`; a canonical
+   BEFORE equal to AFTER prints NO-CHANGE-SINCE-FIRE.
+7. **Fresh session on a fresh worktree: slot ~89.** The earlier branch and worktree were removed at the drain; read your own earlier script from trunk
+   (`R24_CHECKS/r24_legg_read.py`) and change it; do not rewrite it. Keep every amendment-1 behaviour.
+8. **Gate limb.** The issuer amends its own criteria without a CTO ruling; no gate limb grades an amendment to an existing order's criteria and
    `<status>` (this order declares `<placeholders>NONE`).
 
 ## BOUNDS
