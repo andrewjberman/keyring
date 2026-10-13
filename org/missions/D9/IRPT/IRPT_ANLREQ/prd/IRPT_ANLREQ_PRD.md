@@ -121,6 +121,8 @@ on its own artifact.
 3. FWD-4: each driven failure named on the ticket.
 4. FWD-5: another firm refused the ticket and each package file, repeatably.
 5. FWD-6: the Analysis tab as the manual path, landing on the same ticket.
+6. After FWD-1: the branded Opal PDF with the commentary inside, rendered by the Opal engine's layout (L4 ruling 1, S4), attached as one more
+   package kind (brief item 8; ADDENDUM v0.5).
 
 ## 4. Rulings closed at L4
 
@@ -148,11 +150,11 @@ on its own artifact.
 | 1 | the type of analysis | FWD-2. The form offers the report types the engine serves (Overview, Comparison, Multi-Comp; `ycharts/generate/comparison_catalogue.py`). S1 |
 | 2 | Opal-model checkboxes and an other-ETF input | FWD-2. Model checkboxes from the comparison catalogue; free ETF tickers, each resolved before filing. S1 and S3 |
 | 3 | the holdings Excel attached | FWD-1. Through the upload door (C-ONE-DOOR, TCKT_VNEXT); the ticket stores the handle, never the bytes. S3 |
-| 4 | typo check and swap, frontend and backend | FWD-2. A mistyped ETF gets a correction offer; an unknown or unpriceable holding is SWAPPED for a confirmed `etf-classifications` candidate. The backend is `intake/upload_suggestions.py` and `resolution_kimi.py` (C-ABSORB a); the frontend is S1. Proof gap: `KIMI_WEB_SEARCH_UNVERIFIED` today |
-| 5 | a ticket in the open Ticket Center page | FWD-1. An `analysis_request` ticket, open until the package lands. S2. Proof gap: 0 filed end to end |
+| 4 | typo check and swap, frontend and backend | FWD-2. A mistyped ETF gets a correction offer verified against the registry and yfinance. An unknown or unpriceable holding takes C-SWAP's one pass: KNOWN, then the yfinance check (KEEP), then classify, then a deterministic proxy from the designated-proxy table (MDPF_SECCLASS, dell1, a pre-arranged input), then RECORD with `proxy_for` / `method` / `confidence`. The model-proposed swap is retired. The frontend is S1. Proof gap: the C-SWAP path exercised on one unknown holding |
+| 5 | a ticket in the open Ticket Center page | FWD-1. An `analysis_request` ticket, open until the package lands, filed by a partner-firm advisor. Opal staff do not file in the Ticket Center (Andrew's 10-13 memo), the driven arm is a synthetic partner-firm advisor, and `2e30` is SUPERSEDED (ADDENDUM v0.5). S2. Proof gap: the synthetic advisor's filing end to end; that identity is never minted or left live outside its never-widen pair |
 | 6 | the backend generates the full report | FWD-1. Generation submit and the Opal engine (C-ABSORB a, b). S3 and S4 |
 | 7 | commentary from the report's key surfaces | FWD-3. The drafter reads the report's composition through `get()`, tenant-bound, with abstract fields only (C-KIMI). S5 |
-| 8 | the package attached: original upload, the form as filled, the Opal report, the commentary draft (v0.5) | FWD-1. `POST /tickets/{id}/package`, pointers only (C-PACKAGE), by the one packager (C-PACKAGER). S2 and S6. Proof gap: no signed-link open yet (hop 9) |
+| 8 | the package attached | FWD-1 carries the four items of the 10-13 memo: the original upload, the form as filled (J6, a new package kind), the Opal report and the commentary draft, each a pointer through `POST /tickets/{id}/package` (C-PACKAGE) by the one packager (J5). The brief's branded Opal PDF with the commentary moves to section 3 as a named enrichment (memo section 1.1; direction :152-155). S2 and S6. Proof gap: four pointers set on one ticket, each opened from the ticket page |
 | 9 | ONE workflow, the form primary | FWD-1 and C-ONE-JOURNEY |
 | 10 | the Analysis tab after, as the manual path | FWD-6. S7, cut after FWD-1 |
 | 11 | measure each COO workstream | Section 1, the nine-hop state measured per lane (`~Y2`, `~G2`, `~T2`, `~V2`, `~P2`) |
