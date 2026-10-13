@@ -111,7 +111,7 @@ one cell, an owner-gated route serving index.html for each path in the bundle's 
 f25b53c5): /control-plane, /open-calls, /gateway = 404. Check dry-run at base 8abe56f2cd: AC1 FAIL (test file absent).
 Under 100 product lines: worker-light. No gate. Lives through MP-z-5.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <workstream>GW</workstream>
 <slot>~15</slot>
