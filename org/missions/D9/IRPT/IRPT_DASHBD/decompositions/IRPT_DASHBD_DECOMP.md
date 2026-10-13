@@ -1545,3 +1545,24 @@ some flow segment the all-end one misses and the reverse never happens; `END` th
 segment the other hits. The last two are not a FAIL of the cell; they are a surprise row and a wider window. The negative arm is the convention not chosen missing at least one flow segment.
 
 **fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~132` (worker), a new slot.
+
+## 91. ROUND 89, WORKSTREAM B (2026-10-13 ~14:0xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ROUND-89 ANALYSIS @8208cabf27 section 4 and msg 6956)
+
+Round 88 is terminal (MAY-CLOSE; the CVO's ADJUDICATION_v52 @50d8780e32 dismissed the one row). The PRD addendum v0.12 decision 11a reads the tie-out under `BD_DEFAULT`; the 12 segments neither
+convention closes still owe a stated reason (FWD-8's ACCEPT). The analysis fixes three items.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. ledger leg L7, carried: the 2026-10-14 11:41Z fire, read with `l5b_read.py`; close `irpt-dashbd-thresholds-swap-20261013` or restore rollback `8ELUDq...` the same session | the issuer's own act, no cell | FWD-8 (the thresholds the page reads) | the 11:41Z fire | none |
+| 2. a stated reason for each of the 12, from a closed list written before the read, each reasoned segment recomputed with its cause corrected and closing within 0.35 pp | `DB-b-167` | FWD-8 | `~132`'s tracked module and the stored tables of `~108` (read, never edited) | R89-1 |
+| 3. the FWD-8 grade read, per account and window, by the issuer in its drain-end, citing the cells that already proved the label and guard clauses | the issuer's own act, no cell | FWD-8 | cell `DB-b-167` drained | R89-1 |
+
+`DB-b-167` is a read, LOCAL: zero vendor calls and zero secret reads, no served byte moves. **The closed list, in the order a segment is tested (the first reason whose single correction re-closes the
+segment at 0.35 pp takes it): `MISSING_PRICE`, `FLOW_ABSENT_ONE_SIDE`, `FLOW_ON_NON_TRADING_DAY`, `INCOME_OFF_FLOW_DAY`, `BD_ACCRUED_INCOME`, `UNEXPLAINED`.** The first four are the analysis's list. `BD_ACCRUED_INCOME`
+is the issuer's one addition, inside its own decomposition: the issuer's design read (counts only) found that 5 of the 12 sit in the earlier ruled class of that name (worker ~108's accrual identity,
+`UNCLASSED_90.json`) and the other 7 are in that record's remainder; leaving the cause off the list would call five segments UNEXPLAINED that the record already explains. A reason is shown by a count or by
+day offsets from the stored rows, never asserted; a segment whose single correction does not close it is not given that reason (it stays `UNEXPLAINED`; a segment closed only by two corrections together is
+reported as `combined_only`, still `UNEXPLAINED`). `UNEXPLAINED` above zero is counted per account, makes FWD-8 unmet for that account, and goes in a surprise row. The rule file (each reason's test and its
+correction, stated so another seat would count the same way) is committed before the read; its bytes are bound by hash in the record.
+
+**fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~133` (worker), a new slot.

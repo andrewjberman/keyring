@@ -94,7 +94,7 @@ Instance at the path above. Commit `WRITERS.json` and `WRITERS.md` FIRST, your r
 
 **ISSUER NOTES:** PRD cell C5 (census half), DEC-8 (the fourth writer is identified before FWD-2; its identity also bears on the 603-of-1,610 gap). Read-only; class LOCAL. The build half of C5 (the one rule's home) is an enrichment item.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <workstream>WRITERS</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-a-1</to_id>
