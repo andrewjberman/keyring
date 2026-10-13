@@ -124,7 +124,26 @@ security, every day. Instead:
 - **A pass ports the security to Yahoo.** It is re-tested only when Yahoo restates the security (a split or another corporate action). A fail keeps the security on
   Bloomberg at the B1 depth.
 
--- open for Andrew (proposed): Yahoo-sourced client prices already stored read **UNVERIFIED** until their security passes, the same posture as the capped lots.
+**CONFIRMED, Andrew (~16:5xZ):** the porting test as proposed above, and Yahoo-sourced client prices already stored read **UNVERIFIED** until their security passes.
+
+> The premise is that we always need to account for TWR pricing on ALL surfaces, so if Yahoo can accomodate that and its proven to be accurate within some interval, then great, we can manage that. Moving to your recs, yes that is correct.
+
+**STANDING RULE, Andrew: TIME-WEIGHTED RETURN (TWR) PRICING ON EVERY SURFACE.** Every price series a surface keeps must support a total-return (TWR) reading: price plus
+distributions (dividends, interest), not price alone. Yahoo is admitted only through the porting test, which compares total returns.
+
+**This seat's census against that rule** (field lists as carded above; "n/a" is a series that is not a priced security):
+
+| item | total return today | gap |
+|---|---|---|
+| A1 models pull | daily and monthly `DAY_TO_DAY_TOT_RETURN_GROSS_DVDS` on indices and model ETFs; macro levels n/a | none |
+| A2 ETF pull | `DAY_TO_DAY_TOT_RETURN_GROSS_DVDS` and the total-return level | none |
+| A3 rival funds, today's data | `DAY_TO_DAY_TOT_RETURN_GROSS_DVDS`, plus dividend history | none |
+| A3 rival funds, history still owed | the close only | **GAP**: add the total return field |
+| A4 research price axis | `PX_LAST` only | **GAP**: add the total return field (about 500 cells a day at 5 days) |
+| A5 ETF breakdown | n/a (allocations, not prices) | none |
+| B1 Cottonwood history | `PX_LAST` only | **OPEN**: the basis is a decision (below) |
+| B2 Yahoo client history | the close, and adjusted close where stored | the porting test |
+
 
 ## STANDING RULE, Andrew: INCREMENTAL MODE = THE LAST 5 TRADING DAYS, on every surface
 
