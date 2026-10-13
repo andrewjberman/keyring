@@ -39,7 +39,7 @@ Portal DEV is to be written only through `.tools/portal-merge-forward.sh`, which
 ### RULES FOR THIS CELL
 
 Read only against the real portal; every write is in temporary directories. You do NOT install the hook (do not touch `portal/.git/hooks`), push, merge or rebase. No non-ASCII. Python standard library only; ruff clean; the bash edit stays Git Bash default utilities only. Do not put `MSYS_NO_PATHCONV=1` on a command that takes an absolute path.
-FOUND SOMETHING ODD OFF-TASK? Append ONE row to the investigation file named in `<paths>` (id `NFRA_DEVPLN-W3-S<k>`, next unused k after the highest `W3-S` in the file, `surfaced_at` = `date -u +%FT%TZ`) and keep working.
+FOUND SOMETHING ODD OFF-TASK? Append ONE row to the investigation file named in `<paths>` (id `NFRA_DEVPLN-W1-S<k>`, next unused k after the highest `W1-S` in the file, `surfaced_at` = `date -u +%FT%TZ`) and keep working.
 
 ### ACCEPTANCE
 
