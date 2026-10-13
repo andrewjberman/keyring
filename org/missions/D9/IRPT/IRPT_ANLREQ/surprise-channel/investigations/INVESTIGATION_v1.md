@@ -7601,3 +7601,83 @@
   "world_is": "REPORTED by Andrew with two screenshots at this seat, 2026-10-13: (1) after uploading the holdings file the in-page 'Holdings file' input still reads 'Choose File No file chosen' and the status line reads only 'Needs correction.'; no file name appears anywhere on the page, and the only sign of the upload is the correction text below. (2) Andrew's words, verbatim: 'there is no point in picking a \"price data for share quantities\" as the answer is always \"now\", which will translate into market close of the prior trading day.' READ by me in the DEV checkout, not reproduced and not run on PROD: the in-page input (ProspectComposer.tsx:419-422) is a bare native file input with no name shown once the page re-renders; the Price date field (:434-437) is a date input defaulting to today with no stated rule. Whether the date is read by the serving path or ignored is NOT read by this seat: the owner reads it before removing the field. Both points go to 2.0.0_SA_COO~Y2 with S77."
 }
 ```
+
+## IRPT_ANLREQ-D2-W77-S1 -- the r22 record and the W75 rows are not in this worktree (read from the base checkout)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W77-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~77",
+  "surfaced_at": "2026-10-13T17:51:01Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's premise read-first (the r22 worker record of slot 75 and rows W75-S1..S4) is absent from worktree wk-IRPT_ANLREQ-77; both were read read-only from the base checkout.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-77 at bddbded002: the path org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~75/r22/ does not exist; grep of the worktree INVESTIGATION_v1.md for W75-S gives 0 hits",
+      "C:/dev/ajb_workspace (box/dell2) carries deliverables/0.9.0_WK_IRPT_ANLREQ~75/r22/PORTAL_PRICE_DATE_CANDIDATE.json (untracked there at read time) and INVESTIGATION_v1.md rows IRPT_ANLREQ-D2-W75-S1..S4 (base commit 398c0c0644 touches the channel file); bddbded002 is not a descendant of 398c0c0644 (git merge-base --is-ancestor)"
+    ]
+  },
+  "spec_asserts": "Face read-first: the worker record deliverables/0.9.0_WK_IRPT_ANLREQ~75/r22/PORTAL_PRICE_DATE_CANDIDATE.json and rows IRPT_ANLREQ-D2-W75-S1 and -S3 in the channel, navigated from the worktree the order names.",
+  "world_is": "The worktree branch wk-IRPT_ANLREQ-77 is at bddbded002, older than box/dell2 at 553c860ec5, and lacks the W75 drain commits. The record and the rows exist only in the base checkout. The cell was built on the record's read (server_reads, intake/portfolio.py:208-212, uploads.py:419-421 and 586-587 at 2d244d2ff0) with the base copy, without any rebase, merge or checkout. Nothing was copied into the worktree beyond this row.",
+  "notes": "Recorded for the issuer: the worktree lineage is the reason, not a decision of this worker. No rebuild, extraction or reconstruction of the tree was done."
+}
+```
+
+## IRPT_ANLREQ-D2-W77-S2 -- the resident recipe's builder is not the in-tree reports/ builder; the calendar member lives in a builder outside this grant
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W77-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~77",
+  "surfaced_at": "2026-10-13T17:51:01Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The release-19 recipe names org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py (EXTRA_FILES at :62) as its builder; the in-tree reports/build_resident_package.py has no EXTRA_FILES list and adds lib/opal_naming.py once at :75. Adding lib/trading_calendar.py to the resident package is one member in the recipe's builder, which is outside this order's grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/r19/RESIDENT_RECIPE_AND_DELTA.json recipe_source[0] (the builder blob e1e58c2d94 at aaa458aa4f)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py:55, :62 (EXTRA_FILES = lib/opal_naming.py, data/firm_registry.json, org/standards/NAMING_SCHEMA.json), :218 (for path in EXTRA_FILES)",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:37-38 (DIRS includes intake), :75 (add lib/opal_naming.py) at the worktree HEAD bddbded002"
+    ]
+  },
+  "spec_asserts": "Face step 1: the resident package is built by reports/build_resident_package.py and the release-19 recipe record; the calendar's membership is answered from those two.",
+  "world_is": "The recipe record's builder is a different file (IRPT_MVP_P, blob e1e58c2d94) from the in-tree reports/ builder. The intake/ directory ships in both (the resident includes intake; tests and fixtures excluded). lib/trading_calendar.py ships in neither. Either builder needs one added member: a one-line entry in the recipe builder's EXTRA_FILES, or one add() line in reports/build_resident_package.py. The recipe builder is outside this order's grant and was read only.",
+  "notes": "Packaging answer recorded in r22/PRICE_DATE_DEFAULT.json. The release cell that carries the member is the issuer's act."
+}
+```
+
+## IRPT_ANLREQ-D2-W77-S3 -- the calendar's fallback table ends in 2027: from 2028 an upload with a Shares unit and no price date raises instead of pricing
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W77-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~77",
+  "surfaced_at": "2026-10-13T17:51:01Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "one_line": "The server default for a Shares price date reads lib/trading_calendar.py, whose hardcoded NYSE table covers 2010-2027 and raises CalendarCoverageError for a prior day in a later year when pandas_market_calendars is absent (the irpt-ycharts-generate entry carries no such package). The default then fails loud from 2028-01-02 instead of answering.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py:_require_covered and CalendarCoverageError (the fail-closed raise for a year outside FALLBACK_FIRST_YEAR..FALLBACK_LAST_YEAR); the header line 'Regenerate NYSE_HOLIDAYS_FALLBACK ... before 2028.'",
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py:36-67 (_trading_calendar, default_price_date) at this cell's change; no catch of CalendarCoverageError is added, by design"
+    ]
+  },
+  "spec_asserts": "Cell AR-y-245: when no price date is sent for a Shares unit, the server takes the prior trading day from the estate's one calendar source.",
+  "world_is": "Measured by reading, not running: the generated fallback set spans 2010-2027 (FALLBACK_LAST_YEAR = 2027). The default computes prev_trading_day(today), which checks the prior calendar day, so for today 2028-01-02 onward it raises CalendarCoverageError; the default does not catch it, so a CSV upload with a Shares unit and no price date, or a template upload of basis SHARES, raises from the upload path until the table is regenerated or pandas_market_calendars is packaged. The irpt-ycharts-generate entry in infra/aws/lambda/ci/lambda-source-map.json has no pandas_market_calendars member and no layer; the resident host was not read. The calendar's own header names the regeneration duty. Not run.",
+  "notes": "The disarm is the regeneration of the table (lib/tests/gen_nyse_closures.py --write, LAST_YEAR extended) or the packaging of pandas_market_calendars, owned by the calendar's own lane. The disarm owner named here is the issuing seat of the cell that introduced the dependency."
+}
+```
