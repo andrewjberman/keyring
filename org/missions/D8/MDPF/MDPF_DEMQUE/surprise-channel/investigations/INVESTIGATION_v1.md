@@ -2263,6 +2263,46 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "priority_gate._request_files: cusips list carries None for a security with no cusip (the rank rule classes it P2)"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W44-S6",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~44",
+    "surfaced_at": "2026-10-13T19:06:02Z",
+    "one_line": "The census gives each non_client row securities 0, its count in requested, and null classes: the AC2 check reads a null class as zero and a string n/a would make its sum raise, so this is the only form it passes unedited.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Amended order 2026-10-13, census ruling: a non-client row's classes are counted as n/a 'so the rows still add up'; 'set their securities accordingly'. AC2 file_rows arm: every file row has securities == P1 + P2 + P3.",
+    "world_is": "dq_t52_real.py file_rows computes (f.get('P1') or 0) + (f.get('P2') or 0) + (f.get('P3') or 0); a string 'n/a' raises TypeError there, null sums to 0. The census on this branch prints 8 non_client rows: requested 1,100 in total, securities 0, classes null. The check is unedited.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t52_real.py@b3c92c8830 (file_rows arm, unedited)",
+        "python data/mdpf/scripts/demque/priority_gate.py --census run from the worktree wk-MDPF_DEMQUE-44 (rc 0; 8 non_client rows, requested 1100)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W44-S7",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~44",
+    "surfaced_at": "2026-10-13T19:06:02Z",
+    "one_line": "A non_client security with no CUSIP, once its request is queued, is drawn but cannot be stored: the store is keyed by CUSIP, so the pull is counted under unstored_no_cusip and its pacer request is spent.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Amended order 2026-10-13, ruling: 'a non-client request security with no CUSIP is NOT skipped' (one test); the draw stores prices keyed by CUSIP (daily_draw on_result).",
+    "world_is": "No non_client request is in the device queue today: all 7 queue files are client-class (survey at b3c92c8830). The repo requests/ folder holds non_client securities with no CUSIP: AMGT_RESAPP-S14-CRNCY-SCANNER-US.json 1038, AMGT_RESAPP-S14-CRNCY-SCANNER-US-SLICE1.json 50, AMGT_RESAPP-493c-ICT-IDENTITY.json 1, MDPF_SECHIST-SHT8-TR-FIELD-HISTORY-20261009.json 2, MDPF_SECHIST-SHT8-TR-FIELD-CONFIRM-20261009.json 1, SITEZ-SIGNIN-PREFLIGHT-REFDATA-20261009.json 1. If one is copied to the queue, each such pull is spent and its prices are dropped.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/daily_draw.py on_result, the cusip None branch (this branch)",
+        "survey of requests/ and ~/.opal/demque/queue at b3c92c8830 (7 queue files, all need_class client; the requests/ no-CUSIP counts above)"
+      ]
+    }
   }
 ]
 ```
