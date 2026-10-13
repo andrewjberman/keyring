@@ -7503,3 +7503,78 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-S20 -- Opal report export 'creates but does not export' (status could not be read, UNEXPECTED) and the export modal is too narrow
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S20",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-13T18:14:13Z",
+  "one_line": "Andrew's smoke: the Opal report export is created but does not export (message: the export's status could not be read, UNEXPECTED), and the export modal is too narrow, with a lot of scrolling side to side; ExportModal.tsx is identical on PROD and DEV, so the defect is live on PROD and is not a regression of the promote.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "An export a person starts completes and downloads, or fails with a stated cause; the export modal fits its content without side scrolling.",
+  "world_is": "Reported by Andrew through the CTO, not reproduced by this seat: the export is created, then the status read fails with UNEXPECTED; the modal needs horizontal scrolling. Per the CTO ExportModal.tsx is identical on PROD and DEV. Cut in the next issuance after ledger leg L7 and never ahead of the O1/O2 seats: read the export status chain to the failing call; widen the modal as a portal candidate to the CTO's review.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 7139 (2026-10-13 ~18:12Z), relaying Andrew's smoke of portal DEV f6ef1d25 on localhost:5174 (Inflection, Opal report)",
+      "not read by this seat yet: the export status chain, ExportModal.tsx on DEV and PROD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-S21 -- FDRXX is classed Fixed Income; it should be listed as CASH
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S21",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-13T18:14:13Z",
+  "one_line": "Andrew's smoke: FDRXX is shown with the class Fixed Income; it should be a CASH-tagged asset, and money-market funds should map to CASH.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A money-market fund such as FDRXX carries the class CASH.",
+  "world_is": "Reported by Andrew through the CTO, not reproduced by this seat: the Opal report lists FDRXX as Fixed Income. Cut in the next issuance after ledger leg L7 and never ahead of the O1/O2 seats: read where FDRXX's class is assigned, with money-market funds mapping to CASH.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 7139 (2026-10-13 ~18:12Z), relaying Andrew's smoke of portal DEV f6ef1d25 on localhost:5174 (Inflection, Opal report)",
+      "not read by this seat yet: where the class of FDRXX is assigned"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-S22 -- YTD (and any window reaching back before the history's first day) is to be measured from the first measured day and labeled with it, never blank
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S22",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-13T18:17:10Z",
+  "one_line": "Andrew's smoke: on a 49F client whose history starts mid-year the YTD selector reads 'YTD not measured (the history starts June 3rd, 2026)'; he wants YTD shown from the first measured day and labeled with it. RULED by the CTO (msg 7144): YTD, and any window reaching back before the history's first day, is measured from the first measured day and labeled with it, never blank; a window with no measured day at all stays 'not measured'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A window that reaches back before the history's first day is measured from the first measured day and labeled with it (for example 'YTD (from June 3rd, 2026)'); it is never blank. A window with no measured day at all stays 'not measured'.",
+  "world_is": "Reported by Andrew through the CTO, not reproduced by this seat: for a 49F client whose history starts 2026-06-03 the selector reads 'YTD not measured (the history starts June 3rd, 2026)'. Andrew's words: 'This client apparently only has data since June 3rd, which is fine but if that's the case we should still be able to show YTD with the data from that point and so on.' Ruled by the CTO; cut in the next issuance after ledger leg L7, behind no O1/O2 seat.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 7144 (2026-10-13 ~18:16Z), relaying Andrew's smoke (~18:1xZ)",
+      "not read by this seat yet: where the YTD selector decides 'not measured'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
