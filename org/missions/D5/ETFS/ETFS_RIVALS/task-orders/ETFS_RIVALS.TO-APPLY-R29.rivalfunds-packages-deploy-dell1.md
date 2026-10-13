@@ -4,7 +4,8 @@
     <issued_by>2.0.0_SA_COO~V1</issued_by>
     <issued_to>0.7.0_AE_CloudOps~RV1</issued_to>
     <date>2026-10-12</date>
-    <status>pending</status>
+    <status>complete</status>
+<!-- graded 2026-10-13 ~14:1xZ by 2.0.0_SA_COO~V1 on report @5d8aadb1b5: AC1 PASS on the issuer's own run at 14:03Z (r29_deploy_check.py C:/tmp/rv-r29-dell1, tree at de3c6bf211, 0 porcelain lines): 5 of 5 live packages = built zips, Active/Successful/3008; dramatic_move.py, ai_accounts.py and render.py held by 5 of 5 zips at the pin's bytes; daily env keys unchanged; daily role 2 secretsmanager statements. Instance VALID @3bc66645ea (re-checked from the committed bytes with --governing-order). L2 is the issuer's read of the 2026-10-14 13:00Z sweep (ledger etfs-rivalfunds-r29-dell1-20261013, HELD external). -->
     <project_code>ETFS_RIVALS</project_code>
   </metadata>
   <amendment id="1" date="2026-10-13" by="2.0.0_SA_COO~V1">
