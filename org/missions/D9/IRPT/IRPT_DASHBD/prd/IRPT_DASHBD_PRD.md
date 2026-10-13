@@ -196,9 +196,11 @@ outcomes verbatim.
                     holds more than Black Diamond's feed, that is shown
          SOURCE     Andrew-direct ~21:0xZ, "figure out what black diamond endpoints correspond with the
                     various fields and we essneitally do black diamonds job for them"; was IRPT_CUSTDY FWD-9 (merged 2026-10-09, CTO ruling @ca5f74553d)
-  FWD-21 Any client at any firm opens one default performance report, on the Performance tab and as the export, in one Opal Shape (v0.14)
+  FWD-21 Any client at any firm opens one default performance report, on the Performance tab and as the export, in one Opal Shape
          DONE WHEN  EXERCISED -- one household at each of 49 Financial, Cottonwood and Inflection rendered from Opal gold, on DEV, on the
-                    Performance tab and as the export, carrying the baseline's sections; read by Andrew
+                    Performance tab and as the export, carrying the baseline's sections, checked section by section against the
+                    baseline by a seat; Andrew's own read is the organic arm and an essential wait he asked for ("I want to see
+                    how we're able to get a sample display", 2026-10-13)
          ACCEPT     the report has the sections and columns of the baseline (household value summary with QTD/YTD/12M/since-inception and
                     the four Opal benchmarks; the activity summary by account; holdings by class with gain and return per window; per account:
                     realized gain/loss YTD, the account value summary, the gain/loss review); the same layout for every firm, whatever vendor
