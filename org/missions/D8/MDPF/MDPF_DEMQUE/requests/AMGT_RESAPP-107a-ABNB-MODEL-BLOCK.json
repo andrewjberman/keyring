@@ -3,6 +3,7 @@
   "need_class": "non_client",
   "need_date": "2026-10-09",
   "window_start": "2016-01-01",
+  "window_exception": "research_app_model_history_2016",
   "channel": "model_block",
   "reason": "FWD-2: ABNB's model-block pull, the remainder of the first pull of a never-covered company (CTO~Z round-77 analysis ruling 7). Carried from rounds 78 and 79: deliverables/2.0.0_SA_COO~Z/round79/DRAIN_END_PACKET.md item 2 and round78/DRAIN_END_PACKET.md item 2.",
   "securities": [
