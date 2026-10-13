@@ -10,7 +10,7 @@
  "subject": "HG-t-10 restore actor, 2026-10-13 (ADDENDUM 7)",
  "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CROSSBOX_ORDER_FBL_HG_T10_RESTORE_20261012.md",
  "opened_at": "2026-10-12T13:53:10Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-12T13:55:22Z",
   "bus_message_id": "34b5e6d2-feca-4e88-83fa-73ff4f65092c"
@@ -21,9 +21,9 @@
   "bus_message_id": "1600dc98-259e-4953-b9ee-51b680ddd5b8"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "from_at": "2026-10-13T12:32:14Z",
+  "from_by": "1.0.0_SA_CTO~DELL1",
+  "to_at": "2026-10-13T12:33:29Z",
+  "to_by": "0.7.0_AE_CloudOps~FBL"
  }
 }
