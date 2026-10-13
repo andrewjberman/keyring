@@ -2508,6 +2508,48 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "data/mdpf/scripts/demque/priority_gate.py excluded_for and load_inputs (not used by the build)@be745e7fa2"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W49-S6",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~49",
+    "surfaced_at": "2026-10-13T22:18:03Z",
+    "one_line": "The order's premise for test_demque_b1_request.py (a stub active set of {} leaves every window unclipped, so that test takes {} and nothing else) does not hold under the 22:0xZ ruling: an empty or absent active set now holds every security back, and build_request then raises 'no name is priced'. The one build call in that test now passes an active set whose single entry (the priced name, open from 2012-01-01) clips nothing; no assertion in that test changed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order DQ-t-57 AC1 note and 'Existing test_demque_b1_request.py tests keep passing; one that pins the unclipped cell count takes the stub's empty active set (a stub that returns {} leaves every window unclipped) and NOTHING else.' Ruling 22:0xZ: a security NOT in the active set is HELD BACK, never kept at its old window.",
+    "world_is": "build_request(active=None or {}) holds every security back (OUTSIDE_REASON), so the test's call with no active argument would raise ValueError('no name is priced') rather than leave windows unclipped. The test now passes active={'CDX000003': window from 2012-01-01, open}, which clips nothing; the test's other assertions are unchanged.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/test_demque_b1_request.py test 3 build_request call (uncommitted at this row; committed in this commit)",
+        "data/mdpf/scripts/demque/b1_request.py build_request and OUTSIDE_REASON (uncommitted at this row; committed in this commit)",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t57.active-set-windows.md AMENDED 22:0xZ@e7655e1a1e"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W49-S7",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~49",
+    "surfaced_at": "2026-10-13T22:18:03Z",
+    "one_line": "AC2 arm3 'no_account_key' (dq_t57_real.py line 75) is the substring test \"account\" not in json.dumps(req).lower(). The ruled hold-back reason text (CTO msg 5227: 'not held by an active Cottonwood account under any identifier the files carry ...') contains that word in each of the four outside-set held_back entries, so the real request fails arm3 although it holds no account key and no account number. AC2 cannot pass as written with the ruled text; the check is the issuer's file and is not edited here.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DQ9-t57-AC2 arm3: the request carries no account key (dq_t57_real.py: \"no_account_key\": \"account\" not in json.dumps(req).lower()); the amended order: each outside-set name is held back with the reason 'not held by an active Cottonwood account under any identifier the files carry (draws are limited to the active set, CTO msg 5227)'.",
+    "world_is": "The real --build request (scratch copy .scratch/b1_check49.json, S3 read only) holds 5 held_back entries; the word 'account' occurs 4 times in the request text, all inside the 4 outside-set reasons, 0 times in any securities key, and no key names an account. arm1, arm2 (608 / 1 emptied / 5 held back / 34,223 cells) and the determinism and validity arms pass; only no_account_key fails. The test in test_demque_active_windows.py test 3 now reads keys, not text, for the same property.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t57_real.py line 75 (no_account_key) @e7655e1a1e",
+        "data/mdpf/scripts/demque/b1_request.py OUTSIDE_REASON (uncommitted at this row; committed in this commit)",
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t57_real.py run at this commit's parent: arm3 no_account_key, WIN-REAL-BAD arm3 no_account_key"
+      ]
+    }
   }
 ]
 ```
