@@ -35,7 +35,7 @@ of EVERY call in the chain and widens the blast radius; the CTO refused it.
 ### 1b. Rules
 
 1. Your checks are issuer files: `bash org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round7/checks/r7_region_test.sh <the script>` (3 arms; base 1 of 3: R3 passes as a control), `bash org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round7/checks/r7_emit_test.sh <the script>`
-   must still read 3 of 3 (the stub tolerates the extra argument), and `r7_checks.py awsdiff` (every other `aws` line byte-unchanged). Do not
+   must still read 4 of 4 (the stub tolerates the extra argument), and `r7_checks.py awsdiff` (every other `aws` line byte-unchanged). Do not
    edit them. `bash -n` the script.
 
 ## 2. BOUNDS
