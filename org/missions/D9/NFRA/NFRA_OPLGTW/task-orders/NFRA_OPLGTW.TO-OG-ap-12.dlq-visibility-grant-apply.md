@@ -125,7 +125,7 @@ the ONE `<status>` tag to `complete` only if both PASS.
   - ap12.AC1: no ledger; simulate implicitDeny; live code = the OG-ap-11 build.
   - ap12.AC2: grade absent.
 
-<status>pending</status>
+<status>complete</status>
 <round>35</round>
 <workstream>APPLY-R35-G</workstream>
 <slot>~AE</slot>
