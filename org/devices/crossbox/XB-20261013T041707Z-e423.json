@@ -10,12 +10,16 @@
  "subject": "Run 10-12: IRPT 878 day 1 of 3 (30,570 cells), BRK-A and BF-B landed; ADVI 7 of 15 landed",
  "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_SA_COO~Q1/ROUND9_FIRST_SCHEDULED_RUN_20261012.md",
  "opened_at": "2026-10-13T04:17:07Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-13T04:18:46Z",
   "bus_message_id": "41f4cc43-30a8-4d6e-9e68-5782cc01472a"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-13T07:41:42Z",
+  "by": "2.0.0_SA_COO~P2",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
