@@ -6533,3 +6533,29 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Observation only. The reflex matched on basename; the cited claim does not describe the BD emit function. No action taken by this seat."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-j-6, the exec reads after the first canonical chain)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S46",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-13T08:44:29Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-j-6 step 3 STOPPED before plan and apply: r4_execeq.py reads DIFFER (artifacts 4/4) because the legacy home has been frozen since act 2 and the canonical home has advanced two chains, so the instrument's EQUAL premise no longer holds; the built artifact is uploaded and not applied.",
+  "spec_asserts": "TO-FB-j-6 step 3: `r4_execeq.py --zip <the built zip>` must read `EXEC READS: legacy and canonical EQUAL` (the seam's reads are unchanged by this code); a difference is Branch B and a STOP.",
+  "world_is": "Built 2026-10-13T08:42Z: artifact sha256 qVCUzRtwZxKSrql+JapMKH4wwoAd2+aSB0FyZ470ZkU= (20,501 bytes, S3 VersionId YMvkL9sHlJIYO5UGDOeHgRbj8ejsdeAe; prior fdPwodukz88dtRfm0bGw8T5lmUxwrmJ3LFnqmvccKe4= at VersionId pOUiPH87zO8.FnEzSXQ7cW57HflaOdh9). Members that differ from the prior artifact: lambda_function.py (2 hunks, 40 changed lines: the FB-j-5 helper and guard) and platinum_dest_view.py (one line, the generated registry hash in its first comment line). r4_execeq.py: legacy advisors 194 ids 93b6a21e2799, leaderboards 2 b7b13fdce82a, artifacts 4 b8c54a169457; canonical advisors 194 ids 93b6a21e2799, leaderboards 2 b7b13fdce82a, artifacts 4 e8842ad7cc18: the advisor list and the leaderboards read equal and the first advisor's four artifact keys read different content. Cause measured: that advisor's objects at the legacy home were last written 2026-10-12T05:44Z to 05:54Z (summary.json 17121 bytes) and at the canonical home 2026-10-13T05:47Z to 05:57Z (summary.json 17120 bytes), i.e. the canonical home carries the 04:00Z chain of 2026-10-13 and the legacy home is frozen by act 2. At act 4b (2026-10-12 07:44Z) the same instrument read EQUAL 194/194, 2/2, 4/4 because act 3 had just made the homes equal. No plan or apply was run; the function still runs fdPwodukz88d.... The new S3 object is the bucket key's latest version, so any other apply of that root before the issuer's decision would pick it up.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/j6_stop/r4_execeq_after_first_canonical_chain.txt",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/j6_stop/build_exec_summary_generator.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The instrument compares CONTENT hashes across two homes that now diverge by design (canonical advances, legacy frozen: COO msg 4561). A replacement that keeps its purpose (the seam resolves the same keys, only the bucket and prefix differ): equal key SETS and equal ids/leaderboards (both read equal), the artifacts' key list equal, or the canonical read compared with the prior artifact's canonical read at the same moment (the prior function, same instant). Decision owed by the issuer, with the CTO: amend step 3's criterion, or rule the difference by design and proceed. This seat will not apply on a STOP. Restoring the prior object as the key's latest version is a further S3 write outside the permitted set, so it was not done; say if wanted."
+}
+```
