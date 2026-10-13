@@ -29516,3 +29516,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Inflection performance answers are refused for any caller of the deployed function (the portal path and the direct invokes alike) until dell1's fix lands; our release's changed path remains UNEXERCISED-LIVE. Owner of the hold: 2.0.0_SA_COO~P2. Condition that lifts it: dell1's fix is live, which this seat reads by re-running IB169-3-AC2 (a computed, non-refused irpt_retained_phases line after the fix) and by IB2's retry of the invokes on the issuer's go-message. Nothing was rolled back, granted or edited by this seat or IB2. Not measured: when dell1's fix lands; whether the Inflection Performance tab on PROD is failing for client logins (flagged to the CTO)."
 }
 ```
+
+## IRPT_BCKEND-D2-S118 -- correction to row S116: the AccessDenied is in the holdings gold read after the index read, not at the index read
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S118",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-13T00:43:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "CORRECTION to my row IRPT_BCKEND-D2-S116: it located the AccessDenied at the retained-index read, before any compute; that is wrong, the failing step is the holdings gold read inside holdings_gold.calculate, which is the cause row D2-S117 records.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "retained.py:279-292: laps.lap('pointer_get_ms') runs AFTER index.get returns, so a log line carrying pointer_get_ms as its last lap means the index read SUCCEEDED; the next statements are holdings_gold.calculate(...) on the fresh path, whose partition_dates() lists the gold bucket with an exact-prefix s3:ListBucket (holdings_gold.py:152-155).",
+      "role grants read this seat: DynamoDB GetItem on irpt-requests is allowed for leading keys 49financial, inflection and cottonwood (irpt-performance-retained-policy and the selection-read policy); the Inflection gold read is s3:ListBucket on opal-data-inflection with prefix irpt/inflection/gold/holdings_performance_daily/ and s3:GetObject on date=*/data.parquet; the builder's address for the firm resolves to that bucket and prefix.",
+      "CloudTrail (record IB169-3_accessdenied_cloudtrail_read.json): no PutRolePolicy, key or table change in the window; two DeleteRolePolicy on 2026-10-11T10:13:59Z and 10:14:00Z remove only the count-conditional Secrets Manager session policies."
+    ]
+  },
+  "spec_asserts": "My row S116 said: the refusal is raised at the retained-index read, before calculate and so before holdings_gold.py.",
+  "world_is": "The index read succeeded; the refusal comes from the S3 list inside the gold read. S116's other facts (2 invokes, 0 persisted, ok:false UNEXPECTED, log class AccessDenied, no TypeError, live digest unchanged) stand. The cause is row S117's (the issuer, from dell1's act); this row only retires my wrong location. Not established by this seat: that the bucket-policy deny is the S3 error's source (taken from S117)."
+}
+```
