@@ -1670,3 +1670,18 @@ Second to O1/O2; takes no seat from IRPT_ANLREQ; every cell is LOCAL or DEV-only
 | `DB-b-179` re-source 36 window members of the performance report contract (the value summaries' beginning, ending, net additions, net gain, and the account returns, for QTD, YTD, 12M and since inception) to `account_return_daily`; contract 0.2.0, the 0.1.0 bytes in its `lineage`; the gap table regenerated | FWD-21 | LOCAL | `DB-b-174` | R95-1 |
 
 `DB-b-175` (the household sample) is stopped and re-seated after `DB-b-179` drains, reading windows from `account_return_daily`. The records of `DB-b-175`, `DB-b-176` and `DB-b-177` bind to the contract's bytes; the checker accepts the 0.1.0 bytes through the lineage, so no record is re-made. **fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~145` (`DB-b-179`). Round 94 stays open until its orders are terminal; round 96 carries the FDRXX class cell.
+
+## 98. ROUND 96, WORKSTREAM B (2026-10-13 ~23:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 msgs 7349 and 7258)
+
+Rounds 94 and 95 are terminal (MAY-CLOSE; packets with the CVO). Round 94 built FWD-21's pieces but mounted none: nothing serves a filled report, so a mount has no data. The CTO rules (msg 7349): (2) render the real 49 Financial sample locally (HTML and PDF, private folder) as round 96's first cell so Andrew can read it; (1) the served FilledReport (platinum object and route, IRPT_BCKEND's) comes AFTER his read, so a layout he changes is not built into a route twice. Also (msg 7258): FDRXX to CASH in the gold classifier, keyed on the money-market type, under a never-widen pair with a count of the holdings that move.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. the real sample rendered through the tab and export components into a local HTML (tab), HTML and PDF (export) in `C:/dev/_irpt_private_evidence_20261009/fwd21_sample/`, never in the repo | `DB-b-180` | FWD-21 | LOCAL | `DB-b-175`, `DB-b-176`, `DB-b-177` (drained) | R96-1 |
+| 2. FDRXX to CASH, cell A: the rule in `etf_classifier.py` keyed on the canonical row's `sub_asset_class`, its tests and mutant, and the count of canonical rows and served holdings that move | `DB-b-181` | FWD-8 class label, FWD-21 | LOCAL | none | R96-2 |
+| 3. FDRXX to CASH, cell B: the apply by `0.7.0_AE_CloudOps~IB2` under a signed never-widen pair, ledger first | the issuer's own act and a later WORLD order, no cell yet | the same | WORLD | `DB-b-181` drained, the count read, both halves signed | R96-2 |
+| 4. ledger leg L7 (held until the 2026-10-14T11:41Z fire) | the issuer's own act, no cell | FWD-8 | the fire | none |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the render is CLIENT DATA: it lives only in the private folder, the record carries paths, hashes and counts, and the checker verifies the files by their absolute paths and refuses any output inside the repo; (b) the render harness is tracked (it holds no data), the outputs are not; (c) cell A's cash class value must be one the canonical table already uses: if none exists the worker stops with a row and the issuer rules the vocabulary; (d) cell B is a separate order because it is a WORLD act that needs the count, the pair and the AE applier, like `DB-b-164` and `DB-b-165`.
+
+**fanout:** 2 of 2 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~146` (`DB-b-180`) and `~147` (`DB-b-181`).
