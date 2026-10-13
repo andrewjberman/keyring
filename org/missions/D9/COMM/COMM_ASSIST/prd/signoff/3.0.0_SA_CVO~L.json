@@ -1,0 +1,12 @@
+{
+  "prd": "COMM_ASSIST_PRD.md",
+  "prd_version": "v0.6",
+  "prd_pin": "024be02f00197065c7d0f6748f944a4936007198",
+  "half": "ratified-text",
+  "half_hash": "7938371ac624d6adc8173dd8e54e925865aa5fb0f44ee4e985a36755a6b2b64b",
+  "endpoint_hash": "5b7b767aeec090b065b6fb8f06ccc84dedf790e0cc5e429d4fc4b64261b7e966",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/COMM_ASSIST_PRD_V06_RATIFIED_TEXT_REVIEW_20261013.md@8c935f56e7",
+  "signed_by": "3.0.0_SA_CVO~L",
+  "signed_at": "2026-10-13T15:32:19Z"
+}

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_DASHBD~134</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -31,7 +31,10 @@ You make NO vendor call and read NO credential: the live mode below is yours to 
 1. **`plan`** (OFFLINE; set `DRY_RUN=1` before importing the estate's client, which then refuses any network call; S3 GET/LIST of the cross-reference table `s3://opal-data-assets/blackdiamond/49f/silver/dim_account_xref/` only). Select the 7 UNEXPLAINED segments by
    reproducing `tieout_neither_reasons.py`'s selection (import it by path, do not edit it; assert 7 segments in 7 accounts, else stop); map each account to its Black Diamond internal id by the tier-1 rule of `0.9.0_WK_IRPT_DASHBD~6/bd_population_pull_e3.py` (`load_xref`, `map_account`, imported
    by path); build ONE `performanceSeries` request body per account for that account's segment `[start, end]` with the estate's own helper (the series body is built where the estate builds it: read `infra/aws/lambda/investor-reporting/performance/bd_adapter.py` (`adapt`, `parse_series`), `tenants.py` for the route, and
-   `infra/aws/lambda/opal-assets/opal-assets-bd49f-reporting-pull/lambda_function.py` for the body helper; a LOCAL RESTATEMENT of a request body is refused by the adapter's own docstring; if the estate has no series-body helper, file a surprise row and stop). Write the plan to your PRIVATE folder
+   `infra/aws/lambda/opal-assets/opal-assets-bd49f-reporting-pull/lambda_function.py` for the body helper; a LOCAL RESTATEMENT of a request body is refused by the adapter's own docstring). **ISSUER'S RULING (amendment, after row IRPT_DASHBD-D2-W134-S1): the estate has exactly one definition of the series body, inline in `bd_selected.requests_for` (line 61 onward), behind a Cottonwood-only mapping guard.** Build the 49F body from
+   `bd_adapter.build_period_request(vendor_id, start, end, start, int(end[:4]))` by THE SAME TRANSFORMATION that function applies (the `series` dict: `perfFrequency` 0, `groupings` ["Account"], `dateRange` {start, end, excludeHistoryRanges false}, the period body's `dataPointOptions` minus `asOfDatePoints` and `dateRangePoints`, empty `benchmarks`, a deep copy of `benchmarkLevelDisplay`), with `accountFilters.accounts` = [vendor_id].
+   You do NOT call `requests_for` for production and you do NOT hand it a Cottonwood mapping to get past its guard. Instead `selftest` PROVES the parity: it imports `bd_selected` by path and asserts that, for one synthetic input (a synthetic Cottonwood-shaped mapping used only inside the test, with no network and no session), your builder's body equals `bd_selected.requests_for(...)["performanceSeries"]` exactly,
+   and it prints `SELFTEST PASS` only when that holds. State in the module's docstring that the transformation is a re-derivation guarded by that parity test. Add `series_body_parity_with_estate_test`: true to the record's `runner` object (the checker ignores the key; the issuer reads it). If the parity test cannot be made to pass, file a row and stop. Write the plan to your PRIVATE folder
    (`DAY_READ_PLAN.json`: request bodies, mapping, the 7 segments; it holds account ids and never enters the repo) and print COUNTS ONLY: `requests`, `daily_ranges`, `vendor_calls` 0, `plan_sha256` (of the canonical bodies).
 2. **`pull --go`** (LIVE, the issuer's, NEVER run by you). Model it on `~6/bd_population_pull_e3.py`'s `refusal_checks` and `pull` and `~25/bd_split_pull.py`. Refuses (exit non-zero, message naming `--go`) unless: `--go` is given; the private plan exists; the plan rebuilt from scratch equals the written plan (hash); NO pull record exists
    (no second pull); then lifts `DRY_RUN`, mints the session once through the estate's helpers (`load_bd_session`, `get_clientview_token`), sends each account exactly once at 1 request per second, one transient retry, aborts on the first non-transient error, and writes each raw response and a pull record

@@ -38,6 +38,12 @@ Three earlier cells of this round are merged into your worktree (read them first
       daily files whose source is `transaction_observed`) is classed `EQUAL` in `GAP_ROWS.csv`, and the served price equals the anchor's price within `1e-6 * max(1, |price|)`. (The newest two daily
       price files carry no `transaction_observed` row, measured by worker ~2 in row `ADVI_BDPRCE-D1-W2-S1`, so shape b is expected to be the normal case at the served T-1 date.)
    State how many candidates there were of each shape and why you took this one (the first in file order that fits is enough).
+   Two further conditions bind BOTH shapes (amendment 2, issuer; measured by the issuer on the first candidate, which sat in `entities/clients/0/detail.json`):
+   c. **A normal client entity.** Take the holding from a client object whose `client_key` is NOT `0`: the entity `0` is a catch-all (its `client_name` reads as a bucket label, it holds 210 accounts and 3,052 open lots),
+      not a client an advisor opens. Use an object under `advi/49financial/platinum/entities/clients/` keyed `acct_z...` or `z0...`. Name the entity's key class in the record as `client_entity_class: "normal"`.
+   d. **One served price for the asset.** In the chosen client object, every open lot of that asset carries the SAME `current_price` on that object's `data_as_of`. Count the objects you try and how many fail this
+      (the asset showing two prices at once is a finding: file a row naming the asset class, the two prices and the lot counts, never an asset or account name beyond the asset's name).
+   Keep the first candidate in `THREAD_TRACE.md` as a rejected candidate with the reason (catch-all entity; two served prices for the asset in its object).
 3. **Trace it.** Run `trace_price.py --asset "<asset_name>" --date <the date>` with `--out <your TRACE.json>`: for shape a the served date; for shape b the SERVED date (it reports the carry-forward
    row and its rule) AND again at the anchor date (it reports the median and the trade ids). `trade_ids`, `recomputed_price` and `recompute_equals_served` carry into the record from the anchor trace
    for shape b (the recompute is the anchor's median, and `recompute_equals_served` compares it with the price SERVED at the served date). `rule` names the whole chain in one or two sentences
@@ -54,6 +60,7 @@ Three earlier cells of this round are merged into your worktree (read them first
  "account_ref": "<first 12 hex of sha256(str(account_id))>", "asset_name": "<name>", "ticker": null,
  "served_price": 0.0, "price_source": "transaction_observed | carry_forward | linear_interpolation",
  "chain": false, "anchor_date": null, "shape_counts": {"direct": 0, "chain": 0},
+ "client_entity_class": "normal", "objects_tried": 0, "objects_failing_one_price": 0,
  "rule": "<one sentence, with file:line>", "trade_ids": ["<transaction_id>", "..."],
  "recomputed_price": 0.0, "recompute_equals_served": true,
  "writer": "<writer id and rule copy from WRITERS.json, or unidentified>",
@@ -97,7 +104,7 @@ Instance at the path above. Commit `THREAD_TRACE.json`, `THREAD_TRACE.md` and yo
 **ISSUER NOTES:** PRD cell C10; FWD-1 DONE WHEN. STAGED at the cut: it un-parks when `BP-a-1`, `BP-a-2` and `BP-a-3` are merged and PASS at the merged HEAD; its worktree is cut from that HEAD, so the three deliverables are in it.
 The FWD-1 grade (REALIZED) is the CTO's at the round-1 analysis, on the issuer's one real run of this record at the drain (the served object re-opened). Read-only; class LOCAL.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <workstream>THREAD</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-a-4</to_id>

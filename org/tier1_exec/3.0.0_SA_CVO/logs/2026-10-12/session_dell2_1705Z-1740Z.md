@@ -209,3 +209,21 @@ Quiet stretch 08:37Z to 13:04Z: watcher re-armed at each expiry; delivery ledger
 |---|---|---|
 | IRPT_DASHBD round 89 | ADJUDICATION_v53 + REMEDIATION_v36: FWD-8 NOT REALIZED at segment grain; D2-W133-S1 (the 7 unexplained) to the CTO; 5 dismissed. Slug sent | 46e9beb3fd |
 | IRPT_ANLREQ round 20 (Y, YR) | My live reads: eight packagers at the signed values, 0 errors since 12:30Z; the holdings artifact key's three wrong versions, restore and release, no function ran a wrong one. L9: AR211-y-AC3J FAIL (probed: Acct Cost Basis/Gain), five AC2J PASS on a sample, AR212/213-y-AC1 re-grades accepted; 19 dismissed, 6 OPEN, 2 ARMED. Slug sent | af5f05fd94 |
+
+## Addendum, 2026-10-13 14:41Z to 14:49Z (msg 6990)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 178 | ADJUDICATION_v79: the minimal holdings packages live (my head-object reads: 49F UHOCIkWj, INF PzhCs97q, cottonwood untouched); 2 dismissed (the issuer's rm -r of 39 tracked records, restored, read clean); W345-S3 stays ARMED. Slug sent | c76b1a3cd3 |
+
+## Addendum, 2026-10-13 15:11Z to 15:16Z (msg 7014)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 179 | ADJUDICATION_v80: W345-S3 closed (0/0 after a named S3-path build; caveats kept); 3 dismissed; nothing graduates. Noted: v0.53 half already SIGNED current. Slug sent | 7eff6094d3 |
+
+## Addendum, 2026-10-13 15:29Z to 15:35Z (msg 7027)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_DASHBD round 90 | ADJUDICATION_v54 + REMEDIATION_v37: FWD-8 NOT REALIZED for 7 accounts at day grain; D2-W136-S1 to the CTO; 4 dismissed (incl. v36 D2-W133-S1). The vendor pull checked against CTO msg 6986 (no per-use word for a non-Bloomberg vendor). Slug sent | 322f6b77f8 |

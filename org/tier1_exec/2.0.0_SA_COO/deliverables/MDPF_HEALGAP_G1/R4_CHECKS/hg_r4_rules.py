@@ -5,14 +5,17 @@
                       (the scheduled 13:25Z fire keeps its own clock and its own raise-loud behaviour), and
                   (b) exactly one OTHER aws_cloudwatch_event_rule whose aws_cloudwatch_event_target has
                       arn = module.cot_satellites_characteristics_producer.function_arn and an `input` carrying
-                      require_partition = true, scheduled at cron(25 14-23 * * ? *) (hourly after the scheduled fire),
+                      require_partition = true, scheduled at cron(55 * * * ? *) (hourly, at :55, clear of the 13:25Z fire;
+                      the handler's holdings guard keeps it from running before the registry's 13:15Z fire has made
+                      holdings.json final), a schedule the naming limb's cadence reader DECIDES as `hourly`,
                       named by the opal_name module (system etfs, scope cottonwood, function
                       satellites-characteristics-producer, qualifier reattempt, kind hourly), with an aws_lambda_permission
                       whose source_arn names that rule.
                   Last line: T16-OK or T16-BAD <reason>.
   --t16-iam [TF]  the producer role's S3 policy block gains exactly ONE statement: s3:ListBucket on the cot bucket whose
-                  Condition is StringEquals s3:prefix = [platinum/satellites/characteristics.json] (the handler LISTS that
-                  exact key to read its LastModified; a HEAD on a key under a prefix-conditioned grant reads 403). The block
+                  Condition is StringEquals s3:prefix = [platinum/satellites/characteristics.json,
+                  platinum/satellites/holdings.json] (the handler LISTS those two exact keys to read their LastModified; a HEAD
+                  on a key under a prefix-conditioned grant reads 403). The block
                   keeps its other ListBucket statement (bbg/*, bbg-testpull/tickers/*) unchanged, grants NO GetObject on
                   characteristics.json (the producer never reads back what it wrote, CTO PRD ruling 13c) and no new
                   Put or Delete.
@@ -26,9 +29,10 @@ import sys
 T16 = "infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf"
 EXISTING = "cot_satellites_characteristics_producer_daily"
 EXISTING_CRON = "cron(25 13 * * ? *)"
-NEW_CRON = "cron(25 14-23 * * ? *)"
+NEW_CRON = "cron(55 * * * ? *)"
 FUNCTION_ARN = "module.cot_satellites_characteristics_producer.function_arn"
 OUT_KEY = "platinum/satellites/characteristics.json"
+HOLDINGS_KEY = "platinum/satellites/holdings.json"
 
 
 def blocks(text: str, kind: str) -> dict:
@@ -79,6 +83,18 @@ def t16(path: str) -> int:
     cron = attr(rule, "schedule_expression")
     if cron != NEW_CRON:
         print("T16-BAD new rule %s schedule %r, want %r" % (new[0], cron, NEW_CRON))
+        return 1
+    # the naming limb (opal_naming_rootcheck, hole-count-ratchet) refuses a rule whose name carries a cadence word its schedule
+    # does not decide; read the same reader, not a copy of its rule.
+    try:
+        sys.path.insert(0, ".")
+        import lib.opal_naming_cadence as cad
+        word, basis = cad.word_for(cron)
+    except Exception as exc:  # noqa: BLE001 - a check that cannot run its instrument is BAD, never OK
+        print("T16-BAD the cadence reader could not run: %s: %s" % (type(exc).__name__, exc))
+        return 1
+    if word != "hourly":
+        print("T16-BAD the cadence reader gives %r for %s (%s); the name ends in `hourly`" % (word, cron, basis))
         return 1
     name_attr = attr(rule, "name")
     if not name_attr.startswith("module."):
@@ -156,8 +172,8 @@ def t16_iam(path: str) -> int:
         if not re.search(r"^\s*StringEquals\s*=\s*\{", s, re.M) or re.search(r"^\s*StringLike\s*=\s*\{", s, re.M):
             bad.append("the new ListBucket condition operator is not StringEquals (a StringLike prefix would widen)")
         pv = re.findall(r'"([^"]+)"', (re.search(r's3:prefix"?\s*=\s*(\[[^\]]*\]|"[^"]*")', s) or [None, ""])[1])
-        if pv != [OUT_KEY]:
-            bad.append("the new ListBucket s3:prefix is %r, want exactly [%r]" % (pv, OUT_KEY))
+        if pv != [OUT_KEY, HOLDINGS_KEY]:
+            bad.append("the new ListBucket s3:prefix is %r, want exactly [%r, %r]" % (pv, OUT_KEY, HOLDINGS_KEY))
     for s in stmts:
         if "s3:GetObject" in s and re.search(r"platinum/satellites/characteristics\.json", s):
             bad.append("a GetObject grant reaches characteristics.json (the producer never reads back its own output)")
@@ -166,7 +182,7 @@ def t16_iam(path: str) -> int:
     if bad:
         print("T16IAM-BAD " + "; ".join(bad))
         return 1
-    print("T16IAM-OK one new StringEquals-prefix ListBucket on the cot bucket for the exact output key, nothing wider")
+    print("T16IAM-OK one new StringEquals-prefix ListBucket on the cot bucket for the two exact keys (output, holdings), nothing wider")
     return 0
 
 

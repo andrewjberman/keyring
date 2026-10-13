@@ -19,7 +19,7 @@ EGRESS CLASS, declared: NONE.
 
 **Your worktree:** `C:/dev/wk-resapp-402` (branch `wk-AMGT_RESAPP-402`, cut from the issuance commit). Work and commit only there. The shell's working directory resets between calls: start EVERY shell call with `cd C:/dev/wk-resapp-402`; a call that starts elsewhere resolves `git rev-parse --show-toplevel` to the base checkout and answers for the wrong tree.
 
-## 1. THE ACT -- `AMGT-bi-3` (round 102, decomposition s.110): A READING, NOTHING CHANGED
+## 1. THE ACT -- `AMGT-bi-3` (round 102, decomposition s.110): A READING, NOTHING CHANGED (AMENDED 1: A SECOND RUN)
 
 CTO~DELL1 round-101 analysis item 2 (msg 4864): "bh-2's steady state, driven: with the snapshot current, a warm overlay request after the 60 s hold is served from the snapshot in about 1.3 s, with bytes
 equal to the recompute." Run the two instruments below ONCE EACH, alone, and report their lines. Nothing is edited; no other reader may run on `opal-amgt-scoped-api` while the first runs (about four
@@ -31,7 +31,16 @@ minutes: three requests, each more than the 60 s hold after the last).
 2. `python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round101_prep/checks/r101_snapshot_equal.py`: the stored snapshot's 302 rows against the live recompute of the same view (bytes equal; the packaged list files' deployed path is allowed for and printed).
 
 On a WEEKDAY the old 24-hour rule also served the snapshot, so this reading shows the served path's latency and bytes on Lambda; the calendar rule's WEEKEND arm is Saturday's and is not claimed here.
-Write the instruments' output to `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~402/BI4_STEADY_STATE_OUTPUT_20261013.txt` (the AC1 invocation does it).
+Write the instruments' output to `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~402/BI4_STEADY_STATE_OUTPUT_RUN2_20261013.txt` (the AC1 invocation does it).
+
+**AMENDMENT 1 -- WHAT THE FIRST RUN READ, AND WHY THIS IS A SECOND RUN.** An earlier seat of this slot ran the two instruments once (its commit `d236368db7`, output file
+`BI4_STEADY_STATE_OUTPUT_20261013.txt`, which STAYS). It read: `q0` overlay 19.81 s cold (Init 678 ms); `q1` /freshness 0.27 s, served from the snapshot, but in a NEW container (Init 692 ms: the
+function did not reuse q0's); `q2` overlay `ASML_NA_Equity` 20.08 s with NO Init (a container that had only served /freshness); `q3` overlay `ADBE_US_Equity` 0.76 s warm. Two findings the order did not
+anticipate: (1) the FIRST OVERLAY on a container costs about 20 s even where the container itself was not cold: the 20 s is not the Lambda Init, it is the first overlay's own work; (2) the stored
+snapshot and the recompute differed on two metadata keys (`denominators`, `reads`) 2.5 hours after the write, because inputs landed after 12:30Z; the 302 rows were equal. The first-run criteria assumed
+a container that stays the same and inputs that do not move: both are the issuer's design defects, not the instrument's. THE SECOND RUN keeps the same two instruments and records, beside the
+verdict, every request's container state. Its criteria below are about WHAT THE OUTPUT PRINTS (the snapshot served, every request answered, the keys that differ named); the reading itself, whatever it
+says, is graded by the CVO. Do not retry a request, do not adjust an instrument, and do not delete the first run's file.
 
 WRITE NOTHING anywhere but that file and, if a premise fails, a surprise row. No invoke of any other function, no other AWS call than the instruments make, no Bloomberg call.
 
@@ -55,8 +64,8 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (literal; timeout 900)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-bi-3"><invocation>cd C:/dev/wk-resapp-402 &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round102_prep/checks/r102_steady_state_live.py" &gt; "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~402/BI4_STEADY_STATE_OUTPUT_20261013.txt" 2&gt;&amp;1; echo "exit=$?"; tail -9 "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~402/BI4_STEADY_STATE_OUTPUT_20261013.txt"</invocation><expect>the five arms PASS (S1 the snapshot current now, S2 /freshness served from the snapshot with generated_at equal to the stored object's, S3 three 200s, S4 three warm containers, S5 each handler time under 3.0 s), then `R102 STEADY STATE LIVE: YES`; exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="AMGT-bi-3"><invocation>cd C:/dev/wk-resapp-402 &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round101_prep/checks/r101_snapshot_equal.py" | tail -2; echo "exit=${PIPESTATUS[0]}"</invocation><expect>`snapshot generated_at ... rows: snapshot 302, recompute 302 | differing: 0` (the row counts may differ with the day's universe, but equal each other and `differing: 0`), then `R101 SNAPSHOT EQUAL: YES`; and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-bi-3"><invocation>cd C:/dev/wk-resapp-402 &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round102_prep/checks/r102_steady_state_live.py" &gt; "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~402/BI4_STEADY_STATE_OUTPUT_RUN2_20261013.txt" 2&gt;&amp;1; echo "exit=$?"; grep -E "^(q[0-3] |   (PASS|FAIL) S[1-5]|R102 STEADY STATE LIVE)" "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~402/BI4_STEADY_STATE_OUTPUT_RUN2_20261013.txt"</invocation><expect>the four request lines `q0` to `q3` (each with status, handler time and cold or warm), `PASS S1` and `PASS S2` and `PASS S3` (the snapshot is current, `/freshness` is served from it with its generated_at, every request answered 200), the lines for S4 and S5 whichever way they read, and one verdict line `R102 STEADY STATE LIVE: YES`, `R102 STEADY STATE LIVE: NOT WARM` or `R102 STEADY STATE LIVE: NO` (exit 0 or 1 is not graded)</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-bi-3"><invocation>cd C:/dev/wk-resapp-402 &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round101_prep/checks/r101_snapshot_equal.py" | grep -E "^(snapshot generated_at|   key |R101 SNAPSHOT EQUAL)"; echo "done"</invocation><expect>the line `snapshot generated_at ... rows: snapshot 302, recompute 302 | differing: <n>` with the two row counts EQUAL, then one `   key <name>` line for each differing key (every one of them `denominators` or `reads`, the metadata the inputs that landed after the write move; any other key is a finding), then `R101 SNAPSHOT EQUAL: YES` or `R101 SNAPSHOT EQUAL: NO`; and `done`</expect></criterion>
   <criterion id="AC3" cell_refs="AMGT-bi-3" judgment="true"/>
 </proof_of_spec>
 
@@ -70,8 +79,8 @@ Run `python .tools/proof-of-spec-check.py <instance>` on the committed bytes and
 Report once:
 - the commit hash;
 - criterion AC1's and AC2's output lines;
-- the handler times, each request's cold or warm state and the snapshot's generated_at and age;
-- any row.
+- the handler times, each request's cold or warm state and the snapshot's generated_at and age (this run, and the first run's for comparison);
+- any row. Rows the first seat filed (`AMGT_RESAPP-D1-W402-S1`, `S2`, `S3`) stay as they are; the issuer rules them. A new observation is a new row.
 
 The `<status>` flip is the issuer's.
 
@@ -80,7 +89,9 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** CTO round-101 analysis item 2. The issuer dry-ran the instrument at the cut (YES). AC3 is the CVO's judgment (the output states only what its numbers show; the weekday limitation is stated;
 no claim is made for the weekend arm). The first organic weekend read is the negative arm and is the issuer's, Saturday 2026-10-17 from 12:35Z, by the round-101 pair.
 
-<status>pending</status>
+**AMENDMENT 1 (2026-10-13T15:2xZ, 2.0.0_SA_COO~R1, the issuer's own order; no gate limb graded it: `.tools/to-pipeline-gate.py` fires on newly-added orders, and this is a modification):** the first seat's run read AC1 NO (S4 and S5: a request met a new container, and the first overlay on that container ran 20.08 s) and AC2 NO (two metadata keys moved 2.5 h after the write). Both expectations were the issuer's: the order assumed a stable container and inputs that do not move. The reading is KEPT as a finding (the first overlay on a container costs about 20 s with no Init to blame; warm overlays read 0.75 to 0.91 s on this seat's run, the issuer's dry-run and RA1's, and `/freshness` 0.24 to 0.27 s from the snapshot). AC1 and AC2 now grade what the output PRINTS; the verdicts stay printed; AC3 is the CVO's. The slot is re-seated for a second run with the same instruments.
+
+<status>complete -- 2026-10-13T15:3xZ by the issuer (2.0.0_SA_COO~R1): wk-AMGT_RESAPP-402, first seat @d236368db7 and re-seat @56b675d25b, merged; proof instance VALID (rc=0) on the second seat's committed bytes. THE READING, two runs of the same instruments on the live function j+j1k5r7.. (snapshot generated 2026-10-13T12:30Z, current): RUN 1 (14:53Z): q0 overlay ASML_NA 19.81 s COLD; q1 /freshness 0.27 s from the snapshot in a NEW container (Init 692 ms); q2 overlay ASML_NA 20.08 s, no Init; q3 overlay ADBE_US 0.76 s warm. RUN 2 (15:10Z): q0 20.53 s COLD; q1 /freshness 0.21 s warm, from the snapshot; q2 overlay ASML_NA 0.84 s warm; q3 overlay ADBE_US 0.80 s warm; S1 to S5 PASS, R102 STEADY STATE LIVE: YES. Independent of the worker: the function's own REPORT lines at 15:11:05, 15:12:10, 15:13:16 and 15:14:22Z read 20531.5, 206.0, 839.9 and 799.9 ms (Init 666.07 ms on the first), and the issuer's dry-run at 14:21Z read 20.01, 0.24, 0.75, 0.91 s. THE FINDING: a warm overlay after the 60 s hold is served in 0.75 to 0.91 s on this function and /freshness in 0.21 to 0.27 s from the snapshot (the CTO's 'about 1.3 s' is the box's figure; Lambda's is lower); the FIRST OVERLAY on a container costs 19.8 to 23.9 s whether or not the container itself was cold (run 1 q2 had no Init and read 20.08 s), so the 20 s is the first overlay's own work, not Lambda's Init (0.56 to 0.69 s). The snapshot and the recompute differed on `denominators` and `reads` at 2.4 to 2.7 h after the write, with the 302 rows equal: inputs landed after 12:30Z. ROWS RULED BY THE ISSUER: AMGT_RESAPP-D1-W402-S1 (ARMED: 'the warm overlay does not answer in about 1.3 s') is DISMISSED, the premise holds on a container that has served an overlay (0.75 to 0.91 s on 8 requests across three runs) and the 20 s is the first overlay per container, named above and carried to round 102's attribution; S2 (INERT: a request met a new container) is resolved by the amendment; S3 (ARMED: snapshot and recompute differ on two keys) is DISMISSED as INERT, the metadata keys move with inputs after the write and the rows are equal; the instrument's equality arm is read near the write or with those two keys named. AC1 and AC2 were re-graded by the amendment (shape plus S1 to S3), both PASS on run 2; AC3 is the CVO's judgment, ungraded. The first-run expectations that read NO were the issuer's design defects (a stable container; inputs that do not move), recorded in the round-102 packet.</status>
 <round>102</round>
 <slot>0.9.0_WK_AMGT_RESAPP~402</slot>
 <fabric>dell1</fabric>

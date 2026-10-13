@@ -3647,3 +3647,17 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r178/p178_cells.py` cell IB178-2, dry
 | `IB-pr-513` | ONE read-only count of leftover snapshot temp files on the runner host after a real build that ran on the new packages, the build named | FWD-3 | SERVED (a read on a host that may hold client-bearing files) | IB-pr-512 (done); a real scheduled build on the new package; the host Online | P179-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one applier, one read. Not a spawn: the order is addressed to a live seat.
+
+## 172. ROUND 180, WORKSTREAM ~P (2026-10-13 ~15:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's RE 7016 = round 180: item 1 the served 49F account_id read, then item 2 the directory-search apply)
+
+The `account_id` line: the builder's host packages are live (round 178) and the temp-file fix is shown clean (round 179, row S136). The CTO ordered (RE 7016): item 1, read-only and counts only, the latest served 49F HoldingsSnapshot built on `UHOCIkWj` (ACCOUNT nodes total; those with `account_id`; those whose `account_id` is in the landed directory population; those without, by reason; the negative arm is the pre-release snapshot reading 0 with `account_id`); item 2, the `irpt-directory-search` apply under its signed pair, AFTER item 1 passes. The formal analysis follows the CVO's compile.
+
+CUT now: `IB-pr-514` (item 1). NOT cut now, with the reason and the condition: item 2, the directory-search apply (it is ordered after item 1 passes: an unmet dependency inside the round; it also needs the CVO's re-sign of PRD v0.53's ratified-text half for the signed pair to stand at the current bytes; owner me; condition: IB-pr-514 passes and the pair re-reads as signed); the repair of the no-op report validator in the ycharts generate composition (row W352-S1).
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r180/p180_cells.py`, dry-run at the base: IB180-1 AC1, AC2, AC3 FAIL (no record); a synthetic record in a path the run created itself passes all three (path removed).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-514` | READ-ONLY, counts only: the latest served 49F snapshot built on the new package: ACCOUNT nodes total, with `account_id`, in the directory population, without by reason; the pre-release snapshot as the negative arm | FWD-3 | SERVED (a read of a client-bearing served snapshot, counts only) | none (IB-pr-512 done) | P180-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one read with no sibling cell. One worker spawn (slot ~364).

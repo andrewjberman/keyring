@@ -7318,3 +7318,83 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W134-S1 -- DB-b-168 stops at plan: the estate's helpers hold no firm-neutral performanceSeries body for 49F
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W134-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~134",
+  "surfaced_at": "2026-10-13T14:42:05Z",
+  "one_line": "TO-DB-b-168 step 1 cannot be built as written: the estate has no firm-neutral performanceSeries request-body helper for 49F. The only series body is inline in bd_selected.requests_for, which refuses every mapping that is not the Cottonwood firm, so the order's plan (ONE series body per account) is not built and the module is not written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-168 step 1: build ONE performanceSeries request body per account for its segment window with the estate's own helper (read bd_adapter.py adapt and parse_series, tenants.py for the route, and the opal-assets lambda for the body helper); a LOCAL RESTATEMENT of a request body is refused by the adapter's docstring; if the estate has no series-body helper, file a surprise row and stop.",
+  "world_is": "At 7e571758b1 the body helpers the order names hold period and cost bodies only: lambda_function.py body_performance_period (line 216), body_cost_basis (282), body_allocation (293). The series body is not among them. bd_adapter.py adapt() calls transport.request('performanceSeries', ..., None, ...) at line 285, so the adapter passes no series body on the 49F path, and bd_live.py request() refuses a non-dict body. bd_selected.py requests_for (line 61) builds the one series body (dateRange, perfFrequency 0, Account grouping) inline, and its first check refuses any mapping whose firm_id is not tenants._CANONICAL_COT. Calling it for 49F would need a Cottonwood mapping, which is refused. A grep for performanceSeries over lib/ and infra/logic/ returns no file. No DRY_RUN lift, no session load, no vendor call, no S3 call was made: the plan was not run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/bd_selected.py@7e571758b1:61-62 (requests_for: inline series body; Cottonwood-only gate)",
+      "infra/aws/lambda/investor-reporting/performance/bd_adapter.py@7e571758b1:285 (adapt passes None as the performanceSeries body)",
+      "infra/aws/lambda/opal-assets/opal-assets-bd49f-reporting-pull/lambda_function.py@7e571758b1:216,282,293 (the body helpers present: period, cost basis, allocation; no series)",
+      "Native grep performanceSeries|seriesPoints over infra/aws: a series request body is built only in bd_selected.py; the other hits are the adapter's parser, route tables, tests and fixtures. Native grep performanceSeries over lib/ and infra/logic/: no file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W134-S2 -- the client account-id check does not run on this box: the hashed list is absent, so commits pass unchecked
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W134-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~134",
+  "surfaced_at": "2026-10-13T14:58:30Z",
+  "one_line": "The client-data check for account identifiers did not run on the commit of tieout_day_read.py at 9f2d9ee3f6: the hashed account-id list is absent at the box's default path and OPAL_ACCOUNT_ID_HASHES is unset, so the gate prints WARN and the commit lands unchecked for account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "Every commit that lands through safe-commit.sh is checked for client account identifiers by the commit gate's client-data-check, and a commit that carries an account identifier does not land; the repo carries counts only, never an account identifier.",
+  "world_is": "On this box, commit 9f2d9ee3f6 (IRPT_DASHBD worktree wk-IRPT_DASHBD-134) printed 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids'. The measured state at 2026-10-13T14:58:20Z: the default path is absent and OPAL_ACCOUNT_ID_HASHES is unset. The committed module carries no account identifier (checked by reading it; the gate did not check it). Every later commit from this box is exposed to the same unchecked state until the list is placed or the variable is set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output of commit 9f2d9ee3f6 on branch wk-IRPT_DASHBD-134: the client-data-check WARN line, 'this commit was NOT checked for client account ids'",
+      "test -f on the default path C:\\Users\\Test\\.opal\\account_id_hashes.txt, measured 2026-10-13T14:58:20Z: ABSENT",
+      "test -n on OPAL_ACCOUNT_ID_HASHES, measured 2026-10-13T14:58:20Z: UNSET"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W136-S1 -- DB-b-169: under the day rule no differing day of the 7 segments takes a reason; all 7 windows stay open
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W136-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~136",
+  "surfaced_at": "2026-10-13T15:17:10Z",
+  "one_line": "Under the day rule committed before the read, all 23 differing days of the 7 UNEXPLAINED segments stay UNEXPLAINED; no account's window re-closes at 0.35 pp, so FWD-8 is not realized for any of the 7 accounts.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "RULE_DAY.md (committed cc529b9e3d, sections 3 to 5): a differing day takes the first round-89 reason whose TEST holds on that day and whose day-level CORRECTION brings the day within 0.01 pp of Black Diamond; the window re-closes at 0.35 pp when every differing day is reasoned.",
+  "world_is": "day_reasons.py (a16f3debc5) on the issuer's pull: 7 of 7 requests http_ok; 7 of 7 series controls true (the last cumulative equals the stored window return); 23 of 103 compared days differ and all 23 are UNEXPLAINED (reason counts 0, 0, 0, 0, 0, 23); the uncorrected window misses in 7 of 7; the fee add-back is zero for all 7. Reason 5's TEST holds on 12 of the 23 days but its correction closes none. On exactly those 12 days the BD income is a whole multiple (3x to 6x) of the served income, and on 2 of the 23 days the BD flow is 3x or 4x the served flow: a ledger-multiplicity pattern outside the closed list, not tested by this rule. Reasons 1 to 4 have no TEST that holds on any differing day.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~136/RULE_DAY.md@cc529b9e3d (committed before any pulled response was opened)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~136/day_reasons.py@a16f3debc5 (the module run that produced DAY_READ_7.json: 23 differing of 103 compared days, 0 reasoned)",
+      "the per-day detail with account ids is in the worker ~136 private folder (day_detail.json); the repo carries counts, offsets and multiples only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

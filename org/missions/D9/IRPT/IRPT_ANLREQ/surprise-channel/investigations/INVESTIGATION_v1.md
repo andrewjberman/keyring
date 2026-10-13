@@ -7042,3 +7042,167 @@
  "notes": "Grade row for ADJUDICATION_v21. Built, not released: nothing live."
 }
 ```
+```json
+{
+ "id": "IRPT_ANLREQ-D2-W69-S1",
+ "project": "IRPT_ANLREQ",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~69",
+ "surfaced_at": "2026-10-13T14:55:24Z",
+ "hazard_standing": "INERT",
+ "class": "BLOCKING",
+ "one_line": "AR-y-223 premise fails: every firm the live map can select is a client firm, and the admitted arm of the driven exercise reads that firm's directory and ownership artifacts; the no-client-data premise holds only for the two refused arms.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "infra/aws/terraform/investor-reporting/directory/iam.tf lines 28, 31-34, 48 and lambda.tf line 44 at b4943b79ce: the live IRPT_DIRECTORY_BUCKET_MAP is the kind == client and enabled rows of data/firm_registry.json (members 49financial, inflection, cottonwood)",
+   "infra/aws/lambda/investor-reporting/_authz/served.py lines 855, 1237-1241, 1256-1260 at b4943b79ce: a selection the map does not carry is refused before the status test; the admitted arm reaches deps(selected)",
+   "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~69/r21/offline_run_ar223.py run at b4943b79ce: deps_reached_for_selected_firm true for active, false for disabled and norow"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AR223-y-AC2J and the cell AR-y-223 step 1: the route and the selected firm are read from the code, the selected firm opens no client data, and the design names a firm other than opal-capital that the function accepts as a selection without touching any client data.",
+ "world_is": "The live IRPT_DIRECTORY_BUCKET_MAP is derived from kind == client rows only, so demo and mockadv are refused by bucket_for (served.py 1237-1241) before the status test and write no class line. The three selectable firms are all clients. The admitted arm reaches deps(selected) (served.py 855) and reads that firm's directory and ownership artifacts (loaders.py 320-349) before projection. The refused arms stop before deps (served.py 1256-1260) and read no artifact.",
+ "notes": "Filed by the design of AR-y-223; nothing minted, called or read live. Options for the CTO: (a) a never-widen half covering the one cottonwood directory and ownership read by the admitted arm, before any mint; (b) drop the positive control and run the two refusal arms only. The design states the finding and does not claim the premise. Class BLOCKING because AR223-y-AC2J's premise cannot be met as written; hazard INERT because no act is live."
+}
+```
+
+## IRPT_ANLREQ-D2-W68-S1 -- the S71 premise does not reproduce in this worker's shell: the script's own head-object --query call returns rc 0, so the cause of "'int' object has no attribute 'items'" is not established here
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W68-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~68",
+  "surfaced_at": "2026-10-13T14:50:52Z",
+  "one_line": "The reproduction asked for by AR-y-222 step 1 did not fail: the script's exact head-object --query '[ContentLength, Metadata.\"content-sha256\"]' call returns rc 0 with the two values through the repo shim, the ~/bin shim and the real CLI path (aws-cli 2.37.9); so the cause of the S71 error is not established by this worker, and the fix is shipped without a live reproduction.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-222 step 1 (order and CTO round-21 item 3): reproduce the defect read-only and find the cause; IRPT_ANLREQ-D2-S71 says the script's verify call dies with 'int' object has no attribute 'items' on the applier's CLI, and that the same call run by hand through the .tools/aws shim fails.",
+  "world_is": "On this worker's Git Bash, with CLI aws-cli/2.37.9 and type -a aws resolving to /c/Users/Test/bin/aws then /c/Program Files/Amazon/AWSCLIV2/aws, the identical call returns rc 0 and '221061<TAB>vBzPCvn9lUEZzmDFGK+9g9ICnF8h7N8Z/hccjw2qoBg='; through bash .tools/aws it also returns rc 0; the two scalar forms return rc 0 each. The error did not occur here, so no cause is established.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read-only head-object, bucket opal-313476888478-lambda-artifacts, key investor-reporting/irpt-narrative.zip, run by this worker at 2026-10-13T14:41Z: the script's exact --query call rc 0; the no-query JSON call rc 0; the scalar ContentLength and content-sha256 calls rc 0 (org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~68/r21/CI_VERIFY_FIX.json, repro)",
+      "infra/aws/lambda/ci/build-and-upload.sh@b4943b79ce:723-727 is the verify call that S71 reports; the fix that replaces it is at the worker's HEAD on branch wk-IRPT_ANLREQ-68"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "owner of the live proof: the applier of the next release, by the scratch-arm design in CI_VERIFY_FIX.json scratch_arm_design (designed, not run here). Until that arm reads back VERIFIED on the applier's CLI, the fix's effect on that CLI is unproven. Not decided here: whether S71 holds on the applier box."
+}
+```
+
+## IRPT_ANLREQ-D2-W67-S1 -- the ruled allowlist does not admit "Acct Ref Ext" ("ext" is neither a tail word nor a modifier): three intake tests that use that header fail, and AC1 and AC2 cannot pass as ruled
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W67-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~67",
+  "surfaced_at": "2026-10-13T14:47:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "one_line": "Built the ruled allowlist (a root header enters the backstop only when every other word is an identifier tail, alias added, or a modifier, primary added). The intake suite goes from 364 passed to 361 passed and 3 failed (rc 1): test_an_account_root_header_with_two_identifier_values_is_read_as_an_account_column, test_the_backstop_words_say_what_is_seen_and_ask (both named backstop tests) and test_a_digit_run_column_with_no_separator_under_a_root_is_read_as_an_account_column (an earlier test). All three use the header 'Acct Ref Ext', whose word 'ext' is in neither ACCOUNT_TAIL_WORDS nor ACCOUNT_MODIFIERS, so the allowlist does not admit it. AR221-y-AC1 and AR221-y-AC2 cannot both pass without a ruling on 'ext'.",
+  "spec_asserts": "AR-y-221 cell item 2 and CTO round-21 section 2 item 1: a header with an account root enters the backstop only when every other word is an identifier-tail word (alias added to the tails) or a modifier (primary added). ACCEPTANCE AR221-y-AC1: the five named backstop tests pass; AC2: the whole intake folder passes (364 at the base) and READER_VERSION differs. The test file's own comment at test_account_value_backstop.py:20 says 'ext' is not a tail word.",
+  "world_is": "'ext' is in neither ACCOUNT_TAIL_WORDS nor ACCOUNT_MODIFIERS at the base (template_reader.py:66-69 @b4943b79ce), and the three tests read the header 'Acct Ref Ext' (test_account_value_backstop.py:21, :29, :46, :139-151 @b4943b79ce), which the ruled allowlist therefore does not turn back. Measured in the worktree after the rule change: pytest tests -q gives 3 failed, 361 passed, 1 skipped, 25 subtests passed (rc 1); the other 361 are unchanged. The check y221-allowlist prints 'negatives 16, positives 5; backstop tests: 22 passed, 3 failed (rc=1)' and Y221-ALLOWLIST-FAIL. Nothing outside the grant was changed; ext was NOT added to the tail set and the test header was NOT changed, because each is a ruling this seat does not hold.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py:66-69 @b4943b79ce (ACCOUNT_MODIFIERS and ACCOUNT_TAIL_WORDS: no 'ext' in either)",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_account_value_backstop.py:19-25 and :139-152 @b4943b79ce (the header 'Acct Ref Ext')",
+      "pytest run in C:/dev/wk-irpt-anlreq-67 after the rule change: 3 failed, 361 passed, 1 skipped, 25 subtests passed (output .scratch/after_intake.txt in the worktree)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_ANLREQ_Y_ROUND_21_20261013.md section 2 item 1 @b4943b79ce (the ruled allowlist)"
+    ]
+  },
+  "notes": "Hazard if released as ruled: a two-account file under an 'Acct Ref Ext' style header reads as one account (no ACCOUNT_COLUMN_SEVERAL_VALUES). Not released (READER_VERSION r19.3 is built, not live). The fix belongs to the ruling: add 'ext' to the tails (a header-rule widening: 'Account Ext' would then match the header rule too) or move the test header. Not decided here."
+}
+```
+
+## IRPT_ANLREQ-D2-W67-S2 -- the cell's word-set test, applied literally, admits "Acct Custodian" (custodian is a modifier); built by word position instead
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W67-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~67",
+  "surfaced_at": "2026-10-13T14:47:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cell says a root header enters the backstop when every OTHER word is in ACCOUNT_TAIL_WORDS or ACCOUNT_MODIFIERS. 'custodian' is in ACCOUNT_MODIFIERS, so read as a word set, 'Acct Custodian' (CVO neighbour, control AR221-y-AC1) would enter and its values SCHWAB01 and FIDELITY1 would be turned back. The built rule tests POSITION instead: a word before the root must be a modifier, a word after it an identifier tail (_root_header_admitted). Under it all 16 negatives and 5 positives behave as the controls name.",
+  "spec_asserts": "AR-y-221 cell item 2: 'a header that carries an account root enters the backstop ONLY when every OTHER word of the header is in ACCOUNT_TAIL_WORDS (add alias) or ACCOUNT_MODIFIERS (add primary)'; item 1: the six CVO neighbours (Acct Custodian among them) are controls that must NOT be turned back.",
+  "world_is": "custodian is in ACCOUNT_MODIFIERS (template_reader.py:66 @b4943b79ce), so the word-set test as written admits Acct Custodian. The header rule's grammar places a modifier BEFORE the account word ('Custodian Account' names whose account it is) and a tail AFTER it; 'Acct Custodian' names an attribute of the account, the same class as 'Acct Holder'. Built by position in template_reader.py (_root_header_admitted), not by the literal set test. Function-level run in the worktree: negatives 16, positives 5, no FAIL line for any control.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py:66 @b4943b79ce (ACCOUNT_MODIFIERS includes custodian)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py NEGATIVES (\"Acct Custodian\", \"SCHWAB01\", \"FIDELITY1\") @b4943b79ce",
+      "worktree .scratch/ac1_run1.txt (y221-allowlist run after the rule change)"
+    ]
+  },
+  "notes": "For the CTO's read of the rule: the position test is the one the controls pass with no extra word list. The literal set test would need custodian removed from the modifier set, which the header rule needs. Residual: a backstop-only header with a word before the root that is not a modifier (e.g. 'No. of Acct Ref Ext') no longer enters the backstop; no test or fixture carries one (the header-rule matches 'No. of Acct' and 'Roth IRA Acct No.' are unaffected)."
+}
+```
+
+## IRPT_ANLREQ-D2-W67-S3 -- two money-column tests under a root header use "Acct Ref Ext", which the allowlist does not admit: they pass without reaching the VALUES path they name
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W67-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~67",
+  "surfaced_at": "2026-10-13T15:02:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Two money-column tests in test_account_value_backstop.py (test_a_digit_run_column_holding_a_decimal_is_a_money_column_under_a_root and test_a_digit_run_column_holding_a_comma_or_a_dollar_is_a_money_column_under_a_root) still use the header 'Acct Ref Ext'. The ruled allowlist does not admit that header, so both assert 'not turned back' for the wrong reason: the reader never reaches the VALUES path, and a regression in repair (b) would not turn them red. The order named three tests for the header change; these two were not changed.",
+  "spec_asserts": "AR-y-221 amendment 1 (deliverables IRPT_ANLREQ.TO-AR-y-221 task order, paragraph before THE CELL): change the HEADER of the three named tests to Client Primary Acct and keep each test's assertions otherwise; add one negative-control test for Acct Ref Ext. The two money-column tests are not among the three named.",
+  "world_is": "At commit 2ccad1f84f, _root_header_admitted('Acct Ref Ext') is False (ext is in neither ACCOUNT_TAIL_WORDS nor ACCOUNT_MODIFIERS, template_reader.py:192-203 @00ed339bf8), and _several_accounts on Acct Ref Ext with values 10023845, 10023846, 1234.50 returns [] (the same as with two identifier values). On Client Primary Acct the same two-identifier call returns [('C', 'VALUES', 2)], so the header is the one that exercises the path. The money tests stay green under the header Acct Ref Ext whether or not repair (b) is correct.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/tests/test_account_value_backstop.py money tests (the headers 'Acct Ref Ext' at the two money-column test bodies) @2ccad1f84f",
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py:192-203 @00ed339bf8 (_root_header_admitted)",
+      "python -c run in the worktree intake folder at 2ccad1f84f: Acct Ref Ext admitted_by_allowlist=False; money col 1234.50 -> []; two ids -> []; Client Primary Acct admitted_by_allowlist=True; two ids -> [('C', 'VALUES', 2)]"
+    ]
+  },
+  "notes": "For the CVO's or CTO's read: the fix is a header change in two more tests (Client Primary Acct), which is a test-file edit outside this order's named tests and so a ruling or a new order, not taken here. Until then the money-column behaviour (AR-y-211 repair (b)) is covered only by the function-level test_a_money_column_turns_off_the_digit_run_only_and_not_letter_and_digit_identifiers, which calls _identifier_like directly and never reads a column."
+}
+```
+
+### IRPT_ANLREQ-D2-S74 -- the status-rule exercise saw three class lines from a caller this seat did not make, and a refusal arrives as HTTP 200
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S74",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-13T15:50:00Z",
+  "one_line": "TO-EXERCISE-R21: the disabled arm's sub-window [15:28:45Z, 15:29:50Z) holds 4 INTERNAL-CALLER-CLASS lines, not the expected 1: this seat's own row_non_active/refused line plus 3 row_present/admitted lines from the second invocation in that window (invocations 2), which this seat did not make; and the function answers a status-rule refusal as an HTTP 200 answer envelope, not a 4xx.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r21/EXERCISE_RESULT.txt and EXERCISE_PHASE2_COUNTS.txt: per sub-window counts, 1 / 4 / 1 class lines",
+      "a filter read of REPORT lines in the same sub-windows: invocations 1 / 2 / 4; all events 4 / 10 / 16 in 1 / 1 / 3 log streams of /aws/lambda/irpt-directory-search",
+      "the norow request answered HTTP 200 with a body whose sha256 equals the disabled request's body, whose envelope names FIRM_BINDING (EXERCISE_TRACE.txt, EXERCISE_PHASE2_TRACE.txt)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "COO half section 4 step 5 and CTO half condition 2: exactly one class line per sub-window, a line in another sub-window or a wrong class is a FAIL, not a reassignment. The pair expects the refusal arms to be REFUSED (the exercise executor read refusal as a 4xx).",
+  "world_is": "The 3 extra lines are all class=row_present outcome=admitted, from one invocation (the REPORT count in that window is 2) that is not one of this seat's three requests; the line carries no identity, so who made it is not known and was not looked for. They are most plausibly a real active internal caller selecting another firm, INFERRED. A client that treats a non-2xx as the only refusal will read the rule's refusals as success; the refusal is in the envelope's public_reason_code.",
+  "notes": "owner of any follow-up: 2.0.0_SA_COO~Y2 (issuer). No action needed on the rule: it decided correctly for all three identities."
+}
+```
+
+- **owner:** `2.0.0_SA_COO~Y2`
+- **disarm_owner:** n/a -- INERT
+- **state:** OBSERVATION / INERT
