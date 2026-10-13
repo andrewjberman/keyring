@@ -30200,3 +30200,101 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W347-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~347",
+  "surfaced_at": "2026-10-13T03:16:11Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The sibling caller holdings_inf.py also writes a retained capture to a system temp file that nothing removes; the order asked for the same fix there, but holdings_inf.py is outside the order's paths, so it is not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "holdings_inf.py:286-288 calls hs.retained_capture for IRPT_INF_ECLIPSE_MEMBERSHIP_SNAPSHOT with membership_map.json @f91aedd1ef",
+      "holdings_inf.py:297 reads capture_path through eclipse_membership_capture and holds no removal step @f91aedd1ef",
+      "holdings_snapshot.py:1288 writes the fetched bytes with tempfile.mkstemp inside retained_capture, the shared write both callers reach @f91aedd1ef"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-496 says: if another caller of retained_capture leaks the same way, fix it the same way and say so; its paths block names holdings_49f.py and holdings_snapshot.py only, no other module.",
+  "world_is": "The Eclipse membership capture leaves one temp file per build when IRPT_INF_ECLIPSE_MEMBERSHIP_SNAPSHOT is unset. The 49F fix (holdings_49f.py finally-removal of builder-created files) does not reach it. Needs a grant for holdings_inf.py or a follow-on order that names it.",
+  "notes": "Form only. The contents of the Eclipse capture are not read by this worker; no run of any builder."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W347-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~347",
+  "surfaced_at": "2026-10-13T03:16:11Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "raw_keys.json 49financial account holdings_citation still cites holdings_snapshot.py:352-353, the superseded source, after holdings_source was corrected to the live mint.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_ids/raw_keys.json line 12 holdings_citation reads holdings_snapshot.py:352-353 @f91aedd1ef",
+      "holdings_49f.py:363 is the live custody mint, opaque_id of the dim_balance raw account @f91aedd1ef"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-496: correct the declared holdings_source key and keep every other key unchanged.",
+  "world_is": "The two declared fields of this account entry now disagree about the source: holdings_source names the live mint and holdings_citation names the old crosswalk line. The worker kept holdings_citation unchanged as the order directs.",
+  "notes": "Form only. A follow-on cell may re-point holdings_citation; the order did not ask for it."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W347-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~347",
+  "surfaced_at": "2026-10-13T03:16:11Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order cites holdings_49f.py:339 for the custody account mint; in this tree line 339 is the smartx overlay call and the mint is at line 363.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "holdings_49f.py:339 reads overlay, closed, smartx_accounts = _smartx_overlay(frames) @f91aedd1ef",
+      "holdings_49f.py:363 reads account_id = hs.opaque_id(account, firm_id, raw_account) @f91aedd1ef"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-496 says correct the declared key and cite holdings_49f.py:339 for the mint.",
+  "world_is": "The mint the declared key describes is at holdings_49f.py:363. raw_keys.json now cites :363, and the order's :339 is not used.",
+  "notes": "Form only. The line number in the order is off by the overlay call; the source name it asks for, dim_balance.account_id, is confirmed at the mint."
+}
+```
+```json
+{
+  "id": "IRPT_BCKEND-D2-W347-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~347",
+  "surfaced_at": "2026-10-13T03:36:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "Amendment 1 (b) cannot be committed: the naming gate refuses the bare path citation holdings_49f.py:363 as a NEW hand-kept carrier of the 49f token in raw_keys.json holdings_citation, so the correction was reverted in the worktree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_ids/raw_keys.json line 12 holdings_citation @aa5778d962 is at HEAD text holdings_snapshot.py:352-353 (reverted)",
+      ".tools/naming-gate.py NAMING REFUSE at the raw_keys.json diff line 12, hand-kept carrier of 49f, remedy printed as lookup('49financial') @3c6a833932 gate read",
+      "holdings_49f.py:363 is the live mint, opaque_id of the dim_balance raw account @f91aedd1ef"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-496 amendment 1 (b): correct holdings_citation in the 49financial account entry to cite the live mint at holdings_49f.py:363; keep everything else.",
+  "world_is": "The naming gate (LGIC_ENFORCE, ENFORCE mode) refuses a NEW bare path string carrying the 49f firm token in an authored JSON file under infra/. The gate exempts strings with whitespace as prose, and that exemption was not used to pass the citation through. The raw_keys.json citation stays at its HEAD value; holdings_source keeps the mint citation committed at 135fc3509e. A ruling is needed: a registry-backed citation form, or a gate ruling on a source-file path citation in an authored JSON.",
+  "notes": "Form only. The holdings_inf.py fix and its two arms are committed separately at aa5778d962 and need no ruling."
+}
+```
