@@ -145,6 +145,13 @@ distributions (dividends, interest), not price alone. Yahoo is admitted only thr
 | B2 Yahoo client history | the close, and adjusted close where stored | the porting test |
 
 
+**Porting test, short held windows** (this seat's ruling on `2.0.0_SA_COO~Q1` msg 4975; the test is built @567a058ddb: 326 securities, 2,497 cells, no draw):
+- 182 of the 326 held windows are under a year. The test still uses **5 intervals**, Andrew's "several".
+- A fixed length (1 month, 1 quarter, 1 year) that does not fit the held window is replaced by a sha256-drawn length that does. Overlap is allowed, the minimum interval is 5
+  trading days, and every interval must be within 10 bps.
+- A held window under 10 trading days stays on Bloomberg as **UNTESTABLE** (a reason, not a FAIL).
+- The adjusted close is reformulated from the store: the as-traded close, with split-undone gross dividends reinvested on the ex-date close.
+
 **Porting-test size** (`2.0.0_SA_COO~Q1` msg 4947):
 - **326 securities** have Yahoo-sourced client prices landed today: 3,260 cells, about 1.2 days of allowance.
 - **965 are requested** across items 11 to 17: 9,650 cells, about 3.6 days.

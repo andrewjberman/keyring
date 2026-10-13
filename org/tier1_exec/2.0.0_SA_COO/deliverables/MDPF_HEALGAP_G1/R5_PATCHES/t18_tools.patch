@@ -1,0 +1,156 @@
+diff --git a/tools/astn_wsjft/scripts/run.py b/tools/astn_wsjft/scripts/run.py
+index 0899d31fb6..9704d6468c 100644
+--- a/tools/astn_wsjft/scripts/run.py
++++ b/tools/astn_wsjft/scripts/run.py
+@@ -13,9 +13,11 @@ from __future__ import annotations
+ 
+ import datetime
+ import json
++import math
+ import os
+ import pathlib
+ import subprocess
++import sys
+ import tempfile
+ 
+ import boto3
+@@ -108,6 +110,109 @@ def _fresh(articles: list[dict], now_utc: datetime.datetime, hours: int = 12) ->
+     return kept
+ 
+ 
++# ---- FT same-day re-attempt (MDPF_HEALGAP HG-t-18, CTO round-4 analysis item 1) ---------------------------------
++# The 3 AM run degrades to WSJ-only when the FT fetch fails (a warning, no retry), and a missed FT day was never
++# refilled: the 12 h freshness window drops the missed window on later runs. This is FWD-1's pattern for it: one
++# later invocation that fetches FT only, widens the window ONLY to "since the last successful run", sends ONLY
++# articles no earlier digest already carried, and does nothing on a complete day.
++FT_FAIL_PREFIX = "FT fetch failed"        # the warning run() writes when the FT fetch raises (see run() step 1)
++SUPPLEMENT_SUFFIX = "-ftsup"              # digest/{date}-ftsup/digest.json marks a day's refill as sent
++MAX_LOOKBACK_DAYS = 7                     # never look back further than a week for the last successful run
++LAST_RUN_START_UTC = datetime.time(7, 0)  # 3 AM ET at its earliest (EDT): the window starts no later than the run
++
++
++def _ft_failed(digest: dict) -> bool:
++    return any(str(w).startswith(FT_FAIL_PREFIX) for w in (digest.get("warnings") or []))
++
++
++def _article_ids(digest: dict) -> set:
++    """store._id(url) of every article the digest carried (what was SENT), whatever its section."""
++    ids = set()
++    for arts in (digest.get("by_section") or {}).values():
++        for a in arts:
++            if a.get("url"):
++                ids.add(store._id(a["url"]))
++    return ids
++
++
++def ft_reattempt(date: str, now_utc: datetime.datetime, dry_run: bool = False) -> dict:
++    """Refill a day whose FT fetch failed. Returns {"verdict": ..., ...}; raises when the FT fetch itself fails.
++
++    SKIP-COMPLETE       the day's refill was already sent, or today's digest carries no FT failure: nothing runs.
++    NO-PRIOR-DIGEST     the 3 AM run wrote no usable digest: not an FT re-attempt; the absence guard owns that alert.
++    FT-REATTEMPT-NO-NEW the FT fetch ran and nothing in the window was new (or none survived analysis): nothing sent.
++    FT-REATTEMPT-DRY    as SENT but nothing persisted or sent (dry_run).
++    FT-REATTEMPT-SENT   one supplement sent, its digest persisted under `{date}-ftsup`.
++    """
++    today = store.try_load_digest(date)
++    if store.try_load_digest(date + SUPPLEMENT_SUFFIX) is not None:
++        print(f"ASTN_FT_REATTEMPT SKIP-COMPLETE {date}: the FT supplement was already sent")
++        return {"verdict": "SKIP-COMPLETE"}
++    if today is None or int(today.get("total_articles_out", 0)) <= 0:
++        print(f"ASTN_FT_REATTEMPT NO-PRIOR-DIGEST {date}: the run produced no usable brief (the absence guard owns that)")
++        return {"verdict": "NO-PRIOR-DIGEST"}
++    if not _ft_failed(today):
++        print(f"ASTN_FT_REATTEMPT SKIP-COMPLETE {date}: today's digest carries no FT fetch failure")
++        return {"verdict": "SKIP-COMPLETE"}
++
++    known = [today]
++    last_ok = None
++    d0 = datetime.date.fromisoformat(date)
++    for i in range(1, MAX_LOOKBACK_DAYS + 1):
++        d = (d0 - datetime.timedelta(days=i)).isoformat()
++        sup = store.try_load_digest(d + SUPPLEMENT_SUFFIX)
++        if sup is not None:
++            known.append(sup)
++        dg = store.try_load_digest(d)
++        if dg is None:
++            continue
++        known.append(dg)
++        if int(dg.get("total_articles_out", 0)) > 0 and not _ft_failed(dg):
++            last_ok = d
++            break
++    if last_ok:
++        start = datetime.datetime.combine(datetime.date.fromisoformat(last_ok), LAST_RUN_START_UTC,
++                                          tzinfo=datetime.timezone.utc)
++        hours = max(1, math.ceil((now_utc - start).total_seconds() / 3600.0))
++    else:
++        hours = 12
++    hours = min(hours, 24 * MAX_LOOKBACK_DAYS)
++
++    sent_ids: set = set()
++    for dg in known:
++        sent_ids |= _article_ids(dg)
++
++    ft = fetch_ft(date, persist=not dry_run)       # raises on failure: loud, nothing is sent
++    fresh = _fresh(ft, now_utc, hours=hours)
++    new = [a for a in fresh if store._id(a["url"]) not in sent_ids]
++    print(f"ASTN_FT_REATTEMPT {date}: fetched FT={len(ft)} fresh({hours}h)={len(fresh)} new={len(new)} "
++          f"last_ok={last_ok or 'none'}")
++    if not new:
++        return {"verdict": "FT-REATTEMPT-NO-NEW", "fetched": len(ft), "fresh": len(fresh), "new": 0, "hours": hours}
++
++    digest = analyze.analyze_all(new)
++    digest["date"] = date
++    digest["supplement"] = True
++    digest["warnings"] = []
++    if digest["total_articles_out"] == 0:
++        print(f"ASTN_FT_REATTEMPT {date}: 0 of {len(new)} new FT articles survived analysis -- not sending")
++        return {"verdict": "FT-REATTEMPT-NO-NEW", "fetched": len(ft), "fresh": len(fresh), "new": len(new), "hours": hours}
++    if dry_run:
++        print(f"ASTN_FT_REATTEMPT DRY RUN {date}: would send {digest['total_articles_out']} article(s); nothing written")
++        return {"verdict": "FT-REATTEMPT-DRY", "out": digest["total_articles_out"], "hours": hours}
++
++    store.put_digest(date + SUPPLEMENT_SUFFIX, digest)
++    html = compile_email.render(digest, date)
++    store.put_email(date + SUPPLEMENT_SUFFIX, html)
++    send_ses.send(html, date, subject=f"{config.EMAIL_SUBJECT_PREFIX} - FT supplement - {date}")
++    try:
++        store.discard_raw(date)
++    except Exception as e:  # noqa: BLE001 -- non-fatal; the lifecycle expires raw anyway
++        print(f"WARN: raw discard failed (lifecycle backstops): {str(e)[:100]}")
++    print(f"ASTN_FT_REATTEMPT SENT {date}: {digest['total_articles_out']} FT article(s)")
++    return {"verdict": "FT-REATTEMPT-SENT", "out": digest["total_articles_out"], "hours": hours}
++
++
+ def run() -> None:
+     date = _run_date()
+     print(f"=== ASTN_WSJFT run {date} ===")
+@@ -181,4 +286,7 @@ def run() -> None:
+ 
+ 
+ if __name__ == "__main__":
+-    run()
++    if "--ft-reattempt" in sys.argv:
++        ft_reattempt(_run_date(), datetime.datetime.now(datetime.timezone.utc), dry_run="--dry-run" in sys.argv)
++    else:
++        run()
+diff --git a/tools/astn_wsjft/scripts/store.py b/tools/astn_wsjft/scripts/store.py
+index a3b41133fa..8643c40945 100644
+--- a/tools/astn_wsjft/scripts/store.py
++++ b/tools/astn_wsjft/scripts/store.py
+@@ -55,6 +55,16 @@ def load_digest(date: str) -> dict:
+     return json.loads(s3().get_object(Bucket=config.S3_BUCKET, Key=key)["Body"].read())
+ 
+ 
++def try_load_digest(date: str) -> dict | None:
++    """The digest dict for `date`, or None when there is no object (a run that never wrote one, or no refill
++    supplement yet). Any other error (AccessDenied, throttle, corrupt) raises: an unreadable digest is never
++    read as an absent one."""
++    try:
++        return load_digest(date)
++    except s3().exceptions.NoSuchKey:
++        return None
++
++
+ def put_email(date: str, html: str) -> str:
+     key = f"{config.EMAIL_PREFIX}/{date}/digest.html"
+     s3().put_object(Bucket=config.S3_BUCKET, Key=key, Body=html.encode(), ContentType="text/html")

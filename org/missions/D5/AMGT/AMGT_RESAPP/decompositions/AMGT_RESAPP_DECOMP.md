@@ -10578,3 +10578,71 @@ fanout:
   no_s3_deletes: true
   egress: none; no Bloomberg call in any order
 ```
+
+---
+
+## 111. ROUND 103 -- THE OVERLAY'S FEED AND NEWS CARD READ ONLY THE SUBJECT'S ROWS (A BUILD, ITS STAGED APPLY AND THE DRIVEN COLD REQUEST); THE OVERLAY'S HANDLER TIME OVER A DECLARED WINDOW (A STAGED READ); THE ADMISSION TABLE'S ARMS; THE TOTAL-RETURN FIELD ON THE RESEARCH PRICE AXIS (SITE Z CODE). Two worker builds, one staged seat order, one staged read, one instrument.
+
+**Issuer:** `2.0.0_SA_COO~R1` on dell1. **Input:** the CTO~DELL1 round-102 analysis `ledger/ROUND_ANALYSIS.round102.md` @2c3cf03abb (msg 4958) section 2, after the CVO's slug (msg 4954,
+`ADJUDICATION_v124` @4a8f8b49eb, MAY-CLOSE). **Prefix:** `bj` (round 103). Round 102 attributed the cold overlay (the first overlay a container serves is about 20 s; 91 percent of it is `feed`, inside it
+the whole-table gold read) and applied the phase log lines (`bKCGUhXp..`, 2026-10-13T16:15:54Z).
+
+### 111a. MEASURED AT THE CUT
+
+- **The remedy already exists in the module.** `_timeline_snapshot_rows(table, columns=..., security_key=...)` (`scoped_amgt.py`, AMGT-an-5) reads ONE security's rows of ONLY the named columns; the
+  timeline route uses it. The overlay's two readers of `article_security_mention` (`read_feed`, `_overlay_top_band`) call it with neither, so the table is decoded whole and turned into Python
+  rows for all securities. The prototype (blob 84002d3fd559, +9 -2: one column tuple, two call sites) serves overlay bytes EQUAL to the base for ASML_NA, four drawn covered keys and a
+  covered key with no mention rows (16 of 16 arms), and leaves no whole-snapshot cache entry.
+- **What the prototype does NOT prove.** Locally the snapshot (8.4 MB object, 52,424 rows, 31 columns) costs list 0.23 s, GET 0.38 s, full decode 0.30 s, `to_pylist` 0.78 s; the projected decode
+  is 0.01 s and the key column 0.003 s. Lambda ran the whole-table phase 12 times slower than the box. The key-scoped path still LISTs and GETs the object once per container; whether feed
+  reaches the CTO's 2 s on Lambda is read at the driven request (`bj-2`), not claimed. A second whole-table reader exists (`_overlay_top_band`): fixing only `read_feed` would have moved the
+  18 s to the news card, which is why ONE tuple serves both.
+- **The window.** Since the apply of 2026-10-13T16:17:06Z the log group holds 740 overlay phase lines: median 489 ms, p95 779 ms, 3 over 4,000 ms (0.4 percent), REPORT 1,342 with 12 Init. The
+  traffic is the issuer's and the workers' own requests, not organic use (round 101's finding).
+- **The admission tool.** The build script packages exactly seven registry files (`NAMING_REGISTRY_FILES`) and `NAMING_SCHEMA.json`; the tool now (round 102's edit) lists every JSON in the
+  folder, which over-lists `firm_pages.json`. Patched tool on the real pin and ref: 12 members, `exemptions.json` and `scopes.json` among them, no `firm_pages.json` (RA1's build printed the same
+  five packaged).
+- **The total-return field.** `price_axis_pull.py` requests `["PX_LAST"]` over a 30-day window; `price_series_persist.py` persists that series write-once at
+  `bloomberg/harvest/bronze/price_history_px_last/date=<as_of>/`. The naming builder admits a new table name; the daily job's budget is about 3,000 history cells today and about 500 more for a
+  total-return field at 5 days (the queue form's census). The Terminal sign-in is down (an Andrew act); nothing runs until it returns.
+
+### 111b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-bj-1` | `read_feed` and `_overlay_top_band` read only the subject's rows of `article_security_mention`, one column tuple for both (a build) | `~404` | worker (build) | LOCAL | `scoped_amgt.py` | item 1 |
+| `AMGT-bj-2` | the apply carrying it, and the FIRST request after it driven alone and read by phase against the target -- STAGED seat order | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | the function's code; ledger; one request file | item 1's close |
+| `AMGT-bj-3` | READ the overlay's handler time over two declared windows, before and after the apply -- STAGED until `bj-2` completes | `~405` | worker (read-only) | LOCAL | one output file | item 2 |
+| `AMGT-bj-4` | the admission table lists the registry files the build script packages, read from the script; two arms | `~406` | worker (instrument) | LOCAL | `r94_admission_table.py` | item 3 |
+| `AMGT-bj-5` | the research price axis pulls and keeps `DAY_TO_DAY_TOT_RETURN_GROSS_DVDS` over the last five trading days (site Z code) | `~407` | worker (build) | LOCAL | two producer modules and one test module | item 4 (Andrew-direct) |
+| `AMGT-bj-6` | ss-7 / pp-4 on the DEMQUE answer; the reader-side EXPIRED criterion -- CARRIED, no order | -- | -- | -- | -- | item 5 |
+
+**Uncovered, with its owner:** the PRD addendum that switches the rankings to total return (the CTO); the card amendment and quote for the producer's added cells (`2.0.0_SA_COO~Q1`, sent by
+the issuer at `bj-5`'s merge) and the Terminal sign-in (Andrew); the portal PROD promote (call `dell1-20261011T033643Z-e7f2`) and the API's drop of the top-level `fiscal_year_figures` (Andrew, then
+a later pair); FWD-16 and the model API key (Andrew); D1-S18's three reds (dell2, via MSTR); `AMGT_RESAPP-S14-CRNCY-SCANNER-US-SLICE1` (queued at site Z, finish 2026-10-14).
+
+### 111c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: the analysis's five items. Item 1 -> bj-1 + bj-2; item 2 -> bj-3; item 3 -> bj-4; item 4 -> bj-5; item 5 -> bj-6 (carried). Printed denominator 5 of 5 items placed
+  (2 builds, 1 staged apply, 1 staged read, 1 instrument, 1 carried).
+- **(ii) Same grain.** bj-1 one tuple and two call sites in one file; bj-2 one code leg and one request; bj-3 two windows of one instrument; bj-4 one tool; bj-5 one leg in the daily job.
+- **(iii) Intent coherence.** bj-1 changes no served byte; bj-2 serves it and reads its first request against the target; bj-3 reads the figure over a window; bj-5 adds a stored series and
+  changes no ranking.
+- **(iv) What a cell does NOT move.** bj-1 and bj-2 move which rows the overlay decodes and no response field; bj-3 and bj-4 write one file each; bj-5 leaves the PX_LAST request, window,
+  writes and exit codes untouched.
+
+### 111d. EDGES AND FAN-OUT
+```
+bj-2 after bj-1 merged and reviewed, after bj-4 merged (the pair's member table), after its pair   (the apply is spent on a build the CTO has read)
+bj-3 after bj-2 complete (its window boundary is bj-2's apply)
+bj-4, bj-5 independent
+bj-6 on the DEMQUE answer and the first status.json reader
+fanout:
+  cap: 8
+  orders_total: 5          (bj-1, bj-4, bj-5 worker orders; bj-2 a staged seat order; bj-3 a staged worker read)
+  chains_total: 4          (bj-1 -> bj-2 -> bj-3 ; bj-4 ; bj-5 ; bj-6)
+  wave_0: [bj-1 ~404, bj-4 ~406, bj-5 ~407]
+  wave_1 staged: [bj-2 RA1 (after bj-1's merge, bj-4's merge and its pair), bj-3 ~405 (after bj-2 completes)]
+  no_s3_deletes: true
+  egress: none; no Bloomberg call in any order (bj-5 is code; the run is the queue's at site Z)
+```

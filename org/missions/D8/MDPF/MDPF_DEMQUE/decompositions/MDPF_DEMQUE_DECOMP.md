@@ -531,3 +531,8 @@ basis with the total-return field for the 11 long-held bonds, $1.00 money market
 request and comparator, `0.9.0_WK_MDPF_DEMQUE~41`, workstream PORTING) and `DQ-t-50` (the B1 request: `dates` and per-entry `fields` in `bbg_quote`, `b1_request.py`;
 `0.9.0_WK_MDPF_DEMQUE~42`, workstream B1REQUEST). Not cut here: the UNVERIFIED labelling (SERVED, its own pair), Z8 and Z9 (the models pull's incremental change and meter; the
 notebooks are production code on the Bloomberg device and their change is a site-Z act). The draw of B1 waits on Andrew's form.
+
+**Round 9 close of DQ-t-49 and amendment 15 (issuer, 2026-10-13 ~18:xxZ):** DQ-t-49 merged @567a058ddb (the porting-test request: 326 securities, 2,497 cells; comparator: every interval within
+10 bps; 174 passed). Its worker found 182 of 326 held windows fit fewer than 5 intervals and could never pass. CTO ruling msg 4976: always 5 intervals, a length that does not fit is
+replaced by a sha256-drawn length that does, minimum 5 trading days, overlap allowed, a window under 10 trading days is UNTESTABLE (a reason, not a FAIL). One cell, `DQ-t-51`
+(`porting_test.py` and its tests; `0.9.0_WK_MDPF_DEMQUE~43`, worker, LOCAL, workstream PORTINTERVALS, depends on DQ-t-49).
