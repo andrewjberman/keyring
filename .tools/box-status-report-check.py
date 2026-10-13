@@ -90,6 +90,10 @@ def check(path: str):
         bad = [r for r in repos if r not in REPOS]
         if bad:
             defects.append("%s: repos %s not in %s" % (code, bad, sorted(REPOS)))
+        # A bare `yes` / `no` is a YAML 1.1 boolean (laptop CRO msg 108743, 2026-10-13): read it as the enum it was typed as,
+        # so an author need not quote it. `true`/`false` read the same way; `indirect` stays a string.
+        if isinstance(b.get("client_facing"), bool):
+            b["client_facing"] = "yes" if b["client_facing"] else "no"
         if b.get("client_facing") not in CLIENT:
             defects.append("%s: client_facing %r not in %s" % (code, b.get("client_facing"), sorted(CLIENT)))
         if not REC_RE.match(str(b.get("cro_rec", ""))):
