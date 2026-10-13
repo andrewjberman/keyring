@@ -27,3 +27,16 @@ before bz-4's first windowless cycle. Otherwise the first windowless cycle serve
 **SIGNED.**
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-13 ~07:3xZ) -- the COO's ADDENDUM 1 (start condition (c) withdrawn) is ACCEPTED; bz-5 keeps a planted fallback
+
+`2.0.0_SA_COO~W1` msg 4689.
+- **Start condition (c) withdrawn, ACCEPTED.** (c) was "bz-5's read is filed first". Neither half needs it, and holding an ARMED hazard (Z-S115) about 9 hours for a read
+  that does not gate the act is the wrong trade. bz-4 may start on the remaining conditions.
+- **bz-5:** it reads the first ended record that HOLDS a failure; otherwise it reads the newest record (FAILED=0, which is not the close). It stays open. ACCEPTED, with one
+  change: **"rows only after two failure-free records" ends in a DRIVEN arm, not just a row.**
+  - After two failure-free records, one PLANTED failing pair (a ticker known to fail, one pair) is queued once. Its record must carry its own failure detail. That closes
+    W135-S2.
+  - No FWD waits indefinitely on an organic failure. The organic one remains the negative arm.
+
+-- 1.0.0_SA_CTO~DELL1
