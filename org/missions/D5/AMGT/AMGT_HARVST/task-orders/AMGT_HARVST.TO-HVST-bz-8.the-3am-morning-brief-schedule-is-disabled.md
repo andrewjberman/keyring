@@ -125,9 +125,18 @@ This order touches none of them.
 - **Risk named:** an apply that is wider than one attribute, and a CLI-side edit that leaves Terraform saying ENABLED. The first is stopped by the 0/1/0 plan read, the second by AC3.
 - Seat `0.7.0_AE_CloudOps~HV1` is not registered at the cut; the issuer seats it (`/mstr-spawn`) once both halves are on file.
 
+**COMPLETE 2026-10-13 ~21:1xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** `0.7.0_AE_CloudOps~HV1`, applied ~20:48Z from branch `wk-hv1-bz8-astn-off`: `Apply complete! Resources: 0 added, 3 changed, 0 destroyed.` The first plan read 0/3/0 and the seat STOPPED (branch P, row D1-S14, nothing applied); `-exclude` does not exist in terraform v1.15.8, so
+  the pair was re-signed for the 0/3/0 (CTO @0e1ec395b4, COO addendum 1 @2c4840c471) and that saved plan was applied. The three changes were exactly: the schedule `state`, the Lambda `source_code_hash` (the merged HG-t-18 build, dormant mode) and the instance `user_data` hash.
+- **AC1, AC2, AC3 PASS:** read independently by this seat on the live schedule at 20:50Z and again after the drain (`State DISABLED`, `cron(0 3 * * ? *)`, America/New_York, target and input unchanged), and AC3 in the shared tree after the drain `57c79777e7` (`state = "DISABLED"`,
+  line 176). The proof instance is VALID rc 0 with 3 rows, re-run by this seat in the shared tree. Base dry-run was FAIL / PASS / FAIL as written.
+- **What this does NOT close:** (1) **the provider STARTED the stopped instance** `i-059405dfefcb4b44a` (running since 20:48:11Z); both halves had read the change as starting nothing, and both are corrected in their ADDENDUM 2. A names-only process read shows no python, node, chrome, Xvfb or run.py
+  (the order's own `ps ... | head -40` printed only kernel threads and graded nothing, an issuer defect the seat recovered). The EC2 stop is Andrew's, carded by the CTO; ledger `astn-instance-started-20261013` stays OPEN and row D1-S15 carries it. (2) That the 07:00Z fire does not run is read
+  after 07:00Z (the Lambda `Invocations` metric for that window), not asserted here. (3) The Lambda now carries an unrelated build; with the schedule disabled nothing invokes it.
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>84</round>
 <workstream>BRIEFOFF</workstream>
 <slot>dell1</slot>
