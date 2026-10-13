@@ -2,8 +2,9 @@
 
 Arm 1: `active_set.py --census` prints ONE JSON line {"sha256_ok", "accounts", "securities", "windows", "open_held"} with sha256_ok true, accounts 769, securities 3357,
 windows >= 3300 and open_held >= 1. The line carries counts only: no key containing "account_key" and no account number.
-Arm 2: `b1_request.py --build --out <scratch>` prints the B1 line with "securities" 613 (the 606 priced P1 names plus the 7 of the 8 funds that are P1; the P2 fund held back),
-"clipped_cusips" >= 90, "held_back" >= 1, and "cells" between 33,000 and 35,500 and strictly below 37,439 (the filed request before the active windows).
+Arm 2: `b1_request.py --build --out <scratch>` prints the B1 line with "securities" 608 (the 606 priced P1 names plus the 7 of the 8 funds that are P1 = 613, minus the 4 names no active account holds
+under any identifier the files carry (CTO msg 5227), minus the 1 name whose active window opens after all its B1 history, which is EMPTIED (AMENDED 2026-10-13, rulings on rows W49-S1..S5)),
+"emptied_cusips" 1, "clipped_cusips" >= 90, "held_back" >= 5 (the P2 fund and those 4), and "cells" between 33,000 and 35,000 and strictly below 37,439. Each build call is allowed 110 seconds (a build runs about 45 s).
 Arm 3: a second `--build` writes a byte-identical file; the written request validates under `bbg_quote._validate`; no entry starts before 2012-01-01; no key naming an account.
 WIN-REAL-OK; else WIN-REAL-BAD <why>.
 """
@@ -19,7 +20,7 @@ import tempfile
 D = os.path.join("data", "mdpf", "scripts", "demque")
 
 
-def _line(cmd, timeout=55):
+def _line(cmd, timeout=110):
     r = subprocess.run([sys.executable] + cmd, capture_output=True, text=True, timeout=timeout, check=False)
     ls = [x for x in r.stdout.splitlines() if x.strip().startswith("{")]
     if r.returncode != 0 or not ls:
@@ -50,7 +51,7 @@ def main() -> int:
         return _bad("arm2 " + e)
     print("arm2 " + json.dumps(b, sort_keys=True)[:360])
     ints = all(isinstance(b.get(k), int) for k in ("securities", "cells", "clipped_cusips", "held_back"))
-    if not (ints and b["securities"] == 613 and b["clipped_cusips"] >= 90 and b["held_back"] >= 1 and 33000 <= b["cells"] <= 35500 and b["cells"] < 37439):
+    if not (ints and b["securities"] == 608 and b.get("emptied_cusips") == 1 and b["clipped_cusips"] >= 90 and b["held_back"] >= 5 and 33000 <= b["cells"] <= 35000 and b["cells"] < 37439):
         return _bad("arm2 B1 line does not show the active-window clip")
     c, e = _line([os.path.join(D, "b1_request.py"), "--build", "--out", o2])
     if c is None:
