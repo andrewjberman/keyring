@@ -30029,3 +30029,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W348-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~348",
+  "surfaced_at": "2026-10-13T03:19:10Z",
+  "one_line": "The irpt-holdings build (re-pin of the HoldingsSnapshot schema copy only) carries a pre-existing attribute mismatch that the r278 instrument reads on the BUILT zip and on the LIVE zip alike: the packaged served.py (pin 74a62fb) passes load_report_owner to enforce.Enforcer, whose packaged copy (pin 21eca74) has no such keyword. The order's refusal clause stops the release; nothing was changed.",
+  "spec_asserts": "Step 3 and the refusal clause: both limbs of the signature instrument read 0 mismatches on the built zip; a signature or attribute mismatch on the built zip is a STOP (file a row naming it, change nothing more, report). The census criterion requires built_attribute_mismatched 0.",
+  "world_is": "Built twice, byte-identical, zip sha256 c07833d87d366dc921188956441bc6a35450fa832011b452988ec4c7e5b97452 (live zip 49645f51f1dd25aaced9185bc70fca40af3c0de0cda2b42e8e4691d6352e65cd). Changed members vs live: exactly contracts/HoldingsSnapshot.schema.json (built = repo blob at f91aedd1ef, 5d9e7fe165). Signature limb 0 mismatched on both zips. Attribute limb: 1 mismatch on both zips (attr_checked 57): ATTR_MISMATCH served:856 calls enforce.Enforcer -- unknown keyword(s) ['load_report_owner']. The served.py copy sets render load_report_owner at line 855 and the enforce.py copy has no such string. Not introduced by this release: the mismatch is identical on the live zip, and the release changes no member that feeds it. Counts and hashes only; no client figure.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~348/IB171-3_release_census.json@f91aedd1ef (built and live sha256, changed_members, attribute counts)",
+      "signature_closure_attr.py@f91aedd1ef (r278 instrument) run with -I on built zip c07833d8 and live zip 49645f51: last line attr_checked=57 attr_mismatched=1",
+      "infra/aws/lambda/investor-reporting/_authz/served.py@74a62fb46c packaged copy line 855 render[\"load_report_owner\"] = ports[2]; infra/aws/lambda/investor-reporting/_authz/enforce.py@21eca74f40 packaged copy: string load_report_owner absent (HEAD enforce.py line 317 carries it, unreleased)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
