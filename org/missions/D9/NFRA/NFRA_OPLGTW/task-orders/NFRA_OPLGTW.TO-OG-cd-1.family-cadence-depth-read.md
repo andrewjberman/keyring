@@ -112,7 +112,7 @@ Read-only, also inputs: `infra/aws/ec2/opal-gateway/app/admin_gateway_breakdown.
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OG-cd-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/cd1.AC1.sh; echo "exit=$?"</invocation><expect>(?s)pytest rc=0; named tests passed 3 of 3; failed/error lines 0.*RESULT: PASS.*exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OG-cd-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/cd1.AC2.sh; echo "exit=$?"</invocation><expect>(?s)families ([1-9]\d*); denominator \1 \([^)]+\); claim-less values 0.*schwab schedule record=\S+ live=\S+ equal=yes.*schwab backfill frontier record=\S+ live=\S+ equal=yes.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-cd-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/cd1.AC2.sh; echo "exit=$?"</invocation><expect>(?s)families ([1-9]\d*); denominator \1 \([^)]+\); claim-less values 0.*schwab schedule record=.+? live=.+? equal=yes.*schwab backfill frontier record=.+? live=.+? equal=yes.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 - `AC1`: the read is derived, claimed and read-only.
@@ -142,6 +142,12 @@ ONE `<status>` tag to `complete` only if both PASS, and report once.
   - cd1.AC1 base FAIL as expected (the test file is absent).
   - cd1.AC2 base FAIL as expected (the record is absent). Its GREEN arm PASSED on a planted record carrying the live
     values (schedule equal, frontier equal), and the fixture was removed.
+
+- A1 (issuer, 2026-10-13 ~22:0xZ, row Z-W65-S4): AC2's `<expect>` used `record=\S+ live=\S+`, which can never match a
+  live EventBridge expression (`cron(15 12 * * ? *)` holds spaces). This was the issuer's defect at the cut: the green arm
+  was planted with a space-free value. Now `record=.+? live=.+? equal=yes` on both lines. Measured on worker ~65's real
+  output: the old form does not match, the new one does, and a red `equal=no` output still fails. No code is re-run.
+  Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>
