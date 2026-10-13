@@ -1438,3 +1438,29 @@
   }
 ]
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S41",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~Z",
+  "surfaced_at": "2026-10-13T01:05Z",
+  "one_line": "MCPORTAL deep links are 404 on a direct load or refresh: the gateway serves the dashboard bundle only at '/' and '/assets/{path:path}' (server.py:1155-1156), but the bundle's router uses path routes (/control-plane, /open-calls), so a URL Andrew is given cannot be opened directly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "spec_asserts": "An open call's URL (https://mcp.opalinvest.dev/control-plane, /open-calls) opens the page it names.",
+  "world_is": "Andrew opened both URLs from open calls 21c5 and 8ed7 and got 404 (1.0.0_SA_CTO~Z msg 33520). Read by the CTO at served release 185dc04888, and at 1e32562729, 2a5966dfbd and 28ba9532b6: no route serves index.html for a bundle path. Re-read by this seat at box/sitez HEAD: server.py:1155 Route('/assets/{path:path}') and :1156 Route('/'), and no other route returns the bundle. Unauthenticated, every path (including /no-such-route-xyz) answers 302 to sign-in, so this seat could not reproduce the 404 behind the login; the defect is grounded on the code read and Andrew's own load.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/server.py:315-348 and :1147-1156 at HEAD",
+      "1.0.0_SA_CTO~Z msg 33520 (Andrew's 404; the code read at four releases)",
+      "curl, unauthenticated, 2026-10-13 ~01:0xZ: '/', '/control-plane', '/open-calls', '/no-such-route-xyz' all 302"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "CTO ruling (msg 33520): the FWD-20 issuance carries one cell, an owner-gated route serving index.html for each path in the bundle's route list (an unknown path still 404s), with a test of each. Interim: open https://mcp.opalinvest.dev/ and use the menu. Filed by the CVO on the CTO's 'File the row'."
+}
+```

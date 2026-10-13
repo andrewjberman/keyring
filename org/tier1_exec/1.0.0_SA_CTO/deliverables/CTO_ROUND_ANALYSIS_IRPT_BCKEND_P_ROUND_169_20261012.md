@@ -34,3 +34,28 @@ with Andrew's word, because a seat can drive it.
 None new for this project.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## 5. Row D2-S116: Inflection Performance answers fail (client-facing), and NO rollback of IB-pr-487 (2026-10-13 ~00:4xZ)
+
+- **Measured by this seat:** `irpt-performance-adapter` log since 2026-10-13T00:00Z: "not authorized to perform: s3:ListBucket on
+  resource opal-data-inflection with an explicit deny in a resource-based policy". The bucket's `DenyForeignFirmPrincipals` admits
+  `role/*-inf-*` and a named list; `irpt-performance-adapter-role` is in neither. The role's own policy, the table key's policy
+  (root delegation only) and the role (no boundary) allow the DynamoDB/KMS reads; the issuer's first read (DynamoDB at
+  pointer_get) was wrong.
+- **Not caused by IB-pr-487:** `holdings_gold.py` 361c44fa9d..05219b8444 is 31+/7-, all claim logic, 0 lines naming S3, a bucket,
+  a prefix or a list; the zips differ in that 1 of 71 members; the ListBucket is `partition_dates()` (`:154`) on a bucket the
+  caller passes, and `opal_naming.address("irpt","inflection","gold",...)` resolves to `opal-data-inflection`. The issuer's
+  CloudTrail read: 0 bucket-policy events on `opal-data-inflection` since 10-11. The live version before ours (`kMB8xCI9`,
+  14:11Z) is ADVI_FIRMBKTS act 4's build (ledger `20261012T1340Z_advi-firmbkts-fb-f-11-act4-irpt-leg-20261012_deploy_completion.md`);
+  no Inflection request ran 14:13Z-22:35Z, so timing cannot split the two. **Ruled: no rollback** (it restores act 4's build and
+  the same deny; Branch B's triggers are not met). dell1's CTO (msg 4588) read the cause as ours; the evidence above is sent back,
+  with the ask that dell1 act or the laptop cluster lead rule ownership.
+- **The fix, whoever owns it:** the estate pattern (`holdings-performance/iam.tf:7-21`) -- a firm-scoped Inflection read principal --
+  or act 4's ledger's pre-act-4 version if the old source still holds the data. dell2 edits no bucket policy.
+- **Correction (~00:5xZ, dell1 `2.0.0_SA_COO~B1` msg 4593 via msg 6714):** act 4 changed 1 of 71 members too (the 49financial
+  ownership line), so NEITHER deploy touched the Inflection path. `opal-data-inflection`'s policy was last put 2026-10-08 05:17Z
+  and never admitted `irpt-performance-adapter-role`; the first deny (10-13 00:04:48Z) is the first Inflection traffic seen. This
+  seat's "act 4's" attribution above is withdrawn. Not established: why a fresh path ran clean on 10-11 09:3x-09:5xZ (3 `fresh`
+  phase lines; the line carries no firm). **REC sent to the laptop cluster lead's ownership ruling:** add the role to the bucket's
+  exemption list in Terraform, the precedent being `irpt-holdings-role` (multi-firm, already listed), as one never-widen pair, then
+  one Inflection answer read.

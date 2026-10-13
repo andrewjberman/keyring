@@ -4705,3 +4705,190 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W54-S4 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-12T22:42:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "With the AR-y-172 reader change, five _authz tests outside the order's write grant now fail, so the folder is rc=1 and AC2 cannot pass inside <paths>",
+  "spec_asserts": "The order's AC2 (y172-keep) requires the whole _authz folder to pass with at least 320. Its <paths> grants served.py, test_allowed_firm_ids.py, the new test file and this channel only. The cell says a test that ASSUMED a no-row caller is admitted changes with its reason, inside the grant.",
+  "world_is": "Measured at the worktree working tree over base 43e1e85895: python -m pytest _authz/tests gives 332 passed, 5 failed, 337 collected (320 base + 17 new), rc=1. The five, all outside <paths> and not edited here: test_interactive_entry.py::test_other_creator_record_reaches_compute_with_real_viewer[prospect-owner-v1], [custody-owner-v1]; test_interactive_entry.py::test_opal_prospect_create_is_prospect_not_custody_or_partner; test_interactive_entry.py::test_foreign_creator_input_keeps_both_identities_for_submitter_contract (their Entry is built with no load_service_profile, so the default profile read decides; an internal caller selecting 49financial gets FIRM_BINDING where the test asserts admission); test_svc_custody_statement.py::test_svc_custody_statement_does_not_change_opal_or_dev_admission (fixture _ALL_ROW = {'allowedFirmIds': 'ALL'} carries no status, so an internal caller selecting inflection is refused). The status rule refuses both shapes by design; whether the fixtures or the grant change is the issuer's decision.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1157-1162 (working tree over 43e1e85895)",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_interactive_entry.py:25-37 @43e1e85895 (failing arms; no load_service_profile injected)",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_svc_custody_statement.py:53-63 @43e1e85895 (_ALL_ROW fixture and its loader)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-172.internal-reader-status-active.md (ACCEPTANCE AC2, paths)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S5 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-12T22:42:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "one_line": "The narrative test file reports 13 passed after the reader change, but it runs the PINNED served.py (staged_from pin 361c44fa9d), not the worktree file, so its green run says nothing about AR-y-172 on narrative",
+  "spec_asserts": "The AR-y-163 read (INTERNAL_READER_NO_ROW_READ.json, proposed_cell.what) says narrative needs its own decision after the change: its two call sites catch the raise, so a no-row narrative caller who selects another firm would be REFUSED where it is held to its own firm today. A green narrative run is not evidence of narrative unchanged.",
+  "world_is": "narrative/tests/test_served_error_path.py _stage() takes each bundled member from the git blob at the staged_from pin in infra/aws/lambda/ci/lambda-source-map.json (functions.irpt-narrative: served.py at pin 361c44fa9d40992c8cacfd625cc789536f84b920) and reads the worktree file only for members with no staged row. Measured: narrative/tests/test_no_row_unknown.py gives 13 passed, rc 0, at the working tree over 43e1e85895. By code reading only, not run: narrative/entry.py _held_to_verified_firm (:218) now receives a raise from _internal_allowed_firms for a no-row or non-active caller; the except at :221 returns the event to the shared boundary, which refuses FIRM_BINDING; the base dropped the selection and served the caller's own firm, class UNKNOWN. The narrative arm norow_none_selecting_other cannot fail until the pin moves to a commit that carries this served.py. The pin bump and its census are cell AR-y-173, not this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-narrative.staged_from, served.py pin 361c44fa9d40992c8cacfd625cc789536f84b920 @43e1e85895",
+      "infra/aws/lambda/investor-reporting/narrative/tests/test_served_error_path.py:80-97 @43e1e85895 (_stage reads the git blob at the pin)",
+      "infra/aws/lambda/investor-reporting/narrative/entry.py:204-222 @43e1e85895 (_held_to_verified_firm)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~53/r16/INTERNAL_READER_NO_ROW_READ.json (proposed_cell.what)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S6 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-12T22:58:56Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The _authz internal arms built with no load_service_profile read the default profile reader (a DynamoDB query), not an offline fake; the amended four arms now inject one, but the six test_final_release_refuses_changed_actor_owner_or_service_identity arms still take that reader and now pass by refusal at the fence, not by their identity check",
+  "spec_asserts": "The order's preflight and bounds say the _authz tests run offline (no AWS, no network). AMENDMENT 1 says the four test_interactive_entry arms take status active on the row they read; the six test_final_release arms are not in the amendment and were meant to stay without a row.",
+  "world_is": "Read at base a13729590f: canonical_profile_reads.py:70-73 get_user issues self._ddb.query(TableName='opal-users-v2', IndexName='email-index') and served.py:1151-1156 builds boto3.client('dynamodb') when no loader is injected; test_interactive_entry.py and test_final_release arms build Entry without load_service_profile. In this worktree the amended arms now use a monkeypatched get_user (active_internal_row fixture) and make no query. Not measured: whether the baseline run reached AWS (no live call was made by this worker for this row). By code reading only, not run: a test_final_release arm's caller now gets None from the default reader, served.py:1157-1160 raises, the caller's except at served.py:1235-1237 refuses FIRM_BINDING before compute runs, and the test's assertion (ok False and no data) passes on that refusal, not on the changed actor, owner or renderer it names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py:70-73 @a13729590f (get_user query)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1151-1160 @a13729590f (_internal_allowed_firms default reader and status rule)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1233-1237 @a13729590f (internal branch try/except refuse)",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_interactive_entry.py:24-95 @a13729590f (active_internal_row fixture and the test_final_release arms)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S10 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S10",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-13T01:05:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Row S7 and the AR-y-183 cell place the second refusal of the actor and renderer arms at interactive_access.py:110. Measured with the named check pinned: the actor arms are refused at line 110 (principal != live current()), but the renderer arms are not. On renderer headers the live current() at interactive_access.py:109 raises, and authorize_current returns False at lines 120-121. Both routes are recorded as 'issued record not currently authorized' (owner_reads.py:33) or 'prospect input not currently authorized' (prospect.py:87). The owner arms have no second comparison.",
+  "spec_asserts": "AR-y-183 cell and row IRPT_ANLREQ-D2-W54-S7: each of the six final-release arms is caught by its named identity comparison, and the second comparison that also refuses the actor and renderer arms is interactive_access.py:110 (principal != current).",
+  "world_is": "Measured in _authz/tests/test_final_release_bites.py, step 2a of each actor and renderer test (the named check pinned, the live comparison left in). Read actor: refused at owner_reads.py:33, raised from retained() at owner_reads.py:40, after the live comparison at interactive_access.py:110 returned False. Read renderer: refused at owner_reads.py:33; current() raised at interactive_access.py:109 and was caught at :120-121. Prospect actor and prospect renderer: refused at prospect.py:87. Owner read and owner prospect: the payload escapes once the retained-owner comparison is pinned, so no second comparison exists for them. Not measured: any other arm of the folder.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py:108-121 @16795233f6 (authorize_current: 109 live current(), 110 principal comparison, 120-121 except returns False)",
+      "infra/aws/lambda/investor-reporting/_scope/owner_reads.py:33-41 @16795233f6 (retained() refusal at 33; post-compute retained() at 40; owner raise at 41)",
+      "infra/aws/lambda/investor-reporting/_scope/prospect.py:87-95 @16795233f6 (authorization refusal at 87; actor comparison 92-93; owner comparison 94-95)",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_final_release_bites.py @f722a48d92 (step 2a of the actor and renderer tests)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S11 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S11",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-13T01:05:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The read arms of test_final_release_refuses_changed_actor_owner_or_service_identity pass authorize = lambda *a: True to read_entry, which reads as the test deciding the retained-record grant. For an internal caller served replaces that argument with InteractiveAccess.authorize_current, so the injected lambda is never called in those arms; the refusal and the grant both come from authorize_current.",
+  "spec_asserts": "test_interactive_entry.py:87-103 (the read arms): the authorize argument of the read entry is the retained-record grant under test.",
+  "world_is": "served.py:59-62 @16795233f6: authorizer = self.authorize_record_owner, then replaced by InteractiveAccess(...).authorize_current when verified_internal_subject(headers) is not None. For the opal caller the test's lambda is therefore dead in the read arms. Measured by the new file: with the named owner-read check pinned, the read actor arm is refused at owner_reads.py:33 through authorize_current. Not checked: whether other test modules rely on the injected authorizer for an internal caller.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:59-62 @16795233f6 (authorizer replaced for an internal subject)",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_interactive_entry.py:84-104 @16795233f6 (the six arms; lambda *a: True passed as the authorizer in the read mode)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S12 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S12",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-13T01:05:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A mutant run in a scratch copy of infra/aws/lambda/investor-reporting raises IdRefused at _ids/ids.py:136 in every test until IRPT_FIRM_REGISTRY names the worktree's data/firm_registry.json. The order's mutant instruction asks for a scratch copy and does not name the variable.",
+  "spec_asserts": "AR-y-183 cell and preflight: a mutant is run in a scratch copy outside the product tree; no registry requirement is stated.",
+  "world_is": "Measured: the copy with no variable set gives 6 failed, all IdRefused at _ids/ids.py:136 (the walk is bounded upward from _ids and the copy has no data/firm_registry.json above it). With IRPT_FIRM_REGISTRY set to the worktree file: the unmutated copy gives 6 passed; source mutants give 2 failed (owner_reads.py:38 removed), 3 failed (owner_reads.py:40 removed), 2 failed (prospect.py:92 removed), 3 failed (prospect.py:94 removed). Not measured: the rest of the _authz folder under a copy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_ids/ids.py:114-139 @16795233f6 (registry resolution: env variable, then bounded walk upward, then beside the module; IdRefused at 136)",
+      "data/firm_registry.json @16795233f6 (the file the walk finds from inside the worktree)"
+    ]
+  }
+}
+```
+
+
+## IRPT_ANLREQ-D2-S65 -- (disarm row; this seat's own, allocated on the main index)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S65",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T01:12:44Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W52-S24: the account-header rule now matches Brokerage Account, IRA Account, Joint Account, Subaccount, Account Seq and Account Sequence, so a multi-account file under any of them is turned back; the residual spellings outside the ruled vocabulary are carried by row IRPT_ANLREQ-D2-W52-S31.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO round-18 ruling (CTO_ROUND_ANALYSIS_IRPT_ANLREQ_Y_ROUND_18_20261012.md section 1 row D2-W52-S24): WIDEN before the release pair, not a stated limit. The owner of the ARMED row (this seat) disarms it when the widening is on the trunk.",
+  "world_is": "MEASURED by this seat 2026-10-13 on the shared tree after the drain a665d34dd3: ar18_checks y181-rule prints Y181-RULE-OK over 28 identifier forms (the six named in S24 among them), 2 count forms, 10 attribute forms, 7 non-account forms and 6 negative controls committed before the rule (015af53b8f, rule da7b3b10bc); y181-keep prints Y181-KEEP-OK (331 intake tests pass, READER_VERSION irpt-template-reader.r18.1). The reader is unreleased, so the hazard was never live; it is disarmed where it was armed. NOT covered: identifier spellings outside the ruled vocabulary (Account Numbers, Subaccounts, Accnt, Account Nos, Seqno, Serial), carried by row W52-S31 (ARMED, this seat), and a real identifier column headed No. of Accounts, carried by row W52-S32 (ARMED, the CTO).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "a665d34dd3 (the drain of TO-AR-y-181)",
+      "ar18_checks.py y181-rule and y181-keep run by this seat on the shared tree",
+      "CTO round-18 analysis section 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
