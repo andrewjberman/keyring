@@ -31452,3 +31452,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The record flags exactly the four differing rows that carry none of the other three explanations; the 45-member closure check passes with closure_absent_from_package unchanged; no hash, no other row and no AWS object was touched."
 }
 ```
+
+## IRPT_BCKEND-D2-S131 -- DISPOSITION after the round-176 drain: the live packages are not HEAD; the pair is built on live bytes
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S131",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T07:48:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISPOSITION after the round-176 drain: W361-S1 and S3 ruled -- the live per-firm packages are NOT HEAD (25 of 45 members differ in each), so the host-bundle pair is built on the LIVE bytes plus only the two merged changes, never re-cut from the guard's closure at HEAD; W361-S2 and S4 observations.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer re-run: IB176-1 AC1, AC2, AC3 PASS in the merged tree (merge 024a54df28); AC2 was amended by me (fea3a3c885) because the live packages were built from trees other than HEAD; round-close-check MAY-CLOSE.",
+      "data/assets/scripts/silver/rebalancer_schemas.py at HEAD imports opal_strategy_matcher at module level (lines 42-43; read by this seat); the live packages' rebalancer_schemas.py differs from HEAD in all three and opal_strategy_matcher.py is in none of them (record, closure_absent_from_package), so a package re-cut from the guard's closure would ship MDPF_STRATID's strategy-matcher wiring that is not live on the host.",
+      "the census: temp_file_fix (135fc3509e) lands in holdings_49f.py and holdings_snapshot.py (not holdings_inf.py); account_id_builder (7ace854890) in holdings_49f.py, holdings_snapshot.py and the HoldingsSnapshot schema copy; holdings_snapshot.py also differs by four other commits (69679b90e3, 3a5e564561, e2021e6a5d, 6c962b0a52) and holdings_inf.py by aa5778d962."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "RULED: the host-bundle pair is NOT a re-cut of the packages from HEAD (that would ship 25 members' worth of other projects' changes per firm, among them a module-level import of a module the live packages do not carry). It is a MINIMAL package per firm: the live package's bytes with exactly the members the two merged changes touch replaced by the LIVE bytes plus those changes applied (holdings_49f.py, holdings_snapshot.py, the schema copy; holdings_inf.py only if its own temp-file fix needs it, which the census says 135fc3509e does not touch), every other member and SHA256SUMS regenerated only for the replaced members. Built BUILD ONLY, tested by extracting the candidate and running the builder tests against it, and then written as the never-widen pair (COO half and CTO half), applied at the host's next scheduled Online. The next cells: construct and census the candidate packages (live minus nothing, plus the changes) with a member-level diff against live equal to exactly the intended members, and the pair packet. STILL ARMED: W361-S1 and W361-S3 (they describe packages that are live and unchanged; the hazard is a careless re-cut, now fenced by this ruling), W345-S3 and W348-S2. OBSERVATIONS: W361-S2 (my order said the temp-file fix touches holdings_inf.py; it does not: measured), W361-S4 (the guard declares a manifest stamp; the live packages carry SHA256SUMS and S3 metadata members-sha256 and member-count, no manifest member, no source commit), W361-S5."
+}
+```
