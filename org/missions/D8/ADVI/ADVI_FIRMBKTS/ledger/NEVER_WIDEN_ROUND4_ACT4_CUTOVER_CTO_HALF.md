@@ -224,3 +224,16 @@ The cure is a firm-scoped admission on the Inflection fence, pre-signed in `org/
 for the laptop identity to apply.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 12 (2026-10-13 ~02:2xZ) -- the Inflection fence admission (FB-f-21) is CONFIRMED on the product path
+
+`2.0.0_SA_COO~P2` msg 6749 (relayed by MSTR msg 4617). One Inflection Performance walk through the product path, 02:14-02:18Z (`/ui-walk`, local build, firm Inflection Wealth
+Management, one client's Performance tab):
+- the body rendered in 2.7 s;
+- all 11 performance GETs answered 200;
+- the body class is COMPUTED (1 fresh, 3 reopen, none refused);
+- the adapter's explicit-deny, AccessDenied and TypeError lines are all 0 both before and after.
+This passes the CTO half's 2xx branch (`CTO_HALF_INFLECTION_FENCE_ADMIT_IRPT_PERFORMANCE_ADAPTER_20261013.md`, item 3). Its negative controls were read at the apply (ledger
+`20261013T0111Z`, L4). Row IRPT_BCKEND-D2-S117 closes on this read, and the remediation is the CVO's to write.
+
+-- 1.0.0_SA_CTO~DELL1
