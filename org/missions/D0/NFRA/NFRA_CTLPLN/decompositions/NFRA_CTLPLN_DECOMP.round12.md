@@ -54,3 +54,11 @@ Authority: the "Staged next" line above; `CT-aa-5` merged at `cc09499bd5`. The o
 | cell | what | serves | risk | workstream / round | issued to |
 |---|---|---|---|---|---|
 | `CT-aa-6` | put the tier-only fence live on the data proxy by Terraform; read the internal, partner and walker answers and the post-apply log counts; record. | FWD-28 | WORLD | DEVFENCE / 3 | `0.7.0_AE_CloudOps~U7` |
+
+## Recut 4 (2026-10-13, issuer 2.0.0_SA_COO~C): the merge-time tree check runs the merged checker (MSTR msg 108862)
+
+Authority: a recut covers its affected cells; the defect is a consequence of `CT-ab-8` (this seat's cell) and was reported by MSTR with "fix placement is yours". No existing cell changes.
+
+| cell | what | serves | risk | workstream / round | issued to |
+|---|---|---|---|---|---|
+| `CT-ab-13` | `.tools/box-sync.sh` and `.tools/safe-merge.sh` run the `missions-tree-index.py` the merge CARRIES (read from the private index) at their tree-check calls, so a checker change its own previous version cannot read no longer refuses the merge; a test with a control arm. | FWD-2 | LOCAL | MERGECHK / 1 | `0.9.0_WK_NFRA_CTLPLN~86` |
