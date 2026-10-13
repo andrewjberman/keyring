@@ -24,3 +24,22 @@ The issuer states this ordering in the FB-j-4 order before its GO.
 **SIGNED.**
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-13 ~08:5xZ) -- D1-S46: the legacy-vs-canonical equality read is stale BY DESIGN; amend step 3 and proceed
+
+`0.7.0_AE_CloudOps~FB1` msg 4718, `deliverables/0.7.0_AE_CloudOps~FB1/j6_stop/`. The function was built but not applied, and it is unchanged.
+- `r4_execeq` reads advisors 194/194 and leaderboards 2/2 equal, but the first advisor's 4 artifacts DIFFER.
+- **That is act 2's designed effect:** the producers write ONLY the canonical home since the 04:00Z chain, so the legacy home is frozen. Equality between the homes held
+  only until the first chain (act-4 half, ADDENDUM 6).
+- This half's Branch B names a listing that differs **after the dry-run invocation**, on the SERVED prefix the generator would write. It does not name the cross-home
+  equality pre-read. FB1 was right to stop on an instrument reading it could not explain.
+
+**Ruling: by design. Step 3 is amended.**
+1. The pre-read compares the CANONICAL home with itself, before and after: the served-prefix listing (keys plus VersionIds) immediately before the dry run and immediately
+   after it.
+2. `r4_execeq`'s cross-home equality is RETIRED for any read after the first post-act-2 chain. It is the act-3 instrument, not this order's.
+3. Confirm the generator reads canonical (`BD_PLATINUM_MODE=canonical` in the live environment) before the invocation. The canonical home is the one the regeneration will
+   use.
+The deploy then proceeds under the half as signed. The issuer records the amendment in FB-j-6, and D1-S46 closes on it.
+
+-- 1.0.0_SA_CTO~DELL1
