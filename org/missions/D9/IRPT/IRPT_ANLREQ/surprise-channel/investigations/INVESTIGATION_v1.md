@@ -9608,3 +9608,135 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W93-S1 -- AR-y-272: the premise that package_principal is empty at HEAD is false, so before-arm (a) cannot FAIL at HEAD
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W93-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~93",
+  "surfaced_at": "2026-10-13T19:51:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-272 premise void: TYPE_DEFINITIONS package_principal already names svc-irpt-packager at HEAD, so the cell's before-arm (a) cannot fail and no new test is needed.",
+  "spec_asserts": "AR-y-272 step 3 and the order's before_arm: '(a) FAILS at HEAD (the value is empty)'; the pivot direction DIRECTION_DELL2_20261013 section 2 O1 reads package_principal as unset.",
+  "world_is": "MEASURED by reading at HEAD 4b1e07dabc: infra/aws/lambda/ticket_center/lambda_function.py:120 is '\"package_principal\": \"svc-irpt-packager\"' (named by TO-AR-v12, infra/aws/terraform/ticket-center/CHANGELOG.json:368). The empty-value refusal is already tested (tests/test_package_route.py:131 test_package_principal_empty_refuses_everyone). Positive control on the unmodified tree: test_package_principal.py and test_package_route.py 16 passed, rc 0; full ticket_center suite 206 passed, 43 subtests passed, rc 0. No test the cell lists fails at HEAD, so AC1 clause 'the before-arm failing at HEAD' cannot be produced honestly. No product file was changed in this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:120 (package_principal value at HEAD 4b1e07dabc)",
+      "infra/aws/lambda/ticket_center/tests/test_package_route.py:131-143 (empty principal refuses everyone; names the shipped value)",
+      "infra/aws/terraform/ticket-center/CHANGELOG.json:368 (TO-AR-v12 names svc-irpt-packager)",
+      "worker run 2026-10-13: test_package_principal.py + test_package_route.py 16 passed rc 0 on the unmodified tree"
+    ]
+  },
+  "notes": "Issuer decision needed: amend AR-y-272's before-arm and AC1 clause (ii), or re-cut the cell onto a different unbuilt gap. Ruling is the issuer's; no widening was made."
+}
+```
+
+## IRPT_ANLREQ-D2-W93-S2 -- AR-y-272: the packager firm binding is the env list PACKAGE_ALLOWED_FIRMS, not a PROFILE row; the ticket service comment at :119 still says PROFILE
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W93-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~93",
+  "surfaced_at": "2026-10-13T19:51:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cell says the packager is firm-bound by its PROFILE row; the code binds it by the env list PACKAGE_ALLOWED_FIRMS and reads no users row.",
+  "spec_asserts": "AR-y-272 cell text (C-PACKAGER, IB-pr-387): 'The principal is firm-bound by its PROFILE row (internal-caller narrowing) and never ALL.'",
+  "world_is": "MEASURED at HEAD 4b1e07dabc: lambda_function.py:84-87 and :1490-1492 bind the body firm to the env list PACKAGE_ALLOWED_FIRMS (R4-pk-1); package_ticket (:1462-1534) reads no users row; tests/test_package_principal.py:96 asserts users.wanted == [] ('the users table is not consulted for the packager any more'). The comment at lambda_function.py:117-119 ('package_ticket also firm-binds it by that subject's own PROFILE row allowedFirmIds LIST') is stale against the code. Terraform sets PACKAGE_ALLOWED_FIRMS = '49financial,cottonwood,inflection' (infra/aws/terraform/ticket-center/main.tf:266). Not changed: a PROFILE-row binding would be a widening decision for the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:84-87 and :1490-1492 (env-list binding)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:117-119 (stale PROFILE comment)",
+      "infra/aws/lambda/ticket_center/tests/test_package_principal.py:96 (users table not consulted)",
+      "infra/aws/terraform/ticket-center/main.tf:266 (PACKAGE_ALLOWED_FIRMS value)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W93-S3 -- AR-y-272: portal/src/api/endpoints/tickets.ts is not in the worktree (the portal submodule is unpopulated); the pinned read shows no PACKAGE caller
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W93-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~93",
+  "surfaced_at": "2026-10-13T19:51:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's portal path is absent in this worktree (portal is a gitlink with no checkout); a read of the portal repository at its pinned commit shows no PACKAGE call.",
+  "spec_asserts": "AR-y-272 step 1(b): Grep 'portal/src/api/endpoints/tickets.ts' for the package call.",
+  "world_is": "MEASURED: git ls-tree HEAD portal at 4b1e07dabc is a 160000 gitlink to 53506d4903; the worktree portal/ directory is empty, so the path does not exist here. Read instead at the portal repository's pinned commit with git grep (read-only): src/api/endpoints/tickets.ts:70-71 and :106 carry the TicketPackage type only; no POST to /package appears in that file. Who-calls-PACKAGE from the portal is therefore NONE at that pin. No portal file was changed and nothing was committed in the portal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree HEAD portal (gitlink 53506d4903aeabac675d87b7fe208fc9945c8ce7)",
+      "git -C C:/dev/ajb_workspace/portal grep -n -i package 53506d4903aeabac675d87b7fe208fc9945c8ce7 -- src/api/endpoints/tickets.ts"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W93-S4 -- AR-y-272: the W66-S1 blocker (the packager's GET ticket read refused 403) is not present at HEAD; the packager reads no ticket
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W93-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~93",
+  "surfaced_at": "2026-10-13T19:51:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IRPT_ANLREQ-D2-W66-S1 (packager idempotence GET refused 403) describes a read that no longer exists at HEAD; the adjudicator should disposition W66-S1 against this commit.",
+  "spec_asserts": "IRPT_ANLREQ-D2-W66-S1 world_is: opal_packager.py calls ticket_package (idempotence read) before render and attach, and GET /api/scoped/tickets/{id} is refused 403 to svc-irpt-packager.",
+  "world_is": "MEASURED at HEAD 4b1e07dabc: opal_packager.py:14 says the idempotence is 'against data the packager OWNS and never a ticket read'; :252 says 'No ticket is ever read (AR-g-32)'; the module has no ticket_package call (grep of the module: no match). The GET route is unchanged (lambda_function.py:1719-1720 dispatch to get_ticket; MATRIX GET = INTERNAL only), so the refusal still holds for the route, but no caller reads it. W66-S1 is append-only and was not edited; its disposition is the CVO's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:14 and :252 (no ticket read)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:1719-1720 and :156-180 (GET route and MATRIX unchanged)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_ANLREQ-D2-W66-S1 (the row this concerns)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W93-S5 -- AR-y-272: 'the packager runs LAST, after the commentary' is ordered after the draft is STORED, not after it is POSTED to the ticket
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W93-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~93",
+  "surfaced_at": "2026-10-13T19:51:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The packager's trigger (commentary_ready) is sent after the draft is persisted but before the draft is posted to the ticket; the PACKAGE route does not check the ticket's draft_commentary.",
+  "spec_asserts": "AR-y-272 cell and direction O1: 'the packager runs LAST, after the commentary'; the package is the four items, the commentary draft included.",
+  "world_is": "MEASURED at HEAD 4b1e07dabc: data/transcripts/scripts/commentary/lambda_handler.py:341 persist(...) stores the DRAFT; :344 ports['send'] sends commentary_ready (the only trigger of the packager, resident_installed.py:341 and opal_packager.py:144); the draft is posted to the ticket afterwards, at :353 (ticket_client.post_draft_to_ticket). The PACKAGE route (lambda_function.py:1462-1534) reads no draft_commentary field, so the ticket service does not enforce that the draft is on the ticket before a package attaches. The order is enforced by message sequence, not by a ticket-state check.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/commentary/lambda_handler.py:341, :344, :353 (persist, send, post)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:144 and :200-212 (packager trigger and attach)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:1462-1534 (no draft_commentary read on PACKAGE)"
+    ]
+  }
+}
+```
