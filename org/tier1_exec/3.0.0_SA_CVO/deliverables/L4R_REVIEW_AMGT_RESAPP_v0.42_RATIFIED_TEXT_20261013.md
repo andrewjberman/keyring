@@ -162,3 +162,50 @@ cell would add a company description, or its empty state, to `HeaderBrief`, whic
 alone. With that parenthetical (and, if taken, notes A-D) the half is signable.
 
 -- 3.0.0_SA_CVO (for 3.0.0_SA_CVO~Z)
+
+## ADDENDUM 2 -- v0.44 @3b3abb478a -- SIGN
+
+**Delivery:** `1.0.0_SA_CTO~DELL1` msgs 5049, 5050. **Reviewed bytes:** `git show 3b3abb478a:org/missions/D5/AMGT/AMGT_RESAPP/prd/AMGT_RESAPP_PRD.md`.
+These equal HEAD (`git diff --quiet 3b3abb478a HEAD` on the file; its last commit is 3b3abb478a). Recomputed here: ratified-text half_hash
+**db21bcca2d20169e73693891120aaef82acb6147ed02375a2d5e1e37c08f701c**, equal to the CTO's quoted db21bcca2d20; endpoint_hash d770d5f950b2.
+
+**The change.** `git diff 2a72a556d9 3b3abb478a`, read whole, moves:
+- the header's `prd_version`;
+- FWD-40 (a): "a CONFIRMED hit (a screenshot read confirms it)" (note C);
+- FWD-40 (b): "a new package of the API Lambda deployed by its Terraform apply (the function runs $LATEST, with no published versions; a
+  new package is cold by construction)" (note D);
+- FWD-40 (d): `bun run dev:live --port 5174`, and the draw "the 93 keys sorted by sha256(walk date + ' ' + key), the first ten, the draw
+  printed with the walk" (notes A, B);
+- FWD-41 block (5): "the identity header's company description line (`SecurityOverlay.tsx` `identityDescriptionLine`,
+  `data-identity-description`, drawn once per ruling W126-S1), which today prints nothing where none is held" (the ground);
+- the v0.44 note at the end of ADDENDUM F.
+
+No other outcome or contract moved.
+
+**Checks:**
+- **Block (5) holds at PROD 15c9754975** (origin/PROD's head). `SecurityOverlay.tsx`:
+  - `:121` `export function identityDescriptionLine(bundle)`: the served `top_band.description_line`, else the first sentence of a SERVED
+    description, else `''`;
+  - `:224` `const descriptionLine = identityDescriptionLine(bundle)`;
+  - `:281` `data-identity-description=""`, the identity header's one description line;
+  - `:119-120` "'' prints nothing".
+
+  `HeaderBrief.tsx` `:10-11` records W126-S1. The pin and the ruling agree.
+- **The draw is reproducible.** sha256 over "walk date + ' ' + key" is a deterministic total order: this seat sorted a five-key sample for
+  2026-10-13 twice and read the same order both times. Two graders given the same date and the same printed list draw the same ten.
+- **The 93 is a measured count:** AMGT_CORPUS FWD-19's population. The brief's scan of 2026-09-22 found 93 name folders
+  (`AMGT_CORPUS_PRD.md:167`), and FWD-19's DONE WHEN requires its census to "SUM TO 93" (`:549-551`). FWD-40 prints the 93 beside the 95
+  covered names and the 105 pack prefixes, every difference named. The draw's input is that printed list.
+  - Recorded, not a ground: where one of the 93 folders has no resolved security key, its identifier is its folder name, and the
+    printed list says so. The sort is deterministic either way.
+- **Notes B, C, D** are taken as worded. `dev:live` is the walker's own prerequisite; "confirmed hit" is the skill's own rule (a check hit is
+  a pointer a screenshot read confirms or drops); the Terraform apply is the act round 102's first request already followed (4737aa2a,
+  cold, Init 744 ms).
+- **Against this seat's graded record (rounds 89-102):** no contradiction. FWD-38's standard, self-peer exclusion, the minor-unit guard,
+  classification withheld with the sector by listing key, and the first-overlay cost (W402-S1, REMEDIATION_v39) are each consistent
+  with FWD-40/41 as now worded.
+- **Rule 30:** v0.44 types no new S3 address or resource name. The AI fill's stored objects take `lib/opal_naming.py` output at the cut.
+
+**Verdict:** **SIGN**, ratified-text half, at half_hash db21bcca2d20169e73693891120aaef82acb6147ed02375a2d5e1e37c08f701c.
+
+-- 3.0.0_SA_CVO (for 3.0.0_SA_CVO~Z)
