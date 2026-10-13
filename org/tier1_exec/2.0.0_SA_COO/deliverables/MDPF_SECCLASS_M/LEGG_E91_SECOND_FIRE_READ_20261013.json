@@ -1,0 +1,27 @@
+{
+ "claim": "measured: SC-e-91 leg G (b), the SECOND scheduled fire since the 09:55:03Z ship (launch 2026-10-13T04:00:47Z). Read 2026-10-13 ~05:4xZ after C_06's own telemetry (run 2e63e82e5ef2: 05:21:34Z to 05:23:32Z, rc by telemetry upload) completed, with r24_legg_read.py e91 --fire-start 2026-10-13T04:00:00Z --since 2026-10-13T04:00:00Z on both destinations.",
+ "fire": {
+  "launch": "2026-10-13T04:00:47Z",
+  "c06_run_id": "2e63e82e5ef2",
+  "c06_first_sample": "2026-10-13T05:21:34.175Z",
+  "c06_last_sample": "2026-10-13T05:23:32.877Z",
+  "c06_wall_seconds_approx": 118,
+  "c06_peak_pss_mb": 6712.7,
+  "first_fire_c06_wall_seconds": 186.0,
+  "first_fire_c06_peak_mb": 6349
+ },
+ "idempotence": {
+  "canonical_prefix": "opal-data-49financial advi/49financial/platinum/entities/clients/",
+  "canonical_c06_keys_modified_since": 0,
+  "canonical_c06_keys": 7586,
+  "legacy_prefix": "opal-data-bd gold/client_timeseries/",
+  "legacy_c06_keys_modified_since": 0,
+  "legacy_c06_keys": 7945,
+  "c06_keys_modified_since_total": 0,
+  "c06_keys_total": 15531,
+  "mix_daily_summary_canonical_version": "ZuygB9ZtOGqSqiaE.3gV_ae70lhbSZeF",
+  "mix_daily_summary_unchanged_since_fire": true
+ },
+ "verdict": "SC-e-91 leg G (b): the second fire rewrote 0 relationship keys on both destinations and left mix_daily_summary.json unchanged: PASS. With (a) (first fire, LEGG_E91_FIRST_FIRE_READ_20261013.json: both named Reach bounds hold, $0.35 over on 10-09 ruled rounding by the CTO msg 4601), leg G of TO-SC-e91b is read in full.",
+ "note": "the chain was still running when this was read (D_00..D_04 after C_06); D_04 may rewrite platinum/firm/mix_summary.json, which is not a C_06 key and is not in this read"
+}

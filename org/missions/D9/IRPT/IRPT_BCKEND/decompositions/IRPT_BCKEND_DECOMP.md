@@ -3558,3 +3558,20 @@ Checks `deliverables/2.0.0_SA_COO~P2/checks/r173/p173_cells.py`, dry-run at the 
 | `IB-pr-504` | the frozen export envelope carries `facts.covered_account_ids` (synthetic ids), validated against the v1 `ExportReceipt` schema, and the generator reproduces it | FWD-3 | LOCAL | round 172's generator repair (merged; the portal branch `wk-IRPT_BCKEND-353-portal` @e1cd356e2f is fast-forwarded into the worker's portal worktree) | P173-b |
 
 fanout: 2 of 2 chains, cap 8, reason: two disjoint write sets (a records-only replay; one portal generator and one fixture), no edge between them. Two worker spawns (slots ~354 and ~355).
+
+## 166. ROUND 174, WORKSTREAM ~P (2026-10-13 ~05:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6812 = ROUND-174 ANALYSIS section 2)
+
+The CTO's list has three items. Item 1: the builder validates its own output against the repository's v1 schema before it writes, with a planted-member test (row D2-W354-S2), and the contract line "enforced at build; not at serve". Item 2: the portal wire union and type to the contract's enum, `multi_asset` included (row D2-S127), a portal candidate through the CTO's review lane, DEV only. Item 3, carried: the fe-s-18 generator repair (built and merged on the workspace side in rounds 172 and 173; the portal candidates await the DEV review lane) and the builder's `account_id` with its host bundle (which also carries the 49F temp-file fix), when the host is next Online.
+
+The issuer's read before cutting: the builder ALREADY validates (`validate_snapshot` in `holdings_snapshot.py`, called in the build path before the refusal logic and as the `validate=` hook of `land`) and refuses a planted ACCOUNT-node member (probed offline on the contract's valid fixture). So item 1 is a READ plus the missing PROOF (a test), with no product-code edit unless the read finds an unvalidated write path (then a row). The contract line is the PRD's (the schema is generated from the PRD CONTRACTS table): sent to the CTO, not cut.
+
+CUT now: `IB-pr-505` (the read and the planted-member test) and `IB-pr-506` (the portal wire union and type). NOT cut now, with the reason and the condition: the builder's `account_id` host-bundle deploy (a never-widen pair; the host is stopped and the bundle also carries the temp-file fix: condition, the host Online; owner me); the `irpt-directory-search` apply (the signed pair, after the CVO's re-sign); the repair of the no-op report validator in the ycharts generate composition (row W352-S1; before any path calls it, none does yet).
+
+Checks `deliverables/2.0.0_SA_COO~P2/checks/r174/p174_cells.py`, dry-run at the base: IB174-1 AC1 and AC3 FAIL (no test file, no record), AC2 PASS at base (a regression guard on the validator); IB174-2 AC1 FAIL (IVE48-AC1 fails), AC2 FAIL (1212 pass, 5 fail in the shared portal checkout), AC3 FAIL (no test file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-505` | READ of the build path's validation before any write, and the planted-member test (a stray member refuses the build, zero puts) | FWD-3 | LOCAL | none | P174-a |
+| `IB-pr-506` | the portal wire union and type follow the contract's enum, `multi_asset` with a plain fallback label; `IVE48-AC1` passes | FWD-3 | LOCAL | none | P174-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two disjoint write sets (a gold-runner test and a records read; the portal wire type and holdings tab), no edge between them. Two worker spawns (slots ~356 and ~357).
