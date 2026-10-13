@@ -1,13 +1,13 @@
 {
   "prd": "MDPF_CANON_PRD.md",
-  "prd_version": "v2.12",
-  "prd_pin": "84aecdf45f9d772fc0ebc7db371066805010dc50",
+  "prd_version": "v2.13",
+  "prd_pin": "fed23ff9ff497ee529d8732dc6c6b63b85072758",
   "half": "ratified-text",
-  "half_hash": "b7aa2eb054be842b74af9ff59f606f78864d572d91fc48c1cb242ba3375b77e5",
-  "endpoint_hash": "7ba6711802e19a6cef7ffa9d7dc2b98ca232870c51a242d9849d7c8401270599",
+  "half_hash": "3eea94b4862515db2cc8608991fc53e9a93970b9f98a007242c26c2503652f71",
+  "endpoint_hash": "cb2f5ef3d8551f4b4c5a3e2e7c8816a68825382378bbee1f369f0470c924bc1b",
   "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_MDPF_CANON_v2.12_RATIFIED_TEXT_20261013.md@1337ef5c75",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_MDPF_CANON_v2.12_RATIFIED_TEXT_20261013.md@556bc01b3e",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-13T19:03:13Z",
-  "reason": "FWD-9: draw, comparison, membership sources and stack composition (Client split short of non_model_aua by ~21-23M) undefined"
+  "signed_at": "2026-10-13T19:10:25Z",
+  "reason": "FWD-9 v2.13: stack overshoots opal_aggregate_aua by the two carries listed under ETF (21.12M on 10-09); ALT lists tax and tax_additive_aua (same dollars); fold suppression vs universal sum-to-Total"
 }
