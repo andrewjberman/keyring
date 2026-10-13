@@ -13853,5 +13853,6 @@
   "tier": 4,
   "page": "research",
   "authority": "1.0.0_SA_CTO~DELL1 msg 3434 (2026-10-11 ~03:2xZ), verbatim: 'under the 2026-10-09 law a Bloomberg pull goes through its queue (MDPF_DEMQUE) with no per-use word from Andrew. File one DEMQUE request for CRNCY over the scanner universes.'",
-  "runs_at": "site Z (the Terminal), by the queue's producer, under integrations/bloomberg/READ_HERE.md budget rules; quoted before it draws"
+  "runs_at": "site Z (the Terminal), by the queue's producer, under integrations/bloomberg/READ_HERE.md budget rules; quoted before it draws",
+  "draw_hold": "Draws ONLY if AMGT_RESAPP-S14-CRNCY-SCANNER-US-SLICE1 reads a non-USD currency (COO~R1 msg 4877; CTO form row D5, msg 5139). Until a CVO-or-COO release record names this key, the standing drawer lists this request as not drawable."
 }

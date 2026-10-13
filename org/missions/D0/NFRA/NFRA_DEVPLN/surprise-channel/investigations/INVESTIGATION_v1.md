@@ -622,3 +622,106 @@
   "world_is": "No separate test file exists or is granted for this cell. The worker put the test inside the tool as --selftest (7 cases, exit 0) and ran ruff on the tool file only; a standalone test file would have needed a path outside the grant."
 }
 ```
+
+## NFRA_DEVPLN-W2-S5 -- the open-calls test was red because its fixture call lacked --context and --rec, not because the tool was wrong; repaired in the test
+
+```json
+{
+  "id": "NFRA_DEVPLN-W2-S5",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~2",
+  "surfaced_at": "2026-10-13T21:06:48Z",
+  "one_line": "The order says the open-calls test prints cases=2/2 and that its red cause may be a fork add without --context; the test has 19 cases, and its fixture add lacked both --context and --rec, which the tool requires for a fork. The test was repaired by supplying both; the tool was not changed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DP-r-1 DPr1-AC1 expects OPEN-CALLS-TEST cases=2/2 ok=True, and BUILD item 1 says repair the test, not the tool, when the test is right.",
+  "world_is": "At 5b69a3c295 the run prints cases=0/2 ok=False because case 1 raised FileNotFoundError: add was refused rc 2, so no state file was written. cmd_add requires --context (40-600 characters) and a fork requires --rec; the test base_add supplied neither. After the repair the run prints cases=19/19 ok=True. The denominator 2 in the order was the count of entries that existed when the test aborted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_DEVPLN/task-orders/NFRA_DEVPLN.TO-DP-r-1.repair-batch.md BUILD item 1 and DPr1-AC1 (cases=2/2 expected)",
+      ".tools/tests/test_open_calls.py@5b69a3c295 base_add (line 108 at HEAD) carried no --context and no --rec; python .tools/tests/test_open_calls.py at base printed cases=0/2 ok=False with the FileNotFoundError",
+      ".tools/open-calls.py@5b69a3c295 cmd_add (line 1013) and check_call_text (lines 783-792) refuse a call without --context and a fork without --rec"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## NFRA_DEVPLN-W2-S6 -- approval-lease --project breaks four lease cases of test_open_calls_register.py, a file outside this order's paths
+
+```json
+{
+  "id": "NFRA_DEVPLN-W2-S6",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~2",
+  "surfaced_at": "2026-10-13T21:06:48Z",
+  "one_line": "Making approval-lease require --project (DPr1-AC3) turns four lease cases of test_open_calls_register.py red: its register_lease helper calls approval-lease without --project. That file is not in this order's paths, so the one-argument fix cannot be made here, and the order's keep-green instruction cannot be met inside the grant.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DP-r-1 BUILD item 3: --project becomes required; keep test_open_calls_approval.py and test_open_calls_register.py green.",
+  "world_is": "At this worktree test_open_calls_register.py prints OPEN-CALLS-REGISTER-TEST cases=6/10 ok=False. The four failing cases (a live lease writes an APPROVED row; expired, other-seat and HOLD leases; a missing lease file; a live lease on a DEV-cut branch) each exit rc 2 at argparse before their own check. Test_open_calls_approval.py stays 13/13 ok=True. No caller in the tree omits --project except that helper, so the hazard is a loud refusal, not silent harm. The fix is --project NFRA_DEVPLN in register_lease, a path the order does not grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/tests/test_open_calls_register.py@5b69a3c295 line 136 register_lease builds approval-lease args with no --project",
+      ".tools/open-calls.py@5b69a3c295 approval-lease --project is required=True after this order's edit (line 1797); argparse prints 'the following arguments are required: --project' with rc 2",
+      "git grep approval-lease at 5b69a3c295: the only caller that omits --project is the register test helper"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## NFRA_DEVPLN-W2-S7 -- the default fetch refuses a branch that exists only locally with fetch-failed; the local fallback runs only under --no-fetch
+
+```json
+{
+  "id": "NFRA_DEVPLN-W2-S7",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~2",
+  "surfaced_at": "2026-10-13T21:06:48Z",
+  "one_line": "The order does not say whether a branch missing from origin is a failed fetch. Built as one: the default run fetches the branch and refuses fetch-failed when origin has no such ref, so the local-only fallback in step 1 is reachable only with --no-fetch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DP-r-1 BUILD item 2(a): before it decides it fetches origin for DEV and for the branch; a failed fetch is REFUSED fetch-failed; item 2(c): --no-fetch on an unknown branch still prints branch-not-found.",
+  "world_is": "A temporary repository with a local branch localonly and no origin ref: the default run prints result=REFUSED reason=fetch-failed (git: couldn't find remote ref refs/heads/localonly); with --no-fetch the same branch passes step 1 and reaches the approval reader. The temporary repository was not the real portal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/portal-merge-forward.sh@wk-NFRA_DEVPLN-2 (uncommitted at this row) fetch block after git check-ref-format: git fetch origin '+refs/heads/<branch>:refs/remotes/origin/<branch>' refuses fetch-failed",
+      "temporary repository under mktemp -d with origin.git and a local branch localonly: default run REFUSED fetch-failed; --no-fetch run reaches status-unreadable (the reader stand-in printed nothing)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## NFRA_DEVPLN-W2-S8 -- proof-of-spec-check's POST-COMMIT pin-drift line names 066fd5d7e2 as the commit that changed the register test row's file, and git says it did not
+
+```json
+{
+  "id": "NFRA_DEVPLN-W2-S8",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~2",
+  "surfaced_at": "2026-10-13T21:18:04Z",
+  "one_line": "On the proof instance for DP-r-1, the checker's artifact-resolution/pin-drift line reports 1 row whose pinned version had a line removed or changed by 066fd5d7e2 (the proof-instance commit). The row is .tools/tests/test_open_calls_register.py pinned at 6b9bc6662b, the one-line repair. Git shows 066fd5d7e2 adds only the instance file (118 insertions) and touches no tool or test file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "proof-of-spec-check artifact-resolution: a pinned row's graded content is read at its pin, and POST-COMMIT drift is announced when the pinned version was changed by the instance commit (AMGT_CORPUS-Z-S70 class).",
+  "world_is": "The checker returned VALID rc=0 with 5/5 rows and 0 violations; its drift announcement attributes a change to a commit that does not touch the cited file. git log -- .tools/tests/test_open_calls_register.py lists 6b9bc6662b then 7bff1eab9b, and 066fd5d7e2 is an ancestor of 6b9bc6662b, so the attribution is not the instance commit's diff. The announcement is advisory (ANNOUNCED, not asserted) and did not change the verdict.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "proof-of-spec-check run on org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~2/NFRA_DEVPLN.TO-DP-r-1.repair-batch.proof_of_spec.json: artifact-resolution/pin-drift names .tools/tests/test_open_calls_register.py@6b9bc6662b, 1 line changed by 066fd5d7e2",
+      "git show --stat 066fd5d7e2: 1 file changed, 118 insertions, the instance JSON only",
+      "git log --oneline -3 -- .tools/tests/test_open_calls_register.py at HEAD: 6b9bc6662b, 7bff1eab9b"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

@@ -7680,6 +7680,7 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
 ## IRPT_DASHBD-D2-W141-S1 -- No store the builder may read groups the accounts of one 49 Financial client: the client summary keys accounts by issued id and the gold account tables by custodian id, and no named store maps one to the other
 
 ```json
@@ -7884,6 +7885,110 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
     "evidence": [
       "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at base a2ab71ab9e: hold.ending_value, hold.net_gain_last_12_months and the other hold.* members with their section holdings_overview; hold.allocation as the only by-class member",
       "portal worktree commit 47673668: dashboard/report/reportModel.ts buildReportModel holdings section"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W141-S3 -- The gold account_activity_daily table holds four trading days, so no standard window (QTD, YTD, last 12 months, since inception) can be measured for any household, and DB94-2-AC1 cannot pass
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W141-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~141",
+  "surfaced_at": "2026-10-13T21:38:36Z",
+  "one_line": "The gold account_activity_daily table carries four trading days (2026-10-07, 10-08, 10-09 and 10-12), one per date partition, so each standard window's opening day is absent for every household: no QTD, YTD, last-12-months or since-inception identity can be graded, the fewer-than-four-checks clause of TO DB-b-175 step 3 applies to every household, and the builder stopped before choosing one.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-175 step 3: for each of the four standard windows whose four members are sourced, check beginning + net additions + net gain = ending within a dollar, for the household and each account; if fewer than 4 checks are possible because those members are ABSENT, file a surprise row and stop. The contract's activity members open on the window's opening anchor (the last trading day before the window start): QTD 2026-09-30, YTD 2025-12-31, last 12 months the trading day before the calendar day one year before 2026-10-12.",
+  "world_is": "Read-only, LIST and GET only, by 0.9.0_WK_IRPT_DASHBD~141 on 2026-10-13. s3://opal-data-49financial/irpt/49financial/gold/account_activity_daily/ holds 4 date= partitions: 2026-10-07 (6897 rows), 2026-10-08 (6901), 2026-10-09 (6914) and 2026-10-12 (6914); each partition holds ONE distinct business_date and one row per account, and the table has 8 keys in total. The rows before 2026-10-07 are not in gold, so no window opening (2025-12-31, 2026-09-30, the last-12-months anchor) exists. The contract's window identity note measured a 24-trading-day window at round 25; the table now carries four trading days. The newest partition's coverage is 6897 MEASURED and 17 GAP_ABOVE_ALLOWANCE, which is not the blocker; the span is.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S3 LIST and GET of irpt/49financial/gold/account_activity_daily/ by 0.9.0_WK_IRPT_DASHBD~141 on 2026-10-13: 4 CommonPrefixes, 8 keys; per-partition counts by .scratch/probe_coverage.py (counts and dates only, output in the private folder)",
+      "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json at commit 0c0ae5a8f5: grain account x trading day, partition date=YYYY-MM-DD, window_identity_tolerance note (round 25 grading of a 24-trading-day window)",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at commit 0c0ae5a8f5: window start_rule and opening_anchor for quarter_to_date, year_to_date, last_12_months; since_inception opens on first_data_date",
+      "builder run at commit 8df8e76f09: outcome NO_ELIGIBLE_HOUSEHOLD before any window was graded; 596 households with at least three gold accounts were counted (counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W141-S4 -- The household rule in the builder docstring names the newest return partition for the twelve-month history test, and that partition holds one trading day; applied as written the rule yields zero eligible households
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W141-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~141",
+  "surfaced_at": "2026-10-13T21:38:36Z",
+  "one_line": "My household rule (builder docstring R4) tests 'at least 12 months of history in the return table' against the NEWEST account_return_daily partition, which holds one trading day; the table's history spans its 569 date partitions (2024-07-08 to 2026-10-12). Applied as written the rule gives 0 eligible households of 596 with at least three gold accounts. The rule text was not changed after its outcome was seen.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-175 step 2: choose ONE household by a rule written in the module's docstring before any figure is read; the order's example reads 'at least 12 months of history in the return table'.",
+  "world_is": "account_return_daily is partitioned one trading day per date= prefix (569 partitions, 2024-07-08 to 2026-10-12); the newest partition (2026-10-12) holds 6914 rows of a single business_date. A twelve-month history test must read the union of partitions, not the newest one. The rule as written could not be satisfied, which is a defect of the rule's wording, not a finding about the households.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S3 LIST of irpt/49financial/gold/account_return_daily/: 569 CommonPrefixes, earliest 2024-07-08, newest 2026-10-12; partition counts by .scratch/probe_coverage.py (counts and dates only)",
+      "builder docstring R4 at commit 8df8e76f09 (org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~141/build_sample.py): 'its earliest business_date in the newest account_return_daily partition'",
+      "builder run at commit 8df8e76f09: households_eligible_R4 = 0, households_with_3_or_more_gold_accounts = 596 (counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W141-S5 -- The sibling contract for account_class_daily states that no object of its table exists in any bucket, and gold holds four date partitions of it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W141-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~141",
+  "surfaced_at": "2026-10-13T21:38:36Z",
+  "one_line": "IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json says served false and 'No object of this table exists in any bucket', but s3://opal-data-49financial/irpt/49financial/gold/account_class_daily/ holds four date partitions (2026-10-07, 10-08, 10-09 and 10-12); the class members of the report, and the class rows, therefore do not rest on the absence the contract states.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The sibling contract's served_note: 'No object of this table exists in any bucket.' TO DB-b-175 step 2 reads the gold stores named in the sibling contracts' addresses.",
+  "world_is": "Four date= partitions exist in gold, each with data.parquet and manifest.json (the newest data.parquet is 485,289 bytes). Whether the gold table is complete is not measured here; the builder reads the newest partition only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json at commit 0c0ae5a8f5: served false, served_note 'No object of this table exists in any bucket'",
+      "S3 LIST of irpt/49financial/gold/account_class_daily/ by 0.9.0_WK_IRPT_DASHBD~141 on 2026-10-13: 4 CommonPrefixes, 8 keys; the newest partition's object sizes read by LIST (sizes only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W141-S6 -- The activity rows carry method_version 3, and the gold dim_return_method table holds versions 1 and 2 only, so the fee-basis member has no row to read
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W141-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~141",
+  "surfaced_at": "2026-10-13T21:38:36Z",
+  "one_line": "The contract's convention.fee_basis_label reads the fee basis from dim_return_method, and states it as GROSS_ONLY; the activity rows carry method_version 3 (6914 of 6914 on 2026-10-12), and gold dim_return_method holds method_version 1 and 2 only, so no landed row carries the version the figures were produced under.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PERFORMANCE_REPORT_CONTRACT convention.fee_basis_label: 'the served fee basis is GROSS_ONLY'; DIM_RETURN_METHOD contract: versions 1 and 2 are GROSS_ONLY, version 3 is PER_ENTRY_FEE_TREATMENT.",
+  "world_is": "dim_return_method/ in gold: method_version=1 and method_version=2 (LIST, 2 partitions); account_activity_daily rows of 2026-10-12: method_version 3 for all 6914 rows (counts only). The label is therefore ABSENT in the builder's rule (the row for the carried version is missing), and the GROSS_ONLY statement is not read from any landed row for version 3.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S3 LIST of irpt/49financial/gold/dim_return_method/ by 0.9.0_WK_IRPT_DASHBD~141 on 2026-10-13: method_version=1 and method_version=2",
+      "S3 GET of account_activity_daily/date=2026-10-12/data.parquet, column method_version only: counts {3: 6914} (probe in .scratch, counts only)",
+      "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json at commit 0c0ae5a8f5: method_versions list with fee_basis per version"
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
