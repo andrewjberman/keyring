@@ -14,7 +14,7 @@ Source: `deliverables/0.7.0_AE_CloudOps~FB1/DRYRUN10_FIGURES.json` (FB1 msg 4744
 1. **`top_nna_mover` attributes ONE client to TWO advisors.**
    - "Client rel_id 0" with the identical $9,625,309.46 inflow appears for `alex_bright` (93.88 pct) and for `garrett_newberry` (100.11 pct).
    - `rel_id "0"` is a placeholder or unmapped key, so the flows of unrelated accounts are pooled under one fake client.
-   - The slot also prints raw relationship ids (`z08374526`) to advisors, and it is the slot where the withheld client name leaked.
+   - The slot also prints raw relationship ids (<relationship id, scrubbed>) to advisors, and it is the slot where the withheld client name leaked.
 2. **The PII guard misses client display names** (D1-S50). Every slot that names a client is unsafe until it is fixed.
 3. **An accuracy question:** `garrett_newberry`'s IQLT reads "down $302,321 (-69.2%)" on a broad international ETF. A 69 pct unrealized loss on that fund is implausible, and it suggests a
    cost-basis or price defect of the kind the Black Diamond pricing brief covers. It is checked before any serve.
