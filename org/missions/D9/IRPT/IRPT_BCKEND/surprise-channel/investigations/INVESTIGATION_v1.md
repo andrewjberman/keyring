@@ -30872,3 +30872,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "safe-commit.sh does not commit from a portal repo under this worker's environment: it reads the committer identity from the git config of the box, which is unset for the portal repo, and it does not take the author value as committer. The portal commit exists (c8c668c0) with the required identity, made by the route the order names. The wrapper's pre-commit gates printed before the refusal; commit-gate reported it checked 0 of 4 files (non-py frontend paths), so no gate validated the portal commit."
 }
 ```
+
+## IRPT_BCKEND-D2-S127 -- DISPOSITION after the round-173 drain
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S127",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T05:35:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISPOSITION after the round-173 drain: W354-S2 disarmed (the repo schema admits account_id); W355-S1 closed by my grant amendment; the portal test IVE48-AC1 now fails because the v1 contract enum regained multi_asset (dell1 TO-SC-e100), not because of this round.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer re-run: IB173-1 AC1, AC2, AC3 PASS in the merged tree (merge 317311364d); IB173-2 AC1, AC2, AC3 PASS in worker 355's worktree at portal c8c668c0 (merge 69394053a4 workspace side).",
+      "the pinned packaged snapshot.py line 356: project() copies every kept node whole (json.loads(json.dumps(n))); read by this seat.",
+      "IB-pr-498 replay arm (a): a node with account_id reads VALID against the repo HoldingsSnapshot schema (merge faf4f860bb); the packaged OLD copy is the one that refuses it, and nothing validates at serve (IB-pr-501).",
+      "bun test dsgn-irptv1/iv-e-48.new-classes.test.tsx alone in worker 355's worktree: VERDICT NEW-CLASSES-FAIL, wire union [alternatives,cash,commodities,equity,fixed_income,other,structured,unclassified] != contract enum [... multi_asset ...]."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "DISARMED: W354-S2 (the serve path validates nothing and would serve schema-invalid bytes; the 49F builder's account_id is schema-VALID under the repo v1 schema, which admits the optional member since PRD v0.52, so the account_id line serves no invalid bytes; the missing serve-time check is a pre-existing property of the function, not a hazard this line creates). CLOSED: W355-S1 (the grant omitted four fixtures the generator also writes: my defect; amended and delivered). OBSERVATIONS: W354-S1 (the packaged project() has no include argument, consistent with the live function not serving TARGET); W355-S2 (the full portal folder reads 1212 pass, 27 skip, 5 fail against 1213/27/4): the fifth failure is IVE48-AC1, which compares the wire fixtures' asset_class union to the contract enum read from docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json; that enum regained multi_asset when dell1's TO-SC-e100 (7d49d6cc6d) reached this branch at ~05:1Z, and the portal wire fixtures carry no multi_asset. Not caused by IB-pr-504 (the test fails alone at the worker's portal HEAD). The fix is a portal-owned decision (the wire union and its type move together, or the test names the producer's six): asked of the CTO in the round-173 slug. STILL ARMED: W345-S3, W348-S2, W346-S2, W346-S3, W350-S1 as in D2-S126; the portal candidates 346, 350, 353 and 355 await the DEV review lane."
+}
+```
