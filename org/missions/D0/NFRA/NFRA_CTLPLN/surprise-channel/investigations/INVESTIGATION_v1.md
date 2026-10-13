@@ -8828,3 +8828,32 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Found while running the reader checks this cell touches. Not fixed: the file is outside this order's <paths>. The owner is the seat that wrote crossbox-call.py and its test."
 }
 ```
+
+## NFRA_CTLPLN-Z-S7 -- DEVICES.json lists site Z's lane letters as Z only; ~MP, ~O, ~MI and ~MQ run on site Z
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "0.0.0_AB_MSTR~Z",
+  "surfaced_at": "2026-10-13T19:25:00Z",
+  "one_line": "org/devices/DEVICES.json lists site Z's lane_letters as [\"Z\"] only, while site Z runs ~MP, ~O, ~MI and ~MQ lanes; the two prefix readers would place those lanes on the laptop.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/DEVICES.json sitez row at box/sitez 549c4f26c7: lane_letters [\"Z\"], lane_letters_claim measured, source the ~Z agentbus-trunk files",
+      "DIRECTION_SITEZ_20261013.md section 2 owner key names site Z lanes 2.0.0_SA_COO~MP, 2.0.0_SA_COO~O, 2.0.0_SA_COO~MI, 0.7.0_AE_CloudOps~MQ, 0.7.0_AE_CloudOps~MI; COO~MP, ~O and ~MI were spawned on site Z by 0.0.0_AB_MSTR~Z at 19:1xZ (org/mcp/agent-spawn-audit.log)",
+      ".tools/crossbox-call.py:364 and .tools/fabric-activity.py:184 resolve a lane to a box by prefix over lane_letters; with [\"Z\"] the ~Z* lanes resolve to sitez and ~MP/~O/~MI/~MQ fall to the laptop (lane_letters_default)",
+      "python .tools/seat-liveness.py on site Z at 19:2xZ DOES list ~ZQ, ~ZW, ~MI, ~MP and ~O, so the exact-match reader at seat-liveness.py:261-265 is not hiding these seats today"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DEVICES.json lane_letters lists the lanes each box runs (claim: measured); DIRECTION_SITEZ_20261013 section 8 asks 0.0.0_AB_MSTR~Z to correct the stale site Z row.",
+  "world_is": "Only \"Z\" is listed. The prefix readers' misplacement of ~MP/~O/~MI/~MQ was not exercised by a real call here, so no wrong delivery is measured. A plain list add has a prefix trap: \"O\" or \"M\" as a prefix also claims any other box's lane starting with that letter.",
+  "notes": "Not edited by 0.0.0_AB_MSTR~Z: owned-paths-validate refuses the file (lane NFRA_CTLPLN_FAST_C). The fix shape (full lane names vs prefixes) is the lane owner's.",
+  "disarm_owner": "2.0.0_SA_COO~C (issuer of lane NFRA_CTLPLN_FAST_C; decides the lane_letters form and lands the site Z row)"
+}
+```
