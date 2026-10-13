@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-12T21:15:16Z",
+ "written_at": "2026-10-13T07:37:22Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -1994,6 +1994,39 @@
     "at": "2026-10-12T20:50:31Z",
     "by": "1.0.0_SA_CTO~DELL1",
     "reason": "His subscriber login: only he can sign in"
+   }
+  },
+  {
+   "id": "dell1-20261013T073721Z-1261",
+   "project": "NONE",
+   "subject": "New project, Black Diamond pricing rules: confirm its three DONE WHEN lines (rule on record; traceable; every price move shown to you first)? REC yes",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "docs/briefs/bd-pricing-rules-brief-20261013.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-13T07:37:21Z",
+   "kind": "fork",
+   "context": "FIRMBKTS found 49F's T-1 price weighted by duplicate rows (830 of 5,366 asset-days move), a latent unstable tie sort, and a file-day/trade-date question. CRO brief docs/briefs/bd-pricing-rules-brief-20261013.md PART VIII; no work starts before your word.",
+   "rec": "Yes, as written: the third line keeps every client-visible price change behind your review, and the first two make the rules auditable. The CTO then writes the endpoint and registers it.",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-13T07:37:21Z"
+   },
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-13T07:37:22Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "L2 DONE WHEN is Andrew's to confirm"
    }
   }
  ]
