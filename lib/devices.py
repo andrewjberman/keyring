@@ -50,6 +50,17 @@ def names(reg: dict | None = None) -> list:
     return [d["name"] for d in devices(reg)]
 
 
+def senders(reg: dict | None = None) -> list:
+    """Sender-only tailnet identities (top-level `senders`): accepted as agentbus `from_tailnet`, never a box."""
+    return list((reg or load()).get("senders") or [])
+
+
+def held_tailnet_names(reg: dict | None = None) -> list:
+    """Every tailnet name an agentbus consumer accepts: each box's, then each sender-only identity's."""
+    reg = reg or load()
+    return [d["tailnet_name"] for d in devices(reg) + senders(reg) if d.get("tailnet_name")]
+
+
 def resolve(label: str, reg: dict | None = None) -> str | None:
     """Canonical name for a box name or alias, case-insensitive; None when the register does not hold it."""
     want = (label or "").strip().lower()
