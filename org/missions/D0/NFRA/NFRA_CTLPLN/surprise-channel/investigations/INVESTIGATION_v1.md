@@ -9042,3 +9042,81 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The events are gone and the group reads 0 before the cut. A rotation path exists (the OP-s-10 runbook), but a single rotation does not invalidate these tokens, since the rotated-out key moves to the previous slot and still verifies; invalidation needs the rotation plus retiring the previous slot. Neither was done by this order. The 16 in-window refresh_token lines (10 device_trust) remain acceptable until the expiries above. The ruling's use-read for the no-path branch (proxy access log by source address, status only) was not run, since a path exists."
 }
 ```
+
+## NFRA_CTLPLN-W87-S1 -- the crossbox suite's named denominator (50) is the base count before the exceptions; with the origin fixture fixed the suite reads 71 of 71
+
+```json
+{
+  "id": "NFRA_CTLPLN-W87-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~87",
+  "surfaced_at": "2026-10-13T22:22:37Z",
+  "one_line": "TO-CT-ac-1 CTac1-AC1 names 'reads 50 of 50' from the base 45/50. After the origin fixture fix, test_crossbox_call.py reads CROSSBOX-TEST cases=71/71 ok=True. The base count stopped early: each refused commit raised inside its part, so the checks behind that raise never ran.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/tests/test_crossbox_call.py at the worktree base (before the cell's edit): CROSSBOX-TEST cases=45/50 ok=False; the five FAIL lines each read a 'not on origin yet' refusal raised from a part at its first commit (writer and watcher, refusal cases, cli)",
+      ".tools/tests/test_crossbox_call.py on branch wk-NFRA_CTLPLN-87 after the cell's edit (publish() pushes each fixture commit to the fixture's own origin): CROSSBOX-TEST cases=71/71 ok=True, rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-ac-1 CTac1-AC1: the crossbox suite reads 50 of 50 (base: cases=45/50 ok=False); expect ok=True.",
+  "world_is": "The suite passes 71 of 71. The denominator 50 was the count at the base, where refused commits stopped their parts early; it is not the size of the suite. The ok=True expectation holds; the named denominator does not.",
+  "notes": "Recorded as measured. The order's expected count is for the issuer to correct at the round-13 analysis; the worker did not edit the order."
+}
+```
+
+## NFRA_CTLPLN-W87-S2 -- two comments in routes.tf still name tests/simulate_policy.py, which this cell removed
+
+```json
+{
+  "id": "NFRA_CTLPLN-W87-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~87",
+  "surfaced_at": "2026-10-13T22:22:37Z",
+  "one_line": "The CTO ruling on item 7 retired tests/simulate_policy.py as a gate; no test reads it as a fixture, so this cell deleted it. infra/aws/terraform/nfra-ctlpln-identity/routes.tf lines 23 and 30 are comments that still say the file reads the route Deny document. routes.tf is outside this order's <paths>, so the comments were not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/routes.tf:23 and :30 (branch wk-NFRA_CTLPLN-87): comment lines naming tests/simulate_policy.py",
+      "Grep of infra/aws/terraform/nfra-ctlpln-identity (.py, .sh, .ps1, .tf, .json) after the cell: no code or gate reads simulate_policy; the deleted file is infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py (git history keeps it)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO ruling (item 7): simulate_policy.py is retired as a gate; keep the file only if a test still reads it as a fixture, and then say so in a comment at its top.",
+  "world_is": "No test reads the file as a fixture, so it was deleted. Two routes.tf comments still name it: a dangling reference in a comment, not a gate.",
+  "notes": "Owner: the seat that owns routes.tf (the CT-d and CT-ab-1 lane). Not edited by this worker."
+}
+```
+
+## NFRA_CTLPLN-W87-S3 -- the OPEN-CALL project-field arm reads a key that crossbox call files do not carry
+
+```json
+{
+  "id": "NFRA_CTLPLN-W87-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~87",
+  "surfaced_at": "2026-10-13T22:22:37Z",
+  "one_line": "The CTO-ruled arm (a) matches a call's structured project field. crossbox-call.py KEYS has no project key and check_call refuses an unknown key, so a crossbox call FILE cannot carry a project field. The arm is reachable from open_calls rows and from a hand-made file. Case 943 now puts its project code in a project field of a call file, which the writer would refuse.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/crossbox-call.py KEYS (line 60, branch wk-NFRA_CTLPLN-87): no project key; check_call raises Refused on an unknown key",
+      ".tools/tests/test_apply_who_and_crossbox.py case 943 (branch wk-NFRA_CTLPLN-87): call_doc(subject='the project needs a word', project='PA')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO ruling D2-S32 (2) and order CT-ac-1 item 4: the OPEN-CALL arm matches the call's structured project field against the deploy's project.",
+  "world_is": "The deploy checker reads the field from any JSON it is given; the writer never writes one. A project-field hit on a crossbox call file can come only from a hand-made file or from an open_calls row. The ruling's wording holds; the carrier for arm (a) on call files is absent.",
+  "notes": "Owners: 2.0.0_SA_COO~C with 1.0.0_SA_CTO (the ruling). Not decided by this worker."
+}
+```
