@@ -27,7 +27,7 @@ runs.**
 identity gate passed this session (prompt.md On-Launch); the Teams Monitor is the stock
 engine armed WITH the identity pin (no wrapper — the scratch-wrapper pattern is dead by
 design). The canonical arm line (Monitor tool, `timeout_ms: 1800000`). `teams-watch.py` has no exit of its own
-(`while True`, teams-watch.py:531), and the harness kill at 30 minutes stops only the Monitor wrapper, so the
+(`while True`, teams-watch.py:537), and the harness kill at 30 minutes stops only the Monitor wrapper, so the
 `timeout 1770` prefix is what ends the python (29.5 minutes, Andrew-direct 2026-10-08 ~16:2xZ). Re-arm on its
 exit and run the backlog sweep (`/bbg-teams-assist`) to cover the gap:
 
@@ -36,8 +36,21 @@ timeout 1770 python .claude/skills/teams-assist/teams-watch.py --server opal-gat
 ```
 
 `--channels` is mandatory: without it the engine watches ZERO Team channels and says nothing (`channels = []`,
-teams-watch.py:511). The arm banner must print `channels=1 watched (Opal Client Tickets)`; a banner with no
-`channels=` clause is an unwatched tickets channel. Add a channel by adding a row to `channels.json` (ids, never names).
+teams-watch.py:511). Add a channel by adding a row to `channels.json` (ids, never names).
+
+**THE ARM PROOF IS THE STDOUT RECEIPT, NOT THE BANNER.** The `[teams-watch] armed ...` banner goes to STDERR,
+which a Monitor does not deliver, so from inside the session a healthy arm and a dead one read identically on it
+(it is readable only in the task's own output file). The first Monitor event after an arm is instead ONE stdout line:
+
+```
+[TEAMS-ARMED] pid=<pid> identity=<oid or BARE> channels=<n> cursor=<iso>
+```
+
+Read it as the ARM RECEIPT, never as a message: no ACK, no reply, no cursor effect, no serve loop. It must carry
+`identity=517aa5ee-b4d0-425a-b493-5a22ff77ac4f` and `channels=1`. `channels=0` is an unwatched tickets channel
+(the `--channels` flag was dropped); `identity=BARE` is the identity-blind arm this seat must never run.
+**No `[TEAMS-ARMED]` event within 60 seconds of an arm means the watcher did NOT arm** -- census the
+`teams-watch.py` process rows for this serial, then re-arm. A silent arm is a deaf seat, not a quiet one.
 
 The pin is the opalbloomberg account's Entra `oid`. The old form, `--identity opalbloomberg`, could never match:
 `self_id()` reads the token's `sub` (`<tid>/<oid>`), and the token carries no `preferred_username` or `upn`. Read
