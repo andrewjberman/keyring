@@ -101,3 +101,13 @@
 - AC3 re-run from the amended tool: `SAMPLE EQUAL: 8 of 8 cases`, `exit=0`. The order's `<status>` flips to `complete` in the commit that carries this
   note. Evidence: `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act4bc/4c_ac3_amended.txt`
   (the earlier note's `evidence/act4bc/` prefix names this same `act4bc/` folder).
+
+
+## NOTE 2026-10-13 (0.7.0_AE_CloudOps~FB1; COO msg 4639, row ADVI_FIRMBKTS-D1-S40)
+
+- **Act 4b is labelled NOT EXERCISED; read path graded by `r4_execeq`.** The exec-summary generator did not run at 04:30Z or at all: its only trigger
+  is EventBridge `exec-summary-trigger` (chain-complete from `bd-pipeline.gold-chain`), whose event has failed to emit on every gold chain close in
+  the run log since at least 2026-04-25; the function's newest log stream is 2026-05-04 and the 04:50Z read of 2026-10-13 found 0 invocations,
+  158 `exec_summary.json` objects at each home and 0 written since 04:25Z. Not caused by the cutover.
+- The COO ruled: do NOT invoke the generator (it would rewrite 158 client-facing summaries outside the signed 4b pair); the CTO decides who fixes
+  the put-events fault and whether one manual invocation is authorised. Evidence: `act4bc_followup/` under this seat's deliverables folder.
