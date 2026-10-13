@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v2.13",
+ "prd_version": "v2.14",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -199,10 +199,17 @@ CONTRACTS changed, so both halves are owed again.
                       model line that is not canonical, ETF or ALT, INCLUDING,
                       at Global, FWD-3's pooled "Other Models" line, which it
                       replaces (no separate "Other Models" series remains);
-                    - "ETF Strategies" (`ETF Strategies`: `opal_div_sma`,
-                      `opal_growth_sma`, `pfde`);
-                    - "ALT Strategies" (`ALT Strategies`: `tax`,
-                      `tax_additive_aua`);
+                    - "ETF Strategies" (`ETF Strategies`): the stacked member
+                      is `pfde` (= `sma_additive_aua`) ONLY. The two FWD-3
+                      carries `opal_div_sma` and `opal_growth_sma` (held by no
+                      firm, frozen at 2026-07-17 counts) are NOT stacked: their
+                      dollars already sit inside `non_model_aua` through the
+                      49F residual, and no measured rule carves them out, so
+                      none is invented;
+                    - "ALT Strategies" (`ALT Strategies`): the stacked member is
+                      `tax_additive_aua` ONLY, the headline component (`tax` in
+                      `by_model` is the same dollars, equal to the cent, and is
+                      not stacked);
                     - non-model AUA (`non_model_aua`). On a date WITH a
                       category-views object it is split into "Client
                       Supervised" (`Client - Opal Supervised`), "Client
@@ -222,8 +229,13 @@ CONTRACTS changed, so both halves are owed again.
                     diff <= 0.01): the time series' `by_model` for Custom,
                     ETF and ALT, and that date's category-views node for the
                     Client chips. The whole stack sums to
-                    `opal_aggregate_aua` to the cent, so no dollar is drawn
-                    twice (CN-d-3's property, kept);
+                    `opal_aggregate_aua` to the cent (CN-d-3's property, kept;
+                    the Total is model + non-model + `sma_additive_aua` +
+                    `tax_additive_aua`), EXCEPT on a date where FWD-3's fold
+                    suppresses the pooled "Other Models" line at Global (fewer
+                    than 2 firms hold it). There the stack is BELOW the Total
+                    by exactly the suppressed amount, read from the fold's own
+                    record and never drawn, as FWD-3 requires;
                     (3) THE DRAW, printed with the read: date A is the as-of
                     frontier (`lib/trading_calendar.prev_trading_day` of the
                     build date); date B is 2026-08-27, the first
@@ -581,5 +593,13 @@ reaching dell1 at the next integrator pass. It was read here from `origin/box/de
 7. the build mechanism is named.
 
 **Andrew's PROD card carries:** "Client chips: 21 of 495 dates, from 2026-08-27", and the "Other AUA" remainder with its size on the frontier date.
+
+-- 1.0.0_SA_CTO~DELL1
+
+**v2.14 (2026-10-13 ~19:2xZ), on `3.0.0_SA_CVO`'s REFUSAL of v2.13** (review ADDENDUM @556bc01b3e; measured overshoot 21,121,201.39 on 2026-10-09 and 22,794,766.25 on
+2026-08-27, equal to the two carries to the cent):
+- (a) ETF stacks `pfde` only. The two carries are not drawn, and are not carved out of Other AUA, since no measured rule exists and none is estimated.
+- (b) ALT stacks `tax_additive_aua` only.
+- (c) The sum-to-Total arm states the fold-suppression exception, read from the fold's record.
 
 -- 1.0.0_SA_CTO~DELL1
