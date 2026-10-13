@@ -13051,3 +13051,30 @@ name the one known failure instead of silently inheriting it.
   "notes": "Read-only; the command writes nothing."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-13T22:09:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-S102",
+  "one_line": "Re-vendoring orion and eclipse ADDS two hardcoded cottonwood bronze address patterns their live packages do not carry, so the LGIC naming gate refuses both commits in ENFORCE mode; the order forbids overriding any gate but the author escape, so OG-ap-15 AC1 can read at most 3 of 5.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN vendor-manifest.sh then safe-commit.sh for all five families on rel-nfra-oplgtw-fd2 at b0af6527a3: schwab 12ecbe2b8f, etf 58ee124eb7 and blackdiamond dabaa1af6b committed; orion and eclipse both printed 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' with NAMING REFUSE on mirror_conversion.py:103, :105 and :129, each a ^blackdiamond/cottonwood/bronze/ regex resolving to lookup('cottonwood').",
+      "READ the package copies at b0af6527a3: occurrences of blackdiamond/cottonwood/bronze in mirror_conversion.py are orion 2, eclipse 2, etf 4, blackdiamond 4; the SOURCE carries 4. So the two refused families would newly receive two such lines, while the two that committed already carry all four -- which is why the gate graded zero added matching lines for them (measured: git show 58ee124eb7 -- the etf copy, grep -c of added lines matching the pattern = 0).",
+      "READ data/assets/scripts/silver/mirror_conversion.py at b0af6527a3 lines 102, 105, 108 and 129: all four patterns are PRE-EXISTING source text; the file's newest commit is b2538131ea (OG-fd-2, 0.9.0_WK_NFRA_OPLGTW~61, today), which passed the same gate because it added only the fd-2 hunks and none of these lines.",
+      "READ CLAUDE.md rule 30: the commit-time naming gate REFUSES names today (LGIC_ENFORCE); non-application is existing pipelines, each reaching conformance through its own migration project (R19), never as a rider; a deliberate departure is an R20 register entry Andrew acknowledges."
+    ]
+  },
+  "spec_asserts": "TO NFRA_OPLGTW.TO-OG-ap-15 PHASE A step 2: re-vendor each of the five package dirs from source with vendor-manifest.sh, one commit per family, with the audited GIT_COMMIT_AUTHOR_OVERRIDE on those commits only; BOUNDS: never override a gate other than that lane escape; AC1 expects five families built from source with every vendored module byte-equal at the build commit.",
+  "world_is": "Three families are built and committed. orion and eclipse cannot be committed as the order is written: the only instrument that would let them through is the naming-gate override the BOUNDS forbid, and the alternative -- editing the source's cottonwood bronze address strings -- is both an ungraded rider on a signed act and outside this order's <paths> (data/assets/scripts/silver/ is not among them). The refusal is substantively correct rather than noise: for these two families the rebuild really does widen the package's hardcoded-address surface by two lines.",
+  "notes": "Three routes, none of them this seat's to pick: (a) the issuer elects the fd-2 ask's option (b), a drain-only package for orion and eclipse, which the ask already names as a build choice the release order must make explicit; (b) mirror_conversion.py's cottonwood bronze addresses reach LGIC conformance under their own migration (rule 30 R19), after which the re-vendor passes unchanged; (c) an R20 register entry Andrew acknowledges. Phase A is reported with 3 of 5 built and AC1 FAIL; the two vendored working trees are left in place in C:/tmp/og-rel-fd2 so no re-vendor is needed once a route is chosen."
+}
+```
