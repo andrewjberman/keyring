@@ -5793,3 +5793,29 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "No blocking effect: the corrected address names the same single policy the pair signs and the plan gate (one resource, three added statements, nothing removed) was read on the corrected plan before the apply. For the issuer: fix the order's target and AC1 key if the invocation is reused, and say whether the exception-list entry on DenyForeignFirmPrincipals is inside 'the three statements' reading of the pair (it is the row's signed effect per the COO half)."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (exec-summary generator read, 2026-10-13)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S40",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-13T04:52:31Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The exec-summary generator is triggered by a gold chain-complete EVENT, not a 04:30Z cron, and that event has not been emitted by any gold chain in the run log since at least 2026-04-25 (every chain logs put-events failed); the generator has not run since 2026-05-04, before and independent of the cutover.",
+  "spec_asserts": "Runbook rev 3d step 9 and ADDENDUM 4 item 3: the exec-summary generator runs cron(30 4 * * ? *) daily; its first run after 4b is read at the object at the canonical home (LastModified and a count).",
+  "world_is": "04:50:01Z read: exec-summary-generator log 0 invocations since 04:25Z; exec_summary.json objects 158 at the canonical home and 158 at the legacy home, 0 written since 04:25Z at either. The only rule targeting the function is exec-summary-trigger, ENABLED, EventPattern detail-type chain-complete / source bd-pipeline.gold-chain, no schedule. Lambda Invocations, Errors and Throttles for the function: no datapoints in 30 hours; newest log stream 2026-05-04 16:44:32Z. gold_dispatch.sh emit_chain_complete (line 836) puts the event at chain close and prints WARN: EventBridge chain-complete put-events failed (non-fatal); the cumulative run log (6,834,280 lines, from at least 2026-04-25) carries that WARN on every chain-close date and 0 'chain-complete emitted' lines on any date, including 2026-10-12 and 2026-10-13. The runner role bd-exporter-ec2-role holds an Allow for events:PutEvents on the default bus in policy events-emit, so the role grant is not the missing piece (an SCP or the request itself is not read). The 23:00Z incremental chain of 2026-10-12 closed with exit code 0 and the generator did not run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act4bc_followup/exec_summary_read_0450Z.txt",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act4bc_followup/chain_complete_emission_per_log_date.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not caused by the move (the log shows it on every date from April). Act 4b's deployed generator (canonical mode, CodeSha256 fdPwodukz88d...) has therefore never been exercised; its read path was graded by r4_execeq only. No fix is in this lane's permitted set; ADDENDUM 4 item 3 classes a generator failure as a BLOCKING row fixed forward, with the stale summaries as the named cost (stale since 2026-05-04, not one day). Decision owed by the issuer: who fixes the put-events failure, and whether one manual invocation of the generator is authorised to exercise 4b (the order said not to invoke it)."
+}
+```
