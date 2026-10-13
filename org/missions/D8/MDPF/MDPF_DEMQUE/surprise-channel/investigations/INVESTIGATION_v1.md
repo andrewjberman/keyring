@@ -2510,6 +2510,149 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "data/mdpf/scripts/demque/test_demque_drawer_cusip_entries.py test 1 (this branch)"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W49-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~49",
+    "surfaced_at": "2026-10-13T22:00:25Z",
+    "one_line": "AC2 arm2 requires securities 613 in the B1 line; the rule as written yields 612. One in-set CUSIP (9128334Y3) has an active window that opens 2026-09-22, after all of its B1 history, so its cells are clipped away and the name is emptied and dropped (Build item 3). 613 is the pre-clip count less the held-back fund. The emptied rule and the 613 cannot both hold; 613 was not forced.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AC2 (dq_t57_real.py arm2): the B1 line shows securities 613, clipped about 99 CUSIPs, 33,000 to 35,500 cells. Build item 3: an entry left with no cells is dropped; a CUSIP left with none is counted in emptied_cusips; the --build securities key counts distinct CUSIPs in the request.",
+    "world_is": "At be745e7fa2 the --build line reads securities 612, clipped_cusips 99 (98 narrowed plus the one emptied), emptied_cusips 1, unclipped_cusips 4, held_back 1, cells 34341. 612 = 614 (606 priced plus 8 funds) minus 1 held-back fund minus 1 emptied name. The emptied name 9128334Y3 has an active window from 2026-09-22, open; none of its B1 cells (2024-08-05 to 2026-05-27) falls inside it. A 613 would need a name with no entries in the request. CTO to rule: confirm an emptied name leaves the request (Build item 3 as written), and restate AC2 as 612.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t57.active-set-windows.md@be745e7fa2",
+        "data/mdpf/scripts/demque/b1_request.py build_request and clip_entries@be745e7fa2",
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t57_real.py arm2, run at be745e7fa2: WIN-REAL-BAD arm2 (securities 612)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W49-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~49",
+    "surfaced_at": "2026-10-13T22:00:25Z",
+    "one_line": "AC2 and the order cite 37,439 filed cells for the unclipped B1 request. The unchanged base code measures 37,514 cells on this date, which matches the DQ-t-50 instance's measured 37514 at 1dcdbbde7d. The clip gives 34,341, which matches the issuer's figure exactly. The check's bound (under 37,439) holds either way.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order AC2: 'the B1 line clipped ... 33,000 to 35,500 cells against 37,439 filed'; arm2: cells strictly below 37439.",
+    "world_is": "The base b1_request.py, run once before any change on this branch (--build to a scratch path, S3 read only), printed cells 37514 and securities 614. The published set's clip gives 34341 cells. The figure 37439 does not reproduce on this date; no check was weakened.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t57.active-set-windows.md@be745e7fa2",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/0.9.0_WK_MDPF_DEMQUE~42/MDPF_DEMQUE.TO-DQ-t50.b1-cottonwood-depth-option-c-request.proof_of_spec.json@6765fe5e2b (cells 37514 at 1dcdbbde7d)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W49-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~49",
+    "surfaced_at": "2026-10-13T22:00:25Z",
+    "one_line": "The unchanged --build ran about 51 s wall time and the first clipped build went over the real check's 55 s subprocess timeout (TimeoutExpired in arm2). Four speed-only changes (memoised NYSE calendar lookups; the P2/P3 gate reads the named CUSIPs' rows; fund windows read from the fund rows; output verified byte-identical) bring --build to about 45 s. The margin is thin: card_a_slice.build (about 24 s) is outside this order's paths and is the largest cost.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order AC2 note: '55 seconds a run: read the CSV once; load the priority-gate classification lazily and cache it for the run'. dq_t57_real.py gives each --build subprocess a 55 s timeout.",
+    "world_is": "Measured at be745e7fa2: one --build run took 55 s before the speed changes (arm2 TimeoutExpired) and 45 s after (rc 0, same bytes). Stage times after the changes: transactions read about 3 s, card_a build about 24 s, gate about 1 s, build_request about 5 s, quote about 6 s.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/b1_request.py _fund_windows, excluded_names, calendar memoisation@be745e7fa2",
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t57_real.py _line timeout=55@be745e7fa2"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W49-S4",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~49",
+    "surfaced_at": "2026-10-13T22:00:25Z",
+    "one_line": "AC2 expects accounts 769. Counting only the rows that are not skipped gives 639; 130 active accounts appear only on the 472 blank-cusip rows. active_set.census counts every row's account key (769): a skipped row still belongs to an active account. The definition is stated in active_set.py's docstring.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order DQ-t-57 Build item 2: accounts = the distinct account keys COUNTED, not listed; Build item 1: a blank-cusip row is counted under skipped and ignored.",
+    "world_is": "The published CSV holds 769 distinct account keys over all 42,319 rows, 639 over the 41,847 rows with a non-blank cusip, and 130 keys only on blank-cusip rows (window_basis not_established). Neither reading was printed by account key; the counts are the only output.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/active_set.py census and module docstring@be745e7fa2",
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t57_real.py arm1 (accounts 769)@be745e7fa2"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W49-S5",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~49",
+    "surfaced_at": "2026-10-13T22:00:25Z",
+    "one_line": "The P2/P3 hold-back calls priority_gate.excluded on the crosswalk and transactions that main() already read, not priority_gate.excluded_for(), which would read S3 a second time (crosswalk and transactions) per run. The rule, the fail-closed refusal and the classification are the same; the P1 build and the gate rank over the same frames, so they cannot disagree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order Build item 3: P2/P3 names are held back via priority_gate.excluded, the same fail-closed read; AC2 note: load the priority-gate classification lazily and cache it for the run.",
+    "world_is": "b1_request.excluded_names calls priority_gate.excluded once per run on the frames main holds (narrowed to the named CUSIPs; rank's per-name statistics are unchanged by the narrowing). build_request holds nothing back when its excluded argument is None, so main() is the only caller that applies the gate.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/b1_request.py excluded_names and main@be745e7fa2",
+        "data/mdpf/scripts/demque/priority_gate.py excluded_for and load_inputs (not used by the build)@be745e7fa2"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W49-S6",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~49",
+    "surfaced_at": "2026-10-13T22:18:03Z",
+    "one_line": "The order's premise for test_demque_b1_request.py (a stub active set of {} leaves every window unclipped, so that test takes {} and nothing else) does not hold under the 22:0xZ ruling: an empty or absent active set now holds every security back, and build_request then raises 'no name is priced'. The one build call in that test now passes an active set whose single entry (the priced name, open from 2012-01-01) clips nothing; no assertion in that test changed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order DQ-t-57 AC1 note and 'Existing test_demque_b1_request.py tests keep passing; one that pins the unclipped cell count takes the stub's empty active set (a stub that returns {} leaves every window unclipped) and NOTHING else.' Ruling 22:0xZ: a security NOT in the active set is HELD BACK, never kept at its old window.",
+    "world_is": "build_request(active=None or {}) holds every security back (OUTSIDE_REASON), so the test's call with no active argument would raise ValueError('no name is priced') rather than leave windows unclipped. The test now passes active={'CDX000003': window from 2012-01-01, open}, which clips nothing; the test's other assertions are unchanged.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/test_demque_b1_request.py test 3 build_request call (uncommitted at this row; committed in this commit)",
+        "data/mdpf/scripts/demque/b1_request.py build_request and OUTSIDE_REASON (uncommitted at this row; committed in this commit)",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t57.active-set-windows.md AMENDED 22:0xZ@e7655e1a1e"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W49-S7",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~49",
+    "surfaced_at": "2026-10-13T22:18:03Z",
+    "one_line": "AC2 arm3 'no_account_key' (dq_t57_real.py line 75) is the substring test \"account\" not in json.dumps(req).lower(). The ruled hold-back reason text (CTO msg 5227: 'not held by an active Cottonwood account under any identifier the files carry ...') contains that word in each of the four outside-set held_back entries, so the real request fails arm3 although it holds no account key and no account number. AC2 cannot pass as written with the ruled text; the check is the issuer's file and is not edited here.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DQ9-t57-AC2 arm3: the request carries no account key (dq_t57_real.py: \"no_account_key\": \"account\" not in json.dumps(req).lower()); the amended order: each outside-set name is held back with the reason 'not held by an active Cottonwood account under any identifier the files carry (draws are limited to the active set, CTO msg 5227)'.",
+    "world_is": "The real --build request (scratch copy .scratch/b1_check49.json, S3 read only) holds 5 held_back entries; the word 'account' occurs 4 times in the request text, all inside the 4 outside-set reasons, 0 times in any securities key, and no key names an account. arm1, arm2 (608 / 1 emptied / 5 held back / 34,223 cells) and the determinism and validity arms pass; only no_account_key fails. The test in test_demque_active_windows.py test 3 now reads keys, not text, for the same property.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t57_real.py line 75 (no_account_key) @e7655e1a1e",
+        "data/mdpf/scripts/demque/b1_request.py OUTSIDE_REASON (uncommitted at this row; committed in this commit)",
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t57_real.py run at this commit's parent: arm3 no_account_key, WIN-REAL-BAD arm3 no_account_key"
+      ]
+    }
   }
 ]
 ```

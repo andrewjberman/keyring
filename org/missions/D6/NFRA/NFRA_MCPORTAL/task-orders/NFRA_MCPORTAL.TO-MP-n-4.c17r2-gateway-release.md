@@ -34,7 +34,12 @@ bundle change; keep `mcportal_commit` as the live manifest records it.
 In order:
 1. **The release tree.** `git worktree add -b rel-nfra-mcportal-c17r2 <path> <live deployed_commit>`; cherry-pick the GO's
    commit. **Census:** `git diff --stat <live> HEAD -- infra/aws/ec2/opal-gateway` names ONLY those two files; anything
-   else STOPS with a BLOCKING row. Run `tests/test_admin_fabric_gitstate.py tests/test_admin_fabric.py` there: 0 failed.
+   else STOPS with a BLOCKING row. Run `tests/test_admin_fabric_gitstate.py tests/test_admin_fabric.py` on `box/sitez`
+   HEAD with the payload: 0 failed. Then run the same two files on the release tree. There, a test may fail ONLY if its
+   failure is `FileNotFoundError` on a repo path outside `infra/aws/ec2/opal-gateway/` whose `git ls-tree` reads 0 at the
+   live base AND 1 at `box/sitez` HEAD, and that same test passes at HEAD. A release tree's `org/` is frozen at the
+   release chain's vintage (row Z-S45; at 64b3e54658, `cp2/fixtures/` lists 0 files). List each such test id with its
+   path and both ls-tree counts in the ASK. Any other failure STOPS with a BLOCKING row.
 2. **The ASK and the pair.** Write `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MQ/NEVER_WIDEN_ASK_MP-n-4.md`:
    the blast radius (the one module and its test; the refusal field's basis changes and boxes with no pointer read "not
    recorded"); what it may never touch (the MCP tool surface, any IAM, any store write, the producer); the census; the
@@ -98,6 +103,8 @@ ledger entry path and its CLOSED state; every commit hash; any row.
 the narrow limb alone reads clean because round 1's live span is the same two files -- the slug is the discriminator);
 AC2 FAIL (SSM 90c9dbfe: /health 200 control, no-identity 401, gitstate_s=9.7 body_fetches=1336 recorded=4 against the
 5 s bar). Gate G-REL4, holder the issuer. Same project as MP-z-4/z-5, so the seating rule admits ~MQ.
+
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~MP, 2026-10-13 ~22:4xZ):** step 1's "0 failed" is graded at box/sitez HEAD. On the release tree, a failure is admitted only by mechanism: a FileNotFoundError on a repo path absent at the live base and present at HEAD, with the test passing at HEAD. This is the MP-z-5 ruling (row Z-S45; both never-widen halves of MP-z-5 used the same closed-set form), applied before the GO and measured at the act, so the issuer does not predict the ids. Gate limb: to-pipeline-gate GATE (viii).
 
 <status>staged</status>
 <round>2</round>
