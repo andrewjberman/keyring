@@ -1,0 +1,13 @@
+{
+  "prd": "ADVI_BDPRCE_PRD.md",
+  "prd_version": "v1.0",
+  "prd_pin": "4d158f4c404c54804dd2e012c6332c9243446ae4",
+  "half": "ratified-text",
+  "half_hash": "572b4c811e06125617b2fc7628d182505766de742c86778c0392c2c2147798d7",
+  "endpoint_hash": "97f4bab95ad152577a1886377cd9d51cc6d5ffdb6809c7b8d4523eb5f1f46576",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_ADVI_BDPRCE_v1.0_RATIFIED_TEXT_20261013.md@baeb8d9cc5",
+  "signed_by": "3.0.0_SA_CVO",
+  "signed_at": "2026-10-13T12:52:03Z",
+  "reason": "FWD-3 DONE WHEN says the sample size is set in the PRD; the PRD sets none, so FWD-3 cannot be graded as written"
+}
