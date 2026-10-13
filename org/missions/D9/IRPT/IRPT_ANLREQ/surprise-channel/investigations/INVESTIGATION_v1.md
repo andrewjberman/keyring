@@ -10002,3 +10002,29 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W98-S1 -- the ycharts/generate tests folder does not finish inside the 120 second bound as one invocation; measured per file on both trees
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W98-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~98",
+  "surfaced_at": "2026-10-13T20:01:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The AR-y-277 step 2 invocation for the generate folder (python -m pytest over ycharts/generate/tests) did not finish under the 120 second bound: rc 124 on two runs; the same folder was measured file by file (43 files, each bounded) on the restored tree and on 6bca581cd1, with identical per-file results.",
+  "spec_asserts": "AR-y-277 step 2: the ycharts/generate/tests files that collect pass as they did at 6bca581cd1 (known baseline: 4 custody failures; fitz collection errors shown at 6bca581cd1 in a second detached worktree).",
+  "world_is": "Whole-folder run on the restored tree (C:/dev/wk-irpt-anlreq-98) under timeout 120: rc 124 twice, partial output stopped at 69 percent. Per-file run, timeout 120 per file, 43 files, both trees: 540 passed, 4 failed (test_custody_entry.py 2, test_custody_retained.py 2), 30 skipped, 1 xfailed, 0 collection errors; the two per-file listings are identical after stripping timings (scratch files .scratch/h.txt and .scratch/b.txt in the worker worktree). Baseline worktree: C:/dev/wk-irpt-base-98-6bca at 6bca581cd1, detached, clean.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-98 HEAD 5d3ed81c12 (restore commit) and the baseline worktree at 6bca581cd1 run by this worker",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/ (43 test_*.py files) at both trees",
+      "IRPT_ANLREQ-D2-W82-S2 records the same bound limit for this folder on the earlier round"
+    ]
+  },
+  "class": "OBSERVATION"
+}
+```
