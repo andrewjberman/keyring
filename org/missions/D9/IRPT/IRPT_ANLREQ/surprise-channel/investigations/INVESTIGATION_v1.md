@@ -7042,3 +7042,53 @@
  "notes": "Grade row for ADJUDICATION_v21. Built, not released: nothing live."
 }
 ```
+```json
+{
+ "id": "IRPT_ANLREQ-D2-W69-S1",
+ "project": "IRPT_ANLREQ",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~69",
+ "surfaced_at": "2026-10-13T14:55:24Z",
+ "hazard_standing": "INERT",
+ "class": "BLOCKING",
+ "one_line": "AR-y-223 premise fails: every firm the live map can select is a client firm, and the admitted arm of the driven exercise reads that firm's directory and ownership artifacts; the no-client-data premise holds only for the two refused arms.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "infra/aws/terraform/investor-reporting/directory/iam.tf lines 28, 31-34, 48 and lambda.tf line 44 at b4943b79ce: the live IRPT_DIRECTORY_BUCKET_MAP is the kind == client and enabled rows of data/firm_registry.json (members 49financial, inflection, cottonwood)",
+   "infra/aws/lambda/investor-reporting/_authz/served.py lines 855, 1237-1241, 1256-1260 at b4943b79ce: a selection the map does not carry is refused before the status test; the admitted arm reaches deps(selected)",
+   "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~69/r21/offline_run_ar223.py run at b4943b79ce: deps_reached_for_selected_firm true for active, false for disabled and norow"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AR223-y-AC2J and the cell AR-y-223 step 1: the route and the selected firm are read from the code, the selected firm opens no client data, and the design names a firm other than opal-capital that the function accepts as a selection without touching any client data.",
+ "world_is": "The live IRPT_DIRECTORY_BUCKET_MAP is derived from kind == client rows only, so demo and mockadv are refused by bucket_for (served.py 1237-1241) before the status test and write no class line. The three selectable firms are all clients. The admitted arm reaches deps(selected) (served.py 855) and reads that firm's directory and ownership artifacts (loaders.py 320-349) before projection. The refused arms stop before deps (served.py 1256-1260) and read no artifact.",
+ "notes": "Filed by the design of AR-y-223; nothing minted, called or read live. Options for the CTO: (a) a never-widen half covering the one cottonwood directory and ownership read by the admitted arm, before any mint; (b) drop the positive control and run the two refusal arms only. The design states the finding and does not claim the premise. Class BLOCKING because AR223-y-AC2J's premise cannot be met as written; hazard INERT because no act is live."
+}
+```
+
+## IRPT_ANLREQ-D2-W68-S1 -- the S71 premise does not reproduce in this worker's shell: the script's own head-object --query call returns rc 0, so the cause of "'int' object has no attribute 'items'" is not established here
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W68-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~68",
+  "surfaced_at": "2026-10-13T14:50:52Z",
+  "one_line": "The reproduction asked for by AR-y-222 step 1 did not fail: the script's exact head-object --query '[ContentLength, Metadata.\"content-sha256\"]' call returns rc 0 with the two values through the repo shim, the ~/bin shim and the real CLI path (aws-cli 2.37.9); so the cause of the S71 error is not established by this worker, and the fix is shipped without a live reproduction.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-222 step 1 (order and CTO round-21 item 3): reproduce the defect read-only and find the cause; IRPT_ANLREQ-D2-S71 says the script's verify call dies with 'int' object has no attribute 'items' on the applier's CLI, and that the same call run by hand through the .tools/aws shim fails.",
+  "world_is": "On this worker's Git Bash, with CLI aws-cli/2.37.9 and type -a aws resolving to /c/Users/Test/bin/aws then /c/Program Files/Amazon/AWSCLIV2/aws, the identical call returns rc 0 and '221061<TAB>vBzPCvn9lUEZzmDFGK+9g9ICnF8h7N8Z/hccjw2qoBg='; through bash .tools/aws it also returns rc 0; the two scalar forms return rc 0 each. The error did not occur here, so no cause is established.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read-only head-object, bucket opal-313476888478-lambda-artifacts, key investor-reporting/irpt-narrative.zip, run by this worker at 2026-10-13T14:41Z: the script's exact --query call rc 0; the no-query JSON call rc 0; the scalar ContentLength and content-sha256 calls rc 0 (org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~68/r21/CI_VERIFY_FIX.json, repro)",
+      "infra/aws/lambda/ci/build-and-upload.sh@b4943b79ce:723-727 is the verify call that S71 reports; the fix that replaces it is at the worker's HEAD on branch wk-IRPT_ANLREQ-68"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "owner of the live proof: the applier of the next release, by the scratch-arm design in CI_VERIFY_FIX.json scratch_arm_design (designed, not run here). Until that arm reads back VERIFIED on the applier's CLI, the fix's effect on that CLI is unproven. Not decided here: whether S71 holds on the applier box."
+}
+```
