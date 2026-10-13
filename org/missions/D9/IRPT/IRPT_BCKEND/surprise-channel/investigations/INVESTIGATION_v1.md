@@ -30665,3 +30665,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The committed export map omits a member the portal's typed export receipt declares required. Whether a typed parser refuses the committed map was not measured. The map is reproduced as committed."
 }
 ```
+
+## IRPT_BCKEND-D2-S126 -- DISPOSITION after the round-172 drain
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S126",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T04:49:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISPOSITION after the round-172 drain: W346-S2, W346-S3 and W350-S1 stay ARMED until the portal candidates land on DEV; W352-S1, S2 and W353-S1..S5 are observations, ruled.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer re-run in the merged tree: IB172-1 AC1, AC2, AC3 PASS (merge 2215fb19f4); in worker 353's worktree at portal e1cd356e2f: IB172-2 AC1, AC2, AC3 PASS; the generator diff read: it derives each output from the wire map and the committed shapes, embeds no output bytes.",
+      "snapshot.py in the holdings function: validate_slice has no non-test caller (Grep over the holdings folder, tests excluded: the definition at :115 and its jsonschema use at :128 and :134 only)."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "STILL ARMED: W346-S2 (fe-s-15 generator), W346-S3 and W350-S1 (fe-s-18 generator): the repairs exist only on the portal branches wk-IRPT_BCKEND-350-portal @69f69895 and wk-IRPT_BCKEND-353-portal @e1cd356e2f, so the generator at portal DEV still dirties a committed fixture on every run; they disarm when those candidates land on DEV (the CTO review lane). RULED OBSERVATIONS: W352-S1 (a no-op one-argument report validator in the ycharts generate composition; the function is deployed unwired to live; a later repair cell, owner me) and W352-S2 (the ycharts packaged schema copy is not the bytes at the commit its source-map note names; the next re-pin cell reads which bytes it takes); W353-S1 (the order's status wording was wrong at key level; ruled, my wording), S2 (the base generator would have rewritten five statuses with internal_correlation_id: repaired), S3 (the two directory answers name different firm ids, each as committed), S4 (no test names the prehistory output; the smoke-classification test reads it), S5 (the committed frozen export envelope lacks facts.covered_account_ids that the portal ExportReceipt type declares required: a portal-owned inconsistency, asked of the CTO in the round-172 slug)."
+}
+```
