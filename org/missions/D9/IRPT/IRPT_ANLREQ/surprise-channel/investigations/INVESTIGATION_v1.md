@@ -9057,3 +9057,130 @@
   "class": "OBSERVATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W97-S1 -- (AR-y-276) the authorizer does not carry allowedFirmIds in the token; the portal authorizer computes it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W97-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~97",
+  "surfaced_at": "2026-10-13T19:57:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order names allowedFirmIds as a token claim a partner-firm human carries; the repo's portal authorizer computes it from the token (own firmId for a non-internal tier) and does not read it from the token.",
+  "spec_asserts": "AR-y-276 step 1: 'the claims a partner-firm human carries: firmId, allowedFirmIds, userType, tier'; step 2: the token claims are sub, iss, aud, firmId, tier, role, userType, exp.",
+  "world_is": "infra/aws/users/lambda/portal-authorizer/index.mjs computeAllowedFirms (lines 293-322) derives allowedFirmIds: userType Dev or tier internal gives ALL; otherwise the own firmId (plus descendants only when role is admin). The context it attaches (lines 397-414) carries allowedFirmIds from that computation, never from a decoded claim. The token for a partner-firm advisor therefore carries no allowedFirmIds; the synthetic identity's token design omits it (AR-y-276 design record, claim section). The users row's allowedFirmIds is read by other readers (served.py 1139-1192, _service_allowed_firms and the internal narrowing), not by the portal authorizer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/users/lambda/portal-authorizer/index.mjs@4b1e07dabc:293-322 (computeAllowedFirms) and :397-414 (context)",
+      "infra/aws/lambda/ticket_center/lambda_function.py@4b1e07dabc:300-309 (_actor reads allowedFirmIds from the authorizer context, not the token)"
+    ]
+  },
+  "class": "OBSERVATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W97-S2 -- (AR-y-276) the form's own filing sequence is refused for a partner-firm principal at CREATE and REPORT; SUBMIT-FORM cannot carry the answers
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W97-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~97",
+  "surfaced_at": "2026-10-13T19:57:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "BLOCKING FOR THE LIVE DRIVE ONLY: under the current bytes the form's createTicket (POST /api/scoped/tickets) and recordTicketReport (POST /tickets/{id}/report) are denied 403 for a client-human principal, and the SUBMIT route admits no answers or attachment; a partner-firm advisor cannot file an analysis request through the form as written.",
+  "spec_asserts": "AR-y-276 step 3: the ordered calls the form makes from Submit to the package, each with the principal that signs it and its expected outcome; the drive exercises the FORM's own request sequence (AR276-y-AC2J). PRD C-FIRM: the synthetic partner-firm advisor is FWD-1's filer.",
+  "world_is": "lambda_function.py MATRIX (lines 166-180): CREATE admits svc-ticket-form, svc-analyst-intake, svc-commentary and internal; LIST, GET, CLAIM, COMPLETE, REPORT and COMMENTARY_SENT admit internal only; SUBMIT-FORM admits client-human and internal. The form (portal analysisRequest.ts:183-189 createTicket with source ticketcenter:i1; :340-352 recordStep) calls the CREATE and REPORT routes for every principal. submit_form (lines 1102-1142) accepts only ticket_type, title and description (SUBMIT_ALLOWED_FIELDS line 182). Offline decision on the synthetic authorizer context (python -I principal_decision.py, run in .scratch/r23): principal_class client-human; CREATE DENY 403; REPORT DENY 403; SUBMIT-FORM ALLOW. The fix is AR-y-271's named cell (J2), not this seat's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py@4b1e07dabc:166-180 (MATRIX), :182 (SUBMIT_ALLOWED_FIELDS), :1102-1142 (submit_form), :1145-1150 (create_ticket authorize)",
+      "portal cf52fdbf src/pages/TicketCenter/analysisRequest.ts:149-191, :304-318, :340-352 (the form's calls); TicketCenter.tsx:289-333",
+      "offline run: .scratch/r23/principal_decision.py (python -I), output: principal_class=client-human; authorize CREATE -> DENY 403; REPORT -> DENY 403"
+    ]
+  },
+  "class": "BLOCKING"
+}
+```
+
+## IRPT_ANLREQ-D2-W97-S3 -- (AR-y-276) the eligible-advisor rule E5 is named in the PRD but its text is not in the PRD; the code is served.py _advisor_owner
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W97-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~97",
+  "surfaced_at": "2026-10-13T19:57:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-276 step 1 points at the PRD for E5; the PRD names E5 (line 110) and does not define it in its text; the rule is read from code (served.py _advisor_owner and advisor_census.py), so the identity's E5 fields are the code's, not a PRD clause.",
+  "spec_asserts": "AR-y-276 step 1: 'the PRD's eligible-advisor rule (E5: org/missions/D9/IRPT/IRPT_ANLREQ/prd/IRPT_ANLREQ_PRD.md)'; step 2: the users row carries whatever E5 requires of an advisor.",
+  "world_is": "IRPT_ANLREQ_PRD.md line 110 uses 'an eligible advisor (E5)'; line 100 says 'the upload door and E5 live in IRPT_BCKEND'. A grep of the IRPT_BCKEND prd folder for E5 returns no definition. The operative rule is served.py _advisor_owner (lines 1085-1114): a partner row at opal-partner-<firm> with email and firmId equal to the request, a users PROFILE row with email, firmId equal and status exactly active, and the partner row's advisorKey, which becomes the advisorId claim. advisor_census.py lines 3-6 read the same rule as FIRM_ADVISOR-capable rows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/prd/IRPT_ANLREQ_PRD.md@4b1e07dabc:100 and :110",
+      "infra/aws/lambda/investor-reporting/_authz/served.py@4b1e07dabc:1085-1114 (_advisor_owner)",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/advisor_census.py@4b1e07dabc:1-6"
+    ]
+  },
+  "class": "OBSERVATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W97-S4 -- (AR-y-276) the portal source is not in this worktree; the portal submodule is an empty directory here
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W97-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~97",
+  "surfaced_at": "2026-10-13T19:57:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's read and offline run name portal/src files; in worktree wk-IRPT_ANLREQ-97 the portal directory is empty (uninitialised submodule), so the portal source was read from the base checkout at its DEV commit, read-only.",
+  "spec_asserts": "AR-y-276 step 4: run the form's request builder (fileAndRequestAnalysis) against fakes; the worktree is the place a read of the product tree happens (the task order's read-first list).",
+  "world_is": "C:/dev/wk-irpt-anlreq-97/portal is an empty directory (ls shows no entries; the submodule path models/factor_scanner in .gitmodules has no mapping). The portal checkout at C:/dev/ajb_workspace/portal is on DEV at cf52fdbf00f2798e5dd295170fcb00c2bee1b27b. The offline run imported analysisRequest.ts from that base checkout by relative path; nothing was written there.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git worktree C:/dev/wk-irpt-anlreq-97: portal/ empty directory at 4b1e07dabc (ls -la portal)",
+      "C:/dev/ajb_workspace/portal HEAD cf52fdbf00f2798e5dd295170fcb00c2bee1b27b (git rev-parse, read-only)"
+    ]
+  },
+  "class": "OBSERVATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W97-S5 -- (AR-y-276) the offline run shows the body variant derived from the key count, not from the select (a Comparison select with two keys sends multicomp)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W97-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~97",
+  "surfaced_at": "2026-10-13T19:57:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The drive's expected variant (the variant the advisor selects is the variant produced) does not hold under current code: the offline run of the form's own builder sends variant multicomp for a Comparison select with two model keys. AR-y-275 is the cell that names this.",
+  "spec_asserts": "PRD C-FIRM and the FWD-1 binding constraint: the variant the advisor selects is the variant produced (PRD line 251); AR-y-276 step 4: one Comparison request with two Opal models.",
+  "world_is": "analysisRequest.ts analysisBody (lines 256-271) sets variant from variantFor(reportTypeForKeys(input.keys)) at line 264; reportTypeForKeys (lines 251-253) maps two keys to Multi-Comp, and the select is not read. The offline run printed: 'analysis body variant enum = multicomp; select was Comparison; keys=2'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal cf52fdbf src/pages/TicketCenter/analysisRequest.ts:251-253 (reportTypeForKeys), :256-271 (analysisBody), :264 (variant)",
+      "offline run .scratch/r23/offline_run.ts, bun, rc=0: step 3 line shows variant multicomp with select Comparison"
+    ]
+  },
+  "class": "OBSERVATION"
+}
+```
