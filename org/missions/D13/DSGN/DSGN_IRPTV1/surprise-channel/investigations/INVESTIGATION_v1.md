@@ -6982,3 +6982,56 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## DSGN_IRPTV1-D2-W73-S1 -- IV-e-124: the reason change turns three existing tests red, and two of them sit outside this order's grant
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W73-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~73",
+  "surfaced_at": "2026-10-12T23:48:44Z",
+  "one_line": "The unsupported-card reason on a vendor report is now the plain sentence, as the order asks. Three existing tests assert the old wording and sit outside the grant: iv-e-101.opal-report-words.test.tsx (vendor UNCERTIFIED case) and fe-s-6/sections.test.ts (two cases). They fail after the change; they were not edited, so IV124-AC1 cannot PASS as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO IV-e-124 point 2 and BOUNDS: one rendered test and one mutant; re-golden an existing test ONLY where it asserts this reason's old wording, and only inside the grant (paths: tabs/analysis/, __tests__/dsgn-irptv1/iv-e-124.*, iv-e-122.vendor-validation-and-source.test.tsx). IVE17-AC2 and the rest of the suite stay as at base, so suite_after.fail is no greater than suite_base.fail (1) and new_failing_ids is [].",
+  "world_is": "Measured at portal 91d682d6908ac1c3b59dbcc33edc84e41aa913aa (base cf52fdbf00f2): bun test src/pages/InvestorReporting -- base 1216 pass / 27 skip / 1 fail (F14-AC3); after 1219 pass / 27 skip / 4 fail. The three new failing tests are: (1) __tests__/dsgn-irptv1/iv-e-101.opal-report-words.test.tsx, case (b), line 72, asserts the old vendor card text; (2) __tests__/fe-s-6/sections.test.ts, the UNCERTIFIED case, line 78, asserts '2 value(s) could not be confirmed'; (3) the same file, the NO-VERDICT case, line 100, asserts 'no extraction verdict is stated for this report'. Line 72 of iv-e-101 asserts a vendor card carries the producer token UNCERTIFIED, which the order forbids; the three cannot both hold, so the re-golden needs a grant on those two files or a ruling from the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@91d682d6908a tabs/analysis/NativeSections.tsx unsupportedReason (the vendor card reason)",
+      "portal@91d682d6908a __tests__/dsgn-irptv1/iv-e-101.opal-report-words.test.tsx:72 and __tests__/fe-s-6/sections.test.ts:78,100 (read, not edited)",
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~73/suite_base_bun_test.txt and suite_after2_bun_test.txt (the two whole-scope runs)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## DSGN_IRPTV1-D2-W73-S2 -- IV-e-124 AMENDMENT 1: the amendment's line 78 is the count assertion; the UNCERTIFIED assertion it describes sits on line 77
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W73-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~73",
+  "surfaced_at": "2026-10-13T00:08:34Z",
+  "one_line": "AMENDMENT 1 names fe-s-6/sections.test.ts line 78 as holding 'UNCERTIFIED' and '2 value(s)'. Line 78 holds only the count assertion; the UNCERTIFIED assertion is line 77 and it fails first (Bun stops at the first failed expect). Line 77 was re-goldened to the new card lead, so four assertion lines moved in total (iv-e-101:72, sections.test.ts:77, :78, :100), not three.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 1: re-golden ONLY the three named wording assertions (iv-e-101 line 72; fe-s-6/sections.test.ts lines 78 and 100, the card block holding 'UNCERTIFIED' and '2 value(s) could not be confirmed'); keep every other assertion; replace the expected string only.",
+  "world_is": "At portal 64980b4d3a1e11d8407b6a263ddcd5447dafaef2, sections.test.ts line 77 reads expect(riskBlock).toContain('UNCERTIFIED'). The new card block carries no producer status word, so line 77 fails before line 78 is reached. The earlier record listed :78 for this case; this run fails at :77 first, and that earlier run was not reconstructed. Line 77 now asserts the new card lead 'The producer could not confirm this figure'; the other assertions in the file are unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@64980b4d3a1e __tests__/fe-s-6/sections.test.ts:77 (UNCERTIFIED, re-goldened to the card lead in commit 64980b4d3a1e) and :78 (count sentence, re-goldened in df075c5ba664)",
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~73/suite_after_r32_IV124.txt (whole-scope run after the last portal commit: 1222 pass / 27 skip / 1 fail, the one fail F14-AC3)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
