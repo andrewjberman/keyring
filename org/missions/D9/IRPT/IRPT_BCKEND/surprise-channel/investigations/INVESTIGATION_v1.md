@@ -31321,3 +31321,134 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "RULED, W359-S1: the guard's investor_reporting bundle is the DIRECTORY refresh's package (12 members, 5 differing from HEAD: directory_runner.py, holdings_snapshot.py, firm_registry.json, the HoldingsSnapshot schema copy, lib/trading_calendar.py); the 49F and Inflection builders and their temp-file fix and account_id reach the host inside the per-firm investor-reporting-holdings.tar.gz named by IRPT_HOLDINGS_BUNDLE_MAP, which no seat has read. So the host-bundle pair cannot be written from this census, and W345-S3 stays ARMED. The next cell is a read-only census of those per-firm holdings packages (which firms, their S3 keys, members against HEAD, the commits since each object was written), and then the pair. OBSERVATION W359-S2: the directory refresh docstring says nine members, the guard and the object carry twelve (a stale comment). The directory host bundle is a separate release path with its own 5 differing members; it is NOT part of the account_id pair and nothing here moves it. STILL ARMED: W345-S3, W348-S2."
 }
 ```
+
+## IRPT_BCKEND-D2-W361-S1 -- the guard's closure member opal_strategy_matcher.py is in none of the three live holdings packages
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W361-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~361",
+  "surfaced_at": "2026-10-13T07:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "data/assets/scripts/silver/opal_strategy_matcher.py is in _IRPT_HOLDINGS_CLOSURE but in none of the 49financial, inflection or cottonwood holdings packages (45 rows each, 44 repository members plus SHA256SUMS); the inflection and cottonwood packages were uploaded after the commit that added the closure entry.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe_deploy_core.py:501 lists data/assets/scripts/silver/opal_strategy_matcher.py in _IRPT_HOLDINGS_CLOSURE @69047b4bd6",
+      "closure entry added by 82e0a49ed2 2026-10-09 01:19:39 -0400 (ship MDPF_STRATID ST-w-5: six carriers of rebalancer_schemas.py now ship opal_strategy_matcher.py beside it) @69047b4bd6",
+      "head-object LastModified 2026-10-09T10:28:52Z (inflection) and 2026-10-09T10:29:07Z (cottonwood) and 2026-10-11T02:56:45Z (49financial); members listed from the scratch copies with python -I, read only; IB176-1 record packages[].closure_absent_from_package @69047b4bd6"
+    ]
+  },
+  "spec_asserts": "IB-pr-509 (CTO round-176 analysis) asserts that every member of the guard's closure appears in each per-firm package's rows, and that the next release names exactly the packages and members it needs.",
+  "world_is": "The guard's closure lists 45 members; each live per-firm package carries 44 of them. opal_strategy_matcher.py is absent from all three, so a release that re-cuts these packages from the guard's closure would add it, and a host run of the current packages does not have it. Whether rebalancer_schemas.py in the packages imports it was not read (not in this cell's grant). AC2 of IB176-1 FAILS on this row."
+}
+```
+
+## IRPT_BCKEND-D2-W361-S2 -- the order's premise that commit 135fc3509e changes holdings_inf.py is wrong
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W361-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~361",
+  "surfaced_at": "2026-10-13T07:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-509 says temp_file_fix (commit 135fc3509e) touches holdings_49f.py, holdings_inf.py and holdings_snapshot.py; the commit touches holdings_49f.py and holdings_snapshot.py (and not holdings_inf.py). holdings_inf.py differs from HEAD in all three packages and its since-live commit is aa5778d962.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show --name-only --format= 135fc3509e lists holdings_49f.py, holdings_snapshot.py, tests/test_retained_capture_cleanup.py, _ids/raw_keys.json and the investigation file; holdings_inf.py is not listed @69047b4bd6",
+      "holdings_inf.py live bytes identical in the three packages (member sha256 a897083fb744...) and differ from HEAD; commits_since_live is aa5778d962 @69047b4bd6",
+      "the same finding is recorded at IRPT_BCKEND-D2-W359-S1 and IRPT_BCKEND-D2-S130 in this channel @69047b4bd6"
+    ]
+  },
+  "spec_asserts": "IB-pr-509 item 4 states where the two merged changes land: temp_file_fix (135fc3509e) in holdings_49f.py, holdings_inf.py and holdings_snapshot.py.",
+  "world_is": "135fc3509e lands in holdings_49f.py and holdings_snapshot.py. The holdings_inf.py difference in the packages is explained by aa5778d962, not by the temp-file fix. The record's fix_locations cites the commit and the main file (holdings_49f.py); the issuer decides what is intended."
+}
+```
+
+## IRPT_BCKEND-D2-W361-S3 -- the per-firm packages are not built from HEAD: differing members with no commit since the upload, and a package carrying content older than a commit that predates its upload
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W361-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~361",
+  "surfaced_at": "2026-10-13T07:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "25 rows per package differ from HEAD; 22 differing rows across the three packages (10, 6 and 6) have no commit since the package's last_modified (for example 49financial build_cottonwood_mdpf_slice.py equals its blob at 9efbec3c2f, while HEAD changed it at 0c72f3be00 before the 2026-10-11 upload); lib/opal_naming.py differs in all three packages with 12 or more commits since.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB176-1 record packages[].members[] with equal false and commits_since_live empty, read against git log --since at each package's LastModified @69047b4bd6",
+      "git log -n 3 -- data/assets/scripts/gold/build_cottonwood_mdpf_slice.py: 0c72f3be00 2026-10-09 13:29:34 -0400, 58772c1e86, 9efbec3c2f; the 49financial live bytes equal the blob at 9efbec3c2f (history match) @69047b4bd6",
+      "the control: --since with the 49financial LastModified returns no commit for that path, and --since 2026-10-01 returns three; the filter is live @69047b4bd6"
+    ]
+  },
+  "spec_asserts": "IB-pr-509 says the next release must name exactly the packages and members it needs, with every other member at today's bytes, and that each differing member is explained by commits since its object was written.",
+  "world_is": "The three packages carry bytes that are not HEAD's: some differences have no commit since the upload and match an older HEAD-history blob, some are CRLF-stored JSON, and the rest are explained by later commits. Until the issuer rules on the packaging source, the packages cannot be taken as HEAD. IB176-1 AC2 FAILS on the empty commits_since_live rows; the record is not edited to pass it."
+}
+```
+
+## IRPT_BCKEND-D2-W361-S4 -- the guard declares a manifest stamp for each package; no package holds a manifest member
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W361-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~361",
+  "surfaced_at": "2026-10-13T07:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "_irpt_holdings_bundles() declares stamp manifest and sha_metadata_key manifest; the live packages carry SHA256SUMS (verified by the host with sha256sum -c) and S3 metadata members-sha256 and member-count, and no manifest member and no source commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe_deploy_core.py:559 and :565 declare sha_metadata_key and stamp manifest for each bundle @69047b4bd6",
+      "infra/aws/lambda/investor-reporting/holdings_refresh/refresh_dispatch.py:67 runs sha256sum -c --quiet SHA256SUMS on the unpacked package @69047b4bd6",
+      "head-object Metadata keys of each package are members-sha256 and member-count only; the packages' member lists hold no manifest name (scratch read, python -I) @69047b4bd6"
+    ]
+  },
+  "spec_asserts": "The order asks for the stamped manifest member, if the package has one, and its source commit.",
+  "world_is": "The packages have no manifest member and no source commit. The record gives manifest_source_commit null with the reason. The declared stamp name and the live stamp differ."
+}
+```
+
+## IRPT_BCKEND-D2-W361-S5 -- the AC2 amendment is applied: four unexplained rows flagged unattributed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W361-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~361",
+  "surfaced_at": "2026-10-13T07:40:56Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The AC2 amendment delivered by 2.0.0_SA_COO~P2 (ed1c1ec438) is applied to the census record: four differing rows with a repo_path (49financial 2, inflection 1, cottonwood 1) carry unattributed true and a note, and each package carries members_unattributed; the check file is not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p176_cells.py run at the worktree root: IB176-1-AC1, AC2 and AC3 each print PASS with rc=0 (AC2 output: OK: head hashes are the blobs at HEAD; each package carries the 45-member closure)",
+      "the four rows: git rev-list HEAD -- path gives 14 (reporting_policies.json) and 13 (resources.json) commits; no commit is dated after each package's last_modified; the live sha256 equals no blob in those histories (a positive control on build_cottonwood_mdpf_slice.py matches its recorded blob)"
+    ]
+  },
+  "spec_asserts": "IB176-1-AC2 as amended by the issuer: a differing member is accepted if it carries commits_since_live, eol_only_difference true, a live_matches_blob_at_commit value, or unattributed true with a note; the guard's closure members absent from a package must equal its closure_absent_from_package.",
+  "world_is": "The record flags exactly the four differing rows that carry none of the other three explanations; the 45-member closure check passes with closure_absent_from_package unchanged; no hash, no other row and no AWS object was touched."
+}
+```
