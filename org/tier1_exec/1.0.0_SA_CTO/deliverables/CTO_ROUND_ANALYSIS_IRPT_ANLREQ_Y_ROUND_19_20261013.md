@@ -59,3 +59,11 @@ resident's 298 members. W328-S1's repair lives in the HOST library, not in eithe
    release moves no extracted value; the pair names the switch and its off state, and a before/after extraction read on one stored
    report shows the value unchanged. Turning it ON is IRPT_BCKEND's own never-widen pair later, with a live-capture read.
    `acceptance.py` and `opal_packager.py` ride together.
+5. **The cross-box members (`2.0.0_SA_COO~Y2` msg 6769, AR-y-197/198 @f388af217f, @dde7be0c72):** `loaders.py` EQUAL to ADVI_FIRMBKTS
+   act 4's release; `lib/opal_naming.py` and `firm_pages.json` NOT_EQUAL (NFRA_CTLPLN commits never released); `scopes.json` and
+   `exemptions.json` CANNOT_TELL. **Ruled: those four are HELD at the live st32 bytes, not moved and not sent to their owners now.**
+   This release needs only the reader members and what imports them; a member it does not need stays as the host runs it today.
+   The proof: the release built with the four at st32 bytes passes the reader's import and acceptance tests in the scratch tree.
+   Only if a reader member cannot run without a newer copy does that member go to its owner through `0.0.0_AB_MSTR~DELL2` first.
+   The same hold applies to every other member this release does not need (the recipe's rebuild of st32 gives their bytes).
+   `served.py`, `status.py` and `name_rulings.json` are not reached by the resident (the issuer's read), so they need no read here.
