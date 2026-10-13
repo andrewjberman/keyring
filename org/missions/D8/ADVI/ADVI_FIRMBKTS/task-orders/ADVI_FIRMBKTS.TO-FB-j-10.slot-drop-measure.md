@@ -101,7 +101,7 @@ to a CRO brief. The pre-screened ids are `SLOT_PRESCREEN.json`'s `targeted_ids` 
 
 **AMENDMENT 2 (2.0.0_SA_COO~B1, 2026-10-13 ~10:4xZ) -- UN-PARKED:** `FB-j-9` is merged at 8fcbf07d7d (worker commit 2deaa9165e; its four arms PASS at the merged HEAD together with `FB-j-5`'s three: 7 passed; the `betas` mutant fails arm 4, the helper-call mutant fails arm 1; instance VALID). The diff you deploy: `betas=[...]` removed from the `client.messages.create(...)` call; `_log_slot_drop` and its two call sites (message `redacted` for PII, schema and URL classes; ASCII only). The pair addendum is signed on both sides (COO 78a9c61182, CTO f6ded5f20a). Build from the main checkout at or after 8fcbf07d7d. Status pending. No criterion changed.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <workstream>SLOTDROPLOG</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-j-10</to_id>
