@@ -12,8 +12,8 @@
  "opened_at": "2026-10-13T18:03:28Z",
  "state": "OPEN",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-13T18:07:39Z",
+  "bus_message_id": "30e9d560-24f6-45ee-81a4-9a826b4879d4"
  },
  "ack": null,
  "closed": {
