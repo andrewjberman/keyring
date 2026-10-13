@@ -12900,3 +12900,79 @@ name the one known failure instead of silently inheriting it.
   "notes": "Issuer defect class: a cell 'ships in rN' with no release order cut is invisible to every round-close check, because the build order is complete. Carry to the cut template: a build cell whose release is deferred names the release order it rides at the cut."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~64",
+  "surfaced_at": "2026-10-13T21:48:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_OPLGTW-Z-W64-S1",
+  "one_line": "No roster or record names the Opal asset-manager principals, so every row of HV1_PRINCIPALS.json reads asset_manager 'unknown' and the FWD-21 driven call has no named principal to drive.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN comp-find -i 'asset.manage(r|ment) team' --files --limit 40 from the worktree: 38 hits across 77677 files scanned [corpus=all]; the 26 files listed are PRDs, briefs, a daily report and AMGT evidence -- the team is described as an audience; none lists its principals.",
+      "RAN a Grep for 'asset manag*' within 200 chars of an @opalinvest.com address over *.{yaml,yml,json,md,csv,py}: 1 file (research_transcripts/schema/series.json), a meeting-series schema, not a roster.",
+      "READ the 4 principal_profile records of gateway-access-state-table (scan, begins_with POLICY#): attributes email, grant_revision, oid, pk, probe, profile_kind, record_type, rev_by, revision, sk, status, tid -- no role or team field.",
+      "READ org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md:263-264 (v2.6) 'Asset-manager principals are named from the grant store, never guessed' against :1039-1040 (v2.8) 'the principal census reads the identity store ... never the grant store': the identity store (family heads) carries tid/oid/email/status only."
+    ]
+  },
+  "spec_asserts": "TO NFRA_OPLGTW.TO-OG-hv-1 section 1 item 5: asset_manager comes from a NAMED source only; if none names them, write 'unknown' and file a BLOCKING row.",
+  "world_is": "The census was written with asset_manager 'unknown' on all 8 principals (3 in the identity store, 8 in the 30-day audit lake). The release can be signed on the tools; naming the asset managers needs a source the issuer or Andrew supplies (a roster of addresses, or a profile role field), after which the census is re-read.",
+  "notes": "Names were not mapped to addresses: AMGT_RESAPP_PRD.md:121 names a Head of Asset Management in prose, and a name-to-address inference is the guess the order forbids."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~64",
+  "surfaced_at": "2026-10-13T21:48:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_OPLGTW-Z-W64-S2",
+  "one_line": "The harvest tools ride tools._run, which fetches a delegated Graph token the tools do not use, and app/audit.py (outside this order's paths) has no args allowlist row for them, so their audit args are omitted and the key rides in detail.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/opal-gateway/app/tools.py:167-171 @4e26a29872: _run calls _user_token() before fn(token) and returns needs_login when get_token raises NeedsLogin.",
+      "READ infra/aws/ec2/opal-gateway/app/audit.py:79-145 @e488418898: _ARGS_ALLOWLIST has no 'harvest_list' or 'harvest_read'; _safe_args then returns {'_omitted': ...} for a tool not declared.",
+      "RAN test_oghv1_ac04 (the real served MCP surface, tools.get_token stubbed by the guard harness): both tools dispatched for an unprofiled Opal principal and for an outsider."
+    ]
+  },
+  "spec_asserts": "TO NFRA_OPLGTW.TO-OG-hv-1 section 1 item 2: every call writes one audit record with the tool, the key or prefix, the verdict and the bytes; the tools are registered beside list_shared_folder.",
+  "world_is": "Each call writes two records: harvest_read.py's own (key or prefix in detail, bytes_returned, principal; outcome denied on a refusal) and _run's 'ok' record with args omitted. An Opal user with no delegated Graph consent would receive needs_login from a tool that never calls Graph. Neither blocks the criteria; a row of the audit allowlist and a token-free chokepoint are the owner's choice.",
+  "notes": "The release order may want to read both before the live driven call."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~64",
+  "surfaced_at": "2026-10-13T21:48:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_OPLGTW-Z-W64-S3",
+  "one_line": "31 percent of the gateway audit lake's rows over the last 30 UTC days carry an empty user, so the 30-day principal count of the census covers only the attributed rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN a full read of s3://opal-mcp-audit/audit/dt=<day>/ for the 30 UTC days before today with 48 threads: 110848 objects, 0 get failures, 0 unparsed lines; 34407 rows had an empty user, 8 distinct non-empty users (all opalinvest.com) for the remaining rows.",
+      "READ HV1_PRINCIPALS.json denominator.audit_lake_rows_with_empty_user_excluded = 34407 (W/ deliverables of 0.9.0_WK_NFRA_OPLGTW~64)."
+    ]
+  },
+  "spec_asserts": "TO NFRA_OPLGTW.TO-OG-hv-1 section 1 item 5: audit_lake_principals_30d is the distinct principals of the lake's 30 days.",
+  "world_is": "audit_lake_principals_30d = 8 is a count of distinct non-empty user values; the rows with an empty user cannot be attributed to a principal from the lake, so the number is a floor for the 30-day principals, not a total.",
+  "notes": "Row counts are over rows (one per object-line), not over principals."
+}
+```
