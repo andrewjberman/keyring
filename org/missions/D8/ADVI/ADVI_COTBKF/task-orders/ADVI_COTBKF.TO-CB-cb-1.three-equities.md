@@ -35,6 +35,14 @@ build's price on the last store day at 0.5, 0.15 and 0.1 of the store's row, whe
 `## ADDENDUM v0.10` (find the heading in `org/missions/D8/ADVI/ADVI_COTBKF/prd/ADVI_COTBKF_PRD.md`: this build's split step is NOT applied to a point already split-undone), and
 the round-79 record `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~152/BASIS_VALUE_AGAINST_SPLIT_SCALING.json` (where the split scaling runs: `split_plan`, `apply_splits`).
 
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~C2`, 2026-10-13T12:4xZ) -- the store copy named below is gone from this box.** `C:/dev/wk-cotbkf-84/` was removed; the
+store object is NOT on disk anywhere. Where this order says "the price store object `C:/dev/wk-cotbkf-84/.scratch/w149/store/`", read instead ONE
+S3 object, read-only, into your own worktree's `.scratch/` (never committed): `s3://opal-data-cot/silver/prices/canonical_prices.parquet`, current
+version `76.rgWIXYdLNsXSwrXvyuEmaEtfr9y98` (97,443,387 bytes, last modified 2026-10-09T13:41:04Z; read by the issuer with `head-object` at this
+amendment, and named in `deliverables/0.9.0_WK_ADVI_COTBKF~153/STORE_WRITER.md`). Through the `.tools/aws` shim; one `get-object` for that key and
+version; no listing, no write. Check the byte length against 97,443,387 before use and say so. Columns date, asset_name, ticker, price, source, as before.
+The AWS bound below is widened by this one object and nothing else.
+
 **Local data:** the build's prices `C:/dev/ajb_workspace/.scratch/advi_cotbkf/r34/after/security_day_price.parquet` (cusip, date, price, store); the price store
 object `C:/dev/wk-cotbkf-84/.scratch/w149/store/` (date, asset_name, ticker, price, source; read it there, do not download it); the vendor cache
 `C:/dev/ajb_workspace/.scratch/advi_cotbkf/yahoo_census/` (one file per ticker with Close, Adj Close and, where the file has them, split events: read what is on
@@ -91,7 +99,7 @@ no account id or amount appears.
 
 - **Grant.** The `<paths>` block below (your deliverables folder and your own NEW channel row) and the file of this order.
 - **You change no code, test, config, manifest or registry.**
-- **AWS: READ-ONLY, this firm's own gold holdings partitions dated 2026-04-22 to 2026-06-07, the rows for these tickers,** read the
+- **AWS: READ-ONLY, the ONE price-store object of AMENDMENT 1 (`get-object`, that key and version, into your `.scratch/`), and this firm's own gold holdings partitions dated 2026-04-22 to 2026-06-07, the rows for these tickers,** read the
   way the round-77 record says they were read; nothing else; no write, delete or serve. If that read is refused, record the exact
   error and mark the served-partition answers `not_established`.
 - **No rebuild of any partition and no consumer attached to the minted table** (the ruling on row D2-S131).
