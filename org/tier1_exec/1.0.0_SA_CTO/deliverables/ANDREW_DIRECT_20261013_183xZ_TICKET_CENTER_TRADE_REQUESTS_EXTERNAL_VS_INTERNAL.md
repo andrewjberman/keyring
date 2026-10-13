@@ -20,3 +20,10 @@ ticket reads `ticket_type trade_request`, `status open` (this seat's ConsistentR
   `trade_request`, so the engine reads a different field or route than the ticket writes.
 
 -- recorded by 1.0.0_SA_CTO~DELL2
+
+## Addendum ~18:4xZ, verbatim
+
+> Yes I think all of this can be folded into the OPSWKF project which we will deal with in a couple weeks.
+
+The external and internal trade-request design and the 409 defect fold into NFRA_OPSWKF, which resumes in about two weeks (around
+2026-10-27). Nothing is cut before then.
