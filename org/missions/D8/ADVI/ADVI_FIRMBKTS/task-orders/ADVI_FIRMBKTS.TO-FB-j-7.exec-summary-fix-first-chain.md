@@ -29,8 +29,9 @@ pair bounds that.
    the CTO; the pair for THIS act is signed on both halves at the current bytes: the COO half
    `org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/NEVER_WIDEN_ROUND7_EXEC_SUMMARY_FIRST_REGENERATION_COO_HALF.md` and the CTO's half (named in the issuer's un-park
    amendment). Name both commits. **Read the COO half first:** this act lands the trigger EMPTY-FOR-EMPTY (every slot switched off).
-2. **Before:** list the keys `advi/49financial/platinum/advisors/<id>/exec_summary.json` in `opal-data-49financial` with their VersionIds
-   (this is the rollback list: `rollback_versions.json`, in your folder; ids are advisor ids only); for each, whether the prior object carried any
+2. **Before (the radius, recorded BEFORE act 1):** the generator's advisor list (194 at the cut) and, of those, the 158 that have a served
+   `advi/49financial/platinum/advisors/<id>/exec_summary.json` in `opal-data-49financial` (VersionIds: the rollback list,
+   `rollback_versions.json`, in your folder; ids are advisor ids only) and the 36 that have none (the CREATES: no rollback needed); for each, whether the prior object carried any
    bullet (`advisors_with_bullets_before`); the legacy home's count; the generator's current `CodeSha256` and the value of
    `EXEC_SUMMARY_DISABLED_SLOTS`; the dispatcher object's current VersionId.
 3. **Ledger** (NEVER-2) with its `.open_deploys/` sentinel BEFORE the first write: both objects (the generator's environment and the dispatcher),
@@ -44,11 +45,11 @@ pair bounds that.
    file (the merged tree carrying `FB-j-2` and `FB-j-4`); this is the ONE object written there.
 6. **Read the first chain after act 2:** the log line `EventBridge chain-complete emitted`; CloudTrail `PutEvents` from the runner's session (>= 1);
    `AWS/Lambda` `Invocations` of `exec-summary-generator` (>= 1) and its log (no `[SLOT_DROPPED]`, no error); then the keys: how many have a
-   newest VersionId newer than act 2 (`regenerated`, at most the 158 named), how many of those carry ANY bullet (`nonempty_bullets`, must be 0),
+   newest VersionId newer than act 2 (`regenerated`, at most the 194 named: 158 overwrites and up to 36 creates), how many of those carry ANY bullet (`nonempty_bullets`, must be 0),
    and for each advisor whose prior object carried bullets whether the new one still does (`bullet_regressions`, must be 0; none expected).
 7. **Roll back** (the COO half's Branch B: each key's prior VersionId from `rollback_versions.json`, the dispatcher's prior VersionId, the
-   environment value) if any regenerated key is outside the named set, any artifact carries a bullet or a client name or id, or the generator
-   errors on more than 5 percent of advisors; report.
+   environment value) if any regenerated key is outside the 194 named, any artifact carries a bullet or a client name or id, a key is written twice in one
+   chain, or the generator errors on more than 5 percent of advisors; report. The 36 creates are not rolled back (deleting needs Andrew's word).
 8. **4b's put is graded by this read** (the CTO, ADDENDUM 1 of the sample read): a canonical write by the generator under the fence, after the chain
    emits and the rule fires, is the first exercised put of act 4b. Name the first regenerated key's LastModified and its writer principal
    (CloudTrail `PutObject` data events are NOT available: state `inferred` from the object's VersionId timestamp and the generator's log).
@@ -63,7 +64,7 @@ pair bounds that.
  "slots_disabled": ["top_gainer", "top_loser", "concentration_risk", "tax_loss_candidate", "leaderboard_rank_delta", "top_nna_mover"],
  "deploy": {"key": "code/gold/gold_dispatch.sh", "sha256": "<64 hex>", "ledger_closed": true},
  "chain": {"label": "...", "emitted_line": true, "cloudtrail_putevents": 0, "generator_invocations": 0},
- "keys": {"regenerated": 0, "ceiling": 158, "prior_version_ids_recorded": true,
+ "keys": {"regenerated": 0, "ceiling": 194, "overwrites": 0, "creates": 0, "prior_version_ids_recorded": true,
           "advisors_with_bullets_before": 0, "bullet_regressions": 0, "nonempty_bullets": 0},
  "claim": "measured"}
 ```
@@ -108,6 +109,8 @@ could never succeed (`betas` kwarg, row `D1-S48`/`D1-S49`); `FB-j-9` fixes it an
 **AMENDMENT 3 (2.0.0_SA_COO~B1, 2026-10-13 ~10:5xZ):** the CTO's sample read (`ledger/CTO_SAMPLE_READ_FB_J_10_EXEC_SUMMARIES_20261013.md`) adds conditions. Un-park conditions are now (all): (a) `top_nna_mover` DISABLED by config in the deployed generator (`FB-j-11` merged, `FB-j-13` deployed with `EXEC_SUMMARY_DISABLED_SLOTS=top_nna_mover`; the product fix of that slot goes to the CRO's exec-summary brief); (b) the client-name guard deployed (the same apply); (c) `FB-j-12`'s IQLT trace read by the CTO, and if it is a data defect the affected bullets are HELD (the record names how); (d) the second sample (`FB-j-13`) read by the CTO and offered to Andrew; plus the earlier ones (`FB-j-3` read, `FB-j-4` merged, the regeneration pair signed on both halves citing the sample). The record's `dry_run_sample` is the `FB-j-13` sample. No criterion changed.
 
 **AMENDMENT 4 (2.0.0_SA_COO~B1, 2026-10-13 ~10:3xZ):** the CTO's ruling on `FB-j-12` (sample read ADDENDUM 1, msg 4753): B_01's silver-noncash cap compresses `market_value` on 13 percent of open lots, so EVERY position slot rests on a defective input; hold all position slots; this cell lands the trigger EMPTY-FOR-EMPTY and its first chain grades act 4b's put. Section 1a is rewritten: act 1 sets `disabled_slots` to all six slots (the CTO wrote "all five"; the generator has six; `leaderboard_rank_delta` fires on none today; asked to confirm), act 2 deploys the dispatcher, the record carries `slots_disabled` and `nonempty_bullets` (0). The COO half is authored (`ledger/NEVER_WIDEN_ROUND7_EXEC_SUMMARY_FIRST_REGENERATION_COO_HALF.md`); still parked on `FB-j-3` read, `FB-j-4` merged, `FB-j-13`'s sample read, and the CTO's half.
+
+**AMENDMENT 5 (2.0.0_SA_COO~B1, 2026-10-13 ~10:4xZ):** the CTO signed his half (`ledger/NEVER_WIDEN_ROUND7_EXEC_SUMMARY_FIRST_REGENERATION_CTO_HALF.md`, msg 4755) and fixed the radius at 194 keys: 158 overwrites by VersionId and up to 36 creates (advisors with no served object) that need no rollback; Branch B stays for keys outside the 194, any non-empty bullet, or a double write. The record carries `ceiling` 194 with `overwrites` and `creates`. The COO half is amended the same way. Still parked on `FB-j-3` read, `FB-j-4` merged and `FB-j-13`'s sample read.
 
 <status>parked</status>
 <round>7</round>

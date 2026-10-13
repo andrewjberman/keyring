@@ -23,10 +23,12 @@ Two acts, in this order, by `0.7.0_AE_CloudOps~FB1`, each reading the entry it o
 ## What the first chain does after act 2 (the served effect, named)
 
 The dispatcher's chain-complete emit reaches EventBridge, `exec-summary-trigger` matches, and the generator runs NON-dry over every advisor
-in its list (194 at the cut; 158 have a served object). With all six slots switched off every artifact is the SAME SHAPE as the served
-ones today (the seven keys, `bullets` an empty list, no model call, no text): each of up to 158 keys
-`advi/49financial/platinum/advisors/<id>/exec_summary.json` in `opal-data-49financial` (the canonical home) is rewritten with a new
-`generated_at` and `input_hash`, and the generator's metrics start to move. Nothing a client or an advisor reads changes in content.
+in its list: **194 at the cut, of which 158 have a served object and 36 have none**. With all six slots switched off every artifact is the SAME
+SHAPE as the served ones today (the seven keys, `bullets` an empty list, no model call, no text): of the keys
+`advi/49financial/platinum/advisors/<id>/exec_summary.json` in `opal-data-49financial` (the canonical home), **158 are OVERWRITTEN** with a new
+`generated_at` and `input_hash`, and **36 are CREATED** (advisors with no served object), 194 in all, and the generator's metrics start to move.
+An empty artifact matches every served one, so the 36 creates carry no content change; they need no rollback by VersionId (deleting them would
+need Andrew's word, and no reader keys on their absence). Nothing a client or an advisor reads changes in content.
 Every later chain close repeats this (a write of about 158 small objects per chain; the bucket is versioned).
 
 ## Writers of the property (counted, N printed)
@@ -39,16 +41,18 @@ measured by its `test_disabled_slot_is_skipped_entirely` and `test_default_uncha
 ## Both branches
 
 - **Branch A (expected):** the first chain after act 2 logs `EventBridge chain-complete emitted`; CloudTrail shows `PutEvents` from the runner's
-  session; the generator is invoked; the number of keys whose newest VersionId is newer than act 2 is at most 158 and every one has `bullets`
-  empty; for every advisor whose PRIOR object carried bullets (none are expected: the sampled May and canonical objects had none) the new one
+  session; the generator is invoked; the number of keys whose newest VersionId is newer than act 2 is at most 194 (158 overwrites, up to 36 creates) and every one has
+  `bullets` empty; for every advisor whose PRIOR object carried bullets (none are expected: the sampled May and canonical objects had none) the new one
   keeps them (no regression, read per advisor). The generator's own log carries no `[SLOT_DROPPED]` line.
-- **Branch B (STOP, roll back, report):** any regenerated key outside the 158 named; any artifact with a non-empty `bullets`; any key rewritten
-  that carries a client name or id; the generator erroring on more than 5 percent of advisors. Rollback: restore each key's prior VersionId
+- **Branch B (STOP, roll back, report):** any regenerated key outside the 194 named (the 158 served and the 36 advisors with no served object); any
+  artifact with a non-empty `bullets`; a key written TWICE in one chain; any key that carries a client name or id; the generator erroring on more
+  than 5 percent of advisors. Rollback: restore each key's prior VersionId
   from `rollback_versions.json` (recorded before act 2), restore the dispatcher's prior VersionId, and set `disabled_slots` back as it was.
 
 ## Rollback per object
 
-Per key: the prior VersionId of each of the up-to-158 `exec_summary.json` keys, recorded by FB1 in `rollback_versions.json` before act 2.
+Per key: the prior VersionId of each of the 158 served `exec_summary.json` keys, recorded by FB1 in `rollback_versions.json` before act 2. The 36
+creates have no prior version and need no rollback (deleting them would need Andrew's word).
 The dispatcher: the prior VersionId of `code/gold/gold_dispatch.sh`. The Lambda environment: the prior value of `EXEC_SUMMARY_DISABLED_SLOTS`
 (`top_nna_mover` after `FB-j-13`), the same scoped `safe-apply`.
 
@@ -61,7 +65,9 @@ The dispatcher: the prior VersionId of `code/gold/gold_dispatch.sh`. The Lambda 
 - Whether text will be served later: this half signs the EMPTY regeneration only. Setting the variable to a smaller set (text on) needs its own
   pair, the CTO's reading of the sample from the fixed inputs, and Andrew's read.
 
-**SIGNED by `2.0.0_SA_COO~B1` for exactly these two acts, the named key set (at most 158 `exec_summary.json` keys, each rewritten empty-for-empty)
-and this rollback.** Any slot enabled, any other object written, any other environment value changed or a second dispatcher deploy needs a new half.
+**SIGNED by `2.0.0_SA_COO~B1` for exactly these two acts, the named key set (at most 194 `exec_summary.json` keys: 158 overwrites and 36 creates, each
+empty-for-empty) and this rollback.** Any slot enabled, any other object written, any other environment value changed or a second dispatcher deploy needs a new half.
 
 -- 2.0.0_SA_COO~B1
+
+**AMENDMENT 1 (2026-10-13 ~10:4xZ, on the CTO's ruling msg 4755):** the radius is 194 keys (158 overwrites by VersionId and 36 creates), recorded before act 1; Branch B stays for keys outside the 194, any non-empty bullet, or a double write; Branch A's canonical write grades 4b.
