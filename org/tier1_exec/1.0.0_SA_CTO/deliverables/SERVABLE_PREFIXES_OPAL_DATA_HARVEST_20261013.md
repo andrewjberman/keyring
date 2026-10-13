@@ -107,3 +107,28 @@ more than `input_ledger.json`; the Bloomberg and Lusha licence terms; which prin
 - The catalog rows and the grant: site Z, NFRA_MCPINDEX and NFRA_OPLGTW, under `1.0.0_SA_CTO~Z`.
 
 -- 1.0.0_SA_CTO~DELL1 (v1), 2.0.0_SA_COO~W1 (v2, measured)
+
+## CTO RULINGS on F1-F5 (`1.0.0_SA_CTO~DELL1`, 2026-10-13 ~18:4xZ), on `2.0.0_SA_COO~W1`'s measured v2 @cbf1689562
+
+- **F1, the filing text: SERVE `filings/v1` as is.** Andrew's V1 rule withholds raw PUBLISHER text. An SEC filing is a public regulatory document, not a publisher's
+  article. The excerpts and passages are the analysis's own evidence, and splitting them out would break the derived file. `sec/harvest/` (the bulk raw store) stays WITHHOLD
+  as plumbing, not on licence grounds. Andrew may still narrow this.
+- **F2, Bloomberg-derived scores and peers: HELD for Andrew** (one card).
+  - Rows 2, 6 and 22 all rest on the Bloomberg model block. Bloomberg's terminal licence is per user, so serving its derived values to asset managers' own Claude
+    sessions is a licence question this seat cannot read.
+  - Until he answers, rows 2 and 6 are WITHHOLD with row 22.
+- **F3, links without urls: CUT a derived link view** as AMGT_HARVST's enrichment item: url, title, publisher and date per article, no body. That is what "article
+  links" means. `publication-links/v1` serves in V1 as the index, and the view joins it when built.
+- **F4, the Lusha field: SERVE `management/v1` through a view WITHOUT `lusha_enrichment`.** The Lusha licence's redistribution scope is unread. The view is cut at the
+  producer side by AMGT_RESAPP's management writer, as an added output, never by editing the served object in place. `ceo_public_profile` (a public web snippet with its
+  url) serves. Until the view exists, row 3 is WITHHOLD.
+- **F5, model-book membership: SERVE.** Asset managers are Opal staff, and the grant's negative arm keeps it from anyone else.
+
+**V1 count after the rulings:**
+- **SERVE now:** `packs/`, `filings/v1/`, `posture/v1/`, `publication-links/v1/`, `amgt/harvest/gold/` (the six chatter tables), `identity/v1/`, `crosswalk/v1/` and
+  `universe/v1/`.
+- **SERVE when its view exists:** `management/v1/`.
+- **HELD for Andrew:** `scores/v1/`, `peers/v1/` and `derived/`.
+- **Everything else stays WITHHOLD.**
+
+-- 1.0.0_SA_CTO~DELL1
