@@ -13,7 +13,7 @@
 <preflight>
 comp-schedule: DECLARED-NOT-APPLICABLE -- nothing is scheduled; a library module and its tests.
 comp-iam: DECLARED-NOT-APPLICABLE -- no AWS call, grant, key or policy is touched; the cell writes and tests local Python only.
-comp-adversary: RUN at the cut -- `check_fa5_text_blocks.py` is a prepared acceptance check (21 arms, the model stubbed); at the base it exits 1 on `ModuleNotFoundError: No module named 'lib.research.aifill'`, the build check failing as expected.
+comp-adversary: RUN at the cut -- `check_fa5_text_blocks.py` is a prepared acceptance check (20 arms, the model stubbed); at the base it exits 1 on `ModuleNotFoundError: No module named 'lib.research.aifill'`, the build check failing as expected.
 EGRESS CLASS, declared: NONE. No network call by the cell or its checks (the model is a stub or a recorded response); no Bloomberg call.
 </preflight>
 
@@ -108,7 +108,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (literal; each invocation bounded by its own `timeout`; set your shell tool's timeout to 600000 ms)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-fa-5"><invocation>cd C:/dev/wk-resapp-426 &amp;&amp; PYTHONPATH="$(pwd)" timeout 300 python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa5_text_blocks.py" | tail -4; echo "exit=${PIPESTATUS[0]}"</invocation><expect>the line `AIFILL FA-5 ARMS: YES (N of N)` with N equal to the count printed and N at least 21, no `FAIL` arm line above it; and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-fa-5"><invocation>cd C:/dev/wk-resapp-426 &amp;&amp; PYTHONPATH="$(pwd)" timeout 300 python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa5_text_blocks.py" | tail -4; echo "exit=${PIPESTATUS[0]}"</invocation><expect>the line `AIFILL FA-5 ARMS: YES (N of N)` with N equal to the count printed and N at least 20, no `FAIL` arm line above it; and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-fa-5"><invocation>cd C:/dev/wk-resapp-426 &amp;&amp; PYTHONPATH="$(pwd)" timeout 300 python -m pytest -q --color=no -p no:cacheprovider lib/research/aifill/tests/test_text_blocks.py | tail -3; echo "exit=${PIPESTATUS[0]}"</invocation><expect>the last non-empty line before `exit=` reads `N passed` (N at least the count your test module's functions define) with no `failed` and no `error` in the last 3 lines; and exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -127,6 +127,8 @@ Report once:
 The `<status>` flip is the issuer's.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**AMENDMENT 1 (2026-10-13 ~23:5xZ, the issuer, after worker ~426's BLOCKING row W426-S1; no gate limb graded it: the order is open, `<placeholders>NONE` stands):** the arm count was the issuer's miscount: `check_fa5_text_blocks.py` defines 20 arms (the preflight and AC1 said 21). AC1 read `YES (20 of 20)`, 0 FAIL, so the expectation is corrected to 20; the worker's code is not at fault and no check arm was removed.
 
 **ISSUER NOTES:** STAGED behind `AMGT-fa-1`'s merge. Three blocks in one order because they are one pattern (a gap test, an optional Opal source, a web path) at about 60 lines each; each stays its own module with its own arms. The `identity_description` block is the only one the page header draws, and the header draws it once (ruling W126-S1): the serve puts it in the `/thesis` bundle (cell fa-7) and the page passes it down (cell fa-8), so the overlay route gains no read.
 

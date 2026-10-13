@@ -147,6 +147,7 @@ class Estate:
         # value enums: resolved from the GATE's source by AST (contract `value_enums`), one carrier
         self.enums = {}
         self.enum_sources = {}
+        self.enum_origins = {}
         self.enum_norm = {}
         for field, spec in (self.contract.get("value_enums") or {}).items():
             if field.startswith("_") or not isinstance(spec, dict) or spec.get("no_enum"):
@@ -154,6 +155,8 @@ class Estate:
             src = self.ws / spec["source"]
             self.enums[field] = _resolve_enum(src, spec["symbol"], self.ws)
             self.enum_sources[field] = f"{spec['source']}:{spec['symbol']}"
+            self.enum_origins[field] = ("derived from the device register via lib/devices.py placement_values()"
+                                        if spec["symbol"] in REGISTER_DERIVED_SYMBOLS else "literal assignment in the source, read by AST")
             self.enum_norm[field] = spec.get("normalize", "exact")
 
     def _norm(self, field, value):
@@ -404,7 +407,8 @@ class Estate:
             "directives_entries": sum(len(v) for v in directives.values()),
             "macros_directives": len(macros),
             "macros_ratified": sum(1 for v in macros.values() if v["ratification"].startswith(self.ratified_prefix)),
-            "value_enums": {f: {"values": list(vals), "source": self.enum_sources[f]} for f, vals in self.enums.items()},
+            "value_enums": {f: {"values": list(vals), "source": self.enum_sources[f], "origin": self.enum_origins[f]}
+                            for f, vals in self.enums.items()},
         }
         if r6_not_graded:
             denom["r6_not_graded_index_only"] = sorted(r6_not_graded)
@@ -733,7 +737,7 @@ def _print_check(viol, denom, as_json=False, scope=None):
           " | DIRECTIVES.yaml: {directives_entries} entries across {directives_listed} directives"
           " | MACROS.yaml: {macros_ratified} of {macros_directives} directive(s) RATIFIED".format(**denom))
     for f, spec in denom.get("value_enums", {}).items():
-        print(f"  value enum {f}: {len(spec['values'])} values from {spec['source']} (read by AST at run time)")
+        print(f"  value enum {f}: {len(spec['values'])} values from {spec['source']} ({spec.get('origin', 'origin not recorded')})")
     if denom.get("r6_not_graded_index_only"):
         skipped = denom["r6_not_graded_index_only"]
         print(f"  R6 NOT GRADED for {len(skipped)} CLOSED project(s) outside this sparse cone (read from the git index): {', '.join(skipped)}")

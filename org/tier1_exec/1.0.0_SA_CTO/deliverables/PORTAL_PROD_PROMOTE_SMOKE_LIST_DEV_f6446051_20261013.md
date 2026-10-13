@@ -34,6 +34,9 @@ Sign in as yourself. Each line: where, what to do, and PASS when.
 4. **Open report** on a finished ticket -- PASS: it opens the finished report in Investor Reporting's layout, not the request record.
 5. **Trade Request form** -- PASS: it is present for the trade_request type. Do not submit.
 6. **Final commentary** -- PASS: the ticket shows who sent it.
+7. **Added 23:1xZ: the five Opal models** (IB-pr-518, live on `irpt-ycharts-generate` since 22:48Z). New Ticket > Analysis Request, model
+   checkboxes. PASS: Opal Ultra Short-Term, Short-Term, Intermediate-Term, Long-Term and Ultra Long-Term, in that order (Long-Term
+   fourth).
 
 ## 3. Advisor Intelligence (client-facing; 5 files)
 

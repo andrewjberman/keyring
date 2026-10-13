@@ -15,6 +15,7 @@ TESTS = [
     "test_a_gap_beyond_five_days_pulls_from_the_stored_max_and_appends_only",
     "test_the_receipt_lists_names_appended_without_a_relock_and_a_failed_lock_check_makes_the_name_held",
     "test_a_name_whose_combined_history_relock_is_rejected_is_held_even_when_the_appended_window_passes",
+    "test_a_held_name_never_breaks_the_unresolved_fold_and_only_a_rejected_relock_opens_a_row",
 ]
 
 if __name__ == "__main__":

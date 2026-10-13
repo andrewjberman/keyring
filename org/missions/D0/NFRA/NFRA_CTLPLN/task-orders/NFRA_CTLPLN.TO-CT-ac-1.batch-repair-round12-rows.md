@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~87</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run: CROSSBOX-TEST cases=71/71 ok=True (the order's "50 of 50" was the base denominator; parts that stopped early at the base now run, row W87-S1), ROUND13-BATCH arms=15/15 ok=True, APPLY-GATES-TEST cases=100/100 ok=True; proof instance VALID. simulate_policy.py deleted (no test reads it); routes.tf comments at about :23 and :30 still name it (outside the grant, INERT, row W87-S2: a round-14 batch item).</status_reason>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>

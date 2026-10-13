@@ -13,7 +13,7 @@
 <preflight>
 comp-schedule: DECLARED-NOT-APPLICABLE -- nothing is scheduled; a library module and its tests.
 comp-iam: DECLARED-NOT-APPLICABLE -- no AWS call, grant, key or policy is touched; the cell writes and tests local Python only.
-comp-adversary: RUN at the cut -- `check_fa3_mgmt_bio.py` is a prepared acceptance check (14 arms, the model stubbed); at the base it exits 1 on `ModuleNotFoundError: No module named 'lib.research.aifill'`, the build check failing as expected.
+comp-adversary: RUN at the cut -- `check_fa3_mgmt_bio.py` is a prepared acceptance check (15 arms, the model stubbed); at the base it exits 1 on `ModuleNotFoundError: No module named 'lib.research.aifill'`, the build check failing as expected.
 EGRESS CLASS, declared: NONE. No network call by the cell or its checks (the model is a stub or a recorded response); no Bloomberg call.
 </preflight>
 
@@ -97,7 +97,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (literal; each invocation bounded by its own `timeout`; set your shell tool's timeout to 600000 ms)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-fa-3"><invocation>cd C:/dev/wk-resapp-424 &amp;&amp; PYTHONPATH="$(pwd)" timeout 300 python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa3_mgmt_bio.py" | tail -4; echo "exit=${PIPESTATUS[0]}"</invocation><expect>the line `AIFILL FA-3 ARMS: YES (N of N)` with N equal to the count printed and N at least 14, no `FAIL` arm line above it; and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-fa-3"><invocation>cd C:/dev/wk-resapp-424 &amp;&amp; PYTHONPATH="$(pwd)" timeout 300 python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa3_mgmt_bio.py" | tail -4; echo "exit=${PIPESTATUS[0]}"</invocation><expect>the line `AIFILL FA-3 ARMS: YES (N of N)` with N equal to the count printed and N at least 15, no `FAIL` arm line above it; and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-fa-3"><invocation>cd C:/dev/wk-resapp-424 &amp;&amp; PYTHONPATH="$(pwd)" timeout 300 python -m pytest -q --color=no -p no:cacheprovider lib/research/aifill/tests/test_block_mgmt_bio.py | tail -3; echo "exit=${PIPESTATUS[0]}"</invocation><expect>the last non-empty line before `exit=` reads `N passed` (N at least the count your test module's functions define) with no `failed` and no `error` in the last 3 lines; and exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -116,6 +116,8 @@ Report once:
 The `<status>` flip is the issuer's.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**AMENDMENT 1 (2026-10-13 ~23:4xZ, the issuer, after worker ~424's BLOCKING row W424-S1; no gate limb graded it: the order is open, `<placeholders>NONE` stands):** the face is right and the CHECK was wrong. The face takes the officer fact only when `role_start` or `tenure_years` is not None; the served ASML fixture has both null, yet arm `OPAL citations ...` demanded an officer-list citation for it (the worker followed the face, AC1 read 13 of 14). The arm now requires the research-team-pack citation for ASML, and a new arm builds the officer-fact case (a CEO row with a role start). 14 -> 15 arms. The worker's code is not at fault.
 
 **ISSUER NOTES:** STAGED behind `AMGT-fa-1`'s merge (this cell imports `contract`). The issuer flips it `pending`, cuts the worktree from the merged head with `.tools/wk-provision.sh`, and spawns. The 93-name census (round 104) is what grades the source-class mix; this order grades the builder's branches against stubs.
 
