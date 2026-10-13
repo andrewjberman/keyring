@@ -30977,3 +30977,240 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Run in that combination, pytest aborts the session at collection (rc=2) before any test runs, so the 49F and INF results are not reported by the combined run. Whether a larger folder run masks this by importing safe_deploy_core earlier was not measured (the order forbids the whole-folder run). No test was edited."
 }
 ```
+
+## IRPT_BCKEND-D2-W357-S1 -- the regeneration of the wire copy changes a second member (account_id on the nodes block), so the IB-pr-506 refusal clause fired
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W357-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~357",
+  "surfaced_at": "2026-10-13T05:56Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "Step 1 of IB-pr-506 regenerated the wire copy with gen-all.ts. The regeneration changes HoldingsSnapshot.ts in two ways beyond the header sha: the multi_asset member in the five asset_class unions (expected), and one added optional member 'account_id?: string' in the nodes block (not multi_asset). The contract carries account_id on ACCOUNT nodes since 7ace854890 (IB-pr-493); the committed wire copy never received it. Per the refusal clause the worker stopped: no portal commit, the regenerated file restored to HEAD bytes, the other 28 generated files byte-identical to HEAD.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun run src/pages/InvestorReporting/__tests__/fe-s-13/gen-all.ts at portal cf52fdbf: rc=0, 'gen-wire: 25 of 25 documents, 19 of 24 routes responses; gen-consumed: 11 of 11 contracts'",
+      "git -C portal diff --ignore-cr-at-eol -- src/pages/InvestorReporting/contracts/wire/HoldingsSnapshot.ts: 7 insertions, 6 deletions; hunks = source sha256 7c221b13... -> c7890367... (expected), multi_asset added to five asset_class unions (expected), and one added line 'readonly account_id?: string' after model_code in the nodes block (not multi_asset)",
+      "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json at workspace HEAD 6e3cbe050a: account_id under the nodes items at line 617; the HEAD blob of the wire copy has no account_id in the nodes block (its two account_id hits are the scope and attribution_holdouts account_ids arrays)",
+      "git log of the contract: 7ace854890 build(IRPT_BCKEND TO-IB-pr-493) added the account_id member; 506096fc9a restore(MDPF_SECCLASS~90) restored multi_asset in this file",
+      "git -C portal cat-file/cmp over the 28 files reported dirty by stat: 0 of 28 byte-differ from HEAD after the restore of HoldingsSnapshot.ts"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-506 step 1: the expected change in the generated wire file is the multi_asset member of the asset_class union; if the regeneration changes anything else in any generated wire file, STOP and file a row (the contract may have moved for another reason).",
+  "world_is": "The contract has moved for another reason: the v1 HoldingsSnapshot schema carries an account_id member on ACCOUNT nodes (added by IB-pr-493), and the committed portal wire copy does not. The regeneration therefore brings two changes, not one. The multi_asset fix alone cannot be committed as the order names it without also taking the account_id member, which the order does not name. IVE48-AC1 stays failing at this HEAD until the COO or CTO decides whether the wire copy takes account_id in this cell or in another."
+}
+```
+
+## IRPT_BCKEND-D2-W357-S2 -- the order's typecheck command (tsc --noEmit -p .) checks nothing on this tree; the app project is checked with -p tsconfig.app.json
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W357-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~357",
+  "surfaced_at": "2026-10-13T05:56Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order says to run 'bunx tsc --noEmit -p .' from portal/ and record its error count. On this tree that command reads the root tsconfig.json, whose files array is empty and whose references name tsconfig.app.json and tsconfig.node.json; it checks zero files and reports zero errors by construction. bunx is also not on PATH in Git Bash here (rc=127). The app project was checked with 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.app.json': baseline at portal cf52fdbf, 0 'error TS' lines, rc=0, 20.9 s.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/tsconfig.json at cf52fdbf: \"files\": [] with references to ./tsconfig.app.json and ./tsconfig.node.json",
+      "bunx from Git Bash: 'failed to run command bunx: No such file or directory', rc=127; bun 1.4.2 is on PATH and node_modules/.bin holds tsc.bunx",
+      "node node_modules/typescript/bin/tsc --noEmit -p tsconfig.app.json: rc=0, output empty, 20.9 s (TypeScript 5.9.3)"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-506 step 2: run bunx tsc --noEmit -p . from portal/ once after step 1 and record its error count.",
+  "world_is": "The named command is a no-op on this tree and cannot grade exhaustiveness; the typecheck that covers src is -p tsconfig.app.json. The tsc gate for IB-pr-506 therefore needs the app project named explicitly."
+}
+```
+
+## IRPT_BCKEND-D2-W357-S3 -- closes IRPT_BCKEND-D2-W357-S1: AMENDMENT 1 grants the account_id member, and the regeneration now matches the grant
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W357-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~357",
+  "surfaced_at": "2026-10-13T06:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "CLOSES W357-S1. Re-seated under AMENDMENT 1 (218f56524d, granting multi_asset and the optional account_id node member), the regeneration at portal cf52fdbf changes HoldingsSnapshot.ts by exactly the granted pair plus the source sha256 header line. The other 28 generated files are content-identical to HEAD (stat-dirty only). The S1 refusal is closed by the amendment; this row records the closure, nothing else.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun run src/pages/InvestorReporting/__tests__/fe-s-13/gen-all.ts at portal cf52fdbf: rc=0, 'gen-wire: 25 of 25 documents, 19 of 24 routes responses; gen-consumed: 11 of 11 contracts'",
+      "git -C portal diff --stat after regeneration: one file changed (HoldingsSnapshot.ts), 7 insertions, 6 deletions; hunks = sha256 header line, five asset_class unions gaining 'multi_asset', one added 'readonly account_id?: string' at line 108 inside the nodes block beside model_code",
+      "git -C portal ls-files --eol for the wire folder: index is LF for all 28 files; the 27 non-regenerated files differ from HEAD by stat only (git diff --quiet exits 0 for the content)"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-506 AMENDMENT 1: the regeneration may differ from HEAD by exactly two things in the generated files: the multi_asset member of the asset_class union, and the optional account_id node member.",
+  "world_is": "The regeneration matches the amended grant exactly. No other generated file changed content."
+}
+```
+
+## IRPT_BCKEND-D2-W357-S4 -- BLOCKING: the granted regeneration reddens iv-e-148 six_class (d), a test that passes at the base, so the refusal clause fired and the portal change is NOT committed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W357-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~357",
+  "surfaced_at": "2026-10-13T06:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "bun test of iv-e-148.multi-asset-class-readers.test.ts after the granted regeneration: six_class (d) 'the wire type admits no retired token at any class enum' FAILS (expected 0 lines carrying 'multi_asset', received 5). Test (d) passes at the base, where the wire copy carries 0 multi_asset (portal HEAD blob count 0). IVE48-AC1 passes after the regeneration (its arm 1 reads the wire union equal to the contract enum). Per the refusal clause (a test other than IVE48-AC1 that passes at the base fails after the change) the order stops here: no further step, no portal commit, no criteria run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-148.multi-asset-class-readers.test.ts src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-48.new-classes.test.tsx at portal cf52fdbf plus the granted regeneration: '7 pass, 1 fail, 8 tests across 2 files'; the fail is 'six_class (d) ... Expected: 0 Received: 5' at iv-e-148.multi-asset-class-readers.test.ts:95",
+      "git -C portal show HEAD:src/pages/InvestorReporting/contracts/wire/HoldingsSnapshot.ts: multi_asset count 0 (positive control: the five 'readonly asset_class' enum lines are present at HEAD)",
+      "The test's own header (Andrew-direct 2026-10-07, quoted in the file): 'there should be no multi-asset class. There are 6 classes'; the file pins arms (b) Object.keys(ASSET_CLASS_COLOR) equal the six plus Other and Unclassified, (c) no seventh key in ASSET_CLASS, (d) no retired token in any wire class enum. The contract re-gained multi_asset through 506096fc9a (restore MDPF_SECCLASS~90), so the contract and this test now disagree",
+      "tsc at portal cf52fdbf after regeneration: rc=0, 0 'error TS' lines (baseline also 0); the typecheck does not see the test regression"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-506 BOUNDS refusal clause: STOP, file a row, change nothing more, if a portal test other than IVE48-AC1 that passes at the base fails after the change; and the order's AMENDMENT 1 grant of the wire regeneration.",
+  "world_is": "The grant is correct for the wire copy (it matches the contract) but the wire copy now contradicts iv-e-148 (d), a passing test whose assertion encodes the 2026-10-07 six-class ruling. Both cannot hold at once: either the wire copy follows the contract (IVE48-AC1 green, iv-e-148 (d) red) or it does not (the reverse). That ruling is the CTO's to make; the worker has not edited iv-e-148 and does not. The regenerated HoldingsSnapshot.ts remains UNCOMMITTED in the worktree; HEAD is unchanged."
+}
+```
+
+## IRPT_BCKEND-D2-W357-S5 -- BLOCKING: the premise that the holdings tab keys its class map on the wire union fails; multi_asset reaches the tab only through two files outside the grant
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W357-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~357",
+  "surfaced_at": "2026-10-13T06:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-506 step 2 names HoldingAssetClass and ASSET_CLASS_COLOR in tabs/holdings/assetClass.ts as the places keyed on the asset_class union. They are not: HoldingAssetClass is the display class, keyed on the SERVED union (HoldingsNode.assetClass, contracts/index.ts:819, camelCase, no multi_asset member), and the wire-to-served map ASSET_CLASS_FOR_WIRE (contracts/adapt.ts:1128, read at :1154 and :1244-1275) folds any token it does not carry to 'unclassified'. So multi_asset reaches the tab as Unclassified today. A distinct label needs an edit to contracts/index.ts and contracts/adapt.ts, both outside <paths>. Adding 'Multi-asset' to HoldingAssetClass inside the grant would still break iv-e-148 arm (b) and the 2026-10-07 six-class ruling. typecheck shows zero places keyed on the wire union (0 errors after regeneration), so the exhaustiveness the order asks for is not a compile fact here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tr -d CR on portal/src/pages/InvestorReporting/contracts/index.ts:819 at cf52fdbf: assetClass?: 'equity' | 'fixedIncome' | 'alternatives' | 'structured' | 'commodities' | 'cash' | 'unclassified' | 'other'",
+      "portal/src/pages/InvestorReporting/contracts/adapt.ts:1154 at cf52fdbf: out.assetClass = ASSET_CLASS_FOR_WIRE[node.asset_class] ?? 'unclassified'; ASSET_CLASS_FOR_WIRE (:1128) has no multi_asset key",
+      "tabs/holdings/assetClass.ts:30-44 at cf52fdbf: HoldingAssetClass and ASSET_CLASS_COLOR carry the six display classes plus Other and Unclassified; CLASS_FOR_SERVED (:66) is keyed on the served union",
+      "iv-e-148 (b) asserts Object.keys(ASSET_CLASS_COLOR) equals the six plus Other and Unclassified; the test's ASSET_CLASS registry arm (c) asserts no seventh key",
+      "tsc -p tsconfig.app.json after regeneration: 0 error TS lines (no exhaustive switch or Record fails on the new member)"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-506 step 2: everything keyed or exhaustive over the asset_class union must cover multi_asset, with a plain fallback label; BOUNDS: if making a type exhaustive needs a file outside the paths, STOP and name it.",
+  "world_is": "The wire union is the only place multi_asset is spelled as a key; the portal's served and display layers never see it as a key. Covering it end to end is a decision between the CTO's six-class ruling (iv-e-148) and the round-174 ruling that the wire union follows the contract, and it needs contracts/index.ts and contracts/adapt.ts in a grant. The worker has changed no tab file and no adapter file."
+}
+```
+
+## IRPT_BCKEND-D2-W357-S6 -- closes IRPT_BCKEND-D2-W357-S4 and IRPT_BCKEND-D2-W357-S5: superseded by the CTO's six-class ruling (AMENDMENT 2); INERT
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W357-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~357",
+  "surfaced_at": "2026-10-13T06:25Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Requests the CVO close S4 and S5. Both were refusals under the withdrawn direction (the wire union moved to the contract's enum, multi_asset included). AMENDMENT 2 (CTO RE 6818, round-174 analysis section 3 @cbcc4a88b8) keeps six classes: the generator subtracts the RETIRED set {multi_asset}, iv-e-148 is unchanged and passes, IVE48-AC1 names the retired set, and the adapter folds a served multi_asset to unclassified with one log line.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@63b31b0c __tests__/fe-s-13/gen-wire.ts: RETIRED_ENUM_MEMBERS = new Set(['multi_asset']) subtracted in the renderType enum branch; contracts/wire/HoldingsSnapshot.ts multi_asset count 0 (grep -c)",
+      "checks/r174/p174_cells.py IB174-2-AC1 at the worker run: 'OK: IVE48-AC1 and iv-e-148 pass; iv-e-148 is unchanged' rc=0; iv-e-148 sha256 (LF-normalised) equals the pinned a61839fa...",
+      "bun test of src/pages/InvestorReporting: 1219 pass, 2 fail (producer fixtures; F14-AC3), the two pre-existing tests; IVE48-AC1 and iv-e-148 green"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Worker request to the CVO: disposition S4 and S5 as superseded by the six-class ruling (Andrew-direct 2026-10-07; RE 6818). The adjudicates carrier is the CVO's field and is not used by the worker.",
+  "spec_asserts": "TO-IB-pr-506 AMENDMENT 2: file a short row closing S4 and S5 once the six-class direction is in force.",
+  "world_is": "The six-class direction is in force: the portal wire keeps six classes, the contract's retired member is subtracted by the generator, and iv-e-148 is untouched and green."
+}
+```
+
+## IRPT_BCKEND-D2-W357-S7 -- OBSERVATION: the regenerated HoldingsSnapshot.ts header carries a new source sha256 (provenance line only); INERT
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W357-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~357",
+  "surfaced_at": "2026-10-13T06:25Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "gen-all.ts regeneration changed HoldingsSnapshot.ts in two places: the granted optional account_id on the ACCOUNT node (AMENDMENT 1) and the header 'Source sha256' line (7c221b13... to c7890367...), which follows the current schema bytes. No other generated file changed (consumed.ts, index.ts, responses.ts and the other 24 documents are byte-identical in content).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@63b31b0c contracts/wire/HoldingsSnapshot.ts: git diff --ignore-cr-at-eol shows 3 changed lines: the Source sha256 header line and the added 'readonly account_id?: string' line, nothing else",
+      "gen-all.ts output 'gen-wire: 25 of 25 documents' followed by 'gen-consumed: 11 of 11 contracts'; git diff --stat over contracts/wire/ lists HoldingsSnapshot.ts only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 and AMENDMENT 2: the regeneration may differ from HEAD by the account_id member only, and any other difference is a row.",
+  "world_is": "The only content difference is the granted account_id member. The header sha is a provenance line that every regeneration of a changed schema rewrites; it is recorded here so the reviewer sees it rather than inferring it."
+}
+```
+
+## IRPT_BCKEND-D2-W357-S8 -- OBSERVATION: at the worker run two of the five base failures named in the order pass (IVE26-AC3, IVE98); the folder reads 2 fail, not 4
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W357-S8",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~357",
+  "surfaced_at": "2026-10-13T06:25Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's base reading (1212 pass, 5 fail: IVE26-AC3, IVE48-AC1, IVE98, producer fixtures, F14-AC3) and the four pre-existing names do not match the run after the change: bun test of src/pages/InvestorReporting reads 1219 pass, 27 skip, 2 fail over 1248 tests, and the two failing tests are producer fixtures and F14-AC3. IVE26-AC3 and IVE98 pass in this run. No file on their path changed except the wire copy, adapt.ts, gen-wire.ts and iv-e-48.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test src/pages/InvestorReporting at portal@63b31b0c (run 77.00s): 'Ran 1248 tests across 394 files', failing lines '✗ producer fixtures > every copied fixture carries the same CONSUMED CONTENT as its source' and '✗ F14-AC3 -- the refusals still refuse, and the edit is three lines'",
+      "p174_cells.py IB174-2-AC2 at the worker run: 'OK: the folder reads 1219 pass, 2 fail' rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-pr-506 AC2 preamble: the base reads 1212 pass, 5 fail, the four pre-existing failures are IVE26-AC3, IVE98, producer fixtures and F14-AC3.",
+  "world_is": "After the change the folder reads 2 fail: the producer fixtures and F14-AC3. IVE26-AC3 and IVE98 pass here, and the worker did not measure the base in this worktree, so the cause of the difference is not settled. The criterion (at least 1214 pass, at most 4 fail) is met."
+}
+```
+
+## IRPT_BCKEND-D2-S128 -- DISPOSITION after the round-174 drain
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S128",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T06:33:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISPOSITION after the round-174 drain: W357-S4 and S5 superseded by the CTO's six-class ruling (RE 6818); W356-S1 to S3 and W357-S6 to S8 are observations, ruled.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer re-run: IB174-1 AC1, AC2, AC3 PASS in the merged tree (merge 50fc1010d5); IB174-2 AC1, AC2, AC3 PASS in worker 357's worktree at portal 63b31b0c (merge 7c14d46b59 workspace side); the generated wire file differs from base by the header sha256 line and the optional account_id member only (read).",
+      "CTO RE 6818 and the round-174 analysis section 3 @cbcc4a88b8: the portal keeps six classes; iv-e-148 (quoting Andrew-direct 2026-10-07) stands as written and the check pins its sha256."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "CLOSED: W357-S4 (iv-e-148 six_class (d) failed after a regeneration to the contract's enum) and W357-S5 (the adapter folds multi_asset to unclassified): superseded, the wire generator now subtracts the retired set {multi_asset} and the adapter logs a served retired token; the worker's own row S6 asks the CVO to close them. RULED OBSERVATIONS: W356-S1 (validate_snapshot is called in run_firm, which main reaches; my wording), W356-S2 (land writes a local file before its validate hook when called directly with upload off; no production path does, and it is not an S3 write; the S3 path is validated at publication.py:232 and run_firm), W356-S3 (the combined pytest of test_runner_jsonschema_tolerance.py with the builder tests stops at collection: the file removes .tools from sys.path then imports safe_deploy_core; a pre-existing import-order defect in a test I do not own, no repair cut), W357-S7 (the regenerated wire header sha256 line moved with the contract), W357-S8 (IVE26-AC3 and IVE98 pass in the worker tree; the folder failures there are producer fixtures and F14-AC3). STILL ARMED: W345-S3, W348-S2, W346-S2, W346-S3, W350-S1 as in D2-S126 and S127; the portal candidates 346, 350, 353, 355 and 357 await the DEV review lane."
+}
+```
