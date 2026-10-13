@@ -32167,3 +32167,184 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "ANSWER, for the CTO: the coupling is to a vendor_id FIELD and to a per-key code-pinned policy digest, not to a YCharts id; so it is not a G2 (J3) defect, but two facts ride on it: (1) every new catalogue key needs a pin added to _COMPARISON_POLICY_SHA256 in maintained_sources.py (the digest includes vendor_id), (2) the YCharts generate path must refuse an OPAL-namespace entry and say so (not yet read: where recipe.py builds the vendor body from a comparison). Scope read from Model Portfolios (portal ModelPortfolios.tsx MODEL_ORDER and the Yang pipeline MODEL_CODES, per Y2's read): five models, UST ST INT LT ULT; four are in the catalogue with YCharts ids, only Ultra Short-Term is missing; Fixed Income and the two 50/50 blends are declared in the portal's colour map but are NOT in that served list, so this cell does not add them (recorded, not decided). I cut the cell now as a BUILD-ONLY order with the design above."
 }
 ```
+```json
+{
+  "id": "IRPT_BCKEND-D2-W366-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~366",
+  "surfaced_at": "2026-10-13T19:53:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Adding the opal_ultra_short_term pin breaks _scope/tests/test_maintained_sources.py test_a_catalogue_edit_alone_admits_no_other_firm, which asserts the pin set is exactly the four old keys; that file is outside this order's paths and was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/tests/test_maintained_sources.py:331-332 @77ca6943ff (the set literal names four keys)",
+      "worktree run of that file after the pin: 1 failed, 30 passed; AssertionError: Items in the first set but not the second: 'opal_ultra_short_term'"
+    ]
+  },
+  "spec_asserts": "Adding one key to _COMPARISON_POLICY_SHA256 leaves every test outside the two named files green; the order names a stop if one does not.",
+  "world_is": "A pinned-set assertion outside the named files asserts exactly four pin keys, so a fifth pin fails it. The order did not list that test."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W366-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~366",
+  "surfaced_at": "2026-10-13T19:53:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The reorder moved opal_ultra_short_term to position 0, so the test that edits entries[0] to exclude a firm would have left opal_long_term served; it now selects opal_long_term by key, and its len(keys) == 3 becomes 4, a third count the order did not name.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_comparison_catalogue.py:80 and :84 @77ca6943ff (entries[0] and len(keys) == 3)",
+      "worktree run of the two named files after the edit: 15 passed"
+    ]
+  },
+  "spec_asserts": "The order moves the two pinned counts in test_comparison_catalogue.py (4 to 5, 6 to 7) and leaves the rest of the file as it was.",
+  "world_is": "A positional fixture and a third count depended on the old first entry; both were changed in the named file so the test keeps its intent. The count change is the consequence of the same added entry."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W366-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~366",
+  "surfaced_at": "2026-10-13T19:53:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Four custody tests fail with and without this change: test_custody_entry.py (test_opal_selected_firm_reaches_custody_service_with_real_actor, test_warm_opal_does_not_elevate_partner) and test_custody_retained.py (the two descriptor and canonical-sdk parametrised cases); public_reason_code FIRM_BINDING, log INTERNAL-CALLER-CLASS class=row_absent.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_entry.py:81 @77ca6943ff (failing assertion on the analysis-requests reply)",
+      "both files run with the four changed source files restored to base 77ca6943ff: 4 failed, 38 passed, 2 skipped; the same four names fail",
+      "both custody tests send comparison_keys [] (test_custody_entry.py:26, test_custody_retained.py:138)"
+    ]
+  },
+  "spec_asserts": "The ycharts/generate test folder is green at its base commit apart from named blockers.",
+  "world_is": "Those four fail at base, and the catalogue is not on their path. Their cause was not traced beyond the refusal code."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W366-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~366",
+  "surfaced_at": "2026-10-13T19:53:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A fresh worktree at 77ca6943ff reports the portal submodule gitlink as modified (git diff --stat: portal | 2 +-) before this worker wrote anything; portal is not in this order's paths and was not committed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff --stat in C:/dev/wk-IRPT_BCKEND-366 after the four source edits: 5 files changed, the fifth is portal"
+    ]
+  },
+  "spec_asserts": "A fresh worktree carries no local modification to the portal gitlink.",
+  "world_is": "The portal gitlink differs from the commit it names. The commit must name its paths explicitly."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W366-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~366",
+  "surfaced_at": "2026-10-13T19:53:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "recipe.validate_envelope reads catalog[k]['security_id'], but the projection _admitted_comparison returns carries vendor_id and no security_id; where the live envelope gets security_id was not traced, so whether the mapped entries reach comparison_security_ids with an id is UNKNOWN from this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/maintained_sources.py:678-693 @77ca6943ff (projection keys: key, vendor_id, name, security_type, namespace, mapping_evidence)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py validate_envelope @77ca6943ff line 278 (ids = [catalog[k][security_id] ...])",
+      "non-test sweep of investor-reporting *.py for security_id: no assignment of it onto a comparison entry was found; not traced end to end"
+    ]
+  },
+  "spec_asserts": "The YCharts envelope path receives a catalogue entry that carries security_id for every mapped comparison; order step 3 assumes it.",
+  "world_is": "The admitted projection has no security_id key. The live source of that key is not established by this worker."
+}
+```
+```json
+{
+  "id": "IRPT_BCKEND-D2-W366-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~366",
+  "surfaced_at": "2026-10-13T19:57:26Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's row grammar IRPT_BCKEND-W366-S<k> is refused by the surprise-row gate on fabric dell2, which requires the coordinate IRPT_BCKEND-D2-W366-S<k> (the bare form is the laptop's); the five rows above were re-keyed to the gate's form before the commit attempt.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit surprise-row gate output for this commit: 5 violation(s), each fabric='dell2' but the id carries no coordinate; the gate names dell2 = id <CODE>-D2-S<n>, worker <CODE>-D2-W<n>-S<k>",
+      "the commit was aborted by the gate; nothing staged remained"
+    ]
+  },
+  "spec_asserts": "A worker row on fabric dell2 is minted IRPT_BCKEND-W<n>-S<k> as the order states.",
+  "world_is": "The gate requires the dell2 coordinate in the worker row id. The order's bare form is not accepted on this fabric."
+}
+```
+```json
+{
+  "id": "IRPT_BCKEND-D2-W366-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~366",
+  "surfaced_at": "2026-10-13T20:23:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The first commit of the build was refused by the lane gate: the _scope test file was not in the paths the gate read at HEAD, because the amended order (f127a6570b on box/dell2) had not yet reached this branch; the order was landed first (89be625971), then the build retried.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit owned-paths refusal for infra/aws/lambda/investor-reporting/_scope/tests/test_maintained_sources.py (lane IRPT_LIVE_SCOPE_P, agent not in permitted_agents; no NON-TERMINAL order at HEAD named the path) on the first commit attempt, HEAD a0c93a061b",
+      "order at HEAD before the land: a0c93a061b carried the pre-amendment paths block; box/dell2 carries f127a6570b (git log -1 --format=%h box/dell2 -- the order path)"
+    ]
+  },
+  "spec_asserts": "The order's <paths> block is the worker's write grant and the lane gate admits a worker to exactly the paths it names; a worker's commit is refused for a path the order at HEAD does not name.",
+  "world_is": "The amended order was on box/dell2 and not on this branch, so the gate read the superseded grant. Landing the order file at HEAD resolved the refusal without any change to the grant."
+}
+```
+```json
+{
+  "id": "IRPT_BCKEND-D2-W366-S8",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~366",
+  "surfaced_at": "2026-10-13T20:23:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The build step asks the worker to commit the issuer's check file deliverables/2.0.0_SA_COO~P2/checks/r183/p183_cells.py, which is outside the order's paths block; the lane gate refuses it (TREE_DELIVERABLES: the serial folder is the owner). The check was not committed; it stays as the issuer's file, read only, and the working copy holds the box/dell2 version.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit owned-paths refusal for org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r183/p183_cells.py (lane TREE_DELIVERABLES, owner = the serial in the path) on the first commit attempt",
+      "the order's <paths> block (amended) names no check path; the order's BOUNDS say do not edit the check"
+    ]
+  },
+  "spec_asserts": "Step F of the worker face lists the check file among the paths to commit.",
+  "world_is": "The check file is outside the grant and under the issuer's serial folder; a worker cannot commit it. It is unstaged and not in the build commit."
+}
+```
