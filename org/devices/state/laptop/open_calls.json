@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "laptop",
- "written_at": "2026-10-13T20:38:24Z",
+ "written_at": "2026-10-13T21:32:39Z",
  "written_by": "1.0.0_SA_CTO",
  "rows": [
   {
@@ -573,6 +573,175 @@
     "at": "2026-10-13T20:38:24Z",
     "by": "1.0.0_SA_CTO",
     "reason": "Andrew's own words conflict (~18:0xZ replacement vs ~14:4xZ decision 2a); his to resolve, REC (a)"
+   }
+  },
+  {
+   "id": "laptop-20261013T210914Z-e89f",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/laptop/declined-example",
+   "asked_by": "2.0.0_SA_COO~DV",
+   "source": "portal/CONTRIBUTING-BOXES.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-13T21:09:14Z",
+   "kind": "approval",
+   "approval": {
+    "box": "laptop",
+    "branch": "cand/laptop/declined-example",
+    "purpose": "Declined-arm example for the NFRA_DEVPLN approval route (FWD-2): one added line in CONTRIBUTING-BOXES.md that nobody wants. Please DECLINE it, so the declined answer is read back by the box that asked and the merge-forward and release builder are shown to refuse it.",
+    "pages": [
+     "portal/CONTRIBUTING-BOXES.md (docs only; no page a user opens)"
+    ],
+    "class": "opal-internal",
+    "how": "git -C portal diff origin/PROD origin/cand/laptop/declined-example (two added lines)",
+    "head_sha": "b5222d78784e779fe0411516b5073f697665bded",
+    "commits": 1
+   },
+   "scope": {
+    "measured_at": "2026-10-13T21:09:14Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      ".tools/tests/test_open_calls.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/tests/test_open_calls.py is on the shared branch (.tools)",
+      ".tools/portal-merge-forward.sh is on the shared branch (.tools)",
+      ".tools/open-calls.py is on the shared branch (.tools)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-13T21:31:44Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/DECLINE_20261013_213xZ_DEVPLN_CAND_LAPTOP_DECLINED_EXAMPLE.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "declined"
+   }
+  },
+  {
+   "id": "laptop-20261013T211859Z-e846",
+   "project": "NFRA_CTLPLN",
+   "subject": "Rotate the portal signing key after the S9112 log purge (sign everyone out), or accept the bounded token expiry (refresh tokens 2026-10-18, device-trust 2026-11-10)?",
+   "asked_by": "2.0.0_SA_COO~C",
+   "source": "org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-13T21:18:59Z",
+   "kind": "fork",
+   "context": "TO-CT-ab-10 purged 8513 pre-fix log streams (pre-cut credential census 0/0/0/0) and found a rotation path (OP-s-10 runbook). A rotation alone does not invalidate: the previous key slot must also be retired (runbook step 7), which signs every user out, clients included. Row NFRA_CTLPLN-S9122 (ARMED, owner COO~C). Record: org/tier2_senior/0.7.0_AE_CloudOps~U7/deliverables/NFRA_CTLPLN.TO-CT-ab-10.s9112-purge-record.txt",
+   "rec": "Accept the bounded expiry: the material is purged, the readers were account-internal principals, and a rotation signs clients out; cut the rotation order (own pair, off-hours) only if the CTO weighs the 28-day device-trust window higher.",
+   "scope": {
+    "measured_at": "2026-10-13T21:18:59Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-13T21:32:36Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261013_213xZ_LAPTOP_E846_7D95_BB8B.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
+  },
+  {
+   "id": "laptop-20261013T212920Z-7d95",
+   "project": "NFRA_DEVPLN",
+   "subject": "Who builds the dell2 Investor Reporting feature that FWD-1 names as its first case, now that IRPT work is parked?",
+   "asked_by": "2.0.0_SA_COO~DV",
+   "source": "org/tier1_exec/2.0.0_SA_COO~DV/deliverables/NFRA_DEVPLN_ROUND2_DRAIN_END_20261013.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-13T21:29:20Z",
+   "kind": "fork",
+   "context": "FWD-1's named first case is a dell2 Investor Reporting feature approved by Andrew. Round 2 proved the route on a laptop docs feature; no dell2 builder seat exists and none of the nine old branches qualifies. It gates the round-3 cell that runs a client-facing feature through the route.",
+   "rec": "Place it on the dell2 manager's next IRPT_ANLREQ change: have that seat cut its next page change as cand/dell2/<slug> from PROD and register it, instead of landing on DEV directly. Why: it is a real client-facing change already in flight, so FWD-1 and FWD-7 are exercised on organic work with no invented feature.",
+   "scope": {
+    "measured_at": "2026-10-13T21:29:20Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-13T21:32:38Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261013_213xZ_LAPTOP_E846_7D95_BB8B.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
+  },
+  {
+   "id": "laptop-20261013T212922Z-bb8b",
+   "project": "NFRA_DEVPLN",
+   "subject": "The 7 unapproved dell2 commits now on portal DEV: re-register them as features, or move the settlement line?",
+   "asked_by": "2.0.0_SA_COO~DV",
+   "source": "org/tier1_exec/2.0.0_SA_COO~DV/deliverables/NFRA_DEVPLN_ROUND2_DRAIN_END_20261013.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-13T21:29:22Z",
+   "kind": "fork",
+   "context": "Three IRPT_ANLREQ merges (62d455f5 through a577cba5) were landed on DEV after the settlement with no Approved-By trailer; portal-dev-approval-read.py lists them UNAPPROVED. The first chosen-set promote left them behind on purpose. It gates whether the next promote can ship them.",
+   "rec": "Re-register each of the three merges as a cand/dell2/<slug> approval row for Andrew to rule, and leave DEV as is (no rewrite). Why: DEV cannot be rewritten (no rebase on a shared branch), and the approval rule binds from the settlement forward, so the honest path is a row per feature, not a retroactive exception.",
+   "scope": {
+    "measured_at": "2026-10-13T21:29:22Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-13T21:32:39Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261013_213xZ_LAPTOP_E846_7D95_BB8B.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
    }
   }
  ]
