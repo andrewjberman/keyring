@@ -1509,6 +1509,47 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "test -e on C:\\Users\\Test\\.opal\\account_id_hashes.txt at 2026-10-13T14:25:02Z: ABSENT (rc=1); OPAL_ACCOUNT_ID_HASHES unset; the directory C:\\Users\\Test\\.opal exists"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W37-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~37",
+    "surfaced_at": "2026-10-13T15:29:12Z",
+    "one_line": "The CARD-A P1 slice prices CFNCASH, a cash identifier and not a CUSIP; the placeholder rule (FDIC plus digits) does not catch it, so it adds 3,326 needed cells to the P1 draw.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "spec_asserts": "data/mdpf/scripts/demque/card_a_slice.py@6293183101 lines 13-14 and 51: a name is unresolved only when it has no trade in the window or its CUSIP is a cash-sweep placeholder shaped FDIC plus digits; every other P1 name is priced over its window (worker face: 609 P1, 607 priced, the 2 FDIC placeholders unresolved).",
+    "world_is": "CFNCASH is ranked 571 of 1,319 at P1 and pursued in MDPF_SECHIST-CARD-A-COT-BBG-HISTORY.quote.json, so card_a_slice.build prices it over 2013-04-03..2026-06-23: 3,326 trading days, inside the 882,024 window cells. It is a cash line, not a Bloomberg-priceable security. Nothing was drawn; the next P1 draw would quote it.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "p1_coverage.py run 2026-10-13 at 6293183101 (rc 0): per_cusip row cusip CFNCASH, yahoo_class no_symbol, needed_days 3326, uncovered_days 3326; window_cells 882024 equals the card_a_slice merge figure",
+        "MDPF_SECHIST-CARD-A-COT-BBG-HISTORY.quote.json ranked: CFNCASH rank 571 priority P1 pursued true (python read, 2026-10-13)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W37-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~37",
+    "surfaced_at": "2026-10-13T15:29:12Z",
+    "one_line": "47 gold holdings daily files (2026-04-22..2026-06-05, source bd) carry no cusip column, so their Black Diamond rows cannot be priced per CUSIP and those days stay in the residual.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DQ-t-46 input list: Black Diamond units and value per CUSIP and held date from s3://opal-data-cot/gold/canonical/holdings/YYYY-MM-DD.parquet, exact price = market value over units per CUSIP and day.",
+    "world_is": "The daily files dated 2026-04-22 to 2026-06-07 (47 files, source bd) hold ten columns (date, one account column, asset_name, units, price, market_value, source, bd_units, schwab_units, ticker) and no cusip. The cusip column appears from 2026-06-08 (88 files, source bd_snapshot); all 120 trading days of 2026-04-22..2026-10-12 have a daily file. Only ticker and asset_name identify the early rows; a ticker-to-CUSIP map was not built because it would be an inference. The early days are uncovered in the residual.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "schema read of all 135 gold/canonical/holdings parquet files, 2026-10-13 (rc 0): 47 without cusip (source bd), 88 with cusip (source bd_snapshot), first cusip file 2026-06-08",
+        "trading_days_between 2026-04-22..2026-10-12 = 120 days, missing gold daily files on trading days = 0"
+      ]
+    }
   }
 ]
 ```
