@@ -30397,3 +30397,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-D2-S125 -- DISPOSITION of W347-S1, W347-S4, W344-S2, W348-S3 and S124; W345-S3 and W348-S2 stay ARMED
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S125",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T03:59:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISPOSITION by the issuer of rows W347-S1, W347-S4, W344-S2, W348-S3 and S124 after the round-171 drain of workers 347, 348 and 350; W345-S3 and W348-S2 stay ARMED, with the reason for each.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 8dc575a3b8 (worker 347): holdings_49f.py and holdings_inf.py remove the capture temp file they create (only when the vintage carries no env key); the issuer re-ran IB171-1-AC1, AC2 and AC3: PASS; test_holdings_49f.py: 22 passed.",
+      "commit 0f24e0ba1d (on 347, merged in 8dc575a3b8): raw_keys.json 49financial holdings_citation is prose naming the live mint at holdings_49f.py:363; the naming gate exempts prose, the field is a human citation and not a name or address, and holdings_source already uses the same form.",
+      "merge faf4f860bb (worker 348): the issuer re-ran IB171-3-AC1, AC2 and AC3: PASS. python -m pytest _contracts -rf from infra/aws/lambda/investor-reporting in the shared tree, which carries no candidate: 4 failed, 201 passed; the same four nodes the worker listed, so the red-list reading is a base state, not an effect of the schema member."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "DISARMED (code merged): W347-S1 (holdings_inf.py leak: fixed by 8dc575a3b8, two test arms); W344-S2 (holdings_source and holdings_citation now cite the live mint; no release carries raw_keys.json yet); W348-S3 (the 4 failed _contracts nodes exist at the base, the member names no red operation, nodes 3 and 4 are analysis-request operations unrelated to holdings). RULED, W347-S4: prose citation, as above. IB-pr-497 (S124): PARKED, reissued for a window when the runner is up; no start or stop of the host is granted. STILL ARMED: W345-S3, because the fix is in merged code only and the host bundle that runs the live builder is not redeployed, and the files already on the host are not counted (S124); W348-S2, because the built holdings schema copy also turns on include=target (two TARGET blocks) and drops multi_asset from three enums, so the apply is a served change that the CTO half must sign or refuse (asked of 1.0.0_SA_CTO in the round-171 packet); W346-S2, S3 and W350-S1 stay ARMED until the portal candidates land on DEV and the fe-s-18 committed bytes are ruled."
+}
+```
