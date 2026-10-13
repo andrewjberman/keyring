@@ -63,6 +63,25 @@ Build, in the gateway app at `infra/aws/ec2/opal-gateway/`:
      first FULL match) is the same object as before your change: record the expected endpoint/app by name in the test
      and assert none of these resolves to `dashboard_deep_link`.
 
+**AMENDMENT 1 (issuer, 2026-10-13 ~10:5xZ, at the drain read of `24608f8f8a`): the catch-all must not change the answer to
+ANY method on a path it does not serve.** Measured by the issuer on your branch's route table: `POST /mcp`, `DELETE /mcp`
+and `POST /no-such` now resolve PARTIAL to `dashboard_deep_link` (Starlette answers 405), where the live code answered
+`POST /mcp` with Starlette's 307 to `/mcp/` and `POST /no-such` with 404. Every MCP client is registered at
+`https://mcp.opalinvest.dev/mcp` (no trailing slash) and POSTs there, so shipping this would break the gateway for every
+client. Change, in `app/server.py` only:
+- The route accepts EVERY method: `Route("/{path:path}", dashboard_deep_link)` with no `methods=` (or the full method
+  list), still LAST.
+- In the handler, serve `index.html` (through `dashboard_root`) ONLY for `GET`/`HEAD` on a listed path other than `/`.
+  Every other request -- any other method, or an unlisted path -- takes the slash-replay you wrote, matched the way
+  Starlette's own `redirect_slashes` matches (a route counts if its match is NOT `Match.NONE`, i.e. FULL or PARTIAL),
+  answering 307 to the other slash form; otherwise the plain 404.
+- Two more tests in `tests/test_dashboard_deep_links.py`, by these exact names:
+  - `test_bare_mcp_post_still_redirects` -- resolve `POST /mcp` through the app's router (walk `app.routes` as in
+    `test_existing_routes_keep_their_endpoint`, then call the resolved endpoint, or call `dashboard_deep_link` with a
+    `POST /mcp` request): the answer is 307 with `location` ending `/mcp/`, never 405. Also `DELETE /mcp`: 307, never 405.
+  - `test_unknown_path_any_method_404` -- `POST /no-such-page` and `PUT /no-such-page` answer 404, never 405.
+- AC1 now names 7 tests (the check file is amended at the same commit).
+
 ## 2. BOUNDS
 
 1. Write surface: exactly the paths in section 3. Change nothing in `server.py` but the new handler, its route line, its
@@ -91,7 +110,7 @@ ARMED row is `2.0.0_SA_COO~MP`.
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="MP-z-3"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/fwd20/checks/z3.AC1.sh; echo "exit=$?"</invocation><expect>deep-link tests: 0 failed; named tests PASSED 5 of 5 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="MP-z-3"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/fwd20/checks/z3.AC1.sh; echo "exit=$?"</invocation><expect>deep-link tests: 0 failed; named tests PASSED 7 of 7 -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -111,10 +130,12 @@ one cell, an owner-gated route serving index.html for each path in the bundle's 
 f25b53c5): /control-plane, /open-calls, /gateway = 404. Check dry-run at base 8abe56f2cd: AC1 FAIL (test file absent).
 Under 100 product lines: worker-light. No gate. Lives through MP-z-5.
 
-<status>complete</status>
+<status>pending</status>
 <round>1</round>
 <workstream>GW</workstream>
 <slot>~15</slot>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
+<status>in_progress</status>
+<!-- REOPENED by the issuer 2026-10-13 ~10:5xZ: AMENDMENT 1 (the catch-all turned POST /mcp from 307 into 405); the same worker continues. -->
