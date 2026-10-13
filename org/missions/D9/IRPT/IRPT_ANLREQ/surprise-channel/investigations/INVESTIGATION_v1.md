@@ -7018,3 +7018,27 @@
   }
 }
 ```
+
+```json
+{
+ "id": "IRPT_ANLREQ-D2-S73",
+ "project": "IRPT_ANLREQ",
+ "fabric": "dell2",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-10-13T14:32:00Z",
+ "hazard_standing": "INERT",
+ "class": "OBSERVATION",
+ "one_line": "L9 AR211-y-AC3J FAILS clause 1: the r19.2 backstop still turns back one-account files whose abbreviated attribute header is not on its 17-word blocklist -- Acct Cost Basis and Acct Gain with 8-digit integers (the same class as the closed Acct Market Value case), and Acct Weight, Description, Currency and Custodian with letter-and-digit values.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "this seat's run of _several_accounts on r19.2 (template_reader.py at HEAD, READER_VERSION irpt-template-reader.r19.2), 2026-10-13T14:2xZ: Acct Cost Basis ['25000000','31000000'] -> ('C','VALUES',2); Acct Gain ['12000000','13000000'] -> ('C','VALUES',2); Acct Market Value, Acct CUSIP, Acct Lot -> []",
+   "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_ROUND_20_L9_GRADE_20261013.md"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AR211-y-AC3J: the repair cannot turn back a one-account file the CVO's cases or their obvious neighbours describe.",
+ "world_is": "A blocklist of attribute words cannot list every attribute a custodian export names, so obvious neighbours still enter the backstop. An allowlist (other words must be identifier tails), with alias added to the tails and primary to the modifiers, closes every attribute neighbour and keeps Acct Alias and Primary Acct.",
+ "notes": "Grade row for ADJUDICATION_v21. Built, not released: nothing live."
+}
+```

@@ -202,3 +202,10 @@ Quiet stretch 08:37Z to 13:04Z: watcher re-armed at each expiry; delivery ledger
 | item | result | commit |
 |---|---|---|
 | IRPT_DASHBD round 88 | ADJUDICATION_v52: D2-W132-S1 (checker defect, amended) dismissed; nothing graduates. Slug sent | 50d8780e32 |
+
+## Addendum, 2026-10-13 14:17Z to 14:35Z (msgs 6963, 6974)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_DASHBD round 89 | ADJUDICATION_v53 + REMEDIATION_v36: FWD-8 NOT REALIZED at segment grain; D2-W133-S1 (the 7 unexplained) to the CTO; 5 dismissed. Slug sent | 46e9beb3fd |
+| IRPT_ANLREQ round 20 (Y, YR) | My live reads: eight packagers at the signed values, 0 errors since 12:30Z; the holdings artifact key's three wrong versions, restore and release, no function ran a wrong one. L9: AR211-y-AC3J FAIL (probed: Acct Cost Basis/Gain), five AC2J PASS on a sample, AR212/213-y-AC1 re-grades accepted; 19 dismissed, 6 OPEN, 2 ARMED. Slug sent | af5f05fd94 |
