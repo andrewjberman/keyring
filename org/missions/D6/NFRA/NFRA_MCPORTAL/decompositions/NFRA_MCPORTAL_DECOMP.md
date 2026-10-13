@@ -1020,3 +1020,76 @@ issued STAGED (row Z-S19).
    MCP channels, tools and indexes. They stay on the CRO census until a later round adds them.
 3. **Ratings** stay "unrated" everywhere until FWD-19 lands C16's file.
 4. **The population row** stands for every tenant user who can sign in; the page cannot name them, and says so.
+
+# WORKSTREAM C17, ROUND 2 -- THE INTEGRATE POINTER (E1) AND THE MANIFEST HELPER (E2) (L5, v8)
+
+```json
+{
+ "project": "NFRA_MCPORTAL",
+ "decomp_version": "v8",
+ "step": 5,
+ "workstream": "C17",
+ "round": 2,
+ "input": "ledger/ROUND_ANALYSIS.c17-round1.md @53231d51ee (1.0.0_SA_CTO~Z), ENRICHMENT LIST E1 + E2; E1 consent by 4.0.0_SA_CRO~Z, five conditions, org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/CONSENT_NFRA_MCPORTAL_C17_E1_LAST_INTEGRATE_POINTER_20261013.md @b5ce7b2966 (msg 33630)",
+ "prd_ref": "org/missions/D6/NFRA/NFRA_MCPORTAL/prd/NFRA_MCPORTAL_PRD.md@cdb5ff66b1 (C17 unchanged; FWD-16)",
+ "author": "2.0.0_SA_COO~MP",
+ "cells": 4,
+ "chains": 3,
+ "join_cells": 1,
+ "frozen": true
+}
+```
+
+**The recut, from the analysis's enrichment list, one cell per item, with E1 split by write set.** E1 has two writers on
+two surfaces, the producer `.tools/fabric-gitstate.py` (`4.0.0_SA_CRO`'s, consent above) and the gateway reader
+`app/admin_fabric_gitstate.py`, so it is two parallel cells against one fixed object (C17R2.2), plus the release. E2 is
+one cell; the analysis allowed a LOCAL direct act, but the L6 gate floors an `infra/` path at WORLD, so it is cut as a
+build order. Every order carries `<workstream>C17</workstream>` beside `<round>2</round>`.
+
+## C17R2.1 THE CELLS -- 4
+
+| Cell | Serves | Builds / runs | Assignee | Write surface | Risk |
+|---|---|---|---|---|---|
+| `MP-n-2` | E1, gateway side (C17, FWD-16) | `_refused` reads ONE object per box, `.../gitstate/box=<B>/last_integrate.json`; the window scan in `_refused` is REMOVED; `first_seen` keeps its early stop; tests | worker `~17` | `app/admin_fabric_gitstate.py`, `tests/test_admin_fabric_gitstate.py` | WORLD (live only through MP-n-4) |
+| `MP-n-3` | E1, producer side | `.tools/fabric-gitstate.py` writes the pointer on an `integrate` pass only, under the CRO's five conditions; tests | worker `~18` | `.tools/fabric-gitstate.py`, `.tools/tests/test_fabric_gitstate_pointer.py` (new) | WORLD (it reaches every box through box-sync) |
+| `MP-n-4` | E1 live (C17 criterion 3) | the gateway release on the LIVE ref, carrying MP-n-2's two files only; never-widen pair; NEVER-2; manifest; on-host cold read at or under 5 s | `0.7.0_AE_CloudOps~MQ` | `infra/aws/ec2/EC2_MANIFEST.json`, ledger paths | WORLD |
+| `MP-n-5` | E2 | the `safe-ec2-deploy.sh` manifest helper copies the old `deployed_commit` into `previous_deployed_commit` when the commit changes; an equal commit moves nothing; two test arms | worker `~19` | `infra/aws/ec2/safe-ec2-deploy.sh`, `.tools/tests/test_safe_ec2_deploy_manifest.py` | WORLD (the L6 gate's floor for an `infra/` path; the analysis said LOCAL and DIRECT ACT) |
+
+## C17R2.2 THE OBJECT (fixed here so MP-n-2 and MP-n-3 run in parallel)
+
+`s3://opal-313476888478-globgrph/fabric/activity/v1/gitstate/box=<B>/last_integrate.json`, written by the producer's
+existing `put()` client and `PREFIX`, body ASCII JSON with exactly these keys:
+`{"at": "<the pass record's own 'at', YYYY-MM-DDTHH:MM:SSZ>", "rc": <int, box-sync's --rc>, "note": "<the pass note, at most 200 chars>"}`.
+- **Reader:** absent (NoSuchKey/404) -> `integration_refused` "not recorded", basis "no integrate pass recorded since the
+  pointer began 2026-10-13"; `rc != 0` -> `{at, note}`; `rc == 0` -> "not recorded" (the newest integrate passed). Any
+  other read failure is the existing 503 arm.
+- **Writer:** the CRO's conditions, verbatim in the consent record: (1) integrate passes only; (2) same `PREFIX` and
+  `box=<B>`; (3) `rc` is the pass's rc and `at` the pass record's `now`; (4) a failed pointer put is reported on the LAST
+  line as `pointer=no:<ExceptionName>` beside `put=`, the two existing keys are still attempted, and nothing else fails;
+  (5) a later GitOps home folds the pointer in (not this round).
+
+## C17R2.3 DEPENDENCY EDGES AND CHAINS
+
+```
+chain G   MP-n-2 --> MP-n-4        the release ships the reader
+chain W   MP-n-3                   the producer reaches each box by git; no deploy act
+chain H   MP-n-5                   closes at its own drain
+```
+
+**Fan-out:** `N = 3 of M = 3 chains, cap 8`: workers `~17` (MP-n-2), `~18` (MP-n-3), `~19` (MP-n-5). MP-n-4 is issued
+STAGED to the applier seat.
+
+## C17R2.4 GATES
+
+- **MP-n-2, MP-n-3, MP-n-5:** none.
+- **G-REL4 (MP-n-4):** MP-n-2 drained; the gateway queue free. That means after NFRA_MCPORTAL's own MP-z-5 release (GW)
+  and any NFRA_OPLGTW release `2.0.0_SA_COO~O` holds. The never-widen pair is signed against the release ASK. Holder:
+  the issuer.
+
+## C17R2.5 WHAT THIS CUT DOES NOT CLAIM
+
+1. Until a box runs an `integrate` pass under the new producer, the gateway reads that box "not recorded". The window
+   scan that read older refusals is removed by design, and the basis line says so.
+2. The 5 s bar is measured once, on the served release (MP-n-4). `first_seen` still walks the window and is not bounded
+   further here.
+3. Condition (5), the GitOps fold, is not cut; it rides `4.0.0_SA_CRO~A`'s home if that lands.
