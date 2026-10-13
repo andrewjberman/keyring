@@ -9180,6 +9180,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "notes": "INERT: the flag is OFF by default and nothing registers it until HVST-bz-10, which this seat will not send until it is narrowed. The remedy is one small LOCAL cell, HVST-bz-9b, cut as a repair to bz-9's own scope: refresh_wanted() admits only {wsj, barrons}; every other publisher's refusal is recorded (REFUSAL line, class) and never refreshed. It narrows ruling (A) from 'a publisher' to the two the ruling closes on; the CTO is told in the bz-10 pair request. The miss was mine: the bz-9 order wrote 'any publisher whose class is expired' and my COO half read the diff for what it recorded, not for which credentials the refresh seam could reach.",
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-D1-W140-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~140",
+      "surfaced_at": "2026-10-13T22:37:38Z",
+      "one_line": "HVST-bz-12 moved the shared drive_once() test-helper default publisher from sa to wsj, so the non-refresh arms test_f and test_h also run as wsj; their assertions are otherwise unchanged and pass.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bz-12 face section 1 step 2: change only the publisher name in the arms that exercise a refresh with publisher sa (about lines 186-310); keep every arm and every assertion otherwise as it is.",
+      "world_is": "Worktree C:/dev/wk-harvst-140 (wk-AMGT_HARVST-140-r85, cut from d1439782c7), uncommitted. drive_once() default publishers changed from (sa,) to (wsj,) at test_bz9_refresh_once.py line 193. That default also reaches test_f (lines 287-289) and test_h (lines 313-323), which never refresh, so their publisher name moved too. The refresh arms d, e, g carry the rename at lines 214-303. The renamed range runs to line 323, not 310. AC2 after the edit: 100 passed; full lib/opal_data_harvest suite: 4 failed (the known four), 826 passed.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/test_bz9_refresh_once.py@d1439782c7 line 193 drive_once default publishers=(\"sa\",) and lines 287-323 (test_f, test_h) before the edit",
+          "git diff -U0 -- lib/opal_data_harvest/test_bz9_refresh_once.py in worktree C:/dev/wk-harvst-140 (hunks at 193, 287, 289, 313, 315-321, 323)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
