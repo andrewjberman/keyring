@@ -30690,3 +30690,57 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "STILL ARMED: W346-S2 (fe-s-15 generator), W346-S3 and W350-S1 (fe-s-18 generator): the repairs exist only on the portal branches wk-IRPT_BCKEND-350-portal @69f69895 and wk-IRPT_BCKEND-353-portal @e1cd356e2f, so the generator at portal DEV still dirties a committed fixture on every run; they disarm when those candidates land on DEV (the CTO review lane). RULED OBSERVATIONS: W352-S1 (a no-op one-argument report validator in the ycharts generate composition; the function is deployed unwired to live; a later repair cell, owner me) and W352-S2 (the ycharts packaged schema copy is not the bytes at the commit its source-map note names; the next re-pin cell reads which bytes it takes); W353-S1 (the order's status wording was wrong at key level; ruled, my wording), S2 (the base generator would have rewritten five statuses with internal_correlation_id: repaired), S3 (the two directory answers name different firm ids, each as committed), S4 (no test names the prehistory output; the smoke-classification test reads it), S5 (the committed frozen export envelope lacks facts.covered_account_ids that the portal ExportReceipt type declares required: a portal-owned inconsistency, asked of the CTO in the round-172 slug)."
 }
 ```
+
+## IRPT_BCKEND-D2-W355-S1 -- the fe-s-18 generator rewrites four committed fixtures outside the IB-pr-504 grant once the frozen envelope gains the member
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W355-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~355",
+  "surfaced_at": "2026-10-13T05:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "IB-pr-504: keeping facts.covered_account_ids in exportEnvelope() makes the fe-s-18 generator rewrite FOUR committed fixtures, not only fixtures/smoke/fe-s-18-frozen.json: fixtures/smoke/fe-s-18-holdings-observed.json, fe-s-18-holdings-target.json, fe-s-18-holdings-missing-attribution.json and __tests__/fe-s-32/holdings-no-answer.json each gain the same five-line covered_account_ids hunk, because holdingsMap() and the no-answer map clone the frozen export key. The order grants only frozen.json, but its criterion IB173-2-AC1 requires the smoke, fe-s-16 and fe-s-32 folders to reproduce byte-equal, so AC1 cannot PASS under the grant. The four files were NOT committed and were restored to their committed bytes (CRLF kept) after each run. Until they are committed, the generator at portal DEV dirties four committed fixtures on every run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@cdffa5dd41 src/pages/InvestorReporting/__tests__/fe-s-18/gen-fixtures.ts: holdingsMap() clones every frozen key (lines 502-512) and the no-answer map clones the observed map (lines 546-548) (native Read)",
+      "portal worktree after bun run gen-fixtures.ts at portal@cdffa5dd41: git status lists M for __tests__/fe-s-32/holdings-no-answer.json and fixtures/smoke/fe-s-18-holdings-{missing-attribution,observed,target}.json; each diff is the same covered_account_ids hunk at line 437 (git diff --ignore-cr-at-eol --stat)",
+      "checks/r173/p173_cells.py IB173-2-AC1 run from the workspace root: FAIL: the fe-s-18 generator drifts from the committed bytes (holdings-no-answer.json, fe-s-18-holdings-missing-attribution.json, ...); rc 1",
+      "TO-IB-pr-504 <paths> names only __tests__/fe-s-18/gen-fixtures.ts and fixtures/smoke/fe-s-18-frozen.json at workspace HEAD 54e10ac801"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-504 grants two portal paths (the generator and the frozen map) and states the only expected output change is the one added list in the frozen map; IB173-2-AC1 requires the smoke, fe-s-16 and fe-s-32 fixture folders to be byte-equal after a generator run.",
+  "world_is": "The generator writes the same one added list into four further committed fixtures (three holdings maps and the fe-s-32 no-answer map), so a generator run changes four files outside the grant and AC1 FAILs. Those four are not committed by this order. The frozen map alone is committed at portal cdffa5dd41; the committed holdings and no-answer maps still lack the member while the frozen export carries it. Disarm: the issuer grants those four paths in a follow-on order, or the CTO rules that the committed holdings maps stay as they are and the generator stops writing them."
+}
+```
+
+## IRPT_BCKEND-D2-W355-S2 -- the full InvestorReporting portal run reads 1212 pass, 27 skip, 5 fail against the order's base of 1213, 27, 4
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W355-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~355",
+  "surfaced_at": "2026-10-13T05:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "bun test src/pages/InvestorReporting at portal cdffa5dd41 reads 1212 pass, 27 skip, 5 fail (1244 tests across 393 files), against the order's base of 1213 pass, 27 skip, 4 fail. The five failing tests are IVE26-AC3 (dsgn-irptv1/iv-e-26.wire-regen.test.ts), IVE48-AC1 (dsgn-irptv1/iv-e-48.new-classes.test.tsx), IVE98 (dsgn-irptv1/iv-e-98.generators-drift.test.ts), producer fixtures (fe-s-13/producer-fixtures.test.ts, HoldingsSnapshot.nodes copy drift) and F14-AC3 (fe-s-14/allowlist.test.ts, firmAccess.ts numstat 35 added). None of the five reads fe-s-18-frozen.json or the export key. The same five files fail with the base frozen bytes put back (e1cd356e2f), so the frozen change flips none of them; the full base run was not repeated, so which test is the fifth against base is not established.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test src/pages/InvestorReporting from portal worktree at cdffa5dd41: 1212 pass, 27 skip, 5 fail, Ran 1244 tests across 393 files (log .scratch/bun_test_ir.log in the worker worktree)",
+      "bun test of the five files with fe-s-18-frozen.json at e1cd356e2f bytes (CRLF restored, then HEAD bytes restored): 9 pass, 5 fail; the same five names fail (log .scratch/five_at_base.log)",
+      "grep (native Grep) of dsgn-irptv1, fe-s-13 and fe-s-14 for fe-s-18, frozen, smoke/fe-s-18: no match in iv-e-26, iv-e-48, iv-e-98, fe-s-13/producer-fixtures, fe-s-14/allowlist"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-504 states the base as 1213 pass, 27 skip, 4 fail, the four pre-existing.",
+  "world_is": "At the cell's commit the folder reads 1212 pass, 27 skip, 5 fail. The five named failures are present with the base frozen bytes, so none is attributable to the frozen export change. The base count of four was not reproduced and the difference of one pass is not attributed to a test; a full base run would settle it and was not made."
+}
+```
