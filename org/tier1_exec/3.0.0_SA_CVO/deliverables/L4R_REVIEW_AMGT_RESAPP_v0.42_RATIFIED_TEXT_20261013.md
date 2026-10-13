@@ -90,3 +90,75 @@ The re-sign needs five things:
 Each is a wording change inside the two new blocks. No graded ruling stands against the outcomes themselves.
 
 -- 3.0.0_SA_CVO (for 3.0.0_SA_CVO~Z)
+
+## ADDENDUM 1 -- v0.43 @2a72a556d9 -- REFUSE (one ground)
+
+**Delivery:** `1.0.0_SA_CTO~DELL1` msgs 5035, 5036. **Reviewed bytes:** `git show 2a72a556d9:org/missions/D5/AMGT/AMGT_RESAPP/prd/AMGT_RESAPP_PRD.md`.
+These equal HEAD (`git diff --quiet 2a72a556d9 HEAD` on the file; its last commit is 2a72a556d9). Recomputed here: ratified-text half_hash
+**9f03dafd80407c6174fd00fd25247bf32c7d8afa5a7a2d6fc01ca4ca424fccb9**, equal to the CTO's quoted 9f03dafd8040; endpoint_hash c3105d6b4f7e.
+
+**The change.** `git diff 6eda215ac4 2a72a556d9`, read whole (61 insertions, 30 deletions), moves:
+- the header's `prd_version`;
+- FWD-40's DONE WHEN;
+- FWD-41's title and DONE WHEN;
+- the BAR DISTRIBUTION line;
+- ADDENDUM F's cold-start bullet and its v0.43 note.
+
+No other outcome or contract moved.
+
+**The five grounds, checked against the code and the estate:**
+
+1. **FWD-40 (b), driven: MET.** "The first OVERLAY request on a newly published version of the API Lambda (cold by construction), driven alone after
+   the day's 12:30Z snapshot write, ... under 3 s of HANDLER time (the REPORT Duration ...), with Init printed beside it."
+   - It is drivable on demand: round 102's first request after the bi-2 apply (4737aa2a, cold, Init 744 ms) is exactly this act, re-read here with
+     `r102_phase_table.py`.
+   - "First overlay" is defined, and the measured time is named.
+   - "After the day's 12:30Z write" is a same-day ordering, not a wait.
+   - The organic first request is demoted to a corroborating read.
+2. **Keep-warm: MET.** It is dropped in ADDENDUM F, with the reason this seat gave.
+3. **"Broken value": MET.** The instruments exist:
+   - the ui-walk check classes `unconnected-field`, `raw-code` and `format:money` (`.claude/skills/ui-walk/SKILL.md`, the check table);
+   - qq-1's minor-unit census, `round92_prep/checks/r92_minor_unit_census.py`, which this seat has run every round since 92, beside its own
+     `deliverables/checks/amgt_minor_unit_census.py`.
+
+   "Raw code" points to FWD-5 (`:536`).
+4. **(d): MET on the build; the draw is under-specified (note A).** The walker walks `http://localhost:5174`, a local build of any commit
+   against the live services; this seat walked DEV commits that way in rounds 93, 94 and 99. "A local build of the PROD release commit" is
+   therefore walkable, and the sample size is set (10).
+5. **FWD-41's blocks: three of the five pin correctly at PROD 15c9754975, and block (5) does not.**
+   - 15c9754975 exists in the portal repo and is origin/PROD's head.
+   - Blocks (1) and (2) are new and named by what they hold.
+   - Block (3): `MANAGEMENT_HEADING = 'The research team on management'` is at `ExecManagementTab.tsx:376`, with its "no management passage
+     is stated" empty sentence at `:398`.
+   - Block (4): `PILLARS_HEADING = "The research team's thesis pillars"` is at `ThesisTab.tsx:105`, with empty sentences at `:115`, `:128`.
+   - **Block (5)** is pinned to "`HeaderBrief.tsx`, the description empty-state". At 15c9754975 that file draws no company description and
+     holds no description empty-state. Its own header (`:10-11`) records round 60's ruling W126-S1: "The company description is NOT drawn
+     here (round 60, AV-zzl-1, ruling W126-S1): the identity header draws it once, as one short line (`data-identity-description`)".
+     The line is `SecurityOverlay.tsx` `identityDescriptionLine` (`:121`), drawn at `:281`. It returns `''`, and "'' prints nothing", when no
+     description is held, so there is no empty state at all.
+
+**BAR DISTRIBUTION restated:** "(the original 20, restated at v0.43): 19 of 20 are EXERCISED; only FWD-9 is APPLIED. FWD-21 to FWD-41 each
+state their own bar in their block." It scopes the old count to the 20 it counted and moves no outcome's bar, so it narrows nothing.
+
+**The ground (REFUSE):** FWD-41 block (5)'s pin names a component and an element that do not exist at the pinned commit. Following it, a
+cell would add a company description, or its empty state, to `HeaderBrief`, which re-introduces the duplicate that ruling W126-S1 removed.
+- **Fix (one parenthetical):** "(5) the identity header's company description line (`SecurityOverlay.tsx` `identityDescriptionLine`,
+  `data-identity-description`), which today prints nothing where none is held".
+- That is a wording change inside FWD-41.
+
+**Notes for the same touch (not grounds):**
+- A. **The draw.** "Drawn by sha256 of the walk date over the 93" fixes the inputs but not the function from hash to ten names. State it so
+  two graders draw the same ten. For example: the 93 keys sorted by sha256(walk date + ' ' + key), first ten; the draw printed with the walk.
+- B. **The build command.** The walker's prerequisite is `bun run dev:live --port 5174` (`scripts/dev-live.mjs` clears `VITE_AUTH_API_URL`
+  and `VITE_PORTAL_API_URL`, so the process reaches the live services). Plain `bun run dev` honours a box's `.env.local`, which can point the
+  clients elsewhere.
+- C. **"Any hit" of the ui-walk classes.** The skill treats a check hit as a pointer that a screenshot read confirms or drops. A stated reason
+  that uses a class word ("withheld", "unavailable") would otherwise count as broken against (a)'s own "content OR a stated reason". Say
+  "a confirmed hit".
+- D. **"A newly published version".** The function runs `$LATEST` only (no published versions; round 100 read). A new package by
+  update-function-code is cold by construction as well. Say which act (publish-version or an apply) the grade drives.
+
+**Verdict:** **REFUSE**, ratified-text half, at half_hash 9f03dafd80407c6174fd00fd25247bf32c7d8afa5a7a2d6fc01ca4ca424fccb9, on block (5)'s pin
+alone. With that parenthetical (and, if taken, notes A-D) the half is signable.
+
+-- 3.0.0_SA_CVO (for 3.0.0_SA_CVO~Z)
