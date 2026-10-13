@@ -51,6 +51,8 @@ You are `0.9.0_WK_IRPT_ANLREQ~102`.
 
 <expected_criteria>AR281-y-AC1 AR281-y-AC2J</expected_criteria>
 
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-13 ~20:5xZ, after the first worker's stop, rows `IRPT_ANLREQ-D2-W102-S1` and `-S2`; the worker's stop was right).** (S1, the size) MEASURED by this seat with one single-resource read, `describe-table opal-tickets`: `ItemCount 29`, `TableSizeBytes 37652`, status ACTIVE, one index (`status-index`), created 2026-07-14 (DynamoDB refreshes the count about every six hours, so it is approximate; the order of magnitude is the point). At that size the FILTER-ON-SCAN version is LICENSED: no Terraform and no new index in this cell. Its rule: a client-human's LIST reads the table with a FULL PAGINATED scan (follow `LastEvaluatedKey` until it is absent; NEVER `Limit` the scan and then filter: the internal path does that at `lambda_function.py` :1218-1228, row `W102-S3`, which cuts the page before the firm filter and is not to be copied), filters to `ticket_type == analysis_request` AND `requester.firm ==` the caller's firm, and carries a HARD BOUND of 20 scan pages: if the bound is reached before the scan ends, the answer is a 503-class refusal with the words `list incomplete` (never a partial list that reads as complete); record the bound and the 29-item measurement in the record and in a code comment. A firm-keyed index is the right shape if the table grows past a few thousand items: say so in `release_needs`. (S2, the grant) `<paths>` now also names the three tests that pin a client LIST as 403: `tests/test_fence_other_firm.py`, `tests/test_no_row_refuses.py`, `tests/test_status_active.py`. Edit each ONLY where it asserts that a client-human's LIST is refused; keep every other assertion; list each edit in the record with before and after text; a pin on another principal or action is never edited. The refusals those tests pin for an unresolvable or no-row principal stay refusals (the new LIST admits only a resolvable client-human with a firm). Gate limb that graded this amendment: none stated (the issuer amends its own pending order's text and grant).
+
 ## BOUNDS
 
 - **Grant:** exactly the `<paths>` below, plus `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~102/` and this order's file (status flip only). If a test OUTSIDE the grant fails because of your change, STOP: file a BLOCKING row naming it; the issuer amends the grant.
@@ -60,6 +62,9 @@ You are `0.9.0_WK_IRPT_ANLREQ~102`.
 infra/aws/lambda/ticket_center/lambda_function.py
 infra/aws/lambda/ticket_center/tests/test_authz_matrix.py
 infra/aws/lambda/ticket_center/tests/test_list_scoped_firm.py
+infra/aws/lambda/ticket_center/tests/test_fence_other_firm.py
+infra/aws/lambda/ticket_center/tests/test_no_row_refuses.py
+infra/aws/lambda/ticket_center/tests/test_status_active.py
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 

@@ -130,7 +130,7 @@ declared_devices() {
 # MagicDNS name), as SQS message attributes AND in the body envelope beside the serial. The names are read
 # from the device register through lib/devices.py (OPAL_DEVICE_REGISTER honoured) and never typed here.
 #   _tailnet of <label>   -> the tailnet name of the box a name or alias resolves to (rc 2 unknown/none)
-#   _tailnet all          -> every tailnet name the register holds, one per line
+#   _tailnet all          -> every tailnet name the register holds (boxes, then sender-only `senders`), one per line
 # Fail-closed like _devices: no python or an unreadable register is rc 3, never a built-in list.
 _tailnet() {
     local _root _p
@@ -148,7 +148,7 @@ except devices.RegisterError as exc:
     print(str(exc), file=sys.stderr)
     sys.exit(3)
 if mode == "all":
-    print("\n".join(d["tailnet_name"] for d in devices.devices(reg) if d.get("tailnet_name")))
+    print("\n".join(devices.held_tailnet_names(reg)))
     sys.exit(0)
 canon = devices.resolve(sys.argv[3], reg)
 for d in devices.devices(reg):
