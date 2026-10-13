@@ -30899,3 +30899,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISARMED: W354-S2 (the serve path validates nothing and would serve schema-invalid bytes; the 49F builder's account_id is schema-VALID under the repo v1 schema, which admits the optional member since PRD v0.52, so the account_id line serves no invalid bytes; the missing serve-time check is a pre-existing property of the function, not a hazard this line creates). CLOSED: W355-S1 (the grant omitted four fixtures the generator also writes: my defect; amended and delivered). OBSERVATIONS: W354-S1 (the packaged project() has no include argument, consistent with the live function not serving TARGET); W355-S2 (the full portal folder reads 1212 pass, 27 skip, 5 fail against 1213/27/4): the fifth failure is IVE48-AC1, which compares the wire fixtures' asset_class union to the contract enum read from docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json; that enum regained multi_asset when dell1's TO-SC-e100 (7d49d6cc6d) reached this branch at ~05:1Z, and the portal wire fixtures carry no multi_asset. Not caused by IB-pr-504 (the test fails alone at the worker's portal HEAD). The fix is a portal-owned decision (the wire union and its type move together, or the test names the producer's six): asked of the CTO in the round-173 slug. STILL ARMED: W345-S3, W348-S2, W346-S2, W346-S3, W350-S1 as in D2-S126; the portal candidates 346, 350, 353 and 355 await the DEV review lane."
 }
 ```
+
+## IRPT_BCKEND-D2-W356-S1 -- the order places the validate_snapshot call in main; it sits in run_firm, which main calls
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W356-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~356",
+  "surfaced_at": "2026-10-13T05:56:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-IB-pr-505 step 1 and its cell text place the validate_snapshot call in the build main path (about :3133). At the base the call is in run_firm (holdings_snapshot.py:3133), which main reaches at :3224; main itself does not call validate_snapshot. The validation guarantee holds on the main path; the location differs from the order's wording.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py:3133 'valid, errors = validate_snapshot(snapshot)' (inside def run_firm, which begins at :3109)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py:3203 'def main(argv=None) -> int:' and :3224 'r = run_firm(firm_id, s3, qa=args.qa, upload=args.upload,' (main names no validate_snapshot call)",
+      "run at the worktree base 6e3cbe050a: test_build_refuses_planted_member.py drives main -> run_firm and refuses at :3159 with the planted member named"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-505 cell text and step 1: validate_snapshot is called 'in the build main path (about :3133)' and the read must cover 'the validate_snapshot call in main'.",
+  "world_is": "validate_snapshot is called in run_firm at holdings_snapshot.py:3133, not in main. main reaches it by calling run_firm per firm. The guarantee the order asks for (a snapshot is validated before any put) holds on the main path; only the function name in the wording differs."
+}
+```
+
+## IRPT_BCKEND-D2-W356-S2 -- land writes local_out files before its validate hook, and validates nothing when upload is false
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W356-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~356",
+  "surfaced_at": "2026-10-13T05:56:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "land (holdings_snapshot.py:2851) writes its local_out files at :2871-2875 before its validate= hook at :2881, and runs no validation at all when upload is false. Its only production caller, run_firm at :3181, is reached only after run_firm validates at :3133, so no live path reaches the local write unvalidated. A direct caller of land with local_out set and upload false would write an unvalidated local file. Not an S3 write.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py:2871-2875 'if local_out:' then 'target.write_bytes(content)' (no validation before the write)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py:2877-2882 'if upload:' ... 'validate=lambda doc: validate_snapshot(payload)[0]' (validation only in the upload branch)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py:3181 'land(bucket, prefix, publication_date, snapshot, upload, local_out,' is the only production call of land (grep of data/assets/scripts at base 6e3cbe050a)"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-505 step 3: a write path that reaches a write without validate_snapshot is a stop-and-file condition; the order's refusal clause names S3 writes.",
+  "world_is": "The S3 write path is validated: publish validates at infra/aws/lambda/investor-reporting/holdings/publication.py:232 before its first put at :267, and run_firm validates before land. The unvalidated write is local disk, reachable only by a direct call of land that the production code does not make. Recorded as an observation; no product edit made."
+}
+```
+
+## IRPT_BCKEND-D2-W356-S3 -- test_runner_jsonschema_tolerance.py fails at collection in a run that has not imported safe_deploy_core first
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W356-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~356",
+  "surfaced_at": "2026-10-13T05:58:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's named run (pytest of test_holdings_49f.py, test_holdings_inf.py and test_runner_jsonschema_tolerance.py) stops at collection: test_runner_jsonschema_tolerance.py line 43-44 removes .tools from sys.path, and line 46 then imports safe_deploy_core, which lives only in .tools. rc=2, ModuleNotFoundError. The two builder files pass alone (36 passed, rc=0). No criterion grades this file; the cause is the file's import order, not this order's change.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/tests/test_runner_jsonschema_tolerance.py:43-44 'while str(_REPO / \".tools\") in sys.path:' / 'sys.path.remove(str(_REPO / \".tools\"))' then :46 'import safe_deploy_core as sdc  # noqa: E402'",
+      "Glob of the worktree finds safe_deploy_core.py only at .tools/safe_deploy_core.py",
+      "run at base 6e3cbe050a: python -m pytest <49f> <inf> <tolerance> -q rc=2 'ModuleNotFoundError: No module named safe_deploy_core'; the same two files without the tolerance file: 36 passed rc=0"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-505 step: run python -m pytest on test_holdings_49f.py, test_holdings_inf.py and test_runner_jsonschema_tolerance.py ONCE and report.",
+  "world_is": "Run in that combination, pytest aborts the session at collection (rc=2) before any test runs, so the 49F and INF results are not reported by the combined run. Whether a larger folder run masks this by importing safe_deploy_core earlier was not measured (the order forbids the whole-folder run). No test was edited."
+}
+```
