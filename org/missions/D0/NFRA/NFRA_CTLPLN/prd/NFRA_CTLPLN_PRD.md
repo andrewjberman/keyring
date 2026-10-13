@@ -5,7 +5,7 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.28",
+ "prd_version": "v0.29",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26", "FWD-27", "FWD-28"],
@@ -143,17 +143,21 @@
                     "agreed on all points go ahead"
 
   FWD-14 From his MacBook Andrew opens a remote desktop on all four boxes, and from the Windows laptop
-         on the other three, over Opal's private network
+         on the other three, over Opal's private network, and from nowhere outside it
          DONE WHEN  EXERCISED -- one session from the MacBook to each of laptop, site Z, dell1 and dell2, and
                     one from the Windows laptop to each of site Z, dell1 and dell2, all over the private
-                    network
+                    network; one remote-desktop attempt at any box from an address off the private
+                    network, refused
          ACCEPT     Andrew sits at his MacBook and opens a remote desktop to the laptop, site Z, dell1 and
                     dell2 in turn; at the Windows laptop he opens one to site Z, dell1 and dell2; each goes
-                    over Opal's private network; a box added later is reachable the same way as part of
-                    being set up
+                    over Opal's private network; the remote desktop from "rc" into the laptop stays as it
+                    is; no remote desktop answers from outside the private network, the IT remote-support
+                    services Andrew names (Splashtop) excepted; a box added later is reachable the same way
+                    as part of being set up
          SOURCE     Andrew-direct 2026-10-06 ~18:5xZ, "we need RDP on all devices accessible
                     via tailnet" and "that RDP ability from any device in the tailnet, namely the macbook";
-                    the directions, Andrew-direct ~20:1xZ
+                    the directions, Andrew-direct ~20:1xZ; Andrew-direct 2026-10-13 ~14:0xZ, "no external
+                    ssh available nor any external rdp available (aside from IT services like splashtop)"
 
   FWD-15 A lane on a Dell that needs a package the box does not have gets it from the laptop, checked,
          without the Dell ever asking the internet for it
@@ -298,17 +302,30 @@
                     that an agent would speak for, that uses representative emails or teams messages
                     or whatever as a reference for the given action"
 
-  FWD-27 Every box on the tailnet answers an SSH login from the laptop by key, and nothing else
-         DONE WHEN  EXERCISED -- from the laptop, `ssh -o BatchMode=yes <user>@<tailnet-ip> hostname`
-                    answers with the box's own name for sitez, dell1, dell2 and the laptop itself
+  FWD-27 Every box on the tailnet answers an SSH login by key from the tailnet devices Andrew works
+         from ("rc", "muse" and the laptop "cloud-local"), the laptop included as a target, and from
+         nowhere outside the tailnet
+         DONE WHEN  EXERCISED -- `ssh -o BatchMode=yes <user>@<tailnet-ip> hostname` answers with the
+                    box's own name for sitez, dell1, dell2 and the laptop from each of rc, muse and the
+                    laptop (muse -> laptop included); one login attempt from a non-tailnet address at
+                    any box, refused
          ACCEPT     on each of the four boxes OpenSSH Server runs as a service, port 22 is admitted
                     only from 100.64.0.0/10, password authentication is off once a key is in
-                    place, and RDP is unchanged; a login by password or from a non-tailnet address
-                    is refused; the elevated enable run on each box is Andrew's one line, the
-                    script and its receipt are the cell's
-         SOURCE     LD-0644 (Andrew-direct 2026-10-11 ~15:5xZ) and Andrew-direct 2026-10-12 ~01:5xZ,
+                    place, and RDP is unchanged and bound the same way (FWD-14); a login by password
+                    or from a non-tailnet address is refused; on the laptop, whose only interactive
+                    account is an Entra account sshd cannot resolve (measured by 0.0.0_AB_MSTR
+                    2026-10-13 ~00:5xZ, msg 108757), key logins land on a local administrator account
+                    made for them, whose Administrators membership is re-read after one Intune policy
+                    sync and recorded; the elevated runs on each box (the sshd enable, the laptop
+                    account) are Andrew's one line each, the script and its receipt are the cell's;
+                    the keys of rc and the laptop are Andrew's to place, muse's is in place on all
+                    four (measured: dell1, dell2 and sitez answer muse today; the laptop holds its key)
+         SOURCE     LD-0644 (Andrew-direct 2026-10-11 ~15:5xZ); Andrew-direct 2026-10-12 ~01:5xZ,
                     "I also want that tailnet port set up so that we can ssh into the various devices
-                    as well as rdp ... perhaps COO~C can handle it"
+                    as well as rdp ... perhaps COO~C can handle it"; Andrew-direct 2026-10-13 ~14:0xZ,
+                    "'muse' also needs to be able to remote into laptop ... ssh to be functional within
+                    tailnet devices only, no external ssh available nor any external rdp available
+                    (aside from IT services like splashtop)" (ADDENDUM v0.29)
 
   FWD-28 A data-proxy route that no partner page calls answers only an Opal-internal caller; a
          route a partner page calls answers the firms that page admits, and no one else
@@ -1018,3 +1035,44 @@ addendum keeps the why and the record of the change.
   'internal'` only) at the next apply of this function, under a pair in the CT-w-10 shape, in round 11; "defence-in-depth" is
   struck. Until CT-aa-5 lands, PRE-1's invariant (no `userType Dev` row on a non-internal firm) is the control, re-read at
   that apply. `3.0.0_SA_CVO~L` re-signs on this wording.
+
+## ADDENDUM v0.29 (1.0.0_SA_CTO, 2026-10-13 ~14:2xZ) -- an ENDPOINT change on Andrew's words of ~14:0xZ: FWD-27 and FWD-14 bound to the tailnet from every device he works from; FWD-9 PARKED; FWD-13 as written DROPPED and its bid re-scoped to ad hoc work under COMM_ASSIST; FWD-11 kept
+
+Andrew-direct 2026-10-13 ~14:0xZ at the `4.0.0_SA_CRO` terminal, record
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261013_140xZ_FOUR_OPEN_CALLS_ANSWERED_DEVPLN_TAILNET_SSH_BDFEE_CTLPLN_SCOPE.md`
+@90867982ed, answering the CRO's four cards and the CVO's 2026-10-13 re-grade (@69e690cebf: FWD-9, FWD-11, FWD-13 NOT SERVED, no
+order ever named them). His words are quoted on the cards and in the record; nothing here paraphrases the operative sentences.
+
+- **FWD-27 amended in place (ENDPOINT change).** The source devices are the tailnet devices Andrew works from, which he named
+  "rc", "muse" and "cloud-local" (the laptop); the laptop is a target too ("'muse' also needs to be able to remote into laptop").
+  The bound is the tailnet: "no external ssh available nor any external rdp available (aside from IT services like splashtop)".
+  The earlier (a)/(b) offer is withdrawn; neither was his answer. Measured input taken into the ACCEPT from `0.0.0_AB_MSTR`
+  (msg 108757, read on the laptop ~00:5xZ): the laptop's only interactive account is an Entra account that sshd 9.5p2 cannot
+  resolve (plain names log "Invalid user"; `azuread\` forms reset the connection); muse's key already sits in the laptop's
+  `administrators_authorized_keys`, and muse's key logins to dell1, dell2 and sitez already answer. RULED: the laptop limb lands
+  key logins on a local administrator account made for them; whether Intune strips its Administrators membership at policy
+  sync is UNREAD (MSTR could not read the policy) and is the cell's first read after one sync, recorded either way. Creating
+  that account and enabling sshd are elevated runs, Andrew's one line each, as the card already says; the keys of rc and the
+  laptop are his to place, so FWD-27's gate narrows from "Andrew's public keys" to "rc's key, the laptop's key, and the two
+  elevated lines per box". `2.0.0_SA_COO~C` re-cuts the FWD-27 cells in round 12 on this card: one packaging cell, four per-box
+  cells (the laptop's carrying the local-account step), the refusal arm from a non-tailnet address on every box.
+- **FWD-14 amended in place (ENDPOINT change).** "rc" into the laptop by remote desktop stays as it is; no remote desktop
+  answers from outside the tailnet, Splashtop and the IT services he names excepted; the DONE WHEN gains the refused attempt.
+  C-RDP's firewall ruling (3389 scoped to 100.64.0.0/10) is now the ENDPOINT's own bound, not a narrower default.
+- **FWD-9 PARKED on his word ("park FWD-9").** No round cuts a cell for it; C-LEASE's text stays; its grade reads PARKED, and it
+  counts neither REALIZED nor NOT SERVED in a round analysis until he un-parks it. Scarce accounts keep their current homes.
+- **FWD-13 as written DROPPED ("drop FWD-13 as written"), its bid RE-SCOPED.** His clarification, verbatim: "The 'bid' is not for
+  active registered projects, it is for ad hoc bug fixes and etc that come in over teams/outlook via the COMMS_ASSIST channel,
+  which needs to be approved at my discretion over that COMMS_ASSIST channel." So a registered project never moves between
+  boxes by bid; the bid places ad hoc work that arrives through COMM_ASSIST, and its placement is approved by Andrew over that
+  channel. That outcome belongs to COMM_ASSIST (site Z, `1.0.0_SA_CTO~Z`), the way FWD-20 and FWD-26 moved in v0.21: the FWD-13
+  card stays above so every citation resolves, this PRD no longer grades it, C-BID's "the laptop's fabric manager awards moves"
+  is struck in substance, and `1.0.0_SA_CTO~Z` appends the ad hoc-placement outcome to COMM_ASSIST's PRD at its next unused id
+  on this record (relayed via `0.0.0_AB_MSTR`). `remote-job.py`'s bid stays the mechanism for the ad hoc award (its devices come
+  from the register, C-REGISTRY).
+- **FWD-11 kept** as written; it joins the round-12 enrichment list behind cell 1 (the Dell grants, ruling @1161dc05fc).
+- Header bumped to v0.29. ENDPOINT bytes changed on FWD-14 and FWD-27: the ratified-text half re-signs (`3.0.0_SA_CVO~L`); the
+  brief half is the CRO's and unchanged. Andrew's first answer (NFRA_DEVPLN as its own laptop project; "CTLPLN is getting too
+  large") touches this PRD's scope only by subtraction: the per-box portal DEV approval work is NOT a CTLPLN outcome, and his
+  later ask, an analysis of why CTLPLN work on the laptop "has completely drawn to a close", is owed by this seat after the
+  calls are addressed.
