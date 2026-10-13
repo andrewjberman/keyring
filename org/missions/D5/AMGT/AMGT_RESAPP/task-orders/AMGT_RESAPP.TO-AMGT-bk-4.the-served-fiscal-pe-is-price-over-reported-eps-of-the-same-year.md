@@ -71,9 +71,9 @@ The `<status>` flip is the issuer's.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-**ISSUER NOTES:** CTO 5244 (iii) and 5262: exact arithmetic on two served figures; Bloomberg's PE_RATIO stays stored; a minor unit of the same currency is an exact scale (the ruled qq-1 / CRPS-g-1 rule, `case_rule`), true cross-currency stays withheld because an FX rate and date would be a choice this cell does not make. Measured at the cut over 618 live P/E name-years: 464 derived, 154 withheld (126 cross-currency, 28 EPS not positive). A derived row moves the served value, so it moves under a PAIR (bk-2): the pair names the 95 x 10 cells and prints before/after for five names. STAGED behind bk-1 because both edit one file.
+**ISSUER NOTES:** GO 2026-10-13T22:5xZ by the issuer: `AMGT-bk-1` is complete and MERGED (@8203952bad); the file's blob at HEAD is `96642b55204d`, the base this order's patch expects. CTO 5244 (iii) and 5262: exact arithmetic on two served figures; Bloomberg's PE_RATIO stays stored; a minor unit of the same currency is an exact scale (the ruled qq-1 / CRPS-g-1 rule, `case_rule`), true cross-currency stays withheld because an FX rate and date would be a choice this cell does not make. Measured at the cut over 618 live P/E name-years: 464 derived, 154 withheld (126 cross-currency, 28 EPS not positive). A derived row moves the served value, so it moves under a PAIR (bk-2): the pair names the 95 x 10 cells and prints before/after for five names. STAGED behind bk-1 because both edit one file.
 
-<status>staged</status>
+<status>pending</status>
 <round>104</round>
 <slot>0.9.0_WK_AMGT_RESAPP~415</slot>
 <fabric>dell1</fabric>

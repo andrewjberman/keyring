@@ -14,6 +14,7 @@ TESTS = [
     "test_a_gained_split_or_a_restated_overlap_bar_is_held_restatement_and_the_name_keeps_its_files",
     "test_a_gap_beyond_five_days_pulls_from_the_stored_max_and_appends_only",
     "test_the_receipt_lists_names_appended_without_a_relock_and_a_failed_lock_check_makes_the_name_held",
+    "test_a_name_whose_combined_history_relock_is_rejected_is_held_even_when_the_appended_window_passes",
 ]
 
 if __name__ == "__main__":
