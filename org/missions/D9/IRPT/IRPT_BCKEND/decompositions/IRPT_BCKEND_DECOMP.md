@@ -3720,3 +3720,19 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r184/p184_cells.py`, dry-run at the b
 | `IB-pr-518` | `irpt-ycharts-generate` censused and rebuilt against its CURRENT live with the catalogue release (two members, one source-map row in scratch), the four arms, the open ledgers, and the never-widen packet | FWD-1 (O1 hop) | SERVED (reads the live function and the source map; builds only) | IB-pr-517 (merged) | P184-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one census with no sibling cell. One worker spawn (slot ~367).
+
+
+## 177. ROUND 185, WORKSTREAM ~P (2026-10-13 ~23:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round-185 analysis (msg 7305) and the signed pair IB-pr-518 (COO half @d06ee1f0fc, CTO half @f7bd0b5b7e, msg 7310 "cut the apply"))
+
+Round 184 closed (IB-pr-518 @414adbfdc0). The CTO's round-185 list has three items. (1) The catalogue apply on the signed pair: **CUT now** as `IB-pr-520`, to `0.7.0_AE_CloudOps~IB2`. (2) The export re-pin (row D2-S152): **CUT now** as `IB-pr-519`, a BUILD-ONLY census and packet for `irpt-export-render` with the stored-receipt count and the branch rule of RE 7262; the root cause was found read-only before the cut (the live function writes `facts.covered_account_ids` but packages a stale `ExportReceipt.schema.json`). (3) IB-pr-456's after-read and apply: **NOT cut now: an unmet dependency (Andrew's PROD execution ID is its BEFORE record; open call `f61b`); cut in the round after it arrives; owner me.** NOT cut and not owed here: the pair for the export re-pin (a later round, after its packet), and the `account_activity_daily` backfill (the CTO queued it behind these).
+
+Two cuts, independent chains: the apply moves `irpt-ycharts-generate` and the export census reads `irpt-export-render`; they share no file and no function. Both orders carry one WORLD or SERVED class decided by the gate's floors (the apply: WORLD; the census: SERVED, paths under org/ only).
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r185/p185_cells.py`, dry-run at the base: IB185-1 and IB185-2 AC1, AC2, AC3 all FAIL (no records); positive controls in temp roots the runs created themselves pass all three of each cell, and fourteen negatives each fail their own arm; roots removed.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-520` | `irpt-ycharts-generate` moved to the signed built digest (`templates.json` and `maintained_sources.py`; the form's model order changes) by its Terraform path, digest-gated, then a health proof with no invoke | FWD-1 (O1 hop) | WORLD (moves a client-facing catalogue) | the signed pair IB-pr-518 (both halves) | P185-a |
+| `IB-pr-519` | `irpt-export-render` censused and rebuilt against its CURRENT live with ONE staged contract re-pinned, the stored-receipt count (dry run), the four arms, the open ledgers, and the never-widen packet | FWD-1 (O1 hop) | SERVED (reads the live function, the source map and the receipt store; builds only) | none | P185-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two independent chains. One worker spawn (slot ~368) and one live seat (`0.7.0_AE_CloudOps~IB2`).

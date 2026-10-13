@@ -7047,3 +7047,410 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Not cleared by the worker: no checkout, reset or commit of portal. A ruling is needed on whether AC2 reads the gitlink as out-of-scope drift or the submodule pointer is re-synced by the integrator. Disarm: none (INERT)."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W80-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~80",
+  "surfaced_at": "2026-10-13T22:03:45Z",
+  "one_line": "The Door 6 retirement premise (retire after a no-other-consumer read) does not hold: a live S3 event notification on opal-data-inf (prefix gold/meta/, suffix pipeline-complete.json) invokes inf-portal-publisher, so retiring the key stops that trigger.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api get-bucket-notification-configuration --bucket opal-data-inf (read 2026-10-13 ~21:50Z): LambdaFunctionConfigurations has 2 entries; one invokes inf-portal-publisher with Filter Prefix gold/meta/ and Suffix pipeline-complete.json",
+      "infra/aws/terraform/inf-pipeline/s3-notifications.tf:15-21 at eff1db9d7f: 'ADVI_INFETL.005: gold/meta/pipeline-complete.json -> inf-portal-publisher', lambda_function block with filter_prefix and filter_suffix",
+      "aws lambda get-function-configuration --function-name inf-portal-publisher: INPUT_BUCKET and OUTPUT_BUCKET both opal-data-inf",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/ROUND8_PLAN_INPUTS_20261013.md:11 at eff1db9d7f: 'DEC-13 Door 6 RETIRE, no successor marker, inside the Inflection move, after a no-other-consumer read'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ROUND8_PLAN_INPUTS_20261013.md:11 records DEC-13 Door 6 as RETIRE, no successor marker, inside the Inflection move, after a no-other-consumer read of gold/meta/pipeline-complete.json.",
+  "world_is": "The no-other-consumer read finds a second live consumer: an S3 event notification on opal-data-inf (prefix gold/meta/, suffix pipeline-complete.json) that invokes inf-portal-publisher, wired under ADVI_INFETL.005. Retiring the key as ruled would stop that trigger.",
+  "notes": "Not decided by this worker. The ruling's precondition is not met as written; the disposition (re-point the publisher's trigger, or retire it with the key) is Andrew's ruling with the CTO. Disarm: CTO, before the Door 6 retirement act is cut. Evidence record: org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~80/PLANINV_LEGACY_OPERATIONS.json (candidate inf-portal-publisher-sentinel-trigger) @59c2e13ecc."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W80-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~80",
+  "surfaced_at": "2026-10-13T22:03:45Z",
+  "one_line": "infra/aws/terraform/opal-assets/router_iam.tf:26-29 says mdpf-daily-refresh-trigger is ENABLED and armed on the Door 6 key, but the live account has no such rule (describe-rule ResourceNotFound) and feeder-trigger.tf:7-8 records its destruction on 2026-08-18.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/opal-assets/router_iam.tf:26-29 at eff1db9d7f: '# `mdpf-daily-refresh-trigger` is ENABLED and armed on ObjectCreated of that EXACT key.'",
+      "infra/aws/terraform/mdpf-pipeline/feeder-trigger.tf:7-8 at eff1db9d7f: 'destroyed the mdpf-daily-trigger Lambda + mdpf-daily-refresh-trigger rule' (TO-3 K3, 2026-08-18)",
+      "aws events describe-rule --name mdpf-daily-refresh-trigger --region us-east-1: ResourceNotFound ('does not exist on EventBus default'); aws events list-rules --name-prefix mdpf-daily: 0 rules"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "router_iam.tf:26-29 states that mdpf-daily-refresh-trigger is ENABLED and armed on the Door 6 key.",
+  "world_is": "No rule of that name exists on the default event bus; it was destroyed on 2026-08-18. The router deny statement 3 still cites it as the live guard.",
+  "notes": "Stale comment in a Terraform file. No harm measured: the deny blocks writes the chain no longer makes. Its disposition rides candidate router-iam-door6-deny in the FB-k-5 record (decision Andrew). Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W80-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~80",
+  "surfaced_at": "2026-10-13T22:03:45Z",
+  "one_line": "The aws shim, run from a directory outside a git checkout (the data directory), prints a WARN line into its captured output, so a raw JSON capture is not parseable until that line is stripped.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-firmbkts-80-data/targets_firmsep.json (aws events list-targets-by-rule, 2026-10-13 ~21:4xZ) begins with 'WARN: aws: no caller-toplevel .tools/aws (git rc=128) -- PREPENDING THE BAKED C:/dev/ajb_workspace/.tools instead'; json.load on that file fails with Expecting value, line 1 column 1",
+      "the same warning appeared in the captured outputs of later aws calls run from the same directory; the captures were filtered with grep -v '^WARN:' before parsing"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task order's bounds say AWS from bash is .tools/aws, and downloads go to the data directory outside the checkout; the shim is expected to read cleanly from there.",
+  "world_is": "Run from outside a checkout, the shim falls back to the baked workspace tools and writes a WARN line into the captured stream, so the raw capture is not valid JSON until the line is removed.",
+  "notes": "Read-only calls were unaffected. No write was made by the shim. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W79-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~79",
+  "surfaced_at": "2026-10-13T22:10:00Z",
+  "one_line": "The Cottonwood Black Diamond scope is not inside opal-data-bd: the live IAM grants and the repository place it in opal-data-assets under blackdiamond/cottonwood/.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep of infra/aws for opal-data-bd within 120 characters of cottonwood: 2 hits, both prose (infra/aws/terraform/cot-pipeline/ssm.tf:310; infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py:870)",
+      "Grep of data/ for the same pattern: 2 hits, both prose (data/cot/scripts/gold/README_FIRM_NATIVE_DIVERGENCE.md:47,64)",
+      "iam get-role-policy cot-rebalancer-runner-role/cot-rebalancer-runner-write-cot stmt0: arn:aws:s3:::opal-data-assets/blackdiamond/cottonwood/bronze/* (measured)",
+      "infra/aws/lambda/investor-reporting/PATH_MANIFEST.json:3031 (s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_allocations/)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FB-k-4 section 1a lists the Cottonwood scope inside opal-data-bd as a legacy home to inventory, next to opal-data-cot.",
+  "world_is": "No live grant or repository path places a Cottonwood key inside opal-data-bd. The Cottonwood Black Diamond tree is opal-data-assets/blackdiamond/cottonwood/ (bronze, silver fact_holdings and fact_allocations). The inventory records it under opal-data-assets with legacy_touch false."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W79-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~79",
+  "surfaced_at": "2026-10-13T22:10:00Z",
+  "one_line": "Cottonwood holdings have two live homes: the edge router resolves cottonwood to opal-data-cot, while the IRPT holdings reader reads opal-data-cottonwood.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "iam get-role-policy irpt-holdings-role/irpt-holdings-firm-read stmt0-1: GetObject and GetObjectVersion on arn:aws:s3:::opal-data-cottonwood/irpt/cottonwood/platinum/holdings/ (measured)",
+      "iam get-role-policy irpt-holdings-role/irpt-holdings-firm-read stmt2: opal-data-cot investor-reporting/directory/* and platinum/cottonwood/ownership_map.json (measured)",
+      "infra/aws/lambda-edge/_shared/firm-config.mjs:77-80: cottonwood bucket opal-data-cot (measured)",
+      "comp-find --corpus aws over the S3_BUCKET nodes: opal-data-cottonwood present, drift=DECLARED (measured)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FB-k-4 section 1a items 1 and 3 treat opal-data-cot as the Cottonwood serving home and inventory the IRPT Lambdas against it.",
+  "world_is": "IRPT holdings for Cottonwood come from opal-data-cottonwood, the destination-named bucket for the move, and only the directory and ownership map come from opal-data-cot. Both homes are in live use."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W79-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~79",
+  "surfaced_at": "2026-10-13T22:10:00Z",
+  "one_line": "bd-cot-freshness-probe is in the repository with a read of opal-data-cot, but no live Lambda of that name exists.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda list-functions: 237 functions, none named bd-cot-freshness-probe (measured)",
+      "infra/aws/lambda/cot-pipeline/bd-cot-freshness-probe/lambda_function.py:44-46 (BD_DATA_BUCKET default opal-data-cot) and :56 (SERVED_AUA_KEY platinum/firm/timeseries_overview.json) (measured)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FB-k-4 section 1a item 1 asks for the Lambda functions that touch the buckets, read from the live plane.",
+  "world_is": "The repository holds a freshness probe that reads the served Cottonwood AUA key, and the live account does not run it under that name. The inventory records it as a repository-only row with trigger not determined."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W76-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~76",
+  "surfaced_at": "2026-10-13T22:15:48Z",
+  "one_line": "TO-FB-k-1 names the Inflection scope inside opal-data-bd as a legacy home to inventory; the census and the mapping table hold zero Inflection-scope objects in opal-data-bd, so the bd leg of that slice is empty by measurement.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/census.json@3fc68796 buckets.opal-data-bd: 36,395 bytes, 0 'inflection' or 'inf' scope tokens (python -I count, worktree 0.9.0_WK_ADVI_FIRMBKTS~76)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v4.json@3fc68796 rows: 3451 total; bucket opal-data-bd 247 rows, 0 with an inflection or inf scope token in prefix or address",
+      "aws s3api get-bucket-notification-configuration --bucket opal-data-bd: two Lambda notifications on bronze/ and silver/prices/ only; comp-find --corpus aws EVENT_RULE band names no Inflection scope in opal-data-bd",
+      "docs/briefs/d8-legacy-firm-buckets-migration-brief-20260913.md@3fc68796:251 maps opal-data-bd to mockadv, not inflection"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-FB-k-1 slice: the inventory covers what runs against opal-data-inf or the Inflection scope inside opal-data-bd.",
+  "world_is": "The measured opal-data-bd tree holds no Inflection-scope key (0 census tokens, 0 mapping rows). The bd rows of the inventory are the Black Diamond and mockadv scope; the bd Inflection leg is empty by measurement, not by an unread gap.",
+  "notes": "Recorded by the worker; the inventory reports the bd notification rows as legacy_touch false with claim absent where unread. Whether an Inflection scope should exist in opal-data-bd is the issuer's call; no disposition is proposed here. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W77-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~77",
+  "surfaced_at": "2026-10-13T22:23:46Z",
+  "one_line": "The prohibited key opal-data-inf/gold/meta/pipeline-complete.json has a second live watcher: an S3 notification on opal-data-inf routes its creation to inf-portal-publisher, and the PRD names only the mdpf-feeder-accelerator rule as its watcher.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B1 (carries the second watcher into the FWD-9 plan; the FWD-7 ruling governs the key itself)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api get-bucket-notification-configuration --bucket opal-data-inf (live): LambdaFunctionConfigurations = 2; inf-portal-publisher on ObjectCreated:* with prefix gold/meta/ and suffix pipeline-complete.json (record org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~77/PLANINV_INFLECTION_SERVING.json, row INF-EDGE-05)",
+      "aws events describe-rule --name mdpf-feeder-accelerator (live): State ENABLED; S3 Object Created on opal-data-inf key gold/meta/pipeline-complete.json; list-targets-by-rule: 1 target MdpfFeederTrigger",
+      "infra/aws/lambda/inf-gold-trigger/lambda_function.py:24 defines COMPLETE_KEY = 'gold/meta/pipeline-complete.json' and no other use of it appears in that file (grep of the file at 5760dbcc38db)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/prd/ADVI_FIRMBKTS_PRD.md:275-276 (DEC-12) names one watcher: the prohibited key is watched by the mdpf-feeder-accelerator rule (pin 5760dbcc38db)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ADVI_FIRMBKTS_PRD.md DEC-12 (lines 275-276): the prohibited key opal-data-inf/gold/meta/pipeline-complete.json is watched by the mdpf-feeder-accelerator rule.",
+  "world_is": "The same key is also watched by a live S3 notification from opal-data-inf to Lambda inf-portal-publisher (ObjectCreated under gold/meta/ with suffix pipeline-complete.json). The notification configuration is a singleton per bucket (PRD DEC-7).",
+  "notes": "Form only: no notification was changed, no key was read or moved. The move plan needs both watchers named for this key."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W77-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~77",
+  "surfaced_at": "2026-10-13T22:23:46Z",
+  "one_line": "The exec-summary trigger is live as an ENABLED rule named exec-summary-trigger on the bd-pipeline.gold-chain chain-complete event; the Terraform declares only a DISABLED cron placeholder, and no Terraform in the tree declares the live rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "owner of exec-summary-generator (not named in the order); surfaced to 2.0.0_SA_COO~B1 for the plan",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/exec-summary/main.tf:224-233 (pin 5760dbcc38db): rule exec-summary-trigger-placeholder, schedule cron(30 4 * * ? *), description 'PLACEHOLDER ... DO NOT enable until TO 7'",
+      "aws events describe-rule --name exec-summary-trigger-placeholder (live): ResourceNotFoundException; the placeholder is not deployed",
+      "aws events describe-rule --name exec-summary-trigger (live): State ENABLED; EventPattern detail-type chain-complete, source bd-pipeline.gold-chain; list-targets-by-rule: 1 target exec-summary-generator",
+      "Grep of infra/aws/terraform for exec-summary-trigger and chain-complete (pin 5760dbcc38db): no resource declares the live name; hits are the placeholder lines and a comment at bd-pipeline/iam.tf:677"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "infra/aws/terraform/exec-summary/main.tf:224-233 (pin 5760dbcc38db): the exec-summary EventBridge rule is the DISABLED placeholder exec-summary-trigger-placeholder; DO NOT enable until TO 7.",
+  "world_is": "Live: no rule of the placeholder name. An ENABLED rule exec-summary-trigger on the gold chain-complete event invokes exec-summary-generator, and no Terraform in the tree declares that rule.",
+  "notes": "Form only; no rule was changed. The generator defaults to firm 49financial (lambda_function.py:565) and its destinations are 49financial only (platinum_dest_view.py:5-15), which the inventory records as legacy_touch false for inflection."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W77-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~77",
+  "surfaced_at": "2026-10-13T22:23:46Z",
+  "one_line": "The served graph cannot answer the IAM-grant or Lambda-environment question for the Inflection bucket: a bucket-name query matches only the bucket policy node, while the live IAM read finds 40 roles with an Allow on opal-data-inf.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B1 (the move plan's grant column is read from the live IAM account read, not from the graph)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find --corpus aws 'opal-data-inf' IAM_POLICY (live graph read): DENOMINATOR 1 hit across 633 aws nodes scanned; the one hit is the bucket policy node arn:aws:s3:::opal-data-inf#policy",
+      "comp-find --corpus aws 'opal-data-inf' LAMBDA: DENOMINATOR 0 hits across 238 aws nodes scanned, while the live list-functions (saved capture) shows opal-data-inf in the environment of the inf-* and irpt-* functions",
+      "aws iam get-account-authorization-details --filter Role LocalManagedPolicy (live): 303 roles scanned, 40 with an Allow on opal-data-inf (scripts/planinv_iam_grants.py over the saved capture)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-k-2.inflection-serving.md section 2 bound 2: read AWS through the served graph first"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO FB-k-2 bound 2: AWS is read through the served graph first; comp-find --corpus aws lists CloudNodes with a printed denominator, and grants are read as list role, action class, resource.",
+  "world_is": "The graph's IAM_POLICY search matched only the bucket policy for the Inflection bucket, and its LAMBDA search matched no environment value; the grant and environment reads had to be taken live from IAM and Lambda.",
+  "notes": "Form only. The inventory records each grant with claim measured from the live IAM read, and the graph answers were recorded as denominators (record denominators, comp-find lines)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W77-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~77",
+  "surfaced_at": "2026-10-13T22:23:46Z",
+  "one_line": "The task order names an Inflection scope inside opal-data-bd; no source in this read holds one: the mapping table has 0 opal-data-bd rows with an inflection prefix, no IAM statement names one, and the one bd-scope Lambda maps 49financial only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v4.json (3451 rows): opal-data-bd 247 rows; a scan of the prefix field finds 0 rows with an inflection or inf prefix",
+      "aws iam get-account-authorization-details (saved capture): a scan for statements naming opal-data-bd with an inflection or inf scope finds 0",
+      "infra/aws/lambda/exec-summary-generator/platinum_dest_view.py:5-15 (pin 5760dbcc38db): the bd destinations are opal-data-49financial only",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-k-2.inflection-serving.md section 1a names the scope the inventory must cover"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO FB-k-2 section 1a: the inventory covers what touches opal-data-inf or the Inflection scope inside opal-data-bd.",
+  "world_is": "No read found an Inflection scope in opal-data-bd. The firm's data sits in opal-data-inf and in the new bucket, and bd is reached in this read only by 49financial code paths.",
+  "notes": "Form only. The inventory keeps the opal-data-bd side at zero rows for the firm and says so in the denominators (mapping_v4 bd rows with an inflection prefix: 0)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W77-S5",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~77",
+  "surfaced_at": "2026-10-13T22:23:46Z",
+  "one_line": "The served graph holds 238 LAMBDA nodes while the live list-functions returns 237 functions; the one-node difference is not identified in this read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find --corpus aws '.' LAMBDA (vintage 2026-10-13 21:02:47 UTC): DENOMINATOR 238 hits across 238 aws nodes scanned",
+      "aws lambda list-functions --output json (auto-paginated, saved capture): 237 functions",
+      "the record denominators (record org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~77/PLANINV_INFLECTION_SERVING.json) carry both numbers; the difference was not chased (out of the slice)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The served graph and the live Lambda plane agree on the function population, so a sweep denominator taken from either reads the same count.",
+  "world_is": "At the graph vintage (21:02:47 UTC) the graph counts 238 LAMBDA nodes; at the live read the plane lists 237 functions. One node is in one count and not the other.",
+  "notes": "Form only. Recorded so the issuer can re-read the denominator against the plane before the move plan relies on either count."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W78-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~78",
+  "surfaced_at": "2026-10-13T22:22:11Z",
+  "one_line": "The Cottonwood scope inside opal-data-bd is empty: no blackdiamond/cottonwood/ or blackdiamond/cot/ prefix exists there. The Cottonwood legacy home is opal-data-cot, and its monolith copy is in opal-data-assets.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-objects-v2 --bucket opal-data-bd with --prefix blackdiamond/cottonwood/, blackdiamond/cot/, advi/cottonwood/ and cottonwood/ and --delimiter / (2026-10-13, rc 0): no CommonPrefixes and no Contents for each (saved as C:/dev/wk-firmbkts-78-data/bd_*.json)",
+      "aws s3api list-objects-v2 --bucket opal-data-bd --prefix blackdiamond/ --delimiter / returns CommonPrefixes 49f and 49financial only (C:/dev/wk-firmbkts-78-data/bdl_blackdiamond_.json)",
+      "infra/aws/lambda/bd-pipeline/bd-silver-merge/lambda_function.py:18-20: the Black Diamond merge is opal-data-bd only, with an explicit Deny on opal-data-cot"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-FB-k-3 section 1a: inventory every thing that touches opal-data-cot or the Cottonwood scope inside opal-data-bd.",
+  "world_is": "The Cottonwood scope inside opal-data-bd does not exist as a key prefix. No Lambda or script row carries a Cottonwood access to opal-data-bd. The Cottonwood legacy access is to opal-data-cot.",
+  "notes": "Recorded for the move plan; no action taken and no row proposes one. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W78-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~78",
+  "surfaced_at": "2026-10-13T22:22:11Z",
+  "one_line": "The satellites characteristics producer header says characteristics.json has zero writers today, but the object was last modified 2026-10-13T15:56:02Z, and its daily and hourly rules are ENABLED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf:22: 'characteristics.json has ZERO WRITERS TODAY -- it is' (non-application statement in the header)",
+      "aws s3api list-objects-v2 --bucket opal-data-cot --prefix platinum/satellites/ (2026-10-13): characteristics.json LastModified 2026-10-13T15:56:02Z; holdings.json 13:15:49Z; registry.json 13:15:48Z",
+      "aws events list-rules (us-east-1): cot-satellites-characteristics-producer-daily cron(25 13 * * ? *) ENABLED; etfs-cot-satellites-characteristics-producer-reattempt-hourly cron(55 * * * ? *) ENABLED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The producer header, as a non-application statement, says the characteristics object has no writers today.",
+  "world_is": "The object is written on the hourly and daily schedules. The header statement is stale, or it describes an earlier state, and the producer's own schedules are live.",
+  "notes": "Read by list only; the object body was not read. Not re-derived here. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W78-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~78",
+  "surfaced_at": "2026-10-13T22:22:11Z",
+  "one_line": "The served graph lists an EventBridge rule cot-satellites-registry-producer-daily that is absent from the live account: describe-rule returns ResourceNotFound and list-rules has no such name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws events describe-rule --name cot-satellites-registry-producer-daily --region us-east-1 (rc 254): ResourceNotFoundException, rule does not exist on EventBus default",
+      "aws events list-rules --region us-east-1 (156 rules) and --name-prefix cot-satellites (1 rule: cot-satellites-characteristics-producer-daily)",
+      "comp-find --corpus aws -i 'cottonwood|cot-|cot_|_cot|/cot' (VINTAGE built 2026-10-13 21:02:47 UTC) lists an EVENT_RULE node of that name with drift DECLARED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-FB-k-3 section 1a item 1: list all EventBridge rules, then describe those that name the Cottonwood scope or the gold chain.",
+  "world_is": "The served graph and the live account disagree on this rule. The registry producer runs from etfs-cot-satellites-registry-producer-stamp-gated-daily, which is live.",
+  "notes": "The inventory records the rule as claim absent with no function behind it. The graph vintage is the comp-find VINTAGE line. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W78-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~78",
+  "surfaced_at": "2026-10-13T22:22:11Z",
+  "one_line": "The live cot-etf-ownership-daily Lambda has an environment variable SRC_BUCKET naming the legacy bucket opal-data-cot, but its code reads only opal-data-assets and opal-data-etfs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda list-functions --region us-east-1: cot-etf-ownership-daily environment names ASSETS_BUCKET, ETFS_BUCKET, PARTNER, SRC_BUCKET and others; SRC_BUCKET value opal-data-cot",
+      "infra/aws/lambda/cot-pipeline/cot-etf-ownership-daily/lambda_function.py:87-91 (env reads: ETFS_BUCKET, ASSETS_BUCKET, and the prefixes) and :119, :199 (assets reads); grep for SRC_ finds only the historical comment at line 5",
+      "the inventory row lambda.cot-etf-ownership-daily carries legacy_touch false, with this row as its consumer note"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-FB-k-3 section 1a: legacy_touch is true only where a function reads or writes the legacy home.",
+  "world_is": "A live configuration names the legacy bucket for a function that does not use it. A reader of configuration alone would count a legacy dependency that the code does not have.",
+  "notes": "Not touched. A configuration cleanup is a move-plan item for the round 8 author, not for this inventory. Disarm: none (INERT)."
+}
+```

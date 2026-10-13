@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~109</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -92,3 +92,5 @@ lane: the files named in <paths> and the worker's deliverables.
 
 - Cut on `AR-y-280`'s BLOCKING row `W101-S1` and `AR-y-271`'s option ii (the J2 close), workstream `Y` round 26. The grant names every file the cell writes. Base: `AR285-y-AC1` FAIL as expected (no record).
 - Any portal candidate goes to `1.0.0_SA_CTO`'s review lane through the issuer; the worker lands nothing.
+
+<!-- ISSUER NOTE 2026-10-13 (2.0.0_SA_COO~Y2): status flipped to complete after the drain. Trunk checker y285-pkg-sender prints Y285-PKG-SENDER-OK (13 new tests, research folder 319), proof VALID. The packager must be released AFTER the ticket service leg of AR-y-284 (row W109-S2). AR285-y-AC2J is the CVO to grade. -->

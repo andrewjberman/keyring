@@ -7994,3 +7994,233 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W143-S1 -- The export document has no source in the render bundle: the hookup into PrintDocument needs a FilledReport the bundle does not carry
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W143-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~143",
+  "surfaced_at": "2026-10-13T21:49:25Z",
+  "one_line": "The order says the export document goes through the portal's existing print render and is wired by the issuer at the merge; the print render passes a RenderBundle, which carries no FilledReport, so PerformanceReportDocument has no bundle-side source to be fed from.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-177 says the export document goes through the portal's existing print render (render/Page.tsx, render/PrintEntry.tsx, render/print.css, render/performance/PerformanceDocument.tsx) and that the wiring of PerformanceReportDocument into ExportModal and the print entry is the issuer's hookup, named by the worker.",
+  "world_is": "PrintDocument (render/PrintEntry.tsx:398) and export/Preview.tsx:296 render PerformanceDocument with a RenderBundle. The RenderBundle carries performanceReport or dashboardPerformance, never a FilledReport (the contract's document layout keyed by member id). No file names a function that turns a bundle into a FilledReport, so the hookup needs a source decision the order does not name. Nothing in the criterion depends on it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/render/PrintEntry.tsx:398 at portal base 47673668: PrintDocument renders PerformanceDocument with bundle",
+      "portal/src/pages/InvestorReporting/export/Preview.tsx:296 at portal base 47673668: the preview renders PerformanceDocument with bundle",
+      "portal/src/pages/InvestorReporting/render/performance/report/PerformanceReportDocument.tsx at portal commit 091ae64e: the new document takes a FilledReport and a firmWord, and is not wired"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W143-S2 -- The portal's page frame requires a report-state band the filled report cannot supply, so the document uses the print classes in its own frame
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W143-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~143",
+  "surfaced_at": "2026-10-13T21:49:25Z",
+  "one_line": "The existing page primitive PageSheet requires a reportState (FE-s-31) read off an availability block; a FilledReport carries none, so the document lays its sheets with the same print.css classes in its own frame and prints no report-state band.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-177 says the document is laid out for print through the portal's existing page primitives.",
+  "world_is": "PageSheet (render/Page.tsx:379) has a REQUIRED prop reportState: ReportStateChrome, built by reportStateChrome(report) from availability.state and sourceTimestamps. A FilledReport has neither, and inventing a state would print a READY band the report never stated. The new frame reuses the classes ir-page, ir-page-performance-landscape-letter, ir-page-head, ir-logo-clearspace, ir-logo, ir-identity, ir-page-foot and ir-page-number, and prints 'Page n of N' itself (PageSheet prints 'n / N').",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/render/Page.tsx:379 at portal base 47673668: PageSheet props include reportState: ReportStateChrome as required",
+      "portal/src/pages/InvestorReporting/render/Page.tsx:402 at portal base 47673668: the footer prints pageNumber / pageCount"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W143-S3 -- A section taller than one letter sheet is not split by the document, and the Page n of N count is not measured for a real household
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W143-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~143",
+  "surfaced_at": "2026-10-13T21:49:25Z",
+  "one_line": "The document makes one sheet per section (one per account for the two per-account sections) and never splits a sheet across letter pages; the Page n of N count is correct only while each sheet fits its page, which is measured on the synthetic fixture alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-177 says every page carries the baseline footer (Page n of N) and the export lays the same eight sections out for print.",
+  "world_is": "The synthetic fixture renders 10 sheets (screenshot export_document_full.png in the worker folder): the eight sections, with the two per-account sections one sheet per account. In the worker's screenshot, read at reduced resolution, each sheet's footer sits at its own sheet foot and no content visibly runs into the next sheet. A real household of 11 accounts, or a long Holdings Overview, has not been rendered, and no splitting rule exists in the document, so a sheet taller than one letter page would print across pages under a footer count that does not see it.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/render/performance/report/documentSheets.ts at portal commit 091ae64e: one sheet per section, per-account sheets for account_overview and gain_loss_review_by_account",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~143/export_document_full.png read by the worker: 10 sheets, footers present, disclosure last"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W143-S4 -- The contract carries no household display name, so the footer names the household by a label word
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W143-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~143",
+  "surfaced_at": "2026-10-13T21:49:25Z",
+  "one_line": "The baseline footer reads '<household> Performance Report'; the contract's cover.household_name is ABSENT on the synthetic fixture, so every footer reads 'Household Performance Report' until a name source exists.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-177 says the baseline's footer is printed on every page: '<household or account> Performance Report', 'As of <date>', 'Page n of N'.",
+  "world_is": "cover.household_name is ABSENT in the contract (source: the client summary carries ids only, no name), and the fixture repeats that. The footer's household part is therefore the label 'Household' (documentSheets.ts HOUSEHOLD_FALLBACK_LABEL), and an account page's part is 'Account ending <last4>' from the account list. The as-of date is measured: cover.as_of_date is present in the fixture.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at workspace base ea67c3f456: cover.household_name carries an absent reason and no sourced value",
+      "portal/src/pages/InvestorReporting/dashboard/report/fixtures/syntheticReport.ts at portal base 47673668: cover.household_name is absent in the synthetic fixture"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W145-S1 -- The account return table does not say whether total_return_daily is served on a FLOW_UNRECONCILED or GRADED_DISAGREED day, so the window return fold rests on an inference
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W145-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~145",
+  "surfaced_at": "2026-10-13T22:16:51Z",
+  "one_line": "account_return_daily defines total_return_daily as null only on NOT_MEASURABLE, yet ruling 17 says a guard disagreement serves no number; the cumulative-return fold had to choose, and chose ABSENT for a GRADED_DISAGREED day and as-served-with-a-flag for a FLOW_UNRECONCILED day.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-179 directs every fold to name the account return table's guard and day_quality rules, and the cumulative return to compound total_return_daily under those rules.",
+  "world_is": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json at base f3186318ba defines total_return_daily as null on NOT_MEASURABLE only, and its supersedes block says ruling 17 means a guard disagreement serves no number. No sentence states whether a GRADED_DISAGREED or FLOW_UNRECONCILED row's total_return_daily is served as a number or nulled. The fold of avs.<window>.return_cumulative therefore makes the window ABSENT on any GRADED_DISAGREED row and compounds FLOW_UNRECONCILED rows as served with a flag; both choices are the worker's inference from the sibling, not a sibling rule.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json at f3186318ba: total_return_daily meaning reads 'null on NOT_MEASURABLE'",
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json at f3186318ba: supersedes.changes reads 'a guard disagreement serves no number'",
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json at f3186318ba: day_quality enum holds FLOW_UNRECONCILED and guard_state enum holds GRADED_DISAGREED as separate members",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json in this worktree: avs.<window>.return_cumulative fold names the choice"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W145-S2 -- The DB94-6-AC1 prose says no custodian is named, and the base contract already uses the word custodian in five lines outside the 36 re-sourced members
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W145-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~145",
+  "surfaced_at": "2026-10-13T22:16:51Z",
+  "one_line": "The criterion's 'no vendor or custodian is named' cannot be read as a literal word test: the base contract carries the common noun custodian in five lines outside the 36 members, the grant names no edit to them, and none is a custodian's name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB94-6-AC1 (order criterion line) and the Bounds state that no vendor or custodian is named in the contract, and the Worker Face says nothing in the file may name a vendor or a custodian.",
+  "world_is": "The base contract at f3186318ba (0.1.0) contains the word custodian in five lines: 25 (the vendor_agnostic statement that nothing in the file names a vendor or a custodian), 74 (account_id, custodian account form), 1381 and 1390 (reasons citing the custodian account id), and 1519 (the account id spaces). None of them names a custodian. The checker's vendor pattern (black diamond, orion, schwab, commonwealth, bloomberg, ycharts, fidelity) does not include the word, and DB94-1-AC1 and DB94-6-AC1 both PASS. None of the 36 re-sourced folds contains the word, and those five lines lie outside the grant, so they were not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "grep -n -i custodian over org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at f3186318ba prints five lines: 25, 74, 1381, 1390, 1519",
+      "p94_round94.py VENDOR pattern lists black diamond, blackdiamond, orion, schwab, commonwealth, bloomberg, ycharts, fidelity; custodian is not among them",
+      "DB94-6-AC1 output in this worktree: 'DB94-6-AC1 PASS' rc 0 after the edit; the word custodian is absent from the 36 re-sourced folds"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-S23 -- Resolves and disarms IRPT_DASHBD-D2-W145-S1: the two guard-state rules are now stated in the account_return_daily contract
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S23",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-13T22:57:58Z",
+  "one_line": "Resolves and disarms IRPT_DASHBD-D2-W145-S1: the CTO ruled both guard-state inferences stand and become the return table's stated rule (msg 7330), written as served_day_rules into the account_return_daily contract.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row W145-S1: the return table does not say whether total_return_daily is served on FLOW_UNRECONCILED or GRADED_DISAGREED days, so the performance report contract's fold for the account returns rested on an inference.",
+  "world_is": "CTO msg 7330 rules: a GRADED_DISAGREED day serves no number (ruling 17), so a window containing one reads ABSENT with its reason and the count of such days, never compounded around the gap; a FLOW_UNRECONCILED day compounds as served and the window carries the flag with its count. Both are now one sentence each under the new top-level key served_day_rules in org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json (no column, enum or hash changed). The fold of avs.<window>.return_cumulative in the performance report contract already says the same, so it now cites a rule. W145-S2 is a documentation word: no change (CTO).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 7330 (2026-10-13 ~22:55Z)",
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json, key served_day_rules, in the commit that carries this row; DB94-1-AC1 and DB94-6-AC1 re-run PASS after the edit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W141-S7 -- the realized-lot window cannot open: gold account_lot_realized holds four trading days, so the year-to-date realized members and the last-12-months realized total are ABSENT in words
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W141-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~141",
+  "surfaced_at": "2026-10-13T23:00:12Z",
+  "one_line": "The realized-lot window cannot open: gold account_lot_realized holds four trading days, so the year-to-date realized members and the last-12-months realized total print an absent form naming the count, never zero.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The performance contract (version 0.2.0) sources the trgl.* members to the sum of the realized lots closed in the year to date across the lot table, and the order's BOUNDS and criterion DB94-2-AC1 say an unsourced figure reads ABSENT, never zero.",
+  "world_is": "The account_lot_realized partitions (one per closing date) hold four trading days in total; the household's realized rows across all of them total four, so the year-to-date window and the last-12-months realized total cannot open. Those members print the absent form with the count. The first build read only the newest partition and filled these members with zeros the table did not hold; that defect was corrected in commit af04c3a7c8 before the record was written, and the record comes from the corrected run at commit 3de2b240e2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "builder run output (private folder, counts only): lot_realized_rows_read 4 across every partition; class and activity partitions listed 4 each",
+      "commit af04c3a7c8 (every-partition read of account_lot_realized, with the window-coverage test) and commit 3de2b240e2 (member count)",
+      "org/standards/IRPT_DASHBD_ACCOUNT_LOT_REALIZED_CONTRACT.json: partition date=YYYY-MM-DD, grain realized lot (closing event x opening event)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W141-S8 -- the trading calendar on this device answers from its hardcoded NYSE fallback: pandas_market_calendars is absent, and the fallback covers only 2010 to 2027
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W141-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~141",
+  "surfaced_at": "2026-10-13T23:00:12Z",
+  "one_line": "The window anchors of the household build came from the hardcoded NYSE fallback of lib/trading_calendar.py, because pandas_market_calendars is absent on this device; the calendar warns that the fallback must be regenerated before 2028.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "lib/trading_calendar.py is the trading-day frontier that the window anchors and the activity-day pairs read (CLAUDE.md, the trading calendar rule); the contract's folds name the last trading day before each window start from it.",
+  "world_is": "The builder run printed WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027, and it names the regeneration step (lib/tests/gen_nyse_closures.py --write before 2028). The anchors and the pair checks of this build came from that fallback; the household rule itself reads no calendar.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "builder run output (private folder): the WARN line of the calendar import, printed on each of the three runs",
+      "lib/trading_calendar.py fallback label NYSE/hardcoded-fallback-2010-2027 as printed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

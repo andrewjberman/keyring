@@ -25730,3 +25730,128 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The rows' text is unchanged; the byte-level change is what the append-only rule is about. The fix is a follow-on commit, not an amend. Whether other Edit calls on this file normalize line endings was not tested."
 }
 ```
+```json
+{
+  "id": "AMGT_RESAPP-D1-W428-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~428",
+  "surfaced_at": "2026-10-13T22:34:42Z",
+  "one_line": "check_fa9_prefix.py prints failure-text as the detail column on PASS arms, so the arm lines read as FAIL while the verdict line reads YES (8 of 8)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "check_fa9_prefix.py at d1439782c7: arm 'the scoped sources tuple is unchanged' returns the detail string '_SOURCES moved' as its second tuple element regardless of result (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa9_prefix.py, the sources_unchanged function).",
+      "check_fa9_prefix.py at d1439782c7: arm 'test_harvest_prefixes.py pins the new constant' returns the detail string 'the neighbouring test does not pin the new constant' regardless of result (the test_pin function).",
+      "Run in worktree wk-AMGT_RESAPP-428 after the generator edit: output lines 'ARM the scoped sources tuple is unchanged PASS _SOURCES moved' and 'ARM test_harvest_prefixes.py pins the new constant to fresh opal_naming output PASS the neighbouring test does not pin the new constant' followed by 'AIFILL FA-9 ARMS: YES (8 of 8)', exit=0."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC1 expect: the line 'AIFILL FA-9 ARMS: YES (N of N)' with N equal to 8, no FAIL arm line above it, and exit=0. The arm lines carry a PASS/FAIL verdict beside a detail column that the reader takes as the arm's evidence.",
+  "world_is": "The detail column is the failure message on PASS arms: two of the eight arms print their failure text beside PASS (the sources-tuple arm prints '_SOURCES moved' and the test-pin arm prints 'the neighbouring test does not pin the new constant'). All eight arms PASS and no arm line reads FAIL; the verdict line and exit code are computed from the pass flag and are correct.",
+  "notes": "Form only. The verdict is unaffected: 8 of 8 arms PASS, exit 0. The defect is in the detail strings the check passes to arms.run, which are static failure text. Not fixed here: the check file is outside this order's write surface."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W420-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~420",
+  "surfaced_at": "2026-10-13T22:38:59Z",
+  "one_line": "The fill cell's source files, as first written, held raw UTF-8 characters where the face requires \\uXXXX escapes; rewritten to escapes before the commit.",
+  "spec_asserts": "AMGT-fa-1 face, section 1 (fold_text: write the characters as \\uXXXX escapes so the file stays ASCII) and section 2 bound 1 (ASCII-only source files).",
+  "world_is": "Before the rewrite, lib/research/aifill/contract.py held 12 raw non-ASCII characters (32 bytes above 127, the first at line 27) and the test module held 29 (79 bytes); orchestrate.py held none. A mechanical rewrite (each character to its \\uXXXX escape, the same runtime value) left all three files ASCII. After it: AC1 31 of 31, AC2 114 passed, commit gate clean on 4 of 4. The cause was not established.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Byte pass in the worktree before the rewrite (C:/dev/wk-resapp-420/lib/research/aifill/contract.py): 32 bytes above 127, first at line 27 (the _CHAR_MAP tuple); the test module: 79 bytes above 127, first at line 64.",
+      "After the rewrite: all three .py files decode as ASCII and parse with feature_version (3,9); lib/research/aifill/orchestrate.py had no non-ASCII bytes at any point."
+    ]
+  },
+  "notes": "Form only. The defect is in the bytes; the runtime strings are unchanged. Whether the authoring write or the write tool produced the raw characters was not established."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W420-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~420",
+  "surfaced_at": "2026-10-13T22:38:59Z",
+  "one_line": "fold_text strips before it drops non-ASCII, so a character dropped at the end of a text leaves a trailing space: fold_text of 'caf', e-acute, space, CJK character returns 'caf ' with the space.",
+  "spec_asserts": "AMGT-fa-1 face, section 1, fold_text: 'Collapse each run of spaces or tabs to one space, ... strip the ends, and drop any character still outside ASCII' (the listed order: strip, then drop).",
+  "world_is": "lib/research/aifill/contract.py fold_text runs the listed order. A probe returns 'caf ' for 'caf' + e-acute + space + a CJK character, and 'a' for 'a' + e-acute. The output is ASCII and passes validate_block (the text rule is non-empty after strip, not free of a trailing space), so no contract check fails. The cell kept the listed order rather than reordering it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Probe run at the worktree: PYTHONPATH=<worktree> python -c fold_text('caf\\u00e9 \\u4e2d') printed 'caf ' (with the trailing space).",
+      "lib/research/aifill/contract.py fold_text: the strip() call precedes the final ASCII-only comprehension."
+    ]
+  },
+  "notes": "Form only. Whether stored text should be stripped after the drop is for the issuer to decide; the cell did not change the listed order."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W420-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~420",
+  "surfaced_at": "2026-10-13T22:38:59Z",
+  "one_line": "build_document catches Exception from a builder, not BaseException, so a KeyboardInterrupt or SystemExit raised by a builder propagates out of build_document.",
+  "spec_asserts": "AMGT-fa-1 face, section 1, orchestrate.py: 'No exception from a builder escapes build_document.'",
+  "world_is": "lib/research/aifill/orchestrate.py _build_one wraps the builder call in except Exception, so a KeyboardInterrupt or SystemExit is not converted to a NONE block with a reason. The cell's tests raise ValueError, RuntimeError and a ModelError subclass and do not exercise this path. The narrower catch keeps an operator interrupt from being recorded as a block reason; the issuer decides whether the literal line should win.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/orchestrate.py _build_one: 'except Exception as exc' around the builder(ctx) call, in the worktree C:/dev/wk-resapp-420 (uncommitted at filing; committed with this row).",
+      "lib/research/aifill/tests/test_contract_orchestrate.py test_no_builder_exception_escapes_build_document raises RuntimeError; no test raises a BaseException."
+    ]
+  },
+  "notes": "Form only. No change to the listed behaviour was made beyond the Exception catch."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W421-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~421",
+  "surfaced_at": "2026-10-13T22:41:43Z",
+  "one_line": "The LGIC naming gate (ENFORCE) refuses the literal default Lambda name opal-amgt-scoped-api in lib/research/aifill/inputs.py line 14 as NEW and out of pattern, so AMGT-fa-2's inputs.py and its test module cannot be committed as the face specifies.",
+  "spec_asserts": "Face AMGT-fa-2 section 1: served_inputs(security_key, lam=None, function_name='opal-amgt-scoped-api') takes that literal as its default, and the prepared check asserts the served invoke goes to opal-amgt-scoped-api. CLAUDE.md section 4: every resource name is name() output; a builder refusal is a missing registry row to add (infra/logic/registry/), never a hand-typed workaround.",
+  "world_is": "The commit of 0.9.0_WK_AMGT_RESAPP~421 with inputs.py staged was refused by the naming limb: 'NAMING REFUSE lib/research/aifill/inputs.py:14 opal-amgt-scoped-api -> amgt-scoped-api ... NEW and OUT-OF-PATTERN as API_GW: REFUSE'; the commit was aborted and the files unstaged. infra/logic/registry/resources.json holds no row for the live function (a Grep of the registry folder for 'scoped' returns no amgt-scoped-api row). The live function is declared as a literal at infra/aws/terraform/harvest/scoped-amgt-api.tf:455. model.py carries no such literal and is committed at 3018dac548. inputs.py and lib/research/aifill/tests/test_model_inputs.py are held uncommitted in the worktree; the test module also carries the literal (line 314) and the gate did not refuse it.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/resources.json@816797e82366: no amgt-scoped-api row; Grep of infra/logic/registry for 'scoped' returns market-update-dynamodb-scoped, bd-s3-scoped and other names only.",
+      "infra/aws/terraform/harvest/scoped-amgt-api.tf@816797e82366 line 455: function_name = \"opal-amgt-scoped-api\" (the live function, also named in the Lambda source map entry).",
+      "lib/research/aifill/inputs.py@816797e82366 (worktree, uncommitted) line 14: DEFAULT_FUNCTION = \"opal-amgt-scoped-api\"; safe-commit naming-gate output of 0.9.0_WK_AMGT_RESAPP~421 quoted in world_is."
+    ]
+  },
+  "notes": "Not worked around: the name was not renamed, derived or hidden, and the naming gate was not bypassed. The disposition is the issuer's: a registry row for the live function (infra/logic/registry is outside this order's write grant) or an R20 register entry Andrew acknowledges. Held files, both STAGED-AWAITING-GATE in the proof instance: lib/research/aifill/inputs.py and lib/research/aifill/tests/test_model_inputs.py."
+}
+```

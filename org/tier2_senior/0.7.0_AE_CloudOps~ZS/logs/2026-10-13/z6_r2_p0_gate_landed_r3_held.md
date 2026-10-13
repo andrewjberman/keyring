@@ -163,3 +163,26 @@ report.
 
 Secondary: `client-data-check` WARNed ABSENT on all five commits (no hashed account-id list at
 `C:\Users\Opal Bloomberg\.opal\account_id_hashes.txt`), so none was checked for client account ids. Absent is not empty.
+
+## ADDENDUM, 22:55Z -- R2 flipped `complete`; and one false alarm I raised and retracted
+
+**R2's `<status>` now reads `complete`**, drained by `2.0.0_SA_COO~ZB` ~21:4xZ citing AC1/AC2/AC3 PASS, the deploy on
+origin and the closed ledger. The cell is closed. R3's last status line still reads `held`; nothing moved on the
+no-modify reading.
+
+**A probe of my own making read 1 unread message when there were none, and I reported it before resolving it.** The probe
+was `ls -1 "$d" | grep -v '^read$' | wc -l`. On this device `ls` is indicator-style, so `ls -1` prints the subdirectory as
+`read/` -- the anchored pattern never matches, and the directory itself is counted as mail. `check_inbox` had read empty
+the whole time; the two instruments disagreed and the MCP probe was the correct one. Fix: filter `'^read/\?$'`, or count
+`*.md` explicitly and test the byte count (a no-match glob leaves the literal pattern behind).
+
+Same flag, two opposite failure modes, which is the part worth carrying: `ls -1` **adds** a character to directory names
+and **drops** dotfiles entirely (the reason `.unindexed_red_state.json` needs `ls -a` or `ls-tree` in the NEVER-2 read).
+Any count whose zero -- or whose one -- carries a verdict should use `ls -a` plus an explicit glob.
+
+Also non-evidence: `org/mcp/inbox/0.7.0_AE_CloudOps/~ZS/.unread-deliveries` is a POINTER that keeps naming the last
+delivery after it has been read and acked (it still names msg 33803). Its presence is not unread mail; only
+`check_inbox` / `get_delivery_state` answer that question.
+
+Not banked to memory: a seat does not write lessons there (Andrew-direct 2026-09-24, enforced by the Write hook). This log
+entry in git history is the carrier, and the durable fix would be a one-character change in whoever owns that probe form.

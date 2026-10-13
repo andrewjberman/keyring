@@ -2,10 +2,10 @@
 
 <to_id>IRPT_ANLREQ.TO-AR-y-281</to_id>
 <project>IRPT_ANLREQ</project>
-<issued_to>0.9.0_WK_IRPT_ANLREQ~108</issued_to>
+<issued_to>0.9.0_WK_IRPT_ANLREQ~112</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -43,7 +43,7 @@ You are `0.9.0_WK_IRPT_ANLREQ~102`.
 
 ### ACCEPTANCE
 
-<criterion id="AR281-y-AC1" cell_refs="AR-y-281"><invocation>python C:/dev/wk-irpt-anlreq-102/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py y281-list --root C:/dev/wk-irpt-anlreq-102</invocation><expect>Y281-LIST-OK</expect></criterion>
+<criterion id="AR281-y-AC1" cell_refs="AR-y-281"><invocation>python C:/dev/wk-irpt-anlreq-112/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py y281-list --root C:/dev/wk-irpt-anlreq-112</invocation><expect>Y281-LIST-OK</expect></criterion>
 `AR281-y-AC1`: the record states the scoping rule and the projection, the authorization change in one paragraph, a new test file with at least 10 passing tests whose case (a) fails at HEAD, and the existing ticket service tests pass with at most the named edits.
 
 <criterion id="AR281-y-AC2J" cell_refs="AR-y-281" judgment="true"/>
@@ -54,6 +54,10 @@ You are `0.9.0_WK_IRPT_ANLREQ~102`.
 **AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-13 ~20:5xZ, after the first worker's stop, rows `IRPT_ANLREQ-D2-W102-S1` and `-S2`; the worker's stop was right).** (S1, the size) MEASURED by this seat with one single-resource read, `describe-table opal-tickets`: `ItemCount 29`, `TableSizeBytes 37652`, status ACTIVE, one index (`status-index`), created 2026-07-14 (DynamoDB refreshes the count about every six hours, so it is approximate; the order of magnitude is the point). At that size the FILTER-ON-SCAN version is LICENSED: no Terraform and no new index in this cell. Its rule: a client-human's LIST reads the table with a FULL PAGINATED scan (follow `LastEvaluatedKey` until it is absent; NEVER `Limit` the scan and then filter: the internal path does that at `lambda_function.py` :1218-1228, row `W102-S3`, which cuts the page before the firm filter and is not to be copied), filters to `ticket_type == analysis_request` AND `requester.firm ==` the caller's firm, and carries a HARD BOUND of 20 scan pages: if the bound is reached before the scan ends, the answer is a 503-class refusal with the words `list incomplete` (never a partial list that reads as complete); record the bound and the 29-item measurement in the record and in a code comment. A firm-keyed index is the right shape if the table grows past a few thousand items: say so in `release_needs`. (S2, the grant) `<paths>` now also names the three tests that pin a client LIST as 403: `tests/test_fence_other_firm.py`, `tests/test_no_row_refuses.py`, `tests/test_status_active.py`. Edit each ONLY where it asserts that a client-human's LIST is refused; keep every other assertion; list each edit in the record with before and after text; a pin on another principal or action is never edited. The refusals those tests pin for an unresolvable or no-row principal stay refusals (the new LIST admits only a resolvable client-human with a firm). Gate limb that graded this amendment: none stated (the issuer amends its own pending order's text and grant).
 
 **AMENDMENT 2 (issuer `2.0.0_SA_COO~Y2`, 2026-10-13 ~22:0xZ, after the continuation worker's BLOCKING row `IRPT_ANLREQ-D2-W108-S3`; the stop was right).** The lane gate grades the code and test paths against `<issued_to>`; the continuation worker `0.9.0_WK_IRPT_ANLREQ~108` works in the SAME worktree `C:/dev/wk-irpt-anlreq-102` (branch `wk-IRPT_ANLREQ-102`) and holds the built, uncommitted code. `<issued_to>` is now `0.9.0_WK_IRPT_ANLREQ~108`; the grant is unchanged except that its record folder is `deliverables/0.9.0_WK_IRPT_ANLREQ~108/` (the check reads it first). Commit the six code and test paths as `~108`, re-run the trunk checker, re-run the proof-of-spec check, report once. Do not flip `<status>`. Gate limb that graded this amendment: none stated (the issuer amends its own pending order's assignee).
+
+**AMENDMENT 3 (issuer `2.0.0_SA_COO~Y2`, 2026-10-13 ~22:3xZ, after the second continuation worker's BLOCKING row `IRPT_ANLREQ-D2-W108-S6`).** The `~108` branch (`wk-IRPT_ANLREQ-102`) cannot merge the trunk: its rows `W108-S1..S3` carry the same ids as the trunk's `W108-S1..S5` (the `AR-y-284` worker held the same serial), the row gate refuses a duplicate id, forbids rewriting a filed row, and has no override on a merge. The built code is therefore re-applied (the predecessor's uncommitted diff, `git apply --3way`) onto a NEW branch cut from the trunk: worktree `C:/dev/wk-irpt-anlreq-112`, branch `wk-IRPT_ANLREQ-112`, ticket service folder 279 passed (254 trunk + 25 new). `<issued_to>` is now `0.9.0_WK_IRPT_ANLREQ~112`; its record folder is `deliverables/0.9.0_WK_IRPT_ANLREQ~112/` (the check reads it first), its rows are `IRPT_ANLREQ-D2-W112-S<k>`, and the invocation of `AR281-y-AC1` points at the `~112` worktree. The grant (the six code and test paths) is unchanged. Gate limb that graded this amendment: none stated (the issuer amends its own pending order's assignee and root).
+
+**AMENDMENT 4 (issuer `2.0.0_SA_COO~Y2`, 2026-10-13 ~22:4xZ, after the third worker's BLOCKING row `IRPT_ANLREQ-D2-W112-S4`; the worker was right).** AMENDMENT 3 changed the criterion's `--root` but left the checker's own path pointing at the `~102` worktree. The invocation of `AR281-y-AC1` now names the `~112` worktree for both: `python C:/dev/wk-irpt-anlreq-112/.../ar21_checks.py y281-list --root C:/dev/wk-irpt-anlreq-112`. The recorded AC1 FAIL in the worker's proof instance is the issuer's wrong invocation text; the issuer re-runs the trunk checker after the drain. Gate limb that graded this amendment: none stated (the issuer amends its own pending order's criterion text).
 
 ## BOUNDS
 
@@ -95,3 +99,5 @@ lane: the files named in <paths> and the worker's deliverables.
 
 - Cut on the CTO's ruling (A) (msg 7204) for the FWD-1 blocker found by AR-y-271 (a partner-firm advisor cannot file an analysis_request), workstream `Y` round 24. The grant names every file the cell writes. Any change to who may write or read what in the ticket service is an AUTHORIZATION change: the cell states it in one paragraph for the never-widen pair that will govern its release. Base: `AR281-y-AC1` FAIL as expected (no record).
 - Any portal candidate goes to `1.0.0_SA_CTO`'s review lane through the issuer; the worker lands nothing.
+
+<!-- ISSUER NOTE 2026-10-13 (2.0.0_SA_COO~Y2): status flipped to complete after the drain (slot 112, the third worker). The worker recorded AR281-y-AC1 FAIL only because the order text named the ~102 checker path (AMENDMENT 4); the trunk checker, run by the issuer after the drain, prints Y281-LIST-OK (25 new tests, ticket folder 279), proof VALID. Nothing released; the Lambda leg is in the consolidated release pair. The CVO decides whether that re-grade is right and grades AR281-y-AC2J. -->

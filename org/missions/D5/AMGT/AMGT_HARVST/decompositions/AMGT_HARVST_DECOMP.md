@@ -4019,3 +4019,32 @@ STOP status. `auth.SessionManager.refresh(publisher)` is the existing sign-in. S
 - **Why bz-10 is not cut in this issuance:** its pin is bz-9's merge commit, which does not exist yet (the same shape as bz-3 -> bz-4).
 - **Not orders:** a re-mint (round 84's finding was that a plain re-mint postpones wsj and leaves barrons untouched); FT; the servable-prefix list work (a standing deliverable).
 - **Checks dry-run at the base before the cut:** bz-9 AC1 base FAIL as expected (`no tests ran`: the file does not exist); bz-9 AC2 base PASS as expected (`76 passed`).
+
+## 105. ROUND 85 -- a repair inside bz-9's own scope: the refresh is limited to wsj and barrons (row `AMGT_HARVST-D1-S16`, this seat), 2026-10-13 ~22:5xZ
+
+Found reading `credentials.py` and `auth.py` beside the merged bz-9 (`44aadb7f1d`) before sending the bz-10 pair: `REFUSAL_CLASSES` maps `sign_in_refused` to `expired` for every publisher and `refresh_wanted()` tests only the class and the checkpoint budget, so under `--refresh-once` a `bbg` job refused as expired would spend
+its one refresh through the non-Dow-Jones branch of `SessionManager._refresh`, whose credential is `google/andrew-goldengate/credentials`: an automated headful Google sign-in that ruling (A) never named. The flag is OFF and unregistered, so nothing has fired. The issuer rules inside its own decomposition; this narrows bz-9, it adds no capability.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-bz-12` | `bz-12` | **`refresh_wanted()` admits only `wsj` and `barrons`** (one module constant); a refusal of any other publisher is recorded as before and never refreshed; the bz-9 tests that used another publisher for the refresh arms move to `wsj` or `barrons`; a loop over EVERY publisher of `credentials.PUBLISHERS` proves only those two refresh, and a mutant with the constant widened fails it. | LOCAL (direct act, about 40 product lines) | worker `0.9.0_WK_AMGT_HARVST~140` | CUT |
+| `HVST-bz-10` | (re-pinned) | **Site Z re-registered with `-Windowless -RefreshOnce`**: its pin is now bz-12's merge, not `44aadb7f1d`. | WORLD | seat `0.7.0_AE_CloudOps~ZW` | STAGED on bz-12's merge pin (its draft is not issued) |
+| `HVST-bz-11` | (with bz-10) | **The close read**, unchanged. | LOCAL (read) | seat `0.7.0_AE_CloudOps~ZW` | STAGED with bz-10 |
+
+- **Fan-out:** 1 worker, 1 chain of 1, cap 8 (bz-12 only).
+- **Why a new order and not an edit of bz-9:** bz-9 is complete and merged; its record stays as written.
+- **Checks dry-run at the base before the cut:** bz-12 AC1 base FAIL as expected (`no tests ran`: the file does not exist); AC2 base PASS as expected.
+
+## 106. ROUND 85, workstream REFRESH-SITEZ -- `HVST-bz-10` and `HVST-bz-11` CUT on the merge pin `3d88eccbc3` (bz-9 `44aadb7f1d` + bz-12), 2026-10-13 ~23:4xZ
+
+bz-12 (`3d88eccbc3`, on `origin/CLOUD` as of the cut) limited the refresh to `wsj` and `barrons`, so the staged site Z cells are cut on that pin. Cut as a second workstream of the project (its own `<workstream>` element), disjoint from the finished build workstreams: it writes only site Z deployment artifacts and reads cycle records.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-bz-10` | `bz-10` | **Site Z re-registered with `-Windowless -RefreshOnce`** from pin `3d88eccbc3` at a cycle boundary by the stop file, `-Plan` read first, one runner, every harvest pin locked, the old pin `995adcaeaa` the signed rollback, the account stop rule, `bz10_t0.txt` written just before the start. | WORLD | seat `0.7.0_AE_CloudOps~ZW` | CUT; needs a signed pair before it is sent |
+| `HVST-bz-11` | `bz-11` | **The close, read only** by `bz11_close_read.py` (10 tests): per publisher `ALIVE`, `NON_EXPIRY:<class>`, `REFRESH_FAILED`, `NOT_CURED` or `WAITING`; `CLOSE=MET` when both are ALIVE or NON_EXPIRY. Organic, about a cycle length (the sequence is bbg, then wsj, then barrons). | LOCAL (read) | seat `0.7.0_AE_CloudOps~ZW` | CUT; starts on `bz10_t0.txt` |
+
+- **Fan-out:** 0 workers (two seat orders), 2 chains, cap 8: bz-11 reads what bz-10 starts.
+- **Not orders:** a re-mint; a sign-in by any hand; FT; `bbg`, `sa` and `ft` are never refreshed (row D1-S16).
+- **Checks dry-run at the base before the cut:** bz-11 AC1 base FAIL as expected (`CLOSE=WAITING reason=no-t0-file`); AC2 base PASS as expected (`10 passed`). bz-10's AC1 and AC2 are site Z reads (base: `WorkingDirectory` is `...pin-995adcaeaa` and the task arguments carry no `--refresh-once`); AC3's file does not exist.
+- **After this round the project PARKS** (Andrew-direct ~21:1xZ, CTO msg 5209); collection keeps running at site Z.

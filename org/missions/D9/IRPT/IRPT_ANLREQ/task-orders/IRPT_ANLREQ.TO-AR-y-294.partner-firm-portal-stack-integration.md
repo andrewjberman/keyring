@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~111</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -85,3 +85,5 @@ lane: the files named in <paths> and the worker's deliverables.
 
 - Cut on `AR-y-283`'s BLOCKING row `W104-S1` (the stack strands ten AR-y-265 tests) and `AR-y-282`'s row `W103-S3` (landing order), workstream `YR` round 27. The CTO reviews ONE branch instead of five. Base: `AR294-y-AC1` FAIL as expected (no record).
 - Any portal candidate goes to `1.0.0_SA_CTO`'s review lane through the issuer; the worker lands nothing.
+
+<!-- ISSUER NOTE 2026-10-13 (2.0.0_SA_COO~Y2): status flipped to complete after the drain of the record. The worker recorded AR294-y-AC1 FAIL only because the ISSUER'S checker required failed 0 on every mid-stack row (W111-S4); the checker is fixed and the criterion, unchanged, prints Y294-STACK-OK. The portal branch cand/dell2/partner-firm-stack (head 1c71bfd8e1, LOCAL in the portal repository) goes to the CTO for review before an approval row is registered. AR294-y-AC2J is the CVO to grade. -->

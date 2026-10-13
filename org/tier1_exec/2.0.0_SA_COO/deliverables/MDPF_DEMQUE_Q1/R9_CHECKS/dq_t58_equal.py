@@ -2,7 +2,7 @@
 
 Reads `org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/0.9.0_WK_MDPF_DEMQUE~50/INCREMENTAL_WIRED_EQUALITY_REPORT.json` and requires: no_split_arm.n >= 50 with equal == n and
 mismatches == []; cells_compared prices, dividends, splits AND tr all > 0 (tr = the cells of cash, total_return, tr_source, flags compared against the full path's); a split_arm with at
-least 1 symbol with refilled false, held_restatement true and files_unchanged true (a gained split is HELD, never written); http_requests an int <= 120. Then runs
+least 1 symbol with refilled false, held_restatement true and files_unchanged true (a gained split is HELD, never written); `relock_held` naming LCEYX and FTHSX (AMENDED 2026-10-13, row W50-S2); http_requests an int <= 120. Then runs
 `incremental_equal.py --spot 5 --tr` live (5 symbols, both paths, scratch pacer, TR columns compared) and requires equal 5 of 5 and tr_cells > 0.
 WIREEQ-OK; else WIREEQ-BAD <why>.
 """
@@ -38,6 +38,10 @@ def main() -> int:
         return _bad("the split arm is missing, was written, or did not hold: %s" % sp)
     if not (isinstance(d.get("http_requests"), int) and d["http_requests"] <= 120):
         return _bad("http_requests missing or above 120: %s" % d.get("http_requests"))
+    held = d.get("relock_held") or []
+    print("relock_held: %s" % held)
+    if not ("LCEYX" in held and "FTHSX" in held):
+        return _bad("relock_held must name LCEYX and FTHSX (row W50-S2: served LOCKED, a relock over the combined history REJECTS): %s" % held)
     if not os.path.isfile(TOOL):
         return _bad("no file " + TOOL)
     r = subprocess.run([sys.executable, TOOL, "--spot", "5", "--tr"], capture_output=True, text=True, timeout=100, check=False)

@@ -47,7 +47,7 @@ exactly: [COO half](file:///C:/dev/ajb_workspace/org/missions/D8/MDPF/MDPF_DEMQU
    `test_a_gained_split_or_a_restated_overlap_bar_is_held_restatement_and_the_name_keeps_its_files`,
    `test_a_gap_beyond_five_days_pulls_from_the_stored_max_and_appends_only`,
    `test_the_receipt_lists_names_appended_without_a_relock_and_a_failed_lock_check_makes_the_name_held`.
-   Existing tests keep passing; a test that pins "a stored name is re-pulled over its whole range" changes that assertion and nothing else.
+   Existing tests keep passing (the order is amended below: SIX named tests); a test that pins "a stored name is re-pulled over its whole range" changes that assertion and nothing else.
 
 ### ACCEPTANCE
 
@@ -58,6 +58,27 @@ exactly: [COO half](file:///C:/dev/ajb_workspace/org/missions/D8/MDPF/MDPF_DEMQU
 <expected_criteria>DQ9-t58-AC1,DQ9-t58-AC2</expected_criteria>
 
 Run each invocation from the worktree root. At the base: `WIRE-BAD no file ...test_demque_incremental_wiring.py`; `WIREEQ-BAD no file ...INCREMENTAL_WIRED_EQUALITY_REPORT.json`.
+
+
+### AMENDED 2026-10-13 ~23:0xZ (issuer; STRICTER than the signed pair, so no new pair; no gate limb graded it) -- ruling on rows D1-W50-S1 to S4, and the re-seated slot
+
+Your first pass (commits `0b279b80bc`, `39c3a3e402`) stands as inherited state; the proof and the stub night are good. Do NOT merge box/dell1; this amended order and the amended checks are placed on your branch by file.
+- **S2 (ARMED, the issuer disarms with your fix): ruled.** LCEYX and FTHSX serve LOCKED, but a fresh `lock.check` over the whole history REJECTS them; today's full path therefore refuses to rewrite them (`price_store.write`: lock state not LOCKED) and the incremental path would EXTEND their `valid_to`. That widens a served claim
+  and is what pair A condition 2 forbids. **Add a RELOCK OVER THE COMBINED HISTORY, with no network:** before an append is written, run `lock.check` on `stored as_traded_close ∪ appended rows` (the stored `prices.parquet` already holds the full history) with the same trades, range and `trades_through` the full path uses. A state other than LOCKED holds the
+  name: `HELD_RESTATEMENT` with reason `relock: <state> on the combined history`, files untouched. The appended-window check stays. `appended_without_relock` now lists only names for which the combined check could not be run (no trade rows to prove against), with that reason printed.
+  Add a FIFTH named test, in `test_demque_incremental_wiring.py`: `test_a_name_whose_combined_history_relock_is_rejected_is_held_even_when_the_appended_window_passes`. The report gains `relock_held` (symbols; the 50-name proof must list LCEYX and FTHSX) and the real check `dq_t58_equal.py` now requires both.
+- **S1, S3, S4: accepted.** (A different frontier rule when no `today` is passed, the 21:00 UTC final-bar rule, is accepted as the order's own sentence. The parallel `index()` is accepted: same rows and order, proven.)
+
+
+### AMENDED 2026-10-13 ~23:3xZ (issuer; no gate limb graded it) -- a DEFECT found at the drain read: the nightly run would CRASH on its first held name (rows to follow from the issuer, not yours)
+
+Your second pass (commits `9449d5f48e`, `48f715247d`) is inherited state and the relock itself is right. **The defect:** `daily_draw.hold()` registers every held name in `locks` with a synthetic lock `{"state": "REJECTED:HELD_RESTATEMENT", ...}`, and `run()` then calls `_fold_unresolved` (the nightly script passes `--unresolved`), which calls
+`unresolved.update`. `unresolved.STATES` is a CLOSED tuple (`UNRESOLVED:*`, `REJECTED:PRICE_MISMATCH`, `REJECTED:LOW_TRADE_AGREEMENT`, `PARKED:LOW_PRIORITY`); the issuer ran `unresolved.update([], ..., {"state": "REJECTED:HELD_RESTATEMENT"})` and it RAISES `ValueError: unknown rejected state`. LCEYX and FTHSX are held every night, so the
+first nightly run would crash AFTER writing the appended names and after `write_index`, `run_daily_draw.sh` would exit 1 BEFORE the ledger upload, and no receipt would print. Your stub night passed because it ran without `unresolved_path`. Do NOT edit `unresolved.py` (outside the grant, and its state set stays closed).
+- **Fix.** A held name is registered in `locks` ONLY when the hold is an identity rejection: the combined relock returned a state that is in `unresolved.STATES` (the `REJECTED:*` states). Register it with the REAL combined lock row, which is exactly what the full path would have recorded. Every other hold (gained split, restated close, TR hole,
+  refused write) is NOT registered, so the unresolved list is left as the full path left it. Add `unresolved_path` to the stub-night test and print the receipt from that run.
+- **SIXTH named test**, in `test_demque_incremental_wiring.py`: `test_a_held_name_never_breaks_the_unresolved_fold_and_only_a_rejected_relock_opens_a_row` (run with `unresolved_path` set; one gained-split name leaves the list untouched, one relock-rejected name opens a `REJECTED:LOW_TRADE_AGREEMENT` row, the run returns normally). `dq_t58_tests.py` lists it and is placed on your branch.
+- Re-run the folder and both checks; the 50-name report needs no re-pull (this change touches no Yahoo path). Regenerate the proof instance, validate it, flip the status in the same commit.
 
 ## BOUNDS
 

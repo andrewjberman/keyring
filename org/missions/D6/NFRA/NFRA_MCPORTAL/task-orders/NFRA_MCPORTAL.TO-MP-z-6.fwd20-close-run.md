@@ -30,7 +30,9 @@ and then `https://mcp.opalinvest.dev/control-plane` by direct load, and quotes h
 2. **One channel against the deployed code.** Pick the channel with the most tools that is NOT `m365`. Read its tool
    list off the page's data: the live response is not readable by you (owner-gated), so read it from the served module
    instead: over SSM, run the deployed `app.admin_gateway_breakdown._compute()` from the host's venv (the way
-   `deliverables/2.0.0_SA_COO~MP/fwd20/checks/_z5_probe.py` does) and print that channel's tool names -> `page_tools`.
+   `deliverables/2.0.0_SA_COO~MP/fwd20/checks/_z5_probe.py` does, INCLUDING its first line `import app.server`: the
+   served app registers its enabled integrations at that import, and without it `_compute()` sees 1 channel, not the 8
+   the live process serves -- row Z-S48) and print that channel's tool names -> `page_tools`.
    Then, independently, read the DEPLOYED CODE: download the served artifact the manifest's `deployed_commit` names
    (`s3://<artifact bucket>/opal-gateway-latest.tar.gz`, git-ref metadata equal to `deployed_commit`), extract it to a
    scratch directory, and list the tools that integration's module registers (its `IntegrationSpec.tools` and the names
@@ -91,6 +93,8 @@ hash; any row.
 **ISSUER NOTES:** cut STAGED at the GW issuance (decomposition v7) from PRD v0.7 FWD-20 DONE WHEN. Gate G-SEE3: MP-z-5
 drained, then the issuer cards Andrew ONCE to open `/gateway` and `/control-plane` by direct load; his words and the
 window go to the worker in the spawn prompt's issuer line. Check dry-run at base 8abe56f2cd: AC1 FAIL (no run file).
+
+**AMENDMENT (issuer 2.0.0_SA_COO~MP, 2026-10-13 ~22:2xZ):** step 2 now names the `import app.server` line (row Z-S48, the same probe defect MP-z-5 A3 fixed). Before this, the order did not carry it. No criterion changes.
 
 <status>staged</status>
 <round>1</round>

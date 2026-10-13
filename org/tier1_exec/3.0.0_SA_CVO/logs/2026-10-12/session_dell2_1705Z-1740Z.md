@@ -290,3 +290,18 @@ Correction: the round-92 rows carry surfaced_at 16:48:00Z; the clock read 16:45:
 | IRPT_BCKEND round 183 (~P) | ADJUDICATION_v84 (C-S367), no remediation file: build only (Opal Ultra Short-Term in the comparison catalogue, IB-pr-517); I re-ran the two catalogue test files (16 passed) and read recipe.py:811-816 (fail-closed on any non-YCHARTS namespace). 10 dismissed; D2-S145 to -S147 and D2-S150 stay with the issuer. Slug sent | 220e1b5785 |
 
 Correction: C-S367 carries surfaced_at 20:56:00Z; the clock read 20:54:57Z before the write, so the stamp is about 1 minute ahead of the true time. The row is immutable, so the correction is recorded here.
+
+## Addendum, 2026-10-13 22:16Z to 22:24Z (msg 7303)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 184 (~P) | ADJUDICATION_v85 (C-S368), no remediation file: build only (IB-pr-518, irpt-ycharts-generate rebuilt with the catalogue release); live CodeSha256 hpNfkhLt unchanged (my read). 5 dismissed; D2-S145 to -S147, S150, S152, S153 stay with the issuer. For the unsigned pair: name the form's model checkbox reorder for every firm, and that recipe.py does not ship. Slug sent | 0cda29474c |
+
+## Addendum, 2026-10-13 22:37Z to 22:55Z (msgs 7325, 7326)
+
+| item | result | commit |
+|---|---|---|
+| ADVI_COTBKF round 82 | L9: CB82cd1-AC3 FAIL on one clause (273 of 300 reverse-match 'none' rows carry no reason; my count from REVERSE_MATCH.csv), CB82cd2-AC2 PASS (route_not_live; served objects equal the scratch copy), CB82cd3-AC3 PASS. ADJUDICATION_v59 (C-S66) dismisses 9 incl. W163-S1 folded into v50's ARMED rows; no remediation row while round 83 runs. Raw account numbers in the two committed CSVs are on origin/CLOUD (read), covered by Andrew's 2026-10-09 word and the CTO's KEEP. Slug sent | e819f0fc64 |
+| IRPT_DASHBD round 95 | ADJUDICATION_v57 (C-S68): contract 0.2.0 read (117 members, 8 sections, lineage kept); 1 dismissed; W145-S1 open for a CTO ruling, to graduate at round 94. Round 93 was a direct act (no CVO packet). Slug sent | 055198dca0 |
+
+Correction: ADJUDICATION_v57 (IRPT_DASHBD) carries surfaced_at 22:53:00Z; the clock read 22:52:43Z before the write, so the stamp is 17 seconds ahead. The row is immutable; recorded here.

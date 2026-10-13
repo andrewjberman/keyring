@@ -10396,7 +10396,108 @@
   },
   "disposition": "UNDER_INVESTIGATION",
   "notes": "Staff cannot submit (the submit is off), so the unscoped read has no filing consequence. Recorded so the L9 grader can judge the staff path on the candidate's own terms."
-}
+},
+  {
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~107",
+    "surfaced_at": "2026-10-13T21:08:01Z",
+    "id": "IRPT_ANLREQ-D2-W107-S1",
+    "one_line": "The words-table lock (test_correction_words.py:44) compares uploads.CORRECTION_WORDS with the literal in ops/status.py, which is outside this order's grant, so the three new finding codes cannot be locked without an ops/status.py edit: the intake folder reads 1 failed, 369 passed, 1 skipped.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AR-y-293 step 4: add the new codes to the words table and keep the words-table lock test green by editing it ONLY to include the new codes. The grant names intake/tests/test_correction_words.py and intake/uploads.py, not ops/status.py.",
+    "world_is": "test_correction_words.py:44 asserts uploads.CORRECTION_WORDS == status.CORRECTION_WORDS; ops/status.py:86 is the literal copy. With TICKER_CHECK_FAILED, TICKER_KEPT_BY_HISTORY and TICKER_NOT_CHECKED added to uploads.py, the assertion lists three extra items. The lock is by design (its own comment: locks the copy to the source word for word), so the only green route is an ops/status.py edit the grant does not name.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/intake/intake/tests/test_correction_words.py:44@d2c68580a1",
+        "ops/status.py:86@d2c68580a1 (CORRECTION_WORDS literal)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "STOP per the order. The source edits are held as a patch in the deliverables folder and NOT committed, so the branch stays green. Issuer: amend the grant to name ops/status.py, copying the three entries from uploads.py CORRECTION_WORDS."
+  },
+  {
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~107",
+    "surfaced_at": "2026-10-13T21:08:01Z",
+    "id": "IRPT_ANLREQ-D2-W107-S2",
+    "one_line": "template_reader.finding() replaces an empty actions list with REPLACE_FILE, so a NOTICE with no action cannot be made through finding(); the KEPT notice carries REVIEW, the action CASH_SYMBOL_NORMALIZED uses.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AR-y-293 step 4: one NOTICE finding for a KEPT holding, with no action (words only).",
+    "world_is": "intake/template_reader.py:149 is 'actions': actions or ['REPLACE_FILE']; intake/template_reader.py:471 emits CASH_SYMBOL_NORMALIZED with severity NOTICE and actions ['REVIEW'].",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/intake/intake/template_reader.py:149@d2c68580a1",
+        "infra/aws/lambda/investor-reporting/intake/intake/template_reader.py:471@d2c68580a1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~107",
+    "surfaced_at": "2026-10-13T21:08:01Z",
+    "id": "IRPT_ANLREQ-D2-W107-S3",
+    "one_line": "A KEPT holding in a SHARES upload cannot be priced by the freeze: the price gate needs an AVAILABLE identity reference with a canonical key and a dated share-class quote with provenance, which a yfinance close cannot supply, so the holding refuses as SHARES_PRICE_UNAVAILABLE. Shares are NOT covered; dollar and weight bases are.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AR-y-293 step 3: a KEPT holding passes the freeze; if the freeze needs a price only MDPF_SECHIST can supply, STOP at step 3 for SHARES only and file a BLOCKING row naming the file and what is needed.",
+    "world_is": "portfolio.py SHARES branch: quote = prices.get(symbol); key is set only when the check's reference state is AVAILABLE; the quote must carry canonical_key == key, as_of == price_date, price_basis EXACT_DATED_SHARE_CLASS and a provenance sha256. A KEPT check carries reference UNAVAILABLE (identity port is the None stub, ycharts/generate/resident_worker.py:619-620), so the holding emits SHARES_PRICE_UNAVAILABLE (probe: NEEDS_CORRECTION). Needed: a dated share-class price for the request from MDPF_SECHIST, supplied through resolve_prices (uploads.py:592; intake/upload_resolution.py:112,133 SHARES_PRICE_SOURCE_NOT_COMPOSED), plus a canonical identity, or a CTO ruling that a yfinance close is an acceptable SHARES price for one request.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/intake/intake/portfolio.py:510-527@d2c68580a1",
+        "infra/aws/lambda/investor-reporting/intake/intake/upload_resolution.py:112@d2c68580a1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~107",
+    "surfaced_at": "2026-10-13T21:08:01Z",
+    "id": "IRPT_ANLREQ-D2-W107-S4",
+    "one_line": "A KEPT holding is written with security_id = the client's bare ticker under holdings identity_kind YCHARTS_SECURITY, and the freeze's own comment says the YCharts upload echo reconciles on that provider id; a KEPT holding has no provider id, so a consumer that reads holdings as YCharts ids would misread it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y2",
+    "spec_asserts": "AR-y-293 step 3: a KEPT holding is recorded with its identity as given by the client (the client's own ticker and name), price_source yfinance, method KEPT_BY_HISTORY.",
+    "world_is": "portfolio.py holdings block: identity_kind YCHARTS_SECURITY. The KEPT row's security_id is the client ticker. portfolio.py:455-456 comment: YCharts' upload echo must match the provider id (recipe.step_upload reconciles on it). ARMED: no KEPT state arises until a checker is injected, so the hazard waits on the resident wiring. Disarm before wiring: the recipe must treat a KEPT_BY_HISTORY row as provider-less, or keep it out of the YCharts upload.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/intake/intake/portfolio.py:455-456@d2c68580a1",
+        "infra/aws/lambda/investor-reporting/intake/intake/portfolio.py holdings block (identity_kind)@d2c68580a1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~107",
+    "surfaced_at": "2026-10-13T21:08:01Z",
+    "id": "IRPT_ANLREQ-D2-W107-S5",
+    "one_line": "The per-ticker finding sentences (a KEPT notice, a failed check with its reason, a holding not checked) need the ticker and the reason, which the words table cannot carry; uploads._words_for now takes the finding's own description for three codes (SYMBOL_WORDS_CODES), a second source the words-table docstring does not declare.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AR-y-293 step 4: the words for the three codes live in the words table (generic words per code).",
+    "world_is": "uploads.py SYMBOL_WORDS_CODES and _words_for: the own description wins for the three codes; the table entries stay as the fallback and as the lock's copy. CORRECTION_WORDS values carry no placeholders (test_every_finding_code asserts no brace), so the table alone cannot name a ticker.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/intake/intake/uploads.py:160-178@d2c68580a1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
 ]
 ```
 
@@ -11016,5 +11117,417 @@
   },
   "disposition": "UNDER_INVESTIGATION",
   "notes": "Recorded so that the L9 grader can judge the authorization change on its full effect."
+}
+```
+
+## IRPT_ANLREQ-D2-W110-S1 -- (AR-y-293 KEPT freeze) the holding cannot keep the client's name: the template projection carries no name
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W110-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~110",
+  "surfaced_at": "2026-10-13T22:03:10Z",
+  "one_line": "AR-y-293 step 3 says a KEPT holding keeps the client's own ticker AND name; the freeze has no name to keep, because the template reader's row carries only the ticker and the amount.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-293 step 3 and AC2J: 'a KEPT holding keeps the client's own ticker and name'.",
+  "world_is": "MEASURED at the wk-IRPT_ANLREQ-107 HEAD after amendment 2: template_reader.read_template on 'Ticker,Dollars' returns rows with keys ['amount', 'basis', 'cells', 'row', 'symbol'] and no name field; portfolio.freeze_template_portfolio builds the KEPT row from original (the template row) and security_id = the client's symbol. The client's ticker is kept; no name is kept, because none is read from the file. The name is not in the frozen KEPT row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py (read_template row keys, measured)",
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py:571 (KEPT row, method KEPT_BY_HISTORY; name not carried)",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_kept_holding.py (test_the_client_ticker_is_kept_on_the_holding_and_the_found_path_is_unchanged asserts the ticker only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W110-S2 -- (AR-y-293 amendment 2 merge) a merge over a dirty overlap needs a file-level revert; the stash that would park the work is blocked
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W110-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~110",
+  "surfaced_at": "2026-10-13T22:03:10Z",
+  "one_line": "The coordinator-directed merge of amendment 2 (461a5fa3df) into the worktree holding uncommitted KEPT edits could not run as written: git refuses a merge that touches a dirty file, and the shared-worktree rule blocks the git stash that would park it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The coordinator's note: merge 461a5fa3df before the commit, a conflict in the order or investigations file kept on both sides, nothing else changes.",
+  "world_is": "MEASURED: the merge overlaps one dirty file (intake/security_resolution.py, 48 upstream lines). The stash was refused by the shared-worktree blast rule. The work was saved to .scratch/backup, the one file was reverted to its committed HEAD content, the merge ran (auto-merged the investigations file, no conflict), and the saved hunks were re-applied with patch (4 hunks, offsets 16 to 30 lines, no reject). The other five edited files were not touched by the merge and were verified byte-equal to their backups. The uncommitted state is not yet committed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge 461a5fa3df in C:/dev/wk-irpt-anlreq-107 (merge commit after 5af9243b49)",
+      "intake/security_resolution.py diff against the merged HEAD: 88 insertions, 2 deletions",
+      "a suite run on the merged tree with the edits: 429 passed, 1 skipped, rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W109-S1 -- two existing packager tests outside the grant pin the five-member payload and fail with the seven-member payload
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W109-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~109",
+  "surfaced_at": "2026-10-13T21:45:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "Two existing packager tests outside my grant assert the five-member PACKAGE payload and fail once request_id and request_revision are sent; per the order I stopped and did not edit them.",
+  "spec_asserts": "AR-y-285 step 3(f) and AC1: the existing packager tests pass with no assertion edited except where it pinned the exact five-member payload. BOUNDS: a test OUTSIDE the grant that fails because of the change is a BLOCKING row and a STOP; the grant is opal_packager.py, the new test file, the channel and the deliverables.",
+  "world_is": "MEASURED in the worktree on base 844d025f4a with the change: research folder 317 passed, 2 failed (HEAD: 306 passed, 0 failed). The two failures are ycharts/research/tests/test_opal_packager.py::test_d_one_message_one_render_to_package_pdf_then_one_attach (pin at :155) and ycharts/research/tests/test_packager_own_store.py::test_a_a_retained_package_makes_no_commentary_read_no_render_no_produce_and_posts_the_retained_ref (pin at :70). Both files are outside the <paths> grant, so the pins cannot be amended by this order. Each needs the same edit: add request_id and request_revision to the expected dict. Nothing was edited; the order stays open.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_packager.py:155 (five-member payload equality, base 844d025f4a)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_packager_own_store.py:70 (five-member payload equality, base 844d025f4a)",
+      "pytest run in infra/aws/lambda/investor-reporting/ycharts/research: 317 passed, 2 failed with the change; 306 passed, 0 failed at HEAD (worktree C:/dev/wk-irpt-anlreq-109)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W109-S2 -- a packager sending request_id before the ticket service accepts it refuses every package attach with 400
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W109-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~109",
+  "surfaced_at": "2026-10-13T21:45:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "The packager change released ahead of the ticket service half makes every package attach fail: HEAD package_ticket refuses any body field outside PACKAGE_ALLOWED_FIELDS with 400.",
+  "spec_asserts": "AR-y-285 interface: the PACKAGE body gains optional request_id and request_revision; the ticket service half (AR-y-284) is the other member of the pair, and the server half states its authorization change for the pair.",
+  "world_is": "MEASURED at base 844d025f4a: infra/aws/lambda/ticket_center/lambda_function.py:1497-1501 (package_ticket) returns 400 'unexpected field(s) on the package path' for any body key outside PACKAGE_ALLOWED_FIELDS, and the HEAD set has neither request_id nor request_revision. The packager change (opal_packager.py:219-220) sends both on every attach. Released alone, the packager's attach is refused 400 until the server half is live. Release order is server first; the packager is not released by this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:1497-1501 (package_ticket extra-field refusal, base 844d025f4a)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:219-220 (seven-member payload, worktree wk-IRPT_ANLREQ-109)"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
+
+## IRPT_ANLREQ-D2-W109-S3 -- the face names the record r26/ but the checker reads r23/
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W109-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~109",
+  "surfaced_at": "2026-10-13T21:45:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The face says write r26/PACKAGER_REQUEST_ID.json; the named check reads the record under r23/, so the record was written to r23/.",
+  "spec_asserts": "Face step 4: write r26/PACKAGER_REQUEST_ID.json in the deliverables folder for this order.",
+  "world_is": "MEASURED at base 844d025f4a: checks/r21/ar21_checks.py sets D26 = D23 (line 29), and the y285-pkg-sender branch loads D26 % '109' + 'PACKAGER_REQUEST_ID.json' (lines 655-656), which is the r23/ folder. The round-26 records of ~92 and ~101 also sit in r23/. The record is at org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~109/r23/PACKAGER_REQUEST_ID.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py:29 (D26 = D23) and :655-656 (record path)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~101/r23/ (round-26 record folder convention)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W109-S4 -- the AC1 invocation exits 0 but prints Y285-PKG-SENDER-OK, not the expected token Y285-PKG-OK
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W109-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~109",
+  "surfaced_at": "2026-10-13T21:45:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR285-y-AC1 names the expected token Y285-PKG-OK; the named invocation exits 0 and prints Y285-PKG-SENDER-OK, which does not contain that token.",
+  "spec_asserts": "AR285-y-AC1: invocation python ...ar21_checks.py y285-pkg-sender --root <worktree>, expect Y285-PKG-OK.",
+  "world_is": "MEASURED in the worktree after the change: 'packager request id tests: 13 passed, 0 failed (rc=0)' then 'Y285-PKG-SENDER-OK', rc=0. The checker's TOKENS map (ar21_checks.py:41) names the token Y285-PKG-SENDER for y285-pkg-sender. The expected literal Y285-PKG-OK does not occur in the output. Recorded as the output; AC1 is graded FAIL on this token and on BLOCKING row IRPT_ANLREQ-D2-W109-S1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py:41 (TOKENS y285-pkg-sender -> Y285-PKG-SENDER)",
+      "worktree run of the named invocation, rc=0, output Y285-PKG-SENDER-OK (C:/dev/wk-irpt-anlreq-109)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W109-S5 -- the ycharts/generate/tests run does not finish inside the 120-second bound, so the four-custody-failure baseline is recorded partially
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W109-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~109",
+  "surfaced_at": "2026-10-13T22:15:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-285 step 4 names the generate folder baseline (4 custody failures) and the bounded run of that folder does not complete inside timeout 120; two runs both return rc=124.",
+  "spec_asserts": "TO-AR-y-285 step 4: the known baseline of ycharts/generate/tests is 4 custody failures, reported with counts under the bound timeout 120.",
+  "world_is": "MEASURED in the worktree after the change: timeout 120 python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests -q returned rc=124 on the first run and on the one permitted retry. Partial output (.scratch/generate_run.txt) shows 4 F markers through about 68 percent of the run and no summary line. The full denominator and the final pass and fail counts were NOT reached inside the bound. Recorded as partial, not as a full count.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree run of the named invocation twice, rc=124 both (C:/dev/wk-irpt-anlreq-109)",
+      "C:/dev/wk-irpt-anlreq-109/.scratch/generate_run.txt (partial output, 4 F markers, 7 lines)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W112-S1 -- AR-y-281: a fourth client LIST 403 pin (DEV_PARTNER, test_authz_matrix.py:256) sat outside the earlier pin census; edited in-grant to 200
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W112-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~112",
+  "surfaced_at": "2026-10-13T22:25:34Z",
+  "one_line": "The pin census that named the client LIST pins missed the DEV_PARTNER assertion at test_authz_matrix.py:256; it asserts a client-human's LIST is refused and it moved to 200 with the firm-scoped list, keeping its stated predicate.",
+  "spec_asserts": "AR-y-281 amendment 1: edit each pinning test only where it asserts that a client-human's LIST is refused; keep every other assertion; list each edit with before and after text.",
+  "world_is": "MEASURED at commit cbdfe204a0: test_authz_matrix.py:256 now asserts GET /api/scoped/tickets for DEV_PARTNER (userType Dev, firm 49financial, allowedFirmIds ALL) is 200. Before the build it asserted 403 under the message 'allowedFirmIds=ALL at a partner firm is NOT internal (D8 predicate)'. That predicate still holds: the caller is a client-human, so its LIST is the firm-scoped one; only the outcome moved. The earlier census listed :246, :182-191 and :290-299 only. Recorded as a pinning edit in r23/LIST_SCOPED.json.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/tests/test_authz_matrix.py@cbdfe204a0 :256 (read this turn; asserts 200 with the AR-y-281 comment)",
+      "infra/aws/lambda/ticket_center/tests/test_authz_matrix.py@df215447fa :256 (the trunk line: asserts 403 with the D8 predicate message)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W112-S2 -- AR-y-281: two same-answer pins compare two client LIST answers across two fresh ticket tables; the second setup needed the same ticket re-seeded
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W112-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~112",
+  "surfaced_at": "2026-10-13T22:25:34Z",
+  "one_line": "Under a 200 client answer, test_no_row_refuses.py and test_status_active.py compare a before and an after answer across a second P.setup() that returns a fresh empty table, so the seeded ticket was re-seeded on the second setup; the equality assertion is unchanged.",
+  "spec_asserts": "AR-y-281 amendment 1: edit each pinning test only where it asserts a client-human's LIST is refused; keep every other assertion; list each edit with before and after text.",
+  "world_is": "MEASURED in the folder run at the build: test_no_row_refuses.py:142-143 and test_status_active.py:176-177 call P.setup() a second time and that table holds no ticket; the first answer held one ticket and the second none, so the equality failed. The fix re-seeds the same analysis ticket with _analysis_ticket(t) on the second setup line. Under the old 403 both answers were equal, so the defect could not show. The setup line sits outside the refusal assertion, so it is recorded here rather than silently.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/tests/test_no_row_refuses.py@cbdfe204a0 :142-143 (read this turn)",
+      "infra/aws/lambda/ticket_center/tests/test_status_active.py@cbdfe204a0 :176-177 (read this turn)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W112-S3 -- safe-commit ran the client account-id check as ABSENT on this box (hashed list not present); the commit landed unchecked for that gate
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W112-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~112",
+  "surfaced_at": "2026-10-13T22:25:34Z",
+  "one_line": "The client-data-check inside safe-commit printed WARN because the hashed account-id list is not at its expected local path, so commit cbdfe204a0 was not checked for client account ids; the commit itself returned rc 0.",
+  "spec_asserts": "Worker face step 4: commit the six paths through .tools/safe-commit.sh with the commit gates it runs (commit-gate on each .py, then the commit).",
+  "world_is": "MEASURED at commit cbdfe204a0: safe-commit printed 'WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there)'. The commit returned rc 0 and the other gates printed OK. The six paths are Lambda and test code; the gate that did not run is the one that checks account ids. Not resolved here: the list is an environment file outside the grant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit cbdfe204a0 (the WARN line, measured in this session; commit rc 0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W112-S4 -- AR-y-281 AC1: the task order's invocation names the ~102 checker; run literally it prints Y281-LIST-FAIL here, so the criterion cannot pass as issued
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W112-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~112",
+  "surfaced_at": "2026-10-13T22:38:58Z",
+  "one_line": "The AR-y-281 AC1 invocation in the task order names the checker under worktree 102 with --root 112; run literally it prints Y281-LIST-FAIL (no ~102 record), so AC1 cannot pass as issued.",
+  "spec_asserts": "Task order AR281-y-AC1 invocation: python C:/dev/wk-irpt-anlreq-102/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py y281-list --root C:/dev/wk-irpt-anlreq-112, expect Y281-LIST-OK. AMENDMENT 3 states the invocation of AR281-y-AC1 points at the ~112 worktree.",
+  "world_is": "MEASURED this turn at commit ebf4bf1d4c: the literal criterion command printed 'FAIL: no org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~102/r23/LIST_SCOPED.json' and 'Y281-LIST-FAIL' (rc 1). The checker run from the ~112 worktree (the face's invocation) prints 'tests/test_list_scoped_firm.py: 25 passed', 'ticket service folder: 279 passed' and 'Y281-LIST-OK' (rc 0). proof-of-spec-check reports the recorded invocation as not equal to the criterion's invocation (VIOLATION invocation-alignment[AR281-y-AC1]). The task order file is the issuer's and outside this worker's grant; it was not edited.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-281.list-scoped-to-the-callers-own-firm.md@df215447fa (criterion AR281-y-AC1 invocation names C:/dev/wk-irpt-anlreq-102 for the script)",
+      "python C:/dev/wk-irpt-anlreq-102/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py y281-list --root C:/dev/wk-irpt-anlreq-112 -> FAIL: no ...0.9.0_WK_IRPT_ANLREQ~102/r23/LIST_SCOPED.json; Y281-LIST-FAIL (rc 1), measured this turn",
+      "python C:/dev/wk-irpt-anlreq-112/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py y281-list --root C:/dev/wk-irpt-anlreq-112 -> Y281-LIST-OK (rc 0), measured this turn"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W111-S1 -- the stack's history carries three DEV merge commits and 22 files of delta, where CONTRIBUTING-BOXES says a feature branch carries only its own commits
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W111-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~111",
+  "surfaced_at": "2026-10-13T22:48:34Z",
+  "one_line": "The partner-firm stack cut from origin/PROD carries three DEV merge commits (73d8d3a4, 0101dd66, a577cba5) in its history, because two candidate tips were cut from DEV tip a577cba5 and two dependency chains contain DEV merges of themselves.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "portal/CONTRIBUTING-BOXES.md step 1 (at origin/PROD 07f065e6): cut the feature branch from the last PROD release so the branch carries only its own commits; AR-y-294 step 1: the branch is cut from origin/PROD.",
+  "world_is": "MEASURED at portal 1c71bfd8: git log 10e7664d..HEAD gives 21 commits: 8 merges, 9 candidate commits, 1 test-edit commit and 3 DEV merge commits (73d8d3a4, 0101dd66, a577cba5). The 103 and 104 tips (46a49e57, e82daf4c) have parent a577cba5, which is DEV tip after the three IRPT_ANLREQ DEV merges, and the 88 and 90 chains carry their DEV merges, so merging a tip brings them into history. Their content is the three dependency candidates already on DEV; no other DEV commit is in the range. The file delta from PROD is 22 files.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@1c71bfd8: git log --format='%h %p %s' 10e7664d..HEAD lists the 21 commits and the three DEV merges",
+      "portal@46a49e57 parent a577cba5 (candidate 103 cut from DEV)",
+      "portal@e82daf4c parent a577cba5 (candidate 104 cut from DEV)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The order fixes the cut at origin/PROD and the candidate tips; this worker did not re-cut the candidates. The CTO may prefer a re-cut from PROD of the candidate commits alone."
+}
+```
+
+## IRPT_ANLREQ-D2-W111-S2 -- the combination strands 21 tests at the partner-view merge, not the ten the cell names: ten AR-y-265, one AR-y-283, and ten from the C-FIRM and variant candidates' own pins
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W111-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~111",
+  "surfaced_at": "2026-10-13T22:48:34Z",
+  "one_line": "The stack strands 21 tests in the TicketCenter folder at the partner-view merge: the ten AR-y-265 silence tests named by W104-S1, one AR-y-283 partner-view test, and ten tests the C-FIRM and variant candidates pin to the bare select tag, the old comparison source text and the inferred variant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IRPT_ANLREQ-D2-W104-S1 (BLOCKING, ARMED, disarm owner 2.0.0_SA_COO~Y2): the stack strands ten AR-y-265 tests; AR-y-294 step 3: reconcile the stranded tests by re-pointing mounting or fixtures and keeping every assertion's words and intent.",
+  "world_is": "MEASURED with bun test src/pages/TicketCenter src/lib: after the C-FIRM merge 94 pass and 1 fail; after the variant merge 90 pass and 10 fail; after the partner-view merge 95 pass and 21 fail (r23/PORTAL_PARTNER_STACK.json after_each). The ten AR-y-265 tests fail with 'no button New Ticket on the page'. The eleven others are partner-view test a (select[aria-label=Firm] expected truthy), four in analysis-firm-c-firm (three bare select absences and the source pin filingForm.firm === ''), five in analysis-firm-choice (bare select absences), and one in analysis-form-no-fee (comparison_model SPY from the inferred variant). Each is re-pointed in portal commit 1c71bfd8; every edit is listed with before and after text in r23/PORTAL_PARTNER_STACK.json test_edits. The re-point of W104-S1 is the stack's proposal; its disarm owner rules on it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@f9e39deb bun test src/pages/TicketCenter src/lib: 95 pass, 21 fail (measured, after_each m7)",
+      "portal@1c71bfd8 src/pages/TicketCenter/__tests__/analysis-submit-silence.test.tsx (re-pointed to the partner submit route)",
+      "portal@1c71bfd8 src/pages/TicketCenter/__tests__/analysis-firm-c-firm.test.tsx and analysis-firm-choice.test.tsx (select count of one)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "W104-S1 remains ARMED until its disarm owner rules. This row does not disarm it."
+}
+```
+
+## IRPT_ANLREQ-D2-W111-S3 -- the variant candidate's merge re-introduces advisory_fee from a base that predates the no-fee removal; the conflict was resolved by keeping the removal
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W111-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~111",
+  "surfaced_at": "2026-10-13T22:48:34Z",
+  "one_line": "Candidate AR-y-275 (wk-IRPT_ANLREQ-96-portal, base 4d601023) carries an advisory_fee member that AR-y-263 (on DEV) removed; the merge conflicted on it and the removal was kept.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-294 step 2: resolve a conflict keeping BOTH sides' intent and never drop a candidate's behaviour to make a conflict go away; the no-fee removal (AR-y-263) is a dependency the stack carries.",
+  "world_is": "MEASURED at merge 4c378259: on the 96 side, EMPTY_ANALYSIS_FORM and answersFromForm in AnalysisRequestParts.tsx and the analysis-form-i1.test.tsx fixture carry advisory_fee, inherited from base 4d601023, which predates the AR-y-263 removal on DEV at 9ef6a359. The 96 side's own fee line was dead code (its answersFromForm never sent it). Resolved by keeping report_type and dropping advisory_fee and the fee line. No candidate behaviour was dropped: the variant change is kept and the fee field stays removed as AR-y-263 requires.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@80d7c70a: git diff 4d601023 80d7c70a -- AnalysisRequestParts.tsx keeps advisory_fee as context in EMPTY_ANALYSIS_FORM",
+      "portal@1c71bfd8 src/pages/TicketCenter/AnalysisRequestParts.tsx: EMPTY_ANALYSIS_FORM has no advisory_fee member"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W111-S4 -- the proof-of-spec checker's y294 rule requires failed 0 on every after_each row, which the order's own sequence cannot meet: reconciliation runs after the last merge
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W111-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~111",
+  "surfaced_at": "2026-10-13T22:48:34Z",
+  "one_line": "ar21_checks.py y294-stack refuses any after_each row with failed other than 0, but the order records counts after each merge and reconciles the stranded tests only after the last merge, so the honest mid-stack rows read failed 1, 10, 10, 21 and 21.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR294-y-AC1: the record lists the eight merges in order with the test and typecheck counts after each. ar21_checks.py y294-stack: every after_each row must read failed 0 and typecheck_rc 0, else 'after_each row not clean'.",
+  "world_is": "MEASURED: the record r23/PORTAL_PARTNER_STACK.json states the counts measured after each merge, before reconciliation: merge 4 failed 1, merge 5 failed 10, merge 6 failed 10, merge 7 failed 21, merge 8 failed 21; the test-edit commit reads failed 0 and 121 pass. The checker's rule reads every row, so AC1 refuses on the mid-stack rows. The record states the measured counts and is not edited to read clean. AC1 is recorded FAIL and the order stays open. The checker is outside this worker's grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py y294-stack: the failed-0 loop over every after_each row",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~111/r23/PORTAL_PARTNER_STACK.json after_each rows m4 to m8"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: either the checker reads the final after_each row only, or the order allows the reconciliation to precede the per-merge rows. The worker has not changed either."
+}
+```
+
+## IRPT_ANLREQ-D2-W111-S5 -- the staff analysis form's held submit says choose a firm, on a form that has no firm control and says staff cannot file from it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W111-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~111",
+  "surfaced_at": "2026-10-13T22:48:34Z",
+  "one_line": "On the internal (staff) analysis form, once staff pick the Analysis Request type, the held submit reads 'Choose the firm this request is filed under.' while the form has no firm control and states that staff cannot submit from it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "AR-y-294 step 4 asks what staff are told; the C-FIRM cell (AR-y-274): Opal staff file nothing here; the form says so in one sentence and the submit stays off.",
+  "world_is": "READ from code at portal 1c71bfd8, not rendered: filingFirm returns '' for an internal caller (AnalysisRequestParts.tsx line 116). The internal analysis submit is disabled by heldReason (TicketCenter.tsx lines 297 to 299 and line 537). For staff the firms list is the READY firms, not null and not empty, so submitHeldReason reaches its firm check and returns 'Choose the firm this request is filed under.' (analysisRequest.ts lines 226 to 227). The staff form shows no firm control (AnalysisRequestFields omits FirmLine for staff) and the sentence 'Opal staff open requests from the queue rather than file them, so this form cannot be submitted from here.' ARMED: left alone, each staff use of the analysis form after the stack reaches DEV shows the contradiction. The stack is not on DEV.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@1c71bfd8 src/pages/TicketCenter/TicketCenter.tsx lines 297-299 (heldReason) and line 537 (submit disabled)",
+      "portal@1c71bfd8 src/pages/TicketCenter/analysisRequest.ts lines 226-227 (submitHeldReason firm check)",
+      "portal@1c71bfd8 src/pages/TicketCenter/AnalysisRequestParts.tsx lines 115-116 and 155 (filingFirm for staff; FirmLine omitted for staff)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not rendered in a browser. The words are read from code. The issuer decides the held sentence for staff; this worker did not change it."
 }
 ```

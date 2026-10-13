@@ -96,7 +96,7 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMB
 **ISSUER NOTES:** the CTO's word (msg 5215, Andrew-direct ~21:1xZ "don't hold back"): read-only per-firm inventories NOW as workstream PLANINV under PRD v1.5 FWD-9, a separate workstream from
 round 7's frozen decomposition, disjoint write surface (this deliverables folder). The plan itself stays round 8; writing it starts no Inflection or Cottonwood move. Class LOCAL.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <workstream>PLANINV</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-k-2</to_id>

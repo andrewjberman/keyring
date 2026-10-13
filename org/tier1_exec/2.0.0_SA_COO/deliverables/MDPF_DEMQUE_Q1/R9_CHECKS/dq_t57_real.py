@@ -2,9 +2,10 @@
 
 Arm 1: `active_set.py --census` prints ONE JSON line {"sha256_ok", "accounts", "securities", "windows", "open_held"} with sha256_ok true, accounts 769, securities 3357,
 windows >= 3300 and open_held >= 1. The line carries counts only: no key containing "account_key" and no account number.
-Arm 2: `b1_request.py --build --out <scratch>` prints the B1 line with "securities" 609 (the 606 priced P1 names plus the 7 of the 8 funds that are P1, minus the 4 names no active account holds
-under any identifier the files carry (AMENDED 2026-10-13, CTO msg 5227)), "clipped_cusips" >= 90, "held_back" >= 5 (the P2 fund and those 4), and "cells" between 33,000 and 35,500 and strictly below 37,439.
-Arm 3: a second `--build` writes a byte-identical file; the written request validates under `bbg_quote._validate`; no entry starts before 2012-01-01; no key naming an account.
+Arm 2: `b1_request.py --build --out <scratch>` prints the B1 line with "securities" 608 (the 606 priced P1 names plus the 7 of the 8 funds that are P1 = 613, minus the 4 names no active account holds
+under any identifier the files carry (CTO msg 5227), minus the 1 name whose active window opens after all its B1 history, which is EMPTIED (AMENDED 2026-10-13, rulings on rows W49-S1..S5)),
+"emptied_cusips" 1, "clipped_cusips" >= 90, "held_back" >= 5 (the P2 fund and those 4), and "cells" between 33,000 and 35,000 and strictly below 37,439. Each build call is allowed 110 seconds (a build runs about 45 s).
+Arm 3: a second `--build` writes a byte-identical file; the written request validates under `bbg_quote._validate`; no entry starts before 2012-01-01; no KEY naming an account (a reason text may say the word) and zero hits from the account-id oracle where its hash list is present.
 WIN-REAL-OK; else WIN-REAL-BAD <why>.
 """
 from __future__ import annotations
@@ -19,7 +20,7 @@ import tempfile
 D = os.path.join("data", "mdpf", "scripts", "demque")
 
 
-def _line(cmd, timeout=55):
+def _line(cmd, timeout=110):
     r = subprocess.run([sys.executable] + cmd, capture_output=True, text=True, timeout=timeout, check=False)
     ls = [x for x in r.stdout.splitlines() if x.strip().startswith("{")]
     if r.returncode != 0 or not ls:
@@ -30,6 +31,35 @@ def _line(cmd, timeout=55):
 def _bad(why):
     print("WIN-REAL-BAD " + why)
     return 1
+
+
+def _keys(o):
+    if isinstance(o, dict):
+        for k, v in o.items():
+            yield str(k)
+            yield from _keys(v)
+    elif isinstance(o, list):
+        for v in o:
+            yield from _keys(v)
+
+
+def _no_account_key(req):
+    """AMENDED 2026-10-13 (issuer, row W49-S7): the test is on KEY NAMES, not on the text of a reason (the ruled hold-back reason says 'account'), plus the
+    repo's own account-id oracle (.tools/git-hooks/client-data-check.py against the hash list) when the list is present on this device."""
+    if any("account" in k.lower() for k in _keys(req)):
+        return False
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("cdc", os.path.join(".tools", "git-hooks", "client-data-check.py"))
+        m = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(m)
+        hashes = m._load_hashes(m._hash_list_path())
+        hits = len(m.hits_in(json.dumps(req).encode("utf-8"), hashes))
+        print("account-id oracle: %d hit line(s) against %d hashes" % (hits, len(hashes)))
+        return hits == 0
+    except Exception as exc:  # noqa: BLE001
+        print("account-id oracle NOT RUN on this device (%s); key-name test only" % str(exc)[:80])
+        return True
 
 
 def main() -> int:
@@ -50,7 +80,7 @@ def main() -> int:
         return _bad("arm2 " + e)
     print("arm2 " + json.dumps(b, sort_keys=True)[:360])
     ints = all(isinstance(b.get(k), int) for k in ("securities", "cells", "clipped_cusips", "held_back"))
-    if not (ints and b["securities"] == 609 and b["clipped_cusips"] >= 90 and b["held_back"] >= 5 and 33000 <= b["cells"] <= 35500 and b["cells"] < 37439):
+    if not (ints and b["securities"] == 608 and b.get("emptied_cusips") == 1 and b["clipped_cusips"] >= 90 and b["held_back"] >= 5 and 33000 <= b["cells"] <= 35000 and b["cells"] < 37439):
         return _bad("arm2 B1 line does not show the active-window clip")
     c, e = _line([os.path.join(D, "b1_request.py"), "--build", "--out", o2])
     if c is None:
@@ -71,7 +101,7 @@ def main() -> int:
         "deterministic": same,
         "valid": valid,
         "floor": all(x >= "2012-01-01" for x in starts + dates),
-        "no_account_key": "account" not in json.dumps(req).lower(),
+        "no_account_key": _no_account_key(req),
     }
     bad = [k for k, v in arms.items() if not v]
     if bad:

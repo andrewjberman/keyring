@@ -4,7 +4,7 @@
 <issued_to>0.9.0_WK_MDPF_DEMQUE~49</issued_to>
 <issued_by>2.0.0_SA_COO~Q1</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -64,6 +64,23 @@ a CUSIP with no row in the active set (by CUSIP; a row with a blank CUSIP is mat
 `not held by an active Cottonwood account under any identifier the files carry (draws are limited to the active set, CTO msg 5227)`, the `--build` line's `unclipped_cusips` is retired, and `securities` counts only the CUSIPs left in the request.
 The issuer measured the case: B1's 4 CUSIPs outside the set are bonds and T-bills with no symbol (118 cells together, last trades from 2023-08 to 2026-05); the expected real line is therefore `securities` 609, `held_back` 5 (those 4 and the P2 fund),
 cells about 34,223. The real check `dq_t57_real.py` is already amended to 609 and 5; test 3's name stays and its body asserts the hold-back of a name outside the set instead of the old unclipped behaviour.
+
+
+### AMENDED 2026-10-13 ~22:4xZ (issuer; no gate limb graded it, no new order added) -- rulings on rows D1-W49-S1 to S5, and the re-seated slot
+
+Your first pass (commits `be745e7fa2`, `b5fab0e728`) stands as inherited state. **You built to the order BEFORE the 22:0xZ amendment: the amended order and the amended real check are placed on your branch by file, and they govern.** Do NOT merge box/dell1.
+- **S1 (the emptied name): RULED, it leaves the request.** A name in the active set whose window opens after all its B1 history is `emptied_cusips` and is not in `securities` (draws are limited to the held dates). The check was the issuer's error: the expected count is 608, not 609 or 613.
+  Build to BOTH rulings together: names outside the set are held back (the section above), and the emptied name is dropped. Expected line: `securities` 608, `emptied_cusips` 1, `held_back` 5 (the P2 fund and the 4 outside names), `cells` about 34,223; `unclipped_cusips` is retired.
+- **S2: accepted.** The builder's own base measures 37,514 cells, 614 securities; the filed 37,439 is that minus the hand-held-back P2 fund. The builder now holds the P2 fund back itself, so 37,439 is the like-for-like base.
+- **S3: the check now allows 110 seconds a build call; keep your speed changes.** **S4: accepted** (`accounts` counts the key of every row, 769, as the published set states). **S5: accepted.**
+- Update test 3 to assert the hold-back of an outside-the-set name and the dropped emptied name; keep its name.
+
+
+### AMENDED 2026-10-13 ~22:5xZ (issuer; no gate limb graded it, no new order added) -- ruling on rows D1-W49-S6 and S7: the check was wrong, the build is right
+
+Your second pass (commits `593c4d3455`, `468f377221`) is inherited state and is CORRECT: `--build` read securities 608, cells 34,223, held_back 5, emptied_cusips 1, exactly as ruled. **S7:** arm 3's substring test on the word "account" was the issuer's error (the ruled hold-back reason contains it); the check now tests KEY names and runs the repo's
+account-id oracle, and is placed on your branch by file. **S6:** accepted. YOUR ONLY TASK NOW: run both acceptance checks and the folder (`python -m pytest data/mdpf/scripts/demque -q`, 0 failed), regenerate the proof instance with the real outputs, validate it
+(`python .tools/proof-of-spec-check.py <instance> DQ9-t57-AC1,DQ9-t57-AC2`) and flip the order's status to complete in the same commit. Change no code unless a check fails.
 
 ## BOUNDS
 

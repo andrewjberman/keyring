@@ -86,7 +86,7 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMB
 
 **ISSUER NOTES:** the CTO's word (msg 5215) and Andrew's DEC-12/13/14 answers (msg 5128): Door 6 RETIRE with its rule after a no-other-consumer read; DEC-14 `mockadv` is a census, not this cell's. Class LOCAL.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <workstream>PLANINV</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-k-5</to_id>

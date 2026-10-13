@@ -8182,3 +8182,235 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S135",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-13T22:51:13Z",
+  "one_line": "Disarm of D2-W155-S1 (served price errors: APH, CTVA, HON), on the CTO's ruling of 2026-10-13 ~22:48Z (msg 7328): the round-82 route read found route_not_live, so the ARD output reaches no page; the price errors stay recorded as a parked defect",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 7328 (2026-10-13T22:48Z): \"W155-S1 is DISARMED by this seat on your round-82 read: route_not_live, so the ARD output reaches no page. File the disarm row citing this message\"",
+      "org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/adjudications/ADJUDICATION_v59.md and org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_82_L9_GRADE_20261013.md: CB82cd2-AC2 PASS (the Cottonwood publish function returns ResourceNotFound, the same call finds the 49financial function, 121 routes listed)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~162/ROUTE_READ.json (route_not_live; a_person_can_see_these_prices no)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An ARMED hazard disarms same-turn via its disarm_owner (CLAUDE.md section 2); W155-S1's remedy: a read that the second hop reaches no page, or corrected served prices.",
+  "world_is": "The served prices of APH, CTVA and HON are still wrong in the minted tables (cause not established; the stage read puts the first stage off 1.0 at store row against vendor Close). They reach no page today. Recorded as a parked defect. A precondition on the ARD route ever going live, per the CTO (msg 7308): the porting_verdict label and its never-widen pair, and a correction of these prices. NOT re-measured by this seat at this turn: the route's state after 2026-10-13T20:0xZ."
+}
+```
+
+## ADVI_COTBKF-D2-W166-S1 -- The AC1 invocation as written errors at collection on a duplicate package name; the same error at HEAD before any edit
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W166-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~166",
+  "surfaced_at": "2026-10-13T22:41:43Z",
+  "one_line": "The AC1 invocation (three files in one pytest run) stops at collection on a duplicate package name (tests); the same error occurs at HEAD before any edit. The three files pass 28 of 28 under --import-mode=importlib.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/tests/__init__.py and data/assets/scripts/analysis/tests/__init__.py @df215447fa",
+      "baseline run at HEAD before any edit: the two existing files together, rc=2, collection error (this worker's shell)",
+      "combined AC1 invocation as written after the edits, rc=2, collection error (this worker's shell)",
+      "diagnostic: the same three files with --import-mode=importlib, 28 passed, rc=0 (this worker's shell)"
+    ]
+  },
+  "spec_asserts": "CB-ce-3 CB83ce3-AC1: `python -m pytest data/assets/scripts/silver/tests/test_commonwealth_ticker_asset_key.py data/assets/scripts/silver/tests/test_commonwealth_price_basis.py data/assets/scripts/analysis/tests/test_commonwealth_price_census.py -q` passes with no failure and no skipped test.",
+  "world_is": "The combined run is interrupted at collection: ModuleNotFoundError 'tests.test_commonwealth_price_census' (rc=2, 1 error during collection). data/assets/scripts/silver/tests/ and data/assets/scripts/analysis/tests/ are both packages named tests (an __init__.py in each). Per file: 6, 3 and 19 passed. Combined with --import-mode=importlib: 28 passed, rc=0. The packaging fix lies outside this order's paths and was not made.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W166-S2 -- Item 2's literal rule would drop 177,413 price-equal yahoo ticker-days; implemented for price-distinct days only
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W166-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~166",
+  "surfaced_at": "2026-10-13T22:41:43Z",
+  "one_line": "Item 2's literal rule (no median on a two-name ticker-day) would remove 177,413 yahoo_finance ticker-days, all of which carry the same price under both names. Implemented as: a two-name day is left out only where the names disagree on price (0 such days on the pinned store).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_price_basis_census.py ticker_day_series @df215447fa (the change), and @df215447fa line 384 (the old median)",
+      ".scratch/measure_cb_ce3.json BASIS block (scratch; counts only): two_name_yahoo_ticker_days 177413, ambiguous 0, series_days_removed 0"
+    ]
+  },
+  "spec_asserts": "CB-ce-3 item 2: where one ticker-day then has two rows, the reader no longer takes a median, mean or first of them: it keeps both and picks by name, or reports the day as ambiguous_name with a count.",
+  "world_is": "On the pinned store the yahoo_finance rows of the tickers carry 177,413 two-name ticker-days (SCCO 701, APH 45 of them). All 177,413 agree on price; 0 disagree. The literal rule would remove those values from the basis census series and change the class inputs of those tickers. The implemented rule removes none (series days removed 0, values changed 0). The one disagreeing day (APH 2026-04-14) sits on the transaction_observed and linear_interpolation rows, which the basis census does not read for its series.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W166-S3 -- The four readers' main() cannot run as the read-only before/after; measured through their own functions on the local copy
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W166-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~166",
+  "surfaced_at": "2026-10-13T22:41:43Z",
+  "one_line": "The four readers' main() runs are not the read-only before/after the order names: each lists or reads beyond the pinned object (census lists every bucket and writes deliverables; basis census calls Yahoo; custodian needs the transactions table and writes a deliverable; provenance lists every version of the cot bucket). The before/after was run through each reader's own functions on the local store copy, HEAD copies for the old side.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/analysis/commonwealth_price_census.py main() and data/assets/scripts/silver/commonwealth_price_basis_census.py main() @df215447fa",
+      "data/assets/scripts/silver/commonwealth_bond_custodian_price.py main() and data/assets/scripts/silver/commonwealth_bd_txn_provenance.py main() @df215447fa",
+      ".scratch/measure_cb_ce3.log (scratch; counts only)"
+    ]
+  },
+  "spec_asserts": "CB-ce-3 item 4: each reader is run in its read-only mode over local inputs, per reader, with the old and the new code; a reader that needs an input not on this box is marked not_established.",
+  "world_is": "commonwealth_price_census.py main() calls boto3 list_buckets and reads every price store. commonwealth_price_basis_census.py main() calls yfinance (a vendor call barred for this order). commonwealth_bond_custodian_price.py main() needs the transactions table (not on this box) and writes a deliverable. commonwealth_bd_txn_provenance.py main() lists every object version of opal-data-cot. The custodian name test needs the transactions Security_Description: its name effect is not_established here; zero CUSIP-matched rows on the store make it inert on this store.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W166-S4 -- Channel row ADVI_COTBKF-D2-W158-S2 is written about the minted-table consumers; the ticker-key disarm is attached to that id
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W166-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~166",
+  "surfaced_at": "2026-10-13T22:41:43Z",
+  "one_line": "The channel row ADVI_COTBKF-D2-W158-S2 is written about the minted-table consumers of W155-S1/S3, but the round-82 ruling, this order and the W163-S1 row attach the ticker-only-readers disarm to that id. Nothing in the row's text mentions the four ticker-keyed readers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md ADVI_COTBKF-D2-W158-S2 @df215447fa",
+      "org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md ADVI_COTBKF-D2-W163-S1 @df215447fa"
+    ]
+  },
+  "spec_asserts": "CTO round-82 analysis ruling 2, as quoted in ADVI_COTBKF-D2-W163-S1: W158-S2 disarms on a read that names 0 ticker-only readers, or on a keyed fix to the (ticker, asset_name) pair.",
+  "world_is": "The row's one_line and spec_asserts state the minted-table consumer premise (disarm_owner 1.0.0_SA_CTO~DELL2). The ticker-key disarm cannot be answered on that row's text. This worker reports row_w158_s2_disarms as not_established and did not edit the row.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W164-S1 -- The set's salted account tokens cannot be re-derived in this tree: the salt the round-161 record names is in n...
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W164-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~164",
+  "surfaced_at": "2026-10-13T23:01:09Z",
+  "one_line": "The set's salted account tokens cannot be re-derived in this tree: the salt the round-161 record names is in no committed file, and its worktree .scratch folder is absent, so the 20-account derivation check the order asks for is not performed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~161/ACTIVE_SET_RECORD.json not_established[1] names the salt as held only in the worktree .scratch folder",
+      "C:/dev/wk-cotbkf-161 holds only portal/ with no .scratch and no git checkout; the .scratch of this worker (C:/dev/wk-cotbkf-164/.scratch) was created by this run and holds no salt",
+      "plain SHA-256 of the Commonwealth account number matches 0 of 471 crosswalk predecessor tokens in REVERSE_MATCH.csv at HEAD a71af0a8d5 (count-only read)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ce-1 item 4: write additions exactly as the set writes them; where a key must be derived, derive it the way the record says and check the derivation by reproducing the set's row count for 20 accounts before relying on it.",
+  "world_is": "No derivation of the account token is possible in this tree. The additions file is header-only because no active account held the four identifiers, so no written row depends on a derived key. Any later additions round needs the salt restored or a keyed reader.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W164-S2 -- The premise that the four identifiers were traded by a matched active client fails under the set's definition...
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W164-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~164",
+  "surfaced_at": "2026-10-13T23:01:09Z",
+  "one_line": "The premise that the four identifiers were traded by a matched active client fails under the set's definition: each trader is MATCHED to a current account outside the 769-account active set, and one holder held its identifier non-zero in 74 of 88 silver snapshots before the 2026-10-12 snapshot showed no non-cash position.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ADVI_COTBKF.TO-CB-ce-1 item 1-2 and the round-83 framing: a MATCHED Cottonwood client traded the four identifiers (order text)",
+      "deliverables/0.9.0_WK_ADVI_COTBKF~164/FOUR_CUSIPS.json held_by and cause at HEAD a71af0a8d5: 0 active accounts traded any of the four; 1 non-active account each",
+      "s3://opal-data-cot/silver/holdings/ 88 of 88 snapshots 2026-06-08..2026-10-12: the holder of cause row 2 holds that identifier non-zero in 74 snapshots, cash_equivalent false; its 2026-10-12 snapshot has 0 non-cash non-zero rows (count-only read)"
+    ]
+  },
+  "spec_asserts": "CTO round-83 section 2 item 1: test every security a matched active account traded against the set; if an active account held it, add its rows with windows.",
+  "world_is": "No account in the 769-account active set traded any of the four. The holder of cause row 2 is excluded by the set's latest-snapshot definition although the bond was held in most snapshots of the window, so the set gives it no backfill and the MDPF_DEMQUE refusal of these identifiers stands. Whether the definition should look back is a CTO ruling.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W164-S3 -- REVERSE_MATCH.csv carries two account-key spaces: 457 raw Black Diamond account ids and 312 salted 71-characte...
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W164-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~164",
+  "surfaced_at": "2026-10-13T23:01:09Z",
+  "one_line": "REVERSE_MATCH.csv carries two account-key spaces: 457 raw Black Diamond account ids and 312 salted 71-character tokens. The 312 do not appear in any holdings snapshot by key, so a key join silently covers 457 of the 769 active accounts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/REVERSE_MATCH.csv (769 rows): crosswalk_matched keys 457 of 11 characters; none 300 and near_match 12 keys of 71 characters (count-only shape read at HEAD a71af0a8d5)",
+      "s3://opal-data-cot/silver/holdings/2026-10-12: 769 accounts hold a non-cash non-zero row, 457 of them match a REVERSE_MATCH raw key; no 71-character key appears in any of the 88 silver snapshots (count-only read)"
+    ]
+  },
+  "spec_asserts": "ACTIVE_SET_RECORD.json: the active set and its reverse match use the same account keys as the set; Commonwealth-side keys are salted SHA-256 tokens.",
+  "world_is": "The active list holds raw ids for the 457 matched accounts and tokens for the 312 unmatched; they are not one key space. The count of 769 agrees with the holdings definition, but membership of the 312 cannot be checked against raw holdings.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W164-S4 -- The two sides classify the same identifiers differently: every Commonwealth trade of the four identifiers carr...
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W164-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~164",
+  "surfaced_at": "2026-10-13T23:01:09Z",
+  "one_line": "The two sides classify the same identifiers differently: every Commonwealth trade of the four identifiers carries Asset_Type Cash Equivalent, while the Black Diamond cash_equivalent flag on the holder's rows is false. The transaction table's Fixed Income type does not isolate bonds and bills.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/commonwealth/cottonwood/silver/transactions/date=2026-06-23/ 14 of 14 parts: Asset_Type distinct values include Cash Equivalent 26,097 rows and Fixed Income 11,425 rows (count-only read)",
+      "the four identifiers in the transactions: every row Asset_Type Cash Equivalent (38, 2, 2 and 2 rows); the holder's silver holdings rows: cash_equivalent false in 88 of 88 snapshots"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ce-1 items 3 and 5: fixed income is judged by the CUSIP prefix or the security type the transaction table carries for bonds and bills.",
+  "world_is": "The table gives bonds and bills the Cash Equivalent type in these trades and the holdings flag them non-cash. Neither rule isolates fixed income alone; the order's fixed-income count uses the CUSIP prefix and the Fixed Income type together (0 of 7 missing).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
