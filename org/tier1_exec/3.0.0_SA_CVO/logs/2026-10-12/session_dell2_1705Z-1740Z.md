@@ -196,3 +196,9 @@ Quiet stretch 08:37Z to 13:04Z: watcher re-armed at each expiry; delivery ledger
 | item | result | commit |
 |---|---|---|
 | TCKT_VNEXT round 16 | No row, no judgment; slug by message. My ConsistentRead: TCK-20261009-a1052909 and TCK-20261012-13cd3a1d completed, TCK-20261012-c546fead open | none |
+
+## Addendum, 2026-10-13 13:43Z to 13:46Z (msg 6953)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_DASHBD round 88 | ADJUDICATION_v52: D2-W132-S1 (checker defect, amended) dismissed; nothing graduates. Slug sent | 50d8780e32 |

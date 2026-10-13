@@ -34,8 +34,9 @@ Sign in as yourself. Each line: where, what to do, and PASS when.
 
 ## 3. Advisor Intelligence (client-facing; 5 files)
 
-1. Open an advisor's book client detail. PASS: a fee panel for 2026Q3 shows the computed fee against the Schwab debit, and an absent
-   field reads "not computed for this quarter".
+1. **Amended 13:4xZ.** Andrew's smoke found the new 2026Q3 fee panel empty ("Fee detail is not available for this quarter"). Its
+   mount is reverted in candidate `f6ef1d25` (branch `cto-dell2-revert-29b18a8c`), which the 5174 build now serves; the component
+   stays. Open an advisor's book client detail. PASS: no new fee panel, and the existing Fee Summary shows its figures.
 
 ## 4. Model Portfolios (client-facing; 1 file)
 

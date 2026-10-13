@@ -7117,3 +7117,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W132-S1 -- DB88-1-AC1 digit-run limb refuses the record's own sha256 of the committed module
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W132-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~132",
+  "surfaced_at": "2026-10-13T13:32:30Z",
+  "one_line": "DB88-1-AC1 cannot PASS as written: the record's code.sha256 (the sha256 of the committed module) carries an 11-digit run, which the criterion's no-run-of-8-digits limb refuses",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-166, criterion DB88-1-AC1 (checks/r88/p88_round88.py): the record holds no run of 8 or more digits; code.sha256 is the sha256 of the committed bytes of the tracked module.",
+  "world_is": "Both cannot hold for the module as committed. tieout/tieout_flow_timing.py at commit 6950c70aff hashes to 31065637043f06751cb5889bbbb5fb0c30b4fc49fc9e12de4bf4c324d4511bee, which holds an 11-digit run; the record's sha256 field carries it, so the checker returns FAIL on the digit limb (rc 1). A scratch copy with only that limb disabled returns DB88-1-AC1 PASS on every other limb (88 flow-bearing segments; verdict BD_DEFAULT; controls 50 and 0). The worker did not change the module bytes to move the hash, and did not edit the checker. The issuer decides which limb governs. Counts only; no client data in this row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python checks/r88/p88_round88.py . DB88-1-AC1 at worktree HEAD 6950c70aff: 'FAIL: the record holds a run of 8 or more digits', rc 1, repeated with rc 1",
+      "record line 17 holds a digit run of length 11, inside the code.sha256 value; sha256 of the committed blob equals the recorded value 31065637043f06751cb5889bbbb5fb0c30b4fc49fc9e12de4bf4c324d4511bee",
+      "scratch diagnostic copy .scratch/p88_diag_noregex.py (not committed; digit limb set to if False): 'DB88-1-AC1 PASS'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
