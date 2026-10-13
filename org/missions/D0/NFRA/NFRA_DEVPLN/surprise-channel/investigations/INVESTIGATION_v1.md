@@ -802,3 +802,30 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## NFRA_DEVPLN-S2 -- the route needs a withdraw decision and a cluster-first read for another box's rows
+
+```json
+{
+  "id": "NFRA_DEVPLN-S2",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~DV",
+  "surfaced_at": "2026-10-13T22:25Z",
+  "one_line": "dell2's first organic client-facing approval (cand/dell2/irpt-ytd-from-first-day-and-wider-export-modal) exposes two route gaps: an approval row has no lawful close except approved or declined (a duplicate cannot be withdrawn), and approval-status reads a foreign box's list from a stale working-tree copy instead of the cluster copy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "relay from 0.0.0_AB_MSTR (bus 4ac17c50, CTO~DELL2 msg 7302): dell2 registered the same branch twice, dell2-20261013T221352Z-cffa (keep) and dell2-20261013T221411Z-3635 (duplicate); close takes only --decision approved|declined, so closing the duplicate declined could read as Andrew declining the feature",
+      "python .tools/open-calls.py list --all --cloud at ~22:25Z: both rows listed OPEN from the cluster copy",
+      "python .tools/open-calls.py approval-status --branch cand/dell2/irpt-ytd-from-first-day-and-wider-export-modal on the laptop: state=ABSENT (the laptop's working-tree copy of dell2's list predates the rows; approval_read at .tools/open-calls.py:1459 prefers any working-tree file over the cluster copy and over origin/box/dell2)",
+      "approval_read picks the NEWEST row per branch by opened_at: the duplicate 3635 (22:14:11Z) would be the row the merge-forward reads, so approving only cffa would still refuse as not-approved"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v0.3 C-APPROVAL: one row per feature, the row is the record the merge-forward and the promote read; FWD-2: the list is the open-calls list he already reads, from whichever box he is at.",
+  "world_is": "Two defects in the route for a feature on a box other than the one running the merge-forward. (1) A duplicate row is read as the feature's row and cannot be withdrawn: the route needs a close decision of withdrawn that the status reader ignores (all rows withdrawn reads ABSENT, so the consumers refuse). (2) A foreign box's list is read from a possibly stale local copy; a stale readable copy reads as ABSENT, which for a test-only change would let the merge-forward proceed. The reader should take a foreign box's list from the cluster copy first and fall back to git. Interim: leave both rows OPEN and have Andrew close BOTH with the same decision. Proposed as the first two cells of round 4, ahead of the CTO's analysis."
+}
+```

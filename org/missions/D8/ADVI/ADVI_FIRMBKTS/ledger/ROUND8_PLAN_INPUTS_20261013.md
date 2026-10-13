@@ -32,3 +32,13 @@ Door 6 is not consumer-free: `opal-data-inf` has an ObjectCreated S3 notificatio
 - only AFTER that is proven live do the marker, its S3 notification, `mdpf-feeder-accelerator` and the `router_iam` Door 6 deny retire, in ONE change with a rollback;
 - `D1-W80-S1` disarms when the plan names the successor and its proof;
 - the 13 CTO candidates among FB-k-5's 16 are ruled at the round-7 L10 on the plan's REC per row (record `deliverables/0.9.0_WK_ADVI_FIRMBKTS~80/PLANINV_LEGACY_OPERATIONS.json`).
+
+## FB-k-4 findings (Cottonwood serving layer and crosswalk; merged 3ffb7c95a0; record `deliverables/0.9.0_WK_ADVI_FIRMBKTS~79/PLANINV_COTTONWOOD_SERVING_CROSSWALK.json`)
+
+56 rows (16 touch the legacy home); 20 crosswalk rows: the crosswalk INPUT lives outside every legacy home, at `opal-data-assets` key prefix `commonwealth/cottonwood/silver/crosswalk/`
+(the issuer listed it: present), with its builder, 7 consumers and 11 module importers. Three rows for the plan:
+- `D1-W79-S1`: the Cottonwood Black Diamond scope is in `opal-data-assets/blackdiamond/cottonwood/`, not in `opal-data-bd` (the order's premise did not match).
+- `D1-W79-S2`: **Cottonwood holdings have TWO live homes** -- the edge router resolves `cottonwood` to `opal-data-cot`, while the IRPT holdings reader reads `opal-data-cottonwood` (the issuer's
+  head-bucket read: that bucket exists). The plan must name which is canonical and move the other.
+- `D1-W79-S3`: `bd-cot-freshness-probe` exists in the repository and reads `opal-data-cot`; none of the 237 live functions has that name.
+Not read (unknowns for the plan): environment values of 226 live functions, IRPT invocation triggers, SNS subscribers, the default-band crosswalk enumeration (timed out).

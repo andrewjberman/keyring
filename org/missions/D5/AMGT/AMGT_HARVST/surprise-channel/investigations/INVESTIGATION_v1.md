@@ -9157,6 +9157,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "notes": "Not closed here: the order stays open on its proof (rc=1) and the seat does not flip its status. The issuer should name the governing TO path in the face, or confirm the to_id; the instance's decomp_ref.to_ref is a placeholder that says so, and it should be replaced by the real path once known.",
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-D1-S16",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "2.0.0_SA_COO~W1",
+      "surfaced_at": "2026-10-13T22:18Z",
+      "one_line": "The merged --refresh-once (bz-9, 44aadb7f1d) is not limited to the Dow Jones publishers: a bbg job refused as expired would spend its one refresh through the Bloomberg-side SessionManager branch, whose credential is the secret google/andrew-goldengate/credentials, an automated headful Google sign-in that ruling (A) never named.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~W1",
+      "spec_asserts": "Ruling (A), CTO msg 5143 and ROUND_ANALYSIS.round84.md section 2 item 1: 'the runner refreshes once per publisher per cycle through the existing SessionManager; no new credential path, no secret printed', closing on wsj and barrons (row Z-S119). HVST-bz-9 section 1 step 4: the class table maps sign_in_refused to expired for every STOP-status job, and step 6 refreshes any publisher whose class is expired. My COO half for bz-9 (NEVER_WIDEN_HALF_COO_BZ9_MERGE.md) says the sign-in path is reached only under --refresh-once and names the Dow Jones account only for the bz-10 pair.",
+      "world_is": "Read on dell1 2026-10-13 ~22:3xZ, names only. (1) lib/opal_data_harvest/credentials.py CREDENTIAL_SECRETS maps bbg to 'google/andrew-goldengate/credentials' (wsj and barrons to 'dowjones/credentials'). (2) lib/opal_data_harvest/auth.py SessionManager._refresh runs the Dow Jones script for {wsj, barrons} and, for every other publisher, harvest_local_session.py (the branch bbg takes). (3) backfill_driver.REFUSAL_CLASSES (merged 44aadb7f1d) maps sign_in_refused to expired with no publisher test, and refresh_wanted() tests only the class and the checkpoint budget, so under the flag a bbg job ending sign_in_refused spends a refresh. (4) The runner's publishers are bbg wsj barrons, so the flag bz-10 registers reaches bbg. NOT exercised: no bbg refresh has run; bz-9's tests inject the refresher. NOT read: whether the bbg sign-in script can log in non-interactively, and the Google account's challenge or lock policy.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/credentials.py lines 18-24 (CREDENTIAL_SECRETS) at 44aadb7f1d",
+          "lib/opal_data_harvest/auth.py SessionManager._refresh, the else branch that loads harvest_local_session.py, at 44aadb7f1d",
+          "lib/opal_data_harvest/backfill_driver.py REFUSAL_CLASSES and refresh_wanted at 44aadb7f1d (the diff reviewed in full before the merge)"
+        ]
+      },
+      "notes": "INERT: the flag is OFF by default and nothing registers it until HVST-bz-10, which this seat will not send until it is narrowed. The remedy is one small LOCAL cell, HVST-bz-9b, cut as a repair to bz-9's own scope: refresh_wanted() admits only {wsj, barrons}; every other publisher's refusal is recorded (REFUSAL line, class) and never refreshed. It narrows ruling (A) from 'a publisher' to the two the ruling closes on; the CTO is told in the bz-10 pair request. The miss was mine: the bz-9 order wrote 'any publisher whose class is expired' and my COO half read the diff for what it recorded, not for which credentials the refresh seam could reach.",
+      "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```

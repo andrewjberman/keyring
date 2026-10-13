@@ -13051,3 +13051,131 @@ name the one known failure instead of silently inheriting it.
   "notes": "Read-only; the command writes nothing."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-13T22:09:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-S102",
+  "one_line": "Re-vendoring orion and eclipse ADDS two hardcoded cottonwood bronze address patterns their live packages do not carry, so the LGIC naming gate refuses both commits in ENFORCE mode; the order forbids overriding any gate but the author escape, so OG-ap-15 AC1 can read at most 3 of 5.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN vendor-manifest.sh then safe-commit.sh for all five families on rel-nfra-oplgtw-fd2 at b0af6527a3: schwab 12ecbe2b8f, etf 58ee124eb7 and blackdiamond dabaa1af6b committed; orion and eclipse both printed 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' with NAMING REFUSE on mirror_conversion.py:103, :105 and :129, each a ^blackdiamond/cottonwood/bronze/ regex resolving to lookup('cottonwood').",
+      "READ the package copies at b0af6527a3: occurrences of blackdiamond/cottonwood/bronze in mirror_conversion.py are orion 2, eclipse 2, etf 4, blackdiamond 4; the SOURCE carries 4. So the two refused families would newly receive two such lines, while the two that committed already carry all four -- which is why the gate graded zero added matching lines for them (measured: git show 58ee124eb7 -- the etf copy, grep -c of added lines matching the pattern = 0).",
+      "READ data/assets/scripts/silver/mirror_conversion.py at b0af6527a3 lines 102, 105, 108 and 129: all four patterns are PRE-EXISTING source text; the file's newest commit is b2538131ea (OG-fd-2, 0.9.0_WK_NFRA_OPLGTW~61, today), which passed the same gate because it added only the fd-2 hunks and none of these lines.",
+      "READ CLAUDE.md rule 30: the commit-time naming gate REFUSES names today (LGIC_ENFORCE); non-application is existing pipelines, each reaching conformance through its own migration project (R19), never as a rider; a deliberate departure is an R20 register entry Andrew acknowledges."
+    ]
+  },
+  "spec_asserts": "TO NFRA_OPLGTW.TO-OG-ap-15 PHASE A step 2: re-vendor each of the five package dirs from source with vendor-manifest.sh, one commit per family, with the audited GIT_COMMIT_AUTHOR_OVERRIDE on those commits only; BOUNDS: never override a gate other than that lane escape; AC1 expects five families built from source with every vendored module byte-equal at the build commit.",
+  "world_is": "Three families are built and committed. orion and eclipse cannot be committed as the order is written: the only instrument that would let them through is the naming-gate override the BOUNDS forbid, and the alternative -- editing the source's cottonwood bronze address strings -- is both an ungraded rider on a signed act and outside this order's <paths> (data/assets/scripts/silver/ is not among them). The refusal is substantively correct rather than noise: for these two families the rebuild really does widen the package's hardcoded-address surface by two lines.",
+  "notes": "Three routes, none of them this seat's to pick: (a) the issuer elects the fd-2 ask's option (b), a drain-only package for orion and eclipse, which the ask already names as a build choice the release order must make explicit; (b) mirror_conversion.py's cottonwood bronze addresses reach LGIC conformance under their own migration (rule 30 R19), after which the re-vendor passes unchanged; (c) an R20 register entry Andrew acknowledges. Phase A is reported with 3 of 5 built and AC1 FAIL; the two vendored working trees are left in place in C:/tmp/og-rel-fd2 so no re-vendor is needed once a route is chosen."
+}
+```
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W65-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~65",
+  "surfaced_at": "2026-10-13T21:41:00Z",
+  "one_line": "OG-cd-1 item 1 derives the channel-to-family link from the catalog's dataset s3:// roots, but DATA_CATALOG.yaml carries no s3:// root for any dataset; the link was derived from catalog entity ids instead (claim inferred).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:1359-1363 (silver_datasets header): 'no S3 key, no precomputed artifact; each row is resolved live through its own producer + tools'.",
+      "RAN a pattern read of 's3://' over DATA_CATALOG.yaml: 0 matches in 2114 lines; the only bucket field is line 43 'bucket: opal-data-portal-v2' (the portal store, not a silver root).",
+      "READ app/family_depth.py default_channels()/read(): tools -> read_tool rows and spec.tool_catalog_refs -> entity ids; the entity id's leading token (schwab_dim_asset -> schwab) is matched to a family's sources. Result recorded in W/CD1_LIVE_READ.json: blackdiamond_fees links to BOTH families with source blackdiamond (blackdiamond and bd49finsurance), although the gateway's blackdiamond tool reads opal-data-bd silver/fees, not opal-data-assets."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "TO OG-cd-1 item 1: 'Use the catalog's dataset roots in app/refs/DATA_CATALOG.yaml (each read tool's dataset s3:// root) against each family's bronze/silver source prefix. It is never a typed table.'",
+  "world_is": "The catalog holds no dataset s3:// root; the derived link is by entity-id leading token against the family's source names, labelled inferred in every row's `link` leaf. It over-links blackdiamond_fees to the 49F insurance family and cannot see that the gateway's blackdiamond store is another bucket.",
+  "notes": "A precise link needs the catalog (NFRA_MCPINDEX is its only writer) or each IntegrationSpec to declare its dataset store and prefix; the issuer decides whether to ask for that."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W65-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~65",
+  "surfaced_at": "2026-10-13T21:41:30Z",
+  "one_line": "OG-cd-1 says every leaf value is {value, claim, read_at, source}, but the issuer's AC2 check reads depth.backfill_status_keys as a plain list of s3:// URIs; the module returns that one field as a plain list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/cd1.AC2.sh: python snippet 'ks=(f[0].get(\"depth\",{}).get(\"backfill_status_keys\") or []) ... print(ks[0] ...)' then 'aws s3 cp \"$key\" -'; a {value,...} dict there would raise KeyError at ks[0].",
+      "READ app/family_depth.py _family_values(): backfill_status_keys is a list of s3:// URIs; the per-key outcome (readable or the reason) rides in the backfill_frontier and last_sweep leaves' `source`."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "TO OG-cd-1 item 1: 'every leaf value is {value, claim, read_at, source}' and `backfill_status_keys` is one of the depth fields.",
+  "world_is": "The AC2 check dictates a plain list for backfill_status_keys, so it is the one identifier-list field without a claim wrapper; the list names keys, and each key's read outcome is claimed in the sibling leaves. Other sources the module cannot read read as absent with the reason, as asked."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W65-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~65",
+  "surfaced_at": "2026-10-13T21:58:00Z",
+  "one_line": "OG-cd-1 asks silver_families.json to be generated from silver.tf, but the commit-time naming gate REFUSES the scope names a faithful copy carries (49financial, cottonwood, inflection and the <source>/<scope> forms), so the file carries sources only and the read discovers scopes live.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN bash .tools/safe-commit.sh on the first build (JSON with silver_source_scopes copied): naming-gate REFUSE 'silver_families.json:7 49financial -> lookup', ':17 cottonwood', ':27 inflection', ':58 inflection' (NEW hand-kept carrier, context rule); a second build holding '<source>/<scope>' prefixes was REFUSED as SECRET: 'eclipse/inflection', 'trueshares/DIVZ', 'pathfinder/PFOE' and others.",
+      "READ .tools/naming-gate.py:22-28 (THE CONTEXT RULE): a firm or product token is permitted only in registry files, generated registry blocks, and name()/key()/address()/lookup() arguments; a generated COPY of silver.tf is none of these.",
+      "READ app/family_depth.py _prefixes_of(): the scopes of each source are the children of '<source>/' that hold a '<child>/silver/' tier, listed live; families sharing a source (blackdiamond and bd49finsurance) are flagged in the leaf's `source` and their claims read inferred."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "TO OG-cd-1 item 1: 'Read it [silver.tf local.silver_families] at build time into ONE generated file, app/refs/silver_families.json'; the scopes for the keys are the family's.",
+  "world_is": "The families and sources are carried (7 families, 8 sources, the rule-name template, the bucket); the per-family scope maps are not, because the gate admits no hand-kept scope literal outside the registry. The module lists each source's children live, so a scope the sweep does not serve but which holds a silver tier would be read as the family's, and two families on one source cannot be told apart; both are labelled inferred. The IAM list condition needs the eight source prefixes typed in family_depth_read_iam.tf (locals, drift noted in the ask).",
+  "notes": "A precise per-family scope list needs a registry carrier (lookup) the deployed gateway does not ship; the issuer decides whether to cut that."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W65-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~65",
+  "surfaced_at": "2026-10-13T22:07:01Z",
+  "one_line": "OG-cd-1 AC2's <expect> pattern cannot match any real output: it needs 'record=\\S+ live=\\S+' but the schedule value is an EventBridge expression with spaces ('cron(15 12 * * ? *)'), so the script reads RESULT: PASS exit=0 while the pattern fails.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN timeout 120 bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/cd1.AC2.sh; echo exit=$? from the worktree root at 2b000fea49: lines 'schwab schedule record=cron(15 12 * * ? *) live=cron(15 12 * * ? *) equal=yes', 'schwab backfill frontier record=2026-10-12 live=2026-10-12 equal=yes', 'RESULT: PASS', 'exit=0'.",
+      "RAN python re.search of the order's AC2 <expect> over that output: no match. The break is 'schwab schedule record=\\S+ live=\\S+ equal=yes': \\S+ stops at 'cron(15' and the next token is ' 12', not ' live='.",
+      "READ cd1.AC2.sh: the script's own comparison is record == live as strings, so a record whose schedule value has no space would read equal=no; the live ScheduleExpression of opal-assets-silver-schwab-sweep-daily is 'cron(15 12 * * ? *)' (ISSUER NOTES, measured at the cut, and re-read by the script)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "TO OG-cd-1 section 4 AC2 <expect>: '(?s)families ([1-9]\\d*); denominator \u0001 \\([^)]+\\); claim-less values 0.*schwab schedule record=\\S+ live=\\S+ equal=yes.*schwab backfill frontier record=\\S+ live=\\S+ equal=yes.*RESULT: PASS.*exit=0'; ISSUER NOTES: the GREEN arm PASSED on a planted record carrying the live values.",
+  "world_is": "The script passes and the pattern does not, for the live schedule value alone; every other clause of the pattern matches. Recorded as AC2 FAIL, the order left open. Smallest amendment: record=.+? live=.+? equal=yes (and the same for the frontier line), which the issuer may make without a CTO ruling.",
+  "notes": "The off-host record W/CD1_LIVE_READ.json is committed and the script's own verdict is PASS; only the order's expectation is unmeetable as written. A re-grade needs no re-run of the code."
+}
+```
