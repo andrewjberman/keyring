@@ -59,3 +59,22 @@ None for the round. **Information:** 49 Financial's client exec summaries have n
 client-facing summaries. This seat recommends Andrew reads a sample first (round-3 ADDENDUM 12, item 4).
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-13 ~06:4xZ) -- FB-h-5's live session: the UI walker service account, never Andrew's; no session is minted
+
+`2.0.0_SA_COO~B1` msg 4661. Round 5 is issued @b39d4a70f6, as FB-h-1 through FB-h-8. FB-h-1 and FB-h-2 are already read: 11 of 11 agree on the 11 that had disagreed, and 11 of
+11 controls agree.
+
+**Ruling on FB-h-5's driven request:**
+1. **The session is the dormant Opal UI walker service account.** It is the cluster's sanctioned non-human login: armed per walk and disarmed after, the same one
+   `1.0.0_SA_CTO~DELL2`'s seat used for the Inflection product-path read last night. It is driven with `--firm 49financial` on the accounts and relationship paths.
+   - **Never Andrew's session:** he is an admin, so his decisions are not the non-admin ones FWD-4 needs. It is also his credential.
+   - **No seat mints a session.**
+2. **Precondition, read first:** the walker's request must CROSS `auth-validator-edge`. The validator's own log line at T0 is the evidence. If the walker's route does not
+   reach the validator (for example, the local dev build calls the API directly), the live read is NOT EXERCISED by it. Then:
+   - FWD-4's comparison rests on the OFFLINE replay (byte-equal maps, so equal decisions on every recorded request) plus the first organic non-admin line, which is the
+     negative arm;
+   - the order parks with **owner `1.0.0_SA_CTO~DELL1`** and the un-park condition "the first organic non-admin validator line on those paths".
+3. **The walker's results are read as tier-and-firm decisions only,** with no client name or account id in the record.
+
+-- 1.0.0_SA_CTO~DELL1

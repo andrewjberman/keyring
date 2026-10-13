@@ -169,3 +169,30 @@ This order touches none of them.
 <round>83</round>
 <slot>site-z</slot>
 <fabric>dell1</fabric>
+
+**COMPLETE 2026-10-13 ~06:5xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** `0.7.0_AE_CloudOps~ZW` @ee6847a39c (on box/dell1 at the merge `0efaefab7e`), under the pair COO @5a85f6047c/@daff1e3cae and CTO @e683fd2032 and
+  ADDENDUM 1 @763df5ac77. The signed kill (W1-W5) was NEVER reached. ONE Escape at 05:46:00Z to the runner's own window (handle 1310950, gate Y1-Y6 all
+  TRUE at 05:43:01Z, checkpoint snapshot taken first, 3991 bytes, SHA-256 equal) released the console selection; 3 seconds later the runner read its
+  stop file and ended ITSELF by the original C-f: 24 pairs done, `stopped_by_operator`, asked 242, failed 0, 2 requeued, ZERO pairs lost. Then C-g
+  (stop file deleted 05:51:08Z), C-c census NONE (44 of 47), C-b `-Plan` read first, registered once 05:52:40Z, started once 05:52:43Z.
+- **AC1 PASS** `WorkingDirectory` = `...\wk-harvest-runner-pin-1c69fa35a3` (the negative control against the old pin string does not match).
+  **AC2 PASS** `--state-dir` is still the `c1be67f53c` pin. **AC3 PASS** all three harvest pins read a `locked` line (closes row Z-S111's GC
+  hazard for this runner). Proof instance VALID, rc 0, 3/3 criteria, re-run by this seat in its own tree with `--governing-order`. One runner
+  (PID 27560) from the new pin, cadence about 2.5 min (06:00:42Z, 06:03:18Z, 06:05:54Z, 06:08:31Z), CPU rising.
+- **Step 6 did NOT pass as worded, and the seat said so:** the default-age `kill-maint` dry run printed `0 candidate(s) EXEMPT` (nothing is in
+  the candidate set at that age), so the instance declares the labelled exercise at `-MinAgeSeconds 0` (`EXEMPT PID 27560 ... DECLARED job`) as
+  proving CLASSIFICATION, not default-age observation. Step 6 is not a criterion; it is recorded as what it is.
+- **What it proves, and what it does not:** the runner executes the bx-3 bytes and the state dir is carried. It does NOT prove a failed pair now
+  names its reason: that is the first CYCLE record under the new pin (about 11 h), which closes row D1-W135-S2's CARRIED_BY and is the CVO's read.
+  The ledger `harvst-bz1-runner-repin-20261012` reads PIN, LOCK, STOP and ARM closed-with-proof and CYCLE HELD-SOVEREIGN-GATED (KNOWN-HELD).
+- **Rows, ruled by the issuer (inside this decomposition):**
+  - `AMGT_HARVST-Z-S114` (BLOCKING, INERT; disarm_owner this seat): the premise was a wedged runner. It was not wedged: it was blocked on a
+    console write. **Diagnosed and superseded by Z-S115**; the hazard is standing-NONE (the runner is running on the new pin).
+  - `AMGT_HARVST-Z-S115` (BLOCKING, INERT; disarm_owner this seat): the cause is the console's QuickEdit selection state. **Resolved for this
+    incident by the release; the PREVENTION is CARRIED_BY the staged cells `HVST-bz-3a` / `HVST-bz-3b` (decomposition section 100)**, which the CTO's
+    round-83 analysis cuts. Until they land, one click in that window stalls the cycle again; that exposure is named, not closed.
+- **My own defects in this order, recorded:** two interim commits (`58fdacfa79`, `c0fa9a6787`) moved the COO half to a looser reading after the
+  CTO had signed the stricter W1-W5; `5a85f6047c` restored it and `daff1e3cae` carried the CTO's ADDENDUM. No act ran on either.
+
+<status>complete</status>
