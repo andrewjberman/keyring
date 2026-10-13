@@ -42,11 +42,11 @@ incident anchors are cited inline. Design history: `docs/briefs/portal-main-tree
   the workspace root.** From inside the Step-4 worktree `--show-toplevel` returns THE WORKTREE, so
   carry the value forward rather than recomputing it there.
 - Pull inbox (`check-inbox` + `get_agent_status`) — a pending `[STOP]`/`[HALT]` blocks the promote.
-- **Declare the freeze window:** MCP COO that a promote is staged. The promote merges LIVE
-  `origin/DEV` at GO time — it is NOT a frozen snapshot; any DEV commit pushed during the window
-  silently rides into the promote as an unverified passenger
-  (`feedback_portal_promote_remerges_live_dev_at_go_not_frozen_snapshot`). COO holds portal/DEV
-  pushes until the promote lands.
+- **Declare the freeze window:** MCP COO that a promote is staged. The promote ships the NAMED list
+  of approved feature branches (the `--features` set, Step 4), never live `origin/DEV`: DEV at GO
+  time no longer rides in, so a DEV commit pushed during the window ships only if its branch is on
+  the list and approved (`feedback_portal_promote_remerges_live_dev_at_go_not_frozen_snapshot` is
+  superseded by the chosen-set release). COO holds portal/DEV pushes until the promote lands.
 - **If COO dispatched this promote via GO message:** the freeze is already active — skip the MCP
   notify, just confirm the GO is current (same session, no STOP received since) before proceeding.
 
@@ -107,6 +107,18 @@ v2.1.114 stale 47b3d5d7). Step 3 is mandatory on EVERY promote, not just after k
 
 ```bash
 WS="$(git rev-parse --show-toplevel)"        # re-derive; do not assume Step 0's shell
+PROD_BASE=$(git rev-parse origin/PROD)
+
+# CHOSEN-SET RELEASE (NFRA_DEVPLN C-PROMOTE) -- the promote ships the approved feature branches named
+# for it, and never live origin/DEV. The builder merges only those into a release branch cut from PROD.
+# It refuses the whole release on any unapproved, stale or mismatched branch, and leaves nothing behind
+# when it refuses. Run it BEFORE the worktree below, so a refusal leaves no worktree to tear down.
+RELEASE_OUT="$(bash "$WS/.tools/portal-release-build.sh" --features "<b1,b2,...>")" \
+  || { printf '%s\n' "$RELEASE_OUT"; echo "BLOCKED: release refused -- read the REFUSE line, fix or drop that branch, re-run"; exit 1; }
+printf '%s\n' "$RELEASE_OUT"                  # keep the PROMOTE-LIST lines for the receipt (Step 8)
+RELEASE_BRANCH="$(printf '%s\n' "$RELEASE_OUT" | sed -n 's/^RELEASE result=READY .* branch=\([^ ]*\) .*/\1/p')"
+[ -n "$RELEASE_BRANCH" ] || { echo "BLOCKED: no release branch printed"; exit 1; }
+
 WORKTREE="$WS/.runtmp/portal-promote-$(date -u +%Y%m%dT%H%M%SZ)"
 git -C "$WS/portal" worktree add "$WORKTREE" PROD
 cd "$WORKTREE"
@@ -119,13 +131,12 @@ BUN="$(command -v bun)" || { echo "BLOCKED: bun not on PATH — resolve it BEFOR
 echo "OK: bun -> $BUN ($("$BUN" --version))"   # corruption oracle: echo the resolved path back
 "$BUN" install
 
-# Explicit --no-ff with a descriptive message encoding rollback SHA
-PROD_BASE=$(git rev-parse origin/PROD)
-git merge --no-ff origin/DEV \
-  -m "merge DEV->PROD: vX.Y.Z — <description> @ DEV $(git rev-parse origin/DEV). Base $PROD_BASE. Rollback: $PROD_BASE. Authored <serial>."
+# Take the release branch onto PROD by fast-forward: the release is PROD plus the approved merges, so
+# --ff-only adds no commit of its own and every Feature:/Approved-By: trailer stays as built.
+git merge --ff-only "$RELEASE_BRANCH"
 
 # Parity gate — MUST be empty; non-empty = something is wrong with the merge
-git diff origin/DEV HEAD   # empty = OK; any output = ABORT
+git diff "$RELEASE_BRANCH" HEAD   # empty = OK; any output = ABORT
 
 # SEV1 HAND-CHECK ON THE MERGED TREE — STRUCK. THE TOOL IS RETIRED AND NOTHING REPLACES IT.
 # retired-tombstone: comp-surface-check
@@ -268,6 +279,7 @@ RAVC report to COO (releases the DEV-push hold) + session log. The artifact tabl
 | Field | Value |
 |---|---|
 | PROD commit | `<hash>` |
+| Promote list | the `PROMOTE-LIST` lines and the `PROMOTE-CLIENT-FACING count` line, verbatim from the Step 4 builder output |
 | Tag | `portal-vX.Y.Z` (peeled-verified) |
 | CI run | `<id>` + `conclusion: success` |
 | Workspace pointer | `<CLOUD hash>` + measured push state ("LOCAL @hash (ls-remote read)"; MSTR carries it) |
