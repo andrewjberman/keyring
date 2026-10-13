@@ -1159,3 +1159,29 @@
   "notes": "Not changed here: moving the write changes staged content on every run, which is outside this amendment. The reader question is open."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S20",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+  "surfaced_at": "2026-10-13T14:00:16Z",
+  "one_line": "The qa_local dry run of mdpf-gold-lambda created two NEW tax-prelude objects (a bronze and a silver workbook snapshot for knowledge date 2026-10-13); the order expected the stores to read the same, because it assumed a second acquisition on the same day is a no-op conditional create. It is not: the key carries the response sha256, which differs per acquisition.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "ADHOC.canon-r6-fold-deploy leg d and pair section 4: qa_local does not pass dry_run into the tax prelude, whose stores are conditional creates; run after the same day's fire each store already holds that date, so the writes are no-ops; every store and the control key read the SAME VersionId, and a change is a STOP with a BLOCKING row naming the key.",
+  "world_is": "Measured 2026-10-13T13:58Z. The one dry run (invoke 13:57:03Z-13:58:18Z, 200, green, errors [], 16 of 16) left all 16 served objects byte-equal with the same VersionId, the control key mdpf/global/state/taxsma_control/current.json at VersionId exA7udEpsIfWTRSK4HmnhLK.X7Y4Ebil, the four durable stores' EXISTING objects at their VersionIds (bronze yZlDy9Xq.., silver XGDYmwoko75.., dispositions 49f YARonRjo.. cot aWcj2tjY.., gold assets 49f A0axHKqe.. cot n6xJnCBb..), and the emitter CodeSha256 unchanged. It ALSO created, at 2026-10-13T13:58:14Z, two objects that did not exist at the before print: s3://opal-data-assets/gateway/global/bronze/taxsma_workbook/date=20261013/354362accd108ee3d84f80fab41b1595f9ebd1afc7b244e2e097e7948f22e853-231f1f19e583de1242fa4ff8bce4b53992a8d78694a8979e8e351b7c1482cb94.json (5,656 B, VersionId xVpjCobJKbo.s9RN500CcKxWf1sqLPdY) and s3://opal-data-assets/gateway/global/silver/taxsma_workbook/date=2026-10-13/354362accd108ee3d84f80fab41b1595f9ebd1afc7b244e2e097e7948f22e853-231f1f19e583de1242fa4ff8bce4b53992a8d78694a8979e8e351b7c1482cb94.parquet (15,673 B, VersionId J.xeeTys9uvPCo7TRw_nfRB4PdTpmcs_). Same snapshot_id 354362ac.., a different response_sha256 (231f1f19.. against the fire's 5ac6579c..): each acquisition of the workbook is a new key. The same pattern is on record for date=20261012: one object at 13:31:43Z (the fire) and a second at 17:32:49Z (the CN-d-1 real run of 17:31Z), on the code BEFORE this order, so the cause is the acquisition, not the four deployed files. The gold assets objects and the dispositions did not change.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/canon_r6_taxstores_before_20261013.json and ..._after_...json",
+      "aws s3api head-object / list-objects-v2 on the two keys, 2026-10-13T13:58Z (LastModified 13:58:14Z inside the invoke window)",
+      "aws s3api list-objects-v2 prefix gateway/global/bronze/taxsma_workbook/date=20261012/ (13:31:43Z and 17:32:49Z)",
+      "aws lambda invoke 2026-10-13T13:57:03Z-13:58:18Z StatusCode 200 payload status green errors []"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "STOPPED as the order says; no further act. No rollback taken: the objects are write-once creates a code rollback would not remove, the same two-object pattern followed the real run on the CN-d-1 code, and a rollback would put the pre-fold code on tomorrow's first folded fire. The four keys and the prior package (artifact VersionId qUUF7ZdR5eqGOL.5j8fJgrR2RAMhcviU, MDPF_GOLD_COMMIT 88e974ca10) stay recorded in ledger mdpf-canon-r6-fold-deploy-dell1-20261013 for the issuer's call before 2026-10-14T12:45Z. Whether a consumer reads 'latest object under date=' and can pick up a second snapshot is not measured here."
+}
+```

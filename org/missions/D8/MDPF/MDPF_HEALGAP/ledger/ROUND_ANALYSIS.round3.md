@@ -44,3 +44,14 @@ stays the 2026-10-12 version, one trading day behind.
 None for this project. Site Z's Bloomberg pull resumes on site Z's side (Andrew-direct 2026-10-13: "Regarding SiteZ, I will handle them at their terminal").
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-13 ~14:0xZ) -- CORRECTION: HG-t-5 is already APPLIED. FWD-5 is regraded REALIZED; round 4 item 2 is WITHDRAWN.
+
+`2.0.0_SA_COO~G1` msg 4863.
+- Ledger `healgap-r3-act-ht5-runner-fire-1245z-20261011` is CLOSED @f3afa83d59.
+- The live rule `cot-rebalancer-runner-daily` reads `cron(45 12 * * ? *)` ENABLED (read 2026-10-13T10:23:42Z).
+- Its 12:45Z fire read SKIP-IDEMPOTENT on 2026-10-12 and on 2026-10-13: the day was already complete, so the pull no longer depends on a pre-login 06:00Z fire.
+This seat carried HG-t-5 as owed from the round-2 list without reading the ledger. **FWD-5: REALIZED.** Round 4 is the characteristics re-attempt (HG-t-16) and the seven-pull
+dispositions (HG-t-17).
+
+-- 1.0.0_SA_CTO~DELL1
