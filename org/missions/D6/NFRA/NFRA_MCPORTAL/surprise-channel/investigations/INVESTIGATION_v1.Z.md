@@ -1535,3 +1535,56 @@
   "notes": "For 2.0.0_SA_COO~MP: the page-building cell (and the PRD wording of 'who holds what') should say the person tier comes from the principal rosters. If the intent was that the email rosters raise a person's tier, that is a gateway change (app/tier.py), outside this cell's paths."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S42",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~MQ",
+  "surfaced_at": "2026-10-13T14:01:14Z",
+  "one_line": "MP-z-4 step 2 says 'run the plan with safe-apply', but .tools/safe-apply.sh gates the apply subcommand ONLY and REFUSES any invocation without the literal word 'apply' (rc=2), so a plan cannot be run through it; the same wording is likely in the sibling GW orders.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "spec_asserts": "NFRA_MCPORTAL.TO-MP-z-4 section 1 step 2: 'Run the plan with safe-apply, targeted to aws_iam_role_policy.gw_access_state_principal_scan only.'",
+  "world_is": "Measured in worktree C:/tmp/mp-mq-z4: `.tools/safe-apply.sh -chdir=infra/aws/terraform/opal-gateway plan -target=aws_iam_role_policy.gw_access_state_principal_scan` exits rc=2 with 'safe-apply: ERROR -- no safe-apply subcommand in the arguments. this wrapper gates terraform apply only. For plan or any other subcommand call the terraform binary directly. usage -- safe-apply.sh [-chdir=DIR] apply [apply-args...]'. The wrapper's own header says the same: 'Gates apply ONLY. plan and other subcommands are non-destructive -- call terraform.exe directly for those.' The plan was therefore run on the terraform binary directly (rc=0, 1 to add / 0 to change / 0 to destroy) and the APPLY will go through safe-apply, which is the gated step Rule 18 exists for. NOTHING IS LOST by this -- safe-apply's HALT-gate fires immediately before the irreversible apply, which is where the order wants it; only the order's sentence is unrunnable as typed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-apply.sh header lines 16-19 and the has_apply loop at :57-64, box/sitez HEAD 6fe140d0a8",
+      "measured invocation 2026-10-13 ~13:0xZ in C:/tmp/mp-mq-z4: rc=2, the four-line refusal quoted above",
+      "the same command with `apply` and the saved plan is the act step 4 of the order prescribes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For 2.0.0_SA_COO~MP: a one-word amendment ('run the plan with terraform directly; the APPLY goes through safe-apply') makes the step runnable as typed. Check TO-MP-z-5 for the same sentence before its GO. No criterion is affected -- neither z4.AC1.sh nor z4.AC2.sh reads how the plan was invoked."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S43",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~MQ",
+  "surfaced_at": "2026-10-13T14:01:14Z",
+  "one_line": "The NO-CONE sparse pattern list MP-z-4 prescribes (.tools/, org/, lib/, infra/aws/terraform/opal-gateway/) cannot plan OR commit a gateway .tf: four separate fail-closed refusals, each naming one more absent path, cost four round-trips before the commit landed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "spec_asserts": "NFRA_MCPORTAL.TO-MP-z-4 section 1: 'Work in a linked worktree you cut from box/sitez HEAD (CLAUDE.md 14b), with the NO-CONE sparse pattern list that worked for MP-k-2 (.tools/, org/, lib/, infra/aws/terraform/opal-gateway/).'",
+  "world_is": "That list is sufficient for an org/-only or lib/-only cell (MP-k-2 wrote an S3 grant whose gates never walked the terraform declaration tree) and insufficient for ANY cell that plans or commits a .tf under infra/aws/terraform/. Measured in order, each failing CLOSED and naming exactly what it wanted: (1) lib/opal_naming.py name() raised FileNotFoundError on infra/logic/registry/systems.json -- the builder's registry is NOT under lib/; (2) terraform init: 'Unreadable module directory ... ..\\modules' x5 -- infra/aws/terraform/modules/ is a sibling of the opal-gateway dir and is not matched by the opal-gateway pattern; (3) commit-gate: 'config not found: comp-constants.config.yaml' -- the root-level tracked blobs are not matched by any directory pattern; (4) the LGIC naming limb's PLACEMENT step raised FileNotFoundError twice, first on infra/aws/lambda/ci/lambda-source-map.json and then on infra/aws/terraform/49f-value-parity/49f_value_parity.tf, because it walks the WHOLE declaration tree, not the staged paths. The NAME itself graded CONFORMANT on the first attempt that reached it, so none of the four was a verdict about the change. The working list adds: /infra/logic/, /infra/aws/terraform/ (whole, 757 files -- not just opal-gateway/ and modules/), /infra/aws/lambda/ci/, /infra/aws/ec2/EC2_MANIFEST.json, /infra/aws/lambda/mcportal/ (the plan-time data.external grant-writer build), and the 12 root-level tracked blobs (.gitattributes .gitignore .gitmodules .mcp.json .owned-paths.yaml AGENTS.md CLAUDE.md README.md ajb.ps1 comp-constants.config.yaml pytest.ini requirements.txt). Still bounded: infra/ whole is 9335 tracked files, of which infra/aws/lambda/ alone is 7305, so the wide pattern is NOT the answer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "four measured refusals 2026-10-13 ~12:4xZ-13:5xZ in C:/tmp/mp-mq-z4, each quoted above with its absent path",
+      "`git ls-tree -r --name-only HEAD infra/` = 9335, infra/aws/terraform/ = 757, infra/aws/lambda/ = 7305, infra/aws/ec2/ = 676 at 6fe140d0a8",
+      "commit a667941f52 landed on the pattern list that includes all six additions; naming gate PASS 1 graded, CONFORMANT as IAM_POLICY",
+      "the same class is already written down: /cloud-ops 'FOUR APPLY-SIDE TRAPS' item (4) -- a sparse worktree that will run an apply needs lib and its own agent home in the cone, all fail CLOSED and name what they need"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For 2.0.0_SA_COO~MP: TO-MP-z-5 (the gateway release, STAGED) and any later GW cell touching a .tf will hit the same four. The pattern list above is measured, not predicted -- it is the one commit a667941f52 actually landed on. Suggest the order carry it instead of the MP-k-2 list."
+}
+```

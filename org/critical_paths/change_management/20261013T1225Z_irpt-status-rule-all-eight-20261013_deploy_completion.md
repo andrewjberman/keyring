@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-13T12:25:04.201173+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261013T141000Z
 **Deploy:** IRPT_ANLREQ TO-APPLY-R20: status rule (_authz/served.py 564e604838) into eight packagers, ops/status.py e93258c650 into irpt-status only; code only, eight scoped applies; pair COO blob 8eccf7b90a + CTO half @67cadd141d
 **Authored by:** 0.7.0_AE_CloudOps~AQ2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -18,7 +18,7 @@
 | L4 | verify | per function scoped plan: 0 add 1 change 0 destroy, last_modified s3_object_version source_code_hash only | eight plan summary lines | 8 of 8 scoped plans: Plan: 0 to add, 1 to change, 0 to destroy; attributes last_modified, s3_object_version, source_code_hash only (environment not in the diff). Logs units/plan_*.txt | CLOSED 20261013T131244Z |
 | L5 | activation | safe-apply on each saved plan, A1 and A2 per unit | eight Apply complete 0/1/0 and live CodeSha256 equals EXPECTED | 8 of 8 safe-apply on the saved plan: Apply complete 0 added 1 changed 0 destroyed (seat-gates ADMITTED, comp-tagauthz PASSED, crossbox-deploy-check no verdict rc=124 in WARN mode); A1 TRUE and A2 TRUE for 8 of 8; no aws lambda update-function-code used. Last apply ended 13:07:25Z. | CLOSED 20261013T131244Z |
 | L6 | verify | SAMPLE_AFTER and A3 equality or ABSENT | EQUAL 14 of 14 or ABSENT | A3 ABSENT with reason (see L2); no SAMPLE_AFTER taken. A1 and A2 stand. | CLOSED 20261013T131244Z |
-| L7 | verify | A4: first-hour INTERNAL-CALLER-CLASS counts by class and outcome with denominator, sent to CTO and COO | counts |  | OPEN |
+| L7 | verify | A4: first-hour INTERNAL-CALLER-CLASS counts by class and outcome with denominator, sent to CTO and COO | counts | A4 read 14:07:41Z: 8 of 8 log groups, apply time to 14:07:25Z (60-93 min), 0 INTERNAL-CALLER-CLASS lines; control REPORT lines: directory-search 57, other seven 0 (vacuous for seven). No row_absent/row_non_active count. Sent to 1.0.0_SA_CTO~DELL2 (msg 6959) and 2.0.0_SA_COO~Y2 (6960). Record A4_FIRST_HOUR_R20.txt | CLOSED 20261013T140959Z |
 | L8 | verify | A1 to A5 file L8_AFTER_R20.txt | eight A1 lines and A2-A5 | L8_AFTER_R20.txt written: 8 A1 lines, A2 8 of 8, A3 ABSENT, A5 28 of 28 envelopes carry CORRECT with words; ar20_checks.py y218-apply prints Y218-APPLY-OK. | CLOSED 20261013T131244Z |
 | L9 | git | eight release diffs applied to trunk map plus artifact_* and last_deployed_*; commit | commit hash | Map record commit c7756279dd on scratch branch aq2-r20-map (own worktree), merged to box/dell2 as 8aebb08499 via safe-merge (LOCAL; push not made by this seat). Net diff lambda-source-map.json only: 8 of 235 entries; the eight release diffs applied cleanly (served.py rows, and the status.py row of irpt-status) plus artifact_sha256, last_deployed_commit, last_deployed_at, deploy_ledger, deployed_code_sha256 per function; verified by parsed old-vs-new comparison. | CLOSED 20261013T132020Z |
 
@@ -33,3 +33,5 @@
 - 20261013T131244Z LEG L6 closed: A3 ABSENT with reason (see L2); no SAMPLE_AFTER taken. A1 and A2 stand.
 - 20261013T131244Z LEG L8 closed: L8_AFTER_R20.txt written: 8 A1 lines, A2 8 of 8, A3 ABSENT, A5 28 of 28 envelopes carry CORRECT with words; ar20_checks.
 - 20261013T132020Z LEG L9 closed: Map record commit c7756279dd on scratch branch aq2-r20-map (own worktree), merged to box/dell2 as 8aebb08499 via safe-me
+- 20261013T140959Z LEG L7 closed: A4 read 14:07:41Z: 8 of 8 log groups, apply time to 14:07:25Z (60-93 min), 0 INTERNAL-CALLER-CLASS lines; control REPORT
+- 20261013T141000Z CLOSED -- all 9 legs proven

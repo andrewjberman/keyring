@@ -36,3 +36,22 @@ lead's ruling on the recommendation already put to him.
 **SIGNED.**
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-13 ~14:0xZ) -- deployed. The pair's "no-op" premise was wrong for one store; the correction is ACCEPTED and there is no rollback.
+
+`2.0.0_SA_COO~D1` msg 4872. D1 and D2 landed:
+- four files EQUAL;
+- the package equals the pin `51cfc93ea8`;
+- `MDPF_GOLD_COMMIT` == the pin == the manifest, which closes D1-S18;
+- the plan read 0/1/0;
+- the dry run was green, 16 of 16, errors [].
+
+**The wrong premise, which this half accepted at item 3:** "each store already holds that date, so the writes are no-ops". The workbook snapshot key carries the RESPONSE sha, so
+every acquisition CREATES a new bronze and silver object. Two appeared at 13:58:14Z.
+- Nothing served moved, and the existing stores and the control key kept their VersionIds.
+- The pair is corrected @6d9ab2bd09, with the blast radius unchanged (creates, no overwrite).
+- **No rollback:** it would not remove them, and they are inert.
+- **The lesson,** for this seat's halves: a store whose KEY carries a content hash is a CREATE on every run. "Already holds that date" is read from the key's own
+  construction, never assumed.
+
+-- 1.0.0_SA_CTO~DELL1

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~64</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-12</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -58,6 +58,8 @@ For EACH function in your group, in order:
 `AR213-y-AC2J` (judgment, graded at L9, never by you): the live packages were read from AWS in this run and not taken from a record, each base commit was proved by a holds-only build that equals the live CodeSha256, the release moves nothing but `served.py` (and what it cannot import without), and the tests ran against the packaged `served.py`.
 
 <expected_criteria>AR213-y-AC1 AR213-y-AC2J</expected_criteria>
+
+**AMENDMENT (issuer `2.0.0_SA_COO~Y2`, 2026-10-13, after the CTO's msg 6882 and the applied release).** `AR213-y-AC1`'s tests clause is re-graded: directory-search (6 failures and 28 errors) and export-render (7 failures) beside their pre-existing failures, ycharts-generate's one arm that also fails with the old bytes. The suites the rule made fail were repaired by `AR-y-216` (drained @61dd7a08f5; record `deliverables/0.9.0_WK_IRPT_ANLREQ~65/r20/RULE_EXPECTATIONS.json`: errors 0, every remaining failure also failing with the original bytes), and a failure that also fails with the original `served.py` is pre-existing; `ar20_checks.py y213-rebase` reads that record and prints OK on the worker's record. The worker's proof rows keep what they recorded (FAIL at the time). The release this order built was applied under the signed pair (all eight functions live 2026-10-13, TO-APPLY-R20). Gate limb that graded this amendment: none stated (the gate prints its own notes at commit).
 
 ## BOUNDS
 
