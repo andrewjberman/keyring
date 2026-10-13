@@ -3956,3 +3956,79 @@
   }
 }
 ```
+
+## IRPT_ANLREQ-D2-W54-S13 -- the cell's blob path misses the registry member: name_rulings.json lives at infra/logic/registry/, not under infra/aws/lambda/investor-reporting/
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S13",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-13T03:03:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-AR-y-197 reads each member with git show <pin>:infra/aws/lambda/investor-reporting/<member>; for infra/logic/registry/name_rulings.json that path does not exist at either pin, so the member was read at infra/logic/registry/name_rulings.json instead (the path the delta's source field names).",
+  "spec_asserts": "TO-AR-y-197 READ FIRST: for each member, git show <pin>:infra/aws/lambda/investor-reporting/<member>, with the four members named as _authz/served.py, infra/logic/registry/name_rulings.json, ops/status.py and ycharts/generate/resident_worker.py.",
+  "world_is": "Control: git ls-tree 069b8f797e -- infra/logic/registry/name_rulings.json returns blob d0752edf6e; git ls-tree 069b8f797e -- infra/aws/lambda/investor-reporting/infra/logic/registry/name_rulings.json returns nothing; the same negative control at 0485393f3a returns nothing. The delta's own source field for this member is infra/logic/registry/name_rulings.json. The other three members are under the investor-reporting prefix as the cell says.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/name_rulings.json @069b8f797e (blob d0752edf6ee15355a1c782675f800bd00b667a04) and @0485393f3a (blob 4cef897c32a243034a0359a9d9b35d40f691dfca)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/r19/RESIDENT_PACKAGE_DELTA.json (differing, source field for infra/logic/registry/name_rulings.json)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S14 -- the resident factory is at reports/resident_installed.py, not beside resident_main.py under ycharts/generate/ as the cell's entry-point list reads
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S14",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-13T03:03:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cell lists resident_installed.py among the resident's entry points beside resident_main.py and resident_worker.py; the file is at infra/aws/lambda/investor-reporting/reports/resident_installed.py and ycharts/generate/ holds no resident_installed.py. The trace followed the factory from its real location (resident_main.py:46 imports it by module name).",
+  "spec_asserts": "TO-AR-y-197 cell: the resident's entry point is ycharts/generate/resident_main.py, resident_installed.py or resident_worker.py, traced from there.",
+  "world_is": "At 069b8f797e: ycharts/generate/ contains resident_main.py and resident_worker.py; reports/resident_installed.py defines build_resident_runtime at line 344 and sets its sys.path at lines 4-8 (_scope, _ids, _keys, _authz, _contracts, intake, ops, reports, ycharts/generate, ycharts/session, lib). The installer (install-resident.sh) names the factory by module:function, so the module location is set by sys.path, not by the entry directory.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py @069b8f797e (line 344 def build_resident_runtime; lines 4-8 sys.path)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py @069b8f797e (line 46 importlib.import_module of the factory module)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S15 -- a latent lazy edge from the resident's closure to _authz/served.py has no call site today; a future call would bring the status rule into the resident's reach
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S15",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-13T03:03:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The resident's static import closure reaches _authz/served.py only through a function-level chain that no resident path calls; if a caller of resolve_custody_profile_fields were added on the resident, served.py would load (running its import-time _earn_the_mark) and Entry.handle's status rule and log line would be in the resident's reach. No gate or cell names this edge.",
+  "spec_asserts": "TO-AR-y-197 AC2J (judgment): a member the resident does not reach is shown not reached rather than assumed; the pair's reading of served.py rests on the static trace.",
+  "world_is": "Chain at 069b8f797e: reports/resident_installed.py:376 (lazy) -> _scope/canonical_profile_reads.py:15 (module level) -> _scope/maintained_sources.py:332 (lazy, in snapshot_custody_profile_sources, def 313) -> _scope/custody.py:25 (lazy, in current_custody_principal, def 24) -> _authz/served.py:323. snapshot_custody_profile_sources has one caller, resolve_custody_profile_fields (maintained_sources.py:380-386), which has no caller in the closure; CustodyAccess (custody.py:45) is never instantiated in the closure. served.py:1384 runs _earn_the_mark() at import.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/maintained_sources.py @069b8f797e (lines 313, 332, 380, 386)",
+      "infra/aws/lambda/investor-reporting/_scope/custody.py @069b8f797e (lines 24-25, 45, 61, 64)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py @069b8f797e (line 1384 GUARD_WIRING_PROVEN = _earn_the_mark())"
+    ]
+  }
+}
+```
