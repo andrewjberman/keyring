@@ -23,16 +23,14 @@ On 2026-10-12 the site Z runner stopped for 9 h 24 m because its console window 
 window, and adds `-Windowless` to the installer. This cell re-registers the task from pin **P = `995adcaeaa`** with `-Windowless`, and nothing else.
 Today the runner (PID 27560 at 07:1xZ) runs from `wk-harvest-runner-pin-1c69fa35a3` as `python.exe`; `<old>` below is that pin and it stays locked.
 
-## 1. START CONDITIONS (all four read at the start, not assumed; any false: DO NOT START, file one row, and the issuer reads it)
+## 1. START CONDITIONS (all three read at the start, not assumed; any false: DO NOT START, file one row, and the issuer reads it)
 
 - (a) After `git fetch origin CLOUD`, `git cat-file -e 995adcaeaa` and `git merge-base --is-ancestor 995adcaeaa origin/CLOUD` both succeed. Read the
   reverse (`origin/CLOUD` is not an ancestor of P) as the negative control. If P is not on origin/CLOUD, nothing here pushes it.
 - (b) BOTH never-widen halves are on file and read SIGNED at their pins: COO half
   `deliverables/2.0.0_SA_COO_W1/round84/NEVER_WIDEN_HALF_COO_BZ4_WINDOWLESS_REPIN.md` and CTO half
   `ledger/NEVER_WIDEN_ROUND84_BZ4_CTO_HALF.md`. Read each with `git show <pin>:<path>`; the issuer states the pins in the crossbox line.
-- (c) `HVST-bz-5` has filed its read: `deliverables/0.7.0_AE_CloudOps~ZW/round84/bz5_read.out` exists. (The stop in step 2 writes a stopped cycle
-  record; the close read of D1-W135-S2 must not be that one.)
-- (d) **The runner is PROGRESSING:** `cycle_runner.log`'s last write is less than 15 minutes old and the runner's window title does not begin
+- (c) **The runner is PROGRESSING:** `cycle_runner.log`'s last write is less than 15 minutes old and the runner's window title does not begin
   `Select `. If not, STOP: that is row Z-S115's old failure, it has its own signed branch, and this order does not take it.
 
 ## 2. BEFORE THE STOP (C-f, as in HVST-bz-1)
@@ -120,8 +118,8 @@ This order touches none of them.
   `ledger/NEVER_WIDEN_ROUND84_BZ4_CTO_HALF.md` (owed). The act does not start without both on file, and the crossbox ORDER is delivered after both.
 - **Row Z-S115 (ARMED, disarm owner this seat):** disarmed when R1 to R4 read TRUE and AC1 to AC3 PASS. The first ended cycle under `pythonw` is a later read.
 - Delivered as a crossbox ORDER through MSTR (`python .tools/crossbox-call.py open --kind ORDER --to-device sitez`).
-- The ordering with HVST-bz-5 (start condition (c)) is the issuer's: both go to one seat, and a stop before the read would put a partial record
-  where D1-W135-S2's close read looks.
+- **No ordering with HVST-bz-5:** the stop in step 2 writes a stopped cycle record; `HVST-bz-5` reads the first ended record that holds a failure,
+  so an early stopped record that holds one serves the close (CTO half note) and, if it holds none, the first windowless cycle does.
 
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
