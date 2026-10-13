@@ -51,6 +51,17 @@ FT news (Bright Data pull, summary, SES email) is turned off by DISABLING its sc
 Do NOT touch the Lambda, IAM, the bucket `opal-data-astn`, the SNS topic, SES, the EC2 instance or any other resource. Do NOT run an untargeted `terraform apply`.
 Write every file in `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round84/`. Anything odd: one row `AMGT_HARVST-D1-S<next free D1 number>`, then keep working.
 
+## 2a. AMENDMENT 1 (issuer, 2026-10-13 ~20:5xZ, after your branch-P STOP of ~20:41Z, row D1-S14): ONE READ-ONLY PROBE, NO APPLY
+
+Your STOP was right: a targeted plan includes the schedule's dependencies, and their pending diffs (the Lambda code from commit 1eaea051c4 and the instance `user_data`) are not this act. Do NOT apply the 0/3/0 plan, and do NOT land the other two diffs.
+The signed halves cover only a plan that reads 0 to add / 1 to change / 0 to destroy; this amendment changes nothing in them and starts no apply. Do exactly this, and nothing else, in the same worktree:
+1. `terraform version`; save as `bz8_tfversion.out`.
+2. Read whether `terraform plan -help` lists `-exclude`; save the line (or its absence) in `bz8_tfversion.out`.
+3. If `-exclude` is accepted: `terraform -chdir=infra/aws/terraform/astn-pipeline plan -target=aws_scheduler_schedule.astn_run -exclude=aws_lambda_function.orchestrator -exclude=aws_instance.astn` (use the resource addresses exactly as the 0/3/0 plan names them), WITHOUT `-out`; save as `bz8_plan_excl.out`.
+   Report the `Plan:` line, whether any destroy or replace appears, and whether the only change is `state: "ENABLED" -> "DISABLED"` on `aws_scheduler_schedule.astn_run`. If `-exclude` is not accepted, say so and stop.
+4. Report to the issuer with the file paths. NO `-out`, NO apply, NO `safe-apply`, NO edit of the live schedule, NO other change. The ledger `astn-3am-off-20261013` stays OPEN.
+Any apply waits on a re-signed pair that names the method; the issuer asks the CTO.
+
 <paths>
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round84/
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/
