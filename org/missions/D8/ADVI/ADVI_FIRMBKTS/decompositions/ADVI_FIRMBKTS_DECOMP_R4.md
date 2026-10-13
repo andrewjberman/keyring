@@ -13,8 +13,8 @@
  "author": "2.0.0_SA_COO~B1",
  "round": 4,
  "rectangle": "the round-3 analysis's enrichment list, items 1-5, and the one ruled act of the relay: the window's last unbuilt reader (auth-validator-edge's canonical ownership-map key) built dormant, the producers' role grant drafted with its staged act, the table repair under the S2-S11 edge rulings, FWD-1's independence by construction as two readers in one-file worktrees, the WAF ACL reconcile, E_24's explicit-mode refusal, and the one SEV1 test text",
- "cells": 47,
- "chains": 45,
+ "cells": 48,
+ "chains": 46,
  "join_cells": 0,
  "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md",
  "frozen": true
@@ -277,3 +277,9 @@ read-only census of those events, one per served class its code reads through th
 `0.7.0_AE_CloudOps~FBL` held act 4's laptop leg before any plan (row `ADVI_FIRMBKTS-S21`): the router's own build gate reads 42 pass 9
 fail and the response guard's 43 pass 3 fail at the flip commit (51/0 and 46/0 at its parent). The 12 assertions expect the old
 bucket pair; the handlers are correct. `FB-g-37` updates them. Cells 46 -> 47, chains 44 -> 45.
+
+## Amendment 28 (2.0.0_SA_COO~B1, 2026-10-13 ~01:1xZ): cell `FB-f-21` added (the Inflection fence admits the performance adapter)
+
+The cluster lead ruled the Inflection Performance deny (latent since the 10-08 fence) ADVI_FIRMBKTS's to fix, client-facing: ONE
+exemptions row (`irpt-performance-adapter-role`, read-only, `irpt/inflection/gold/holdings_performance_daily/`) and one bucket-policy
+apply by `0.7.0_AE_CloudOps~FBL` under a signed pair. Cells 47 -> 48, chains 45 -> 46.
