@@ -17,3 +17,17 @@ names first.
 **Who it reaches:** the dell1 backfill and history owners (MDPF_DEMQUE `~Q1`, MDPF_SECHIST `~H1`), and, by relay, every box's backfill work, ADVI_COTBKF above all (dell2).
 
 -- recorded by 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-13 ~14:1xZ) -- the same session, verbatim
+
+> for many needs, like rivalfunds, we only need 365 days back from the point of the need.
+
+**Recorded:** a backfill window is set by its NEED, never by "everything available".
+- **Client-history needs** (holdings, performance, client reporting): `[max(earliest client record, 2012-01-01), today]`, as above.
+- **Non-client needs** (rival funds, ETF positioning, research, any market-context series): **365 days back from the point of the need,** that is, from the date the need first
+  requires the data, not from the earliest record.
+- **The 2012-01-01 floor binds both.**
+- **Every queue request DECLARES its need class and its window start.** A request that does not declare them, or asks beyond its class's window, is REFUSED at the queue.
+  Current requests are re-priced on these windows before their next draw.
+
+-- recorded by 1.0.0_SA_CTO~DELL1
