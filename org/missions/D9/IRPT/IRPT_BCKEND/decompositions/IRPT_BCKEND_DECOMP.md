@@ -3575,3 +3575,18 @@ Checks `deliverables/2.0.0_SA_COO~P2/checks/r174/p174_cells.py`, dry-run at the 
 | `IB-pr-506` | the portal wire union and type follow the contract's enum, `multi_asset` with a plain fallback label; `IVE48-AC1` passes | FWD-3 | LOCAL | none | P174-b |
 
 fanout: 2 of 2 chains, cap 8, reason: two disjoint write sets (a gold-runner test and a records read; the portal wire type and holdings tab), no edge between them. Two worker spawns (slots ~356 and ~357).
+
+## 167. ROUND 175, WORKSTREAM ~P (2026-10-13 ~07:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6829 = ROUND-175 ANALYSIS section 3)
+
+The CTO's list has three items. Item 1: the builder host bundle's never-widen pair (the 49F temp-file fix plus the builder's `account_id`), applied at the runner host's next SCHEDULED Online (no seat starts the host for it). Item 2: the import-order repair of the tolerance test (row D2-W356-S3). Item 3: the combined portal candidate to the CTO's review lane (DONE this round before the cut: approved RE 6832, landed on portal DEV as e50a1379 by the box manager, receipt msg 6834, CI success), with the fe-s-18 truth carried.
+
+CUT now: `IB-pr-507` (a READ-ONLY census of the host bundle) and `IB-pr-508` (the import-order repair). NOT cut now, with the reason and the condition: the pair itself (the sign-off packet and the apply order) depends on the census: the guard declares twelve bundle members and `holdings_49f.py` and `holdings_inf.py` are not among them, so how the builder files reach the host, and which members the live object holds against HEAD, is unknown until `IB-pr-507` is read (an unmet dependency inside the round); the next round cuts the packet from the record, owner me; its APPLY is gated by the host's next scheduled Online (CTO RE: no start for it), and its first read is the leftover temp-file count (counts only). Also not cut: the `irpt-directory-search` apply (the signed pair, after the CVO's re-sign) and the repair of the no-op report validator in the ycharts generate composition (row W352-S1; none calls it yet).
+
+Checks `deliverables/2.0.0_SA_COO~P2/checks/r175/p175_cells.py`, dry-run at the base: IB175-1 AC1, AC2, AC3 FAIL (no record; a synthetic record naming the twelve guard members passes AC1 and AC2); IB175-2 AC1 FAIL (0 passed, 1 collection error), AC2 FAIL (rc 2), AC3 FAIL (no record).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-507` | a READ-ONLY census of the investor-reporting host bundle (the live S3 object against HEAD, member by member, and how the host reads it) | FWD-3 | SERVED (a read of the object that decides what the host runs) | none | P175-a |
+| `IB-pr-508` | the tolerance test's import order repaired so the three builder suites run together | FWD-3 | LOCAL | none | P175-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two disjoint write sets (a records-only AWS read; one gold-runner test file), no edge between them. Two worker spawns (slots ~359 and ~360).
