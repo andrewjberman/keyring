@@ -9,8 +9,11 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
 ## PACING -- governs every row below (Andrew-direct 2026-10-10 ~23:3xZ)
 
 Every live `/canonical-drive`, `/self-drive` and `/govern` arm runs at **60m**, whatever cadence its row names. Every
-re-arm also takes 60m. `/keep-driving` is **OFF** on all four boxes (cloud switch set 23:33:52Z by 1.0.0_SA_CTO, read back
-scan=off empty_tick=off). VERBATIM: "yeah we need slower pacing, i think canonical drive and self drive loops can be on 60m
+re-arm also takes 60m. `/keep-driving` is **ON** on all four boxes since 2026-10-13 20:34:07Z (cloud switch set by
+0.0.0_AB_MSTR, read back scan=on empty_tick=on, no overrides) on Andrew-direct ~20:3xZ at the MSTR terminal, VERBATIM: "ON, 60m
+loops for /self-drive, /canonical-drive, /govern for the relevant agents. CTOs on each box should have /self-drive loop on their
+entire box, i.e. any open-calls that appears on that box they need to adjudicate." (relayed by 0.0.0_AB_MSTR msg 108887;
+landed by 1.0.0_SA_CTO). Before that, OFF from 2026-10-10 23:33:52Z (set by 1.0.0_SA_CTO, read back scan=off empty_tick=off). VERBATIM: "yeah we need slower pacing, i think canonical drive and self drive loops can be on 60m
 interval and /keep-driving OFF for now, no need to be so aggressive. This is to avoid the usage limit and try to scale
 productivity correctly." then "in govern loop too". Record
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261010_23xxZ_SLOWER_PACING_LOOPS_60M_KEEP_DRIVING_OFF.md`.
@@ -30,13 +33,34 @@ Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO. `/govern` fires on each 
 
 ## Arms
 
+- **Every COO lane seated on a non-terminal project, on every box: `/canonical-drive 60m` over its own project**, DIRECTED,
+  chooser Andrew. Andrew-direct ~20:3xZ 2026-10-13 at the MSTR terminal, VERBATIM: "ON, 60m loops for /self-drive,
+  /canonical-drive, /govern for the relevant agents" (relayed by 0.0.0_AB_MSTR msg 108887). Then at the `1.0.0_SA_CTO` terminal
+  ~20:4xZ: "we need COO~C added to the live arms group, as well as any other active COO on the various boxes, so they can run
+  canonical-drive properly". Lanes named at landing are measured from the project registers on CLOUD (28 active of 52) and the
+  dell2 packet's seat list:
+  - laptop: `2.0.0_SA_COO~C` (NFRA_CTLPLN), `~DV` (NFRA_DEVPLN), `~CA` (COMM_ASSIST);
+  - dell1: `~B1` (ADVI_FIRMBKTS), `~K1` (ADVI_BDPRCE), `~R1` (AMGT_RESAPP), `~W1` (AMGT_HARVST), `~V1` (ETFS_RIVALS),
+    `~D1` (MDPF_CANON), `~Q1` (MDPF_DEMQUE), `~M1` (MDPF_SECCLASS), `~G1` (MDPF_HEALGAP), `~S1` (MDPF_STRATID), `~H1` (MDPF_SECHIST);
+  - dell2: `~Y2` (IRPT_ANLREQ), `~G2` (IRPT_YCDGEN), `~P2` (IRPT_BCKEND), `~D2` (IRPT_DASHBD), `~C2` (ADVI_COTBKF), `~T2`
+    (NFRA_TRNSPT), `~V2` (TCKT_VNEXT);
+  - site Z: `~O` (NFRA_OPLGTW), `~MP` (NFRA_MCPORTAL), `~MI` (NFRA_MCPINDEX).
+
+  A COO lane seated later on an active project is covered by this row as written. A project the pivot PARKED (the
+  direction packets, @4e963d4a12) or a CLOSED one does not drive: its lane stops at its drain. A lane may drive only its own
+  project (Tier-2 seating). Stop: his stand-down. Landed by 1.0.0_SA_CTO.
+- **Each box's CTO: `/self-drive 60m` over EVERY open call on its own box** (`python .tools/open-calls.py list` for that box;
+  rule, escalate or hold each, per `/open-calls`), DIRECTED, chooser Andrew, Andrew-direct ~20:3xZ 2026-10-13 (PACING above).
+  Lanes: `1.0.0_SA_CTO` (laptop, inside its cluster loop below), `1.0.0_SA_CTO~DELL1`, `1.0.0_SA_CTO~DELL2`, `1.0.0_SA_CTO~Z`.
+  Each lane arms in its own session; `0.0.0_AB_MSTR` relays the word to the other boxes. Stop: his stand-down. Landed by
+  1.0.0_SA_CTO.
 - `1.0.0_SA_CTO` (laptop) **CLUSTER LEAD: `/loop 60m` over every box's open calls**, DIRECTED. Andrew at the laptop
   `1.0.0_SA_CTO` terminal ~03:2xZ 2026-10-11, VERBATIM: "I am also deputizing you as the leader of the entire cluster. What
   that means is that you should run a /loop to check the various /open-calls across the various boxes json uploads, and you
   adjudicate them. This loop should run every 60m." Body: `python .tools/open-calls.py list --all --cloud`, then a ruling
   per open row, relayed through `0.0.0_AB_MSTR`; rows Andrew reserved stay his. Record
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261011_032xZ_CTO_LEADS_CLUSTER_OPEN_CALLS_LOOP_60M.md`.
-  Stop: his stand-down. Landed by 1.0.0_SA_CTO. The laptop `/self-drive` row below is NOT re-armed since the 2026-10-10 restart.
+  Stop: his stand-down. Landed by 1.0.0_SA_CTO. RE-ARMED 2026-10-13 ~20:4xZ in the post-reboot session at 60m (keep-driving ON). The laptop `/self-drive` row below is NOT re-armed since the 2026-10-10 restart.
 - `1.0.0_SA_CTO` `/self-drive 30m laptop directives` at `17,47 * * * *` (cron `a5054ca6`; 30m on Andrew ~06:0xZ 2026-10-09, "that should be much faster clip, like 30m"), DIRECTED: re-armed after the 2026-10-08 laptop reboot on
   Andrew's "1.) Yes." (~18:3xZ, last addendum of
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_153xZ_TWO_PRIORITIES_GITOPS_AND_PROCESS_GC.md`), terms of
