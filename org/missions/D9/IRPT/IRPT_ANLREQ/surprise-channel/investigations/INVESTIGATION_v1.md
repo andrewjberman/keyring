@@ -9386,3 +9386,357 @@
   }
 }
 ```
+
+## IRPT_ANLREQ-D2-W90-S1 -- the AR-y-265 grant names only the investigations file, but the cell's deliverable is a portal src/ commit
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W90-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~90",
+  "surfaced_at": "2026-10-13T19:40:36Z",
+  "one_line": "The cell's deliverable is a portal commit under portal/src/, outside the workspace <paths> the order grants; the face directs the portal worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-265 Bounds: the grant is exactly the <paths> (the investigations file), the deliverables folder and this order's file; the cell says the fix is a portal candidate under src/ on a portal branch in the portal repository.",
+  "world_is": "The portal src/ change sits in the portal repository (C:/dev/ajb_workspace/portal), outside the granted workspace paths. The face directs the portal worktree C:/dev/wk-portal-90 (branch wk-IRPT_ANLREQ-90-portal), where the candidate is two local commits, 923f7d69 and 794b7df4, on base f6ef1d25. Nothing was pushed, landed or deployed. The issuer should confirm that portal src/ writes are granted for this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-265.analysis-request-submit-silent-failure.md (Bounds, the <paths> block)",
+      "git -C C:/ajb_workspace/portal worktree list: C:/dev/wk-portal-90 on wk-IRPT_ANLREQ-90-portal at 794b7df4 (read by this seat)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W90-S2 -- the ticket CREATE refusals carry no code, so no refusal table can key on them
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W90-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~90",
+  "surfaced_at": "2026-10-13T19:40:36Z",
+  "one_line": "The service's CREATE refusals answer {error: text} with no code key; the page cannot map them to words by code.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-265 step 2: read the service side for what it REFUSES and the codes it returns; step 4: the service's refusal code is mapped to words where the portal has a table for it.",
+  "world_is": "infra/aws/lambda/ticket_center/lambda_function.py create_ticket answers each refusal as {error: <text>} with no code key: 400 from _validate_service_fields, _validate_answers (lines 689-735), _validate_attachment (lines 738-752), the requester_firm mismatch and the firm check; 403 from _deny (lines 339-341) and _resolve_scope (lines 398-406). The portal's apiRequest (src/api/api-client.ts lines 178-181) throws 'API request failed: <status> - <body>', so the page showed the raw service body before the change. The candidate shows the generic CREATE sentence instead; no code exists to key a table on.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py at workspace HEAD 56c8113a00 (read by this seat): create_ticket lines 1145-1206, _deny 339-341, _validate_answers 689-735, _validate_attachment 738-752",
+      "portal/src/api/api-client.ts at f6ef1d25 lines 178-181 (read by this seat)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W90-S3 -- a test file that releases the shared dom-env helper strands every later DOM test file
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W90-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~90",
+  "surfaced_at": "2026-10-13T19:40:36Z",
+  "one_line": "dom-env registers the DOM once per process and cannot register again; a file that releases it leaves later DOM-bound test files with no DOM.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "A test file that needs a DOM imports the shared dom-env helper and releases it in afterAll, as commentary-sent.test.tsx does.",
+  "world_is": "Measured in this cell: a mounted-page test file that called releaseDom() made commentary-sent.test.tsx fail 4 DOM-bound tests when the two ran together (12 pass, 4 fail); with the release removed the pair ran 15 of 15. The helper's module registers once and never again, so any later file that imports it after a release has no DOM. The candidate's test file registers happy-dom itself only when no DOM is present and releases only that. A future file that copies the release pattern will break later DOM tests without a visible cause.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/dom-env.ts at f6ef1d25: GlobalRegistrator.register() at module load; releaseDom() unregisters (read by this seat)",
+      "bun test of src/pages/TicketCenter/__tests__/analysis-submit-silence.test.tsx with commentary-sent.test.tsx, measured 12 pass 4 fail with the release and 15 pass 0 fail without (this seat, portal worktree C:/dev/wk-portal-90)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W90-S4 -- the service-request branch of the same create form has two silent ends the cell does not own
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W90-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~90",
+  "surfaced_at": "2026-10-13T19:40:36Z",
+  "one_line": "The service-request create still returns silently on an empty title and renders nothing on an error with an empty message; not fixed (neighbouring path).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-265 step 4: every hop that ended silently shows a plain sentence on screen, scoped to the Analysis Request submit.",
+  "world_is": "On origin/DEV f6ef1d25 TicketCenter.tsx handleCreate (line 385) returns with no message when the title is empty, which the disabled button prevents by click; its catch (line 401) sets the page error from e.message, which renders nothing when the message is empty. The candidate shows the held reason for the service-request button (the disabled rule itself is unchanged) and leaves these two ends as they are.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx at f6ef1d25 lines 385 and 401 (read by this seat)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W90-S5 -- origin/DEV moved under the cell and a landed commit touches the same TicketCenter.tsx
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W90-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~90",
+  "surfaced_at": "2026-10-13T19:40:36Z",
+  "one_line": "origin/DEV advanced from f6ef1d25 to 4d601023 during the cell; 4d601023 edits TicketCenter.tsx; the candidate merges onto it cleanly (merge-tree rc=0).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-265 step 1: record dev_tip as the full sha of origin/DEV at fetch; the candidate is judged against the DEV tip without the change.",
+  "world_is": "The dev_tip recorded at fetch is f6ef1d2548cf6f619f80662d3082d66ea0a3fcf4. The shared origin/DEV ref now reads 4d601023 (commit 'hide(TicketCenter, 1.0.0_SA_CTO~DELL2): Trade Request is not offered in the new-ticket type list', +3/-1 in TicketCenter.tsx) on top of c1d36723 (a landed merge of the AR-y-252 candidate). The before arm is measured against the recorded base f6ef1d25. A read-only merge of the candidate onto 4d601023 completes with no conflict (git merge-tree rc=0, tree 3c7161fa9e340c13ee005a16004d28d7e1ff7f27). The merge result was not checked for behaviour.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/ajb_workspace/portal log origin/DEV (read by this seat): 4d601023, c1d36723",
+      "git merge-tree --write-tree origin/DEV 794b7df4 (read-only, this seat): rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W92-S1 -- (AR-y-271 J2) the portal path in the grant is not carried by this worktree: the portal submodule is an empty gitlink
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W92-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~92",
+  "surfaced_at": "2026-10-13T19:52:11Z",
+  "one_line": "PREMISE: the grant names portal/src/pages/TicketCenter/analysisRequest.ts, but this worktree's portal entry is an uninitialised gitlink (an empty directory), so the portal half of J2 cannot be built or diffed here; the hop was read from the base portal repository at origin/DEV by git show only, and the submodule was not initialised.",
+  "spec_asserts": "TO-AR-y-271 <paths> names portal/src/pages/TicketCenter/analysisRequest.ts as a file of this worktree's grant, and the worker's first act requires the worktree to carry the paths the order names (a missing path is a BLOCKING row).",
+  "world_is": "git ls-files -s portal in C:/dev/wk-irpt-anlreq-92 gives 160000 53506d4903aeabac675d87b7fe208fc9945c8ce7 (a gitlink); ls -la of the portal directory shows no entries; the file does not exist in the worktree. The base portal repository C:/dev/ajb_workspace/portal (branch DEV) has origin/DEV at 4d601023 and the file there (514 lines; fileAndRequestAnalysis at :304). Read there by git show only. The submodule was NOT initialised, nothing was copied or edited in the portal, and no portal commit was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -s portal in C:/dev/wk-irpt-anlreq-92 (160000 53506d4903aeabac675d87b7fe208fc9945c8ce7); the portal directory is empty (ls -la)",
+      "git -C C:/dev/ajb_workspace/portal show origin/DEV:src/pages/TicketCenter/analysisRequest.ts (read at DEV 4d601023)"
+    ]
+  },
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W92-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~92",
+  "surfaced_at": "2026-10-13T19:52:11Z",
+  "one_line": "PREMISE CONTRADICTED (AR-y-271 J2): a partner-firm advisor's Analysis Request is refused at CREATE (403, lambda_function.py:1148-1150) before any request id exists, so the loss is earlier than REPORT; no request-id fix can reach that advisor's ticket until the CTO rules on who may create an analysis_request.",
+  "spec_asserts": "AR-y-271 premise: a partner-firm human reaches the ticket and the request id is lost at REPORT (lambda_function.py:1390, route table :17); the SUBMIT-FORM path or a named service records it (CTO rule). FWD-1: one Analysis Request, filed by the advisor, reaches the ticket with its four attachments. FWD-4: a failed hop shows on the ticket.",
+  "world_is": "principal class client-human is not in MATRIX CREATE (lambda_function.py:168 = SVC_TICKET_FORM, SVC_ANALYST_INTAKE, SVC_COMMENTARY, INTERNAL); create_ticket refuses it at :1148-1150. The portal's createTicket posts to /api/scoped/tickets (tickets.ts:142-143 at origin/DEV 4d601023) for every filer, and fileAnalysisRequest uploads the file first (analysisRequest.ts:156) and creates the ticket second (:183-189), so a partner-firm filing leaves an upload with no ticket and shows a refusal. The SUBMIT-FORM path (lambda_function.py:1102-1142, body allowlist :182) takes ticket_type, title and description only, so it cannot carry the answers or the input_id. Pinned by test_authz_matrix.py:218-220 (D7F-5: client direct write -> 403) and test_analysis_request.py:170-171 ('a client cannot create') and :131-133 (submit path refuses answers and attachment). Measured: the ticket_center test folder at HEAD 4b1e07dabc: 206 passed, 43 subtests passed, rc 0. NOT measured: whether the upload door keeps an input after a later refusal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py :166-168, :1145-1150 (worktree HEAD 4b1e07dabc)",
+      "portal origin/DEV 4d601023: src/api/endpoints/tickets.ts:142-143 (createTicket to /api/scoped/tickets); src/pages/TicketCenter/analysisRequest.ts:156 and :183-189",
+      "infra/aws/lambda/ticket_center/tests/test_authz_matrix.py:218-220; tests/test_analysis_request.py:131-133 and :170-171; the folder run 206 passed, 43 subtests, rc 0"
+    ]
+  },
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W92-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~92",
+  "surfaced_at": "2026-10-13T19:52:11Z",
+  "one_line": "The route table says REPORT admits the ticket's assignee only (lambda_function.py:17), but report_ticket admits the ticket's creator as well (:1383-1386, :1406-1417, the one-step filing); the creator clause is reachable only by an internal creator because MATRIX REPORT is INTERNAL (:174).",
+  "spec_asserts": "Route table header (lambda_function.py:17): 'REPORT internal humans; the ticket's assignee only; records the report reference'. Premise of AR-y-271: REPORT is the route a partner-firm advisor must not need.",
+  "world_is": "report_ticket (:1381-1392) first authorizes REPORT (MATRIX :174 INTERNAL only; CLIENT refused 403 at :1391-1392). Past that gate it takes two callers: the assignee on an in_progress ticket (:1401-1405) or the creator on a non-completed analysis_request with an attachment and no report_ref (:1406-1417, :1439-1441). The header comment and the function disagree; the function is the one that runs. Consequence for J2: opening REPORT to a partner-firm creator would be a widening (option iii, rejected); the creator clause is an internal-only one-step filing path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py :17, :174, :1381-1417 (worktree HEAD 4b1e07dabc)"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W92-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~92",
+  "surfaced_at": "2026-10-13T19:52:11Z",
+  "one_line": "The packager's PACKAGE write stores its report pointer under package.report_ref (a string), while the commentary drafter's gate reads the top-level report_ref.request_id; the two named writes never meet on one attribute, so a named-service record of the request id (option ii) must pick one field first.",
+  "spec_asserts": "AR-y-271 option (ii): a NAMED service records the request id after the analysis is accepted; the existing candidates are the packager's principal (AR-y-272 lane) and the drafter's principal.",
+  "world_is": "package_ticket (lambda_function.py:1462-1534) admits only svc-irpt-packager (:1468-1470) and writes package = {report_ref, pdf_ref, original_ref, commentary_ref, attached_at, attached_by} (:1512, :1521-1523). commentary_draft_ticket (:1537-1595) reads the top-level report_ref.request_id (:1569) and conditions on it (:1587); the top-level report_ref is written only by REPORT (:1434-1449) or by CREATE with the svc-commentary field report_request_id (:644-649, field declared at :122). The packager's post-acceptance write therefore does not satisfy the drafter's gate. Lane of the packager: AR-y-272 (0.9.0_WK_IRPT_ANLREQ~93), outside this grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py :122, :644-649, :1468-1470, :1512, :1521-1523, :1565-1569, :1587 (worktree HEAD 4b1e07dabc)"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W93-S1 -- AR-y-272: the premise that package_principal is empty at HEAD is false, so before-arm (a) cannot FAIL at HEAD
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W93-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~93",
+  "surfaced_at": "2026-10-13T19:51:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-272 premise void: TYPE_DEFINITIONS package_principal already names svc-irpt-packager at HEAD, so the cell's before-arm (a) cannot fail and no new test is needed.",
+  "spec_asserts": "AR-y-272 step 3 and the order's before_arm: '(a) FAILS at HEAD (the value is empty)'; the pivot direction DIRECTION_DELL2_20261013 section 2 O1 reads package_principal as unset.",
+  "world_is": "MEASURED by reading at HEAD 4b1e07dabc: infra/aws/lambda/ticket_center/lambda_function.py:120 is '\"package_principal\": \"svc-irpt-packager\"' (named by TO-AR-v12, infra/aws/terraform/ticket-center/CHANGELOG.json:368). The empty-value refusal is already tested (tests/test_package_route.py:131 test_package_principal_empty_refuses_everyone). Positive control on the unmodified tree: test_package_principal.py and test_package_route.py 16 passed, rc 0; full ticket_center suite 206 passed, 43 subtests passed, rc 0. No test the cell lists fails at HEAD, so AC1 clause 'the before-arm failing at HEAD' cannot be produced honestly. No product file was changed in this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:120 (package_principal value at HEAD 4b1e07dabc)",
+      "infra/aws/lambda/ticket_center/tests/test_package_route.py:131-143 (empty principal refuses everyone; names the shipped value)",
+      "infra/aws/terraform/ticket-center/CHANGELOG.json:368 (TO-AR-v12 names svc-irpt-packager)",
+      "worker run 2026-10-13: test_package_principal.py + test_package_route.py 16 passed rc 0 on the unmodified tree"
+    ]
+  },
+  "notes": "Issuer decision needed: amend AR-y-272's before-arm and AC1 clause (ii), or re-cut the cell onto a different unbuilt gap. Ruling is the issuer's; no widening was made."
+}
+```
+
+## IRPT_ANLREQ-D2-W93-S2 -- AR-y-272: the packager firm binding is the env list PACKAGE_ALLOWED_FIRMS, not a PROFILE row; the ticket service comment at :119 still says PROFILE
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W93-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~93",
+  "surfaced_at": "2026-10-13T19:51:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cell says the packager is firm-bound by its PROFILE row; the code binds it by the env list PACKAGE_ALLOWED_FIRMS and reads no users row.",
+  "spec_asserts": "AR-y-272 cell text (C-PACKAGER, IB-pr-387): 'The principal is firm-bound by its PROFILE row (internal-caller narrowing) and never ALL.'",
+  "world_is": "MEASURED at HEAD 4b1e07dabc: lambda_function.py:84-87 and :1490-1492 bind the body firm to the env list PACKAGE_ALLOWED_FIRMS (R4-pk-1); package_ticket (:1462-1534) reads no users row; tests/test_package_principal.py:96 asserts users.wanted == [] ('the users table is not consulted for the packager any more'). The comment at lambda_function.py:117-119 ('package_ticket also firm-binds it by that subject's own PROFILE row allowedFirmIds LIST') is stale against the code. Terraform sets PACKAGE_ALLOWED_FIRMS = '49financial,cottonwood,inflection' (infra/aws/terraform/ticket-center/main.tf:266). Not changed: a PROFILE-row binding would be a widening decision for the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:84-87 and :1490-1492 (env-list binding)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:117-119 (stale PROFILE comment)",
+      "infra/aws/lambda/ticket_center/tests/test_package_principal.py:96 (users table not consulted)",
+      "infra/aws/terraform/ticket-center/main.tf:266 (PACKAGE_ALLOWED_FIRMS value)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W93-S3 -- AR-y-272: portal/src/api/endpoints/tickets.ts is not in the worktree (the portal submodule is unpopulated); the pinned read shows no PACKAGE caller
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W93-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~93",
+  "surfaced_at": "2026-10-13T19:51:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's portal path is absent in this worktree (portal is a gitlink with no checkout); a read of the portal repository at its pinned commit shows no PACKAGE call.",
+  "spec_asserts": "AR-y-272 step 1(b): Grep 'portal/src/api/endpoints/tickets.ts' for the package call.",
+  "world_is": "MEASURED: git ls-tree HEAD portal at 4b1e07dabc is a 160000 gitlink to 53506d4903; the worktree portal/ directory is empty, so the path does not exist here. Read instead at the portal repository's pinned commit with git grep (read-only): src/api/endpoints/tickets.ts:70-71 and :106 carry the TicketPackage type only; no POST to /package appears in that file. Who-calls-PACKAGE from the portal is therefore NONE at that pin. No portal file was changed and nothing was committed in the portal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree HEAD portal (gitlink 53506d4903aeabac675d87b7fe208fc9945c8ce7)",
+      "git -C C:/dev/ajb_workspace/portal grep -n -i package 53506d4903aeabac675d87b7fe208fc9945c8ce7 -- src/api/endpoints/tickets.ts"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W93-S4 -- AR-y-272: the W66-S1 blocker (the packager's GET ticket read refused 403) is not present at HEAD; the packager reads no ticket
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W93-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~93",
+  "surfaced_at": "2026-10-13T19:51:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IRPT_ANLREQ-D2-W66-S1 (packager idempotence GET refused 403) describes a read that no longer exists at HEAD; the adjudicator should disposition W66-S1 against this commit.",
+  "spec_asserts": "IRPT_ANLREQ-D2-W66-S1 world_is: opal_packager.py calls ticket_package (idempotence read) before render and attach, and GET /api/scoped/tickets/{id} is refused 403 to svc-irpt-packager.",
+  "world_is": "MEASURED at HEAD 4b1e07dabc: opal_packager.py:14 says the idempotence is 'against data the packager OWNS and never a ticket read'; :252 says 'No ticket is ever read (AR-g-32)'; the module has no ticket_package call (grep of the module: no match). The GET route is unchanged (lambda_function.py:1719-1720 dispatch to get_ticket; MATRIX GET = INTERNAL only), so the refusal still holds for the route, but no caller reads it. W66-S1 is append-only and was not edited; its disposition is the CVO's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:14 and :252 (no ticket read)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:1719-1720 and :156-180 (GET route and MATRIX unchanged)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_ANLREQ-D2-W66-S1 (the row this concerns)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W93-S5 -- AR-y-272: 'the packager runs LAST, after the commentary' is ordered after the draft is STORED, not after it is POSTED to the ticket
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W93-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~93",
+  "surfaced_at": "2026-10-13T19:51:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The packager's trigger (commentary_ready) is sent after the draft is persisted but before the draft is posted to the ticket; the PACKAGE route does not check the ticket's draft_commentary.",
+  "spec_asserts": "AR-y-272 cell and direction O1: 'the packager runs LAST, after the commentary'; the package is the four items, the commentary draft included.",
+  "world_is": "MEASURED at HEAD 4b1e07dabc: data/transcripts/scripts/commentary/lambda_handler.py:341 persist(...) stores the DRAFT; :344 ports['send'] sends commentary_ready (the only trigger of the packager, resident_installed.py:341 and opal_packager.py:144); the draft is posted to the ticket afterwards, at :353 (ticket_client.post_draft_to_ticket). The PACKAGE route (lambda_function.py:1462-1534) reads no draft_commentary field, so the ticket service does not enforce that the draft is on the ticket before a package attaches. The order is enforced by message sequence, not by a ticket-state check.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/commentary/lambda_handler.py:341, :344, :353 (persist, send, post)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:144 and :200-212 (packager trigger and attach)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:1462-1534 (no draft_commentary read on PACKAGE)"
+    ]
+  }
+}
+```

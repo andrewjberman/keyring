@@ -87,7 +87,7 @@ Instance at the path above. Commit `trace_price_v2.py`, `TRACE2_PROBE.json` and 
 
 **ISSUER NOTES:** round-1 analysis item 4; closes `W4-S6`. FWD-3's grade (DEC-10) must trace what is served. Class LOCAL: a new script under `deliverables/`, reads only.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <workstream>TRACE2</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-b-4</to_id>
