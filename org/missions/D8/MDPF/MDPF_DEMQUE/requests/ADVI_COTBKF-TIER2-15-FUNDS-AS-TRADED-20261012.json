@@ -1,8 +1,12 @@
 {
-  "request_id": "ADVI_COTBKF-TIER2-15-FUNDS-AS-TRADED-20261012",
-  "tier": 2,
-  "reason": "ADVI_COTBKF PRD v0.9 contract C-BASIS: a fund security is priced at its as-traded close, read from the one lander (ruling CTO_RULING_DELL2_AS_TRADED_CLOSES_VIA_DEMQUE_20261012.md @479d6deba0 on origin/box/dell1; 1.0.0_SA_CTO~DELL2 msg 6361). 15 funds whose store close fails against the price paid; held days of the back-fill.",
+  "end": "2026-06-22",
+  "fields": [
+    "close"
+  ],
+  "need_class": "client",
   "page": "ADVI_COTBKF returns back-fill (minted table account_return_daily; no portal page reads it)",
+  "reason": "ADVI_COTBKF PRD v0.9 contract C-BASIS: a fund security is priced at its as-traded close, read from the one lander (ruling CTO_RULING_DELL2_AS_TRADED_CLOSES_VIA_DEMQUE_20261012.md @479d6deba0 on origin/box/dell1; 1.0.0_SA_CTO~DELL2 msg 6361). 15 funds whose store close fails against the price paid; held days of the back-fill.",
+  "request_id": "ADVI_COTBKF-TIER2-15-FUNDS-AS-TRADED-20261012",
   "securities": [
     {
       "cusip": "921921300",
@@ -65,9 +69,7 @@
       "symbol": "VGHAX"
     }
   ],
-  "fields": [
-    "close"
-  ],
   "start": "2020-07-06",
-  "end": "2026-06-22"
+  "tier": 2,
+  "window_start": "2020-07-06"
 }

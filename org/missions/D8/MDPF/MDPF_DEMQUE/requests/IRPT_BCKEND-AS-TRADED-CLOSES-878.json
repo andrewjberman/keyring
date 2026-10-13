@@ -1,3534 +1,3536 @@
 {
- "request_id": "IRPT_BCKEND-AS-TRADED-CLOSES-878",
- "standing": false,
- "tier": 2,
- "reason": "PRD v0.46 answer 1: the date-basis grading's second witness needs as-traded closes on landed bars; ruling CTO_RULING_DELL2_AS_TRADED_CLOSES_VIA_DEMQUE_20261012.md @479d6deba0",
- "page": "investor reporting (IRPT_BCKEND date-basis grading)",
- "vendor": "yahoo",
- "securities": [
-  {
-   "cusip": "00846U101",
-   "symbol": "A"
-  },
-  {
-   "cusip": "02376R102",
-   "symbol": "AAL"
-  },
-  {
-   "cusip": "03823U102",
-   "symbol": "AAOI"
-  },
-  {
-   "cusip": "037833100",
-   "symbol": "AAPL"
-  },
-  {
-   "cusip": "01881G106",
-   "symbol": "AB"
-  },
-  {
-   "cusip": "00287Y109",
-   "symbol": "ABBV"
-  },
-  {
-   "cusip": "097873822",
-   "symbol": "ABNFX"
-  },
-  {
-   "cusip": "002824100",
-   "symbol": "ABT"
-  },
-  {
-   "cusip": "G0450A105",
-   "symbol": "ACGL"
-  },
-  {
-   "cusip": "G1151C101",
-   "symbol": "ACN"
-  },
-  {
-   "cusip": "001419423",
-   "symbol": "ACTSX"
-  },
-  {
-   "cusip": "464288257",
-   "symbol": "ACWI"
-  },
-  {
-   "cusip": "464286525",
-   "symbol": "ACWV"
-  },
-  {
-   "cusip": "464288240",
-   "symbol": "ACWX"
-  },
-  {
-   "cusip": "00724F101",
-   "symbol": "ADBE"
-  },
-  {
-   "cusip": "032654105",
-   "symbol": "ADI"
-  },
-  {
-   "cusip": "02452A643",
-   "symbol": "ADLYX"
-  },
-  {
-   "cusip": "053015103",
-   "symbol": "ADP"
-  },
-  {
-   "cusip": "052769106",
-   "symbol": "ADSK"
-  },
-  {
-   "cusip": "008474108",
-   "symbol": "AEM"
-  },
-  {
-   "cusip": "025537101",
-   "symbol": "AEP"
-  },
-  {
-   "cusip": "29875E100",
-   "symbol": "AEPFX"
-  },
-  {
-   "cusip": "00130H105",
-   "symbol": "AES"
-  },
-  {
-   "cusip": "399874106",
-   "symbol": "AGTHX"
-  },
-  {
-   "cusip": "026874784",
-   "symbol": "AIG"
-  },
-  {
-   "cusip": "04621X108",
-   "symbol": "AIZ"
-  },
-  {
-   "cusip": "363576109",
-   "symbol": "AJG"
-  },
-  {
-   "cusip": "74316P579",
-   "symbol": "AKRE"
-  },
-  {
-   "cusip": "012653101",
-   "symbol": "ALB"
-  },
-  {
-   "cusip": "016255101",
-   "symbol": "ALGN"
-  },
-  {
-   "cusip": "020002101",
-   "symbol": "ALL"
-  },
-  {
-   "cusip": "02005N100",
-   "symbol": "ALLY"
-  },
-  {
-   "cusip": "02043Q107",
-   "symbol": "ALNY"
-  },
-  {
-   "cusip": "038222105",
-   "symbol": "AMAT"
-  },
-  {
-   "cusip": "023375827",
-   "symbol": "AMCFX"
-  },
-  {
-   "cusip": "G0250X149",
-   "symbol": "AMCR"
-  },
-  {
-   "cusip": "007903107",
-   "symbol": "AMD"
-  },
-  {
-   "cusip": "031100100",
-   "symbol": "AME"
-  },
-  {
-   "cusip": "453320822",
-   "symbol": "AMEFX"
-  },
-  {
-   "cusip": "031162100",
-   "symbol": "AMGN"
-  },
-  {
-   "cusip": "00162Q452",
-   "symbol": "AMLP"
-  },
-  {
-   "cusip": "03076C106",
-   "symbol": "AMP"
-  },
-  {
-   "cusip": "027681824",
-   "symbol": "AMRFX"
-  },
-  {
-   "cusip": "03027X100",
-   "symbol": "AMT"
-  },
-  {
-   "cusip": "35804X200",
-   "symbol": "AMZE"
-  },
-  {
-   "cusip": "023135106",
-   "symbol": "AMZN"
-  },
-  {
-   "cusip": "040413205",
-   "symbol": "ANET"
-  },
-  {
-   "cusip": "G0403H108",
-   "symbol": "AON"
-  },
-  {
-   "cusip": "03743Q108",
-   "symbol": "APA"
-  },
-  {
-   "cusip": "009158106",
-   "symbol": "APD"
-  },
-  {
-   "cusip": "032095101",
-   "symbol": "APH"
-  },
-  {
-   "cusip": "04314H857",
-   "symbol": "APHKX"
-  },
-  {
-   "cusip": "038169207",
-   "symbol": "APLD"
-  },
-  {
-   "cusip": "03769M106",
-   "symbol": "APO"
-  },
-  {
-   "cusip": "03831W108",
-   "symbol": "APP"
-  },
-  {
-   "cusip": "G3265R107",
-   "symbol": "APTV"
-  },
-  {
-   "cusip": "03990B101",
-   "symbol": "ARES"
-  },
-  {
-   "cusip": "040919102",
-   "symbol": "ARKB"
-  },
-  {
-   "cusip": "00214Q708",
-   "symbol": "ARKF"
-  },
-  {
-   "cusip": "00214Q302",
-   "symbol": "ARKG"
-  },
-  {
-   "cusip": "00214Q104",
-   "symbol": "ARKK"
-  },
-  {
-   "cusip": "042735100",
-   "symbol": "ARW"
-  },
-  {
-   "cusip": "01741R102",
-   "symbol": "ATI"
-  },
-  {
-   "cusip": "049560105",
-   "symbol": "ATO"
-  },
-  {
-   "cusip": "G0378L100",
-   "symbol": "AU"
-  },
-  {
-   "cusip": "008073108",
-   "symbol": "AVAV"
-  },
-  {
-   "cusip": "11135F101",
-   "symbol": "AVGO"
-  },
-  {
-   "cusip": "053611109",
-   "symbol": "AVY"
-  },
-  {
-   "cusip": "05464C101",
-   "symbol": "AXON"
-  },
-  {
-   "cusip": "025816109",
-   "symbol": "AXP"
-  },
-  {
-   "cusip": "06849F108",
-   "symbol": "B"
-  },
-  {
-   "cusip": "097023105",
-   "symbol": "BA"
-  },
-  {
-   "cusip": "01609W102",
-   "symbol": "BABA"
-  },
-  {
-   "cusip": "060505104",
-   "symbol": "BAC"
-  },
-  {
-   "cusip": "099502106",
-   "symbol": "BAH"
-  },
-  {
-   "cusip": "058498106",
-   "symbol": "BALL"
-  },
-  {
-   "cusip": "05990K106",
-   "symbol": "BANC"
-  },
-  {
-   "cusip": "071813109",
-   "symbol": "BAX"
-  },
-  {
-   "cusip": "086516101",
-   "symbol": "BBY"
-  },
-  {
-   "cusip": "05534B760",
-   "symbol": "BCE"
-  },
-  {
-   "cusip": "09058V103",
-   "symbol": "BCRX"
-  },
-  {
-   "cusip": "06829D503",
-   "symbol": "BCTK"
-  },
-  {
-   "cusip": "075887109",
-   "symbol": "BDX"
-  },
-  {
-   "cusip": "354613101",
-   "symbol": "BEN"
-  },
-  {
-   "cusip": "115637209",
-   "symbol": "BF-B"
-  },
-  {
-   "cusip": "10922N103",
-   "symbol": "BHF"
-  },
-  {
-   "cusip": "78468R663",
-   "symbol": "BIL"
-  },
-  {
-   "cusip": "090043100",
-   "symbol": "BILL"
-  },
-  {
-   "cusip": "G16252101",
-   "symbol": "BIP"
-  },
-  {
-   "cusip": "11276H106",
-   "symbol": "BIPC"
-  },
-  {
-   "cusip": "091936419",
-   "symbol": "BISOX"
-  },
-  {
-   "cusip": "091749101",
-   "symbol": "BITW"
-  },
-  {
-   "cusip": "921937819",
-   "symbol": "BIV"
-  },
-  {
-   "cusip": "09857L108",
-   "symbol": "BKNG"
-  },
-  {
-   "cusip": "05722G100",
-   "symbol": "BKR"
-  },
-  {
-   "cusip": "09290D101",
-   "symbol": "BLK"
-  },
-  {
-   "cusip": "921937793",
-   "symbol": "BLV"
-  },
-  {
-   "cusip": "09249W101",
-   "symbol": "BLW"
-  },
-  {
-   "cusip": "110122108",
-   "symbol": "BMY"
-  },
-  {
-   "cusip": "921937835",
-   "symbol": "BND"
-  },
-  {
-   "cusip": "92203J407",
-   "symbol": "BNDX"
-  },
-  {
-   "cusip": "064058100",
-   "symbol": "BNY"
-  },
-  {
-   "cusip": "055622104",
-   "symbol": "BP"
-  },
-  {
-   "cusip": "11133T103",
-   "symbol": "BR"
-  },
-  {
-   "cusip": "084670108",
-   "symbol": "BRK-A"
-  },
-  {
-   "cusip": "084670702",
-   "symbol": "BRK-B"
-  },
-  {
-   "cusip": "115236101",
-   "symbol": "BRO"
-  },
-  {
-   "cusip": "78518H202",
-   "symbol": "BRW"
-  },
-  {
-   "cusip": "057071516",
-   "symbol": "BSNIX"
-  },
-  {
-   "cusip": "101137107",
-   "symbol": "BSX"
-  },
-  {
-   "cusip": "110448107",
-   "symbol": "BTI"
-  },
-  {
-   "cusip": "09257P105",
-   "symbol": "BTT"
-  },
-  {
-   "cusip": "03524A108",
-   "symbol": "BUD"
-  },
-  {
-   "cusip": "09260D107",
-   "symbol": "BX"
-  },
-  {
-   "cusip": "101121101",
-   "symbol": "BXP"
-  },
-  {
-   "cusip": "172967424",
-   "symbol": "C"
-  },
-  {
-   "cusip": "14149Y108",
-   "symbol": "CAH"
-  },
-  {
-   "cusip": "140194101",
-   "symbol": "CAIFX"
-  },
-  {
-   "cusip": "092528884",
-   "symbol": "CALI"
-  },
-  {
-   "cusip": "00039J772",
-   "symbol": "CAM"
-  },
-  {
-   "cusip": "14448C104",
-   "symbol": "CARR"
-  },
-  {
-   "cusip": "149123101",
-   "symbol": "CAT"
-  },
-  {
-   "cusip": "H1467J104",
-   "symbol": "CB"
-  },
-  {
-   "cusip": "12504L109",
-   "symbol": "CBRE"
-  },
-  {
-   "cusip": "13740E107",
-   "symbol": "CCEYF"
-  },
-  {
-   "cusip": "22822V101",
-   "symbol": "CCI"
-  },
-  {
-   "cusip": "13321L108",
-   "symbol": "CCJ"
-  },
-  {
-   "cusip": "228368106",
-   "symbol": "CCK"
-  },
-  {
-   "cusip": "G2004J103",
-   "symbol": "CCL"
-  },
-  {
-   "cusip": "19766M840",
-   "symbol": "CDDYX"
-  },
-  {
-   "cusip": "192108504",
-   "symbol": "CDE"
-  },
-  {
-   "cusip": "127387108",
-   "symbol": "CDNS"
-  },
-  {
-   "cusip": "13161T401",
-   "symbol": "CDSIX"
-  },
-  {
-   "cusip": "21037T109",
-   "symbol": "CEG"
-  },
-  {
-   "cusip": "149498107",
-   "symbol": "CEMIX"
-  },
-  {
-   "cusip": "125269100",
-   "symbol": "CF"
-  },
-  {
-   "cusip": "174610105",
-   "symbol": "CFG"
-  },
-  {
-   "cusip": "229899109",
-   "symbol": "CFR"
-  },
-  {
-   "cusip": "14020Y201",
-   "symbol": "CGMU"
-  },
-  {
-   "cusip": "171340102",
-   "symbol": "CHD"
-  },
-  {
-   "cusip": "12541W209",
-   "symbol": "CHRW"
-  },
-  {
-   "cusip": "125523100",
-   "symbol": "CI"
-  },
-  {
-   "cusip": "171779309",
-   "symbol": "CIEN"
-  },
-  {
-   "cusip": "172062101",
-   "symbol": "CINF"
-  },
-  {
-   "cusip": "194162103",
-   "symbol": "CL"
-  },
-  {
-   "cusip": "37960A438",
-   "symbol": "CLIP"
-  },
-  {
-   "cusip": "189054109",
-   "symbol": "CLX"
-  },
-  {
-   "cusip": "20030N101",
-   "symbol": "CMCSA"
-  },
-  {
-   "cusip": "12572Q105",
-   "symbol": "CME"
-  },
-  {
-   "cusip": "169656105",
-   "symbol": "CMG"
-  },
-  {
-   "cusip": "231021106",
-   "symbol": "CMI"
-  },
-  {
-   "cusip": "20451W101",
-   "symbol": "CMPS"
-  },
-  {
-   "cusip": "12558Q103",
-   "symbol": "CMRF"
-  },
-  {
-   "cusip": "125896100",
-   "symbol": "CMS"
-  },
-  {
-   "cusip": "15135B101",
-   "symbol": "CNC"
-  },
-  {
-   "cusip": "15189T107",
-   "symbol": "CNP"
-  },
-  {
-   "cusip": "14040H105",
-   "symbol": "COF"
-  },
-  {
-   "cusip": "19247G107",
-   "symbol": "COHR"
-  },
-  {
-   "cusip": "19260Q107",
-   "symbol": "COIN"
-  },
-  {
-   "cusip": "20825C104",
-   "symbol": "COP"
-  },
-  {
-   "cusip": "03073E105",
-   "symbol": "COR"
-  },
-  {
-   "cusip": "22160K105",
-   "symbol": "COST"
-  },
-  {
-   "cusip": "13646K108",
-   "symbol": "CP"
-  },
-  {
-   "cusip": "16411Q101",
-   "symbol": "CQP"
-  },
-  {
-   "cusip": "G25508105",
-   "symbol": "CRH"
-  },
-  {
-   "cusip": "205768302",
-   "symbol": "CRK"
-  },
-  {
-   "cusip": "159864107",
-   "symbol": "CRL"
-  },
-  {
-   "cusip": "79466L302",
-   "symbol": "CRM"
-  },
-  {
-   "cusip": "144285103",
-   "symbol": "CRS"
-  },
-  {
-   "cusip": "22788C105",
-   "symbol": "CRWD"
-  },
-  {
-   "cusip": "21873S108",
-   "symbol": "CRWV"
-  },
-  {
-   "cusip": "17275R102",
-   "symbol": "CSCO"
-  },
-  {
-   "cusip": "78433H501",
-   "symbol": "CSHI"
-  },
-  {
-   "cusip": "142339100",
-   "symbol": "CSL"
-  },
-  {
-   "cusip": "128125101",
-   "symbol": "CSQ"
-  },
-  {
-   "cusip": "126408103",
-   "symbol": "CSX"
-  },
-  {
-   "cusip": "172908105",
-   "symbol": "CTAS"
-  },
-  {
-   "cusip": "22052L104",
-   "symbol": "CTVA"
-  },
-  {
-   "cusip": "126650100",
-   "symbol": "CVS"
-  },
-  {
-   "cusip": "166764100",
-   "symbol": "CVX"
-  },
-  {
-   "cusip": "140543109",
-   "symbol": "CWGIX"
-  },
-  {
-   "cusip": "131649808",
-   "symbol": "CWVIX"
-  },
-  {
-   "cusip": "247361702",
-   "symbol": "DAL"
-  },
-  {
-   "cusip": "25809K105",
-   "symbol": "DASH"
-  },
-  {
-   "cusip": "26614N201",
-   "symbol": "DD"
-  },
-  {
-   "cusip": "244199105",
-   "symbol": "DE"
-  },
-  {
-   "cusip": "243537107",
-   "symbol": "DECK"
-  },
-  {
-   "cusip": "24703L202",
-   "symbol": "DELL"
-  },
-  {
-   "cusip": "97717W315",
-   "symbol": "DEM"
-  },
-  {
-   "cusip": "25434V633",
-   "symbol": "DFCA"
-  },
-  {
-   "cusip": "25434V872",
-   "symbol": "DFCF"
-  },
-  {
-   "cusip": "233203371",
-   "symbol": "DFIEX"
-  },
-  {
-   "cusip": "25434V864",
-   "symbol": "DFSD"
-  },
-  {
-   "cusip": "233203843",
-   "symbol": "DFSTX"
-  },
-  {
-   "cusip": "24477V105",
-   "symbol": "DFTX"
-  },
-  {
-   "cusip": "256677105",
-   "symbol": "DG"
-  },
-  {
-   "cusip": "235851102",
-   "symbol": "DHR"
-  },
-  {
-   "cusip": "78467X109",
-   "symbol": "DIA"
-  },
-  {
-   "cusip": "403949100",
-   "symbol": "DINO"
-  },
-  {
-   "cusip": "254687106",
-   "symbol": "DIS"
-  },
-  {
-   "cusip": "210322731",
-   "symbol": "DIVZ"
-  },
-  {
-   "cusip": "26142V105",
-   "symbol": "DKNG"
-  },
-  {
-   "cusip": "25659T107",
-   "symbol": "DLB"
-  },
-  {
-   "cusip": "253868103",
-   "symbol": "DLR"
-  },
-  {
-   "cusip": "256746108",
-   "symbol": "DLTR"
-  },
-  {
-   "cusip": "25820R105",
-   "symbol": "DMLP"
-  },
-  {
-   "cusip": "260003108",
-   "symbol": "DOV"
-  },
-  {
-   "cusip": "260557103",
-   "symbol": "DOW"
-  },
-  {
-   "cusip": "256206509",
-   "symbol": "DOXGX"
-  },
-  {
-   "cusip": "256206889",
-   "symbol": "DOXIX"
-  },
-  {
-   "cusip": "233331107",
-   "symbol": "DTE"
-  },
-  {
-   "cusip": "23334J107",
-   "symbol": "DTF"
-  },
-  {
-   "cusip": "97717W802",
-   "symbol": "DTH"
-  },
-  {
-   "cusip": "26441C204",
-   "symbol": "DUK"
-  },
-  {
-   "cusip": "25179M103",
-   "symbol": "DVN"
-  },
-  {
-   "cusip": "109641100",
-   "symbol": "EAT"
-  },
-  {
-   "cusip": "278642103",
-   "symbol": "EBAY"
-  },
-  {
-   "cusip": "278768106",
-   "symbol": "ECHO"
-  },
-  {
-   "cusip": "278865100",
-   "symbol": "ECL"
-  },
-  {
-   "cusip": "209115104",
-   "symbol": "ED"
-  },
-  {
-   "cusip": "464287465",
-   "symbol": "EFA"
-  },
-  {
-   "cusip": "G3223R108",
-   "symbol": "EG"
-  },
-  {
-   "cusip": "277907200",
-   "symbol": "EIBIX"
-  },
-  {
-   "cusip": "277911491",
-   "symbol": "EIBLX"
-  },
-  {
-   "cusip": "27826L249",
-   "symbol": "EIHMX"
-  },
-  {
-   "cusip": "27826M841",
-   "symbol": "EIHYX"
-  },
-  {
-   "cusip": "277902698",
-   "symbol": "EISMX"
-  },
-  {
-   "cusip": "281020107",
-   "symbol": "EIX"
-  },
-  {
-   "cusip": "518439104",
-   "symbol": "EL"
-  },
-  {
-   "cusip": "28414H103",
-   "symbol": "ELAN"
-  },
-  {
-   "cusip": "036752103",
-   "symbol": "ELV"
-  },
-  {
-   "cusip": "277432100",
-   "symbol": "EMN"
-  },
-  {
-   "cusip": "291011104",
-   "symbol": "EMR"
-  },
-  {
-   "cusip": "46434G764",
-   "symbol": "EMXC"
-  },
-  {
-   "cusip": "29250N105",
-   "symbol": "ENB"
-  },
-  {
-   "cusip": "29362U104",
-   "symbol": "ENTG"
-  },
-  {
-   "cusip": "26875P101",
-   "symbol": "EOG"
-  },
-  {
-   "cusip": "293792107",
-   "symbol": "EPD"
-  },
-  {
-   "cusip": "29452E101",
-   "symbol": "EQH"
-  },
-  {
-   "cusip": "29444U700",
-   "symbol": "EQIX"
-  },
-  {
-   "cusip": "29445S100",
-   "symbol": "EQPT"
-  },
-  {
-   "cusip": "26884L109",
-   "symbol": "EQT"
-  },
-  {
-   "cusip": "27005A105",
-   "symbol": "EROK"
-  },
-  {
-   "cusip": "30040W108",
-   "symbol": "ES"
-  },
-  {
-   "cusip": "29273V100",
-   "symbol": "ET"
-  },
-  {
-   "cusip": "38964R203",
-   "symbol": "ETH"
-  },
-  {
-   "cusip": "46438R105",
-   "symbol": "ETHA"
-  },
-  {
-   "cusip": "389638107",
-   "symbol": "ETHE"
-  },
-  {
-   "cusip": "G29183103",
-   "symbol": "ETN"
-  },
-  {
-   "cusip": "29364G103",
-   "symbol": "ETR"
-  },
-  {
-   "cusip": "29786A106",
-   "symbol": "ETSY"
-  },
-  {
-   "cusip": "464289180",
-   "symbol": "EUFN"
-  },
-  {
-   "cusip": "30034W106",
-   "symbol": "EVRG"
-  },
-  {
-   "cusip": "61774R858",
-   "symbol": "EVSM"
-  },
-  {
-   "cusip": "27828H105",
-   "symbol": "EVV"
-  },
-  {
-   "cusip": "165167735",
-   "symbol": "EXE"
-  },
-  {
-   "cusip": "26969P108",
-   "symbol": "EXP"
-  },
-  {
-   "cusip": "302130109",
-   "symbol": "EXPD"
-  },
-  {
-   "cusip": "30225T102",
-   "symbol": "EXR"
-  },
-  {
-   "cusip": "345370860",
-   "symbol": "F"
-  },
-  {
-   "cusip": "399874742",
-   "symbol": "FAFGX"
-  },
-  {
-   "cusip": "25278X109",
-   "symbol": "FANG"
-  },
-  {
-   "cusip": "003009867",
-   "symbol": "FAX"
-  },
-  {
-   "cusip": "31617L798",
-   "symbol": "FBKWX"
-  },
-  {
-   "cusip": "315948109",
-   "symbol": "FBTC"
-  },
-  {
-   "cusip": "33739P863",
-   "symbol": "FCAL"
-  },
-  {
-   "cusip": "461308744",
-   "symbol": "FCIAX"
-  },
-  {
-   "cusip": "31946M103",
-   "symbol": "FCNCA"
-  },
-  {
-   "cusip": "316071109",
-   "symbol": "FCNTX"
-  },
-  {
-   "cusip": "316061852",
-   "symbol": "FCSTX"
-  },
-  {
-   "cusip": "140543752",
-   "symbol": "FCWGX"
-  },
-  {
-   "cusip": "35671D857",
-   "symbol": "FCX"
-  },
-  {
-   "cusip": "46138E578",
-   "symbol": "FDIQ"
-  },
-  {
-   "cusip": "31428X106",
-   "symbol": "FDX"
-  },
-  {
-   "cusip": "316138106",
-   "symbol": "FEQIX"
-  },
-  {
-   "cusip": "N3168P101",
-   "symbol": "FER"
-  },
-  {
-   "cusip": "097873749",
-   "symbol": "FFBOX"
-  },
-  {
-   "cusip": "338478100",
-   "symbol": "FFC"
-  },
-  {
-   "cusip": "027681741",
-   "symbol": "FFMMX"
-  },
-  {
-   "cusip": "648018745",
-   "symbol": "FFPNX"
-  },
-  {
-   "cusip": "31618H390",
-   "symbol": "FIEZX"
-  },
-  {
-   "cusip": "360802821",
-   "symbol": "FINFX"
-  },
-  {
-   "cusip": "31638R683",
-   "symbol": "FIQZX"
-  },
-  {
-   "cusip": "337738108",
-   "symbol": "FISV"
-  },
-  {
-   "cusip": "316773100",
-   "symbol": "FITB"
-  },
-  {
-   "cusip": "199908104",
-   "symbol": "FIX"
-  },
-  {
-   "cusip": "353496508",
-   "symbol": "FKGRX"
-  },
-  {
-   "cusip": "31635V679",
-   "symbol": "FLCOX"
-  },
-  {
-   "cusip": "343412102",
-   "symbol": "FLR"
-  },
-  {
-   "cusip": "67065Q822",
-   "symbol": "FLTRX"
-  },
-  {
-   "cusip": "808524730",
-   "symbol": "FNDE"
-  },
-  {
-   "cusip": "643822745",
-   "symbol": "FNEEX"
-  },
-  {
-   "cusip": "649280740",
-   "symbol": "FNFWX"
-  },
-  {
-   "cusip": "351858105",
-   "symbol": "FNV"
-  },
-  {
-   "cusip": "316389105",
-   "symbol": "FOCPX"
-  },
-  {
-   "cusip": "31638A508",
-   "symbol": "FOTJX"
-  },
-  {
-   "cusip": "30254T643",
-   "symbol": "FPNIX"
-  },
-  {
-   "cusip": "303901102",
-   "symbol": "FRFHF"
-  },
-  {
-   "cusip": "316146315",
-   "symbol": "FSGGX"
-  },
-  {
-   "cusip": "315911693",
-   "symbol": "FSKAX"
-  },
-  {
-   "cusip": "336433107",
-   "symbol": "FSLR"
-  },
-  {
-   "cusip": "315911743",
-   "symbol": "FSMAX"
-  },
-  {
-   "cusip": "31635V729",
-   "symbol": "FSPGX"
-  },
-  {
-   "cusip": "315911727",
-   "symbol": "FSPSX"
-  },
-  {
-   "cusip": "316146182",
-   "symbol": "FSSNX"
-  },
-  {
-   "cusip": "316066752",
-   "symbol": "FSSZX"
-  },
-  {
-   "cusip": "831681747",
-   "symbol": "FSWFX"
-  },
-  {
-   "cusip": "G3730V105",
-   "symbol": "FTAI"
-  },
-  {
-   "cusip": "14064D865",
-   "symbol": "FTHSX"
-  },
-  {
-   "cusip": "G87110105",
-   "symbol": "FTI"
-  },
-  {
-   "cusip": "34959E109",
-   "symbol": "FTNT"
-  },
-  {
-   "cusip": "298706763",
-   "symbol": "FUEPX"
-  },
-  {
-   "cusip": "939330742",
-   "symbol": "FWMMX"
-  },
-  {
-   "cusip": "315911750",
-   "symbol": "FXAIX"
-  },
-  {
-   "cusip": "316146356",
-   "symbol": "FXNAX"
-  },
-  {
-   "cusip": "31618Q507",
-   "symbol": "FZEMX"
-  },
-  {
-   "cusip": "389637109",
-   "symbol": "GBTC"
-  },
-  {
-   "cusip": "369550108",
-   "symbol": "GD"
-  },
-  {
-   "cusip": "92189F106",
-   "symbol": "GDX"
-  },
-  {
-   "cusip": "369604301",
-   "symbol": "GE"
-  },
-  {
-   "cusip": "36266G107",
-   "symbol": "GEHC"
-  },
-  {
-   "cusip": "668771108",
-   "symbol": "GEN"
-  },
-  {
-   "cusip": "360873129",
-   "symbol": "GENIX"
-  },
-  {
-   "cusip": "36828A101",
-   "symbol": "GEV"
-  },
-  {
-   "cusip": "399874825",
-   "symbol": "GFFFX"
-  },
-  {
-   "cusip": "G39387108",
-   "symbol": "GFS"
-  },
-  {
-   "cusip": "375558103",
-   "symbol": "GILD"
-  },
-  {
-   "cusip": "370334104",
-   "symbol": "GIS"
-  },
-  {
-   "cusip": "37959E102",
-   "symbol": "GL"
-  },
-  {
-   "cusip": "78463V107",
-   "symbol": "GLD"
-  },
-  {
-   "cusip": "00900W704",
-   "symbol": "GLVAX"
-  },
-  {
-   "cusip": "219350105",
-   "symbol": "GLW"
-  },
-  {
-   "cusip": "37045V100",
-   "symbol": "GM"
-  },
-  {
-   "cusip": "36467W109",
-   "symbol": "GME"
-  },
-  {
-   "cusip": "02079K107",
-   "symbol": "GOOG"
-  },
-  {
-   "cusip": "02079K305",
-   "symbol": "GOOGL"
-  },
-  {
-   "cusip": "372460105",
-   "symbol": "GPC"
-  },
-  {
-   "cusip": "37940X102",
-   "symbol": "GPN"
-  },
-  {
-   "cusip": "38147X705",
-   "symbol": "GPPIX"
-  },
-  {
-   "cusip": "38141G104",
-   "symbol": "GS"
-  },
-  {
-   "cusip": "37733W204",
-   "symbol": "GSK"
-  },
-  {
-   "cusip": "381430503",
-   "symbol": "GSLC"
-  },
-  {
-   "cusip": "36254L308",
-   "symbol": "GTBP"
-  },
-  {
-   "cusip": "406216101",
-   "symbol": "HAL"
-  },
-  {
-   "cusip": "418056107",
-   "symbol": "HAS"
-  },
-  {
-   "cusip": "446150104",
-   "symbol": "HBAN"
-  },
-  {
-   "cusip": "437076102",
-   "symbol": "HD"
-  },
-  {
-   "cusip": "416515104",
-   "symbol": "HIG"
-  },
-  {
-   "cusip": "422704106",
-   "symbol": "HL"
-  },
-  {
-   "cusip": "438516106",
-   "symbol": "HON"
-  },
-  {
-   "cusip": "43849R105",
-   "symbol": "HONA"
-  },
-  {
-   "cusip": "42824C109",
-   "symbol": "HPE"
-  },
-  {
-   "cusip": "40434L105",
-   "symbol": "HPQ"
-  },
-  {
-   "cusip": "806407102",
-   "symbol": "HSIC"
-  },
-  {
-   "cusip": "44107P104",
-   "symbol": "HST"
-  },
-  {
-   "cusip": "427866108",
-   "symbol": "HSY"
-  },
-  {
-   "cusip": "443510607",
-   "symbol": "HUBB"
-  },
-  {
-   "cusip": "443573100",
-   "symbol": "HUBS"
-  },
-  {
-   "cusip": "444859102",
-   "symbol": "HUM"
-  },
-  {
-   "cusip": "44812J104",
-   "symbol": "HUT"
-  },
-  {
-   "cusip": "443201108",
-   "symbol": "HWM"
-  },
-  {
-   "cusip": "92189H409",
-   "symbol": "HYD"
-  },
-  {
-   "cusip": "543912877",
-   "symbol": "HYMAX"
-  },
-  {
-   "cusip": "543912836",
-   "symbol": "HYMIX"
-  },
-  {
-   "cusip": "464285204",
-   "symbol": "IAU"
-  },
-  {
-   "cusip": "46438F101",
-   "symbol": "IBIT"
-  },
-  {
-   "cusip": "459200101",
-   "symbol": "IBM"
-  },
-  {
-   "cusip": "45104G104",
-   "symbol": "IBN"
-  },
-  {
-   "cusip": "45866F104",
-   "symbol": "ICE"
-  },
-  {
-   "cusip": "451107106",
-   "symbol": "IDA"
-  },
-  {
-   "cusip": "210322707",
-   "symbol": "IDVZ"
-  },
-  {
-   "cusip": "464287440",
-   "symbol": "IEF"
-  },
-  {
-   "cusip": "46432F842",
-   "symbol": "IEFA"
-  },
-  {
-   "cusip": "46434G103",
-   "symbol": "IEMG"
-  },
-  {
-   "cusip": "45956T501",
-   "symbol": "IGFFX"
-  },
-  {
-   "cusip": "464288638",
-   "symbol": "IGIB"
-  },
-  {
-   "cusip": "464288117",
-   "symbol": "IGOV"
-  },
-  {
-   "cusip": "464288646",
-   "symbol": "IGSB"
-  },
-  {
-   "cusip": "464287507",
-   "symbol": "IJH"
-  },
-  {
-   "cusip": "464287705",
-   "symbol": "IJJ"
-  },
-  {
-   "cusip": "464287606",
-   "symbol": "IJK"
-  },
-  {
-   "cusip": "464287879",
-   "symbol": "IJS"
-  },
-  {
-   "cusip": "464287887",
-   "symbol": "IJT"
-  },
-  {
-   "cusip": "46434V449",
-   "symbol": "IMTM"
-  },
-  {
-   "cusip": "45337C102",
-   "symbol": "INCY"
-  },
-  {
-   "cusip": "921075388",
-   "symbol": "INIYX"
-  },
-  {
-   "cusip": "458140100",
-   "symbol": "INTC"
-  },
-  {
-   "cusip": "461202103",
-   "symbol": "INTU"
-  },
-  {
-   "cusip": "462222100",
-   "symbol": "IONS"
-  },
-  {
-   "cusip": "460146103",
-   "symbol": "IP"
-  },
-  {
-   "cusip": "46121Y201",
-   "symbol": "IPI"
-  },
-  {
-   "cusip": "46434V456",
-   "symbol": "IQLT"
-  },
-  {
-   "cusip": "46284V101",
-   "symbol": "IRM"
-  },
-  {
-   "cusip": "46120E602",
-   "symbol": "ISRG"
-  },
-  {
-   "cusip": "366651107",
-   "symbol": "IT"
-  },
-  {
-   "cusip": "464288752",
-   "symbol": "ITB"
-  },
-  {
-   "cusip": "032108599",
-   "symbol": "ITEQ"
-  },
-  {
-   "cusip": "45073V108",
-   "symbol": "ITT"
-  },
-  {
-   "cusip": "452308109",
-   "symbol": "ITW"
-  },
-  {
-   "cusip": "00142F642",
-   "symbol": "ITYAX"
-  },
-  {
-   "cusip": "464287408",
-   "symbol": "IVE"
-  },
-  {
-   "cusip": "46435G409",
-   "symbol": "IVLU"
-  },
-  {
-   "cusip": "921932844",
-   "symbol": "IVOV"
-  },
-  {
-   "cusip": "464287200",
-   "symbol": "IVV"
-  },
-  {
-   "cusip": "464287309",
-   "symbol": "IVW"
-  },
-  {
-   "cusip": "G491BT108",
-   "symbol": "IVZ"
-  },
-  {
-   "cusip": "464287598",
-   "symbol": "IWD"
-  },
-  {
-   "cusip": "464287614",
-   "symbol": "IWF"
-  },
-  {
-   "cusip": "464287655",
-   "symbol": "IWM"
-  },
-  {
-   "cusip": "464287630",
-   "symbol": "IWN"
-  },
-  {
-   "cusip": "464287648",
-   "symbol": "IWO"
-  },
-  {
-   "cusip": "464287481",
-   "symbol": "IWP"
-  },
-  {
-   "cusip": "464287473",
-   "symbol": "IWS"
-  },
-  {
-   "cusip": "46432F834",
-   "symbol": "IXUS"
-  },
-  {
-   "cusip": "47103U845",
-   "symbol": "JAAA"
-  },
-  {
-   "cusip": "471023879",
-   "symbol": "JABAX"
-  },
-  {
-   "cusip": "471023804",
-   "symbol": "JAENX"
-  },
-  {
-   "cusip": "471023549",
-   "symbol": "JATTX"
-  },
-  {
-   "cusip": "471023309",
-   "symbol": "JAWWX"
-  },
-  {
-   "cusip": "47103C704",
-   "symbol": "JBALX"
-  },
-  {
-   "cusip": "445658107",
-   "symbol": "JBHT"
-  },
-  {
-   "cusip": "4812C0100",
-   "symbol": "JCBUX"
-  },
-  {
-   "cusip": "47803P567",
-   "symbol": "JCCIX"
-  },
-  {
-   "cusip": "G51502105",
-   "symbol": "JCI"
-  },
-  {
-   "cusip": "46641Q332",
-   "symbol": "JEPI"
-  },
-  {
-   "cusip": "48121L825",
-   "symbol": "JGSMX"
-  },
-  {
-   "cusip": "G4474Y214",
-   "symbol": "JHG"
-  },
-  {
-   "cusip": "426281101",
-   "symbol": "JKHY"
-  },
-  {
-   "cusip": "48121L841",
-   "symbol": "JLGMX"
-  },
-  {
-   "cusip": "47103C795",
-   "symbol": "JMGRX"
-  },
-  {
-   "cusip": "46641Q654",
-   "symbol": "JMST"
-  },
-  {
-   "cusip": "46641Q647",
-   "symbol": "JMUB"
-  },
-  {
-   "cusip": "478160104",
-   "symbol": "JNJ"
-  },
-  {
-   "cusip": "78468R622",
-   "symbol": "JNK"
-  },
-  {
-   "cusip": "G65163100",
-   "symbol": "JOBY"
-  },
-  {
-   "cusip": "67073B106",
-   "symbol": "JPC"
-  },
-  {
-   "cusip": "46625H100",
-   "symbol": "JPM"
-  },
-  {
-   "cusip": "46641Q837",
-   "symbol": "JPST"
-  },
-  {
-   "cusip": "4812A4351",
-   "symbol": "JSOSX"
-  },
-  {
-   "cusip": "50155Q100",
-   "symbol": "KD"
-  },
-  {
-   "cusip": "49271V100",
-   "symbol": "KDP"
-  },
-  {
-   "cusip": "493267108",
-   "symbol": "KEY"
-  },
-  {
-   "cusip": "49338L103",
-   "symbol": "KEYS"
-  },
-  {
-   "cusip": "496902404",
-   "symbol": "KGC"
-  },
-  {
-   "cusip": "500754106",
-   "symbol": "KHC"
-  },
-  {
-   "cusip": "49446R109",
-   "symbol": "KIM"
-  },
-  {
-   "cusip": "48251W104",
-   "symbol": "KKR"
-  },
-  {
-   "cusip": "482480100",
-   "symbol": "KLAC"
-  },
-  {
-   "cusip": "49456B101",
-   "symbol": "KMI"
-  },
-  {
-   "cusip": "191216100",
-   "symbol": "KO"
-  },
-  {
-   "cusip": "501044101",
-   "symbol": "KR"
-  },
-  {
-   "cusip": "49177J102",
-   "symbol": "KVUE"
-  },
-  {
-   "cusip": "53681J103",
-   "symbol": "LAC"
-  },
-  {
-   "cusip": "376549101",
-   "symbol": "LAND"
-  },
-  {
-   "cusip": "H5012F103",
-   "symbol": "LAR"
-  },
-  {
-   "cusip": "504922105",
-   "symbol": "LH"
-  },
-  {
-   "cusip": "502431109",
-   "symbol": "LHX"
-  },
-  {
-   "cusip": "G54950103",
-   "symbol": "LIN"
-  },
-  {
-   "cusip": "37954Y855",
-   "symbol": "LIT"
-  },
-  {
-   "cusip": "55024U109",
-   "symbol": "LITE"
-  },
-  {
-   "cusip": "532457108",
-   "symbol": "LLY"
-  },
-  {
-   "cusip": "539830109",
-   "symbol": "LMT"
-  },
-  {
-   "cusip": "16411R208",
-   "symbol": "LNG"
-  },
-  {
-   "cusip": "37960A172",
-   "symbol": "LNGX"
-  },
-  {
-   "cusip": "548661107",
-   "symbol": "LOW"
-  },
-  {
-   "cusip": "464287242",
-   "symbol": "LQD"
-  },
-  {
-   "cusip": "512807306",
-   "symbol": "LRCX"
-  },
-  {
-   "cusip": "550021109",
-   "symbol": "LULU"
-  },
-  {
-   "cusip": "844741108",
-   "symbol": "LUV"
-  },
-  {
-   "cusip": "517834107",
-   "symbol": "LVS"
-  },
-  {
-   "cusip": "513272104",
-   "symbol": "LW"
-  },
-  {
-   "cusip": "N53745100",
-   "symbol": "LYB"
-  },
-  {
-   "cusip": "55087P104",
-   "symbol": "LYFT"
-  },
-  {
-   "cusip": "57636Q104",
-   "symbol": "MA"
-  },
-  {
-   "cusip": "571903202",
-   "symbol": "MAR"
-  },
-  {
-   "cusip": "580135101",
-   "symbol": "MCD"
-  },
-  {
-   "cusip": "595017104",
-   "symbol": "MCHP"
-  },
-  {
-   "cusip": "58155Q103",
-   "symbol": "MCK"
-  },
-  {
-   "cusip": "615369105",
-   "symbol": "MCO"
-  },
-  {
-   "cusip": "552727109",
-   "symbol": "MCR"
-  },
-  {
-   "cusip": "609207105",
-   "symbol": "MDLZ"
-  },
-  {
-   "cusip": "G5960L103",
-   "symbol": "MDT"
-  },
-  {
-   "cusip": "46431W838",
-   "symbol": "MEAR"
-  },
-  {
-   "cusip": "552983694",
-   "symbol": "MEIIX"
-  },
-  {
-   "cusip": "58733R102",
-   "symbol": "MELI"
-  },
-  {
-   "cusip": "59156R108",
-   "symbol": "MET"
-  },
-  {
-   "cusip": "30303M102",
-   "symbol": "META"
-  },
-  {
-   "cusip": "552985863",
-   "symbol": "MFEIX"
-  },
-  {
-   "cusip": "921910816",
-   "symbol": "MGK"
-  },
-  {
-   "cusip": "95766N103",
-   "symbol": "MHF"
-  },
-  {
-   "cusip": "55273G652",
-   "symbol": "MIAGX"
-  },
-  {
-   "cusip": "55293K204",
-   "symbol": "MIEKX"
-  },
-  {
-   "cusip": "72201R833",
-   "symbol": "MINT"
-  },
-  {
-   "cusip": "92647K309",
-   "symbol": "MISIX"
-  },
-  {
-   "cusip": "579780206",
-   "symbol": "MKC"
-  },
-  {
-   "cusip": "573284106",
-   "symbol": "MLM"
-  },
-  {
-   "cusip": "37954Y343",
-   "symbol": "MLPA"
-  },
-  {
-   "cusip": "88579Y101",
-   "symbol": "MMM"
-  },
-  {
-   "cusip": "552737108",
-   "symbol": "MMT"
-  },
-  {
-   "cusip": "02209S103",
-   "symbol": "MO"
-  },
-  {
-   "cusip": "56585A102",
-   "symbol": "MPC"
-  },
-  {
-   "cusip": "55336V100",
-   "symbol": "MPLX"
-  },
-  {
-   "cusip": "58933Y105",
-   "symbol": "MRK"
-  },
-  {
-   "cusip": "60770K107",
-   "symbol": "MRNA"
-  },
-  {
-   "cusip": "571748102",
-   "symbol": "MRSH"
-  },
-  {
-   "cusip": "573874104",
-   "symbol": "MRVL"
-  },
-  {
-   "cusip": "617446448",
-   "symbol": "MS"
-  },
-  {
-   "cusip": "61744H105",
-   "symbol": "MSD"
-  },
-  {
-   "cusip": "61744J861",
-   "symbol": "MSEQX"
-  },
-  {
-   "cusip": "594918104",
-   "symbol": "MSFT"
-  },
-  {
-   "cusip": "55825T103",
-   "symbol": "MSGS"
-  },
-  {
-   "cusip": "620076307",
-   "symbol": "MSI"
-  },
-  {
-   "cusip": "61744J408",
-   "symbol": "MSIQX"
-  },
-  {
-   "cusip": "594972408",
-   "symbol": "MSTR"
-  },
-  {
-   "cusip": "576485205",
-   "symbol": "MTDR"
-  },
-  {
-   "cusip": "595112103",
-   "symbol": "MU"
-  },
-  {
-   "cusip": "464288414",
-   "symbol": "MUB"
-  },
-  {
-   "cusip": "606822104",
-   "symbol": "MUFG"
-  },
-  {
-   "cusip": "626755102",
-   "symbol": "MUSA"
-  },
-  {
-   "cusip": "67066V101",
-   "symbol": "NAD"
-  },
-  {
-   "cusip": "641224787",
-   "symbol": "NBPIX"
-  },
-  {
-   "cusip": "67065N555",
-   "symbol": "NCHRX"
-  },
-  {
-   "cusip": "631103108",
-   "symbol": "NDAQ"
-  },
-  {
-   "cusip": "670657105",
-   "symbol": "NEA"
-  },
-  {
-   "cusip": "65339F101",
-   "symbol": "NEE"
-  },
-  {
-   "cusip": "643822828",
-   "symbol": "NEFFX"
-  },
-  {
-   "cusip": "651639106",
-   "symbol": "NEM"
-  },
-  {
-   "cusip": "649280104",
-   "symbol": "NEWFX"
-  },
-  {
-   "cusip": "65342K105",
-   "symbol": "NEXT"
-  },
-  {
-   "cusip": "649280823",
-   "symbol": "NFFFX"
-  },
-  {
-   "cusip": "636180101",
-   "symbol": "NFG"
-  },
-  {
-   "cusip": "64110L106",
-   "symbol": "NFLX"
-  },
-  {
-   "cusip": "67065Q772",
-   "symbol": "NHMRX"
-  },
-  {
-   "cusip": "65473P105",
-   "symbol": "NI"
-  },
-  {
-   "cusip": "64122Q705",
-   "symbol": "NINLX"
-  },
-  {
-   "cusip": "654106103",
-   "symbol": "NKE"
-  },
-  {
-   "cusip": "64110Y108",
-   "symbol": "NLOP"
-  },
-  {
-   "cusip": "035710839",
-   "symbol": "NLY"
-  },
-  {
-   "cusip": "65250K105",
-   "symbol": "NMAX"
-  },
-  {
-   "cusip": "666807102",
-   "symbol": "NOC"
-  },
-  {
-   "cusip": "665531307",
-   "symbol": "NOG"
-  },
-  {
-   "cusip": "62955J103",
-   "symbol": "NOV"
-  },
-  {
-   "cusip": "81762P102",
-   "symbol": "NOW"
-  },
-  {
-   "cusip": "670700400",
-   "symbol": "NPSRX"
-  },
-  {
-   "cusip": "629377508",
-   "symbol": "NRG"
-  },
-  {
-   "cusip": "655844108",
-   "symbol": "NSC"
-  },
-  {
-   "cusip": "67065Q574",
-   "symbol": "NSIOX"
-  },
-  {
-   "cusip": "67059N108",
-   "symbol": "NTNX"
-  },
-  {
-   "cusip": "632307104",
-   "symbol": "NTRA"
-  },
-  {
-   "cusip": "665859104",
-   "symbol": "NTRS"
-  },
-  {
-   "cusip": "654624105",
-   "symbol": "NTTYY"
-  },
-  {
-   "cusip": "670346105",
-   "symbol": "NUE"
-  },
-  {
-   "cusip": "670928100",
-   "symbol": "NUV"
-  },
-  {
-   "cusip": "670695105",
-   "symbol": "NUW"
-  },
-  {
-   "cusip": "67066G104",
-   "symbol": "NVDA"
-  },
-  {
-   "cusip": "67071L106",
-   "symbol": "NVG"
-  },
-  {
-   "cusip": "756109104",
-   "symbol": "O"
-  },
-  {
-   "cusip": "00141B584",
-   "symbol": "OARDX"
-  },
-  {
-   "cusip": "74933W478",
-   "symbol": "OBIL"
-  },
-  {
-   "cusip": "00143N693",
-   "symbol": "OGMIX"
-  },
-  {
-   "cusip": "681936100",
-   "symbol": "OHI"
-  },
-  {
-   "cusip": "46636U876",
-   "symbol": "OIEJX"
-  },
-  {
-   "cusip": "92189H607",
-   "symbol": "OIH"
-  },
-  {
-   "cusip": "30609A109",
-   "symbol": "OKE"
-  },
-  {
-   "cusip": "02156V109",
-   "symbol": "OKLO"
-  },
-  {
-   "cusip": "00141W851",
-   "symbol": "OLCYX"
-  },
-  {
-   "cusip": "681919106",
-   "symbol": "OMC"
-  },
-  {
-   "cusip": "68268W103",
-   "symbol": "OMF"
-  },
-  {
-   "cusip": "682189105",
-   "symbol": "ON"
-  },
-  {
-   "cusip": "00143W602",
-   "symbol": "OPBIX"
-  },
-  {
-   "cusip": "00900R572",
-   "symbol": "OPMSX"
-  },
-  {
-   "cusip": "68389X105",
-   "symbol": "ORCL"
-  },
-  {
-   "cusip": "67103H107",
-   "symbol": "ORLY"
-  },
-  {
-   "cusip": "68902V107",
-   "symbol": "OTIS"
-  },
-  {
-   "cusip": "674599105",
-   "symbol": "OXY"
-  },
-  {
-   "cusip": "74624M102",
-   "symbol": "P"
-  },
-  {
-   "cusip": "726503105",
-   "symbol": "PAA"
-  },
-  {
-   "cusip": "69344A834",
-   "symbol": "PAAA"
-  },
-  {
-   "cusip": "697900108",
-   "symbol": "PAAS"
-  },
-  {
-   "cusip": "697435105",
-   "symbol": "PANW"
-  },
-  {
-   "cusip": "90364P105",
-   "symbol": "PATH"
-  },
-  {
-   "cusip": "704326107",
-   "symbol": "PAYX"
-  },
-  {
-   "cusip": "714236106",
-   "symbol": "PBT"
-  },
-  {
-   "cusip": "693718108",
-   "symbol": "PCAR"
-  },
-  {
-   "cusip": "74253Q747",
-   "symbol": "PCBIX"
-  },
-  {
-   "cusip": "69331C108",
-   "symbol": "PCG"
-  },
-  {
-   "cusip": "36087T411",
-   "symbol": "PCHI"
-  },
-  {
-   "cusip": "74440B405",
-   "symbol": "PDBZX"
-  },
-  {
-   "cusip": "744573106",
-   "symbol": "PEG"
-  },
-  {
-   "cusip": "746745405",
-   "symbol": "PEIYX"
-  },
-  {
-   "cusip": "713448108",
-   "symbol": "PEP"
-  },
-  {
-   "cusip": "75526L670",
-   "symbol": "PFDE"
-  },
-  {
-   "cusip": "717081103",
-   "symbol": "PFE"
-  },
-  {
-   "cusip": "464288687",
-   "symbol": "PFF"
-  },
-  {
-   "cusip": "74251V102",
-   "symbol": "PFG"
-  },
-  {
-   "cusip": "72201H108",
-   "symbol": "PFL"
-  },
-  {
-   "cusip": "693391658",
-   "symbol": "PFMIX"
-  },
-  {
-   "cusip": "75526L688",
-   "symbol": "PFOE"
-  },
-  {
-   "cusip": "693390882",
-   "symbol": "PFORX"
-  },
-  {
-   "cusip": "722005220",
-   "symbol": "PFUIX"
-  },
-  {
-   "cusip": "742718109",
-   "symbol": "PG"
-  },
-  {
-   "cusip": "743315103",
-   "symbol": "PGR"
-  },
-  {
-   "cusip": "701094104",
-   "symbol": "PH"
-  },
-  {
-   "cusip": "722014107",
-   "symbol": "PHK"
-  },
-  {
-   "cusip": "46137V142",
-   "symbol": "PHO"
-  },
-  {
-   "cusip": "85207H104",
-   "symbol": "PHYS"
-  },
-  {
-   "cusip": "46434G848",
-   "symbol": "PICK"
-  },
-  {
-   "cusip": "92648C835",
-   "symbol": "PICYX"
-  },
-  {
-   "cusip": "31423A689",
-   "symbol": "PIUIX"
-  },
-  {
-   "cusip": "700517105",
-   "symbol": "PK"
-  },
-  {
-   "cusip": "74340W103",
-   "symbol": "PLD"
-  },
-  {
-   "cusip": "69608A108",
-   "symbol": "PLTR"
-  },
-  {
-   "cusip": "718172109",
-   "symbol": "PM"
-  },
-  {
-   "cusip": "72200W106",
-   "symbol": "PML"
-  },
-  {
-   "cusip": "693475105",
-   "symbol": "PNC"
-  },
-  {
-   "cusip": "72201M719",
-   "symbol": "PONPX"
-  },
-  {
-   "cusip": "74680E507",
-   "symbol": "POVYX"
-  },
-  {
-   "cusip": "739128106",
-   "symbol": "POWL"
-  },
-  {
-   "cusip": "693506107",
-   "symbol": "PPG"
-  },
-  {
-   "cusip": "71424F105",
-   "symbol": "PR"
-  },
-  {
-   "cusip": "77957N605",
-   "symbol": "PRTMX"
-  },
-  {
-   "cusip": "744320102",
-   "symbol": "PRU"
-  },
-  {
-   "cusip": "74441P817",
-   "symbol": "PRUZX"
-  },
-  {
-   "cusip": "74460D109",
-   "symbol": "PSA"
-  },
-  {
-   "cusip": "85207K107",
-   "symbol": "PSLV"
-  },
-  {
-   "cusip": "718546104",
-   "symbol": "PSX"
-  },
-  {
-   "cusip": "72201B101",
-   "symbol": "PTY"
-  },
-  {
-   "cusip": "69344A107",
-   "symbol": "PULS"
-  },
-  {
-   "cusip": "74347M108",
-   "symbol": "PUMP"
-  },
-  {
-   "cusip": "74762E102",
-   "symbol": "PWR"
-  },
-  {
-   "cusip": "70450Y103",
-   "symbol": "PYPL"
-  },
-  {
-   "cusip": "46138E537",
-   "symbol": "PZA"
-  },
-  {
-   "cusip": "74743L100",
-   "symbol": "Q"
-  },
-  {
-   "cusip": "747525103",
-   "symbol": "QCOM"
-  },
-  {
-   "cusip": "337344105",
-   "symbol": "QQEW"
-  },
-  {
-   "cusip": "46090E103",
-   "symbol": "QQQ"
-  },
-  {
-   "cusip": "25459Y207",
-   "symbol": "QQQE"
-  },
-  {
-   "cusip": "26922A420",
-   "symbol": "QTUM"
-  },
-  {
-   "cusip": "46432F339",
-   "symbol": "QUAL"
-  },
-  {
-   "cusip": "82846H405",
-   "symbol": "QXO"
-  },
-  {
-   "cusip": "N3167Y103",
-   "symbol": "RACE"
-  },
-  {
-   "cusip": "781154109",
-   "symbol": "RBRK"
-  },
-  {
-   "cusip": "V7780T103",
-   "symbol": "RCL"
-  },
-  {
-   "cusip": "75886F107",
-   "symbol": "REGN"
-  },
-  {
-   "cusip": "92189H805",
-   "symbol": "REMX"
-  },
-  {
-   "cusip": "7591EP100",
-   "symbol": "RF"
-  },
-  {
-   "cusip": "780287108",
-   "symbol": "RGLD"
-  },
-  {
-   "cusip": "770323103",
-   "symbol": "RHI"
-  },
-  {
-   "cusip": "46434G855",
-   "symbol": "RING"
-  },
-  {
-   "cusip": "76954A103",
-   "symbol": "RIVN"
-  },
-  {
-   "cusip": "024071839",
-   "symbol": "RLBFX"
-  },
-  {
-   "cusip": "750917106",
-   "symbol": "RMBS"
-  },
-  {
-   "cusip": "773903109",
-   "symbol": "ROK"
-  },
-  {
-   "cusip": "77543R102",
-   "symbol": "ROKU"
-  },
-  {
-   "cusip": "776696106",
-   "symbol": "ROP"
-  },
-  {
-   "cusip": "759141104",
-   "symbol": "RPMT"
-  },
-  {
-   "cusip": "759509102",
-   "symbol": "RS"
-  },
-  {
-   "cusip": "760759100",
-   "symbol": "RSG"
-  },
-  {
-   "cusip": "46137V357",
-   "symbol": "RSP"
-  },
-  {
-   "cusip": "46137V365",
-   "symbol": "RSPG"
-  },
-  {
-   "cusip": "75513E101",
-   "symbol": "RTX"
-  },
-  {
-   "cusip": "78516J101",
-   "symbol": "SAABY"
-  },
-  {
-   "cusip": "958435109",
-   "symbol": "SBI"
-  },
-  {
-   "cusip": "785688102",
-   "symbol": "SBR"
-  },
-  {
-   "cusip": "855244109",
-   "symbol": "SBUX"
-  },
-  {
-   "cusip": "84265V105",
-   "symbol": "SCCO"
-  },
-  {
-   "cusip": "808524102",
-   "symbol": "SCHB"
-  },
-  {
-   "cusip": "808524706",
-   "symbol": "SCHE"
-  },
-  {
-   "cusip": "808524805",
-   "symbol": "SCHF"
-  },
-  {
-   "cusip": "808524508",
-   "symbol": "SCHM"
-  },
-  {
-   "cusip": "808513105",
-   "symbol": "SCHW"
-  },
-  {
-   "cusip": "784117103",
-   "symbol": "SEIC"
-  },
-  {
-   "cusip": "32008F606",
-   "symbol": "SGIIX"
-  },
-  {
-   "cusip": "46436E718",
-   "symbol": "SGOV"
-  },
-  {
-   "cusip": "780259305",
-   "symbol": "SHEL"
-  },
-  {
-   "cusip": "78468R739",
-   "symbol": "SHM"
-  },
-  {
-   "cusip": "82509L107",
-   "symbol": "SHOP"
-  },
-  {
-   "cusip": "824348106",
-   "symbol": "SHW"
-  },
-  {
-   "cusip": "464287457",
-   "symbol": "SHY"
-  },
-  {
-   "cusip": "92189F387",
-   "symbol": "SHYD"
-  },
-  {
-   "cusip": "46434V407",
-   "symbol": "SHYG"
-  },
-  {
-   "cusip": "092528108",
-   "symbol": "SHYM"
-  },
-  {
-   "cusip": "31761R591",
-   "symbol": "SIVLX"
-  },
-  {
-   "cusip": "806857108",
-   "symbol": "SLB"
-  },
-  {
-   "cusip": "83413U100",
-   "symbol": "SLRC"
-  },
-  {
-   "cusip": "46428Q109",
-   "symbol": "SLV"
-  },
-  {
-   "cusip": "78464A201",
-   "symbol": "SLYG"
-  },
-  {
-   "cusip": "831681101",
-   "symbol": "SMCWX"
-  },
-  {
-   "cusip": "80004C200",
-   "symbol": "SNDK"
-  },
-  {
-   "cusip": "871607107",
-   "symbol": "SNPS"
-  },
-  {
-   "cusip": "842587107",
-   "symbol": "SO"
-  },
-  {
-   "cusip": "83443Q103",
-   "symbol": "SOLS"
-  },
-  {
-   "cusip": "835495102",
-   "symbol": "SON"
-  },
-  {
-   "cusip": "84615Q103",
-   "symbol": "SPCX"
-  },
-  {
-   "cusip": "828806109",
-   "symbol": "SPG"
-  },
-  {
-   "cusip": "78409V104",
-   "symbol": "SPGI"
-  },
-  {
-   "cusip": "46137V241",
-   "symbol": "SPHQ"
-  },
-  {
-   "cusip": "78468R606",
-   "symbol": "SPHY"
-  },
-  {
-   "cusip": "78464A367",
-   "symbol": "SPLB"
-  },
-  {
-   "cusip": "78462F103",
-   "symbol": "SPY"
-  },
-  {
-   "cusip": "78464A409",
-   "symbol": "SPYG"
-  },
-  {
-   "cusip": "78433H303",
-   "symbol": "SPYI"
-  },
-  {
-   "cusip": "78464A854",
-   "symbol": "SPYM"
-  },
-  {
-   "cusip": "78464A508",
-   "symbol": "SPYV"
-  },
-  {
-   "cusip": "816851109",
-   "symbol": "SRE"
-  },
-  {
-   "cusip": "G7997R103",
-   "symbol": "STX"
-  },
-  {
-   "cusip": "21036P108",
-   "symbol": "STZ"
-  },
-  {
-   "cusip": "464288158",
-   "symbol": "SUB"
-  },
-  {
-   "cusip": "866674104",
-   "symbol": "SUI"
-  },
-  {
-   "cusip": "E8943P102",
-   "symbol": "SUIAF"
-  },
-  {
-   "cusip": "86765K109",
-   "symbol": "SUN"
-  },
-  {
-   "cusip": "83088M102",
-   "symbol": "SWKS"
-  },
-  {
-   "cusip": "87165B103",
-   "symbol": "SYF"
-  },
-  {
-   "cusip": "863667101",
-   "symbol": "SYK"
-  },
-  {
-   "cusip": "871829107",
-   "symbol": "SYY"
-  },
-  {
-   "cusip": "00206R102",
-   "symbol": "T"
-  },
-  {
-   "cusip": "46138G706",
-   "symbol": "TAN"
-  },
-  {
-   "cusip": "60871R209",
-   "symbol": "TAP"
-  },
-  {
-   "cusip": "74933W452",
-   "symbol": "TBIL"
-  },
-  {
-   "cusip": "893641100",
-   "symbol": "TDG"
-  },
-  {
-   "cusip": "89832Q109",
-   "symbol": "TFC"
-  },
-  {
-   "cusip": "89679E300",
-   "symbol": "TFIN"
-  },
-  {
-   "cusip": "879369106",
-   "symbol": "TFX"
-  },
-  {
-   "cusip": "88579N105",
-   "symbol": "TGOPY"
-  },
-  {
-   "cusip": "87612E106",
-   "symbol": "TGT"
-  },
-  {
-   "cusip": "885215368",
-   "symbol": "TIVRX"
-  },
-  {
-   "cusip": "872540109",
-   "symbol": "TJX"
-  },
-  {
-   "cusip": "892331307",
-   "symbol": "TM"
-  },
-  {
-   "cusip": "883556102",
-   "symbol": "TMO"
-  },
-  {
-   "cusip": "872590104",
-   "symbol": "TMUS"
-  },
-  {
-   "cusip": "890930506",
-   "symbol": "TORIX"
-  },
-  {
-   "cusip": "872657101",
-   "symbol": "TPG"
-  },
-  {
-   "cusip": "88262P102",
-   "symbol": "TPL"
-  },
-  {
-   "cusip": "87283A102",
-   "symbol": "TQAIX"
-  },
-  {
-   "cusip": "77954Q106",
-   "symbol": "TRBCX"
-  },
-  {
-   "cusip": "87612G101",
-   "symbol": "TRGP"
-  },
-  {
-   "cusip": "74144T108",
-   "symbol": "TROW"
-  },
-  {
-   "cusip": "892356106",
-   "symbol": "TSCO"
-  },
-  {
-   "cusip": "885215194",
-   "symbol": "TSIIX"
-  },
-  {
-   "cusip": "88160R101",
-   "symbol": "TSLA"
-  },
-  {
-   "cusip": "G8994E103",
-   "symbol": "TT"
-  },
-  {
-   "cusip": "88339J105",
-   "symbol": "TTD"
-  },
-  {
-   "cusip": "F92124100",
-   "symbol": "TTE"
-  },
-  {
-   "cusip": "874054109",
-   "symbol": "TTWO"
-  },
-  {
-   "cusip": "882508104",
-   "symbol": "TXN"
-  },
-  {
-   "cusip": "882681109",
-   "symbol": "TXRH"
-  },
-  {
-   "cusip": "902252105",
-   "symbol": "TYL"
-  },
-  {
-   "cusip": "910047109",
-   "symbol": "UAL"
-  },
-  {
-   "cusip": "90353T100",
-   "symbol": "UBER"
-  },
-  {
-   "cusip": "904504495",
-   "symbol": "UBVSX"
-  },
-  {
-   "cusip": "74280R205",
-   "symbol": "UFO"
-  },
-  {
-   "cusip": "023586506",
-   "symbol": "UHALB"
-  },
-  {
-   "cusip": "913903100",
-   "symbol": "UHS"
-  },
-  {
-   "cusip": "904767803",
-   "symbol": "UL"
-  },
-  {
-   "cusip": "90384S303",
-   "symbol": "ULTA"
-  },
-  {
-   "cusip": "91324P102",
-   "symbol": "UNH"
-  },
-  {
-   "cusip": "907818108",
-   "symbol": "UNP"
-  },
-  {
-   "cusip": "911312106",
-   "symbol": "UPS"
-  },
-  {
-   "cusip": "37954Y871",
-   "symbol": "URA"
-  },
-  {
-   "cusip": "911363109",
-   "symbol": "URI"
-  },
-  {
-   "cusip": "85208P303",
-   "symbol": "URNM"
-  },
-  {
-   "cusip": "902973304",
-   "symbol": "USB"
-  },
-  {
-   "cusip": "46435U853",
-   "symbol": "USHY"
-  },
-  {
-   "cusip": "756158101",
-   "symbol": "UTG"
-  },
-  {
-   "cusip": "74933W486",
-   "symbol": "UTWO"
-  },
-  {
-   "cusip": "92826C839",
-   "symbol": "V"
-  },
-  {
-   "cusip": "00142J818",
-   "symbol": "VADAX"
-  },
-  {
-   "cusip": "00142J776",
-   "symbol": "VADDX"
-  },
-  {
-   "cusip": "00142J131",
-   "symbol": "VADFX"
-  },
-  {
-   "cusip": "922908751",
-   "symbol": "VB"
-  },
-  {
-   "cusip": "921937777",
-   "symbol": "VBITX"
-  },
-  {
-   "cusip": "922908595",
-   "symbol": "VBK"
-  },
-  {
-   "cusip": "922908611",
-   "symbol": "VBR"
-  },
-  {
-   "cusip": "921937504",
-   "symbol": "VBTIX"
-  },
-  {
-   "cusip": "922021407",
-   "symbol": "VCADX"
-  },
-  {
-   "cusip": "92206C870",
-   "symbol": "VCIT"
-  },
-  {
-   "cusip": "92204A108",
-   "symbol": "VCR"
-  },
-  {
-   "cusip": "92206C409",
-   "symbol": "VCSH"
-  },
-  {
-   "cusip": "921943858",
-   "symbol": "VEA"
-  },
-  {
-   "cusip": "921921300",
-   "symbol": "VEIRX"
-  },
-  {
-   "cusip": "922908710",
-   "symbol": "VFIAX"
-  },
-  {
-   "cusip": "92206C102",
-   "symbol": "VGSH"
-  },
-  {
-   "cusip": "921908877",
-   "symbol": "VGSLX"
-  },
-  {
-   "cusip": "92204A702",
-   "symbol": "VGT"
-  },
-  {
-   "cusip": "92204A504",
-   "symbol": "VHT"
-  },
-  {
-   "cusip": "922908884",
-   "symbol": "VIEIX"
-  },
-  {
-   "cusip": "921908844",
-   "symbol": "VIG"
-  },
-  {
-   "cusip": "921946810",
-   "symbol": "VIGI"
-  },
-  {
-   "cusip": "922040100",
-   "symbol": "VINIX"
-  },
-  {
-   "cusip": "922908801",
-   "symbol": "VITSX"
-  },
-  {
-   "cusip": "91913Y100",
-   "symbol": "VLO"
-  },
-  {
-   "cusip": "92338C103",
-   "symbol": "VLTO"
-  },
-  {
-   "cusip": "929160109",
-   "symbol": "VMC"
-  },
-  {
-   "cusip": "922907886",
-   "symbol": "VMLUX"
-  },
-  {
-   "cusip": "29476L107",
-   "symbol": "VMRK"
-  },
-  {
-   "cusip": "47103U886",
-   "symbol": "VNLA"
-  },
-  {
-   "cusip": "92189F817",
-   "symbol": "VNM"
-  },
-  {
-   "cusip": "64361Q101",
-   "symbol": "VNOM"
-  },
-  {
-   "cusip": "922908553",
-   "symbol": "VNQ"
-  },
-  {
-   "cusip": "922908629",
-   "symbol": "VO"
-  },
-  {
-   "cusip": "922908363",
-   "symbol": "VOO"
-  },
-  {
-   "cusip": "922908538",
-   "symbol": "VOT"
-  },
-  {
-   "cusip": "92345Y106",
-   "symbol": "VRSK"
-  },
-  {
-   "cusip": "92537N108",
-   "symbol": "VRT"
-  },
-  {
-   "cusip": "92532F100",
-   "symbol": "VRTX"
-  },
-  {
-   "cusip": "921937686",
-   "symbol": "VSIAX"
-  },
-  {
-   "cusip": "925283103",
-   "symbol": "VSNT"
-  },
-  {
-   "cusip": "922042718",
-   "symbol": "VSS"
-  },
-  {
-   "cusip": "922907746",
-   "symbol": "VTEB"
-  },
-  {
-   "cusip": "921935870",
-   "symbol": "VTES"
-  },
-  {
-   "cusip": "922908769",
-   "symbol": "VTI"
-  },
-  {
-   "cusip": "92203J209",
-   "symbol": "VTIFX"
-  },
-  {
-   "cusip": "921943403",
-   "symbol": "VTMSX"
-  },
-  {
-   "cusip": "92276F100",
-   "symbol": "VTR"
-  },
-  {
-   "cusip": "92556V106",
-   "symbol": "VTRS"
-  },
-  {
-   "cusip": "921909784",
-   "symbol": "VTSNX"
-  },
-  {
-   "cusip": "922908736",
-   "symbol": "VUG"
-  },
-  {
-   "cusip": "92203C303",
-   "symbol": "VUSB"
-  },
-  {
-   "cusip": "46131H107",
-   "symbol": "VVR"
-  },
-  {
-   "cusip": "922907845",
-   "symbol": "VWALX"
-  },
-  {
-   "cusip": "925458101",
-   "symbol": "VWDRY"
-  },
-  {
-   "cusip": "922907878",
-   "symbol": "VWIUX"
-  },
-  {
-   "cusip": "922042858",
-   "symbol": "VWO"
-  },
-  {
-   "cusip": "921910600",
-   "symbol": "VWUAX"
-  },
-  {
-   "cusip": "06748M196",
-   "symbol": "VXX"
-  },
-  {
-   "cusip": "92892R108",
-   "symbol": "VYLR"
-  },
-  {
-   "cusip": "921946406",
-   "symbol": "VYM"
-  },
-  {
-   "cusip": "921946794",
-   "symbol": "VYMI"
-  },
-  {
-   "cusip": "92343V104",
-   "symbol": "VZ"
-  },
-  {
-   "cusip": "929740108",
-   "symbol": "WAB"
-  },
-  {
-   "cusip": "934423104",
-   "symbol": "WBD"
-  },
-  {
-   "cusip": "95082P105",
-   "symbol": "WCC"
-  },
-  {
-   "cusip": "94106B101",
-   "symbol": "WCN"
-  },
-  {
-   "cusip": "958102105",
-   "symbol": "WDC"
-  },
-  {
-   "cusip": "92939U106",
-   "symbol": "WEC"
-  },
-  {
-   "cusip": "95040Q104",
-   "symbol": "WELL"
-  },
-  {
-   "cusip": "958669103",
-   "symbol": "WES"
-  },
-  {
-   "cusip": "949746101",
-   "symbol": "WFC"
-  },
-  {
-   "cusip": "066922204",
-   "symbol": "WFSPX"
-  },
-  {
-   "cusip": "140543828",
-   "symbol": "WGIFX"
-  },
-  {
-   "cusip": "949921662",
-   "symbol": "WITIX"
-  },
-  {
-   "cusip": "94106L109",
-   "symbol": "WM"
-  },
-  {
-   "cusip": "969457100",
-   "symbol": "WMB"
-  },
-  {
-   "cusip": "939330825",
-   "symbol": "WMFFX"
-  },
-  {
-   "cusip": "00790R104",
-   "symbol": "WMS"
-  },
-  {
-   "cusip": "931142103",
-   "symbol": "WMT"
-  },
-  {
-   "cusip": "4812C0381",
-   "symbol": "WOBDX"
-  },
-  {
-   "cusip": "92936U109",
-   "symbol": "WPC"
-  },
-  {
-   "cusip": "962879102",
-   "symbol": "WPM"
-  },
-  {
-   "cusip": "084423102",
-   "symbol": "WRB"
-  },
-  {
-   "cusip": "29670G102",
-   "symbol": "WTRG"
-  },
-  {
-   "cusip": "G96629103",
-   "symbol": "WTW"
-  },
-  {
-   "cusip": "962166104",
-   "symbol": "WY"
-  },
-  {
-   "cusip": "983134107",
-   "symbol": "WYNN"
-  },
-  {
-   "cusip": "23306X829",
-   "symbol": "XAIX"
-  },
-  {
-   "cusip": "74933W460",
-   "symbol": "XBIL"
-  },
-  {
-   "cusip": "98389B100",
-   "symbol": "XEL"
-  },
-  {
-   "cusip": "81369Y852",
-   "symbol": "XLC"
-  },
-  {
-   "cusip": "81369Y506",
-   "symbol": "XLE"
-  },
-  {
-   "cusip": "81369Y605",
-   "symbol": "XLF"
-  },
-  {
-   "cusip": "46137V233",
-   "symbol": "XLG"
-  },
-  {
-   "cusip": "81369Y704",
-   "symbol": "XLI"
-  },
-  {
-   "cusip": "81369Y803",
-   "symbol": "XLK"
-  },
-  {
-   "cusip": "81369Y308",
-   "symbol": "XLP"
-  },
-  {
-   "cusip": "81369Y886",
-   "symbol": "XLU"
-  },
-  {
-   "cusip": "81369Y209",
-   "symbol": "XLV"
-  },
-  {
-   "cusip": "81369Y407",
-   "symbol": "XLY"
-  },
-  {
-   "cusip": "78464A755",
-   "symbol": "XME"
-  },
-  {
-   "cusip": "30231G102",
-   "symbol": "XOM"
-  },
-  {
-   "cusip": "98423K405",
-   "symbol": "XTIA"
-  },
-  {
-   "cusip": "98419M100",
-   "symbol": "XYL"
-  },
-  {
-   "cusip": "852234103",
-   "symbol": "XYZ"
-  },
-  {
-   "cusip": "00170K588",
-   "symbol": "YACKX"
-  },
-  {
-   "cusip": "988498101",
-   "symbol": "YUM"
-  },
-  {
-   "cusip": "98956P102",
-   "symbol": "ZBH"
-  },
-  {
-   "cusip": "H9870Y105",
-   "symbol": "ZFSVF"
-  },
-  {
-   "cusip": "989701107",
-   "symbol": "ZION"
-  },
-  {
-   "cusip": "98978V103",
-   "symbol": "ZTS"
-  }
- ],
- "fields": [
-  "close"
- ],
- "start": "2026-04-14",
- "end": "2026-10-09",
- "standing_enrolment": {
-  "tier": 1,
-  "in_words": "enrol the same 878 securities in the standing daily extension to the T-1 frontier after the history lands"
- },
- "filed_for": "IRPT_BCKEND",
- "requested_by": "2.0.0_SA_COO~P2",
- "authority": "1.0.0_SA_CTO~DELL2 msg 6362; 1.0.0_SA_CTO~DELL1 ruling @479d6deba0"
+  "authority": "1.0.0_SA_CTO~DELL2 msg 6362; 1.0.0_SA_CTO~DELL1 ruling @479d6deba0",
+  "end": "2026-10-09",
+  "fields": [
+    "close"
+  ],
+  "filed_for": "IRPT_BCKEND",
+  "need_class": "client",
+  "page": "investor reporting (IRPT_BCKEND date-basis grading)",
+  "reason": "PRD v0.46 answer 1: the date-basis grading's second witness needs as-traded closes on landed bars; ruling CTO_RULING_DELL2_AS_TRADED_CLOSES_VIA_DEMQUE_20261012.md @479d6deba0",
+  "request_id": "IRPT_BCKEND-AS-TRADED-CLOSES-878",
+  "requested_by": "2.0.0_SA_COO~P2",
+  "securities": [
+    {
+      "cusip": "00846U101",
+      "symbol": "A"
+    },
+    {
+      "cusip": "02376R102",
+      "symbol": "AAL"
+    },
+    {
+      "cusip": "03823U102",
+      "symbol": "AAOI"
+    },
+    {
+      "cusip": "037833100",
+      "symbol": "AAPL"
+    },
+    {
+      "cusip": "01881G106",
+      "symbol": "AB"
+    },
+    {
+      "cusip": "00287Y109",
+      "symbol": "ABBV"
+    },
+    {
+      "cusip": "097873822",
+      "symbol": "ABNFX"
+    },
+    {
+      "cusip": "002824100",
+      "symbol": "ABT"
+    },
+    {
+      "cusip": "G0450A105",
+      "symbol": "ACGL"
+    },
+    {
+      "cusip": "G1151C101",
+      "symbol": "ACN"
+    },
+    {
+      "cusip": "001419423",
+      "symbol": "ACTSX"
+    },
+    {
+      "cusip": "464288257",
+      "symbol": "ACWI"
+    },
+    {
+      "cusip": "464286525",
+      "symbol": "ACWV"
+    },
+    {
+      "cusip": "464288240",
+      "symbol": "ACWX"
+    },
+    {
+      "cusip": "00724F101",
+      "symbol": "ADBE"
+    },
+    {
+      "cusip": "032654105",
+      "symbol": "ADI"
+    },
+    {
+      "cusip": "02452A643",
+      "symbol": "ADLYX"
+    },
+    {
+      "cusip": "053015103",
+      "symbol": "ADP"
+    },
+    {
+      "cusip": "052769106",
+      "symbol": "ADSK"
+    },
+    {
+      "cusip": "008474108",
+      "symbol": "AEM"
+    },
+    {
+      "cusip": "025537101",
+      "symbol": "AEP"
+    },
+    {
+      "cusip": "29875E100",
+      "symbol": "AEPFX"
+    },
+    {
+      "cusip": "00130H105",
+      "symbol": "AES"
+    },
+    {
+      "cusip": "399874106",
+      "symbol": "AGTHX"
+    },
+    {
+      "cusip": "026874784",
+      "symbol": "AIG"
+    },
+    {
+      "cusip": "04621X108",
+      "symbol": "AIZ"
+    },
+    {
+      "cusip": "363576109",
+      "symbol": "AJG"
+    },
+    {
+      "cusip": "74316P579",
+      "symbol": "AKRE"
+    },
+    {
+      "cusip": "012653101",
+      "symbol": "ALB"
+    },
+    {
+      "cusip": "016255101",
+      "symbol": "ALGN"
+    },
+    {
+      "cusip": "020002101",
+      "symbol": "ALL"
+    },
+    {
+      "cusip": "02005N100",
+      "symbol": "ALLY"
+    },
+    {
+      "cusip": "02043Q107",
+      "symbol": "ALNY"
+    },
+    {
+      "cusip": "038222105",
+      "symbol": "AMAT"
+    },
+    {
+      "cusip": "023375827",
+      "symbol": "AMCFX"
+    },
+    {
+      "cusip": "G0250X149",
+      "symbol": "AMCR"
+    },
+    {
+      "cusip": "007903107",
+      "symbol": "AMD"
+    },
+    {
+      "cusip": "031100100",
+      "symbol": "AME"
+    },
+    {
+      "cusip": "453320822",
+      "symbol": "AMEFX"
+    },
+    {
+      "cusip": "031162100",
+      "symbol": "AMGN"
+    },
+    {
+      "cusip": "00162Q452",
+      "symbol": "AMLP"
+    },
+    {
+      "cusip": "03076C106",
+      "symbol": "AMP"
+    },
+    {
+      "cusip": "027681824",
+      "symbol": "AMRFX"
+    },
+    {
+      "cusip": "03027X100",
+      "symbol": "AMT"
+    },
+    {
+      "cusip": "35804X200",
+      "symbol": "AMZE"
+    },
+    {
+      "cusip": "023135106",
+      "symbol": "AMZN"
+    },
+    {
+      "cusip": "040413205",
+      "symbol": "ANET"
+    },
+    {
+      "cusip": "G0403H108",
+      "symbol": "AON"
+    },
+    {
+      "cusip": "03743Q108",
+      "symbol": "APA"
+    },
+    {
+      "cusip": "009158106",
+      "symbol": "APD"
+    },
+    {
+      "cusip": "032095101",
+      "symbol": "APH"
+    },
+    {
+      "cusip": "04314H857",
+      "symbol": "APHKX"
+    },
+    {
+      "cusip": "038169207",
+      "symbol": "APLD"
+    },
+    {
+      "cusip": "03769M106",
+      "symbol": "APO"
+    },
+    {
+      "cusip": "03831W108",
+      "symbol": "APP"
+    },
+    {
+      "cusip": "G3265R107",
+      "symbol": "APTV"
+    },
+    {
+      "cusip": "03990B101",
+      "symbol": "ARES"
+    },
+    {
+      "cusip": "040919102",
+      "symbol": "ARKB"
+    },
+    {
+      "cusip": "00214Q708",
+      "symbol": "ARKF"
+    },
+    {
+      "cusip": "00214Q302",
+      "symbol": "ARKG"
+    },
+    {
+      "cusip": "00214Q104",
+      "symbol": "ARKK"
+    },
+    {
+      "cusip": "042735100",
+      "symbol": "ARW"
+    },
+    {
+      "cusip": "01741R102",
+      "symbol": "ATI"
+    },
+    {
+      "cusip": "049560105",
+      "symbol": "ATO"
+    },
+    {
+      "cusip": "G0378L100",
+      "symbol": "AU"
+    },
+    {
+      "cusip": "008073108",
+      "symbol": "AVAV"
+    },
+    {
+      "cusip": "11135F101",
+      "symbol": "AVGO"
+    },
+    {
+      "cusip": "053611109",
+      "symbol": "AVY"
+    },
+    {
+      "cusip": "05464C101",
+      "symbol": "AXON"
+    },
+    {
+      "cusip": "025816109",
+      "symbol": "AXP"
+    },
+    {
+      "cusip": "06849F108",
+      "symbol": "B"
+    },
+    {
+      "cusip": "097023105",
+      "symbol": "BA"
+    },
+    {
+      "cusip": "01609W102",
+      "symbol": "BABA"
+    },
+    {
+      "cusip": "060505104",
+      "symbol": "BAC"
+    },
+    {
+      "cusip": "099502106",
+      "symbol": "BAH"
+    },
+    {
+      "cusip": "058498106",
+      "symbol": "BALL"
+    },
+    {
+      "cusip": "05990K106",
+      "symbol": "BANC"
+    },
+    {
+      "cusip": "071813109",
+      "symbol": "BAX"
+    },
+    {
+      "cusip": "086516101",
+      "symbol": "BBY"
+    },
+    {
+      "cusip": "05534B760",
+      "symbol": "BCE"
+    },
+    {
+      "cusip": "09058V103",
+      "symbol": "BCRX"
+    },
+    {
+      "cusip": "06829D503",
+      "symbol": "BCTK"
+    },
+    {
+      "cusip": "075887109",
+      "symbol": "BDX"
+    },
+    {
+      "cusip": "354613101",
+      "symbol": "BEN"
+    },
+    {
+      "cusip": "115637209",
+      "symbol": "BF-B"
+    },
+    {
+      "cusip": "10922N103",
+      "symbol": "BHF"
+    },
+    {
+      "cusip": "78468R663",
+      "symbol": "BIL"
+    },
+    {
+      "cusip": "090043100",
+      "symbol": "BILL"
+    },
+    {
+      "cusip": "G16252101",
+      "symbol": "BIP"
+    },
+    {
+      "cusip": "11276H106",
+      "symbol": "BIPC"
+    },
+    {
+      "cusip": "091936419",
+      "symbol": "BISOX"
+    },
+    {
+      "cusip": "091749101",
+      "symbol": "BITW"
+    },
+    {
+      "cusip": "921937819",
+      "symbol": "BIV"
+    },
+    {
+      "cusip": "09857L108",
+      "symbol": "BKNG"
+    },
+    {
+      "cusip": "05722G100",
+      "symbol": "BKR"
+    },
+    {
+      "cusip": "09290D101",
+      "symbol": "BLK"
+    },
+    {
+      "cusip": "921937793",
+      "symbol": "BLV"
+    },
+    {
+      "cusip": "09249W101",
+      "symbol": "BLW"
+    },
+    {
+      "cusip": "110122108",
+      "symbol": "BMY"
+    },
+    {
+      "cusip": "921937835",
+      "symbol": "BND"
+    },
+    {
+      "cusip": "92203J407",
+      "symbol": "BNDX"
+    },
+    {
+      "cusip": "064058100",
+      "symbol": "BNY"
+    },
+    {
+      "cusip": "055622104",
+      "symbol": "BP"
+    },
+    {
+      "cusip": "11133T103",
+      "symbol": "BR"
+    },
+    {
+      "cusip": "084670108",
+      "symbol": "BRK-A"
+    },
+    {
+      "cusip": "084670702",
+      "symbol": "BRK-B"
+    },
+    {
+      "cusip": "115236101",
+      "symbol": "BRO"
+    },
+    {
+      "cusip": "78518H202",
+      "symbol": "BRW"
+    },
+    {
+      "cusip": "057071516",
+      "symbol": "BSNIX"
+    },
+    {
+      "cusip": "101137107",
+      "symbol": "BSX"
+    },
+    {
+      "cusip": "110448107",
+      "symbol": "BTI"
+    },
+    {
+      "cusip": "09257P105",
+      "symbol": "BTT"
+    },
+    {
+      "cusip": "03524A108",
+      "symbol": "BUD"
+    },
+    {
+      "cusip": "09260D107",
+      "symbol": "BX"
+    },
+    {
+      "cusip": "101121101",
+      "symbol": "BXP"
+    },
+    {
+      "cusip": "172967424",
+      "symbol": "C"
+    },
+    {
+      "cusip": "14149Y108",
+      "symbol": "CAH"
+    },
+    {
+      "cusip": "140194101",
+      "symbol": "CAIFX"
+    },
+    {
+      "cusip": "092528884",
+      "symbol": "CALI"
+    },
+    {
+      "cusip": "00039J772",
+      "symbol": "CAM"
+    },
+    {
+      "cusip": "14448C104",
+      "symbol": "CARR"
+    },
+    {
+      "cusip": "149123101",
+      "symbol": "CAT"
+    },
+    {
+      "cusip": "H1467J104",
+      "symbol": "CB"
+    },
+    {
+      "cusip": "12504L109",
+      "symbol": "CBRE"
+    },
+    {
+      "cusip": "13740E107",
+      "symbol": "CCEYF"
+    },
+    {
+      "cusip": "22822V101",
+      "symbol": "CCI"
+    },
+    {
+      "cusip": "13321L108",
+      "symbol": "CCJ"
+    },
+    {
+      "cusip": "228368106",
+      "symbol": "CCK"
+    },
+    {
+      "cusip": "G2004J103",
+      "symbol": "CCL"
+    },
+    {
+      "cusip": "19766M840",
+      "symbol": "CDDYX"
+    },
+    {
+      "cusip": "192108504",
+      "symbol": "CDE"
+    },
+    {
+      "cusip": "127387108",
+      "symbol": "CDNS"
+    },
+    {
+      "cusip": "13161T401",
+      "symbol": "CDSIX"
+    },
+    {
+      "cusip": "21037T109",
+      "symbol": "CEG"
+    },
+    {
+      "cusip": "149498107",
+      "symbol": "CEMIX"
+    },
+    {
+      "cusip": "125269100",
+      "symbol": "CF"
+    },
+    {
+      "cusip": "174610105",
+      "symbol": "CFG"
+    },
+    {
+      "cusip": "229899109",
+      "symbol": "CFR"
+    },
+    {
+      "cusip": "14020Y201",
+      "symbol": "CGMU"
+    },
+    {
+      "cusip": "171340102",
+      "symbol": "CHD"
+    },
+    {
+      "cusip": "12541W209",
+      "symbol": "CHRW"
+    },
+    {
+      "cusip": "125523100",
+      "symbol": "CI"
+    },
+    {
+      "cusip": "171779309",
+      "symbol": "CIEN"
+    },
+    {
+      "cusip": "172062101",
+      "symbol": "CINF"
+    },
+    {
+      "cusip": "194162103",
+      "symbol": "CL"
+    },
+    {
+      "cusip": "37960A438",
+      "symbol": "CLIP"
+    },
+    {
+      "cusip": "189054109",
+      "symbol": "CLX"
+    },
+    {
+      "cusip": "20030N101",
+      "symbol": "CMCSA"
+    },
+    {
+      "cusip": "12572Q105",
+      "symbol": "CME"
+    },
+    {
+      "cusip": "169656105",
+      "symbol": "CMG"
+    },
+    {
+      "cusip": "231021106",
+      "symbol": "CMI"
+    },
+    {
+      "cusip": "20451W101",
+      "symbol": "CMPS"
+    },
+    {
+      "cusip": "12558Q103",
+      "symbol": "CMRF"
+    },
+    {
+      "cusip": "125896100",
+      "symbol": "CMS"
+    },
+    {
+      "cusip": "15135B101",
+      "symbol": "CNC"
+    },
+    {
+      "cusip": "15189T107",
+      "symbol": "CNP"
+    },
+    {
+      "cusip": "14040H105",
+      "symbol": "COF"
+    },
+    {
+      "cusip": "19247G107",
+      "symbol": "COHR"
+    },
+    {
+      "cusip": "19260Q107",
+      "symbol": "COIN"
+    },
+    {
+      "cusip": "20825C104",
+      "symbol": "COP"
+    },
+    {
+      "cusip": "03073E105",
+      "symbol": "COR"
+    },
+    {
+      "cusip": "22160K105",
+      "symbol": "COST"
+    },
+    {
+      "cusip": "13646K108",
+      "symbol": "CP"
+    },
+    {
+      "cusip": "16411Q101",
+      "symbol": "CQP"
+    },
+    {
+      "cusip": "G25508105",
+      "symbol": "CRH"
+    },
+    {
+      "cusip": "205768302",
+      "symbol": "CRK"
+    },
+    {
+      "cusip": "159864107",
+      "symbol": "CRL"
+    },
+    {
+      "cusip": "79466L302",
+      "symbol": "CRM"
+    },
+    {
+      "cusip": "144285103",
+      "symbol": "CRS"
+    },
+    {
+      "cusip": "22788C105",
+      "symbol": "CRWD"
+    },
+    {
+      "cusip": "21873S108",
+      "symbol": "CRWV"
+    },
+    {
+      "cusip": "17275R102",
+      "symbol": "CSCO"
+    },
+    {
+      "cusip": "78433H501",
+      "symbol": "CSHI"
+    },
+    {
+      "cusip": "142339100",
+      "symbol": "CSL"
+    },
+    {
+      "cusip": "128125101",
+      "symbol": "CSQ"
+    },
+    {
+      "cusip": "126408103",
+      "symbol": "CSX"
+    },
+    {
+      "cusip": "172908105",
+      "symbol": "CTAS"
+    },
+    {
+      "cusip": "22052L104",
+      "symbol": "CTVA"
+    },
+    {
+      "cusip": "126650100",
+      "symbol": "CVS"
+    },
+    {
+      "cusip": "166764100",
+      "symbol": "CVX"
+    },
+    {
+      "cusip": "140543109",
+      "symbol": "CWGIX"
+    },
+    {
+      "cusip": "131649808",
+      "symbol": "CWVIX"
+    },
+    {
+      "cusip": "247361702",
+      "symbol": "DAL"
+    },
+    {
+      "cusip": "25809K105",
+      "symbol": "DASH"
+    },
+    {
+      "cusip": "26614N201",
+      "symbol": "DD"
+    },
+    {
+      "cusip": "244199105",
+      "symbol": "DE"
+    },
+    {
+      "cusip": "243537107",
+      "symbol": "DECK"
+    },
+    {
+      "cusip": "24703L202",
+      "symbol": "DELL"
+    },
+    {
+      "cusip": "97717W315",
+      "symbol": "DEM"
+    },
+    {
+      "cusip": "25434V633",
+      "symbol": "DFCA"
+    },
+    {
+      "cusip": "25434V872",
+      "symbol": "DFCF"
+    },
+    {
+      "cusip": "233203371",
+      "symbol": "DFIEX"
+    },
+    {
+      "cusip": "25434V864",
+      "symbol": "DFSD"
+    },
+    {
+      "cusip": "233203843",
+      "symbol": "DFSTX"
+    },
+    {
+      "cusip": "24477V105",
+      "symbol": "DFTX"
+    },
+    {
+      "cusip": "256677105",
+      "symbol": "DG"
+    },
+    {
+      "cusip": "235851102",
+      "symbol": "DHR"
+    },
+    {
+      "cusip": "78467X109",
+      "symbol": "DIA"
+    },
+    {
+      "cusip": "403949100",
+      "symbol": "DINO"
+    },
+    {
+      "cusip": "254687106",
+      "symbol": "DIS"
+    },
+    {
+      "cusip": "210322731",
+      "symbol": "DIVZ"
+    },
+    {
+      "cusip": "26142V105",
+      "symbol": "DKNG"
+    },
+    {
+      "cusip": "25659T107",
+      "symbol": "DLB"
+    },
+    {
+      "cusip": "253868103",
+      "symbol": "DLR"
+    },
+    {
+      "cusip": "256746108",
+      "symbol": "DLTR"
+    },
+    {
+      "cusip": "25820R105",
+      "symbol": "DMLP"
+    },
+    {
+      "cusip": "260003108",
+      "symbol": "DOV"
+    },
+    {
+      "cusip": "260557103",
+      "symbol": "DOW"
+    },
+    {
+      "cusip": "256206509",
+      "symbol": "DOXGX"
+    },
+    {
+      "cusip": "256206889",
+      "symbol": "DOXIX"
+    },
+    {
+      "cusip": "233331107",
+      "symbol": "DTE"
+    },
+    {
+      "cusip": "23334J107",
+      "symbol": "DTF"
+    },
+    {
+      "cusip": "97717W802",
+      "symbol": "DTH"
+    },
+    {
+      "cusip": "26441C204",
+      "symbol": "DUK"
+    },
+    {
+      "cusip": "25179M103",
+      "symbol": "DVN"
+    },
+    {
+      "cusip": "109641100",
+      "symbol": "EAT"
+    },
+    {
+      "cusip": "278642103",
+      "symbol": "EBAY"
+    },
+    {
+      "cusip": "278768106",
+      "symbol": "ECHO"
+    },
+    {
+      "cusip": "278865100",
+      "symbol": "ECL"
+    },
+    {
+      "cusip": "209115104",
+      "symbol": "ED"
+    },
+    {
+      "cusip": "464287465",
+      "symbol": "EFA"
+    },
+    {
+      "cusip": "G3223R108",
+      "symbol": "EG"
+    },
+    {
+      "cusip": "277907200",
+      "symbol": "EIBIX"
+    },
+    {
+      "cusip": "277911491",
+      "symbol": "EIBLX"
+    },
+    {
+      "cusip": "27826L249",
+      "symbol": "EIHMX"
+    },
+    {
+      "cusip": "27826M841",
+      "symbol": "EIHYX"
+    },
+    {
+      "cusip": "277902698",
+      "symbol": "EISMX"
+    },
+    {
+      "cusip": "281020107",
+      "symbol": "EIX"
+    },
+    {
+      "cusip": "518439104",
+      "symbol": "EL"
+    },
+    {
+      "cusip": "28414H103",
+      "symbol": "ELAN"
+    },
+    {
+      "cusip": "036752103",
+      "symbol": "ELV"
+    },
+    {
+      "cusip": "277432100",
+      "symbol": "EMN"
+    },
+    {
+      "cusip": "291011104",
+      "symbol": "EMR"
+    },
+    {
+      "cusip": "46434G764",
+      "symbol": "EMXC"
+    },
+    {
+      "cusip": "29250N105",
+      "symbol": "ENB"
+    },
+    {
+      "cusip": "29362U104",
+      "symbol": "ENTG"
+    },
+    {
+      "cusip": "26875P101",
+      "symbol": "EOG"
+    },
+    {
+      "cusip": "293792107",
+      "symbol": "EPD"
+    },
+    {
+      "cusip": "29452E101",
+      "symbol": "EQH"
+    },
+    {
+      "cusip": "29444U700",
+      "symbol": "EQIX"
+    },
+    {
+      "cusip": "29445S100",
+      "symbol": "EQPT"
+    },
+    {
+      "cusip": "26884L109",
+      "symbol": "EQT"
+    },
+    {
+      "cusip": "27005A105",
+      "symbol": "EROK"
+    },
+    {
+      "cusip": "30040W108",
+      "symbol": "ES"
+    },
+    {
+      "cusip": "29273V100",
+      "symbol": "ET"
+    },
+    {
+      "cusip": "38964R203",
+      "symbol": "ETH"
+    },
+    {
+      "cusip": "46438R105",
+      "symbol": "ETHA"
+    },
+    {
+      "cusip": "389638107",
+      "symbol": "ETHE"
+    },
+    {
+      "cusip": "G29183103",
+      "symbol": "ETN"
+    },
+    {
+      "cusip": "29364G103",
+      "symbol": "ETR"
+    },
+    {
+      "cusip": "29786A106",
+      "symbol": "ETSY"
+    },
+    {
+      "cusip": "464289180",
+      "symbol": "EUFN"
+    },
+    {
+      "cusip": "30034W106",
+      "symbol": "EVRG"
+    },
+    {
+      "cusip": "61774R858",
+      "symbol": "EVSM"
+    },
+    {
+      "cusip": "27828H105",
+      "symbol": "EVV"
+    },
+    {
+      "cusip": "165167735",
+      "symbol": "EXE"
+    },
+    {
+      "cusip": "26969P108",
+      "symbol": "EXP"
+    },
+    {
+      "cusip": "302130109",
+      "symbol": "EXPD"
+    },
+    {
+      "cusip": "30225T102",
+      "symbol": "EXR"
+    },
+    {
+      "cusip": "345370860",
+      "symbol": "F"
+    },
+    {
+      "cusip": "399874742",
+      "symbol": "FAFGX"
+    },
+    {
+      "cusip": "25278X109",
+      "symbol": "FANG"
+    },
+    {
+      "cusip": "003009867",
+      "symbol": "FAX"
+    },
+    {
+      "cusip": "31617L798",
+      "symbol": "FBKWX"
+    },
+    {
+      "cusip": "315948109",
+      "symbol": "FBTC"
+    },
+    {
+      "cusip": "33739P863",
+      "symbol": "FCAL"
+    },
+    {
+      "cusip": "461308744",
+      "symbol": "FCIAX"
+    },
+    {
+      "cusip": "31946M103",
+      "symbol": "FCNCA"
+    },
+    {
+      "cusip": "316071109",
+      "symbol": "FCNTX"
+    },
+    {
+      "cusip": "316061852",
+      "symbol": "FCSTX"
+    },
+    {
+      "cusip": "140543752",
+      "symbol": "FCWGX"
+    },
+    {
+      "cusip": "35671D857",
+      "symbol": "FCX"
+    },
+    {
+      "cusip": "46138E578",
+      "symbol": "FDIQ"
+    },
+    {
+      "cusip": "31428X106",
+      "symbol": "FDX"
+    },
+    {
+      "cusip": "316138106",
+      "symbol": "FEQIX"
+    },
+    {
+      "cusip": "N3168P101",
+      "symbol": "FER"
+    },
+    {
+      "cusip": "097873749",
+      "symbol": "FFBOX"
+    },
+    {
+      "cusip": "338478100",
+      "symbol": "FFC"
+    },
+    {
+      "cusip": "027681741",
+      "symbol": "FFMMX"
+    },
+    {
+      "cusip": "648018745",
+      "symbol": "FFPNX"
+    },
+    {
+      "cusip": "31618H390",
+      "symbol": "FIEZX"
+    },
+    {
+      "cusip": "360802821",
+      "symbol": "FINFX"
+    },
+    {
+      "cusip": "31638R683",
+      "symbol": "FIQZX"
+    },
+    {
+      "cusip": "337738108",
+      "symbol": "FISV"
+    },
+    {
+      "cusip": "316773100",
+      "symbol": "FITB"
+    },
+    {
+      "cusip": "199908104",
+      "symbol": "FIX"
+    },
+    {
+      "cusip": "353496508",
+      "symbol": "FKGRX"
+    },
+    {
+      "cusip": "31635V679",
+      "symbol": "FLCOX"
+    },
+    {
+      "cusip": "343412102",
+      "symbol": "FLR"
+    },
+    {
+      "cusip": "67065Q822",
+      "symbol": "FLTRX"
+    },
+    {
+      "cusip": "808524730",
+      "symbol": "FNDE"
+    },
+    {
+      "cusip": "643822745",
+      "symbol": "FNEEX"
+    },
+    {
+      "cusip": "649280740",
+      "symbol": "FNFWX"
+    },
+    {
+      "cusip": "351858105",
+      "symbol": "FNV"
+    },
+    {
+      "cusip": "316389105",
+      "symbol": "FOCPX"
+    },
+    {
+      "cusip": "31638A508",
+      "symbol": "FOTJX"
+    },
+    {
+      "cusip": "30254T643",
+      "symbol": "FPNIX"
+    },
+    {
+      "cusip": "303901102",
+      "symbol": "FRFHF"
+    },
+    {
+      "cusip": "316146315",
+      "symbol": "FSGGX"
+    },
+    {
+      "cusip": "315911693",
+      "symbol": "FSKAX"
+    },
+    {
+      "cusip": "336433107",
+      "symbol": "FSLR"
+    },
+    {
+      "cusip": "315911743",
+      "symbol": "FSMAX"
+    },
+    {
+      "cusip": "31635V729",
+      "symbol": "FSPGX"
+    },
+    {
+      "cusip": "315911727",
+      "symbol": "FSPSX"
+    },
+    {
+      "cusip": "316146182",
+      "symbol": "FSSNX"
+    },
+    {
+      "cusip": "316066752",
+      "symbol": "FSSZX"
+    },
+    {
+      "cusip": "831681747",
+      "symbol": "FSWFX"
+    },
+    {
+      "cusip": "G3730V105",
+      "symbol": "FTAI"
+    },
+    {
+      "cusip": "14064D865",
+      "symbol": "FTHSX"
+    },
+    {
+      "cusip": "G87110105",
+      "symbol": "FTI"
+    },
+    {
+      "cusip": "34959E109",
+      "symbol": "FTNT"
+    },
+    {
+      "cusip": "298706763",
+      "symbol": "FUEPX"
+    },
+    {
+      "cusip": "939330742",
+      "symbol": "FWMMX"
+    },
+    {
+      "cusip": "315911750",
+      "symbol": "FXAIX"
+    },
+    {
+      "cusip": "316146356",
+      "symbol": "FXNAX"
+    },
+    {
+      "cusip": "31618Q507",
+      "symbol": "FZEMX"
+    },
+    {
+      "cusip": "389637109",
+      "symbol": "GBTC"
+    },
+    {
+      "cusip": "369550108",
+      "symbol": "GD"
+    },
+    {
+      "cusip": "92189F106",
+      "symbol": "GDX"
+    },
+    {
+      "cusip": "369604301",
+      "symbol": "GE"
+    },
+    {
+      "cusip": "36266G107",
+      "symbol": "GEHC"
+    },
+    {
+      "cusip": "668771108",
+      "symbol": "GEN"
+    },
+    {
+      "cusip": "360873129",
+      "symbol": "GENIX"
+    },
+    {
+      "cusip": "36828A101",
+      "symbol": "GEV"
+    },
+    {
+      "cusip": "399874825",
+      "symbol": "GFFFX"
+    },
+    {
+      "cusip": "G39387108",
+      "symbol": "GFS"
+    },
+    {
+      "cusip": "375558103",
+      "symbol": "GILD"
+    },
+    {
+      "cusip": "370334104",
+      "symbol": "GIS"
+    },
+    {
+      "cusip": "37959E102",
+      "symbol": "GL"
+    },
+    {
+      "cusip": "78463V107",
+      "symbol": "GLD"
+    },
+    {
+      "cusip": "00900W704",
+      "symbol": "GLVAX"
+    },
+    {
+      "cusip": "219350105",
+      "symbol": "GLW"
+    },
+    {
+      "cusip": "37045V100",
+      "symbol": "GM"
+    },
+    {
+      "cusip": "36467W109",
+      "symbol": "GME"
+    },
+    {
+      "cusip": "02079K107",
+      "symbol": "GOOG"
+    },
+    {
+      "cusip": "02079K305",
+      "symbol": "GOOGL"
+    },
+    {
+      "cusip": "372460105",
+      "symbol": "GPC"
+    },
+    {
+      "cusip": "37940X102",
+      "symbol": "GPN"
+    },
+    {
+      "cusip": "38147X705",
+      "symbol": "GPPIX"
+    },
+    {
+      "cusip": "38141G104",
+      "symbol": "GS"
+    },
+    {
+      "cusip": "37733W204",
+      "symbol": "GSK"
+    },
+    {
+      "cusip": "381430503",
+      "symbol": "GSLC"
+    },
+    {
+      "cusip": "36254L308",
+      "symbol": "GTBP"
+    },
+    {
+      "cusip": "406216101",
+      "symbol": "HAL"
+    },
+    {
+      "cusip": "418056107",
+      "symbol": "HAS"
+    },
+    {
+      "cusip": "446150104",
+      "symbol": "HBAN"
+    },
+    {
+      "cusip": "437076102",
+      "symbol": "HD"
+    },
+    {
+      "cusip": "416515104",
+      "symbol": "HIG"
+    },
+    {
+      "cusip": "422704106",
+      "symbol": "HL"
+    },
+    {
+      "cusip": "438516106",
+      "symbol": "HON"
+    },
+    {
+      "cusip": "43849R105",
+      "symbol": "HONA"
+    },
+    {
+      "cusip": "42824C109",
+      "symbol": "HPE"
+    },
+    {
+      "cusip": "40434L105",
+      "symbol": "HPQ"
+    },
+    {
+      "cusip": "806407102",
+      "symbol": "HSIC"
+    },
+    {
+      "cusip": "44107P104",
+      "symbol": "HST"
+    },
+    {
+      "cusip": "427866108",
+      "symbol": "HSY"
+    },
+    {
+      "cusip": "443510607",
+      "symbol": "HUBB"
+    },
+    {
+      "cusip": "443573100",
+      "symbol": "HUBS"
+    },
+    {
+      "cusip": "444859102",
+      "symbol": "HUM"
+    },
+    {
+      "cusip": "44812J104",
+      "symbol": "HUT"
+    },
+    {
+      "cusip": "443201108",
+      "symbol": "HWM"
+    },
+    {
+      "cusip": "92189H409",
+      "symbol": "HYD"
+    },
+    {
+      "cusip": "543912877",
+      "symbol": "HYMAX"
+    },
+    {
+      "cusip": "543912836",
+      "symbol": "HYMIX"
+    },
+    {
+      "cusip": "464285204",
+      "symbol": "IAU"
+    },
+    {
+      "cusip": "46438F101",
+      "symbol": "IBIT"
+    },
+    {
+      "cusip": "459200101",
+      "symbol": "IBM"
+    },
+    {
+      "cusip": "45104G104",
+      "symbol": "IBN"
+    },
+    {
+      "cusip": "45866F104",
+      "symbol": "ICE"
+    },
+    {
+      "cusip": "451107106",
+      "symbol": "IDA"
+    },
+    {
+      "cusip": "210322707",
+      "symbol": "IDVZ"
+    },
+    {
+      "cusip": "464287440",
+      "symbol": "IEF"
+    },
+    {
+      "cusip": "46432F842",
+      "symbol": "IEFA"
+    },
+    {
+      "cusip": "46434G103",
+      "symbol": "IEMG"
+    },
+    {
+      "cusip": "45956T501",
+      "symbol": "IGFFX"
+    },
+    {
+      "cusip": "464288638",
+      "symbol": "IGIB"
+    },
+    {
+      "cusip": "464288117",
+      "symbol": "IGOV"
+    },
+    {
+      "cusip": "464288646",
+      "symbol": "IGSB"
+    },
+    {
+      "cusip": "464287507",
+      "symbol": "IJH"
+    },
+    {
+      "cusip": "464287705",
+      "symbol": "IJJ"
+    },
+    {
+      "cusip": "464287606",
+      "symbol": "IJK"
+    },
+    {
+      "cusip": "464287879",
+      "symbol": "IJS"
+    },
+    {
+      "cusip": "464287887",
+      "symbol": "IJT"
+    },
+    {
+      "cusip": "46434V449",
+      "symbol": "IMTM"
+    },
+    {
+      "cusip": "45337C102",
+      "symbol": "INCY"
+    },
+    {
+      "cusip": "921075388",
+      "symbol": "INIYX"
+    },
+    {
+      "cusip": "458140100",
+      "symbol": "INTC"
+    },
+    {
+      "cusip": "461202103",
+      "symbol": "INTU"
+    },
+    {
+      "cusip": "462222100",
+      "symbol": "IONS"
+    },
+    {
+      "cusip": "460146103",
+      "symbol": "IP"
+    },
+    {
+      "cusip": "46121Y201",
+      "symbol": "IPI"
+    },
+    {
+      "cusip": "46434V456",
+      "symbol": "IQLT"
+    },
+    {
+      "cusip": "46284V101",
+      "symbol": "IRM"
+    },
+    {
+      "cusip": "46120E602",
+      "symbol": "ISRG"
+    },
+    {
+      "cusip": "366651107",
+      "symbol": "IT"
+    },
+    {
+      "cusip": "464288752",
+      "symbol": "ITB"
+    },
+    {
+      "cusip": "032108599",
+      "symbol": "ITEQ"
+    },
+    {
+      "cusip": "45073V108",
+      "symbol": "ITT"
+    },
+    {
+      "cusip": "452308109",
+      "symbol": "ITW"
+    },
+    {
+      "cusip": "00142F642",
+      "symbol": "ITYAX"
+    },
+    {
+      "cusip": "464287408",
+      "symbol": "IVE"
+    },
+    {
+      "cusip": "46435G409",
+      "symbol": "IVLU"
+    },
+    {
+      "cusip": "921932844",
+      "symbol": "IVOV"
+    },
+    {
+      "cusip": "464287200",
+      "symbol": "IVV"
+    },
+    {
+      "cusip": "464287309",
+      "symbol": "IVW"
+    },
+    {
+      "cusip": "G491BT108",
+      "symbol": "IVZ"
+    },
+    {
+      "cusip": "464287598",
+      "symbol": "IWD"
+    },
+    {
+      "cusip": "464287614",
+      "symbol": "IWF"
+    },
+    {
+      "cusip": "464287655",
+      "symbol": "IWM"
+    },
+    {
+      "cusip": "464287630",
+      "symbol": "IWN"
+    },
+    {
+      "cusip": "464287648",
+      "symbol": "IWO"
+    },
+    {
+      "cusip": "464287481",
+      "symbol": "IWP"
+    },
+    {
+      "cusip": "464287473",
+      "symbol": "IWS"
+    },
+    {
+      "cusip": "46432F834",
+      "symbol": "IXUS"
+    },
+    {
+      "cusip": "47103U845",
+      "symbol": "JAAA"
+    },
+    {
+      "cusip": "471023879",
+      "symbol": "JABAX"
+    },
+    {
+      "cusip": "471023804",
+      "symbol": "JAENX"
+    },
+    {
+      "cusip": "471023549",
+      "symbol": "JATTX"
+    },
+    {
+      "cusip": "471023309",
+      "symbol": "JAWWX"
+    },
+    {
+      "cusip": "47103C704",
+      "symbol": "JBALX"
+    },
+    {
+      "cusip": "445658107",
+      "symbol": "JBHT"
+    },
+    {
+      "cusip": "4812C0100",
+      "symbol": "JCBUX"
+    },
+    {
+      "cusip": "47803P567",
+      "symbol": "JCCIX"
+    },
+    {
+      "cusip": "G51502105",
+      "symbol": "JCI"
+    },
+    {
+      "cusip": "46641Q332",
+      "symbol": "JEPI"
+    },
+    {
+      "cusip": "48121L825",
+      "symbol": "JGSMX"
+    },
+    {
+      "cusip": "G4474Y214",
+      "symbol": "JHG"
+    },
+    {
+      "cusip": "426281101",
+      "symbol": "JKHY"
+    },
+    {
+      "cusip": "48121L841",
+      "symbol": "JLGMX"
+    },
+    {
+      "cusip": "47103C795",
+      "symbol": "JMGRX"
+    },
+    {
+      "cusip": "46641Q654",
+      "symbol": "JMST"
+    },
+    {
+      "cusip": "46641Q647",
+      "symbol": "JMUB"
+    },
+    {
+      "cusip": "478160104",
+      "symbol": "JNJ"
+    },
+    {
+      "cusip": "78468R622",
+      "symbol": "JNK"
+    },
+    {
+      "cusip": "G65163100",
+      "symbol": "JOBY"
+    },
+    {
+      "cusip": "67073B106",
+      "symbol": "JPC"
+    },
+    {
+      "cusip": "46625H100",
+      "symbol": "JPM"
+    },
+    {
+      "cusip": "46641Q837",
+      "symbol": "JPST"
+    },
+    {
+      "cusip": "4812A4351",
+      "symbol": "JSOSX"
+    },
+    {
+      "cusip": "50155Q100",
+      "symbol": "KD"
+    },
+    {
+      "cusip": "49271V100",
+      "symbol": "KDP"
+    },
+    {
+      "cusip": "493267108",
+      "symbol": "KEY"
+    },
+    {
+      "cusip": "49338L103",
+      "symbol": "KEYS"
+    },
+    {
+      "cusip": "496902404",
+      "symbol": "KGC"
+    },
+    {
+      "cusip": "500754106",
+      "symbol": "KHC"
+    },
+    {
+      "cusip": "49446R109",
+      "symbol": "KIM"
+    },
+    {
+      "cusip": "48251W104",
+      "symbol": "KKR"
+    },
+    {
+      "cusip": "482480100",
+      "symbol": "KLAC"
+    },
+    {
+      "cusip": "49456B101",
+      "symbol": "KMI"
+    },
+    {
+      "cusip": "191216100",
+      "symbol": "KO"
+    },
+    {
+      "cusip": "501044101",
+      "symbol": "KR"
+    },
+    {
+      "cusip": "49177J102",
+      "symbol": "KVUE"
+    },
+    {
+      "cusip": "53681J103",
+      "symbol": "LAC"
+    },
+    {
+      "cusip": "376549101",
+      "symbol": "LAND"
+    },
+    {
+      "cusip": "H5012F103",
+      "symbol": "LAR"
+    },
+    {
+      "cusip": "504922105",
+      "symbol": "LH"
+    },
+    {
+      "cusip": "502431109",
+      "symbol": "LHX"
+    },
+    {
+      "cusip": "G54950103",
+      "symbol": "LIN"
+    },
+    {
+      "cusip": "37954Y855",
+      "symbol": "LIT"
+    },
+    {
+      "cusip": "55024U109",
+      "symbol": "LITE"
+    },
+    {
+      "cusip": "532457108",
+      "symbol": "LLY"
+    },
+    {
+      "cusip": "539830109",
+      "symbol": "LMT"
+    },
+    {
+      "cusip": "16411R208",
+      "symbol": "LNG"
+    },
+    {
+      "cusip": "37960A172",
+      "symbol": "LNGX"
+    },
+    {
+      "cusip": "548661107",
+      "symbol": "LOW"
+    },
+    {
+      "cusip": "464287242",
+      "symbol": "LQD"
+    },
+    {
+      "cusip": "512807306",
+      "symbol": "LRCX"
+    },
+    {
+      "cusip": "550021109",
+      "symbol": "LULU"
+    },
+    {
+      "cusip": "844741108",
+      "symbol": "LUV"
+    },
+    {
+      "cusip": "517834107",
+      "symbol": "LVS"
+    },
+    {
+      "cusip": "513272104",
+      "symbol": "LW"
+    },
+    {
+      "cusip": "N53745100",
+      "symbol": "LYB"
+    },
+    {
+      "cusip": "55087P104",
+      "symbol": "LYFT"
+    },
+    {
+      "cusip": "57636Q104",
+      "symbol": "MA"
+    },
+    {
+      "cusip": "571903202",
+      "symbol": "MAR"
+    },
+    {
+      "cusip": "580135101",
+      "symbol": "MCD"
+    },
+    {
+      "cusip": "595017104",
+      "symbol": "MCHP"
+    },
+    {
+      "cusip": "58155Q103",
+      "symbol": "MCK"
+    },
+    {
+      "cusip": "615369105",
+      "symbol": "MCO"
+    },
+    {
+      "cusip": "552727109",
+      "symbol": "MCR"
+    },
+    {
+      "cusip": "609207105",
+      "symbol": "MDLZ"
+    },
+    {
+      "cusip": "G5960L103",
+      "symbol": "MDT"
+    },
+    {
+      "cusip": "46431W838",
+      "symbol": "MEAR"
+    },
+    {
+      "cusip": "552983694",
+      "symbol": "MEIIX"
+    },
+    {
+      "cusip": "58733R102",
+      "symbol": "MELI"
+    },
+    {
+      "cusip": "59156R108",
+      "symbol": "MET"
+    },
+    {
+      "cusip": "30303M102",
+      "symbol": "META"
+    },
+    {
+      "cusip": "552985863",
+      "symbol": "MFEIX"
+    },
+    {
+      "cusip": "921910816",
+      "symbol": "MGK"
+    },
+    {
+      "cusip": "95766N103",
+      "symbol": "MHF"
+    },
+    {
+      "cusip": "55273G652",
+      "symbol": "MIAGX"
+    },
+    {
+      "cusip": "55293K204",
+      "symbol": "MIEKX"
+    },
+    {
+      "cusip": "72201R833",
+      "symbol": "MINT"
+    },
+    {
+      "cusip": "92647K309",
+      "symbol": "MISIX"
+    },
+    {
+      "cusip": "579780206",
+      "symbol": "MKC"
+    },
+    {
+      "cusip": "573284106",
+      "symbol": "MLM"
+    },
+    {
+      "cusip": "37954Y343",
+      "symbol": "MLPA"
+    },
+    {
+      "cusip": "88579Y101",
+      "symbol": "MMM"
+    },
+    {
+      "cusip": "552737108",
+      "symbol": "MMT"
+    },
+    {
+      "cusip": "02209S103",
+      "symbol": "MO"
+    },
+    {
+      "cusip": "56585A102",
+      "symbol": "MPC"
+    },
+    {
+      "cusip": "55336V100",
+      "symbol": "MPLX"
+    },
+    {
+      "cusip": "58933Y105",
+      "symbol": "MRK"
+    },
+    {
+      "cusip": "60770K107",
+      "symbol": "MRNA"
+    },
+    {
+      "cusip": "571748102",
+      "symbol": "MRSH"
+    },
+    {
+      "cusip": "573874104",
+      "symbol": "MRVL"
+    },
+    {
+      "cusip": "617446448",
+      "symbol": "MS"
+    },
+    {
+      "cusip": "61744H105",
+      "symbol": "MSD"
+    },
+    {
+      "cusip": "61744J861",
+      "symbol": "MSEQX"
+    },
+    {
+      "cusip": "594918104",
+      "symbol": "MSFT"
+    },
+    {
+      "cusip": "55825T103",
+      "symbol": "MSGS"
+    },
+    {
+      "cusip": "620076307",
+      "symbol": "MSI"
+    },
+    {
+      "cusip": "61744J408",
+      "symbol": "MSIQX"
+    },
+    {
+      "cusip": "594972408",
+      "symbol": "MSTR"
+    },
+    {
+      "cusip": "576485205",
+      "symbol": "MTDR"
+    },
+    {
+      "cusip": "595112103",
+      "symbol": "MU"
+    },
+    {
+      "cusip": "464288414",
+      "symbol": "MUB"
+    },
+    {
+      "cusip": "606822104",
+      "symbol": "MUFG"
+    },
+    {
+      "cusip": "626755102",
+      "symbol": "MUSA"
+    },
+    {
+      "cusip": "67066V101",
+      "symbol": "NAD"
+    },
+    {
+      "cusip": "641224787",
+      "symbol": "NBPIX"
+    },
+    {
+      "cusip": "67065N555",
+      "symbol": "NCHRX"
+    },
+    {
+      "cusip": "631103108",
+      "symbol": "NDAQ"
+    },
+    {
+      "cusip": "670657105",
+      "symbol": "NEA"
+    },
+    {
+      "cusip": "65339F101",
+      "symbol": "NEE"
+    },
+    {
+      "cusip": "643822828",
+      "symbol": "NEFFX"
+    },
+    {
+      "cusip": "651639106",
+      "symbol": "NEM"
+    },
+    {
+      "cusip": "649280104",
+      "symbol": "NEWFX"
+    },
+    {
+      "cusip": "65342K105",
+      "symbol": "NEXT"
+    },
+    {
+      "cusip": "649280823",
+      "symbol": "NFFFX"
+    },
+    {
+      "cusip": "636180101",
+      "symbol": "NFG"
+    },
+    {
+      "cusip": "64110L106",
+      "symbol": "NFLX"
+    },
+    {
+      "cusip": "67065Q772",
+      "symbol": "NHMRX"
+    },
+    {
+      "cusip": "65473P105",
+      "symbol": "NI"
+    },
+    {
+      "cusip": "64122Q705",
+      "symbol": "NINLX"
+    },
+    {
+      "cusip": "654106103",
+      "symbol": "NKE"
+    },
+    {
+      "cusip": "64110Y108",
+      "symbol": "NLOP"
+    },
+    {
+      "cusip": "035710839",
+      "symbol": "NLY"
+    },
+    {
+      "cusip": "65250K105",
+      "symbol": "NMAX"
+    },
+    {
+      "cusip": "666807102",
+      "symbol": "NOC"
+    },
+    {
+      "cusip": "665531307",
+      "symbol": "NOG"
+    },
+    {
+      "cusip": "62955J103",
+      "symbol": "NOV"
+    },
+    {
+      "cusip": "81762P102",
+      "symbol": "NOW"
+    },
+    {
+      "cusip": "670700400",
+      "symbol": "NPSRX"
+    },
+    {
+      "cusip": "629377508",
+      "symbol": "NRG"
+    },
+    {
+      "cusip": "655844108",
+      "symbol": "NSC"
+    },
+    {
+      "cusip": "67065Q574",
+      "symbol": "NSIOX"
+    },
+    {
+      "cusip": "67059N108",
+      "symbol": "NTNX"
+    },
+    {
+      "cusip": "632307104",
+      "symbol": "NTRA"
+    },
+    {
+      "cusip": "665859104",
+      "symbol": "NTRS"
+    },
+    {
+      "cusip": "654624105",
+      "symbol": "NTTYY"
+    },
+    {
+      "cusip": "670346105",
+      "symbol": "NUE"
+    },
+    {
+      "cusip": "670928100",
+      "symbol": "NUV"
+    },
+    {
+      "cusip": "670695105",
+      "symbol": "NUW"
+    },
+    {
+      "cusip": "67066G104",
+      "symbol": "NVDA"
+    },
+    {
+      "cusip": "67071L106",
+      "symbol": "NVG"
+    },
+    {
+      "cusip": "756109104",
+      "symbol": "O"
+    },
+    {
+      "cusip": "00141B584",
+      "symbol": "OARDX"
+    },
+    {
+      "cusip": "74933W478",
+      "symbol": "OBIL"
+    },
+    {
+      "cusip": "00143N693",
+      "symbol": "OGMIX"
+    },
+    {
+      "cusip": "681936100",
+      "symbol": "OHI"
+    },
+    {
+      "cusip": "46636U876",
+      "symbol": "OIEJX"
+    },
+    {
+      "cusip": "92189H607",
+      "symbol": "OIH"
+    },
+    {
+      "cusip": "30609A109",
+      "symbol": "OKE"
+    },
+    {
+      "cusip": "02156V109",
+      "symbol": "OKLO"
+    },
+    {
+      "cusip": "00141W851",
+      "symbol": "OLCYX"
+    },
+    {
+      "cusip": "681919106",
+      "symbol": "OMC"
+    },
+    {
+      "cusip": "68268W103",
+      "symbol": "OMF"
+    },
+    {
+      "cusip": "682189105",
+      "symbol": "ON"
+    },
+    {
+      "cusip": "00143W602",
+      "symbol": "OPBIX"
+    },
+    {
+      "cusip": "00900R572",
+      "symbol": "OPMSX"
+    },
+    {
+      "cusip": "68389X105",
+      "symbol": "ORCL"
+    },
+    {
+      "cusip": "67103H107",
+      "symbol": "ORLY"
+    },
+    {
+      "cusip": "68902V107",
+      "symbol": "OTIS"
+    },
+    {
+      "cusip": "674599105",
+      "symbol": "OXY"
+    },
+    {
+      "cusip": "74624M102",
+      "symbol": "P"
+    },
+    {
+      "cusip": "726503105",
+      "symbol": "PAA"
+    },
+    {
+      "cusip": "69344A834",
+      "symbol": "PAAA"
+    },
+    {
+      "cusip": "697900108",
+      "symbol": "PAAS"
+    },
+    {
+      "cusip": "697435105",
+      "symbol": "PANW"
+    },
+    {
+      "cusip": "90364P105",
+      "symbol": "PATH"
+    },
+    {
+      "cusip": "704326107",
+      "symbol": "PAYX"
+    },
+    {
+      "cusip": "714236106",
+      "symbol": "PBT"
+    },
+    {
+      "cusip": "693718108",
+      "symbol": "PCAR"
+    },
+    {
+      "cusip": "74253Q747",
+      "symbol": "PCBIX"
+    },
+    {
+      "cusip": "69331C108",
+      "symbol": "PCG"
+    },
+    {
+      "cusip": "36087T411",
+      "symbol": "PCHI"
+    },
+    {
+      "cusip": "74440B405",
+      "symbol": "PDBZX"
+    },
+    {
+      "cusip": "744573106",
+      "symbol": "PEG"
+    },
+    {
+      "cusip": "746745405",
+      "symbol": "PEIYX"
+    },
+    {
+      "cusip": "713448108",
+      "symbol": "PEP"
+    },
+    {
+      "cusip": "75526L670",
+      "symbol": "PFDE"
+    },
+    {
+      "cusip": "717081103",
+      "symbol": "PFE"
+    },
+    {
+      "cusip": "464288687",
+      "symbol": "PFF"
+    },
+    {
+      "cusip": "74251V102",
+      "symbol": "PFG"
+    },
+    {
+      "cusip": "72201H108",
+      "symbol": "PFL"
+    },
+    {
+      "cusip": "693391658",
+      "symbol": "PFMIX"
+    },
+    {
+      "cusip": "75526L688",
+      "symbol": "PFOE"
+    },
+    {
+      "cusip": "693390882",
+      "symbol": "PFORX"
+    },
+    {
+      "cusip": "722005220",
+      "symbol": "PFUIX"
+    },
+    {
+      "cusip": "742718109",
+      "symbol": "PG"
+    },
+    {
+      "cusip": "743315103",
+      "symbol": "PGR"
+    },
+    {
+      "cusip": "701094104",
+      "symbol": "PH"
+    },
+    {
+      "cusip": "722014107",
+      "symbol": "PHK"
+    },
+    {
+      "cusip": "46137V142",
+      "symbol": "PHO"
+    },
+    {
+      "cusip": "85207H104",
+      "symbol": "PHYS"
+    },
+    {
+      "cusip": "46434G848",
+      "symbol": "PICK"
+    },
+    {
+      "cusip": "92648C835",
+      "symbol": "PICYX"
+    },
+    {
+      "cusip": "31423A689",
+      "symbol": "PIUIX"
+    },
+    {
+      "cusip": "700517105",
+      "symbol": "PK"
+    },
+    {
+      "cusip": "74340W103",
+      "symbol": "PLD"
+    },
+    {
+      "cusip": "69608A108",
+      "symbol": "PLTR"
+    },
+    {
+      "cusip": "718172109",
+      "symbol": "PM"
+    },
+    {
+      "cusip": "72200W106",
+      "symbol": "PML"
+    },
+    {
+      "cusip": "693475105",
+      "symbol": "PNC"
+    },
+    {
+      "cusip": "72201M719",
+      "symbol": "PONPX"
+    },
+    {
+      "cusip": "74680E507",
+      "symbol": "POVYX"
+    },
+    {
+      "cusip": "739128106",
+      "symbol": "POWL"
+    },
+    {
+      "cusip": "693506107",
+      "symbol": "PPG"
+    },
+    {
+      "cusip": "71424F105",
+      "symbol": "PR"
+    },
+    {
+      "cusip": "77957N605",
+      "symbol": "PRTMX"
+    },
+    {
+      "cusip": "744320102",
+      "symbol": "PRU"
+    },
+    {
+      "cusip": "74441P817",
+      "symbol": "PRUZX"
+    },
+    {
+      "cusip": "74460D109",
+      "symbol": "PSA"
+    },
+    {
+      "cusip": "85207K107",
+      "symbol": "PSLV"
+    },
+    {
+      "cusip": "718546104",
+      "symbol": "PSX"
+    },
+    {
+      "cusip": "72201B101",
+      "symbol": "PTY"
+    },
+    {
+      "cusip": "69344A107",
+      "symbol": "PULS"
+    },
+    {
+      "cusip": "74347M108",
+      "symbol": "PUMP"
+    },
+    {
+      "cusip": "74762E102",
+      "symbol": "PWR"
+    },
+    {
+      "cusip": "70450Y103",
+      "symbol": "PYPL"
+    },
+    {
+      "cusip": "46138E537",
+      "symbol": "PZA"
+    },
+    {
+      "cusip": "74743L100",
+      "symbol": "Q"
+    },
+    {
+      "cusip": "747525103",
+      "symbol": "QCOM"
+    },
+    {
+      "cusip": "337344105",
+      "symbol": "QQEW"
+    },
+    {
+      "cusip": "46090E103",
+      "symbol": "QQQ"
+    },
+    {
+      "cusip": "25459Y207",
+      "symbol": "QQQE"
+    },
+    {
+      "cusip": "26922A420",
+      "symbol": "QTUM"
+    },
+    {
+      "cusip": "46432F339",
+      "symbol": "QUAL"
+    },
+    {
+      "cusip": "82846H405",
+      "symbol": "QXO"
+    },
+    {
+      "cusip": "N3167Y103",
+      "symbol": "RACE"
+    },
+    {
+      "cusip": "781154109",
+      "symbol": "RBRK"
+    },
+    {
+      "cusip": "V7780T103",
+      "symbol": "RCL"
+    },
+    {
+      "cusip": "75886F107",
+      "symbol": "REGN"
+    },
+    {
+      "cusip": "92189H805",
+      "symbol": "REMX"
+    },
+    {
+      "cusip": "7591EP100",
+      "symbol": "RF"
+    },
+    {
+      "cusip": "780287108",
+      "symbol": "RGLD"
+    },
+    {
+      "cusip": "770323103",
+      "symbol": "RHI"
+    },
+    {
+      "cusip": "46434G855",
+      "symbol": "RING"
+    },
+    {
+      "cusip": "76954A103",
+      "symbol": "RIVN"
+    },
+    {
+      "cusip": "024071839",
+      "symbol": "RLBFX"
+    },
+    {
+      "cusip": "750917106",
+      "symbol": "RMBS"
+    },
+    {
+      "cusip": "773903109",
+      "symbol": "ROK"
+    },
+    {
+      "cusip": "77543R102",
+      "symbol": "ROKU"
+    },
+    {
+      "cusip": "776696106",
+      "symbol": "ROP"
+    },
+    {
+      "cusip": "759141104",
+      "symbol": "RPMT"
+    },
+    {
+      "cusip": "759509102",
+      "symbol": "RS"
+    },
+    {
+      "cusip": "760759100",
+      "symbol": "RSG"
+    },
+    {
+      "cusip": "46137V357",
+      "symbol": "RSP"
+    },
+    {
+      "cusip": "46137V365",
+      "symbol": "RSPG"
+    },
+    {
+      "cusip": "75513E101",
+      "symbol": "RTX"
+    },
+    {
+      "cusip": "78516J101",
+      "symbol": "SAABY"
+    },
+    {
+      "cusip": "958435109",
+      "symbol": "SBI"
+    },
+    {
+      "cusip": "785688102",
+      "symbol": "SBR"
+    },
+    {
+      "cusip": "855244109",
+      "symbol": "SBUX"
+    },
+    {
+      "cusip": "84265V105",
+      "symbol": "SCCO"
+    },
+    {
+      "cusip": "808524102",
+      "symbol": "SCHB"
+    },
+    {
+      "cusip": "808524706",
+      "symbol": "SCHE"
+    },
+    {
+      "cusip": "808524805",
+      "symbol": "SCHF"
+    },
+    {
+      "cusip": "808524508",
+      "symbol": "SCHM"
+    },
+    {
+      "cusip": "808513105",
+      "symbol": "SCHW"
+    },
+    {
+      "cusip": "784117103",
+      "symbol": "SEIC"
+    },
+    {
+      "cusip": "32008F606",
+      "symbol": "SGIIX"
+    },
+    {
+      "cusip": "46436E718",
+      "symbol": "SGOV"
+    },
+    {
+      "cusip": "780259305",
+      "symbol": "SHEL"
+    },
+    {
+      "cusip": "78468R739",
+      "symbol": "SHM"
+    },
+    {
+      "cusip": "82509L107",
+      "symbol": "SHOP"
+    },
+    {
+      "cusip": "824348106",
+      "symbol": "SHW"
+    },
+    {
+      "cusip": "464287457",
+      "symbol": "SHY"
+    },
+    {
+      "cusip": "92189F387",
+      "symbol": "SHYD"
+    },
+    {
+      "cusip": "46434V407",
+      "symbol": "SHYG"
+    },
+    {
+      "cusip": "092528108",
+      "symbol": "SHYM"
+    },
+    {
+      "cusip": "31761R591",
+      "symbol": "SIVLX"
+    },
+    {
+      "cusip": "806857108",
+      "symbol": "SLB"
+    },
+    {
+      "cusip": "83413U100",
+      "symbol": "SLRC"
+    },
+    {
+      "cusip": "46428Q109",
+      "symbol": "SLV"
+    },
+    {
+      "cusip": "78464A201",
+      "symbol": "SLYG"
+    },
+    {
+      "cusip": "831681101",
+      "symbol": "SMCWX"
+    },
+    {
+      "cusip": "80004C200",
+      "symbol": "SNDK"
+    },
+    {
+      "cusip": "871607107",
+      "symbol": "SNPS"
+    },
+    {
+      "cusip": "842587107",
+      "symbol": "SO"
+    },
+    {
+      "cusip": "83443Q103",
+      "symbol": "SOLS"
+    },
+    {
+      "cusip": "835495102",
+      "symbol": "SON"
+    },
+    {
+      "cusip": "84615Q103",
+      "symbol": "SPCX"
+    },
+    {
+      "cusip": "828806109",
+      "symbol": "SPG"
+    },
+    {
+      "cusip": "78409V104",
+      "symbol": "SPGI"
+    },
+    {
+      "cusip": "46137V241",
+      "symbol": "SPHQ"
+    },
+    {
+      "cusip": "78468R606",
+      "symbol": "SPHY"
+    },
+    {
+      "cusip": "78464A367",
+      "symbol": "SPLB"
+    },
+    {
+      "cusip": "78462F103",
+      "symbol": "SPY"
+    },
+    {
+      "cusip": "78464A409",
+      "symbol": "SPYG"
+    },
+    {
+      "cusip": "78433H303",
+      "symbol": "SPYI"
+    },
+    {
+      "cusip": "78464A854",
+      "symbol": "SPYM"
+    },
+    {
+      "cusip": "78464A508",
+      "symbol": "SPYV"
+    },
+    {
+      "cusip": "816851109",
+      "symbol": "SRE"
+    },
+    {
+      "cusip": "G7997R103",
+      "symbol": "STX"
+    },
+    {
+      "cusip": "21036P108",
+      "symbol": "STZ"
+    },
+    {
+      "cusip": "464288158",
+      "symbol": "SUB"
+    },
+    {
+      "cusip": "866674104",
+      "symbol": "SUI"
+    },
+    {
+      "cusip": "E8943P102",
+      "symbol": "SUIAF"
+    },
+    {
+      "cusip": "86765K109",
+      "symbol": "SUN"
+    },
+    {
+      "cusip": "83088M102",
+      "symbol": "SWKS"
+    },
+    {
+      "cusip": "87165B103",
+      "symbol": "SYF"
+    },
+    {
+      "cusip": "863667101",
+      "symbol": "SYK"
+    },
+    {
+      "cusip": "871829107",
+      "symbol": "SYY"
+    },
+    {
+      "cusip": "00206R102",
+      "symbol": "T"
+    },
+    {
+      "cusip": "46138G706",
+      "symbol": "TAN"
+    },
+    {
+      "cusip": "60871R209",
+      "symbol": "TAP"
+    },
+    {
+      "cusip": "74933W452",
+      "symbol": "TBIL"
+    },
+    {
+      "cusip": "893641100",
+      "symbol": "TDG"
+    },
+    {
+      "cusip": "89832Q109",
+      "symbol": "TFC"
+    },
+    {
+      "cusip": "89679E300",
+      "symbol": "TFIN"
+    },
+    {
+      "cusip": "879369106",
+      "symbol": "TFX"
+    },
+    {
+      "cusip": "88579N105",
+      "symbol": "TGOPY"
+    },
+    {
+      "cusip": "87612E106",
+      "symbol": "TGT"
+    },
+    {
+      "cusip": "885215368",
+      "symbol": "TIVRX"
+    },
+    {
+      "cusip": "872540109",
+      "symbol": "TJX"
+    },
+    {
+      "cusip": "892331307",
+      "symbol": "TM"
+    },
+    {
+      "cusip": "883556102",
+      "symbol": "TMO"
+    },
+    {
+      "cusip": "872590104",
+      "symbol": "TMUS"
+    },
+    {
+      "cusip": "890930506",
+      "symbol": "TORIX"
+    },
+    {
+      "cusip": "872657101",
+      "symbol": "TPG"
+    },
+    {
+      "cusip": "88262P102",
+      "symbol": "TPL"
+    },
+    {
+      "cusip": "87283A102",
+      "symbol": "TQAIX"
+    },
+    {
+      "cusip": "77954Q106",
+      "symbol": "TRBCX"
+    },
+    {
+      "cusip": "87612G101",
+      "symbol": "TRGP"
+    },
+    {
+      "cusip": "74144T108",
+      "symbol": "TROW"
+    },
+    {
+      "cusip": "892356106",
+      "symbol": "TSCO"
+    },
+    {
+      "cusip": "885215194",
+      "symbol": "TSIIX"
+    },
+    {
+      "cusip": "88160R101",
+      "symbol": "TSLA"
+    },
+    {
+      "cusip": "G8994E103",
+      "symbol": "TT"
+    },
+    {
+      "cusip": "88339J105",
+      "symbol": "TTD"
+    },
+    {
+      "cusip": "F92124100",
+      "symbol": "TTE"
+    },
+    {
+      "cusip": "874054109",
+      "symbol": "TTWO"
+    },
+    {
+      "cusip": "882508104",
+      "symbol": "TXN"
+    },
+    {
+      "cusip": "882681109",
+      "symbol": "TXRH"
+    },
+    {
+      "cusip": "902252105",
+      "symbol": "TYL"
+    },
+    {
+      "cusip": "910047109",
+      "symbol": "UAL"
+    },
+    {
+      "cusip": "90353T100",
+      "symbol": "UBER"
+    },
+    {
+      "cusip": "904504495",
+      "symbol": "UBVSX"
+    },
+    {
+      "cusip": "74280R205",
+      "symbol": "UFO"
+    },
+    {
+      "cusip": "023586506",
+      "symbol": "UHALB"
+    },
+    {
+      "cusip": "913903100",
+      "symbol": "UHS"
+    },
+    {
+      "cusip": "904767803",
+      "symbol": "UL"
+    },
+    {
+      "cusip": "90384S303",
+      "symbol": "ULTA"
+    },
+    {
+      "cusip": "91324P102",
+      "symbol": "UNH"
+    },
+    {
+      "cusip": "907818108",
+      "symbol": "UNP"
+    },
+    {
+      "cusip": "911312106",
+      "symbol": "UPS"
+    },
+    {
+      "cusip": "37954Y871",
+      "symbol": "URA"
+    },
+    {
+      "cusip": "911363109",
+      "symbol": "URI"
+    },
+    {
+      "cusip": "85208P303",
+      "symbol": "URNM"
+    },
+    {
+      "cusip": "902973304",
+      "symbol": "USB"
+    },
+    {
+      "cusip": "46435U853",
+      "symbol": "USHY"
+    },
+    {
+      "cusip": "756158101",
+      "symbol": "UTG"
+    },
+    {
+      "cusip": "74933W486",
+      "symbol": "UTWO"
+    },
+    {
+      "cusip": "92826C839",
+      "symbol": "V"
+    },
+    {
+      "cusip": "00142J818",
+      "symbol": "VADAX"
+    },
+    {
+      "cusip": "00142J776",
+      "symbol": "VADDX"
+    },
+    {
+      "cusip": "00142J131",
+      "symbol": "VADFX"
+    },
+    {
+      "cusip": "922908751",
+      "symbol": "VB"
+    },
+    {
+      "cusip": "921937777",
+      "symbol": "VBITX"
+    },
+    {
+      "cusip": "922908595",
+      "symbol": "VBK"
+    },
+    {
+      "cusip": "922908611",
+      "symbol": "VBR"
+    },
+    {
+      "cusip": "921937504",
+      "symbol": "VBTIX"
+    },
+    {
+      "cusip": "922021407",
+      "symbol": "VCADX"
+    },
+    {
+      "cusip": "92206C870",
+      "symbol": "VCIT"
+    },
+    {
+      "cusip": "92204A108",
+      "symbol": "VCR"
+    },
+    {
+      "cusip": "92206C409",
+      "symbol": "VCSH"
+    },
+    {
+      "cusip": "921943858",
+      "symbol": "VEA"
+    },
+    {
+      "cusip": "921921300",
+      "symbol": "VEIRX"
+    },
+    {
+      "cusip": "922908710",
+      "symbol": "VFIAX"
+    },
+    {
+      "cusip": "92206C102",
+      "symbol": "VGSH"
+    },
+    {
+      "cusip": "921908877",
+      "symbol": "VGSLX"
+    },
+    {
+      "cusip": "92204A702",
+      "symbol": "VGT"
+    },
+    {
+      "cusip": "92204A504",
+      "symbol": "VHT"
+    },
+    {
+      "cusip": "922908884",
+      "symbol": "VIEIX"
+    },
+    {
+      "cusip": "921908844",
+      "symbol": "VIG"
+    },
+    {
+      "cusip": "921946810",
+      "symbol": "VIGI"
+    },
+    {
+      "cusip": "922040100",
+      "symbol": "VINIX"
+    },
+    {
+      "cusip": "922908801",
+      "symbol": "VITSX"
+    },
+    {
+      "cusip": "91913Y100",
+      "symbol": "VLO"
+    },
+    {
+      "cusip": "92338C103",
+      "symbol": "VLTO"
+    },
+    {
+      "cusip": "929160109",
+      "symbol": "VMC"
+    },
+    {
+      "cusip": "922907886",
+      "symbol": "VMLUX"
+    },
+    {
+      "cusip": "29476L107",
+      "symbol": "VMRK"
+    },
+    {
+      "cusip": "47103U886",
+      "symbol": "VNLA"
+    },
+    {
+      "cusip": "92189F817",
+      "symbol": "VNM"
+    },
+    {
+      "cusip": "64361Q101",
+      "symbol": "VNOM"
+    },
+    {
+      "cusip": "922908553",
+      "symbol": "VNQ"
+    },
+    {
+      "cusip": "922908629",
+      "symbol": "VO"
+    },
+    {
+      "cusip": "922908363",
+      "symbol": "VOO"
+    },
+    {
+      "cusip": "922908538",
+      "symbol": "VOT"
+    },
+    {
+      "cusip": "92345Y106",
+      "symbol": "VRSK"
+    },
+    {
+      "cusip": "92537N108",
+      "symbol": "VRT"
+    },
+    {
+      "cusip": "92532F100",
+      "symbol": "VRTX"
+    },
+    {
+      "cusip": "921937686",
+      "symbol": "VSIAX"
+    },
+    {
+      "cusip": "925283103",
+      "symbol": "VSNT"
+    },
+    {
+      "cusip": "922042718",
+      "symbol": "VSS"
+    },
+    {
+      "cusip": "922907746",
+      "symbol": "VTEB"
+    },
+    {
+      "cusip": "921935870",
+      "symbol": "VTES"
+    },
+    {
+      "cusip": "922908769",
+      "symbol": "VTI"
+    },
+    {
+      "cusip": "92203J209",
+      "symbol": "VTIFX"
+    },
+    {
+      "cusip": "921943403",
+      "symbol": "VTMSX"
+    },
+    {
+      "cusip": "92276F100",
+      "symbol": "VTR"
+    },
+    {
+      "cusip": "92556V106",
+      "symbol": "VTRS"
+    },
+    {
+      "cusip": "921909784",
+      "symbol": "VTSNX"
+    },
+    {
+      "cusip": "922908736",
+      "symbol": "VUG"
+    },
+    {
+      "cusip": "92203C303",
+      "symbol": "VUSB"
+    },
+    {
+      "cusip": "46131H107",
+      "symbol": "VVR"
+    },
+    {
+      "cusip": "922907845",
+      "symbol": "VWALX"
+    },
+    {
+      "cusip": "925458101",
+      "symbol": "VWDRY"
+    },
+    {
+      "cusip": "922907878",
+      "symbol": "VWIUX"
+    },
+    {
+      "cusip": "922042858",
+      "symbol": "VWO"
+    },
+    {
+      "cusip": "921910600",
+      "symbol": "VWUAX"
+    },
+    {
+      "cusip": "06748M196",
+      "symbol": "VXX"
+    },
+    {
+      "cusip": "92892R108",
+      "symbol": "VYLR"
+    },
+    {
+      "cusip": "921946406",
+      "symbol": "VYM"
+    },
+    {
+      "cusip": "921946794",
+      "symbol": "VYMI"
+    },
+    {
+      "cusip": "92343V104",
+      "symbol": "VZ"
+    },
+    {
+      "cusip": "929740108",
+      "symbol": "WAB"
+    },
+    {
+      "cusip": "934423104",
+      "symbol": "WBD"
+    },
+    {
+      "cusip": "95082P105",
+      "symbol": "WCC"
+    },
+    {
+      "cusip": "94106B101",
+      "symbol": "WCN"
+    },
+    {
+      "cusip": "958102105",
+      "symbol": "WDC"
+    },
+    {
+      "cusip": "92939U106",
+      "symbol": "WEC"
+    },
+    {
+      "cusip": "95040Q104",
+      "symbol": "WELL"
+    },
+    {
+      "cusip": "958669103",
+      "symbol": "WES"
+    },
+    {
+      "cusip": "949746101",
+      "symbol": "WFC"
+    },
+    {
+      "cusip": "066922204",
+      "symbol": "WFSPX"
+    },
+    {
+      "cusip": "140543828",
+      "symbol": "WGIFX"
+    },
+    {
+      "cusip": "949921662",
+      "symbol": "WITIX"
+    },
+    {
+      "cusip": "94106L109",
+      "symbol": "WM"
+    },
+    {
+      "cusip": "969457100",
+      "symbol": "WMB"
+    },
+    {
+      "cusip": "939330825",
+      "symbol": "WMFFX"
+    },
+    {
+      "cusip": "00790R104",
+      "symbol": "WMS"
+    },
+    {
+      "cusip": "931142103",
+      "symbol": "WMT"
+    },
+    {
+      "cusip": "4812C0381",
+      "symbol": "WOBDX"
+    },
+    {
+      "cusip": "92936U109",
+      "symbol": "WPC"
+    },
+    {
+      "cusip": "962879102",
+      "symbol": "WPM"
+    },
+    {
+      "cusip": "084423102",
+      "symbol": "WRB"
+    },
+    {
+      "cusip": "29670G102",
+      "symbol": "WTRG"
+    },
+    {
+      "cusip": "G96629103",
+      "symbol": "WTW"
+    },
+    {
+      "cusip": "962166104",
+      "symbol": "WY"
+    },
+    {
+      "cusip": "983134107",
+      "symbol": "WYNN"
+    },
+    {
+      "cusip": "23306X829",
+      "symbol": "XAIX"
+    },
+    {
+      "cusip": "74933W460",
+      "symbol": "XBIL"
+    },
+    {
+      "cusip": "98389B100",
+      "symbol": "XEL"
+    },
+    {
+      "cusip": "81369Y852",
+      "symbol": "XLC"
+    },
+    {
+      "cusip": "81369Y506",
+      "symbol": "XLE"
+    },
+    {
+      "cusip": "81369Y605",
+      "symbol": "XLF"
+    },
+    {
+      "cusip": "46137V233",
+      "symbol": "XLG"
+    },
+    {
+      "cusip": "81369Y704",
+      "symbol": "XLI"
+    },
+    {
+      "cusip": "81369Y803",
+      "symbol": "XLK"
+    },
+    {
+      "cusip": "81369Y308",
+      "symbol": "XLP"
+    },
+    {
+      "cusip": "81369Y886",
+      "symbol": "XLU"
+    },
+    {
+      "cusip": "81369Y209",
+      "symbol": "XLV"
+    },
+    {
+      "cusip": "81369Y407",
+      "symbol": "XLY"
+    },
+    {
+      "cusip": "78464A755",
+      "symbol": "XME"
+    },
+    {
+      "cusip": "30231G102",
+      "symbol": "XOM"
+    },
+    {
+      "cusip": "98423K405",
+      "symbol": "XTIA"
+    },
+    {
+      "cusip": "98419M100",
+      "symbol": "XYL"
+    },
+    {
+      "cusip": "852234103",
+      "symbol": "XYZ"
+    },
+    {
+      "cusip": "00170K588",
+      "symbol": "YACKX"
+    },
+    {
+      "cusip": "988498101",
+      "symbol": "YUM"
+    },
+    {
+      "cusip": "98956P102",
+      "symbol": "ZBH"
+    },
+    {
+      "cusip": "H9870Y105",
+      "symbol": "ZFSVF"
+    },
+    {
+      "cusip": "989701107",
+      "symbol": "ZION"
+    },
+    {
+      "cusip": "98978V103",
+      "symbol": "ZTS"
+    }
+  ],
+  "standing": false,
+  "standing_enrolment": {
+    "in_words": "enrol the same 878 securities in the standing daily extension to the T-1 frontier after the history lands",
+    "tier": 1
+  },
+  "start": "2026-04-14",
+  "tier": 2,
+  "vendor": "yahoo",
+  "window_start": "2026-04-14"
 }
