@@ -7398,3 +7398,30 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none of the 23 differing days under the rule as written or under its addendum reading; on 8 of the 12 whole-multiple days the day gap equals minus the served income over the prior-day value, so the booking premise is not the return's cause; all 7 windows stay open
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W137-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~137",
+  "surfaced_at": "2026-10-13T16:05:36Z",
+  "one_line": "Under RULE_LEDGER.md as written and under its dated addendum, no differing day of the 7 accounts takes a closed-list reason, so 0 of 7 windows re-close at 0.35 pp; on 8 of the 12 whole-multiple days the day gap equals minus the served income over the prior-day value, so the booking premise of the round-91 analysis is not what the day return shows.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "RULE_LEDGER.md (committed e90aabb4cb, section 1) and the round-91 analysis premise (1.0.0_SA_CTO~DELL2, msg 7032, section 3 item 2): a whole multiple of the served income is the signature of a booking difference, so one of the closed-list reasons (1) to (4) takes those days, and the BD-side correction of reason (1) (BD income set to the served income) closes them within 0.01 pp.",
+  "world_is": "Counts, multiples and sizes only, 23 differing days of the 7 accounts. (a) As written, reason (1) takes 0 days: its TEST requires two distinct transaction ids among the income rows, and 9 of the 12 whole-multiple days carry one id each. (b) Addendum reading (0adf9dd5db, the clause removed; all 12 multiple days then pass the TEST): still 0 days take a reason, because none of the 12 closes within 0.01 pp under the BD-side correction. (c) On 8 of the 12 multiple days (3x to 6x alike) the day gap equals minus the served income over the prior-day market value within 0.01 pp; on the other 4 it differs from that by 0.01 to 0.06 pp. A gap of that size is what a return would show if it carried none of the BD multiple; the multiple itself is not measured in the return. (d) Reasons (2) to (4) take 0 days under both readings. (e) 0 of 7 accounts close; 23 of 23 differing days UNEXPLAINED. Reads: 925 BD rows and 261 served rows; the stored-table control matches on 122 of 122 window days.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~137/RULE_LEDGER.md@e90aabb4cb (committed alone before any ledger row of the 7 accounts was read)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~137/ledger_rows.py@27c347c36c (the run that wrote LEDGER_ROWS_23_DAYS.json: 23 of 23 UNEXPLAINED, 7 of 7 windows open, rc 0)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~137/RULE_LEDGER_ADDENDUM.md@0adf9dd5db (reading B, measured in the worker's private folder: 0 days taken)",
+      "per-row detail, account ids and dates are in the worker 137 private folder; the repo carries counts, multiples, offsets and sizes only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
