@@ -25654,3 +25654,79 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not decided here: when port 5174 is free, the walk runs on the branch with bun run dev --port 5174 --strictPort. A walk that fell back to another port, or one served by pid 10248, would walk a tree other than this branch. The fallback to 5175 by vite itself was not refused, which is why this row carries the --strictPort point. Egress for the walk is NONE beyond the local server; a playwright walk would block non-localhost requests."
 }
 ```
+
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W409-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~409",
+  "surfaced_at": "2026-10-13T19:57:35Z",
+  "one_line": "The per-name call count the task order's preflight recorded for ASML_NA_Equity (134 calls, price 16) does not reproduce in the merged pull census of 2026-10-13 (116 classed calls, price 2).",
+  "spec_asserts": "AMGT_RESAPP.TO-AMGT-bj-8 preflight, comp-adversary line: one real name (ASML_NA_Equity) ran 134 calls over six routes: corpus 48, scanner 43, price 16, news 7, filings 5, posture 4, peers 4, management 2, scores 2, drafting 1, coverage 1, other 1.",
+  "world_is": "The merged run output run/pull_census.json (AC2, 2026-10-13T19:51Z to 19:52Z, instrument at 6aef447b7d) holds 116 classed calls for ASML_NA_Equity across its six result keys (overlay, thesis, peers, coverage, versions, ledger): corpus 46, scanner 44, news 6, filings 5, posture 4, peers 4, price 2, management 2, scores 2, drafting 1; it has no other and no coverage call for this name. The preflight figures are not re-derived by this run; the difference is recorded, not explained.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~409/run/pull_census.json: result.ASML_NA_Equity, recursive count of dicts carrying class and service = 116 (corpus 46, scanner 44, news 6, filings 5, posture 4, peers 4, price 2, management 2, scores 2, drafting 1).",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~409/run/pull_census.txt: PULLS table over 95 names, total 6915 calls, consistent with the class sums of the per-name records.",
+      "Preflight figures: AMGT_RESAPP.TO-AMGT-bj-8 section 'preflight', comp-adversary line (the cut's own run of one name)."
+    ]
+  },
+  "notes": "Form only. Possible causes not tested: state of the live pool between the cut and this run, or a difference in how the cut counted the calls. The AC1 selftest passed 4 of 4 at this run, so the instrument's classing arms hold."
+}
+```
+
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W409-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~409",
+  "surfaced_at": "2026-10-13T19:57:35Z",
+  "one_line": "Five silver filing_source prefixes (SEC and issuer-site, 104 calls in the printed top-20) fall to other in the pull census, because the filings rule matches only the /filings/v1 key shape.",
+  "spec_asserts": "r103_pull_census.py header (lines 8-9, at 6aef447b7d): a call is classed into corpus, filings, management, news, price, scanner by its key prefix; a call no rule classes is other and is printed with its prefix. The filings rule (line 31) is the substring /filings/v1 or a leading filings/v1.",
+  "world_is": "The merged UNCLASSED line lists 135 prefixes; the printed top 20 include the five opal-data-harvest/(sec|issuer-site)/harvest/silver/filing_source prefixes (72+8+8+8+8 = 104 calls) and 15 bronze exec_officers prefixes (3 calls each, 45 calls). None of the five filing_source prefixes contains /filings/v1, so filings-shaped reads are counted in other (444 calls in total) and not in the filings row (269 calls). The census reports this as printed; the mapping is not judged here.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~409/run/pull_census.txt: UNCLASSED prefixes (135) line and the PULLS table (other 444 calls, filings 269 calls).",
+      "r103_pull_census.py at 6aef447b7d line 31: the filings lambda tests '/filings/v1' in r or r.startswith('filings/v1')."
+    ]
+  },
+  "notes": "Form only. Whether the filing_source reads are a pull the page makes under FWD-40 (c) is not decided here; the instrument has no rule for them, and the census prints them as other, which is the stated behaviour."
+}
+```
+
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W409-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~409",
+  "surfaced_at": "2026-10-13T20:06:30Z",
+  "one_line": "Appending a row to this append-only channel with the Edit tool rewrote the 75 existing CRLF line endings to LF in commit d244ea3ccc; the row text was unchanged, but the bytes of existing rows changed.",
+  "spec_asserts": "Channel rule (this file's header and the worker face): append-only during the round; never edit an existing row. An append should add lines and leave every prior line's bytes as they were.",
+  "world_is": "At d244ea3ccc the channel diff against its parent is 126 insertions and 75 deletions; base INVESTIGATION_v1.md carries 75 CR bytes and the committed version carries 0. git diff -w (CR-insensitive) shows 51 insertions and 0 deletions, which is the appended block alone. The fix commit restores the 75 CRLF lines byte for byte and appends the block as LF; the diff against the pre-commit parent is then 51 insertions and 0 deletions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show --numstat d244ea3ccc: org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md 126 insertions, 75 deletions; git diff -w --numstat HEAD^ HEAD for the same file: 51 insertions, 0 deletions.",
+      "git show HEAD^:org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md carries 75 CR bytes (tr -cd '\\r' | wc -c = 75); the same file at d244ea3ccc carries 0."
+    ]
+  },
+  "notes": "Form only. The rows' text is unchanged; the byte-level change is what the append-only rule is about. The fix is a follow-on commit, not an amend. Whether other Edit calls on this file normalize line endings was not tested."
+}
+```
