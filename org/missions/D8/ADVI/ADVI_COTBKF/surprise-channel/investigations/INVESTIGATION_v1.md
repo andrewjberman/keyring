@@ -8232,3 +8232,30 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D2-W167-S2 -- The 273 target reverse-match keys are 71-character tokens that no raw holdings partition or crosswalk row carries, so the partition reads cannot test them
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W167-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~167",
+  "surfaced_at": "2026-10-13T23:21:28Z",
+  "one_line": "The 273 none rows of REVERSE_MATCH.csv are keyed by 71-character tokens. None of the 273 appears as account_id in the Black Diamond silver holdings (88 keys), the gold canonical holdings (135 keys), crosswalk.csv or account_links.csv. The per-account partition tests in the closed list therefore cannot run on them; the worker used the active-set windows, which carry the same tokens, and the salt that would tie tokens to raw ids was not used.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/REVERSE_MATCH.csv@20fb38333542b23beab5a61316cf9acdc0119dbf0be85b55fe150ec191c09a64: 457 keys of 11 characters and 312 keys of 71 characters; the 273 targets are all 71 characters",
+      "read-only probe at worktree HEAD 9442dec344: target keys in silver/holdings account_id 0 of 273, in gold/canonical/holdings account_id 0 of 273, in crosswalk current_account 0 of 273, in account_links 0 of 273",
+      "C:/dev/_cotbkf_active_set_20261013/ACTIVE_COTTONWOOD_SET.csv@eb9dd0c3f6def67eab31c1b931e7fe66ad07ef37e2600908733da0a154afebfc: 6416 black_diamond window rows carry the 273 target keys",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~161/ACTIVE_SET_RECORD.json sources: the Commonwealth-side keys are salted tokens; the salt is held only in a worktree .scratch folder"
+    ]
+  },
+  "spec_asserts": "Round-82 record and TO CB-cf-1: the reverse-match keys are read against the Black Diamond holdings by account_id, and the Commonwealth-side keys are salted tokens whose salt is held in a worktree .scratch folder.",
+  "world_is": "The Black Diamond-side keys of the 312 unmatched current accounts are 71-character tokens, not the raw ids the holdings partitions and the crosswalk carry. No partition read joins them. The salt that would bridge the two spaces is not in this worktree; it was not used or opened. The worker listed the file names of two other folders while locating it and read no content.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
