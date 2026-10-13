@@ -10326,3 +10326,138 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W101-S1 -- (AR-y-280 step 3) the PACKAGE body carries no request id, so the packager cannot write the top-level report_ref the drafter reads
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W101-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~101",
+  "surfaced_at": "2026-10-13T20:39:34Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "Step 3 of AR-y-280 was STOPPED: the PACKAGE route has no request id to write as the top-level report_ref.request_id that the commentary drafter reads; the packager sends report_id, not request_id.",
+  "spec_asserts": "AR-y-280 step 3: package_ticket writes the top-level report_ref as {request_id, revision, recorded_by, recorded_at} ONCE (a second write refused), bound to the requester firm; if the PACKAGE body does not carry the request id today, STOP and file a BLOCKING row naming what the packager would have to send.",
+  "world_is": "MEASURED at HEAD 6c728045fb: PACKAGE accepts only PACKAGE_REF_FIELDS, firm and prior_attached_at (infra/aws/lambda/ticket_center/lambda_function.py:138), and writes them under package (:1538). The packager attach payload is {report_ref, pdf_ref, original_ref, commentary_ref, firm} (infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:208-209); its report_ref is the READY job receipt's report_id (opal_packager.py:168), and no request id is sent. The drafter reads top-level report_ref.request_id (lambda_function.py commentary_draft_ticket, :1595). So nothing writes that member on the packager's path. To close it the packager must send request_id in the PACKAGE body (a new member of PACKAGE_ALLOWED_FIELDS, bound to the request the ticket records), and its _attach payload (opal_packager.py:208-209, outside the grant of AR-y-280) must carry it; the top-level write then takes it once. Until then a ticket cannot receive a commentary draft through the drafter route.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:138 (PACKAGE_ALLOWED_FIELDS) and :1538 (pkg = {k: body[k] for k in PACKAGE_REF_FIELDS})",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:168 (report_ref = receipt report_id) and :208-209 (the attach payload, no request id)",
+      "infra/aws/lambda/ticket_center/lambda_function.py commentary_draft_ticket :1595 (ref = cur.get report_ref, read for request_id)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W101-S2 -- (AR-y-280 step 4k) the premise that a test pins the analysis_request submit refusal does not hold; the pinned refusal is for ticket_type other
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W101-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~101",
+  "surfaced_at": "2026-10-13T20:39:34Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order says the old test at test_analysis_request.py :131-133 pins the refusal of answers and attachment for this type; it pins the refusal for ticket_type other, so no edit was needed.",
+  "spec_asserts": "AR-y-280 step 4(k): the existing ticket service folder passes with the ONE edit of the old test that pinned the refusal for this type; the acceptance text allows at most one named edit.",
+  "world_is": "MEASURED at HEAD 6c728045fb: infra/aws/lambda/ticket_center/tests/test_analysis_request.py:131-133 posts ticket_type other with answers to /submit as CLIENT and asserts 400. No test in the folder posts an analysis_request to /submit and asserts a refusal. The new fields are admitted for analysis_request only, so the folder passes with 221 tests and zero edits to any existing file (206 at HEAD plus 15 new).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/tests/test_analysis_request.py:131-133 (ticket_type other, answers, assert 400)",
+      "infra/aws/lambda/ticket_center/tests/test_submit_analysis_request.py (15 tests, all pass with the change at commit 336168cde3)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W101-S3 -- (AR-y-280 step 2) the ticket service cannot tell whether an attachment's upload belongs to the caller's firm; the submit path admits a foreign input reference once analysis_request is admitted
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W101-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~101",
+  "surfaced_at": "2026-10-13T20:39:34Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "one_line": "The attachment check is a shape check only: a client-human can name another firm's input_id on the submit path and the ticket is written under the caller's own firm.",
+  "spec_asserts": "AR-y-280 step 2: refuse an attachment whose upload belongs to another firm if the service can tell; if it cannot, say so in authorization_change and do not invent a check.",
+  "world_is": "MEASURED at HEAD 6c728045fb: _validate_attachment (infra/aws/lambda/ticket_center/lambda_function.py:744-758) checks the keys, a non-empty upload_id and the input_id pattern ^portfolio_[0-9a-f]{64}$; the module reads no upload, input or owner record anywhere (the only occurrences of upload_id are in that function). CREATE has the same check. The service therefore CANNOT tell whether input_id belongs to the caller's firm, and no check was invented. The submit path is reached by client-humans (MATRIX SUBMIT-FORM, :167), so once analysis_request is released to partner firms a partner can file a ticket that references another firm's input. Whether the downstream reader enforces the input owner was not read. Stated in authorization_change of r23/SUBMIT_ANALYSIS_REQUEST.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:744-758 (_validate_attachment: shape only)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:167 (SUBMIT-FORM admits CLIENT)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~101/r23/SUBMIT_ANALYSIS_REQUEST.json (authorization_change)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W101-S4 -- a ticket filed on the submit path has no human creator, so the REPORT creator branch can never admit it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W101-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~101",
+  "surfaced_at": "2026-10-13T20:39:34Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A client-submitted analysis_request carries created_by svc-ticket-form, so REPORT's creator branch (no claim) cannot admit any human for it; REPORT is internal-only and the assignee branch must claim first.",
+  "spec_asserts": "The J2 record's one-step filing (the form files the ticket and requests the report with no claim) is served by REPORT's creator branch, which admits the ticket's created_by caller.",
+  "world_is": "MEASURED at HEAD 6c728045fb and unchanged by AR-y-280: submit_form stamps created_by as SVC_TICKET_FORM (lambda_function.py, submit path). report_ticket admits the creator branch only when created_by equals the caller email (is_creator), and MATRIX REPORT is INTERNAL only (lambda_function.py:174). A client-submitted ticket therefore has no creator who can record a report without a claim. Not changed by this order; surfaced for the CVO and the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:174 (MATRIX REPORT frozenset INTERNAL)",
+      "infra/aws/lambda/ticket_center/lambda_function.py report_ticket, is_creator branch (created_by equals the caller email)",
+      "infra/aws/lambda/ticket_center/lambda_function.py submit_form (created_by=SVC_TICKET_FORM)"
+    ]
+  }
+}
+```
+
+### IRPT_ANLREQ-D2-S85 -- TO-READS-R193 step 1 names a commit at which the count script's self-test cannot pass
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S85",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-13T21:20:00Z",
+  "one_line": "TO-READS-R193 step 1 asks for the count script's --self-test to exit 0 in a worktree detached at a665d34dd3 (the r18.1 reader); it exits 1 there (read_the_same 0 not 1, read_differently 7 not 6, by_cause all OTHER:NON_FINDING_DIFFERENCE), and exits 0 at 35c3c4bd45, the base commit Y9 AMENDMENT 1 used; so the order's step 1 is unmeetable as written and the live counting run was not made.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r22/R0D_STEP0_AND_STOP.json, member step1: self_test_at_a665d34dd3 exit 1 with its first failures; control_self_test_at_35c3c4bd45 exit 0",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r16/count_stored_inputs.py:446-453 and the self_test: the new reader is hard-wired to d95cf11106 and the checkout's reader is the old one",
+      "org/tier2_senior/0.7.0_AE_CloudOps~ANL/task_orders/IRPT_ANLREQ.TO-READS-Y9.stored-input-count-r18-laptop.md AMENDMENT 1: the same defect, resolved by running the self-test at the base reader"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-READS-R193 step 1: the script's --self-test exits 0 in a throwaway worktree detached at a665d34dd3 ('the self-test takes the checkout's own reader as the old reader'). A self-test failure is a STOP.",
+  "world_is": "The self-test takes the checkout's reader as the old reader but its expected counts are written for the BASE reader as old (35c3c4bd45) against the hard-wired new reader d95cf11106; with r18.1 as old the stored-template differences collapse into one cause. The same self-test at 35c3c4bd45 exits 0 on this box, so the script and the box are sound. Step 0 of the order passed first (identity, one decrypt of 214395 bytes with the digest equal, delete simulated explicitDeny). No stored-input count was taken.",
+  "notes": "owner of the amendment: 2.0.0_SA_COO~Y2 (the issuer amends its own order). The ask is whether step 1 may be met by the self-test at 35c3c4bd45, as under Y9 AMENDMENT 1."
+}
+```
+
+- **owner:** `2.0.0_SA_COO~Y2`
+- **disarm_owner:** n/a -- INERT
+- **state:** OBSERVATION / INERT

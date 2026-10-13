@@ -282,3 +282,11 @@ Correction: the round-92 rows carry surfaced_at 16:48:00Z; the clock read 16:45:
 | item | result | commit |
 |---|---|---|
 | ADVI_COTBKF round 81 | L9: CB81cc1-AC2 PASS, CB81cc2-AC2 PASS (note: the minted copy is the local copy, not compared with the served object), CB81cc3-AC2 PASS. The minted table has two code readers: D2-S134's disarm is void, confirming my round-80 refusal to accept it. ADJUDICATION_v58 (C-S65) dismisses 7; REMEDIATION_v50: D2-W158-S2 ARMED to CTO~DELL2, D2-W159-S1 ARMED to COO~C2. Slug sent 19:31:55Z | 43b340c673 |
+
+## Addendum, 2026-10-13 20:49Z to 20:57Z (msg 7230; account changed to a fresh login before this item)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 183 (~P) | ADJUDICATION_v84 (C-S367), no remediation file: build only (Opal Ultra Short-Term in the comparison catalogue, IB-pr-517); I re-ran the two catalogue test files (16 passed) and read recipe.py:811-816 (fail-closed on any non-YCHARTS namespace). 10 dismissed; D2-S145 to -S147 and D2-S150 stay with the issuer. Slug sent | 220e1b5785 |
+
+Correction: C-S367 carries surfaced_at 20:56:00Z; the clock read 20:54:57Z before the write, so the stamp is about 1 minute ahead of the true time. The row is immutable, so the correction is recorded here.
