@@ -2079,3 +2079,29 @@
 2026-10-13T07:32:42Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=4  secs=34.39  held=dirty-overlap graded=0/31  phases: t_fetch=3.43s t_merge_cloud=19.42s
 2026-10-13T07:35:18Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=8.25  graded=n/a  args=(--verify-merge 73a5fc8f3aeb60ff56613b4f545ecfc905b9b9bd)  first=(none)
 2026-10-13T07:35:34Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=43.35  took=cae614ae24 hold=2.60s graded=0/31 pushed=73a5fc8f3a  phases: t_fetch=4.02s t_merge_cloud=19.45s t_land=2.64s t_push=10.86s
+2026-10-13T07:40:30Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-13T07:40:38Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-13T07:40:56Z LANDED-2P  0.0.0_AB_MSTR~Z  527ce2f31a  paths=1  validate=26.34s  wait=0.52s  hold=1.90s  build=1.03s  ref=0.80s  post-commit=7.17s  attempt=1
+2026-10-13T07:41:18Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=3.03  graded=n/a  args=(--verify-merge 401d17dcd87c2180736c06e5fb079048c1f66dad)  first=(none)
+2026-10-13T07:41:24Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=22.92  took=fff3b5579a hold=1.20s graded=0/24 pushed=401d17dcd8  phases: t_fetch=4.15s t_merge_cloud=10.30s t_land=1.22s t_push=4.38s
+2026-10-13T07:42:24Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=17.45  took=already-current pushed=401d17dcd8  phases: t_fetch=2.69s
+2026-10-13T07:52:22Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=4.69  graded=n/a  args=(--verify-merge 317a83c824274f76c8af39d46ceece82318f1f89)  first=(none)
+2026-10-13T07:52:32Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=29.14  took=a1d0790eae hold=2.73s graded=0/10 pushed=317a83c824  phases: t_fetch=1.84s t_merge_cloud=13.23s t_land=2.76s t_push=6.44s
+2026-10-13T07:53:35Z PASS  0.7.0_AE_CloudOps~ZW  2  (all paths in-lane) act=4fe3f9237be6 paths=2:org/critical_paths/.open_deploys/harvst-bz4-windowless-20261013.json|org/critical_paths/change_management/20261013T0753Z_harvst-bz4-windowless-20261013_deploy_completion.md
+2026-10-13T07:53:40Z PASS  2.0.0_SA_COO~ZI  1  (all paths in-lane) act=506498ccd55b paths=1:org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/COMPLETION_REPORT.round9.json
+2026-10-13T07:53:40Z PASS  0.7.0_AE_CloudOps~ZW  2  (all paths in-lane) act=4fe3f9237be6 paths=2:org/critical_paths/.open_deploys/harvst-bz4-windowless-20261013.json|org/critical_paths/change_management/20261013T0753Z_harvst-bz4-windowless-20261013_deploy_completion.md
+2026-10-13T07:53:48Z PASS  2.0.0_SA_COO~ZI  1  (all paths in-lane) act=506498ccd55b paths=1:org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/COMPLETION_REPORT.round9.json
+2026-10-13T07:53:54Z LANDED-2P  0.7.0_AE_CloudOps~ZW  0ca6d5ab66  paths=2  validate=20.20s  wait=0.15s  hold=1.59s  build=1.10s  ref=0.43s  post-commit=6.13s  attempt=1
+2026-10-13T07:54:00Z LANDED-2P  2.0.0_SA_COO~ZI  89ae680e21  paths=1  validate=22.59s  wait=0.16s  hold=1.74s  build=1.27s  ref=0.41s  post-commit=5.04s  attempt=1
+2026-10-13T08:01:49Z PASS  1.0.0_SA_CTO~Z  4  (all paths in-lane) act=d7397e21946f paths=4:org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/COMPLETION_GRADES.round9.json|org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/ROUND_ANALYSIS.round9.md|org/missions/D12/NFRA/NFRA_IAMROLES202609/project.json|org/projects/NFRA_IAMROLES202609.json
+2026-10-13T08:02:01Z PASS  1.0.0_SA_CTO~Z  4  (all paths in-lane) act=d7397e21946f paths=4:org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/COMPLETION_GRADES.round9.json|org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/ROUND_ANALYSIS.round9.md|org/missions/D12/NFRA/NFRA_IAMROLES202609/project.json|org/projects/NFRA_IAMROLES202609.json
+2026-10-13T08:02:22Z LANDED-2P  1.0.0_SA_CTO~Z  d00d438bc4  paths=4  validate=36.82s  wait=0.91s  hold=5.72s  build=2.94s  ref=2.72s  post-commit=8.82s  attempt=1
+2026-10-13T08:02:33Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=6.10  graded=n/a  args=(--verify-merge e09fdec6b3e975d4db124f8691f5d2f190d899f6)  first=(none)
+2026-10-13T08:02:56Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=52.91  took=878a2346cf hold=3.97s graded=0/23 pushed=e09fdec6b3  phases: t_fetch=5.12s t_merge_cloud=18.31s t_land=4.01s t_push=13.80s
+2026-10-13T08:12:41Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=7.58  graded=n/a  args=(--verify-merge e75af3a8be6abcad0b351e6ee4ba876ff625b05b)  first=(none)
+2026-10-13T08:12:52Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=48.41  took=af90ab31ce hold=4.05s graded=0/17 pushed=e75af3a8be  phases: t_fetch=3.56s t_merge_cloud=28.83s t_land=4.08s t_push=5.05s
+2026-10-13T08:14:14Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=5.67  took=already-current pushed=e75af3a8be  phases: t_fetch=1.85s
+2026-10-13T08:22:22Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=4.67  graded=n/a  args=(--verify-merge d8d1ef509169dcb42dffdeac489993ab976a6616)  first=(none)
+2026-10-13T08:22:30Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=27.46  took=39ec534512 hold=2.32s graded=0/15 pushed=d8d1ef5091  phases: t_fetch=2.34s t_merge_cloud=13.12s t_land=2.34s t_push=5.41s
+2026-10-13T08:32:33Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=5.22  graded=n/a  args=(--verify-merge 8ab27325ccfecf4e1509b6824f89733a84648e5d)  first=(none)
+2026-10-13T08:32:44Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=40.54  took=1cb227ab52 hold=2.69s graded=0/21 pushed=8ab27325cc  phases: t_fetch=4.56s t_merge_cloud=17.54s t_land=2.72s t_push=7.07s
