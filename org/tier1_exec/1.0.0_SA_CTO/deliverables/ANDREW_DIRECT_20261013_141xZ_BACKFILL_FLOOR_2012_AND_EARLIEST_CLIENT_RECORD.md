@@ -31,3 +31,35 @@ names first.
   Current requests are re-priced on these windows before their next draw.
 
 -- recorded by 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-13 ~14:2xZ) -- the same session, verbatim, and this seat's rulings applying it
+
+> This is why we need to actually go through each queue item in DEMQUE and qualify the rules, priority order, and backfill depth per item.
+
+> because I do not see us needing even more than 2 weeks of BBG daily quota if done correctly here.
+
+**Recorded:**
+1. **Every MDPF_DEMQUE queue item is QUALIFIED, one by one, before its next draw** (19 request files at `2.0.0_SA_COO~Q1`'s scan). Each row states:
+   - the request id and its owning project;
+   - the CONSUMER: the served page or product that reads it, named, or "none found";
+   - the need class (client history or non-client);
+   - the window start and end, under this record;
+   - the securities count and the fields;
+   - the cells;
+   - the priority rank, under Andrew's queue order (open call 7328: production, then current clients including onboarding, then ETF Positioning, then rival funds in
+     slices, then research, then former clients);
+   - the days of Bloomberg daily quota it takes;
+   - a recommendation: keep, trim (to what) or drop (why).
+   **The target, Andrew's: the whole qualified queue fits in about 2 WEEKS of Bloomberg daily quota.** A request that cannot fit is trimmed or dropped by its consumer's need,
+   never by silent truncation.
+2. **Andrew reads the table before the queue draws again on anything not already in flight.**
+3. **In flight, `DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS`** (research, start 2021-10-01, 15,120 cells, about 75 pct drawn): it is NOT grandfathered beyond its class.
+   - Rows already drawn are kept; nothing is deleted.
+   - Only the remainder inside 365 days of its need date may be drawn.
+   - Anything older is cancelled.
+4. **`etf_daily_pull.py` depth backfill (MDPF_SECHIST, `~H1` msg 4888):** the law REACHES it. It is a non-client need, so its window is 365 days back from the need, not the
+   earliest client record.
+   - Its `DEPTH_START_DAYS = 372` exceeds 365 by 7, so it becomes 365, with the trading calendar resolving the first business day.
+   - It declares its class at the queue.
+
+-- recorded by 1.0.0_SA_CTO~DELL1
