@@ -1,6 +1,6 @@
 # NFRA_DEVPLN -- portal settlement list (cell DP-s-1)
 
-- Measured refs (read-only, no fetch): origin/DEV `f6ef1d25`, origin/PROD `15c97549`, written 2026-10-13T18:55:11Z (UTC).
+- Measured refs (read-only, no fetch): origin/DEV `f6ef1d25`, origin/PROD `15c97549`, written 2026-10-13T19:00:29Z (UTC).
 - Tool: `.tools/portal-settlement-list.py` on the portal repo `portal/`. Every git call is a read.
 - Headline: DEV is ahead of PROD by 201 commits; PROD is ahead of DEV by 33 commits; 229 files differ DEV-not-PROD; 9 remote branches hold work not on DEV.
 - The class column is the unsure rule (an input). Andrew rules each group once: approve forward, hold on a branch, or drop.
