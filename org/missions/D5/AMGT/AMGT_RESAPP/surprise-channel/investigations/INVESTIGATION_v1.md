@@ -25319,3 +25319,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~403 at AMGT-bi-4. Any worker committing from a nested portal worktree hits the same refusal; the next order that names a nested portal commit should pass the committer identity or the portal repo should carry one. Whether to add it to the repo config is the issuer's or the CTO's call; this row changes nothing."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S27",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~RA1",
+  "surfaced_at": "2026-10-13T16:05Z",
+  "one_line": "r94_admission_table.py diffs only scopes.json and systems.json under infra/logic/registry, so the AMGT-bi-2 pair's 11-member table omits exemptions.json, which the function's package carries and which changed between 7da642c1ff and 6ecb5bc567.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "GO msg 4926 condition 1: 'r94_admission_table.py 6ecb5bc567 --pin 7da642c1ff must print EXACTLY the ELEVEN members of the pair's table at its blobs ... any other member or blob is a STOP'; the COO half's table is the package's blast radius.",
+  "world_is": "The script printed the eleven at the half's blobs, and the BUILD at the pin printed 'CONTENT-DIFF SUMMARY: files 408, IDENTICAL 403, CHANGED 5, ADDED 0, REMOVED 0' against the live package: the four named runtime members (scoped_amgt.py, opal_naming.py, trading_calendar.py, scopes.json) and infra/logic/registry/exemptions.json bc909dc105ff -> ccaf6c9f3481 (+8, irpt-performance-adapter-role admitted to opal-data-inflection read-only, commit 61cc536c29, ADVI_FIRMBKTS). The package carries the whole registry folder (15 files) and opal_naming reads exemptions.json at import. Seven of the table's eleven (the four harvest modules, the ps1, two test modules) are not packaged at all. The table is therefore not a statement of what the package carries.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scratchpad bi2/bi2_build.log lines 179 and 552 (the CHANGED lines and the SUMMARY), copied to org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~RA1/BI2_STOP_TWELFTH_MEMBER_20261013.md",
+      "git rev-parse --short=12 7da642c1ff:infra/logic/registry/exemptions.json = bc909dc105ff; 6ecb5bc567:... = ccaf6c9f3481; git log 7da642c1ff..6ecb5bc567 -- that path = 61cc536c29",
+      "bi2_built.zip's own name list: 408 members, lib/opal_data_harvest/ holds 6, none of worker.py, transport.py, backfill_driver.py, cycle_runner.py, install-cycle-schedule.ps1, test_bx3, test_bz3",
+      "r94_naming_replay.py --pin 7da642c1ff on the built zip's lib/ and infra/ (controlled: naming loaded from the zip root, REGISTRY_DIR in it): 35 requests all 200, 78 builder calls, 16 distinct, 0 differ, YES"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "AMGT-bi-2 is STOPPED at its build leg; nothing uploaded, planned or applied; live still reads j+j1k5r7... The remedy is a decision (amend the pair to twelve members, name another pin, or the CTO rules it covered by the half's own measurement, which was taken from a tree that already carries it); this row changes nothing. Future admission tables for this function should list the registry folder whole, or be read against the build's content diff."
+}
+```
