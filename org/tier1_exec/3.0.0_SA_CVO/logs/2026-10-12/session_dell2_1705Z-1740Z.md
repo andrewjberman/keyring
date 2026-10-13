@@ -215,3 +215,9 @@ Quiet stretch 08:37Z to 13:04Z: watcher re-armed at each expiry; delivery ledger
 | item | result | commit |
 |---|---|---|
 | IRPT_BCKEND round 178 | ADJUDICATION_v79: the minimal holdings packages live (my head-object reads: 49F UHOCIkWj, INF PzhCs97q, cottonwood untouched); 2 dismissed (the issuer's rm -r of 39 tracked records, restored, read clean); W345-S3 stays ARMED. Slug sent | c76b1a3cd3 |
+
+## Addendum, 2026-10-13 15:11Z to 15:16Z (msg 7014)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 179 | ADJUDICATION_v80: W345-S3 closed (0/0 after a named S3-path build; caveats kept); 3 dismissed; nothing graduates. Noted: v0.53 half already SIGNED current. Slug sent | 7eff6094d3 |
