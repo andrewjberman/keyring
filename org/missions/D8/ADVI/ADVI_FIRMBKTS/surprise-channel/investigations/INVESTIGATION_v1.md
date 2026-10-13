@@ -6587,3 +6587,32 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Not a defect of this order: the deploy and the dry-run arm are proven. For the issuer and the CTO: the regeneration pair (FB-j-7) cannot cite a read of generated text yet. Either (a) a second dry run (the pair allows 1 to 10 ids per invocation, dry-run-only) with advisors chosen by the triggers: an offline pre-screen of all 158 advisors' positions and leaderboard reads through the artifact's evaluators (no model call, no write) names the ids that WOULD fire each slot; this seat can run that read on request; or (b) the CTO rules that an all-empty first pass is the sample and reads it as 'the regeneration would write 158 artifacts with no bullets today', which is the question for FB-j-7 either way."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-j-8, the pre-screen; corrects D1-S47)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S48",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-13T09:05:32Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "CORRECTS ADVI_FIRMBKTS-D1-S47: slots DO fire (158 of 158 served advisors, 189 of 194) and every fired slot is dropped on the generator's model path (81 of 81 in two dry runs, about 0.17 s each) with no exception text logged; the positive control of FB-j-8 failed and AC1 reads FAIL on purpose.",
+  "spec_asserts": "TO-FB-j-8: step 1 per-slot fire counts offline (no model call); step 2 ONE targeted dry run on advisors that fire, which must return bullets (the CTO's positive control); FB-j-6 row D1-S47 as filed read 'no slot fired for any of 10 advisors'.",
+  "world_is": "D1-S47's reading was wrong and is corrected here: the empty bullets lists were not 'no trigger fired'. Offline (no model call, no write, the built artifact's own readers and evaluators, both homes): the generator's list_active_advisors is 194 advisors (158 have a served exec_summary.json, 36 have none, 5 have no positions.json); over the 158 served ids canonical top_gainer 157, top_loser 156, concentration_risk 124, tax_loss_candidate 156, leaderboard_rank_delta 0, top_nna_mover 80, firing any 158; over the 194: 186, 185, 152, 170, 0, 87, any 189; the frozen legacy home gives identical counts. leaderboard_rank_delta is 0 because both leaderboard reads (current and prior week) return None in both homes. Controls: FB-j-6's invocation (ten ids, 42 offline fired slots) read ExecSummarySlotDropped Sum 42 (the namespace's only datapoints in 14 days); FB-j-8's targeted invocation (ten other ids, 39 fired slots) returned http 200, 10 artifacts, ZERO bullets, 7 s, listing identical (158 keys, sha256 d5d52e93...), ExecSummarySlotDropped 39. So 81 of 81 fired slots were dropped in _build_slot (`except (PIIDetectedError, SchemaError, Exception): metrics.emit_slot_dropped(); return None`, which prints nothing), consistent with about 0.17 s per call. Measured preconditions: no VpcConfig; secret anthropic-api-key exists (LastChanged 2026-04-24) and exec-summary-generator-role allows secretsmanager:GetSecretValue on anthropic-api-key-*; layer anthropic-sdk-deps:1 (python3.12, anthropic and pydantic_core cpython-312 present). The exception class is not known.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/SLOT_PRESCREEN.json",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/SLOT_PRESCREEN.md",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/SLOT_DRYRUN_ARTIFACTS.json",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/j8_prescreen/prescreen_counts.txt",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/j8_prescreen/dry2_summary.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Consequences for the regeneration pair (FB-j-7): (1) deploying FB-j-4 as it stands would, at the next chain close, invoke the generator NON-dry for up to 194 advisors, drop every slot, and REWRITE served exec_summary.json for all of them with empty bullets (the objects are 305 bytes today and already empty, so the visible text does not regress, but 36 new empty objects appear, 5 advisors have no positions, and the model-path calls and failure metrics run for 194 x ~5 slots); (2) the cause of the model-path failure must be surfaced before any non-dry run: the one-line step is to log the exception class and its first 200 characters in _build_slot's two except branches (the form FB-j-2 used for the CLI), deployed under a pair, then one dry run. This seat did not read or use the Anthropic key and made no model call. D1-S47's disposition should be read through this row."
+}
+```
