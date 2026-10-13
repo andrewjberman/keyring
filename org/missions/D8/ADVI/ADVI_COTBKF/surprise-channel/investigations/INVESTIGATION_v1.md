@@ -8206,3 +8206,29 @@ round.** Never edit an existing row.
   "world_is": "The served prices of APH, CTVA and HON are still wrong in the minted tables (cause not established; the stage read puts the first stage off 1.0 at store row against vendor Close). They reach no page today. Recorded as a parked defect. A precondition on the ARD route ever going live, per the CTO (msg 7308): the porting_verdict label and its never-widen pair, and a correction of these prices. NOT re-measured by this seat at this turn: the route's state after 2026-10-13T20:0xZ."
 }
 ```
+
+## ADVI_COTBKF-D2-W167-S1 -- The order's population of 273 rows (reason none) is the predecessor-none subset: reason none alone matches 730 rows
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W167-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~167",
+  "surfaced_at": "2026-10-13T23:05:52Z",
+  "one_line": "TO ADVI_COTBKF.TO-CB-cf-1 names the 273 rows as those whose reason is none (and only those). In the committed REVERSE_MATCH.csv, reason none alone matches 730 rows; the 273 are the rows with predecessor_key none AND reason none. The population used is the 273 (the order's own count), keyed on both columns.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/REVERSE_MATCH.csv@20fb38333542b23beab5a61316cf9acdc0119dbf0be85b55fe150ec191c09a64 (sha256 of the committed file): reason counts none 730, AWAITING_PERSON 12, AMBIGUOUS 27; predecessor_key none 300, of which reason none 273 and AMBIGUOUS 27",
+      "reason none on 457 rows whose match_basis is crosswalk_matched (a matched row carries reason none in this file)",
+      "read at worktree HEAD 9442dec344 (NONE_REASON_LIST.md, the list commit)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-cf-1 item 2: for each of the 273 rows whose reason is none (and only those), assign one code. Worker face item 1: reasonless = 273 of the 300 none rows.",
+  "world_is": "A reason-none filter selects 730 rows, including 457 crosswalk_matched rows that the order must not touch. The 273 population is reproduced only by predecessor_key none AND reason none. The worker classifies that subset and leaves the 457 matched rows and the 27 AMBIGUOUS rows unchanged, as the order's bounds require. The list's population sentence is corrected in the commit that follows the list commit, before any classification read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
