@@ -225,6 +225,8 @@ $inFlightCmd = 'safe-(commit|merge|deploy|apply)\.sh|commit-worker\.sh|commit-ga
 #   WORKTREE  a process whose command line, or whose cwd (MSYS /proc/<pid>/cwd, else its nearest MSYS ancestor's, else the
 #             Windows process's own current directory read from its PEB), is
 #             under a WORKER worktree: a linked worktree (`git worktree list --porcelain`) whose leaf or branch is wk-*.
+# SEAT BOUNDARY (CT-ab-4): a tree holding a claude.exe seat with another launch serial is never stopped by taskkill /T.
+. (Join-Path $PSScriptRoot 'seat-boundary.ps1')
 $root0 = Split-Path -Parent $PSScriptRoot
 $gitExe0 = (Get-Command git.exe -ErrorAction SilentlyContinue)
 $commonDir = $null
@@ -737,6 +739,22 @@ foreach ($t in $targets) {
   }
   if ($t.PSObject.Properties['Created'] -and $t.Created -and $now1.CreationDate -ne $t.Created) {
     Write-Output ("  SKIP: PID {0,-6} {1,-22} was reused since the snapshot" -f $t.Id, $t.Name)
+    continue
+  }
+  # SEAT BOUNDARY (CT-ab-4): judged on the target's own launch serial; a foreign seat anywhere under it refuses this target.
+  $tSerial = Get-LaunchSerial -CommandLine $now1.CommandLine
+  $foreignSeats = $null; $seatErr = ''
+  try { $foreignSeats = @(Test-SeatBoundary -RootPid ([int]$t.Id) -TargetSerial $tSerial) } catch { $seatErr = $_.Exception.Message }
+  if ($null -eq $foreignSeats -or @($foreignSeats).Count -gt 0) {
+    if ($null -eq $foreignSeats) {
+      Write-Output ("  REFUSED: seat boundary -- PID {0,-6} {1,-22} not evaluated, not stopped: {2}" -f $t.Id, $t.Name, $seatErr)
+    } else {
+      foreach ($f in $foreignSeats) {
+        Write-Output ("  REFUSED: seat boundary -- PID {0,-6} {1,-22} holds foreign seat {2} at pid {3}; tree not stopped" -f $t.Id, $t.Name, $f.Serial, $f.ProcessId)
+      }
+      $foreignList = (@($foreignSeats) | ForEach-Object { "$($_.Serial)@$($_.ProcessId)" }) -join ','
+      Write-Audit ("{0}  KILL-MAINT-REFUSED  by {1}  pid={2}  name={3}  foreign={4}  reason=seat-boundary" -f (UtcNow), $runBy, $t.Id, $t.Name, $foreignList)
+    }
     continue
   }
   $prevEap = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
