@@ -111,7 +111,7 @@ Report once: the two named assets' R1 prices (variant A and B), the types seen, 
 **ISSUER NOTES:** round-1 analysis item 1 (first half); PRD C5, C6, C7, C8 read this module later. Variant B exists so the CTO can rule on reinvestment rows with numbers; it is never the default. The module sits under
 `data/black_diamond/scripts/silver/`, a path the silver script does not sync to the runner (`deploy-to-ec2.sh:16-20`), and nothing imports it: LOCAL. Disarm map: `W2-S2`, `W2-S4`, `W1-S3`, `W3-S3`, `W3-S4` are brought within reach.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <workstream>RULE</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-b-1</to_id>
