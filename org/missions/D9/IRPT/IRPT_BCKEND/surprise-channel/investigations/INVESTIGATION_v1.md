@@ -29436,3 +29436,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The redaction holds for the full name but not for the slug the walker derives from it. Shot paths and STEP lines on the terminal carry a name fragment. The shot files stay under tmp/ui-walk (gitignored), so the leak is to the terminal and to the walker's log only. The walk record and the proof are written without any name; this row carries none."
 }
 ```
+
+## IRPT_BCKEND-D2-S115 -- DISARM EVIDENCE for IRPT_BCKEND-D2-W341-S7: the walker's name redaction now covers the screenshot slug
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S115",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T00:23:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARM EVIDENCE for row IRPT_BCKEND-D2-W341-S7, filed by its disarm owner: the --first-client redaction in ui-walk walk.mjs now applies to the log, the shot file name and the check label, by the full name and by each word of it of 3 or more characters, so the fragment that reached one worker's terminal is not printed by a further run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read by this seat: the diff of walk.mjs merged at 66439bd6a8: redactFirst(s) replaces the first client's name and each whitespace- or comma-separated word of it of 3+ characters (case-insensitive, longest first) by 'first-client'; log() maps every argument through it once the name is set; shot(page, label0) and checks(page, label0) build their label from redactFirst(label0) before the screenshot file name is made.",
+      "the leak itself: one worker session (0.9.0_WK_IRPT_BCKEND~341) saw a name fragment on its own terminal during the walk of 00:04Z to 00:06Z; the worker reports it did not reproduce it; nothing was committed (the walk record and the proof carry no name; the shot files sit under the gitignored tmp/ui-walk of that worktree and go with its removal).",
+      "the only --first-client walk of this round is finished and the walker account reads status=disabled armed=no (the worker disarmed an orphaned arm at its last session)."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "The redaction is by code read plus the worker's three IB169-1 criteria (node --check, flag parsing, SKILL.md and FIRM_OPTION_ABSENT); none of them runs a walk, so the redaction is NOT exercised on a live page. It is written so that any text leaving the walker for a file name or a terminal line passes through one function. No further --first-client walk is planned; a later one rides on this fix. Not measured: a live run of the fixed walker."
+}
+```
