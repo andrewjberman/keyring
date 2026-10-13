@@ -73,3 +73,16 @@ added order in a round that already has an issuance (ONE ISSUER PER ROUND, rule 
 **What CA-i-7 does and does not do.** J290 asked for "a response ... issued/sent through the pipeline". The standing rule (PRD, FWD-4; the CTO's addendum) is that mail is
 drafted, never sent. CA-i-7 builds the loop up to the last step Andrew can take himself: the approved final draft, handed back to paste into Outlook. Saving the draft INTO
 Outlook through a new gateway route is a different component (NFRA_OPLGTW, site Z; the mail route is GET-only today) and a WORLD act; it is put to the CTO as one decision.
+
+## AMENDMENT 2 (2.0.0_SA_COO~CA, 2026-10-13 ~23:2xZ): the mail text tells Andrew how to answer (worker row W13-S1)
+
+CA-i-7 is merged (@d555e412c1) and its worker found the mail text still ends `Reply #dev [notes] to open a job / 0 drop`, so Andrew is never told that `1` and notes work. The issuer rules
+inside its own decomposition: one more cell, DIRECT-ACT, one line and its assertion. Same gate limb as Amendment 1 (a new order in an issued round is admitted only as a workstream; this
+one is `MAILFOOT`, because workstream `MAILREPLY` already carries its issuance).
+
+| cell | what | serves | risk | chain, slot | depends_on |
+|---|---|---|---|---|---|
+| `CA-i-8` | the closing line of `_mail_text` names 1 (approve, paste), notes (redraft), 0 and #dev | FWD-4 mail branch, J290 | LOCAL, DIRECT-ACT | workstream MAILFOOT, slot ~14 | CA-i-7 merged |
+| `CA-i-4` | the single deploy now waits for CA-i-8 as well | FWD-7, FWD-8, FWD-4 | WORLD | a CloudOps seat | CA-i-2, 6, 7, 8 merged |
+
+`fanout (amendment 2): 1 of 1 chain, cap 8, reason: one line in mail_requests.py after CA-i-7, which wrote the same file.`
