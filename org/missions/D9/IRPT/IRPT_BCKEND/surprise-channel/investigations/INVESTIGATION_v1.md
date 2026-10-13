@@ -31478,3 +31478,79 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "RULED: the host-bundle pair is NOT a re-cut of the packages from HEAD (that would ship 25 members' worth of other projects' changes per firm, among them a module-level import of a module the live packages do not carry). It is a MINIMAL package per firm: the live package's bytes with exactly the members the two merged changes touch replaced by the LIVE bytes plus those changes applied (holdings_49f.py, holdings_snapshot.py, the schema copy; holdings_inf.py only if its own temp-file fix needs it, which the census says 135fc3509e does not touch), every other member and SHA256SUMS regenerated only for the replaced members. Built BUILD ONLY, tested by extracting the candidate and running the builder tests against it, and then written as the never-widen pair (COO half and CTO half), applied at the host's next scheduled Online. The next cells: construct and census the candidate packages (live minus nothing, plus the changes) with a member-level diff against live equal to exactly the intended members, and the pair packet. STILL ARMED: W361-S1 and W361-S3 (they describe packages that are live and unchanged; the hazard is a careless re-cut, now fenced by this ruling), W345-S3 and W348-S2. OBSERVATIONS: W361-S2 (my order said the temp-file fix touches holdings_inf.py; it does not: measured), W361-S4 (the guard declares a manifest stamp; the live packages carry SHA256SUMS and S3 metadata members-sha256 and member-count, no manifest member, no source commit), W361-S5."
 }
 ```
+
+## IRPT_BCKEND-D2-W362-S1 -- AC1 needs a non-empty allowed replaced set per firm; the order's own rule gives cottonwood nothing
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W362-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~362",
+  "surfaced_at": "2026-10-13T08:13:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB177-1 AC1 requires every BUILDERS firm's package to replace a non-empty subset of the allowed members; the order's rule (a firm whose builder does not need account_id gets the temp-file fix only if it carries that code path, else nothing) gives cottonwood NOTHING, because build_cot reaches neither retained_capture nor the 49F account_id path. So cottonwood's package replaces zero members and AC1 cannot pass without editing the check, which the worker does not do.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@9863238ccf:2674-2675 maps cottonwood to build_cot; build_cot is defined at :2303",
+      "Grep of holdings_snapshot.py@9863238ccf (worktree) for retained_capture: the only match is its definition at :1266, so build_cot has no caller of it; the only retained_capture callers are holdings_49f.py:634 and holdings_inf.py:287 (Grep of each named file)",
+      "IB177-1_candidate_packages.json plan.cottonwood needs [] (committed in 0da8f0bbfc); the cottonwood candidate is the live object, object sha256 3f2e738f83aa415a2b56cf506d54368f9d2f86f7ded8f19202fc373ef6a28901, not rebuilt"
+    ]
+  },
+  "spec_asserts": "IB177-1 AC1 (p177_cells.py): packages are exactly the BUILDERS firms and each replaces a non-empty subset of the allowed members. Order worker face: a firm whose builder does not need account_id gets the temp-file fix only if it carries that code path, else nothing.",
+  "world_is": "Cottonwood carries neither change, so the order's own rule yields an empty replaced set that the check refuses. Recorded as measured: cottonwood members_replaced is empty and its AC1 result is FAIL. No hunk of any commit was added to cottonwood to satisfy the check. Disposition for the COO and CTO: whether cottonwood's package is in the pair at all, or the check's non-empty expectation is amended by the issuer."
+}
+```
+
+## IRPT_BCKEND-D2-W362-S2 -- the Branch A apply omits the S3 metadata restamp (members-sha256, member-count)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W362-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~362",
+  "surfaced_at": "2026-10-13T08:13:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The Branch A apply in the order copies each candidate object to its key and reads it back; it names no S3 metadata. The live objects carry members-sha256 and member-count (44), so a candidate object copied with the live stamp would name a SHA256SUMS that it no longer carries. The candidate stamps are recorded in the record (candidate_members_sha256_metadata).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api head-object (read only, 2026-10-13) on opal-data-49financial and opal-data-inflection: Metadata members-sha256 73f33c3c59b77528c6eaaa56799e9c55f570a7adac23a0c6bcd12e66fe343a81 (49financial) and 0b1a3bf7077865054a330ba9360521425f6299bb1bb970766023d2011d70a093 (inflection), member-count 44",
+      "candidate SHA256SUMS sha256 97515201fe83bdeca1f47c788f2d701d8c1b975a25f42fb4f6601ed2dd6c1aee (49financial) and 14f55af02989ae7f262759c20b0d4666cd7f535ca74b173d5457df67c2befb9f (inflection), from the scratch rebuild; the record IB177-1_candidate_packages.json (committed in 0da8f0bbfc and later)"
+    ]
+  },
+  "spec_asserts": "IB-pr-510 worker face step 5 (Branch A): the apply is an aws s3 cp of each candidate to its key with the live VersionId named and re-read before the write, one firm at a time, each read back by ETag and sha256.",
+  "world_is": "The apply order as written does not restamp the object metadata; the packet names the restamp as an apply step, so the apply order carries it or the stamp goes stale. Nothing is applied in this order."
+}
+```
+
+## IRPT_BCKEND-D2-W362-S3 -- the live schema copy is CRLF end to end; the candidate keeps the live convention
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W362-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~362",
+  "surfaced_at": "2026-10-13T08:13:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The live HoldingsSnapshot.schema.json copy in the 49financial and inflection packages is CRLF on every line, while HEAD's copy is LF. The candidate schema keeps the live CRLF, so the 7ace854890 lines it adds are CRLF in the candidate; the order does not name line endings.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scratch count on the extracted 49financial package member docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json: 1322 CRLF of 1322 lines; the census member row (IB176-1 census, committed at 2a16f74311) reads head_has_crlf false and live_has_crlf true",
+      "candidate schema sha256 953d319e9b97c71cb9fcf51951d975e15faa5b911496fe897ecad8d8037b1e61, 1326 lines, CRLF throughout; AC2 normalises CR before comparing lines (p177_cells.py lines_of and commit_changed_lines)"
+    ]
+  },
+  "spec_asserts": "IB-pr-510 worker face: each candidate member is the LIVE bytes with the allowed commits' hunks applied; the order names no line-ending rule.",
+  "world_is": "The candidate differs from the live schema only by the four lines of 7ace854890 (CRLF-terminated). Whether the next apply keeps CRLF or converts to HEAD's LF is a choice the pair signs, not one this build made silently."
+}
+```
