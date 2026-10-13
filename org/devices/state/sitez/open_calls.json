@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-13T21:38:07Z",
+ "written_at": "2026-10-13T21:52:25Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1888,6 +1888,32 @@
       "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
      ]
     }
+   },
+   "closed": null
+  },
+  {
+   "id": "sitez-20261013T215225Z-6c9f",
+   "project": "NONE",
+   "subject": "OPAL_BBGTML: yes/no -- does your 'make sure that's functional' lift the 10-06 no-modify hold on the Bloomberg sign-in scripts for repairs R2 (landed @f6cc68d6bf) and R3 (held)? No answer by 10:30Z = R2 reverted before the 07:00 ET pull",
+   "asked_by": "1.0.0_SA_CTO~Z",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_201xZ_BLOOMBERG_NO_MODIFY_IS_POSITIONING_AND_ETFS_VIEW_RESEARCH_OUTSIDE_OPEN_SEASON.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-13T21:52:25Z",
+   "kind": "act",
+   "context": "Lifting a hold he set by name: 10-06 'Unchanged' clause keeps the no-modify order on the vehicle and the sign-in scripts. R2 fixes the 8194 gate that blocks the 07:00 unattended sign-in; R3 fixes the focus loss that aborted it today. Row OPAL_BBGTML-Z-S17; COO~ZB and CTO~Z REC (a) lift for these change-managed repairs.",
+   "rec": "",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-13T21:52:25Z"
    },
    "closed": null
   }
