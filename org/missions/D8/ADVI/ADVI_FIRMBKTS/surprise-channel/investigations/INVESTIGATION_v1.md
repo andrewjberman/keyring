@@ -6326,3 +6326,30 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "The issuer should re-point AC1 at the integrated path or accept the worktree path; the order status is not flipped here."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-i-2, the runner-side emit read)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S44",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-13T07:48:47Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The exec-summary emit fails on the runner with no exception text and the cause reads REGION_UNSET (inferred); the order's probe step collides with the runner's standing access policy, and the 'no CloudTrail PutEvents' premise is not a discriminator.",
+  "spec_asserts": "TO-FB-i-2 section 1: read the runner-side emit path; step 2 sends ONE non-matching PutEvents by ssm send-command to bd-gold-layer-runner only if step 1 is STILL_INDETERMINATE. ROUND_ANALYSIS.round5 section 2 premise: CloudTrail holds no PutEvents call, so the dispatcher's WARN fires without the call reaching the events API.",
+  "world_is": "Read 2026-10-13T07:4xZ. (1) infra/aws/ec2/EC2_MANIFEST.json entry bd-gold-layer-runner carries _access_policy 'EVENTBRIDGE ONLY. No agent, no human, no SSM command may start, stop, or run commands on this instance. Only the bd-gold-trigger Lambda (invoked by EventBridge) may touch it. Manual gold runs go to bd-gold-qa-runner.' The order's step 2 is an ssm send-command to that instance; it was not needed (verdict reached) and not sent. (2) cloudtrail lookup-events EventName=PutEvents in us-east-1 returned 0 events from any principal over 7 days, while the runner's own session shows 806 events (UpdateInstanceInformation 529, ListInstanceAssociations 235, Decrypt 27, CreateInvalidation 14, GetSecretValue 1) and PutMetricData is not logged by CloudTrail at all (the AccessDenied PutMetricData lines in the runner log have no CloudTrail twin): the absence of a PutEvents record is not evidence that the call never left the runner. (3) The runner log carries 33 'SS4c weekly run FAILED (AccessDenied ... cloudwatch:PutMetricData ... no identity-based policy allows ...)' lines from 2026-06-24 and a dtype-divergence AccessDenied (namespace Opal/DataQuality) in the 2026-10-13 04:00Z chain: policy GldRunnerMetrics allows PutMetricData only for namespaces GLDINC/SS4c and BD/GoldRunner, so the first two are IAM matters separate from the emit. (4) The emit WARN's neighbour lines and the CloudFront-invalidation control are in RUNNER_EMIT_READ.json (commit a1408b77df77edf2c3f2f8e391affc5dc169f4ce).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/RUNNER_EMIT_READ.json",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/RUNNER_EMIT_READ.md",
+      "infra/aws/ec2/EC2_MANIFEST.json (bd-gold-layer-runner _access_policy)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Decisions owed: (a) whether the one-event probe is wanted at all given the verdict is reached by inference, and if so how the manifest's standing access policy is reconciled with the CTO's word (the issuer's call; the next runner-up window is 23:00Z); (b) the fix cell (round 7) under its own never-widen pair; (c) whether the 33 SS4c and the dtype PutMetricData AccessDenied lines want their own row owner. Nothing was sent, written or changed by this seat."
+}
+```

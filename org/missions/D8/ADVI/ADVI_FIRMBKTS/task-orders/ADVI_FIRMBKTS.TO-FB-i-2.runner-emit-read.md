@@ -129,7 +129,7 @@ one) -- which would explain a WARN with no CloudTrail record. The estate's own c
 (`estate_report_runner.py:188`). The disarm of `D1-W65-S1` is the fix cell, round 7, not this order. Class WORLD (the conditional probe write
 and a live runner), reads otherwise.
 
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <workstream>EXECSUM</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-i-2</to_id>
