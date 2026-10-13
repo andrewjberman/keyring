@@ -25829,3 +25829,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. No change to the listed behaviour was made beyond the Exception catch."
 }
 ```
+```json
+{
+  "id": "AMGT_RESAPP-D1-W426-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~426",
+  "surfaced_at": "2026-10-13T23:10:23Z",
+  "one_line": "check_fa5_text_blocks.py prints 20 arms, not the 21 the face names, so the AC1 expectation of at least 21 arms cannot be met by the check as shipped.",
+  "spec_asserts": "AMGT-fa-5 face: section 4 AC1 expect reads the line AIFILL FA-5 ARMS: YES (N of N) with N at least 21; the preflight names the check as a prepared acceptance check of 21 arms.",
+  "world_is": "round104_aifill_prep/checks/check_fa5_text_blocks.py at fd17076e15 defines 20 arms (17 arms.run calls and one loop of 3 arms.raises). The run on the cell's committed modules printed AIFILL FA-5 ARMS: YES (20 of 20), exit=0, with zero FAIL lines. The check sits outside this cell's write surface and was not edited.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa5_text_blocks.py@fd17076e15: the arms.run and arms.raises calls, 17 plus a loop of 3",
+      "the AC1 run in worktree C:/dev/wk-resapp-426: last lines ARM no I/O imports; sources are ASCII PASS [], then AIFILL FA-5 ARMS: YES (20 of 20), exit=0"
+    ]
+  },
+  "notes": "Form only. The arm-count expectation is the issuer's to amend or the check's to extend; the worker did not change either."
+}
+```
