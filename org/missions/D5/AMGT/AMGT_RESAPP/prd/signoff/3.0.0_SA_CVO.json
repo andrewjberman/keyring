@@ -1,14 +1,14 @@
 {
   "prd": "AMGT_RESAPP_PRD.md",
-  "prd_version": "v0.42",
-  "prd_pin": "6eda215ac47fc01fabfe8e5c4a23042dfa51538e",
+  "prd_version": "v0.43",
+  "prd_pin": "2a72a556d9a869a4acf6fd18f7bb1d5d51eeecd1",
   "half": "ratified-text",
-  "half_hash": "a337e56d195aad79596d3f6e5dc0eae728db0a1feec7bb8c049303cb63f6e9f9",
-  "endpoint_hash": "1ccf18950c085ab2ca122008f7671d1e985a683bf21ddff7274e445b5de92309",
+  "half_hash": "9f03dafd80407c6174fd00fd25247bf32c7d8afa5a7a2d6fc01ca4ca424fccb9",
+  "endpoint_hash": "c3105d6b4f7e20542d7326f6db362ee15f1f71372f6349530606033021bd21b9",
   "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_AMGT_RESAPP_v0.42_RATIFIED_TEXT_20261013.md@1e185d91e4",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_AMGT_RESAPP_v0.42_RATIFIED_TEXT_20261013.md@eac3ca88a0",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-13T18:19:51Z",
+  "signed_at": "2026-10-13T18:31:39Z",
   "substitute_for": "3.0.0_SA_CVO~Z",
-  "reason": "FWD-40 (b) an unqualified wait and unmeetable by the keep-warm option; (a) broken values and FWD-41 hard thesis items undefined; (d) sample unset and the walker cannot walk PROD"
+  "reason": "FWD-41 block (5) pins a HeaderBrief.tsx description empty-state that does not exist at PROD 15c9754975; ruling W126-S1 puts the description in the identity header (SecurityOverlay.tsx)"
 }
