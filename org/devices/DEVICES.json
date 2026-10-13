@@ -129,5 +129,18 @@
       "lane_letters_source": "no lane runs on this box yet"
     }
   ],
+  "senders": [
+    {
+      "name": "ms",
+      "tailnet_name": "ms",
+      "tailnet_claim": "held",
+      "tailnet_source": "Muse (Z), the operator agent, by Andrew at the 1.0.0_SA_CTO terminal 2026-10-13 ~20:4xZ: it stamps agentbus messages from_tailnet=ms",
+      "role": "sender-only",
+      "role_text": "Muse, Andrew's operator agent on the tailnet: SENDS agentbus messages, never consumes; no inbound queue, no box, no placement, no seats.",
+      "role_claim": "held",
+      "role_source": "Andrew-direct 2026-10-13 ~20:4xZ (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_204xZ_MUSE_SENDER_AND_COO_LIVE_ARMS.md)"
+    }
+  ],
+  "senders_contract": "A sender is a tailnet name the agentbus consumers ACCEPT as from_tailnet (lib/devices.py held_tailnet_names) without being a box: it is never in devices[], so no box list, placement value, queue lookup, SSH or crossbox sweep sees it.",
   "tailnet": "Every box carries its tailnet (Tailscale) name and address. The tailnet name is the cross-box identifier (Andrew-direct 2026-10-07): it rides every bus message beside the sender's serial, and every NEW per-box resource name (queue, IAM user, policy) takes it. Three boxes' register names equal their tailnet names; the laptop's is cloud-local, carried as an alias."
 }
