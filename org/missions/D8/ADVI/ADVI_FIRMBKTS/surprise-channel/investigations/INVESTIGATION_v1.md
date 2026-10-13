@@ -6026,3 +6026,30 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "AC2 stays FAIL on the instance; the order is not flipped. The issuer decides whether the checker path is to be re-pointed at the worktree copy or the record is to be copied to the base checkout; I did not do either."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-h-8, the fence-scoped check)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S43",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-13T06:54:01Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-h-8: the cp1252 crash is fixed, but the fence-scoped check cannot read ok=True for four further reasons that are not the two named: the simulator is denied to this identity (31 of 31 arms), the pinned fence file's CRM selector fails over today's registry, two refusal arms no longer match the validator (5 of 7), and unchanged_today and scoped_rendered read stale against the registry's new `grants` field.",
+  "spec_asserts": "TO-FB-h-8 section 1: two named failures (cp1252 print, before_strip init at one(list)); close on FENCE-SCOPED ... refusals_ok=7/7 ... ok=True with no environment override; section 2.2: a failure for any other reason is a BLOCKING row naming the failing arm; section 1b rule 1: an arm's meaning is not weakened; rule 2: a denied simulator is reported, never stubbed.",
+  "world_is": "Edits committed at 38f8179f10056a0ddaf8d66fe21d389e8068b720: out() replaces non-ASCII, the two git ls-tree reads carry encoding utf-8. The other three tests/ files already read and write with explicit utf-8 and hold 0 non-ASCII bytes. Last line at that HEAD, no override: FENCE-SCOPED rows_today=42 unchanged_today=False scoped_rendered=0/0 sim_ok=0/0 refusals_ok=0/7 unknown_key_refused_by=none ok=False. Reasons, each measured: (1) the named second failure is real but its cause is not `lgic_managed_firm_buckets` being an object: the PINNED fence file (06c783b92b, s3-lgic-firm-buckets.tf line 194) selects `lgic_crm_scope = one([for k,s in local.lgic_managed_firm_buckets : s if length(lookup(s, 'masters', [])) > 0])`, which returns ONE row over the pre-rows registry (before_pre passes) and two rows over today's registry, so one() fails the init of before_strip and before_today ('local.lgic_managed_firm_buckets is object with 2 attributes' is the diagnostic's value dump); HEAD's own file uses restricted_prefix_hosts and says masters 'stopped being unique'. An experiment in a scratch driver (no repository file touched) that gave those two roots HEAD's selector lets them init. (2) With (1) worked around: sim_ok=0/31: iam:SimulateCustomPolicy is AccessDenied to user/cloudops-dell1-agent-user (direct call: 'no identity-based policy allows the iam:SimulateCustomPolicy action'); arms 1-8 and C1-C4 on three buckets all ERROR; not stubbed (rule 2). (3) refusals_ok=5/7: case 3 (a prefix without the trailing /) and case 4 (actions with s3:PutObject) are NOT refused by opal_naming.validate at HEAD (0 refusals, the control is clean), while case 1, 2, 5, 6, 7 are, so the instrument's arms 3 and 4 assert rules the validator no longer carries. (4) The registry's exemptions.json gained a top-level `grants` object (key opal-data-49financial) since the commit before the first scoped row: rows_since reports `top-level field grants changed`, so unchanged_today reads False, and scoped_rendered reads 17/39 (13 scoped rows x 3 expected, 17 rendered).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/round5/ADVI_FIRMBKTS.TO-FB-h-8.fence-instrument-utf8-fixture.proof_of_spec.json",
+      "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf (lines 191-198 at HEAD)",
+      "git show 06c783b92b:infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf (line 194)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No arm was weakened and the simulator was not stubbed. Decisions owed by the issuer: (a) route the 31 simulator arms to the laptop lane (rule 2); (b) rule what the before roots do when the pinned fence file's selector no longer picks one row (give them HEAD's selector, or retire the pinned arm, or re-pin): any of the three changes what the arm asserts; (c) rule arms 3 and 4 against the validator's current rules (did the grants field retire them?), and (d) whether `grants` is an admitted top-level field for unchanged_today. This seat made no further edit to the check."
+}
+```
