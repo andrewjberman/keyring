@@ -182,3 +182,11 @@ condition on a check.
 | item | result | commit |
 |---|---|---|
 | IRPT_BCKEND round 177 | ADJUDICATION_v78 + REMEDIATION_v54: minimal packages built, nothing applied; the 4 unattributed members are CRLF copies (v53 W361-S3 closed); W363-S2 to the CTO; 7 dismissed. Slug sent | 936ddf2b3c |
+
+## Addendum, 2026-10-13 13:04Z to 13:08Z (msg 6927)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_DASHBD round 87 | No row, no judgment; slug by message, no channel change. My live read: irpt-49f-reporting-gold-lambda J6M/92Mh (12:39:43Z, 3008 MB, Successful), since then Traceback 0, ERROR 0, REPORT 1 | none |
+
+Quiet stretch 08:37Z to 13:04Z: watcher re-armed at each expiry; delivery ledger read twice (no message missed).
