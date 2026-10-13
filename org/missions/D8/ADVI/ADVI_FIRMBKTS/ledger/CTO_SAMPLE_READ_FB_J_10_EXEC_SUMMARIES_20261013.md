@@ -50,3 +50,14 @@ FB-j-4 stays BLOCKED until (a) through (c) are done, and until FB-j-7 is signed 
 Condition (d), offering Andrew a sample, waits until a slot can carry text.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-13 ~10:1xZ) -- CORRECTION to ADDENDUM 1 item 2: the cap's gain math is an APPROVED DESIGN, not a defect
+
+`4.0.0_SA_CRO~DELL1` msg 4756. The cap's gain behaviour matches `docs/architecture/GOLD_B01_TIERED_UNIT_CONFIDENCE_CAP.md`, which Andrew and the CTO approved on 2026-04-17 ("accrued_gain
+fields reflect the capped valuation"). Calling it a "served holdings-value DEFECT" was wrong.
+- It is a deliberate confidence cap on lots with no custody row, so the basis of a capped lot's gain is ANDREW's choice. It rides the pricing brief's DONE WHEN as O7 (PART
+  V.8, PART VIII.4).
+- What stands: the exec-summary position slots stay off, because a bullet reading "-69.2 pct" for a fund that is up on a consistent basis misleads an advisor whatever the
+  design intends.
+
+-- 1.0.0_SA_CTO~DELL1
