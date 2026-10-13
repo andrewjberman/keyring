@@ -35,7 +35,7 @@ $clOwn   = 'claude.exe --dangerously-skip-permissions -- 2.0.0_SA_COO~ZI begin'
 $clLane  = 'claude.exe --dangerously-skip-permissions -- 2.0.0_SA_COO~C begin'
 $clBase  = 'claude.exe --dangerously-skip-permissions -- 2.0.0_SA_COO begin'
 $clBare  = 'claude.exe --dangerously-skip-permissions -p hello'
-$clPunct = 'claude.exe -- 0.9.0_WK_CTLPLN~78. go'
+$clPunct = 'claude.exe -- 0.9.0_WK_NFRA_CTLPLN~78. go'
 $clShell = 'powershell.exe -NoProfile -NoExit -Command "ajb -Headless" # OPAL_SPAWN_MARKER_v1'
 
 # ---- 1-4: launch serial identity -----------------------------------------------
@@ -43,7 +43,7 @@ $ls1 = Get-LaunchSerial -CommandLine $clHint
 Check 'launch serial of a seat is its own first serial token, not a serial named in a hint' ($ls1 -eq '0.7.0_AE_CloudOps~IR')
 Check 'a hint naming the target in ANOTHER seat command line is not a target' (-not (Test-LaunchSerialMatch -CommandLine $clHint -Serial $sCOO))
 Check 'the target own launch serial is a target' (Test-LaunchSerialMatch -CommandLine $clOwn -Serial $sCOO)
-Check 'a trailing full stop on the serial token is trimmed' ((Get-LaunchSerial -CommandLine $clPunct) -eq '0.9.0_WK_CTLPLN~78')
+Check 'a trailing full stop on the serial token is trimmed' ((Get-LaunchSerial -CommandLine $clPunct) -eq '0.9.0_WK_NFRA_CTLPLN~78')
 
 # ---- 5-8: no serial, single vs family, no bleed ---------------------------------
 Check 'a command line with no serial token has no launch serial' ($null -eq (Get-LaunchSerial -CommandLine $clBare))
@@ -167,6 +167,72 @@ $spTokens = $null; $spErrs = $null
 $spAst = [System.Management.Automation.Language.Parser]::ParseFile((Join-Path $tools 'spawn-agent.ps1'), [ref]$spTokens, [ref]$spErrs)
 $bareLaunch = $spAst.FindAll({ param($node) $node -is [System.Management.Automation.Language.CommandAst] -and $node.GetCommandName() -eq 'Start-Process' -and $node.CommandElements.Count -gt 1 -and $node.CommandElements[1].Value -match '^powershell(\.exe)?$' }, $true)
 Check 'spawn-agent.ps1 has no bare Start-Process powershell (the caller-child launch)' (@($bareLaunch).Count -eq 0)
+
+# ---- 27-38: underscore project segment, codex.exe seats, one name set ----------
+$sU      = '0.9.0_WK_NFRA_CTLPLN~78'
+$sUBase  = '0.9.0_WK_NFRA_CTLPLN'
+$clU     = 'claude.exe --dangerously-skip-permissions -- 0.9.0_WK_NFRA_CTLPLN~78 begin the round'
+$clCxB   = 'codex.exe --dangerously-bypass-approvals-and-sandbox -- 2.0.0_SA_COO~D2 begin the round'
+$clCxA   = 'codex.exe -- 1.0.0_SA_CTO~DELL2 begin'
+$clCxNo  = 'codex.exe app-server --listen stdio'
+$clNodeB = 'node.exe mcp-server.js 2.0.0_SA_COO~D2'
+
+$ls27 = Get-LaunchSerial -CommandLine $clU
+Check 'an underscore project segment is a launch serial (0.9.0_WK_NFRA_CTLPLN~78)' ($ls27 -eq $sU)
+Check 'an underscore-serial seat is its own target' (Test-LaunchSerialMatch -CommandLine $clU -Serial $sU)
+Check 'an underscore base serial with no lane is a launch serial' ((Get-LaunchSerial -CommandLine 'claude.exe -- 0.9.0_WK_NFRA_CTLPLN begin') -eq $sUBase)
+Check 'single mode: an underscore base does not match its own ~lane' (-not (Test-LaunchSerialMatch -CommandLine $clU -Serial $sUBase))
+Check '-Family admits the underscore base with its ~lane' (Test-LaunchSerialMatch -CommandLine $clU -Serial $sUBase -Family)
+$tree28 = @(
+    (New-FakeProc 1000 1    'powershell.exe' $clShell),
+    (New-FakeProc 1001 1000 'claude.exe'     $clU),
+    (New-FakeProc 1002 1001 'bash.exe'       'bash inbox-watch.sh 0.9.0_WK_NFRA_CTLPLN~78')
+)
+$f28a = @(Test-SeatBoundary -RootPid 1001 -TargetSerial $sU -Processes $tree28)
+Check 'underscore-serial seat tree passes when that seat is the target (count 0)' ($f28a.Count -eq 0)
+$tree29 = @(
+    (New-FakeProc 1100 1    'claude.exe' $clA),
+    (New-FakeProc 1101 1100 'claude.exe' $clU)
+)
+$f29 = @(Test-SeatBoundary -RootPid 1100 -TargetSerial $sA -Processes $tree29)
+Check 'an underscore-serial claude.exe under seat A is foreign and named (count 1)' ($f29.Count -eq 1 -and $f29[0].Serial -eq $sU -and $f29[0].ProcessId -eq 1101)
+$tree30 = @(
+    (New-FakeProc 1200 1    'powershell.exe' $clShell),
+    (New-FakeProc 1201 1200 'claude.exe'     $clA),
+    (New-FakeProc 1202 1201 'codex.exe'      $clCxB)
+)
+$f30a = @(Test-SeatBoundary -RootPid 1201 -TargetSerial $sA -Processes $tree30)
+Check 'codex seat B under claude seat A: killing A tree is refused, codex seat B named (count 1, name codex.exe)' ($f30a.Count -eq 1 -and $f30a[0].Serial -eq $sB -and $f30a[0].ProcessId -eq 1202 -and $f30a[0].Name -eq 'codex.exe')
+$f30b = @(Test-SeatBoundary -RootPid 1200 -TargetSerial $sA -Processes $tree30)
+Check 'codex seat B under the host shell is named too (count 1)' ($f30b.Count -eq 1 -and $f30b[0].Serial -eq $sB)
+$tree31 = @(
+    (New-FakeProc 1300 1    'claude.exe' $clA),
+    (New-FakeProc 1301 1300 'codex.exe'  $clCxA)
+)
+$f31 = @(Test-SeatBoundary -RootPid 1300 -TargetSerial $sA -Processes $tree31)
+Check 'a codex.exe carrying the target own serial is not foreign (count 0)' ($f31.Count -eq 0)
+$tree32 = @(
+    (New-FakeProc 1400 1    'claude.exe' $clA),
+    (New-FakeProc 1401 1400 'codex.exe'  $clCxNo),
+    (New-FakeProc 1402 1400 'node.exe'   $clNodeB)
+)
+$f32 = @(Test-SeatBoundary -RootPid 1400 -TargetSerial $sA -Processes $tree32)
+Check 'a serial-less codex.exe and a serial-bearing node.exe are not seats (count 0)' ($f32.Count -eq 0)
+
+# ---- 39: every copy of the serial-token pattern widens its third segment (AST literals) ----
+function Get-SerialLiterals {
+    param([string]$Path)
+    $tokens = $null; $errs = $null
+    $ast = [System.Management.Automation.Language.Parser]::ParseFile($Path, [ref]$tokens, [ref]$errs)
+    $hits = $ast.FindAll({ param($node) $node -is [System.Management.Automation.Language.StringConstantExpressionAst] -and $node.Value -match '_\[A-Za-z\]\+_\[A-Za-z0-9' }, $true)
+    return @($hits | ForEach-Object { $_.Value })
+}
+$litsSB  = @(Get-SerialLiterals -Path (Join-Path $tools 'seat-boundary.ps1'))
+$litsKA  = @(Get-SerialLiterals -Path (Join-Path $tools 'kill-agent.ps1'))
+$allLits = @($litsSB) + @($litsKA)
+$widened = @($allLits | Where-Object { $_ -match '_\[A-Za-z\]\+_\[A-Za-z0-9_\]\+' }).Count
+$oldLeft = @($allLits | Where-Object { $_ -match '_\[A-Za-z\]\+_\[A-Za-z0-9\]\+' }).Count
+Check ("every serial-token literal in seat-boundary.ps1 and kill-agent.ps1 widens its third segment (literals={0}, widened={1}, old-form left={2})" -f $allLits.Count, $widened, $oldLeft) ($allLits.Count -eq 3 -and $widened -eq 3 -and $oldLeft -eq 0)
 
 $wired = if ($kaCalls -and $kmCalls) { 'both' } elseif ($kaCalls) { 'kill-agent' } elseif ($kmCalls) { 'kill-maint' } else { 'none' }
 $ok = ($script:k -eq $script:n)
