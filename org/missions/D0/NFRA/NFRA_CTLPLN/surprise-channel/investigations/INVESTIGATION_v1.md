@@ -8531,3 +8531,85 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "The read is cheap and preventive: if the live seats' parents are transient wrappers, the cause is the spawn path (the same S9117 class) and the fix is the detached spawn; if the parents are stable, the next candidate is an idle-session exit at the limit prompt, read from the next ending's last stderr line (headless stdout/stderr should be captured to a file per seat from now on -- a log sink, not an alert). Not a cell this round; folds into the round-12 seat-boundary cell."
 }
 ```
+
+## NFRA_CTLPLN-W78-S1 -- the seat-boundary serial pattern cannot read a worker serial whose project code carries an underscore
+
+```json
+{
+  "id": "NFRA_CTLPLN-W78-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~78",
+  "surfaced_at": "2026-10-13T18:12:43Z",
+  "one_line": "The launch-serial pattern in CT-ab-4 (third segment [A-Za-z0-9]+) does not match 0.9.0_WK_NFRA_CTLPLN~78: Get-LaunchSerial returns null for that seat, so the boundary never counts it as a seat, and kill-agent.ps1 refuses the same serial before any tree is judged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree test run 1 (uncommitted, .tools/tests/test_seat_boundary.ps1): Get-LaunchSerial of '0.9.0_WK_NFRA_CTLPLN~78.' returned null and the case 'trailing full stop' FAILED. The fixture was then changed to 0.9.0_WK_CTLPLN~78 and the order's pattern was kept.",
+      ".tools/kill-agent.ps1:53 @5bd9bd2ed2 rejects the serial with 'does not look like an agent serial' (the same third-segment pattern).",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-ab-4.kill-tools-seat-boundary.md:33 (BUILD 1, the pattern as ordered)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO (rules whether a project code may carry an underscore, or the token pattern widens); 2.0.0_SA_COO~C (re-cuts the pattern once ruled)",
+  "spec_asserts": "CT-ab-4 BUILD 1 and S9117: Get-LaunchSerial reads the first full serial token per the ordered pattern, and a kill ends the seat it names and no seat under another serial.",
+  "world_is": "A seat whose project code carries an underscore has a serial the ordered pattern does not match. Such a seat has no launch serial, so the boundary does not count it and a tree holding it can still be stopped; kill-agent cannot target it at all. Not measured: whether any live tree holds such a seat.",
+  "notes": "Not widened here: the order fixes the pattern, and this cell may not widen its own grant. S9117's hazard stays open for underscore-coded seats until the ruling. This worker's own serial is the example."
+}
+```
+
+## NFRA_CTLPLN-W78-S2 -- S9117 fix shape stops at a foreign descendant; CT-ab-4 BUILD 2 refuses the whole tree
+
+```json
+{
+  "id": "NFRA_CTLPLN-W78-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~78",
+  "surfaced_at": "2026-10-13T18:12:43Z",
+  "one_line": "S9117's notes say Stop-ProcessTree should stop AT a descendant claude.exe carrying a different serial. BUILD 2 refuses the whole target tree, so a target with any live foreign seat beneath it is not stopped and kill-agent exits 2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md:8446 (S9117 notes, fix shape 1): 'Stop-ProcessTree stops at a descendant claude.exe whose command line carries a different serial, prints it'.",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-ab-4.kill-tools-seat-boundary.md:34 (BUILD 2): 'a non-empty list REFUSES the kill of that tree'.",
+      ".tools/kill-agent.ps1 (worktree, uncommitted): the Write-SeatRefusal path skips the target and sets exit 2."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S9117 notes fix shape (1) versus CT-ab-4 BUILD 2: stop at the foreign seat without descending into it, versus refuse the kill of the whole tree.",
+  "world_is": "Built to BUILD 2. A target with a live foreign seat under it survives the kill, and so does the host shell when a foreign seat sits under it. Not run live: no kill was executed.",
+  "notes": "The two readings differ only for a target that parents a foreign seat. The COO decides which reading stands; the cell followed the order's wording."
+}
+```
+
+## NFRA_CTLPLN-W78-S3 -- the seat boundary tests claude.exe only; a codex.exe seat under a tree is not judged
+
+```json
+{
+  "id": "NFRA_CTLPLN-W78-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~78",
+  "surfaced_at": "2026-10-13T18:12:43Z",
+  "one_line": "Test-SeatBoundary names claude.exe only (BUILD 1), so a codex.exe seat under a killed tree is neither refused nor named; kill-maint.ps1's existing descendant guard names both claude and codex.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/kill-maint.ps1:725 @5bd9bd2ed2 names 'claude|codex' in the existing descendant guard.",
+      "worktree .tools/seat-boundary.ps1 Test-SeatBoundary name test (uncommitted): -ine 'claude.exe' is the only process name the walk judges."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~C (decides whether codex.exe joins the boundary; one name test in .tools/seat-boundary.ps1)",
+  "spec_asserts": "CT-ab-4 BUILD 1: Test-SeatBoundary returns the descendant claude.exe processes whose launch serial is not the target's.",
+  "world_is": "A codex.exe process carrying a serial is outside the boundary by construction. Not measured: whether any codex seat is parented under a kill target.",
+  "notes": "Built as ordered (claude.exe only). The hazard stays ARMED for codex-launched seats under a tree."
+}
+```
