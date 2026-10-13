@@ -767,11 +767,14 @@ class Box:
             block = dict(mine[key] or {})
             for sub, val in other[key].items():
                 if val is None:
+                    block.setdefault(sub, None)   # a null the other copy carries stays null: the schema allows it
                     continue
                 if block.get(sub) not in (None, val):
                     raise Refused("both copies hold a different %s.%s (%r vs %r): resolve by hand" % (key, sub, block[sub], val))
                 block[sub] = val
             merged[key] = block
+        # validate the merged value FIRST; a refusal here leaves the file as it was (nothing is written before this)
+        check_call(json.loads(dump(dict(merged))), "%s (merged from %s)" % (self.rel(call_id), ref))
         changed = merged != mine
         self.save(merged)
         return ["MERGED %s from %s (%s)" % (call_id, ref, "fields folded in" if changed else "nothing new")] + self.status(call_id)
