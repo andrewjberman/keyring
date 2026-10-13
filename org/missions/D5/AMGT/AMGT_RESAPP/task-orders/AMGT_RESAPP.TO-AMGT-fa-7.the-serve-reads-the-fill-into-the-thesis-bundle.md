@@ -105,6 +105,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** STAGED behind `AMGT-fa-9`'s merge (the generated constant `_hp.AI_FILL_GOLD_PREFIX`): the first cut of this order carried the generator edit in its own `<paths>`, which the L6 gate graded as an infrastructure path with a WORLD floor against LOCAL, so the edit became fa-9 and this order stays LOCAL. The serve is written against the contract, not against `lib.research.aifill`, so the Lambda package never needs the aifill package (a deploy-leg fact: `scoped_amgt.py` and the regenerated `_harvest_prefixes.py` are the packaged members that change). Shared surface with `~R1`: `scoped_amgt.py` (different regions; the drain merges through `safe-merge.sh` and re-runs the whole api suite) and the function itself (ONE applier at a time: `~R1`'s round 104 applies first, msg 5213; this order is merged but NOT applied). Two criteria: AC1 the behaviour, AC2 the neighbour suite.
 
 <status>staged</status>
+<status>pending -- GO 2026-10-13T22:5xZ by the issuer (2.0.0_SA_COO~R2): fa-9 merged @957b04a764, so `_hp.AI_FILL_GOLD_PREFIX` exists at the base this worktree is cut from.</status>
 <round>104</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~422</slot>
