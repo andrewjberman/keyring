@@ -803,3 +803,55 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Not mitigated in this cell: a retry-on-newer-snapshot rule would change the BUILD rule list and needs an issuer ruling. The rejection marker's at field is the run time, not the snapshot's read_at, so a later reader cannot tell from the marker which snapshot judged the answer."
 }
 ```
+
+## COMM_ASSIST-W9-S1 -- the S3 listing's LastModified carries a millisecond fraction that the cell's two example forms do not name
+
+```json
+{
+  "id": "COMM_ASSIST-W9-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~9",
+  "surfaced_at": "2026-10-13T22:40:09Z",
+  "one_line": "The S3 listing's LastModified is 2026-10-13T20:13:51.000Z, a millisecond fraction the cell's two example forms do not name; the first parser read all three sprint objects as having no time.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Measured 2026-10-13 ~22:3xZ from this laptop: aws s3api list-objects-v2 --bucket opal-data-portal-v2 --prefix daily-reports/2026-10-13/ --max-items 5 returned LastModified \"2026-10-13T20:13:51.000Z\" on each Contents entry (rc 0).",
+      "data/transcripts/scripts/muse_reader/refresh.py@8bf64bac36 read_sprint_today passed c.get(\"LastModified\") through unchanged; the scratch run before the parser fix (.scratch/muse_i1/sprint_today.json, 3 items) carried age_minutes null and age_from null on all 3; after the fix the same run carries 144 and last_modified on all 3."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CA-i-1 BUILD 1: with_age ages from the first key whose value parses as an ISO UTC time in the Z or +00:00 form; a value that does not parse is aged None, never guessed.",
+  "world_is": "S3 emits the listing time with a .000 fraction before the Z. refresh.parse_utc now accepts an optional fraction of a second (microseconds kept) and still only the Z and +00:00 offsets; no other offset parses. The widening is my reading of 'ISO UTC time' and is recorded for the L9 read; no criterion changed.",
+  "notes": "The other sources are unaffected: drafts texted_at and eod send_at are written by assist.iso() as %Y-%m-%dT%H:%M:%SZ (teams_chat/assist.py:96, no fraction), and open_calls opened_at by now_utc() in the same form (.tools/open-calls.py:170)."
+}
+```
+
+## COMM_ASSIST-W9-S2 -- the eod_today draft row carries object_id too, because one row builder serves both draft readers
+
+```json
+{
+  "id": "COMM_ASSIST-W9-S2",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~9",
+  "surfaced_at": "2026-10-13T22:40:09Z",
+  "one_line": "The cell names object_id on drafts rows; the shared draft-row builder also serves the eod_today reader, so the End of Day draft row carries object_id as well (its pk, eod:<day>).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/muse_reader/refresh.py@8bf64bac36 read_eod_today reads the row by key eod:<day> and built its one row with _draft_row(state, pending); read_drafts builds its rows with the same helper.",
+      "org/missions/D9/COMM/COMM_ASSIST/surprise-channel/investigations/INVESTIGATION_v1.md COMM_ASSIST-W8-S2 (world_is): a state row's pk is the object id (a chat id, eod:<day>, or inbox:owner)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CA-i-1 BUILD 3: drafts rows carry object_id, the id of the DynamoDB state row the draft was read from; every draft row has a non-empty string object_id.",
+  "world_is": "eod_today's row also carries object_id = eod:<day>, the pk of the row it was read from, so one helper serves both readers and 'every draft row' holds for the End of Day draft. The cell named the drafts reader only; this is my judgment and it changes no criterion. The live run found eod:2026-10-13 with pending=no, so no eod draft row was present and the field is unmeasured on a live eod draft.",
+  "notes": "An eod row without a pk raises, so the source reads unreadable rather than emitting an empty object_id, the same rule the drafts reader applies to a state row without one."
+}
+```
