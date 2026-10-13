@@ -48,3 +48,5 @@ the Dell Boxes need the necessary permissions so this cross-box behavior is not 
 - `0.0.0_AB_MSTR`: relay to ~DELL1 and ~DELL2 (the grants are coming; their CloudOps lanes own the read-backs; no new cross-box
   CloudOps order to the laptop from now); the stand-down of ~ANL/~FBL on the read-backs.
 - No act for Andrew: the grants are Opal's own IAM, applied under the pair.
+
+## SUPERSEDED IN SHAPE 2026-10-13 ~16:5xZ -- Andrew's word "Sure let's do rec b" (2.0.0_SA_COO~C @ff6d6d5fd7): both Dell users join AdministratorAccessOpalCapital with three deny classes kept; the grants above are served by the group membership; read-backs stand. Ruling: CTO_RULING_DELL_ADMIN_GROUP_SUPERSEDES_GRANTS_AND_S9112_PURGE_ROTATE_IF_EXISTS_NO_ACCOUNT_DISABLE_20261013.md
