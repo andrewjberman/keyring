@@ -1,0 +1,211 @@
+#!/usr/bin/env python3
+"""test_open_calls_cloudread.py -- approval-status reads another box's list from the freshest readable source (NFRA_DEVPLN
+round 4, cell DP-e-2).
+
+A foreign box's list is read from three sources -- the cluster copy, origin/box/<box> and the working-tree copy -- and the
+greatest written_at wins; a tie goes to the cluster copy, then git, then the working tree. This box reads its own working
+tree only. A foreign box with no readable source is UNREADABLE rc 2, never ABSENT.
+
+Test seams (never the live lists, never S3, never the real git refs):
+  OPAL_STATE_ROOT         a temporary state root (the working-tree copies live there)
+  OPAL_CLOUD_READ_LOCAL   a temporary directory holding box=<box>/open_calls.json, standing in for the cluster copy
+  OPAL_GIT_READ_ROOT      a temporary git repository whose refs/remotes/origin/box/<box> stand in for the real ones
+OPAL_OPENCALLS_CLOUD=0 is set on every call; the cluster stand-in is read only when OPAL_CLOUD_READ_LOCAL is set.
+
+Last line: OPEN-CALLS-CLOUDREAD-TEST cases=<k>/<n> ok=<True|False>
+"""
+import json
+import os
+import shutil
+import stat
+import subprocess
+import sys
+import tempfile
+
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+TOOL = os.path.join(ROOT, ".tools", "open-calls.py")
+THIS = "laptop"          # this box in the test (AGENTBUS_DEVICE)
+FOREIGN = "dell2"        # a box that is not this box
+SERIAL = "0.9.0_WK_NFRA_DEVPLN~1"
+PRD = "org/missions/D0/NFRA/NFRA_DEVPLN/prd/NFRA_DEVPLN_PRD.md"
+SCHEMA = "open-calls/1"
+T1 = "2026-10-13T10:00:00Z"   # the stale copy
+T2 = "2026-10-13T12:00:00Z"   # the newer copy
+T3 = "2026-10-13T11:00:00Z"   # between them
+BRANCH_F = "cand/%s/t-slug" % FOREIGN
+BRANCH_T = "cand/%s/t-slug" % THIS
+
+
+def _force(func, path, _exc):
+    """A read-only git object on Windows: clear the flag, then remove. Only inside this test's own temporary directory."""
+    os.chmod(path, stat.S_IWRITE)
+    func(path)
+
+
+def row(rid, branch, state="OPEN", closed=None):
+    """one approval row for a branch, shaped as the tool writes it (validate_doc accepts it)."""
+    return {"id": rid, "project": "NFRA_DEVPLN", "subject": "test row " + rid, "asked_by": SERIAL, "source": PRD,
+            "orders": [], "roots": [], "state": state, "opened_at": T1, "scope": {"verdict": "OWN-BOX"}, "closed": closed,
+            "kind": "approval",
+            "approval": {"box": branch.split("/")[1], "branch": branch, "purpose": "test feature " + rid,
+                         "pages": ["portal/a.tsx"], "class": "test-only", "how": "look at it", "head_sha": None,
+                         "commits": None}}
+
+
+def doc(box, written_at, rows):
+    return {"schema": SCHEMA, "device": box, "written_at": written_at, "written_by": "test", "rows": rows}
+
+
+def write_json(path, obj):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(json.dumps(obj, indent=1, ensure_ascii=True) + "\n")
+
+
+def git(repo, *args):
+    p = subprocess.run(["git", "-C", repo, "-c", "user.name=test", "-c", "user.email=test@opal.agent", "-c", "commit.gpgsign=false"]
+                       + list(args), capture_output=True, text=True, encoding="utf-8", errors="replace")
+    if p.returncode != 0:
+        raise RuntimeError("git %s rc=%d: %s" % (" ".join(args), p.returncode, p.stderr.strip()))
+    return p.stdout.strip()
+
+
+class Env:
+    """A temporary base: a state root (working-tree copies), a cluster stand-in directory and a git repository."""
+
+    def __init__(self):
+        self.base = tempfile.mkdtemp(prefix="opalcalls_cloudread_")
+        self.state = os.path.join(self.base, "state")
+        self.cloud = os.path.join(self.base, "cloud")
+        self.repo = os.path.join(self.base, "repo")
+        os.makedirs(self.state)
+        os.makedirs(self.cloud)
+        os.makedirs(self.repo)
+        git(self.repo, "init", "-q")
+        git(self.repo, "commit", "-q", "--allow-empty", "-m", "base")
+
+    def working_tree(self, box, obj):
+        write_json(os.path.join(self.state, box, "open_calls.json"), obj)
+
+    def cluster(self, box, obj):
+        write_json(os.path.join(self.cloud, "box=%s" % box, "open_calls.json"), obj)
+
+    def origin(self, box, obj):
+        """commit the list at org/devices/state/<box>/open_calls.json and point refs/remotes/origin/box/<box> at it."""
+        path = os.path.join(self.repo, "org", "devices", "state", box, "open_calls.json")
+        write_json(path, obj)
+        git(self.repo, "add", "-f", "--", os.path.relpath(path, self.repo).replace(os.sep, "/"))
+        git(self.repo, "commit", "-q", "-m", "list of " + box)
+        git(self.repo, "update-ref", "refs/remotes/origin/box/" + box, "HEAD")
+
+    def cleanup(self):
+        if os.path.isdir(self.base):
+            shutil.rmtree(self.base, onerror=_force)
+
+
+def run(env, args, box_env=THIS, cluster=True):
+    """(rc, stdout, stderr) of one approval-status call. cluster=False leaves OPAL_CLOUD_READ_LOCAL unset."""
+    e = dict(os.environ)
+    for k in ("OPAL_CLOUD_READ_LOCAL", "OPAL_GIT_READ_ROOT", "OPAL_OPENCALLS_CLOUD", "OPAL_STATE_ROOT"):
+        e.pop(k, None)
+    e.update({"OPAL_STATE_ROOT": env.state, "OPAL_OPENCALLS_CLOUD": "0", "OPAL_GIT_READ_ROOT": env.repo,
+              "AGENTBUS_DEVICE": box_env, "OPAL_AGENT_SERIAL": SERIAL})
+    if cluster:
+        e["OPAL_CLOUD_READ_LOCAL"] = env.cloud
+    p = subprocess.run([sys.executable, TOOL] + args, cwd=ROOT, env=e, capture_output=True, text=True,
+                       encoding="utf-8", errors="replace", timeout=120)
+    return p.returncode, p.stdout, p.stderr
+
+
+def status(env, branch, **kw):
+    return run(env, ["approval-status", "--branch", branch], **kw)
+
+
+def main():
+    cases = []
+
+    def check(label, ok):
+        cases.append((label, bool(ok)))
+
+    env = None
+    try:
+        # 1. cluster copy newer than a stale working-tree copy: the cluster rows are read
+        env = Env()
+        env.working_tree(FOREIGN, doc(FOREIGN, T1, [row("wt-stale", BRANCH_F)]))
+        env.cluster(FOREIGN, doc(FOREIGN, T2, [row("cl-new", BRANCH_F)]))
+        rc, out, err = status(env, BRANCH_F)
+        check("cluster newer than a stale working-tree copy: reads the cluster row (state=OPEN row=cl-new), NOTE cluster",
+              rc == 0 and "state=OPEN" in out and "row=cl-new" in out and "row=wt-stale" not in out
+              and ("NOTE: %s list read from cluster written_at=%s" % (FOREIGN, T2)) in err)
+        env.cleanup()
+
+        # 2. git copy newer than a stale cluster copy: git is read; no working-tree copy exists
+        env = Env()
+        env.cluster(FOREIGN, doc(FOREIGN, T1, [row("cl-stale", BRANCH_F)]))
+        env.origin(FOREIGN, doc(FOREIGN, T2, [row("git-new", BRANCH_F)]))
+        rc, out, err = status(env, BRANCH_F)
+        check("git newer than a stale cluster copy: reads the git row (state=OPEN row=git-new), NOTE git",
+              rc == 0 and "state=OPEN" in out and "row=git-new" in out and "row=cl-stale" not in out
+              and ("NOTE: %s list read from git written_at=%s" % (FOREIGN, T2)) in err)
+        env.cleanup()
+
+        # 3. equal written_at in all three sources: the cluster copy is taken
+        env = Env()
+        env.working_tree(FOREIGN, doc(FOREIGN, T2, [row("wt-eq", BRANCH_F)]))
+        env.cluster(FOREIGN, doc(FOREIGN, T2, [row("cl-eq", BRANCH_F)]))
+        env.origin(FOREIGN, doc(FOREIGN, T2, [row("git-eq", BRANCH_F)]))
+        rc, out, err = status(env, BRANCH_F)
+        check("equal written_at in cluster, git and working tree: the cluster copy is taken (row=cl-eq), NOTE cluster",
+              rc == 0 and "row=cl-eq" in out and "NOTE: %s list read from cluster" % FOREIGN in err)
+        env.cleanup()
+
+        # 4. no readable source and no cluster stand-in (the test switch): UNREADABLE rc 2, never ABSENT
+        env = Env()
+        rc, out, err = status(env, BRANCH_F, cluster=False)
+        check("no readable source, cluster read skipped under the test switch: UNREADABLE rc 2, never ABSENT",
+              rc == 2 and "state=UNREADABLE" in out and "state=ABSENT" not in out and "no readable source" in out
+              and "not read under the test switch" in out)
+        env.cleanup()
+
+        # 5. no readable source with the cluster stand-in holding no object for the box: UNREADABLE rc 2
+        env = Env()
+        rc, out, err = status(env, BRANCH_F)
+        check("no readable source, the cluster stand-in holds no object for the box: UNREADABLE rc 2, never ABSENT",
+              rc == 2 and "state=UNREADABLE" in out and "state=ABSENT" not in out and "cluster copy absent" in out)
+        env.cleanup()
+
+        # 6. this box reads only its own working tree, even with a newer cluster copy and a newer git copy of its list
+        env = Env()
+        env.working_tree(THIS, doc(THIS, T1, [row("wt-own", BRANCH_T)]))
+        env.cluster(THIS, doc(THIS, T2, [row("cl-own", BRANCH_T, state="CLOSED",
+                                             closed={"at": T2, "by": "andrew", "decision": "approved"})]))
+        env.origin(THIS, doc(THIS, T3, [row("git-own", BRANCH_T)]))
+        rc, out, err = status(env, BRANCH_T)
+        check("this box reads only its working tree even with a newer cluster copy (row=wt-own, state=OPEN), NOTE working-tree",
+              rc == 0 and "state=OPEN" in out and "row=wt-own" in out and "row=cl-own" not in out
+              and "row=git-own" not in out and ("NOTE: %s list read from working-tree" % THIS) in err)
+        env.cleanup()
+
+        # 7. a cluster copy that fails validation (the wrong device) is skipped; the readable working-tree copy is read
+        env = Env()
+        env.working_tree(FOREIGN, doc(FOREIGN, T1, [row("wt-ok", BRANCH_F)]))
+        env.cluster(FOREIGN, doc("dell1", T2, [row("cl-wrong", BRANCH_F)]))
+        rc, out, err = status(env, BRANCH_F)
+        check("a cluster copy that fails validation is skipped: the working-tree row is read (row=wt-ok), NOTE working-tree",
+              rc == 0 and "row=wt-ok" in out and "row=cl-wrong" not in out
+              and ("NOTE: %s list read from working-tree" % FOREIGN) in err)
+        env.cleanup()
+    finally:
+        if env is not None:
+            env.cleanup()
+
+    fails = 0
+    for label, ok in cases:
+        print("  %s  %s" % ("PASS" if ok else "FAIL", label))
+        fails += 0 if ok else 1
+    print("OPEN-CALLS-CLOUDREAD-TEST cases=%d/%d ok=%s" % (len(cases) - fails, len(cases), fails == 0))
+    return 1 if fails else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

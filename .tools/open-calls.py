@@ -76,7 +76,9 @@ LAST line: CALL-SCOPE project=<CODE> device=<d> paths=<clear|hit> placement=<cle
 OWN-BOX means this box's CTO may settle the call. An act only Andrew can do still goes to him, named as that act: the tool
 prints that sentence and decides nothing about which acts those are.
 
-Environment (tests only): OPAL_STATE_ROOT replaces org/devices/state; OPAL_CROSSBOX_ROOT replaces org/devices/crossbox.
+Environment (tests only): OPAL_STATE_ROOT replaces org/devices/state; OPAL_CROSSBOX_ROOT replaces org/devices/crossbox;
+OPAL_CLOUD_READ_LOCAL=<dir> stands in for the cluster copy for approval-status reads (box=<box>/open_calls.json, read only);
+OPAL_GIT_READ_ROOT=<repo> replaces the repository whose origin/box/<box> refs approval-status reads.
 Exit: 0 done (either verdict is a result), 1 refused, 2 usage or an unresolved box, 3 an unreadable register or list file.
 """
 from __future__ import annotations
@@ -1457,37 +1459,111 @@ def cmd_hold(args) -> int:
 
 # ---------------------------------------------------------------- approval-status (NFRA_DEVPLN DP-b-1)
 
+class _Skip(Exception):
+    """One source of an approval list that is absent or unreadable: skipped, its reason kept for the refusal."""
+
+
+def _git_root() -> str:
+    return os.environ.get("OPAL_GIT_READ_ROOT", "").strip() or ROOT   # tests: a repository standing in for ROOT
+
+
+def _is_this_box(box: str) -> bool:
+    """True only when this box resolves and is `box`. An unresolved identity is not this box: every source is read."""
+    dev = load_mod("opal_devices", "lib/devices.py")
+    try:
+        return this_box(dev, dev.load()) == box
+    except Refused:
+        return False
+
+
+def _source_working_tree(box: str) -> tuple:
+    path = list_path(box)
+    if not os.path.isfile(path):
+        raise _Skip("working-tree copy absent (%s)" % path)
+    try:
+        return json.load(open(path, encoding="utf-8")), path
+    except (OSError, ValueError) as exc:
+        raise _Skip("working-tree copy unreadable (%s)" % exc)
+
+
+def _source_git(box: str) -> tuple:
+    where = "origin/box/%s:org/devices/state/%s/open_calls.json" % (box, box)
+    try:
+        got = subprocess.run(["git", "-C", _git_root(), "show", where], capture_output=True, text=True, encoding="utf-8",
+                             errors="replace")
+    except OSError as exc:
+        raise _Skip("git unavailable (%s)" % exc)
+    if got.returncode != 0:
+        raise _Skip("git show failed (rc %d: %s)" % (got.returncode, got.stderr.strip()[:200]))
+    try:
+        return json.loads(got.stdout), where
+    except ValueError as exc:
+        raise _Skip("%s not JSON (%s)" % (where, exc))
+
+
+def _source_cluster(box: str) -> tuple:
+    local = os.environ.get("OPAL_CLOUD_READ_LOCAL", "").strip()
+    if local:   # tests: a directory holding box=<box>/open_calls.json stands in for the cluster object (read only)
+        path = os.path.join(local, "box=%s" % box, "open_calls.json")
+        if not os.path.isfile(path):
+            raise _Skip("cluster copy absent (%s)" % path)
+        try:
+            return json.load(open(path, encoding="utf-8")), path
+        except (OSError, ValueError) as exc:
+            raise _Skip("cluster copy unreadable (%s)" % exc)
+    if os.environ.get("OPAL_STATE_ROOT", "").strip() or os.environ.get("OPAL_OPENCALLS_CLOUD", "1") == "0":
+        raise _Skip("cluster copy not read under the test switch (OPAL_STATE_ROOT or OPAL_OPENCALLS_CLOUD=0)")
+    try:
+        found, _absent, refused = cloud_read_all([box])
+    except Exception as exc:  # noqa: BLE001 -- an unreachable cluster copy is one skipped source, never a crash
+        raise _Skip("cluster copy unreadable (%s)" % type(exc).__name__)
+    if box in found:
+        return found[box][0], "s3://%s/%s" % (CLOUD_BUCKET, cloud_key(box))
+    if refused:
+        raise _Skip("cluster copy refused (%s)" % refused[0][1])
+    raise _Skip("cluster copy absent (%s)" % cloud_key(box))
+
+
 def approval_read(box: str, store_dir) -> tuple:
-    """(doc, where): the box's list from --store-dir, else the working tree, else origin/box/<box>. Raises BadFile naming the
-    store when it cannot be read: an unreadable store is never read as an absent one."""
+    """(doc, where) for one box's approval list (NFRA_DEVPLN DP-b-1; DP-e-2 freshest source). --store-dir overrides all
+    (tests). THIS box reads its own working tree, else origin/box/<box> as before: the first readable one. A FOREIGN box
+    reads every readable source -- the cluster copy, origin/box/<box>, the working-tree copy -- and takes the greatest
+    written_at; a tie goes to the cluster copy, then git, then the working tree. A source that is absent or unreadable is
+    skipped; if NO source is readable this raises BadFile, so the line reads UNREADABLE and never ABSENT."""
     if store_dir:
         where = os.path.join(store_dir, box, "open_calls.json")
         try:
             text = open(where, encoding="utf-8").read()
         except OSError as exc:
             raise BadFile("%s: unreadable (%s)" % (where, exc))
-    elif os.path.isfile(list_path(box)):
-        where = list_path(box)
         try:
-            text = open(where, encoding="utf-8").read()
-        except OSError as exc:
-            raise BadFile("%s: unreadable (%s)" % (where, exc))
-    else:
-        where = "origin/box/%s:org/devices/state/%s/open_calls.json" % (box, box)
+            doc = json.loads(text)
+        except ValueError as exc:
+            raise BadFile("%s: not JSON (%s)" % (where, exc))
+        return validate_doc(doc, box, where), where
+    this = _is_this_box(box)
+    order = ([("working-tree", _source_working_tree), ("git", _source_git)] if this else
+             [("cluster", _source_cluster), ("git", _source_git), ("working-tree", _source_working_tree)])
+    best, reasons = None, []
+    for label, source in order:
         try:
-            got = subprocess.run(["git", "-C", ROOT, "show", where], capture_output=True, text=True, encoding="utf-8",
-                                 errors="replace")
-        except OSError as exc:
-            raise BadFile("%s: git unavailable (%s)" % (where, exc))
-        if got.returncode != 0:
-            raise BadFile("%s: no working-tree list and git show failed (rc %d: %s)" % (
-                where, got.returncode, got.stderr.strip()[:200]))
-        text = got.stdout
-    try:
-        doc = json.loads(text)
-    except ValueError as exc:
-        raise BadFile("%s: not JSON (%s)" % (where, exc))
-    return validate_doc(doc, box, where), where
+            raw, where = source(box)
+            doc = validate_doc(raw, box, where)
+            if not isinstance(doc["written_at"], str):
+                raise BadFile("%s: written_at is not text" % where)
+        except (_Skip, BadFile) as exc:
+            reasons.append("%s: %s" % (label, exc))
+            continue
+        if this:   # this box: the first readable source is the answer
+            best = (label, doc, where)
+            break
+        if best is None or doc["written_at"] > best[1]["written_at"]:   # strict: a tie keeps the earlier source
+            best = (label, doc, where)
+    if best is None:
+        raise BadFile("%s: no readable source (%s)" % (box, "; ".join(reasons)))
+    label, doc, where = best
+    print("NOTE: %s list read from %s written_at=%s" % (box, label, doc["written_at"]), file=sys.stderr)
+    return doc, where
 
 
 def approval_class_ok(klass: str, by: str) -> bool:

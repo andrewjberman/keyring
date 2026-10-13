@@ -855,3 +855,29 @@
   "world_is": "The worktree's recorded gitlink for portal is 4d6010234e, one commit behind-or-equal to a nested checkout at 24877b67b7 that is ahead of it on the wk-NFRA_DEVPLN-1-portal branch, so the parent index reports portal as modified with no edit by this worker. The cell touches no portal file, so DP-e-1 is unaffected; the gitlink mismatch is not repaired by this worker."
 }
 ```
+
+## NFRA_DEVPLN-W1-S14 -- the DP-e-2 build step 6 needs a git-source test seam the order does not name; the cell adds OPAL_GIT_READ_ROOT (tests only) beside OPAL_CLOUD_READ_LOCAL
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S14",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-13T23:13:04Z",
+  "one_line": "The order names one test-only variable (OPAL_CLOUD_READ_LOCAL) for the cluster stand-in, but its git-newer-than-cluster case cannot run without a controlled origin/box/<box> ref; the cell adds a second test-only variable OPAL_GIT_READ_ROOT, read only when set, and the test builds its own temporary repository",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "approval_read git source before this cell (.tools/open-calls.py at 4d40d2552f): subprocess.run([\"git\", \"-C\", ROOT, \"show\", \"origin/box/<box>:org/devices/state/<box>/open_calls.json\"]); ROOT is the real checkout, so a test reads the real refs",
+      "git -C <worktree> rev-parse origin/box/dell2 is the real remote ref; a test that needs git newer than a stale cluster copy must either write a real ref or read the real dell2 history, and neither is a temporary state",
+      ".tools/tests/test_open_calls_cloudread.py case 2 (git newer than a stale cluster copy) runs with OPAL_GIT_READ_ROOT pointing at a temporary repository; 7/7 cases pass, and the real refs are untouched"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DP-e-2 build step 4 adds ONE test-only variable, OPAL_CLOUD_READ_LOCAL, and build step 6 requires a foreign box whose git copy is newer than a stale cluster copy to read git, on a temporary state root.",
+  "world_is": "The git source has no test seam of its own, so the git-newer case cannot be exercised without a second variable; OPAL_GIT_READ_ROOT is that seam (the repository whose origin/box refs are read, default ROOT, unset in production). The order's one-variable count is exceeded by this one; the production read path and the grammar of the approval-status line are unchanged."
+}
+```
