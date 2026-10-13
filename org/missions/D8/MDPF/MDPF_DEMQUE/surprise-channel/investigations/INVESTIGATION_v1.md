@@ -2163,6 +2163,27 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "data/mdpf/scripts/demque/test_demque_porting_intervals.py test_a_fixed_length_that_does_not_fit_is_replaced_by_a_sha256_drawn_length_that_fits_so_every_testable_security_has_five_intervals recomputes the salted draw"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W45-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~45",
+    "surfaced_at": "2026-10-13T18:39:26Z",
+    "one_line": "The order's fund-type filter for --coverage reads Asset_Type 'from lock.json's class where present', but no landed lock.json carries a class field, so the filter had to take Asset_Type from the Cottonwood transactions instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-53 BUILD step 2: '--coverage ... of the landed names whose Asset_Type is an ETF or fund type (from lock.json's class where present)'.",
+    "world_is": "The live price store (s3://opal-data-assets/yahoo/global/silver/price_history, read 2026-10-13) holds 326 landed names; the lock.json of all 326 was read and none carries asset_class, class or Asset_Type (the sample key set is claim, cusip, locked_at, median_abs_error, method, observations_checked, observations_passed, run_id, state, supersedes, trades_through, valid_from, valid_to, yahoo_symbol). The coverage therefore takes Asset_Type from b1_request.read_transactions (first non-null per CUSIP, the daily_draw rule; 4,634 CUSIPs). Fund types taken: ETF, Mutual Fund, Mutual Fund (Closed End), Unit Investment Trust. Measured: checked 131, classified 108, missing_examples 5 CUSIPs; the classification gap is SECCLASS's path, not DEMQUE's.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/secclass_sync.py coverage() and _run_coverage() at this branch: lock_class() reads lock.json keys asset_class, class, Asset_Type; the stderr line 'lock.json carries a class for 0' printed by --coverage on 2026-10-13",
+        "data/mdpf/scripts/demque/b1_request.py read_transactions() and _asset_types() at commit 41d134244e; the distinct Asset_Type values counted from 1,416,497 transaction rows",
+        "--coverage run 2026-10-13 (rc=0): {\"checked\": 131, \"classified\": 108, \"missing_examples\": [\"001419688\", \"00141B204\", \"00888W700\", \"01883A107\", \"09251M504\"]}"
+      ]
+    }
   }
 ]
 ```
