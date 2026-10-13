@@ -3690,3 +3690,20 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r182/p182_cells.py`, dry-run at the b
 | `IB-pr-516` | `irpt-directory-search` moved to the signed built digest (`handler.py` only) by the module's Terraform path and `safe-apply`, then one synthetic-directory tail search and its resolve through the deployed function | FWD-3 | WORLD (moves a client-facing search) | none (the pair and the three gates above) | P182-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one apply with no sibling cell; the seat is the live `0.7.0_AE_CloudOps~IB2` (no worker spawn).
+
+
+## 175. ROUND 183, WORKSTREAM ~P (2026-10-13 ~19:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round-183 analysis (msg 7149) and its addition (msgs 7178 and 7189: "key the catalogue entries by Opal model identity; the YCharts id is an optional vendor mapping"))
+
+Round 182 closed (the directory-search apply landed; ledger closed; CVO compile v83). Round 183 carries two threads. (1) IB-pr-456's after-read and apply, **NOT cut now: an unmet dependency (Andrew's PROD execution ID is the BEFORE record; no placeholder is admissible); it is cut in the round after the ID arrives; owner me.** (2) The O1 hop the CTO added: the comparison catalogue lacks the Opal Ultra Short-Term model (Y2's read `0.9.0_WK_IRPT_ANLREQ~86/r22/ULTRA_SHORT_TERM_READ.json`: `templates.json` `comparison_catalog.entries` holds 4 of the 5 models the Model Portfolios page lists).
+
+Measured before the cut (rows D2-S148 and D2-S149): no seat can read a YCharts model identity (the gateway search returns nothing even for Opal Short-Term, the positive control), so the cell does not use one; the composition requires a `vendor_id` FIELD and a code-pinned per-key policy digest, not a YCharts id, so an entry in namespace OPAL carrying Opal's own model code (`UST`) passes it; the YCharts path reads `catalog[k]["security_id"]` (`recipe.py` in `validate_envelope`), so it needs a stated refusal for an unmapped entry. Scope: the five models the Model Portfolios page lists (UST, ST, INT, LT, ULT); Fixed Income and the two 50/50 blends are declared in the portal's colour map and are NOT in that served list, so they are recorded, not added.
+
+CUT now: `IB-pr-517` (BUILD only, in a worktree): the new entry, the canonical order, the pin, the YCharts-path refusal and the tests. NOT cut now, with the condition: the census and never-widen packet for the function(s) that package `templates.json`, `maintained_sources.py` and `recipe.py` (round 184, after this builds; a build order carries at most three criteria and the packet is its own cell), and the apply.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r183/p183_cells.py`, dry-run at the base: IB183-1 AC1, AC2, AC3 FAIL; a positive control in a temp tree the run created itself (the change applied by hand) passes AC1 and AC2 and the refusal arm of AC3; the temp tree removed.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-517` | Opal Ultra Short-Term added to the comparison catalogue keyed by Opal's own model identity (namespace OPAL, code UST, no YCharts id), the five models in canonical order, its policy pin, the YCharts path's stated refusal of an unmapped entry, and the tests | FWD-1 (O1 hop) | WORLD (the gate infers the floor from the infrastructure path templates.json; this order is BUILD ONLY and applies nothing) | none | P183-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one build with no sibling cell. One worker spawn (slot ~366).

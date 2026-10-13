@@ -1638,3 +1638,25 @@ endpoint question (FWD-8 accepted with named exceptions) to Andrew as one card. 
 **Decision inside this decomposition (the issuer's, stated):** the figure is `|G_c - R_c| * 100` for the fifth account of the round-90 plan order, with `G_c = G` (no Black Diamond-side correction is taken for that account) and `R_c` the product of the corrected served daily returns; the uncorrected gap is printed beside it as the negative arm.
 
 **fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~139` (`DB-b-173`, direct act).
+
+
+## 96. ROUND 94, WORKSTREAM B (2026-10-13 ~19:3xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ROUND-94 ANALYSIS section ENRICHMENT LIST and msgs 7181 and 7192; PRD v0.14 @6d694ed9a5, ADMITTED)
+
+FWD-8 is REALIZED WITH NAMED RESIDUE (accounts 1 and 6; the laptop ruling @51f07538ea and the CTO's msg 7104). Andrew-direct ~19:0xZ: the default performance report, on the baseline of the Black Diamond 49 Financial Performance Report he supplied; PRD v0.14 adds FWD-21 (any client at any firm opens ONE default
+performance report, on the Performance tab and as the export, in one Opal Shape). The baseline's structure (not its data) is `deliverables/1.0.0_SA_CTO~DELL2/BD_FINANCIAL_PERFORMANCE_REPORT_BASELINE_SCHEMA_20261013.md`; the PDF is client data and stays off the repo. Vendor-agnostic (Andrew ~18:2xZ, `ANDREW_DIRECT_20261013_182xZ_VENDOR_AGNOSTIC_OPAL_SHAPE_IN_GOLD.md`).
+Second to O1/O2; takes no seat from IRPT_ANLREQ; every cell is LOCAL or DEV-only and none touches the gold Lambda. Cottonwood and Inflection samples follow once 49 Financial's reads true and are NOT built here.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. the contract `org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json` (one member per baseline table, column and row; each names its Opal gold source or `ABSENT` with its reason; vendor-free; a `document` layout; folds in FWD-20's map where it exists) and its gap table | `DB-b-174` | FWD-21 | LOCAL | none | R94-1 |
+| 2. one 49 Financial multi-account household built into the contract shape from gold, writes nothing served; unsourced = ABSENT, never zero; the proof read is balance identities, not figures | `DB-b-175` | FWD-21 | LOCAL | `DB-b-174` | R94-1 |
+| 3a. the Performance tab renders the contract shape in the baseline's section order (DEV-only portal candidate; new files only; the mount is the issuer's hookup at the merge) | `DB-b-176` | FWD-21 | LOCAL | `DB-b-174` (shape); fixture-driven | R94-1 |
+| 3b. the export document renders the same shape in the same order (DEV-only portal candidate; new files only) | `DB-b-177` | FWD-21 | LOCAL | `DB-b-176` (the shared view model) | R94-1 |
+| 3c. the smoke fixes: the export status chain read to the failing call and the modal widened (S20); FDRXX to CASH (S21); YTD from the first measured day, labeled (S22) | `DB-b-178` | FWD-21 | LOCAL | none | R94-2 |
+| 4. ledger leg L7, carried: the 2026-10-14 11:41Z fire; `l5b_read.py` | the issuer's own act, no cell | FWD-8 | the fire | none |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the CTO's "Performance tab and the export in one portal candidate" is cut as FOUR cells by write set: the tab and the export document are NEW files in disjoint directories (`dashboard/report/` and `render/performance/report/`), the smoke fixes own the existing files they touch
+(`export/ExportModal.tsx`, the YTD label files), and every one-line mount of a new component into an existing file is the issuer's hookup in ONE merge commit (dispatch Step 5); the merged result goes to the CTO as one candidate; (b) the contract is the shape both renderers and the sample share, so it carries a `document` layout (how a filled report lays out);
+(c) a `member` is a baseline table cell, a chart, a cover field or a convention (the checker derives the required set from the baseline's structure: 117 members, no extras); (d) FDRXX: the cell reads where the class is assigned; if the assignment is in a producer or gold script (outside DEV-only scope) it files a row naming the file and line and changes nothing there; (e) counts and synthetic fixtures only in the repo; the household chosen for the sample is referenced by hash.
+
+**fanout:** 2 of 2 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~140` (`DB-b-174`) and `~144` (`DB-b-178`) now; `~141` (`DB-b-175`) after `DB-b-174` drains; `~142` (`DB-b-176`) after `DB-b-174`; `~143` (`DB-b-177`) after `DB-b-176`.
