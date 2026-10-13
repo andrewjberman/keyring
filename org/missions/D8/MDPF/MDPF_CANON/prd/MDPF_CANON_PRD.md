@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v2.12",
+ "prd_version": "v2.13",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -188,24 +188,58 @@ CONTRACTS changed, so both halves are owed again.
   FWD-9  The AUA Trend shows custom models as ONE block and the strategy groups as
          chips, in the colors the Total Assets breakdown already uses
          DONE WHEN  EXERCISED -- on Model Portfolios > AUA TREND ANALYSIS > Trend (the
-                    period-end bars, the daily area chart and the legend), read on a
-                    local build at a stated commit against the live services:
-                    every individual custom model is summed into ONE series,
-                    "Custom Models", colored with the color the Total Assets
-                    "Models" card hover uses for custom models; ALT Strategies,
-                    ETF Strategies, Client Supervised and Client Unsupervised are
-                    each ONE series with its own legend chip, in the Total Assets
-                    breakdown's grouping and colors; the canonical Opal models
-                    (Ultra Short-Term to Ultra Long-Term) stay as their own series;
-                    and each grouped series' value equals the sum of its members
-                    on three drawn dates (the negative arm: today's build lists
-                    about 17 individual series). Client Supervised and Client
-                    Unsupervised exist only on the dated category-views objects
-                    (the first is 2026-08-27): their chips draw on those dates
-                    alone and read ABSENT, never zero and never interpolated,
-                    on every date without one
+                    period-end bars, the daily area chart, the legend and the
+                    tooltip), read on `bun run dev:live --port 5174` (portal
+                    `package.json` `dev:live`, `scripts/dev-live.mjs`) at a
+                    STATED portal commit against the live services, at Global
+                    and at each firm scope the page offers:
+                    (1) THE SERIES SET. The five canonical Opal models (Ultra
+                    Short-Term to Ultra Long-Term) are one series each. Then:
+                    - "Custom Models" (Total Assets L1 key `Custom`): every
+                      model line that is not canonical, ETF or ALT, INCLUDING,
+                      at Global, FWD-3's pooled "Other Models" line, which it
+                      replaces (no separate "Other Models" series remains);
+                    - "ETF Strategies" (`ETF Strategies`: `opal_div_sma`,
+                      `opal_growth_sma`, `pfde`);
+                    - "ALT Strategies" (`ALT Strategies`: `tax`,
+                      `tax_additive_aua`);
+                    - non-model AUA (`non_model_aua`). On a date WITH a
+                      category-views object it is split into "Client
+                      Supervised" (`Client - Opal Supervised`), "Client
+                      Unsupervised" (`Client - Opal Unsupervised`) and "Other
+                      AUA" (the remainder, `non_model_aua` minus the two). On a
+                      date WITHOUT one it is ONE series, "Other AUA", and the
+                      two Client chips draw nothing. Membership is from
+                      `data/mdpf/scripts/gold/mdpf_category_registry.py`
+                      VIEW_TREE (Client: the `fee_taking` axis, :150-157) and
+                      the issuer's map (`deliverables/2.0.0_SA_COO~D1/round7/
+                      FWD9_GROUPING_READ.md` :28-32). Colors are
+                      `portal/src/components/CategoryViewTree.tsx` `L1_COLOR`
+                      (:87-95), with Custom = `PALETTE.fuchsia500`, the
+                      "Models" card hover color;
+                    (2) THE SUMS. On each drawn date every grouped series
+                    equals the sum of its served members to the cent (abs
+                    diff <= 0.01): the time series' `by_model` for Custom,
+                    ETF and ALT, and that date's category-views node for the
+                    Client chips. The whole stack sums to
+                    `opal_aggregate_aua` to the cent, so no dollar is drawn
+                    twice (CN-d-3's property, kept);
+                    (3) THE DRAW, printed with the read: date A is the as-of
+                    frontier (`lib/trading_calendar.prev_trading_day` of the
+                    build date); date B is 2026-08-27, the first
+                    category-views date; date C is the trading day before
+                    2026-08-27; date D is the first trading day between
+                    2026-08-27 and the frontier with no category-views
+                    object. B, and A when it carries an object, are the
+                    present arms; C and D are the absent arms;
+                    (4) ABSENT, on C and D: no Client bar or area segment is
+                    drawn, the tooltip carries no Client row (or one reading
+                    "absent", never "$0"), and the legend chips stay with no
+                    value for that date. A measured zero is shown as "$0",
+                    never "-$0". The negative arm is today's build, which
+                    lists about 17 individual series
          ACCEPT     The trend reads as a few meaningful groups, not a crowd of
-                    individual models, and it matches Total Assets.
+                    individual models, it matches Total Assets, and it adds up.
          SOURCE     Andrew-direct 2026-10-13 ~18:4xZ at the dell2 terminal, record
                     ANDREW_DIRECT_20261013_184xZ_MODEL_PORTFOLIOS_AUA_TREND_GROUP_CUSTOM_MODELS_AND_CHIPS.md
                     @5e80d5eb9b (owner MDPF_CANON)
@@ -531,5 +565,21 @@ reaching dell1 at the next integrator pass. It was read here from `origin/box/de
 - **Sequencing:** round 6 is executing, so this enters at the round-6 L10 as a round-7 item beside the frontier account counts.
 
 **L4-R:** an ENDPOINT change, so the ratified-text half is re-owed to `3.0.0_SA_CVO`. The brief half is accepted (Andrew's own words).
+
+-- 1.0.0_SA_CTO~DELL1
+
+**v2.13 (2026-10-13 ~19:1xZ), on `3.0.0_SA_CVO`'s REFUSAL of v2.12** (`org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_MDPF_CANON_v2.12_RATIFIED_TEXT_20261013.md`
+@1337ef5c75). FWD-9's DONE WHEN is rewritten to take all seven items:
+1. the draw is named (dates A to D);
+2. the comparison is to the cent against the served members;
+3. membership, colors and labels are cited by path and line;
+4. the Client source is unchanged (ruling (i));
+5. **the stack composition is defined.** The CVO measured Supervised plus Unsupervised about 21-23M short of `non_model_aua` on 3 of 3 dates, so the Client chips SPLIT
+   non-model AUA with an explicit "Other AUA" remainder and never sit on top of it. The whole stack sums to `opal_aggregate_aua`. At Global, Custom Models absorbs
+   FWD-3's pooled "Other Models";
+6. the absent observable is named, and "-$0" is ruled out;
+7. the build mechanism is named.
+
+**Andrew's PROD card carries:** "Client chips: 21 of 495 dates, from 2026-08-27", and the "Other AUA" remainder with its size on the frontier date.
 
 -- 1.0.0_SA_CTO~DELL1
