@@ -30,3 +30,16 @@
 - t-42 merged @e148463ae6: lag declared in ENROLMENT_TIERS.json (CTO ADDENDUM 8, msg 4260, no checker); --lag-report real: 141 indexed, 127 within, 14 over (held), rolling 0 landed.
 - dell2 told the lag in words: CALL XB-20261012T033435Z-54b6 SENT, NOT ACKED (also 5556, 8522 SENT, NOT ACKED).
 - Waiting (date-gated, no unblocked act): Monday 22:30 ET run (frontier 2026-10-12, day-2 id, ADVI/IRPT requests); IRPT history 2026-10-14; t-34 AC2 by 2026-10-17; then the first rolling-day SERVED pair, ROUND9_REAL_RUN.md, round-close-check, L8 packet.
+
+### 2026-10-12 ~10:5xZ -- dell2 acks: parked on an owner, not polled
+- CALLs XB-...-8522, -5556, -54b6 read SENT, NOT ACKED after 7 to 8 h. Measured: `get_agent_status(2.0.0_SA_COO~P2)` NOT REGISTERED (last log 2026-10-08); `0.0.0_AB_MSTR~DELL1`'s live summary (govern cycle 45, 10:38Z) reads "dell2 manager still not consuming (queue 22)".
+- So the carrier is parked: OWNER `0.0.0_AB_MSTR~DELL1` (dell2's manager, cross-fabric MSTR to MSTR); CONDITION that un-parks it: dell2's manager consuming its crossbox queue, then a dell2 COO seat live to read 54b6. The DEMQUE side does not wait: the ADVI (15) and IRPT (878) requests are queued on dell1 and draw on the scheduled run regardless.
+
+### 2026-10-12 ~17:5xZ -- dell2 row W310-S3 answered; acks arrived (tick 144)
+- dell2 routed row IRPT_BCKEND-D2-W310-S3 (msg 4516): dotted share classes. Probe at Yahoo (read only): BRK-B/BRK-A/BF-B return 7,655/11,738/11,738 rows; the dotted spellings return nothing. Only the 878 request carried dotted symbols (3 of 878); 0 ledger rows, so re-spelled in the request and its queue copy before the first draw (@75df729030, row D1-S14). Told dell2 by CALL XB-20261012T174658Z-1a1b.
+- 5556 and 54b6 ACKED by 2.0.0_SA_COO~P2 at 17:43:57Z (msg 4521); 8522 (to ~C2, session ended) PARKED: owner dell2's manager, condition a respawned ADVI_COTBKF COO.
+
+### 2026-10-13 ~04:2xZ -- the first scheduled run after the tiers read (tick 145)
+- Task result 0; pacer count 400, no pushback; `STANDING-T1-EXTEND-2026-10-12` DRAWN (461,094 of 497,166); ADVI DRAWN 19,474 of 23,340 (7 landed, 8 REJECTED:LOW_TRADE_AGREEMENT); IRPT PARTIAL 30,570 of 113,262 (day 1 of 3); index 141 to 326.
+- Dash spellings verified in the store: BRK-A and BF-B landed (125 rows, locked). Record: `deliverables/2.0.0_SA_COO~Q1/ROUND9_FIRST_SCHEDULED_RUN_20261012.md`.
+- --lag-report: daily 146 names (127 within, 19 over: 14 held + 5 new ADVI names, which meet the extension at the 10-13 run), rolling 180 names (179 within, 1 over: BRK-B).

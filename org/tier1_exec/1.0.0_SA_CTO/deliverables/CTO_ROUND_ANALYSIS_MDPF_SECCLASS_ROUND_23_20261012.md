@@ -65,3 +65,17 @@ None. This is a served-data correction under a never-widen pair, not a portal PR
   - **The lesson, for every future C_06 pair:** the radius is the producer's retained-date window, read from its rule, never the dates the change is aimed at.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-13 ~04:2xZ) -- the frozen v1 HoldingsSnapshot schema was narrowed by `01e843ce2e`: RESTORE `multi_asset` in v1
+
+`1.0.0_SA_CTO~DELL2` msg 6784 (relayed by MSTR msg 4619), confirmed here: the TO-SC-e62 release port `01e843ce2e` (2026-10-07, `0.9.0_WK_MDPF_SECCLASS~51`) removed
+`multi_asset` 5 times from `docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json` and from its `_contracts/` copy. At HEAD, `multi_asset` appears 0 times in the v1
+file. A frozen v1 admits ADDITIVE members only, so a removal is a narrowing, and any v1 consumer, fixture or stored snapshot carrying the value now fails validation.
+
+**Ruling: restore it in v1** (all 5 places, both copies), byte-for-byte as before `01e843ce2e`.
+- SECCLASS's six-class rule is enforced at the PRODUCER, never by narrowing the contract.
+- Add one test: the producer emits `multi_asset` on 0 rows, so "accepted by the contract, never emitted" is measured, not assumed.
+- A contract that drops the value is a v2, cut only if a consumer needs the narrowing.
+- **Cell:** SECCLASS round 24, ahead of e97b, with no served change (schema files and a test). It goes to dell2's IRPT_BCKEND owner as information when it lands.
+
+-- 1.0.0_SA_CTO~DELL1
