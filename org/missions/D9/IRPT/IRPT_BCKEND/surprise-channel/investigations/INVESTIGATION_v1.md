@@ -31835,3 +31835,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "RESULT: the account_id member is live end to end on the builder side: 7639 of 7640 (99.99%) 49F ACCOUNT nodes carry it, every one in the landed directory, the one without has no directory candidate; the pre-release snapshot carried none; the node total grew 7634 to 7640 between the two builds (new accounts; not examined). RULED: W364-S2 (publication.py caps selected part reads at 64 and refuses a full-firm read of the 200-part served publication): by design, not a hazard: the serving entry points read only the selected accounts' parts, the cap bounds a per-request read, and the count needed a full in-memory walk by an operator script that runs the same read_exact and account-group checks; ARMED withdrawn to INERT by this ruling. OBSERVATION W364-S1 (carried to the CTO): the builder's own directory read finds the landed directory in the bucket its firm_bucket_map names (opal-data-bd, investor-reporting/directory/latest.json, population 7694) while the canonical address() of the same directory names opal-data-49financial, where no object exists; the account_id counts stand on the builder's read path; whether the directory-search function reads the canonical home or the builder's one is the first thing the directory-search apply's step 0 must establish, because its reach count depends on it. STILL ARMED: W361-S1, W348-S2."
 }
 ```
+
+## IRPT_BCKEND-D2-W365-S1 -- open-deploy marker copy OPEN against a CLOSED exercise ledger (IB-pr-515 step 2)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W365-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~365",
+  "surfaced_at": "2026-10-13T16:11:09Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-515 step 2: the exercise ledger md reads CLOSED but its .open_deploys marker reads OPEN on two worktree HEADs; the apply must measure the artifact before it waits on that ledger.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/change_management/20261013T1521Z_irpt-status-rule-exercise-20261013_deploy_completion.md@8168a663b8 line 3: Status CLOSED -- closed 20261013T154403Z (names irpt-directory-search in its Deploy line).",
+      "org/critical_paths/.open_deploys/irpt-status-rule-exercise-20261013.json@HEAD of worktree wk-irpt-anlreq-73 and of worktree wk-irpt-dashbd-137 (same blob 6fc2e06d): status OPEN.",
+      "The other 34 ledgers naming irpt-directory-search (35 in all, change_management at 8168a663b8) read CLOSED; no other open marker names the function across 50 worktrees (141 unique marker blobs read)."
+    ]
+  },
+  "spec_asserts": "TO IB-pr-515 step 2 and docs/deployment/MDPF_RUNNER_CODE_SYNC.md SEQUENCING: list every deploy ledger naming irpt-directory-search with its status; the apply waits for the ledger to read CLOSED.",
+  "world_is": "The ledger md of the status-rule exercise reads CLOSED (20261013T154403Z), but its .open_deploys marker reads OPEN in the HEAD of two worktrees (wk-irpt-anlreq-73, wk-irpt-dashbd-137). Read only: no deploy, no marker edit. The apply's gate must measure the artifact, not either copy alone.",
+  "notes": "Filed by the build-only recensus. Not disarmed here; no hazard to served values is shown. Step 0 itself MATCHED (function and builder both read opal-data-bd, opal-data-cot, opal-data-inf under investor-reporting/directory), so no home-mismatch row was needed."
+}
+```
+
+## IRPT_BCKEND-D2-S138 -- DISPOSITION after the round-181 drain: step 0 matches; the COO half of the refreshed directory-search pair is signed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S138",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T16:20:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISPOSITION after the round-181 drain: the irpt-directory-search candidate is rebuilt against its CURRENT live and the COO half of the refreshed pair is signed; step 0 MATCHES (no home moves); the gap to the canonical address is ONE row for its migration project.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer re-run in the merged tree: IB181-1 AC1, AC2, AC3 PASS (merge 23fb169341); round-close-check MAY-CLOSE; live CodeSha256 re-read by this seat at ~16:15Z: tvrsQ+w820jp1pxiUoYrhiKCZGVnViUTbBsDUbJEG3w= (last modified 2026-10-13T12:34:28Z), equal to the packet's and to the source map's artifact_sha256.",
+      "the packet NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-515.md (sha256 3c369b9086b3...) read in full; COO half NEVER_WIDEN_IB_pr_515_DIRECTORY_SEARCH_REFRESHED_COO_HALF.md signed at that sha256; the CTO half is unsigned; ledger irpt-status-rule-exercise-20261013 has a completion record (20261013T1521Z)."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "RULED: (1) step 0 reads MATCH: the function (IRPT_DIRECTORY_BUCKET_MAP: opal-data-bd, opal-data-cot, opal-data-inf under investor-reporting/directory, role grants on the same) and the 49F builder read the same directory homes; no home moves. (2) The gap to the canonical address() (opal-data-49financial holds no directory object) is recorded as THIS one row for its migration project (CTO RE 7037; rule 30, R19): it is not a rider on this release and nothing here depends on it. (3) W365-S1 (the exercise ledger's .open_deploys marker still reads OPEN on two worktree HEADs while its change_management ledger reads CLOSED, 15:44Z): the apply measures the artifact on every live worktree before it waits; a stale marker is a clean-up for the trees that hold it. (4) CARRIED, a consumer condition set by me in the COO half: the portal's pick path throws for an ACCOUNT-kind row that is not narrowed (header/selectionRequest.ts:18); the CTO half is asked to confirm that the portal build serving clients handles an ACCOUNT-kind search row before the apply, because this release makes the function return such rows for tail queries. STILL ARMED: W349-S1 (the latent served.py/enforce.py mismatch, now at served:876, unreachable here), W361-S1, W348-S2."
+}
+```
+
+## IRPT_BCKEND-D2-S139 -- HELD by Andrew's word: the directory-search apply and the r181 analysis wait for the laptop CTO; the portal consumer point is open
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S139",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T16:24:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (laptop) or Andrew",
+  "one_line": "HELD by Andrew's word (relayed by 1.0.0_SA_CTO~DELL2, msg 7066): the irpt-directory-search apply and the IRPT_BCKEND round-181 analysis wait for the laptop CTO or Andrew; the portal consumer point (selectionRequest.ts:18 throws for an unnarrowed ACCOUNT-kind row) must be cleared before the apply.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO~DELL2 msg 7066, 2026-10-13 ~16:23Z: 'At ~15:5xZ Andrew interrupted my round-181 analysis with those words ... I will deal with this on the laptop device, not here ... Until he says otherwise I write no IRPT_BCKEND half or analysis. Your IB-pr-515 pair waits for the laptop CTO or his word; apply nothing.' (quoted from the relay; the words 'I will deal with this on the laptop device, not here' are Andrew's per the relay.)",
+      "portal/src/pages/InvestorReporting/header/selectionRequest.ts:8-18 at the shared checkout: an ACCOUNT-kind row that is not narrowed throws 'Choose a client, relationship or account.' (read by this seat); the refreshed packet's consumer table cites it."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "STATE: the IB-pr-515 pair has my COO half SIGNED (packet sha256 3c369b9086b3...) and the CTO half UNSIGNED; nothing is applied; irpt-directory-search stays at CodeSha256 tvrsQ+w82... . HELD: the apply (no seat applies; no order to IB2 is cut); the CTO~DELL2 half and the round-181 analysis; I add no cell on the account_id / directory-search line until the laptop CTO or Andrew speaks (the scope is the relayed words' own: this line; I do not widen it to the rest of IRPT_BCKEND, which has no open order). OPEN (the CTO's instruction): the portal point: if PROD's selectionRequest.ts:18 throws on an ACCOUNT-kind row, the apply must NOT precede a portal fix; I have read the DEV checkout's file only and not whether PROD serves the same code; the check belongs to the portal consumers' owner (DSGN_IRPTV1) and the PROD promote (held, dell1-e7f2). This row is ARMED because the apply, if run, would change what a client-facing search returns before that is cleared; it disarms when the laptop CTO or Andrew releases the hold AND the portal question is answered."
+}
+```
