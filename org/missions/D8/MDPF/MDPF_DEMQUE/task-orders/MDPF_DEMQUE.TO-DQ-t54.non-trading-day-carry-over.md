@@ -59,6 +59,18 @@ Report the whole folder `pytest data/mdpf/scripts/demque` once.
 
 Run each invocation from the worktree root. At the base: `CARRY-BAD no file ...`; `standing_drawer.py: error: unrecognized arguments: --carry-over ...`.
 
+
+### AMENDED 2026-10-13 ~20:5xZ (issuer; no gate limb graded it, no new order added) -- rulings on rows D1-W46-S1 to S3, and the re-seated slot
+
+Your first pass (commits `35fb21e554`, `13578d3e5e`) stands as inherited state. Do NOT merge box/dell1 (blocked by a foreign row); this amended order is placed on your branch by file.
+- **S1 (arm 1): the check was the issuer's error and is corrected.** Your arithmetic was right: Monday 10-12 spends 1,000, Tuesday 0, Wednesday overspent, Thursday and Friday 0 gives
+  (c-1000) + c + 0 + c + c. The check now writes a ledger file for every trading day it means to be read (a spent-nothing day is a `rows: 0` line) and leaves ONE day with no file.
+- **S2 (an absent day): the CONSERVATIVE reading.** A trading day whose budget ledger is missing or unreadable carries **0** (an absent ledger is not a zero spend), and is listed in an `absent_days` key
+  of `carry_over`'s line and of the receipt. `claim` = `measured` when at least one day's ledger was read, else `absent`. The expected line for the check's week is
+  (c-1000) + c + 0 + 0 + c with `absent_days` ["2026-10-15"]. Update `test_an_absent_or_unreadable_budget_ledger_carries_zero_and_the_receipt_says_so` to assert this per-day rule, and change nothing else
+  in the other two tests except the setup they need (a `rows: 0` line instead of a missing file for a day meant to be a zero spend).
+- **S3 (UTC keying of the ledger): known and accepted.** It only lowers the carry. Leave it.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below plus your deliverables folder and this order's file. Scaffolding goes under `.scratch/`, uncommitted.
