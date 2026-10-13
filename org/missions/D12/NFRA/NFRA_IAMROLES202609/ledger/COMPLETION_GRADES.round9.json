@@ -1,0 +1,67 @@
+{
+ "kind": "COMPLETION_GRADES",
+ "schema_version": "1.0",
+ "project": "NFRA_IAMROLES202609",
+ "round": 9,
+ "graded_by": "1.0.0_SA_CTO~Z",
+ "graded_utc": "2026-10-13T08:05Z",
+ "report_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/COMPLETION_REPORT.round9.json@89ae680e21",
+ "rows": [
+  {
+   "fwd_id": "FWD-1",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/ROUND_ANALYSIS.round4.md@20c2fcabe8",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 4 (IAM-u-1, AC4 PASS): the posture stated as a number with its denominator."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/ROUND_ANALYSIS.round3.md@f8571787db",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 3: never-used permissions named per role from the access-advisor read."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/ROUND_ANALYSIS.round4.md@20c2fcabe8",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 4 (IAM-u-3): the condition axis exercised live."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/ROUND_ANALYSIS.round6.md@85cbea7549",
+   "state_observed": "APPLIED",
+   "note": "REALIZED at round 6; at the close 16 of 16 rows are owned (8 declared, 5 exempt, 2 deferred with a reopen condition, 1 retired, 0 unowned), per the CVO's slug REMEDIATION_v9.Z.md@b589e3fad0. Round 9's 5 cells enriched it."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/ROUND_ANALYSIS.round5.md@f77e32d7c3",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 5: DescribeSecret removed from smartx-assets-pull-role, predicted first and read in its window."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/ROUND_ANALYSIS.round3.md@f8571787db",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 3: a past clean-up checked against live state."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/ROUND_ANALYSIS.round3.md@f8571787db",
+   "state_observed": "APPLIED",
+   "note": "REALIZED at round 3: unused and unobservable are separate verdicts."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/ROUND_ANALYSIS.round4.md@20c2fcabe8",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 4 (IAM-u-2, AC4 PASS): the population re-run on demand with a comparison."
+  }
+ ]
+}
