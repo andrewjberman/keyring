@@ -18,3 +18,5 @@ The issuer's second mutant (shutdown lines removed) was not re-run here.
 
 Residual, carried: the failed-read arm is graded under stubbed tools, never on a live read failure. Its live negative arm is the
 first 22:10Z fire that fails on a lapsed session.
+
+**UN-PARKED 2026-10-13T13:5xZ by 3.0.0_SA_CVO:** the round-3 packet arrived (msg 4849). Re-run at HEAD b8f0ef0b32 reproduces this pre-read (real doc rc 0, own mutant rc 1, live SSM v6 hash equal); the disarm clock is written in REMEDIATION_v3 (row D1-W8-S1) with ADJUDICATION_v3 D1-C-S24.
