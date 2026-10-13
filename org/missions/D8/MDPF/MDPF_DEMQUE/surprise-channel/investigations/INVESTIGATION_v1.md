@@ -2184,6 +2184,146 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "--coverage run 2026-10-13 (rc=0): {\"checked\": 131, \"classified\": 108, \"missing_examples\": [\"001419688\", \"00141B204\", \"00888W700\", \"01883A107\", \"09251M504\"]}"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W44-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~44",
+    "surfaced_at": "2026-10-13T18:40:44Z",
+    "one_line": "The order's premise that the request builders already leave out pursued: False does not hold: card_a_slice.py calls rank.rank and reads no pursued flag, and b1_request.py reads none either. Before this change nothing in the demque folder read pursued outside rank.py.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DQ-t-52 BUILD item 2 (task order DQ-t52, WORKER FACE): 'The request builders already leave out pursued: False.'",
+    "world_is": "The exclusion is enforced where the order also names it: demand_queue.draw skips an excluded security (daily_draw.run passes the gate's classes), and extend_frontier leaves excluded names out of every tier. The builders still write a P2 or P3 name into a request file (census: requests/ holds 1,093 such securities, see MDPF_DEMQUE-D1-W44-S5), and the draw skips them there. card_a_slice.py and b1_request.py are outside the grant and were not edited.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/card_a_slice.py@e7a7beca52 line 158: ranked = rank.rank([...]) and no read of pursued in the file (grep)",
+        "data/mdpf/scripts/demque/b1_request.py@e7a7beca52: imports rank (line 54); no call to rank.rank and no read of pursued (grep)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W44-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~44",
+    "surfaced_at": "2026-10-13T18:40:44Z",
+    "one_line": "Five existing tests outside the grant fail on the new rule. Each plans or reports standing names with fake CUSIPs and no classification stub, so the priority gate reads the real crosswalk, classes the fake names P2 (no holder on record) and excludes them. The grant does not cover these four files, so they are left unedited.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order instruction: 'another existing test file that fails on the new rule is a surprise row asking for the grant, not an edit'; the whole folder reports 0 failed.",
+    "world_is": "python -m pytest data/mdpf/scripts/demque -q at e7a7beca52 plus this branch's change: 5 failed, 178 passed (51.6 s). The failing tests, none in <paths>: test_demque_extend_future.py::test_today_equal_to_the_local_date_still_plans; test_demque_extend_guard.py::test_a_frontier_on_or_after_the_latest_valid_to_still_plans; test_demque_lag_report.py::test_the_lag_report_counts_every_indexed_name_in_one_tier_with_its_measured_lag and ::test_a_name_older_than_its_tier_cycle_is_listed_over_and_never_counted_within; test_demque_yahoo_need_class.py::test_the_standing_extension_request_declares_client_and_a_window_start_on_or_after_the_floor. The grant that clears them is the one-line xf._excluded_for stub the order allowed in test_demque_rolling_tiers.py and test_demque_extend_frontier.py, added to each of these four files. Production is unaffected: dq_t52_real.py returns GATE-REAL-OK on the real names.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pytest run at the worktree, output in the worker's scratch: 5 failed, 178 passed in 51.55s; each failing assertion reads 0 symbols or 0 names where the test expects 2 or the daily tier",
+        "test_demque_extend_guard.py:79 'assert day[\"symbols\"] == 2 and day[\"cells\"] > 0' fails with (0 == 2): the extension excluded both fake names as P2"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W44-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~44",
+    "surfaced_at": "2026-10-13T18:40:44Z",
+    "one_line": "rank.py's two S3 loaders compute the repo root with four dirname calls, which lands in data/, so 'from lib.opal_naming import address' fails in a plain python run unless PYTHONPATH carries the repo root. run_daily_draw.sh sets PYTHONPATH, so the nightly path is unaffected.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DQ-t-52 AC2 runs 'python .../dq_t52_real.py' from the worktree root with no PYTHONPATH and expects GATE-REAL-OK (the census must load the crosswalk and transactions).",
+    "world_is": "rank.py@e7a7beca52 lines 136 and 147 take four dirnames of abspath(__file__), which is data/. The first AC2 run returned GATE-REAL-BAD 'crosswalk unreadable (ModuleNotFoundError)' in 0.6 s. priority_gate.py now inserts the repo root from its own four-up path when it is absent from sys.path; rank.py's root formula is unchanged, as it is outside the order's scope. Any other caller of rank.load_crosswalk or load_transactions outside PYTHONPATH hits the same error.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/rank.py@e7a7beca52 lines 136 and 147: root = os.path.dirname x4 of os.path.abspath(__file__)",
+        "AC2 run before the gate-side fix: GATE-REAL-BAD rc=1 REFUSED: crosswalk unreadable (ModuleNotFoundError), 0.6 s; after it: GATE-REAL-OK, 60 s"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W44-S4",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~44",
+    "surfaced_at": "2026-10-13T18:40:44Z",
+    "one_line": "The device queue is not P1-only. Its IRPT copy is cut to P1 (630 of 630), but ADVI_COTBKF-TIER2-15 carries 3 match-open names and R2-SCHED-SLICE-1 carries 1. From the 22:30 ET draw after this merges, those four securities are skipped and counted, not drawn.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order orientation: 'Your change must keep a P1-only queue valid and drawing as before'; DQ-t-52 AC2: the IRPT device queue copy carries no P2 or P3 name.",
+    "world_is": "priority_gate.py --census at e7a7beca52 (S3 read, 2026-10-13): queue/IRPT_BCKEND-AS-TRADED-CLOSES-878.json securities 630, P1 630, P2 0, P3 0; queue/ADVI_COTBKF-TIER2-15-FUNDS-AS-TRADED-20261012.json securities 15, P1 12, P2 3; queue/R2-SCHED-SLICE-1.json securities 3, P1 2, P2 1; the other five queue files are P1 in full. No request file was edited (outside the grant).",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "priority_gate.py --census output line (captured to the worker's scratch, rc 0): files rows for queue/*.json",
+        "census rule field names Andrew-direct 2026-10-13 and the former client and match-open classes"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W44-S5",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~44",
+    "surfaced_at": "2026-10-13T18:40:44Z",
+    "one_line": "1,093 securities in the repo request files carry no CUSIP (a cusip_reason field stands in). The order does not say how a name with no CUSIP is classed. The gate classes it P2 by rank's no-holder rule, so it is excluded; the census counts it P2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DQ-t-52 BUILD item 1: 'a name with no holder on record is P2 (the rank rule), so it is excluded too'; the census rows: every file row has securities == P1 + P2 + P3.",
+    "world_is": "census over requests/ at e7a7beca52: AMGT_RESAPP-S14-CRNCY-SCANNER-US.json 1038 P2; AMGT_RESAPP-S14-CRNCY-SCANNER-US-SLICE1.json 50 P2; AMGT_RESAPP-493c-ICT-IDENTITY.json 1 P2; MDPF_SECHIST-SHT8-TR-FIELD-HISTORY-20261009.json 2 P2; MDPF_SECHIST-SHT8-TR-FIELD-CONFIRM-20261009.json 1 P2; SITEZ-SIGNIN-PREFLIGHT-REFDATA-20261009.json 1 P2, every one with an empty cusip. None is in the device queue. The class is a choice (None is ranked like any name with no holder) for the CTO to confirm.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "priority_gate.py --census (rc 0): the requests/ rows of AMGT_RESAPP-S14-CRNCY-SCANNER-US.json and the five other no-CUSIP files",
+        "priority_gate._request_files: cusips list carries None for a security with no cusip (the rank rule classes it P2)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W44-S6",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~44",
+    "surfaced_at": "2026-10-13T19:06:02Z",
+    "one_line": "The census gives each non_client row securities 0, its count in requested, and null classes: the AC2 check reads a null class as zero and a string n/a would make its sum raise, so this is the only form it passes unedited.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Amended order 2026-10-13, census ruling: a non-client row's classes are counted as n/a 'so the rows still add up'; 'set their securities accordingly'. AC2 file_rows arm: every file row has securities == P1 + P2 + P3.",
+    "world_is": "dq_t52_real.py file_rows computes (f.get('P1') or 0) + (f.get('P2') or 0) + (f.get('P3') or 0); a string 'n/a' raises TypeError there, null sums to 0. The census on this branch prints 8 non_client rows: requested 1,100 in total, securities 0, classes null. The check is unedited.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t52_real.py@b3c92c8830 (file_rows arm, unedited)",
+        "python data/mdpf/scripts/demque/priority_gate.py --census run from the worktree wk-MDPF_DEMQUE-44 (rc 0; 8 non_client rows, requested 1100)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W44-S7",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~44",
+    "surfaced_at": "2026-10-13T19:06:02Z",
+    "one_line": "A non_client security with no CUSIP, once its request is queued, is drawn but cannot be stored: the store is keyed by CUSIP, so the pull is counted under unstored_no_cusip and its pacer request is spent.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Amended order 2026-10-13, ruling: 'a non-client request security with no CUSIP is NOT skipped' (one test); the draw stores prices keyed by CUSIP (daily_draw on_result).",
+    "world_is": "No non_client request is in the device queue today: all 7 queue files are client-class (survey at b3c92c8830). The repo requests/ folder holds non_client securities with no CUSIP: AMGT_RESAPP-S14-CRNCY-SCANNER-US.json 1038, AMGT_RESAPP-S14-CRNCY-SCANNER-US-SLICE1.json 50, AMGT_RESAPP-493c-ICT-IDENTITY.json 1, MDPF_SECHIST-SHT8-TR-FIELD-HISTORY-20261009.json 2, MDPF_SECHIST-SHT8-TR-FIELD-CONFIRM-20261009.json 1, SITEZ-SIGNIN-PREFLIGHT-REFDATA-20261009.json 1. If one is copied to the queue, each such pull is spent and its prices are dropped.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/daily_draw.py on_result, the cusip None branch (this branch)",
+        "survey of requests/ and ~/.opal/demque/queue at b3c92c8830 (7 queue files, all need_class client; the requests/ no-CUSIP counts above)"
+      ]
+    }
   }
 ]
 ```

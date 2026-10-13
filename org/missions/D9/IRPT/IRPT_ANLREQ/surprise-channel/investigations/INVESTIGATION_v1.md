@@ -8931,3 +8931,458 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W86-S1 -- the cell names portal/src/lib/chartColors.ts as the home of MODEL_PORTFOLIO_COLORS; the map is in modelPortfolioColors.ts
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W86-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~86",
+  "surfaced_at": "2026-10-13T19:01:04Z",
+  "one_line": "AR-y-261 names portal/src/lib/chartColors.ts as the home of MODEL_PORTFOLIO_COLORS; the map is declared in portal/src/lib/modelPortfolioColors.ts, and chartColors.ts names it in comments only.",
+  "spec_asserts": "AR-y-261 step 2 says the portal's own model list is portal/src/lib/chartColors.ts MODEL_PORTFOLIO_COLORS, and asks the worker to read it there.",
+  "world_is": "At portal commit 53506d4903 (the gitlink this worktree pins; an ancestor of the base portal HEAD cf52fdbf), MODEL_PORTFOLIO_COLORS is declared at src/lib/modelPortfolioColors.ts:18 and its Ultra-Short Term entry at :55-62. src/lib/chartColors.ts holds PALETTE and mentions MODEL_PORTFOLIO_COLORS only in comments (:129, :134, :646). The read was made with git show of the pinned commit; nothing was changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@53506d4903 src/lib/modelPortfolioColors.ts:18 read by git -C C:/dev/ajb_workspace/portal show 53506d4903:src/lib/modelPortfolioColors.ts",
+      "portal@53506d4903 src/lib/chartColors.ts:129,134,646 (comments only) read by the same git show"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W86-S2 -- the worktree's portal/ submodule is an empty directory; portal facts were read from the pinned object store
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W86-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~86",
+  "surfaced_at": "2026-10-13T19:01:04Z",
+  "one_line": "The worktree's portal/ submodule is not populated, so every portal read in AR-y-261 was made from the base checkout's object store at the pinned gitlink, not from the worktree.",
+  "spec_asserts": "The worktree carries the portal/ product files the cell names as READ paths (portal/src/pages/TicketCenter/AnalysisRequestParts.tsx, comparisonCatalogue.ts, modelPortfolioColors.ts, ModelPortfolios.tsx).",
+  "world_is": "C:/dev/wk-irpt-anlreq-86/portal is an empty directory; the superproject pins portal at 53506d4903 (git ls-files -s portal: mode 160000). Reads used git -C C:/dev/ajb_workspace/portal show 53506d4903:<path> and git grep on that commit (read-only; no fetch, clone, checkout or submodule update). 53506d4903 is an ancestor of the base portal HEAD cf52fdbf, and git diff --stat between the two commits is empty for the six key files. No tree was rebuilt or extracted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -s portal in C:/dev/wk-irpt-anlreq-86 prints 160000 53506d4903aeabac675d87b7fe208fc9945c8ce7 portal; ls -la portal lists no files",
+      "git -C C:/dev/ajb_workspace/portal merge-base --is-ancestor 53506d4903 cf52fdbf returned success; diff --stat over the six key files returned rc 0 with no output"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W86-S3 -- Ultra Short-Term is not in the catalogue's source, so no filter can drop it; the CTO ruling assumes it is
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W86-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~86",
+  "surfaced_at": "2026-10-13T19:01:04Z",
+  "one_line": "The served comparison catalogue is built from templates.json, which holds four model entries and no Ultra Short-Term entry; the form cannot show what the catalogue never serves.",
+  "spec_asserts": "The served comparison catalogue lists every Opal model in the catalogue, Ultra Short-Term included (CTO ruling msg 7151, item 1, relayed in AR-y-261).",
+  "world_is": "The catalogue's model source is infra/aws/lambda/investor-reporting/ycharts/generate/templates.json comparison_catalog.entries, which holds opal_long_term (:103), opal_short_term (:134), opal_intermediate_term (:165) and opal_ultra_long_term (:196). A Grep of the investor-reporting tree finds no Ultra Short-Term or UST model entry. build_catalogue (comparison_catalogue.py:184-200) served those four entries in an offline run (rc 0; 4 entries; no Ultra-Short label). The source's own _meta.claim and verification_requirements require a separate vendor identity verification and firm permission before an entry is added, and forbid inferring a vendor ID from a label. So the fix is not a repo-only edit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "templates.json key lines 103,134,165,196 read by grep -n on the worktree file; comparison_catalogue.py:184-200 run offline via python -c from ycharts/generate (rc 0, 4 entries)",
+      "templates.json _meta.claim and comparison_catalog.verification_requirements read at the worktree file"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W86-S4 -- the estate's model order is written three times, and the served catalogue order is not that order
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W86-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~86",
+  "surfaced_at": "2026-10-13T19:01:04Z",
+  "one_line": "AR-y-261 asks for the estate's one definition of the model order; three copies exist and agree on the five names, and the served catalogue order and the form do not follow them.",
+  "spec_asserts": "The estate holds one definition of the Opal model order, which the form can use for canonical order (AR-y-261 step 4).",
+  "world_is": "Three copies agree on one order: portal src/pages/ModelPortfolios.tsx:88-94 (MODEL_ORDER), portal src/lib/modelPortfolioColors.ts:250-258 (getAllModelColors), and infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-model-portfolio-benchmarks/lambda_function.py:66 (MODEL_CODES = UST, ST, INT, LT, ULT). The served catalogue order is Long, Short, Intermediate, Ultra Long (templates.json :103, :134, :165, :196), and the form renders served order (portal AnalysisRequestParts.tsx:112-121). The holdings tab orders sub-asset classes (portal HoldingsBreakdownTable.tsx:129-176), not models.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@53506d4903 src/pages/ModelPortfolios.tsx:88-94 and src/lib/modelPortfolioColors.ts:250-258 read by git show of the pinned commit",
+      "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-model-portfolio-benchmarks/lambda_function.py:66 and :72-78 read at the worktree"
+    ]
+  },
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-S84 -- (stop record; this seat's own) the Kimi search swap withdrawn by the CTO; TIMXX has yfinance history
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S84",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-13T19:14:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "STOP RECORDED: the CTO withdrew rulings B, (a) and (a') (msg 7176): the Kimi search/chat swap contradicts the PRD's C-SWAP, which retires the model-proposed swap; the cell cut for it was stopped, the cells already drained are unreleased dark code.",
+  "spec_asserts": "C-SWAP (IRPT_ANLREQ_PRD.md :104): one pass per unknown holding: (1) KNOWN in etf-classifications and MDPF_SECHIST; (2) the yfinance checker, one paced call: history means KEPT, a registry row is added, prices land in MDPF_SECHIST; (3) classify only if yfinance has nothing; (4) a deterministic proxy from MDPF_SECCLASS's designated-proxy table; (5) record proxy_for, proxy, method, confidence. resolution_kimi's model-proposed swap is retired.",
+  "world_is": "RECORD: the CTO's withdrawal, msg 7176 (20261013T191024Z): 'follow C-SWAP instead. Do not build the Kimi search or chat path; stop any cell cut for it and record the stop. For TIMXX, run step (2), the yfinance check, first.' STOPPED by this seat at 2026-10-13 ~19:11Z: cell AR-y-266 (the live QA runner for the Kimi search QA): the worker was stopped before any commit; its uncommitted files remain untracked in C:/dev/wk-irpt-anlreq-91 (ycharts/generate/kimi_search_qa_live.py and tests/test_kimi_search_qa_live.py); the order is closed cancelled. ALREADY DRAINED, built dark, not released, no capability file shipped: AR-y-249 (@2fd504168f, the swap advisory on the search endpoint), AR-y-250 (@6cae7c8cc9, the QA harness), AR-y-251 (@c3a5a3181c, the wiring and caller, default off), and the read cells AR-y-246 and AR-y-247. MEASURED by this seat, 2026-10-13 ~19:12Z, step (2) for TIMXX: one yfinance history call (period 1mo) returned 20 daily rows, last close 1.0 on 2026-10-07, 2026-10-08 and 2026-10-09, volume 0: it HAS history, so by C-SWAP TIMXX is KEPT and needs no proxy. NOT read by this seat: where C-SWAP step (2) would be built (the upload door's resolver today asks the YCharts securities_info read; the registry row and MDPF_SECHIST price landing belong to MDPF_SECHIST, dell1), and which of the drained Kimi members a consolidated release must leave out.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/mcp/inbox/2.0.0_SA_COO/~Y2/read/20261013T191024Z_1.0.0_SA_CTO_DELL2_WITHDRAWN__my_proxy-suggestion_rulings_B.md (CTO msg 7176)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/prd/IRPT_ANLREQ_PRD.md :104 (C-SWAP)",
+      "a yfinance history call for TIMXX run by this seat (20 rows)"
+    ]
+  },
+  "class": "OBSERVATION"
+}
+```
+
+## IRPT_ANLREQ-W87-S1 -- (worker 0.9.0_WK_IRPT_ANLREQ~87, cell AR-y-262) the fresh portal worktree carries no node_modules
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W87-S1",
+  "one_line": "The portal candidate worktree for AR-y-262 (C:/dev/wk-portal-87) has no node_modules; the candidate linked the portal checkout's install by a directory junction.",
+  "spec_asserts": "The candidate's tests (bun test) and typecheck (bun run typecheck) run in its own worktree under the portal's own install (face step 1, step 4).",
+  "world_is": "git worktree add of origin/DEV at f6ef1d2548 created C:/dev/wk-portal-87 without node_modules. The candidate ran bun test and bun run typecheck through a directory junction C:/dev/wk-portal-87/node_modules -> C:/dev/ajb_workspace/portal/node_modules (created with New-Item -ItemType Junction). No bun install was run, and no package.json, lockfile or config was touched. The junction is git-ignored and was left in place for the L9 reader; a non-recursive removal (rmdir on the junction) is the way to take it out.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/ajb_workspace/portal worktree list: C:/dev/wk-portal-87 on branch wk-IRPT_ANLREQ-87-portal",
+      "C:/dev/ajb_workspace/portal/node_modules exists (317 entries counted through the junction)"
+    ]
+  },
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~87",
+  "surfaced_at": "2026-10-13T19:15:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT"
+}
+```
+
+## IRPT_ANLREQ-W87-S2 -- (worker 0.9.0_WK_IRPT_ANLREQ~87, cell AR-y-262) the portal repository has no committer identity for the worker
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W87-S2",
+  "one_line": "git commit in the portal repository refused: Committer identity unknown; the candidate commit named the serial through --author and GIT_COMMITTER_* for that one command.",
+  "spec_asserts": "The candidate is committed in the portal repository under the serial, the way earlier candidate branches were (face step 1: commit as the earlier candidate was made).",
+  "world_is": "The first git commit in C:/dev/wk-portal-87 stopped with 'Committer identity unknown' (no user.name or user.email in this session) and created no commit. The commit that landed, 62d455f5 on wk-IRPT_ANLREQ-87-portal (local, not pushed), carries the serial as author (--author) and as committer (GIT_COMMITTER_NAME / GIT_COMMITTER_EMAIL set on that command only). No global or repository git config was written. The workspace safe-commit.sh was not used because it names no portal path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal repo commit 62d455f5 (git log -1 on wk-IRPT_ANLREQ-87-portal: author and committer both 0.9.0_WK_IRPT_ANLREQ~87)",
+      "the refused first attempt printed 'fatal: unable to auto-detect email address' (rc=128)"
+    ]
+  },
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~87",
+  "surfaced_at": "2026-10-13T19:15:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT"
+}
+```
+
+## IRPT_ANLREQ-W87-S3 -- (worker 0.9.0_WK_IRPT_ANLREQ~87, cell AR-y-262) the estate has no single exported model-order constant
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W87-S3",
+  "one_line": "The face's premise 'the estate has a single order constant' holds only in part: the page-local MODEL_ORDER list and the exported getAllModelColors() both spell the canonical order.",
+  "spec_asserts": "The form imports the estate's existing canonical order constant and does not type a model list of its own; if the estate has no single order constant, STOP and file BLOCKING (face step 2).",
+  "world_is": "portal/src/pages/ModelPortfolios.tsx:88 holds MODEL_ORDER (Ultra-Short Term, Short Term, Intermediate Term, Long Term, Ultra-Long Term), not exported. portal/src/lib/modelPortfolioColors.ts:250-258 getAllModelColors() is exported and returns the five canonical colour rows in the same order, each carrying its canonical name. The candidate imports getAllModelColors (read at portal DEV f6ef1d25) and did not export MODEL_ORDER, which would edit a page outside the grant. The two lists agree today. The face's STOP condition was read as not triggered because getAllModelColors is the one exported order source; the issuer can overrule that reading.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/ModelPortfolios.tsx@f6ef1d25:88-94 (MODEL_ORDER, not exported)",
+      "portal/src/lib/modelPortfolioColors.ts@f6ef1d25:250-258 (getAllModelColors, exported)"
+    ]
+  },
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~87",
+  "surfaced_at": "2026-10-13T19:15:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT"
+}
+```
+
+## IRPT_ANLREQ-W87-S4 -- (worker 0.9.0_WK_IRPT_ANLREQ~87, cell AR-y-262) 'Opal Fixed Income' is declared canonical elsewhere but sits in no canonical order
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W87-S4",
+  "one_line": "A catalogue entry 'Opal Fixed Income' is declared a canonical model in the estate, yet it is in neither the five-row order nor the duration ladder; under the rule it lists last with no colour.",
+  "spec_asserts": "Entries that match no canonical name keep the catalogue order after the matched ones and get no colour (face step 2, name_matching).",
+  "world_is": "portal/src/lib/modelPortfolioColors.ts:84-106 pins 'Fixed Income' (its comment quotes Andrew-direct 2026-08-28: 'There is a canonical Opal Fixed Income model') with a violet colour; :315 aliases 'Opal Fixed Income' to it. DESIGN.md C4 and getAllModelColors() carry five rows and no Fixed Income. The candidate follows the face rule, so the Opal Fixed Income checkbox lists after the five, uncoloured. Whether Fixed Income joins the order and the colour rule is the issuer's call.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/lib/modelPortfolioColors.ts@f6ef1d25:84-106 and :315",
+      "portal/DESIGN.md C4 table (five rows; the ladder)"
+    ]
+  },
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~87",
+  "surfaced_at": "2026-10-13T19:15:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT"
+}
+```
+
+## IRPT_ANLREQ-W87-S5 -- (worker 0.9.0_WK_IRPT_ANLREQ~87, cell AR-y-262) the candidate's visual change was not rendered
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W87-S5",
+  "one_line": "The portal verification law's rendered screenshot was not produced for the AR-y-262 candidate's checkbox colour change.",
+  "spec_asserts": "A visual change is rendered and its screenshot read before it is committed (portal/CLAUDE.md, Verification law: /frontend-dev, scripts/ui-smoke.mjs).",
+  "world_is": "The candidate sets --model-accent on the checked model's label and reads it through the Tailwind arbitrary variant [&>input]:accent-[var(--model-accent)]. The markup tests and the typecheck pass; no browser render or screenshot was taken, so the generated CSS and the on-band look are not seen. The rendered check is open for the L9 reader. Nothing is landed or pushed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/CLAUDE.md@f6ef1d25 'Verification law' section",
+      "portal commit 62d455f5 (src/pages/TicketCenter/AnalysisRequestParts.tsx, the [&>input]:accent-[var(--model-accent)] class)"
+    ]
+  },
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~87",
+  "surfaced_at": "2026-10-13T19:15:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT"
+}
+```
+
+## IRPT_ANLREQ-W87-S6 -- (worker 0.9.0_WK_IRPT_ANLREQ~87, cell AR-y-262) origin/DEV moved while the candidate was made
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W87-S6",
+  "one_line": "origin/DEV advanced from the recorded dev_tip f6ef1d2548 to 4d6010234e during the cell; the candidate is based on f6ef1d25.",
+  "spec_asserts": "The candidate is made on origin/DEV at the tip the worker fetched and records as dev_tip (face step 1).",
+  "world_is": "git fetch origin DEV at the start read origin/DEV = f6ef1d2548 (recorded as dev_tip). When the candidate was closed, git rev-parse origin/DEV in the portal repository read 4d6010234e, and the DEV checkout's files (ProspectComposer.tsx, prospect.ts, TicketCenter.tsx, the analysis tests) differ from f6ef1d25. The candidate was not rebased. Its base is f6ef1d25, and the L9 reader should test it against the newer tip before any landing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/ajb_workspace/portal rev-parse origin/DEV at fetch: f6ef1d2548cf6f619f80662d3082d66ea0a3fcf4",
+      "git -C C:/dev/ajb_workspace/portal rev-parse origin/DEV at close: 4d6010234ed2eb1d0a1c1782b4bf782b7e019993"
+    ]
+  },
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~87",
+  "surfaced_at": "2026-10-13T19:15:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT"
+}
+```
+
+## IRPT_ANLREQ-D2-W88-S1 -- AR-y-263 step 4(c) asks for a board display of a stored advisory_fee; no board renders ticket answers, so (c) is not written
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W88-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~88",
+  "surfaced_at": "2026-10-13T19:10:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "class": "OBSERVATION",
+  "one_line": "TO AR-y-263 step 4(c) asks for a test that an existing ticket's advisory_fee still renders where the board showed it. On the portal DEV tip no board renders a ticket's answers, so there is no rendering to pin; test (c) is not written and the candidate 9ef6a359b8 carries tests (a) and (b) only.",
+  "spec_asserts": "TO AR-y-263 step 4(c): an existing ticket with an advisory_fee still renders its value where the board showed it; step 3: a ticket that already carries an advisory_fee still displays as before.",
+  "world_is": "On portal origin/DEV 4d6010234e (the tip the candidate sits on) no src/ file displays a ticket's answers.advisory_fee. advisory_fee appears in portal src/ only at src/api/endpoints/tickets.ts:43 (the optional type member, kept by the candidate), at src/pages/TicketCenter/analysisRequest.ts (the validation branch, removed by the candidate) and in tests. src/pages/TicketCenter/TicketCenter.tsx reads no ticket answers member (its answers references are answersFromForm at :69 and :309 only). The board therefore showed no fee for any ticket on this tip. Server side, infra/aws/lambda/ticket_center/lambda_function.py:110 keeps advisory_fee optional, so an earlier ticket may still store one with nothing displaying it. Measured by this seat in portal worktree C:/dev/wk-portal-88 and workspace worktree C:/dev/wk-irpt-anlreq-88 at 56c8113a00.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@4d6010234ed2 src/pages/TicketCenter/TicketCenter.tsx (no ticket answers display; read by 0.9.0_WK_IRPT_ANLREQ~88)",
+      "portal@4d6010234ed2 src/api/endpoints/tickets.ts:43 (type member only; grep of portal src/ for advisory_fee)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:110@56c8113a00 (optional, required False, no value applied when absent)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W88-S2 -- the portal DEV tip moved three times while the AR-y-263 candidate was cut
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W88-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~88",
+  "surfaced_at": "2026-10-13T19:10:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "class": "OBSERVATION",
+  "one_line": "origin/DEV in the portal repository moved from f6ef1d2548 to c1d3672317 and then to 4d6010234e while the candidate was cut; the candidate branch was fast-forwarded onto 4d6010234e with its uncommitted edits held, and the record names 4d6010234e as dev_tip.",
+  "spec_asserts": "TO AR-y-263 step 1: record dev_tip (full sha of origin/DEV) and cut the portal worktree from origin/DEV.",
+  "world_is": "origin/DEV was f6ef1d2548 at this seat's fetch and at worktree creation. Sibling landings then moved it: c1d367231c (merge of wk-IRPT_ANLREQ-85-portal at 3b1f44ba67) and 4d6010234e (hide of Trade Request in TicketCenter.tsx by 1.0.0_SA_CTO~DELL2). The fast-forward (git merge --ff-only) touched files this seat did not change; the candidate's seven files had no overlap with either landing. The candidate commit 9ef6a359b8 sits on 4d6010234e. Measured by git rev-parse origin/DEV at each step.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal repository git rev-parse origin/DEV read by 0.9.0_WK_IRPT_ANLREQ~88 at f6ef1d2548, c1d367231c and 4d6010234e",
+      "portal commit 4d6010234ed2 hide(TicketCenter, 1.0.0_SA_CTO~DELL2) in the portal history"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W88-S3 -- the commit-pattern branch named by step 1 does not exist in the portal repository
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W88-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~88",
+  "surfaced_at": "2026-10-13T19:10:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "class": "OBSERVATION",
+  "one_line": "TO AR-y-263 step 1 names wk-IRPT_ANLREQ-63-portal as the pattern for the portal commit; no local branch of that name exists in the portal repository, so the pattern was taken from its commit f6446051, whose message names that branch.",
+  "spec_asserts": "TO AR-y-263 step 1: commit the way an earlier candidate branch was made (git -C ... log of wk-IRPT_ANLREQ-63-portal).",
+  "world_is": "git -C C:/dev/ajb_workspace/portal branch --list '*63*' lists wk-IRPT_BCKEND-163-portal and wk-IRPT_BCKEND-363-portal only, and git log on wk-IRPT_ANLREQ-63-portal is an unknown revision. Commit f6446051 (author and committer 0.9.0_WK_IRPT_ANLREQ~63, message naming the candidate branch) is in the portal history and was used as the pattern: the worker serial as author, a candidate-form message, a Co-Authored-By trailer. Measured by 0.9.0_WK_IRPT_ANLREQ~88.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal repository git branch --list '*63*' read by 0.9.0_WK_IRPT_ANLREQ~88 (no wk-IRPT_ANLREQ-63-portal)",
+      "portal commit f6446051 (AR-y-214 candidate, message names wk-IRPT_ANLREQ-63-portal)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W89-S1 -- (AR-y-264 worker row) the ticket service reads add_commentary, not commentary_requested; the checked box first stops in the portal submission builder
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W89-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~89",
+  "surfaced_at": "2026-10-13T19:11:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-264 (Add commentary): the ticket service declares and reads add_commentary, not commentary_requested; the checked box first stops in the portal's analysis submission builders, so the cell's step-3 rename of the answer would be refused by the ticket service.",
+  "spec_asserts": "AR-y-264 step 3 (worker face): the form sends the member the ticket service reads, with the name commentary_requested, in the place the ticket service reads it.",
+  "world_is": "The ticket service declares and stores add_commentary (infra/aws/lambda/ticket_center/lambda_function.py:112 question; :624-625 item answers stored as given) and refuses any answer name it does not declare (:694-696, unknown answer(s)). It never names commentary_requested (ticket_center/ holds no occurrence). The member the packager reads sits in the analysis SUBMISSION body (infra/aws/lambda/investor-reporting/ycharts/generate/submission.py:16,82; acceptance.py:138-139; resident_worker.py:191-197 gates analysis_ready on it). The first hop where a checked box stops reaching commentary_requested is the portal (portal lane): src/pages/TicketCenter/analysisRequest.ts submissionBody :197-211 and analysisBody :257-272 build the submission with no commentary member. Candidate 972c7dab on wk-IRPT_ANLREQ-89-portal keeps add_commentary in the ticket answers and adds commentary_requested to both builders.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:112,624-625,694-696 @56c8113a00 (workspace worktree base)",
+      "src/pages/TicketCenter/analysisRequest.ts:197-211,257-272 @f6ef1d25 (portal DEV tip, read in the portal worktree)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py:16,82 @56c8113a00",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py:138-139 @56c8113a00"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W89-S2 -- (AR-y-264 worker row) the portal's closed submission reader refuses commentary_requested before transport
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W89-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~89",
+  "surfaced_at": "2026-10-13T19:11:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-264: adding commentary_requested to the submission body alone sends nothing, because the portal's closed reader refuses any key outside its allowed set before transport.",
+  "spec_asserts": "AR-y-264 (worker face): the box's member reaches the analysis submission the packager receives; the send is the submission path the form uses.",
+  "world_is": "src/pages/InvestorReporting/contracts/submission-request.ts:14 allowed set and :25 refusal of any other key. LiveClient.submitAnalysisRequest (src/api/endpoints/investor-reporting.ts:1472-1473) calls readSubmissionRequest(body) before transport, so on f6ef1d25 a body carrying commentary_requested is refused with TypeError and no POST is made (measured: the candidate's tests (a) to (d) fail there). Candidate 972c7dab widens the allowed set to the schema's optional boolean member only (non-boolean refuses). The change sits in an InvestorReporting contract file, outside the TicketCenter folder the cell names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "src/pages/InvestorReporting/contracts/submission-request.ts:14,22-25 @f6ef1d25 (portal DEV tip)",
+      "src/api/endpoints/investor-reporting.ts:1472-1473 @f6ef1d25 (portal DEV tip)",
+      "src/pages/InvestorReporting/contracts/wire/AnalysisSubmissionRequest.ts:23 @f6ef1d25 (optional boolean member)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W89-S3 -- (AR-y-264 worker row) a fresh portal worktree carries no node_modules
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W89-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~89",
+  "surfaced_at": "2026-10-13T19:15:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-264: the new portal worktree C:/dev/wk-portal-89 had no node_modules, so bun test and bun run typecheck could not run until it was linked.",
+  "spec_asserts": "AR-y-264 step 4: the tests and bun run typecheck run in the portal worktree (no install step is named).",
+  "world_is": "git worktree add of origin/DEV gives a tree without node_modules. The candidate linked the main checkout's install by a directory symlink (C:/dev/wk-portal-89/node_modules -> C:/dev/ajb_workspace/portal/node_modules, the pattern C:/dev/wk-portal-74 already carries); git status stayed clean (node_modules is ignored). No package install was run and nothing was downloaded.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/ajb_workspace/portal worktree add C:/dev/wk-portal-89 -b wk-IRPT_ANLREQ-89-portal origin/DEV (rc=0, HEAD f6ef1d25)",
+      "C:/dev/wk-portal-74/node_modules symlink to /c/dev/ajb_workspace/portal/node_modules (existing pattern, read at 2026-10-13)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W89-S4 -- (AR-y-264 worker row) the portal repository has no committer identity for this worker
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W89-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~89",
+  "surfaced_at": "2026-10-13T19:15:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-264: git commit in the portal worktree failed with 'Committer identity unknown' until the serial was given as the committer for that one command.",
+  "spec_asserts": "AR-y-264 step 5: commit in the portal worktree the way an earlier candidate branch was made, with the serial as author.",
+  "world_is": "The portal repository (C:/dev/ajb_workspace/portal) has no user.name or user.email for this device, so the first commit attempt (author set by --author only) returned rc=128 and created nothing. The candidate commit 972c7dab was made with GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL set for that one command to the serial; no git config was written. The earlier candidate 0.9.0_WK_IRPT_ANLREQ~85 (3b1f44ba67) carries the same author and no committer override is recorded on it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-portal-89 commit --author=... -F <msgfile> (rc=128, 'Committer identity unknown')",
+      "git -C C:/dev/wk-portal-89 log -1 972c7dab: author and committer both 0.9.0_WK_IRPT_ANLREQ~89"
+    ]
+  }
+}
+```

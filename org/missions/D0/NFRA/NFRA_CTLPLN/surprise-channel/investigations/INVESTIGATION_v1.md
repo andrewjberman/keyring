@@ -8857,3 +8857,160 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "disarm_owner": "2.0.0_SA_COO~C (issuer of lane NFRA_CTLPLN_FAST_C; decides the lane_letters form and lands the site Z row)"
 }
 ```
+
+## NFRA_CTLPLN-W81-S1 -- TO-CT-ab-8 cannot derive FABRIC_ENUM: the AST carrier is read by the tree index outside the grant
+
+```json
+{
+  "id": "NFRA_CTLPLN-W81-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~81",
+  "surfaced_at": "2026-10-13T18:26:11Z",
+  "one_line": "TO-CT-ab-8 BUILD 1 cannot make FABRIC_ENUM derived: .tools/missions-tree-index.py reads it by ast.literal_eval (outside the grant), so a derived assignment raises there; the gate's decisions already read the register.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/missions-tree-index.py@2ab34bf8ff:70-86 _resolve_enum reads the module-level FABRIC_ENUM by ast.literal_eval; measured: ast.literal_eval on FABRIC_ENUM = tuple([...]) raises ValueError malformed node (scratch probe, .scratch/derived_probe.py)",
+      "org/standards/PROJECT_TREE.contract.json@2ab34bf8ff:84-87 value_enums.fabric names source .tools/to-pipeline-gate.py and symbol FABRIC_ENUM",
+      ".tools/to-pipeline-gate.py@2ab34bf8ff:97-100 says FABRIC_ENUM stays a literal ONLY as the AST carrier missions-tree-index and the contract still resolve; decisions go through _fabric_values() at :103-111",
+      ".tools/tests/test_no_hand_listed_boxes.py@2ab34bf8ff:30 HELD row NFRA_CTLPLN-W53-S1 for the literal carrier; base run cases=23/23 ok=True hand_listed=9",
+      ".tools/tests/test_fabric_readers_dell.py@2ab34bf8ff:59-62 enum_from_source regex-matches ^FABRIC_ENUM = (...) and literal_eval's it; a call value does not match; the schema org/surprise_channel/schemas/investigation_item.schema.json also carries a literal fabric enum read against it"
+    ]
+  },
+  "spec_asserts": "TO-CT-ab-8 BUILD 1: FABRIC_ENUM becomes tuple(<lib.devices placement_values()>), and every reader that parses the literal by AST makes it call the derived value instead (CTab8-AC1 expects gate=derived).",
+  "world_is": "FABRIC_ENUM is the AST carrier for the tree index and the contract, and a derived value is not a literal, so BUILD 1 cannot land inside the order's <paths>; the other readers are outside the grant.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Worker 81 did not derive FABRIC_ENUM and did not edit the outside readers. Built and measured: box-status-report-check.py BOXES derives from lib/devices.py names() (AC2 and AC3 still pass; real-tree hand_listed 9 -> 8, the held gate carrier remains). Decision needed from the issuer (2.0.0_SA_COO~C) or the CTO: widen the grant to missions-tree-index.py, PROJECT_TREE.contract.json value_enums.fabric, test_fabric_readers_dell.py and the investigation schema, or keep the literal as the single carrier (CTab8-AC1 gate=derived then unreachable). Not decided by the worker."
+}
+```
+
+## NFRA_CTLPLN-W84-S1 -- spawn-agent.ps1 carries the old third-segment serial pattern and refuses an underscore project serial
+
+```json
+{
+  "id": "NFRA_CTLPLN-W84-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~84",
+  "surfaced_at": "2026-10-13T19:04:01Z",
+  "one_line": "The loose serial check in .tools/spawn-agent.ps1:108 still uses the third segment [A-Za-z0-9]+, so spawn-agent refuses a serial such as 0.9.0_WK_NFRA_CTLPLN~78 before any launch. CT-ab-11 widened the copies in seat-boundary.ps1 and kill-agent.ps1 only, because spawn-agent.ps1 is outside that order's paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/spawn-agent.ps1:108 at worktree HEAD c396b76722 carries the pattern with the third segment [A-Za-z0-9]+ (no underscore), the same form CT-ab-11 widened in kill-agent.ps1:56 and kill-agent.ps1:79.",
+      "grep of .tools/seat-boundary.ps1, .tools/kill-agent.ps1, .tools/kill-maint.ps1 and .tools/spawn-agent.ps1 in worktree wk-NFRA_CTLPLN-84: the old-form serial literal appears only at spawn-agent.ps1:108 after the widening."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ab-11 BUILD 1: widen the third segment EVERYWHERE the pattern is written in seat-boundary.ps1 and kill-agent.ps1 (find every copy).",
+  "world_is": "spawn-agent.ps1 refuses an underscore-project serial at its loose check, so spawn-agent cannot launch such a worker. The kill tools now accept that serial. Not exercised: no spawn was run and no process was started.",
+  "notes": "Not widened here: spawn-agent.ps1 is outside this order's <paths> grant. The COO that issues the next round (2.0.0_SA_COO~C) decides whether the copy re-cuts. The hazard is INERT for the kill boundary."
+}
+```
+
+## NFRA_CTLPLN-W85-S1 -- the W77-S2 notes say dell_respol_policy.json reason-c rows cite the removed deploy Denies; measured, no such row exists
+
+```json
+{
+  "id": "NFRA_CTLPLN-W85-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~85",
+  "surfaced_at": "2026-10-13T19:19:51Z",
+  "one_line": "The W77-S2 notes say dell_respol_policy.json reason-c rows cite the removed deploy Denies. Measured at 35feed35c8: there are no reason-c rows and no 'already denied' text, so no data row changed and derive_respol_actions.py needed no edit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/dell_respol_policy.json@35feed35c8 summary.exclusion_c_already_denied is [] and summary.exclusion_b_routes_deny is []; the actions with an exclusion are iam:UpdateAssumeRolePolicy (a) and two secretsmanager actions (d)",
+      "infra/aws/terraform/nfra-ctlpln-identity/dell_respol_policy.json@35feed35c8 grep -c 'already denied' returns 0",
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/derive_respol_actions.py@35feed35c8 --check (timeout 120, rc=0) last line: RESPOL-ALLOW actions=75 in_allow=72 excluded=3 a_iam=1 b_routes=0 c_already_denied=0 d_secretsmanager=2 routes_intersection=0 chars_no_whitespace=2260 limit=6144 ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W77-S2 notes: dell_respol_policy.json reasons (in_allow false, reason c) also cite the removed deploy Denies, so the data's reasons are stale. CT-ab-12 build step 3 asks for the changed rows to be named, if any change.",
+  "world_is": "dell_respol_policy.json has no reason-c row and no text that cites a removed Deny. The reason-c logic in derive_respol_actions.py reads dell_deploy_policy.json's Denies at run time and names no removed Deny. Nothing was changed in that file or in the script."
+}
+```
+
+## NFRA_CTLPLN-W85-S2 -- derive_protected_functions.py with no source argument makes live read-only AWS calls; the CT-ab-12 cell ran one such bare run at the base by mistake
+
+```json
+{
+  "id": "NFRA_CTLPLN-W85-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~85",
+  "surfaced_at": "2026-10-13T19:19:51Z",
+  "one_line": "derive_protected_functions.py defaults to --live, so a bare --check lists Lambda, API Gateway and CloudFront through .tools/aws even though --check writes nothing. The CT-ab-12 worker ran it bare once at the base, a breach of its no-AWS-call rule; every later run used --from-file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/derive_protected_functions.py@35feed35c8 main(): src group defaults to live_listing() when --from-file is absent; the docstring says --live is the default and makes READ-ONLY list/get calls",
+      "worker scratch .scratch/base_derive_protected_functions.py.txt (worktree wk-NFRA_CTLPLN-85, not committed): REGIONS 17, us-east-1=237, FUNCTIONS listed=238, written from the bare --check before the edit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ab-12 rules: no terraform credential command, no aws call; the renderer checks are run as their saved-file forms.",
+  "world_is": "A bare derive_protected_functions.py --check calls AWS (read-only) and reports a live census. It wrote no file (the check path writes nothing). The worker's one bare run was a breach of its rule, not a gate refusal. The later checks in this cell pass --from-file tests/protected_functions_listing.json."
+}
+```
+
+## NFRA_CTLPLN-W85-S3 -- the saved protected-functions census holds 233 functions; the live list read at the base holds 238
+
+```json
+{
+  "id": "NFRA_CTLPLN-W85-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~85",
+  "surfaced_at": "2026-10-13T19:19:51Z",
+  "one_line": "The saved census tests/protected_functions_listing.json lists 233 functions, and the live list read at 35feed35c8 lists 238 (us-east-1 232 saved, 237 live). The protected set is the same 10 ARNs in both, and unruled is 0 in both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/protected_functions_listing.json@35feed35c8 (read by derive_protected_functions.py --check --from-file): FUNCTIONS listed=233, PROTECTED-CENSUS functions=233 census_in_sync=True ok=True",
+      "live read at the base (bare derive_protected_functions.py --check, see NFRA_CTLPLN-W85-S2): FUNCTIONS listed=238, PROTECTED-CENSUS functions=238 protected=10 unruled=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "tests/protected_functions_listing.json is the census of the account that protected_functions.json is derived from; derive_reached_roles.py reads protected_functions.json.",
+  "world_is": "The saved census is five functions behind the live account. The protected list is unchanged, so the consumer's answer is not moved by this drift. The census was not refreshed here: a refresh needs a live --write, and the cell's write surface does not include the listing as a live product."
+}
+```
+
+## NFRA_CTLPLN-W85-S4 -- the SSM renderer's shell-parity check required a StartSession Deny that CT-ab-1 removed; its meaning is inverted to "no such Deny"
+
+```json
+{
+  "id": "NFRA_CTLPLN-W85-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~85",
+  "surfaced_at": "2026-10-13T19:19:51Z",
+  "one_line": "derive_ssm_documents.py policy_shell_ok required a Deny of ssm:StartSession on AWS-RunShellScript (AMENDMENT 24). CT-ab-1 removed that Deny by ruling, so the check failed at the base (ok=False). The check now asserts the Deny is absent, which is the committed state.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/derive_ssm_documents.py@35feed35c8 policy_shell_ok returned allowed and not send_denied and session_denied (the StartSession Deny)",
+      "infra/aws/terraform/nfra-ctlpln-identity/dell2_ssm_policy.json@35feed35c8 has three Allow statements and no Deny (commit 0a6e65f519 removed DenyStartSessionOnShellScriptDocument)",
+      "base run of derive_ssm_documents.py --check (rc=1) printed SHELL-PARITY policy_shell_ok=False and SSM-DOCS ... ok=False; after the edit the same invocation prints policy_shell_ok=True and ok=True (rc=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 24: the SSM policy keeps a Deny of StartSession on AWS-RunShellScript, and the renderer's shell-parity check asserts that Deny.",
+  "world_is": "CT-ab-1's ruling removed that Deny. The check now asserts the Deny is absent. A reader of the AMENDMENT 24 text should take the check as the inverted contract: a reinstated Deny makes it fail. The SHELL-PARITY print line was reworded to match."
+}
+```

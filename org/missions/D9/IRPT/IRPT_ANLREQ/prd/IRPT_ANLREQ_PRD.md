@@ -5,7 +5,7 @@
  "project": "IRPT_ANLREQ",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.4",
+ "prd_version": "v0.5",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_223xZ_ANALYSIS_REQUEST_END_TO_END_ONE_PROJECT_CLOSER_TRACE.md@2b21a349d1",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
@@ -25,14 +25,19 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
 ## ENDPOINT (step 2, /endpoint --forward)
 
 ```
-  FWD-1  One Analysis Request goes from the Ticket Center form to a finished package on the same open ticket, with no person in between
-         DONE WHEN  EXERCISED -- on DEV, a seat files ONE request through the form (analysis type, Opal-model checkboxes, other ETFs, holdings Excel) for a
-                    49financial client with an eligible advisor; with nobody touching it, the ticket ends up carrying the report, the branded Opal PDF with
-                    the investment commentary, and the original Excel, each opened from the ticket page; Alyssa's own first real request grades it again
-                    (the organic arm)
-         ACCEPT     an Opal person opens the still-open ticket and finds the report, the branded PDF with the commentary and the advisor's original Excel,
-                    without asking anyone and without anyone having forwarded a file
-         SOURCE     Andrew 2026-10-08 ~22:3xZ; CRO trace hops 1-9
+  FWD-1  One Analysis Request goes from the Ticket Center form to FOUR attachments on the same open ticket, with no person in between
+         DONE WHEN  EXERCISED -- on DEV, a SYNTHETIC partner-firm advisor (minted and deleted under a never-widen pair) signs in, opens the Ticket
+                    Center, fills the Analysis Request form and uploads a holdings CSV or XLSX. The form carries the variant the advisor chose
+                    (Overview, Comparison, Multi-Comp) and the report produced is that variant, the Opal-model checkboxes and other tickers. The firm comes from the signed-in user, not a
+                    choice. Nobody touches anything after Submit. The still-OPEN ticket then carries four attachments, each opened from the ticket
+                    page by an Opal person: (1) the advisor's original upload, (2) the form as filled, (3) the Opal-generated report (the Opal
+                    producer, not YCharts), (4) the AI commentary draft. A partner-firm filing (Alyssa's first real request) grades it again (the
+                    organic arm, never the gate)
+         ACCEPT     an Opal person opens the still-open ticket and finds the four items, without asking anyone and without anyone having forwarded
+                    a file; the branded Opal PDF with the commentary inside is a later enrichment, not FWD-1
+         SOURCE     Andrew 2026-10-08 ~22:3xZ; Andrew's dell2 voice memo 2026-10-13 ("they should see the CSV or XLSX that the advisor uploaded.
+                    They should see the form ... the generated report ... the commentary that we AI generated ... That is the deliverable");
+                    call 2 approved ~17:4xZ (synthetic advisor); pivot direction XB-20261013T180328Z-d4a5 O1
 
   FWD-2  The form fits the request and catches a bad request before it files
          DONE WHEN  EXERCISED -- the form offers the analysis types and the Opal models as checkboxes plus a field for other ETFs; a mistyped ETF is caught
@@ -93,8 +98,8 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
 |---|---|---|
 | C-ONE-JOURNEY: FWD-1 is driven, never waited on | this project | Round 1 decomposes over the nine hops of FWD-1. A hop that waits on another box parks that ONE hop in STATUS.md with its owner and un-park condition, and the driver moves to the next hop in the same tick (the CRO's no-stop rule). Alyssa's own filing is the organic arm, never the gate. |
 | C-SOURCES: contracts are cited, not copied | this project | C-PACKAGE, C-ONE-DOOR and C-TYPE live in `org/missions/D7/TCKT/TCKT_VNEXT/prd/TCKT_VNEXT_PRD.md`. C-KIMI and C-WIPE-GATE live in `org/missions/D9/NFRA/NFRA_TRNSPT/prd/NFRA_TRNSPT_PRD.md`. The upload door and E5 live in IRPT_BCKEND. This PRD cites each at its path and never restates it, so each rule has one home. |
-| C-PACKAGER: one principal attaches the package | this project | The package's last hop is the branded PDF render, which runs after the commentary. That hop's principal is the ONE `package_principal` named in the type definition. It is firm-bound by its PROFILE row (internal-caller narrowing, IB-pr-387), and never ALL. |
-| C-FIRM: firm reach | consumed | Every principal on the journey reaches exactly the request's firm: svc-commentary by tenant-bound `get()`; the test filer by its PROFILE row [49financial]; the packager by its row. ALL never admits. |
+| C-PACKAGER: one principal attaches the package | this project | The package is four separate items: the original upload, the form as filled, the Opal report and the commentary draft. Its last hop attaches them after the commentary; the branded PDF is a later enrichment, not this hop. That hop's principal is the ONE `package_principal` named in the type definition. It is firm-bound by its PROFILE row (internal-caller narrowing, IB-pr-387), and never ALL. |
+| C-FIRM: firm reach | consumed | Every principal on the journey reaches exactly the request's firm: svc-commentary by tenant-bound `get()`; the synthetic partner-firm advisor (FWD-1's filer) by its PROFILE row; the packager by its row. ALL never admits. |
 | C-ABSORB: what MOVES into this project (the brief's "compress into ONE project") | this project | **Moves in, owned and issued here.** (a) IRPT_BCKEND `~Y2`'s Analysis lane: the upload door and resolution `infra/aws/lambda/investor-reporting/intake/{uploads,upload_resolution,upload_suggestions,resolution_kimi}.py`, the security swap (today `KIMI_WEB_SEARCH_UNVERIFIED`, `resolution_kimi.py:159-165`; candidates from `etf-classifications`, ex-IRPT_YCDGEN FWD-16), and generation submit. (b) IRPT_YCDGEN whole: the Opal engine and brand `ycharts/generate/{resident_worker,durable_job,comparison_catalogue,publication_worker}.py`, `ycharts/research/{opal_producer,layout_overview}.py`, report types and vendor retirement. (c) NFRA_TRNSPT FWD-10 and FWD-11: the commentary drafter `data/transcripts/scripts/commentary/*` and its Lambda `commentary.tf`. (d) The READY event H1 (from `~P2`'s queue). (e) TCKT_VNEXT's Analysis Request scope: the `analysis_request` type definition, `POST /tickets/{id}/package`, `portal/src/pages/TicketCenter/` Analysis Request parts. **Keeps the remainder:** IRPT_BCKEND (`~P2`: auth, routes, directory, holdings, `irpt-export-render` as the shared renderer); NFRA_TRNSPT (FWD-1..9: transcripts, company read, mail); TCKT_VNEXT (non-analysis types). **Lanes:** `~Y2` is the ONE driver, issuing the FWD-1 thread and the round analysis. `~G2` (engine and brand), `~T2` (commentary) and `~V2` (ticket) continue as this project's workstreams with disjoint write surfaces, each issuing only into its own workstream scope (rule 27). No hop of FWD-1 parks on another project's cell. Each source PRD gains a one-line addendum pointing here at its next round boundary; in-flight orders and signed pairs complete where they are. |
 | C-SWAP: the security swap, one pass per unknown holding (Andrew ~04:4xZ; CRO research @9ae5d353d1 section 2) | this project | (1) KNOWN: the ticker or CUSIP in `etf-classifications` and MDPF_SECHIST; a typo suggestion is verified against the registry and yfinance, never YCharts. (2) YFINANCE CHECKER: one paced call; if it has history, the holding is KEPT, a registry row is added and its prices land in MDPF_SECHIST. (3) CLASSIFY only if yfinance has nothing: SECCLASS's classifier with a web-search tool, output bound to the live (class, sub-class) vocabulary, below 0.80 confidence FLAGGED. (4) PROXY, deterministic, no model: the designated registry ETF for that pair, else the class default, and it must have prices. (5) RECORD: the holding keeps the client's name, with `proxy_for`, `proxy`, `method`, `confidence`, `low_confidence` and `sources`. `resolution_kimi`'s model-proposed swap is retired. The designated-proxy table is MDPF_SECCLASS's (dell1), a pre-arranged input. |
 | C-PRICES: where prices come from | this project | MDPF_SECHIST's per-security series first, then yfinance (paced), then Bloomberg only when both lack it (through its queue, CLAUDE.md). The performance overlays of variants 2 and 3 use IRPT_DASHBD's daily TWR engine, ported with zero flows. No YCharts price or figure. |
@@ -116,6 +121,8 @@ on its own artifact.
 3. FWD-4: each driven failure named on the ticket.
 4. FWD-5: another firm refused the ticket and each package file, repeatably.
 5. FWD-6: the Analysis tab as the manual path, landing on the same ticket.
+6. After FWD-1: the branded Opal PDF with the commentary inside, rendered by the Opal engine's layout (L4 ruling 1, S4), attached as one more
+   package kind (brief item 8; ADDENDUM v0.5).
 
 ## 4. Rulings closed at L4
 
@@ -143,11 +150,11 @@ on its own artifact.
 | 1 | the type of analysis | FWD-2. The form offers the report types the engine serves (Overview, Comparison, Multi-Comp; `ycharts/generate/comparison_catalogue.py`). S1 |
 | 2 | Opal-model checkboxes and an other-ETF input | FWD-2. Model checkboxes from the comparison catalogue; free ETF tickers, each resolved before filing. S1 and S3 |
 | 3 | the holdings Excel attached | FWD-1. Through the upload door (C-ONE-DOOR, TCKT_VNEXT); the ticket stores the handle, never the bytes. S3 |
-| 4 | typo check and swap, frontend and backend | FWD-2. A mistyped ETF gets a correction offer; an unknown or unpriceable holding is SWAPPED for a confirmed `etf-classifications` candidate. The backend is `intake/upload_suggestions.py` and `resolution_kimi.py` (C-ABSORB a); the frontend is S1. Proof gap: `KIMI_WEB_SEARCH_UNVERIFIED` today |
-| 5 | a ticket in the open Ticket Center page | FWD-1. An `analysis_request` ticket, open until the package lands. S2. Proof gap: 0 filed end to end |
+| 4 | typo check and swap, frontend and backend | FWD-2. A mistyped ETF gets a correction offer verified against the registry and yfinance. An unknown or unpriceable holding takes C-SWAP's one pass: KNOWN, then the yfinance check (KEEP), then classify, then a deterministic proxy from the designated-proxy table (MDPF_SECCLASS, dell1, a pre-arranged input), then RECORD with `proxy_for` / `method` / `confidence`. The model-proposed swap is retired. The frontend is S1. Proof gap: the C-SWAP path exercised on one unknown holding |
+| 5 | a ticket in the open Ticket Center page | FWD-1. An `analysis_request` ticket, open until the package lands, filed by a partner-firm advisor. Opal staff do not file in the Ticket Center (Andrew's 10-13 memo), the driven arm is a synthetic partner-firm advisor, and `2e30` is SUPERSEDED (ADDENDUM v0.5). S2. Proof gap: the synthetic advisor's filing end to end; that identity is never minted or left live outside its never-widen pair |
 | 6 | the backend generates the full report | FWD-1. Generation submit and the Opal engine (C-ABSORB a, b). S3 and S4 |
 | 7 | commentary from the report's key surfaces | FWD-3. The drafter reads the report's composition through `get()`, tenant-bound, with abstract fields only (C-KIMI). S5 |
-| 8 | the package attached: report, branded PDF with commentary, original Excel | FWD-1. `POST /tickets/{id}/package`, pointers only (C-PACKAGE), by the one packager (C-PACKAGER). S2 and S6. Proof gap: no signed-link open yet (hop 9) |
+| 8 | the package attached | FWD-1 carries the four items of the 10-13 memo: the original upload, the form as filled (J6, a new package kind), the Opal report and the commentary draft, each a pointer through `POST /tickets/{id}/package` (C-PACKAGE) by the one packager (J5). The brief's branded Opal PDF with the commentary moves to section 3 as a named enrichment (memo section 1.1; direction :152-155). S2 and S6. Proof gap: four pointers set on one ticket, each opened from the ticket page |
 | 9 | ONE workflow, the form primary | FWD-1 and C-ONE-JOURNEY |
 | 10 | the Analysis tab after, as the manual path | FWD-6. S7, cut after FWD-1 |
 | 11 | measure each COO workstream | Section 1, the nine-hop state measured per lane (`~Y2`, `~G2`, `~T2`, `~V2`, `~P2`) |
@@ -227,3 +234,31 @@ FWD-2's ACCEPT changed, so the CVO's ratified-text half re-opens too.
 - **Acts only Andrew can do:** none new.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.5 (2026-10-13 ~19:0xZ, 1.0.0_SA_CTO~DELL2; re-cut ~19:1xZ on the CVO's refusal @3e8061163e) -- the pivot direction's O1, written into the ENDPOINT
+
+Authority: crossbox ORDER `XB-20261013T180328Z-d4a5`, body `org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_DELL2_20261013.md`
+(ACCEPTED by Andrew ~17:4xZ), section 2 O1 and section 8 act 4; Andrew's dell2 voice memo (section 1.1 there, verbatim).
+
+1. **FWD-1 is re-worded (above).** The package is four separate items (original upload, the form as filled, the Opal report, the
+   commentary draft), and the branded PDF is out of FWD-1. The driven arm is a synthetic partner-firm advisor; `2e30`, the Opal-staff
+   filing, is SUPERSEDED. The ratified-text half re-opens on this ENDPOINT change, so `3.0.0_SA_CVO` re-signs it.
+2. **FWD-1 is the only open thread.** No reader-hardening round opens unless it is a hop of FWD-1. AR-y-242..252 and AR-y-261..265
+   finish, because Andrew raised them in his own test.
+3. **Constraints that bind the form** (Andrew's memo):
+   - C-FIRM: the firm is the signed-in user's, and a multi-firm partner user never chooses a firm outside its own domain; the staff
+     picker stays out of the advisor path.
+   - The variant the advisor selects is the variant produced (not inferred from the comparison count).
+   - Opal staff do not file in the Ticket Center.
+4. **The hop cells, cut at the next issuance by `2.0.0_SA_COO~Y2` (the ONE driver, C-ABSORB):**
+   - J1: the form sends `commentary_requested` (the backend half is IRPT_BCKEND IB-pr-456).
+   - J2: the request id is recorded on a partner-firm filer's ticket (the SUBMIT-FORM path or a named service does it; the advisor
+     never needs the REPORT route).
+   - J3: the C-SWITCH release for ticket-filed requests (`~G2`), ruled in `CTO_DELL2_PIVOT_FIRST_ACTS_20261013.md` act 2, with the
+     principal read first.
+   - J5: the packager principal is named, and it runs after the commentary.
+   - J6: the form is the fourth attachment (a package kind for it).
+   - J4: the orchestration stays client-side for V1, as ruled here. Either way FWD-4 holds: a failed hop shows on the ticket. Andrew's
+     silent submit (AR-y-265) is the first proof of that.
+5. **Commentary model:** ship on the wired Kimi K3 so the chain is proved. Andrew's "Astra" is one card on dell2's list; it becomes
+   a setting once the first draft lands.
