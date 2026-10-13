@@ -25346,3 +25346,81 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "AMGT-bi-2 is STOPPED at its build leg; nothing uploaded, planned or applied; live still reads j+j1k5r7... The remedy is a decision (amend the pair to twelve members, name another pin, or the CTO rules it covered by the half's own measurement, which was taken from a tree that already carries it); this row changes nothing. Future admission tables for this function should list the registry folder whole, or be read against the build's content diff."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W406-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~406",
+  "surfaced_at": "2026-10-13T17:43:26Z",
+  "one_line": "The worktree the order names as cut from the issuance commit a0278ca28a is at 57e446ce0b, one commit later; a0278ca28a is its ancestor and the one extra commit touches only MDPF_DEMQUE files.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-resapp-406 rev-parse HEAD = 57e446ce0b775fb00132ec627932767a0f83afc3; rev-list --count HEAD = 81531 and a0278ca28a = 81530; merge-base --is-ancestor a0278ca28a HEAD = true",
+      "git show --stat 57e446ce0b: 4 files, 191 insertions, all under org/missions/D5/MDPF_DEMQUE (the round-9 t-51 amendment)",
+      "git merge-base HEAD box/dell1 = 57e446ce0b; box/dell1 = a618773b86f980bb52bd7e2f558674ee2bba1f4f"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Order header: worktree C:/dev/wk-resapp-406 (branch wk-AMGT_RESAPP-406) is 'cut from the issuance commit' (a0278ca28a, the round-103 issuance).",
+  "world_is": "The branch HEAD is 57e446ce0b, one commit after the issuance. The prepared patch applied cleanly (git apply --check, then apply), and AC2's merge-base diff is unaffected, so the cell was not blocked; the premise is off by one commit.",
+  "notes": "Filed at the first act; the worktree was not reset or moved. The extra commit belongs to MDPF_DEMQUE and was not touched by this worker."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W406-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~406",
+  "surfaced_at": "2026-10-13T17:43:26Z",
+  "one_line": "r94_admission_table.py documents its lib/ population as 'every non-test file', but its filter drops only paths containing /tests/ or ending _test.py, so test_*.py modules under lib/ are listed as package members.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 python .../round94_prep/checks/r94_admission_table.py 6ecb5bc567 --pin 7da642c1ff (patched tool, commit b5c16e920a) rc=0, header 'members whose bytes differ: 12', listing lib/opal_data_harvest/test_bx3_failure_reason_kept.py (ABSENT -> 34bf12214cff, +301 -0) and lib/opal_data_harvest/test_bz3_windowless_runner.py (ABSENT -> f54f04f91024, +203 -0)",
+      "the filter in the tool: names = [n for n in names if \"/tests/\" not in n and not n.endswith(\"_test.py\")] -- the docstring says 'every non-test file under lib/'",
+      "AC1 arm A5 (a lib/ change is still listed) keeps the lib/ population by design, so this is a filter-rule gap, not a packaging defect of the registry rule"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "r94_admission_table.py docstring: the lib/ members are 'every non-test file under lib/'; the filter excludes '/tests/' paths and '_test.py' suffixes only.",
+  "world_is": "Two test modules named test_*.py are members of the table's lib/ population at 6ecb5bc567 --pin 7da642c1ff; 2 of the 12 printed members are test files.",
+  "notes": "Not changed here: the order bounds the change to the packaged-registry rule (cell AMGT-bj-4), and the prepared patch leaves the lib/ filter as it is."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W406-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~406",
+  "surfaced_at": "2026-10-13T17:43:26Z",
+  "one_line": "AC2 as written (exactly one line from merge-base to HEAD, excluding only the ~406 deliverables folder) cannot pass while the surprise row this worker must file is committed, because the order's own surfaces name INVESTIGATION_v1.md.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "order section 4, AC2 invocation: git diff --name-only \"$(git merge-base HEAD box/dell1)\" HEAD -- . \":(exclude)org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~406\" | sort; expect 'exactly one line'",
+      "order section 3 (surfaces) lists org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md as a write surface",
+      "the surprise-channel rule requires a filed row to be committed; committing this file adds a second line to AC2's output"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "AC2 expects exactly one line of output (the r94_admission_table.py path) and no other line; the exclusion covers only the ~406 deliverables folder.",
+  "world_is": "The surface list names the investigation file, and the row filed for this order is committed to it, so AC2's output carries a second line. AC2 is reported literally as FAIL; the criterion was not adjusted.",
+  "notes": "The issuer decides whether AC2's expectation or the surface list is amended. The worker does not widen or narrow the criterion."
+}
+```
