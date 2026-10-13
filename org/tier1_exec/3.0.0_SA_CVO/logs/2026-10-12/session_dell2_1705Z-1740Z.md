@@ -240,3 +240,10 @@ Quiet stretch 08:37Z to 13:04Z: watcher re-armed at each expiry; delivery ledger
 |---|---|---|
 | IRPT_ANLREQ round 21 (Y, YR) | Probed r19.3: 10 of 10 one-account neighbours unflagged, 8 of 8 two-account forms turned back (incl. Account Numbers, Subaccounts, Account Nos). L9: AR221 PASS, AR-y-222 judgment FAIL superseded by AR-y-229 PASS, four AC2J PASS, two re-grades accepted; 22 dismissed (incl. my D2-S73), nothing graduates. Slug sent | 99fe06bb74 |
 | IRPT_DASHBD round 91 | ADJUDICATION_v55 + REMEDIATION_v38: FWD-8 NOT REALIZED for 7 after the ledger-row read; D2-W137-S1 to the CTO; v37 D2-W136-S1 closed. Slug sent | 5e23f18556 |
+
+## Addendum, 2026-10-13 16:24Z to 16:38Z (msgs 7064, 7066, 7067)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 181 (~P) | ADJUDICATION_v82 + REMEDIATION_v56: nothing applied (irpt-directory-search read tvrsQ+w8). D2-S139 graduates ARMED to the laptop 1.0.0_SA_CTO, HELD by Andrew's word (msg 7066). Portal read: the selectionRequest.ts:18 throw is the same on DEV f6ef1d25 and PROD 15c97549, reached only by an ACCOUNT row whose accountId is null (search.ts:277). 2 dismissed. Slug sent | 7f0f905a42 |
+| ADVI_COTBKF round 80 (COO~C2, in bound by Andrew card 6) | L9: CB80cb1-AC2 PASS (note: the top-level served count of 48 is APH only; CTVA has 115 served days), CB80cb2-AC2 PASS (test byte-equal to round 76's). ADJUDICATION_v57 + REMEDIATION_v49: 8 dismissed; D2-W155-S1 graduates ARMED to 1.0.0_SA_CTO~DELL2 because the issuer's disarm D2-S134 rests on minted-table readers that were not re-measured; D2-W155-S4 to COO~C2. Slug sent (16:38:28Z) | 7aceb5d4a1 |
