@@ -32017,3 +32017,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "RULED (issuer, inside my own decomposition; amendment commit states the gate limb): (1) THE DEFECT IS MINE: I read handler.py:462 for the fixture path and did not read which function the deployed Handler names; the packet's own direct-invoke section said 'API-shaped event for an Opal principal', which the guard admits only with a verified principal's headers. (2) NO RESTORE: the function is healthy (a well-formed refusal envelope, no 5xx or TypeError), the applied digest equals the signed one, one member changed, the re-plan reads 0 changes, and Branch B's trigger is 'a direct-invoke arm that fails' (none ran and none disagreed). (3) THE PROOF IS AMENDED (order 516 AMENDMENT 1, check AC3): the deployed handler.py member sha256 equals the built member whose four replay arms the packet shows, and a log-group read since the apply counts zero 5xx or TypeError with the invocations counted; the second invoke is struck; no principal is forged and no live directory is read. (4) WHAT STAYS OPEN: nothing has yet read the SERVED tail search. A tail search by a person on a served page (an Opal staff sign-in on portal DEV) is that read; no seat can sign in, so it is an act only a person can take, filed as an open-calls act. The CTO half's condition 4 named the synthetic invoke; I asked the CTO to rule whether the offline arms plus the health proof suffice in its place. D2-S139 and D2-S141 stay ARMED until the person's read or that ruling. (5) SIDE FINDING (IB2's): the seat-gates crossbox check printed STOP-in-ENFORCE on the generic token 'directory' against an ACKED open call XB-20261011T062718Z-c908 and on the order's own ledger sentinel; it ran in WARN mode and proceeded; not mine to fix, recorded here."
 }
 ```
+
+## IRPT_BCKEND-D2-S144 -- DISARM of D2-S139, D2-S141 and D2-S143: Andrew's tail search works on the deployed function
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S144",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T18:13:22Z",
+  "disposition": "GRADUATED",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARMED: D2-S139, D2-S141 and D2-S143 -- Andrew's own tail search on his localhost:5174 smoke worked after the irpt-directory-search apply; the served read they waited on is met.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 7140, 2026-10-13T18:12Z, relaying Andrew's smoke-list item 1.8 verbatim: 'last 4 digit search does work.' (a relay; the CTO committed the smoke item as be5085e3af)",
+      "live function CodeSha256 rXHDDz/ZhY2pZFuLDcrPisAs69IuTd6p8Rwflxhvwyw= equal to the signed digest, re-read by me at ~17:50Z; IB182-1 AC1-AC3 PASS on the merged tree (IB2 record 8df634fac5)"
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "DISARMED, with the INERT evidence above. D2-S139 (the hold and the portal consumer point): the hold was lifted by Andrew's word at this seat (D2-S140), the portal condition read 0 null accountId over 9,441 ACCOUNT entries (D2-S141), and the person's served search now works, so the apply no longer changes a client-facing search before it is cleared; its disarm owners were the laptop CTO or Andrew, and Andrew's own smoke result is the evidence. D2-S141 and D2-S143: mine, disarmed on the same read. NOT disarmed here: W349-S1, W361-S1, W348-S2 (unchanged, ARMED, owner me). What is NOT shown: the same search by a CLIENT login on PROD (the PROD promote is held, dell1-e7f2); this read was Andrew's on localhost:5174 against the deployed function. Ledger irpt-dirsearch-tail-accounts-20261013 is asked to close at IB2 (my message citing msg 7140)."
+}
+```
