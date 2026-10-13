@@ -57,6 +57,16 @@ producer function; it was not checked against every path that can serve a holdin
 <criterion id="IV123-AC1" cell_refs="IV-e-123"><invocation>python "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D2/checks/r32/p32_round32.py" . IV123-AC1</invocation><expect>IV123-AC1 PASS</expect></criterion>
 `IV123-AC1` -- every enumerated producer path was read with its denominator printed and the ACCOUNT node-id rule cited by file and line; the record says whether the ids are equal on all of them; the page maps the node ref only where they are not, with a test and a mutant. Base: FAIL (no record).
 
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-13 ~00:0xZ; gate limb: none graded it, this is a modification of an existing order).** Your first report found the ids differ
+(the live 49 Financial builder mints ACCOUNT node ids from the Schwab balance key, the directory from gold dim_account) and that the wire carries no account id the page
+could map to, so the step-3 map has no source inside this grant. That is a valid outcome of this cell, not a failure of it. The cell's answer is now the READ plus the named
+blocker, with NO page change. Re-record `NODE_ID_READ.json` and keep every key you already wrote, except: `product_change` false; `page_maps_node_ref` false; keep
+`page_map_blocker`; add `blocking_row` ("DSGN_IRPTV1-D2-W72-S1"); `product_files_changed` []. Add to `verdict_basis` one sentence that on a live served 49 Financial client the
+one-account Holdings view loaded and showed that account's own value (the issuer's real run on portal DEV, no client named), and that the producer refuses or withholds an
+unequal account (`holdings/snapshot.py:442-443`, `holdings/resolve.py:512`) rather than serving it under a wrong id. Re-run IV123-AC1 (the amended checker is on your branch),
+validate the proof instance, and flip this order's `<status>` to complete only when the criterion PASSES. File no further blocking row for the same fact. Row W72-S2 (ARMED,
+disarm owner the issuer) is the issuer's to rule; leave it.
+
 <expected_criteria>IV123-AC1</expected_criteria>
 
 ## BOUNDS
