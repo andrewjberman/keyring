@@ -84,7 +84,7 @@ is cut from that merged head and `69679b90e3dc52b670d33fddd96d06be1deaac90` in t
 ADDENDUM 2. After this commit the build-and-upload of each function (and its scoped plan and apply) is `FB-f-11`'s IRPT leg.
 Workstream `REPIN`. Class WORLD by the path floor.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>REPIN</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-31</to_id>
