@@ -5766,3 +5766,30 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "The worker measured the counts with the codes stripped and reports AC2 as UNVERIFIABLE-BY-INSTRUMENT with that substitute oracle; AC1 is FAIL on the state, one failing test outside the twelve (ADVI_FIRMBKTS-D1-W60-S1). The worker changed no invocation: the issuer amends the instrument."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FBL (FB-f-21, Inflection fence admit, the order's target key and AC1)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-S22",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~FBL",
+  "surfaced_at": "2026-10-13T01:30:00Z",
+  "one_line": "TO-FB-f-21: the order's -target key lgic_firm[\"opal-data-inflection\"] matches no state instance (real key: inflection), so its step 3 plan and its AC1 read 'No changes' vacuously; and the plan's diff carries one exception-list entry on DenyForeignFirmPrincipals besides the three added statements.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-FB-f-21 step 3: `-target='aws_s3_bucket_policy.lgic_firm[\"opal-data-inflection\"]'` plans 'Plan: 0 to add, 1 to change, 0 to destroy' with exactly THREE ADDED statements; AC1 (same target, after the apply) expects '^No changes\\.'.",
+  "world_is": "shared-infra state lists aws_s3_bucket_policy.lgic_firm[\"inflection\"] and [\"cottonwood\"]; no [\"opal-data-inflection\"] instance exists (terraform state list, 2026-10-13 01:13Z). Plan 01:12:40Z with the order's key: 'No changes' and the policy resource was not even refreshed. Plan 01:14:43Z with the key [\"inflection\"]: 'Plan: 0 to add, 1 to change, 0 to destroy'; policy 1 -> 4 statements; ADDED DenyScopedExemption1AnyOtherAction, DenyScopedExemption1ListingOutsidePrefix, DenyScopedExemption1ObjectsOutsidePrefix; REMOVED none; the pre-existing DenyForeignFirmPrincipals differs by ONE added leaf, Condition.ArnNotLike.aws:PrincipalArn gaining role/irpt-performance-adapter-role, which is what the COO half calls the row removing the blanket Deny for that ONE role. Applied 01:17:20Z-01:18:05Z with the real key. AC1 as written reads 'No changes' both before and after the apply, so it cannot discriminate; the corrected key read 'Plan 1 to change' before and 'No changes' after.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence_f21/step3_plan_diff.txt and step3_plan.txt",
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence_f21/step5_AC1_AC2_AC3.txt (AC1 as written and corrected)",
+      "terraform state list in infra/aws/terraform/shared-infra: aws_s3_bucket_policy.lgic_firm[\"cottonwood\"] and [\"inflection\"]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No blocking effect: the corrected address names the same single policy the pair signs and the plan gate (one resource, three added statements, nothing removed) was read on the corrected plan before the apply. For the issuer: fix the order's target and AC1 key if the invocation is reused, and say whether the exception-list entry on DenyForeignFirmPrincipals is inside 'the three statements' reading of the pair (it is the row's signed effect per the COO half)."
+}
+```
