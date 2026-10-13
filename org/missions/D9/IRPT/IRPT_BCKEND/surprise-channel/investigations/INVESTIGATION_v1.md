@@ -29594,3 +29594,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The world meets AC2's intent (a computed path, 0 TypeError) and the check reads FAIL because it sums nothing: it compares per-page counts to a literal 0, so any log volume above one page of results fails it regardless of the true count. I did not edit the check, relabel its output or write a proof_of_spec with AC2 marked PASS; the order stays pending. Needs from the issuer: amend the check to count events client-side (as the same file already does for the phases limb at :196-204) or to sum the pages, with a positive control that a planted TypeError line makes it FAIL, then I rerun AC2 and finish the proof_of_spec and the status flip. Not established: that no other limb of p169_cells.py reads a paginated count the same way."
 }
 ```
+
+```json
+{
+ "id": "IRPT_BCKEND-D2-S121",
+ "project": "IRPT_BCKEND",
+ "fabric": "dell2",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-10-13T01:50:00Z",
+ "hazard_standing": "INERT",
+ "class": "OBSERVATION",
+ "one_line": "The round-168 release's CHANGED branch (claim inferred, days_with_return_left_out above 0) has still not run on a live answer: round 169's on-demand Inflection read computed twice and matched its prediction, but the account had 0 excluded days, so it exercised only the measured branch. The act that would reach the changed branch now exists (a walk that picks another client).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lambda get-function-configuration 2026-10-13T01:47Z: irpt-performance-adapter abep4h7RngMS9JomQUdkcOT3EZ+W953OdxeK0HkdzFo=, LastModified 2026-10-12T22:35:06Z (unchanged since the round-168 release)",
+   "logs filter-log-events since 01:18:00Z, auto-paginated, summed: TypeError 0, AccessDenied 0, REPORT 2, irpt_retained_phases path 'fresh' x2",
+   "merge-base --is-ancestor HEAD yes for 6bee5842ba, 66439bd6a8, b86e6e8f9d, be628bd919, 569e06a9f3, faf155cc10",
+   "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUND_169_P_DRAIN_END_20261013.md section 'The live read of the changed path'"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Row D2-S114's remedy: drive one Inflection answer on demand and read its claim and counts against the offline prediction. The release changed the left-out branch, so that branch is what must be read.",
+ "world_is": "The on-demand act exists and ran: /ui-walk --firm and --first-client (IB-pr-488), one walk (IB-pr-489), two computed invokes (IB-pr-490). Measured live: claim measured equals predicted in YTD and 1Y; both counts present as integers (0 and 0); figure sha256 equal to predicted. NOT measured live: an account with an excluded day that leaves a return out, so the claim inferred and a non-zero count have never been read from the deployed function.",
+ "notes": "Read row for ADJUDICATION_v70. It replaces D2-S114, which is closed in its stated form. Digests, counts and times only; no client name."
+}
+```

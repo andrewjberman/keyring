@@ -121,3 +121,9 @@ Checked and not a finding: portal origin/DEV at 183860ba (IB-pr-483) was landed 
 | IRPT_ANLREQ round 18 (Y) | L9 5 PASS (AR186-y-AC2J with a condition: run the pinned pair before the reader's pair); grades a60300f1fb. Compile HELD while TO-READS-Y9 was pending, landed on its flip: ADJUDICATION_v19 + REMEDIATION_v11, 12 dismissed, 6 OPEN, 5 ARMED; D2-W52-S33 LIVE today. Slug sent | 8cf145cf49 |
 
 My miss: round-17 rows D2-W54-S4, S5, S6 had no disposition at my round-17 compile; dispositioned in round 18. Lesson: run the comp-surprise census AFTER the drain's last commit, not before.
+
+## Addendum, 2026-10-13 01:46Z to 01:52Z (msg 6733)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 169 | ADJUDICATION_v70 + REMEDIATION_v46: live read matched on the measured branch (my read: abep4h7R, 2 fresh computes, 0 TypeError, 0 AccessDenied since 01:18Z); D2-S114 closed in its stated form, residual carried by my row D2-S121 (CTO); 15 dismissed; ARMED 0. Slug sent | 5cb27e610e |
