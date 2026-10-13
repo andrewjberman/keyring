@@ -71,7 +71,7 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMB
 
 **ISSUER NOTES:** the CTO's round-6 analysis section 2 item 1 ("measure first, no write") and ADDENDUM 1; the SSM route to the runner is barred by its manifest (row D1-S44), so the measurement is this text-only deploy, read from the next chain (FB-j-3). Class WORLD by the path floor (a production pipeline script); the change moves no served output. The two bash checks and `r7_checks.py awsdiff` are the issuer's, dry-run at the base and on a reference patch (L5_FACTS).
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <workstream>EXECSUMFIX</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-j-2</to_id>
