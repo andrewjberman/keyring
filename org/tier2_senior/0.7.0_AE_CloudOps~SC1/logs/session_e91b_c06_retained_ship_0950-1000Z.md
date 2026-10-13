@@ -47,6 +47,16 @@ Leg G is the issuer's; the entry is HELD on it. The order is left `in_progress`.
 
 The next scheduled fires: 23:00Z fallback Mon-Sat tonight (2026-10-12 is a Monday), else 04:00Z.
 
+## First post-ship fire (23:00:11Z, read back ~01:45Z 2026-10-13)
+
+Reported in `deliverables/E91_FIRST_FIRE_REPORT_20261013.md`. C_06 wall 186.0 s (baseline 15.5 s), peak 6,349 MB
+(baseline 6,767 MB); chain log upload +2 m 23 s over the baseline on the same basis, STOP threshold +30 m: not
+fired. One gap in MY leg P, stated plainly: it enumerated the opal-data-bd legacy keys the order named, but the
+runner now writes the served platinum keys to `opal-data-49financial`, so the three summary keys the fire
+rewrote were not in it. Their pre-fire VersionIds were recovered from S3 versioning (table in the report) and
+the 1,592 rewritten `gold/client_timeseries/` keys are in `E91_FIRE1_REWRITTEN_KEYS_20261013.json`. The
+issuer's own read is row `MDPF_SECCLASS-D1-S33`; nothing was restored by this seat.
+
 ## Compiler Tools
 
 | tool | invocation | result |
