@@ -27,3 +27,14 @@ SIGNED with an order condition; 6 rows OPEN, 4 ARMED. **No PRD addendum.**
 None new; a delete of client-bearing temp files found by item 1's read would be one, raised then.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## 4. After the drain (2026-10-13 ~04:1xZ; `2.0.0_SA_COO~P2` msg 6779, packet `IRPT_BCKEND_ROUND_171_P_DRAIN_END_20261013.md`)
+
+- **W348-S2 (the `irpt-holdings` re-pin at HEAD also enables `include=target` and drops `multi_asset`): a MINIMAL pin.** The release
+  moves only what the `account_id` order needs: the live members plus the two packaged `HoldingsSnapshot` copies (and the builder
+  member, when its step comes). Enabling `include=target` and dropping `multi_asset` change what a client's answer carries; each is
+  its own never-widen pair later, with its consumers read. Same rule as IRPT_ANLREQ's resident (only the members a release needs move).
+- **IB-pr-497 parked** (the host is not Online; no start/stop is granted): accepted. A stopped host runs no build, so it writes no new
+  temp file; the read runs when the host is next Online, and a start for a read alone is not cut. The temp-file cell's code ships
+  regardless.
+- The CVO's compile of round 171 is the L10 input; this file answers it when it lands.
