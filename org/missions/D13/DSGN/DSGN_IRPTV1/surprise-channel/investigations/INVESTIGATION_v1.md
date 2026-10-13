@@ -6906,3 +6906,28 @@
 }
 ```
 
+
+## DSGN_IRPTV1-D2-W73-S2 -- IV-e-124 AMENDMENT 1: the amendment's line 78 is the count assertion; the UNCERTIFIED assertion it describes sits on line 77
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W73-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~73",
+  "surfaced_at": "2026-10-13T00:08:34Z",
+  "one_line": "AMENDMENT 1 names fe-s-6/sections.test.ts line 78 as holding 'UNCERTIFIED' and '2 value(s)'. Line 78 holds only the count assertion; the UNCERTIFIED assertion is line 77 and it fails first (Bun stops at the first failed expect). Line 77 was re-goldened to the new card lead, so four assertion lines moved in total (iv-e-101:72, sections.test.ts:77, :78, :100), not three.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 1: re-golden ONLY the three named wording assertions (iv-e-101 line 72; fe-s-6/sections.test.ts lines 78 and 100, the card block holding 'UNCERTIFIED' and '2 value(s) could not be confirmed'); keep every other assertion; replace the expected string only.",
+  "world_is": "At portal 64980b4d3a1e11d8407b6a263ddcd5447dafaef2, sections.test.ts line 77 reads expect(riskBlock).toContain('UNCERTIFIED'). The new card block carries no producer status word, so line 77 fails before line 78 is reached. The earlier record listed :78 for this case; this run fails at :77 first, and that earlier run was not reconstructed. Line 77 now asserts the new card lead 'The producer could not confirm this figure'; the other assertions in the file are unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@64980b4d3a1e __tests__/fe-s-6/sections.test.ts:77 (UNCERTIFIED, re-goldened to the card lead in commit 64980b4d3a1e) and :78 (count sentence, re-goldened in df075c5ba664)",
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~73/suite_after_r32_IV124.txt (whole-scope run after the last portal commit: 1222 pass / 27 skip / 1 fail, the one fail F14-AC3)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
