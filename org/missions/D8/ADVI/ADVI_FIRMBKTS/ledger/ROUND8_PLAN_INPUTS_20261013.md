@@ -42,3 +42,12 @@ Door 6 is not consumer-free: `opal-data-inf` has an ObjectCreated S3 notificatio
   head-bucket read: that bucket exists). The plan must name which is canonical and move the other.
 - `D1-W79-S3`: `bd-cot-freshness-probe` exists in the repository and reads `opal-data-cot`; none of the 237 live functions has that name.
 Not read (unknowns for the plan): environment values of 226 live functions, IRPT invocation triggers, SNS subscribers, the default-band crosswalk enumeration (timed out).
+
+## FB-k-1 findings (Inflection pipeline layer; merged 5a848b3fc0; record `deliverables/0.9.0_WK_ADVI_FIRMBKTS~76/PLANINV_INFLECTION_PIPELINE.json`)
+
+54 functions, 34 touch the legacy home (50 measured, 2 held, 2 absent). Kinds: 33 Lambdas, 9 EventBridge rules, 7 scripts, 2 edge, 1 service, 2 other. Denominators: 156 EventBridge rules listed
+(targets read for 52), 34 Scheduler schedules (targets read 34), 51 Lambda configurations, 3 bucket notification configs (2 Lambda notifications on `opal-data-inf`, 2 on `opal-data-bd`), 9 ECS task
+definitions, 1 CloudFront distribution (7 origins, 30 behaviours), 169 repo files under `data/` naming `opal-data-inf`. Not read: targets of 104 of 156 rules, 31 of 34 schedule sources, the in-instance
+runner content, the live Lambda@Edge version, IAM and SNS, object-level listings.
+- `D1-W76-S1`: the order's premise (an Inflection scope inside `opal-data-bd`) does not hold: the census holds 0 such tokens and 0 of 247 `opal-data-bd` mapping rows are Inflection. Inflection's legacy
+  home is `opal-data-inf` alone (3,127 of 3,451 mapping rows). The plan treats `opal-data-bd` as the shared lake, not an Inflection home.
