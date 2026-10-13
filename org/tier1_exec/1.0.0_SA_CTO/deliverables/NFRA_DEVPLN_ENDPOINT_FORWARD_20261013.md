@@ -2,8 +2,9 @@
 
 Author `1.0.0_SA_CTO`, 2026-10-13 ~14:3xZ. **STATUS: EMITTED; the brief's five decisions APPROVED by Andrew ~14:3xZ at the CRO
 terminal** (record `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261013_143xZ_DEVPLN_RECS_APPROVED_AND_COMM_ASSIST_THROUGH_MUSE.md`
-@0ecb2dd97e, "DEVPLN decisions a-e approved"); **the seven DONE WHEN lines await his confirmation** (the one L2 touch that is his:
-"i will confirm CTO's 'DONE WHEN' from their /endpoint --forward", Andrew-direct 2026-09-03). Registered at L3 in the same
+@0ecb2dd97e, "DEVPLN decisions a-e approved"); **the seven DONE WHEN lines are CONFIRMED by Andrew ~16:0xZ at this terminal, VERBATIM "All agreed,
+proceed."** (record `ANDREW_DIRECT_20261013_160xZ_NFRA_DEVPLN_ENDPOINT_CONFIRMED_ALL_AGREED_PROCEED.md`; the one L2 touch that is his:
+"i will confirm CTO's 'DONE WHEN' from their /endpoint --forward", Andrew-direct 2026-09-03). The PRD carries this section verbatim. Registered at L3 in the same
 commit as a laptop project under D0 on his word of ~14:0xZ ("get this brief sorted and folded in as a laptop project NFRA_DEVPLN.
 I want it separated from CTLPLN because CTLPLN is getting too large", record
 `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261013_140xZ_FOUR_OPEN_CALLS_ANSWERED_DEVPLN_TAILNET_SSH_BDFEE_CTLPLN_SCOPE.md`
