@@ -7478,3 +7478,225 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+```json
+{
+  "id": "ADVI_COTBKF-D2-W155-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~155",
+  "surfaced_at": "2026-10-13T13:04:19Z",
+  "one_line": "Same-hour clause, round 80 CB-cb-1: APH (CUSIP 032095101) is held on 48 SERVED minted days (1 account, 48 account-days, 2025-02-11 to 2025-04-21). Its served close is 0.50 of the store (0.5035 to 0.5048) and 0.487 of the price paid on the nearest sale: a split-sized error in the price served on those days.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "spec_asserts": "CB-cb-1 item 6 of the round-80 order: a held SERVED day carrying a split-sized error in the served price is reported FIRST, with the ticker and the counts of served days and holding account-days, so the issuer can carry it to the CTO at once.",
+  "world_is": "In fwd3_serve_r34/account_day_value.parquet the close for APH on its 48 held account-days equals the build (r34/after/security_day_price.parquet), and the build over the store is 0.5000 on the last common day and 0.5035 to 0.5048 on the served days. The 47 early partitions do not hold APH. Cause not established: no step in the build over store equals a split ratio. Counts only; no account id or value printed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~155/THREE_EQUITIES.json (worker record, entries APH and CTVA; to be committed on wk-ADVI_COTBKF-155 from b38e73ab2d)",
+      "C:/dev/ajb_workspace/.scratch/advi_cotbkf/fwd3_serve_r34/account_day_value.parquet (read: cusip, quantity, close columns, filtered to the five CUSIPs)",
+      "C:/dev/ajb_workspace/.scratch/advi_cotbkf/r34/after/security_day_price.parquet (read: cusip, date, price, store)",
+      "store object s3://opal-data-cot/silver/prices/canonical_prices.parquet at version 76.rgWIXYdLNsXSwrXvyuEmaEtfr9y98 (97443387 bytes, read by get-object into .scratch)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "ADVI_COTBKF-D2-W155-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~155",
+  "surfaced_at": "2026-10-13T13:04:19Z",
+  "one_line": "The vendor split dates the round-80 order asks for are not on disk for the five securities: the build split plan the order names is absent from r34/after/, and the cache files carry no split events.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CB-cb-1 item 4 and its local-data list: the vendor split dates come from the cache file split events if present, else from the split store entries the build plan lists; the order says to list r34/after/ for the plan of applied splits per CUSIP and the suspect rows.",
+  "world_is": "r34/after/ holds four files: account_day_value.parquet, price_basis.json, repair_days.parquet, security_day_price.parquet. It has no plan of applied splits. The yahoo_census CSV files carry Date, Close, Adj Close only, with no split event, and no day move over 30 percent. repair_days.parquet has no row for the five CUSIPs. The split store was not read (not in the grant). vendor_splits is empty for all five for this reason.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ajb_workspace/.scratch/advi_cotbkf/r34/after/ (directory listing, four files)",
+      "C:/dev/ajb_workspace/.scratch/advi_cotbkf/yahoo_census/APH.csv, CTVA.csv, KLAC.csv, HON.csv, SCCO.csv (header and day moves read)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~155/THREE_EQUITIES.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "ADVI_COTBKF-D2-W155-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~155",
+  "surfaced_at": "2026-10-13T13:04:19Z",
+  "one_line": "The served minted copy and the 47 early holdings partitions disagree for HON: the minted copy holds it on 32 days of 2026-04-22 to 2026-06-07 (3 accounts) at the build price; the partitions hold it on 9 days (2 accounts) at the store price.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "spec_asserts": "CB-cb-1 item 2: the held days in the 47 served early partitions and the held days in the minted table are read as the served record for the same securities; the order expects one served price per security day.",
+  "world_is": "Partition price over store is 1.0000 on all 9 held partition days, and over build 0.9535. Minted close over build is 1.0000 on the 32 minted window days, and the minted close is 1.0488 times the store on those days. Seven partition held days are also minted held days. Counts and ratios only. Not reconciled: the partitions were read by asset_name (HONEYWELL INTL INC COM), since their ticker column is empty.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "gold/canonical/holdings/2026-04-22 to 2026-06-07 (47 objects, read by get-object into .scratch, asset_name match only)",
+      "C:/dev/ajb_workspace/.scratch/advi_cotbkf/fwd3_serve_r34/account_day_value.parquet (read: cusip, quantity, close)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~155/THREE_EQUITIES.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "ADVI_COTBKF-D2-W155-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~155",
+  "surfaced_at": "2026-10-13T13:04:19Z",
+  "one_line": "The build series after the store last day (2026-06-05 onward) has one-day steps of split size or more on several securities (APH 2026-09-04 factor 0.5171; CTVA 2026-10-02 factor 0.1535; KLAC 2026-09-04 factor 1.0774), which the store cannot test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CB-cb-1 item 4: the build over the store is read on the store days, and the split behind a level factor is named only where a step equals a split ratio on the split date.",
+  "world_is": "security_day_price.parquet after 2026-06-05 (all store labels) holds one-day ratios of 0.5171 (APH, 2026-09-04), 0.1535 (CTVA, 2026-10-02) and 1.0774 (KLAC, 2026-09-04). The store object ends 2026-06-09, so these days have no store comparison. A split dated after the store end would explain a level factor across the store window, but none is on disk, and the cause is not established.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ajb_workspace/.scratch/advi_cotbkf/r34/after/security_day_price.parquet (read: cusip, date, price, store; days after 2026-06-05)",
+      "store object s3://opal-data-cot/silver/prices/canonical_prices.parquet at version 76.rgWIXYdLNsXSwrXvyuEmaEtfr9y98 (last date 2026-06-09)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W156-S1 -- The order and round 80's item 2 say 'the 14 funds with trades'; the round-76 record gives
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W156-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~156",
+  "surfaced_at": "2026-10-13T13:00:43Z",
+  "one_line": "The order and round 80's item 2 say 'the 14 funds with trades'; the round-76 record gives trade units for all 15 of the funds, and round 80's own bz-2 record calls VGHAX too_few on a different close. The 14 is not reproduced on either basis.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~140/FUNDS_BY_TRADES.json @156563e290 (named: trade_units_read 5 to 1596 for all 15; class fails for all 15)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~149/STORE_UNADJUSTED_FIELD.json @156563e290 (the_fifteenth = VGHAX, too_few, 5 units, cache close)",
+      "scratch run of .scratch/cb2_test.py and cb2_store.py at worktree HEAD 156563e290 (not committed): round-76 positive control, 15 of 15 per-fund counts MATCH"
+    ]
+  },
+  "spec_asserts": "Order CB-cb-2 item 3 and the round-80 CTO analysis section 3 item 2: 'for the 14 funds with trades'.",
+  "world_is": "All 15 funds carry round-76 trade units (5 to 1,596 each), so 15 have trades on that basis. VGHAX has 5 decisive units on 5 days under the round-76 rule and classes fails on the served close, not too_few. No basis in the record gives 14 except by excluding VGHAX, which the rule does not do.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W156-S2 -- The order says the store root is 's3://' plus what s3_root() returns; s3_root() already re
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W156-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~156",
+  "surfaced_at": "2026-10-13T13:00:43Z",
+  "one_line": "The order says the store root is 's3://' plus what s3_root() returns; s3_root() already returns the s3:// scheme, so the prefix as written doubles it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/mdpf/scripts/demque/price_store.py @156563e290 lines 30-33 (s3_root returns address(...).rsplit)",
+      "scratch run of .scratch/cb2_test.py and cb2_store.py at worktree HEAD 156563e290 (not committed): s3_root() returned 's3://opal-data-assets/yahoo/global/silver/price_history'"
+    ]
+  },
+  "spec_asserts": "Order CB-cb-2 cell text, item 1: 'the price store's S3 root is s3:// + what s3_root() returns'.",
+  "world_is": "s3_root() returns the full s3:// root. The root was used as returned; no address was typed and no prefix was added.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W156-S3 -- Three of the seven landed objects (GFFFX, FOCPX, FCNTX) start on 2026-04-14 and hold 125 r
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W156-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~156",
+  "surfaced_at": "2026-10-13T13:00:43Z",
+  "one_line": "Three of the seven landed objects (GFFFX, FOCPX, FCNTX) start on 2026-04-14 and hold 125 rows; so their held days before that date are absent, and their round-76 trades cannot be read on dell1's column.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cusip=399874825, cusip=316389105, cusip=316071109 under yahoo/global/silver/price_history, lock.json valid_from 2026-04-14 valid_to 2026-10-09 (read via .tools/aws get, read-only)",
+      "scratch run of .scratch/cb2_test.py and cb2_store.py at worktree HEAD 156563e290 (not committed): present 122, 56 and 85 of 1571, 1499 and 1528 held trading days; trade units read on dell1's column 0, 0 and 1",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~156/FUND_CLOSES_READ_BACK.json (by_fund)"
+    ]
+  },
+  "spec_asserts": "Dell1's ruling and the request: the 7 landed closes are the store's back-fill of the held days (20,718 across the 15 funds), against which the held-day presence is counted.",
+  "world_is": "The three objects hold 2026-04-14 to 2026-10-09 only. Total present is 5,730 of 20,718 held trading days; 8 funds have no object at all. Why the lock starts on 2026-04-14 was not read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W156-S4 -- In all seven landed objects dell1's close_served equals as_traded_close on every row where
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W156-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~156",
+  "surfaced_at": "2026-10-13T13:00:43Z",
+  "one_line": "In all seven landed objects dell1's close_served equals as_traded_close on every row where both are present; with no split inside the back-fill, the split-undone property rests on dell1's word alone for these funds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cusip=<CUSIP>/prices.parquet of the seven landed objects, read via .tools/aws get (read-only); 0 differing rows across all non-null pairs",
+      "cusip=<CUSIP>/splits.parquet: FOCPX 2018-05-11 ratio 10.0; FCNTX 2018-08-10 ratio 10.0 (both before every held day)",
+      "scratch run of .scratch/cb2_test.py and cb2_store.py at worktree HEAD 156563e290 (not committed): close_served versus r34 served price, within 0.1 percent on 202, 171, 48 and 48 common dates for PCBIX, SGIIX, DISVX, DFLVX"
+    ]
+  },
+  "spec_asserts": "Dell1's ruling (CTO_RULING_DELL2_AS_TRADED_CLOSES_VIA_DEMQUE_20261012): the seven-column store carries as_traded_close, the vendor close with later splits undone, as a field distinct from the served close.",
+  "world_is": "The two fields are identical on every landed row. The split-undone property cannot be seen in the objects for these funds (no split inside the back-fill). Separately, the landed close_served differs from the round-76 served close on most common dates for the four passing funds; not explained here.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W156-S5 -- The held-day calendar answered from the hardcoded NYSE fallback: pandas_market_calendars i
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W156-S5",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~156",
+  "surfaced_at": "2026-10-13T13:00:43Z",
+  "one_line": "The held-day calendar answered from the hardcoded NYSE fallback: pandas_market_calendars is absent, and lib/trading_calendar printed its WARN; the count still reproduces round 80's per-fund figures.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py @156563e290 (is_trading_day; calendar_source NYSE/hardcoded-fallback-2010-2027)",
+      "scratch run of .scratch/cb2_test.py and cb2_store.py at worktree HEAD 156563e290 (not committed): WARN trading_calendar: pandas_market_calendars absent; the sum over 15 funds is 20,718, equal to round 80's held_covered_by_cache"
+    ]
+  },
+  "spec_asserts": "Held trading days are NYSE sessions by lib/trading_calendar; the round-80 denominator is 20,718 (STORE_UNADJUSTED_FIELD.json).",
+  "world_is": "The calendar in use is the hardcoded fallback covering 2010 to 2027; it must be regenerated before 2028. Counts agree with round 80 under it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
