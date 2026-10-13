@@ -2,7 +2,7 @@
 #
 # Dot-source this file. It defines functions only and starts no process.
 #
-# A SEAT is a claude.exe whose command line carries its LAUNCH SERIAL as the first full serial token
+# A SEAT is a claude.exe or codex.exe whose command line carries its LAUNCH SERIAL as the first full serial token
 # (ajb.ps1 opens claude with the serial as its first message). Another seat's launch hint may NAME
 # a serial further along a command line, so "the command line contains the serial" is not identity.
 # A kill must match the launch serial exactly, and a kill must not stop a process tree that holds a
@@ -17,11 +17,14 @@
 #                                                               object per FOREIGN seat: ProcessId, Serial, Name
 #
 # -Processes takes fake process objects (ProcessId, ParentProcessId, Name, CommandLine) for tests;
-# without it the live Win32_Process table is read. A claude.exe with no serial token is not a seat
-# (a native helper; S9118 notes) and is never reported. -Selected names pids the caller is killing in
+# without it the live Win32_Process table is read. A claude.exe or codex.exe with no serial token is not
+# a seat (a native helper; S9118 notes) and is never reported. -Selected names pids the caller is killing in
 # the same run; a selected seat is not foreign. A null -TargetSerial makes every serial-bearing seat foreign.
 
-$script:SeatSerialRe = '^[0-9]+\.[0-9]+\.[0-9]+_[A-Za-z]+_[A-Za-z0-9]+(~[A-Za-z0-9]+)?$'
+$script:SeatSerialRe = '^[0-9]+\.[0-9]+\.[0-9]+_[A-Za-z]+_[A-Za-z0-9_]+(~[A-Za-z0-9]+)?$'
+
+# The process names that carry a seat. One name set: Test-SeatBoundary judges every name in it the same way.
+$script:SeatAgentNames = @('claude.exe', 'codex.exe')
 
 function Get-LaunchSerial {
     param([string]$CommandLine)
@@ -76,7 +79,7 @@ function Test-SeatBoundary {
             $kp = [int]$k.ProcessId
             if ($kp -eq [int]$RootPid -or -not $seen.Add($kp)) { continue }
             $queue.Enqueue($kp)
-            if ($k.Name -ine 'claude.exe') { continue }
+            if ($k.Name -notin $script:SeatAgentNames) { continue }
             $ls = Get-LaunchSerial -CommandLine $k.CommandLine
             if (-not $ls) { continue }
             if ($Selected -contains $kp) { continue }

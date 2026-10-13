@@ -8857,3 +8857,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Worker 81 did not derive FABRIC_ENUM and did not edit the outside readers. Built and measured: box-status-report-check.py BOXES derives from lib/devices.py names() (AC2 and AC3 still pass; real-tree hand_listed 9 -> 8, the held gate carrier remains). Decision needed from the issuer (2.0.0_SA_COO~C) or the CTO: widen the grant to missions-tree-index.py, PROJECT_TREE.contract.json value_enums.fabric, test_fabric_readers_dell.py and the investigation schema, or keep the literal as the single carrier (CTab8-AC1 gate=derived then unreachable). Not decided by the worker."
 }
 ```
+
+## NFRA_CTLPLN-W84-S1 -- spawn-agent.ps1 carries the old third-segment serial pattern and refuses an underscore project serial
+
+```json
+{
+  "id": "NFRA_CTLPLN-W84-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~84",
+  "surfaced_at": "2026-10-13T19:04:01Z",
+  "one_line": "The loose serial check in .tools/spawn-agent.ps1:108 still uses the third segment [A-Za-z0-9]+, so spawn-agent refuses a serial such as 0.9.0_WK_NFRA_CTLPLN~78 before any launch. CT-ab-11 widened the copies in seat-boundary.ps1 and kill-agent.ps1 only, because spawn-agent.ps1 is outside that order's paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/spawn-agent.ps1:108 at worktree HEAD c396b76722 carries the pattern with the third segment [A-Za-z0-9]+ (no underscore), the same form CT-ab-11 widened in kill-agent.ps1:56 and kill-agent.ps1:79.",
+      "grep of .tools/seat-boundary.ps1, .tools/kill-agent.ps1, .tools/kill-maint.ps1 and .tools/spawn-agent.ps1 in worktree wk-NFRA_CTLPLN-84: the old-form serial literal appears only at spawn-agent.ps1:108 after the widening."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ab-11 BUILD 1: widen the third segment EVERYWHERE the pattern is written in seat-boundary.ps1 and kill-agent.ps1 (find every copy).",
+  "world_is": "spawn-agent.ps1 refuses an underscore-project serial at its loose check, so spawn-agent cannot launch such a worker. The kill tools now accept that serial. Not exercised: no spawn was run and no process was started.",
+  "notes": "Not widened here: spawn-agent.ps1 is outside this order's <paths> grant. The COO that issues the next round (2.0.0_SA_COO~C) decides whether the copy re-cuts. The hazard is INERT for the kill boundary."
+}
+```
