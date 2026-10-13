@@ -3931,3 +3931,29 @@ a STATE-coherence defect of the launch, and it is staged for the next round (the
 - **Open to the CTO:** whether the runner's log lines can all reach a file without a console (the order's own evidence reads the log file, so yes
   by reading; 3a's test is what proves it).
 - **Not issued here:** round 83 is one order, and a second cell in it is a second issuance in the round.
+
+## 101. ROUND 84 -- the runner with no console, and the first ended cycle read (`1.0.0_SA_CTO~DELL1` msg 4670, `ledger/ROUND_ANALYSIS.round83.md` section 3), 2026-10-13 ~07:2xZ
+
+Input: the CVO's slug msg 4669 (`ADJUDICATION_v75` @d3501cc7f3, MAY-CLOSE) and the CTO's round-83 analysis @bcb24fcac3. Row `AMGT_HARVST-Z-S115` is ARMED
+(disarm owner this seat, the disarm act is this round's first cell). The interim for the running cycle was sent same turn (MSTR relay to `~ZW`).
+Issuer `2.0.0_SA_COO~W1`. Section 100's `bz-3a` is cut as **`HVST-bz-3`** and `bz-3b` is **`HVST-bz-4`** (ids without a letter, for the gates).
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-bz-3` | `bz-3` | **The runner can run with no console window.** `Tee` tolerates a `None` real stream; the installer gains `-Windowless` (the `pythonw.exe` beside `python.exe`); a test runs the cycle runner under the REAL `pythonw.exe` and carries a mutant (the unguarded `Tee` ends the cycle as `AttributeError`). | LOCAL | worker `0.9.0_WK_AMGT_HARVST~138` | CUT |
+| `HVST-bz-5` | `bz-5` | **The first ENDED bbg cycle under the new pin is read**: every failure names its reason (`FAILED` = `NAMED` >= 1), read-only, no plant. Start condition: such a record exists (about 17:00Z). Closes D1-W135-S2's CARRIED_BY. | LOCAL (read) | seat `0.7.0_AE_CloudOps~ZW` | CUT (crossbox ORDER) |
+| `HVST-bz-4` | (cut after bz-3's merge) | **Site Z re-registered windowless** at a cycle boundary by the stop file, `-Plan` read first, one runner whose image is `pythonw.exe`, no `conhost.exe` child, the log writing for three consecutive jobs; both pins locked; before the old interpreter is retired the first real cycle under `pythonw` is read. | WORLD | seat `0.7.0_AE_CloudOps~ZW` | STAGED: cut under workstream `WINDOWLESS-SITEZ` once its pin `M` (bz-3's merge) is a real commit and the pair is signed |
+| plant | (none) | **A planted failing pair** for D1-W135-S2, only if bz-5 reads `FAILED=0`. Writes the state dir on a live producer, so its own pair. | WORLD | `0.7.0_AE_CloudOps~ZW` | STAGED, conditional |
+| `HVST-bx-4` | (none) | bs-3's successor | LOCAL (read) | `0.7.0_AE_CloudOps~ZW` | STAGED on Andrew's WSJ/Barron's sign-in |
+
+- **Fan-out:** 1 worker of 2 chains (bz-3 and bz-5 share no file and no edge), cap 8. bz-5 is a seat order, not a spawn.
+- **Why bz-4 is not cut in this issuance:** its pin is the merge commit of bz-3, which does not exist yet, and a placeholder pin on a WORLD order is a
+  hole the seat can step into. The same shape as `by-3` -> `bz-1` and the DEVADMIT workstream.
+- **Why `pythonw`:** QuickEdit-off stops a mouse selection but not the console's Mark command; no console has neither. Recorded on bz-3's issuer notes.
+- **Order of the two site Z acts:** bz-5's record must exist before `bz-4` re-registers, or the stop at the boundary writes the record bz-5 reads as a
+  `stopped_by_operator` one; bz-5 reports `STOPPED=` in its line so that is visible, not hidden.
+- **Not orders:** Andrew's WSJ/Barron's sign-in; the reader-side EXPIRED rule (rides the first pull-status reader, carried).
+
+**Checks dry-run at the base before the cut:** bz-3 AC1 base: FAIL as expected (`no tests ran`: the file does not exist); bz-3 AC2 base: PASS as expected
+(`61 passed`); bz-5 AC1 base: FAIL as expected (the round-79 record prints `FAILED=8 NAMED=0`), with a PASS control (`FAILED=8 NAMED=8`) and a no-record
+arm (`NO-ENDED-CYCLE-SINCE`, rc 1).

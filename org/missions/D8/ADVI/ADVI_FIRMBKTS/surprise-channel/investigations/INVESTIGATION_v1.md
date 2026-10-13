@@ -6053,3 +6053,80 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "No arm was weakened and the simulator was not stubbed. Decisions owed by the issuer: (a) route the 31 simulator arms to the laptop lane (rule 2); (b) rule what the before roots do when the pinned fence file's selector no longer picks one row (give them HEAD's selector, or retire the pinned arm, or re-pin): any of the three changes what the arm asserts; (c) rule arms 3 and 4 against the validator's current rules (did the grants field retire them?), and (d) whether `grants` is an admitted top-level field for unchanged_today. This seat made no further edit to the check."
 }
 ```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~65 (FB-h-6, exec-summary diagnosis, read-only)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W65-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~65",
+  "surfaced_at": "2026-10-13T06:52:46Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B1",
+  "one_line": "No CloudTrail PutEvents call exists in any of 17 enabled regions over 90 days, so the chain-complete put-events WARN never reached the events API: the failure sits upstream of EventBridge.",
+  "spec_asserts": "TO-FB-h-6 section 1a.1 reads the failing put-events as a call that reaches the events API, so CloudTrail holds its per-day calls and errorCode texts for reading, and the record's verdict follows from them.",
+  "world_is": "CloudTrail LookupEvents EventName=PutEvents, 2026-07-15T00:00:00Z to 2026-10-13T23:59:59Z: 0 events in 17 of 17 enabled regions. The positive control (EventSource=events.amazonaws.com, us-east-1, 20 events) returns events. The chain-close WARN on 2026-10-13 is cited from D1-S40, not re-read. Runner bd-gold-layer-runner (i-01003b035d2988dfb, profile bd-exporter-profile) launched 2026-10-13T04:00:47Z and is stopped now.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~65/EXEC_SUMMARY_DIAGNOSIS.json@c9fc7f9ec0",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~65/EXEC_SUMMARY_DIAGNOSIS.md@c9fc7f9ec0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Consistent with D1-S40, which records chain-close WARNs on 2026-10-12 and 2026-10-13 and zero 'chain-complete emitted' lines. Either the call never executes on the runner, or it runs under an identity, region or CLI config that CloudTrail does not show here. The next read is runner-side (CLI identity, default region and output, chain logs), outside this read-only order; the issuer decides who reads it."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~65 (FB-h-6, region scope of the CloudTrail read)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W65-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~65",
+  "surfaced_at": "2026-10-13T06:52:46Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order fixed its CloudTrail read to us-east-1, but the emit names no --region, so the runner's region is unreadable; this worker swept PutEvents over the 17 enabled regions and found none.",
+  "spec_asserts": "TO-FB-h-6 section 1a.1 and its header: CloudTrail lookup in region us-east-1, the region the bus and rule live in.",
+  "world_is": "gold_dispatch.sh:840-850 runs 'aws events put-events' with no --region, so the region is the runner's CLI default, which this order cannot read. The us-east-1 lookup and each of the 16 other enabled regions (ec2 describe-regions) returned 0 PutEvents over the 90-day window.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~65/EXEC_SUMMARY_DIAGNOSIS.json@c9fc7f9ec0 (calls list, 17 PutEvents lookups)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The region question is closed for CloudTrail event history: no PutEvents in any enabled region. The runner's default region itself stays unread, and the sweep was a read, not an act."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~65 (FB-h-6, denied read)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W65-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~65",
+  "surfaced_at": "2026-10-13T06:52:46Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "organizations list-policies (SERVICE_CONTROL_POLICY) is AccessDenied to cloudops-dell1-agent-user, so any SCP that could deny events:PutEvents is unreadable from this identity.",
+  "spec_asserts": "TO-FB-h-6 section 2 bound 2: a denied read is recorded in the record's calls and filed as a surprise row, and the record states the SCP effect.",
+  "world_is": "aws organizations list-policies --filter SERVICE_CONTROL_POLICY returns AccessDeniedException ('You don't have permissions to access this resource'), rc=254, for arn:aws:iam::313476888478:user/cloudops-dell1-agent-user.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~65/EXEC_SUMMARY_DIAGNOSIS.json@c9fc7f9ec0 (denied_reads)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A denial is not evidence that an SCP exists. An SCP deny on PutEvents would show as an AccessDenied record in CloudTrail, and none is recorded, so the SCP question is open only in the sense that it is unread."
+}
+```
