@@ -7042,3 +7042,59 @@
  "notes": "Grade row for ADJUDICATION_v21. Built, not released: nothing live."
 }
 ```
+
+## IRPT_ANLREQ-D2-W67-S1 -- the ruled allowlist does not admit "Acct Ref Ext" ("ext" is neither a tail word nor a modifier): three intake tests that use that header fail, and AC1 and AC2 cannot pass as ruled
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W67-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~67",
+  "surfaced_at": "2026-10-13T14:47:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "one_line": "Built the ruled allowlist (a root header enters the backstop only when every other word is an identifier tail, alias added, or a modifier, primary added). The intake suite goes from 364 passed to 361 passed and 3 failed (rc 1): test_an_account_root_header_with_two_identifier_values_is_read_as_an_account_column, test_the_backstop_words_say_what_is_seen_and_ask (both named backstop tests) and test_a_digit_run_column_with_no_separator_under_a_root_is_read_as_an_account_column (an earlier test). All three use the header 'Acct Ref Ext', whose word 'ext' is in neither ACCOUNT_TAIL_WORDS nor ACCOUNT_MODIFIERS, so the allowlist does not admit it. AR221-y-AC1 and AR221-y-AC2 cannot both pass without a ruling on 'ext'.",
+  "spec_asserts": "AR-y-221 cell item 2 and CTO round-21 section 2 item 1: a header with an account root enters the backstop only when every other word is an identifier-tail word (alias added to the tails) or a modifier (primary added). ACCEPTANCE AR221-y-AC1: the five named backstop tests pass; AC2: the whole intake folder passes (364 at the base) and READER_VERSION differs. The test file's own comment at test_account_value_backstop.py:20 says 'ext' is not a tail word.",
+  "world_is": "'ext' is in neither ACCOUNT_TAIL_WORDS nor ACCOUNT_MODIFIERS at the base (template_reader.py:66-69 @b4943b79ce), and the three tests read the header 'Acct Ref Ext' (test_account_value_backstop.py:21, :29, :46, :139-151 @b4943b79ce), which the ruled allowlist therefore does not turn back. Measured in the worktree after the rule change: pytest tests -q gives 3 failed, 361 passed, 1 skipped, 25 subtests passed (rc 1); the other 361 are unchanged. The check y221-allowlist prints 'negatives 16, positives 5; backstop tests: 22 passed, 3 failed (rc=1)' and Y221-ALLOWLIST-FAIL. Nothing outside the grant was changed; ext was NOT added to the tail set and the test header was NOT changed, because each is a ruling this seat does not hold.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py:66-69 @b4943b79ce (ACCOUNT_MODIFIERS and ACCOUNT_TAIL_WORDS: no 'ext' in either)",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_account_value_backstop.py:19-25 and :139-152 @b4943b79ce (the header 'Acct Ref Ext')",
+      "pytest run in C:/dev/wk-irpt-anlreq-67 after the rule change: 3 failed, 361 passed, 1 skipped, 25 subtests passed (output .scratch/after_intake.txt in the worktree)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_ANLREQ_Y_ROUND_21_20261013.md section 2 item 1 @b4943b79ce (the ruled allowlist)"
+    ]
+  },
+  "notes": "Hazard if released as ruled: a two-account file under an 'Acct Ref Ext' style header reads as one account (no ACCOUNT_COLUMN_SEVERAL_VALUES). Not released (READER_VERSION r19.3 is built, not live). The fix belongs to the ruling: add 'ext' to the tails (a header-rule widening: 'Account Ext' would then match the header rule too) or move the test header. Not decided here."
+}
+```
+
+## IRPT_ANLREQ-D2-W67-S2 -- the cell's word-set test, applied literally, admits "Acct Custodian" (custodian is a modifier); built by word position instead
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W67-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~67",
+  "surfaced_at": "2026-10-13T14:47:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cell says a root header enters the backstop when every OTHER word is in ACCOUNT_TAIL_WORDS or ACCOUNT_MODIFIERS. 'custodian' is in ACCOUNT_MODIFIERS, so read as a word set, 'Acct Custodian' (CVO neighbour, control AR221-y-AC1) would enter and its values SCHWAB01 and FIDELITY1 would be turned back. The built rule tests POSITION instead: a word before the root must be a modifier, a word after it an identifier tail (_root_header_admitted). Under it all 16 negatives and 5 positives behave as the controls name.",
+  "spec_asserts": "AR-y-221 cell item 2: 'a header that carries an account root enters the backstop ONLY when every OTHER word of the header is in ACCOUNT_TAIL_WORDS (add alias) or ACCOUNT_MODIFIERS (add primary)'; item 1: the six CVO neighbours (Acct Custodian among them) are controls that must NOT be turned back.",
+  "world_is": "custodian is in ACCOUNT_MODIFIERS (template_reader.py:66 @b4943b79ce), so the word-set test as written admits Acct Custodian. The header rule's grammar places a modifier BEFORE the account word ('Custodian Account' names whose account it is) and a tail AFTER it; 'Acct Custodian' names an attribute of the account, the same class as 'Acct Holder'. Built by position in template_reader.py (_root_header_admitted), not by the literal set test. Function-level run in the worktree: negatives 16, positives 5, no FAIL line for any control.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py:66 @b4943b79ce (ACCOUNT_MODIFIERS includes custodian)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py NEGATIVES (\"Acct Custodian\", \"SCHWAB01\", \"FIDELITY1\") @b4943b79ce",
+      "worktree .scratch/ac1_run1.txt (y221-allowlist run after the rule change)"
+    ]
+  },
+  "notes": "For the CTO's read of the rule: the position test is the one the controls pass with no extra word list. The literal set test would need custodian removed from the modifier set, which the header rule needs. Residual: a backstop-only header with a word before the root that is not a modifier (e.g. 'No. of Acct Ref Ext') no longer enters the backstop; no test or fixture carries one (the header-rule matches 'No. of Acct' and 'Roth IRA Acct No.' are unaffected)."
+}
+```
