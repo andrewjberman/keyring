@@ -27,7 +27,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 TOOLS = os.path.join(ROOT, ".tools")
 EDITED = [".tools/open-calls-scan.py", ".tools/to-pipeline-gate.py", ".tools/fabric-activity.py",
           ".tools/open-calls-scan-schedule.ps1", ".tools/remote-job.py", "org/devices/kit_python_install.py", "lib/devices.py"]
-HELD = {".tools/to-pipeline-gate.py": "NFRA_CTLPLN-W53-S1"}   # still names the boxes ONLY as the AST carrier missions-tree-index reads
+HELD = {}   # no held file: to-pipeline-gate.py derives its box list from the register and is no longer in the census
 RESULTS = []
 
 

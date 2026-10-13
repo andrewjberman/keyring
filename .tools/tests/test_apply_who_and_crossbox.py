@@ -944,7 +944,7 @@ def _():
 @case("OPEN-CALL, files mode: a call naming only a project whose write set covers the root hits root-only, and does not when the carried file is outside its write set")
 def _():
     fx = fresh("LAPTOP")
-    put(fx / "org/devices/crossbox/c1.json", call_doc(subject="the PA project needs a word"))
+    put(fx / "org/devices/crossbox/c1.json", call_doc(subject="the project needs a word", project="PA"))
     put(fx / "org/devices/crossbox/c1.body.md", "nothing about paths\n")
     rc0, out0 = cross(fx)
     rc1, out1 = cross(fx, "--files", OTHER_TF)

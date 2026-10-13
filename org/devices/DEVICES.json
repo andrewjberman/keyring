@@ -146,6 +146,16 @@
       "role_text": "Muse, Andrew's operator agent on the tailnet: SENDS agentbus messages, never consumes; no inbound queue, no box, no placement, no seats.",
       "role_claim": "held",
       "role_source": "Andrew-direct 2026-10-13 ~20:4xZ (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_204xZ_MUSE_SENDER_AND_COO_LIVE_ARMS.md)"
+    },
+    {
+      "name": "ldo-001",
+      "tailnet_name": "ldo-001",
+      "tailnet_claim": "held",
+      "tailnet_source": "COMM_ASSIST's LDO-001 assistant (the teams-global-chat-assist Lambdas, AWS, not on the tailnet); agentbus logs 'unstamped sender=LDO-001'; the name it must stamp as from_tailnet, assigned by 1.0.0_SA_CTO 2026-10-13 ~22:4xZ",
+      "role": "sender-only",
+      "role_text": "COMM_ASSIST's LDO-001 assistant in AWS: SENDS agentbus messages (bids, jobs), never consumes; no inbound queue, no box, no placement, no seats.",
+      "role_claim": "held",
+      "role_source": "Andrew-direct 2026-10-13 ~22:3xZ via 0.0.0_AB_MSTR msg 108966 (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_223xZ_COMM_ASSIST_SENDER_STAMP_AND_J290.md)"
     }
   ],
   "senders_contract": "A sender is a tailnet name the agentbus consumers ACCEPT as from_tailnet (lib/devices.py held_tailnet_names) without being a box: it is never in devices[], so no box list, placement value, queue lookup, SSH or crossbox sweep sees it.",

@@ -68,3 +68,15 @@ rotated by the same change-managed path.
    The dell2 forwarder job follows it. This is a crossbox order to `~CA2`.
 4. **FWD-12 (muse efficacy)** is cut the round after FWD-6 is exercised, so the fallback decision Andrew asked for is a read.
 5. Carried, Andrew's acts: `44eb` (one Teams @mention) and `e435` (one colleague email).
+
+## ADDENDUM ~22:4xZ -- Andrew-direct ~22:3xZ: two items folded in (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_223xZ_COMM_ASSIST_SENDER_STAMP_AND_J290.md`)
+
+6. **The LDO-001 sender stamp** (same workstream as muse's `ms`). The register now holds `ldo-001` (`DEVICES.json` senders). The
+   assistant's agentbus send path stamps `from_tailnet=ldo-001`. Done when one real bid is delivered with no
+   `unstamped sender=LDO-001` WARN, and a fixture stamped with an unheld name is refused.
+7. **Job J290, the reply mechanism for received mail** (FWD-4's mail branch; the bid was lost and the job is unowned). COMM_ASSIST
+   takes it. The first live case is the Keith Wagner (TIFIN call) mail. Nothing is sent in Andrew's name without his approval, and
+   mail is drafted, never sent, as the project's standing rule.
+
+If round 17 is already issued, the issuer adds both as its own amendment and states which gate limb graded it (rule 27). Otherwise
+they are cut in the round-17 issuance.

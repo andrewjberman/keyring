@@ -721,3 +721,270 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "CA-h-2 (host act on dell2) includes one SSH read from muse; its order will carry the key read-back as its own first step unless NFRA_CTLPLN adds the cell first. Owner of the gap: 1.0.0_SA_CTO."
 }
 ```
+
+## COMM_ASSIST-W11-S1 -- an unreadable drafts.json would make the once-only rejection permanent, so the forwarder defers instead
+
+```json
+{
+  "id": "COMM_ASSIST-W11-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~11",
+  "surfaced_at": "2026-10-13T22:37:00Z",
+  "one_line": "The BUILD rule rejects an answer file whose tag has no drafts.json row, and rejection writes a permanent marker. A refresh that could not read drafts writes items null, so the literal rule would reject every valid answer for good. The forwarder defers those files instead: no marker, no send, retried next run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/muse_reader/refresh.py@8bf64bac36:80-84 the README the refresh writes: an unreadable source has items null; absent and unreadable are never an empty list",
+      "data/transcripts/scripts/muse_reader/forwarder.py@8bf64bac36 (new file, CA-i-3 commit) _draft_rows raises DraftsUnreadable when items is not a list; forward() counts the file failed and writes no marker",
+      "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r17/checks/check_i3_forward.py@8bf64bac36:30 the check always writes drafts.json with a list, so the deferral arm is not exercised by the issuer's check"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CA-i-3 BUILD step 1: a file whose tag has no row in root/drafts.json with a non-empty object_id is written to answers/rejected/<sha>.json with reason tag-not-waiting; a rejected marker makes later runs skip the same bytes.",
+  "world_is": "refresh.py writes drafts.json with items null when the drafts read is unreadable, and the README says items null is not an empty list. Read literally, the BUILD rule treats that as no row and makes the rejection permanent. The forwarder treats an unreadable drafts.json as no verdict: it writes no marker and sends nothing, counts the file under failed, and retries next run.",
+  "notes": "The deferral is the forwarder's only departure from the BUILD rule list, and the CLI reports deferred files under failed. The issuer should confirm the reading. Edge arm measured in scratch only (.scratch/edge_ca_i3.py T1), not in the issuer's checks."
+}
+```
+
+## COMM_ASSIST-W11-S2 -- the forwarder routes on object_id, which the refresh at this base does not write
+
+```json
+{
+  "id": "COMM_ASSIST-W11-S2",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~11",
+  "surfaced_at": "2026-10-13T22:37:00Z",
+  "one_line": "THE CONTRACT says the refresh cell adds object_id to each drafts.json row this round. At this base refresh.py does not write object_id, so every answer would be rejected tag-not-waiting until the CA-i-1 refresh change lands in the reader folder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~CA",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/muse_reader/refresh.py@8bf64bac36:230-234 _draft_row keeps tag, kind, version, status, texted_at, send_at, draft and chat_title; no object_id",
+      "data/transcripts/scripts/muse_reader/refresh.py@8bf64bac36 a path-scoped search of the muse_reader folder for object_id returns zero matches in refresh.py",
+      "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r17/checks/check_i1_live.py@8bf64bac36:43-50 the CA-i-1 check requires every drafts item to carry a non-empty object_id, so that change is a separate cell"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CA-i-3 THE CONTRACT: the refresh cell adds object_id to each drafts.json row this round, and BUILD step 1 routes each answer on that row's object_id.",
+  "world_is": "At 8bf64bac36 the drafts rows carry no object_id, so the forwarder finds no waiting row for any tag. Under THE CONTRACT a rejected marker is permanent, so installing this forwarder before the CA-i-1 object_id change lands would reject every answer for good. The forwarder is not installed by this cell; the install cell CA-i-5 must sequence after CA-i-1.",
+  "notes": "This cell does not edit refresh.py: its <paths> do not name it. The check suite for this cell passes on synthetic drafts rows that carry object_id."
+}
+```
+
+## COMM_ASSIST-W11-S3 -- a permanent tag-not-waiting rejection can fire on a lagging drafts.json snapshot
+
+```json
+{
+  "id": "COMM_ASSIST-W11-S3",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~11",
+  "surfaced_at": "2026-10-13T22:37:00Z",
+  "one_line": "A tag-not-waiting rejection is permanent by the BUILD rule, but drafts.json is a scheduled refresh snapshot. An answer for a draft that is waiting in the cloud and not yet in the snapshot would be rejected for good, and the forwarder cannot tell the two cases apart.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~CA",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/muse_reader/refresh.py@8bf64bac36:155-184 refresh() writes drafts.json on each scheduled run, carrying read_at; the snapshot is whatever the last run read",
+      "data/transcripts/scripts/muse_reader/forwarder.py@8bf64bac36 the tag-not-waiting branch writes answers/rejected/<sha>.json, and the once-only check at the top of the loop skips any sha with a marker in done/ or rejected/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CA-i-3 BUILD step 1: no drafts.json row with a non-empty object_id for the tag writes answers/rejected/<sha>.json; a rejected marker stops any later run from acting on the same bytes.",
+  "world_is": "drafts.json is a snapshot written by the scheduled refresh, so it can lag the cloud table by one refresh interval. A draft that became waiting after the last refresh is absent from the snapshot, and the marker then makes that rejection permanent. The BUILD rule does not say the snapshot is current at the time of the answer.",
+  "notes": "Not mitigated in this cell: a retry-on-newer-snapshot rule would change the BUILD rule list and needs an issuer ruling. The rejection marker's at field is the run time, not the snapshot's read_at, so a later reader cannot tell from the marker which snapshot judged the answer."
+}
+```
+
+## COMM_ASSIST-W9-S1 -- the S3 listing's LastModified carries a millisecond fraction that the cell's two example forms do not name
+
+```json
+{
+  "id": "COMM_ASSIST-W9-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~9",
+  "surfaced_at": "2026-10-13T22:40:09Z",
+  "one_line": "The S3 listing's LastModified is 2026-10-13T20:13:51.000Z, a millisecond fraction the cell's two example forms do not name; the first parser read all three sprint objects as having no time.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Measured 2026-10-13 ~22:3xZ from this laptop: aws s3api list-objects-v2 --bucket opal-data-portal-v2 --prefix daily-reports/2026-10-13/ --max-items 5 returned LastModified \"2026-10-13T20:13:51.000Z\" on each Contents entry (rc 0).",
+      "data/transcripts/scripts/muse_reader/refresh.py@8bf64bac36 read_sprint_today passed c.get(\"LastModified\") through unchanged; the scratch run before the parser fix (.scratch/muse_i1/sprint_today.json, 3 items) carried age_minutes null and age_from null on all 3; after the fix the same run carries 144 and last_modified on all 3."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CA-i-1 BUILD 1: with_age ages from the first key whose value parses as an ISO UTC time in the Z or +00:00 form; a value that does not parse is aged None, never guessed.",
+  "world_is": "S3 emits the listing time with a .000 fraction before the Z. refresh.parse_utc now accepts an optional fraction of a second (microseconds kept) and still only the Z and +00:00 offsets; no other offset parses. The widening is my reading of 'ISO UTC time' and is recorded for the L9 read; no criterion changed.",
+  "notes": "The other sources are unaffected: drafts texted_at and eod send_at are written by assist.iso() as %Y-%m-%dT%H:%M:%SZ (teams_chat/assist.py:96, no fraction), and open_calls opened_at by now_utc() in the same form (.tools/open-calls.py:170)."
+}
+```
+
+## COMM_ASSIST-W9-S2 -- the eod_today draft row carries object_id too, because one row builder serves both draft readers
+
+```json
+{
+  "id": "COMM_ASSIST-W9-S2",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~9",
+  "surfaced_at": "2026-10-13T22:40:09Z",
+  "one_line": "The cell names object_id on drafts rows; the shared draft-row builder also serves the eod_today reader, so the End of Day draft row carries object_id as well (its pk, eod:<day>).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/muse_reader/refresh.py@8bf64bac36 read_eod_today reads the row by key eod:<day> and built its one row with _draft_row(state, pending); read_drafts builds its rows with the same helper.",
+      "org/missions/D9/COMM/COMM_ASSIST/surprise-channel/investigations/INVESTIGATION_v1.md COMM_ASSIST-W8-S2 (world_is): a state row's pk is the object id (a chat id, eod:<day>, or inbox:owner)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CA-i-1 BUILD 3: drafts rows carry object_id, the id of the DynamoDB state row the draft was read from; every draft row has a non-empty string object_id.",
+  "world_is": "eod_today's row also carries object_id = eod:<day>, the pk of the row it was read from, so one helper serves both readers and 'every draft row' holds for the End of Day draft. The cell named the drafts reader only; this is my judgment and it changes no criterion. The live run found eod:2026-10-13 with pending=no, so no eod draft row was present and the field is unmeasured on a live eod draft.",
+  "notes": "An eod row without a pk raises, so the source reads unreadable rather than emitting an empty object_id, the same rule the drafts reader applies to a state row without one."
+}
+```
+
+## COMM_ASSIST-W10-S1 -- the owner.text redraft sends its edit WITH a version, so the W8-S6 stale check reaches it
+
+```json
+{
+  "id": "COMM_ASSIST-W10-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~10",
+  "surfaced_at": "2026-10-13T22:43:46Z",
+  "one_line": "CA-i-2 says a text-path edit carries no version, but the owner.text redraft path sends its edit with a version, so the W8-S6 stale check now reaches those redrafts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/tenant.py@8bf64bac36:874-876 on_owner_text sends sms.reply with action edit and version = act.get('version') or item['version'] for every non-send, non-dev action",
+      "data/transcripts/scripts/teams_chat/tenant.py@8bf64bac36:497 the send and drop stale check that the edit now shares, for an edit that carries a version",
+      "data/transcripts/scripts/teams_chat/tenant.py@8bf64bac36:1110-1165 route_text (the #N text path) sends sms.reply with no version key, and is unchanged by this cell"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-i-2 step 3: a text-path edit carries no version in its payload, so its behaviour must not change; the stale check covers an edit that carries a version.",
+  "world_is": "The premise holds for the #N text path but not for owner.text. An owner.text redraft of a draft that has moved on is now refused as unseen (the changed-just-before text) where it used to redraft. The #N text path, which sends no version, is not checked and its behaviour is unchanged.",
+  "notes": "Chosen in the worker commit: the edit check runs only when the payload carries a version (on_sms_reply), so every version-less edit is untouched. The owner-path change is a consequence of the order's wording, not a separate decision; the CVO grades whether it is wanted."
+}
+```
+
+## COMM_ASSIST-W10-S2 -- the sms.reply path has no origin check of its own, so a queued sms.reply is acted on as Andrew's text
+
+```json
+{
+  "id": "COMM_ASSIST-W10-S2",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~10",
+  "surfaced_at": "2026-10-13T22:43:46Z",
+  "one_line": "The sms.reply handler trusts any sms.reply event; the only sender check is the SNS originationNumber test in route_text, so an sms.reply put on the queue directly is acted on as Andrew's text.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~CA",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/tenant.py@8bf64bac36:469-470 on_sms_reply reads the payload's tag, action and notes and acts on them, with no origin check",
+      "data/transcripts/scripts/teams_chat/tenant.py@8bf64bac36:1110-1111 route_text compares originationNumber to a.secret(a.PHONE_SECRET); this is the only sender check, and it runs only on the SNS ingress",
+      "data/transcripts/scripts/teams_chat/tenant.py@8bf64bac36:955 dispatch routes kind sms.reply to on_sms_reply for any event on the queue, so an event put there directly is not checked"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-i-2 rules: a forged sms.reply that imitates the text path is a pre-existing weakness of the text path and is outside this cell; if confirmed from the code, file one row naming it.",
+  "world_is": "Confirmed from the code, not exercised: an sms.reply event on the queue with action send posts the chat's draft to Teams, and one with action drop cancels it, with no text from Andrew behind it. The muse receiver does not change this, because the muse path is a separate kind and this one is still open.",
+  "notes": "Left alone by this cell (outside its rules). Remedy belongs to a later cell; the disarm owner is the issuing COO, who routes the ruling to 1.0.0_SA_CTO. No AWS call was made to test it."
+}
+```
+
+## COMM_ASSIST-W10-S3 -- the order names no reason for a verified answer that is not the contract, or for a pinned line that is not a key
+
+```json
+{
+  "id": "COMM_ASSIST-W10-S3",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~10",
+  "surfaced_at": "2026-10-13T22:43:46Z",
+  "one_line": "CA-i-2 names reasons no-signature, no-key-configured and bad-signature only; a verified answer whose payload is not the contract, and a pinned key line that does not parse, have no named reason.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/muse_verify.py (new in the worker commit on wk-COMM_ASSIST-10): _pinned_key returns None for a line that does not parse as ssh-ed25519, and verify() then reports no-key-configured",
+      "data/transcripts/scripts/teams_chat/tenant.py (new in the worker commit on wk-COMM_ASSIST-10): _muse_fields returns None for a signed payload that is not the contract, and on_muse_reply refuses it with reason bad-payload"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-i-2 step 2 names the refusal reasons no-signature, no-key-configured and bad-signature; step 1 says a malformed signature is bad-signature.",
+  "world_is": "Two cases had no named reason. A signed payload that is not JSON, not an object, has no string tag, has an action outside send, drop and edit, or has a non-integer version is refused as bad-payload and recorded with its tag if one parses. A pinned line that is not an ssh-ed25519 key is treated as no key, so it fails closed as no-key-configured.",
+  "notes": "Both choices are the worker's, made so that nothing is sent. Both are recorded in the refusal list. The CVO grades whether bad-payload should exist as a reason."
+}
+```
+
+## COMM_ASSIST-W10-S4 -- a muse answer addressed to the owner object cannot answer a K### confirmation
+
+```json
+{
+  "id": "COMM_ASSIST-W10-S4",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~10",
+  "surfaced_at": "2026-10-13T22:43:46Z",
+  "one_line": "A verified muse answer sent to the owner object runs on_sms_reply, which has no pending draft there, so muse cannot answer a K### confirmation.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/tenant.py@8bf64bac36:955 dispatch sends only sms.reply on the owner object to on_owner_reply; a muse.reply on that object falls through to ROUTES",
+      "data/transcripts/scripts/teams_chat/tenant.py@8bf64bac36:899-921 on_owner_reply is the only code that answers a K### confirmation (st['confirm'])"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-i-2 step 2: a verified answer is run through the same code on_sms_reply runs for the same tag, action, notes and version.",
+  "world_is": "The order names only on_sms_reply. For a muse answer addressed to the owner object, on_sms_reply finds no pending draft and answers nothing-open, so the K### confirmation is not answered. Nothing is sent by this path, and the action set is limited to send, drop and edit, so dev and close cannot be reached through muse.",
+  "notes": "Left as the order says. A later cell that wants muse to answer K### confirmations needs on_owner_reply on the same verified fields; that is a decision for the issuer."
+}
+```
+
+## COMM_ASSIST-W13-S1 -- the footer every mail text carries names #dev and 0 only, so the approve and redraft replies are not stated where he reads them
+
+```json
+{
+  "id": "COMM_ASSIST-W13-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~13",
+  "surfaced_at": "2026-10-13T23:17:35Z",
+  "one_line": "The mail text footer (_mail_text) says Reply #dev [notes] to open a job / 0 drop; it does not name 1 (approve) or notes (redraft), which CA-i-7 now answers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/mail_requests.py@90adf8a007:229 the footer line of _mail_text: Reply #dev [notes] to open a job / 0 drop",
+      "data/transcripts/scripts/teams_chat/mail_requests.py (worker commit on wk-COMM_ASSIST-13): on_mail_reply now answers 1 with the final draft and notes with a redraft, and the footer is unchanged"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-i-7 step 2: his notes redraft the mail draft and his 1 approves it, so he can finish the item by text.",
+  "world_is": "Every mail text, first or redrafted, ends with a footer that names only #dev and 0. Nothing in the text he receives says that 1 approves or that notes redraft. The chat text names 1 and notes (its offer text); the mail text does not.",
+  "notes": "Not changed here: the footer is the first-text format and the order names no footer change. The issuer decides the wording. The mail item's approve and redraft replies work regardless of the footer."
+}
+```

@@ -129,13 +129,20 @@ def roots_field_hit(doc, rel: str) -> str:
     return ""
 
 
-def mentions(text: str, pats: list, codes: list) -> str:
+def project_field_hit(doc, codes) -> str:
+    """Non-empty when the doc's own structured `project` field names one of the covering project codes. Structured data only:
+    a project code in a subject or context is free text and does not count (CTO ruling on D2-S32)."""
+    value = doc.get("project") if isinstance(doc, dict) else None
+    if isinstance(value, str) and value.strip() in codes:
+        return "names project %s in its project field, whose write set covers the root" % value.strip()
+    return ""
+
+
+def mentions(text: str, pats: list) -> str:
+    """Free text names the root only by its path pattern (mention_patterns); a bare project code or a bare root name does not."""
     for pat, label in pats:
         if re.search(pat, text):
             return "names the root (token %s)" % label
-    for code in codes:
-        if re.search(r"(?<![A-Za-z0-9_])%s(?![A-Za-z0-9_])" % re.escape(code), text):
-            return "names project %s, whose write set covers the root" % code
     return ""
 
 
@@ -209,7 +216,8 @@ def measure_open_call(repo_root, rel, covering, now, files=None) -> tuple:
                     body = open(os.path.join(repo_root, call["body_path"]), encoding="utf-8", errors="replace").read()
                 except OSError:
                     body = ""
-            why = (roots_field_hit(call, rel) if not narrow else "") or mentions(json.dumps(call) + "\n" + body, pats, codes)
+            why = (roots_field_hit(call, rel) if not narrow else "") or project_field_hit(call, codes) \
+                or mentions(json.dumps(call) + "\n" + body, pats)
         except Exception as exc:
             hits.append("%s unreadable (%s: %s): a file that exists and cannot be parsed is not clear" % (name, type(exc).__name__, exc))
             lines.append("  HIT %s" % hits[-1])
@@ -233,7 +241,8 @@ def measure_open_call(repo_root, rel, covering, now, files=None) -> tuple:
                 scanned += 1
                 if str(row.get("state", "")).upper() in CLOSED_WORDS:
                     continue
-                why = (roots_field_hit(row, rel) if not narrow else "") or mentions(json.dumps(row), pats, codes)
+                why = (roots_field_hit(row, rel) if not narrow else "") or project_field_hit(row, codes) \
+                    or mentions(json.dumps(row), pats)
                 if why:
                     hits.append("%s row %s %s" % (name, row.get("id", "?"), why))
                     lines.append("  HIT %s" % hits[-1])
@@ -537,7 +546,7 @@ def measure_open_deploy(repo_root, rel, serial, files=None) -> tuple:
             hits.append("%s is not JSON (%s): not clear" % (path, exc))
             lines.append("  HIT %s" % hits[-1])
             continue
-        why = mentions(text, pats, [])
+        why = mentions(text, pats)
         if why and narrow:
             why = why.replace("names the root (token", "names a carried file (token")
         readings.append((sentinel_slug(doc, path), doc, why, path))
