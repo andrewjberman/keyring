@@ -7175,3 +7175,106 @@
   "notes": "For the CVO's or CTO's read: the fix is a header change in two more tests (Client Primary Acct), which is a test-file edit outside this order's named tests and so a ruling or a new order, not taken here. Until then the money-column behaviour (AR-y-211 repair (b)) is covered only by the function-level test_a_money_column_turns_off_the_digit_run_only_and_not_letter_and_digit_identifiers, which calls _identifier_like directly and never reads a column."
 }
 ```
+
+## IRPT_ANLREQ-D2-W71-S1 -- the AR-y-227 scratch commit of the two reader blobs is refused by the owned-paths lane gate; the build takes the same bytes through the builder's --override
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W71-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~71",
+  "surfaced_at": "2026-10-13T15:31:58Z",
+  "one_line": "AR-y-227 step 1 asks for ONE local scratch commit at st32's pin carrying the two reader blobs. safe-commit refuses it: intake/uploads.py and intake/template_reader.py are not in this worker's <paths>, so no scratch commit exists. The build takes the same bytes through the builder's --override (member_overrides), as AR-y-200 did.",
+  "spec_asserts": "AR-y-227 step 1 (worker face, the cell): in a throwaway worktree cut at 0485393f3a, replace the two reader members and make ONE local scratch commit; step 2 builds with the scratch commit as the pin source.",
+  "world_is": "safe-commit.sh run in the scratch worktree C:/dev/ar227-71/wt (detached at 0485393f3a) for both paths refused rc=1: VIOLATION lane=IRPT_Y_ACCESS_INTEGRATION_P, agent 0.9.0_WK_IRPT_ANLREQ~71 not in permitted_agents (no NON-TERMINAL task order at HEAD names the path). After the refusal the scratch worktree HEAD still reads 0485393f3a and the two files are unstaged. The same refusal is recorded for AR-y-200 as IRPT_ANLREQ-D2-W55-S22.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh refusal text in the scratch worktree C:/dev/ar227-71/wt, attempted 2026-10-13T15:31Z: ERROR owned-paths lane violation(s) detected (block mode), two VIOLATION lines for infra/aws/lambda/investor-reporting/intake/uploads.py and intake/template_reader.py, rc=1",
+      "git -C C:/dev/ar227-71/wt rev-parse --short HEAD -> 0485393f3a (no commit made)",
+      "AR-y-200 precedent: org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/r19/RESIDENT_TWO_MEMBER_RELEASE.json scratch_commit.made false, reason cites IRPT_ANLREQ-D2-W55-S22"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W71-S2 -- the stored-input contract tests read the base reader from git history (commit 35c3c4bd45), so a release-package test run needs the repository object store
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W71-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~71",
+  "surfaced_at": "2026-10-13T15:48:18Z",
+  "one_line": "Run against the extracted release package with no git repository, three of the named reader tests in test_stored_input_contract.py fail inside the test body (git show exits 128) and the run reads 5 failed. The base reader those tests compare against is read from git history at 35c3c4bd45, which a release tarball cannot carry. With GIT_DIR pointed at the repository object store (no worktree read) the same run reads 2 failed and 135 passed, and the two failures are the CTO-accepted S26 and S25.",
+  "spec_asserts": "AR-y-227 step 5 (worker face): run the named reader tests against the EXTRACTED package with PYTHONPATH set to the package root; the tarball carries no tests; the repository is not on the path.",
+  "world_is": "intake/tests/test_stored_input_contract.py line 32 sets BASE_COMMIT = 35c3c4bd45 and line 39 runs git -C REPO show 35c3c4bd45:<reader path>. Under the extracted package root (not a repository) that call returns rc 128 for the tests test_an_input_stored_by_the_base_reader_is_read_unchanged_by_the_new_reader, test_an_original_with_altered_bytes_is_refused_under_both_versions and test_a_stored_input_with_no_version_member_reads_as_the_version_before. The base reader bytes at that commit are 76795b75 (READER_VERSION before r18.1). The surprise is that a named reader test needs repository history to run at all.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/tests/test_stored_input_contract.py:7, :32, :39 @af70692803 (BASE_COMMIT and the git -C REPO show call)",
+      "run without GIT_DIR: 5 failed, 132 passed in 2.95s (3 CalledProcessError rc 128 plus the 2 accepted); with GIT_DIR=C:/dev/ajb_workspace/.git: 2 failed, 135 passed in 3.73s; output files under C:/dev/ar227-71/ (tests_run5_clean.txt, tests_run6.txt, scratch)",
+      "git cat-file -t 35c3c4bd45 -> commit; blob 35c3c4bd45:infra/aws/lambda/investor-reporting/intake/template_reader.py sha256 76795b75313b076488d6c2f0ed7a8480be92b999efb6886a3ede92b11e916409"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W71-S3 -- the named reader tests need the repo-depth docs/ folder and the sibling test-support folders around the extracted package, which the tarball does not carry
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W71-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~71",
+  "surfaced_at": "2026-10-13T15:48:18Z",
+  "one_line": "Copying only intake/tests into the extracted package failed collection: test_uploads.py loads a support module from reports/tests, test_repository.py takes its root five levels above reports/ (so it reads docs/ at repo depth), and the deferred and correction tests import test_resolution_broker, test_retention and test_operation_lease from reports/tests and ycharts/session/tests. The harness copied those folders (test files only) and a copy of the package docs/ at repo depth. The package itself was not changed.",
+  "spec_asserts": "AR-y-227 step 5: copy the test files from the worktree (the tarball carries none), then run the named tests against the extracted package.",
+  "world_is": "Collection errors on the first run, in order: FileNotFoundError reports/tests/test_repository.py (intake/tests/test_uploads.py:24); FileNotFoundError docs/contracts/investor-reporting/v1/AnalysisReport.schema.json at repo depth (reports/tests/test_repository.py:17-18, ROOT = MODULE.parents[5]); ModuleNotFoundError test_resolution_broker, test_retention and test_operation_lease. Each named module lives in reports/tests or ycharts/session/tests at HEAD, and none is in intake/tests. The release tarball's own test set is therefore not self-contained for the named files.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/tests/test_repository.py:13-18 @af70692803 (MODULE, ROOT = parents[5], docs/contracts path)",
+      "git ls-tree HEAD: test_resolution_broker.py and test_operation_lease.py under ycharts/session/tests/; test_retention.py under reports/tests/ (paths @af70692803)",
+      "the harness layout: C:/dev/ar227-71/pkgtest/ (package at infra/aws/lambda/investor-reporting, plus pkgtest/docs/ copied from the package docs/, plus the reports/tests and ycharts/session/tests folders copied from the worktree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W71-S4 -- the release-19 host script carries no member check for template_reader.py; the r21 copy adds one line
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W71-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~71",
+  "surfaced_at": "2026-10-13T15:48:18Z",
+  "one_line": "AR-y-227 step 4 asks to change the member checks for template_reader.py in the release-19 host script. That script has 17 check lines (16 members and the capture library) and none for template_reader.py, so there was no line to change. The r21 copy adds one check line, check intake/template_reader.py a61cd0c6, as the only member-check change. The package's SHA256SUMS check (host line 26) already covers the reader.",
+  "spec_asserts": "AR-y-227 step 4 (worker face): copy the r19 host script and change ONLY the lines that name the release, including the member checks for template_reader.py; the 17 member-check hashes must equal the new tarball's members.",
+  "world_is": "resident_host_install_0485393f3a-r19.sh (sha256 8b53be13, deliverables 2.0.0_SA_COO~Y2/release19) lines 27-43 hold 17 check calls, none naming intake/template_reader.py. The r21 script carries 18 check calls (17 unchanged plus the added reader check), all 18 equal to the new tarball's member bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/release19/resident_host_install_0485393f3a-r19.sh lines 27-43 (sha256 8b53be1328f9ed20827e0118aee9c1b1b402d66b25d82a434275b1c83cfa57f0)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~71/r21/resident_host_install_0485393f3a-r193.sh (sha256 edd10a4bf5af03c8ed109f83ccc5ffbe9654edde7dac9a71e189d952d812603c), diff shows 4 hunks: header, NEW/OLD, WANT_TAR, one added check line, ledger"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
