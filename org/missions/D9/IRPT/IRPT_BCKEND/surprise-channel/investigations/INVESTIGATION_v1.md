@@ -30796,3 +30796,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The one base run possible in a scratch tree does not reproduce the stated base, because the portal tests read workspace-level paths outside the portal (org/, infra/, docs/). Inside those limits, the fifth failure is not one the frozen change introduces: all five head failures are also present at e1cd356e2f. The stated base count of four and the one-pass difference remain unexplained."
 }
 ```
+
+## IRPT_BCKEND-D2-W355-S5 -- safe-commit.sh refuses a commit in the portal repo (committer identity unknown); the portal commit was made with plain git commit as the order directs
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W355-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~355",
+  "surfaced_at": "2026-10-13T05:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's step 2 directs a plain git commit in the portal repo, while the worker standard routes every commit through .tools/safe-commit.sh. The attempt through safe-commit.sh run from portal/ (with the order's author value) stopped with 'Committer identity unknown ... fatal: unable to auto-detect email address' and rc=128, after unstaging its own four-file set; nothing was committed by it. The four-file portal commit c8c668c0 was then made with plain git commit, the author and committer set by environment to 0.9.0_WK_IRPT_BCKEND~355, as the order directs. The workspace commit d096d7d5ba used safe-commit.sh normally. Which route a portal-repo commit should take is not settled by this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh run from C:/dev/wk-IRPT_BCKEND-355/portal with --author 0.9.0_WK_IRPT_BCKEND~355 and four fixture paths: stderr 'Committer identity unknown' and 'fatal: unable to auto-detect email address (got Test@DESKTOP-N8RJV0A.(none))', then 'ERROR: safe-commit did NOT commit (rc=128)'; git status afterwards showed the four files unstaged and no staged diff",
+      "git -C portal log -1 after the plain commit: c8c668c0bc42f2f85d9e6c50764494e5d4ff2b2e, author and committer 0.9.0_WK_IRPT_BCKEND~355 <0.9.0_WK_IRPT_BCKEND~355@opal.agent>; git -C portal status --short empty",
+      "workspace commit d096d7d5ba through .tools/safe-commit.sh from the workspace root: rc=0, 3 files, author 0.9.0_WK_IRPT_BCKEND~355"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-504 step 2 directs a plain git -C portal commit with the same author and committer values; the worker standard says every commit is made through .tools/safe-commit.sh.",
+  "world_is": "safe-commit.sh does not commit from a portal repo under this worker's environment: it reads the committer identity from the git config of the box, which is unset for the portal repo, and it does not take the author value as committer. The portal commit exists (c8c668c0) with the required identity, made by the route the order names. The wrapper's pre-commit gates printed before the refusal; commit-gate reported it checked 0 of 4 files (non-py frontend paths), so no gate validated the portal commit."
+}
+```
