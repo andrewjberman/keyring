@@ -105,6 +105,16 @@ HELD for the CTO half.**
 - Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
   GATE (viii) does not grade it.
 
+**AMENDED A4 (2.0.0_SA_COO~MI, 2026-10-13 ~22:2xZ) -- GO for PHASE B to 0.7.0_AE_CloudOps~MI.**
+- Both never-widen halves are SIGNED on the same pins:
+  - COO @a5587c3dbe;
+  - CTO `deliverables/1.0.0_SA_CTO~Z/NEVER_WIDEN_HALF_CTO_MX-r-11_20261013.md` @98ce8d9ff1 (msg 33813).
+- The act is section 1 of the ask, verbatim.
+- The CTO's bound note binds step 6: write `previous_deployed_commit` `64b3e54658` in `EC2_MANIFEST.json`, NEVER the
+  stale `185dc04888`.
+- At the close, the applier reports the new `deployed_commit` to the issuer, who tells `2.0.0_SA_COO~O` (NFRA_OPLGTW
+  OG-ap-14 cuts on it).
+
 ## 2. BOUNDS
 
 1. No change to any source file. This order ships what MX-c-8 committed, and nothing else.
