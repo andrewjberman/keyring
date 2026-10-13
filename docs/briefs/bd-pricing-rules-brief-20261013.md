@@ -186,6 +186,9 @@ These are named, not sequenced. Sequencing is step 5.
    served does not satisfy O1.
 8. O7 changes how an Andrew-approved design (2026-04-17) states a gain, so the basis is chosen on Andrew's word. The choices include
    scaling cost with market value, stating the gain on uncapped values, or marking the gain unverified on capped lots.
+   **Constraint from Andrew (2026-10-13, same record as PART VIII):** "any 'estimation' is highly risky for performance reporting
+   that needs to be exact". A basis that keeps an estimated value in a served performance figure is out of pattern unless he says
+   otherwise. He has asked for clarification of the cap concept before choosing; the CTO gives it.
 9. The executive-summary position slots that rest on capped market values stay disabled until O7's correction is served. This is the
    CTO's ruling in ADVI_FIRMBKTS (`CTO_SAMPLE_READ_FB_J_10_EXEC_SUMMARIES_20261013.md` ADDENDUM 1).
 
@@ -226,9 +229,9 @@ Status ages; do not cut outcomes from it.
 
 ---
 
-## PART VIII -- DONE WHEN (proposed; Andrew confirms)
+## PART VIII -- DONE WHEN (CONFIRMED by Andrew as written, 2026-10-13 ~12:1xZ)
 
-Proposed qualitatively, for Andrew to confirm or rewrite:
+Andrew's answer, verbatim, was "Yes as written" (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_121xZ_BD_PRICING_RULES_DONE_WHEN_CONFIRMED_AND_CAP_CLARIFICATION.md`, item 1). Line 4 names the basis for capped lots, which he has not yet chosen (PART V.8).
 
 1. **Rule on record:** every served Black Diamond price for 49 Financial is produced by a rule written down in one place.
 2. **Traceability:** an analyst can trace any served price to that rule and its inputs.
