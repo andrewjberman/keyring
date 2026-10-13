@@ -6559,3 +6559,31 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "The instrument compares CONTENT hashes across two homes that now diverge by design (canonical advances, legacy frozen: COO msg 4561). A replacement that keeps its purpose (the seam resolves the same keys, only the bucket and prefix differ): equal key SETS and equal ids/leaderboards (both read equal), the artifacts' key list equal, or the canonical read compared with the prior artifact's canonical read at the same moment (the prior function, same instant). Decision owed by the issuer, with the CTO: amend step 3's criterion, or rule the difference by design and proceed. This seat will not apply on a STOP. Restoring the prior object as the key's latest version is a further S3 write outside the permitted set, so it was not done; say if wanted."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-j-6, the dry-run sample)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S47",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-13T08:53:29Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "FB-j-6's one dry run returned ten artifacts with zero bullets: no slot fired for any of 10 evenly spaced advisors and no model call is evident, so the sample the CTO is to read holds no text; the dry-run arm itself (0 objects written, listing identical) is proven.",
+  "spec_asserts": "TO-FB-j-6 step 7: ids 'across slots: at least one advisor with a leaderboard slot and one with a concentration-risk slot, as the artifacts of a first pass show; if the first pass returns fewer slots, say so'; CTO half: the sample is READ (its text, against the advisors' figures) before FB-j-4 deploys.",
+  "world_is": "2026-10-13T08:50Z to 08:52Z, function at CodeSha256 qVCUzRtwZxKSrql+JapMKH4wwoAd2+aSB0FyZ470ZkU=: ONE invocation {dry_run: true, advisor_ids: 10 ids evenly spaced over the sorted served-prefix listing} returned statusCode 200, dry_run true, advisors_processed 10, 3,353 payload bytes in 7 s. Each artifact has the seven expected keys (advisor_id, firm_id, generated_at, model claude-sonnet-4-6, input_hash, bullets, permissions_scope) and `bullets` is an empty list in all ten; the function log holds only the four lifecycle lines (no WARN, no exception: a swallowed per-advisor exception would print a WARN and omit the advisor, and all ten are present). The served-prefix listing before and after is identical: 158 keys, one sha256 d5d52e9339e4208e26d2dae0e94c0dfd7b874289df94780985a1b7c50fab767d, so the dry run wrote 0 objects. Slots: the six evaluators (largest gain, largest loss, concentration risk, tax-loss candidate, leaderboard rank delta, top NNA mover) each gate their model call on a trigger; none fired for these ten on today's canonical data. Existing served exec_summary.json objects are 305 bytes (the first advisor's canonical one dated 2026-10-11T04:02Z), i.e. consistent with empty-bullet artifacts today.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/DRYRUN_ARTIFACTS.json",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/j6_dryrun/dry_summary.json",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/j6_dryrun/listing_before.txt",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/j6_dryrun/listing_after.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a defect of this order: the deploy and the dry-run arm are proven. For the issuer and the CTO: the regeneration pair (FB-j-7) cannot cite a read of generated text yet. Either (a) a second dry run (the pair allows 1 to 10 ids per invocation, dry-run-only) with advisors chosen by the triggers: an offline pre-screen of all 158 advisors' positions and leaderboard reads through the artifact's evaluators (no model call, no write) names the ids that WOULD fire each slot; this seat can run that read on request; or (b) the CTO rules that an all-empty first pass is the sample and reads it as 'the regeneration would write 158 artifacts with no bullets today', which is the question for FB-j-7 either way."
+}
+```
