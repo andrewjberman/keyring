@@ -688,3 +688,55 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "The served home holds client objects whose as-of date is months old, alongside objects dated 2026-10-09. The served T-1 object is therefore not uniform across client objects; the thread uses each object's own data_as_of."
 }
 ```
+
+## ADVI_BDPRCE-D1-W8-S1 -- The output contract enumerates followed_source as canonical or daily, and no value in that set holds when neither candidate equals the served price
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W8-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~8",
+  "surfaced_at": "2026-10-13T19:49:02Z",
+  "one_line": "Task order 1b enumerates followed_source as canonical or daily; when neither same-date candidate equals the served price, no value in that set is true, so the instrument emits followed_source null with follows_served false and traces no row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "trace_price_v2.py@80be485749 function trace_followed: the followed-is-None branch sets followed_source None, followed_price None, follows_served False, trade_ids [] and writes the candidates into served_rows without picking one",
+      "trace_price_v2.py@80be485749 self-test arm 4 (served 170.0 against daily 162.155 and canonical 168.94): follows_served False, followed_source None; TRACE2 SELFTEST: OK 7 arms",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/task-orders/ADVI_BDPRCE.TO-BP-b-4.trace-follows-served.md section 1b: output keys followed_source (canonical or daily); 'if neither equals it, report follows_served: false and say so'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order 1b: the output key followed_source is canonical or daily, and if neither candidate row equals the served price the instrument reports follows_served false and says so, never picking one silently.",
+  "world_is": "Both clauses are met only by a null followed_source, which the enumerated set does not name. The instrument writes null and follows_served false, lists both candidates in served_rows with followed false, and traces no rule. The task order does not say which value followed_source takes in that case."
+}
+```
+
+## ADVI_BDPRCE-D1-W8-S2 -- The lot-object usage names no date, so the instrument takes the date and the served price from the served object itself
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W8-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~8",
+  "surfaced_at": "2026-10-13T19:49:02Z",
+  "one_line": "The task order's --lot-object form takes no date; the instrument reads the date from the served object's data_as_of and the served price from its one current_price for the asset, and records the client key only as a SHA-256 prefix.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TRACE2_PROBE.json@80be485749 served_source: kind lot_object, date_source 'served object data_as_of', data_as_of 2026-10-09, lot_rows_for_asset 2, key_sha256 3a1adf541436e1d4 (prefix only); the client key is not in the record",
+      "served object read by get_object at VersionId ZCjWpzPR1n2uZl849onevhS.pIvSQhVA (bucket opal-data-49financial, 51,343 bytes): data_as_of 2026-10-09; the asset's open_lots carry one distinct current_price, 168.94",
+      "task order 1b usage line: --lot-object <bucket>/<key>@<VersionId> --asset <name> [--out]; section 2 bound 2: no client name, account number or advisor name is printed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order 1b: --lot-object <bucket>/<key>@<VersionId> --asset <name> [--out] with no date argument; section 2 bound 2: no client name, account number or advisor name is printed.",
+  "world_is": "The served object states its own as-of date and carries one current_price per lot, so the date and price are read from the object. The lot key carries a client identifier, so the record holds a SHA-256 prefix of it. The date source is a choice the task order did not name, and the record names it in served_source.date_source."
+}
+```
