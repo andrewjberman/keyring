@@ -7175,3 +7175,34 @@
   "notes": "For the CVO's or CTO's read: the fix is a header change in two more tests (Client Primary Acct), which is a test-file edit outside this order's named tests and so a ruling or a new order, not taken here. Until then the money-column behaviour (AR-y-211 repair (b)) is covered only by the function-level test_a_money_column_turns_off_the_digit_run_only_and_not_letter_and_digit_identifiers, which calls _identifier_like directly and never reads a column."
 }
 ```
+
+### IRPT_ANLREQ-D2-S74 -- the status-rule exercise saw three class lines from a caller this seat did not make, and a refusal arrives as HTTP 200
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S74",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-13T15:50:00Z",
+  "one_line": "TO-EXERCISE-R21: the disabled arm's sub-window [15:28:45Z, 15:29:50Z) holds 4 INTERNAL-CALLER-CLASS lines, not the expected 1: this seat's own row_non_active/refused line plus 3 row_present/admitted lines from the second invocation in that window (invocations 2), which this seat did not make; and the function answers a status-rule refusal as an HTTP 200 answer envelope, not a 4xx.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r21/EXERCISE_RESULT.txt and EXERCISE_PHASE2_COUNTS.txt: per sub-window counts, 1 / 4 / 1 class lines",
+      "a filter read of REPORT lines in the same sub-windows: invocations 1 / 2 / 4; all events 4 / 10 / 16 in 1 / 1 / 3 log streams of /aws/lambda/irpt-directory-search",
+      "the norow request answered HTTP 200 with a body whose sha256 equals the disabled request's body, whose envelope names FIRM_BINDING (EXERCISE_TRACE.txt, EXERCISE_PHASE2_TRACE.txt)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "COO half section 4 step 5 and CTO half condition 2: exactly one class line per sub-window, a line in another sub-window or a wrong class is a FAIL, not a reassignment. The pair expects the refusal arms to be REFUSED (the exercise executor read refusal as a 4xx).",
+  "world_is": "The 3 extra lines are all class=row_present outcome=admitted, from one invocation (the REPORT count in that window is 2) that is not one of this seat's three requests; the line carries no identity, so who made it is not known and was not looked for. They are most plausibly a real active internal caller selecting another firm, INFERRED. A client that treats a non-2xx as the only refusal will read the rule's refusals as success; the refusal is in the envelope's public_reason_code.",
+  "notes": "owner of any follow-up: 2.0.0_SA_COO~Y2 (issuer). No action needed on the rule: it decided correctly for all three identities."
+}
+```
+
+- **owner:** `2.0.0_SA_COO~Y2`
+- **disarm_owner:** n/a -- INERT
+- **state:** OBSERVATION / INERT
