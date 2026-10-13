@@ -4166,3 +4166,59 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W52-S31 -- identifier spellings outside the ruled vocabulary are still unmatched after the widening: Account Numbers, Subaccounts, Accnt, Account Nos, Account Seqno, Account Serial
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S31",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-13T00:00:19Z",
+  "one_line": "After the AR-y-181 widening, the rule still does not match identifier-like headers whose spelling sits outside the ruled vocabulary: Account Numbers (plural tail), Subaccounts (plural account word), Accnt, Account Nos, Account Seqno and Account Serial. A multi-account file under one of them passes as one account, the same costly direction as S24.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py@da7b3b10bc (ACCOUNT_WORDS, ACCOUNT_TAIL_WORDS, _is_account_header)",
+      "scratch run .scratch/subtract_r18.py (uncommitted) over a declared grid of 2200 headers against template_reader.py@da7b3b10bc: 'account numbers' False, 'subaccounts' False, 'accnt' False, 'account nos' False, 'account seqno' False, 'account serial' False; 1542 unmatched of 2200"
+    ]
+  },
+  "spec_asserts": "Point 2 of IRPT_ANLREQ.TO-AR-y-181 and the CTO ruling on S24: widen the named modifiers, account word and tail words only, each with its census line; subaccounts only if justified. The rule must not miss an account-identifier header (the costly direction).",
+  "world_is": "The ruled vocabulary does not cover the plural tail numbers, the plural account word subaccounts, the spelling accnt, or the tails nos, seqno and serial. Subaccounts was not added (no census form carries it, so it is not justified from the census). Measured by subtraction, not fixed: a further widening is a ruling for the issuer or the CTO, not a worker choice.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S32 -- the COUNT exclusion keys on the header words alone: a real account column headed No. of Accounts would pass as one account
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S32",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-13T00:00:19Z",
+  "one_line": "The whole-cell exclusion for No. of Accounts (plural) reads only the header words, not the values. A file whose column is headed No. of Accounts but holds account identifiers, not one count, is not turned back, so a multi-account file under that header passes as one account.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py@da7b3b10bc (COUNT_PLURAL_WORDS and the no. of branch of _is_account_header)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r18/ACCOUNT_HEADER_POPULATION.json (count_forms: No. of Accounts, No. of accts)"
+    ]
+  },
+  "spec_asserts": "AR-y-181 criterion AR181-y-AC3J (judgment, L9): the COUNT exclusion cannot hide a real account column; and the CTO ruling on S24: No. of Accounts is a COUNT, a whole-cell exclusion when the account word after no. of is plural.",
+  "world_is": "The exclusion is decided by the header text alone, because a count column and an account-identifier column can carry the same header. The worker cannot decide from the code whether a real file uses that header for account identifiers. Measured, not decided: the exclusion as ruled stands; whether it hides a real account column is for the L9 judgment.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
