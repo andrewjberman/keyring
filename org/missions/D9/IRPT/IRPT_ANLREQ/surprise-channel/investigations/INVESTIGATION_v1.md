@@ -5305,3 +5305,166 @@
 }
 ```
 
+## IRPT_ANLREQ-D2-W55-S9 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S9",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T02:56:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-AR-y-196 step 1 asks where the tarball is extracted, read from the installer. The installer (ycharts/generate/install-resident.sh) takes the package root as an argument that must already exist (line 8 realpath -e, line 17 SHA256SUMS present) and contains no tar, cp, mv, ln, mkdir or copy. Its only rm is its own temp unit file (line 46). The extraction, the pydeps copy, the SHA256SUMS generation and the new root's removal are in the host script.",
+  "spec_asserts": "TO-AR-y-196 step 1 and CTO ruling section 4 point 1: the install mode is read from the installer's lines, where the tarball is extracted and what is removed or copied from the previous root.",
+  "world_is": "The installer at HEAD (blob 0b72f58ff9, identical at 8ee48892bf and in this worktree) performs no extraction, copy, move, link or removal of the package root. The host procedure that the packet fetches by key and runs (resident_host_install_0485393f3a-st32.sh, sha256 05b0cfba..., line 7 WANT of install_st32.sh) does the work: line 20 rm -rf and mkdir of the NEW pin's root, line 23 tar -xzf into it, line 44 cp -a of the host pydeps, line 45 rm -rf of bin, lines 47-58 SHA256SUMS generation, and line 97 calls the installer on that root.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/install-resident.sh lines 8, 17, 18-20, 39, 46 @7e5f57cb47 (worktree) and @8ee48892bf (shared head): grep for tar, cp, mv, ln, mkdir, unzip, extract, --delete, overwrite returns only line 46",
+      "C:/dev/irpt-release-st32/resident_host_install_0485393f3a-st32.sh lines 9, 20, 23, 44, 45, 47-58, 96-99 (sha256 05b0cfba8b8948a6573ef9e4b3a1d538939ebf4d54a3761af797c77712878adf)",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/st32_release/install_st32.sh line 7 (WANT) and line 15 (bash $T), read at the shared tree"
+    ]
+  },
+  "notes": "Recorded because the premise differs from the cell's wording, not because the install mode is in doubt: the record INSTALL_SEMANTICS_SCRATCH_PROOF.json (commit 7e5f57cb47) reads the mode from the host procedure's lines. The installer alone cannot answer the OVERLAY / REPLACE / NEW_ROOT_COPY question."
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S10 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S10",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T02:56:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-AR-y-196 step 2 orders a live-shaped scratch root made of the builder tarball plus 116 placeholders (298 - 182). Set arithmetic on the recorded tars gives 144 names in the st32 release tar that the A1 tar lacks and 28 names in A1 that st32 lacks (27 schemas/*, 1 ycharts/extract/.gitattributes). The record gives the 144 as counts by folder only, so the placeholders were named from the local st32 tar listing: the old scratch root holds 326 members (182 + 144), and the 28 builder-only names are present in it.",
+  "spec_asserts": "TO-AR-y-196 step 2: a live-shaped package = the OLD tarball extracted, PLUS 116 dummy files named like the unbuilt live members (use live_tar_fidelity; if it lists fewer, say so).",
+  "world_is": "live_tar_fidelity gives in_st32_not_A1 144 (by folder: docs 49, _contracts 57, intake 14, ycharts 19, ycharts-host 2, _gate 1, data 1, SHA256SUMS 1), in_A1_not_st32 28 (schemas/ 27, ycharts/extract/.gitattributes 1), same_sha 153, differ 1. 298 - 182 = 116 is not the name-level unbuilt count. Same finding as IRPT_ANLREQ-D2-W55-S4 (144 only in the live tar, 28 only in the builder build); this row records the consequence for the scratch.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/r19/RESIDENT_PACKAGE_DELTA.json key live_tar_fidelity (in_st32_not_A1 144, in_A1_not_st32 28, same_sha 153)",
+      "set difference of the tar listings: st32 298 entries (C:/dev/irpt-release-st32/0485393f3a-st32.tar.gz, sha256 e59596e4...), A1 182 entries (C:/dev/ar195-55-tarballs/live_0485393f3a_A1.tar.gz, sha256 9298dc65...); 154 names common; the names are in r19/scratch_evidence/unbuilt_st32_only.names",
+      "r19/scratch_evidence/census_before.json: member_count 326, unbuilt_list_count 144, unbuilt_present_count 144 (commit 7e5f57cb47)"
+    ]
+  },
+  "notes": "Placeholder names were taken from the release tar listing, not from the record's folder counts; no live byte was read. The old scratch root is therefore 326 members, not the live 298; the 28 extra are builder names with no live counterpart."
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S11 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S11",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T02:56:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The three install modes in TO-AR-y-196 are OVERLAY (new files over the existing root), REPLACE (the root emptied or removed first) and NEW_ROOT_COPY (a new directory per pin with the live members copied or linked in from the old root). The host procedure makes a new directory per pin and never removes or writes into the old root, but copies no live member from the old root: its only non-tarball copy is the host shared pydeps directory. The record uses NEW_ROOT_COPY as the nearest value and states the unmet clause in mode_fit.",
+  "spec_asserts": "TO-AR-y-196 step 1 and the AR196-y-AC1 criterion: the record names the install mode as OVERLAY, REPLACE or NEW_ROOT_COPY, where NEW_ROOT_COPY requires the live members to be copied or linked in from the old root.",
+  "world_is": "Host script line 9 ROOT=$R/$NEW, line 20 rm -rf and mkdir of ROOT only, line 23 tar -xzf into ROOT, line 44 cp -a $H/pydeps/. into ROOT (H is the host shared directory), line 112 install_root $OLD on rollback. The old root is never an argument to any copy. Measured on the scratch replay: the new root holds 1 of the 144 unbuilt names (SHA256SUMS, regenerated), so no unbuilt member is copied from the old root.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/irpt-release-st32/resident_host_install_0485393f3a-st32.sh lines 9, 20, 23, 44, 112 (sha256 05b0cfba...)",
+      "r19/scratch_evidence/compare_E1.json: members_removed 143 (all unbuilt), members_added 1, unbuilt_members_after 1 (commit 7e5f57cb47)",
+      "r19/INSTALL_SEMANTICS_SCRATCH_PROOF.json key mode_fit (commit 7e5f57cb47)"
+    ]
+  },
+  "notes": "Recorded so the CTO can decide the mode label for the next release. The record's install_mode field is NEW_ROOT_COPY; the checker accepts only the three enum values and does not test the copy clause."
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S12 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S12",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T02:56:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-AR-y-196 step 2 asks whether any unbuilt member is lost. Replayed on a scratch root, the host procedure's steps for the release-pin build (tar of release_069b8f797e_B1, the host pydeps copy, SHA256SUMS generation) leave the new root with 184 members: 183 from the tarball and a regenerated SHA256SUMS. 143 of the 144 names the old root carries that the builder tarball does not are absent from the new root. Nothing is removed from the old root, which is not touched.",
+  "spec_asserts": "TO-AR-y-196 step 2 and CTO ruling section 4 point 1: a release that deletes the live members is not this pair's and STOPS; the scratch proves whether any unbuilt member is lost, with denominators printed.",
+  "world_is": "Scratch denominators (commit 7e5f57cb47): before 326 (182 builder + 144 placeholders), after 184; unbuilt before 144, after 1; added 1 (infra/logic/registry/firm_pages.json); removed 143 (all in the unbuilt set: _contracts 57, docs 49, intake 14, ycharts 19, ycharts-host 2, _gate 1, data 1); changed 21 (20 builder members, matching RESIDENT_PACKAGE_DELTA differing 20, plus SHA256SUMS). Control E2, the same tarball extracted in place over a copy of the old root, keeps all 326 and adds 1. The st32 release tar carries the 144; the B1 build carries none of them. The stated consequence in the record: the new root would lack docs/contracts (the st32 V1 check reads docs/contracts/investor-reporting/v1/ from the running root, install_st32.sh line 48) and ycharts-host/ (the host script's line 42 check).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r19/scratch_evidence/compare_E1.json and compare_E2.json (commit 7e5f57cb47): removed 143 vs 0; the removed names listed in compare_E1.json members_removed",
+      "r19/scratch_evidence/commands_run.log (commit 7e5f57cb47): the replay's exact lines, rerun twice with identical member maps",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/st32_release/install_st32.sh line 48 (V1 reads docs/contracts from RUN)",
+      "C:/dev/irpt-release-st32/resident_host_install_0485393f3a-st32.sh line 42 (check ycharts-host/ycharts_session.js) and line 95 (systemctl stop)"
+    ]
+  },
+  "notes": "The placeholders are one-line files, so the removal is measured by construction of the procedure (no copy from the old root), not by the content of the 144 live members. INERT: nothing is built into a root, installed, uploaded or applied under this order. Owner for the decision: 2.0.0_SA_COO~Y2 (the leg) with 1.0.0_SA_CTO (section 4 point 1); the record does not decide whether such a release may ship."
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S13 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S13",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T02:56:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IRPT_ANLREQ-D2-W55-S4 says the installer expects the ycharts-host member and would refuse loudly at install. The installer has no ycharts-host check. The check that refuses a root without ycharts-host/ycharts_session.js is line 42 of the host script, which runs before the unit is stopped (line 95) and before install_root (line 97), so the refusal is in the host procedure and precedes the stop.",
+  "spec_asserts": "Row IRPT_ANLREQ-D2-W55-S4 notes: the gap would surface as a loud refusal at install.",
+  "world_is": "install-resident.sh checks only realpath, SHA256SUMS presence, the python entry, a SHA256SUMS --check, and the --help run (lines 8-40). The host script line 42 runs check ycharts-host/ycharts_session.js against the library sha256 and line 43 node --check, both before systemctl stop at line 95. A root built by the 8-argument builder has 0 ycharts-host members, so line 42 would exit 17 before the stop. Not run: the check is a file operation on the scratch root that the replay did not perform (the host check was not in the replay list).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/irpt-release-st32/resident_host_install_0485393f3a-st32.sh lines 42, 43, 95, 97 (sha256 05b0cfba...)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/install-resident.sh lines 8-40 @7e5f57cb47 (no ycharts-host reference)",
+      "r19/scratch_evidence/census_after_E1.json: ycharts-host members 0 of 2 (commit 7e5f57cb47)"
+    ]
+  },
+  "notes": "Location correction to S4 only; the outcome (a refusal before any cutover step that changes the unit) is the same as S4 states. Owner: 2.0.0_SA_COO~Y2."
+}
+```
+
+## IRPT_ANLREQ-D2-W55-S14 -- (heading added by the issuer at the drain; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W55-S14",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~55",
+  "surfaced_at": "2026-10-13T02:56:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The host script's SHA256SUMS generator (lines 47-58) walks the root with os.walk('.') and compares p == './SHA256SUMS'. On Windows os.path.join yields backslash paths, so the self-exclusion and the row format would be wrong. The replay normalises the separator and writes LF. Nothing else changed. The scratch manifest is therefore a faithful replay of the Linux output, not the host's own bytes.",
+  "spec_asserts": "TO-AR-y-196 step 2: perform the installer's copy and extraction steps with the SAME commands, host paths replaced by scratch paths.",
+  "world_is": "On this box the verbatim generator would write backslash row names and CRLF endings. The replay's bin/gen_sha256sums.py makes the two changes, documented in its header and in r19/INSTALL_SEMANTICS_SCRATCH_PROOF.json scratch.replay_adaptations. The sha256sum --check --strict run on the scratch manifest returns rc 0 over 183 lines (sha_check_new_root.txt).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/irpt-release-st32/resident_host_install_0485393f3a-st32.sh lines 47-58 (generator)",
+      "r19/scratch_evidence/sha_check_new_root.txt (commit 7e5f57cb47): sha256sum --check --strict over 183 lines, rc 0",
+      "C:/dev/ar196-55-scratch/bin/gen_sha256sums.py (outside the product tree; not committed)"
+    ]
+  },
+  "notes": "OBSERVATION only: the adaptation changes no member's hash. It is recorded so a later comparison does not treat the scratch SHA256SUMS as the host's byte-for-byte output."
+}
+```
+
