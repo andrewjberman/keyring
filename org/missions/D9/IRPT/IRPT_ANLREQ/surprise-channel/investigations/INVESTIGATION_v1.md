@@ -10326,3 +10326,73 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W105-S1..S3 -- AR-y-291 (C-SWAP step 1): one GetItem per symbol (no batch), the port runs after the provider read, and the MDPF_SECHIST index is left out
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W105-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~105",
+  "surfaced_at": "2026-10-13T21:16:16Z",
+  "one_line": "The order asks for the registry lookup to batch at most 25 keys, but the resident's role is granted GetItem only on etf-classifications, so the port makes one GetItem per symbol and no batch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-291 step 2: GetItem or a batch get of at most 25 keys on etf-classifications; test item 'the lookup is by upper-case ticker and batches at most 25'.",
+  "world_is": "infra/aws/terraform/investor-reporting/ycharts/resident.tf:127-133 (policy runner_resident, ReadTheCanonicalClassificationTable) grants dynamodb:GetItem only on table/etf-classifications; BatchGetItem is a separate IAM action and is not granted. The port therefore makes one GetItem per symbol (ycharts/generate/resident_worker.py registry_identity_port). The batch test is replaced by one-key-per-call; the order's GetItem option is the one built.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf:127-133 at d2c68580a1 (GetItem only)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:44-72 at the worker branch (registry_identity_port, one get_item per call)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A batch would need a new IAM action on the resident role: an IAM edit, which this order forbids. Recorded so the CTO can rule whether a batch is wanted before the cell C consumer relies on one."
+},
+{
+  "id": "IRPT_ANLREQ-D2-W105-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~105",
+  "surfaced_at": "2026-10-13T21:16:16Z",
+  "one_line": "The identity port was called before the provider read for every pending symbol; the order needs it after the read and only for NOT_FOUND symbols, so the reference label on FOUND rows reads REFERENCE_PORT_UNAVAILABLE under a live port.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-291 (read record design.step_1_known): the provider read first; the registry check runs only for each symbol the provider answers NOT_FOUND; a FOUND symbol is never sent to the port.",
+  "world_is": "intake/security_resolution.py at HEAD d2c68580a1 called self.identity(symbol, 'TICKER') for every pending symbol before the provider read (:204-213). The worker moved the call after the provider read and restricted it to NOT_FOUND symbols (security_resolution.py:194-207, 245-251). A FOUND row keeps the default reference dict, which carries the label REFERENCE_PORT_UNAVAILABLE: the same bytes as today's stub output, but under a live port that label does not say the port was not consulted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "intake/security_resolution.py:204-213 at d2c68580a1 (identity called before the provider read)",
+      "intake/security_resolution.py:32-33 and :194-207 at the worker branch (REFERENCE_NOT_CONSULTED, _reference)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The default dict is kept byte-identical so the unwired form is today's output. The label is a naming question for the CTO: a new not-consulted reason code would change the unwired output."
+},
+{
+  "id": "IRPT_ANLREQ-D2-W105-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~105",
+  "surfaced_at": "2026-10-13T21:16:16Z",
+  "one_line": "The MDPF_SECHIST per-security index cannot be read by ticker: its series key is CUSIP-only and the resident has no read path to it, so the port reads the registry alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-291 step 2: read MDPF_SECHIST's per-security index by ticker or CUSIP only if the read found a read-only way for the resident; else leave it out and say so. Read record design.step_1_known: the registry by ticker and MDPF_SECHIST's index by ticker or CUSIP.",
+  "world_is": "data/mdpf/scripts/silver/security_series_writer.py:48-54 refuses any key that is not a 9-character alphanumeric CUSIP (check_cusip) and keys the series as cusip=<CUSIP9>/series.parquet (series_key). The resident's S3 statements (resident.tf:136-150) name no MDPF_SECHIST prefix. A ticker-keyed index lookup from the resident is therefore not available; the index is left out of the port.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/mdpf/scripts/silver/security_series_writer.py:48-54 at d2c68580a1",
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf:136-150 at d2c68580a1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A ticker-to-CUSIP map (C-IDENTITY in MDPF_SECHIST) would have to exist before the index can serve a ticker. Not built here; the cell's KNOWN answer rests on the registry alone."
+}
+]
+```
