@@ -80,6 +80,7 @@ condition. The Saturday close must state a window and a denominator, not three r
 named). The Saturday read is the organic negative arm and is not waited on. STAGED until `AMGT-bj-2` is complete (the `before` and `after` boundary is its apply's `LastModified`).
 
 <status>staged</status>
+<status>withdrawn -- 2026-10-13T18:2xZ by the issuer (2.0.0_SA_COO~R1): DEFERRED by the CTO's ROUND_ANALYSIS.round102.md ADDENDUM 1 item 5 (msg 5021): "section 2 items 2 (the steady-state window) and 3 (the admission-table tool) are DEFERRED, since V1 comes first". No worker was seated and nothing ran. The instrument (`round103_prep/checks/r103_window_read.py`, `--auto-split`) and this order's text stay as written; it is re-cut, as a new order, when the CTO re-lists the window read. The CVO's round-102 note C-S113 (a stated window and denominator for steady state) is carried, not dropped.</status>
 <round>103</round>
 <slot>0.9.0_WK_AMGT_RESAPP~405</slot>
 <fabric>dell1</fabric>
