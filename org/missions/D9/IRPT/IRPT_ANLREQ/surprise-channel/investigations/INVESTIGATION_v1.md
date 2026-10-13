@@ -6438,3 +6438,59 @@
   }
 }
 ```
+
+
+## IRPT_ANLREQ-D2-W63-S2 -- the dsgn-irptv1 folder fails the same 10 tests on the DEV tip as on the candidate: its reads need the portal inside the workspace tree
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W63-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~63",
+  "surfaced_at": "2026-10-13T07:43:09Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The dsgn-irptv1 test folder (the folder that renders ProspectComposer) fails 10 tests and errors 2 on the DEV tip without the AR-y-214 change, as it does with it: its reads resolve only inside C:\\dev\\ajb_workspace, and the candidate worktree sits at C:\\dev\\wk-portal-63.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-214 step 3 (the cell): run the folders of the two readers touched (ProspectComposer.tsx, prospect.ts) under bun and record the counts. A clean count is what the cell asks for; the folder is read as the portal's own test surface.",
+  "world_is": "bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1 (381 tests, 240 files) gives 371 pass, 10 fail, 2 errors with the change (candidate commit f644605182) and 10 fail, 2 errors on origin/DEV e50a1379 without it (a second worktree C:/dev/wk-portal-63-base); the failing test names diffed identical. The failing reads are ENOENT on C:\\dev\\org\\standards\\..., C:\\dev\\docs\\contracts\\... and C:\\dev\\infra\\aws\\... (iv-e-120, iv-e-124, fe-s-13/content-pins, iv-e-26, gen-wire, IVE98, IVE99-HR), paths that exist only when the portal is checked out inside the workspace tree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test on the candidate worktree C:/dev/wk-portal-63 (HEAD f644605182): 381 tests, 371 pass, 10 fail, 2 errors; output at 0.9.0_WK_IRPT_ANLREQ~63/.scratch/after_dsgn.txt",
+      "bun test on the pristine worktree C:/dev/wk-portal-63-base (origin/DEV e50a1379): 10 fail, 2 errors; failing names identical after timings are stripped (diff empty)",
+      "src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-120.coverage-words.test.ts:47 reads C:\\dev\\org\\standards\\IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json (ENOENT)",
+      "src/pages/InvestorReporting/__tests__/fe-s-13/content-pins.test.ts:78 reads C:\\dev\\docs\\contracts\\investor-reporting\\v1\\routes.json (ENOENT)"
+    ]
+  },
+  "notes": "Form only. The folder is not part of the AR-y-214 change and its failures are on the DEV tip too; the record PORTAL_NOTICE_CANDIDATE.json carries the counts with this cause. Whether the fix is a worktree location or a test-path change is for the portal's owners."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W63-S3 -- the ticket-filing reader shows no SHEETS_NOT_READ words on a NORMALIZED answer; the candidate covers the upload step only
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W63-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~63",
+  "surfaced_at": "2026-10-13T07:43:09Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The TicketCenter filing path still files a ticket on a NORMALIZED answer with no SHEETS_NOT_READ words shown: the AR-y-214 candidate shows the notice on the upload step only, its granted scope.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-214 (the cell): the SHEETS_NOT_READ notice reaches a person on the upload answer's face, because no portal file reads portfolio.findings today; the r19 reader inventory records the TicketCenter reader as the second NORMALIZED reader of that answer.",
+  "world_is": "The r19 inventory row for src/pages/TicketCenter/analysisRequest.ts fileAnalysisRequest (two_sheet_workbook, AFTER arm, commit e50a1379 family) reads: 'Ticket filed on NORMALIZED. The SHEETS_NOT_READ notice is not shown: no reader consumes portfolio.findings.' The candidate f644605182 changes ProspectComposer.tsx and prospect.ts only, so that reader still shows no notice. Not changed by this order: outside its grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~57/r19/PORTAL_UPLOAD_ANSWER_READERS.json (row TicketCenter/analysisRequest.ts fileAnalysisRequest, two_sheet_workbook, AFTER)",
+      "src/pages/TicketCenter/analysisRequest.ts:164-178 at origin/DEV e50a1379: files only on NORMALIZED with an input_id; no notice words"
+    ]
+  },
+  "notes": "Form only. The notice on the ticket path, if wanted, is a further cell in a later round; the CTO rules whether it is in scope."
+}
+```
