@@ -89,7 +89,7 @@ queue (`2.0.0_SA_COO~Q1` prices the card amendment: the issuer sends it at the m
 `price_history_tot_return/date=<as_of>/daily_5d.json`, its schema, field and ticker count), which the issuer reads: not this order's. No served byte moves and no ranking changes; the rankings
 switch to total return only on a PRD addendum (the CTO). The queue form's census row A3 ("rival funds, history still owed: the close only") and B1/B2 are other projects' surfaces.
 
-<status>pending</status>
+<status>complete -- 2026-10-13T17:5xZ by the issuer (2.0.0_SA_COO~R1): wk-AMGT_RESAPP-407 @fbd996c088 (code 6e8f4d013d) merged, proof instance VALID (rc=0). AC1 re-run by the issuer on the worker's tree: 9 passed, 1 deselected (the five new tests and the four existing ones that run off site Z; `loopback_dapi` needs blpapi); AC2: exactly the three files; the three blobs equal the prepared candidate (price_axis_pull.py cb191272359e, price_series_persist.py 782979c3e2a3, the test d322d0453cad). THE CODE IS ON box/dell1, NOT YET RUNNING: it reaches site Z by box-sync and the producer's next daily run after the Terminal sign-in (Andrew's act) writes bloomberg/harvest/bronze/price_history_tot_return/date=<as_of>/daily_5d.json (schema price_tot_return_series_v1, field DAY_TO_DAY_TOT_RETURN_GROSS_DVDS) and requests about 500 more history cells a day. The PX_LAST request, its 30-day window, the ranking writes and the exit codes are unchanged; the rankings stay on price. THE CLOSE is that object's read after the first run, the issuer's. The card amendment and quote for the added cells go to 2.0.0_SA_COO~Q1 (one ask).</status>
 <round>103</round>
 <slot>0.9.0_WK_AMGT_RESAPP~407</slot>
 <fabric>dell1</fabric>
