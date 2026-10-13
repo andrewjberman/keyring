@@ -1894,3 +1894,34 @@
 2026-10-13T02:22:28Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=25.00  took=8f503cc169 hold=2.08s graded=0/22 pushed=7f717caad1  phases: t_fetch=2.01s t_merge_cloud=11.91s t_land=2.12s t_push=4.15s
 2026-10-13T02:32:31Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=6.60  graded=n/a  args=(--verify-merge e11343bfbfa12ae24751a19d36cb1e255b262fd4)  first=(none)
 2026-10-13T02:32:42Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=38.26  took=bc9f30068b hold=2.95s graded=0/5 pushed=e11343bfbf  phases: t_fetch=3.35s t_merge_cloud=19.51s t_land=2.98s t_push=6.36s
+2026-10-13T02:33:03Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-13T02:33:13Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-13T02:33:22Z LANDED-2P  0.0.0_AB_MSTR~Z  9718dd3b4b  paths=1  validate=26.91s  wait=0.16s  hold=1.22s  build=0.75s  ref=0.41s  post-commit=4.12s  attempt=1
+2026-10-13T02:33:31Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=7.37  took=already-current pushed=9718dd3b4b  phases: t_fetch=1.11s t_push=3.87s
+2026-10-13T02:42:21Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=4.32  graded=n/a  args=(--verify-merge 45cff4a741993ea6219874054e1113e66ad16547)  first=(none)
+2026-10-13T02:42:31Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=28.16  took=04e0c19505 hold=3.47s graded=0/20 pushed=45cff4a741  phases: t_fetch=1.62s t_merge_cloud=13.29s t_land=3.50s t_push=5.02s
+2026-10-13T02:52:21Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=4.29  graded=n/a  args=(--verify-merge 94860d9307ffd498ade2b573b584ce7280d5b720)  first=(none)
+2026-10-13T02:52:31Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=29.06  took=879ba3d659 hold=2.45s graded=0/18 pushed=94860d9307  phases: t_fetch=2.77s t_merge_cloud=12.57s t_land=2.48s t_push=6.13s
+2026-10-13T03:02:33Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=6.50  graded=n/a  args=(--verify-merge d327aaecc795f6947851441d5f66f131c8f0cce0)  first=(none)
+2026-10-13T03:02:43Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=40.38  took=dadba57aca hold=2.84s graded=0/5 pushed=d327aaecc7  phases: t_fetch=2.65s t_merge_cloud=20.33s t_land=2.86s t_push=6.21s
+2026-10-13T03:13:06Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=16.20  graded=n/a  args=(--verify-merge c6d4a86188a474f94e3e25ab97bba670b7e62aea)  first=(none)
+2026-10-13T03:13:26Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=79.82  took=6441eb5aea hold=6.69s graded=0/23 pushed=c6d4a86188  phases: t_fetch=3.26s t_merge_cloud=43.46s t_land=6.72s t_push=12.35s
+2026-10-13T03:20:16Z PASS  1.0.0_SA_CTO~Z  1  (all paths in-lane) act=1619511d76eb paths=1:org/devices/state/sitez/open_calls.json
+2026-10-13T03:20:21Z PASS  1.0.0_SA_CTO~Z  1  (all paths in-lane) act=1619511d76eb paths=1:org/devices/state/sitez/open_calls.json
+2026-10-13T03:20:45Z LANDED-2P  1.0.0_SA_CTO~Z  a4e9b8c109  paths=1  validate=34.29s  wait=0.16s  hold=2.76s  build=1.44s  ref=0.91s  post-commit=10.58s  attempt=1
+2026-10-13T03:22:41Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=6.15  graded=n/a  args=(--verify-merge 3b3e211cd4ecc298f32e131942984cd7d66d92b8)  first=(none)
+2026-10-13T03:22:49Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=44.50  took=a1fd70ee36 hold=2.41s graded=0/16 pushed=3b3e211cd4  phases: t_fetch=6.92s t_merge_cloud=20.68s t_land=2.44s t_push=4.67s
+2026-10-13T03:23:54Z PASS  2.0.0_SA_COO~MI  1  (all paths in-lane) act=0360c7fb07da paths=1:org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-s-19.bd-doc-merge-retire.md
+2026-10-13T03:24:05Z PASS  2.0.0_SA_COO~MI  1  (all paths in-lane) act=0360c7fb07da paths=1:org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-s-19.bd-doc-merge-retire.md
+2026-10-13T03:24:30Z LANDED-2P  2.0.0_SA_COO~MI  2b8a08d7fa  paths=1  validate=34.62s  wait=1.28s  hold=2.13s  build=1.23s  ref=0.85s  post-commit=11.65s  attempt=1
+2026-10-13T03:25:17Z PASS  0.7.0_AE_CloudOps~IR  5  (all paths in-lane) act=aba963436987 paths=5:org/critical_paths/.open_deploys/iamroles-r9-narrow-schwab.json|org/critical_paths/change_management/20261012T0427Z_iamroles-r9-narrow-schwab_deploy_completion.md|org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/NFRA_IAMROLES202609.TO-IAM-z-2.schwab-reader-then-grant.proof_of_spec.json|org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round9/schwab/POST_APPLY.md|org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-z-2.schwab-reader-then-grant.md
+2026-10-13T03:25:48Z PASS  0.7.0_AE_CloudOps~IR  5  (all paths in-lane) act=aba963436987 paths=5:org/critical_paths/.open_deploys/iamroles-r9-narrow-schwab.json|org/critical_paths/change_management/20261012T0427Z_iamroles-r9-narrow-schwab_deploy_completion.md|org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/NFRA_IAMROLES202609.TO-IAM-z-2.schwab-reader-then-grant.proof_of_spec.json|org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round9/schwab/POST_APPLY.md|org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-z-2.schwab-reader-then-grant.md
+2026-10-13T03:26:20Z LANDED-2P  0.7.0_AE_CloudOps~IR  20e606c764  paths=5  validate=105.66s  wait=1.53s  hold=3.95s  build=2.61s  ref=0.84s  post-commit=12.25s  attempt=1
+2026-10-13T03:31:02Z PASS  2.0.0_SA_COO~MI  1  (all paths in-lane) act=065216536988 paths=1:org/tier1_exec/2.0.0_SA_COO~MI/drive_log_20261013T03Z_opal_bloomberg.md
+2026-10-13T03:31:20Z PASS  2.0.0_SA_COO~MI  1  (all paths in-lane) act=065216536988 paths=1:org/tier1_exec/2.0.0_SA_COO~MI/drive_log_20261013T03Z_opal_bloomberg.md
+2026-10-13T03:31:50Z LANDED-2P  2.0.0_SA_COO~MI  70472233a4  paths=1  validate=57.80s  wait=0.53s  hold=4.75s  build=3.93s  ref=0.76s  post-commit=14.71s  attempt=1
+2026-10-13T03:32:55Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=12.98  graded=n/a  args=(--verify-merge 9e2f671071e5432275e912556d426d1ae69ee8fd)  first=(none)
+2026-10-13T03:33:25Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=78.42  took=b39553f4bf hold=8.82s graded=0/0 pushed=9e2f671071  phases: t_fetch=3.77s t_merge_cloud=33.65s t_land=8.85s t_push=15.31s
+2026-10-13T03:33:26Z PASS  0.7.0_AE_CloudOps~IR  1  (all paths in-lane) act=16f2ee1645ab paths=1:org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-10-10/ir_lane_iamroles_r6_w1_phase_b_and_w2_phase_a.md
+2026-10-13T03:33:38Z PASS  0.7.0_AE_CloudOps~IR  1  (all paths in-lane) act=16f2ee1645ab paths=1:org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-10-10/ir_lane_iamroles_r6_w1_phase_b_and_w2_phase_a.md
+2026-10-13T03:34:06Z LANDED-2P  0.7.0_AE_CloudOps~IR  e37ee41bce  paths=1  validate=56.62s  wait=0.53s  hold=4.05s  build=2.24s  ref=1.52s  post-commit=11.86s  attempt=1

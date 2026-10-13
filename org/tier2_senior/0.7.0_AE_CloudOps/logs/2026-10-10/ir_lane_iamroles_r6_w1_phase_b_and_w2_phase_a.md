@@ -829,3 +829,50 @@ control only ever observed working is the one people stop believing in, so it is
 
 **Push state: LOCAL** @`fd151c1946` (`ls-remote` read; origin `9892da26df`). `box/sitez` is
 integrator-only.
+
+## R9.6 CLOSURE -- z-2 graded 22 hours after the act; round 9 is complete
+
+**R9.5's "owed by me" line is discharged.** `TO-IAM-z-2` is `complete` @`20e606c764`. Round 9 final:
+all four orders complete, **7 of 7** NEVER-2 entries CLOSED, **0** sentinels, **4** proof instances.
+
+Revised world totals (z-2's delete included): **17 dead ARNs** removed across **7 roles**, **2 policies
+DELETED** and 5 narrowed, **0** ARNs/actions/statements/Sids added anywhere.
+
+**The act took one call and two minutes; the grade took twenty-two hours, and the twenty-two hours are
+the part worth keeping.** Three readings looked like branch A and none was:
+
+1. **A CloudTrail `AccessDenied` sweep returning 0** -- from a plane whose event selectors cover S3 data
+   events for exactly four prefixes (`opal-data-49financial/`, `opal-data-bd/`, `opal-data-cot/`,
+   `opal-data-inf/`), `ReadOnly`, and `opal-data-schwab` is not among them. The trail **cannot** record
+   an object-level call against that bucket by any principal, so its zero was ABSENT, never
+   EXERCISED-AGAINST. The tell was that 90 minutes of S3 activity produced only `GetBucketAcl` and
+   `GetBucketVersioning`.
+2. **22 post-delete stages of a chain that started 25 minutes BEFORE the delete.** The issuer declined
+   it with a better reason than my own argument against it: the 7 stages that ran pre-delete are
+   precisely the Schwab-adjacent ones, so I had counted the **most** stages and the **least relevant**
+   ones. My "arguably exercised harder" phrasing pointed the wrong way.
+3. **A union of two partial executions** covering 25 of 29 keys. I declined this one myself rather than
+   re-offer a weaker form of a ruling already made.
+
+**What finally graded it:** ONE chain, `S_00` 2026-10-12T23:03:07Z -> `D_00f` 2026-10-13T01:12:07Z, with
+all 29 of 29 stage keys newer than its own first stage, 0 stale, `perf_report.json` 01:12:08Z and six
+watermarks. Branch B did not occur; the rollback is retained unused.
+
+**THE INSTRUMENT LESSON, and it is the one I would carry out of this round: the checkpoint keys are
+PER-DATE and overwritten per run.** `S_00.done` read 04:03:46Z, then 12:48:10Z, then 23:03:07Z -- one
+key, three runs. So *"the terminal marker exists"* is worthless and only *"the terminal marker is newer
+than THIS run's first stage"* is evidence. At any point in those 22 hours a presence check on `D_00f`
+would have returned a predecessor's success and closed the leg on the wrong run.
+
+**An unplanned second witness to the delete:** AC2's account-wide document denominator moved **652 ->
+651** across this act, every earlier run of the same checker this round having printed 652. A count
+dropping by exactly 1 corroborates the delete without reading the role at all.
+
+**And one wrong expectation of mine, five hours wide:** I kept predicting a ~04:00Z chain start when the
+start hour had already moved twice inside the observed window (23:03Z on 10-09/10-10, 04:0xZ on
+10-11/10-12). The chain that graded this began at **23:03Z**. Read the first `S_00`; do not predict it.
+
+**Owed by others, unchanged:** rows `Z-S49`, `Z-S50`, `Z-S51`, `Z-S52` and the three wildcard grants.
+**Owed by me: nothing.** The round is with the CVO at L8/L9.
+
+**Push state: LOCAL** @`20e606c764` (`ls-remote` read). `box/sitez` is integrator-only.
