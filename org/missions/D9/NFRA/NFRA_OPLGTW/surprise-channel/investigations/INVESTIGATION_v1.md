@@ -12769,3 +12769,52 @@ name the one known failure instead of silently inheriting it.
   "notes": "NOT A ROLLBACK CASE, and that is the judgment worth stating. The order's rollback trigger is 'if any read-back disagrees'; every read-back agrees. Rolling back would undo working code over a clause no deployment of this code could satisfy. TWO FIXES, the issuer's call, and they are not equivalent: (a) AMEND AC2's report clause to read the behaviour from the QUEUE -- foreign present after the sweep, own gone -- which is provable today and is what the criterion is actually about; or (b) PERSIST the report in the code, writing run_sweep's dlq dict into the backfill-status section or a run-log object, which is a new build order and would make the criterion readable as written for EVERY family rather than just schwab. SAME TWO FIELDS FAILED IN OG-ap-11 FOR AN UNRELATED REASON -- there the function raised before returning, so no report was produced; here it is produced and discarded. A criterion that fails twice for two different causes is worth re-cutting rather than re-running. GENERAL FORM: A CRITERION THAT NAMES AN ARTIFACT MUST NAME ONE THE SYSTEM PERSISTS; a return value is not an artifact, and the difference is invisible until the first time the code actually succeeds."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W61-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~61",
+  "surfaced_at": "2026-10-13T17:31:00Z",
+  "one_line": "OG-fd-2: 'drift_owner = author of the newest commit on the package path' names the vendoring worker, not whoever moved the source ahead, so FD2_DRIFT.json carries both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ git log -1 on each opal-assets-silver-<family> package path at 4c7e933975: orion/eclipse/etf -> 0.9.0_WK_NFRA_MCPINDEX~7 @878fd82986 (a PARTIAL vendor: 5 lines patched into mirror_conversion.py); blackdiamond -> 0.9.0_WK_MDPF_STRATID~5 @82e0a49ed2 (BUILD_MANIFEST only, opal_strategy_matcher.py never copied).",
+      "READ W/FD2_DRIFT.json: for orion/eclipse/blackdiamond/etf the package mirror_conversion.py equals no source commit, and the newest source commit in the drift is 0.9.0_WK_NFRA_OPLGTW~58 @12a92ffa49 (OG-fd-1). Both owners are recorded per family (drift_owner = the order's definition; newest_source_commit_in_drift beside it)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: drift_owner is the author of the newest commit that changed the packaged copy away from the source (git log on the package path), with that commit's hash.",
+  "world_is": "The newest package-path commit is where the copy was last touched, which for four of six families is a partial vendoring; the divergence itself was introduced by later source commits. Applying the definition literally gives AC2 its field and the ask names both owners, so the release is signed against the drift and its true introducers."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W61-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~61",
+  "surfaced_at": "2026-10-13T17:31:30Z",
+  "one_line": "OG-fd-2: the order names mirror and schwab, but etf has its own run_sweep and status writer, so I added the same key there; the order's bounds also stop short of the prior CodeSha256 the ask needs, which I read with six one-resource lambda gets.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ data/assets/scripts/silver/etf_conversion.py run_sweep: it calls mc.drain_dlq and bs.write_layer_status itself (3 trees), so a mirror-only change would have left etf's drain unreadable after the fact. One line added there plus a test (inside <paths>, 78 passed / 10 skipped across the three suites).",
+      "READ schwab_runtime.run_sweep drained AFTER the lanes, whose status folds happen inside _sweep_lane; the drain now runs first so the fold can carry it (a lane exception would now lose the record of messages already deleted; the mirror path has the same shape).",
+      "RAN .tools/aws lambda get-function-configuration on the six non-schwab functions (describe of one resource each, not a queue read): CodeSha256 values are in the ask and FD2_DRIFT.json live_code_sha256_now; none has OPAL_BUILD_COMMIT set."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: do it for the mirror families' runtime and for schwab_runtime.py; the ask names each family's prior CodeSha256 and pin; bounds: no live queue read.",
+  "world_is": "etf is a mirror-family consumer with its own sweep, so it was in scope in substance; the prior CodeSha256 is a live value that cannot be read from the repo, so the one-resource describes were the only way to meet the ask as written."
+}
+```
