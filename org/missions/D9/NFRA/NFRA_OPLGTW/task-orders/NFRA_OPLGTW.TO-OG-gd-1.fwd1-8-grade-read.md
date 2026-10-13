@@ -103,7 +103,7 @@ commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing
     - one email address and one non-date 8-digit run.
   - Dates and the PRD's own master numbers are exempt from the digit scan. The fixtures were removed.
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <slot>~66</slot>
 <fabric>site-z</fabric>
