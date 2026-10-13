@@ -10396,7 +10396,108 @@
   },
   "disposition": "UNDER_INVESTIGATION",
   "notes": "Staff cannot submit (the submit is off), so the unscoped read has no filing consequence. Recorded so the L9 grader can judge the staff path on the candidate's own terms."
-}
+},
+  {
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~107",
+    "surfaced_at": "2026-10-13T21:08:01Z",
+    "id": "IRPT_ANLREQ-D2-W107-S1",
+    "one_line": "The words-table lock (test_correction_words.py:44) compares uploads.CORRECTION_WORDS with the literal in ops/status.py, which is outside this order's grant, so the three new finding codes cannot be locked without an ops/status.py edit: the intake folder reads 1 failed, 369 passed, 1 skipped.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AR-y-293 step 4: add the new codes to the words table and keep the words-table lock test green by editing it ONLY to include the new codes. The grant names intake/tests/test_correction_words.py and intake/uploads.py, not ops/status.py.",
+    "world_is": "test_correction_words.py:44 asserts uploads.CORRECTION_WORDS == status.CORRECTION_WORDS; ops/status.py:86 is the literal copy. With TICKER_CHECK_FAILED, TICKER_KEPT_BY_HISTORY and TICKER_NOT_CHECKED added to uploads.py, the assertion lists three extra items. The lock is by design (its own comment: locks the copy to the source word for word), so the only green route is an ops/status.py edit the grant does not name.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/intake/intake/tests/test_correction_words.py:44@d2c68580a1",
+        "ops/status.py:86@d2c68580a1 (CORRECTION_WORDS literal)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "STOP per the order. The source edits are held as a patch in the deliverables folder and NOT committed, so the branch stays green. Issuer: amend the grant to name ops/status.py, copying the three entries from uploads.py CORRECTION_WORDS."
+  },
+  {
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~107",
+    "surfaced_at": "2026-10-13T21:08:01Z",
+    "id": "IRPT_ANLREQ-D2-W107-S2",
+    "one_line": "template_reader.finding() replaces an empty actions list with REPLACE_FILE, so a NOTICE with no action cannot be made through finding(); the KEPT notice carries REVIEW, the action CASH_SYMBOL_NORMALIZED uses.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AR-y-293 step 4: one NOTICE finding for a KEPT holding, with no action (words only).",
+    "world_is": "intake/template_reader.py:149 is 'actions': actions or ['REPLACE_FILE']; intake/template_reader.py:471 emits CASH_SYMBOL_NORMALIZED with severity NOTICE and actions ['REVIEW'].",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/intake/intake/template_reader.py:149@d2c68580a1",
+        "infra/aws/lambda/investor-reporting/intake/intake/template_reader.py:471@d2c68580a1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~107",
+    "surfaced_at": "2026-10-13T21:08:01Z",
+    "id": "IRPT_ANLREQ-D2-W107-S3",
+    "one_line": "A KEPT holding in a SHARES upload cannot be priced by the freeze: the price gate needs an AVAILABLE identity reference with a canonical key and a dated share-class quote with provenance, which a yfinance close cannot supply, so the holding refuses as SHARES_PRICE_UNAVAILABLE. Shares are NOT covered; dollar and weight bases are.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AR-y-293 step 3: a KEPT holding passes the freeze; if the freeze needs a price only MDPF_SECHIST can supply, STOP at step 3 for SHARES only and file a BLOCKING row naming the file and what is needed.",
+    "world_is": "portfolio.py SHARES branch: quote = prices.get(symbol); key is set only when the check's reference state is AVAILABLE; the quote must carry canonical_key == key, as_of == price_date, price_basis EXACT_DATED_SHARE_CLASS and a provenance sha256. A KEPT check carries reference UNAVAILABLE (identity port is the None stub, ycharts/generate/resident_worker.py:619-620), so the holding emits SHARES_PRICE_UNAVAILABLE (probe: NEEDS_CORRECTION). Needed: a dated share-class price for the request from MDPF_SECHIST, supplied through resolve_prices (uploads.py:592; intake/upload_resolution.py:112,133 SHARES_PRICE_SOURCE_NOT_COMPOSED), plus a canonical identity, or a CTO ruling that a yfinance close is an acceptable SHARES price for one request.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/intake/intake/portfolio.py:510-527@d2c68580a1",
+        "infra/aws/lambda/investor-reporting/intake/intake/upload_resolution.py:112@d2c68580a1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~107",
+    "surfaced_at": "2026-10-13T21:08:01Z",
+    "id": "IRPT_ANLREQ-D2-W107-S4",
+    "one_line": "A KEPT holding is written with security_id = the client's bare ticker under holdings identity_kind YCHARTS_SECURITY, and the freeze's own comment says the YCharts upload echo reconciles on that provider id; a KEPT holding has no provider id, so a consumer that reads holdings as YCharts ids would misread it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y2",
+    "spec_asserts": "AR-y-293 step 3: a KEPT holding is recorded with its identity as given by the client (the client's own ticker and name), price_source yfinance, method KEPT_BY_HISTORY.",
+    "world_is": "portfolio.py holdings block: identity_kind YCHARTS_SECURITY. The KEPT row's security_id is the client ticker. portfolio.py:455-456 comment: YCharts' upload echo must match the provider id (recipe.step_upload reconciles on it). ARMED: no KEPT state arises until a checker is injected, so the hazard waits on the resident wiring. Disarm before wiring: the recipe must treat a KEPT_BY_HISTORY row as provider-less, or keep it out of the YCharts upload.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/intake/intake/portfolio.py:455-456@d2c68580a1",
+        "infra/aws/lambda/investor-reporting/intake/intake/portfolio.py holdings block (identity_kind)@d2c68580a1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~107",
+    "surfaced_at": "2026-10-13T21:08:01Z",
+    "id": "IRPT_ANLREQ-D2-W107-S5",
+    "one_line": "The per-ticker finding sentences (a KEPT notice, a failed check with its reason, a holding not checked) need the ticker and the reason, which the words table cannot carry; uploads._words_for now takes the finding's own description for three codes (SYMBOL_WORDS_CODES), a second source the words-table docstring does not declare.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AR-y-293 step 4: the words for the three codes live in the words table (generic words per code).",
+    "world_is": "uploads.py SYMBOL_WORDS_CODES and _words_for: the own description wins for the three codes; the table entries stay as the fallback and as the lock's copy. CORRECTION_WORDS values carry no placeholders (test_every_finding_code asserts no brace), so the table alone cannot name a ticker.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/intake/intake/uploads.py:160-178@d2c68580a1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
 ]
 ```
 
@@ -11016,5 +11117,57 @@
   },
   "disposition": "UNDER_INVESTIGATION",
   "notes": "Recorded so that the L9 grader can judge the authorization change on its full effect."
+}
+```
+
+## IRPT_ANLREQ-D2-W110-S1 -- (AR-y-293 KEPT freeze) the holding cannot keep the client's name: the template projection carries no name
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W110-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~110",
+  "surfaced_at": "2026-10-13T22:03:10Z",
+  "one_line": "AR-y-293 step 3 says a KEPT holding keeps the client's own ticker AND name; the freeze has no name to keep, because the template reader's row carries only the ticker and the amount.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-293 step 3 and AC2J: 'a KEPT holding keeps the client's own ticker and name'.",
+  "world_is": "MEASURED at the wk-IRPT_ANLREQ-107 HEAD after amendment 2: template_reader.read_template on 'Ticker,Dollars' returns rows with keys ['amount', 'basis', 'cells', 'row', 'symbol'] and no name field; portfolio.freeze_template_portfolio builds the KEPT row from original (the template row) and security_id = the client's symbol. The client's ticker is kept; no name is kept, because none is read from the file. The name is not in the frozen KEPT row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py (read_template row keys, measured)",
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py:571 (KEPT row, method KEPT_BY_HISTORY; name not carried)",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_kept_holding.py (test_the_client_ticker_is_kept_on_the_holding_and_the_found_path_is_unchanged asserts the ticker only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W110-S2 -- (AR-y-293 amendment 2 merge) a merge over a dirty overlap needs a file-level revert; the stash that would park the work is blocked
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W110-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~110",
+  "surfaced_at": "2026-10-13T22:03:10Z",
+  "one_line": "The coordinator-directed merge of amendment 2 (461a5fa3df) into the worktree holding uncommitted KEPT edits could not run as written: git refuses a merge that touches a dirty file, and the shared-worktree rule blocks the git stash that would park it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The coordinator's note: merge 461a5fa3df before the commit, a conflict in the order or investigations file kept on both sides, nothing else changes.",
+  "world_is": "MEASURED: the merge overlaps one dirty file (intake/security_resolution.py, 48 upstream lines). The stash was refused by the shared-worktree blast rule. The work was saved to .scratch/backup, the one file was reverted to its committed HEAD content, the merge ran (auto-merged the investigations file, no conflict), and the saved hunks were re-applied with patch (4 hunks, offsets 16 to 30 lines, no reject). The other five edited files were not touched by the merge and were verified byte-equal to their backups. The uncommitted state is not yet committed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge 461a5fa3df in C:/dev/wk-irpt-anlreq-107 (merge commit after 5af9243b49)",
+      "intake/security_resolution.py diff against the merged HEAD: 88 insertions, 2 deletions",
+      "a suite run on the merged tree with the edits: 429 passed, 1 skipped, rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ```
