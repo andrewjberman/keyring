@@ -5,7 +5,7 @@
   "fabric": "dell1",
   "pipeline": "securities-history",
   "status": "active",
-  "dep_stage": "EXECUTING",
+  "dep_stage": "ROUND_CLOSE",
   "created": "2026-10-06",
   "registered_under_tree": "2026-10-06",
   "placement": "DELL1",

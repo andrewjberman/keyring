@@ -5,10 +5,10 @@
  "project": "ADVI_FIRMBKTS",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v1.4",
+ "prd_version": "v1.5",
  "step": 4,
  "brief_ref": "docs/briefs/d8-legacy-firm-buckets-migration-brief-20260913.md@2b64208047",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
  "status": "RATIFIED"
 }
 ```
@@ -144,6 +144,26 @@ ruled window, carried as a CONTRACTS row.
                     old place open for that one thing -- and neither is left to be
                     discovered by whoever is doing the shutting down
          SOURCE     brief Part I O8; bar Part III O7/O8
+
+  FWD-9  Advisor Intelligence's whole operation has a written move plan per firm, and
+         every legacy operation the move makes unnecessary is retired by a decision
+         DONE WHEN  EXERCISED -- (a) ONE plan document exists and has been read: per
+                    firm (Inflection, Cottonwood), every Advisor Intelligence
+                    operating function (gold chain, exec-summary generator, IRPT
+                    Lambdas, edge functions, schedules, notifications, and every
+                    consumer of a legacy-bucket input such as the Cottonwood
+                    crosswalk), the order of moves with a rollback per move, each
+                    legacy bucket's decommission (FWD-6's window), and each
+                    legacy OPERATION to retire; (b) for a real case, a legacy
+                    operation (a rule, schedule or Lambda) has been retired by a
+                    recorded decision naming what replaced it, or that nothing did
+         ACCEPT     nobody has to discover, at shutdown time, an operation still
+                    running against the old home, and nothing is switched off
+                    without a recorded reason
+         SOURCE     Andrew voice memo 2026-10-13 (ADVI): "a clear plan for the
+                    migration ... including all current operating functions ...
+                    as well as a decommissioning plan for legacy buckets and
+                    legacy operations"; cluster direction XB-ba46 O10
 ```
 
 ## CONTRACTS
@@ -429,3 +449,28 @@ Surfaces this project writes, reads or executes.
     round-3 ADDENDUM 3), printed in the rehearsal. A changed value is a STOP.
 
 **Not changed:** every ENDPOINT outcome and every contract. Monday's acts 2, 3, 4b and 4c and MDPF's 13:30Z fire are unchanged.
+
+## L10 ADDENDUM, v1.5, 2026-10-13 -- FWD-9: the move plan and the retirement of legacy operations (`1.0.0_SA_CTO~DELL1`)
+
+**Source:** Andrew's ADVI voice memo of 2026-10-13 ("firm buckets, that is obviously if peak importance ... a clear plan for the migration to these buckets, including all
+current operating functions that run for Advisor Intelligence, as well as a decommissioning plan for legacy buckets and legacy operations"), and the cluster direction packet
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_DELL1_20261013.md` O10 (crossbox XB-20261013T180327Z-ba46).
+
+- **New outcome FWD-9** (ENDPOINT above): the plan document, and this project as the OWNER of retiring legacy operations. That reverses the PRD's earlier disowning of
+  them for the operations the move makes unnecessary: `FIRMSEP-s3-direct-access-bypass`'s "fate is not this project's to rule" now reads "this project rules it under
+  FWD-9", and `inf-canonical-prices-daily` (disabled and held) is dispositioned in the plan.
+- **Sequencing:**
+  - round 7 stays scoped to closing 49 Financial;
+  - the plan document is the NEXT enrichment item (round-7 L10);
+  - writing the plan does NOT start the Inflection or Cottonwood moves;
+  - no act on `opal-data-inf` begins before both DEC-13 rulings are recorded (DEC-13 unchanged).
+- **DEC-14 REC changes** (Andrew 2026-10-13: "mockadv is almost certainly deprecated/useless/not displayed anywhere"):
+  - **the new REC is RETIRE the `mockadv` alias.** It replaces "follows 49 Financial".
+  - It happens after a consumer census reads zero live use. Then the user rows, the dropdown entry, the two router map entries and the registry rows are removed in one
+    change with a rollback; tests that use it as a negative case keep a fixture.
+  - The ruling stays Andrew's (carried to him as a card).
+- **The register's `andrew_acts`** now carries DEC-12, DEC-13 (Door 6 and B2) and DEC-14.
+
+**L4-R:** an ENDPOINT change, so the ratified-text half is re-owed to `3.0.0_SA_CVO`. The brief half is accepted (Andrew's memo, carried by the cluster packet).
+
+-- 1.0.0_SA_CTO~DELL1

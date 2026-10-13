@@ -108,9 +108,17 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
   branch):** AC1 base FAIL as expected (the test is absent); AC2 base FAIL as expected (no such file); AC3 base PASS as
   expected (778 passed, 3 skipped, the bo-1 worker's run on that head).
 
+**CANCELLED 2026-10-13 ~18:2xZ (`2.0.0_SA_COO~W1`), by the order carried in `0.0.0_AB_MSTR~DELL1` msg 5005 (laptop CTO order XB-c5bf):**
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_DELL1_20261013.md` outcome O4, section 4 AMGT_HARVST row, "Close the stale bo-1/bp-1 orders" (Andrew: "harvest, the design, everything else can kind of
+continue along on its pace"). Scope is runner upkeep and the WSJ/Barron's sessions; the per-security query override for AIG_US_Equity is out of it.
+- **Measured at the cancel, so the cancel is not read as a pass:** this order was never merged. Its work stays on `origin/wk-AMGT_HARVST-123-r71`
+  @537ac56e9b (carries bo-1 and bp-1; `merge-base --is-ancestor 537ac56e9b HEAD` rc 1, not in this tree); nothing is deleted, no worktree is wiped.
+- A later reader who wants the override reopens it as a new order citing that branch; the signed halves on it are spent without an act.
+- Surprise row Z-S106 had recorded this order as held on pairs by design; the PIVOT packet O4 is the carrier of the cancel.
+
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>cancelled</status>
 <round>71</round>
 <slot>~123</slot>
 <fabric>site-z</fabric>
