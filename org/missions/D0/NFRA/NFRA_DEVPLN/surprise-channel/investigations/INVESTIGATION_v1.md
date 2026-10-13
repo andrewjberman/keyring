@@ -207,3 +207,234 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## NFRA_DEVPLN-W1-S1 -- the approval close skips the cross-box file gate, because the project's own scope reads CROSS-BOX on every approval
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S1",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-13T19:05:00Z",
+  "one_line": "An approval row's scope is the project's round orders, and NFRA_DEVPLN reads CROSS-BOX (.tools and portal paths are shared; two paths overlap IRPT_BCKEND on dell2), so the existing close would refuse every CTO close of an approval; cmd_close skips the CLOSED-BOTH gate for kind approval.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/open-calls.py scope --project NFRA_DEVPLN, run at wk-NFRA_DEVPLN-1 @80247a96ad on 2026-10-13: CALL-SCOPE project=NFRA_DEVPLN device=laptop paths=hit placement=clear resources=clear shared=hit risk=LOCAL verdict=CROSS-BOX",
+      ".tools/open-calls.py cmd_close (the DP-b-1 commit): the CROSS-BOX clause carries `and not approval`, with a comment naming why",
+      "org/missions/D0/NFRA/NFRA_DEVPLN/task-orders/NFRA_DEVPLN.TO-DP-b-1.approval-kind.md criterion DPb1-AC1: a CTO serial closing a client-facing row reads valid=no (a recorded close, not a refused one)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The close of an approval row takes the existing close path and records a CTO serial's approval (DPb1-AC1); the existing close refuses a CTO close of a CROSS-BOX row unless a CLOSED-BOTH cross-box file names it.",
+  "world_is": "The project's scope reads CROSS-BOX for every approval of this project, so without the skip no CTO could close an approval at all. The skip is a widening: a CTO close of an approval on a project whose scope reads CROSS-BOX is recorded without a cross-box file. The validity rule in approval-status (class and closing identity) is the only gate on an approval close. The CTO rules whether that is the intended reading or whether an approval needs its own measurement of the branch's paths; the row stays ARMED until it does."
+}
+```
+
+## NFRA_DEVPLN-W1-S2 -- the order states two different values of valid for a declined approval
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S2",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-13T19:05:00Z",
+  "one_line": "The order's BUILD item 4 says valid=- when the state is not APPROVED, while its DPb1-AC1 says a declined close reads DECLINED valid=no; both cannot hold, so the built tool follows the graded criterion and prints valid=no for DECLINED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_DEVPLN/task-orders/NFRA_DEVPLN.TO-DP-b-1.approval-kind.md BUILD item 4, text at base 80247a96ad: 'Otherwise valid=no (and - when the state is not APPROVED)'",
+      "the same order, DPb1-AC1: 'close declined reads DECLINED valid=no'",
+      "org/missions/D0/NFRA/NFRA_DEVPLN/decompositions/NFRA_DEVPLN_DECOMP.round1.md R3 states the class rule and is silent on DECLINED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BUILD item 4 says valid=- when the state is not APPROVED; DPb1-AC1 says a close declined reads DECLINED valid=no.",
+  "world_is": "Built: ABSENT and OPEN print valid=-; DECLINED prints valid=no, which the graded case requires. The reading that DECLINED prints valid=- is a one-line change in the DECLINED branch of cmd_approval_status, and the test case 'close declined reads DECLINED valid=no' would then need the same change. The CTO may rule either way at the round-1 analysis."
+}
+```
+
+## NFRA_DEVPLN-W1-S3 -- the order's close and add invocations name flags the tool does not have, and the decomposition pins a flag the order omits
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S3",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-13T19:05:00Z",
+  "one_line": "The order's close takes --ruling-file (the tool has --ruling) and no --id or --by; the decomposition pins add with --portal and an approval-lease subcommand that the order does not carry; built: --ruling-file as an alias, --by optional on approval closes, --asked-by and --source defaulted for approval adds, --portal and approval-lease not built.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_DEVPLN/task-orders/NFRA_DEVPLN.TO-DP-b-1.approval-kind.md BUILD items 2 and 3 (the close and add invocations)",
+      "org/missions/D0/NFRA/NFRA_DEVPLN/decompositions/NFRA_DEVPLN_DECOMP.round1.md 'Pinned interfaces': add with `--portal <portal repo path>`; `approval-lease --branch <b> ... --lease-file <path>` (cell DP-b-5)",
+      ".tools/open-calls.py at base 80247a96ad: close takes --ruling, requires --id and --by (build_parser, cls.add_argument)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The close invocation is close <id> --ruled-by andrew|cto --ruling-file <path> --decision approved|declined; the approval add takes no --asked-by or --source; the decomposition pins --portal on add and an approval-lease subcommand.",
+  "world_is": "The existing close flag is --ruling. Built: --ruling-file is an alias of it; --by is optional on an approval close, whose identity comes from --ruled-by (andrew, or OPAL_AGENT_SERIAL for cto); an approval add defaults --asked-by to OPAL_AGENT_SERIAL and --source to the branch name. Not built: --portal (absent from the order's row shape, so the tool would have to store a field no reader declares) and approval-lease (cell DP-b-5). A command written from the decomposition's add line is refused by argparse until the order and the decomposition agree."
+}
+```
+
+## NFRA_DEVPLN-W1-S4 -- an older checkout refuses a whole list that holds an approval row, because every reader refuses a key or value it does not know
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S4",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-13T19:05:00Z",
+  "one_line": "An approval row adds the key approval and the kind value approval; a box whose checkout predates this commit refuses its whole list, and the cluster copy of that list, once one approval row exists, until it syncs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~DV",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/open-calls.py at base 80247a96ad: validate_doc refuses an unknown row key ('row %s has unknown key(s)') and a kind outside KINDS ('kind %r is not one of')",
+      "the tool docstring at base 80247a96ad, lines 25-27: 'every reader refuses a key it does not know'",
+      "list --all, list --cloud and the approval reader all call validate_doc, so the refusal reaches every reader on the old tool"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The row shape adds the key approval and the kind value approval; the list is one file per box, read by every box's tool.",
+  "world_is": "Until each box syncs this commit, its old tool refuses the list of any box holding an approval row (REFUSED, rc 3 on list), and the cluster copy reads REFUSED on those boxes. No version gate is built in this order. The issuer sequences the merge so that no approval row is written before every box that reads the list has synced; that act is the disarm."
+}
+```
+
+## NFRA_DEVPLN-W3-S1 -- the cell says two Step 0 freeze bullets merge LIVE origin/DEV at GO time; only one bullet carries that text
+
+```json
+{
+  "id": "NFRA_DEVPLN-W3-S1",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~3",
+  "surfaced_at": "2026-10-13T19:05:42Z",
+  "one_line": "The cell names two Step 0 freeze bullets that say the promote merges LIVE origin/DEV at GO time; only one bullet carries that text in .claude/skills/prod-deploy/SKILL.md at HEAD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DP-b-3 build step 6: in Step 0 change the two freeze bullets that say the promote merges LIVE origin/DEV at GO time so they say the promote ships the named list.",
+  "world_is": "At 01c718ffe3 only the 'Declare the freeze window' bullet (SKILL.md lines 45-49) states the live-DEV merge. The 'If COO dispatched this promote via GO message' bullet (line 50) states no merge. The one merge bullet was changed to name the --features list; the GO-message bullet was left unchanged because it carries no merge statement.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_DEVPLN/task-orders/NFRA_DEVPLN.TO-DP-b-3.chosen-set-release.md worker face, BUILD step 6",
+      ".claude/skills/prod-deploy/SKILL.md@01c718ffe3 lines 45-50 read at HEAD: one bullet names the live origin/DEV merge, the other does not"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## NFRA_DEVPLN-W3-S2 -- the builder refuses on setup and argument errors the pinned reason-token list does not name
+
+```json
+{
+  "id": "NFRA_DEVPLN-W3-S2",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~3",
+  "surfaced_at": "2026-10-13T19:05:42Z",
+  "one_line": "The release builder needs refusal tokens for setup and argument errors (bad-args, no-workspace, no-repo, prod-ref-missing, worktree-failed, no-runtmp) that the cell's token list does not name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DP-b-3 build steps 2-3: a refusal names the branch and one reason token from not-approved, declined, approver-not-valid, stale-head, commits-differ, status-unreadable; release refusals are branch-not-found, conflict, unapproved-commits.",
+  "world_is": "The builder also refuses with bad-args, no-workspace, no-repo, prod-ref-missing, worktree-failed and no-runtmp. Each prints the same RELEASE result=REFUSED line and exits 1 or 2, and none is a feature-level verdict. A same-second release-stamp collision waits one second and re-stamps; it prints no token.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/portal-release-build.sh at the worktree (this commit): refuse() and bad_args() call sites, header comment lists both token sets",
+      "org/missions/D0/NFRA/NFRA_DEVPLN/task-orders/NFRA_DEVPLN.TO-DP-b-3.chosen-set-release.md worker face, BUILD steps 2-3 (the pinned token list)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## NFRA_DEVPLN-W3-S3 -- the cell says change nothing in Steps 5-8 but also add the PROMOTE-LIST lines to the receipt, which is the Step 8 table
+
+```json
+{
+  "id": "NFRA_DEVPLN-W3-S3",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~3",
+  "surfaced_at": "2026-10-13T19:05:42Z",
+  "one_line": "The cell keeps Steps 5-8 unchanged and also asks for the PROMOTE-LIST lines in the promote receipt, but the receipt is the Step 8 table, so the two instructions meet inside Step 8.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DP-b-3 build step 6: 'Change nothing else in the file (the DT-only check, the push law, Steps 1-3, 5-8 and the abort path stay)' and 'Add to the promote receipt the PROMOTE-LIST lines.'",
+  "world_is": "The promote receipt is the Step 8 artifact table. One row ('Promote list') was added to that table, which is the only Step 8 change; the rest of Step 8 and Steps 5-7 are unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".claude/skills/prod-deploy/SKILL.md@01c718ffe3 Step 8 table, read at HEAD: 'Field | Value' artifact table is the receipt",
+      "git diff of .claude/skills/prod-deploy/SKILL.md at the worktree: one added table row inside Step 8, no other Step 8 line changed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## NFRA_DEVPLN-W3-S4 -- the skill file carries non-ASCII bytes that predate this cell, against the cell's no-non-ASCII rule
+
+```json
+{
+  "id": "NFRA_DEVPLN-W3-S4",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~3",
+  "surfaced_at": "2026-10-13T19:05:42Z",
+  "one_line": "The cell rule 'No non-ASCII in any file' does not hold for .claude/skills/prod-deploy/SKILL.md, which carried 189 non-ASCII bytes at HEAD and carries 183 after this cell's edit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DP-b-3 RULES FOR THIS CELL: 'No non-ASCII in any file.'",
+  "world_is": "The skill file already held non-ASCII (em dashes, arrows, quotes) at 01c718ffe3. This cell added zero non-ASCII bytes (checked on the added diff lines); the pre-existing bytes sit outside the cell's changes and were not removed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 01c718ffe3:.claude/skills/prod-deploy/SKILL.md counted with a byte scan: 189 bytes above 127",
+      "the same byte scan of the worktree file: 183 bytes above 127; the added diff lines: 0 bytes above 127"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## NFRA_DEVPLN-W3-S5 -- the cell asks for the TO <status> flip to complete, but the TO file is not in the order's <paths> grant
+
+```json
+{
+  "id": "NFRA_DEVPLN-W3-S5",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~3",
+  "surfaced_at": "2026-10-13T19:20:00Z",
+  "one_line": "The order says to flip its own <status> to complete, but its task-order file is not in the <paths> grant, so the flip is left for the issuer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DP-b-3 worker face: flip the task order <status> to complete only when every mechanical criterion passes and the instance is VALID; <paths> is the write grant (.tools/portal-release-build.sh, .claude/skills/prod-deploy/SKILL.md, the investigation file).",
+  "world_is": "org/missions/D0/NFRA/NFRA_DEVPLN/task-orders/NFRA_DEVPLN.TO-DP-b-3.chosen-set-release.md is not in <paths>, so the worker does not edit it. The status flip is left for the issuer 2.0.0_SA_COO~DV, the same disposition an earlier TO in this family recorded (NFRA_CTLPLN-W78-S4).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_DEVPLN/task-orders/NFRA_DEVPLN.TO-DP-b-3.chosen-set-release.md <paths> block: three entries, none is the TO file",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~78/NFRA_CTLPLN.TO-CT-ab-4.kill-tools-seat-boundary.proof_of_spec.json declared_exclusions: the same flip left for the issuer"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
