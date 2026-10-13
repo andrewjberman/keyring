@@ -31707,3 +31707,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "VERIFIED: the minimal packages for 49financial and inflection are live (new VersionIds above), put at a scheduler start (CloudTrail StartInstances 13:30:36Z by irpt-directory-refresh-role, per IB2), cottonwood untouched, and the 14:15Z holdings refreshes ran for all three firms with Success. STILL ARMED: W345-S3: the 49F builder's leftover-file fix is now on the host, but IB2's first read (counts 0 and 0 at ~13:37Z) PRECEDED every build on the new packages, so the count AFTER a build is not measured; the next cell (IB-pr-513, drafted) repeats the same read-only count after the 14:15Z builds if the host is still Online, else at the next scheduled Online; a task order cannot join round 178 once its issuance is at HEAD (the gate: ONE ISSUER PER ROUND), so it is cut in round 179. RULED: IB2's command_run omits -printf and a stderr redirect because MY check rejected any '>' character; the literal command is a read-only find piped to wc -l (command_run_literal): the check was crude, not the act; W345-S3 evidence does not rest on it. CORRECTED: IB2's row S133 said 39 tracked records in its deliverables folder were missing from the working tree 'not its act': the deletion was MINE: my positive control of the IB178-1 check created and then removed that folder with rm -r, which held 39 tracked records; restored with git restore from HEAD (clean status, 41 files). Nothing else in the folder was modified. STILL ARMED: W361-S1, W348-S2."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S135",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-13T14:52:09Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-IB-pr-513: the count is 0 and 0 after the 14:15Z builds, but its positive control (the build's own snapshot-path log line) cannot be obtained, and the order's AC2 check can never pass.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the two read-only counts at 2026-10-13T14:47:12Z (host running, SSM Success, response code 0): 49financial 0, inflection 0; the 49financial build is invocation 4f958436-de78-4b44-bdfd-c1da2d014ac0, 14:15:25Z to 14:20:49Z, on package version UHOCIkWj3QiIzNucG1VjNnk_AufIg6oD (latest since 13:35:24Z; inferred, the command fetches without a version id)",
+      "the builder prints no such line: holdings_49f.py has no print or log statement; SSM kept the first 24000 characters of that invocation's stdout (487 lines), 0 lines name retained_capture, snapshot, taxsma, membership or temp; get-command CloudWatchOutputEnabled false, no S3 output bucket",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r178/p178_cells.py line 77: cat -A shows the AC2 regex written with literal 0x08 bytes (^H) where \b was meant, so re.search for find between two backspace characters cannot match any command_run; AC2 fails for every record"
+    ]
+  },
+  "spec_asserts": "AC1 needs a non-empty snapshot_path_log_line with a log_source; AC2 needs command_run to be a read-only find piped to wc -l.",
+  "world_is": "AC1 FAIL (no log line exists in any source this order grants), AC2 FAIL (the check's regex cannot match), AC3 PASS (0 and 0). Nothing was invented to pass AC1: snapshot_path_log_line is left empty with its note. The order stays pending for the issuer's ruling: either accept the count with the positive control taken from the served manifest's retained-input receipt (an S3 read outside this grant), or a driven or later scheduled build captured with an output sink; and repair the check's \b bytes."
+}
+```
