@@ -54,6 +54,7 @@ cd "$ROOT" || exit 2
 # nested repo (portal/, a gitlink with no .tools/) resolved "$ROOT/.tools/..." to nothing and
 # refused every portal drain as rc=2 (IRPT_FNTEND FE-s-1 drain, 2026-09-10).
 GATE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/surprise-row-gate.py"
+. "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/merged-checker.sh" || { echo "safe-merge: cannot source merged-checker.sh" >&2; exit 2; }
 
 # ---------------------------------------------------------------- self-test
 if [ "${1:-}" = "--self-test" ]; then
@@ -128,7 +129,7 @@ if [ "${1:-}" = "--self-test" ]; then
       "! bash '$0' --verify-merge \"\$(git rev-list --no-merges -n 1 HEAD)\" >/dev/null 2>&1"
   # GS-t-3: the fast lane (lands by commit-tree, so no commit hook fires) runs the scoped tree check on the merged bytes.
   chk "the fast lane runs the scoped tree check on its private index and refuses by it" \
-      "grep -q 'missions-tree-index.py\" check --staged --act-from-env _SM_ACT' '$0' && grep -q 'REFUSED BY THE TREE CHECK ON THE MERGE' '$0'"
+      "grep -q 'check --staged --act-from-env _SM_ACT' '$0' && grep -q 'merged_checker_path ' '$0' && grep -q 'REFUSED BY THE TREE CHECK ON THE MERGE' '$0'"
   # GS-f-6 (row D1-S5): the commit paths are compared with the paths the merge staged; behaviour is covered by
   # .tools/tests/test_safe_merge_continue.py (a full resolution exits 0; the planted partial exits 7).
   chk "the commit path refuses a merge commit lacking a path the merge staged (exit 7)"       "grep -q '_verify_staged_carried HEAD' '$0' && grep -q 'the merge commit lacks' '$0'"
@@ -615,7 +616,8 @@ _sm_fast_lane() {
       # the project-tree check (GS-t-3) on the same merged bytes: --staged reads the private index, --act scopes the
       # refusal to the projects the merge's graded paths touch; every other violation prints STANDING and never refuses.
       _SM_ACT="$paths"; export _SM_ACT
-      GIT_DIR="$_SM_FL_DIR" GIT_WORK_TREE="$ROOT" python "$ROOT/.tools/missions-tree-index.py" check --staged --act-from-env _SM_ACT || rc=$?
+      _SM_CHK="$(merged_checker_path "$_SM_FL_DIR" "$ROOT")" || { rm -rf "$_SM_FL_DIR"; _SM_FL_DIR=""; echo "safe-merge: *** REFUSED -- no merged checker for the tree check (see merged-checker above). *** Nothing landed; FIX ON THE BRANCH, then re-run." >&2; exit 1; }
+      GIT_DIR="$_SM_FL_DIR" GIT_WORK_TREE="$ROOT" python "$_SM_CHK" check --staged --act-from-env _SM_ACT || rc=$?
       rm -rf "$_SM_FL_DIR"; _SM_FL_DIR=""
       if [ "$rc" -ne 0 ]; then
         echo "safe-merge: *** REFUSED BY THE TREE CHECK ON THE MERGE'S OWN PATHS (rc=$rc). *** Nothing landed; FIX ON THE BRANCH, then re-run." >&2

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_DEVPLN~1</issued_to>
 <issued_by>2.0.0_SA_COO~DV</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -38,7 +38,7 @@ able to write its feature's row already approved. Work in the portal repo checke
    `seat` equal to `$OPAL_AGENT_SERIAL` (`APPROVAL-REGISTER result=REFUSED reason=lease-not-live`, rc 3); then the same portal checks as item 1; then writes the row already CLOSED:
    `decision` `approved`, `by` = `FAST lease <lease file basename>`, `ruled_by` `lease`, `ruling` = the lease path. `approval-status` then reads it `APPROVED valid=yes`.
 
-4. (Amended.) `DP-b-1`'s test `.tools/tests/test_open_calls_approval.py` adds approval rows without `--portal`, which item 1 now refuses. Update it so every add passes `--portal` pointing at a small temporary fixture repository (reuse the fixture builder in your register test, or move it to a shared helper inside your two test files); the test keeps all 13 of its cases and stays green.
+4. (Amended.) `DP-b-1`'s test `.tools/tests/test_open_calls_approval.py` adds approval rows without `--portal`, which item 1 now refuses. Update it so every add passes `--portal` pointing at a small temporary fixture repository (reuse the fixture builder in your register test, or move it to a shared helper inside your two test files); the test keeps all 13 of its cases and stays green. ONE assertion changes, by the issuer's ruling (row W1-S10): case 1 asserted that `head_sha` and `commits` are null after an add, which was `DP-b-1`'s interim state (it said `DP-b-5` would compute them); it now asserts that `commits` equals the fixture branch's own commit count and `head_sha` equals the fixture branch tip. Every other assertion stays unchanged.
 
 ### RULES FOR THIS CELL
 
@@ -54,8 +54,8 @@ FOUND SOMETHING ODD OFF-TASK? Append ONE row to the investigation file named in 
 is refused `dev-overlap` and writes nothing; a missing branch is refused; an empty branch is refused; no `--portal` is refused; a live lease for `$OPAL_AGENT_SERIAL` writes an APPROVED row; an expired lease, a lease
 for another seat and a lease with `mode` `HOLD` are each refused and write nothing; `--check-only` writes nothing.
 
-<criterion id="DPb5-AC2" cell_refs="DP-b-5"><invocation>python .tools/open-calls.py add --kind approval --check-only --project NFRA_DEVPLN --box dell1 --branch origin/DEV --purpose x --pages x --class client-facing --how x --portal portal</invocation><expect>APPROVAL-REGISTER result=REFUSED reason=dev-overlap</expect></criterion>
-`DPb5-AC2` -- the seam against the REAL portal repo: `origin/DEV` is a DEV-cut tip by definition (about 201 commits over PROD, all of them DEV-only), so it is refused for the DEV overlap, nothing written. (Amended by the issuer: the first named branch, wk-dsgn-irptv1-r25-61-prodcut, is itself cut from PROD and overlaps nothing.)
+<criterion id="DPb5-AC2" cell_refs="DP-b-5"><invocation>python .tools/open-calls.py add --kind approval --check-only --project NFRA_DEVPLN --box dell1 --branch origin/cand/laptop/contributing-boxes --purpose x --pages x --class opal-internal --how x --portal portal</invocation><expect>APPROVAL-REGISTER result=OK row=- head_sha=</expect></criterion>
+`DPb5-AC2` -- the seam against the REAL portal repo, positive arm (re-amended by the issuer after rows W1-S5 and W1-S9): the real branch `origin/cand/laptop/contributing-boxes` (one commit, cut from PROD) registers in check-only mode with `commits=1` and a computed head. The `dev-overlap` refusal is proven by AC1's fixture cases: the live portal has no DEV-cut branch to refuse, because DEV is now an ancestor of PROD.
 
 <criterion id="DPb5-AC3" cell_refs="DP-b-5"><invocation>python .tools/tests/test_open_calls_approval.py</invocation><expect>ok=True</expect></criterion>
 `DPb5-AC3` -- `DP-b-1`'s own test stays green after `--portal` became required for the approval kind (amended by the issuer: row W1-S6).
