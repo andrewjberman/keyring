@@ -39,6 +39,7 @@ from __future__ import annotations
 import argparse
 import ast
 import datetime as _dt
+import importlib.util
 import json
 import os
 import re
@@ -67,12 +68,40 @@ DIRECTIVES_REL = "org/missions/DIRECTIVES.yaml"
 MACROS_REL = "org/missions/MACROS.yaml"
 
 
-def _resolve_enum(path: Path, symbol: str) -> tuple:
-    """Read ONE module-level literal assignment from a Python source by AST -- no import, no execution.
+# Register-derived value enums (NFRA_CTLPLN.TO-CT-ab-8): the symbols whose gate assignment is `tuple(_fabric_values())`
+# rather than a literal. Their values come from the device register through lib/devices.py placement_values(), read at
+# the same workspace root the gate is read from; a register that cannot be read FAILS CLOSED.
+REGISTER_DERIVED_SYMBOLS = ("FABRIC_ENUM",)
+REGISTER_RELS = ("lib/devices.py", "org/devices/DEVICES.json")
 
-    The gate's enum is the only carrier (contract `value_enums`); a copy here would be a second
-    carrier that drifts. Missing file or symbol FAILS CLOSED: an empty enum would read every row
-    as invalid or every row as valid, and both are wrong silently."""
+
+def _register_enum(symbol: str, path: Path, ws: Path) -> tuple:
+    if symbol not in REGISTER_DERIVED_SYMBOLS:
+        raise SystemExit(f"ERROR: {symbol} in {path} is not a literal and is not a register-derived enum -- refusing")
+    lib = Path(ws) / "lib" / "devices.py"
+    if not lib.is_file():
+        raise SystemExit(f"ERROR: {symbol} is register-derived but {lib} is missing -- refusing (fail-closed)")
+    spec = importlib.util.spec_from_file_location("opal_devices_for_index", str(lib))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    try:
+        vals = mod.placement_values()
+    except mod.RegisterError as exc:
+        raise SystemExit(f"ERROR: {symbol} is register-derived but the device register cannot be read ({exc}) -- refusing (fail-closed)")
+    if not vals:
+        raise SystemExit(f"ERROR: {symbol} resolved to no values from the device register -- refusing (fail-closed)")
+    return tuple(str(v) for v in vals)
+
+
+def _resolve_enum(path: Path, symbol: str, ws: Path = None) -> tuple:
+    """Read ONE module-level value enum from the gate's source by AST -- no import, no execution of the gate.
+
+    A LITERAL assignment is read by ast.literal_eval. A symbol the gate DERIVES from the device register
+    (REGISTER_DERIVED_SYMBOLS: FABRIC_ENUM = tuple(_fabric_values())) is not a literal; its value is the register's
+    placement_values(), read through lib/devices.py under `ws`. The gate's assignment must still exist (fail closed).
+    The gate's enum is the only carrier (contract `value_enums`); a copy here would be a second carrier that drifts.
+    Missing file or symbol FAILS CLOSED: an empty enum would read every row as invalid or every row as valid, and both
+    are wrong silently."""
     if not path.is_file():
         raise SystemExit(f"ERROR: value-enum source {path} not found -- refusing to run without the gate's enum")
     tree = ast.parse(path.read_text(encoding="utf-8"))
@@ -80,11 +109,14 @@ def _resolve_enum(path: Path, symbol: str) -> tuple:
         if isinstance(node, ast.Assign):
             for t in node.targets:
                 if isinstance(t, ast.Name) and t.id == symbol:
-                    val = ast.literal_eval(node.value)
+                    try:
+                        val = ast.literal_eval(node.value)
+                    except ValueError:
+                        return _register_enum(symbol, path, ws if ws is not None else _WS)
                     if not isinstance(val, (tuple, list)) or not val:
                         raise SystemExit(f"ERROR: {symbol} in {path} is not a non-empty tuple/list literal")
                     return tuple(str(v) for v in val)
-    raise SystemExit(f"ERROR: {symbol} not found as a module-level literal in {path} -- refusing to run without the gate's enum")
+    raise SystemExit(f"ERROR: {symbol} not found as a module-level assignment in {path} -- refusing to run without the gate's enum")
 
 
 class Estate:
@@ -120,7 +152,7 @@ class Estate:
             if field.startswith("_") or not isinstance(spec, dict) or spec.get("no_enum"):
                 continue
             src = self.ws / spec["source"]
-            self.enums[field] = _resolve_enum(src, spec["symbol"])
+            self.enums[field] = _resolve_enum(src, spec["symbol"], self.ws)
             self.enum_sources[field] = f"{spec['source']}:{spec['symbol']}"
             self.enum_norm[field] = spec.get("normalize", "exact")
 
@@ -534,7 +566,7 @@ def materialise_index(repo, dest, env=None):
     contract = json.loads(contract_bytes.decode("utf-8"))
     tree_rel, idx_rel = contract["root"], contract["index"]["root"]
     row_file = contract["project_folder"]["row"]
-    extra = [CLOSE_SCHEMA_REL] + [spec["source"] for f, spec in (contract.get("value_enums") or {}).items()
+    extra = [CLOSE_SCHEMA_REL] + list(REGISTER_RELS) + [spec["source"] for f, spec in (contract.get("value_enums") or {}).items()
                                   if not f.startswith("_") and isinstance(spec, dict) and not spec.get("no_enum")]
     entries = stage0(_index_listing(repo, env, [tree_rel, idx_rel] + extra), "tree/index/enum sources")
     (dest / tree_rel).mkdir(parents=True, exist_ok=True)
@@ -584,7 +616,7 @@ def derive_staged_one(repo, code, env=None):
     contract = json.loads(contract_bytes.decode("utf-8"))
     tree_rel, idx_rel = contract["root"], contract["index"]["root"]
     row_file = contract["project_folder"]["row"]
-    srcs = [spec["source"] for f, spec in (contract.get("value_enums") or {}).items()
+    srcs = list(REGISTER_RELS) + [spec["source"] for f, spec in (contract.get("value_enums") or {}).items()
             if not f.startswith("_") and isinstance(spec, dict) and not spec.get("no_enum")]
     rows = [e for e in _index_listing(repo, env, [f"{tree_rel}/*/{code}/{row_file}"])
             if len(e[3][len(tree_rel) + 1:].split("/")) == 4 and e[3].split("/")[-2] == code]
@@ -1029,7 +1061,9 @@ def self_test() -> int:
         (est.root / "INFRASTRUCTURE" / "GRAPH" / "state.yaml").write_text("x: 1\n", encoding="utf-8")
         viol, denom, _, _ = est.check()
         chk("MSTR mission register beside the tree is not read", not viol and denom["tree_projects"] == 0, str(ids(viol)))
-        # 14. value enums resolve from the GATE by AST and agree with an independent regex read (grain)
+        # 14. value enums resolve from the GATE (literal by AST; FABRIC_ENUM register-derived) and agree with an
+        #     independent read (grain): a regex for the literal enum, lib/devices.py placement_values() for the derived one,
+        #     and the gate must NOT carry a fabric literal (a literal here would be a second carrier)
         est = fresh("t14")
         gate_src = (_WS / ".tools" / "to-pipeline-gate.py").read_text(encoding="utf-8")
 
@@ -1037,9 +1071,14 @@ def self_test() -> int:
             m = re.search(r"^" + sym + r"\s*=\s*\((.*?)\)\s*$", gate_src, re.M)
             return tuple(s.strip().strip("'\"") for s in m.group(1).split(",") if s.strip()) if m else None
 
-        chk("value enums resolved by AST == independent regex read of the gate (dep_stage, fabric)",
-            est.enums.get("dep_stage") == rx_enum("DEP_STAGE_ENUM") and est.enums.get("fabric") == rx_enum("FABRIC_ENUM") and len(est.enums["dep_stage"]) >= 6,
-            f"ast={est.enums} regex={rx_enum('DEP_STAGE_ENUM')},{rx_enum('FABRIC_ENUM')}")
+        _dspec = importlib.util.spec_from_file_location("devices_t14", str(_WS / "lib" / "devices.py"))
+        _dmod = importlib.util.module_from_spec(_dspec)
+        _dspec.loader.exec_module(_dmod)
+        reg_fabric = tuple(_dmod.placement_values())
+        chk("value enums resolved == independent read (dep_stage: regex on the gate literal; fabric: register placement_values, gate carries no fabric literal)",
+            est.enums.get("dep_stage") == rx_enum("DEP_STAGE_ENUM") and est.enums.get("fabric") == reg_fabric
+            and rx_enum("FABRIC_ENUM") is None and len(est.enums["dep_stage"]) >= 6,
+            f"ast={est.enums} regex={rx_enum('DEP_STAGE_ENUM')},{rx_enum('FABRIC_ENUM')} register={reg_fabric}")
         # 15. ROW-ENUM mutants: dep_stage BOGUS; fabric moon; fabric case-insensitive like the gate
         est = fresh("t15")
         plant(est, "D8", "ETFS", "ETFS_GUARDRAIL", dep_stage="BOGUS")
@@ -1156,7 +1195,7 @@ def self_test() -> int:
             plant(e_, "D8", "ETFS", "ETFS_GUARDRAIL")
             plant(e_, "D8", "ETFS", "ETFS_SECOND")
             e_.derive(write=True)
-            for rel in (CONTRACT_REL, CLOSE_SCHEMA_REL, ".tools/to-pipeline-gate.py"):
+            for rel in (CONTRACT_REL, CLOSE_SCHEMA_REL, ".tools/to-pipeline-gate.py") + REGISTER_RELS:
                 (top / rel).parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(_WS / rel, top / rel)
             git_in(top, ["init", "-q"])

@@ -30,6 +30,8 @@ FWD-2: a box is added once, in one place (`org/devices/DEVICES.json`, read by `l
 2. `.tools/box-status-report-check.py`: `BOXES` becomes `set(<lib.devices names()>)`.
 3. A NEW test `.tools/tests/test_box_lists_from_register.py` (standard library): asserts that neither file contains a literal tuple/set/list of box-name strings, that `FABRIC_ENUM` equals `placement_values()` and `BOXES` equals `set(names())`, and prints one final line `BOX-LISTS-FROM-REGISTER gate=<derived|literal> status_report=<derived|literal> ok=<True|False>`.
 
+4. AMENDMENT (issuer 2.0.0_SA_COO~C, answering your row `NFRA_CTLPLN-W81-S1`): the grant now also names `.tools/missions-tree-index.py` and `.tools/tests/test_fabric_readers_dell.py`. Finish BUILD 1: derive `FABRIC_ENUM` in the gate, and change the AST reader in `missions-tree-index.py` (about :70-86, `_resolve_enum`) so it takes the `fabric` enum from `lib/devices.py` `placement_values()` (fail closed if the register cannot be read, as the gate does) instead of `ast.literal_eval` on the gate's literal; fix its self-test arm 14 and `test_fabric_readers_dell.py` (about :59-62) to match the new carrier. Leave `org/standards/PROJECT_TREE.contract.json` and the investigation schema alone (outside the grant; name them in your report as remaining literal carriers). Run the missions-tree-index self-test, `test_fabric_enum_dell.py` and `test_fabric_readers_dell.py` (the last may need `timeout 600`) and report each last line. Re-run your three criteria, rewrite the proof instance, and report.
+
 ### RULES FOR THIS CELL
 
 Write surface = the `<paths>`. No aws, no push. `.tools/safe-commit.sh` for every commit (note: your own edit to `to-pipeline-gate.py` runs in that gate at your commit; if it refuses its own change, STOP and file a BLOCKING row). Do NOT commit the `portal` gitlink. ASCII only; Python 3.11; ruff clean. CLAUDE.md and org/XXX.md are LOCKED. FOUND SOMETHING ODD OFF-TASK? Append ONE row to `org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md` (id `NFRA_CTLPLN-W81-S<k>`, `surfaced_at` = `date -u +%FT%TZ`) and keep working.
@@ -59,6 +61,8 @@ Each invocation runs from the worktree root under `timeout 120`; record the crit
 <paths>
 .tools/to-pipeline-gate.py
 .tools/box-status-report-check.py
+.tools/missions-tree-index.py
+.tools/tests/test_fabric_readers_dell.py
 .tools/tests/test_box_lists_from_register.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
