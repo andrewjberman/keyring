@@ -8542,3 +8542,106 @@
   "class": "BLOCKING"
 }
 ```
+
+## IRPT_ANLREQ-D2-W89-S1 -- (AR-y-264 worker row) the ticket service reads add_commentary, not commentary_requested; the checked box first stops in the portal submission builder
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W89-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~89",
+  "surfaced_at": "2026-10-13T19:11:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-264 (Add commentary): the ticket service declares and reads add_commentary, not commentary_requested; the checked box first stops in the portal's analysis submission builders, so the cell's step-3 rename of the answer would be refused by the ticket service.",
+  "spec_asserts": "AR-y-264 step 3 (worker face): the form sends the member the ticket service reads, with the name commentary_requested, in the place the ticket service reads it.",
+  "world_is": "The ticket service declares and stores add_commentary (infra/aws/lambda/ticket_center/lambda_function.py:112 question; :624-625 item answers stored as given) and refuses any answer name it does not declare (:694-696, unknown answer(s)). It never names commentary_requested (ticket_center/ holds no occurrence). The member the packager reads sits in the analysis SUBMISSION body (infra/aws/lambda/investor-reporting/ycharts/generate/submission.py:16,82; acceptance.py:138-139; resident_worker.py:191-197 gates analysis_ready on it). The first hop where a checked box stops reaching commentary_requested is the portal (portal lane): src/pages/TicketCenter/analysisRequest.ts submissionBody :197-211 and analysisBody :257-272 build the submission with no commentary member. Candidate 972c7dab on wk-IRPT_ANLREQ-89-portal keeps add_commentary in the ticket answers and adds commentary_requested to both builders.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:112,624-625,694-696 @56c8113a00 (workspace worktree base)",
+      "src/pages/TicketCenter/analysisRequest.ts:197-211,257-272 @f6ef1d25 (portal DEV tip, read in the portal worktree)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py:16,82 @56c8113a00",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py:138-139 @56c8113a00"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W89-S2 -- (AR-y-264 worker row) the portal's closed submission reader refuses commentary_requested before transport
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W89-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~89",
+  "surfaced_at": "2026-10-13T19:11:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-264: adding commentary_requested to the submission body alone sends nothing, because the portal's closed reader refuses any key outside its allowed set before transport.",
+  "spec_asserts": "AR-y-264 (worker face): the box's member reaches the analysis submission the packager receives; the send is the submission path the form uses.",
+  "world_is": "src/pages/InvestorReporting/contracts/submission-request.ts:14 allowed set and :25 refusal of any other key. LiveClient.submitAnalysisRequest (src/api/endpoints/investor-reporting.ts:1472-1473) calls readSubmissionRequest(body) before transport, so on f6ef1d25 a body carrying commentary_requested is refused with TypeError and no POST is made (measured: the candidate's tests (a) to (d) fail there). Candidate 972c7dab widens the allowed set to the schema's optional boolean member only (non-boolean refuses). The change sits in an InvestorReporting contract file, outside the TicketCenter folder the cell names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "src/pages/InvestorReporting/contracts/submission-request.ts:14,22-25 @f6ef1d25 (portal DEV tip)",
+      "src/api/endpoints/investor-reporting.ts:1472-1473 @f6ef1d25 (portal DEV tip)",
+      "src/pages/InvestorReporting/contracts/wire/AnalysisSubmissionRequest.ts:23 @f6ef1d25 (optional boolean member)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W89-S3 -- (AR-y-264 worker row) a fresh portal worktree carries no node_modules
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W89-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~89",
+  "surfaced_at": "2026-10-13T19:15:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-264: the new portal worktree C:/dev/wk-portal-89 had no node_modules, so bun test and bun run typecheck could not run until it was linked.",
+  "spec_asserts": "AR-y-264 step 4: the tests and bun run typecheck run in the portal worktree (no install step is named).",
+  "world_is": "git worktree add of origin/DEV gives a tree without node_modules. The candidate linked the main checkout's install by a directory symlink (C:/dev/wk-portal-89/node_modules -> C:/dev/ajb_workspace/portal/node_modules, the pattern C:/dev/wk-portal-74 already carries); git status stayed clean (node_modules is ignored). No package install was run and nothing was downloaded.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/ajb_workspace/portal worktree add C:/dev/wk-portal-89 -b wk-IRPT_ANLREQ-89-portal origin/DEV (rc=0, HEAD f6ef1d25)",
+      "C:/dev/wk-portal-74/node_modules symlink to /c/dev/ajb_workspace/portal/node_modules (existing pattern, read at 2026-10-13)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W89-S4 -- (AR-y-264 worker row) the portal repository has no committer identity for this worker
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W89-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~89",
+  "surfaced_at": "2026-10-13T19:15:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-264: git commit in the portal worktree failed with 'Committer identity unknown' until the serial was given as the committer for that one command.",
+  "spec_asserts": "AR-y-264 step 5: commit in the portal worktree the way an earlier candidate branch was made, with the serial as author.",
+  "world_is": "The portal repository (C:/dev/ajb_workspace/portal) has no user.name or user.email for this device, so the first commit attempt (author set by --author only) returned rc=128 and created nothing. The candidate commit 972c7dab was made with GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL set for that one command to the serial; no git config was written. The earlier candidate 0.9.0_WK_IRPT_ANLREQ~85 (3b1f44ba67) carries the same author and no committer override is recorded on it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-portal-89 commit --author=... -F <msgfile> (rc=128, 'Committer identity unknown')",
+      "git -C C:/dev/wk-portal-89 log -1 972c7dab: author and committer both 0.9.0_WK_IRPT_ANLREQ~89"
+    ]
+  }
+}
+```
