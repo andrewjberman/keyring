@@ -6353,3 +6353,53 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Decisions owed: (a) whether the one-event probe is wanted at all given the verdict is reached by inference, and if so how the manifest's standing access policy is reconciled with the CTO's word (the issuer's call; the next runner-up window is 23:00Z); (b) the fix cell (round 7) under its own never-widen pair; (c) whether the 33 SS4c and the dtype PutMetricData AccessDenied lines want their own row owner. Nothing was sent, written or changed by this seat."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W70-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~70",
+  "surfaced_at": "2026-10-13T08:19:12Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B1",
+  "one_line": "The dry-run path (process_advisor with upload=False) still emits CloudWatch metrics: _call_llm puts ExecSummaryTokensIn, ExecSummaryTokensOut and ExecSummaryLLMCallsMade on every model call, and _build_slot puts ExecSummarySlotDropped on a dropped slot. A dry run is therefore not metric-silent, which the cell requires.",
+  "spec_asserts": "FB-j-5 section 1a item 2: when dry_run is truthy the handler makes NO S3 write of any kind and NO CloudWatch metric emission. Section 1b arm 1 requires the metrics emitters never be called in a dry run.",
+  "world_is": "At 220ea75078, lambda_function.py _call_llm (lines 216-218) calls metrics.emit_tokens_in, metrics.emit_tokens_out and metrics.emit_llm_calls_made after each model call. _build_slot (lines 249 and 252) calls metrics.emit_slot_dropped on a drop. process_advisor's upload flag (line 407) gates only the S3 write. The dry branch of lambda_handler makes no metric call itself. Test arm test_dry_run_writes_nothing stubs _call_llm, so it cannot observe these emissions and passes while a live dry run would emit them. The generator is not deployed; the hazard arms on the first dry-run invocation, which is the CTO-required sample.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/exec-summary-generator/lambda_function.py@220ea75078 lines 216-218 (_call_llm metric emission), 249 and 252 (_build_slot emit_slot_dropped), 407 (upload gate)",
+      "infra/aws/lambda/exec-summary-generator/metrics.py@220ea75078 (_put calls cloudwatch put_metric_data)",
+      "infra/aws/lambda/exec-summary-generator/tests/test_dry_run.py@220ea75078 (_call_llm stubbed in the fixture)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Decision owed by the issuer: either amend the cell so the dry branch suppresses the _call_llm and _build_slot emissions (a change to lines outside the handler, so a widened order), or accept the sample's metric emission as a known cost before the CTO sample run. Nothing was changed by this seat; the production path is unchanged at 220ea75078."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W70-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~70",
+  "surfaced_at": "2026-10-13T08:19:12Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The AC1 literal expectation ^3 passed does not match the raw pytest line on this host: the environment sets FORCE_COLOR=3, so pytest prints ANSI colour codes before the count even through a pipe.",
+  "spec_asserts": "FB-j-5 section 4 AC1: timeout 110 python -m pytest tests/test_dry_run.py -q 2>&1 | tail -1 is expected to match ^3 passed.",
+  "world_is": "Under the host environment (FORCE_COLOR=3) the line is ESC[32m ESC[32m ESC[1m3 passed ESC[0m ESC[32m in 0.21s ESC[0m ESC[0m, rc=0, 3 passed. With FORCE_COLOR unset the same command prints '3 passed in 0.21s' with no escape prefix. The test file is not at fault; the verdict turns on the host colour variable.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "env read at this seat: FORCE_COLOR=3 (host); the same pytest command run with env -u FORCE_COLOR prints '3 passed in 0.21s'",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~70/ADVI_FIRMBKTS.TO-FB-j-5.generator-dry-run.proof_of_spec.json (AC1 output_evidence)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The issuer decides whether AC1 is re-issued with the colour variable unset or the expectation is re-anchored. This seat did not alter the invocation."
+}
+```
