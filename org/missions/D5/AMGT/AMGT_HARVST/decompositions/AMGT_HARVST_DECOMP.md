@@ -3957,3 +3957,24 @@ Issuer `2.0.0_SA_COO~W1`. Section 100's `bz-3a` is cut as **`HVST-bz-3`** and `b
 **Checks dry-run at the base before the cut:** bz-3 AC1 base: FAIL as expected (`no tests ran`: the file does not exist); bz-3 AC2 base: PASS as expected
 (`61 passed`); bz-5 AC1 base: FAIL as expected (the round-79 record prints `FAILED=8 NAMED=0`), with a PASS control (`FAILED=8 NAMED=8`) and a no-record
 arm (`NO-ENDED-CYCLE-SINCE`, rc 1).
+
+## 102. ROUND 84, workstream WSJBARRONS -- `HVST-bx-4` UN-PARKED on the existing credential (`1.0.0_SA_CTO~DELL1` msg 4795, Andrew-direct 2026-10-13 ~12:2xZ item 4), 2026-10-13 ~12:5xZ
+
+Andrew: "we have credentials and HARVEST scripts that do this". The act asked of him (open call 8c66, WSJ/Barron's sign-in) is withdrawn. The CTO: find the
+existing credential and the script, read where each lives without printing the secret, cut bx-4's successor on them, no new vendor scope.
+
+**Where they live (names and metadata only, no value read):** the credential is the Secrets Manager secret `dowjones/credentials` (us-east-1), one secret
+for `wsj` and `barrons` (`lib/opal_data_harvest/credentials.py` `CREDENTIAL_SECRETS`; it exists, one version, changed 2026-09-14); the sign-in is
+`org/tier1_exec/4.0.0_SA_CRO/scripts/dowjones_harvest_session.py`, called by `lib/opal_data_harvest/auth.py` `SessionManager._refresh`, which saves the
+session to the box's own DPAPI vault (`SessionVault`). The runner is `--no-sign-in`, so a publisher without a valid saved session ends `sign_in_refused`.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-bz-6` | `bz-6` | **`wsj` and `barrons` each hold a valid saved session**: state read first; ONE mint per publisher only where it reads `VALID=False`, through `SessionManager.refresh`; the first refusal stops both; no `--park`, no secret printed. | WORLD | seat `0.7.0_AE_CloudOps~ZW` | CUT (workstream WSJBARRONS); needs a signed pair before it is sent |
+| `HVST-bz-7` | `bz-7` | **bx-4's acceptance, read only:** `wsj` and `barrons` each end a COMPLETED cycle (`completed true`, `stopped` none) unattended since 08:09:08Z. Organic, about a day (a pass is bbg, wsj, barrons in turn). | LOCAL (read) | seat `0.7.0_AE_CloudOps~ZW` | CUT |
+| `HVST-bx-4` | (none) | **SUPERSEDED by bz-6 and bz-7**: its one wait (Andrew's sign-in) is withdrawn. | -- | -- | CLOSED as superseded |
+
+- **Instruments (this seat's, tested):** `deliverables/2.0.0_SA_COO_W1/round84/bz6_session_state.py` (+ `test_bz6_session_state.py`, 6 passed: it prints no cookie,
+  username or token, and a refusal names the exception class only) and `bz7_publisher_cycles.py` (base and control arms dry-run).
+- **Fan-out:** 0 workers (two seat orders), 2 chains, cap 8: bz-7 needs bz-6's instance.
+- **Not orders:** a re-mint after a recorded `sign_in_refused` (its own order under its own pair, cut on the record); Seeking Alpha, FT and Bloomberg.
