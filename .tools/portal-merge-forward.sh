@@ -5,8 +5,10 @@
 #   bash .tools/portal-merge-forward.sh <branch> [--repo <portal repo path, default portal>] [--push] [--no-fetch]
 #   bash .tools/portal-merge-forward.sh --selftest
 #
-# Before it decides, origin is fetched for DEV and for the branch (a failed fetch refuses fetch-failed);
-# --no-fetch reads the local refs as they are (the self-test's fixed state uses it).
+# Before it decides, origin is fetched for DEV, and for the branch when origin has it (a failed fetch or
+# ls-remote refuses fetch-failed). A branch absent on origin is read as the local branch (NOTE on stderr);
+# absent both on origin and locally refuses branch-not-found. --no-fetch reads the local refs as they are
+# (the self-test's fixed state uses it).
 # The approval row is read through ${OPAL_APPROVAL_STATUS_CMD:-python .tools/open-calls.py approval-status}
 # and must print one APPROVAL line. Any doubt refuses (fail closed). A feature lands as a MERGE commit
 # on DEV, with the trailers Feature: and Approved-By:, in an ephemeral worktree. The result line prints last,
@@ -64,7 +66,7 @@ pmf_run() {
   local arg_branch="" do_push=0 tok out="" rc=0 nline=0 line="" F_BRANCH=""
   local STATE="" VALID="" ROW="" BY="" HEAD_SHA="" paths="" npath=0 nonfirst=0 p
   local stamp slug APPR="" MERGESHA="" P1="" P2="" P3="" MSGTXT="" pout="" prc=0 _m=""
-  local do_fetch=1
+  local do_fetch=1 local_only=0 lsr_rc=0
   while [ $# -gt 0 ]; do
     case "$1" in
       --repo)
@@ -96,10 +98,19 @@ pmf_run() {
   git check-ref-format "refs/heads/$BRANCH" || pmf_refuse branch-not-found
   if [ "$do_fetch" -eq 1 ]; then
     git -C "$REPO" fetch --quiet origin "+refs/heads/DEV:$DEVREF" 1>&2 || pmf_refuse fetch-failed
-    git -C "$REPO" fetch --quiet origin "+refs/heads/$BRANCH:refs/remotes/origin/$BRANCH" 1>&2 || pmf_refuse fetch-failed
+    # ls-remote exit 2 = the ref is absent on origin (not a network failure); any other failure refuses.
+    git -C "$REPO" ls-remote --exit-code origin "refs/heads/$BRANCH" >/dev/null || lsr_rc=$?
+    case "$lsr_rc" in
+      0) git -C "$REPO" fetch --quiet origin "+refs/heads/$BRANCH:refs/remotes/origin/$BRANCH" 1>&2 || pmf_refuse fetch-failed ;;
+      2)
+        if ! git -C "$REPO" rev-parse --verify -q "refs/heads/$BRANCH" >/dev/null; then pmf_refuse branch-not-found; fi
+        echo "NOTE: $BRANCH is not on origin; using the local branch" 1>&2
+        local_only=1 ;;
+      *) pmf_refuse fetch-failed ;;
+    esac
   fi
-  # Step 1 (cont.): the branch is read as origin/<branch>, else the local branch.
-  if git -C "$REPO" rev-parse --verify -q "refs/remotes/origin/$BRANCH" >/dev/null; then
+  # Step 1 (cont.): the branch is read as origin/<branch>, else the local branch; a local-only branch skips origin/<branch>.
+  if [ "$local_only" -eq 0 ] && git -C "$REPO" rev-parse --verify -q "refs/remotes/origin/$BRANCH" >/dev/null; then
     BREF="refs/remotes/origin/$BRANCH"
   elif git -C "$REPO" rev-parse --verify -q "refs/heads/$BRANCH" >/dev/null; then
     BREF="refs/heads/$BRANCH"
@@ -462,6 +473,59 @@ FIXEOF
   MS="${LAST##* merge=}"
   pmf_check "12b default fetch picks up the pushed branch: MERGED, DEV read as origin now has it" pmf_fetch_12a
   pmf_check "12c the fetched merge commit has origin DEV as first parent and the pushed tip as second" pmf_parents_ok "$MS" "$devnew2" "$T_LATE"
+
+  # 13. a local-only branch (never pushed) with an approved row: the default fetch finds it absent on origin,
+  # reads the local branch with a NOTE on stderr, and merges it.
+  pmf_mkfeat feat-local product/local.txt local
+  git -C "$CLONE" fetch -q "$SEED" refs/heads/feat-local:refs/heads/feat-local
+  T_LOC="$(git -C "$SEED" rev-parse --verify feat-local)"
+  pmf_setfix "$(pmf_apv feat-local APPROVED yes ROW-LOC-1 fixture-approver "$T_LOC" 1 opal-internal)"
+  PMF_RUNTMP="$PMF_TMP/runtmp" OPAL_APPROVAL_STATUS_CMD="bash $FIX" \
+    bash "$PMF_SELF" feat-local --repo "$CLONE" >"$PMF_TMP/out-13.txt" 2>"$PMF_TMP/err-13.txt"
+  RC=$?
+  LAST="$(tail -n 1 "$PMF_TMP/out-13.txt")"
+  MS="${LAST##* merge=}"
+  pmf_localonly_13() {
+    [ "$RC" -eq 0 ] || return 1
+    case "$LAST" in
+      *" result=MERGED reason=- dev_before=$devnew2 dev_after=$devnew2 pushed=no merge="?*) ;;
+      *) return 1 ;;
+    esac
+    grep -qxF "NOTE: feat-local is not on origin; using the local branch" "$PMF_TMP/err-13.txt"
+  }
+  pmf_check "13a local-only branch under the default fetch: MERGED, NOTE on stderr" pmf_localonly_13
+  pmf_check "13b the local-only merge has origin DEV as first parent and the local tip as second" pmf_parents_ok "$MS" "$devnew2" "$T_LOC"
+
+  # 14. a branch absent on origin and locally refuses branch-not-found (not fetch-failed).
+  PMF_RUNTMP="$PMF_TMP/runtmp" OPAL_APPROVAL_STATUS_CMD="bash $FIX" \
+    bash "$PMF_SELF" feat-nowhere --repo "$CLONE" >"$PMF_TMP/out-14.txt" 2>"$PMF_TMP/err-14.txt"
+  RC=$?
+  LAST="$(tail -n 1 "$PMF_TMP/out-14.txt")"
+  pmf_nowhere_14() {
+    [ "$RC" -eq 1 ] || return 1
+    case "$LAST" in
+      *" result=REFUSED reason=branch-not-found dev_before=- dev_after=- pushed=no merge=-") return 0 ;;
+    esac
+    return 1
+  }
+  pmf_check "14 a branch absent on origin and locally refuses branch-not-found" pmf_nowhere_14
+
+  # 15. a deliberately broken remote: the DEV fetch refuses fetch-failed.
+  BROKEN="$PMF_TMP/broken"
+  git clone -q "$ORIG" "$BROKEN"
+  git -C "$BROKEN" remote set-url origin "$PMF_TMP/no-such-origin.git"
+  PMF_RUNTMP="$PMF_TMP/runtmp" OPAL_APPROVAL_STATUS_CMD="bash $FIX" \
+    bash "$PMF_SELF" feat-ok --repo "$BROKEN" >"$PMF_TMP/out-15.txt" 2>"$PMF_TMP/err-15.txt"
+  RC=$?
+  LAST="$(tail -n 1 "$PMF_TMP/out-15.txt")"
+  pmf_broken_15() {
+    [ "$RC" -eq 1 ] || return 1
+    case "$LAST" in
+      *" result=REFUSED reason=fetch-failed dev_before=- dev_after=- pushed=no merge=-") return 0 ;;
+    esac
+    return 1
+  }
+  pmf_check "15 a broken remote makes the DEV fetch refuse fetch-failed" pmf_broken_15
 
   local okflag=False
   if [ "$K" -eq "$N" ]; then okflag=True; fi
