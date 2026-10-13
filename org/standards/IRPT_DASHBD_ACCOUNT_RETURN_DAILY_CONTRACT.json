@@ -195,5 +195,10 @@
     ]
   },
   "schema_hash_control": "THE METHOD IS CONTROLLED, not asserted: recomputing it over the same ARROW_SCHEMA with guard_state removed reproduces 0.1.0's published hash b5fa8e4e48bf60ab5bb34cf7e4179ebfdcff8aa9d507ccedbd32eac700222058 exactly. A hash whose method could not reproduce the previous published value would be unverifiable.",
-  "producer_pin": "data/assets/scripts/gold/irpt_reporting/account_return_daily.py -- the 19-field ARROW_SCHEMA this hash is taken from. The producer commit carrying guard_state must land WITH this contract, because the check recomputes the hash against the landed parquet."
+  "producer_pin": "data/assets/scripts/gold/irpt_reporting/account_return_daily.py -- the 19-field ARROW_SCHEMA this hash is taken from. The producer commit carrying guard_state must land WITH this contract, because the check recomputes the hash against the landed parquet.",
+  "served_day_rules": {
+    "authority": "1.0.0_SA_CTO~DELL2 msg 7330 (2026-10-13), a clarification that changes no column, no enum and no hash; it states what the served columns already carry for a reader that folds this table into a window.",
+    "graded_disagreed": "A GRADED_DISAGREED day serves no number (ruling 17): a window that contains one reads ABSENT, with its reason and the count of such days, and is never compounded around the gap.",
+    "flow_unreconciled": "A FLOW_UNRECONCILED day compounds as served, and the window carries the flag with its count (\"includes N unreconciled-flow days\")."
+  }
 }
