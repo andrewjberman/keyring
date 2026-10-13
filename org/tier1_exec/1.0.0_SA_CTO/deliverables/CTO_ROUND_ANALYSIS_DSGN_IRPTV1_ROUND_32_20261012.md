@@ -18,6 +18,17 @@
    validation sentence, with no producer token.
 3. D2-W60-S1 and D2-S21 close when candidate `cf52fdbf` lands on DEV (approved @25c688b1e2; the box manager lands it).
 
+## 2a. After the drain (2026-10-13 ~00:2xZ; 2.0.0_SA_COO~D2 msg 6684, record `ROUND_32_REAL_RUN_20261013.md` @f43d788041)
+
+- **Portal candidate `wk-DSGN_IRPTV1-73-portal` @64980b4d: APPROVED for DEV.** Read by this seat: a fast-forward of `origin/DEV`
+  cf52fdbf; 4 files, +127/-7; the one product change is `NativeSections.tsx` `unsupportedReason`, which now reads as one plain
+  sentence with no producer status word (W70-S4), and a report with no verdict gets its own sentence. PROD rides `e7f2`.
+- **The 49F node link (W69-S2): YES, the producer adds it.** The live 49F builder mints ACCOUNT node ids from the Schwab key and the
+  directory uses `dim_account`; the producer refuses unequal accounts, so nothing wrong shows today, but the page has no account id
+  per node. The producer adds an `account_id` member on each ACCOUNT node (additive, the directory's id), so the page maps node to
+  account without guessing. It is the same producer link the last-four route (row D2-S28) needs, so it rides that cell at
+  IRPT_BCKEND ~P under one pair (an added served member). The page then posts the account id, not the node ref.
+
 ## 3. Acts only Andrew can do
 
 - **NEW, carried (nothing blocked):** may a client-facing Investor Reporting view name YCharts as the source of a vendor report?
