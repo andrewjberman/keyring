@@ -437,4 +437,4 @@ mutants; `hg_t16_gate.py` has fifteen arms (A-N plus E2) and is BAD at the base,
 **Gate limb that graded this amendment:** none of `to-pipeline-gate` limb 6 fires on a modified order (it grades newly added orders); GATE (viii)
 reads `<placeholders>NONE</placeholders>` unchanged. The graded refusal was the naming limb at the worker's commit (the limb that found the defect).
 **Worker:** the finished slot is re-seated, naming its prior commits (the surprise row and an INVALID proof instance) as inherited state; the
-row is carried into the channel by the issuer in the amendment commit.
+row stayed on the worker's branch (the row gate refuses a seat-authored W-coordinate row) and reached the channel with the worker's merge `8cc7e0458e`.
