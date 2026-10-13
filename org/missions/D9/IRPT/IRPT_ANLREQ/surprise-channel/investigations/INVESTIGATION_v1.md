@@ -6439,7 +6439,6 @@
 }
 ```
 
-
 ## IRPT_ANLREQ-D2-W63-S2 -- the dsgn-irptv1 folder fails the same 10 tests on the DEV tip as on the candidate: its reads need the portal inside the workspace tree
 
 ```json
@@ -6492,5 +6491,136 @@
     ]
   },
   "notes": "Form only. The notice on the ticket path, if wanted, is a further cell in a later round; the CTO rules whether it is in scope."
+}
+```
+
+## IRPT_ANLREQ-D2-W61-S2 -- the live CodeSha256 of irpt-performance-adapter, irpt-narrative and irpt-status is not the deployed_code_sha256 the source map and the act-4 ledger record
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W61-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~61",
+  "surfaced_at": "2026-10-13T07:44:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The three group-A functions' live CodeSha256 values equal their map artifact_sha256 but not their map deployed_code_sha256 fields; the act-4 ledger's performance-adapter value is not the live one",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "The source map at ccacbb0f15 records deployed_code_sha256 for irpt-performance-adapter NU6YVERLJ0i6qmazBYWUF+1xVDPGHwdMKqQ5vgjmVc4=, irpt-narrative es/S9azussVLY2DfTj6hRjV1pqhZ8EaVCnaVcELqhPc= and irpt-status 6idtFvAmYk73wJdr5DPRIyEPrLeWgzjlqbdNr5f1wxc=. The act-4 ledger (STEP 7 AND THE CLOSE, 16:18Z 2026-10-12) records the performance adapter's deployed CodeSha256 as kMB8xCI93/9QLUnzglVIs0EIRY07SSLBiU5ln8iJwUc=.",
+  "world_is": "Read from AWS by this seat on 2026-10-13 (get-function Configuration.CodeSha256; each zip downloaded and its sha256 equal to the value): irpt-performance-adapter abep4h7RngMS9JomQUdkcOT3EZ+W953OdxeK0HkdzFo=, irpt-narrative 0+/PHOb/xGvYNBrz/j4Ltk5k85clmAo96BOJzi9n3ZY=, irpt-status JmOhV/ep4mR1mt2NKKqyUlohgO3mlDw1GEM4eAWYKdw=. Each equals the map artifact_sha256 at ccacbb0f15 and the holds-only build at 5d8b0390ed (byte-equal, 3 of 3). None equals its deployed_code_sha256 field; the performance adapter's live value is not the ledger's kMB8 value. No record read here explains the change.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get-function Configuration.CodeSha256 and Code.Location reads of the three functions this run; zips in .scratch/r20/<function>/live_zip with sha256 equal to CodeSha256",
+      "infra/aws/lambda/ci/lambda-source-map.json at ccacbb0f1555242d5514f423604a859ee8b702fa, functions[irpt-performance-adapter|irpt-narrative|irpt-status] deployed_code_sha256 and artifact_sha256",
+      "org/critical_paths/change_management/20261012T1340Z_advi-firmbkts-fb-f-11-act4-irpt-leg-20261012_deploy_completion.md at ccacbb0f15 (STEP 7 AND THE CLOSE, the performance adapter's evidence key line)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W61-S3 -- the narrative suite is 13 failed of 69 at the released served.py: the status rule refuses the no-row internal callers the suite expects bound to opal-capital, and its stub rows carry no status
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W61-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~61",
+  "surfaced_at": "2026-10-13T07:44:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "AR-y-212 step 5 asks for a narrative suite that passes with the status rule in force; at the released served.py it fails 13 of 69, and the failing expectations encode the pre-rule binding",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "spec_asserts": "AR-y-212 step 5: narrative's tests stage the new served.py pin so the suite tests what ships, and the suite must pass with the rule in force (AR212-y-AC1).",
+  "world_is": "With the staging moved to pin 564e60483858a3cc5c51ffea6aed0f76ff291abe (blob 30c0eb88ec38a7ddfc410e4ae1c06ee7a9e77661812ba666a45ffcf5552c2475), pytest on narrative/tests gives 56 passed, 13 failed. Control on the same tree with the original pin 361c44fa9d (test files unchanged): 69 passed. The failures: no-row or empty-list internal callers that the tests expect bound to opal-capital are refused FIRM_BINDING by the rule; row-listed stubs carry no status key, which the rule reads; the served error-path test and its old-errors control stop at FIRM_BINDING before the enforcer error site. This seat did not edit any test expectation.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest infra/aws/lambda/investor-reporting/narrative/tests at the worktree HEAD with the staging edit: .scratch/r20/irpt-narrative/tests_narrative_new_pin.log (13 failed, 56 passed)",
+      "control pytest of the same folder in the throwaway base checkout at 5d8b0390ed (original test files, pin 361c44fa9d): .scratch/r20/irpt-narrative/tests_narrative_old_pin_control.log (69 passed)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2 (AR-y-212 cell, step 5) and narrative/tests/test_opal_capital_binding.py case rows row_listed and norow_*"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W61-S4 -- irpt-performance-adapter's own folder has one failing test, a calendar coverage error that also fails with the original served.py
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W61-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~61",
+  "surfaced_at": "2026-10-13T07:44:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "performance/tests is 277 passed, 1 failed at the released served.py: test_holdings_gold_calendar_gap raises CalendarCoverageError, and the same test fails identically with the original served.py",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-212 step 4: the function's own test folder passes against the release served.py (AR212-y-AC1).",
+  "world_is": "performance/tests at the released served.py (base checkout 5d8b0390ed, served.py swapped in, restored after): 277 passed, 1 failed: test_the_fallback_calendar_is_graded_in_its_own_years_and_clipped_outside_them, trading_calendar.CalendarCoverageError (calendar source NYSE/hardcoded-fallback). Control with the original 361c44fa9d served.py: test_holdings_gold_calendar_gap.py 1 failed, 6 passed, the same error. The failure does not involve served.py.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".scratch/r20/irpt-performance-adapter/tests_perf.log (277 passed, 1 failed) from the release-served run in the base checkout",
+      ".scratch/r20/irpt-performance-adapter/tests_control_calendar_orig_served.log (1 failed, 6 passed with the original served.py)",
+      "infra/aws/lambda/investor-reporting/performance/tests/test_holdings_gold_calendar_gap.py at 5d8b0390ed"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W61-S5 -- the base search did not try the candidate order: 5d8b0390ed was built first for each function because only it carries the live artifact_sha256
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W61-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~61",
+  "surfaced_at": "2026-10-13T07:44:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The face's candidate order for the holds-only base (last_deployed_commit, parent, e274a0e60c, 69679b90e3, 5d8b0390ed) was not walked in order; each earlier candidate's map artifact_sha256 differs from live",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-212 step 2: candidates in order (last_deployed_commit and its parent; e274a0e60c; 69679b90e3; 5d8b0390ed), five tries before STOP.",
+  "world_is": "For each function the map artifact_sha256 at 259b6c67 (performance), 118612b5 (narrative) and 5c35a6f9 (status), and at e274a0e60c and 69679b90e3, differs from the live CodeSha256; only 5d8b0390ed carries the live value for all three. The holds-only BUILD_ONLY was run at 5d8b0390ed first and reproduced the live CodeSha256 for each function (3 of 3), so no earlier candidate was built. The base choice does not change the release diff, which moves the served.py row only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show <candidate>:infra/aws/lambda/ci/lambda-source-map.json artifact_sha256 per function, read in this run (scratch map_<commit8>.json files in .scratch/r20)",
+      ".scratch/r20/irpt-*/build_base_5d8b0390ed.log (BUILD_ONLY sha256 equal to the live CodeSha256)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W61-S6 -- the source tree at 5d8b0390ed already carries the status-rule served.py, while the live package carries the older pinned bytes
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W61-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~61",
+  "surfaced_at": "2026-10-13T07:44:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "git show 5d8b0390ed:_authz/served.py is the rule blob 30c0eb88, not the pinned blob 361c44fa9d carries (ada9bf5b); a test run in a base tree tests the rule bytes, so the earlier 'original served.py' control of the calendar test was not a control",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-212 step 4 control: the function's tests run against the packaged served.py, and an original (pre-rule) served.py is the control arm.",
+  "world_is": "At 5d8b0390ed the tree file _authz/served.py has sha256 30c0eb88ec38a7dd (the rule blob), while the packaged row pin 361c44fa9d carries ada9bf5bcfd10739 (no rule). The earlier control run labelled 'original served.py' copied the tree file and so ran the rule bytes; a re-run with the pinned bytes (ada9bf5) in the same tree gives the same calendar result: 1 failed, 277 passed (full performance/tests), 1 failed 6 passed (the calendar file). The release bytes equal the tree bytes, so the release tests ran the packaged served.py.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 5d8b0390ed:infra/aws/lambda/investor-reporting/_authz/served.py, sha256 30c0eb88ec38a7dd (.scratch/r20/served_at_5d8b.py, this run)",
+      "git show 361c44fa9d40992c8cacfd625cc789536f84b920:infra/aws/lambda/investor-reporting/_authz/served.py, sha256 ada9bf5bcfd10739 (.scratch/r20/served_361c44_pin.py, this run)",
+      ".scratch/r20/irpt-performance-adapter/tests_control_calendar_pin361c44_served.log and tests_perf_pin361c44_full_control.log (the correct control, this run)"
+    ]
+  }
 }
 ```
