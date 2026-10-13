@@ -43,3 +43,12 @@
 - Task result 0; pacer count 400, no pushback; `STANDING-T1-EXTEND-2026-10-12` DRAWN (461,094 of 497,166); ADVI DRAWN 19,474 of 23,340 (7 landed, 8 REJECTED:LOW_TRADE_AGREEMENT); IRPT PARTIAL 30,570 of 113,262 (day 1 of 3); index 141 to 326.
 - Dash spellings verified in the store: BRK-A and BF-B landed (125 rows, locked). Record: `deliverables/2.0.0_SA_COO~Q1/ROUND9_FIRST_SCHEDULED_RUN_20261012.md`.
 - --lag-report: daily 146 names (127 within, 19 over: 14 held + 5 new ADVI names, which meet the extension at the 10-13 run), rolling 180 names (179 within, 1 over: BRK-B).
+
+### 2026-10-13 ~12:00Z-17:30Z -- the queue law, P1 depth, containment (ticks 146-160)
+- Andrew-direct via CTO msgs 4881/4884/4889/4892/4904/4921/4931/4936: 2012 floor, need-class declaration with refusal (365 days non-client), surface order A/B/E/C/D with 10 percent ad-hoc reserve, ABNB's 2016 named exception, incremental = last 5 trading days (Yahoo: split triggers the full re-pull), hold on new Bloomberg draws until the form is complete.
+- Merged: t-43 @b956c6307e (P1 builder), t-44 @900406e221 (Bloomberg-side rule, TR remainder 1,004 cells by identity, P1 window to the frontier), t-45 @6f6a61123b (Yahoo side), t-46 @1d7ad82723 (coverage: Yahoo 0 in store, Black Diamond 11 names and 126 held days, residual 606 names and 467,992 of 468,118 cells), t-47 @2989e78de8 (ABNB named exception, 989 cells). In flight: t-48 (incremental path and proof, worker ~40).
+- P1 depth cuts for Andrew's card (P1_DEPTH_CUTS_20261013.md @86abd8733d): daily 468,118 cells (175 days at 2,673); month-ends before 2026-04-22, daily after 27,526 (10 days); flow plus month-ends 30,858 (12 days). P1 is held undrawn.
+- TR comparison trimmed to 365 days (keep 11,716, draw 1,004, cancel 2,400), quote re-frozen @eeb36aba99, finish 2026-10-17.
+- Containment: re-sweep of this project's 245 commits found account ids in six files; three redacted in place @84bb84909c, two moved out @121391fb80 (audited overrides), record @44261c0f23.
+- Disarmed: W36-S2 (bbg_backfill unreachable), W37-S1/S3, W38-S2. Armed rows left open: W24-S1 (disarmed earlier, row not edited), W35-S3 (MSTR restored the hash list, word sent to the CVO).
+- Next: the 10-13 22:30 ET Yahoo run on the merged code (new refusal rule live); t-48 report, then the SERVED wiring under its own pair; P1 depth per Andrew's card; ABNB draws only when the form is complete; t-34 AC2 by 10-17.
