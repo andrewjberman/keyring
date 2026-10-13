@@ -725,3 +725,80 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## NFRA_DEVPLN-W1-S12 -- the cited ruling names three merges, not the four waived commits; the waiver ref is checked for existence only
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S12",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-13T22:01:38Z",
+  "one_line": "The CTO ruling cited as --waiver-ref names three merges (62d455f5 through a577cba5) and not the four commits the waiver names; the tool checks only that the ref file exists",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261013_213xZ_LAPTOP_E846_7D95_BB8B.md@f3cc33dddc lines 29-34: the three IRPT_ANLREQ merges 62d455f5 through a577cba5; WAIVED for exactly these three named merge shas; No other DEV-only commit is admitted this way. Only 62d455f5 is named literally; 923f7d69, 794b7df4 and 9ef6a359 do not appear in the file (grep, worktree)",
+      "DP-d-1 order, AC2: the waiver names 923f7d69,794b7df4 and cites this ruling; the check-only run returned APPROVAL-REGISTER result=OK row=- head_sha=794b7df495d2baa3d2f887f148f4389e729ca07d commits=2 check-only=yes waived=2 rc 0",
+      ".tools/open-calls.py@worktree waiver_ref_rel(): the --waiver-ref check is os.path.isfile only; the ruling's text is not read, so a ref that names none of the waived shas is accepted"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DP-d-1 cell: the CTO ruled the DEV-overlap refusal WAIVED for exactly four named commits, 923f7d69, 794b7df4 (feature head), 9ef6a359 and 62d455f5, and the waiver is referenced by a ruling file.",
+  "world_is": "The cited ruling CTO_RULING_20261013_213xZ_LAPTOP_E846_7D95_BB8B.md names three IRPT_ANLREQ merges, 62d455f5 through a577cba5, and says the waiver is for exactly those three named merge shas. Only 62d455f5 appears literally in it; the four-commit set is the issuer's reading recorded in the decomposition, not the ruling's text. The waiver tool accepts any existing ref file, so AC2 registers the 794b7df4 waiver on a ruling that does not name two of its shas. Nothing was registered by this cell (check-only only)."
+}
+```
+
+## NFRA_DEVPLN-W2-S9 -- the local-only fallback reads refs/heads/<branch> even when a stale refs/remotes/origin/<branch> remains, where --no-fetch would read that remote-tracking ref
+
+```json
+{
+  "id": "NFRA_DEVPLN-W2-S9",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~2",
+  "surfaced_at": "2026-10-13T22:01:01Z",
+  "one_line": "TO DP-d-2 says an absent-on-origin branch continues exactly as --no-fetch would, but --no-fetch reads refs/remotes/origin/<branch> first when it exists. Built the local fallback to skip that ref, so the NOTE 'using the local branch' is true; a remote-tracking ref left by a branch deleted on origin is not merged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DP-d-2 BUILD item 1: absent on origin -> do NOT fetch it, do NOT refuse; continue with the local branch exactly as --no-fetch would, and print the NOTE line.",
+  "world_is": "Step 1 of .tools/portal-merge-forward.sh prefers refs/remotes/origin/<branch> over refs/heads/<branch> whenever the former exists. In the absent-on-origin path the built code sets local_only=1 and skips that preference, so refs/heads/<branch> is read. The two readings differ only when a stale remote-tracking ref survives a branch deleted on origin; no such case is measured in the portal repo (the probe branch has no origin ref) and none is exercised by the selftest.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/portal-merge-forward.sh@wk-NFRA_DEVPLN-2 (uncommitted at this row) step 1: local_only flag set in the ls-remote exit-2 branch and tested before the origin/<branch> preference",
+      "git -C portal rev-parse --verify -q refs/remotes/origin/cand/laptop/local-only-probe: exit 1 (no stale remote-tracking ref for the probe branch)",
+      "selftest case 13a: local-only branch under the default fetch, MERGED with the NOTE line on stderr"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## NFRA_DEVPLN-W2-S10 -- the AC2 seam run prints a git multiple-merge-bases warning from the three-dot diff, and the step-2 product-file test reads one of the two bases
+
+```json
+{
+  "id": "NFRA_DEVPLN-W2-S10",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~2",
+  "surfaced_at": "2026-10-13T22:01:01Z",
+  "one_line": "Running the AC2 seam against the real portal prints 'warning: refs/remotes/origin/DEV...refs/heads/cand/laptop/local-only-probe: multiple merge bases'. The ABSENT path's git diff --name-only DEV...BRANCH uses one of the two merge bases, so its product-file list is not the full three-dot set.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DP-d-2 AC2: the seam against the real portal repo and the local-only branch is refused no-approval-row, and nothing is merged, pushed or left behind.",
+  "world_is": "The AC2 call returned result=REFUSED reason=no-approval-row (rc=1) with the warning on stderr. git merge-base --all on the DEV tip and the probe branch returns 2 bases (63c4f9e35f, 07f065e69f). The verdict is the required one; whether a different base would change the product-file list for this branch is not measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/portal-merge-forward.sh cand/laptop/local-only-probe --repo portal (rc=1): stderr line 'warning: refs/remotes/origin/DEV...refs/heads/cand/laptop/local-only-probe: multiple merge bases, using 63c4f9e35f...'",
+      "git -C portal merge-base --all refs/remotes/origin/DEV refs/heads/cand/laptop/local-only-probe: 2 lines (63c4f9e35f..., 07f065e69f...)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

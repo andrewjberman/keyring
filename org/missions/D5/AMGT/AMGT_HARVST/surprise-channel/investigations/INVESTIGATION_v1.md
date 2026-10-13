@@ -9088,5 +9088,75 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      "notes": "INERT: nothing pipeline-shaped runs on the host; the cost is a t3.medium running and a public IP, until the auto-shutdown enforcer or a stop. An EC2 stop is Andrew's confirmation (CLAUDE.md Agent Autonomy), so no seat stopped it; the issuer ruled no stop and the CTO carded it to Andrew with a recommendation of yes. Lesson for the next pair touching an aws_instance user_data: the provider stops a running instance to modify user_data and STARTS a stopped one afterwards, so the blast radius must name the start. The first ledger entry astn-3am-off-20261013 was closed at 20:51Z under message 5182 before message 5183 asked to keep it open; the tool has no reopen, so a second entry astn-instance-started-20261013 (STOP and VERIFY legs) stays OPEN for the instance.",
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W139-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~139",
+      "surfaced_at": "2026-10-13T21:40:07Z",
+      "one_line": "The order premise that the run record stores the job's no_sign_in=True key is false: the run record's jobs entry names its fields one by one and no_sign_in is not among them, so the refusal object rides a conditional key the way attempt_class and detail do.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO-HVST-bz-9 worker face, item 2: 'Read how the run record stores a job's result fields (the existing no_sign_in=True key is stored there) and keep to that mechanism.'",
+      "world_is": "At lib/opal_data_harvest/worker.py@3fc6879679 the job result carries no_sign_in=True (line 775, the SignInRefused handler), but the run record's jobs.append dict (lines 907-926) lists named fields and omits no_sign_in; the run record build (lines 937-952) holds no per-job no_sign_in either; the only conditional per-job keys are attempt_class (lines 927-930) and detail (lines 931-934). Implemented at dd5fc764d8: the SignInRefused handler sets result['refusal'] only for an AuthExpired cause, and the jobs entry gets jobs[-1]['refusal'] only when that key is present.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/worker.py@3fc6879679:775 -- result.update(status='sign_in_refused', detail=..., no_sign_in=True)",
+          "lib/opal_data_harvest/worker.py@3fc6879679:907-934 -- the jobs.append field list and the attempt_class / detail conditionals",
+          "lib/opal_data_harvest/worker.py@3fc6879679:937-952 -- the run record dict, with no per-job no_sign_in",
+          "lib/opal_data_harvest/worker.py@dd5fc764d8 -- the refusal key set in the SignInRefused handler and copied into jobs[-1] only when present"
+        ]
+      },
+      "notes": "Not blocking: nothing is armed, and the change works through the mechanism the run record actually uses. The reader that matters is backfill_driver.Collector.run_job, which reads jobs[0] and passes refusal through only when present. A reader that expects no_sign_in on a run-record job finds none; the order wording should name the conditional-key mechanism.",
+      "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W139-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~139",
+      "surfaced_at": "2026-10-13T21:40:07Z",
+      "one_line": "The installer -Plan test the order names (criterion k) spawns a real powershell child, which the package subprocess poison refuses unless the test carries @pytest.mark.allow_real_session; the order does not name the marker.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO-HVST-bz-9 worker face, item 8(k): the installer through powershell -NoProfile -File (pytest.skip when PowerShell is absent); -Plan -Publishers bbg -RefreshOnce prints an ACTION line containing --refresh-once.",
+      "world_is": "At lib/opal_data_harvest/conftest.py@3fc6879679 (HVST-r-4) subprocess.run raises HarvestPoisonError in any test that does not carry allow_real_session. The first AC1 run of the bz-9 module in the worktree failed on the installer test for that reason (1 failed, 23 passed). With the marker the module passes 24 of 24. The marker is the one lib/opal_data_harvest/test_bz3_windowless_runner.py uses for its -Plan-only powershell children. Implemented at dd5fc764d8.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/conftest.py@3fc6879679:58-81 -- the subprocess poison and its allow_real_session opt-out",
+          "lib/opal_data_harvest/test_bz3_windowless_runner.py@3fc6879679:182-199 -- the same marker on the -Plan-only powershell tests",
+          "pytest of lib/opal_data_harvest/test_bz9_refresh_once.py in worktree wk-AMGT_HARVST-139-r85: 1 failed, 23 passed before the marker; 24 passed in 4.58s after it"
+        ]
+      },
+      "notes": "Not blocking: the marker is the sanctioned opt-out and changes no network or registration behaviour; the test still registers nothing, because -Plan returns before Register-ScheduledTask.",
+      "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W139-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~139",
+      "surfaced_at": "2026-10-13T21:51:02Z",
+      "one_line": "The proof-of-spec checker cannot resolve the governing task order for AMGT_HARVST.TO-HVST-bz-9 from the worker face: the face names the to_id but no TO path, and no tracked task order declares that id, so the instance is INVALID (rc=1) on the alignment limb although its six artifacts resolve at their pins and its two criteria pass.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO-HVST-bz-9 worker face, proof of spec: the instance names to_id AMGT_HARVST.TO-HVST-bz-9.a-refused-pair-carries-its-evidence-and-the-driver-refreshes-once; one acceptance row per criterion; .tools/proof-of-spec-check.py decides rc. The face gives no decomp_ref.to_ref path for the governing order.",
+      "world_is": "Measured at worktree C:/dev/wk-harvst-139, HEAD dd5fc764d8 plus the channel row commit 04e164af17. python .tools/proof-of-spec-check.py on the instance with AC1,AC2: rc=1, violations=1, 'alignment-frame: governing TO UNRESOLVED -- decomp_ref.to_ref ... does not resolve to a file'; with to_ref empty the checker reads 'no TO declares id=AMGT_HARVST.TO-HVST-bz-9.a-refused-pair-carries-its-evidence-and-the-driver-refreshes-once (scanned 6349 TO file(s))'. The seat did not read any task order or other org file to find the path (the order-file policy), so whether the TO is absent or declares its id differently is UNKNOWN here; the instance's own schema is satisfied, and the only violation is this resolution.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "python .tools/proof-of-spec-check.py <instance> AC1,AC2 at dd5fc764d8 -- rc=1, violations=1, the governing-TO UNRESOLVED line (the checker output is in the worker report)",
+          ".tools/proof-of-spec-check.py@732412e179:_resolve_governing_to -- the to_ref path first, else a tracked file declaring id=<to_id>",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~139/ (the instance, committed with this row's pin)"
+        ]
+      },
+      "notes": "Not closed here: the order stays open on its proof (rc=1) and the seat does not flip its status. The issuer should name the governing TO path in the face, or confirm the to_id; the instance's decomp_ref.to_ref is a placeholder that says so, and it should be replaced by the real path once known.",
+      "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```

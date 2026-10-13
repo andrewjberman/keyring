@@ -574,3 +574,9 @@ its windows takes 37,439 cells to about 34,341 (saves about 3,100, 99 CUSIPs shr
 P2 and P3 itself. One cell, `DQ-t-57` (`active_set.py`, `b1_request.py` clip and hold-back; `0.9.0_WK_MDPF_DEMQUE~49`, worker, LOCAL, workstream ACTIVEWINDOWS, depends on DQ-t-50 and DQ-t-52). The issuer re-files and re-quotes B1 on the
 merged bytes. Also filed: `VALUATION_TRACE_DEIDENTIFIED_DQ_t35.md` (the chain, counts only) for the CVO's grade of `DQ9-t35-AC2`, whose original trace was moved out under the containment ruling. DQ-t-54 merged @8b7c76ad35 (carry-over).
 DQ-t-56 (drawer) is in its second pass, held at merge until the full scanner request's `draw_hold` is honoured (row W48-S1, ARMED).
+
+**Round 9 amendment 21 (issuer, 2026-10-13 ~22:3xZ):** both never-widen pairs for the two SERVED cells are signed (call `dell1-20261013T214300Z-eb2a`, CTO msgs 5245, 5249, 5251; `ledger/NEVER_WIDEN_R9_YAHOO_{A,B}_{COO,CTO}_HALF.md`).
+Pair A (wire the Yahoo incremental path): Branch 1 and the gap branch SIGNED on two binding conditions (appended rows carry the TR columns and the 50-name proof is re-run including them; the receipt lists names appended without a re-lock and a
+failed `lock.check` makes the name held); Branch 2 (gained split, restated bar) stays HELD, listed `HELD_RESTATEMENT`, files unchanged. The issuer found while writing the half that `incremental_append.py` carries no TR columns, so DQ-t-48's 50-of-50 covered
+price cells only; named in the pair. One cell, `DQ-t-58` (`daily_draw.py`, `price_store.py` `write_incremental`, `incremental_equal.py --tr`; `0.9.0_WK_MDPF_DEMQUE~50`, worker, **SERVED**, workstream WIREINCREMENTAL, depends on DQ-t-48/21/31). Pair B (the `porting_verdict`
+column on the index, 2 keys): cell `DQ-t-59` is cut AFTER `DQ-t-58` merges (same file, `price_store.py`). The downstream label in `commonwealth_price_need.py` / `land_cot.py` is routed by the CTO to dell2's ADVI_COTBKF.
