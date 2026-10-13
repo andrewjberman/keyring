@@ -81,7 +81,7 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMB
 
 **AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-13 ~09:2xZ):** (a) AC1 strips ANSI colour before the match (the host sets FORCE_COLOR; the worker's row W70-S2; the same trap round 4 recorded and the issuer failed to carry into this face). (b) Section 1a item 2: the worker's row W70-S1 found that `_call_llm` and `_build_slot` emit per-call token metrics, so "no CloudWatch metric emission" cannot hold on a real dry run without threading a flag through the model path. The CTO's arm is "a dry run writes 0 objects (bucket listing before and after)"; the per-call metrics count real model tokens and are kept; only the handler-level metrics are suppressed (as built). The worker's handler is accepted as built; no code change is owed. The criteria are otherwise unchanged. Issuer amends its own pending order; GATE viii reads `<placeholders>NONE</placeholders>` and no token.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <workstream>EXECSUMFIX</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-j-5</to_id>
