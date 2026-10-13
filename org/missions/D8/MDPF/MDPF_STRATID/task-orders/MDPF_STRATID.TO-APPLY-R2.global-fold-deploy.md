@@ -4,7 +4,7 @@
     <issued_by>2.0.0_SA_COO~S1</issued_by>
     <issued_to>0.7.0_AE_CloudOps~DELL1</issued_to>
     <date>2026-10-09</date>
-    <status>pending</status>
+    <status>complete</status>
     <project_code>MDPF_STRATID</project_code>
   </metadata>
 <direct_act>true</direct_act>
@@ -90,13 +90,17 @@ decompositions/MDPF_STRATID_DECOMP_R2.md, under the signed never-widen pair. -->
 <criterion id="APPLY-R2-AC2" cell_refs="ST-u-1" judgment="true"/>
 `APPLY-R2-AC2` -- the three D1 keys and the D2 package equal the pin by content. Legs L1, L2, L3 and the tf-lambda leg are closed
 with that proof.
+<criterion id="APPLY-R2-AC3" cell_refs="ST-u-2"><invocation>python C:/Dev/ajb_workspace/org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_STRATID_S1/R2_CHECKS/st_u2_seam.py</invocation><expect>SEAM-OK</expect></criterion>
+`APPLY-R2-AC3` -- added by the issuer 2026-10-13: the order owns cell ST-u-2 and no criterion referenced it. The ST-u-2 seam on the
+served bytes: every SMA tree member states `inside_model_figure` and `held_out`, and a Cottonwood member with overlap > 0 is held out by name.
 
-<expected_criteria>APPLY-R2-AC1 APPLY-R2-AC2</expected_criteria>
+<expected_criteria>APPLY-R2-AC1 APPLY-R2-AC2 APPLY-R2-AC3</expected_criteria>
 
 <proof_of_spec>
-Criterion ids: APPLY-R2-AC1, APPLY-R2-AC2. Instance at `org/missions/D8/MDPF/MDPF_STRATID/deliverables/0.7.0_AE_CloudOps~DELL1/MDPF_STRATID.TO-APPLY-R2.global-fold-deploy.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> APPLY-R2-AC1,APPLY-R2-AC2` BEFORE the flip. Record AC2 as
-`UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming the issuer `2.0.0_SA_COO~S1`, who grades it on the report.
+Criterion ids: APPLY-R2-AC1, APPLY-R2-AC2, APPLY-R2-AC3. Instance at `org/missions/D8/MDPF/MDPF_STRATID/deliverables/2.0.0_SA_COO~S1/MDPF_STRATID.TO-APPLY-R2.global-fold-deploy.proof_of_spec.json`
+(re-pointed by the issuer 2026-10-13 from the executor's folder, see the second amendment below),
+validated with `python .tools/proof-of-spec-check.py <instance> APPLY-R2-AC1,APPLY-R2-AC2,APPLY-R2-AC3` BEFORE the flip. Record AC2 as
+`UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming the issuer `2.0.0_SA_COO~S1` as reader and the CVO as grader.
 </proof_of_spec>
 
 <paths>
@@ -192,4 +196,13 @@ Gate limb: GATE viii on the modification (placeholders NONE).
 - **No gate waits on this.** `2.0.0_SA_COO~D1` waived the half for MDPF_CANON `ADHOC.canon-r4-code-deploy` (msg 4380). This is the
   record's close, and it can wait behind the executor's current acts.
 - **Gate limb:** GATE viii on the modification (placeholders NONE); no criterion, path or placeholder changed.
+
+## AMENDMENT 2 (issuer, 2026-10-13 ~11:0xZ) -- the issuer authors the instance; AC3 added for the cell the order owned and never discharged
+
+- **Why.** `0.7.0_AE_CloudOps~DELL1` disclaimed the order (msg 4769: its legs closed, it owes no apply) and `1.0.0_SA_CTO~DELL1` directed
+  the flip (msg 4770). The executor's evidence is the closed ledger entry and its logs. The instance is authored by the issuer from them,
+  at `deliverables/2.0.0_SA_COO~S1/`. Steps 1-4 of the amendment above are superseded by this one; the executor owes nothing on this order.
+- **AC3 added.** `proof-of-spec-check` refused the instance because `<owned_cells>` named ST-u-2 and no criterion referenced it: the
+  issuer's defect at the cut. `APPLY-R2-AC3` is the ST-u-2 seam, mechanical, `SEAM-OK` re-run 2026-10-13 on the live served bytes.
+- **Gate limb:** GATE viii on the modification (placeholders NONE) grades this amendment; a criterion and the instance path changed.
 </task_order>
