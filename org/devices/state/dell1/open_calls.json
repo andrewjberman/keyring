@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-13T12:22:22Z",
+ "written_at": "2026-10-13T12:27:10Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -1950,7 +1950,7 @@
    "source": "org/missions/D5/AMGT/AMGT_HARVST/ledger/ROUND_ANALYSIS.round82.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-12T20:50:07Z",
    "kind": "act",
    "context": "The pull's paywalled sources need your subscriber login; every other AMGT_HARVST piece is built and live.",
@@ -1987,7 +1987,14 @@
      ]
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-13T12:27:10Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_122xZ_CAPPED_LOTS_UNVERIFIED_SHARE_COUNT_SOURCES_PORTAL_SMOKE_WSJ_CREDS.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
    "escalation": {
     "to": "andrew",
     "ref": null,
@@ -2137,7 +2144,7 @@
    "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_121xZ_BD_PRICING_RULES_DONE_WHEN_CONFIRMED_AND_CAP_CLARIFICATION.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-13T12:22:21Z",
    "kind": "fork",
    "context": "Andrew-direct 10-13: estimation is too risky for exact performance reporting. The 2026-04-17 cap fits estimated lot values to Black Diamond's exact account total; the BD unrealized export has value and unit cost per lot but no share quantity, so it cannot make them exact alone.",
@@ -2153,7 +2160,14 @@
     "evidence": {},
     "measured_at": "2026-10-13T12:22:21Z"
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-13T12:27:09Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_122xZ_CAPPED_LOTS_UNVERIFIED_SHARE_COUNT_SOURCES_PORTAL_SMOKE_WSJ_CREDS.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
    "escalation": {
     "to": "andrew",
     "ref": null,
