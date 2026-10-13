@@ -116,7 +116,7 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMB
 
 **ISSUER NOTES:** CTO round-4 analysis section 2 (D1-S32, S33, S34): real correctness findings on a pipeline FIRMBKTS moved, not defined; no active project owns its pricing rules. ONE read-only cell quantifies each on served values; non-zero goes to the CRO for a brief under its own project, zero closes the rows as not material. Class LOCAL (reads). The heaviest cell of the round: a partial result with `absent` claims is acceptable and is reported as such; the issuer does not recut a read that the data does not support.
 
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <workstream>BDPRICE</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-h-7</to_id>

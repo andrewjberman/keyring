@@ -31239,3 +31239,85 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISARMED: W346-S2 (fe-s-15 generator), W346-S3 and W350-S1 (fe-s-18 generator): the generator at portal DEV now reproduces its committed bytes, so a run no longer dirties a committed fixture. PROD is untouched (rides the held promote dell1-e7f2). STILL ARMED: W345-S3 (the temp-file fix is in merged code; the host bundle that runs the live builder is not redeployed; its census is IB-pr-507) and W348-S2 (the irpt-holdings schema at HEAD also enables include=target and narrows three enums: not re-pinned)."
 }
 ```
+
+## IRPT_BCKEND-D2-W359-S1 -- the 49F and INF holdings files are not in the directory object; they ride in the per-firm holdings packages
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W359-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~359",
+  "surfaced_at": "2026-10-13T07:01:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "IB-pr-507's premise does not hold: holdings_49f.py and holdings_inf.py are not among the twelve members of investor-reporting.tar.gz (the object the census reads); they reach the host inside the per-firm package investor-reporting-holdings.tar.gz, which this census did not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live object s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz: 12 members (census record org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~359/IB175-1_host_bundle_census.json), none named holdings_49f.py or holdings_inf.py; sha256 of the object f6d48603a6496f78733312e49b0e279b0907288db3423575f735835e896a0118",
+      "the directory refresh is the only reader of that object: infra/aws/lambda/investor-reporting/directory/refresh.py lines 675 and 681 (aws s3 cp, tar -xzf) and line 729 (IRPT_DIRECTORY_BUNDLE_URI); infra/aws/terraform/investor-reporting/directory/schedule.tf line 161 @7c04ead6e3",
+      ".tools/safe_deploy_core.py lines 492-493 list holdings_49f.py and holdings_inf.py in _IRPT_HOLDINGS_CLOSURE; line 538 names _IRPT_HOLDINGS_OBJECT = investor-reporting-holdings.tar.gz; line 562 derives one object per firm via lib/opal_naming address @7c04ead6e3",
+      "infra/aws/lambda/investor-reporting/holdings_refresh/refresh_dispatch.py line 65 (aws s3 cp of the per-firm package), line 66 (tar -xzf), line 75 (python3 $R/holdings_snapshot.py --firms <firm> --upload); the package URI comes from infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf lines 37-38 and 244 @7c04ead6e3",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py lines 110-111 import holdings_49f and holdings_inf at module level; the directory object carries holdings_snapshot.py (sha256 b4c1c984f6adfd0eca09e1b7ce4c10b34ecbc8bdab43a16c9e16901bb68a58ff) but neither import target @7c04ead6e3",
+      "commit 135fc3509e (IB-pr-496) touches holdings_49f.py and holdings_snapshot.py and not holdings_inf.py; holdings_inf.py is touched by aa5778d962 (IB-pr-496 amendment 1) @7c04ead6e3"
+    ]
+  },
+  "spec_asserts": "IB-pr-507 (CTO round-175 analysis, section 3 item 1) says the investor-reporting host bundle must carry the 49F temp-file fix (holdings_49f.py, holdings_inf.py, holdings_snapshot.py) and the builder's account_id, and that the census of the live bundle decides what the host runs.",
+  "world_is": "The 12-member object is read by the directory refresh only. holdings_49f.py and holdings_inf.py reach the host only inside the per-firm standalone holdings packages (investor-reporting-holdings.tar.gz), which the holdings dispatch runs as holdings_snapshot.py --firms <firm> --upload. This census read the directory object only, so it does not say whether any holdings package carries the 49F fix; W345-S3 (ARMED) therefore stays armed on this evidence. Holdings packages are not censused by IB-pr-507 and their census is not cut here.",
+  "notes": "Read of code and of one object's member hashes only; no holdings package was downloaded, no host was contacted. The disarm owner is named for routing (the issuer named by W345-S3); this row does not disarm W345-S3."
+}
+```
+
+## IRPT_BCKEND-D2-W359-S2 -- the directory runner's comment states nine bundle members; the guard declares and the object carries twelve
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W359-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~359",
+  "surfaced_at": "2026-10-13T07:01:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The directory refresh's docstring says the bundle has NINE members; the guard declares TWELVE and the live object carries TWELVE.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/directory/refresh.py lines 641-642 read: 'Cell IB-rtc-3 (R-45, AMENDMENT 1): the bundle's NINE members are now named by REPO PATH, all nine of them' @7c04ead6e3",
+      ".tools/safe_deploy_core.py lines 343-429 declare the investor_reporting members dict with twelve entries @7c04ead6e3",
+      "census record IB175-1_host_bundle_census.json: 12 members in the live object, 0 declared_but_absent_in_tar"
+    ]
+  },
+  "spec_asserts": "The comment at refresh.py lines 641-642 states the bundle's member count, which the guard and the live object both contradict.",
+  "world_is": "The docstring count is stale: the bundle has twelve declared members and twelve live members. The stale count is a comment; the census found no member missing from the object."
+}
+```
+
+## IRPT_BCKEND-D2-S130 -- DISPOSITION after the round-175 drain: the builder files ship in the per-firm holdings package
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S130",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T07:08:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISPOSITION after the round-175 drain: W359-S1 (the order's premise was mine and wrong: the builder files ship in the per-firm holdings package, not the directory bundle) ruled; the per-firm holdings package census is the next cell; W359-S2 observation.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer re-run: IB175-1 AC1, AC2, AC3 PASS in the merged tree (merge 8db2eb22f5); IB175-2 AC1 and AC2 PASS in the merged tree (merge 89af2d14e4), AC3 PASS in the worker's worktree.",
+      "the census record (read): the 12-member object investor-reporting.tar.gz (last_modified 2026-10-09T04:16:44Z) is read by the directory refresh (refresh.py:675 and :681, schedule.tf:161); holdings_snapshot.py:110-111 imports holdings_49f and holdings_inf at module level; refresh_dispatch.py:65 fetches the per-firm package and :75 runs it; safe_deploy_core.py:538 names investor-reporting-holdings.tar.gz."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "RULED, W359-S1: the guard's investor_reporting bundle is the DIRECTORY refresh's package (12 members, 5 differing from HEAD: directory_runner.py, holdings_snapshot.py, firm_registry.json, the HoldingsSnapshot schema copy, lib/trading_calendar.py); the 49F and Inflection builders and their temp-file fix and account_id reach the host inside the per-firm investor-reporting-holdings.tar.gz named by IRPT_HOLDINGS_BUNDLE_MAP, which no seat has read. So the host-bundle pair cannot be written from this census, and W345-S3 stays ARMED. The next cell is a read-only census of those per-firm holdings packages (which firms, their S3 keys, members against HEAD, the commits since each object was written), and then the pair. OBSERVATION W359-S2: the directory refresh docstring says nine members, the guard and the object carry twelve (a stale comment). The directory host bundle is a separate release path with its own 5 differing members; it is NOT part of the account_id pair and nothing here moves it. STILL ARMED: W345-S3, W348-S2."
+}
+```
