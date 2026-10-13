@@ -6485,3 +6485,51 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "The issuer decides whether AC1 is re-issued with the colour variable unset or the expectation is re-anchored. This seat did not alter the invocation."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W72-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~72",
+  "surfaced_at": "2026-10-13T08:31:33Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The FB-j-2 AC2 awsdiff check reads FAIL on the uncommitted edit and passes only after the edit is committed, because it compares committed HEAD with the merge-base and not the working tree.",
+  "spec_asserts": "FB-j-2 section 1b and section 4 AC2: awsdiff is expected to read OK on the edit (every other aws line byte-unchanged, hunks inside the function only). Section 5 says commit the script first; the AC2 invocation in section 4 carries no commit caveat.",
+  "world_is": "r7_checks.py awsdiff reads HEAD:<file> (line 37) and diffs merge-base..HEAD. With the edit uncommitted it printed 'changed hunks 0' and AWSDIFF: FAIL (rc=1). After commit e024089cc9 it prints 'changed hunks 1; changed lines outside the function and the variable: []' and AWSDIFF: OK (rc=0). The check is correct for a committed edit and reads FAIL on any uncommitted one.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round7/checks/r7_checks.py:36-37 (git show <base>:<file> and git show HEAD:<file>)",
+      "worktree /c/dev/wk-firmbkts-72 before commit: awsdiff printed 'changed hunks 0' and AWSDIFF: FAIL; after commit e024089cc9: 'changed hunks 1' and AWSDIFF: OK"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded for the issuer; the order and the check were not changed. The committed-HEAD read is the check's design; the commit-first step in section 5 is what makes AC2 meaningful."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W72-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~72",
+  "surfaced_at": "2026-10-13T08:31:33Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The commit-time risk reflex printed HOLD for data/black_diamond/scripts/gold/gold_dispatch.sh against a freshness-gate claim about data/cot/scripts/gold/gold_dispatch.sh, matched by file basename.",
+  "spec_asserts": "No spec line. The one-line FB-j-2 edit (order section 1a, one file) was to commit under the standing commit gates.",
+  "world_is": "safe-commit printed [risk-reflex] HOLD for two nodes (data/black_diamond/... and data/cot/scripts/gold/gold_dispatch.sh), both citing docs/references/FRESHNESS_GATE_MANIFEST_20260717.md:74, the COT check_freshness row at data/cot/scripts/gold/gold_dispatch.sh:174-177. The cited claim concerns the COT freshness check; the committed edit touches only the put-events capture line of emit_chain_complete. The gates were clean and the commit landed as e024089cc9.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/references/FRESHNESS_GATE_MANIFEST_20260717.md:74 read at /c/dev/wk-firmbkts-72 (the row names data/cot/scripts/gold/gold_dispatch.sh:174-177)",
+      "safe-commit output for e024089cc9: 1 file changed, 1 insertion(+), 1 deletion(-), file data/black_diamond/scripts/gold/gold_dispatch.sh"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Observation only. The reflex matched on basename; the cited claim does not describe the BD emit function. No action taken by this seat."
+}
+```
