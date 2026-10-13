@@ -10766,3 +10766,18 @@ The asset-manager grant serves `management/v1` only through a view that omits `l
   `<workstream>V1</workstream>`; the cold-start cells (`bj-1` to `bj-5`) are the workstream-less round 103. The disjoint boundaries are s.112c's: the function and `scoped_amgt.py` (the
   cold start), the V1 censuses and the portal branch (V1), the AI fill's modules (`~R2`). One issuer (`2.0.0_SA_COO~R1`) holds each (workstream, round) key once. The round-close read for round 103
   is owed under BOTH keys (`round-close-check.py` is run for the project's round and read for the V1 workstream's orders).
+
+### 112i. ADDENDUM 4 -- THE WALK IS CUT, UNDER ITS OWN SCOPE (`V1WALK`), 2026-10-13 ~20:0xZ
+
+- **Why it is cuttable now:** the CTO's msg 5113 and 5117: Andrew promoted DEV whole to PROD at 19:24Z (`63c4f9e3`, `origin/PROD..origin/DEV` = 0), so `AMGT-bj-9` (the feature cut) is WITHDRAWN and the
+  release commit the walk is graded on is known and will not move under it; port 5174 is free (the CTO's own smoke server stopped); the walker (`.claude/skills/ui-walk`, a dormant service account that
+  arms per walk and disarms, `status=disabled` at rest) ran on dell1 on this build for the issuer.
+- **`AMGT-bj-11`** (`~412`, worker, LOCAL, `<workstream>V1WALK</workstream>` beside `<round>103</round>`): the draw (the 93 = resolved names with an exact-key pack, sorted by
+  sha256(walk date + ' ' + key), the first ten: SAN FP, KPN NA, TSM US, HSBA LN, MA US, CDNS US, UNH US, UBER US, AZN LN, NOKIA FH), three walks of 4, 4 and 2 names (the walker's wall time is
+  about 100 s a name; the shell tool is capped at 600 s), screenshots kept OUTSIDE the repository (`C:/dev/ui-walk-evidence/bj-11/`), and a judgment criterion graded by the CVO. **The key:** a third
+  workstream key, because `.tools/to-pipeline-gate.py` refuses a newly added order into a (workstream, round) that already has an issuance at HEAD (V1 holds `bj-7`, `bj-8`, `bj-9`); the walk's
+  write surface (its own deliverables folder and the evidence folder) is disjoint from V1's, and one issuer holds each key once.
+- **The Model-tab hypothesis (CTO 5113, retracted to a hypothesis at 5117):** the issuer's two-name dry run (SAN FP, NOKIA FH) on the PROD build read `raw-code` 0 on the walker's DOM check across
+  the whole page; its only Model-tab pointer is `layout:clipped` (151 text elements cut off sideways by their container). A dry run of two names, not the walk.
+- **bj-12** (the F4 view) is still not cut: the writer is `lib/research/management/enrich.py` (`management_key`, `write_document`; `batch.py` only calls it), not `batch.py` as s.112g said, and the
+  address must come from `lib/opal_naming.py address()`, which has no management view row yet (a registry row, a packaged member). Its face is cut next, from that reading.
