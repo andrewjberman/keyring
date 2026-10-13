@@ -2,7 +2,7 @@
 
 <to_id>IRPT_ANLREQ.TO-AR-y-213</to_id>
 <project>IRPT_ANLREQ</project>
-<issued_to>0.9.0_WK_IRPT_ANLREQ~62</issued_to>
+<issued_to>0.9.0_WK_IRPT_ANLREQ~64</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-12</issued_date>
 <status>pending</status>
@@ -20,15 +20,17 @@
 
 ## WORKER FACE
 
-You are `0.9.0_WK_IRPT_ANLREQ~62`.
-- **Worktree:** `C:/dev/wk-irpt-anlreq-62` (branch `wk-IRPT_ANLREQ-62`). Commit there with
-  `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~62 <0.9.0_WK_IRPT_ANLREQ~62@opal.agent>" -F <msgfile> -- <paths>`.
+You are `0.9.0_WK_IRPT_ANLREQ~64`.
+- **Worktree:** `C:/dev/wk-irpt-anlreq-64` (branch `wk-IRPT_ANLREQ-64`). Commit there with
+  `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~64 <0.9.0_WK_IRPT_ANLREQ~64@opal.agent>" -F <msgfile> -- <paths>`.
 - Write every message file with the Write tool. `surfaced_at` of any row = `date -u +%FT%TZ` at filing; a row id has the form
-  `IRPT_ANLREQ-D2-W62-S<k>` (take the next free `<k>`). The worktree shows ` M portal` (and may show a modified `.parquet`
+  `IRPT_ANLREQ-D2-W64-S<k>` (take the next free `<k>`). The worktree shows ` M portal` (and may show a modified `.parquet`
   fixture): never commit either. Every `.py` you add or change passes `bash .tools/commit-gate.sh <file>` before its commit.
 - The proof instance: artifact rows use a `kind` the schema admits; a judgment row needs `method`, `invocation` and `denominator`;
   every non-PASS row carries a `status_reason`; a `controls.mutant` MUST be a mutant that FIRES (a mutant that leaves your criterion passing makes the instance INVALID).
   No live call EXCEPT the read-only `get-function` and the download of each `Code.Location` zip named below; no push, no deploy, no upload, no apply, no invoke. No non-ASCII in what you add. If a scratch copy is needed, put it OUTSIDE the product tree and leave it (you may not delete recursively; say where it is).
+
+**RE-SLOT AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-13).** The first worker (`~62`) went silent after writing five release diffs (no commit, no record; its last write 07:53Z) and did not answer a status check; this order is re-slotted to `~64` (worktree `C:/dev/wk-irpt-anlreq-64`, branch `wk-IRPT_ANLREQ-64`): every `~62` below is now `~64`. You start from nothing and trust nothing of `~62`'s files (its scratch is at `C:/dev/wk-irpt-anlreq-62/.scratch/r20` and its diffs under `deliverables/0.9.0_WK_IRPT_ANLREQ~62/r20/` in that worktree; READ them if useful, never write there, and re-measure everything you use). Group A's worker (`AR-y-212`, drained @6703116dd4) reproduced all three of its live packages with a holds-only build at base `5d8b0390ed` and moved `served.py` to pin `564e60483858a3cc5c51ffea6aed0f76ff291abe` (blob 30c0eb88...); its record `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~61/r20/STATUS_RULE_REBASE_GROUP_A.json` shows the shape. Start with base `5d8b0390ed` (but `irpt-ycharts-generate` was re-released on 2026-10-13: its holds-only control is the trunk map at the base plus `RELEASE_MAP_PATCH_R2.diff`, whose rows the trunk map now carries). The tests clause is AMENDED: a failure that ALSO fails with the original `served.py` is pre-existing and does not count against the release, but it must be named in `tests.failed_names` and shown failing in a control run with the original bytes (`tests.control_failed_names`); the check `y213-rebase` reads both. Any other failure still fails the criterion. No gate limb graded this amendment (a pending order's text).
 
 ### THE CELL (`AR-y-213`, inlined) -- THE STATUS RULE REBASED ON THE LIVE PACKAGES OF GROUP B: `irpt-directory-search`, `irpt-ycharts-generate`, `irpt-export-render`, `irpt-holdings`, `irpt-49f-reporting-read-lambda`. Nothing is uploaded, deployed or applied.
 
@@ -45,11 +47,11 @@ For EACH function in your group, in order:
 6. **Write the record** (path in the criterion): `served_pin`, `served_blob_sha256`, `functions` (one object per function: `function`, `live_code_sha256`, `live_member_manifest`, `base_commit`, `holds_only_control` {`code_sha256`, `differs_from_live`}, `release` {`code_sha256_b64`, `package_sha256`, `member_manifest`, `differs_from_live`}, `must_move_with`, `carries_status_rule`, `tests`, `patch` {`path`, `git_hash_object`}), `claim`, `not_read`.
 7. **In your report:** per function one line: live CodeSha256 prefix, the base commit, the holds-only control result, the members that differ, the tests.
 
-**Your functions (group B):** `irpt-directory-search`, `irpt-ycharts-generate`, `irpt-export-render`, `irpt-holdings`, `irpt-49f-reporting-read-lambda`. The record is `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~62/r20/STATUS_RULE_REBASE_GROUP_B.json`.
+**Your functions (group B):** `irpt-directory-search`, `irpt-ycharts-generate`, `irpt-export-render`, `irpt-holdings`, `irpt-49f-reporting-read-lambda`. The record is `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~64/r20/STATUS_RULE_REBASE_GROUP_B.json`.
 
 ### ACCEPTANCE
 
-<criterion id="AR213-y-AC1" cell_refs="AR-y-213"><invocation>python C:/dev/wk-irpt-anlreq-62/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r20/ar20_checks.py y213-rebase --root C:/dev/wk-irpt-anlreq-62</invocation><expect>Y213-REBASE-OK</expect></criterion>
+<criterion id="AR213-y-AC1" cell_refs="AR-y-213"><invocation>python C:/dev/wk-irpt-anlreq-64/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r20/ar20_checks.py y213-rebase --root C:/dev/wk-irpt-anlreq-64</invocation><expect>Y213-REBASE-OK</expect></criterion>
 `AR213-y-AC1`: for every function of the group the record holds the live read, a holds-only control that reproduces the live CodeSha256, a release that differs from the live package in `served.py` and in nothing else (but members named in `must_move_with` with a reason), the status rule in the release's `served.py`, and the function's tests passing against it.
 
 <criterion id="AR213-y-AC2J" cell_refs="AR-y-213" judgment="true"/>
@@ -59,7 +61,7 @@ For EACH function in your group, in order:
 
 ## BOUNDS
 
-- **Grant:** exactly the `<paths>` below, plus `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~62/` and this order's file (status flip only). If a test OUTSIDE the grant fails because of your change, STOP: file a BLOCKING row naming it; the issuer amends the grant.
+- **Grant:** exactly the `<paths>` below, plus `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~64/` and this order's file (status flip only). If a test OUTSIDE the grant fails because of your change, STOP: file a BLOCKING row naming it; the issuer amends the grant.
 - READ only: everything else.
 
 <paths>
@@ -73,7 +75,7 @@ org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v
 
 <proof_of_spec>
 Criterion ids: see ACCEPTANCE. The instance is at
-`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~62/IRPT_ANLREQ.TO-AR-y-213.status-rule-rebase-b.proof_of_spec.json`.
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~64/IRPT_ANLREQ.TO-AR-y-213.status-rule-rebase-b.proof_of_spec.json`.
 Its `to_id` is exactly `IRPT_ANLREQ.TO-AR-y-213`. The judgment criterion is recorded under `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming `3.0.0_SA_CVO` (never PASS or FAIL). Validate it AFTER its commit with
 `python .tools/proof-of-spec-check.py <instance> <the criterion ids>`; flip `<status>` to `complete` only when it prints VALID.
 </proof_of_spec>
