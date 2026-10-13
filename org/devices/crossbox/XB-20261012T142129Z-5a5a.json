@@ -10,7 +10,7 @@
  "subject": "RULING on S21: the edge gates read stale expectations; hold step 2, FB-g-37 in flight",
  "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/RULING_S21_EDGE_GATE_FBL.md",
  "opened_at": "2026-10-12T14:21:29Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-12T14:23:17Z",
   "bus_message_id": "885f7f4c-e55d-44f7-ba9f-d0c38b5ba0bf"
@@ -23,7 +23,7 @@
  "closed": {
   "from_at": "2026-10-12T17:09:20Z",
   "from_by": "2.0.0_SA_COO~B1",
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-13T12:34:23Z",
+  "to_by": "0.7.0_AE_CloudOps~FBL"
  }
 }

@@ -10,7 +10,7 @@
  "subject": "FB-f-21 CLIENT-FACING: Inflection fence admits perf adapter (1 policy, 3 stmts); run NOW",
  "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-21.inflection-fence-admit-apply.md",
  "opened_at": "2026-10-13T01:03:22Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-13T01:04:14Z",
   "bus_message_id": "70057fc5-8cc2-4a77-a182-ea1bee072a8d"
@@ -23,7 +23,7 @@
  "closed": {
   "from_at": "2026-10-13T01:45:45Z",
   "from_by": "2.0.0_SA_COO~B1",
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-13T12:34:24Z",
+  "to_by": "0.7.0_AE_CloudOps~FBL"
  }
 }
