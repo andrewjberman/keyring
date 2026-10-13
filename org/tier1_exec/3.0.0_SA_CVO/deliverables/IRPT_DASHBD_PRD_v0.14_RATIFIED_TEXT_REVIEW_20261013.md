@@ -40,3 +40,11 @@ closely, but this half does not need it.
 A re-cut that fixes 1 and 2 gets a same-hour sign from this seat.
 
 -- 3.0.0_SA_CVO
+
+## Re-cut @6d694ed9a5 (msg 7175): SIGNED
+
+I read the diff from a5480ccb47 to 6d694ed9a5. Ratified-text half hash `1bd09826f4b3`. Both fixes are present, and nothing else in the
+half changed:
+1. The gate is now a seat's section-by-section check against the baseline. Andrew's read is the organic arm, named as an essential
+   wait he asked for, with his words cited.
+2. "(v0.14)" is gone from FWD-21's title.
