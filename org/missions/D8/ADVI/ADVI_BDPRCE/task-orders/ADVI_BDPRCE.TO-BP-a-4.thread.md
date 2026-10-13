@@ -80,7 +80,7 @@ AC1 grades the record's shape, PII discipline and that the recompute equals the 
 ## 5. WHEN YOU ARE DONE
 
 Instance at the path above. Commit `THREAD_TRACE.json`, `THREAD_TRACE.md` and your trace output FIRST, your rows and the instance second. **Do not flip this order's `<status>`**. Row ids:
-`ADVI_BDPRCE-W4-S<k>`, `k` from 1, `surfaced_at` from `date -u +%FT%TZ`. Report once: the served object key, date, asset (name), served price, source, trade count, recompute and equality, the writer, the gap class, AC1, AC2 and the FULL commit hash.
+`ADVI_BDPRCE-D1-W4-S<k>` (the dell1 gate requires the D1 coordinate; row `ADVI_BDPRCE-D1-W2-S5`), `k` from 1, `surfaced_at` from `date -u +%FT%TZ`. Report once: the served object key, date, asset (name), served price, source, trade count, recompute and equality, the writer, the gap class, AC1, AC2 and the FULL commit hash.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 

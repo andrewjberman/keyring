@@ -1028,6 +1028,29 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "spec_asserts": "The half says the vendor session is valid at 11:32Z and the repair closes the hole before 11:45Z.",
     "world_is": "The session answered 401 for roughly 11:35Z-11:40Z and was valid again at 11:41Z; the repair closed the hole at 11:41:34Z, inside the 11:45Z bound, by its second async retry. The cause (token expiry window, vendor rotation or another puller) is not read.",
     "notes": "Not chased. The 12:45Z fire is the safety if a later run meets the same window. No code or config touched."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S16",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~G1",
+    "surfaced_at": "2026-10-13T13:33:21Z",
+    "one_line": "The 13:25Z characteristics producer fire failed three times on 2026-10-13 with NoSuchKey on bbg/2026-10-12/characteristics.parquet in opal-data-etfs; the Bloomberg T-1 partition is absent at 13:33Z. The served characteristics.json stays the 2026-10-12 version. The cause is upstream of this project and not the HG-t-10 exercise.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cot-satellites-characteristics-producer log 2026-10-13: START 13:25:14Z, 13:26:29Z, 13:28:23Z each ending '[ERROR] NoSuchKey: ... GetObject' from producer.main (lambda_function.py line 87)",
+        "data/assets/scripts/gold/build_satellites_characteristics.py lines 144-146 and 246-250: the T-1 read is s3://opal-data-etfs/bbg/<T-1>/characteristics.parquet then run_manifest.json; lib.trading_calendar.prev_trading_day(2026-10-13) = 2026-10-12",
+        "head-object 2026-10-13T13:33:21Z: bbg/2026-10-12/characteristics.parquet 404; bbg partitions present through 2026-10-09 (list with delimiter); bbg/2026-10-09/characteristics.parquet LastModified 2026-10-12T11:03:03Z (positive control)",
+        "inputs that exist: opal-data-cot/platinum/satellites/holdings.json LastModified 2026-10-13T13:15:49Z (as_of 2026-10-13); opal-data-portal-v2/json/positioning/positioning_data.json LastModified 2026-10-10T11:06:06Z; served characteristics.json LastModified 2026-10-12T13:26:03Z"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The HG-t-10 half step 6 and the HG-t-14 retime say the 13:25Z fire runs after its inputs land and serves holdings_as_of == as_of for the day.",
+    "world_is": "Today's Bloomberg T-1 partition had not landed by 13:33Z, so the scheduled fire failed three times and the day serves the prior day's characteristics, as any failed day did. Whether the Bloomberg pull for 2026-10-12 failed, is queued or runs later is not read; Bloomberg pulls go only through their queue and are not this seat's.",
+    "notes": "No manual re-invoke: a run off the producer's own clock needs a never-widen half. Not caused by the exercise (it touched rebalancer bronze, silver and the sentinel target only). The CVO takes it at L9 with D1-S14 and D1-S15; a re-run on the partition's arrival is the CTO's call."
   }
 ]
 ```
