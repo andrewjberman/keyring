@@ -134,6 +134,8 @@ This order touches none of them.
   (the order's own `ps ... | head -40` printed only kernel threads and graded nothing, an issuer defect the seat recovered). The EC2 stop is Andrew's, carded by the CTO; ledger `astn-instance-started-20261013` stays OPEN and row D1-S15 carries it. (2) That the 07:00Z fire does not run is read
   after 07:00Z (the Lambda `Invocations` metric for that window), not asserted here. (3) The Lambda now carries an unrelated build; with the schedule disabled nothing invokes it.
 
+**UPDATE ~21:1xZ (issuer):** the instance residual in (1) is closed: stopped on Andrew's word ("Also yes can shut down the morning brief server.", CTO ADDENDUM 3 @dfecbbe7d4), `stop-instances` 21:04:03Z, read back `stopped` 21:04:28Z by `~HV1` and re-read `stopped` by this seat; both ledgers CLOSED; drain `af4002d649`. Items (2) and (3) stand.
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
 <status>complete</status>
