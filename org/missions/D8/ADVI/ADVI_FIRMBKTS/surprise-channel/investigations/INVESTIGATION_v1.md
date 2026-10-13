@@ -6130,3 +6130,199 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "A denial is not evidence that an SCP exists. An SCP deny on PutEvents would show as an AccessDenied record in CloudTrail, and none is recorded, so the SCP question is open only in the sense that it is unread."
 }
 ```
+
+## Rows filed by 0.9.0_WK_ADVI_FIRMBKTS~66 (FB-h-7 quantification, 2026-10-13T07:07:58Z)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W66-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~66",
+  "surfaced_at": "2026-10-13T07:07:58Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's path data/black_diamond/scripts/gold/bd_price_update.py does not exist: the file is at data/black_diamond/scripts/silver/bd_price_update.py; its Lambda twin is infra/aws/lambda/bd-pipeline/bd-price-update/lambda_function.py.",
+  "spec_asserts": "FB-h-7 section 1a and 1c cite data/black_diamond/scripts/gold/bd_price_update.py (lines 263-271, 344, 265).",
+  "world_is": "comp-find --name 'bd_price_update*' data/black_diamond returns one hit, data/black_diamond/scripts/silver/bd_price_update.py (202 files scanned, corpus all). The cited line numbers are correct at the silver path. The Lambda twin's load_transactions_for_date is at lambda_function.py:141-149 (key line 143).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~66/pricing_quant_s32_s33.py",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~66/PRICING_QUANT.md",
+      "infra/aws/lambda/bd-pipeline/bd-price-update/lambda_function.py:143"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Quantified at the silver path. No product file was edited."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W66-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~66",
+  "surfaced_at": "2026-10-13T07:07:58Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "The 2026-10-09 same-date price tie is non-decisive in the current file set: all 11,108 tied assets select a later-dated row, so the unstable sort does not decide the served 10-09 price. It is decisive only as of the 10-09 run (inferred: 3,906 of 11,108 alternative prices differ).",
+  "spec_asserts": "FB-h-7 section 1b: the default-kind sort_values('date', ascending=False) in B_01.holdings_lots.py (lines 331-361) decides same-date ties between silver/prices/2026-10-09.parquet and canonical_prices.parquet.",
+  "world_is": "Replay of the B_01 load on the current 174 price objects: tied 11108; winner_other_date 11108; winner daily 0; winner canonical 0; negative control (no source column) same pick. As-of replay (daily <= 10-09, canonical rows <= 10-09; inferred): winner daily 11106, canonical 2, alternative_differs 3906, max delta 1020.0. The served holdings snapshot gold/timeseries/holdings_lots/2026-10-09.parquet was rewritten 2026-10-13T05:06:00Z.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~66/pricing_quant_s32_s33.py",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~66/PRICING_QUANT.json (s33)",
+      "data/black_diamond/scripts/gold/B_01.holdings_lots.py:331-361"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The sort stays ARMED: any asset whose latest date is a tie takes the pandas sort order. The EC2 runner installs unpinned pandas (setup-instance.sh line 20); the production pandas version is absent. Sensitivity is inferred.",
+  "disarm_owner": "2.0.0_SA_COO~B1 (issuer; routes the B_01 tie-break fix to the gold owner)"
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W66-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~66",
+  "surfaced_at": "2026-10-13T07:07:58Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Served canonical transaction_observed prices do not equal the current file median for 603 of 1,610 comparable rows over the 20 window dates, so a served T-1 value is not the median the code recomputes from the day partition.",
+  "spec_asserts": "FB-h-7 section 1a presumes the served T-1 price is the median of the same-date silver/transactions partition (extract_t1_prices, bd_price_update.py lines 327-345).",
+  "world_is": "Served canonical rows with source transaction_observed on the 20 dates: 1,657; 1,610 have the asset in the recompute; 1,007 equal it within 1e-6; 603 do not. Cause not isolated; candidates are backfill_new_assets (multi-day history) and partition state at write time (transaction ids moved between files).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~66/pricing_quant_s32_s33.py (s32 served_check)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~66/PRICING_QUANT.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Does not change the S32 count; it limits how far the served T-1 value can be read as the file median."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W66-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~66",
+  "surfaced_at": "2026-10-13T07:07:58Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Object versions of gold/canonical/account_gains/2026-08-20..23 begin at 2026-09-27T05:05:24Z, and the whole prefix (2,473 objects) was rewritten within 2026-10-13T05:13:06Z to 05:14:05Z, so the first version after 2026-08-23 is not the rewrite-era state for these keys.",
+  "spec_asserts": "FB-h-7 section 1c: compare each version written after 2026-09-02 with the first version written after 2026-08-23.",
+  "world_is": "list-object-versions: 36 versions per account_gains key, earliest 2026-09-27T05:05:24Z (all four keys share the timestamp); all 36 have identical content per key. silver/transactions keys have versions from 2026-08-20 to 2026-09-02; silver/prices keys have no version after 2026-08-23.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~66/pricing_quant_s34.py",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~66/PRICING_QUANT.json (s34)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The account_gains base is the 09-27 version by necessity; the pre-09-27 state is not recoverable from versions."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W66-S5",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~66",
+  "surfaced_at": "2026-10-13T07:07:58Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "bd-price-update records no INFO step lines: the \"Step 1a\" filter returns zero events since 2026-09-02 while 35 invocations are recorded, so the reader at lambda_function.py:143 cannot be confirmed from its logs.",
+  "spec_asserts": "FB-h-7 section 1c asks whether each reader ran, using a CloudWatch Invocations count or the chain run log.",
+  "world_is": "CloudWatch AWS/Lambda Invocations Sum 35 over daily buckets 2026-09-02..2026-10-12. The log group holds START, END, REPORT and FutureWarning lines (the pd.concat warning at lambda_function.py:135) and no INFO lines; filter-log-events with \"Step 1a\" since 2026-09-02 returns 0 events.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~66/PRICING_QUANT.json (s34 readers[2])",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~66/write_record.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The Lambda twin row is recorded as claim inferred for the call at line 143."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W66-S6",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~66",
+  "surfaced_at": "2026-10-13T07:07:58Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "silver/transactions has objects on weekend dates (for example 2026-10-10 and 2026-10-11), and the two most recent weekdays hold zero-row partitions (2026-10-12 and 2026-10-13, 35,269 bytes each), so \"the 20 most recent trading days that have an object\" needed a weekday rule to be defined.",
+  "spec_asserts": "FB-h-7 section 1a: the 20 most recent trading days that have a silver/transactions object.",
+  "world_is": "1,927 dated objects; 1,614 on weekdays. The 20 most recent weekday objects run 2026-09-16 to 2026-10-13; rows are 0 on 2026-10-12 and 2026-10-13.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~66/PRICING_QUANT.md",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~66/pricing_quant_s32_s33.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Exchange holidays were not removed; a holiday partition with rows would be counted, not dropped."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W66-S7",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~66",
+  "surfaced_at": "2026-10-13T07:07:58Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Every aws call from this worktree prints \"WARN: aws: no caller-toplevel .tools/aws (git rc=128) -- PREPENDING THE BAKED C:/dev/ajb_workspace/.tools\", so the shim resolves to the base checkout tools, not the worktree tools.",
+  "spec_asserts": "CLAUDE.md section 6: AWS via the .tools/aws shim, resolved from the checkout.",
+  "world_is": "Each aws call in this session printed the WARN line and still returned the expected output (rc 0 on reads); the outputs read are S3, CloudWatch and Lambda reads of the same account.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~66/fetch_versions.sh"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as an instrument note; no read result depended on the shim path."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W66-S8",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~66",
+  "surfaced_at": "2026-10-13T07:07:58Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The order AC1 invocation names the base checkout path for PRICING_QUANT.json; the record exists only in this worktree until integration. The literal run is FileNotFoundError (FAIL); the worktree-path run returns QUANT keys ok.",
+  "spec_asserts": "FB-h-7 section 4 AC1: --file C:/dev/ajb_workspace/org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~66/PRICING_QUANT.json",
+  "world_is": "Literal run: FAIL, ABSENT or unreadable (FileNotFoundError) because the base checkout has no folder 0.9.0_WK_ADVI_FIRMBKTS~66. Worktree-path run: QUANT keys ok calls=442 recommendation=BRIEF_TO_CRO (rc 0).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~66/PRICING_QUANT.json",
+      "C:/dev/ajb_workspace/org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round5/checks/r5_checks.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The issuer should re-point AC1 at the integrated path or accept the worktree path; the order status is not flipped here."
+}
+```
