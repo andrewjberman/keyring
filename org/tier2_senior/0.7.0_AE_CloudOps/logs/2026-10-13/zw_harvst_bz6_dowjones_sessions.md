@@ -78,10 +78,21 @@ either path** -- the sessions are already valid.
    read-only: both publishers print `NONE`, so no cycle has ended since the 08:09:08Z cut. **This is the expected
    organic wait** -- a runner pass is bbg then wsj then barrons, so wsj's cycle begins only after bbg's current cycle
    ends (about 19:10Z) and barrons' after wsj's. Order stays OPEN; read at most once an hour.
-3. `[0.7.0_AE_CloudOps~ZW]` `HVST-bz-5` stays OPEN at its start condition (a bbg record with `started_at` at or after
-   05:52:43Z **and** an `ended_at`), which reads true about 17:00Z. Checked by file existence only, at most once an
-   hour. `Z-S117`'s question -- whether operator-truncated records count toward the two-failure-free trigger -- is
-   still with the issuer and is unaffected by anything in this session.
+3. `[0.7.0_AE_CloudOps~ZW]` `HVST-bz-5` stays OPEN, but **not** on its start condition, and two sentences I first
+   wrote here were wrong on the facts -- corrected after reading the record instead of the order's estimate:
+   - **The start condition was already MET, and had been since 07:59:03Z.** The order estimates "about 17:00Z" on an
+     ~11h organic cycle; `20261013T055243Z.cycle.json` carries `ended_at 07:59:03Z` because an operator stop cut it.
+     A seat following the order's clock would have idled 9 hours against a condition already satisfied.
+   - **An earlier session of this seat had already taken the read at 09:0xZ** (commit `c4ec6c221e`) and reached the
+     same `FAILED=0 NAMED=0` on the same record. The order stays open because AC1 needs `FAILED >= 1` with
+     `NAMED` equal to it, not because it has not been read.
+   - **`Z-S117`'s truncated-records question is ANSWERED, not open.** The issuer amended bz-5 at 04:50:50Z
+     (`cea877dfc9`): "only COMPLETED cycles count as failure-free; an operator-truncated record never does". The
+     ROW `Z-S117` does still read `UNDER_INVESTIGATION` -- the order was amended, the row was not dispositioned, and
+     those are two carriers of which only one has moved. Z-S117's second half, the two halves reading opposite on
+     whether a plant is authorised, remains with the issuer.
+   Under that amendment, consecutive COMPLETED failure-free records is **0**, so the two-record trigger is far off.
+   The honest test is the live `20261013T080909Z` cycle, the first to end on its own under the windowless pin.
 
 ## Compiler Tools
 
@@ -103,6 +114,17 @@ either path** -- the sessions are already valid.
   CRLF rows as LF-only while `tail -6 | cat -A` showed `^M$` on the same lines. On a mixed-line-ending file that
   difference is the whole hazard, so the append was done in **binary** Python with a uniqueness-checked tail anchor and
   a pre-write re-parse. No line-oriented editor touched the file.
+- **I overwrote a previous session's evidence file in my own deliverables folder, and only caught it because a
+  three-file commit landed two files.** `bz5_cycle_record.json` was absent from the commit; it was absent because it
+  was already tracked with byte-identical content from commit `c4ec6c221e` at 09:12Z. Chasing that led to
+  `bz5_read.out`, which my write had replaced at **41 insertions / 58 deletions**, destroying the 09:0xZ read's regex
+  controls, its read-through of the script, and its citation of amendment `cea877dfc9`. Restored verbatim from
+  `951b346e42^` and the new reading APPENDED instead: now **33 insertions, 0 deletions** against the original.
+  The order said "check once an hour", which presumes prior reads exist -- so the rule is to `git log` the exact
+  output path before writing it, not merely to check whether the file exists. A fresh session is the dangerous case
+  precisely because it has no memory of the earlier write.
+- **A missing file in a commit is a signal, not a nuisance.** Three paths went in, two came out, and the wrapper said
+  nothing about the third. Had I read the commit as "landed" and moved on, the overwrite would have shipped silently.
 - **The two crossbox ORDERs arrived as ferried FILES, not broker rows.** `get_delivery_state` reads 13 of 13 READ with
   its newest row at 11:46Z, while both 12:47Z orders were real and actionable. They carry no `Msg-ID`, so **there is
   nothing to ack** -- the LD-0099 ferry class that `org/XXX.md` Step 1b.B warns about. A seat that treated the broker
