@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261013T073105Z-9b01",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~W1",
+ "to_serial": "0.7.0_AE_CloudOps~ZW",
+ "subject": "AMGT_HARVST HVST-bz-4 windowless re-pin from 995adcaeaa; halves COO@b0267c5443 CTO@469a566fa1",
+ "body_path": "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-bz-4.site-z-runner-registered-windowless.md",
+ "opened_at": "2026-10-13T07:31:05Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-13T07:32:22Z",
+  "bus_message_id": "88d1b708-561f-4de1-82cf-02f411a84f09"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

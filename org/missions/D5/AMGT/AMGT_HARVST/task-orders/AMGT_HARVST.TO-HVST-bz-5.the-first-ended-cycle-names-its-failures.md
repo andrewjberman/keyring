@@ -39,8 +39,10 @@ most, by the existence of the file only.
 2. Copy the cycle record you read, byte for byte, to `bz5_cycle_record.json` and print its SHA-256 and length beside the source's, and paste the
    script's one line into `bz5_read.out`. Print the record's `failures` rows (key, status, detail) in `bz5_read.out`.
 3. **Read the line, do not grade it past what it says.** `FAILED=<n> NAMED=<m>`: `m` equals `n` and `n` is at least 1 means every failure names its
-   reason. `FAILED=0`: the record has no failure to read. **Do NOT plant a failure, re-queue a pair or touch the state dir to make the read
-   pass**: a planted pair is a separate order under its own pair. File one row naming the reading and stop.
+   reason. The script reads the first ended record that HOLDS a failure; when none does it prints the newest ended record with `FAILED=0`, which is
+   NOT the close. **`FAILED=0`: do NOT plant a failure, re-queue a pair or touch the state dir to make the read pass.** Keep the order OPEN and read
+   again at the next ended record (it may be a stopped one: `STOPPED=` says so). After TWO consecutive ended records with `FAILED=0`, file ONE row
+   naming both readings and stop: a planted pair is a separate order under its own pair.
 4. Anything odd: one row `AMGT_HARVST-Z-S<next free Z number>`, then keep working. Do not stop, start, or re-register the task.
 
 <paths>
@@ -56,7 +58,7 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 </proof_of_spec>
 
 - The checker reads `<expect>` as a regular expression: `NAMED` must equal `FAILED` and be at least 1. AC1 is a site Z read and cannot run from dell1.
-- **Dry-run at the base (issuer):** against the round-79 record (8 failures, bare `error`) the script prints `FAILED=8 NAMED=0` and AC1 does NOT
+- **Dry-run at the base (issuer):** (the script now takes the first ended record that holds a failure, else the newest) against the round-79 record (8 failures, bare `error`) the script prints `FAILED=8 NAMED=0` and AC1 does NOT
   match (FAIL as expected); against a copy whose details carry `HTTPError: ...` it prints `FAILED=8 NAMED=8` and matches; with no record since the
   cut it prints `NO-ENDED-CYCLE-SINCE ...`, rc 1.
 - INSTANCE NAMED EXACTLY
