@@ -9057,3 +9057,105 @@
   "class": "OBSERVATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W94-S1 -- AR-y-273 four-item list retires the Branded PDF item that six existing portal tests pin
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W94-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~94",
+  "surfaced_at": "2026-10-13T20:18:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-273 four-item list retires the Branded PDF item that six existing portal tests pin",
+  "spec_asserts": "AR-y-273 step 4: the ticket page lists FOUR attachments for an analysis request (original upload, the form as filled, the Opal report, the commentary draft); the branded PDF is out of FWD-1.",
+  "world_is": "Six existing tests in three files (package-open.test.tsx AR-v-13 x3, commentary-package.test.tsx TCKT_VNEXT F10-p-2 x1, package-r2.test.tsx AR-v-21 x2) pinned the Branded PDF item on the ticket page. The candidate updates their expectations to the four-item list in commit ab6ede6989 on wk-IRPT_ANLREQ-94-portal; the PDF reader (openPackageFile 'pdf') stays callable and tested. Nothing is landed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal src/pages/TicketCenter/__tests__/package-open.test.tsx@4d6010234e (origin/DEV)",
+      "portal src/pages/TicketCenter/__tests__/commentary-package.test.tsx@4d6010234e (origin/DEV)",
+      "portal src/pages/TicketCenter/__tests__/package-r2.test.tsx@4d6010234e (origin/DEV)",
+      "portal commit ab6ede6989 (wk-IRPT_ANLREQ-94-portal, LOCAL)"
+    ]
+  },
+  "class": "OBSERVATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W94-S2 -- the form as filled is shown on the ticket page only once the ticket has a draft or a package
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W94-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~94",
+  "surfaced_at": "2026-10-13T20:18:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "the form as filled is shown on the ticket page only once the ticket has a draft or a package",
+  "spec_asserts": "AR-y-273 step 4: the ticket page shows the form as filled as one of the four attachments of an analysis request.",
+  "world_is": "The ticket page renders the package block only when the ticket carries a draft or a package (TicketCenter.tsx:634-635 gate at dev_tip, and the AnalysisDraftAndPackage gate). A ticket that is filed but not yet packaged or drafted shows no form on the page. The existing commentary-package test pins a draft-only ticket to show no Report package, so the candidate did not widen the gate. Stated, not changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal src/pages/TicketCenter/TicketCenter.tsx@4d6010234e (origin/DEV) lines 634-635",
+      "portal src/pages/TicketCenter/__tests__/commentary-package.test.tsx@4d6010234e (origin/DEV) line 30"
+    ]
+  },
+  "class": "OBSERVATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W94-S3 -- a git-bash ln -s in the portal worktree copied node_modules instead of linking it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W94-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~94",
+  "surfaced_at": "2026-10-13T20:18:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "a git-bash ln -s in the portal worktree copied node_modules instead of linking it",
+  "spec_asserts": "AR-y-273 step 1 and the portal test run: a fresh worktree at C:/dev/wk-portal-94 runs bun tests against a node_modules.",
+  "world_is": "On this box git-bash ln -s did not create a link: it copied the portal checkout's node_modules (313 entries) into C:/dev/wk-portal-94/node_modules after a stall past the 120 second bound. A directory junction (mklink /J) failed with a syntax error. The copy is git-ignored (.gitignore line 11), is not committed, and is left in place; it is the copy the candidate was tested against.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-portal-94/node_modules (git check-ignore: .gitignore:11)",
+      "C:/dev/ajb_workspace/portal/node_modules (313 entries, the source of the copy)"
+    ]
+  },
+  "class": "OBSERVATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W94-S4 -- the portal contribution rule and the cited sibling candidate branch are absent
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W94-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~94",
+  "surfaced_at": "2026-10-13T20:18:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "the portal contribution rule and the cited sibling candidate branch are absent",
+  "spec_asserts": "AR-y-273 step 1: read portal/CONTRIBUTING-BOXES.md before touching portal/, and commit the way wk-IRPT_ANLREQ-63-portal was made.",
+  "world_is": "No CONTRIBUTING-BOXES.md exists at the portal repository root or in the workspace portal folder at origin/DEV 4d6010234e, and no refs/heads/wk-IRPT_ANLREQ-63-portal exists. The portal commit was made in C:/dev/wk-portal-94 with -F and the message style of wk-IRPT_ANLREQ-85-portal and -74-portal, the committer identity set by environment variable (the portal repository has no user identity). No active portal hook is installed (samples only). The amend that would have corrected one count in the message was refused by the local-commit guard and not forced.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/ajb_workspace/portal show origin/DEV:CONTRIBUTING-BOXES.md (absent)",
+      "portal hooks directory C:/dev/ajb_workspace/.git/modules/portal/hooks (samples only)"
+    ]
+  },
+  "class": "OBSERVATION"
+}
+```
