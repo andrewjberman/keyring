@@ -58,6 +58,24 @@ IRPT device queue copy (cut to P1 by the issuer at 14:2xZ) carries no P2 or P3 n
 
 Run each invocation from the worktree root. At the base: `GATE-BAD no file ...`; `GATE-REAL-BAD no file ...priority_gate.py`.
 
+
+### AMENDED 2026-10-13 ~18:5xZ (issuer; no gate limb graded it, no new order added) -- rulings on rows D1-W44-S1 to S5, and the re-seated slot
+
+Your first pass (commits `3535c1b9e7`, `ff621836fa`) stands as inherited state. The grant now ALSO names four more test files. Rulings:
+- **S2 (five failing tests outside the grant): GRANTED.** In `test_demque_extend_future.py`, `test_demque_extend_guard.py`, `test_demque_lag_report.py` and `test_demque_yahoo_need_class.py` add the same
+  one-line classification stub you added elsewhere (`xf._excluded_for` returns `{}`) and change NOTHING else. The folder must read 0 failed.
+- **The gate applies to CLIENT requests only.** A request whose `need_class` is `non_client` (the research app's scanner and model block, the TR comparison, positioning, pre-flight) is NOT a
+  client holding and is never gated by client priority. Apply the gate in `daily_draw` / `demand_queue` / `extend_frontier` ONLY to a request (or to the standing extension's names) that is client
+  class; a request with no `need_class` is refused by the Yahoo-side rule already. Add one test: a non-client request security with no CUSIP is NOT skipped. `--census` keeps printing
+  every file but marks each row's `need_class` and counts a non-client row's classes as `n/a` (so the census rows still add up).
+- **S1:** known and fine: `card_a_slice` filters by the requested priority itself, so P3 never enters its request; leave it.
+- **S3:** leave as is (the gate inserts the root itself).
+- **S4:** known; the drawn ADVI and R2 names are skipped tonight, which is the rule.
+- **S5 (1,093 securities with no CUSIP class P2):** they are research tickers on non-client requests: the non-client rule above removes them from the gate. For a CLIENT request a security
+  with no CUSIP stays P2 (excluded, counted).
+- **Investigation file:** `box/dell1` has moved on (t-53 and its row): MERGE it into your branch (a merge, never a rebase); the file will conflict at its end because both sides append: keep every
+  row of both sides, by id, then append your rows.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below plus your deliverables folder and this order's file. Scaffolding goes under `.scratch/`, uncommitted.
@@ -81,6 +99,10 @@ data/mdpf/scripts/demque/test_demque_daily_draw.py
 data/mdpf/scripts/demque/test_demque_rolling_tiers.py
 data/mdpf/scripts/demque/test_demque_extend_frontier.py
 data/mdpf/scripts/demque/test_demque_redraw_stale.py
+data/mdpf/scripts/demque/test_demque_extend_future.py
+data/mdpf/scripts/demque/test_demque_extend_guard.py
+data/mdpf/scripts/demque/test_demque_lag_report.py
+data/mdpf/scripts/demque/test_demque_yahoo_need_class.py
 org/missions/D8/MDPF/MDPF_DEMQUE/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
