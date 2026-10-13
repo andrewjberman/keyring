@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-13T02:15:38Z",
+ "written_at": "2026-10-13T03:16:22Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1695,7 +1695,7 @@
    "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261012_205xZ_SITEZ_PORTFOLIO_SEVEN_PROJECT_RULINGS.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-13T02:14:51Z",
    "kind": "fork",
    "context": "Three site Z seats doing dell work ended ~21:xZ 10-12 (usage limit or closed). XB-6082 waits in ~ZW's inbox; dell1's COO~W1 says it may wait for your resume. ~ZV and ~ZC owe nothing.",
@@ -1711,7 +1711,14 @@
     "evidence": {},
     "measured_at": "2026-10-13T02:14:51Z"
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-13T03:16:21Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_SITEZ_39FC_8ABA_2DA6_ZW_RESTART_FFAF_SCOPE_GUARD4_HOLD_20261013.md",
+    "crossbox": null,
+    "ruled_by": "cluster-lead",
+    "xadj": null
+   }
   },
   {
    "id": "sitez-20261013T021453Z-8aba",
@@ -1721,7 +1728,7 @@
    "source": "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/RECEIPT_OG-ap-13_sitez-ffaf_20261013.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-13T02:14:53Z",
    "kind": "fork",
    "context": "Your word was given about IAMROLES round 10. OG-ap-13 was already ruled YES by the laptop CTO (sitez-ffaf) and applied: 0 reads in 90 days, and the key reads your Teams chats.",
@@ -1757,7 +1764,14 @@
      ]
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-13T03:16:22Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_SITEZ_39FC_8ABA_2DA6_ZW_RESTART_FFAF_SCOPE_GUARD4_HOLD_20261013.md",
+    "crossbox": null,
+    "ruled_by": "cluster-lead",
+    "xadj": null
+   }
   },
   {
    "id": "sitez-20261013T021538Z-2da6",
@@ -1769,8 +1783,8 @@
    "roots": [],
    "state": "OPEN",
    "opened_at": "2026-10-13T02:15:38Z",
-   "kind": "fork",
-   "context": "Your no-modify order on integrations/bloomberg/ was lifted for GUARD-3's two edits only, so this third file needs your word. AC1 PASS, five arms (3b65362444); not merged by instruction.",
+   "kind": "act",
+   "context": "Your no-modify order on integrations/bloomberg/ was lifted for GUARD-3's two edits only, so this third file needs your word. AC1 PASS, five arms (3b65362444); not merged by instruction. Re-kinded fork->act 2026-10-13 ~03:1xZ on the laptop cluster-lead ruling (CTO_RULING_SITEZ_39FC_8ABA_2DA6_..._20261013.md): lifting the no-modify hold is Andrew's act; REC yes rides.",
    "rec": "Yes: it catches a stale custom CIX series at T-zero, the same check GUARD-3 already runs live, and it touches no Bloomberg call or schedule.",
    "scope": {
     "paths": "n/a",
