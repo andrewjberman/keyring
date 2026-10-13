@@ -1,0 +1,64 @@
+diff --git a/infra/aws/lambda/cot-pipeline/cot-satellites-characteristics-producer/lambda_function.py b/infra/aws/lambda/cot-pipeline/cot-satellites-characteristics-producer/lambda_function.py
+index 2645e2526f..f938a622ce 100644
+--- a/infra/aws/lambda/cot-pipeline/cot-satellites-characteristics-producer/lambda_function.py
++++ b/infra/aws/lambda/cot-pipeline/cot-satellites-characteristics-producer/lambda_function.py
+@@ -50,8 +50,11 @@ from __future__ import annotations
+ import json
+ import logging
+ import sys
++from datetime import datetime, timezone
+ from pathlib import Path
+ 
++import boto3
++
+ # THE ZIP MIRRORS THE REPO -- see build_package.py "THE LAYOUT" for the measurement.
+ # The producer computes `parents[4]` to find the repo root (the same arithmetic
+ # satellites_weights.py uses), so /var/task must BE the repo root: mirrored, parents[4]
+@@ -69,9 +72,47 @@ logger = logging.getLogger()
+ logger.setLevel(logging.INFO)
+ 
+ 
++def _listed(s3, bucket: str, key: str) -> list:
++    """The listed objects whose Key equals `key` exactly (a sibling that merely starts with it is not it).
++
++    A LISTING and never a head or get: an absent key under a head reads 403 unless the request itself satisfies a
++    ListBucket grant, and an s3:prefix condition is populated on a list request only. An empty result is "absent";
++    AccessDenied raises and stays loud."""
++    got = s3.list_objects_v2(Bucket=bucket, Prefix=key, MaxKeys=1)
++    return [o for o in got.get("Contents", []) if o.get("Key") == key]
++
++
++def _reattempt_skip(event: dict):
++    """HG-t-16: on {"require_partition": true} only, return a skip result or None (None = run the producer).
++
++    Bucket and keys come from the producer module's own constants and the day from its own calendar rule; nothing is
++    typed here. The scheduled fire's event carries no such key, so it makes no S3 call at all."""
++    if not event.get("require_partition"):
++        return None
++    s3 = boto3.client("s3")
++    day = producer.resolve_bbg_as_of()
++    out = _listed(s3, producer.OUT_BUCKET, producer.OUT_KEY)
++    today = datetime.now(timezone.utc).date()
++    if out and out[0]["LastModified"].astimezone(timezone.utc).date() == today:
++        logger.info("SKIP-COMPLETE bbg_as_of=%s: s3://%s/%s was written %s", day, producer.OUT_BUCKET,
++                    producer.OUT_KEY, out[0]["LastModified"])
++        return {"rc": 0, "skipped": "complete", "bbg_as_of": day}
++    missing = [k for k in (producer.BBG_CHARACTERISTICS_KEY % day, producer.BBG_MANIFEST_KEY % day)
++               if not _listed(s3, producer.BBG_BUCKET, k)]
++    if missing:
++        logger.info("PARTITION-ABSENT bbg_as_of=%s: not listed in s3://%s: %s", day, producer.BBG_BUCKET,
++                    ", ".join(missing))
++        return {"rc": 0, "skipped": "partition-absent", "bbg_as_of": day}
++    return None
++
++
+ def lambda_handler(event, context):  # noqa: ANN001 - Lambda signature
+     event = event or {}
+ 
++    skipped = _reattempt_skip(event)
++    if skipped is not None:
++        return skipped
++
+     # A QA invocation may ask for a dry run; a SCHEDULED fire never does. The producer
+     # honours --dry-run by deriving and validating without writing. `bbg_as_of` exists for
+     # a deliberate operator re-run of an older partition and is ABSENT from the scheduled

@@ -475,3 +475,11 @@ read-only `--lag-report`; `0.9.0_WK_MDPF_DEMQUE~34`, worker, LOCAL, workstream L
 extension writes); `as_of` is the max date of the price rows and is the stored max date proper. They agree on all 141 today. The week close
 recomputes each name's lag from `as_of`, prints the count of names where the two differ, and where it is non-zero `as_of` governs. **W34-S2:** the
 rolling cycle of 5 is unmeasured on real data until IRPT's history lands (2026-10-14); the week close is the first reading.
+
+**Round 9 amendment 8 (issuer, 2026-10-13 ~14:2xZ):** CTO msg 4875 rules the Bloomberg client-history need (CARD-A, 1,319 names): cut the per-security
+window cell, the P1 living-client slice first and former clients last, no new allowance, the P1 count, cells and days-to-finish printed before the first
+draw, and a number brought to the CTO if P1 alone runs past 30 days. One cell, `DQ-t-43` (`bbg_quote.quote` prices a window per security;
+`card_a_slice.py --priority P1 --out --quote`; `0.9.0_WK_MDPF_DEMQUE~35`, worker, LOCAL, workstream CARDASLICE, depends on DQ-t-25). The need's per-security
+CSV was moved out of the repo under the CTO containment ruling @0e8209c33c (client account ids), so windows are derived from the silver transactions'
+first trade date per CUSIP to the need's end 2026-06-23. Also: `rank.py` NEED_FILE and `lock.py` still name the moved CSV path (row D1-S15). The 50-cell
+scanner first slice from COO~R1 (msg 4877) is quoted and frozen @fc431ae325, the full scanner request stays filed and undrawn.

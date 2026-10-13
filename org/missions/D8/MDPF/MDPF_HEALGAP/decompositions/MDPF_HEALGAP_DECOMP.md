@@ -318,3 +318,86 @@ read and applied within one trading day". The issuer rules inside its own decomp
   **Known and accepted:** HG-t-9's check `hg_r3_rules.py --t9` asserts the 07:00Z rule and will read T9-BAD on the new tree; HG-t-9 is complete.
 - **Edges:** none into the cell. `fanout: 6 of 6 chains, cap 8`.
 - **Rollback coupling (for the half):** rolling HG-t-5 back to 06:00Z requires restoring this rule in the same act.
+
+## ROUND 4 -- the enrichment (issuer 2.0.0_SA_COO~G1, 2026-10-13 ~14:1xZ; PRD v0.3 @1c25ac7a85; CTO round-3 analysis @1f5f44b861 and its ADDENDUM 1, msg 4866)
+
+Input: `ledger/ROUND_ANALYSIS.round3.md` section 3 (four items) and ADDENDUM 1. The CTO's item numbers map to cells: item 1 = `HG-t-16`,
+item 3 = `HG-t-17`. **Item 2 (the HG-t-5 apply) is WITHDRAWN by ADDENDUM 1**: it was applied in round 3 (ledger
+`healgap-r3-act-ht5-runner-fire-1245z-20261011` CLOSED `f3afa83d59`; live rule `cot-rebalancer-runner-daily` `cron(45 12 * * ? *)` ENABLED, read
+2026-10-13T10:23:42Z; the 12:45Z fire read `SKIP-IDEMPOTENT` on 2026-10-12 and 2026-10-13), and FWD-5 grades REALIZED. **Item 4 is a carried
+obligation, not a cell** (below): nothing is built for it.
+
+### Measured at the base, 2026-10-13 ~14:0xZ
+
+- **Characteristics producer (FWD-1's pattern for D1-S16):** `satellites-characteristics-producer.tf` has one rule
+  `cot_satellites_characteristics_producer_daily` `cron(25 13 * * ? *)`, one target, one permission. The handler passes no event field to
+  `producer.main`. The role (`cot_satellites_characteristics_producer_s3`) holds one `s3:ListBucket`, on `opal-data-etfs` conditioned to
+  `bbg/*` and `bbg-testpull/tickers/*`, **no ListBucket on the cot bucket and, by design (CTO PRD ruling 13c), no GetObject on its own output**.
+  2026-10-13 13:25:14Z, 13:26:29Z and 13:28:23Z: `NoSuchKey` on `bbg/2026-10-12/characteristics.parquet` (404 at 13:33Z; last partition present
+  2026-10-09, landed 2026-10-12T11:03:03Z). The cause is upstream (site Z, weekly limit until 2026-10-14 06:00Z; the CTO's section 2).
+- **Consequence found at the cut (the HG-t-9 lesson again):** the output's own freshness cannot be read by GetObject (no grant, ruled) and a HEAD
+  under a prefix-conditioned ListBucket reads 403 for an absent key. The cell reads it by a LISTING of the exact key: the listing returns the key and
+  its LastModified, never its bytes, and an absent key is an empty listing while a missing grant is a 403 that stays loud. "Complete day" is
+  therefore defined as `characteristics.json` LastModified (UTC date) == today (UTC). The Bloomberg partition is also read by listing; the role's
+  existing `bbg/*` ListBucket already covers it, so the only new grant is one `ListBucket` on the cot bucket for the exact output key.
+- **FWD-6 census (HG-t-12, 164 scheduled pulls):** 7 EXPOSED-MANUAL rows. The census already carries, per row, the person's act and where it is listed
+  (`deliverables/0.9.0_WK_MDPF_HEALGAP~9/FWD6_CENSUS_RESWEEP_R3.md` section 3, last two columns). For `bd-asset-dim-pipeline-trigger` the machine
+  re-attempt exists since round 3 (HG-t-11: `blackdiamond-49f-asset-dim-reattempt-daily` `cron(40 22 ? * MON-FRI *)`, first guarded pair read
+  2026-10-12 22:10Z and 22:40Z). The other six are person-renewed logins.
+
+## Rule 24
+
+Domain: the two live items, one adapter per cell. Same grain: `HG-t-16` is one producer (a second rule + the handler's skip decision + one listing
+grant); `HG-t-17` is one document. State coherence: `HG-t-16` does not move the 13:25Z fire, does not change what that fire does on an absent
+partition (it still raises, loud), and does not touch holdings or the registry; `HG-t-17` writes only its document and the channel.
+
+## The cells
+
+| cell | what | serves | placement | risk | chain / slot |
+|---|---|---|---|---|---|
+| `HG-t-16` | A second rule on the characteristics producer, `cron(25 14-23 * * ? *)`, target input `{"require_partition": true}`, named by the `opal_name` builder (`etfs-cot-satellites-characteristics-producer-reattempt-hourly`). The handler, on that input only: lists `characteristics.json` and returns `SKIP-COMPLETE` when its LastModified (UTC) is today; else lists the T-1 `characteristics.parquet` and `run_manifest.json` and returns `PARTITION-ABSENT` if either is missing; else runs the producer as the scheduled fire does. AccessDenied on a listing raises. The role gains ONE `ListBucket` on the cot bucket, `StringEquals s3:prefix` the exact output key. The 13:25Z fire is unchanged. | D1-S16; FWD-1's pattern on the characteristics producer; FWD-6 (a new re-attempt in the census) | dell1 code; applied at the drain under its own never-widen pair | WORLD | A, `0.9.0_WK_MDPF_HEALGAP~13` |
+| `HG-t-17` | READ-ONLY: each of the seven EXPOSED-MANUAL pulls gets one disposition row, `RE-ATTEMPT-BUILT` (only the asset-dim row), `RE-ATTEMPT-DESIGNED` (a machine re-attempt that no cell builds: the rule time and the guard are written) or `NAMED-REASON` (none needed, because the renewal is a person's act: that act and the list it is queued on are named), each citing code `path:line` that resolves | FWD-6 | dell1, document only | LOCAL | B, `0.9.0_WK_MDPF_HEALGAP~14` |
+
+## Write sets (disjoint)
+
+- **HG-t-16:** `infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf`,
+  `infra/aws/lambda/cot-pipeline/cot-satellites-characteristics-producer/lambda_function.py`, the channel.
+- **HG-t-17:** `org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~14/FWD6_SEVEN_DISPOSITIONS_R4.md`, the channel.
+- Checks (issuer's, dry-run at the base 2026-10-13 ~14:0xZ, each BAD as expected with a GREEN control; 17 mutants of the HG-t-16 reference change and 8 of
+  the HG-t-17 document discriminated): `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R4_CHECKS/` -- `hg_r4_rules.py --t16 | --t16-iam`,
+  `hg_t16_gate.py`, `hg_t17_dispositions.py`. Reference patches that pass every `HG-t-16` check on a pristine HEAD:
+  `R4_PATCHES/t16_characteristics_tf.patch`, `R4_PATCHES/t16_handler.patch`.
+
+## Edges and fan-out
+
+No data edge between the two cells. `fanout: 2 of 2 chains, cap 8`.
+
+## Battery
+
+- `comp-schedule`: `HG-t-16` adds ten fires a day at :25 past 14Z-23Z. The first is 60 minutes after the scheduled 13:25Z fire, whose own
+  worst case (a 120 s timeout and two async retries) is about 8 minutes, so no re-attempt overlaps the fire it backs up. Each re-attempt that does
+  nothing costs one or two S3 listings.
+- `comp-iam`: `HG-t-16` adds one `s3:ListBucket` on `opal-data-cot`, exact-key `StringEquals`. A widening: the never-widen half names the statement,
+  the rollback (revert the policy) and the writer count of `characteristics.json` (one function, now two triggers).
+- `comp-adversary`: the empty-listing versus 403 distinction is the whole difference between "partition absent" and "grant missing"; the stub test
+  pins both on both buckets, and a sibling key (a `.bak`, a `.tmp`) is never read as the key.
+- C-NAMES: the one new rule name is `lib/opal_naming.py` output (`etfs-cot-satellites-characteristics-producer-reattempt-hourly`, kind `hourly`),
+  built by the `opal_name` module; the handler derives its buckets and keys from the producer module's constants and types none.
+- C-FIX-NOT-NOTIFY: no alarm, topic, send or monitor in either cell. The `SKIP-COMPLETE` and `PARTITION-ABSENT` lines are the whole record.
+
+## The issuer's acts at the drain (not cells)
+
+1. **Apply HG-t-16 (WORLD, own never-widen pair):** count the writers of `characteristics.json` first (N printed in the half); build and upload the
+   package (`build_package.py --pin`, deployed bytes read against the build input); then plan (exactly the rule, target, permission and one IAM
+   statement), apply, read the rule and the role back. The first organic read is the next day the T-1 partition arrives after 13:25Z; the driven
+   arm is a QA invoke of `{"require_partition": true}` on a day the output is complete (`SKIP-COMPLETE`) and, once a partition is missing, the
+   `PARTITION-ABSENT` line. A hand re-run to produce 2026-10-12's object is NOT an act of this round (CTO section 2).
+2. Every armed mechanism is named in the entry and read at its close (round-1 section 2.2): the new rule is the only one this round arms.
+
+## Carried obligations (not cells)
+
+- **D1-W8-S1's remediation** closes on the first live failed guard read, read when it occurs, as the organic negative arm (CTO item 4). Owner:
+  the issuer. Trigger: an asset-dim run whose `hg_guard.py` step reads rc 1 or 2 (the pull then runs). Read: that day's
+  `s3://opal-data-bd/logs/asset-dim-download-<D>.log` and the instance's result. Until it occurs the row stays OPEN and the positive arms stand
+  (round-3 act-3 L4: 22:10Z downloaded, 22:40Z `SKIP-COMPLETE`).
+- **Item 2 withdrawn** (above); nothing carried.
