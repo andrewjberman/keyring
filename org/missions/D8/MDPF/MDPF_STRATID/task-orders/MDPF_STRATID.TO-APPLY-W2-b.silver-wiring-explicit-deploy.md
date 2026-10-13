@@ -4,7 +4,7 @@
     <issued_by>2.0.0_SA_COO~S1</issued_by>
     <issued_to>0.7.0_AE_CloudOps~DELL1</issued_to>
     <date>2026-10-09</date>
-    <status>pending</status>
+    <status>complete</status>
     <project_code>MDPF_STRATID</project_code>
   </metadata>
 <direct_act>true</direct_act>
@@ -88,7 +88,7 @@ Run against the deploy tree before the first upload (both files ship together in
 <expected_criteria>APPLY-W2-b-AC1 APPLY-W2-b-AC2</expected_criteria>
 
 <proof_of_spec>
-Criterion ids: APPLY-W2-b-AC1, APPLY-W2-b-AC2. Instance at `org/missions/D8/MDPF/MDPF_STRATID/deliverables/0.7.0_AE_CloudOps~DELL1/MDPF_STRATID.TO-APPLY-W2-b.silver-wiring-explicit-deploy.proof_of_spec.json`,
+Criterion ids: APPLY-W2-b-AC1, APPLY-W2-b-AC2. Instance at `org/missions/D8/MDPF/MDPF_STRATID/deliverables/2.0.0_SA_COO~S1/MDPF_STRATID.TO-APPLY-W2-b.silver-wiring-explicit-deploy.proof_of_spec.json` (re-pointed by the issuer, AMENDMENT 3),
 validated with `python .tools/proof-of-spec-check.py <instance> APPLY-W2-b-AC1,APPLY-W2-b-AC2` BEFORE the flip. Record AC2 as
 `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming the issuer `2.0.0_SA_COO~S1`, who grades it on the report.
 </proof_of_spec>
@@ -109,4 +109,15 @@ direct_act: true -- an executor apply order, round-less, no cell.
 </preflight>
 
 **REPORT:** each safe-deploy line, both sha256 pairs, both LastModified times, the ledger leg L2 close.
+
+## AMENDMENT 3 (issuer, 2026-10-13 ~11:2xZ) -- the issuer authors the instance; the order closes, ledger leg L3 stays the issuer's
+
+- **Why.** `0.7.0_AE_CloudOps~DELL1` disclaimed the order (msg 4769: its W2-b legs closed 2026-10-09, it owes no apply) and
+  `1.0.0_SA_CTO~DELL1` directed the flip (msg 4770). The executor's evidence is the closed ledger legs and its logs; the issuer authors
+  the instance from them at `deliverables/2.0.0_SA_COO~S1/MDPF_STRATID.TO-APPLY-W2-b.silver-wiring-explicit-deploy.proof_of_spec.json`.
+  The `proof_of_spec` block above names the executor's folder; this amendment re-points it.
+- **What stays open, and whose.** Ledger `mdpf-stratid-w2-wiring-silver` L3 (the runner-log half of the served read): the issuer's, as the
+  order always said. It waits on MDPF_TAXSMA-S5 (Stage 6 dies at `lib.opal_naming` before step 6d; owner `2.0.0_SA_COO~T`), row
+  `MDPF_STRATID-D1-S10`. It is not this order's act, and no part of this order is left to the executor.
+- **Gate limb:** GATE viii on the modification (placeholders NONE) grades this amendment; no criterion or path changed, the instance path did.
 </task_order>

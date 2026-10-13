@@ -124,7 +124,7 @@ Full read: `deliverables/2.0.0_SA_COO~S1/R2_RUN_READ_20261012.md`. The 10-10 and
 | Total | 2,172,724,681.31 = base + tax + sma within a cent; Global history 0 diffs on 493 common dates x 4 series | MEASURED |
 | Condition 1 | CTO-ruled per-firm read (@5a151aacea) clean on 49financial, inflection, cottonwood; 49financial by_model 1.99 vs model_aua 1.98 | MEASURED |
 | FWD-3 organic | Global `muni` row 0.00, `held_out=[]`; the sleeve is on the unidentified list | MEASURED, grade is the CVO's |
-| Client | **NOT GRADED**: served as_of 2026-10-09 vs the 268,516,586.73 figure's as_of 2026-10-08; no same-date pre-deploy Client exists | ABSENT |
+| Client | **NOT GRADED** on the served objects: served as_of 2026-10-09 vs the 268,516,586.73 figure's as_of 2026-10-08; no same-date pre-deploy Client exists. The fold's effect on Client IS exercised on one date, with and without the fold, by seam arm B (planted divz overlap 0: total +1,370,211.85 exactly, "Client unchanged"; `st_u1_seam` SEAM-OK re-run 2026-10-13 on the live bytes) | ABSENT on served; MEASURED on the seam |
 
 - **Issuer defect:** `r2_run_read.py` applied the Client clause with no date guard against the packet's "where the date is unchanged";
   amended with a date guard and a NOT-GRADED line, controls in the read page. The CVO rules whether NOT-GRADED stands or a QA run of
