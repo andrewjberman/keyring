@@ -8763,3 +8763,87 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W84-S1 -- the granted resident_session.py does not exist; the session factory that builds the advisory is outside the grant, so the swap advisory is built in resident_worker.py
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W84-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~84",
+  "surfaced_at": "2026-10-13T18:35:38Z",
+  "one_line": "TO-AR-y-251 names infra/aws/lambda/investor-reporting/ycharts/generate/resident_session.py in <paths> and places the swap advisory in resident_session.kimi_advisory. That file does not exist at c53686ba6d; the resident session is ycharts/session/resident_session.py (kimi_advisory at :133-137), which is outside the grant. The swap advisory is therefore built in ycharts/generate/resident_worker.py (_swap_advisory, granted): a second construction of KimiAdvisory beside the session factory.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files at c53686ba6d lists ycharts/session/resident_session.py and no ycharts/generate/resident_session.py",
+      "ycharts/session/resident_session.py:133-137 kimi_advisory() builds KimiAdvisory(send=kimi_send(secret_reader(self.secrets_client)), telemetry=journal_telemetry) with no search argument",
+      "ycharts/generate/resident_worker.py _swap_advisory (worktree edit for AR-y-251) builds the same advisory with search_capability and search; suggest() calls it only when SEARCH_CAPABILITY is not None"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-251 <paths> and wiring step 2: the resident builds KimiAdvisory with search_capability and search inside resident_session.kimi_advisory, under the granted path ycharts/generate/resident_session.py.",
+  "world_is": "No such file exists under the granted path. The session factory is in ycharts/session and is not granted, so the wiring was built in the granted resident_worker.py, and the session factory and the swap advisory are two constructions of one advisory. The branch is unreachable until a capability file ships. The issuer rules whether the session factory should own the construction."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W84-S2 -- the swap wiring calls a KimiAdvisory search parameter and kimi_port.kimi_search, neither of which exists at HEAD; the AR-y-249 cell owns both
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W84-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~84",
+  "surfaced_at": "2026-10-13T18:35:38Z",
+  "one_line": "The swap wiring calls KimiAdvisory(search_capability=, search=) and kimi_port.kimi_search. Neither exists at c53686ba6d; both belong to the AR-y-249 cell, outside this grant. Until AR-y-249 lands, building the swap advisory raises; suggest() catches it, prints IRPT_RESIDENT_SWAP unavailable and runs the check lane alone, so an upload is never failed by the swap lane.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "intake/resolution_kimi.py:140-141 at c53686ba6d: class KimiAdvisory and __init__(self, *, send, telemetry, clock=time.monotonic, search_capability=None) have no search parameter",
+      "ycharts/generate/kimi_port.py at c53686ba6d defines KIMI_URL, kimi_send, journal_telemetry and secret_reader; no kimi_search",
+      "ycharts/generate/resident_worker.py suggest() wraps _swap_advisory in try/except Exception; a construction failure is one journal line and the check lane still runs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-251 wiring step 2: the resident builds KimiAdvisory with search_capability and search=kimi_port.kimi_search(...), against the fixed interface THE INTERFACE of the round.",
+  "world_is": "Both interfaces are absent at HEAD, so the swap wiring is correct only against the AR-y-249 interface and is dormant until that cell lands and a capability receipt exists. The tests use fake ports and do not exercise the construction."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W84-S3 -- the resident release builder admits a tracked ycharts/generate JSON member with no builder change, so the capability carrier needs no packaging edit
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W84-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~84",
+  "surfaced_at": "2026-10-13T18:35:38Z",
+  "one_line": "reports/build_resident_package.py copies every tracked file under ycharts/generate (tests, __pycache__, .pyc and fixtures excluded) and intake/ into the resident package, and the host checks SHA256SUMS. A capability file committed at ycharts/generate/kimi_search_capability.json would therefore ride a release pair with no builder change. The order ships no such file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "reports/build_resident_package.py:37-38 DIRS includes ycharts/generate and intake",
+      "reports/build_resident_package.py:64-68 adds every tracked file under each DIRS entry unless excluded (tests, __pycache__, .pyc, fixtures)",
+      "ycharts/generate/resident_worker.py load_search_capability reads SEARCH_CAPABILITY_FILE beside the module, the way comparison_catalogue reads templates.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-251 wiring step 2: the capability is a package member, read once at resident start, and a release pair must add it.",
+  "world_is": "The carrier is read beside the module and the builder admits it as a tracked member with no change. The release pair's own tooling and the Lambda leg were not read; release_size in the record covers the resident leg only."
+}
+]
+```
