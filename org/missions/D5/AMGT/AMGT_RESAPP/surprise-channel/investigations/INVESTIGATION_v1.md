@@ -25730,3 +25730,78 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The rows' text is unchanged; the byte-level change is what the append-only rule is about. The fix is a follow-on commit, not an amend. Whether other Edit calls on this file normalize line endings was not tested."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W420-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~420",
+  "surfaced_at": "2026-10-13T22:38:59Z",
+  "one_line": "The fill cell's source files, as first written, held raw UTF-8 characters where the face requires \\uXXXX escapes; rewritten to escapes before the commit.",
+  "spec_asserts": "AMGT-fa-1 face, section 1 (fold_text: write the characters as \\uXXXX escapes so the file stays ASCII) and section 2 bound 1 (ASCII-only source files).",
+  "world_is": "Before the rewrite, lib/research/aifill/contract.py held 12 raw non-ASCII characters (32 bytes above 127, the first at line 27) and the test module held 29 (79 bytes); orchestrate.py held none. A mechanical rewrite (each character to its \\uXXXX escape, the same runtime value) left all three files ASCII. After it: AC1 31 of 31, AC2 114 passed, commit gate clean on 4 of 4. The cause was not established.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Byte pass in the worktree before the rewrite (C:/dev/wk-resapp-420/lib/research/aifill/contract.py): 32 bytes above 127, first at line 27 (the _CHAR_MAP tuple); the test module: 79 bytes above 127, first at line 64.",
+      "After the rewrite: all three .py files decode as ASCII and parse with feature_version (3,9); lib/research/aifill/orchestrate.py had no non-ASCII bytes at any point."
+    ]
+  },
+  "notes": "Form only. The defect is in the bytes; the runtime strings are unchanged. Whether the authoring write or the write tool produced the raw characters was not established."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W420-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~420",
+  "surfaced_at": "2026-10-13T22:38:59Z",
+  "one_line": "fold_text strips before it drops non-ASCII, so a character dropped at the end of a text leaves a trailing space: fold_text of 'caf', e-acute, space, CJK character returns 'caf ' with the space.",
+  "spec_asserts": "AMGT-fa-1 face, section 1, fold_text: 'Collapse each run of spaces or tabs to one space, ... strip the ends, and drop any character still outside ASCII' (the listed order: strip, then drop).",
+  "world_is": "lib/research/aifill/contract.py fold_text runs the listed order. A probe returns 'caf ' for 'caf' + e-acute + space + a CJK character, and 'a' for 'a' + e-acute. The output is ASCII and passes validate_block (the text rule is non-empty after strip, not free of a trailing space), so no contract check fails. The cell kept the listed order rather than reordering it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Probe run at the worktree: PYTHONPATH=<worktree> python -c fold_text('caf\\u00e9 \\u4e2d') printed 'caf ' (with the trailing space).",
+      "lib/research/aifill/contract.py fold_text: the strip() call precedes the final ASCII-only comprehension."
+    ]
+  },
+  "notes": "Form only. Whether stored text should be stripped after the drop is for the issuer to decide; the cell did not change the listed order."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W420-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~420",
+  "surfaced_at": "2026-10-13T22:38:59Z",
+  "one_line": "build_document catches Exception from a builder, not BaseException, so a KeyboardInterrupt or SystemExit raised by a builder propagates out of build_document.",
+  "spec_asserts": "AMGT-fa-1 face, section 1, orchestrate.py: 'No exception from a builder escapes build_document.'",
+  "world_is": "lib/research/aifill/orchestrate.py _build_one wraps the builder call in except Exception, so a KeyboardInterrupt or SystemExit is not converted to a NONE block with a reason. The cell's tests raise ValueError, RuntimeError and a ModelError subclass and do not exercise this path. The narrower catch keeps an operator interrupt from being recorded as a block reason; the issuer decides whether the literal line should win.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/orchestrate.py _build_one: 'except Exception as exc' around the builder(ctx) call, in the worktree C:/dev/wk-resapp-420 (uncommitted at filing; committed with this row).",
+      "lib/research/aifill/tests/test_contract_orchestrate.py test_no_builder_exception_escapes_build_document raises RuntimeError; no test raises a BaseException."
+    ]
+  },
+  "notes": "Form only. No change to the listed behaviour was made beyond the Exception catch."
+}
+```
