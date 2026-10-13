@@ -6571,6 +6571,118 @@ carries none.
     "spec_asserts": "FWD-21 catalogs the 11 SERVE rows of list v3 and gives WITHHOLD prefixes no data row.",
     "world_is": "Andrew's word makes all 24 prefixes servable to Opal principals, so 13 prefixes the admitted PRD withholds are now servable.",
     "notes": "Not a defect of round 10: the round is FROZEN and drains as cut (rule 27). 1.0.0_SA_CTO~Z answers at the round-10 analysis with a PRD addendum widening FWD-21 to list v4 (all 24 prefixes, row 8 as its table prefixes), once v4 reaches box/sitez, and the issuer cuts the 13 added rows in round 11. The matching grant change (all 24 to Opal principals, non-Opal refused) is NFRA_OPLGTW's round 37 (Z5). The issuer disarms by citing that analysis."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W33-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~33",
+    "surfaced_at": "2026-10-13T20:54:25Z",
+    "one_line": "FWD-20 history_depth cannot be read by a listing for any of the 11 (a) tools: the served portal objects are single overwritten JSON files whose keys carry no date segment, and the live-queried silver rows have no served artifact; depth is recorded as claim absent with its reason on 11 of 11, freshness measured on 5 of 11.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read-only list-objects-v2 (auto-paginated, keys and dates only) of s3://opal-data-portal-v2/platinum/mdpf/global/ returns 5 objects, all LastModified 2026-10-13T13:50:5xZ and no date segment in any key; platinum/etfs/positioning_data.json is 1 object (LastModified 2026-10-13T13:01:41Z); json/benchmarks/model_portfolio_benchmarks.json is 1 object (2026-10-13T14:39:03Z). Output of workflows/atom_decomposition/tool_index/measure.py: 5 tools measured, 14 objects.",
+        "The only dated keys near these tools are platinum/mdpf/archive/aggregate_aua/<YYYY-MM-DD>.json (first key 2024-11-01; 444 objects under archive/, all written 2026-08-06): a frozen archive (catalog row mp.14.archive, DENY, Andrew order 2026-08-06), so its latest key-date is not the live object's freshness; using it for depth would break the order's rule that both mappings share one basis and method.",
+        "emitted catalog tool_index: history_depth claim absent on 11 of 11 (a) entries, freshness measured on 5 (the portal tools, method last-modified) and absent on 6 (3 Schwab, 1 Black Diamond, gateway_query_catalog, opal_asker_query)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-c-8 Part 1: depth = the earliest date under the index's served prefix, freshness = the latest date, read by a listing, both mappings sharing one basis and method.",
+    "world_is": "The served portal objects are overwritten in place; a listing yields only the object's own write time, so freshness is measurable by last-modified and depth is not. How far back each series goes is inside the body, which the order's bound 4 forbids reading. A tool that must show depth needs the producer to publish it (a dated key family or a manifest field).",
+    "notes": "No (a) entry has a measured history_depth at this vintage. The issuer decides whether FWD-20's depth is satisfied by the honest absent claim (c10_index.py accepts it) or needs a producer-side depth field in a later round."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W33-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~33",
+    "surfaced_at": "2026-10-13T20:54:25Z",
+    "one_line": "MX-c-8 classification calls the order's table does not settle: gateway_query_catalog and opal_asker_query read catalogued channel rows but neither a read_tool row nor catalog_ref_for_tool names a row id for them; status and identity probes (whoami, graph_status, ycharts_freshness) and the catalog readers opal_discover / opal_describe sit between (b) and (c).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "catalog_ref_for_tool(gateway_query_catalog) = 'catalog:app/refs/DATA_CATALOG.yaml' and for opal_discover / opal_describe the same string (portal_index/integration.py:101, opal_discover/integration.py _CATALOG_REF): a file reference, not an entity or key of a row. opal_asker_query declares no catalog ref (native tool, app/tools.py:1230).",
+        "Chosen and recorded in workflows/atom_decomposition/tool_index/members.yaml: gateway_query_catalog and opal_asker_query are (a) with entity mp.04.model-portfolio-timeseries (the row E-14 names this tool for) and links = the 26 non-deny channel rows; opal_discover and opal_describe are (b) owner NFRA_MCPINDEX (they read the catalog file, a row-less source); whoami is (b) (reads the caller's Graph profile); graph_status and ycharts_freshness are (c) (they return service health and session liveness, no dataset); opal_data_refresh_status is (b).",
+        "Partition from the census: N=67, a=11, b=44, c=12, sum 67; c10_index.py exit 0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-c-8 Part 1: an (a) entity is picked from rows that already name the tool as read_tool or from the owning integration's catalog_ref_for_tool; (c) is 'not a data read (sends, writes, uploads or administers)'.",
+    "world_is": "For two query tools and the two discover tools no row id is named by either source, and three probe tools neither write nor read a dataset. Each was placed by what its definition does and the call is written beside it; a different call moves a tool between members without changing N or the sum.",
+    "notes": "Owners used for (b): NFRA_MCPINDEX (read_site_file, per need E-22; opal_discover, opal_describe), NFRA_CLDGRPH (graph_cypher, per its integration docstring), NFRA_OPLGTW (schwab_get_access), `unowned` for the other 39 (Microsoft 365 mail, calendar, OneDrive, SharePoint and Teams reads, five YCharts data reads, opal_data_refresh_status, validate_ssavail_attachment)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W33-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~33",
+    "surfaced_at": "2026-10-13T20:54:25Z",
+    "one_line": "The (a) tool_index entries carry `entity: <catalog row id>` (the order's shape), so the same entity id now appears twice in DATA_CATALOG.yaml; the first full-suite run read 3 NEW failing IDs in tests/test_portal_index.py (KeyError 'accessor'), because a walker that keys a dict by `entity` kept the tool_index copy. Mitigated by emitting tool_index BEFORE silver_datasets / portal_datasets; any first-wins or non-ordered reader of `entity` still collides.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Full gateway suite, first run (tool_index emitted after portal_datasets): NEW tests/test_portal_index.py::test_portal_tools_catalog_refs_resolve (assert {} == five tools), ::test_model_benchmarks_catalog_row_names_its_reader and ::test_etf_positioning_catalog_row_and_entitlement (KeyError: 'accessor' at test_portal_index.py:644 and :733). tests/test_portal_index.py _catalog_entities() does `found[node['entity']] = node` over the whole YAML, last wins.",
+        "After moving the tool_index block ahead of silver_datasets (catalog lines: tool_index 1359, silver_datasets 1844, portal_datasets 1964): tests/test_portal_index.py, tests/test_admin_gateway_breakdown.py and tests/test_opal_discover.py read 56 passed.",
+        "admin_gateway_breakdown._catalog_read_tool_rows() keys by `entity or key` into a SET per read_tool, so it is order-independent: it now links each (a) tool to its entity through the tool_index entry as the order intends."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-c-8 Part 1: an (a) entry carries `entity: <the id of that catalog row>` and `read_tool`, so the breakdown walker reads the link.",
+    "world_is": "`entity` is also the identity key of the rows it points at; a consumer that builds an entity-keyed dict over the whole catalog sees two mappings under one id, and which one it keeps depends on file order. Only the emitter's section order stands between the catalog and that collision.",
+    "notes": "Disarm options for the issuer: name the tool_index link field differently from `entity` (c10_index.py reads e.get('entity') so the check script moves with it), or make the entity-keyed readers skip the tool_index section. Not done here: the check scripts are not the worker's to edit and tests/test_portal_index.py is outside the order's paths."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W33-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~33",
+    "surfaced_at": "2026-10-13T20:54:25Z",
+    "one_line": "failing_ids_full.txt (41 IDs) is stale on this device: the full gateway suite reads 7 NEW failing IDs (48 failed, 739 passed) that fail identically on the UNMODIFIED base edc544ba75, so MX-c-8 owns none of them; a drain that grades by delta will refuse on them every round.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Full suite in the worktree after the MX-c-8 changes: '48 failed, 739 passed, 138 warnings, 34 subtests passed in 267.07s'; suite_delta.py --shape full: 'new 7 fixed 0 baseline 41'. NEW: test_browser_oidc::test_oga3_ac01, test_mail_route::test_graph_get_only_fails_closed and ::test_transcript_and_ms_bearers_refused_on_mail_prefix, test_teams_route::test_methods_and_unknown_routes and ::test_new_routes_are_get_only_and_allowlist_still_refuses_neighbours, test_transcript_route::test_bearer_constant_time_own_prefix_only, test_admin_gateway_breakdown::test_real_server_tool_inventory.",
+        "Base control: the gateway dir of edc544ba75 extracted by git archive, same python: the six route tests FAIL there (404 where 405 is asserted, and test_oga3_ac01 a FileNotFoundError on a repo-level path), and tests/acceptance + tests/test_admin_gateway_breakdown.py read '2 failed, 22 passed' at base with test_real_server_tool_inventory failing ('assert 5 == 4' channels): an earlier acceptance test leaves an integration registered. In the worktree the same pair reads the same '2 failed, 22 passed' with test_real_server_tool_inventory among the failures; run alone it passes.",
+        "The three test_portal_index.py IDs and nothing else were caused by MX-c-8 (row NFRA_MCPINDEX-Z-W33-S3) and are fixed: they pass after the emit-order change."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-c-8 bound 3: the suite is graded by failing-ID delta against the MX-x-6 baseline (failing_ids_full.txt); a NEW failing ID is the worker's to fix.",
+    "world_is": "On this device and interpreter the unmodified tree already fails 7 IDs that the recorded baseline does not list, so the delta cannot separate this cell's effect from the baseline's age. The attribution above (7 pre-existing, 0 new from MX-c-8) rests on the base-copy control, not on the delta.",
+    "notes": "Not fixed here: the 7 failures are outside this order's paths and its tests. The baseline was recorded at commit 9a072fa60a (41 failed, 711 passed); this run is 48 failed, 739 passed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W33-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~33",
+    "surfaced_at": "2026-10-13T21:11:21Z",
+    "one_line": "A measured freshness claim cannot carry the order's `basis: s3://<bucket>/<prefix>` for the platinum portal keys: the commit-time naming gate (ENFORCE) REFUSED the 4 new lines naming platinum/etfs/positioning_data.json and platinum/mdpf/ as NEW out-of-pattern S3 keys, so the claim's basis is s3://<bucket>/ and its `row` names the catalog row whose own key is the prefix.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit naming limb, ENFORCE (org/mcp/naming-gate.enforce present): 'NAMING REFUSE infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:1405 s3://opal-data-portal-v2/platinum/etfs/positioning_data.json -> etfs/{scope}/platinum/positioning_data.json' and ':1539 / :1558 / :1577 s3://opal-data-portal-v2/platinum/mdpf/ -> mdpf/{scope}/platinum/', each 'NEW and OUT-OF-PATTERN as S3Key: REFUSE'; the fifth line, json/benchmarks/model_portfolio_benchmarks.json, graded RAISE-EXISTING (carried at HEAD in data/served_freshness_config.yaml) and passed.",
+        "The same two refusals hit tool_index/members.yaml (measure prefix) and tool_index/measured.yaml (basis) in the first attempt (66 literals graded, 12 REFUSE); both files now type no S3 key: members.yaml names `measure: {row: <channel row id>}`, measure.py reads the key from that catalog row.",
+        "Resolution kept inside the order's paths: basis = 's3://opal-data-portal-v2/' (a CONFORMANT bucket literal) and the claim keeps `row: <id>`; the row's `key` in the same catalog is the prefix that was listed. c10_index.py grades claim and value only, exit 0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-c-8 Part 1: measured and inferred claims carry `basis: s3://<bucket>/<prefix>`.",
+    "world_is": "Pre-LGIC served keys (platinum/...) cannot be re-typed in a new line under the naming gate without an R20 register entry or a registry row, which are outside this order's paths. A consumer that wants the full prefix joins the claim's `row` to that row's `key`.",
+    "notes": "If the issuer wants the literal prefix in the claim, the route is an R20 register entry (or registry rows) for the platinum/ layouts, then one emitter line; Rule 30 puts those keys' conformance in their own migration project."
   }
 ]
 ```

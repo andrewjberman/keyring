@@ -10,12 +10,16 @@
  "subject": "Active Cottonwood set + reverse match for MDPF_DEMQUE (window P1, exclude P3)",
  "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_DELL2_ACTIVE_COTTONWOOD_SET_FOR_DELL1_20261013.md",
  "opened_at": "2026-10-13T21:05:22Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-13T21:11:40Z",
   "bus_message_id": "584841f6-81c0-4a7d-abe5-34309458b749"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-13T21:21:48Z",
+  "by": "1.0.0_SA_CTO~DELL1",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,

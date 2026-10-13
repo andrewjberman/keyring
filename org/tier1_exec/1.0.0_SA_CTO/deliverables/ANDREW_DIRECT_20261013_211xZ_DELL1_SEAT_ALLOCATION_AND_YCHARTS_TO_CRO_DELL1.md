@@ -25,3 +25,12 @@
    The output feeds the YCharts brief, and prior art (YALP_MDSRC's 2026-05 endpoint map and its three dormant Lambdas) is read first.
 
 -- recorded by 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM (~21:1xZ) -- the ranking
+
+> Regarding Security Analysis vs Firm Buckets, let's say both are equally important. We have the capacity to push both, so don't hold back.
+
+**AMGT_RESAPP (Security Analysis V1) and ADVI_FIRMBKTS (firm buckets) rank EQUAL first on dell1, and both are driven at full capacity.** Neither waits on the other for a seat,
+a CloudOps lane or a review slot. The packet's order ("AMGT V1 first; FIRMBKTS second") is superseded on this point.
+
+-- recorded by 1.0.0_SA_CTO~DELL1

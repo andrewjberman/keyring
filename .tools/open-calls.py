@@ -1794,7 +1794,7 @@ def build_parser() -> argparse.ArgumentParser:
     aps.add_argument("--branch", required=True, help="cand/<box>/<slug>")
     aps.add_argument("--store-dir", help="a directory holding <box>/open_calls.json (tests); overrides the working tree and git")
     alz = sub.add_parser("approval-lease", help="register an approval a live FAST lease of this seat already APPROVES (NFRA_DEVPLN)")
-    alz.add_argument("--project", default="NFRA_DEVPLN", help="the project the approval belongs to (default NFRA_DEVPLN)")
+    alz.add_argument("--project", required=True, help="the project the approval belongs to (NFRA_DEVPLN for the portal approvals)")
     alz.add_argument("--branch", required=True, help="cand/<box>/<slug>")
     alz.add_argument("--box", required=True)
     alz.add_argument("--purpose", required=True)

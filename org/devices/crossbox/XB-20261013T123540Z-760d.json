@@ -10,12 +10,16 @@
  "subject": "AMGT_HARVST HVST-bz-6 wsj/barrons sessions; halves COO@154e2ff047 CTO@62d4df161e SIGNED",
  "body_path": "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-bz-6.wsj-and-barrons-sessions-from-the-existing-credential.md",
  "opened_at": "2026-10-13T12:35:40Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-13T12:37:07Z",
   "bus_message_id": "febfb50f-aa86-4971-bb06-4e768a43c331"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-13T21:25:51Z",
+  "by": "0.7.0_AE_CloudOps~ZW",
+  "bus_message_id": "40b591a9-a7f2-47d2-9f69-fde7a059ecb5"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
