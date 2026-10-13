@@ -31966,3 +31966,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "STATE: nothing applied. The apply gates measured now: halves signed (yes), portal condition (a) (0), markers (0 of 271 on 15 trees), live digest (unchanged). W365-S1's stale OPEN marker no longer appears on any readable worktree. D2-S139 stays ARMED: the apply changes what a client-facing search returns, and the direct proof after it (one synthetic tail search through the deployed function) is the first read of the served behaviour; I disarm S139 and this row at that proof, or state why not. The step-0 MATCH is re-read by the apply seat at its own start. The scratch copies of the landed directories (client-derived counts only; no tracked file) sit in my scratchpad outside the repo."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S142",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-13T17:41:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-IB-pr-516: irpt-directory-search is applied and live at the signed digest, but its step-6 direct proof (a synthetic directory_fixture through the deployed function) cannot run: the deployed guarded entry has no fixture path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live CodeSha256 rXHDDz/ZhY2pZFuLDcrPisAs69IuTd6p8Rwflxhvwyw= (LastModified 2026-10-13T17:35:54Z) equals the signed digest; apply 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed.'; targeted re-plan No changes; deployed zip vs the pre-apply live zip: 24 vs 24 members, changed [handler.py] only",
+      "get-function-configuration Handler is entry.lambda_handler (the guarded entry), not handler.lambda_handler; a bare {op, q, resolved_scope, directory_fixture} event returns ok false, operation search, state UNAVAILABLE, public_reason_code CONTRACT_VERSION (response sha256 50cccb86..., 396 bytes): the contract-version guard refuses before any handler runs",
+      "comp-find 'directory_fixture' over infra/aws/lambda/investor-reporting: 7 hits in 5 files (authz_dispatch.py, directory/handler.py, holdings/handler.py and two test files); none is in directory/entry.py or served.py: the guarded boundary takes ctx.directory from its own loader (entry.py:218), so the deployed function offers no fixture path",
+      "the seat-gates crossbox check printed STOP-in-ENFORCE (WARN mode proceeded): OPEN-CALL XB-20261011T062718Z-c908 (ACKED, dell1 to sitez) matched the generic token 'directory', and an OPEN-DEPLOY hit that includes this order's own ledger sentinel"
+    ]
+  },
+  "spec_asserts": "Step 6: two direct lambda invokes of the deployed function with a directory_fixture, over a synthetic directory with no live read; (i) a tail search returns exactly one ACCOUNT entry, (ii) a resolve returns exactly one account.",
+  "world_is": "One invoke of the two allowed was spent and was refused at the contract-version guard. Making a request the guard admits needs a verified principal's trusted headers and reads the live directory and profile tables, which this order's bounds exclude (no live directory read, no IAM or grant change); this seat forged nothing. The function is healthy: it imported the new handler.py and answered with a well-formed status envelope, no TypeError and no 5xx. The behaviour change itself is evidenced offline by the packet's four replay arms. Branch B (S3 version aPcJ4jPQL9NheWPRbhhrw0dAM35ywQWc, redeploy by the same Terraform path) is ready and was NOT run: a proof that cannot be taken is not a proof that disagreed. Ledger L5 and the order stay open for the issuer's ruling: accept the replay arms as the proof, amend the proof to a path the deployed entry serves, or restore."
+}
+```
