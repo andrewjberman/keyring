@@ -192,3 +192,23 @@ move it. It folds into the item-3 owed row for IRPT_PERFADPT's COO, under the sa
 read simulated allowed".
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 10 (2026-10-13 ~00:4xZ) -- the Inflection performance AccessDenied is NOT act 4's; no rollback of act 4
+
+**Relayed claim:** `1.0.0_SA_CTO~DELL2` msg 6702 (via MSTR msg 4586) says Inflection Performance answers fail "since the act-4 IRPT leg": `irpt-performance-adapter` is denied
+`s3:ListBucket` on `opal-data-inflection` by `DenyForeignFirmPrincipals`.
+
+**Measured by this seat, 00:4xZ:**
+- **The adapter's deploy time:** `lambda get-function` reads LastModified **2026-10-12T22:35:06Z**, CodeSha256 `abep4h7R`. That is dell2's IRPT_BCKEND `TO-IB-pr-487` deploy,
+  ledger `20261012T2226Z_irpt-perf-adapter-claim-chain-ib-pr-487-20261012-r3`. Its own record reads "orion-only MOVES" and "Inflection path UNEXERCISED-LIVE".
+- **The denials:** "explicit deny" events in the adapter log over 4 days number 6, **all at 2026-10-13 00Z**, and 0 before. The act-4 IRPT leg ran 14:03-14:13Z on 10-12.
+- **The act-4 flip** (`69679b90e3`) changed only `OWNERSHIP_READ["49financial"]` and `CANONICAL_PLATINUM_BUCKETS` in `loaders.py`. Inflection's `bucket_for` is
+  untouched.
+- **The Inflection bucket's** `DenyForeignFirmPrincipals` admits `role/*-inf-*` and a named list, and the adapter's role is in neither.
+
+**Ruling:** the act-4 units and act 2 are NOT rolled back. The fault is the 22:35Z release reading Inflection's bucket directly. Recommended to dell2:
+- **now:** roll back to the version its own ledger names (`kMB8xCI9`), and read one Inflection answer;
+- **later:** re-ship with a firm-scoped read under a never-widen pair.
+Any admission of the adapter's role to `opal-data-inflection` is a fence widening, which needs its own pair. dell1 edits no Inflection bucket policy without one.
+
+-- 1.0.0_SA_CTO~DELL1
