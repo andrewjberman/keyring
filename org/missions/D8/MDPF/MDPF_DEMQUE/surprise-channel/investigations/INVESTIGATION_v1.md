@@ -1979,6 +1979,47 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "git diff 83c3920c82 box/dell1 -- org/missions/D8/MDPF/MDPF_DEMQUE/surprise-channel/investigations/INVESTIGATION_v1.md: empty"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W41-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~41",
+    "surfaced_at": "2026-10-13T17:22:57Z",
+    "one_line": "The order says to merge box/dell1 into the worker branch before appending rows; the worker standing rule forbids a merge, so this worker did not merge (same finding as MDPF_DEMQUE-D1-W40-S3) and appended its row on its own branch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-49 REFUSAL CLAUSE: 'Merge box/dell1 into your branch (a merge, never a rebase) before you append rows'.",
+    "world_is": "The worker standing rules say never push, merge, rebase, checkout or clean. box/dell1 (05874c6522) is 17 commits ahead of the worker branch merge-base 932f896786, and the investigation file is identical between HEAD and box/dell1 (git diff --stat HEAD box/dell1 empty), so the append cannot conflict now. No merge was run; the drain reconciles the row against box/dell1.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff --stat 932f896786 box/dell1 -- investigations/INVESTIGATION_v1.md: empty at 2026-10-13T17:22Z",
+        "git rev-list --count HEAD..box/dell1: 17"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W41-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~41",
+    "surfaced_at": "2026-10-13T17:22:57Z",
+    "one_line": "A held window that starts before 2012-01-01 cannot be requested as written: bbg_quote._validate refuses a security start before the floor, so porting_test.py clamps the draw window start to 2012-01-01 (held_window). No current name is affected.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO DQ-t-49 BUILD step 1: draw the 5 intervals inside each security's held window [valid_from, valid_to]; the request validates under bbg_quote._validate.",
+    "world_is": "bbg_quote._check_window refuses any security start before WINDOW_FLOOR 2012-01-01. The real index (index/index.parquet, 326 rows) has min valid_from 2013-04-08, so the clamp changes no draw today: the request has window_start 2013-05-10 and 2497 cells. The clamp is a worker choice the order did not state; the alternative (drop such names) was not taken.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/porting_test.py held_window() at worker HEAD (this commit)",
+        "data/mdpf/scripts/demque/bbg_quote.py _check_window: WINDOW_FLOOR 2012-01-01 refusal",
+        "real index read 2026-10-13: 326 rows, min valid_from 2013-04-08, max valid_to 2026-10-12"
+      ]
+    }
   }
 ]
 ```
