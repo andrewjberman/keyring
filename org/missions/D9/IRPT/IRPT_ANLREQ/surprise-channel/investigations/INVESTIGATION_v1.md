@@ -7815,3 +7815,87 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W80-S1 -- AR-y-247's grant names only the investigation file, so the code the cell requires is outside the worker's write surface and AC1 cannot be met
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W80-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~80",
+  "surfaced_at": "2026-10-13T17:53:44Z",
+  "one_line": "The TO-AR-y-247 <paths> grants only surprise-channel/investigations/INVESTIGATION_v1.md, but the cell's wiring (infra/aws/lambda/investor-reporting/ycharts/session/resident_session.py kimi_advisory), caller (infra/aws/lambda/investor-reporting/intake/upload_suggestions.py suggest_for) and the new test file (infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_swap_suggestions.py) are not granted; no code was edited, so AC1 is BLOCKED until the issuer amends the grant.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task-orders/IRPT_ANLREQ.TO-AR-y-247.swap-suggestions-wired-and-called.md lines 59-61: <paths> holds only org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md (worktree HEAD 85f43d3456)",
+      "task-orders/IRPT_ANLREQ.TO-AR-y-247.swap-suggestions-wired-and-called.md line 39 (cell step 3) and line 40 (cell step 4) name upload_suggestions.py suggest_for and the new ycharts/generate/tests/test_swap_suggestions.py",
+      "ycharts/session/resident_session.py:133-137 kimi_advisory() is where step 2 lands; the file is outside <paths>"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-247 Bounds: the grant is exactly the <paths> plus the ~80 deliverables folder and the order's status flip; a path the worker needs that it lacks is a BLOCKING row on that criterion, never an override.",
+  "world_is": "The three code paths the cell needs are not in the grant. The worker wrote no code and no test. AC1 cannot pass: the swap test file does not exist and the r22 record is filed only as its own deliverable. AC2J is judgment and has no change to grade."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W80-S2 -- the cell's file paths are shorthand; the code lives under infra/aws/lambda/investor-reporting, and resident_session.py sits in ycharts/session, not ycharts/generate
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W80-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~80",
+  "surfaced_at": "2026-10-13T17:53:44Z",
+  "one_line": "TO-AR-y-247 names intake/resolution_kimi.py, intake/upload_suggestions.py, ycharts/generate/resident_worker.py, ycharts/generate/resident_session.py and ycharts/generate/kimi_port.py relative to no root; in the worktree they are under infra/aws/lambda/investor-reporting/ (ycharts/session/resident_session.py for the session), and the opal_ai submodule directory is empty here, so it is not the place to look.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree -r --name-only HEAD (worktree) lists intake/upload_suggestions.py only as infra/aws/lambda/investor-reporting/intake/upload_suggestions.py; git ls-tree HEAD opal_ai shows a 160000 submodule pin 90ca424f and the worktree opal_ai directory holds no files",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py:23-24 sets IR = infra/aws/lambda/investor-reporting and INTAKE = IR + /intake",
+      "Grep KimiAdvisory( over infra/aws/lambda/investor-reporting/ycharts returns ycharts/session/resident_session.py:137 and ycharts/generate/tests/test_y4_check_gate.py:138 only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-247 Read first and cell step 1: the named files are the resident's and the suggestion lane's code, read at their paths.",
+  "world_is": "The files exist at the prefixed paths and were read there (read-only). The unprefixed names in the order do not resolve from the worktree root, so a worker taking them literally finds no file."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W80-S3 -- no existing mechanism carries a search capability into the resident at start; resident_session.kimi_advisory passes none and the only read-at-start carrier is a Secrets Manager key
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W80-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~80",
+  "surfaced_at": "2026-10-13T17:53:44Z",
+  "one_line": "TO-AR-y-247 step 1 asks for the one existing mechanism by which the resident reads a search capability at start; none was found: kimi_advisory (resident_session.py:133-137) reads only the Kimi key by name through kimi_port.secret_reader (kimi_port.py:19, :65-69), which returns a key string, not a capability dict with verified, qa_receipt_sha256 and request_fields. The carrier must be named by the CTO; the worker invents none.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/session/resident_session.py:133-137 kimi_advisory(): KimiAdvisory(send=kimi_send(secret_reader(self.secrets_client)), telemetry=journal_telemetry), no search_capability argument",
+      "intake/resolution_kimi.py:141-145 KimiAdvisory.__init__ takes search_capability=None and deep-copies it; :159-165 swap returns KIMI_WEB_SEARCH_UNVERIFIED unless the dict has model, verified true, qa_receipt_sha256 and request_fields",
+      "ycharts/generate/kimi_port.py:19 KIMI_SECRET_ID = astn/kimi/api-key; :65-69 secret_reader returns a SecretString read by name"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-247 Read first step 1: record how_the_capability_would_arrive as one existing mechanism, or say there is none; no secret or environment variable of the worker's invention.",
+  "world_is": "KimiAdvisory already accepts and gates the capability; the resident has no existing read-at-start carrier for it. The wiring has no value to read until the CTO names the carrier and the QA receipt exists (AR-y-246)."
+}
+]
+```
