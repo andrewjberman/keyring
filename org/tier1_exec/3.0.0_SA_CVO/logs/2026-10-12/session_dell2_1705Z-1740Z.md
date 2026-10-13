@@ -176,3 +176,9 @@ condition on a check.
 | item | result | commit |
 |---|---|---|
 | IRPT_BCKEND round 176 | ADJUDICATION_v77 + REMEDIATION_v53: the live per-firm packages are not HEAD, 4 live members equal no historical blob (provenance to the CTO); the minimal-pair ruling agreed; 5 dismissed (incl. v52 W359-S1), 2 ARMED. Slug sent | c5de16f70d |
+
+## Addendum, 2026-10-13 08:31Z to 08:37Z (msg 6865)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 177 | ADJUDICATION_v78 + REMEDIATION_v54: minimal packages built, nothing applied; the 4 unattributed members are CRLF copies (v53 W361-S3 closed); W363-S2 to the CTO; 7 dismissed. Slug sent | 936ddf2b3c |
