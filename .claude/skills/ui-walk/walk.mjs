@@ -428,6 +428,24 @@ async function firstListedClient(page, combo) {
     await page.waitForTimeout(250)
   }
 }
+// --first-client, AMENDMENT 2: when the empty search lists no client, ONE letter is typed at a time, in this order, and the
+// first client the first letter that lists one is walked. Only counts and the empty-state words are kept (no client name).
+const FIRST_CLIENT_LETTERS = ['a', 'e', 'i', 'o', 'n', 'r', 's', 't']
+async function listedOptionState(page, combo) {
+  const listId = await combo.getAttribute('aria-controls').catch(() => null)
+  return page.evaluate((id) => {
+    const list = id ? document.getElementById(id) : null
+    const count = list ? list.querySelectorAll('[role="option"]').length : 0
+    const words = list ? (list.innerText || '') : ((document.body.innerText || '').match(/\b(?:no|none)\b[^\n.]{0,60}/i) || [''])[0]
+    return { count, empty: count === 0 ? String(words).replace(/\s+/g, ' ').trim().slice(0, 160) : null }
+  }, listId).catch(() => ({ count: null, empty: null }))
+}
+async function clearSearchBox(combo) {
+  await combo.click().catch(() => {})
+  await combo.press('Control+A').catch(() => {})
+  await combo.press('Backspace').catch(() => {})
+  await combo.fill('').catch(() => {})
+}
 
 // ---- FWD-1: one company picked BY ITS NAME, then the thread hop by hop ----------------------------------------------
 // The name is found by its price bar's row, on Trending x Price. Never by
@@ -1670,9 +1688,26 @@ try {
         // --first-client: the first client the empty search lists is walked as a named one; its name stays out of the terminal
         let walkList = opt.clients
         if (opt.firstClient && !opt.clients.length) {
-          const first = await firstListedClient(page, combo)
-          if (first) { firstName = first; walkList = [first] }
-          else findings.push({ step: 'first-client', check: 'walker:first-client-absent', claim: 'measured', observed: 'the empty client search listed no client to walk', rule: '--first-client walks the first listed client' })
+          let first = await firstListedClient(page, combo)
+          if (!first) {
+            // AMENDMENT 2: the empty search listed no client; type one letter in turn and take the first client a letter lists
+            const emptySt = await listedOptionState(page, combo)
+            const perLetter = [{ letter: '(empty)', options: emptySt.count, empty_text: emptySt.empty }]
+            log(`FIRST-CLIENT empty search: ${perLetter[0].options} option(s) listed`)
+            for (const letter of FIRST_CLIENT_LETTERS) {
+              if (!timeLeft()) break
+              step = `first-client letter ${letter}`
+              await clearSearchBox(combo)
+              await combo.pressSequentially(letter, { delay: 40 }).catch(() => {})
+              first = await firstListedClient(page, combo)
+              const st = await listedOptionState(page, combo)
+              perLetter.push({ letter, options: st.count, empty_text: first ? null : st.empty })
+              log(`FIRST-CLIENT letter "${letter}": ${st.count} option(s) listed`)
+              if (first) break
+            }
+            if (first) { firstName = first; walkList = [first] }
+            else findings.push({ step: 'first-client', check: 'walker:first-client-absent', claim: 'measured', observed: `the empty client search listed no client to walk; one letter at a time listed: ${perLetter.map((p) => `${p.letter}=${p.options}`).join(', ')}`, letters: perLetter, rule: '--first-client walks the first listed client' })
+          } else { firstName = first; walkList = [first] }
         }
         for (const client of walkList) {
           if (!timeLeft()) break
