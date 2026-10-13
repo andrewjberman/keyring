@@ -26027,3 +26027,99 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Filed by the worker; the issuer owns the disposition. The builder and its tests are unchanged from b2a160c355."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W416-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~416",
+  "surfaced_at": "2026-10-13T22:58:57Z",
+  "one_line": "The cell names StatTile.tsx as the page's dash tile, but StatTile is mounted nowhere on the page; the live header's dash tiles are HeaderCards.tsx ABSENT tiles, so the visible reason was added to both.",
+  "spec_asserts": "AMGT-bk-3 (round 104): the dash tile is StatTile.tsx (formatStatValue returns null and the reason shows on hover only), and its body shows the reason in visible words under the dash; the CVO's bare `--` header tiles are the page's header tiles.",
+  "world_is": "portal@24877b67: a native Grep for '<StatTile' under src/pages/SecurityAnalysis finds no element use, only StatTile.tsx's own definition. SecurityOverlay.tsx:298 mounts HeaderCards, whose ABSENT tile body is a bare `--` with the reason only in title and aria-label. Both tiles now carry a visible data-stat-reason line: StatTile.tsx (unmounted, as the cell names) and HeaderCards.tsx (the live tile).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "native Grep '<StatTile' over C:/dev/wk-resapp-416/portal/src/pages/SecurityAnalysis at portal@24877b67: definition only, no element use",
+      "portal@24877b67 components/SecurityOverlay.tsx:298 renders <HeaderCards bundle={bundle} />; components/HeaderCards.tsx ABSENT tile (line 178) body is a bare `--`"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. No decision here on whether StatTile should be mounted. The cell's stated edit was made in both files."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W416-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~416",
+  "surfaced_at": "2026-10-13T22:58:57Z",
+  "one_line": "The cell says an unresolved-unit tile's body reads `--`; in StatTile the body was the UNIT_NOT_RESOLVED_WORDS text served as a value, and only the header tile read `--`.",
+  "spec_asserts": "AMGT-bk-3 (2): a tile whose body reads `--` includes one whose unit is unresolved; harness check (e) requires that tile to hold UNIT_NOT_RESOLVED_WORDS in data-stat-reason.",
+  "world_is": "portal@24877b67 StatTile.tsx formatStatValue returns UNIT_NOT_RESOLVED_WORDS (non-null) for a money format with an UNRESOLVED unit, so StatTile printed the words in a SERVED tile with no dash. HeaderCards.tsx resolveFigure treats that return as null, so the header tile was the `--` tile. After the change, StatTile treats the words as the absent reason (a dash with the words beneath), matching the header. formatStatValue itself is unchanged, because PeersTab.tsx, ModelTab.tsx and WhatChangedPanel.tsx read its return value.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "native Read portal@24877b67 components/StatTile.tsx lines 79-82 (formatStatValue unresolved-unit branch returns UNIT_NOT_RESOLVED_WORDS)",
+      "native Read portal@24877b67 components/HeaderCards.tsx lines 44-50 (resolveFigure maps that return to null, so the header tile is ABSENT)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The unit-unresolved dash in StatTile was chosen to match the cell's stated outcome and the header's existing behaviour."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W416-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~416",
+  "surfaced_at": "2026-10-13T22:58:57Z",
+  "one_line": "The cell says tooltips are untouched but also names HeaderCards.tsx line 84, which builds the tooltip's full-value row with the currency code; that row now uses the same $ form, and figureTooltipRows was not touched.",
+  "spec_asserts": "AMGT-bk-3 (1): 'The tooltips (figureTooltipRows) and every served value are untouched', and HeaderCards.tsx (about line 84) is named as a formatter that prints <code> <amount> and must print $ for USD.",
+  "world_is": "portal@24877b67 HeaderCards.tsx fullValueWords (line 84) prints `${currency} ${num}` into the tooltip's full-value row (tooltipRows, line 115). figureTooltipRows in StatTile.tsx carries the value and unit only, with no currency code. The change follows the explicit naming of line 84; data-full-value and every served value are unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "native Read portal@24877b67 components/HeaderCards.tsx lines 76-85 (fullValueWords builds the currency prefix) and line 115 (tooltipRows full-value row)",
+      "native Read portal@24877b67 components/StatTile.tsx figureTooltipRows (value and unit rows only, no currency code)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The reading applied: the explicit line-84 naming governs, and the tooltip function the cell names is not edited."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W416-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~416",
+  "surfaced_at": "2026-10-13T23:01:40Z",
+  "one_line": "The portal branch is wk-AMGT_RESAPP-416-portal cut from DEV 24877b67, not the cand/<box>/<slug> branch cut from the PROD release that CONTRIBUTING-BOXES.md names; the order says never push, so the branch is committed locally and its registration is left to the issuer.",
+  "spec_asserts": "The worker face: a portal change is made on a cand/<box>/<slug> branch cut from the last PROD release, never pushed to DEV, and the issuer registers it for approval; portal/CONTRIBUTING-BOXES.md step 2 says a branch cut from DEV is re-cut onto the PROD release by its owner before it is registered.",
+  "world_is": "The order names the branch wk-AMGT_RESAPP-416-portal from DEV 24877b67 and bounds the worker to never push. The commit lands LOCAL on that branch. No re-cut onto the PROD release was done, and no open-calls.py registration was run. The branch name and base are as the order issued them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "native Read portal/CONTRIBUTING-BOXES.md (steps 1-4 and 'Reach DEV, reach PROD'): cand/<box>/<slug> cut from the last PROD release; a DEV-cut branch is re-cut by its owner before registration",
+      "order bounds: branch wk-AMGT_RESAPP-416-portal from DEV 24877b67; never push; the issuer registers the change (open-calls.py add --kind approval)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. Whether the issuer re-cuts the branch onto the PROD release before registering it is the issuer's decision, not decided here."
+}
+```
