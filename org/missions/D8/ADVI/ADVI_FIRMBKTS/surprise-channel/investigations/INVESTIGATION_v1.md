@@ -5845,3 +5845,53 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Owner of the un-park: 1.0.0_SA_CTO~DELL1. Condition: a non-admin session exists in a seat's hands, or Andrew supplies one; at that point the order re-opens with one request on an accounts path. An organic non-admin line may also arrive on its own (advisor lines exist on other paths today); the read can be repeated without a session. Standing watch: none added (no monitor)."
 }
 ```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~64 (FB-h-4 validator spec expectation, 2026-10-13)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W64-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~64",
+  "surfaced_at": "2026-10-13T06:41:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's test (i) wording 'every other firm's bucket is false' cannot hold for mockadv, which shares the 49financial bucket; the spec was implemented as 'every bucket that differs from the 49financial bucket is absent from the list'.",
+  "spec_asserts": "The order's section 1a.1 states test (i) as: the list is the generated one, it is frozen, it contains the 49financial scope's bucket, and it contains NO other FIRM_CONFIG bucket ('every other firm's bucket is false').",
+  "world_is": "FIRM_CONFIG mockadv has bucket 'opal-data-49financial', the same bucket as the 49financial scope (firm-config.mjs lines 67-86 at 69679b90e3), so mockadv's bucket is the engaged one and reads true, not false. The clause 'every other firm's bucket is false' is therefore not literally true for mockadv; the spec skips any firm whose bucket equals the 49financial bucket, so the intent (no other bucket in the list) is tested and the shared-bucket firm is not asserted false.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda-edge/_shared/firm-config.mjs@69679b90e3 lines 67-86: 49financial and mockadv both carry bucket 'opal-data-49financial'",
+      "infra/aws/lambda-edge/auth-validator-edge/tests/ownership_key.spec.mjs@7c6522bfe4 test (i) as implemented"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a product defect and not a failing assertion: the expectation is read at its intent. The issuer may amend the order's wording. The shared bucket is already recorded as a tenancy hazard in firm-config.mjs lines 38-50."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W64-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~64",
+  "surfaced_at": "2026-10-13T06:41:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "On this device safe-commit's client-data check did not run: the hashed account-id list is absent, so the spec commit 7c6522bfe4 was not checked for client account ids.",
+  "spec_asserts": "The order and CLAUDE.md 14a require the commit to go through .tools/safe-commit.sh; the order names no client-data precondition and no account-id list.",
+  "world_is": "safe-commit printed 'WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty)'. The committed change is one .mjs test file with no account identifiers, so the exposure is nil on inspection, but the check itself did not run on this device.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for commit 7c6522bfe4 on worktree wk-ADVI_FIRMBKTS-64: 'WARN: client-data-check: hashed account-id list ABSENT ... this commit was NOT checked for client account ids'",
+      "commit 7c6522bfe4 changed one file: infra/aws/lambda-edge/auth-validator-edge/tests/ownership_key.spec.mjs (11 insertions, 2 deletions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded because a gate that cannot run on this device is a missing capability, not a clean pass. The fix (placing or pointing the list) is outside this order's bounds and is not made here."
+}
+```
