@@ -8877,6 +8877,34 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "notes": "THE ASK, and it is one question with two cheap answers: (1) does W3 mean to exclude a CONSOLE HOST, so that conhost.exe 17968 does not make it FALSE? If yes, W1-W5 all read TRUE and branch W is authorised on a re-read in the same minute as the stop. (2) Before any termination is authorised at all, try releasing the console selection -- it costs one key press, needs no signed pair because nothing is ended, and if the 'Select' reading is the cause the runner resumes and stops itself on the stop file already waiting, which is the original C-f path and loses not even the in-flight pair. This row does not act on either. Carried state: ledger harvst-bz1-runner-repin-20261012 stays OPEN with PIN and LOCK closed-with-proof and STOP, ARM and CYCLE open; the new pin exists at P and all three harvest pins are locked; AC3 PASSES; AC1 and AC2 remain unsatisfiable until the task is re-registered. Row Z-S114 holds the wedge's diagnosis and this row names the reading that stopped the act, per both halves.",
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-W138-S1",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~138",
+     "surfaced_at": "2026-10-13T07:10:03Z",
+     "one_line": "The package conftest HVST-r-4 poisons subprocess.run for every test without allow_real_session, so the order's pythonw.exe and PowerShell tests could not run until they opted out with that marker.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "TO HVST-bz-3 section 4(b) and 4(d): the test starts pythonw.exe and powershell with subprocess from inside the test; the order names no opt-out.",
+     "world_is": "lib/opal_data_harvest/conftest.py@7b8f8e6241 (lines 70-99) replaces subprocess.run with a raiser for every test in the package unless the test carries @pytest.mark.allow_real_session. The first run of test_bz3_windowless_runner.py failed 5 of 7 with HarvestPoisonError. The worker added the marker, reason in each docstring, to tests b, c, d1, d2 and d3 only; conftest.py is outside paths and was not edited.",
+     "grounding": {"status": "GROUNDED", "evidence": ["lib/opal_data_harvest/conftest.py@7b8f8e6241 lines 70-99: _poisoned_subprocess_run and the autouse fixture", "worktree lib/opal_data_harvest/test_bz3_windowless_runner.py (uncommitted at filing): the allow_real_session markers on tests b, c, d1, d2, d3", "pytest run of test_bz3_windowless_runner.py before the markers: 5 failed, 2 passed, HarvestPoisonError at the powershell_plan subprocess.run call"]},
+     "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-W138-S2",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~138",
+     "surfaced_at": "2026-10-13T07:10:03Z",
+     "one_line": "A pythonw.exe child started with captured pipes is not the no-console condition: its sys.stdout and sys.stderr are real pipes, so the mutant did not reproduce AttributeError.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "TO HVST-bz-3 section 4(b): start pythonw.exe with a script and assert the cycle record and log; the order's premise is that pythonw under the runner has sys.stdout None, and it names no handle setup for the child.",
+     "world_is": "The first real pythonw.exe run used subprocess.run with capture_output=True: the child reported stdout_is_none False, and the mutant wrote stopped None instead of AttributeError (2 failed, 5 passed). Launching with creationflags DETACHED_PROCESS and no redirection gave sys.stdout and sys.stderr None; the test now asserts that premise before any cycle assertion. The gap is the test launch, not the build.",
+     "grounding": {"status": "GROUNDED", "evidence": ["worktree lib/opal_data_harvest/test_bz3_windowless_runner.py run_pythonw (uncommitted at filing): the DETACHED_PROCESS launch and the stdout_is_none and stderr_is_none assertions", "pytest of the module before the launch fix: capture_output run gave stdout_is_none False and the mutant stopped None (2 failed, 5 passed); after the fix: 7 passed"]},
+     "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
