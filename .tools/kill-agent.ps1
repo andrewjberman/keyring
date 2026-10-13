@@ -160,31 +160,56 @@ if ($targets.Count -eq 0) {
     exit 0
 }
 
-# Recursive process-tree kill -- children first, then the node.
-function Stop-ProcessTree {
-    param([int]$RootPid)
-    try {
-        $children = @(Get-CimInstance Win32_Process -Filter "ParentProcessId=$RootPid" -ErrorAction SilentlyContinue)
-        foreach ($child in $children) {
-            Stop-ProcessTree -RootPid $child.ProcessId
-        }
-        Stop-Process -Id $RootPid -Force -ErrorAction SilentlyContinue
-    } catch { }
-}
-
-# SEAT BOUNDARY (CT-ab-4). Every target's tree is judged before Stop-ProcessTree touches it.
+# SEAT BOUNDARY (CT-ab-4, CT-ac-2). Every target's tree is planned before anything is stopped.
 # The judged serial is the NAMED serial (single or family), else the target's own launch serial.
 # Selected = every pid this run targets, so a fabric-wide sweep does not refuse its own seats.
+# CT-ac-2: a foreign seat ENDS THE WALK at that seat -- the seat and its subtree are left running and each is
+# named (SKIPPED line and KILL log). Everything else under the tree is stopped. A seat that cannot be judged
+# (unreadable command line) is the floor: that whole tree is refused, as the whole-tree refusal was.
 $selectedPids   = @($targets | ForEach-Object { [int]$_.ProcessId })
 $boundaryFamily = [bool]($All -and $Serial)
 $boundarySerial = $null
-function Test-TreeBoundary {
+function Get-TreePlan {
     param([int]$RootPid)
     try {
-        return [PSCustomObject]@{ Ok = $true; Foreign = @(Test-SeatBoundary -RootPid $RootPid -TargetSerial $boundarySerial -Family:$boundaryFamily -Selected $selectedPids); Err = '' }
+        $procs = @(Get-CimInstance Win32_Process -ErrorAction Stop |
+            Select-Object ProcessId, ParentProcessId, Name, CommandLine)
+        # Two judges read one process list: the boundary judge (Test-SeatBoundary) must report every seat root
+        # the plan skips, or the tree is refused as unevaluated.
+        $judged = @(Test-SeatBoundary -RootPid $RootPid -TargetSerial $boundarySerial -Family:$boundaryFamily -Selected $selectedPids -Processes $procs)
+        $plan = Get-SeatSubtreePids -RootPid $RootPid -TargetSerial $boundarySerial -Family:$boundaryFamily -Selected $selectedPids -Processes $procs
+        $judgedPids = @($judged | ForEach-Object { [int]$_.ProcessId })
+        $unjudged = @($plan.Skip | Where-Object { $_.IsSeat -and ($judgedPids -notcontains [int]$_.ProcessId) })
+        if ($unjudged.Count -gt 0) {
+            $names = ($unjudged | ForEach-Object { "$($_.Serial)@$($_.ProcessId)" }) -join ', '
+            return [PSCustomObject]@{ Ok = $false; Plan = $null; Err = "skipped seat(s) not in the boundary judgement: $names" }
+        }
+        return [PSCustomObject]@{ Ok = $true; Plan = $plan; Err = '' }
     } catch {
-        return [PSCustomObject]@{ Ok = $false; Foreign = @(); Err = $_.Exception.Message }
+        return [PSCustomObject]@{ Ok = $false; Plan = $null; Err = $_.Exception.Message }
     }
+}
+function Invoke-TreeStop {
+    # Stops the planned Kill pids of one tree. Returns Stopped=$false (nothing stopped) on the floor or an
+    # unevaluable tree; otherwise Stopped=$true with the Skip list of seats left running.
+    param([int]$RootPid, [string]$Tree, [string]$Target)
+    $tp = Get-TreePlan -RootPid $RootPid
+    if (-not $tp.Ok) {
+        Write-SeatRefusal -Tree $Tree -RootPid $RootPid -Target $Target -Verdict ([PSCustomObject]@{ Ok = $false; Foreign = @(); Err = $tp.Err })
+        return [PSCustomObject]@{ Stopped = $false; Skip = @() }
+    }
+    if (@($tp.Plan.Unclassified).Count -gt 0) {
+        $why = (@($tp.Plan.Unclassified) | ForEach-Object { "$($_.Name) pid $($_.ProcessId) ($($_.Reason))" }) -join '; '
+        Write-SeatRefusal -Tree $Tree -RootPid $RootPid -Target $Target -Verdict ([PSCustomObject]@{ Ok = $false; Foreign = @(); Err = "unclassified seat: $why" })
+        return [PSCustomObject]@{ Stopped = $false; Skip = @() }
+    }
+    foreach ($line in @(Format-SkipLines -Skip $tp.Plan.Skip)) {
+        Write-Host "[kill-agent] $line" -ForegroundColor Yellow
+    }
+    foreach ($kpid in @($tp.Plan.Kill)) {
+        Stop-Process -Id $kpid -Force -ErrorAction SilentlyContinue
+    }
+    return [PSCustomObject]@{ Stopped = $true; Skip = @($tp.Plan.Skip) }
 }
 function Write-SeatRefusal {
     param([string]$Tree, [int]$RootPid, [string]$Target, $Verdict)
@@ -208,15 +233,16 @@ foreach ($t in $targets) {
     $ownSerial    = Get-LaunchSerial -CommandLine $t.CommandLine
     $targetSerial = if ($ownSerial) { $ownSerial } else { 'unknown' }
     $boundarySerial = if ($Serial) { $Serial } else { $ownSerial }
+    $skipped = @()
 
-    # 1. Kill claude.exe + its descendants (bash, python, watcher children) -- only if no foreign seat is under it.
-    $verdict = Test-TreeBoundary -RootPid $claudePid
-    if (-not $verdict.Ok -or @($verdict.Foreign).Count -gt 0) {
-        Write-SeatRefusal -Tree 'claude tree' -RootPid $claudePid -Target $targetSerial -Verdict $verdict
+    # 1. Stop claude.exe + its non-seat descendants (bash, python, watcher children). A foreign seat under it is
+    #    skipped with its subtree (CT-ac-2); an unclassified seat refuses the tree.
+    $claudeTree = Invoke-TreeStop -RootPid $claudePid -Tree 'claude tree' -Target $targetSerial
+    if (-not $claudeTree.Stopped) {
         $refused += $claudePid
         continue
     }
-    Stop-ProcessTree -RootPid $claudePid
+    $skipped += @($claudeTree.Skip)
     $killedSerials += $targetSerial
 
     # 2. Kill the HOST window ONLY if it's a spawn-agent window (carries the
@@ -226,17 +252,16 @@ foreach ($t in $targets) {
     try {
         $parent = Get-CimInstance Win32_Process -Filter "ProcessId=$($t.ParentProcessId)" -ErrorAction SilentlyContinue
         if ($parent -and $parent.Name -eq 'powershell.exe' -and $parent.CommandLine -and ($parent.CommandLine -like "*$marker*")) {
-            $hostVerdict = Test-TreeBoundary -RootPid $parent.ProcessId
-            if (-not $hostVerdict.Ok -or @($hostVerdict.Foreign).Count -gt 0) {
-                Write-SeatRefusal -Tree 'host shell' -RootPid $parent.ProcessId -Target $targetSerial -Verdict $hostVerdict
+            $hostTree = Invoke-TreeStop -RootPid $parent.ProcessId -Tree 'host shell' -Target $targetSerial
+            if (-not $hostTree.Stopped) {
                 $refused += $parent.ProcessId
             } else {
-                Stop-ProcessTree -RootPid $parent.ProcessId
+                $skipped += @($hostTree.Skip)
             }
         }
     } catch { }
 
-    Add-Content -Path $log -Value "$ts  KILL  $targetSerial  by $by  pid=$claudePid  reason=$Reason"
+    Add-Content -Path $log -Value "$ts  KILL  $targetSerial  by $by  pid=$claudePid  reason=$Reason$(Format-SkipLogSuffix -Skip $skipped)"
     $killedPids += $claudePid
     Write-Host "[kill-agent] terminated $targetSerial (claude pid $claudePid)" -ForegroundColor Green
 }

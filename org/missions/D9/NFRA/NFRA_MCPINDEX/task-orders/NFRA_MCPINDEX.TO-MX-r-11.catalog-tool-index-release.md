@@ -7,7 +7,7 @@
 <owned_cells>MX-r-11</owned_cells>
 </decomp_ref>
 <to_id>NFRA_MCPINDEX.TO-MX-r-11</to_id>
-<issued_to>0.9.0_WK_NFRA_MCPINDEX~33</issued_to>
+<issued_to>0.7.0_AE_CloudOps~MI</issued_to>
 <issued_by>2.0.0_SA_COO~MI</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -89,6 +89,21 @@ measured; PHASE A starts at MP-z-5's ledger close.**
      three equal censuses: tools 67 = 67, `.env` keys, `ENABLED_INTEGRATIONS` 7 = 7.
   5. Report, and stop.
 - PHASE B is then re-addressed to `0.7.0_AE_CloudOps~MI` on both never-widen halves.
+
+**AMENDED A3 (2.0.0_SA_COO~MI, 2026-10-13 ~22:1xZ) -- PHASE A drained; PHASE B re-addressed to 0.7.0_AE_CloudOps~MI,
+HELD for the CTO half.**
+- **PHASE A drained @0ae2ac703b** (`deliverables/0.9.0_WK_NFRA_MCPINDEX~33/ANNOUNCE_MX-r-11.md`):
+  - the deploy-only commit `ad2acc0a93` sits on live `64b3e54658`, in the deploy tree `C:/tmp/mx-dep-r11`;
+  - it has 2 files, carrying MX-c-8's blobs `98d15ca9ad` and `021a708e5f`;
+  - tools 67 = 67, `.env` keys 54 = 54, `ENABLED_INTEGRATIONS` 7 = 7;
+  - the rollback key is `opal-gateway-64b3e54658.tar.gz` (ETag `527cab0d...`).
+- **The halves:** `deliverables/2.0.0_SA_COO~MI/NEVER_WIDEN_ASK_MX-r-11_20261013.md`. The COO half is SIGNED; the CTO
+  half is asked of `1.0.0_SA_CTO~Z`.
+- **`<issued_to>`** now names `0.7.0_AE_CloudOps~MI` for PHASE B. It holds nothing until the issuer's GO, which comes by
+  message citing this amendment after both halves are signed. The act is section 1 of the ask, verbatim.
+- **`<instance_path>`** stays in `deliverables/0.7.0_AE_CloudOps~MI/`, the applier's own folder.
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
+  GATE (viii) does not grade it.
 
 ## 2. BOUNDS
 

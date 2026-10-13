@@ -32450,3 +32450,107 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "QUEUED, not cut: position third, behind IB-pr-456 (waits on Andrew's execution ID) and the round-185 export re-pin. When cut it is ONE cell with its own never-widen pair (a gold-layer write, WORLD), and its first step is a read-only measure of what a backfill needs: the builder that writes the table, its source and its run window, the earliest-record dates per account, the partition count the full history implies, and the cost; NOT read yet: the builder or the source of the table. Owner me."
 }
 ```
+
+## IRPT_BCKEND-D2-W367-S1 -- IB-pr-518 arm (b) asks for the four existing catalogue entries in the same relative order
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W367-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~367",
+  "surfaced_at": "2026-10-13T21:42:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-518 arm (b) asks for the four existing catalogue entries in the same relative order as live; arm (a) canonical order moves opal_long_term, so the two arms cannot both hold; measured verdict is changed, not unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/templates.json@0c0ae5a8f5cee99e9c7fa49b8043c146fed1d05e: comparison_catalog.entries order opal_ultra_short_term, opal_short_term, opal_intermediate_term, opal_long_term, opal_ultra_long_term",
+      "live zip (CodeSha256 hpNfkhLtLRl0...) templates.json: entries order opal_long_term, opal_short_term, opal_intermediate_term, opal_ultra_long_term (four entries, no Ultra Short-Term)",
+      "worker run of ib184_arms.py (deliverables 0.9.0_WK_IRPT_BCKEND~367) parent: five_in_order, existing key and label equal true, existing order equal false, admitted 15 of 15, altered refused"
+    ]
+  },
+  "spec_asserts": "Step 8(b) of IB-pr-518: the four existing entries key and label equal the live zip's, in the same relative order: unchanged; step 8(a): served model labels in the canonical order Ultra Short-Term, Short-Term, Intermediate-Term, Long-Term, Ultra Long-Term.",
+  "world_is": "Keys and labels of the four existing entries are equal between built and live. The relative order is not: built has short, intermediate, long, ultra_long; live has long, short, intermediate, ultra_long. The canonical order required by 8(a) places long after intermediate, so 8(b) as written is unsatisfiable by the built zip. The arm was recorded as measured (changed); no verdict was forced. Criterion AC3 is expected to FAIL on this arm and the order stays open for the issuer and CTO."
+}
+```
+
+## IRPT_BCKEND-D2-W367-S2 -- Three deploy markers that name irpt-ycharts-generate read OPEN at the HEAD of three worktr
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W367-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~367",
+  "surfaced_at": "2026-10-13T21:42:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Three deploy markers that name irpt-ycharts-generate read OPEN at the HEAD of three worktrees, while the trunk ledgers of the two named deploys read CLOSED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/mstr-dell2-merge-0240 HEAD org/critical_paths/.open_deploys/irpt-ycg-release1-20261007.json: status OPEN",
+      "C:/dev/mstr-dell2-merge-0805 HEAD org/critical_paths/.open_deploys/irpt-ycg-release1-20261007.json: status OPEN",
+      "C:/dev/rel-resident-r5 HEAD org/critical_paths/.open_deploys/tckt-vnext-r2-tr1-fwd1-thread-rerun-run3-20261011.json: status OPEN",
+      "org/critical_paths/change_management/20261007T2256Z_irpt-ycg-release1-20261007_deploy_completion.md@0c0ae5a8f5cee99e9c7fa49b8043c146fed1d05e: Status CLOSED",
+      "org/critical_paths/change_management/20261011T0806Z_tckt-vnext-r2-tr1-fwd1-thread-rerun-run3-20261011_deploy_completion.md@0c0ae5a8f5cee99e9c7fa49b8043c146fed1d05e: Status CLOSED"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md section 5: an entry a device left OPEN proves only that this device saw no completion; measure the artifact before acting; world-done is closed SUPERSEDED, never re-executed. Step 2 of IB-pr-518 requires each ledger naming the function to carry its status.",
+  "world_is": "Three open markers sit at stale worktree HEADs (two mstr merge worktrees, one rel-resident worktree). The trunk ledgers for the same two deploys are CLOSED. This worker read the markers and closed nothing, and edited no change-management entry. Denominators of the read: 52 worktrees listed, 50 read, 732 marker files, 1854 ledger files."
+}
+```
+
+## IRPT_BCKEND-D2-W367-S3 -- git worktree list names two worktree directories that do not exist on disk, so the open-ma
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W367-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~367",
+  "surfaced_at": "2026-10-13T21:42:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "git worktree list names two worktree directories that do not exist on disk, so the open-marker read covers 50 of 52 listed worktrees.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git worktree list --porcelain (at 0c0ae5a8f5cee99e9c7fa49b8043c146fed1d05e) lists C:/dev/wk-irpt-dashbd-142 and C:/dev/wk-irpt-dashbd-144",
+      "test -d on both paths returned ABSENT at 2026-10-13T21:42:40Z"
+    ]
+  },
+  "spec_asserts": "IB-pr-518 step 2: the open markers of every worktree listed by git worktree list are read, with the denominator printed.",
+  "world_is": "Two listed worktrees have no directory, so no marker can be read there. The denominator printed in the arms record is 50 of 52. Nothing was pruned by this worker."
+}
+```
+
+## IRPT_BCKEND-D2-W367-S4 -- The source-map deploy_ledger for irpt-ycharts-generate names a CLOSED ledger whose text ne
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W367-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~367",
+  "surfaced_at": "2026-10-13T21:42:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The source-map deploy_ledger for irpt-ycharts-generate names a CLOSED ledger whose text never names the function, so a text scan for the function misses it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json@0c0ae5a8f5cee99e9c7fa49b8043c146fed1d05e: functions.irpt-ycharts-generate.deploy_ledger = irpt-status-rule-all-eight-20261013",
+      "org/critical_paths/change_management/20261013T1225Z_irpt-status-rule-all-eight-20261013_deploy_completion.md@0c0ae5a8f5cee99e9c7fa49b8043c146fed1d05e: Status CLOSED; zero occurrences of ycharts in the file"
+    ]
+  },
+  "spec_asserts": "IB-pr-518 step 2: the deploy ledgers that name irpt-ycharts-generate are listed with their status.",
+  "world_is": "The ledger the source map cites as this function's deploy record is CLOSED but does not name the function in its text, so the text scan of step 2 does not return it. It is listed in the arms record by the source map field, status CLOSED."
+}
+```

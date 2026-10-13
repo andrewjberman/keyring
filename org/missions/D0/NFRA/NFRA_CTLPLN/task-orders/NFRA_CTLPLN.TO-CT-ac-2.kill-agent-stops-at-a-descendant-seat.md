@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~88</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run: STOP-AT-DESCENDANT cases=27/27 ok=True and SEAT-BOUNDARY-TEST cases=39/39 wired=both ok=True; proof instance VALID. RULING on row W88-S1: the floor (Unclassified) is the unreadable-command-line limb only; the "launch serial cannot be extracted" limb is not built, because it would refuse any tree holding a serial-less native helper and contradict "a tree with no foreign seat behaves as today". The host shell takes the same stop-at-descendant rule as the claude tree (the worker's reading, accepted).</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
