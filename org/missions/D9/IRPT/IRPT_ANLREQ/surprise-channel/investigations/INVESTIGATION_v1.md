@@ -4222,3 +4222,87 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W52-S33 -- the Lambda's pinned reader (3f29017cfc) has no account check and no total-row check: two-account and total-row sheets return no finding
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S33",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-13T00:17:35Z",
+  "one_line": "The Lambda's pinned reader (template_reader.py at 3f29017cfc) has no account check and no total-row check. Reader-level, in process: it returns no finding on the two-account sheets or on the total-row sheet, so the file's rows are held with the account column ignored, and the total row is held as a holding named TOTAL.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py@3f29017cfc (read_template emits no ACCOUNT_COLUMN_SEVERAL_VALUES, TOTAL_ROW_PRESENT or HEADER_ROW_REPEATED and the file has no account word; read through git show, sha256 76795b75)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r18/MIXED_VERSION_TRACE_THIRD_READER.json@872d2363ed (lambda_pinned reader-level codes empty for two_value_account_sheet, repair_header_two_values, brokerage_two_account and total_row_sheet; reader_symbols AAA, BBB and TOTAL)"
+    ]
+  },
+  "spec_asserts": "CTO round-18 ruling on S24, org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_ANLREQ_Y_ROUND_18_20261012.md section 1: a multi-account file read as one account puts wrong holdings into a client's report. AR-y-186 step 2 names the Lambda's reader as one of the readers the trace runs.",
+  "world_is": "The reader the Lambda carries (map pin 3f29017cfc, with uploads at f09b802cdc) accepts the four multi-account and total-row sheets with no finding. The Lambda's own door answer for them was not run; it is INFERRED from the empty finding list. The in-world run cannot run this reader (HEAD's uploads.py raises ImportError on READER_VERSION), so the measurement is reader-level.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S34 -- a single-file move of the release pair fails in a measured way (uploads-only raises ImportError; reader-only refuses the pinned-stored templates)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S34",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-13T00:17:35Z",
+  "one_line": "HEAD's uploads.py imports READER_VERSION, so with the pinned reader every template answer raises ImportError (24 of 24 cases in the world). The pinned uploads read_input compares every member with no version gate, so with r18.1 it refuses all 8 templates stored by the pinned reader (computed in process).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/uploads.py@3b7f901bb2 (line 633 imports READER_VERSION inside the read_input template branch; line 639 compares under it)",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py@f09b802cdc has no READER_VERSION and its read_input (lines 533-541) compares the full re-read with the stored template; read through git show",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r18/MIXED_VERSION_TRACE_THIRD_READER.json@872d2363ed (in-world ImportError in 24 of 24 pinned-involved cases; computed pinned-uploads REFUSED for 8 of 8 lambda_pinned-stored templates under new)"
+    ]
+  },
+  "spec_asserts": "AR-y-186 step 3 asks what a person sees when the Lambda is on its third reader and the resident on the new one. CTO round-18 ruling item 5 says the reader's release pair moves as one pair, with S28's third reader included.",
+  "world_is": "The release pair's start state is uploads f09b802cdc with reader 3f29017cfc, and both files must move in one deploy. Neither single-file move is safe as measured. Not run: the Lambda's own door, and the resident's installed pin, which the trace did not read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S35 -- a template stored by the pinned reader is accepted unchanged under r18.1 (no version member, no re-read), so the widening does not reach inputs already stored
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S35",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-13T00:17:35Z",
+  "one_line": "Under the r18.1 read_input gate a template stored by the pinned reader is accepted unchanged on re-open, because a template with no reader_version member is not compared. A multi-account file the pinned reader stored as one account's rows therefore stays accepted on re-open after the widening, with no re-read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/uploads.py@3b7f901bb2 (lines 633-641: stored_version = template.get reader_version, default before-C-STOREDINPUT; the full re-read is compared only when it equals READER_VERSION)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r18/MIXED_VERSION_TRACE_THIRD_READER.json@872d2363ed (computed headGate ACCEPTED, not compared, for 8 of 8 lambda_pinned-stored templates; the in-world writer door cannot run with the pinned reader)"
+    ]
+  },
+  "spec_asserts": "AR-y-186 step 3: say whether any input accepted under one reader can be refused under the other at re-open. CTO round-18 ruling on S24 names no migration for inputs already stored under the pinned reader.",
+  "world_is": "The gate does not compare a template with no version member, so an input stored by the pinned reader is accepted on re-open under r18.1. The 8 of 8 result is computed on the two reader outputs in process, not run through the world. The stored population of the Lambda and the resident was not read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
