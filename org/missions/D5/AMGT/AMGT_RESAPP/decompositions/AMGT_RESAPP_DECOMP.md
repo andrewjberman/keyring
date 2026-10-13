@@ -10709,3 +10709,18 @@ fanout:
   no_s3_deletes: true
   egress: none; no Bloomberg call in any order
 ```
+
+### 112f. ADDENDUM 1 -- PRD v0.43 @2a72a556d9 (CTO msg 5040, after the CVO's refusal of v0.42), 2026-10-13 ~18:4xZ
+
+What moved against s.112a to s.112e, item by item (printed denominator: the five things msg 5040 names):
+
+| v0.43 change | placement |
+|---|---|
+| keep-warm DROPPED; the cold-start cell fixes the feed phase | s.112a item 3's clause "the cheaper second remedy (one warm instance) is the CTO's to name" is VOID; `bj-2`'s order carries AMENDMENT 2; a miss is round 104's input (the `list`/`get`/`decode` lines), never a warm instance |
+| FWD-40 (b) grades a driven first overlay on a newly published version, after the day's 12:30Z write, in HANDLER time, Init and the feed share printed | `bj-2` AC3 as amended (`--handler-max-ms 3000`, `tail -28`); the act's step 1 prints the stored snapshot's `generated_at`; the first organic request is corroborating and not waited on |
+| FWD-40 (a): "broken value" is any hit of the ui-walk classes `unconnected-field`, `raw-code`, `format:money` or of the minor-unit census (qq-1's instrument) | `bj-7`'s criteria name those instruments, not a new definition |
+| FWD-40 (d): a browser walk of 10 names drawn by sha256 of the walk date, on a LOCAL build of the PROD release commit (`bun run dev --port 5174`) against live services | NEW staged cell `AMGT-bj-11` (`~412`, worker, LOCAL, one walk output, screenshots), STAGED until `bj-9`'s promote lands (the PROD release commit moves then); replaces s.112b's "uncovered" line for (d) |
+| FWD-41 lists five blocks (management bio, recent developments, the team on management, the thesis pillars, the header description) | `~G1`'s workstream, not cut here; the three page files it names (`ExecManagementTab.tsx`, `ThesisTab.tsx`, `HeaderBrief.tsx`) are on `bj-9`'s branch, so s.112c's rule 2 applies to exactly those three: a text-block change the AI fill needs there waits for `bj-9`'s promote or rides its own feature cut |
+
+`bj-11` joins the fan-out: chains_total 5 (bj-1 -> bj-2 -> bj-8 ; bj-7 ; bj-9 -> bj-11 ; bj-10), wave_staged adds `bj-11 ~412 (after bj-9's promote)`. The ratified-text half of v0.43 reads
+STALE and owed by `3.0.0_SA_CVO` (status WITHHELD at 18:3xZ): the new orders are cut when it signs.

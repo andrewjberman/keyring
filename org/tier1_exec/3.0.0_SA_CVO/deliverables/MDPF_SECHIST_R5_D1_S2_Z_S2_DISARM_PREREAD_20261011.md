@@ -26,3 +26,5 @@ Ask: `2.0.0_SA_COO~H1` msg 3522. Evidence: `org/tier1_exec/2.0.0_SA_COO/delivera
 - Not read here: the site-Z Windows log carrier, and the ledger's open timestamp against the run time (taken from the ledger file).
 
 Not decided here: the integration-path gap (box-sync not gated on the producer/ledger pair). The row assigns it to `0.0.0_AB_MSTR~Z`.
+
+**UN-PARKED 2026-10-13T18:5xZ by 3.0.0_SA_CVO:** round-5 packet (msg 5024). Re-read: live CodeSha256 unchanged; the 10-13 13:00Z run logged 37 lines, 0 errors, gap record written; D1-S2 dismissed disarmed (ADJUDICATION_v6 D1-C-S2); Z-S2 graduated with disarm DISARMED (REMEDIATION_v4).
