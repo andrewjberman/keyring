@@ -32554,3 +32554,160 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The ledger the source map cites as this function's deploy record is CLOSED but does not name the function in its text, so the text scan of step 2 does not return it. It is listed in the arms record by the source map field, status CLOSED."
 }
 ```
+
+## IRPT_BCKEND-D2-W368-S1 -- The built irpt-export-render zip carries a signature mismatch, so IB-pr-519's zero-mismatch gate and refusal clause stop the census
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W368-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~368",
+  "surfaced_at": "2026-10-13T22:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The rebuilt irpt-export-render zip, with its one re-pinned schema member, reads signature_closure mismatched=1, the same mismatch the live zip reads, so the order stops before the census.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~368/IB185-1_stop_evidence.txt@b924fade4e",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~368/IB185-1_signature_built.txt@b924fade4e: MISMATCH served:1026 calls interactive_access.InteractiveAccess unknown keyword profile_reader; signature_closure mismatched=1 attr_mismatched=0",
+      "infra/aws/lambda/investor-reporting/_authz/served.py@564e604838 line 1026: InteractiveAccess(lambda: request.headers, tenant, then profile_reader=reads.user on the next line",
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py@83e8b9577a line 45: def __init__(self, read_headers, data_firm, *, ordinary_authorizer=None)"
+    ]
+  },
+  "spec_asserts": "IB-pr-519 step 7 and criterion IB185-1-AC1: the signature closure reads 0 mismatches on the built zip and on the live zip; the refusal clause stops the order on any signature mismatch.",
+  "world_is": "The built zip and the live zip both carry the same single signature mismatch (mismatched=1 on each; attr_mismatched=0 on each). The census was not run; the order is STOPPED at step 7 with the change set otherwise exactly ExportReceipt.schema.json (66 of 66 members, the one differing member is that schema, built digest equal to the repo blob at the pin). The source map was reverted; sha256 equal before and after."
+}
+```
+
+## IRPT_BCKEND-D2-W368-S2 -- The live irpt-export-render zip calls InteractiveAccess with a keyword its packaged class does not accept, on the CREATE_INPUT served path
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W368-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~368",
+  "surfaced_at": "2026-10-13T22:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The deployed irpt-export-render bytes pass profile_reader= to InteractiveAccess, whose packaged constructor takes no such keyword, on the CREATE_INPUT branch of served.py.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live zip CodeSha256 K74JEIjw0NKmy4YfEo7Sb7LcRxEII+/yaYtaKJ3qnD8= (get-function-configuration, read-only): signature_closure on the live zip reads mismatched=1, the identical MISMATCH line as the built zip (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~368/IB185-1_signature_live.txt@b924fade4e)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py@564e604838 line 1026-1027 (CREATE_INPUT branch)",
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py@83e8b9577a line 45"
+    ]
+  },
+  "spec_asserts": "The served CREATE_INPUT path of irpt-export-render constructs InteractiveAccess with keywords the packaged class accepts.",
+  "world_is": "Read from the bytes of the deployed zip: the call passes profile_reader=, the packaged constructor has no such parameter and no **kwargs, so construction on that branch raises TypeError. Not exercised: no invoke was made by this worker. The defect is inside the function currently serving, so it stays ARMED until its owner disarms it."
+}
+```
+
+## IRPT_BCKEND-D2-W368-S3 -- The source map's deploy_ledger for irpt-export-render names a CLOSED ledger whose text never names the function
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W368-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~368",
+  "surfaced_at": "2026-10-13T22:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The source-map deploy_ledger for irpt-export-render is irpt-status-rule-all-eight-20261013, a CLOSED ledger with zero occurrences of irpt-export-render, so a text scan for the function does not return it. Same form as D2-S4 of W367 for irpt-ycharts-generate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json@8313f6d827: functions.irpt-export-render.deploy_ledger = irpt-status-rule-all-eight-20261013",
+      "org/critical_paths/change_management/20261013T1225Z_irpt-status-rule-all-eight-20261013_deploy_completion.md@4f6d6acb87: Status CLOSED; zero occurrences of irpt-export-render in the file"
+    ]
+  },
+  "spec_asserts": "IB-pr-519 step 2: the deploy ledgers that name irpt-export-render are listed with their status, and each open marker naming it is read.",
+  "world_is": "The ledger the source map cites as this function's deploy record is CLOSED and does not name the function in its text. The text scan of step 2 found 49 ledgers naming the function, all CLOSED; the cited ledger is not among them. The record of the function's last deploy therefore cannot be found by a text scan."
+}
+```
+
+## IRPT_BCKEND-D2-W368-S4 -- The stored receipts do not lack facts.covered_account_ids: the dry-run census found one receipt, and it already carries the field
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W368-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~368",
+  "surfaced_at": "2026-10-13T23:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's premise that receipts written before IB-pr-343 lack facts.covered_account_ids, so that the backfill tool has receipts to fill, is not borne out at this read: the backfill tool's dry-run census listed one receipt, which already carries the field (receipts_lacking_field 0, branch none_needed). The one receipt is refused by the live v1.1 read today, which the apply resolves.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/tools/backfill_covered_account_ids.py@afa744802e: --dry-run is the default; a receipt whose facts carry a non-empty covered_account_ids is counted FILLED with source already_named",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~368/IB185-1_arms_receipts_ledgers.json (receipt_census: receipts_total 1, receipts_with_field 1, receipts_lacking_field 0, unreadable_or_denied 0; mode dry_run_reads_only)",
+      "cross-check at read time (counts only): 47 objects under the firms/ prefix of the evidence bucket, 1 key ending receipt.json, which is in the documented shape"
+    ]
+  },
+  "spec_asserts": "IB-pr-519 step 9 and the cell text: receipts written before IB-pr-343 lack facts.covered_account_ids and the backfill tool fills them, so the census counts them for the branch backfill_first.",
+  "world_is": "At 2026-10-13 the evidence store holds one receipt, and it carries the field. The census therefore counts zero receipts lacking the field and zero unreadable objects. The premise of a population of pre-IB-pr-343 receipts is not present in this store at this read. This is one read, not a standing fact: the packet's branch none_needed is valid for this read only, and the apply re-reads the store."
+}
+```
+
+## IRPT_BCKEND-D2-W368-S5 -- A worktree listed by git worktree list has no directory on disk, so its open-deploy markers could not be read
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W368-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~368",
+  "surfaced_at": "2026-10-13T23:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The worktree record C:/dev/wk-irpt-anlreq-104 is listed by git worktree list --porcelain, but its directory does not exist, so git -C on it fails with not a git repository. Step 2 read 54 of 55 listed worktrees; the marker scan of the function is therefore complete for 54 worktrees only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git worktree list --porcelain at afa744802e (run from C:/dev/wk-IRPT_BCKEND-368): 55 worktree entries, including C:/dev/wk-irpt-anlreq-104; plain git worktree list lists 54 lines",
+      "test -d on C:/dev/wk-irpt-anlreq-104 at read time: absent"
+    ]
+  },
+  "spec_asserts": "IB-pr-519 step 2: every open marker on every worktree is read (git worktree list --porcelain, then git -C <wt> ls-tree -r --name-only HEAD org/critical_paths/.open_deploys/).",
+  "world_is": "One listed worktree is unreadable, so its markers are not in the denominator (788 marker files read across 54 readable worktrees; 0 naming irpt-export-render). The record is stale; its owner decides whether to prune it. This order closes nothing and changes nothing in that worktree."
+}
+```
+
+## IRPT_BCKEND-D2-S154 -- dispositions on worker 368's rows after IB-pr-519 merged
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S154",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T23:32:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2 at the repair of the stale served.py pin, or the CTO by ruling",
+  "one_line": "Dispositions on worker 368's rows (D2-W368-S1 to S5) after IB-pr-519 merged @295d98d389: my signature-rule wording was an issuer defect; the receipt store holds ONE receipt, which carries the field (branch none_needed for this read); the latent served.py/interactive_access.py mismatch (profile_reader) is carried by the live function and stays ARMED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 368's reports and commits e08ab6f38e, ea64ad3ada, 8fdd16cf82 (merged @295d98d389); I re-ran IB185-1 AC1 to AC3 on the merged tree: PASS",
+      "my read of the staged served.py at pin 564e604838 (line 1026, inside _handle_prospect, mode CREATE_INPUT) and of infra/aws/lambda/investor-reporting/export/entry.py:447-455 (the operations this function routes: submit, receipt, download, custody-report read and persist)",
+      "the packet's receipt count: the backfill tool's default dry run listed ONE receipt across the evidence bucket's firms, a cross-check of the bucket under the documented prefix found 47 objects and one receipt.json key; counts only"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27); a premise the order asserted without reading it is the issuer's defect.",
+  "world_is": "DISPOSITIONS: W368-S1 (the STOP): MY DEFECT, ruled by amendment 1 (@07380ba777): the order demanded 0 signature mismatches on both zips without my reading the live zip, which already carries one; the rule is now the attribute rule. W368-S2 (served.py passes profile_reader= to InteractiveAccess, which takes none; TypeError if reached): the call is in served.py _handle_prospect on the CREATE_INPUT branch; irpt-export-render's operations never route there (my read, entry.py:447-455), so it is LATENT here; NOT exercised by anyone; STAYS ARMED, owner me: the repair is a re-pin of the staged served.py or interactive_access.py row and ships with its own release, and the same stale pin pair sits in every function that stages both (not censused here). W368-S3 (the source map's deploy_ledger names a ledger whose text never names the function) and S5 (a listed worktree with no directory, so the marker read covers 54 of 55): the same class as W367's rows, INERT, not mine to fix. W368-S4 (the premise that pre-IB-pr-343 receipts exist is not borne out): ONE receipt, it carries the field, so the branch is none_needed for THIS read only (the apply re-reads the store and runs the backfill first if a lacking receipt appeared). The CTO's rule (never refuse a receipt that exists today) holds: the one receipt is refused TODAY and the release makes it readable. NOT shown: that a NEW export reads through the v1.2 schema (a person's read on DEV after the apply). Consumers: the packet leaves the portal read-through to the apply seat; I read the export status path in D2's chain (getExportReceipt then pollExportReceipt) and it makes one GET per poll; no change to it ships."
+}
+```
