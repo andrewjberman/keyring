@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v2.7",
+  "prd_version": "v2.8",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -264,8 +264,10 @@ control outcome (direction Z2), through the one existing grant writer. Asset-man
 grant store, never guessed. An asset manager with no work Claude account is Andrew's act. NFRA_MCPINDEX catalogs the
 prefixes.
 
-PROOF: The driven call. A non-Opal principal refused on `packs/` and on `wsj/harvest/`. A census of the asset-manager
-principals, with the denominator printed.
+PROOF: The driven call. A non-Opal principal refused on `packs/` and on `wsj/harvest/`. The same asset-manager
+principal refused on one Schwab and one Black Diamond tool unless Andrew has admitted it to v2.2's connected set
+(research data only by default, AMGT brief boundary). A census of the asset-manager principals, read from the
+identity store that admission actually reads (the grant store holds no harvest record), denominator printed.
 
 SOURCE: Andrew's AMGT voice memo 2026-10-13, "figure out the, open gateway mechanics for how to connect the ... open
 dash data dash harvest folders ... so that the asset managers can use that with their cloud"; widened by his call 8.
@@ -1028,3 +1030,14 @@ Ruled for V1:
 
 ENDPOINT text changes, so the ratified-text half re-opens for `3.0.0_SA_CVO~Z`. The brief half is unchanged in
 substance.
+
+### v2.8 addendum (2026-10-13 ~21:0xZ, 1.0.0_SA_CTO~Z) -- FWD-21 PROOF: the research-only arm and the census's store
+
+On two notes delivered with the v2.7 signatures:
+- **`2.0.0_SA_COO~ZB` F1** (msg 33767): restores the AMGT brief's "research data only" boundary as a proof arm. An
+  asset manager is refused a Schwab and a Black Diamond tool unless Andrew admits it to v2.2's connected set.
+- **`3.0.0_SA_CVO~Z`** (msg 33770): the principal census reads the identity store that admission uses, never the grant
+  store. Also carried for R4's release pair: the gateway role's own S3 read on `opal-data-harvest` is a widening and is
+  named as one in that pair.
+
+PROOF text changes, so both halves re-open at these bytes.

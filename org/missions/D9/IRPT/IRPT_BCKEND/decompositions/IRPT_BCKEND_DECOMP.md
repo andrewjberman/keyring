@@ -3707,3 +3707,16 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r183/p183_cells.py`, dry-run at the b
 | `IB-pr-517` | Opal Ultra Short-Term added to the comparison catalogue keyed by Opal's own model identity (namespace OPAL, code UST, no YCharts id), the five models in canonical order, its policy pin, the YCharts path's stated refusal of an unmapped entry, and the tests | FWD-1 (O1 hop) | WORLD (the gate infers the floor from the infrastructure path templates.json; this order is BUILD ONLY and applies nothing) | none | P183-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one build with no sibling cell. One worker spawn (slot ~366).
+
+
+## 176. ROUND 184, WORKSTREAM ~P (2026-10-13 ~21:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round-184 analysis (msg 7233: "the census and never-widen packet for the function that packages the catalogue, then the pair, then the apply; IB-pr-456 on Andrew's execution ID"))
+
+Round 183 built the catalogue release (IB-pr-517 @0d0e9e1229). Round 184's list has two items. (1) The census and never-widen packet for the function that packages it: **CUT now** as `IB-pr-518`. The issuer measured the package first (row D2-S151): the function is `irpt-ycharts-generate`; the release moves `templates.json` (native) and `maintained_sources.py` (staged at a pin: one source-map row) and must not move `recipe.py` (its live bytes are not the repo's current blob); the CTO's text named only `templates.json`, and the packet names the real set. (2) IB-pr-456's after-read and apply: **NOT cut now: an unmet dependency (Andrew's PROD execution ID is its BEFORE record and has not arrived); cut in the round after it arrives; owner me.** NOT cut and not owed here: the pair's two halves and the apply (they follow the packet, in later rounds, one order per round); the four custody tests that fail at base (queued behind O1/O2 by the CTO, named in each pair).
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r184/p184_cells.py`, dry-run at the base: IB184-1 AC1, AC2, AC3 FAIL (no records); positive control in a temp root the run created itself (a copy of the real source map, synthetic records) passes all three, each negative (a third changed member, a stale live digest, a packet without the recipe.py statement or the current live digest, an altered copy admitted) fails its own arm; root removed.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-518` | `irpt-ycharts-generate` censused and rebuilt against its CURRENT live with the catalogue release (two members, one source-map row in scratch), the four arms, the open ledgers, and the never-widen packet | FWD-1 (O1 hop) | SERVED (reads the live function and the source map; builds only) | IB-pr-517 (merged) | P184-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one census with no sibling cell. One worker spawn (slot ~367).
