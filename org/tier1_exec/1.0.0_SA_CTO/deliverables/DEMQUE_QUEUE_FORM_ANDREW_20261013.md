@@ -45,9 +45,39 @@ cuts about a quarter of the leg's reference cells with no loss.
 
 **Site Z:** today's 7:00 am ET run (as-of 2026-10-12) did not land (no `bbg/2026-10-12/` at 14:4xZ). Andrew: "that is already being rectified on sitez".
 
+#### A3/C1 Rival Funds daily run (ETFS_RIVALS, 7:00 am ET / 11:00Z vehicle at site Z): APPROVED, with both recommendations
+
+> I aprove your recommendations. Regarding ACWI and IWM, we do not need full holdings depth for these.
+
+1. **Who uses it:** the Rival Funds page (13 rival funds set against the Opal funds).
+2. **Priority:** today's data is A, third (after the models pull and the ETF pull). History still owed is C.
+3. **History depth:**
+   - holdings and market data: the prior trading day only;
+   - dividends: see the DECISION below;
+   - history still owed: 365 days before the need.
+4. **Field breadth:**
+   - holdings: one multi-fund Excel BQL query a day (`id`, `name` per holding);
+   - dividends: `DVD_HIST_ALL` and `DVD_CRNCY`;
+   - market: GICS names and codes, `PX_LAST`, `CRNCY`, `DAY_TO_DAY_TOT_RETURN_GROSS_DVDS`;
+   - history still owed: the close only.
+5. **Securities:** every holding of the rival funds (742 securities owed history on 10-08).
+6. **Schedule:** daily at 7:00 am ET, trading days, for the prior trading day.
+7. **Budget:** its own ceiling of 150,000 rows a day, 30,000 of them reserved for production. History still owed is capped at 20,000 cells a run.
+
+**DECISION, Andrew-approved: DIVIDENDS ONCE, THEN INCREMENTAL.** Today `enrichment_bloomberg.py` re-pulls `DVD_HIST_ALL` over `DEFAULT_WINDOW_DAYS = 730` for every
+security, every day. Instead:
+- ONE pull of 365 days per security, when it first enters the universe;
+- after that, a daily window of only the last few trading days.
+
+**DECISION, Andrew: ACWI and IWM do NOT need full holdings depth** (about 2,200 and 2,000 holdings a day today).
+
+-- open for Andrew to confirm: this seat proposes the TOP 25 holdings by weight, daily, for those two broad index ETFs only.
+
 ## FOR SITE Z (the Bloomberg device): changes to carry, appended as decided
 
 | # | change | file | source decision |
 |---|---|---|---|
 | Z1 | Fund-only fields (`FUND_EXPENSE_RATIO`, `FUND_TOTAL_ASSETS`, `TOTAL_NUMBER_OF_HOLDINGS_IN_PORT`, `TRACKING_ERROR`) are requested only for funds | `integrations/bloomberg/pipeline/etf_daily_pull.py`, the `CHAR` request | A2, Andrew 2026-10-13 |
+| Z3 | Dividends: one 365-day `DVD_HIST_ALL` pull per security on first entry, then a daily window of the last few trading days (replacing the 730-day daily re-pull) | `data/etfs/scripts/rivalfunds/enrichment_bloomberg.py` (`DEFAULT_WINDOW_DAYS`, `build_plan`) | A3, Andrew 2026-10-13 |
+| Z4 | ACWI and IWM: not full holdings depth (the depth is to be confirmed; proposed top 25 by weight, daily) | `data/etfs/scripts/rivalfunds/collector_bloomberg.py` (the BQL holdings query) | A3, Andrew 2026-10-13 |
 | Z2 | `DEPTH_START_DAYS` 372 becomes 365 (non-client need: 365 days before the need; the trading calendar resolves the first business day) | `integrations/bloomberg/pipeline/etf_daily_pull.py` | backfill law ADDENDUM 2 item 4 |
