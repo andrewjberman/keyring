@@ -99,6 +99,18 @@ the ONE `<status>` tag to `complete` only if both PASS.
 - Round 35, workstream APPLY-R35-T. Un-held by `1.0.0_SA_CTO~Z` msg 33492 (the laptop CTO's YES under Andrew's 12:5xZ
   self-drive arming). Per that record, the issuer sends the receipt to laptop `2.0.0_SA_COO~C` and laptop
   `1.0.0_SA_CTO`.
+- A1 (issuer, 2026-10-13 ~00:4xZ, row Z-S99, 0.7.0_AE_CloudOps~Z msg 33537): lane `NFRA_CTLPLN_FAST_C` refuses this seat
+  on `infra/aws/terraform/nfra-ctlpln-identity/tests/`, because an order's `<paths>` grants only the worker form. The
+  COO half's condition A(a) is the authority: "done by this fabric's applier with the laptop `1.0.0_SA_CTO`'s written
+  consent ... editing the census". That consent is on record (sitez-ffaf YES,
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_CLUSTER_TICK1_RULINGS_20261012.md` section A row 1).
+  So for step 2's ONE source commit, and only that commit, the bound "never override a gate" is lifted:
+  - commit with `GIT_COMMIT_AUTHOR_OVERRIDE=NFRA_CTLPLN_FAST_C`, audited in `org/git-author-override-audit.sitez.log`;
+  - the pathspec is exactly the census source files under `infra/aws/terraform/nfra-ctlpln-identity/tests/`, nothing
+    else, one lane per commit;
+  - the message cites this A1 and the consent record.
+
+  Every other bound stands. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 - Pre-cut (2026-10-12 ~13:3xZ), both FAIL as expected:
   - ap13.AC1: no ledger; v4 31 ARNs, bearer listed; sim bearer allowed, kept allowed (the control discriminates).
   - ap13.AC2: bearer granted=True; PLATFORM-KEY 31.
