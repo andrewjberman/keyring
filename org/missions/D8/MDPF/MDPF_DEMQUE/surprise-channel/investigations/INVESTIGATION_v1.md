@@ -1447,6 +1447,68 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "grep of demque/*.py for NEED_FILE / NEED_CSV / need_rows: rank.py:42,155,171 and lock.py:32 only"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W35-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~35",
+    "surfaced_at": "2026-10-13T14:25:02Z",
+    "one_line": "DQ-t-43 orders days_to_finish as 'the whole number of trading days from today to finish_date' without saying whether today counts; the built count excludes today and includes finish_date.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO MDPF_DEMQUE.TO-DQ-t43, --quote line: days_to_finish = the whole number of trading days from today to finish_date.",
+    "world_is": "card_a_slice.quote_line counts len(trading_days_between(today + 1 day, finish_date)) at commit 748b73b3ca: the trading days after today up to and including finish_date. On the real P1 slice (2026-10-13 to 2028-02-06, a Sunday) this is 330. A count that includes today would read 331; the finish date is not a trading day, so including or excluding it does not move the figure.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t43.card-a-p1-slice-per-security-windows.md: 'days_to_finish = the whole number of trading days from today to finish_date' (no today-inclusion rule stated)",
+        "data/mdpf/scripts/demque/card_a_slice.py@748b73b3ca quote_line: days = len(trading_days_between(today + timedelta(days=1), finish))",
+        "dq_t43_real.py run 2026-10-13: days=330 finish=2028-02-06 (the --quote line, verbatim)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W35-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~35",
+    "surfaced_at": "2026-10-13T14:25:02Z",
+    "one_line": "The P1 living-client slice of the CARD-A need runs 330 trading days to finish under the history backfill, past the 30-day line the round-9 amendment names for a CTO number.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DECOMP round 9 amendment 8 (DQ-t-43): a number brought to the CTO if P1 alone runs past 30 days; CTO msg 4875: no new spend, the P1 count, cells and days-to-finish printed before the first draw.",
+    "world_is": "The P1 slice prices 607 names (609 P1, 2 FDIC placeholders unresolved) at 882,024 cells; finish 2028-02-06, 330 trading days, claim measured. The figure rests on the history backfill at the measured ceiling 5,858 per non-trading day (bbg_allowance.json) and is quoted tier 2. Nothing has been drawn. The 2026-10-09 CARD-A quote priced the full 1,319-name need at 2,317,534 cells (inferred, an upper bound).",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "dq_t43_real.py run 2026-10-13 (rc 0): SLICE-REAL-OK P1 607 names priced, 2 unresolved, 882024 cells, 330 days to finish; p1=609 priced=607 unresolved=2 finish=2028-02-06 claim=measured",
+        "data/mdpf/scripts/demque/bbg_allowance.json history.ceiling value 5858 claim measured; history.reserve 7322 held"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W35-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~35",
+    "surfaced_at": "2026-10-13T14:25:02Z",
+    "one_line": "On dell1 the commit-time client-data check cannot run: the hashed account-id list is absent, so commit 748b73b3ca was not checked for client account ids.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.0.0_AB_MSTR",
+    "spec_asserts": "CLAUDE.md section 5 and the worker face: account ids never enter a committed file; the commit gate checks client account ids against the hashed list before a commit lands.",
+    "world_is": "The gate prints WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt, and states the commit was NOT checked (absent is not empty). OPAL_ACCOUNT_ID_HASHES is unset. Until the list is placed, every dell1 commit passes this check unexamined. The commit's own content carries stub account tokens only (A1-A4, B1-B2, G1 in the test file; no account number).",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output for 748b73b3ca (2026-10-13T14:2xZ): WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids",
+        "test -e on C:\\Users\\Test\\.opal\\account_id_hashes.txt at 2026-10-13T14:25:02Z: ABSENT (rc=1); OPAL_ACCOUNT_ID_HASHES unset; the directory C:\\Users\\Test\\.opal exists"
+      ]
+    }
   }
 ]
 ```

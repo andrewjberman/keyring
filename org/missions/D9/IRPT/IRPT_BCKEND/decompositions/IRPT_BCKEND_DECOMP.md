@@ -3633,3 +3633,17 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r178/p178_cells.py`, dry-run at the b
 | `IB-pr-512` | the APPLY of the signed pair: two per-firm holdings packages put at the host's next scheduled Online, digest-gated, step 0 on the bucket policies first, then the first read | FWD-3 | WORLD (writes two S3 objects the host runs; rollback per key) | the signed pair (done); the host's scheduled Online (a clock the order waits on without starting it) | P178-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one applier, one act. Not a spawn: the order is addressed to a live seat.
+
+## 171. ROUND 179, WORKSTREAM ~P (2026-10-13 ~14:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's RE 6992 = "round 179 = IB-pr-513, one read-only count after a build")
+
+The round-178 apply (IB-pr-512) put the two minimal holdings packages; IB2's first leftover-file count (0 and 0, ~13:37Z) preceded any build on them, so row D2-W345-S3 (the 49F builder leaves a client-bearing temp file) stays ARMED. The CTO ruled (RE 6992): ONE read-only count after a real build that ran on the new packages, today if the host is Online, else at its next scheduled Online; the wait is qualified because a driven build would write served output outside its schedule. PASS: 0 leftover Tax snapshot temp files after a build that ran on the new packages; the build is named (start time and the package digest it ran); positive control: the build's own log line showing it took the snapshot path; W345-S3 disarms on PASS. The formal round-179 analysis follows the CVO's compile of round 178.
+
+CUT now: `IB-pr-513` (to `0.7.0_AE_CloudOps~IB2`). NOT cut: the `irpt-directory-search` apply (the signed pair, after the CVO's re-sign); the repair of the no-op report validator in the ycharts generate composition (row W352-S1); the provenance of the three package objects beyond CloudTrail's management events (not established: not worth a cell now).
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r178/p178_cells.py` cell IB178-2, dry-run at the base: AC1, AC2, AC3 FAIL (no record).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-513` | ONE read-only count of leftover snapshot temp files on the runner host after a real build that ran on the new packages, the build named | FWD-3 | SERVED (a read on a host that may hold client-bearing files) | IB-pr-512 (done); a real scheduled build on the new package; the host Online | P179-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one applier, one read. Not a spawn: the order is addressed to a live seat.
