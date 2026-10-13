@@ -1,5 +1,7 @@
 {
   "request_id": "ETFS_RIVALS-HISTORY-OWED-DAILY",
+  "need_class": "non_client",
+  "window_rule": "365_days_before_run_date",
   "standing": true,
   "shape": "standing",
   "tier": 3,
