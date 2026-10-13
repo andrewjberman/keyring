@@ -56,6 +56,20 @@ declares client from a window start on or after 2012-01-01. Report the whole fol
 
 Run each invocation from the worktree root. At the base: `YCLASS-BAD no file ...`; `demand_queue.py: error: unrecognized arguments: --check-declared ...`.
 
+
+### AMENDED 2026-10-13 ~17:3xZ (issuer; no gate limb graded it, no new order added) -- rulings on rows D1-W38-S1 to S3, and the re-seated slot
+
+Your first pass (commits `82da168490`, `68f2b1e20f`, `8d7408e391`) stands as inherited state. The grant now ALSO names `redraw_stale.py` and `test_demque_redraw_stale.py`. Rulings:
+- **S1 (queue file undeclared): CLEARED by the issuer.** `~/.opal/demque/queue/Z-STANDING-T1-EXTEND.json` now carries `need_class` client and `window_start` 2013-04-08. Arm 1 of the
+  real check reads the device queue as it is now.
+- **S2 (redraw_stale, ARMED, disarm owner the issuer):** in `redraw_stale.enqueue` declare the request the way `extend_frontier._request` does (`need_class` `"client"`,
+  `window_start` = the request's earliest start, never before 2012-01-01) and call `validate` BEFORE any pacer entry is reset, so a refusal leaves the pacer untouched. Fix its
+  two failing tests by that change alone, and add one test that a refused request resets no pacer entry.
+- **S3 (empty-plan branch leaves an older file): no change.** After this merge every file the extension writes is declared; the leftover case is transitional and the issuer has
+  declared the current one. Leave `apply` as it is.
+- **Investigation file:** `box/dell1` has moved on (rows from t-44/t-46 workers): MERGE it into your branch (never a rebase) before you append; the file will conflict at its end
+  because both sides append rows: keep every row of both sides, by id.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below plus your deliverables folder and this order's file. Scaffolding goes under `.scratch/`, uncommitted.
@@ -72,6 +86,8 @@ data/mdpf/scripts/demque/demand_queue.py
 data/mdpf/scripts/demque/extend_frontier.py
 data/mdpf/scripts/demque/test_demque_yahoo_need_class.py
 data/mdpf/scripts/demque/test_demque_*.py
+data/mdpf/scripts/demque/redraw_stale.py
+data/mdpf/scripts/demque/test_demque_redraw_stale.py
 org/missions/D8/MDPF/MDPF_DEMQUE/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
