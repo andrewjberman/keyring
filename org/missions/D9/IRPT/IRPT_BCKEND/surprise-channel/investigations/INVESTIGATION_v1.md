@@ -29542,3 +29542,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The index read succeeded; the refusal comes from the S3 list inside the gold read. S116's other facts (2 invokes, 0 persisted, ok:false UNEXPECTED, log class AccessDenied, no TypeError, live digest unchanged) stand. The cause is row S117's (the issuer, from dell1's act); this row only retires my wrong location. Not established by this seat: that the bucket-policy deny is the S3 error's source (taken from S117)."
 }
 ```
+
+## IRPT_BCKEND-D2-S119 -- DISPOSITION of IRPT_BCKEND-D2-S116, S117 and S118: the Inflection Performance deny is ADVI_FIRMBKTS's; no IB-pr-487 rollback; the fix is another fabric's applier
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S119",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-13T00:57:39Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISPOSITION record for rows IRPT_BCKEND-D2-S116, S117 and S118, carried as MSTR msg 6718 says: the laptop cluster lead ruled (laptop msg 108710) that the Inflection Performance deny belongs to ADVI_FIRMBKTS, that IB-pr-487 is NOT rolled back, and that the fix is one exemptions.json row plus one safe-apply by laptop 0.7.0_AE_CloudOps~FBL under the pair (CTO half dell1 @354a12bc04, COO half dell1 2.0.0_SA_COO~B1); nothing for dell2 to act on except the lift of IB-pr-490's HOLD.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier0_exec/0.0.0_AB_MSTR/deliverables/relays/LAPTOP_CTO_INFLECTION_OWNER_RULING_20261013T0056Z.md (verbatim relay, bus c7d7481b; not re-read in full by this seat beyond MSTR's summary in msg 6718).",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_INFLECTION_PERFORMANCE_DENY_OWNER_APPLIER_AND_PAIR_20261013.md @af61c60689 (named by MSTR; not read by this seat).",
+      "this fabric's own reads agree: CTO~DELL2 msg 6711 (no rollback: the ListBucket is partition_dates() at holdings_gold.py:154, unchanged by the release) and this seat's diff and CloudTrail reads (rows S117 and S118)."
+    ]
+  },
+  "spec_asserts": "CTO msg 6703 and MSTR msg 6718: the Inflection read waits for the other fabric's fix; no rollback or policy edit by this fabric.",
+  "world_is": "IB-pr-490 stays HELD (order commit 2c9c3afcf1). The hold lifts when the laptop's applier has landed the exemption: this seat reads that by re-running IB169-3-AC2 (a computed, non-refused irpt_retained_phases line after the fix) and then sends IB2 its go. No dell2 act changes the bucket policy, the exemption list, the role or the function. Not measured: when the fix lands."
+}
+```
