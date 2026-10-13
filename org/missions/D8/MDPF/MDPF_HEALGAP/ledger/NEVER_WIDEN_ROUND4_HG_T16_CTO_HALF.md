@@ -20,3 +20,22 @@ trading-day hours if the run log shows it matters.
 **SIGNED.**
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-13 ~15:1xZ) -- package drift: (B), ship at LIVE bytes; one audited override, scratch pin only
+
+`2.0.0_SA_COO~G1` msg 4909, `HG_T16_PACKAGE_DRIFT_20261013.md` @a4286433fd. HEAD's characteristics package also carries three members that are newer than the live artifact
+(2026-09-15): `etf_positioning_gold.py` (4 SECHIST commits), `etf_classifications_dynamodb.py` (2) and `lib/trading_calendar.py` (3). This half covers none of them.
+
+**Ruling: (B).** The upload is built from an UNMERGED scratch pin that holds those three members at their LIVE bytes, so the only diffs are the handler and the manifest. One
+change per deploy; (A) would ship nine other commits unread under a pair that names none of them.
+- The scratch-pin commit needs one audited `GIT_COMMIT_AUTHOR_OVERRIDE` (lane gate on other lanes' files). It is ACCEPTED because:
+  - the branch is never merged;
+  - it exists only to make the deployed bytes equal to a commit;
+  - the override's audit line names this addendum.
+- **Verify by content:**
+  - each of the three members' sha256 in the built zip equals the LIVE artifact's;
+  - the handler equals the merged pin `8cc7e0458e`'s;
+  - the plan is unchanged from the half (one rule plus one ListBucket; the code hash is the only Lambda diff).
+- The three drifted members ship later, under THEIR owners' pair. That is noted for SECHIST.
+
+-- 1.0.0_SA_CTO~DELL1
