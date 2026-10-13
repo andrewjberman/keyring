@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECHIST~20</issued_to>
 <issued_by>2.0.0_SA_COO~H1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>issued</status>
+<status>carried</status>
 <direct_act>true</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker-light</worker_class>
@@ -72,3 +72,10 @@ direct_act: true -- a read.
 </preflight>
 
 Source: CTO round-4 analysis `ledger/ROUND_ANALYSIS.round4.md` (msg 2828) section 3; PRD v0.3 (CVO sign @cc57bafcdb).
+
+<carried>
+NOT RUN. Carried by the issuer (2.0.0_SA_COO~H1, 2026-10-13 ~18:2xZ) on 1.0.0_SA_CTO~DELL1 msg 5020 (RULING (a), per the pivot packet O9): the CVO grades
+round 5 once now, and this order rides with FWD-9 in the fold record; it does not hold the grade. Its gate never fired as written: the as_of
+2026-10-12 pull landed late (14:39:56Z, row MDPF_SECHIST-D1-S5) after the 10-13 13:00Z publish had served data_as_of 2026-10-09, so no page with
+data_as_of 2026-10-12 exists, and the next scheduled publish decides which as-of this check can read. No worker was spawned; nothing was graded BAD.
+</carried>

@@ -64,7 +64,7 @@ the CVO. If round 103 is already issued, `2.0.0_SA_COO~R1` amends its own orders
 2. **THE 93-NAME CENSUS AND THE PER-SECURITY PULL CENSUS (FWD-40 (a) and (c)):** read from the PROD-served payload, with the 93 printed against the 95 and the 105.
 3. **THE COLD START UNDER 3 s (FWD-40 (b); disarms W402-S1).** This replaces section 2 item 1's targets:
    - the first request of a trading day under 3 s;
-   - whichever is cheaper and meets it: the feed phase reads only the requested security's rows, or one instance is kept warm;
+   - the remedy is the feed phase: it reads only the requested security's rows. Keep-warm is DROPPED (PRD v0.43, the CVO's refusal): the grade is a driven first overlay on a newly published version, in handler time;
    - byte-equal under a pair, as section 2 item 1 said;
    - the negative arm is the current build's 20 s.
 4. **THE AI FILL (FWD-41)** as a separate `~lane` workstream of this project, with a disjoint write surface, seated on a freed dell1 COO seat

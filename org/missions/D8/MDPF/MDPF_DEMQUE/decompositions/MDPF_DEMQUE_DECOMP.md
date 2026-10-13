@@ -536,3 +536,17 @@ notebooks are production code on the Bloomberg device and their change is a site
 10 bps; 174 passed). Its worker found 182 of 326 held windows fit fewer than 5 intervals and could never pass. CTO ruling msg 4976: always 5 intervals, a length that does not fit is
 replaced by a sha256-drawn length that does, minimum 5 trading days, overlap allowed, a window under 10 trading days is UNTESTABLE (a reason, not a FAIL). One cell, `DQ-t-51`
 (`porting_test.py` and its tests; `0.9.0_WK_MDPF_DEMQUE~43`, worker, LOCAL, workstream PORTINTERVALS, depends on DQ-t-49).
+
+**Round 9 close of DQ-t-50 and DQ-t-51, and amendment 16 (issuer, 2026-10-13 ~18:xxZ):** DQ-t-50 merged @911d2806c8 (the B1 Cottonwood request at option C depth: 614 securities, 37,514
+cells, finish 2026-11-07 on non-trading-day fires, filed and priced @ee5ad75db7, NOT drawn; the $1.00 skip matched none of 227 cash equivalents, 194 UNREAD pulled). DQ-t-51 merged
+@adbdc57967 (the porting test always draws 5 intervals: 326 testable, 0 UNTESTABLE, 1,630 intervals, 3,195 cells). The dell1 pivot packet (CTO pivot order XB-c5bf, MSTR msg 5009):
+DEMQUE is DRIVE for the standard card, the P3 exclusion and the SECCLASS sync cell (O6, O7); former clients (P3) are never drawn, a match-open name (P2) draws only after its match
+resolves; do not start a new Bloomberg draw until Andrew's form is complete. Measured at 14:2xZ: the price index P1 246, P2 72, P3 8; the IRPT request P1 630, P2 229, P3 19. The
+device queue copy of the IRPT request was cut to P1 (630) by the issuer (original kept in the scratchpad; the repo copy stays as filed). One cell, `DQ-t-52` (`priority_gate.py`, `rank.py`
+refusal, the extension tiers and the daily draw skip P2 and P3, fail closed; `0.9.0_WK_MDPF_DEMQUE~44`, worker, LOCAL, workstream PRIGATE). The SECCLASS sync cell and the P1 windows to each
+account's held dates (the active-account set dell2 publishes) are later cells; this cell does not add them.
+
+**Round 9 amendment 17 (issuer, 2026-10-13 ~18:xxZ):** CTO msg 5025 (cluster packet O6/O7): B1's CUSIPs classified: 613 P1, 1 P2 (ABNFX, held back), 0 P3 (@13722430d4); the `rank.py` P3
+refusal is DQ-t-52 (in flight). The DEMQUE half of the SECCLASS sync (`C-DEMQUE-SECCLASS-SYNC`, PRD addendum): one cell, `DQ-t-53` (`secclass_sync.py --prove`, read only: one real
+security's key printed equal on the request row, the unresolved entry and the `etf-classifications` row, plus the negative arm; `--coverage` of landed fund names; `0.9.0_WK_MDPF_DEMQUE~45`,
+worker, LOCAL, workstream SECCLASSSYNC). Measured by the issuer: the table's one hash key is `ticker`, so the key a human reads across the three places is the symbol string.
