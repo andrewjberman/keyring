@@ -8613,3 +8613,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Built as ordered (claude.exe only). The hazard stays ARMED for codex-launched seats under a tree."
 }
 ```
+
+## NFRA_CTLPLN-W78-S4 -- the TO asks for its own status flip, but the TO file is outside the order's paths grant
+
+```json
+{
+  "id": "NFRA_CTLPLN-W78-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~78",
+  "surfaced_at": "2026-10-13T18:23:32Z",
+  "one_line": "The order's ACCEPTANCE says flip <status> to complete when both criteria pass and the instance is VALID, but the task-order file is not among the order's <paths>; the flip is not performed by this worker and is left pending for the issuer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-ab-4.kill-tools-seat-boundary.md:8 (<status>pending</status>)",
+      "the same file, lines 62-69: <paths> names five .tools paths and the investigation file; no task-order path is granted",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~78/NFRA_CTLPLN.TO-CT-ab-4.kill-tools-seat-boundary.proof_of_spec.json: proof-of-spec-check.py VALID rc=0 for CTab4-AC1,CTab4-AC2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ab-4 ACCEPTANCE: flip <status> to complete only when both criteria pass and the instance is VALID; the grant <paths> block names six paths.",
+  "world_is": "Both criteria PASS and the instance is VALID, but the status-bearing file is outside the grant, so this worker does not make the flip.",
+  "notes": "The issuer 2.0.0_SA_COO~C flips the status, or widens the grant for the flip. The instance lists this row under surprises."
+}
+```
