@@ -3748,3 +3748,51 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S10",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T00:08:53Z",
+  "one_line": "AR-y-185: the worktree is behind the shared head. Its lambda-source-map.json (blob 78e79160) and _authz/served.py (blob 1d55a27a) are older than the read ref 9f43f29de8 (map a5cc836a, served.py d1bf60c9). The eight served.py pins agree in both; the record reads the ref.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse 9f43f29de8:infra/aws/lambda/ci/lambda-source-map.json = a5cc836ae7c4a27ee2bd2c8e37ac3cc6405fb913; worktree (HEAD c0e2b493d4) = 78e79160bdbd44db0f1cff2dfb39c348c7caa825",
+      "git rev-parse 9f43f29de8:infra/aws/lambda/investor-reporting/_authz/served.py = d1bf60c9f907e5bbbbda6c4de5f22f4ad224ee64 (last changed at 564e604838, AR-y-184); worktree = 1d55a27aaefccdb2051c9e5973febdb08d253797",
+      "At the ref, 17 map entries differ from the worktree copy, all eight packagers among them, in loaders.py pins and artifact_sha256 only; the eight served.py pins (361c44fa9d, 74a62fb46c) are identical in both",
+      "read_at block and not_read of org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~51/r18/SERVED_PY_PACKAGERS.json"
+    ]
+  },
+  "spec_asserts": "Read first (the order): the map and the status rule are in the worktree; a file absent from the worktree, or stale against the current head, may be read at the shared tree head.",
+  "world_is": "The worktree and the shared head hold different bytes for the map and for _authz/served.py, and the head moves during a seat's reads. The census read one ref, 9f43f29de8, and cites it; the worktree copies were read and not used.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S11",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-13T00:08:53Z",
+  "one_line": "AR-y-185: the Y185-READ check proves that each named function has a non-empty pin field. It does not prove that the pin is a commit or that the pinned bytes equal the map's sha256, so a PASS of AR185-y-AC1 verifies no pin.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r18/ar18_checks.py at worktree commit c0e2b493d4, y185-read branch of main(): it tests `not funcs[name].get(\"pin\")` and the presence of the three top-level members",
+      "this seat's run: y185-read printed Y185-READ-OK over 8 of 8 names; the same seat verified each of the eight pins by git show plus sha256 against the map (all eight match), outside the checker"
+    ]
+  },
+  "spec_asserts": "AR185-y-AC1 (checker y185-read): the record names each of the eight functions with its pin and how it packages served.py, and states the map denominator, the claim and what was not read.",
+  "world_is": "The checker tests the presence of a non-empty pin and of a non-empty how_it_packages_served_py per name. A record that names a wrong or non-existent commit as a pin would print Y185-READ-OK.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
