@@ -25804,3 +25804,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The extra rules follow the inlined contract text; the enumerated list was not narrowed. Whether the validator should be exactly the enumerated list is the issuer's call."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W422-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~422",
+  "surfaced_at": "2026-10-13T23:01:42Z",
+  "one_line": "The naming gate reads the display literal s3://{0}/{1} in the fill reader's reason text as an S3 address and returns WARN (RAISE as S3Key, K1) on the commit of the serve.",
+  "spec_asserts": "The worker face, section 1, specifies the fill reader's reason text as 'no AI fill document at s3://<bucket>/<key>: <ErrClass>: <err>'. The standing rule (CLAUDE.md rule 30) says every S3 address is lib/opal_naming.py address() output and a naming-gate refusal is a missing registry row to add.",
+  "world_is": "At commit 0b89670d1a the naming gate reports 'NAMING RAISE lib/research/api/scoped_amgt.py:3309 s3://{0}/{1} -> (rule or registry defect)' and 'NAMING-GATE: WARN 1 graded'. The literal builds only the reason string; the key the reader GETs is _hp.AI_FILL_GOLD_PREFIX + crosswalk.security_key_partition + ai_fill.json, and no address literal is typed. The commit was not refused.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit-gate and naming-gate output of the code commit 0b89670d1a (safe-commit run, 2026-10-13): 'NAMING RAISE lib/research/api/scoped_amgt.py:3309 s3://{0}/{1}' and 'NAMING-GATE: WARN 1 graded'.",
+      "lib/research/api/scoped_amgt.py line 3309 in commit 0b89670d1a: where = \"s3://{0}/{1}\".format(bucket, key) inside _read_ai_fill_document."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The gate treats display text as an address. The drafting reader carries the same display text shape (pre-existing, not in this diff, not graded here). Whether the naming gate should read a reason string is the issuer's and naming owner's call; the face's wording was kept."
+}
+```
