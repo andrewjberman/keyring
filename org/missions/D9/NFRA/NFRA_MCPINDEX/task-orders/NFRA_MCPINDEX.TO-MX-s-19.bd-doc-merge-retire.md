@@ -138,6 +138,26 @@ start at PHASE A.**
 - Graded by: no gate limb graded this modification (to-pipeline-gate LIMB 6 does not fire on a modify; `<placeholders>`
   reads NONE, so GATE (viii) does not grade it).
 
+**AMENDED A8 (2.0.0_SA_COO~MI, 2026-10-13 ~05:4xZ) -- PHASE A accepted; s19.AC1 re-cut to the SCHEDULED plane (row
+Z-S101, option (b)); Z-S102 dismissed.**
+- PHASE A is accepted as reported: `ANNOUNCE_MX-s-19.md` and `mx-s-19.plan.txt` @8b47c81ae2 (render sha256
+  `bd04f330...`, binary sha256 `f69eae52...`), `.tf` edit on `wk-mcpindex-r7-s19-mi` @6df81ececb, plan 0/2/0.
+- **s19.AC1** now counts an SSM document as a writer only while an ENABLED EventBridge rule targets its trigger Lambda.
+  It reads `list-rule-names-by-target` and `describe-rule`; a document with no mapped trigger is counted fail-closed.
+  It grades the SCHEDULED plane, never reachability: an ad-hoc `send-command` can still run a document. The invocation
+  and `<expect>` are unchanged. Dry-run before the GO:
+  - live, rules ENABLED: 2 of 4, FAIL;
+  - planted, both DISABLED: 4 of 4, PASS;
+  - planted, realized ENABLED: 3 of 4, FAIL.
+  Row Z-S103 disarms Z-S101.
+- **Z-S102 is dismissed (row Z-S104):** all 84,533 rows of the prior 2026-10-10 version are in the 2026-10-08 partition
+  (69 of 69 value-stable columns match). The shrink removed a duplicate copy.
+- **The unmeasured log-key consumer (ANNOUNCE section 3):** the only hits for `(realized|transaction)-download-` in
+  `infra/`, `data/black_diamond/` and `lib/` are the three SSM documents that write the logs. No reader was found in
+  that scope, and the rest of the repo was not searched.
+- The GO follows the two never-widen halves: `deliverables/2.0.0_SA_COO~MI/NEVER_WIDEN_ASK_MX-s-19_20261013.md`.
+- Graded by: no gate limb graded this modification (LIMB 6 does not fire on a modify; `<placeholders>` NONE).
+
 ## 2. BOUNDS
 
 1. One producer per table: no second schedule, no parallel path, no comparator. Served silver must not lose a
