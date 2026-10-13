@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "laptop",
- "written_at": "2026-10-13T21:32:39Z",
+ "written_at": "2026-10-13T22:30:03Z",
  "written_by": "1.0.0_SA_CTO",
  "rows": [
   {
@@ -743,6 +743,45 @@
     "ruled_by": "cto",
     "xadj": null
    }
+  },
+  {
+   "id": "laptop-20261013T223003Z-3d7e",
+   "project": "NFRA_DEVPLN",
+   "subject": "CLAUDE.md law edit: should FAST-lease and test-only portal changes reach DEV through the merge-forward script (one approved route), instead of a direct push? (a) yes, (b) keep both direct routes",
+   "asked_by": "1.0.0_SA_CTO",
+   "source": "org/missions/D0/NFRA/NFRA_DEVPLN/ledger/ROUND_ANALYSIS.round3.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-13T22:30:03Z",
+   "kind": "fork",
+   "context": "NFRA_DEVPLN C-MERGE-FORWARD fates (iii) and (iv). Both direct routes are CLAUDE.md law (Portal section), so only your word changes them; until then they coexist with the script. Nothing is blocked.",
+   "rec": "(a): one route onto DEV makes 'PROD carries only approved features' checkable from DEV's own history; the FAST lease stays the approval (its row is written by approval-lease) and test-only needs no approver, so neither loses speed.",
+   "scope": {
+    "measured_at": "2026-10-13T22:30:03Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      ".tools/tests/test_open_calls_withdraw.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_open_calls_cloudread.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/open-calls.py is on the shared branch (.tools)",
+      ".tools/tests/test_open_calls_withdraw.py is on the shared branch (.tools)",
+      ".tools/tests/test_open_calls_cloudread.py is on the shared branch (.tools)",
+      ".tools/portal-merge-forward.sh is on the shared branch (.tools)"
+     ]
+    }
+   },
+   "closed": null
   }
  ]
 }
