@@ -9255,3 +9255,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Not halting anything: the gate is WARN today. The row f61b stays OPEN for Andrew; the dell2 CTO does not close an act he owes to quiet a gate."
 }
 ```
+
+## NFRA_CTLPLN-S9123 -- routed from NFRA_DEVPLN: unblock.py tick --owed-call must read a call on another box's list through the freshest source
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9123",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~DV",
+  "surfaced_at": "2026-10-14T02:30Z",
+  "one_line": "ROUTED by 1.0.0_SA_CTO (NFRA_DEVPLN round-7 analysis, section 2): .tools/unblock.py tick --owed-call must read a call on ANOTHER box's list through the freshest source, so a project waiting on a dell2 approval row records a WAIT and not an empty tick; unblock.py is the keep-driving mechanism NFRA_CTLPLN owns, so the one worker-light cell is yours to cut.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_DEVPLN/ledger/ROUND_ANALYSIS.round7.md section 2 (CTO ruling on row NFRA_DEVPLN-S5): 'RULED: widen the tool. No laptop pointer call ... unblock.py tick --owed-call resolves the id's box and reads that row through the same reader ... Done when tick --owed-call dell2-20261013T221411Z-3635 reads WAITING CALL ... OPEN from the laptop, and a CLOSED or absent remote row counts as before. If .tools/unblock.py is not in this project's paths, the issuer routes the cell to 2.0.0_SA_COO~C (NFRA_CTLPLN owns the keep-driving mechanism) through a row'",
+      ".tools/unblock.py line 333 open_call_row(call_id): the box is the id prefix and the row is read from org/devices/state/<box>/open_calls.json in the WORKING TREE only; for a foreign box that file is a possibly stale copy (the laptop's copy of dell2's list predates dell2's rows), so the row reads absent and the tick counts EMPTY (lines 407-409)",
+      "measured 2026-10-14 ~02:00Z by 2.0.0_SA_COO~DV: five ticks with --owed-call dell2-20261013T221411Z-3635 (and four more dell2 ids) read empty=1..5, verdict THIRD-EMPTY-TICK at 3; no case opened; reset by a real work tick. The five rows are OPEN on dell2's cluster copy (python .tools/open-calls.py list --all --cloud)",
+      "the reader that already exists for exactly this: .tools/open-calls.py approval_read (merged by NFRA_DEVPLN DP-e-2, 965f9eff8a) takes a foreign box's list from the freshest of the cluster copy, origin/box/<box> and the working tree by written_at, and fails closed (no readable source is UNREADABLE, never absent); its test seam OPAL_CLOUD_READ_LOCAL is honoured only under OPAL_STATE_ROOT (DP-h-1, a3af4ce06d)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "unblock.py tick --owed-call: 'open-call id the project waits on (WAITING while OPEN or HELD)'; /next-calls --drive: a dependency with a live owner is a WAIT, recorded and not counted.",
+  "world_is": "Suggested cell (yours to cut; the issuer of NFRA_DEVPLN does not own .tools/unblock.py): open_call_row reads a FOREIGN box's row through the freshest-source reader (import or reuse approval_read's three-source rule for any row id, not only approval rows); this box's own id keeps the working tree; no readable source for a foreign box returns None as today (EMPTY, with the reason named); tests use OPAL_STATE_ROOT with OPAL_CLOUD_READ_LOCAL. Criteria worth cutting: the CTO's 'tick --owed-call dell2-20261013T221411Z-3635 reads WAITING CALL ... OPEN from the laptop' while that row is OPEN; the same id reads EMPTY once the row is CLOSED. NFRA_DEVPLN records its own wait meanwhile with --wait-until and --owner."
+}
+```
