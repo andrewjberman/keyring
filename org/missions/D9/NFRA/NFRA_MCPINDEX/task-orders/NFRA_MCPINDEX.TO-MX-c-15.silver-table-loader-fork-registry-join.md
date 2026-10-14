@@ -108,3 +108,4 @@ Battery and planted arms: decomposition R14.7.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+<status>complete</status>
