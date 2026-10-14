@@ -33270,3 +33270,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "At baba4b0 the S4 block had no closing fence, so it did not parse as a row; the gate reported 0 new rows (total stayed 1276, not 1277) and printed OK, so the gate's OK line was not evidence that S4 was graded. The fence is repaired in the next commit; the row text is otherwise unchanged. The gate's silence on an unparsed new block at baba4b0 is the observation."
 }
 ```
+
+## IRPT_BCKEND-D2-S158 -- cottonwood's served holdings are stale: the publish guard refuses the candidate for one lost account
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S158",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T02:16:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (the publish guard's owner decides) or whoever accepts the lost account",
+  "one_line": "Cottonwood's served Investor Reporting holdings are STALE: the newest accepted publication is business date 2026-10-08; the candidates for 2026-10-09 onward were REFUSED by the holdings publish guard on ONE condition, account_lost count 1 (an account in the served snapshot absent from the candidate); found by worker 373's count (D2-W373-S3, S4) and read by me from the 649-byte refusal record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 373's rows D2-W373-S3 and S4 (cottonwood's newest accepted publication 2026-10-08, index last modified 2026-10-09; a publish_refusal.json written 2026-10-13T14:17:45Z; no accepted 2026-10-09 or 2026-10-12 partition)",
+      "my read of that record (head-object: 649 bytes; get-object: schema irpt-holdings-publish-refusal-v1, outcome REFUSED, refused_at 2026-10-13T14:17:42Z, candidate business_date 2026-10-12 with 867 accounts and 17,966 nodes, served business_date 2026-10-08, conditions [account_lost count 1], listed.new_unclassified count 0); the opaque account id the record names is not copied here; the object was read to scratch, then deleted"
+    ]
+  },
+  "spec_asserts": "A firm's holdings publication advances with the trading calendar, or states why it did not (a figure Opal cannot produce says so in words, never blank: FWD-21's ACCEPT).",
+  "world_is": "STATE: a firm's client-facing holdings are four trading days behind (2026-10-08 served; 10-09, 10-12 and later not published) because the publish guard refuses a candidate that LOSES an account (one account here). NOT READ by me: why the account is absent from the candidate (a terminated account, a data gap in the source, a mapping break), whether the refusal clears on its own, who owns the acceptance path (the guard's code and its override are in the holdings publisher; not read), and whether other firms have a refusal record (49financial and inflection are at 2026-10-12, so none is blocking). This is a SERVED, client-facing staleness and a guard decision, not a build for this seat: it is put to the CTO in the L10 slug for a ruling on the owner and the path; ARMED until a person decides or it clears."
+}
+```
