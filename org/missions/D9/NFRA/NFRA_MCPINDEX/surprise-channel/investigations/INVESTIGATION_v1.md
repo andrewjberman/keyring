@@ -7264,6 +7264,93 @@ carries none.
       ]
     },
     "notes": "A later cell that wants the full listed prefix in a claim needs a registry row for it (infra/logic/registry), not a typed literal."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T15:22:00Z",
+    "one_line": "Six in-scope contracts carry a non-integer trading-day value (three strings, one dict, two nulls); the two nulls yield no number, and one of them is stale by its own latest_partition, so the NOT CURRENT rule cannot mark it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Worker face section 1, row business_meaning: let n be the first number found under the contract's freshness keys trading_days_behind_t1, trading_days_behind, trading_days_behind_T-1; when n is above 5 append NOT CURRENT. Frozen-or-empty is never current (PRD v0.12 item 4).",
+    "world_is": "Three in-scope contracts carry a string under those keys ('0 (page day ...)'): opal-data-etfs/gold/buying_trend, holding_contribution, input_census. One carries a per-firm dict (opal-data-etfs/gold/daily_partner_ownership, values 0, 1, 0). Two carry null (opal-data-assets/silver/49financial/_single_file and commonwealth_cottonwood_price_evidence). The generator reads the first integer in a string, the first numeric value in a dict, and skips null; the six rows get n of 0 or none. opal-data-assets/silver/49financial/_single_file has latest_partition 2026-01-28 against t1_frontier 2026-10-13 and no trading-day figure, so it carries no NOT CURRENT flag: the rule has no derivation from latest_partition. The contract's own note on commonwealth_cottonwood_price_evidence says lag is not staleness; no such note is on _single_file.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "G2 pinned at org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G2_assets_silver.md@339a2804d7: opal-data-assets/silver/49financial/_single_file (silver_legacy) freshness {latest_partition 2026-01-28, trading_days_behind_t1 null, t1_frontier 2026-10-13}; opal-data-assets/silver/commonwealth_cottonwood_price_evidence freshness {trading_days_behind null, note: closed historical delivery}.",
+        "G5 pinned at org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G5_etfs.md@35f45893a7: opal-data-etfs/gold/buying_trend, opal-data-etfs/gold/holding_contribution, opal-data-etfs/gold/input_census carry freshness.trading_days_behind_T-1 as a string beginning '0 (page day'; opal-data-etfs/gold/daily_partner_ownership carries trading_days_behind_T-1 as a dict {49financial: 0, cottonwood: 1, inflection: 0}.",
+        "Generator output at workflows/atom_decomposition/catalog_entries/ (174 rows written this cell): business_meaning of the six rows has no NOT CURRENT clause; the first-number reading is in workflows/atom_decomposition/gen_silver_rows.py first_number() and trading_days_behind()."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T15:22:00Z",
+    "one_line": "Three of 36 ETF contracts carry client-firm fork keys, so the firm-scoped rule gives them the client-data sentence; the other 33 ETF contracts are opal-internal-only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Worker face section 1, rows business_meaning and firm_scope_rule: firm-scoped when fork_keys.firm.values holds any value other than global and opal-internal; the test list reads 'opal-internal-only for an ETF table'.",
+    "world_is": "opal-data-etfs/gold/daily_partner_ownership, opal-data-etfs/platinum/etf_ownership_dashboard and opal-data-etfs/platinum/monthly_ownership_report name the firms 49financial and cottonwood in fork_keys.firm.values. The rule as written marks them firm-scoped; their rows carry the client-data sentence. The rule was applied, not overridden. The denominator is 36 ETF contracts in G5; 3 firm-scoped, 33 opal-internal-only.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "G5 pinned at org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G5_etfs.md@35f45893a7: fork_keys.firm.values for opal-data-etfs/gold/daily_partner_ownership is [49financial, cottonwood, inflection]; for opal-data-etfs/platinum/etf_ownership_dashboard and opal-data-etfs/platinum/monthly_ownership_report it is [49financial, cottonwood].",
+        "Generator output: workflows/atom_decomposition/catalog_entries/opal_data_etfs_gold_daily_partner_ownership.yaml, opal_data_etfs_platinum_etf_ownership_dashboard.yaml, opal_data_etfs_platinum_monthly_ownership_report.yaml carry firm_scope_rule firm-scoped."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T15:22:00Z",
+    "one_line": "A deployed vendor tool (blackdiamond_list_fees) named by one in-scope contract's proposed_tools reads as read_tool null, because the policy maps it to client_get_fees before the deployed check and client_get_fees is not deployed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Worker face section 1, read_tool policy: each candidate is cut at the first space, mapped through client_tool_map.json, and the read_tool is the first candidate in the deployed set; a tool that is not deployed is never named.",
+    "world_is": "The deployed census (tool_census.py, 70 tools) holds blackdiamond_list_fees; client_get_fees is not deployed. opal-data-assets/silver/cottonwood/fact_transactions proposes blackdiamond_list_fees (extend) and reads read_tool null with gap_owner NFRA_OPLGTW. Measured denominator: 1 of the 131 contracts that carry proposed_tools has a deployed raw candidate with an undeployed mapped name. The policy was applied as written.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "G2 pinned at org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G2_assets_silver.md@339a2804d7: opal-data-assets/silver/cottonwood/fact_transactions proposed_tools[].name includes 'blackdiamond_list_fees (extend)'.",
+        "tool_census.py run at the worktree (091f812b7b base): 70 tools; blackdiamond_list_fees present (app/integrations/blackdiamond/integration.py:387); client_get_fees absent.",
+        "workflows/atom_decomposition/client_tool_map.json: blackdiamond_list_fees -> client_get_fees (OPLGTW PRD v3.1 ruling 1 pairs)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T16:07:37Z",
+    "one_line": "The commit-time naming gate refuses 162 of the 174 generated rows (377 REFUSE lines of 648 graded) and two code files, because the verbatim contract strings are hand-kept carriers outside the permitted lookup context; the MX-c-14 commit did not land.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Worker face section 1: the row copies the contract's own strings (bucket, prefix, contract, fork_keys, nl_tags) verbatim, never paraphrased; section 2 bound 3: the row shape is exactly the table. Task order bound 4: a commit through the naming gate needs a staged .json under the project home.",
+    "world_is": "The naming gate (safe-commit.sh, LGIC_ENFORCE) grades 648 items and refuses 377, across 162 distinct new catalog rows: the verbatim s3 prefixes, contract ids and firm aliases (49f, 49financial, cottonwood, inflection) are NEW and OUT-OF-PATTERN or hand-kept carriers outside lookup(). It also refuses workflows/atom_decomposition/client_tool_map.json (a tool name read as an S3 key, blackdiamond_get_account_profile -> blackdiamond-get-account-profile) and workflows/atom_decomposition/gen_silver_rows.py (the retired-feed constant holding the 49financial alias). The rows were not altered, because the copy rule forbids it; CLAUDE.md section 4 routes a builder refusal to a registry row or an R20 entry Andrew acknowledges, never a hand-typed workaround. Remaining: the 174 rows, the generator, the map and the tests are uncommitted in the worktree on wk-NFRA_MCPINDEX-38.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh naming-gate output, worktree wk-NFRA_MCPINDEX-38 on base 091f812b7b (log .scratch/commit2.log, not committed): 'NAMING-GATE: REFUSE 648 graded'; 'NAMING REFUSE' lines 377, 'NAMING CONFORMANT' lines 217; distinct refused files 162.",
+        "Example refusal: workflows/atom_decomposition/catalog_entries/opal_data_assets_silver_49f_dim_account_xref.yaml:2 blackdiamond/49f/silver/dim_account_xref/ -> blackdiamond/49financial/silver/dim_account_xref/ (ALIAS, REFUSE: read it through lookup('49financial')).",
+        "CLAUDE.md section 4 at 091f812b7b: 'Every S3 address is lib/opal_naming.py address() output ... a builder REFUSAL is a missing registry row to add (infra/logic/registry/), never a hand-typed workaround; a deliberate departure is an R20 register entry Andrew acknowledges.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
