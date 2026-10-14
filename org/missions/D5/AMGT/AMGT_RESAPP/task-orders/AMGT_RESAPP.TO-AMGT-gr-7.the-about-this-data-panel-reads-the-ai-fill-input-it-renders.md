@@ -80,6 +80,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** An independent head (a portal cell, like AMGT-ar-5). The check is proven satisfiable by the issuer's reference patch (11 of 11, `tsc -b --noEmit` rc 0). The issuer registers the approval row, pushes the branch and runs the release flow AFTER the CVO's re-read is MET and the CTO releases the API hold: the new row is useless while the blocks are held (the panel adds no row for an ABSENT fill).
 
 <status>pending</status>
+<status>complete -- 2026-10-14 by the issuer (2.0.0_SA_COO~R2): wk-AMGT_RESAPP-456 @e6b11ab2bf merged @1bcb4a12e0; portal branch cand/dell1/aifill-provenance @31337460 on PROD 7db035e4 (LOCAL, NOT pushed, no approval row: the issuer registers it after the CVO's re-read is MET). AC1 PASS (`AIFILL PROVENANCE: YES (11 of 11)`, re-run by the issuer in the worker's portal tree), AC2 PASS (feature green YES, regressions 0), AC3 PASS (`R103 FEATURE SURFACE: YES (2 files: 2 page, ...)`).</status>
 <round>106</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~456</slot>

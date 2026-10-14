@@ -92,6 +92,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** An independent head; proven satisfiable by the issuer's reference (21 of 21). PDFs are UNSUPPORTED (no stdlib extractor): the CTO's rule that a citation that does not answer grounds nothing applies, and the yield consequence (5 of 78 in the CVO's sample are PDFs, 26 refuse a script) is stated in the analysis, not hidden. Bot walls are never circumvented: a declared agent, one request, no retry.
 
 <status>pending</status>
+<status>complete -- 2026-10-14 by the issuer (2.0.0_SA_COO~R2): wk-AMGT_RESAPP-451 @229d0ed982 merged @f57f6e049a, proof instance VALID (rc=0). AC1 PASS (`AIFILL GR-2 ARMS: YES (21 of 21)`), AC2 PASS (99 passed). Row W451-S1 ruled: a 2xx page of a non-text content type is UNSUPPORTED (rung and two tests added by the issuer in the worker tree).</status>
 <round>106</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~451</slot>
