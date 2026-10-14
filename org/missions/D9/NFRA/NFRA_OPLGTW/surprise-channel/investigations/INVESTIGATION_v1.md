@@ -13532,6 +13532,111 @@ name the one known failure instead of silently inheriting it.
 }
 ```
 
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W77-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~77",
+  "surfaced_at": "2026-10-14T14:59:23Z",
+  "one_line": "The spec's HARVEST constructor captures harvest_read._client and harvest_typed.TYPED_MAX_BYTES at import, so a test that patches harvest_read._client (the OG-gt-0 pattern) does not reach HARVEST: HARVEST.client() still builds a real boto3 S3 client.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: infra/aws/ec2/opal-gateway/app/typed_scope.py (this worktree, uncommitted at write) -- HARVEST = Scope(<name derived from harvest_read.BUCKET>, harvest_read.BUCKET, harvest_read.SERVED_PREFIXES, harvest_read._client), the constructor the order names with the name derived (see S4); the max_bytes default is evaluated at import from harvest_typed.TYPED_MAX_BYTES.",
+      "TEST: infra/aws/ec2/opal-gateway/tests/test_og_gt0.py:64 @ad64732bcb -- the OG-gt-0 world fixture does monkeypatch.setattr(hr, \"_client\", _client); a G1 tool test written on that pattern does not reach HARVEST.client.",
+      "PROBE (run by this worker, no AWS call, cwd infra/aws/ec2/opal-gateway): HARVEST.client is original _client -> True; after hr._client is replaced by a lambda, HARVEST.client() returns a botocore.client.S3 object while hr._client() returns PATCHED.",
+      "OUTCOME: this worker's tests use harvest_read._s3_client plus internal_role.s3_client for HARVEST, and a recording fake only on non-HARVEST scopes; the constructor was kept literal, not rebound, because the order names it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "HARVEST = Scope(\"harvest\", harvest_read.BUCKET, harvest_read.SERVED_PREFIXES, harvest_read._client), and the five G1 tool cells import the scope seam in parallel.",
+  "world_is": "The Scope holds the function object captured at import, so a test or probe that replaces harvest_read._client is invisible to HARVEST. The next test written on the OG-gt-0 pattern would make a real S3 call with the box's own credentials and report that as a pass or a boto3 error, not as the fake.",
+  "notes": "ARMED until the issuer disarms it: either the G1 test guidance names _s3_client and internal_role.s3_client as the patch points for HARVEST, or HARVEST's client is rebound late (a lambda that calls harvest_read._client at call time). The rebinding is a spec-level edit to the constructor, so it is the issuer's call, not this worker's."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W77-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~77",
+  "surfaced_at": "2026-10-14T14:59:23Z",
+  "one_line": "The order says every extra must start with a served prefix for a non-HARVEST scope, but harvest_read.admit treats an empty extra as absent; the scope admit follows harvest_read, so an empty start_after is admitted on every scope.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ORDER: NFRA_OPLGTW.TO-OG-gt-6.scope-seam.md worker face, item 1, admit_scope: \"ref and every extra must start with a member of scope.served_prefixes and contain no ..\" (the worker face, section 1 item 1).",
+      "BASE: infra/aws/ec2/opal-gateway/app/harvest_read.py:78 @ad64732bcb -- if not _served(ref) or any(x and not _served(x) for x in extra): a falsy extra is skipped.",
+      "CODE: infra/aws/ec2/opal-gateway/app/typed_scope.py admit_scope (this worktree, uncommitted at write) -- the same expression, so admit_scope(HARVEST, ...) and admit_scope(other, ...) agree on an empty extra.",
+      "TEST: infra/aws/ec2/opal-gateway/tests/test_og_gt6.py test_oggt6_ac03 admits a/x with no extra; no test pins the empty-extra case."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "For any scope other than HARVEST, ref and every extra must start with a member of scope.served_prefixes and contain no '..' (else typed_prefix_not_served).",
+  "world_is": "harvest_read.admit, which the order makes admit_scope(HARVEST) equal to, admits an empty extra as no extra (start_after defaults to empty). A literal reading would refuse an empty extra on other scopes only, so the same call would pass on HARVEST and fail on every other scope.",
+  "notes": "The worker followed harvest_read (an empty extra is absent) so the two scopes behave alike. A stricter literal reading is a one-expression change in admit_scope if the issuer rules for it. INERT: no caller of admit_scope exists yet."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W77-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~77",
+  "surfaced_at": "2026-10-14T14:59:23Z",
+  "one_line": "The order says to reuse harvest_typed's filter application by calling a helper, but harvest_typed has no such helper: the filter block is inline in read_parquet, so typed_scope.read_parquet carries a copy of it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ORDER: NFRA_OPLGTW.TO-OG-gt-6.scope-seam.md worker face, item 1: \"Reuse the pure parts (the filter application, the _layout_key ordering, the date coercion) by calling harvest_typed helpers; copy only what must take the scope.\"",
+      "BASE: infra/aws/ec2/opal-gateway/app/harvest_typed.py:177-204 @ad64732bcb -- the filter loop (mask, _FILTER_OPS check, is_in / pc.equal / less / greater) sits inside read_parquet, with no separate function for it.",
+      "CODE: infra/aws/ec2/opal-gateway/app/typed_scope.py read_parquet (this worktree, uncommitted at write) -- the same block, copied; _layout_key and _typed_value are called from harvest_typed as the order says.",
+      "TEST: infra/aws/ec2/opal-gateway/tests/test_og_gt6.py test_oggt6_ac01 compares read_parquet with and without filters on HARVEST against harvest_typed (filtered and unfiltered)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Reuse the pure parts (the filter application, the _layout_key ordering, the date coercion) by calling harvest_typed helpers; copy only what must take the scope.",
+  "world_is": "Only _layout_key and _typed_value are separate harvest_typed helpers. The filter application is inline in harvest_typed.read_parquet, so the scope seam holds a copy of it. A later change to the filter block in harvest_typed would not reach non-HARVEST scopes, and only the ac01 equality test on HARVEST would show the drift.",
+  "notes": "INERT: the copy is proved equal to harvest_typed on HARVEST by test_oggt6_ac01 at this commit. A follow-up that moves the filter block into a shared helper is a change to harvest_typed.py, which this cell may not make."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W77-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~77",
+  "surfaced_at": "2026-10-14T15:06:25Z",
+  "one_line": "The commit-time naming gate (LGIC_ENFORCE, ENFORCE mode) refused the literal scope name 'harvest' typed in app/typed_scope.py, so the scope's name is derived from harvest_read.BUCKET instead; the value is unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GATE: safe-commit of infra/aws/ec2/opal-gateway/app/typed_scope.py, .tools/safe-commit.sh naming limb -- 'NAMING REFUSE infra/aws/ec2/opal-gateway/app/typed_scope.py:46 harvest -> lookup(harvest)'; 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' (this worktree, first attempt).",
+      "REGISTRY READER: lib/opal_naming.py:364 @ad64732bcb -- lookup(scope) resolves a scopes.json row; the gateway's request-path modules do not import lib.opal_naming (gen_rivalfunds_location.py and the tests do).",
+      "BASE: infra/aws/ec2/opal-gateway/app/harvest_read.py:25-26 @ad64732bcb -- BUCKET = \"opal-data-harvest\", the naming builder's output, hand-kept by the base and not flagged (not a NEW carrier).",
+      "CODE after the fix: typed_scope.py HARVEST name = harvest_read.BUCKET.rsplit(\"-\", 1)[-1]; tests/test_og_gt6.py ac01 asserts HARVEST.name == \"harvest\"; gt6.AC1.sh 4 of 4 and gt6.AC2.sh 5 of 5 after the fix."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "HARVEST = Scope(\"harvest\", harvest_read.BUCKET, harvest_read.SERVED_PREFIXES, harvest_read._client): the scope's name is the literal 'harvest'.",
+  "world_is": "The naming gate reads a hand-typed scope token as a NEW carrier and refuses it at commit, and the gateway request path has no runtime route to lookup('harvest') without importing lib/opal_naming. The worker derived the name from the builder output in harvest_read.BUCKET, the same value.",
+  "notes": "INERT: the name is a label used only in the generic refusal text (HARVEST delegates admission to harvest_typed.admit_typed). Whether a registry row or a generated carrier should own the scope token is the issuer's and the naming owner's call; the naming gate was not overridden."
+}
+```
+
   ```json
   {
     "id": "NFRA_OPLGTW-Z-S115",
@@ -13589,3 +13694,105 @@ name the one known failure instead of silently inheriting it.
     "dismissal_reason": "No act is owed: the code of both functions was read at the versions the twin runs, both are no-ops on the bare path, and the decision to attach neither is recorded with its reasoning here and in the Terraform. The order required a row only to say why, and this is it."
   }
   ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W73-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~73",
+  "surfaced_at": "2026-10-14T14:44:37Z",
+  "one_line": "The silver article partition is the FETCH date, not the published date, so harvest_get_article cannot locate a record from published_utc as OG-gt-2 specifies.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO NFRA_OPLGTW.TO-OG-gt-2.press-tools.md section 1, harvest_get_article: partition located from the mention row's published date; the same claim at org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G1_harvest.md:125 @0d7c29b3c5",
+      "READ-ONLY S3: bloomberg/harvest/silver/article/ (745 parts, 12 date partitions) joined to the newest gold article_security_mention part (amgt/harvest/gold/article_security_mention/date=2026-10-08/part-20261009T093755Z.parquet): 2960 of 2960 bloomberg articles found; silver date= equals the mention row's fetched_at UTC date for 2960 of 2960; equals the published_utc date for 1 of 2960",
+      "READ-ONLY S3, sampled 3 fetched-date partitions per publisher, 4 articles each, for seeking-alpha, wsj, ft and barrons: 47 of 47 articles found in the partition named by their mention row's fetched_at date",
+      "READ-ONLY S3, bloomberg: 1230 articles carry more than one silver record, all inside one partition; articles present in more than one partition: 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "harvest_get_article locates the silver partition from the mention row's published date (TO section 1; G1_harvest.md:125).",
+  "world_is": "The silver date= partition is the fetch date: the mention row's fetched_at, UTC. The tool locates the partition by fetched_at and keeps the newest record per article_key by fetched_at inside it. Measured in full on bloomberg and by sample on the other four publishers.",
+  "notes": "No served output is wrong: the tool follows the measured rule and returns absent_reason when the mention row is not in the newest gold part. The contract line and the TO wording are the CRO's to correct; the build does not wait on them."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W73-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~73",
+  "surfaced_at": "2026-10-14T14:44:37Z",
+  "one_line": "The TO joins gold article_sentiment into search with no part rule, while the contract says its parts are append batches.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO NFRA_OPLGTW.TO-OG-gt-2.press-tools.md section 1, harvest_search_articles reads: gold article_sentiment joined on article_key, no part rule named",
+      "G1_harvest.md:651 @0d7c29b3c5: article_sentiment grain 'parts are append batches'",
+      "READ-ONLY S3 listing: amgt/harvest/gold/article_sentiment/ holds 5 parts, all under date=2026-10-03",
+      "G1_harvest.md:677-680 @0d7c29b3c5: rows_all_parts 13235 and distinct_articles 13235, so the contract's own measure finds no article in two parts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The search tool joins gold article_sentiment on article_key and names no part rule for that dataset (TO section 1).",
+  "world_is": "article_sentiment is an append-batch dataset. The tool reads every part, filters to the candidate article_keys, and keeps the newest partition's row per article_key.",
+  "notes": "The copy rule is the tool's choice. With 13235 rows and 13235 distinct keys it changes no answer on the contract's measure."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W73-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~73",
+  "surfaced_at": "2026-10-14T14:44:37Z",
+  "one_line": "The TO asks for chatter_event deduplicated on event_id without naming which copy to keep, while the contract says event_id repeats across partitions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO NFRA_OPLGTW.TO-OG-gt-2.press-tools.md section 1, harvest_get_chatter reads: chatter_event deduplicated on event_id",
+      "G1_harvest.md:1424 @0d7c29b3c5: never_sum_rules 'event_id repeats across partitions; dedupe on event_id'",
+      "G1_harvest.md:1317-1320 @0d7c29b3c5: rows_all_parts 576, distinct_events 528, 10 parts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "chatter_event is deduplicated on event_id (TO section 1); no copy rule is stated.",
+  "world_is": "The contract gives no rule for which copy of a repeated event_id wins. The tool reads every chatter_event part and keeps the copy from the newest date partition, newest part name first within it.",
+  "notes": "A copy rule for a repeated event_id belongs to the chatter_event owner. Events are returned with overlap to from_day..to_day, a choice the TO does not state either."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W73-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~73",
+  "surfaced_at": "2026-10-14T14:44:37Z",
+  "one_line": "OG-gt-0 read_parquet raises on a declared column that a silver part lacks, and silver article parts carry differing column sets.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/harvest_typed.py:176-180 @de8bd420d2: read_parquet raises ValueError 'unknown column' when a named column is absent from the part",
+      "G1_harvest.md:5278-5286 @0d7c29b3c5: bloomberg silver article size block, schema_variants 717 over parts 745",
+      "READ-ONLY S3, bloomberg silver parts: 4 distinct column counts across the 745 parts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The OG-gt-0 base read_parquet projects declared columns at read, and the typed tools read through it (TO section 1, the base surface).",
+  "world_is": "Silver parts differ in their column sets, so a declared-column read on silver raises for each part that lacks a column. The OG-gt-2 tools read silver with columns=None and select the fields they return by name; a field a part lacks comes back None.",
+  "notes": "A future tool that declares silver columns will raise on the variant parts. The base is not edited by this cell: its owner is OG-gt-0."
+}
+```

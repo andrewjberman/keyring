@@ -51,3 +51,24 @@ Nothing of release 29 is live (the CVO's read at 12:13Z). **No PRD addendum.** D
     drain.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM (~15:4xZ): FWD-1's critical path for the NEXT issuance (round 41), from the CRO's trace
+
+Source: `org/tier1_exec/4.0.0_SA_CRO/deliverables/TICKET_CENTER_ANALYSIS_REQUEST_END_TO_END_GAP_BRIEF_20261014.md` @6766f4486d (msg 7720),
+under PRD v0.7 (the filer is a synthetic Opal staff user). Round 40 stays as issued. Round 41 cuts these in this order, as the ONE thread:
+
+1. **J7:** the staff submit with a firm choice (portal; the order is drafted, held only by the v0.7 signatures).
+2. **C-SWITCH** (J3): the resident's `producer_for` admits the ticket-filed request by its confirmed `ticket_id`, not by
+   `andrew@opalinvest.com` alone. Today the allow list holds only that one login, in r29 and at HEAD (hop 8).
+3. **IB-pr-456 deployed (Andrew's f61b), then AR-y-317** (`commentary_requested` from the form; hop 7).
+4. **ONE resident release binding `analysis_ready_queue_url`, `commentary_ready_queue_url` and `packager`**, all null in r29's
+   `resident_bindings.json` (hops 11 and 16).
+   - **CONDITION:** the commentary-ready queue holds ONE stale message from 2026-10-11 (row S26; synthetic REQ-4b5155ac..., tenant
+     49financial). Binding the packager would consume it and post a package. The release's step 0 reads the queue depth. If the message is
+     still there (it expires ~2026-10-15T06:10Z), it is read and either purged under the pair as a named act or left to expire before the
+     binding. It is never consumed by the live packager.
+5. **The ticket page's commentary reader and branded-PDF reader** (hop 19; portal).
+
+Then the FWD-1 run: one synthetic Opal staff user, one 49financial market-value file, Overview, commentary on, on DEV, with all four
+attachments opened from the OPEN ticket, recorded as ONE trace. The report will render with most sections NOT_AVAILABLE (no price source
+is composed). That is accepted for FWD-1's thread, and it is the CRO's sequence item 2, the first enrichment after FWD-1.

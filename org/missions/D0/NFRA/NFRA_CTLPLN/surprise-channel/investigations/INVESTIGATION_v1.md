@@ -9421,3 +9421,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## NFRA_CTLPLN-D2-S5 -- round-close-check and proof-of-spec-check disagree on judgment rows, so every round with a judgment criterion reads REFUSED
+
+```json
+{
+  "id": "NFRA_CTLPLN-D2-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-14T15:47:00Z",
+  "one_line": "round-close-check (cell CT-s-8) wants a proof row for each judgment criterion, while proof-of-spec-check refuses any judgment row outside its expected set; the seat must break one of them, so IRPT_DASHBD reads REFUSED on every judgment round (row IRPT_DASHBD-D2-W156-S8, recurring rounds 101 to 107).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Spine L9/L10: a round closes when every order is terminal and every judgment criterion is graded by the CVO; both checkers are meant to agree on what a complete proof carries.",
+  "world_is": "With a DBnnn-J1 acceptance row present, proof-of-spec-check reports an unexpected addition and returns INVALID (rc 1); with J1 in declared_exclusions instead (the seat's choice), round-close-check reads REFUSED for the missing judgment row. The CVO's round-107 slug (msg 7727, ADJUDICATION_v67 @879e7badcb) names it again as the only reason for REFUSED; the CTO closes such rounds on the CVO's PASS. Owner of the fix: the checkers' cell owner (NFRA_CTLPLN workstream SEATS).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_DASHBD-D2-W156-S8",
+      ".tools/round-close-check.py header (cell CT-s-8) and line 24 (every judgment criterion needs a row)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/adjudications/ADJUDICATION_v67.md @879e7badcb"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

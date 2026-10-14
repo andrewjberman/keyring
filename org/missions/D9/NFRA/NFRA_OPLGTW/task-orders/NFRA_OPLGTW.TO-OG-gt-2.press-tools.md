@@ -159,7 +159,7 @@ the issuer to make at the merge.
 - A1 (issuer, 2026-10-14 ~15:3xZ, from row NFRA_OPLGTW-Z-W74-S2): the `article_sentiment` join reads ALL parts, newest batch wins per article_key. The worker, if still running, is
   continued with this amendment. No criterion moves. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G1-TYPED</workstream>
 <slot>~73</slot>
