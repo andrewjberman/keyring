@@ -2227,3 +2227,110 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "The band costs 442 Fixed Income trade rows on 25 assets. A cluster of nine unrelated funds at one ratio on one date suggests the corroborating ratio, not the trades, carries the offset. Not investigated; the list's classes are the rule's output as written."
 }
 ```
+
+## ADVI_BDPRCE-D1-W20-S1 -- The round-2 lot extract holds no rows for MORGAN STANLEY FIN LLC 0% 05/03/2029, for the eight round-2 scale_100x bond names, or for any other bond named in the order, so their served unit reads unreadable and their rows are withheld
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T03:56:37Z",
+  "one_line": "served_unit_map over lot_extract.csv (sha256 verified) has no lot for MORGAN STANLEY FIN LLC 0%, MIAMI-DADE 5.25% 2031, CITIGROUP 5.3% 2032 or any of the eight round-2 scale_100x names, so the order's expected values (MORGAN 100.0, MIAMI-DADE 1.0419, 8 of 8 unchanged) cannot be produced from the extract as specified.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lot_extract.csv sha256 e7e618d76516c8b7977179aefb3f77ce4fc13c17fbcf1dbeb92001a6e0a2b50b at C:/dev/wk-bdprce-r2-7-data/lot_extract.csv: 198,295 lots, 2,909 asset names (read at the worktree base 218e74901d)",
+      "grep -c -F on lot_extract.csv: MORGAN STANLEY FIN LLC 0; MIAMI-DADE CNTY FLA EDL FACS A 5.25% 0; CITIGROUP INC 5.3% 07/22/2032 0; MISSOURI ST HEALTH & EDL FACS 5% 0; BANK MIDWEST SPIRIT LAKE IOWA 3.85% 0; PNC BANK NATIONAL ASSOCIATION 4.1% 0; STATE BK INDIA NEW YORK NY 3.95% 0; TRUIST BK 3.9% 0; WELLS FARGO BANK NATL ASSN 3.8% 0",
+      "RULE_PROBE3.json served_units {assets 2909, per100 0, per_unit 2500, unreadable 409}; the probe's MORGAN, MIAMI-DADE and CITIGROUP rows read kind withheld with reason unit_unreadable (MORGAN 1 row, MIAMI-DADE 7 rows, CITIGROUP 5 rows)",
+      "BEFORE_AFTER.csv at org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~6/ (base 218e74901d): MORGAN served 115.995 on 2026-10-05 as NOW_CARRY_FORWARD, so the served series is not in the lot extract"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1.00 items 1 and 2 and the probe clause: served_unit_map reads each asset's unit from lot_extract.csv; MORGAN STANLEY FIN LLC 0% 05/03/2029 is expected to read per 100 (100.0 under per100, not 1.0); MIAMI-DADE CNTY FLA EDL FACS A 5.25% 04/01/2031 is expected at 1.0419; the eight round-2 scale_100x rows are expected UNCHANGED 8 of 8.",
+  "world_is": "The extract carries none of those names: 0 lots for MORGAN, MIAMI-DADE, CITIGROUP and the five other round-2 bond names, and 0 of 2,909 asset names read per100. The probe therefore withholds every such trade row as unit_unreadable (84 rows over the five dates); unit_scale_rows_unchanged is 0 of 8 and MORGAN and MIAMI-DADE are not priced. The per100 series the ruling describes is not served through this extract. BLACKROCK INC COM (1,074.9259, per unit) and ALLSPRING CORE BOND CIT CLASS E2 (10.3525, per unit) are in the extract and read as the order expects. Not resolved here: the unit source is the order's, and widening it is the issuer's and CTO's call."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S2 -- R1.3 withholds 54 per-unit-shaped Fixed Income rows that R1.2 left alone, because the unit-unreadable test runs before the ratio is read
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T03:56:37Z",
+  "one_line": "Of the 84 Fixed Income rows withheld unit_unreadable on the five probe dates, 54 carry a ratio within 1 percent of 1, the shape R1.2 left alone as per unit; they belong to 13 assets the extract does not carry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RULE_PROBE3.json census per date: R1.3 per_unit_left 34, 504, 1365, 943, 1144 (total 3,990); withheld unit_unreadable 9, 13, 21, 12, 29 (total 84)",
+      "effect measurement (.scratch/effect.py, not committed): the same five dates with every Fixed Income name read as per_unit (the R1.2 reading) give per_unit_left 4,044 in total, scaled 25 rows, withheld 5 rows; the 84 R1.3 withheld rows split 25 near 100, 54 near 1, 5 at about 1.084",
+      "served_unit_map over lot_extract.csv: 342 of 2,521 Fixed Income candidate names are in the map (266 per_unit, 76 unreadable); the other 2,179 are absent"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1.00 item 2: a Fixed Income row whose ratio is within 1 percent of 1 is left alone (per_unit_left) under per_unit; a Fixed Income row whose unit is unreadable, or whose asset is missing from the map, is withheld with reason unit_unreadable.",
+  "world_is": "Both clauses are built as written, and the consequence is larger than the order's named assets: a per-unit-shaped bond or fund row is withheld as unit_unreadable whenever its asset is absent from the extract, which is the case for 2,179 of 2,521 Fixed Income names. Over the five dates the rule withholds 54 rows that R1.2 left alone, 25 rows that R1.2 would have scaled, and 5 rows R1.2 withheld too. The count is a measured consequence; it is not a defect against the clauses as ruled."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S3 -- The task order's four probe dates omit 2026-09-16, the date of five of the eight round-2 scale_100x rows; the probe reads five dates and the next day of each
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T03:56:37Z",
+  "one_line": "Section 1.00 names four probe dates, but five of the eight round-2 scale_100x rows sit on 2026-09-16, so unit_scale_rows_unchanged cannot be read from the four dates alone; the probe adds 2026-09-16 and reads 2026-09-17 with it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BEFORE_AFTER.csv at org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~6/ (base 218e74901d): scale_100x rows dated 2026-09-16 (BANK MIDWEST SPIRIT LAKE IOWA 3.85% 2026, PNC BANK NATIONAL ASSOCIATION 4.1% 2027, STATE BK INDIA NEW YORK NY 3.95% 2027, TRUIST BK 3.9% 2026, WELLS FARGO BANK NATL ASSN 3.8% 2026), 2026-09-22 (CITIGROUP INC 5.3% 07/22/2032), 2026-10-09 (MIAMI-DADE, MISSOURI ST HEALTH)",
+      "ADVI_BDPRCE-D1-W13-S4 (the first seat's row) recorded the same omission for round 2 and was not carried into section 1.00",
+      "RULE_PROBE3.json census keys 2025-05-28, 2026-09-16, 2026-09-22, 2026-10-02, 2026-10-09"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1.00 probe clause: the probe runs over 2025-05-28, 2026-10-09, 2026-09-22 and 2026-10-02, reading each date and the next; unit_scale_rows_unchanged is the eight round-2 rows.",
+  "world_is": "Those four dates hold three of the eight round-2 rows. The other five sit on 2026-09-16. The probe reads 2026-09-16 and 2026-09-17 in addition, five dates in all (ten partitions plus the dimension), so all eight rows are read on their own dates."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S4 -- served_unit_map also skips a lot whose current price is missing or not positive; the order names only a zero or missing quantity or market value
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S4",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T03:56:37Z",
+  "one_line": "The order's served_unit_map skip rule covers a zero or missing quantity or market value; the module also skips a lot with a missing or non-positive current price, since no lot ratio exists for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lot_extract.csv at C:/dev/wk-bdprce-r2-7-data/lot_extract.csv (sha256 verified): 35 lots with a missing or non-positive current_price (34 missing, 1 zero), of 198,295; 16,339 lots with a zero or missing quantity or market value",
+      "RULE_PROBE3.json lot_skips {lots 198295, zero_or_missing_qty_or_mv 16339, missing_or_non_positive_price 35}",
+      "bd_price_rule.py served_unit_map at the worker branch: the price test sits beside the quantity and market-value test; module docstring records the extra skip"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1.00 item 1: per asset, the median over its lots of current_price / (|market_value| / |quantity|), skipping a lot with a zero or missing quantity or market value.",
+  "world_is": "A lot with no current price yields no ratio at all, and a zero price yields a ratio of zero that would drag the median. The module skips both, which the order does not state. The effect is confined to an asset that also has usable lots; the probe's served-unit counts are computed with the skip in place. Left as built and reported here for the issuer to confirm or reverse."
+}
+```
