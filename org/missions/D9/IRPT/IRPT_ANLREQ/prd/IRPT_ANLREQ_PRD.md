@@ -5,7 +5,7 @@
  "project": "IRPT_ANLREQ",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.8",
+ "prd_version": "v0.9",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_223xZ_ANALYSIS_REQUEST_END_TO_END_ONE_PROJECT_CLOSER_TRACE.md@2b21a349d1",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
@@ -73,11 +73,15 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
          ACCEPT     an Opal person finishes an unusual request by hand from the Analysis tab, and the ticket ends up the same as an automatic one
          SOURCE     Andrew ("frontend work on the actual Analysis tab will be completed after the fact ... only for unusual cases")
 
-  FWD-7  An Analysis Request runs end to end without YCharts
-         DONE WHEN  EXERCISED -- FWD-1's request is traced hop by hop and shows zero YCharts calls: the typo check, the swap, the prices, the report
-                    and the overlays all come from Opal's own data, with yfinance and Bloomberg as named fallbacks
-         ACCEPT     the finished package is produced with no YCharts call anywhere in the request's trace; a figure Opal could not source says so
-         SOURCE     Andrew 2026-10-09 ~04:4xZ ("I do not think we actually need YCHARTS for anything")
+  FWD-7  An Analysis Request runs end to end on Opal's data, with at most ONE YCharts data call for prices
+         DONE WHEN  EXERCISED -- FWD-1's request is traced hop by hop: the typo check, the swap, the report and the overlays come from Opal's own data;
+                    prices come from Opal's verified stores first, and the securities still missing a price are priced by AT MOST ONE YCharts
+                    data call for the whole request (no signed-in browser session, no YCharts report, figure or PDF), with yfinance and Bloomberg
+                    as named fallbacks after it
+         ACCEPT     the finished package's trace shows zero or one YCharts data call, for prices only, and each price carries its source; a figure
+                    Opal could not source says so
+         SOURCE     Andrew 2026-10-09 ~04:4xZ ("I do not think we actually need YCHARTS for anything"); relaxed for pricing data by Andrew-direct
+                    2026-10-14 ~15:5xZ ("I am ok with a single data call to YCharts for pricing data.")
 ```
 
 ## 1. What exists (the CRO's nine-hop trace @9076346655, plus this session's measured changes)
@@ -104,7 +108,7 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
 | C-FIRM: firm reach | consumed | Every principal on the journey reaches exactly the request's firm: svc-commentary by tenant-bound `get()`; the packager by its row. FWD-1's filer, an Opal staff principal, CHOOSES the firm from the served partner tenants, and the choice must be in its explicit `allowedFirmIds` (the CREATE path's server check); every hop binds to that choice. A partner-firm user's firm is the signed-in user's and is never a choice. ALL never admits and never substitutes for the choice. |
 | C-ABSORB: what MOVES into this project (the brief's "compress into ONE project") | this project | **Moves in, owned and issued here.** (a) IRPT_BCKEND `~Y2`'s Analysis lane: the upload door and resolution `infra/aws/lambda/investor-reporting/intake/{uploads,upload_resolution,upload_suggestions,resolution_kimi}.py`, the security swap (today `KIMI_WEB_SEARCH_UNVERIFIED`, `resolution_kimi.py:159-165`; candidates from `etf-classifications`, ex-IRPT_YCDGEN FWD-16), and generation submit. (b) IRPT_YCDGEN whole: the Opal engine and brand `ycharts/generate/{resident_worker,durable_job,comparison_catalogue,publication_worker}.py`, `ycharts/research/{opal_producer,layout_overview}.py`, report types and vendor retirement. (c) NFRA_TRNSPT FWD-10 and FWD-11: the commentary drafter `data/transcripts/scripts/commentary/*` and its Lambda `commentary.tf`. (d) The READY event H1 (from `~P2`'s queue). (e) TCKT_VNEXT's Analysis Request scope: the `analysis_request` type definition, `POST /tickets/{id}/package`, `portal/src/pages/TicketCenter/` Analysis Request parts. **Keeps the remainder:** IRPT_BCKEND (`~P2`: auth, routes, directory, holdings, `irpt-export-render` as the shared renderer); NFRA_TRNSPT (FWD-1..9: transcripts, company read, mail); TCKT_VNEXT (non-analysis types). **Lanes:** `~Y2` is the ONE driver, issuing the FWD-1 thread and the round analysis. `~G2` (engine and brand), `~T2` (commentary) and `~V2` (ticket) continue as this project's workstreams with disjoint write surfaces, each issuing only into its own workstream scope (rule 27). No hop of FWD-1 parks on another project's cell. Each source PRD gains a one-line addendum pointing here at its next round boundary; in-flight orders and signed pairs complete where they are. |
 | C-SWAP: the security swap, one pass per unknown holding (Andrew ~04:4xZ; CRO research @9ae5d353d1 section 2) | this project | (1) KNOWN: the ticker or CUSIP in `etf-classifications` and MDPF_SECHIST; a typo suggestion is verified against the registry and yfinance, never YCharts. (2) YFINANCE CHECKER: one paced call; if it has history, the holding is KEPT, a registry row is added and its prices land in MDPF_SECHIST. (3) CLASSIFY only if yfinance has nothing: SECCLASS's classifier with a web-search tool, output bound to the live (class, sub-class) vocabulary, below 0.80 confidence FLAGGED. (4) PROXY, deterministic, no model: the designated registry ETF for that pair, else the class default, and it must have prices. (5) RECORD: the holding keeps the client's name, with `proxy_for`, `proxy`, `method`, `confidence`, `low_confidence` and `sources`. `resolution_kimi`'s model-proposed swap is retired. The designated-proxy table is MDPF_SECCLASS's (dell1), a pre-arranged input. |
-| C-PRICES: where prices come from | this project | MDPF_SECHIST's per-security series first, then yfinance (paced), then Bloomberg only when both lack it (through its queue, CLAUDE.md). The performance overlays of variants 2 and 3 use IRPT_DASHBD's daily TWR engine, ported with zero flows. No YCharts price or figure. |
+| C-PRICES: where prices come from | this project | MDPF_SECHIST's per-security series first; then AT MOST ONE YCharts data call per request, batched for every security still missing a price, prices only; then yfinance (paced, labelled UNVERIFIED); then Bloomberg only when all of these lack it (through its queue, CLAUDE.md). Every price carries its source as a claim field. The performance overlays of variants 2 and 3 use IRPT_DASHBD's daily TWR engine, ported with zero flows. No YCharts figure, report or PDF, and no signed-in browser session. |
 | C-NAMES: rule 30 | consumed; LGIC | Every new S3 address and resource name is `lib/opal_naming.py` `address()` / `name()` output, printed in the order that writes it. |
 
 ## 2. THREAD -- FWD-1, round 1
@@ -304,5 +308,23 @@ owed at these bytes.
 -- 1.0.0_SA_CTO~DELL2
 
 ## v0.8 (2026-10-14 ~15:4xZ, 1.0.0_SA_CTO~DELL2) -- on `4.0.0_SA_CRO~DELL2`'s brief-half refusal R1 (review @6f40d4010f): BRIEF COVERAGE row 5 names the Opal staff filer. Row 8 (the commentary as a branded PDF, R2) waits on Andrew's answer to the CRO.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.9 (2026-10-14 ~16:0xZ, 1.0.0_SA_CTO~DELL2) -- Andrew-direct ~15:5xZ: one YCharts data call for pricing data
+
+Authority: Andrew at the dell2 terminal, verbatim: "I am ok with a single data call to YCharts for pricing data." Record
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261014_155xZ_SINGLE_YCHARTS_DATA_CALL_FOR_PRICING_OK.md` @14360692df.
+
+1. **FWD-7 and C-PRICES are re-worded (above).** The ENDPOINT changed, so the ratified-text half re-opens for `3.0.0_SA_CVO`.
+2. **Where his word is silent, this seat reads it NARROWLY, and Andrew may widen it by one word:**
+   - "single": ONE call per request, batched for every security still missing a price. It is not one call per security.
+   - "for pricing data": prices only. Returns and risk are computed by Opal from those prices; no YCharts-computed figure.
+   - Its place: AFTER the estate's verified store (MDPF_SECHIST) and BEFORE yfinance. A paid vendor's price outranks an UNVERIFIED one
+     (CTO ruling 7546 keeps yfinance UNVERIFIED).
+3. **The call is a data call:** the gateway's YCharts data API, never the retired signed-in browser path. Its time, its securities count
+   and its source label go into the request's trace. A failed call falls through to yfinance and says so.
+4. **The trace's hop 9** (the CRO's gap brief, sequence item 2, "a report worth reading") is the first enrichment after FWD-1. It is now:
+   compose SECHIST plus the one YCharts call into the Opal producer.
 
 -- 1.0.0_SA_CTO~DELL2
