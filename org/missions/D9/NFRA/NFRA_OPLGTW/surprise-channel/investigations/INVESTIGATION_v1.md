@@ -14387,3 +14387,59 @@ name the one known failure instead of silently inheriting it.
     "notes": "INERT: nothing serves from an alien object by name, and no act is owed by this seat -- the four were not created, moved or deleted here. The next step, for whoever owns the assets pipeline's conformance, is to print the four keys (set_identity's alien list) rather than the count, since the remedy differs per cause. Found while closing OG-ap-15's L3 for this family; that leg is satisfied by the drain record and is not blocked by this."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S119",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T16:40:33Z",
+    "one_line": "A release AC2 that pins the manifest's CURRENT deployed_commit to its own release_sha necessarily reads FAIL once the NEXT release lands, on work that was PASS when measured and is flipped complete. Measured now on TWO orders at once: hv2.AC2 and ap14.AC2 both read RESULT: FAIL with equal=no, naming bacec95ccd (NFRA_MCPORTAL's 15:43Z release), while every other limb of both still passes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "hv2.AC2 re-run at 16:2xZ: 'ledgers CLOSED 2 of 2; sentinels at HEAD 0' then 'manifest deployed_commit=bacec95ccd; release_sha=7c558b4e21; equal=no; rb.AC2 FAIL' then 'simulate packs=allowed wsj_harvest=allowed control_unlisted=implicitDeny' and 'served fields: yes' -> RESULT: FAIL",
+        "ap14.AC2 re-run in the same minute: 'manifest deployed_commit=bacec95ccd; release_sha=90967e39ba; equal=no; rb.AC2 FAIL; served r30 fields: yes' -> RESULT: FAIL",
+        "both read PASS when they were graded (hv2 at 15:0xZ, ap14 at 11:4xZ) and both orders carry <status>complete</status> with VALID proof instances",
+        "the displacing release: org/critical_paths/change_management/20261014T1537Z_nfra-mcportal-pc-release_deploy_completion.md, Status CLOSED at 20261014T154919Z, deployed_commit bacec95ccd, whose own L2 records 'stale-base guard read live ref 7c558b4e21 equal at both reads' -- it cut on the hv-2 release correctly",
+        "the two failing limbs are exactly the two that read a CURRENT value: the manifest equality and rb.AC2 (which reads runbook 7.2's 'live release' line). The ledger, simulate and served-read limbs are historical and still pass."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Each release order's AC2 grades the landed release by 'manifest deployed_commit equals release_sha', and a criterion is expected to stay true for the work it graded.",
+    "world_is": "That equality is not a property of the work -- it is a property of being the MOST RECENT release, and exactly one release can hold it. So every release order's AC2 in this project is guaranteed to flip to FAIL, and the flip says nothing about the release it graded. Two orders are already in that state. The hazard is a reader (or a /drive tick, or a round-N analysis) re-running these checks and reading FAIL as a regression in completed work, then re-opening or re-deploying it. The INERT standing is because nothing in the world is wrong: both releases landed, both are proven in their ledgers, and the newest one is live.",
+    "notes": "Not this seat's to change -- the criteria are the issuer's. If a future release AC2 should stay true, the equality needs a time anchor rather than a current read: compare release_sha to the deployed_commit RECORDED BY THIS RELEASE'S OWN manifest commit (git show <that commit>:EC2_MANIFEST.json), or assert that release_sha appears in the manifest's history chain, which a later release cannot falsify. Until then, a FAIL on one of these two checks should be read by looking at WHICH limb failed: equal=no plus every historical limb passing is displacement, not regression. Found while confirming the live ref after the mcportal release closed; no act was taken on either order."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S120",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T16:40:33Z",
+    "one_line": "Runbook 7.2 now names a release that is NOT live: it says the live release is 7c558b4e21 while the host has run bacec95ccd since 15:43Z. The document a rollback operator is told to read FIRST is the one that is stale, and the release that moved the ref closed its ledger without touching it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/runbooks/SCHWAB_PILOT_RUNBOOK.md section 7.2 at HEAD: 'As last read (2026-10-14) the live release is 7c558b4e21 ... The newest prior release ... is 90967e39ba ... it is the valid rollback target'",
+        "EC2_MANIFEST.json services.opal-gateway at HEAD: deployed_commit bacec95ccd (committed by the mcportal release at 7a4ea1d997)",
+        "rb.AC2 reads FAIL in both hv2.AC2 and ap14.AC2 right now, which is the mechanical tell for exactly this",
+        "the displacing release's ledger (20261014T1537Z_nfra-mcportal-pc-release, CLOSED 20261014T154919Z) carries four legs -- bundle build, S3 prefix, SSM restart, EC2_MANIFEST record -- and none of them is the runbook",
+        "for contrast, OG-hv-2's own step 8 made 7.2 a standing release clause for this seat, which is why 7.2 named 7c558b4e21 at all"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The runbook's own opening line in 7.2: 'Read infra/aws/ec2/EC2_MANIFEST.json, services.opal-gateway, BEFORE acting: it names the live release and every prior one', and the standing release clause that each release updates 7.2 to name the new live release.",
+    "world_is": "7.2's prose is one release behind. The paragraph does warn that a later release moves both the live release and the list and tells the reader to re-read EC2_MANIFEST.json, so a careful operator is steered right; but the sentence they read first now names the wrong ref, and the 'valid rollback target' it offers (90967e39ba) is two releases back rather than one. The correct target today is 7c558b4e21, which this seat proved live and md5-verified at 13:58Z and which the displacing release kept as its own rollback key.",
+    "notes": "ARMED because a rollback is exactly the moment nobody has time to notice stale prose. NOT fixed by this seat: naming bacec95ccd as live would mean asserting ITS R-56 conditions (that it carries the per-principal guard and was proven on the host), and that evidence belongs to its applier, not here -- writing it from their ledger would be a second-hand claim in a rollback document. Surfacing it instead. The act is one paragraph by whoever owns that release, or a standing clause added to the release form so 7.2 cannot be skipped. Found while confirming the live ref after that release closed."
+  }
+  ```
