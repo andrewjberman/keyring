@@ -38,22 +38,15 @@ The probe `RULE_PROBE2.json` is re-run and overwritten: it must show all EIGHT r
 
 1. **Which rows are trades.** Dividend Reinvestment and Income Reinvestment BUYS count as trades: each is a purchase of units at an executed price per unit. Transfer In, Journal, every cash leg, and every row without an executed market price stay OUT (a transfer moves units at a book value, not a market price).
    So the default trade set A becomes `{Buy, Sale, Dividend Reinvestment, Income Reinvestment}`. Keep a SENSITIVITY name for the old two-type set (`TRADE_TYPES_BUY_SALE`), never the default. Every other type is excluded and counted by name; an unseen type is `UNCLASSIFIED` and counted.
-2. **The unit for par-quoted bonds.** R1 serves the PER-UNIT price, the unit of today's served price. For an asset whose executed price is quoted per 100 of par, the executed price is divided by 100. The asset dimension's class field is the identifier; the ratio of `price` to `|market_value|/|units|` is a
-   CORROBORATING check only: when the two disagree, that row is WITHHELD with its reason, never guessed. This is an exact scale, not an estimate.
-   - The dimension is `silver/bd_assets_dim.parquet` in `opal-data-bd` (12,232 rows). Measured columns: `asset_super_class_bd` ('Fixed Income' on 2,562 rows), `asset_class`, `asset_segment` (for example 'Municipal Bonds Long'), `coupon_rate` (5.25 on MIAMI-DADE CNTY FLA EDL FACS A 5.25% 04/01/2031), `opal_asset_class` ('fixed_income' 3,121), `ticker`, `cusip`.
-     There is NO pricing-convention column.
-   - Fixed-income FUNDS are priced per unit (ALLSPRING CORE BOND CIT CLASS E2 serves 10.3525 and is super class Fixed Income), so the class alone would wrongly scale them. A par-quoted CANDIDATE is therefore: `asset_super_class_bd == 'Fixed Income'` AND `coupon_rate` is not null (a coupon-bearing bond).
-     Prove on the real dimension and partitions how many assets that selects, and whether any fixed-income asset it leaves unscaled has a price/(market_value/units) ratio near 100 (report them, do not scale them).
-   - Corroboration: scale when `price / (|market_value|/|units|)` is within 1 percent of 100; ratio within 1 percent of 1 means the two disagree and the row is withheld (`withheld_disagreement`, with the reason `ratio_near_1`); any other ratio is withheld with `ratio_unrecognised`.
-   - The module stays free of AWS: `price_for_date` takes the candidate set as a parameter (`par_quoted_assets`, a frozenset of asset names); the PROBE builds the set from the dimension.
+2. **The unit for par-quoted bonds: SUPERSEDED by section 1.0 above (Amendment 2).** R1 serves the PER-UNIT price, the unit of today's served price. The identifier and the ratio test are exactly those of section 1.0. The dimension is `silver/bd_assets_dim.parquet` in `opal-data-bd` (12,232 rows; measured columns `asset_super_class_bd` ('Fixed Income' on 2,562 rows), `asset_class`, `asset_segment`, `coupon_rate`, `opal_asset_class`, `ticker`, `cusip`; there is NO pricing-convention column). The module stays free of AWS: `price_for_date` takes the set of Fixed Income asset names as a parameter (`par_quoted_assets`, a frozenset); the PROBE builds the set from the dimension.
 3. **Carry-forward** (unchanged, restated): an asset with no qualifying trade on the date is absent; `carry_forward((price, date))` returns the price WITH its observation date. Interpolation stays banned (`resolve_source` refuses `linear_interpolation`).
 4. `RULE_ID` stays `"R1"`; add `AMENDMENT = "R1.2"` and print both on `__main__` (`R1.2 module ok`).
 
 ### 1b. The test: `data/black_diamond/scripts/silver/tests/test_bd_price_rule.py` (edited; no AWS)
 
-Update the arms the amendment changes (round 2's arm 4 said variant A excludes Dividend Reinvestment: it now INCLUDES it, and the sensitivity set excludes it) and ADD arms. It prints one last line `BD PRICE RULE TEST: OK <n> arms` with n at least 20, and `BD PRICE RULE TEST: FAIL <arm>` (exit 1) on any failing arm.
-Required new arms: (a) a Dividend Reinvestment buy beside a Buy prices from both; (b) Income Reinvestment likewise; (c) Transfer In alone leaves the asset absent; (d) Journal and a cash-leg row are excluded and counted; (e) a par-quoted candidate (planted dimension row with Fixed Income and a coupon) with executed price 104.19 and
-`market_value/units` 1.0419 reads 1.0419; (f) the same price with `market_value/units` 104.19 (ratio near 1) is WITHHELD with `ratio_near_1`; (g) a fixed-income fund (no coupon) at 10.35 is NOT scaled; (h) two runs over the same frame are byte-equal; (i) the old two-type set still works as a sensitivity.
+Update the arms the amendment changes (round 2's arm 4 said variant A excludes Dividend Reinvestment: it now INCLUDES it, and the sensitivity set excludes it) and ADD arms. It prints one last line `BD PRICE RULE TEST: OK <n> arms` with n at least 30, and `BD PRICE RULE TEST: FAIL <arm>` (exit 1) on any failing arm.
+Required new arms: (a) a Dividend Reinvestment buy beside a Buy prices from both; (b) Income Reinvestment likewise; (c) Transfer In alone leaves the asset absent; (d) Journal and a cash-leg row are excluded and counted; (e) a Fixed Income asset with executed price 104.19 and
+`market_value/units` 1.0419 reads 1.0419; (f) the same price with `market_value/units` 104.19 (ratio near 1) is LEFT ALONE and counted as `per_unit_left` (Amendment 2: not withheld); (g) a fixed-income fund (no coupon) at 10.35 is NOT scaled; (h) two runs over the same frame are byte-equal; (i) the old two-type set still works as a sensitivity.
 
 ### 1c. The probe: `org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/RULE_PROBE2.json`
 
@@ -63,8 +56,8 @@ MIAMI-DADE CNTY FLA EDL FACS A 5.25% 04/01/2031 2026-10-09 (expect 1.0419), the 
 ```json
 {"order": "BP-c-1", "read_at": "<ISO UTC>", "claim": "measured", "calls": ["aws s3api get-object ...", "..."],
  "amendment": "R1.2", "deterministic": true, "reinvestment_in": true, "transfer_in_out": true,
- "par_quoted": {"class_field": "asset_super_class_bd == 'Fixed Income' and coupon_rate not null", "assets_scaled": 0, "withheld_disagreement": 0,
-                "unit_scale_rows_unchanged": 0, "candidates_in_dimension": 0, "fixed_income_unscaled_with_ratio_near_100": []},
+ "par_quoted": {"class_field": "asset_super_class_bd == 'Fixed Income', then the per-row ratio test", "assets_scaled": 0, "withheld_disagreement": 0,
+                "unit_scale_rows_unchanged": 0, "per_unit_left": 0, "withheld_ratios": [], "coupon_corroborated_scaled_rows": 0, "scaled_rows": 0, "fixed_income_assets_in_dimension": 0},
  "types_seen": {"<transaction_type>": 0},
  "assets": [{"asset_name": "<name>", "date": "YYYY-MM-DD", "price": 0.0, "kind": "trade", "distinct_trade_ids": ["..."]}]}
 ```
