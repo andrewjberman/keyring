@@ -99,6 +99,15 @@ Use the source family and emitter from round 10 (`catalog_entries/harvest_<slug>
 **Census.** Run `workflows/atom_decomposition/tool_census.py` against the deployed commit the manifest names, with
 `--overlay-ref` on your own branch for the files you change (the Z-S112 lesson).
 
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-14 ~01:1xZ) -- H1's denominator lists `amgt/`'s sub-prefixes explicitly (the
+CVO's carried note, CTO msg 33847).**
+- Besides the seven research tables, give EACH of these its own row: `amgt/harvest/bronze/`, `amgt/harvest/silver/`,
+  `amgt/harvest/state/` (list rows 12 and 13; v4 serves them inside `amgt/`).
+- c9.AC2 now also reads `amgt bronze/silver/state rowed 3 of 3`. The amended `round11/checks/c11_harvest.py` is on
+  `box/sitez`; merge `box/sitez` into your branch before you run AC2.
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
+  GATE (viii) does not grade it.
+
 ## 2. BOUNDS
 
 1. You change only the files in `<paths>`. Print the regenerated catalog's diff summary by top-level section.
@@ -136,7 +145,7 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
 <proof_of_spec>
   <expected_criteria>AC1,AC2,AC3</expected_criteria>
   <criterion id="AC1" cell_refs="MX-c-9" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round11/checks/c9.AC1.sh; echo "exit=$?"</invocation><expect>PARTITION sums N of N with every member valid (index named valid a of a through MC Portal's reader), definitions located N of N, duplicate entries 0, tool_index entries carrying a row identity 0 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="MX-c-9" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round11/checks/c9.AC2.sh; echo "exit=$?"</invocation><expect>top-level prefixes covered 24 of 24; research tables rowed 7 of 7; round-10 gold tables kept 6 of 6; whole gold prefix 0; duplicates 0; rows outside the 24 0; rows with neither read_tool nor gap_owner 0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="MX-c-9" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round11/checks/c9.AC2.sh; echo "exit=$?"</invocation><expect>top-level prefixes covered 24 of 24; research tables rowed 7 of 7; round-10 gold tables kept 6 of 6; amgt bronze/silver/state rowed 3 of 3; whole gold prefix 0; duplicates 0; rows outside the 24 0; rows with neither read_tool nor gap_owner 0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="MX-c-9" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round11/checks/c9.AC3.sh; echo "exit=$?"</invocation><expect>PART1 depth claims valid a of a, measured >= 1, verified by the second instrument m of m, mdpf_get_aggregate_aua measured; PART2 the AUA answer carries an answer-time depth, claim measured, equal to part 1 -- RESULT: PASS -- exit=0</expect></criterion>
   <instance_path>org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~34/NFRA_MCPINDEX.TO-MX-c-9.depth-durable-key-v4-rows.proof_of_spec.json</instance_path>
 </proof_of_spec>
