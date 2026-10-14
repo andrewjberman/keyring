@@ -1,5 +1,5 @@
 {
-  "contract_version": "0.4.0",
+  "contract_version": "0.4.1",
   "lineage": [
     {
       "contract_version": "0.1.0",
@@ -15,6 +15,11 @@
       "contract_version": "0.3.0",
       "sha256": "ca633614a32e85f4caa4ee07fdc08923d8398fd287adfc31c7f532efae89b574",
       "reason": "the 0.3.0 bytes, before the 32 model benchmark members and the 12-month chart were sourced from the served dated model series (input model_portfolio_timeseries) at version 0.4.0"
+    },
+    {
+      "contract_version": "0.4.0",
+      "sha256": "45c6c2005663ae5cf356ae890133f90cc1579093be0b0fb27e85c0f3d9710523",
+      "reason": "the 0.4.0 bytes, before the percent-points sentence and the unit_scale field on each percent member: the 0.4.0 shape said percent prints from the decimal fraction, while the sample builder stores percent points (a stored 1.5 means 1.5 percent)"
     }
   ],
   "project": "IRPT_DASHBD",
@@ -83,7 +88,7 @@
     }
   ],
   "document": {
-    "shape": "One filled report per household. A filled report is one JSON object with exactly two keys, household and values (document.filled_report states the layout). household is {household_ref, as_of, first_data_date, accounts}: household_ref is the household's reference, as_of the report date, first_data_date the earliest first_data_date of its accounts, and accounts one entry per account of the household in account_id order, each entry {account_id, last4, first_data_date, window_status}. values is an object keyed by member id with exactly one entry per member in members. A member whose grain is an account or an asset class holds {\"by_row\": {\"<account_id or asset class>\": figure}} (filled_report.per_row_member_form); a chart member holds a list of series {name, points: [{date, value}]}, a point with no measured figure left out, and a chart with no measured point holds its absent form. A value is a number, a text, or {\"absent\": \"<reason in words>\"}. A member whose source is ABSENT always holds the absent form, never zero and never a default. Units follow each member's unit: dollars as whole dollars with thousands separators; percent from the decimal fraction to one decimal place; text as written; series as the list the chart reads. The sample builder writes this object from the sibling contracts named in each member's source; the tab and the export read it by member id and print every absent form as its words. Neither the tab nor the export derives a figure from another source.",
+    "shape": "One filled report per household. A filled report is one JSON object with exactly two keys, household and values (document.filled_report states the layout). household is {household_ref, as_of, first_data_date, accounts}: household_ref is the household's reference, as_of the report date, first_data_date the earliest first_data_date of its accounts, and accounts one entry per account of the household in account_id order, each entry {account_id, last4, first_data_date, window_status}. values is an object keyed by member id with exactly one entry per member in members. A member whose grain is an account or an asset class holds {\"by_row\": {\"<account_id or asset class>\": figure}} (filled_report.per_row_member_form); a chart member holds a list of series {name, points: [{date, value}]}, a point with no measured figure left out, and a chart with no measured point holds its absent form. A value is a number, a text, or {\"absent\": \"<reason in words>\"}. A member whose source is ABSENT always holds the absent form, never zero and never a default. Units follow each member's unit: dollars as whole dollars with thousands separators; percent to one decimal place; text as written; series as the list the chart reads. A percent member holds PERCENT POINTS: a stored 1.5 means 1.5 percent, and a consumer must not scale it again (the unit_scale field on each percent member names this). The sample builder writes this object from the sibling contracts named in each member's source; the tab and the export read it by member id and print every absent form as its words. Neither the tab nor the export derives a figure from another source.",
     "filled_report": {
       "top_level_keys": [
         "household",
@@ -236,6 +241,7 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Return (Cumulative)",
       "label": "Return, cumulative, before advisory fees, quarter to date",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": "ABSENT",
       "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
     },
@@ -245,6 +251,7 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Benchmark: Ultra-Short Term Return (Cumulative)",
       "label": "Opal model benchmark, ultra short term, cumulative, quarter to date",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -259,6 +266,7 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Benchmark: Short-Term Return (Cumulative)",
       "label": "Opal model benchmark, short term, cumulative, quarter to date",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -273,6 +281,7 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Benchmark: Intermediate-Term Return (Cumulative)",
       "label": "Opal model benchmark, intermediate term, cumulative, quarter to date",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -287,6 +296,7 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Benchmark: Long-Term Return (Cumulative)",
       "label": "Opal model benchmark, long term, cumulative, quarter to date",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -349,6 +359,7 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Return (Cumulative)",
       "label": "Return, cumulative, before advisory fees, year to date",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": "ABSENT",
       "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
     },
@@ -358,6 +369,7 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Benchmark: Ultra-Short Term Return (Cumulative)",
       "label": "Opal model benchmark, ultra short term, cumulative, year to date",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -372,6 +384,7 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Benchmark: Short-Term Return (Cumulative)",
       "label": "Opal model benchmark, short term, cumulative, year to date",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -386,6 +399,7 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Benchmark: Intermediate-Term Return (Cumulative)",
       "label": "Opal model benchmark, intermediate term, cumulative, year to date",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -400,6 +414,7 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Benchmark: Long-Term Return (Cumulative)",
       "label": "Opal model benchmark, long term, cumulative, year to date",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -462,6 +477,7 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Return (Cumulative)",
       "label": "Return, cumulative, before advisory fees, last 12 months",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": "ABSENT",
       "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
     },
@@ -471,6 +487,7 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Benchmark: Ultra-Short Term Return (Cumulative)",
       "label": "Opal model benchmark, ultra short term, cumulative, last 12 months",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -485,6 +502,7 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Benchmark: Short-Term Return (Cumulative)",
       "label": "Opal model benchmark, short term, cumulative, last 12 months",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -499,6 +517,7 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Benchmark: Intermediate-Term Return (Cumulative)",
       "label": "Opal model benchmark, intermediate term, cumulative, last 12 months",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -513,6 +532,7 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Benchmark: Long-Term Return (Cumulative)",
       "label": "Opal model benchmark, long term, cumulative, last 12 months",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -575,6 +595,7 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Return (Cumulative)",
       "label": "Return, cumulative, before advisory fees, since inception",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": "ABSENT",
       "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
     },
@@ -584,6 +605,7 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Benchmark: Ultra-Short Term Return (Cumulative)",
       "label": "Opal model benchmark, ultra short term, cumulative, since inception",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -598,6 +620,7 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Benchmark: Short-Term Return (Cumulative)",
       "label": "Opal model benchmark, short term, cumulative, since inception",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -612,6 +635,7 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Benchmark: Intermediate-Term Return (Cumulative)",
       "label": "Opal model benchmark, intermediate term, cumulative, since inception",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -626,6 +650,7 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Benchmark: Long-Term Return (Cumulative)",
       "label": "Opal model benchmark, long term, cumulative, since inception",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -804,6 +829,7 @@
       "baseline": "section 3 Holdings Overview, table Holdings Overview, column Allocation, row household total",
       "label": "Allocation, each asset class's share of household ending value",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "contract": "org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json",
         "field": "market_value_eod",
@@ -832,6 +858,7 @@
       "baseline": "section 3 Holdings Overview, table Holdings Overview, column Return / Last 12 Months, row household total",
       "label": "Return before advisory fees, last 12 months (household)",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": "ABSENT",
       "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
     },
@@ -857,6 +884,7 @@
       "baseline": "section 3 Holdings Overview, table Holdings Overview, column Return / Year To Date, row household total",
       "label": "Return before advisory fees, year to date (household)",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": "ABSENT",
       "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
     },
@@ -882,6 +910,7 @@
       "baseline": "section 3 Holdings Overview, table Holdings Overview, column Return / Quarter To Date, row household total",
       "label": "Return before advisory fees, quarter to date (household)",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": "ABSENT",
       "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
     },
@@ -900,6 +929,7 @@
       "baseline": "section 3 Holdings Overview, table Holdings Overview, column Return / Month To Date, row household total",
       "label": "Return before advisory fees, month to date (household)",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": "ABSENT",
       "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return. Month to date is also not a ruled period, so its household return waits on the same ruling as its net gain."
     },
@@ -925,6 +955,7 @@
       "baseline": "section 3 Holdings Overview, table Holdings Overview, column Return / Since <inception>, row household total",
       "label": "Return before advisory fees, since inception (household)",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": "ABSENT",
       "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
     },
@@ -1048,6 +1079,7 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Return (Cumulative)",
       "label": "Return, cumulative, before advisory fees, quarter to date",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
         "field": "total_return_daily",
@@ -1060,6 +1092,7 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Benchmark: Ultra-Short Term Return (Cumulative)",
       "label": "Opal model benchmark, ultra short term, cumulative, quarter to date",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -1074,6 +1107,7 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Benchmark: Short-Term Return (Cumulative)",
       "label": "Opal model benchmark, short term, cumulative, quarter to date",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -1088,6 +1122,7 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Benchmark: Intermediate-Term Return (Cumulative)",
       "label": "Opal model benchmark, intermediate term, cumulative, quarter to date",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -1102,6 +1137,7 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Benchmark: Long-Term Return (Cumulative)",
       "label": "Opal model benchmark, long term, cumulative, quarter to date",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -1164,6 +1200,7 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Return (Cumulative)",
       "label": "Return, cumulative, before advisory fees, year to date",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
         "field": "total_return_daily",
@@ -1176,6 +1213,7 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Benchmark: Ultra-Short Term Return (Cumulative)",
       "label": "Opal model benchmark, ultra short term, cumulative, year to date",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -1190,6 +1228,7 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Benchmark: Short-Term Return (Cumulative)",
       "label": "Opal model benchmark, short term, cumulative, year to date",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -1204,6 +1243,7 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Benchmark: Intermediate-Term Return (Cumulative)",
       "label": "Opal model benchmark, intermediate term, cumulative, year to date",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -1218,6 +1258,7 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Benchmark: Long-Term Return (Cumulative)",
       "label": "Opal model benchmark, long term, cumulative, year to date",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -1280,6 +1321,7 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Return (Cumulative)",
       "label": "Return, cumulative, before advisory fees, last 12 months",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
         "field": "total_return_daily",
@@ -1292,6 +1334,7 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Benchmark: Ultra-Short Term Return (Cumulative)",
       "label": "Opal model benchmark, ultra short term, cumulative, last 12 months",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -1306,6 +1349,7 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Benchmark: Short-Term Return (Cumulative)",
       "label": "Opal model benchmark, short term, cumulative, last 12 months",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -1320,6 +1364,7 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Benchmark: Intermediate-Term Return (Cumulative)",
       "label": "Opal model benchmark, intermediate term, cumulative, last 12 months",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -1334,6 +1379,7 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Benchmark: Long-Term Return (Cumulative)",
       "label": "Opal model benchmark, long term, cumulative, last 12 months",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -1396,6 +1442,7 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Return (Cumulative)",
       "label": "Return, cumulative, before advisory fees, since inception",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
         "field": "total_return_daily",
@@ -1408,6 +1455,7 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Benchmark: Ultra-Short Term Return (Cumulative)",
       "label": "Opal model benchmark, ultra short term, cumulative, since inception",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -1422,6 +1470,7 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Benchmark: Short-Term Return (Cumulative)",
       "label": "Opal model benchmark, short term, cumulative, since inception",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -1436,6 +1485,7 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Benchmark: Intermediate-Term Return (Cumulative)",
       "label": "Opal model benchmark, intermediate term, cumulative, since inception",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
@@ -1450,6 +1500,7 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Benchmark: Long-Term Return (Cumulative)",
       "label": "Opal model benchmark, long term, cumulative, since inception",
       "unit": "percent",
+      "unit_scale": "percent_points",
       "source": {
         "input": "model_portfolio_timeseries",
         "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
