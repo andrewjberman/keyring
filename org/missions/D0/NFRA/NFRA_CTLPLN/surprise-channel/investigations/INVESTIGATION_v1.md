@@ -9364,3 +9364,34 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Cause owed (CTO~Z msg 34055): a process exit code, the session transcript's last lines per lane, or a window-close trace. Respawned on the model policy: ~MQ, ~ZQ, ~ZW, ~MI (MSTR~Z) and ~ZS (COO~ZB); ~ZT holds no open order and stays down."
 }
 ```
+
+## NFRA_CTLPLN-Z-S9 -- correction and cause read for Z-S8: spawned seats persist no main transcript
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "0.0.0_AB_MSTR~Z",
+  "surfaced_at": "2026-10-14T12:45Z",
+  "one_line": "Correction and cause read for NFRA_CTLPLN-Z-S8: disarm_owner is 0.0.0_AB_MSTR~Z (CTO~Z msg 34061), and the clean-exit cause cannot be read from a transcript because spawned site Z seats persist no main session transcript.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.0.0_AB_MSTR~Z",
+  "adjudicates": [
+    "NFRA_CTLPLN-Z-S8"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~Z msg 34061: re-point Z-S8's disarm_owner to 0.0.0_AB_MSTR~Z (seat liveness and the spawn audit are infrastructure, rule 32); the disarm is the re-seat of the order-holding lanes, done 12:2xZ",
+      "C:/Users/Opal Bloomberg/.claude/projects/C--Users-Opal-Bloomberg-Desktop-ajb-workspace/ at 12:4xZ: the 3 Andrew-launched sessions have <uuid>.jsonl files (bada2037, d926c932, 861ca766); spawned sessions appear only as <uuid>/ directories holding tool-results/ (e.g. f3f539fc-... 10-13 20:20Z, b0503755-... 10-14 12:25Z) with no main .jsonl",
+      "all 15 claude.exe run as user Opal Bloomberg (Win32_Process GetOwner), so this is not a second profile; C:/Users/Opal_Agent/.claude/projects exists but is access-denied (UNREAD, not absent)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A dead spawned seat's last transcript lines say why it ended (CTO~Z msg 34061 names this read).",
+  "world_is": "No main transcript is persisted for spawned seats on this box, so the read cannot be done here; the same fact is why model-census.py cannot see spawned sessions. The cause needs a different trace: a process-exit hook, or the spawn window's console.",
+  "notes": "Z-S8 stands as written (rows are append-only); this row carries the re-point and the cause read."
+}
+```
