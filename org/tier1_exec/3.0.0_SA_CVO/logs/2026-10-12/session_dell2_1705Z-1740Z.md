@@ -347,3 +347,9 @@ Correction: the round-85 grade file header says ~00:3xZ; it was written at about
 | IRPT_BCKEND round 186 (~P) | ADJUDICATION_v87 (C-S370), no remediation file (IB-pr-497 parked): irpt-export-render live at 5/9LZBbT (my read, 00:09:26Z); two person-reads owed (export, catalogue). 9 dismissed; S152 and S155 (backfill design A/B; no COT/INF activity producer) stay with the issuer for the CTO. Slug sent | 7246aa34b3 |
 
 Correction: C-S370's grounding cites msg 7389; the packet message is 7387. The row is immutable; recorded here.
+
+## Addendum, 2026-10-14 00:59Z to 01:05Z (msg 7395)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_DASHBD round 96 | ADJUDICATION_v60 (C-S71): the real sample rendered privately; I re-ran DB96-1-AC1: PASS. 5 dismissed (W146-S1 ARMED: hazard gone on my re-run). HELD: W147-S3 ARMED (synthetic CASH_USD serves fixed_income while Cash-typed rows will serve cash), to clear before round 98's FDRXX apply DB-b-183; flagged in the slug. W146-S4, -S5 stay open. No remediation row while round 98 runs. Slug sent | 1e9bb59614 |

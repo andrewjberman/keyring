@@ -1012,3 +1012,82 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Not fixed here: the check and the order are not this worker's to change. Measuring a base control needs a full-tree scratch or a base worktree. The proof's mutant entry carries this limit."
 }
 ```
+
+## COMM_ASSIST-W16-S1 -- the acted-result set in CA-i-10 step 4 is not the full set: three closure results also clear a draft
+
+```json
+{
+  "id": "COMM_ASSIST-W16-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~16",
+  "surfaced_at": "2026-10-14T00:47:22Z",
+  "one_line": "CA-i-10 step 4 lists seven result words that mean a draft moved and says to read on_sms_reply for the full set; the read finds three more that also clear the draft (expired, already-posted, test-not-posted), so the receiver records those three as acted too.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/tenant.py@7ba1998bf5:100 return \"expired\" in expire_eod, which sets pending None and done True",
+      "data/transcripts/scripts/teams_chat/tenant.py@7ba1998bf5:441 return \"test-not-posted\" and :450 return \"already-posted\" in post_eod_now, both after pending is cleared; post_eod_now is reached from on_sms_reply for a send on an End of Day draft",
+      "wk-COMM_ASSIST-16 worktree, tenant.py MUSE_ACTED: the ten words, the last three marked as closing a draft"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-i-10 step 4: an answer acted when its result is one of sent, dropped, redrafted, approved, posted, mail-approved, job-opened, read from on_sms_reply and mail_requests.on_mail_reply for the full set.",
+  "world_is": "on_sms_reply also returns expired, already-posted and test-not-posted, each after clearing the pending draft. Recording those three as acted refuses a replay the seven-word list would let through. A replay of such an answer already finds nothing open, so no first answer is refused by the wider set.",
+  "notes": "Only the record moves: a wider set refuses more replays and never a first answer. The COO rules whether the three stay in MUSE_ACTED."
+}
+```
+
+## COMM_ASSIST-W16-S2 -- four existing muse tests signed no seq, so the seq binding would refuse them; their signed payloads now name the draft's seq
+
+```json
+{
+  "id": "COMM_ASSIST-W16-S2",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~16",
+  "surfaced_at": "2026-10-14T00:47:22Z",
+  "one_line": "CA-i-10 step 5 names only the tests whose signed payload lacks version; with the seq binding live, four signed-answer tests against a seq-bearing chat draft (the verified send, the edit then drop, the answer for no open draft, the stale signed edit) would be refused seq-mismatch before the path they test; each signed payload now carries the draft's seq. The receiver logic does not depend on this.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/tests/test_teams_chat_tenant.py@7ba1998bf5:395-401, :405-414, :418-423, :457-468: signed payloads with version and no seq, against a _drafted pending that carries seq (assign_seq at tenant.py@7ba1998bf5:119-122)",
+      "wk-COMM_ASSIST-16 worktree after the change: the same four tests pass with seq=st[\"pending\"][\"seq\"] in each signed payload; tests run 59 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-i-10 step 5: existing tests must still pass; a test whose signed payload lacks version now expects bad-payload.",
+  "world_is": "A signed answer with a version and no seq is refused seq-mismatch against any chat draft that carries a seq, so four existing tests that did not name the seq could not pass unchanged. Their payloads were changed to name the seq; no assertion's expected result was changed.",
+  "notes": "The check CAi10-AC2 (check_i2_receiver.py) already signs the draft's seq, which is the same change made by the issuer."
+}
+```
+
+## COMM_ASSIST-W16-S3 -- CA-i-10 step 5 names test_muse_verify.py for a version rule, but that file holds no receiver test
+
+```json
+{
+  "id": "COMM_ASSIST-W16-S3",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~16",
+  "surfaced_at": "2026-10-14T00:47:22Z",
+  "one_line": "CA-i-10 step 5 asks for test_muse_verify.py to be updated where a signed payload lacks version; that file tests muse_verify.verify on raw bytes and never calls the receiver, so no test in it changes and the file was not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/tests/test_muse_verify.py@7ba1998bf5 (112 lines): zero references to tenant, on_muse_reply or on_sms_reply; 18 calls to mv.verify and mv._ed25519_verify",
+      "data/transcripts/scripts/tests/test_teams_chat_tenant.py@7ba1998bf5: the receiver tests (on_muse_reply) live in this file only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-i-10 step 5: update test_teams_chat_tenant.py and test_muse_verify.py; any test whose signed payload lacks version now expects bad-payload.",
+  "world_is": "test_muse_verify.py has no test whose signed payload reaches the receiver, so the version rule changes none of its tests. The receiver tests, including the new CA-i-10 tests, are all in test_teams_chat_tenant.py.",
+  "notes": "Not edited. The version and seq rules are covered in test_teams_chat_tenant.py, which is the file that holds the receiver."
+}
+```

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~93</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -87,3 +87,5 @@ lane: the files named in <paths> and the worker's deliverables.
 
 - Cut on the CTO's GO (msg 7191): PRD v0.5 ADMITTED, the FWD-1 hop cells in ONE issuance (ADDENDUM v0.5 item 4), workstream `Y` round 23. Each grant names every file the cell writes. Base: `AR272-y-AC1` FAIL as expected (no record).
 - Any portal candidate goes to `1.0.0_SA_CTO`'s review lane through the issuer; the worker lands nothing.
+
+<!-- ISSUER NOTE 2026-10-14 (2.0.0_SA_COO~Y2): status flipped to complete. The worker recorded AR272-y-AC1 FAIL because its before-arm premise (the package principal empty at HEAD) did not hold, so no J5 change was built (the trunk checker prints Y272-J5-OK with J5 built=False); the proof is VALID with the FAIL row left as recorded. The CVO grades AR272-y-AC2J and decides whether the FAIL row stands. -->

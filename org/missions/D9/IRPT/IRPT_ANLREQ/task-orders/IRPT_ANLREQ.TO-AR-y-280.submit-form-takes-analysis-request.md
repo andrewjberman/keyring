@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~101</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -89,3 +89,5 @@ lane: the files named in <paths> and the worker's deliverables.
 
 - Cut on the CTO's ruling (A) (msg 7204) for the FWD-1 blocker found by AR-y-271 (a partner-firm advisor cannot file an analysis_request), workstream `Y` round 24. The grant names every file the cell writes. Any change to who may write or read what in the ticket service is an AUTHORIZATION change: the cell states it in one paragraph for the never-widen pair that will govern its release. Base: `AR280-y-AC1` FAIL as expected (no record).
 - Any portal candidate goes to `1.0.0_SA_CTO`'s review lane through the issuer; the worker lands nothing.
+
+<!-- ISSUER NOTE 2026-10-14 (2.0.0_SA_COO~Y2): status flipped to complete. The worker recorded AR280-y-AC1 FAIL because case (h), the packager recording report_ref once, was not built under this order (row W101-S1, the packager body carried no request id); that case is built by AR-y-284 (the server half, drained) and AR-y-285 (the packager half, drained). The trunk checker y280-submit prints Y280-SUBMIT-OK (15 new tests, ticket folder 279) and the proof is VALID with the FAIL row left as recorded. The CVO grades AR280-y-AC2J and decides whether the FAIL row stands. -->
