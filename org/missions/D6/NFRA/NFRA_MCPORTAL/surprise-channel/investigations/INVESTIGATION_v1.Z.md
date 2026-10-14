@@ -1948,3 +1948,50 @@
   }
 ]
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W26-S1",
+  "one_line": "MP-pd-2 says the stored person_access revision is an int; the real store returns it as decimal.Decimal, so an int check refused every real update until the writer normalizes it.",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~26",
+  "surfaced_at": "2026-10-14T18:52:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/access_state.py:27 docstring and :325 TypeDeserializer: numbers come back as decimal.Decimal",
+      "infra/aws/ec2/opal-gateway/app/data_entitlement.py _revision accepts int or integral Decimal",
+      "probe .scratch/probe_person_access_update.py before the _plain_record fix: OK expect 1 read STALE-REVISION with zero writes; after the _plain_record fix it reads WRITTEN with one conditional put"
+    ]
+  },
+  "spec_asserts": "TO MP-pd-2 section 1 sets the stored body field revision to an int >= 1 and says the writer checks the current revision against expect_revision.",
+  "world_is": "acs.AccessState.get returns whole numbers as decimal.Decimal. The writer normalizes the stored record with _plain_record in lambda_function.py before its revision check, so the optimistic condition and the next revision are int. The staged Decimal form is not a fault of the store; the order did not say it."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W26-S2",
+  "one_line": "The worker rules flip the task order status to complete with the proof instance, but the order's granted paths do not include the task-order file, so I did not flip it.",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~26",
+  "surfaced_at": "2026-10-14T19:01:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pd-2.grant-writer-person-access.md section 3 <paths> (lines 106-111) lists the lambda_function.py, tests/test_person_access.py, deliverables and investigations paths only",
+      "base ef2a5b14e176b428600920cbd9ada74817ced168; the code commit is f40bf7dded"
+    ]
+  },
+  "spec_asserts": "The worker rules say a worker flips the task order <status> to complete in the same commit as the proof instance.",
+  "world_is": "The order's <paths> grant no write to its own task-order file. The criteria pass and the instance validates, but this worker does not flip the order status; the issuer or COO owns the flip."
+}
+```
