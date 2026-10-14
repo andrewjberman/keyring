@@ -33620,3 +33620,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. W374-S1 (the safe-commit client-data check is ABSENT on dell2, a WARN): STAYS ARMED, owner me for the record, the repair is the box manager's (placing the hashed account-id list); until it is placed no commit on this box is scanned for account ids, and my own files carry counts, dates, public symbols and hash prefixes only. W375-S1 (the producer carries no apply_cash_rule at base): resolved by the merge, the function exists at dff35d95da; the packet's Branch A is still the release of a rule-bearing build whose mechanics are NOT read. W375-S2 (the ticker shape admits Black Diamond-prefixed and CUSIP-shaped identifiers): ruled inside my decomposition, they are counted and never listed, fallback_tickers stays empty. W375-S3 (101 nodes of 49financial carry no display symbol; none a mover): INERT, the reason is unread. W375-S4 (the runner's schedule and deploy target not located): the next round's CENSUS cell must read them before any pair is signed. MEASURED: FDRXX on Inflection resolves on the canonical branch (row found fixed_income with sub Cash; 757 FDRXX nodes in the 2026-10-12 snapshot), so the rule is canonical-only as ruled; the blast radius is 844 nodes (49financial 32, cottonwood 38, inflection 774); the 215 and 67 fallback-branch cash-sub holdings on cottonwood and inflection stay fixed_income as served (a cross-page consistency fact for the CTO). The Cottonwood count is at the 2026-10-08 snapshot, since the page cannot publish until the directory exemption is repaired (CTO 7489)."
 }
 ```
+
+## IRPT_BCKEND-D2-W377-S1 -- the trading calendar answers from its hardcoded NYSE fallback on dell2
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W377-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~377",
+  "surfaced_at": "2026-10-14T04:13:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "On dell2 neither pandas_market_calendars nor exchange_calendars is installed, so lib/trading_calendar answers from its hardcoded NYSE fallback (2010-2027) during the IB-pr-530 replay; the criterion passed and the fallback is not the vendor calendar.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB190-2-AC3 output, deliverables/0.9.0_WK_IRPT_BCKEND~377/IB190-2_criteria_output.txt @f3a42b2ab8: WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027; regenerate with lib/tests/gen_nyse_closures.py --write before 2028)",
+      "python -c 'import pandas_market_calendars' in the worktree on dell2 (2026-10-14T04:1xZ): ModuleNotFoundError; exchange_calendars: ModuleNotFoundError"
+    ]
+  },
+  "spec_asserts": "The publish gate's source-frontier arm counts trading days through lib/trading_calendar (IB-pr-530 criterion AC3: the same directory with an older source frontier is still refused).",
+  "world_is": "On dell2 the calendar's vendor libraries are absent, so trading_calendar answers from the hardcoded NYSE closures table, which the checker says must be regenerated before 2028. The AC3 result stands for 2026; the calendar source on this box is not the vendor calendar. The reason the libraries are absent on dell2 was not read."
+}
+```
