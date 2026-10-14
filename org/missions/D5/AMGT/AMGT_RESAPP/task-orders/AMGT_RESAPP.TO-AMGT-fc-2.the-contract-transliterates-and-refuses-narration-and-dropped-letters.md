@@ -110,6 +110,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** An independent head. The opener list is the CTO's ruled "stated list printed in the contract" and is drawn from the 11 narrated blocks measured (all `I'll research ...` or `I'll search ...`) plus the obvious first-person starters; `Looking`, `Searching` and `Based on public ...` are deliberately NOT on it (legitimate sentence starts). The structural fix is cell fc-1 (the seam); this is the backstop that makes a narrated document unwritable. `name_mangling_problems` exists because a dropped letter cannot be seen in the stored text alone: it needs the names the inputs carry (fc-4 supplies them). The 43 arms include a loop of 14 transliterations, 13 narration refusals and 7 legitimate openers.
 
 <status>pending</status>
+<status>complete -- 2026-10-14 by the issuer (2.0.0_SA_COO~R2): wk-AMGT_RESAPP-431 @cbb7df53db merged @49219a610b, proof instance VALID (rc=0). AC1 PASS (`AIFILL FC-2 ARMS: YES (43 of 43)`, re-run by the issuer in the worker's tree, same line), AC2 PASS (220 passed; the aifill package 415 passed), AC3 PASS (`AIFILL FA-1 ARMS: YES (31 of 31)`).</status>
 <round>105</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~431</slot>
