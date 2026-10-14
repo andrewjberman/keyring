@@ -27122,3 +27122,53 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only, but it gates the complete flip. A future worker that runs the file's invocation verbatim gets a void walk. The fix is the issuer's: the file carries the prefix. Not edited here: the order file is outside this worker's write grant."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W442-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~442",
+  "surfaced_at": "2026-10-14T05:27:59Z",
+  "one_line": "AMGT-bm-2 AC1 reads FAIL as invoked: on this box the checkout's /thesis ai_fill block differs from the live function on every name, so F5 (no other path differs) cannot pass; the order's premise that base F5 passes does not reproduce.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "AMGT-bm-2 preflight (order section 0): r106_fwd_pe_check.py reads R106 FORWARD PE CHECK: NO (3 of 6 arms) at the base with F2, F5 and F6 PASS, because the checkout's own handler equals the live function on every other path. AC1 expects YES (6 of 6 arms) and exit=0 from the literal invocation.",
+  "world_is": "At HEAD d014b315df, with the literal invocation (no AMGT_AIFILL_ROOT in the shell), the checkout's ai_fill block differs from the live function's on all 95 names (.ai_fill.as_of, .ai_fill.producer, .ai_fill.blocks.*, .ai_fill.reason). The live function runs with AMGT_AIFILL_ROOT=/var/empty/aifill-hold, so its ai_fill reads ABSENT with the reason 'AMGT_AIFILL_ROOT is set, so the pool was not asked'; the local shell does not set it. With AMGT_AIFILL_ROOT=/var/empty/aifill-hold mirrored, the first remaining difference is .ai_fill.reason, where the local handler renders the root as C:/Program Files/Git/var/empty/aifill-hold on this Windows box. With .ai_fill excluded, a 95-name diagnostic reads 0 other-path differences, so the F5 failure is the ai_fill block and not the cell's rows. AC1 as invoked printed: names 95 | base forward P/E rows 278 | candidate 218 | withheld 60 (population 60) | names with a withheld row 20 | status not (200, 200): []; PASS F1, F2, F3, F4, F6; FAIL F5; R106 FORWARD PE CHECK: NO (5 of 6 arms); exit=1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round106_prep/checks/r106_fwd_pe_check.py@d014b315df: set_aside removes only BEST_PE_RATIO rows, forecast_withheld and BEST_PE_RATIO check-face rows; no ai_fill exclusion, so the live AIFILL root reaches F5",
+      "lib/research/api/scoped_amgt.py@d014b315df (ENV_AIFILL_ROOT = AMGT_AIFILL_ROOT, and the reason string 'no AI fill document at {0} (AMGT_AIFILL_ROOT is set, so the pool was not asked)'): the live ai_fill reason names /var/empty/aifill-hold",
+      "worktree diagnostic (not committed): the r106 check run with AMGT_AIFILL_ROOT=/var/empty/aifill-hold leaves F5 failing on .ai_fill.reason only; the same 95-name run excluding .ai_fill paths reads 0 other-path differences"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only, but it gates the AMGT-bm-2 complete flip and any future run of this check from this box. Not patched: the check and the live environment are outside this cell's write grant. The issuer rules whether the check reads with the AIFILL root mirrored or the ai_fill block is excluded from F5, and whether the reason's path rendering on Windows is in scope. The cell's own rows are verified by F1, F2, F3, F4 and F6 and by the 0-difference diagnostic."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W442-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~442",
+  "surfaced_at": "2026-10-14T05:27:59Z",
+  "one_line": "The order does not say whether model.forecast_source_counts counts the served forward rows or the stored rows; the cell counts the stored rows, and counting the served rows would move three counts on each of the 20 withheld names and trip the check's zero-other-path arm.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bm-2 section 1: the withholding is on the served rows only, the stored Bloomberg values are not changed, and every other forecast row is untouched. The order names no rule for the forecast_source_counts census (per period and mnemonic: BBG, SA_FALLBACK, ABSENT).",
+  "world_is": "read_model counts forecast_source_counts over the stored rows (forecast_raw), so a withheld BEST_PE_RATIO still counts as BBG and the census is unchanged on every name. On PBR_US_Equity, AZN_LN_Equity and TSM_US_Equity the base reads BBG 15, ABSENT 0. Counting the served rows instead (measured on a first cut of this cell) gives BBG 12, ABSENT 3, and F5 then names the census as a second other path. The issuer rules which census the page reads.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/scoped_amgt.py@d014b315df, read_model: the forecast_source_counts loop reads the stored rows (forecast_raw) in the committed cell",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round106_prep/checks/r106_fwd_pe_check.py@d014b315df: F5 treats any difference outside BEST_PE_RATIO rows, forecast_withheld and check-face rows as an other path"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. Recorded so the issuer rules the census reading; the cell's current choice keeps the census equal to the stored block."
+}
+```
