@@ -1284,3 +1284,27 @@
   "disarm_owner": "2.0.0_SA_COO~D1"
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W22-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~22",
+  "surfaced_at": "2026-10-14T14:39:21Z",
+  "one_line": "The order names only the after-line dates as the things to keep; the AFTER table title printed the --date argument, which is None when the default date is used, so the title now prints the date actually read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "MDPF_CANON.TO-CN-k-1 section 1 Part B step 5: everything else in the output, the before subcommand, the pinned snapshot logic and every number stay as they are.",
+  "world_is": "At HEAD of this worktree, portfolios_card.py main() builds the AFTER title from args.date. With --date now optional, that value is None on the default path, so the title would read 'at or before None'. The worker changed the title argument to the resolved date (d_read); on an explicit --date run the argument and the resolved date are the same string, so the printed title is unchanged there.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/portfolios_card.py at HEAD (pre-edit) show() call: 'AFTER (dated global objects at or before %s, source %s)' % (args.date, args.source)",
+      "the edited file, after-path block: d_read is the explicit --date or the newest account-distribution key; the show() title argument is d_read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolved in the cell at commit. Recorded because the title change is a step the order did not name; no number, key or exit code moves."
+}
+```

@@ -2177,3 +2177,29 @@ its twin `/api/general/json-tiered/*` returns 401). `1.0.0_SA_CTO~Z` ruled (msg 
 
 **Chain:** `OG-hv-2` (applier `0.7.0_AE_CloudOps~Z`) -> `OG-zs-1`. Independent of the gateway queue (no gateway release); the applier takes it right after OG-hv-2 closes.
 **fanout:** 1 of 1 chain, cap 8.
+
+## ADDENDUM R3-T.52 (2.0.0_SA_COO~O, 2026-10-14 ~14:3xZ) -- round 37, workstream FWD22-W3: FWD-22 groups G3, G6, G5, G2 (PLAN; PRD v3.3 @bb9d1ece12 ADMITTED)
+
+**Source.** PRD v3.1-v3.3 addenda (CTO msgs 34099, 34109, 34116): order to Friday 2026-10-16 is G1, then G3 + G2 core, then G6 + G5 wave A,
+then the rest; one never-widen ask per group; G2 client data NEVER reads through `gateway-global-internal-reader-role` (v3.2: key-segment
+vendors through one-firm prefix-conditioned roles, existing ones first; only SmartX and Tax SMA filter rows in code, with a two-firm negative arm).
+Only the plan is written here. Each group's orders are cut as its precondition lands; the first is OG-gt-6.
+
+| cell | what | writes (new files only) | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-gt-6` | the scope seam: a `Scope(bucket, served_prefixes, client)` and the four S3 helpers (`list_keys`, `newest_part`, `read_parquet`, `read_json`) taking a scope, reusing `harvest_typed`'s envelope, projection and caps; the HARVEST scope is the existing behaviour byte for byte | `app/typed_scope.py`, `tests/test_og_gt6.py` | WORLD | ~77 | gt-0 (merged) |
+| `OG-pt-1` | G3 tools `portal_get_model_positioning`, `portal_get_model_attribution`, `portal_get_market_returns` (json-tiered: the G3 ask's widening), `portal_get_market_regime` | `app/portal_models.py`, tests | WORLD | ~78 | gt-6 |
+| `OG-pt-2` | G3 tools `portal_get_macro`, `portal_get_valuation`, `portal_get_security_scan`, `portal_get_pipeline_freshness` | `app/portal_macro.py`, tests | WORLD | ~79 | gt-6 |
+| `OG-pt-3` | G3 tool `mdpf_get_category_views` (firm-scoped: one scope per call, reusing the `portal_index` firm gate) | `app/portal_mdpf.py`, tests | WORLD | ~80 | gt-6 |
+| `OG-nw-1` | G6 tools `news_search_articles` (14-day cap), `news_trending_topics`, `news_keyword_intelligence`, `news_market_mood`, `news_for_security` (the four live news DynamoDB tables and the two portal singletons) | `app/news_typed.py`, tests | WORLD | ~81 | gt-6 |
+| `OG-et-1` | G5 wave A tools (`etfs_get_partner_ownership`, `etfs_get_ownership_rollup`, `etfs_get_monthly_report` with coverage from each partner's CSV never `coverage_verdict.json`, `etfs_get_fund_holdings`, `etfs_get_fund_nav_history`, `etfs_get_positioning` extended) and the `opal-data-etfs` read grant file with its ask | `app/etfs_typed.py`, `terraform/opal-gateway/etfs_read_iam.tf`, tests | WORLD | ~82 | gt-6 |
+| `OG-cl-0` | G2 design cell, READ ONLY: the inventory of existing firm- and vendor-scoped reader roles (Schwab, Black Diamond, Orion, Eclipse, Commonwealth), what each reads, and what is missing; the `client_*` tool contract (`client_resolve_account` returns candidates, last-4 never unique; every other tool takes a resolved account id); the `NFRA_OPLGTW_CONTRACT.json` and `scopes.json` additions for 08403355 | `W/` records only | SERVED | ~83 | none |
+| `OG-cl-1..n` | the vendor adapters behind `client_get_holdings`, `client_get_transactions`, `client_get_allocation`, `client_get_fees` (BD, Orion/Eclipse, Schwab, Commonwealth, SmartX with the code row filter, Tax SMA), one cell per vendor, cut when `OG-cl-0` lands | per vendor | WORLD | ~84+ | cl-0, gt-6 |
+| `OG-ap-19` | APPLY: the G3 + G6 tools' release, with the G3 ask (json-tiered) and the G6 ask (the four DynamoDB tables and two singletons) | applier | WORLD | ~AE | pt-1..3, nw-1, ap-18 |
+| `OG-ap-20` | APPLY: the G5 wave A grant (policy on the internal reader role) and release | applier | WORLD | ~AE | et-1, ap-19 |
+| `OG-ap-21` | APPLY: the G2 core roles (a missing one named by `lib/opal_naming.py`), then the release | applier | WORLD | ~AE | cl-1..n, ap-20 |
+
+**Chains.** gt-6 -> {pt-1, pt-2, pt-3, nw-1, et-1} (five independent chains once gt-6 merges); `OG-cl-0` independent now; cl-1..n after cl-0 and gt-6.
+Releases queue behind `OG-ap-18` in the order ap-19, ap-20, ap-21, then `OG-ap-17`, then MX-r-13.
+**fanout (plan):** now, wave 2 holds five workers (gt-1..gt-5); `OG-gt-6` and `OG-cl-0` start as workers free up (cap 8); then 5 of 5 after gt-6.
+**Not built this round:** G2's remaining tools (lots, performance, profile, insurance), G5 wave B, G4's `mdpf_get_model_composition` (wave 3), the PII-bearing ADVI leaves.
