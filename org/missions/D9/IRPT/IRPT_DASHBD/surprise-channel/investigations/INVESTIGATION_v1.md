@@ -9842,3 +9842,103 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W159-S1 -- The record's digit-run clause and its checker-bound series hash cannot both hold as written: series_sha256 carries an 11-digit run
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W159-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~159",
+  "surfaced_at": "2026-10-14T05:02:02Z",
+  "one_line": "The record's digit-run clause and its checker-bound series hash cannot both hold as written: series_sha256 carries an 11-digit run",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB103-2-AC1 (the order's criterion text): no run of 8 or more digits in the record. The record field series_sha256 is the sha256 of the private series file, and the checker binds it by equality.",
+  "world_is": "BENCHMARK_FILL.json carries series_sha256 with one run of 11 digits inside the hex digest (one match of a run of 8 or more digits in the file). The checker's own verdict on the record is PASS (rc 0). The field is checker-bound, so it cannot be dropped or altered without failing the checker, and the order names no other way to bind the series. The criterion is therefore not met as written and the order stays open for the issuer's ruling.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BENCHMARK_FILL.json in the worker folder: series_sha256 field, one regex match of a run of 8 or more digits",
+      "checks/r103/p103_round103.py check_bench: the series_sha256 field must equal the sha256 of the series file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W159-S2 -- The served dated series carries rows on 25 weekday exchange holidays; the figures use trading-day rows only
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W159-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~159",
+  "surfaced_at": "2026-10-14T05:02:02Z",
+  "one_line": "The served dated series carries rows on 25 weekday exchange holidays; the figures use trading-day rows only",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO step 1: the normalised series holds ONE daily return per trading day, taken from the served dated series.",
+  "world_is": "The served object holds 640 dates per model code, 25 of them weekday exchange holidays under lib/trading_calendar (the NYSE fallback). On those 25 dates UST carries zero return on 23 and ST, INT and LT carry no zero return on any of them. The normalised file drops the 25 dates, leaving 615 trading days per stem. The compounded figures depend on this drop, so the issuer should confirm it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "model_portfolio_timeseries.json: GET by the worker into the private folder; counts of rows and dates only",
+      "lib/trading_calendar.is_trading_day applied to each served date"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W159-S3 -- The served series holds five model codes and three benchmark columns; the order named neither the code map nor the column
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W159-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~159",
+  "surfaced_at": "2026-10-14T05:02:02Z",
+  "one_line": "The served series holds five model codes and three benchmark columns; the order named neither the code map nor the column",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO step 1: map the four model series to the four stems with the served names; the benchmark return is the model series' daily return.",
+  "world_is": "The served series holds five model codes: UST, ST, INT, LT and ULT. The producer's code table names UST Ultra-Short Term, ST Short Term, INT Intermediate Term and LT Long Term; ULT (Ultra-Long Term) is not a stem and is not used. Each row carries model_return, benchmark_return (equal to index_benchmark_return on every row), index_benchmark_return and etf_benchmark_return. The builder uses index_benchmark_return, the index-benchmark basis that the served read names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-model-portfolio-benchmarks/lambda_function.py: the code table and the benchmark column names",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~157/BENCHMARK_SOURCE_READ.json: the index-benchmark basis note"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W159-S4 -- The avs benchmark members are single model-level values, not by-row; the window starts are the same for every account
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W159-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~159",
+  "surfaced_at": "2026-10-14T05:02:02Z",
+  "one_line": "The avs benchmark members are single model-level values, not by-row; the window starts are the same for every account",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO step 3: avs.* benchmark members take the by_row form with each account's own first_data_date as the since-inception start.",
+  "world_is": "The contract's 16 avs.* benchmark members carry no account grain: each is a model figure, and the prior sample holds each as one absent value. They are filled as one value each, on the household start. All three accounts share the household first data date, so a by_row form with per-account starts would print the same figures. The account windows open on the same trading days as the benchmark starts, so no window differs.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "contract 0.4.0 avs benchmark members and the prior sample HOUSEHOLD_SAMPLE in the worker's private folder: scalar absent shape",
+      "new sample household block: the three account first_data_date values equal the household first_data_date"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
