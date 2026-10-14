@@ -34862,3 +34862,85 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Corrected in the harness's count (not in the build): the count excludes __pycache__ and .pyc. Scratch is removed at the end of the order."
 }
 ```
+
+## IRPT_BCKEND-D2-W387-S1 -- git revert --no-commit of 01e843ce2e (the SC-e-56 CUSIP fallback) does not apply at the new pin: three paths conflict
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W387-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~387",
+  "surfaced_at": "2026-10-14T20:36:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "git revert --no-commit 01e843ce2e at the new pin b1d354cfc9 exits 1 with unmerged holdings_snapshot.py, tests/test_holdings_snapshot.py and the investor-reporting terraform CHANGELOG.json; the commit also places a canonical CUSIP table file, so its revert is not a code-only undo. IB-pr-542 AC1 cannot pass on this commit as the order is written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git revert --no-commit 01e843ce2e in worktree C:/dev/wk-ib542-r-cusip (detached at b1d354cfc9): exit 1; git diff --name-only --diff-filter=U lists data/assets/scripts/gold/investor_reporting/holdings_snapshot.py, data/assets/scripts/gold/investor_reporting/tests/test_holdings_snapshot.py and infra/aws/terraform/investor-reporting/CHANGELOG.json",
+      "git show --stat 01e843ce2e: 11 files, 2347 insertions and 28 deletions, including a 1,960-line canonical table file HOLDINGS_CUSIP_NEWLY_PLACED_20261007.json and a checks script",
+      "git log -S CUSIP at b1d354cfc9 on holdings_snapshot.py: 01e843ce2e is the commit that introduces the CUSIP lookup on the pin line (35999d31a4 and b3e63a795e also name CUSIP and are not among the four named commits)"
+    ]
+  },
+  "spec_asserts": "IB-pr-542 step 3: each named commit's revert applies cleanly in a worktree at the new pin, and the revert of the one named commit removes its change; the order names 01e843ce2e as the commit whose revert undoes the SC-e-56 CUSIP fallback.",
+  "world_is": "Later edits on the pin line overlap the lines 01e843ce2e changed, and the commit places data as well as code, so git refuses the revert. No revert was hand-resolved and no bundle was built from the conflicted tree.",
+  "notes": "Refusal clause of the order: a revert that does not apply cleanly is a STOP. Attribution of the CUSIP group needs a method the order does not name (CTO decision). The surfaced_at stamp is date -u at the row's write."
+}
+```
+
+## IRPT_BCKEND-D2-W387-S2 -- the multi_asset premise does not hold at the new pin: 01e843ce2e removed the value 4cc72587d6 added, so reverting 4cc72587d6 conflicts; 9efbec3c2f removes only a comment line
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W387-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~387",
+  "surfaced_at": "2026-10-14T20:36:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "At the new pin the multi_asset value is already absent from ASSET_CLASS_VALUES: 01e843ce2e replaced the line 4cc72587d6 had added. git revert --no-commit 4cc72587d6 exits 1 (holdings_snapshot.py and two test files unmerged). 9efbec3c2f changes holdings_snapshot.py by one deleted comment line only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show -U0 4cc72587d6 on holdings_snapshot.py: one changed line, adding multi_asset to the ASSET_CLASS_VALUES tuple",
+      "git show -U0 01e843ce2e on holdings_snapshot.py: that tuple line replaced by a line reading unclassified with the comment SC-e-56: multi_asset left (the table holds 0 rows; the six-class rule refuses it)",
+      "git revert --no-commit 4cc72587d6 in worktree C:/dev/wk-ib542-r-multi (detached at b1d354cfc9): exit 1; unmerged paths holdings_snapshot.py, tests/test_holdings_narrowed.py and tests/test_holdings_snapshot.py",
+      "git show -U0 9efbec3c2f on holdings_snapshot.py: one deleted line, the DEPLOY-SERVE-HELD comment; no class value changes"
+    ]
+  },
+  "spec_asserts": "IB-pr-542 names 4cc72587d6 as the one commit whose revert undoes the multi_asset change in holdings_snapshot.py at the new pin, and says 9efbec3c2f removes the DEPLOY-SERVE-HELD lines.",
+  "world_is": "The multi_asset change at the pin is undone by 01e843ce2e, not by 4cc72587d6, so 4cc72587d6's revert re-adds a value the pin no longer carries and conflicts. The 9efbec3c2f change is comment-only and cannot move a node's classification. The FWD-14 gate condition named multi_asset (added by 9af6811b61) is a gate, not a node field.",
+  "notes": "The order's identification rule (print the search) gives 4cc72587d6 as the only commit whose subject names multi_asset and whose diff adds the value; the conflict is the measured outcome, not a choice of commit."
+}
+```
+
+## IRPT_BCKEND-D2-W387-S3 -- git revert of 7ace854890 and 3f2bdda578 at the new pin exits 1 on the project channel file alone; the holdings_snapshot.py reverts stage clean
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W387-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~387",
+  "surfaced_at": "2026-10-14T20:36:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "git revert --no-commit of 7ace854890 (account_id) and 3f2bdda578 (keyed gate) at b1d354cfc9 exits 1, and the only unmerged path in each is the project surprise channel file itself, which both commits edited. Their code reverts stage without conflict but git still reports the revert as not applied.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git revert --no-commit 7ace854890 in worktree C:/dev/wk-ib542-r-account (detached at b1d354cfc9): exit 1; git diff --name-only --diff-filter=U lists only org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md",
+      "git revert --no-commit 3f2bdda578 in worktree C:/dev/wk-ib542-r-keyed (detached at b1d354cfc9): exit 1; the same single unmerged path",
+      "git status --short in both worktrees: holdings_snapshot.py staged as M without an unmerged marker"
+    ]
+  },
+  "spec_asserts": "IB-pr-542 step 3: a revert that does not apply cleanly is recorded as revert_applied false and is a STOP; the revert of each named commit is the code change that commit made.",
+  "world_is": "The conflict sits in a channel log that is not a bundle closure member, so it cannot change the built bundle, but git's verdict is a refused revert. The order's rule is applied as written: revert_applied false, no hand-resolution, no bundle built from either reverted tree.",
+  "notes": "Filed so the CTO can decide whether a revert that conflicts only on the channel log is acceptable for the toggling method. The row carries no node, account or client identifier."
+}
+```
