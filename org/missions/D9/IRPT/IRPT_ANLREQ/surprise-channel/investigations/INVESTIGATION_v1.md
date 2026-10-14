@@ -14480,3 +14480,55 @@
   "notes": "Form only. For the issuer when it decides S7: the baseline name is unchanged by this order, but its failing reason is not."
 }
 ```
+
+## IRPT_ANLREQ-D2-W139-S10 -- the grant's "operation const changed and nothing else different" cannot hold literally for the new response schema: a verbatim copy of analysis-request-pdf keeps its $id and its x-response-contract identity, so those identity fields change too
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W139-S10",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~139",
+  "surfaced_at": "2026-10-14T19:01:47Z",
+  "one_line": "AMENDMENT 3 says the new response schema is modelled on responses/analysis-request-pdf.response.schema.json with only the operation const changed; a literal copy would keep the report route's $id and its x-response-contract identity, so the file as written also changes $id, title, description, x-response-contract.operation and x-response-contract.route_key.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-331 AMENDMENT 3 (1): the new file docs/contracts/investor-reporting/v1/responses/analysis-request-commentary-pdf.response.schema.json is modelled on responses/analysis-request-pdf.response.schema.json with the operation const changed to analysis-request-commentary-pdf and nothing else different.",
+  "world_is": "The neighbour carries $id opal://irpt/contracts/v1/responses/analysis-request-pdf.response.schema.json, a title and a description naming the READY report PDF, and x-response-contract.operation and route_key naming the report route. A verbatim copy would give two published files one $id and metadata that names the report route for the commentary operation. The file written by this order (generated from the neighbour by a script in .scratch) changes those five fields to the commentary identity and keeps the schema body, the operation const change and the data $ref (opal://irpt/contracts/v1/AnalysisRequestPdf.schema.json) unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/responses/analysis-request-pdf.response.schema.json:2-9 @68b2e5daf6 (neighbour, unchanged by this order)",
+      "docs/contracts/investor-reporting/v1/responses/analysis-request-commentary-pdf.response.schema.json:2-9 (working tree at filing, uncommitted at this write)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The schema body, the const and the data $ref are the neighbour's; the four identity fields and the description are the new file's own. For the issuer: say so if the literal copy with a shared $id is wanted."
+}
+```
+
+## IRPT_ANLREQ-D2-W139-S11 -- routes.json _denominator.note still reads 'routed here 22 + routed elsewhere 2 = 24 total' after AMENDMENT 3 raised declared to 23 and total to 25; the grant raises the two counts only, so the note is left as written
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W139-S11",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~139",
+  "surfaced_at": "2026-10-14T19:01:47Z",
+  "one_line": "The _denominator note in routes.json still states the arithmetic 22 + 2 = 24 after this order's row raises declared to 23 and total to 25; AMENDMENT 3 allows only the two counts to move, so the note is not edited by this order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-331 AMENDMENT 3: raise the _denominator declared and total counts by one each; change nothing else under docs/. AC3 (scope_check.py) refuses any change to a _denominator key other than declared and total.",
+  "world_is": "routes.json _denominator (working tree, line 299 onward) has declared 23, routed_elsewhere 2, no_handler_at_head 0, total 25, functions_targeted 7 and a note whose arithmetic reads routed here 22 + routed elsewhere 2 = 24. The file's rows count 25 = 23 DECLARED + 2 ROUTED_ELSEWHERE, so the counts agree with the rows and only the note's text is one route behind. functions_targeted stays 7 because the new route is served by irpt-status, already counted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/routes.json:299-307 (working tree at filing, uncommitted at this write)",
+      "docs/contracts/investor-reporting/v1/routes.json:299-307 @68b2e5daf6 (base of the counts, 22 and 24)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The counts are what the census test pins; the note is human text. For the issuer or a later docs cell to refresh the arithmetic."
+}
+```
