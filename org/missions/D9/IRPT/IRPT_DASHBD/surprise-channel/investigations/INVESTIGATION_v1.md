@@ -12720,3 +12720,51 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W181-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~181",
+  "surfaced_at": "2026-10-14T21:39:36Z",
+  "one_line": "Premise check on the Orion accountNumber field: on the newest partition it carries a digit run on every dry-run account and one value per account, so the premise that it holds text fragments and no number does not hold there (measured, counts only).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "Worker face, Why: the field the sample builder took for the custodian account number (accountNumber in Orion fact_positions) carries text fragments, not a number, so the labels read fragments.",
+  "world_is": "Newest partition date=2026-10-14 of Orion fact_positions (37008 rows): accountNumber holds one value per account for all 980 dry-run accounts, each with a digit run of 4 or more, unique per account, and one value per account across the five sampled dated partitions where the account appears. 73 accounts carry an alphabetic character in the value. Same column name and value shape in Orion fact_assets. Counts only; no value copied.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~181/RD_ACCOUNT_NUMBER_FIELD_R111.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r111/p111_acctfield.py",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_dim.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W181-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~181",
+  "surfaced_at": "2026-10-14T21:39:36Z",
+  "one_line": "The stability clause names an Eclipse positions table, but no Eclipse silver table is named as positions; the one account-keyed Eclipse table is fact_portfolios_simple, which was measured for stability instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face step 4: stability for every string column of fact_positions and of the Eclipse positions table.",
+  "world_is": "The round-108 record names four Eclipse silver tables: fact_model_composition, fact_models, fact_portfolios_full, fact_portfolios_simple. None is named positions. Only fact_portfolios_simple carries an account key (accountId); the other three carry none, so their columns are keyed false. Stability was measured for all 18 string columns of fact_portfolios_simple over five dated partitions, and for any other column passing the digit-run and uniqueness tests.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~172/READ_COVERAGE_RUN_R108.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~181/RD_ACCOUNT_NUMBER_FIELD_R111.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
