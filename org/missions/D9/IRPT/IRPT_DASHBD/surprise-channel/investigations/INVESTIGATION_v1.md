@@ -11192,3 +11192,53 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "A rename of _model_lo breaks the builder loudly (AttributeError at the first None window), never silently. The issuer may ask the module's owner for a public accessor; this worker has not changed the module."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W169-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~169",
+  "surfaced_at": "2026-10-14T14:39:44Z",
+  "one_line": "The contract's footnote for a window the account did not span still says that it prints a dash, which the render no longer prints after contract 0.4.3.",
+  "spec_asserts": "Contract document.footnotes.not_held_for_entire_period (the member convention.not_held_for_entire_period text): a window whose figure is absent because the account did not span it (NOT_SPANNED) prints a dash with the footnote 'Not held for the entire period' in place of the figure. Contract 0.4.3 absent_rule says such a window prints INSUFFICIENT_HISTORY words and never the dash.",
+  "world_is": "The tab and the export (portal commit ea6f71cf0e, DB-b-207) print INSUFFICIENT_HISTORY words in such a cell, never the dash, as the order requires; the footnote line still prints under the table in code (this round's sample holds no such window, so the render shows neither). The contract's footnote text names the dash, so a reader of the contract literally would print the dash the CTO retired.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@fc69a8f606",
+      "portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts@ea6f71cf0e",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/RENDER_R106.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The contract is not in this order's grant, so the worker did not edit it. The issuer decides whether the footnote text changes to words."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W169-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~169",
+  "surfaced_at": "2026-10-14T14:39:44Z",
+  "one_line": "The InvestorReporting whole-scope suite has five failing tests that predate this round and are outside the render scope.",
+  "spec_asserts": "The round's whole-scope suite (bun test src/pages/InvestorReporting) is expected to add no failing test (new_failing_ids empty), as the render remedy order states.",
+  "world_is": "Five tests fail both at the base (portal commit df295727) and after this round (portal commit ea6f71cf0e): IVE26-AC3, IVE48-AC1, IVE98, the producer fixtures test, and F14-AC3. The round adds none; the five are not in the report, the chart or the split-column scope.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/RENDER_R106.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/RENDER_R106.json (tests.suite_base and tests.suite_after)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT for this round's render. The five names are carried in the record's suite_base and suite_after blocks; the CVO may place their owner."
+}
+```
