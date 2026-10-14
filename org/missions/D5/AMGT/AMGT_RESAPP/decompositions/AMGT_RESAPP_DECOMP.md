@@ -10897,3 +10897,34 @@ Cells and their classes:
 **Edges:** bl-1 -> approval row (CTO) -> merge-forward onto DEV (box manager) -> bl-2 -> bl-3. No edge into bl-1. **Cut now:** bl-1 only (the others wait on a landed predecessor, as in round 104). fanout: 1 of 1 chains, cap 8, reason: three items on one branch because items 1 and 3 are one feature by the CTO's word and item 2 shares its files.
 Item 2 moves a served value only if the column were filled by the function; the page-side drop does not, so no never-widen pair is owed; if the cause is in the served block the cell files a row and the issuer returns to the CTO.
 **Not this round's:** the AIFILL workstream (`~R2`, FWD-41), the Terminal sign-in (Andrew), the weekend read of bh-2.
+
+---
+
+## 115. ROUND 106 -- THE CTO'S ROUND-105 REMEDIATION LIST (`ledger/ROUND_ANALYSIS.round105.md`, msg 5426), 2026-10-14 ~05:3xZ
+
+**Frozen at the issuance commit.** Round 105 (this seat's keys bl-1..bl-3) closed at `27c45cadcc`: FWD-40 grades REALIZED. The CTO carries three ARMED rows as remediation, not as FWD gates; they are still wrong or unexplained figures on an analyst's page:
+
+| # | item (row) | cell | what the cell is |
+|---|---|---|---|
+| 1 | PBR US forward P/E 5.2x, 6.3x beside a USD price and BRL EPS, no currency note (W418-S2) | `AMGT-bm-2` | the served block withholds a forward P/E whose price and EPS currencies differ, with a stated reason and a served `model.forecast_withheld` entry (the rule of round 104's cross-currency fiscal P/E, bk-4); a served-value move: it carries its never-widen pair |
+| 2 | the historical P/E prints its price basis (W418-S3) | `AMGT-bm-1` | page side, in ONE Opal-internal portal feature |
+| 3 | an All-figures grid team-row dash states its reason (W419-S3) | `AMGT-bm-1` | the same feature |
+| 1b | the page shows the served reason in a withheld forward P/E's dash | `AMGT-bm-1` | the same feature reads `model.forecast_withheld` (absent field: today's behaviour) so the page can land BEFORE the served change |
+| 4 | the next ten-name walk is a fresh sha256 draw on the walk date; the CTO reads it | `AMGT-bm-5` | placed, NOT CUT until bm-4 is on PROD |
+
+Cells and their classes:
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-bm-1` | the feature branch `cand/dell1/amgt-sa-pe-basis-and-reasons` cut from PROD `7db035e4` (items 2, 3, 1b), its harness and receipt; the approval row is the issuer's | `~441` | worker (portal) | LOCAL | the branch in the nested portal repository (`src/pages/SecurityAnalysis/` only), the receipt | the three rows |
+| `AMGT-bm-2` | `scoped_amgt.py` withholds a different-currency forward P/E and serves `model.forecast_withheld`; one unit-test module | `~442` | worker | LOCAL | `lib/research/api/scoped_amgt.py`, `lib/research/api/tests/test_forward_pe_withheld.py` | W418-S2 |
+| `AMGT-bm-3` | the never-widen pair (COO half, then the CTO's half) and the redeploy of the scoped API from the merged pin with its first cold request (RA1) | `0.7.0_AE_CloudOps~RA1` | seat (RA1) | WORLD | one Lambda (`opal-amgt-scoped-api`) | W418-S2 |
+| `AMGT-bm-4` | the promote of the approved portal feature to PROD (a DT seat act) | a DT named by the CTO | seat (DT) | SERVED | the portal release branch and PROD | the three rows |
+| `AMGT-bm-5` | the 93 census (issuer) and the ten-name walk on a local build of PROD, FRESH draw, the CTO reads it | `~443` | worker | LOCAL | the deliverables folder and `C:/dev/ui-walk-evidence/bm-5/` | the CTO's grade |
+
+**Edges:** bm-1 -> approval row (CTO) -> merge-forward onto DEV (box manager) -> bm-4 -> bm-5; bm-2 -> pair -> bm-3 -> bm-5. bm-1 and bm-2 are independent (disjoint write sets: the portal, and one Python file), so both are cut now. fanout: 2 of 2 chains, cap 8, reason: the portal feature and the served change are independent chains.
+
+**Measured at the cut (round106_prep).** The forward P/E population (`r106_forward_pe_population.py` over the live function, 95 names): 278 served BEST_PE_RATIO rows, 200 with price and EPS in the SAME currency, 18 a minor-unit pair (GBp over GBP: the same currency, kept), **60 in a different currency on 20 names** (1299 HK, 939 HK, 992 HK, AZN LN, BABA US, BP/ LN, BZLFY US, HSBA LN, ICT PM, JD US, NOVN SW, PBR US, RIO LN, SHOP CN, SPOT US, TSM US, TTE FP, UBSG SW, ULVR LN, ZURN SW). `r106_fwd_pe_check.py` at the base reads `NO (3 of 6 arms)` (F1, F3, F4 FAIL; F2, F5, F6 PASS: the checkout's handler equals the live function's pin `0447f2df38` on every other path).
+**The decision this cell takes (the issuer's, inside the CTO's rule):** the CTO's list says "states its basis ... or is withheld with a reason, the same rule as bk-4". Round 104 withheld the cross-currency FISCAL P/E (126 rows) rather than state a basis; this round does the same for the FORWARD P/E: 60 rows on 20 names are withheld with the reason `the price is in <code> and consensus EPS in <code>, and a ratio of different currencies is not shown`. Bloomberg's own forward P/E is not re-derived and the 218 same-currency rows are unchanged. If the CTO prefers the basis-statement branch the cell is re-cut before the apply.
+**A fact for the CTO's item 2:** the served fiscal figures carry NO date for the year-end price (`period_end_date` and `fiscal_period_end` are null on every PX_LAST row), so bm-1 prints the price and its currency and `at the close of fiscal year <YYYY>`, and a date only when one is served. A served date is a later addition if wanted.
+**Not this round's:** the AIFILL workstream (`~R2`, FWD-41), the Terminal sign-in (Andrew), the weekend read of bh-2.
