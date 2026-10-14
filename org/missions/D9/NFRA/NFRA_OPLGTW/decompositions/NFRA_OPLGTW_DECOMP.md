@@ -2188,6 +2188,7 @@ Only the plan is written here. Each group's orders are cut as its precondition l
 | cell | what | writes (new files only) | risk | slot | depends on |
 |---|---|---|---|---|---|
 | `OG-gt-6` | the scope seam: a `Scope(bucket, served_prefixes, client)` and the four S3 helpers (`list_keys`, `newest_part`, `read_parquet`, `read_json`) taking a scope, reusing `harvest_typed`'s envelope, projection and caps; the HARVEST scope is the existing behaviour byte for byte | `app/typed_scope.py`, `tests/test_og_gt6.py` | WORLD | ~77 | gt-0 (merged) |
+| `OG-gt-7` | the hookup of the ten G1 typed tools: `tools.py` registrations, `SAFE_TOOLS` and `NATIVE_TOOLS`, the registry count 65 -> 75 and the non-data count 56 -> 66; applied by the issuer's prepared script (`deliverables/2.0.0_SA_COO~O/r37/hookup_g1.py`) because the gateway app files are in lane CLOUD_OPS_OR_ETL | five existing files | WORLD | ~78 | gt-1..gt-4 (merged) |
 | `OG-pt-1` | G3 tools `portal_get_model_positioning`, `portal_get_model_attribution`, `portal_get_market_returns` (json-tiered: the G3 ask's widening), `portal_get_market_regime` | `app/portal_models.py`, tests | WORLD | ~78 | gt-6 |
 | `OG-pt-2` | G3 tools `portal_get_macro`, `portal_get_valuation`, `portal_get_security_scan`, `portal_get_pipeline_freshness` | `app/portal_macro.py`, tests | WORLD | ~79 | gt-6 |
 | `OG-pt-3` | G3 tool `mdpf_get_category_views` (firm-scoped: one scope per call, reusing the `portal_index` firm gate) | `app/portal_mdpf.py`, tests | WORLD | ~80 | gt-6 |
