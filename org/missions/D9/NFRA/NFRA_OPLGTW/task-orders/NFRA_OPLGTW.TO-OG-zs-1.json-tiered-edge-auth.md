@@ -45,8 +45,8 @@ written under `json-tiered/` later would be public the moment it lands.
    recorded under `W/`: (i) BEFORE the apply, read the live ACL (`get-web-acl`) and write `W/ZS1_ACL_BEFORE.json` = `{"rules": [{"name", "priority", "statement_sha256"}, ...], "rules_sha256"}`
    (the six live rules, statement bodies hashed, never printed); (ii) AFTER the apply, read it again into `W/ZS1_ACL_AFTER.json` in the same shape; the two `rules_sha256` must be EQUAL, else
    restore the before state at once and file an ARMED row naming this seat; (iii) read CloudTrail for the apply window and record `updatewebacl_calls` (the count of `UpdateWebACL`
-   events on this ACL) in `W/ZS1_PROOF.json`: it must be exactly 1, because one atomic update leaves no interval in which the ACL evaluates without its managed rules; a count above 1, or a count you
-   cannot read, is a STOP before the apply (name which). If the plan reads 1 change, none of (i)-(iii) applies and `updatewebacl_calls` is `0`.
+   events on this ACL) in `W/ZS1_PROOF.json`: it must be 0 or 1. ONE atomic update leaves no interval in which the ACL evaluates without its managed rules, and ZERO means nothing was sent (A2: terraform can log a modification it never issues). A count above 1,
+   or a count you cannot read, is a STOP (name which); with the snapshots taken, the two `rules_sha256` must be equal at 0 as at 1. If the plan reads 1 change, none of (i)-(iii) applies and `updatewebacl_calls` is `0`.
 4. **Apply as a deploy with a ledger.** Ledger `nfra-oplgtw-edge-auth-json-tiered`, entry AND sentinel first; `safe-apply`
    targeted at the distribution resource; wait for the distribution status `Deployed`. Rollback: remove the one association
    block and apply again.
@@ -83,7 +83,7 @@ disarm_owner `2.0.0_SA_COO~O`; `surfaced_at` = `date -u +%FT%TZ`.
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OG-zs-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/zs1.AC1.sh; echo "exit=$?"</invocation><expect>(?s)log read: window \d+ days, source named, non-portal consumers 0.*behavior /json-tiered/\* carries auth-validator-edge viewer-request: yes; twin associations 3 of 3.*plan 0 to add, [12] to change, 0 to destroy: yes.*RESULT: PASS.*exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OG-zs-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/zs1.AC2.sh; echo "exit=$?"</invocation><expect>(?s)ledger CLOSED 1 of 1; sentinel at HEAD 0.*WebACL (rules identical before and after, updatewebacl_calls 1|not changed by this apply, updatewebacl_calls 0).*live bare path unauthenticated: 40[13]; twin unauthenticated: 40[13].*proof file: bare 40[13], twin authenticated 200, scanner authorizer read yes.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-zs-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/zs1.AC2.sh; echo "exit=$?"</invocation><expect>(?s)ledger CLOSED 1 of 1; sentinel at HEAD 0.*WebACL (rules identical before and after, updatewebacl_calls [01]|not changed by this apply, updatewebacl_calls 0).*live bare path unauthenticated: 40[13]; twin unauthenticated: 40[13].*proof file: bare 40[13], twin authenticated 200, scanner authorizer read yes.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 - `AC1`: the 7-day read shows no non-portal consumer, the Terraform carries the validator on behavior 7 beside an untouched twin, and the saved plan was exactly one change.
@@ -105,6 +105,10 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-zs-1.json-tiered-edge-auth.proo
 
 - A1 (issuer, 2026-10-14 ~17:0xZ, row Z-S115 BLOCKING, route (c)): the WebACL's identical-block churn is accepted on three recorded conditions (live ACL before and after with equal rule-set hashes; exactly one
   UpdateWebACL call; any other plan change a STOP). Steps 3 and the proof file changed; AC1 reads 1 or 2 changes and AC2 reads the ACL conditions. The CTO's exercised read covers the apply (WORLD). Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
+- A2 (issuer, 2026-10-14 ~18:0xZ, row Z-S121): `updatewebacl_calls` of 0 is accepted beside the before and after snapshots (rules_sha256 equal). The applier measured four agreeing instruments (no UpdateWebACL in a settled
+  window, LockToken byte-identical, capacity unchanged, rules_sha256 identical): zero is safer than one, and condition (iii) was written for the case of one. zs1.AC2 now reads 0 or 1 with the snapshots present.
+  Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>staged</status>
 <round>37</round>
