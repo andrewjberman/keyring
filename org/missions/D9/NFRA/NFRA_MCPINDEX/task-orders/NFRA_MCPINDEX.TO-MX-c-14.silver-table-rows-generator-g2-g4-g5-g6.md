@@ -45,6 +45,7 @@ python workflows/atom_decomposition/gen_silver_rows.py --g2 <file> --g4 <file> -
 - Write one file per in-scope contract: `<out>/<entity>.yaml`, where `entity` = the lower-cased `contract_id` with every run of characters outside `a-z0-9` replaced by one `_`, stripped of leading and trailing `_`. Entities must be unique; exit 2 if not.
 - If `<out>/<entity>.yaml` already exists and holds no `contract` key, exit 3 (never overwrite a row this generator did not write). Write nothing outside `<out>`.
 - `--deployed-tools`: a JSON file holding a list of tool names, or the word `census`, which runs `python workflows/atom_decomposition/tool_census.py` and takes the `tool` names of its JSON `tools`.
+- `--registry-file <path>` (optional): add to that `legacy_addresses.json` the `catalog-*` rows described under "The registry rows" (replace a row of the same key; touch no other row), keeping the file's `_about` and its JSON layout (indent 1).
 - Print `wrote 174 rows to <out>`. Write YAML with `yaml.safe_dump(row, f, sort_keys=False, allow_unicode=True)`, UTF-8, LF.
 
 ### The row (exactly these keys; `retired_reason` only on a retired row)
@@ -88,12 +89,24 @@ blackdiamond_list_insurance                                                     
 ```
 A G2 tool not listed here (balances, find_holders, flows, documents, delivery, the Eclipse tools, prices, workbook rows, platform lists) is NOT mapped: its tables are catalogued with `read_tool` null (OPLGTW: "a table no question reaches is catalogued but gets no adapter this round").
 
+### The registry rows (CTO msg 34143: the existing legacy-address branch of the naming gate, no gate edit)
+
+The commit-time naming gate grades a literal CONFORMANT when it equals a `legacy_addresses.json` row of the COMMITTING PROJECT (`reader` = `NFRA_MCPINDEX`, no `params`) that is COMMITTED AT HEAD. So the registry rows land in a commit BEFORE the rows that name them.
+For every in-scope contract whose `s3_prefix` is a plain S3 key (it does not start `none`, holds no `{`, and its `bucket` starts `opal-data-` but is neither `opal-data-news-v2` nor `opal-data-news-av`): 130 contracts. Add one row with exactly these fields:
+- `key`: `catalog-` + the row's entity with every `_` replaced by `-` (lowercase kebab-case);
+- `bucket`: the contract's `bucket`; `template`: its `s3_prefix`; `shape`: `prefix` when `template` ends in `/`, else `object`; `params`: `[]`; `reader`: `NFRA_MCPINDEX`;
+- `evidence`: `measured by 4.0.0_SA_CRO~Z in the census <file name of G2|G4|G5|G6, e.g. G2_assets_silver.md> @<its pin>: <size.objects> objects (the contract's size.objects, a count; no object content read)`;
+- `note`: `Catalog source-row address; the owner of the data renames it (R19).`
+The other 44 in-scope contracts (the `none` DynamoDB ones, the `{param}` templates, the two news buckets) get no registry row; their prefix stays a literal and may be refused (the residual below).
+
 ### The steps
 
+0. Write the generator first (step 1 below), then run it ONCE with `--registry-file infra/logic/registry/legacy_addresses.json` and `--out` a scratch folder; confirm `python -c "import sys; sys.path.insert(0,'lib'); import opal_naming; print(len(opal_naming.validate(None,None)[0]))"` prints 0 (the registry validates); COMMIT THE REGISTRY FILE AND THE GENERATOR FIRST, in their own commit through `safe-commit.sh` (stage a `.json` under this project's home with it, e.g. your deliverables folder's `step0.json`, so the committing project is derived). That commit is what makes the next one pass.
 1. Write the generator, the map and `workflows/atom_decomposition/tests/test_gen_silver_rows.py` (your own tests: entity uniqueness over the 174, the count refusal, the exit-3 refusal, the read_tool policy under three sets, the four retired rows, `firm-scoped` for a client table and `opal-internal-only` for an ETF table).
 2. Run it with `--out workflows/atom_decomposition/catalog_entries --deployed-tools census`. That writes the 174 rows.
+   **Commit what the naming gate accepts, hold the rest (CTO msg 34143).** Stage all 174 rows plus a `.json` under this project's home, write the staged diff to a file, and run `NAMING_GATE_ENFORCE=1 python .tools/naming-gate.py --diff <that file> --enforce --post-from-index`; every `NAMING REFUSE <path>:<line> ...` line names a row file that cannot land. Unstage those files (`git restore --staged <file>`), commit the rest through `safe-commit.sh` (the commit must pass), and leave the refused files in the working tree UNCOMMITTED. Print: rows committed, rows held, and the REFUSE count by kind: (a) `contract.id`, (b) a firm token in `fork_keys` or another field, (c) an out-of-pattern or templated `prefix`, (d) a news bucket id, (e) other. Write the same numbers to `residual_refusals.json` in your deliverables folder.
 3. Print the diff summary (files added) and the counts by `layer` and by `firm_scope_rule`.
-4. Run the three criteria below.
+4. Run the three criteria below. While rows are held, AC1 to AC3 cannot all PASS: that is expected. Report each criterion's output, and do NOT flip `<status>`.
 
 ## 2. BOUNDS
 
@@ -107,6 +120,7 @@ A G2 tool not listed here (balances, find_holders, flows, documents, delivery, t
 ## 3. SURFACES
 
 <paths>
+infra/logic/registry/legacy_addresses.json
 workflows/atom_decomposition/gen_silver_rows.py
 workflows/atom_decomposition/client_tool_map.json
 workflows/atom_decomposition/catalog_entries/
@@ -150,7 +164,7 @@ The issuer then regenerates the catalog from the merged rows and the loader cell
 (1.0.0_SA_CTO~Z msg 34100) items 1, 3, 4 (the not-yet-catalogued tables) and 5, and PRD v0.13 @bb9d1ece12 (msg 34117). G3 and the `news` / `ft.04` / `mdpf` channel
 corrections are not in this order: they edit CVO-certified channel specs (decomposition R14.6). Battery and planted arms: decomposition R14.3.
 
-**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-14 ~15:3xZ).** Two rulings arrived while you were building. (1) Andrew-direct ~15:0xZ (CTO msg 34135, PRD v0.14 @26a247b289): client data comes ONLY from the `opal-data-assets` vendor silver folders, so the two `model_aua_positions` MDPF feeds are `not_served` (retired, with the record cited), and no row names `opal-data-bd`. The 49F Black Diamond rows keep the contract's `opal-data-assets` location and state their lag through the NOT CURRENT mark. (2) The commit-time naming gate refuses a slash-bearing `contract.id` as an S3 key, so `contract.id` is written with `:` for `/` (the first worker's rows showed it). Re-run the generator and the criteria; the checks were amended to the same rules. Gate limb that graded this modification: none (LIMB 6 does not fire on a modification; `<placeholders>NONE`).
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-14 ~15:3xZ).** Two rulings arrived while you were building. (1) Andrew-direct ~15:0xZ (CTO msg 34135, PRD v0.14 @26a247b289): client data comes ONLY from the `opal-data-assets` vendor silver folders, so the two `model_aua_positions` MDPF feeds are `not_served` (retired, with the record cited), and no row names `opal-data-bd`. The 49F Black Diamond rows keep the contract's `opal-data-assets` location and state their lag through the NOT CURRENT mark. (2) The commit-time naming gate refuses a slash-bearing `contract.id` as an S3 key, so `contract.id` is written with `:` for `/` (the first worker's rows showed it). (3) CTO ruling msg 34143: the gate's legacy-address branch makes a prefix literal CONFORMANT when a committed `legacy_addresses.json` row of this project names it, so the generator also writes those registry rows (130), they land in their OWN commit first, and the rows the gate still refuses (firm tokens in `fork_keys` and ids, `{param}` and `none` prefixes, news buckets) are HELD, not forced: commit what passes and report the residual by kind. The checks were amended to the same rules. Gate limb that graded this modification: none (LIMB 6 does not fire on a modification; `<placeholders>NONE`).
 
 <status>issued</status>
 <round>14</round>

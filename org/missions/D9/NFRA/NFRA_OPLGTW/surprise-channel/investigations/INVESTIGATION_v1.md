@@ -14051,3 +14051,339 @@ name the one known failure instead of silently inheriting it.
   "notes": "No data is read or served on these calls, so the exposure is nil; the gap is the audit trail. The issuer can rule either a denied-argument audit helper in harvest_typed (a base edit) or the rule restated as served calls plus admission refusals."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W72-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~72",
+  "surfaced_at": "2026-10-14T14:50:00Z",
+  "one_line": "lib/research/api/name_search.resolve_query cannot be wrapped by harvest_resolve_security without a second S3 reader; the match is implemented over the crosswalk, universe and identity datasets instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/name_search.py:108 and :114 @de8bd420d2 -- resolve_query calls crosswalk.resolve and crosswalk.load_crosswalk",
+      "lib/research/identity/crosswalk.py:1330-1335 @de8bd420d2 -- _read_pool_latest does import boto3 and opens boto3.client for the crosswalk/v1/ prefix",
+      "lib/research/coverage/covered_universe.py:36-40 @de8bd420d2 -- covered_security_keys opens its own boto3 client when none is passed",
+      "infra/aws/ec2/opal-gateway/app/harvest_identity.py (OG-gt-1, this worktree) -- the match over crosswalk/v1, universe/v1, the bloomberg identity prefix and research_dossier, each read through harvest_typed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Wrap lib/research/api/name_search.resolve_query through harvest_typed if it can run over the parts without a second S3 reader; otherwise implement the match over the three datasets and file an OBSERVATION row naming why the library could not be wrapped (cell OG-gt-1, section 1).",
+  "world_is": "It cannot run without a second S3 reader: it loads the crosswalk and the covered set through two modules that each open their own boto3 client, so a wrap would bypass the one admitted reader. The match is implemented in app/harvest_identity.py with the library's word-start name rule and its one-issuer, one-covered-listing rule.",
+  "notes": "The covered set is the research_dossier partition set that covered_universe.py reads. Whether a shared typed reader should replace the two loaders is the CTO's call; no library file is edited here."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W72-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~72",
+  "surfaced_at": "2026-10-14T14:50:00Z",
+  "one_line": "The gateway's deployed runtime is not shown to carry lib/: harvest_identity imports lib/trading_calendar.py from the repo checkout, and a runtime without lib/ reports the trading-day lag as None with its reason.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:6 @de8bd420d2 -- the instance pulls its own code from S3 via the SSM-run aws s3 cp",
+      "infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:44 @de8bd420d2 -- the one lib/ file the deploy pre-flight names is lib/opal_naming.py, a build-time input",
+      "infra/aws/ec2/opal-gateway/app/gen_rivalfunds_location.py:22 @de8bd420d2 -- the only app/ module that imports lib/ is a generator script, not the served path",
+      "infra/aws/ec2/opal-gateway/app/harvest_identity.py _calendar() (OG-gt-1, this worktree) -- lib is appended to sys.path from the repo root, and a missing lib yields None with an absent_reason"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The T-1 frontier for trading_days_behind_t1 comes from lib/trading_calendar.py, the estate's one frontier definition (cell OG-gt-1, section 1; G1 section 3).",
+  "world_is": "Nothing in the code the deploy pulls is shown to carry lib/: the deploy ships app code, and the only app-level lib import is a generator script. The tool imports lib/trading_calendar.py from the checkout, so on a runtime without lib/ coverage reports trading_days_behind_t1 as None with its reason rather than a number.",
+  "notes": "The deployed box's packaging was not read (read-only task). Whether lib/ ships with the gateway, or the frontier should arrive as an argument, belongs to the release order that rides this cell (ap-18)."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W72-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~72",
+  "surfaced_at": "2026-10-14T14:50:00Z",
+  "one_line": "The 32 keyed harvest prefixes do not share one key form: one keys by a name without its _Equity suffix, one by a bare root ticker, and 11 name no sample object, so their key segment was placed by a listing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G1_harvest.md sections 1 and 5 -- 32 keyed datasets; column_notes.sampled_object is null for 11 plumbing and raw-store contracts",
+      "read-only list_objects_v2 of raw/seekingalpha/ at 2026-10-14T14:4xZ -- 18 objects, the first key BABA_US/20260911T040211Z/symbol.json, so the segment drops the _Equity suffix",
+      "read-only list_objects_v2 of publication-links/v1/ at 2026-10-14T14:4xZ -- 7 objects under BA/, COST/ and HD/ root-ticker segments",
+      "infra/aws/ec2/opal-gateway/app/harvest_identity.py KEYED table and _segment() (OG-gt-1, this worktree) -- five key templates, one listing per keyed prefix"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The keyed datasets are those whose contract names a security_key path segment or a <key>/ first segment, one ListObjectsV2 per keyed prefix (cell OG-gt-1, section 1).",
+  "world_is": "The 32 keyed prefixes carry five key forms: security_key=<key>/ (20 prefixes), <key>/ (7), <key>.json (2), a bare root ticker (publication-links, 1) and a key without its _Equity suffix (raw/seekingalpha, 1). Eleven contracts name no sample object, so their form was placed by a read-only listing.",
+  "notes": "Coverage reports a prefix with no object under the searched base as absent, so a future layout change in one of these prefixes would read as absence. Nothing in the normal serving path changes a layout."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W72-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~72",
+  "surfaced_at": "2026-10-14T14:58:00Z",
+  "one_line": "The commit-time naming gate (LGIC_ENFORCE) refuses four hyphenated harvest prefixes that app/harvest_identity.py reads, so the OG-gt-1 module cannot land on this branch as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit of app/harvest_identity.py at HEAD de8bd420d2: NAMING REFUSE lines 50, 51, 60 and 61 -- amgt/harvest/gold/research-continuation/, research-dossier/, bronze/research-report-extract/ and bronze/research-report/ are NEW and OUT-OF-PATTERN as S3Key; the commit was aborted and nothing staged",
+      "infra/logic/registry/legacy_addresses.json:146-165 @de8bd420d2 -- the research-continuation and research-dossier rows name reader NFRA_MCPINDEX; no row names NFRA_OPLGTW; no row exists for the two research-report prefixes",
+      "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:3587-3604 @de8bd420d2 -- the research-continuation row names gap_owner NFRA_OPLGTW and the same hyphenated prefix",
+      "read-only list_objects_v2 at 2026-10-14T14:5xZ -- the hyphenated prefixes hold 320, 846, 710 and 368 objects; the underscore spellings the gate suggests hold 0 objects"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The OG-gt-1 module reads the keyed datasets of the census under their census prefixes, and its commit lands on the worker branch for the drain (cell OG-gt-1, sections 1 and 3; the commit mechanics of the worker face).",
+  "world_is": "The naming gate grades the four hyphenated prefixes as NEW and out of pattern. The registry rows that name two of them belong to another reader, and the other two have no row. The gate's suggested spelling is not the spelling the bucket holds. The module is uncommitted in the worktree; no naming override or literal rewrite has been made.",
+  "notes": "Needed from the registry owner before landing: a reader row for NFRA_OPLGTW on the four prefixes in infra/logic/registry/ (outside this order's write grant), or a deliberate-departure entry Andrew acknowledges (R20). AC1 and AC2 pass on the worktree; the order stays open until the module lands."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W72-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~72",
+  "surfaced_at": "2026-10-14T15:41:32Z",
+  "one_line": "Ruling A1's premise fails for research_dossier: its canonical underscore spelling holds objects (both spellings hold ASML keys), so the prefer-canonical rule reads only the canonical listing and drops the hyphen-only dates.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read-only list_objects_v2 of amgt/harvest/gold/research_dossier/ this session -- KeyCount 1000 (the page cap), not 0; the ruling (A1) states the canonical underscore spellings hold 0 objects",
+      "read-only list_objects_v2 of amgt/harvest/gold/research_dossier/security_key=ASML_NA_Equity/ this session -- 14 keys, lexicographically first as_of=2026-09-29; amgt/harvest/gold/research-dossier/security_key=ASML_NA_Equity/ -- 10 keys, first as_of=2026-09-24 (dates the canonical listing does not carry)",
+      "read-only list_objects_v2 of amgt/harvest/gold/research-dossier/ this session -- KeyCount 846 in full; the three other canonical underscore spellings (research_continuation, research_report, research_report_extract) hold 0 objects, as S4 measured",
+      "infra/aws/ec2/opal-gateway/app/harvest_identity.py _live_prefix() and KEYED in worktree wk-NFRA_OPLGTW-72 (Ruling A1 applied; the research-dossier pair folded to its canonical entry, 31 entries)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Ruling A1 (issuer, on the naming limb of cell OG-gt-1): the four hyphenated prefixes' canonical underscore spellings hold 0 objects, so the module reads the canonical spelling and the hyphen spelling only when the canonical holds no key.",
+  "world_is": "amgt/harvest/gold/research_dossier/ holds objects, and so does the hyphen spelling; for ASML NA the hyphen spelling carries as_of dates (2026-09-24 onward) that the canonical listing does not. Under the A1 rule the module reads the canonical spelling only, so the coverage row and the covered set omit the hyphen-only dates. The research-dossier pair is one canonical entry (31 entries, not the census's 32).",
+  "notes": "The three other prefixes match the ruling (canonical holds 0; S4 holds). The newest dossier stamp for ASML is in the canonical spelling, so the coverage newest and the covered-listing answer are not moved by this; the undercount of objects and of any hyphen-only key is not measured. The disarm (a fold, a read of both spellings, or the ruling's owner) is the issuer's. The row mints no tool registration and no pinned-count move; the 31-entry census is the worktree's, for the issuer to carry at the merge."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W75-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~75",
+  "surfaced_at": "2026-10-14T15:01:45Z",
+  "one_line": "The 50 KB envelope projection nulls a dict-carried body and empties the list fields before it: a research dossier carried as one dict came back with its dossier and continuation gone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/harvest_typed.py@de8bd420d2 project() lines 65-84: pops items only from top-level LIST fields; a non-envelope field it cannot trim is set to None",
+      "live read 2026-10-14, ASML, pre-projection body (.scratch/debug_proj.py, read only): 163,612 bytes; the 24 dossier fields as one dict 111,210 bytes; continuation 43,602 bytes; first dict-shaped run returned dossier None, continuation None, research_reports emptied"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order OG-gt-4 section 1 and the base surface: envelope(...) projects the body to 50 KB, and project(out) pops items off the end of the largest LIST field until the body fits.",
+  "world_is": "The projection has no rule for a bulky non-list field: it empties the list fields first, then nulls the dict field whole, while the envelope still reports truncated. The tools worked around it by carrying each part as a list of items, smallest first, under a per-part budget (app/harvest_research.py RESEARCH_BUDGET), which is local to OG-gt-4.",
+  "notes": "Any future typed tool whose body has a dict bulk meets the same case. The fix belongs in harvest_typed.project (OG-gt-0's module); it is not edited by this cell."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W75-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~75",
+  "surfaced_at": "2026-10-14T15:01:45Z",
+  "one_line": "A typed read over TYPED_MAX_BYTES returns harvest_over_cap with no audit row: harvest_typed has no deny-audit helper, and a tool module may not reach the principal except through it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/harvest_typed.py@de8bd420d2 _load_capped() lines 147-152 raises TypedOverCap and writes no audit row; admit_typed and audit_ok write only the denied refusal and the SERVE row",
+      "app/harvest_read.py@de8bd420d2 harvest_read() lines 176-179 writes DENY-harvest_over_cap on the same condition: the raw path and the typed path disagree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order OG-gt-4 section 1 (AC4): one audit record per call. The harvest_typed surface: audit_ok is the one audit row of a served call, and admit_typed writes the one audited refusal.",
+  "world_is": "On the typed path an over-cap object is refused with zero audit rows, because the OG-gt-4 tools return refusal(..., harvest_over_cap) after TypedOverCap and no base helper writes the deny row. The raw path writes that row for the same condition.",
+  "notes": "Not exercised live: no object near the 64 MiB cap was read. A deny helper in harvest_typed would close it for every typed tool."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W75-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~75",
+  "surfaced_at": "2026-10-14T15:01:45Z",
+  "one_line": "research_dossier holds several objects per (security_key, as_of) with distinct content hashes, against the contract grain of one object per (security_key, as_of).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G1_harvest.md lines 1949-2101: grain 'one object per (security_key, as_of)'",
+      "live listing 2026-10-14, read only: amgt/harvest/gold/research_dossier/security_key=ASML_NA_Equity/ holds 14 objects, as_of 2026-09-29 through 2026-10-12; as_of 2026-10-09 and 2026-10-11 hold 3 each with distinct content hashes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G1 contract for research_dossier: one object per (security_key, as_of). The order's harvest_get_research reads the newest as_of and names its source key.",
+  "world_is": "ASML has 14 research_dossier objects, and one as_of carries 2 or 3 objects with different content hashes. The tool serves the greatest LastModified within the greatest as_of; no content rule for choosing among duplicates is stated anywhere the tool can read.",
+  "notes": "Which duplicate is authoritative is the AMGT_HARVST owner's call. Until a rule exists the tool serves the latest write, and the envelope names the key it read."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W75-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~75",
+  "surfaced_at": "2026-10-14T15:01:45Z",
+  "one_line": "OBSERVATION (order-required): the retired hyphen research-dossier table is older than the underscore research_dossier table, and for ASML its field names are contained in the underscore table's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live read 2026-10-14, read only, one newest object per table, names and stamps only (.scratch/hyphen_measure.py): hyphen newest as_of 2026-09-29 (10 objects, LastModified 2026-09-29T09:18:18Z); underscore newest as_of 2026-10-12 (14 objects, LastModified 2026-10-12T00:20:59Z)",
+      "field names: hyphen 22, underscore 24; hyphen names absent from underscore: none; underscore names absent from hyphen: 2",
+      "app/harvest_read.py@de8bd420d2 _served() lines 63-64: every amgt/ key is a served prefix, so the raw read path admits hyphen keys (not exercised)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order OG-gt-4 section 1: file one OBSERVATION row stating what was measured on the hyphen table (the newest stamp of each, and whether the underscore table carries every field the hyphen one does). The tool serves the underscore table.",
+  "world_is": "Newest stamps: hyphen 2026-09-29, underscore 2026-10-12. The underscore table carries all 22 hyphen field names for ASML and 2 more; supersession holds on field names for one security only, and the values were not compared. The hyphen objects remain under the served amgt/ prefix.",
+  "notes": "G1 infers the supersession; this row confirms it on field names for ASML only. The contract's open item (confirm with AMGT_HARVST) remains open."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W75-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~75",
+  "surfaced_at": "2026-10-14T15:01:45Z",
+  "one_line": "sec/harvest/silver/filing_source repeats one (security_key, accession) across date partitions: ASML's one accession sits in 4 rows, against the contract grain of one row per (security_key, accession).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "G1_harvest.md lines 6737-6974: grain 'one row per (security_key, accession) resolved filing source'; contract rows_all_parts 22",
+      "live read 2026-10-14, read only, counts (.scratch/silver_measure.py): 10 parts, ASML raw rows 4, distinct accession 1; the silver research-report for ASML: 5 parts, 3 rows, no repeats"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order OG-gt-4 section 1: harvest_get_filing_analysis reads sec/harvest/silver/filing_source. The order states no rule for rows repeated across the date partitions.",
+  "world_is": "The silver table holds snapshot repeats of one (security_key, accession) row across partitions. The tool keeps the row from the latest partition holding the accession; a raw reader of the parquet counts the repeats.",
+  "notes": "Measured for ASML only. The repeat count for the other securities was not measured."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W75-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~75",
+  "surfaced_at": "2026-10-14T15:20:00Z",
+  "one_line": "BLOCKING: the commit gate's naming limb refuses the two existing hyphenated harvest prefixes the research tools read (research-continuation and research-report), so the OG-gt-4 module cannot be committed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit of infra/aws/ec2/opal-gateway/app/harvest_research.py and tests/test_og_gt4.py, 0.9.0_WK_NFRA_OPLGTW~75, 2026-10-14: ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode); NAMING REFUSE harvest_research.py:39 amgt/harvest/gold/research-continuation/security_key=%s/ and :41 amgt/harvest/silver/research-report/ (NEW and OUT-OF-PATTERN as S3Key); the underscore research_dossier, ai_fill, bloomberg exec_officers and sec filing_source literals are CONFORMANT",
+      "infra/logic/registry/legacy_addresses.json@de8bd420d2 lines 147-157: a legacy row for template amgt/harvest/gold/research-continuation/ (exact prefix, reader NFRA_MCPINDEX); no row in infra/logic/registry/ for the silver research-report prefix"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md rule 30: every S3 address is lib/opal_naming.py address() output; a builder refusal is a missing registry row to add (infra/logic/registry/), never a hand-typed workaround; a deliberate departure is an R20 register entry Andrew acknowledges. Task order OG-gt-4 section 3 names the module's write surface, which excludes infra/logic/registry/.",
+  "world_is": "The two prefixes exist in the bucket with hyphens, and the order's tools read them. The naming gate treats their literals as new out-of-pattern addresses, so the commit is refused. The registry row that would clear it lies outside this cell's write surface. Nothing was renamed or worked around: the module is staged in the worktree and uncommitted.",
+  "notes": "Clearing it needs a registry row (or an R20 register entry Andrew acknowledges) for each hyphen prefix at the literal shape the module uses, or the literals follow the builder after the producer migrates (R19). The issuer or the CTO decides which; the cell does not widen its own surface."
+}
+```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S117",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T16:09:07Z",
+    "one_line": "CITES Z-S111 and widens it with the error text that row says was not re-read: the eclipse vendor drift is not confined to fact_portfolios_simple. Today's 16:00Z sweep drained 12 DLQ messages, ALL ONE SIGNATURE -- VendorDriftError on eclipse/portfolios_simple, extra=['defaultTradingEngineId'], declared 22 cols -- and they name model_composition_*.json, models.json, portfolios_full.json AND portfolios_simple.json, so ONE drifted table fails the whole event run for that folder. The sweep's own guard reads FAIL: expected 552 landed 547 missing 5. Silver is 3 trading days behind the frontier.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "eclipse/inflection/meta/backfill-status.json, written by the scheduled sweep at 2026-10-14T16:00:08Z (RequestId 1bd3a5f0-e995-4b01-b76a-f7a54f4422b2): layers.silver.dlq_drain = drained 12, messages_total 12, messages_capped false, other_family_returned 0, unattributed 0",
+        "all 12 message bodies carry condition RetriesExhausted with approximateInvokeCount 3, eventTime 2026-10-14T13:05:2x-29xZ, principal AWS:AROAUR7FNW6PPDDQX6DNZ:opal-assets-ingest-mirror, and the SAME errorMessage: VendorDriftError(\"eclipse/portfolios_simple: vendor shape DRIFT -- extra=['defaultTradingEngineId'] missing=[] (declared 22 cols). A schema change is a reviewed edit to mirror_schemas.py; this boundary never absorbs one silently.\")",
+        "the objects those 12 messages name: eclipse/inflection/bronze/2026-10-14/ model_composition_3,5,6,7,8,9,10,28,29.json plus models.json, portfolios_full.json and portfolios_simple.json -- 12 distinct keys, not 12 retries of one",
+        "the same status object's layers.silver.guard: verdict FAIL, detail 'expected 552 landed 547 matched 547 missing 5 alien 0', instrument mirror_conversion.set_identity, checked_at 2026-10-14T16:00:08Z; backfill_complete false",
+        "lib/trading_calendar.py at the act: expected_last_trading_day(now) = 2026-10-14 and trading_days_behind(2026-10-09, that) = 3, calendar source NYSE/hardcoded-fallback-2010-2027 -- so the lag is 3 trading days, counted on the frontier rather than a wall clock",
+        "Z-S111 (4.0.0_SA_CRO~Z, 2026-10-14T13:34:15Z) named the same drift from the S3 listing side and stated '2 trading days behind' and that the error text was not re-read by that seat"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S111 scopes the drift to the eclipse silver table fact_portfolios_simple and calls it INERT for the gateway because no Eclipse tool exists, with the fix belonging to the assets pipeline's owner.",
+    "world_is": "The scope is wider and the state is worse than a single stale table. Because the drift check fires on the portfolios_simple schema during a run that converts the folder, EVERY eclipse bronze object copied today failed -- the 12 drained messages name nine model_composition files, models.json and both portfolios files. The 16:00Z sweep tried the same conversions through the same code path and could not land them either, which is what the guard's 'missing 5' says. And the DLQ messages are now DRAINED: they are echoed in the status record (messages_capped false, so all 12 bodies are kept), but they are no longer in the queue, so nothing will retry them on its own. A re-drive has to come from the bronze objects, which are still in place. The guard refusing is the guard working; what is not working is that the refusal has now held for 3 trading days with the vendor column still unadmitted.",
+    "notes": "ARMED because the lag grows by one trading day per day and each day's objects go through the same drain. The remedy is unchanged from Z-S111 and is NOT this seat's act: a reviewed edit to mirror_schemas.py admitting defaultTradingEngineId to the eclipse schema, then a re-drive of the bronze objects for 2026-10-10 onward (the sweep will pick them up on its next run once the schema admits the column, since it converts its own misses). This row exists because the drain record is the first place the EXACT error text and the full object list are available, and because the 'INERT for the gateway' reading in Z-S111 is about tool exposure, not about the pipeline's own state. Found while closing OG-ap-15's L3 for this family; the leg itself is satisfied -- the drain record is present, names the family and is non-zero -- and this row is the off-task finding, not a blocker on that ledger."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S118",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T16:09:07Z",
+    "one_line": "The 16:00Z orion sweep drained a clean DLQ (0) and still reads guard verdict FAIL -- expected 4997 landed 5001 matched 4997 missing 0 alien 4. Four silver objects exist that the run-time expectation set does not name. A reader who equates 'drain 0' with 'family healthy' would miss it, and the two numbers come from different instruments.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "orion/inflection/meta/backfill-status.json written by the scheduled sweep at 2026-10-14T16:00:46Z (RequestId 04f1f69f-d69f-4eb0-8fc8-0ba8fa1555bb, START 16:00:42.862Z, Duration 3770.17 ms): layers.silver.dlq_drain = drained 0, messages_total 0, other_family_returned 0, unattributed 0",
+        "the same object's layers.silver.guard: verdict FAIL, detail 'expected 4997 landed 5001 matched 4997 missing 0 alien 4', instrument mirror_conversion.set_identity (per-folder, run-time denominators), checked_at 2026-10-14T16:00:46Z; counts dates 2365 objects 5001; backfill_complete false",
+        "for contrast, the same sweep run for eclipse reads missing 5 alien 0 -- the opposite side of the same identity check, so 'FAIL' alone does not say which"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-ap-15's L3 grades the dlq_drain key the sweep writes. Nothing in that leg speaks to the set-identity guard, and a drained-zero reads as a clean family.",
+    "world_is": "orion's drain IS clean and its guard is NOT. The four alien objects are surplus on the landed side: present under silver/ and absent from the expectation set the run computes from bronze. That is a different class from eclipse's missing-5 (a conversion that could not run) -- an alien can be a leftover from an earlier naming scheme, a partition the expectation set no longer derives, or something genuinely unaccounted for, and this row does not claim which. What it fixes is the reading: on this family, drained 0 and guard FAIL are simultaneously true, and they are measured by different instruments on different planes.",
+    "notes": "INERT: nothing serves from an alien object by name, and no act is owed by this seat -- the four were not created, moved or deleted here. The next step, for whoever owns the assets pipeline's conformance, is to print the four keys (set_identity's alien list) rather than the count, since the remedy differs per cause. Found while closing OG-ap-15's L3 for this family; that leg is satisfied by the drain record and is not blocked by this."
+  }
+  ```
