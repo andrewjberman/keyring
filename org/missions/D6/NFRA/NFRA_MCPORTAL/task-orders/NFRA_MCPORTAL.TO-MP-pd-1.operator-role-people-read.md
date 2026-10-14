@@ -118,7 +118,7 @@ operator role is not yet measured here (its trust and LeadingKeys design say yes
 row and the issuer rules. Check dry-run at base: AC1 FAIL (run file absent); green and red arms exercised with synthetic run
 files.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <workstream>PC</workstream>
 <slot>~25</slot>
