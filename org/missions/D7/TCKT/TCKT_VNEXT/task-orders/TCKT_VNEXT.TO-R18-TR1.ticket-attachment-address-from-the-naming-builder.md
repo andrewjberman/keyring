@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_TCKT_VNEXT~43</issued_to>
 <issued_by>2.0.0_SA_COO~V2</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -87,6 +87,12 @@ registry row exists only if the builder demanded one, and nothing was created in
   (a new row or a status line in your record, never an edit of the committed row). Write `ATTACH_ADDRESS.json` and both checkers, run all three criteria, regenerate the proof instance (the
   mutant is the one AC2 describes and must FIRE), and flip `<status>` to `complete` only when `proof-of-spec-check.py` prints VALID. Keep the channel file's line endings byte-for-byte
   (your own earlier slip, already corrected, shows why).
+- **AMENDMENT 2 (issuer, 2026-10-14; gate limb: none stated, the issuer amends its own order; answers worker 43's row `TCKT_VNEXT-D2-W43-S2`).** `TO-R18-TR3`'s source was REFUSED by the commit-time naming
+  gate (ENFORCE): `NAMING_SCHEMA.json key.table_case` is snake_case, so the table segment `ticket-attachments` is out of pattern although `address()` printed it without refusing. The table is now
+  `ticket_attachments` (snake_case); the partition `trade-form` and every other choice stand (the gate graded the key `portal/{firm}/state/ticket_attachments/trade-form/` CONFORMANT in the issuer's
+  probe). The order is REOPENED (`<status>` complete -> pending by the issuer) for ONE act: re-run steps 1, 2 and 4 with `table = "ticket_attachments"`, rewrite `ATTACH_ADDRESS.json` (`table`,
+  `addresses`, `key_template`; the bucket template and buckets do not change), re-run `address_check.py` and `mutant_check.py` unchanged, regenerate the proof instance, and flip to `complete`
+  only when `proof-of-spec-check.py` prints VALID. The three printed addresses must read `.../state/ticket_attachments/trade-form`.
 - READ only: everything else, including `lib/opal_naming.py` and every Terraform file. Your next orders (`TO-R18-TR2`, `TO-R18-TR3`) edit
   `infra/aws/terraform/ticket-center/main.tf`; you do not.
 
