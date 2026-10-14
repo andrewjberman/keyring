@@ -1903,3 +1903,48 @@
   }
 }
 ```
+
+```json
+[
+  {
+    "id": "NFRA_MCPORTAL-Z-W25-S1",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~25",
+    "surfaced_at": "2026-10-14T18:57:59Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "The face's query-first read of the grant store is refused: the operator role opal-gateway-access-admin is AccessDenied dynamodb:Query on gateway-access-state-table for partition POLICY#6810043e-d171-4adc-9975-068b35e179da#ad037ea5-fee8-412e-9da9-15c6cf2a4fbc. GetItem on that partition's two known keys (principal_profile, data_entitlement#0000000004) succeeded under the same assumed role and is the read the run file uses.",
+    "spec_asserts": "The operator role reads each principal's partition by Query (trust and LeadingKeys design say yes); a denial is a BLOCKING row with the principal key and the error.",
+    "world_is": "sts assume-role on arn:aws:iam::313476888478:role/opal-gateway-access-admin returned rc 0 and get-caller-identity returned the assumed-role ARN. dynamodb query --consistent-read on gateway-access-state-table returned AccessDeniedException: no identity-based policy allows the dynamodb:Query action (rc 254). The same role's dynamodb get-item of principal_profile (rc 0, status active, grant_revision 4) and of data_entitlement#0000000004 (rc 0, status active) succeeded. Nothing was written; the host role was not used for the store read.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~25/pd1_query_denied.txt (the measured AccessDeniedException text)",
+        "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~25/pd1_session_log.txt (steps 2 to 4)"
+      ]
+    }
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W25-S2",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~25",
+    "surfaced_at": "2026-10-14T18:57:59Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "app.admin_gateway_breakdown._scan_principals takes a required client argument; the face's zero-argument call form does not run, so the scan was called with the served module's own host-role client from _ddb_client().",
+    "spec_asserts": "Call app.admin_gateway_breakdown._scan_principals() with no arguments, after reading its signature.",
+    "world_is": "admin_gateway_breakdown.py:174 defines _scan_principals(client) -> list. The page probe pd1_page_probe.py passes BD._ddb_client(), a host-role boto3 DynamoDB client, so the principal list is the served scan's own result (1 principal) and not an operator-role Scan (which the issuer measured denied).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/admin_gateway_breakdown.py:174 (def _scan_principals(client))",
+        "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~25/pd1_page_probe.py (the call site)"
+      ]
+    }
+  }
+]
+```

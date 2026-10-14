@@ -34727,3 +34727,56 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W384-S1 (BLOCKING, ARMED, owner me: the Cottonwood table of the packet omits silver/opal_unidentified.py): CONFIRMED AND WIDER than the row. The packet table lists the members of the BUILT bundle; the built bundle lacks the file because the closure declaration lacks it, so adding it to the packet table cannot make a mint carry it. A Cottonwood bundle minted from the pin cannot import the cottonwood builder. STAYS ARMED; its disarm is the closure fix as a new pin and the bundle-tree differential, not an edit to the table. D2-W384-S2 (Inflection REFUSED on source_frontier_older on both codes): INERT; the served Inflection frontier is now 2026-10-13 so a candidate dated 2026-10-12 is older; the clock moved, the code did not; the release's gate comparison must be live against pin at the same served state. D2-W384-S3 (Cottonwood: 236 changes beyond the signed rule reproduce with holdings_snapshot.py swapped alone): INERT as a hazard; attribution is proven to the member and NOT to a commit: the five keyword-matched commits are not shown to cause the basis and sub-class relabels, and the check that accepted them (mine) is too weak; at the commit level they are UNATTRIBUTED, measured in counts and fields. D2-W384-S4 (python -I writes __pycache__ into trees despite PYTHONDONTWRITEBYTECODE): INERT; the files are in scratch trees outside the repository."
 }
 ```
+
+## IRPT_BCKEND-D2-W385-S1 -- The pin commit of the closure fix is refused by the TO issuance gate on the pin branch: the order file is a new task order under a worker serial, and the old pin's decomposition has no cell IB-pr-540
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W385-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~385",
+  "surfaced_at": "2026-10-14T17:49:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Step 2 of TO-IB-pr-540 cannot be executed as written: committing the order file on the new-pin branch (old pin 49467335d2 plus the order file) is refused by .tools/to-pipeline-gate.py (layer 2). The new pin commit therefore cannot be made by this worker, so the closure fix is not landed and the closure defect D2-W384-S1 stays ARMED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh of the order file in C:/dev/wk-ib540-pin (branch pin-ib-pr-540, HEAD 49467335d2) exited rc=1 with the TO issuance gate REFUSED, 5 violations: (a) a NEW tree task order committed under 0.9.0_WK_IRPT_BCKEND~385 (LD-0521 A3: only 2.0.0_SA_COO or a ~lane of it may add a task order); (b) owned_cells names cell IB-pr-540, not a cell of the pin's IRPT_BCKEND_DECOMP.md (391 cell ids read from its index); (c) criteria IB196-1-AC1, AC2, AC3 name the same absent cell",
+      "grep-count, path-pinned: the decomposition at the base 0d7cf141bd carries IB-pr-540 in 6 lines; the decomposition at the old pin 49467335d2 carries no IB-pr-540 line (the cell is round 196, after the pin's round 191)",
+      "the edited core file (two added lines, zero deleted lines, .tools/safe_deploy_core.py) is uncommitted in C:/dev/wk-ib540-pin; its git blob hash is a09879f2f8d223a71b58889ec0283e1cc1878541",
+      "no override was used: the pipeline-override line was not added, the order file was not edited, and no commit was made on the pin branch"
+    ]
+  },
+  "spec_asserts": "Step 2 of TO-IB-pr-540: the worker lane admits the pin commit once the order file is on the pin branch, and the new pin is committed there with safe-commit.sh; AC1 requires the new pin to descend from the old pin and to change only the core file and the order file.",
+  "world_is": "The to-pipeline-gate (the L6 neck) refuses the order file on the pin branch for the three reasons above; the premise that placing the order file admits the commit does not hold for a file that is new to the pin tree. The commit cannot be made by this worker, so the closure fix has no pin hash and AC1 to AC3 cannot pass. The bundle builds, the import proof and the closure-equals-trace measurement were run from the uncommitted pin worktree and are recorded in IB196-1_closure_record.json with new_pin null. I did not attempt a core-only commit (it would bypass the order admission the lane is built to enforce), did not use the pipeline-override escape, and did not edit the order file. How the fix reaches the pin (a COO-authored commit path or a placement the gate accepts) is the issuer's decision."
+}
+```
+
+## IRPT_BCKEND-D2-W385-S2 -- The order's bundle_delta reads members_changed as [] but a manifest bundle's generated SHA256SUMS member changes by one added line whenever a member is added
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W385-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~385",
+  "surfaced_at": "2026-10-14T17:49:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Step 3 of TO-IB-pr-540 defines bundle_delta as the member comparison by sha256 with members_changed and members_removed both []. Read literally, the generated SHA256SUMS member is in members_changed for every fix of this kind, because it lists the members and its bytes change. The record reports members_changed [] over the closure members and states SHA256SUMS apart.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scratch build of the old pin (49467335d2) and of the pin working tree: 46 and 47 members per firm; the only member whose bytes differ across the two builds other than the added member is SHA256SUMS (safe_deploy_core.build_bundle_payload, stamp manifest, writes a SHA256SUMS member listing every member)",
+      "the SHA256SUMS listings differ by exactly one added line, the sha256 of data/assets/scripts/silver/opal_unidentified.py, and no removed line"
+    ]
+  },
+  "spec_asserts": "Step 3 and AC3 of TO-IB-pr-540: bundle_delta members_added is exactly the one added member and members_changed and members_removed are both empty.",
+  "world_is": "Over the 46 closure members, the old and new bundles differ by exactly the added member (members_changed over closure members is empty, all 45 other members have identical bytes). The generated index differs by its one added line. The definition in the order counts the index. The record states the closure-member comparison and the index separately and does not alter the check. The issuer decides whether the definition excludes generated manifests."
+}
+```

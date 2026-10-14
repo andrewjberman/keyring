@@ -141,7 +141,13 @@ the issuer to make at the merge.
 - The issuer registers the tools and re-pins counts at the merge (CUT BY WRITE SET: hookups belong to no cell).
 - Pre-cut: AC1 and AC2 base FAIL as expected (module, tests and probe absent).
 
-<status>pending</status>
+- SUPERSEDED (issuer, 2026-10-14 ~18:2xZ, row NFRA_OPLGTW-Z-W81-S1 BLOCKING): the naming gate refuses the live key literals `platinum/mdpf/` and `platinum/mdpf/{scope}/category-views.json` as NEW out-of-pattern
+  (their canonical form is `mdpf/{scope}/platinum/...`, which holds no object: the live layout predates the canon), and the module cannot be built without one. The sanctioned carrier for those keys is the catalog:
+  `mdpf_get_category_views` is served through NFRA_MCPINDEX's `portal_index` machinery (a catalog row for the dataset, which its v0.12 item 2 already carries among the nine uncatalogued G3 datasets, and one
+  `ToolRow` with `member_arg="scope"` beside `mdpf_get_aum_metrics`), which reads each key from the catalog row and applies the firm gate. Asked of 2.0.0_SA_COO~MI. The need is met another way; no module is built here.
+  The worker's row and naming probe artifacts are carried by the drain of its branch. Gate limb: none on a status change.
+
+<status>superseded</status>
 <round>37</round>
 <workstream>FWD22-W5</workstream>
 <slot>~81</slot>

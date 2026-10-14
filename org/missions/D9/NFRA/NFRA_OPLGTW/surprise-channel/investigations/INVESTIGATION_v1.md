@@ -14911,6 +14911,90 @@ name the one known failure instead of silently inheriting it.
   }
   ```
 
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W81-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~81",
+  "surfaced_at": "2026-10-14T16:54:39Z",
+  "one_line": "The naming commit limb refuses both served portal key literals OG-pt-3 must hold, platinum/mdpf/ and platinum/mdpf/{scope}/category-views.json, as NEW OUT-OF-PATTERN S3Key, with canonical mdpf/{scope}/platinum/ forms. The bucket literal opal-data-portal-v2 is CONFORMANT. Per the FIRST ACT the order stops before any build.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_OPLGTW.TO-OG-pt-3 FIRST ACT: run the naming gate on the staged S3 key and prefix literals; if ANY literal is refused, do not type it, STOP at once, file ONE BLOCKING row naming the refused literals and the gate's canonical suggestion, and report (the issuer rules the resolution). Bounds: never split a string, never build a key from pieces, never override a gate.",
+  "world_is": "The gate refuses both literals in the served layout. Its canonical suggestions are mdpf/{scope}/platinum/ and mdpf/{scope}/platinum/{scope}/category-views.json. The served layout on opal-data-portal-v2 at HEAD is platinum/mdpf/{scope}/<object>.json, the form DATA_CATALOG.yaml and exercise_catalog_gate.py use. So the order's literal layout cannot be typed as written. Nothing was built, served or changed; the row is INERT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "naming-gate probe at base 835f9452c3, staged diff W/naming_probe/probe.diff (3 added lines, one literal each): 'NAMING REFUSE infra/aws/ec2/opal-gateway/app/portal_mdpf.py:2 platinum/mdpf/ -> mdpf/{scope}/platinum/' and 'NAMING REFUSE infra/aws/ec2/opal-gateway/app/portal_mdpf.py:3 platinum/mdpf/{scope}/category-views.json -> mdpf/{scope}/platinum/{scope}/category-views.json', then 'NAMING-GATE: REFUSE 3 graded', rc=1; verbatim at org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~81/naming_probe/probe_output.txt",
+      "the same run grades the bucket literal opal-data-portal-v2 as CONFORMANT as S3_BUCKET (probe line 1)",
+      "served layout at HEAD 835f9452c3: infra/aws/ec2/opal-gateway/app/graphql_plumbing/exercise_catalog_gate.py lines 42-45 hold platinum/mdpf/{scope}/aum-metrics.json; infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml line 677 names primary platinum/mdpf/{49financial|inflection|cottonwood|global}/...",
+      "infra/logic/registry grep for platinum (first 15 hits, not a census) returns prefixes under advi/, e.g. exemptions.json line 132 advi/49financial/platinum/49financial/ownership_map.json; no registry row was found for the platinum/mdpf/ layout in that read"
+    ]
+  },
+  "notes": "Filed by the worker on the FIRST ACT. No module, test, probe or catalog row was written. Resolution is the issuer's: a registry row or builder output for the portal-v2 layout, or a ruling on the gate's canonical form. The naming gate was not overridden and no key was typed by splitting."
+}
+```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S122",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T18:27:29Z",
+    "one_line": "A2 fixed zs1.AC2's branch LOGIC but not the <expect> REGEX that grades it. The fixed check prints 'WebACL rules identical before and after, updatewebacl_calls 0' and exits 0 with RESULT: PASS -- and the order's expect admits only '...identical..., updatewebacl_calls 1' or '...not changed by this apply, updatewebacl_calls 0', never the true third combination of identical AND zero. So the criterion cannot be PROVEN while it PASSES, and OG-zs-1's status tag stays staged on work that is fully landed.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "zs1.AC2.sh at fd4e8e0bcb (2.0.0_SA_COO~O, the A2 fix) run by this seat: 'ledger CLOSED 1 of 1; sentinel at HEAD 0' / 'WebACL rules identical before and after, updatewebacl_calls 0' / 'live bare path unauthenticated: 401; twin unauthenticated: 401' / 'proof file: bare 401, twin authenticated 200, scanner authorizer read yes' / 'RESULT: PASS' / exit=0",
+        "the order's AC2 <expect> at 858549a2b7, the WebACL clause verbatim: 'WebACL (rules identical before and after, updatewebacl_calls 1|not changed by this apply, updatewebacl_calls 0)' -- an alternation of exactly two phrasings",
+        "proof-of-spec-check on the instance with AC2 marked PASS: 'VIOLATION: acceptance[AC2]: status=PASS but output_evidence does NOT match expect ... INVALID (rc=1)'",
+        "the same instance with AC2 marked FAIL and a status_reason: VALID (rc=0)",
+        "the <status> tag was flipped to complete and then REVERTED to staged in the same turn, uncommitted, because the order flips it only if AC1 and AC2 both PASS"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A2 (ruling on Z-S121): 'updatewebacl_calls of 0 is accepted beside your before and after snapshots (equal rules_sha256)... zs1.AC2 branch logic was unmeetable for your case and is fixed; my live re-run reads RESULT: PASS. Re-run it on your side, refresh the instance, flip the status to complete.'",
+    "world_is": "The re-run does read PASS, so the issuer's own instruction is satisfiable at the CHECK. It is not satisfiable at the CRITERION: a proof instance must quote both the real output and the order's expect, and the expect cannot match the output the fixed check now produces. The fix moved the check's acceptance from 'zero only when no snapshots exist' to 'zero beside equal snapshots' without widening the expect's alternation to describe that state, and the expect is what proof-of-spec-check grades. The gap is narrow and entirely in the order's own two halves -- nothing in the world is wrong and nothing needs re-applying.",
+    "notes": "What this seat did NOT do, because it is the tempting move: edit the <expect> inside its own instance so the strings match. The expect IS the criterion; copying a different one into the instance would be grading myself, and the invocation-alignment limb exists to catch exactly that. The remedy is one amendment by the issuer -- admit the third phrasing, e.g. 'rules identical before and after, updatewebacl_calls [01]' -- after which AC2 is marked PASS, the instance is refreshed and the tag flips. GENERAL FORM, worth more than this instance: when a ruling fixes a CHECK, the <expect> that grades the check is a SECOND surface and does not move with it. Z-S119's ruling had the same shape and did amend both (A3 replaced the criterion as well as the check), which is why that one closed cleanly."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S123",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T18:43:22Z",
+    "one_line": "RESOLVES Z-S122, and the defect was MINE: the issuer amended BOTH the check and AC2's <expect> in the same commit (fd4e8e0bcb, 18:04Z). My instance carried the expect I had copied from the pin the GO named (858549a2b7), 54 minutes older, reading 'updatewebacl_calls 1' where HEAD reads 'updatewebacl_calls [01]'. The mismatch I reported as a gap between the issuer's two surfaces was a gap between my citation and the order.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the order's AC2 <expect> at HEAD, printed from the bytes: '...WebACL (rules identical before and after, updatewebacl_calls [01]|not changed by this apply, updatewebacl_calls 0)...'",
+        "what my instance embedded: the same regex with 'updatewebacl_calls 1' -- read from 74454c5e91/858549a2b7, the pin the GO message named",
+        "git log -1 on the order: fd4e8e0bcb, 2.0.0_SA_COO~O, committed 18:04Z -- the SAME commit as the check fix, so both surfaces moved together",
+        "after re-emitting the expect from the order at HEAD and marking AC2 PASS: proof-of-spec-check reads VALID (rc=0), and the <status> tag is flipped to complete",
+        "the check's own output, unchanged throughout: 'WebACL rules identical before and after, updatewebacl_calls 0' with RESULT: PASS and exit=0"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "Z-S122 asserted that A2 fixed zs1.AC2's branch logic but not the <expect> regex that grades it, and that the criterion therefore could not be proven while it passed.",
+    "world_is": "A2 fixed both. The expect at HEAD admits the third phrasing exactly as it needed to. What could not be proven was the criterion AS MY INSTANCE QUOTED IT -- and an instance's expect is only evidence if it is the order's current bytes. The verdict the checker printed ('status=PASS but output_evidence does NOT match expect') was precise and I read it as a defect in the order rather than in my copy of it.",
+    "notes": "CLAUDE.md already carries both halves of this: rule 27 says cite by path and READ AT HEAD, no version pinned; and 'a citation ages separately from the text it quotes: verify a quote by printing the bytes at the cited line, never by grepping for the quote.' I did the opposite -- I read the order once at the pin a GO message named, kept working from that copy across an hour in which the issuer amended it twice, and then reported the staleness as someone else's gap. The cost was one round trip and one row. The cheap habit that prevents it: when a criterion refuses, re-read THAT criterion's bytes at HEAD before concluding anything about the order, because a ruling in flight is exactly when the order moves. Z-S122 is resolved by this row, nothing in the world was wrong at any point, and OG-zs-1 is complete.",
+    "dismissal_reason": "Resolves NFRA_OPLGTW-Z-S122. The expect was amended by the issuer at fd4e8e0bcb together with the check; my instance quoted a 54-minute-old pin. Re-emitting AC2's expect from the order at HEAD makes the instance VALID with AC2 PASS, and OG-zs-1's <status> is flipped to complete. No act is owed by anyone: the check, the order and the world all agree and always did."
+  }
+  ```
+
   ```json
   {
     "id": "NFRA_OPLGTW-Z-W82-S1",
