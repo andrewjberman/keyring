@@ -12066,3 +12066,85 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not decided here. Two readings are open for the issuer and the CTO: (a) the household return is a ratio over the dated rows of factor, a fold the order does not name; (b) the order's name rule is amended to take a period from the dates of the rows. Under the order as written the four windows are ABSENT and DB110-1-AC1 stays FAIL; DB-b-222 and DB-b-223 are staged behind this row. The round-110 CTO ruling (household return from Orion fact_performance at client grain) is not in question; its window period is."
 }
 ```
+
+## IRPT_DASHBD-D2-W175-S2 -- DB105-1-AC1 pins the members to the 0.4.1 bytes, so the 0.5.0 firm_sources on the four household return members turn it FAIL (BLOCKING)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T19:43:58Z",
+  "one_line": "The earlier criterion DB105-1-AC1 reads FAIL after the 0.5.0 edit, on the clause 'no member may change in 0.4.2 (the members are byte-for-byte the 0.4.1 members)' in check_kind of p105_round105.py; DB110-1-AC1 itself requires firm_sources on the four pvs.<window>.return_cumulative members, which is a member change, so the two cannot both hold.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-217 step 5: re-run the 14 earlier criteria after the edit; each must read PASS; a criterion that turns FAIL because of the contract change is a BLOCKING row naming it and the clause; never edit an issuer check file. DB110-1-AC1 (the same order) re-runs DB105-1-AC1 and DB109-1-AC1 and requires the four return members to carry firm_sources or firm_absent.",
+  "world_is": "Contract 0.5.0 (sha256 4e0344ef...) changes members: the four pvs.<window>.return_cumulative members gain firm_sources.inflection and keep source ABSENT; c['members'] != the 0.4.1 members, so check_kind fails. Measured: DB105-1-AC1 FAIL (rc 1); DB110-1-AC1 fails first on the older_criteria record and would fail on DB105-1-AC1 at its re-run. The members clause and the amended step 3 and 4(d) cannot both hold; the order's own step 4(d) requires the member change.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r105/p105_round105.py check_kind, the members equality clause (read at the worktree, HEAD of wk-IRPT_DASHBD-175)",
+      "python -I .../checks/r105/p105_round105.py . DB105-1-AC1 -> 'FAIL: no member may change in 0.4.2 (the members are byte-for-byte the 0.4.1 members)' rc 1, after the edit; PASS at base",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at the 0.5.0 bytes, sha256 4e0344efad123a633a84b2748c4d29ed888d6afc4c897c3bb80a65285f1887c1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. The issuer must either supersede DB105-1-AC1 for the 0.5.0 bump (as DB104-2 and DB104-3 were superseded at 0.4.2) or name the members clause as amended. The 0.5.0 contract edit is committed as the step-4 deliverable; DB110-1-AC1 cannot read PASS while DB105-1-AC1 reads FAIL, because the order's own check re-runs it."
+}
+```
+
+## IRPT_DASHBD-D2-W175-S3 -- DB106-1-AC1 pins the contract version to 0.4.3 and its members to the 0.4.2 bytes, so the 0.5.0 bump turns it FAIL (BLOCKING)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T19:43:58Z",
+  "one_line": "The earlier criterion DB106-1-AC1 reads FAIL after the 0.5.0 bump, on the clause 'the contract must be 0.4.3 with the 0.4.2 bytes in its lineage' and the clause 'no member may change in 0.4.3' in check_build of p106_round106.py; the 0.5.0 bump changes members by design (DB110-1-AC1).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-217 step 5: re-run the 14 earlier criteria after the edit; each must read PASS; a criterion that turns FAIL because of the contract change is a BLOCKING row naming it and the clause; never edit an issuer check file.",
+  "world_is": "Contract reads 0.5.0. check_build requires c['contract_version'] == '0.4.3' and c['members'] == the 0.4.2 members. Measured: DB106-1-AC1 FAIL (rc 1) with the version clause as the first failing need; the members clause would also fail on the 0.5.0 members.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r106/p106_round106.py check_build, lines 194 and 199 (read at the worktree)",
+      "python -I .../checks/r106/p106_round106.py . DB106-1-AC1 -> 'FAIL: the contract must be 0.4.3 with the 0.4.2 bytes (sha256 e9c389b75c19...) in its lineage' rc 1, after the edit; PASS at base",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at the 0.5.0 bytes, sha256 4e0344efad123a633a84b2748c4d29ed888d6afc4c897c3bb80a65285f1887c1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. The same supersede-or-amend decision as IRPT_DASHBD-D2-W175-S2 applies; the issuer's DB110-1-AC1 check does not re-run DB106-1-AC1, so this row does not block DB110-1-AC1 by itself, but the chain's record convention does."
+}
+```
+
+## IRPT_DASHBD-D2-W175-S4 -- the newest Orion fact_performance partition holds non-positive factor rows for two clients, so the factor is not positive on every row (OBSERVATION)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T19:43:58Z",
+  "one_line": "Orion fact_performance (newest partition, counts only): 409 of 482,971 rows carry a factor of zero or less, in 2 of 315 clients (276 exact zeros, 133 negatives); the sample household's 807 rows are all positive, so the factor is positive on every row the household's windows read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO DB-b-217 step 3 (amended): the factor is positive on every row you test, and the factor is an index level; if not, file a BLOCKING row with the measurement and stop.",
+  "world_is": "The 409 non-positive rows sit in two clients, neither the sample household; the affected clients' rows are not a leading run (the pattern is interleaved). The window fold divides by the opening-day factor, so a household that includes one of those clients would meet a zero or negative denominator. The 0.5.0 fold text makes the figure absent when either factor is not positive; the builder (DB-b-222) must honour that clause.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/orion/inflection/silver/fact_performance/date=2026-10-14/ read via the adapter's GET-only reader, 2026-10-14T19:40Z (counts only)",
+      "the sample household picked by the round-109 rule (pick_household over the private account_dim dry run): 807 rows, none non-positive",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at 0.5.0, the firm_sources fold of pvs.<window>.return_cumulative (absent when either factor is not positive)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Measured here, not classed as a blocking premise failure: the amended step 3 requires positivity on the rows tested, and the rows tested (the household's) are positive. The disarm is the builder's honouring of the fold's absent clause in DB-b-222, which this worker has not started."
+}
+```

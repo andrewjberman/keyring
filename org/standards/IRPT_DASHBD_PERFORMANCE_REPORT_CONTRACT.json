@@ -1,5 +1,5 @@
 {
-  "contract_version": "0.4.3",
+  "contract_version": "0.5.0",
   "lineage": [
     {
       "contract_version": "0.1.0",
@@ -30,6 +30,11 @@
       "contract_version": "0.4.2",
       "sha256": "e9c389b75c1981bfe8a2aee9ebb8b0b21f45c686071b75950bb5db2e806e151d",
       "reason": "the 0.4.2 bytes, before the absent_rule says that a window the account did not span prints words and never the not-held dash: 0.4.3 changes that one clause of document.absent_rule and no member"
+    },
+    {
+      "contract_version": "0.4.3",
+      "sha256": "90a5c8ef6d53244195bea78f32b3cfb5baa23c85cea667490cb887037ab84953",
+      "reason": "the 0.4.3 bytes, before the 0.5.0 bump: no equivalences list (a member and its equivalent could read differently under the whole-document rule), and the household return of every firm ABSENT; 0.5.0 adds the equivalence map and rule, and sources the household return for Inflection only, from Orion's client-grain fact_performance factor"
     }
   ],
   "project": "IRPT_DASHBD",
@@ -259,7 +264,17 @@
       "unit": "percent",
       "unit_scale": "percent_points",
       "source": "ABSENT",
-      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
+      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return.",
+      "firm_sources": {
+        "inflection": {
+          "input": "orion_fact_performance",
+          "grain": "client",
+          "table": "s3://opal-data-assets/orion/inflection/silver/fact_performance (newest dated partition only)",
+          "field": "factor",
+          "fold": "per Inflection client row of the household's client id (one client row per date): the opening day is the last trading day before the first calendar day of the calendar quarter containing as_of (document.windows.quarter_to_date). Return = 100 * (factor on as_of / factor on the opening day - 1), in PERCENT POINTS (a stored 1.5 means 1.5 percent; the unit_scale is percent_points). The factor is the client's cumulative performance index level, one row per client per date. Absent, never zero, when either day has no client row or either factor is not positive.",
+          "claim": "reported by the platform at client grain; not computed by Opal; includes dividends (round-108 read)"
+        }
+      }
     },
     {
       "id": "pvs.qtd.benchmark_ultra_short_term",
@@ -377,7 +392,17 @@
       "unit": "percent",
       "unit_scale": "percent_points",
       "source": "ABSENT",
-      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
+      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return.",
+      "firm_sources": {
+        "inflection": {
+          "input": "orion_fact_performance",
+          "grain": "client",
+          "table": "s3://opal-data-assets/orion/inflection/silver/fact_performance (newest dated partition only)",
+          "field": "factor",
+          "fold": "per Inflection client row of the household's client id (one client row per date): the opening day is the last trading day before 1 January of as_of's year (document.windows.year_to_date). Return = 100 * (factor on as_of / factor on the opening day - 1), in PERCENT POINTS (a stored 1.5 means 1.5 percent; the unit_scale is percent_points). The factor is the client's cumulative performance index level, one row per client per date. Absent, never zero, when either day has no client row or either factor is not positive.",
+          "claim": "reported by the platform at client grain; not computed by Opal; includes dividends (round-108 read)"
+        }
+      }
     },
     {
       "id": "pvs.ytd.benchmark_ultra_short_term",
@@ -495,7 +520,17 @@
       "unit": "percent",
       "unit_scale": "percent_points",
       "source": "ABSENT",
-      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
+      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return.",
+      "firm_sources": {
+        "inflection": {
+          "input": "orion_fact_performance",
+          "grain": "client",
+          "table": "s3://opal-data-assets/orion/inflection/silver/fact_performance (newest dated partition only)",
+          "field": "factor",
+          "fold": "per Inflection client row of the household's client id (one client row per date): the opening day is the last trading day before the calendar day one year before as_of (document.windows.last_12_months). Return = 100 * (factor on as_of / factor on the opening day - 1), in PERCENT POINTS (a stored 1.5 means 1.5 percent; the unit_scale is percent_points). The factor is the client's cumulative performance index level, one row per client per date. Absent, never zero, when either day has no client row or either factor is not positive.",
+          "claim": "reported by the platform at client grain; not computed by Opal; includes dividends (round-108 read)"
+        }
+      }
     },
     {
       "id": "pvs.last_12_months.benchmark_ultra_short_term",
@@ -613,7 +648,17 @@
       "unit": "percent",
       "unit_scale": "percent_points",
       "source": "ABSENT",
-      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
+      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return.",
+      "firm_sources": {
+        "inflection": {
+          "input": "orion_fact_performance",
+          "grain": "client",
+          "table": "s3://opal-data-assets/orion/inflection/silver/fact_performance (newest dated partition only)",
+          "field": "factor",
+          "fold": "per Inflection client row of the household's client id (one client row per date): the opening day is the household's first_data_date, the day the window opens (document.windows.since_inception). Return = 100 * (factor on as_of / factor on the opening day - 1), in PERCENT POINTS (a stored 1.5 means 1.5 percent; the unit_scale is percent_points). The factor is the client's cumulative performance index level, one row per client per date. Absent, never zero, when either day has no client row or either factor is not positive.",
+          "claim": "reported by the platform at client grain; not computed by Opal; includes dividends (round-108 read)"
+        }
+      }
     },
     {
       "id": "pvs.since_inception.benchmark_ultra_short_term",
@@ -1720,10 +1765,38 @@
       "reason": "The baseline export does not include the disclosure page, and no sibling holds its text. The method row carries the GIPS-alignment statement (the dim_return_method gips_alignment field) that the page will quote; the rest of the text needs its own source."
     }
   ],
+  "equivalences": [
+    {
+      "id": "ENDING_VALUE_HOUSEHOLD",
+      "meaning": "the household ending value as of the report date, printed under each member's own label in the portfolio overview, the holdings overview and the activity summary: one quantity",
+      "entity": "household",
+      "members": [
+        "pvs.qtd.ending_value",
+        "pvs.ytd.ending_value",
+        "pvs.last_12_months.ending_value",
+        "pvs.since_inception.ending_value",
+        "hold.ending_value",
+        "act.ending_value.household"
+      ]
+    },
+    {
+      "id": "ENDING_VALUE_ACCOUNT",
+      "meaning": "the account ending value as of the report date, printed under each member's own label in the account overview, the gain/loss review and the activity summary: one quantity per account",
+      "entity": "account",
+      "members": [
+        "avs.qtd.ending_value",
+        "avs.ytd.ending_value",
+        "avs.last_12_months.ending_value",
+        "avs.since_inception.ending_value",
+        "glr.ending_value",
+        "act.ending_value.account"
+      ]
+    }
+  ],
   "change_rule": "a member whose source changes names the new field in the sibling's own versioned edit; a derivation the siblings do not carry (a household return series, a benchmark series, a month-to-date window, the registration name, the disclosure text) is a new field or a new contract before this contract sources it, and the contract changes by a version bump with the gap table re-bound to its bytes",
-  "read_rule": "values are read by member id; an ABSENT member prints its reason in words; a figure is never derived from a source this contract does not name; the fee-basis words print beside every Opal return and gain figure and every baseline Net Gain figure",
+  "read_rule": "values are read by member id; an ABSENT member prints its reason in words; a figure is never derived from a source this contract does not name; the fee-basis words print beside every Opal return and gain figure and every baseline Net Gain figure Members of one equivalence class, for one entity, are all printed or all absent and agree where printed, and a figure printed under one member never reads unavailable under another (the equivalences list).",
   "open_changes": [
-    "the household return series and the household daily return: a new contract (household return rule); until then the household return members are ABSENT",
+    "the household return: Inflection is sourced at 0.5.0 from Orion's client-grain fact_performance factor (each window's return is the factor ratio, in percent points, opening day named per window in its member's firm_sources); every other firm stays ABSENT until its own source is named; a household daily return series built the way the account series is built remains a new contract",
     "the four model benchmark return series: sourced at version 0.4.0 from the served dated model series (input model_portfolio_timeseries); the 32 benchmark members and the 12-month chart are compounded from its daily returns, each window's start stated in its fold; a figure whose window the series does not open on, or whose trading days it does not hold, prints its absent reason in words",
     "month to date: a ruling is needed before a sibling carries it; until then the month-to-date members are ABSENT",
     "the registration names and the disclosure text: no sibling holds them; the cover, account rows and disclosure page print absent forms",
