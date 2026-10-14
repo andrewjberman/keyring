@@ -1,0 +1,263 @@
+{
+ "kind": "COMPLETION_REPORT",
+ "schema_version": "1.0",
+ "project": "MDPF_HEALGAP",
+ "round": 5,
+ "written_by": "2.0.0_SA_COO~G1",
+ "written_utc": "2026-10-14T11:16Z",
+ "decomposition_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/decompositions/MDPF_HEALGAP_DECOMP.md@fe216d8d06",
+ "denominators": {
+  "fwd_in_prd_header": 6,
+  "cells_in_decomposition": 19,
+  "task_orders": 22,
+  "task_orders_terminal_with_valid_proof": 22
+ },
+ "outcomes": [
+  {
+   "fwd_id": "FWD-1",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- one morning pull deliberately made to fail, followed to that day's figures on the reader's page; the next naturally failed morning is the negative arm, never the test",
+   "cells": [
+    {
+     "cell_id": "HG-t-1",
+     "task_orders": [
+      {
+       "id": "MDPF_HEALGAP.TO-HG-d1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.7.0_AE_CloudOps~F/MDPF_HEALGAP.TO-HG-d1.deploy-runner-guard.proof_of_spec.json@8c03191a87"
+      },
+      {
+       "id": "MDPF_HEALGAP.TO-HG-t1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~1/MDPF_HEALGAP.TO-HG-t1.guard-by-listing-and-induced-lapse.proof_of_spec.json@b356a00d49"
+      }
+     ]
+    },
+    {
+     "cell_id": "HG-t-2",
+     "task_orders": [
+      {
+       "id": "MDPF_HEALGAP.TO-HG-d2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.7.0_AE_CloudOps~F/MDPF_HEALGAP.TO-HG-d2.apply-reattempt-target.proof_of_spec.json@04f05c1e31"
+      },
+      {
+       "id": "MDPF_HEALGAP.TO-HG-d3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.7.0_AE_CloudOps~F/MDPF_HEALGAP.TO-HG-d3.fwd1-exercise-induced-morning-failure.proof_of_spec.json@2b865978c3"
+      },
+      {
+       "id": "MDPF_HEALGAP.TO-HG-t2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~2/MDPF_HEALGAP.TO-HG-t2.reattempt-on-bronze-complete.proof_of_spec.json@0b8de356ff"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Coverage claim only. The induced-morning exercise is TO-HG-d3 (deploy-seat order for the issuer's drain act 4); the CTO grades the exercised artifact, not this row."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- one run in which one of the three kinds of data is missing, read from the run's own result",
+   "cells": [
+    {
+     "cell_id": "HG-t-3",
+     "task_orders": [
+      {
+       "id": "MDPF_HEALGAP.TO-HG-t3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~3/MDPF_HEALGAP.TO-HG-t3.per-feed-run-result.proof_of_spec.json@ed6dc2f6a5"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-3",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- one hole repaired by one act on the day it opened (the source serves current state only), the hole induced on purpose as FWD-1's was; and the eleven days 2026-08-31 to 2026-09-10 read as marked-missing, not filled",
+   "cells": [
+    {
+     "cell_id": "HG-t-6",
+     "task_orders": [
+      {
+       "id": "MDPF_HEALGAP.TO-HG-t6",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~5/MDPF_HEALGAP.TO-HG-t6.repair-act-and-missing-mark.proof_of_spec.json@33b8e7557d"
+      }
+     ]
+    },
+    {
+     "cell_id": "HG-t-8",
+     "task_orders": [
+      {
+       "id": "ADHOC.healgap-r2-1-runner-reads-own-result",
+       "status": "complete",
+       "proof_of_spec_ref": "org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/ADHOC.healgap-r2-1-runner-reads-own-result_PROOF_OF_SPEC.json@74b0ca41c8"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "HG-t-8 was carried by an ADHOC order (decomposition ROUND 2 AMENDMENT A1: the round-2 issuance was closed to new order files). The induced hole and its one-act repair, and the eleven marked-missing days, were drain acts recorded in the deploy ledgers healgap-r2-act3-induced-partial-repair-20261010 and healgap-r2-act4-missing-marks-20261008, not cells."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "done_when_state": "APPLIED",
+   "done_when_text": "APPLIED -- the settings in place say what the system actually does",
+   "cells": [
+    {
+     "cell_id": "HG-t-4",
+     "task_orders": [
+      {
+       "id": "MDPF_HEALGAP.TO-HG-t4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~4/MDPF_HEALGAP.TO-HG-t4.retry-settings-made-true.proof_of_spec.json@3ed275fbdf"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-5",
+   "done_when_state": "APPLIED",
+   "done_when_text": "APPLIED -- the two schedules in place put the pull after the refresh",
+   "cells": [
+    {
+     "cell_id": "HG-t-5",
+     "task_orders": [
+      {
+       "id": "MDPF_HEALGAP.TO-HG-t5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~4/MDPF_HEALGAP.TO-HG-t5.fire-after-session-refresh.proof_of_spec.json@911e6aac94"
+      }
+     ]
+    },
+    {
+     "cell_id": "HG-t-9",
+     "task_orders": [
+      {
+       "id": "MDPF_HEALGAP.TO-HG-t9",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~7/MDPF_HEALGAP.TO-HG-t9.satellites-second-fire-stamp-gated.proof_of_spec.json@04020eb875"
+      }
+     ]
+    },
+    {
+     "cell_id": "HG-t-14",
+     "task_orders": [
+      {
+       "id": "MDPF_HEALGAP.TO-HG-t14",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~11/MDPF_HEALGAP.TO-HG-t14.characteristics-retime-past-the-stamp-gated-fire.proof_of_spec.json@8faf2d3c75"
+      }
+     ]
+    },
+    {
+     "cell_id": "HG-t-15",
+     "task_orders": [
+      {
+       "id": "MDPF_HEALGAP.TO-HG-t15",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~12/MDPF_HEALGAP.TO-HG-t15.retire-the-0700z-registry-rule.proof_of_spec.json@4a263f31f5"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-6",
+   "done_when_state": "APPLIED",
+   "done_when_text": "APPLIED -- the written answer, each entry grounded on what was read",
+   "cells": [
+    {
+     "cell_id": "HG-t-7",
+     "task_orders": [
+      {
+       "id": "MDPF_HEALGAP.TO-HG-t7",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~6/MDPF_HEALGAP.TO-HG-t7.session-dependent-pulls-census.proof_of_spec.json@19d006d501"
+      }
+     ]
+    },
+    {
+     "cell_id": "HG-t-11",
+     "task_orders": [
+      {
+       "id": "MDPF_HEALGAP.TO-HG-t11",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~8/MDPF_HEALGAP.TO-HG-t11.asset-dim-reattempt-after-mint.proof_of_spec.json@f0e6e2a0ea"
+      }
+     ]
+    },
+    {
+     "cell_id": "HG-t-12",
+     "task_orders": [
+      {
+       "id": "MDPF_HEALGAP.TO-HG-t12",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~9/MDPF_HEALGAP.TO-HG-t12.fwd6-census-resweep.proof_of_spec.json@432e970dec"
+      }
+     ]
+    },
+    {
+     "cell_id": "HG-t-16",
+     "task_orders": [
+      {
+       "id": "MDPF_HEALGAP.TO-HG-t16",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~13/MDPF_HEALGAP.TO-HG-t16.characteristics-reattempt-on-partition-arrival.proof_of_spec.json@1c90de5363"
+      }
+     ]
+    },
+    {
+     "cell_id": "HG-t-17",
+     "task_orders": [
+      {
+       "id": "MDPF_HEALGAP.TO-HG-t17",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~14/MDPF_HEALGAP.TO-HG-t17.fwd6-seven-pull-dispositions.proof_of_spec.json@fb6da3a1a4"
+      }
+     ]
+    },
+    {
+     "cell_id": "HG-t-18",
+     "task_orders": [
+      {
+       "id": "MDPF_HEALGAP.TO-HG-t18",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~15/MDPF_HEALGAP.TO-HG-t18.astn-ft-same-day-reattempt-code.proof_of_spec.json@f4a40bf3da"
+      }
+     ]
+    },
+    {
+     "cell_id": "HG-t-19",
+     "task_orders": [
+      {
+       "id": "MDPF_HEALGAP.TO-HG-t19",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~16/MDPF_HEALGAP.TO-HG-t19.sdd-session-restore-determination.proof_of_spec.json@cb607e46f3"
+      }
+     ]
+    },
+    {
+     "cell_id": "HG-t-20",
+     "task_orders": [
+      {
+       "id": "MDPF_HEALGAP.TO-HG-t20",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~17/MDPF_HEALGAP.TO-HG-t20.transcripts-pull-header-comment-only.proof_of_spec.json@bc9d80340b"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Coverage claim only. Two named-reason dispositions are carried as the card's third answer, not as machine fixes: the ASTN FT leg (collection held on Andrew's word; HG-t-18 code half merged dormant) and the SDD session (restore is a person's act at the box; HG-t-19 decision BOX-READ-OWED)."
+  }
+ ]
+}

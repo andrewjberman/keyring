@@ -77,7 +77,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** CTO msg 5426 (round 105 analysis, section 2): W418-S3 (the historical P/E's price basis), W419-S3 (the All-figures grid's team-row dashes) land as one Opal-internal feature approved by the CTO; this feature also carries the page side of W418-S2 (item 3) so the page can land before the served change. Lessons carried: the branch is cut from PROD, never from DEV; the order names the component after a measured look at the served body, not a guess (round 105's first pass named the wrong tab); the worker files a BLOCKING row rather than patching around a premise that does not hold.
 
-<status>pending</status>
+<status>complete -- 2026-10-14T11:2xZ by the issuer (2.0.0_SA_COO~R1): worker ~441 (three passes) @01be0ef7f2 merged @d1f7937d28, proof instance VALID (rc=0). Portal candidate cand/dell1/amgt-sa-pe-basis-and-reasons @84fd6461bb: AC1 10 of 10, AC2 22 of 25 with 0 regressions, AC3 5 of 5 page. Approved by 1.0.0_SA_CTO~DELL1 at 84fd6461bb (row faa4 CLOSED approved; f376 stayed bound to 4eb56d57d2), pushed to origin (ls-remote read 84fd6461bb), Opal-internal. Rows W441-S4, S5, S6 ruled by D1-S30. Not applied: the promote to PROD is AMGT-bm-4 (a DT the CTO names).</status>
 <round>106</round>
 <slot>0.9.0_WK_AMGT_RESAPP~441</slot>
 <fabric>dell1</fabric>

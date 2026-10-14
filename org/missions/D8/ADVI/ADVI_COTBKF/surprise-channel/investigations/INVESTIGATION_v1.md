@@ -8845,3 +8845,30 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-14T11:25:00Z",
+  "one_line": "COTBKF's Cottonwood return history carries Yahoo closes for FTHSX and PFORX (and requests RPIFX), which MDPF_DEMQUE row D1-S12 (BLOCKING) classes as wrong-symbol: the client's trade prices agree with the Yahoo symbol's close only about 40 percent of the time. No COTBKF correction list names it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~130/FETCH_HELD_27.csv: 14064D865 FTHSX returned 1579 rows 2020-06-29..2026-10-09; 693390882 PFORX returned 1579 rows 2020-06-29..2026-10-09 (reading 'looks unadjusted', an adjustment test, not a symbol test)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~95/PRICE_REQUEST_YAHOO.csv: FTHSX 2236, PFORX 2083, RPIFX 2341 security-days, identifier_type symbol",
+      "MDPF_DEMQUE row MDPF_DEMQUE-D1-S12 (BLOCKING) and org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_SA_COO~Q1/ROUND9_LOCK_CAUSE_14.md: the three CUSIPs are classed wrong-symbol by the cause rule",
+      "comp-find 'FTHSX|PFORX|RPIFX|14064D865|693390882|77958B402' org/missions/D8/ADVI/ADVI_COTBKF: 18 files, none of them OPEN_CORRECTIONS.json; this channel: 0 rows name D1-S12 or wrong-symbol",
+      "org/missions/D8/ADVI/ADVI_COTBKF/prd/ADVI_COTBKF_PRD.md:121 (C-SCOPE-OUT, nothing on a page) and :278-288 (v0.6: no released reader; un-parks when a reader is to be released)"
+    ]
+  },
+  "spec_asserts": "MDPF_DEMQUE C-IDENTITY: a security is valued under the symbol its CUSIP resolves to. The COTBKF v0.6 re-serve names every correction before a reader of the return history is released.",
+  "world_is": "The served Cottonwood return history (method_r28 table) values FTHSX and PFORX held days from Yahoo closes under the current symbols. MDPF_DEMQUE's cause rule classes those symbols wrong (D1-S12), and its t-35 re-resolution is open. No reader is released, so no page is affected today (INERT). The un-park condition 'a reader of this table is to be released' would carry these closes onto a page unless the re-serve's correction list names them.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2"
+}
+```
