@@ -104,3 +104,38 @@ The Opal ETFs, VEA and VTV also returned full history (DIVZ from 2021-01-28, PFD
 - **Label:** ruling 7546 keeps yfinance labelled UNVERIFIED.
 
 Not attempted: the YCharts trust-token path. Andrew's word makes it the fallback "if it does not work", and yfinance works.
+
+## Addendum ~17:4xZ -- the YCharts trust-token fallback, probed on Andrew's ~17:4xZ ask ("try the ycharts trust token as a fallback, i want to see if it works and the turnaround")
+
+The probe ran from dell2 at 17:47:08Z, through the deployed `ycharts-market-data-pull` Lambda's own client (`ycharts_client.py`,
+downloaded from the live function, LastModified 2026-05-22), called locally. That client reads stored session cookies and makes plain
+HTTPS GETs to YCharts' internal chart endpoints. No browser was used and nothing was written. Script and JSON are in the session
+scratchpad (`coverage/yc_probe.py`, `yc_probe.json`).
+
+**Result:**
+
+| Secret | Result |
+|---|---|
+| `ycharts/session/current` (written by `ycharts-session-capture`, last changed 2026-10-05) | not usable by this client: its `cookies` field is a list, the client expects a string (`AttributeError`). Its capture and probe schedules are both DISABLED |
+| `ycharts/credentials` (session cookies, last changed 2026-07-01) | **WORKS**: freshness GET `/indices/table_data` 200 in 0.47 s |
+
+| Call (`GET /charts/fund_data.json`, zoom=max) | HTTP | Round trip | Bytes | Daily points |
+|---|---|---|---|---|
+| DGRO price | 200 | 0.23 s | 35,349 | 1,256 (2021-10-13 to 2026-10-14) |
+| ^SPXTR level | 200 | 0.10 s | 38,585 | 1,256 (2021-10-13 to 2026-10-14) |
+
+**Throughput and timeline:**
+- **One symbol per call.** Each call takes 0.1 to 0.5 s.
+- **Spacing:** the client's measured safe spacing is 2 s between calls (`REQUEST_SPACING_S`).
+- **A request needing N missing symbols takes about 2.3 x N seconds:** about 35 s for the 15 report tickers, about 21 s for the 9 gaps.
+- **Not a single batched call:** `fund_data` takes one security, so it is N calls.
+- **Depth:** zoom=max returned 5 years, not full history (1,256 points). The last point is today (intraday), so cut at T-1.
+
+**Risks:**
+- These are YCharts' internal web endpoints on a shared signed-in session. The client's own header records the ToS framing and a 403
+  "concurrent sign in" eviction mode.
+- The session in `ycharts/credentials` is three months old and nothing refreshes it automatically (the capture schedule is disabled).
+- Whether this call disturbs the resident's YCharts browser session was not measured.
+
+**Comparison with yfinance:** yfinance gave full history (^SP500TR from 1988) for 16 symbols in ONE 2.21 s batched call. YCharts gives
+5 years per symbol, one symbol per call, about 2.3 s each.
