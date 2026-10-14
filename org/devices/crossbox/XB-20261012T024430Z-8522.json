@@ -10,7 +10,7 @@
  "subject": "QUOTE ADVI_COTBKF tier-2 15 funds: 23,340 cells, 15 requests, finish 2026-10-12",
  "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/requests/ADVI_COTBKF-TIER2-15-FUNDS-AS-TRADED-20261012.quote.json",
  "opened_at": "2026-10-12T02:44:30Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-12T02:45:44Z",
   "bus_message_id": "aaf46472-2769-4fad-b569-9695ca1a8b11"
@@ -23,7 +23,7 @@
  "closed": {
   "from_at": "2026-10-14T00:31:40Z",
   "from_by": "2.0.0_SA_COO~Q1",
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-14T00:28:29Z",
+  "to_by": "2.0.0_SA_COO~C2"
  }
 }
