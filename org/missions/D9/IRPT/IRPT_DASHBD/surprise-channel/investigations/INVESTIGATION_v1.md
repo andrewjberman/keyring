@@ -8795,3 +8795,179 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W155-S1 -- aws s3 ls on an empty irpt prefix exits 1 with no output; s3api on the same prefix reads KeyCount 0
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T03:19:27Z",
+  "one_line": "aws s3 ls on the two empty irpt prefixes exited 1 with no listing text, while s3api list-objects-v2 on the same prefixes returned KeyCount 0 and exit 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 1 of DB-b-190: re-read the two prefixes with aws s3 ls and state irpt_prefix_exists for each (expected false).",
+  "world_is": "Both aws s3 ls calls exited 1 with empty output. The same prefixes read through s3api list-objects-v2 returned KeyCount 0, IsTruncated false, exit 0, and a bucket-level s3api call returned prefixes, so the listing path works. irpt_prefix_exists is recorded false from the s3api read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/aws s3 ls s3://opal-data-cot/irpt/ and s3://opal-data-inf/irpt/ run in this worktree: exit 1, empty output (two runs)",
+      "bash .tools/aws s3api list-objects-v2 --bucket opal-data-cot --prefix irpt/ and --bucket opal-data-inf: KeyCount 0, IsTruncated false, exit 0",
+      "bash .tools/aws s3api list-objects-v2 --bucket opal-data-cot --delimiter / (no prefix): CommonPrefixes returned, exit 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S2 -- No IRPT_BCKEND parquet gold sits in the Cottonwood or Inflection buckets; the IR holdings output is one QA JSON date
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T03:19:27Z",
+  "one_line": "The task order says IRPT_BCKEND builds gold for Cottonwood and Inflection; in both buckets the investor-reporting prefix holds only a QA holdings JSON for one date plus a latest pointer, and the parquet gold named holdings, lots and account gains is written by the firm gold pipelines.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Task order, the why and step 2: IRPT_BCKEND already builds gold for these two firms for the holdings page, and the adapter reuses that gold.",
+  "world_is": "Under investor-reporting/qa/holdings/ each bucket holds two keys only: a snapshot for one date and latest.json. The production investor-reporting/holdings prefix is absent in both buckets. The parquet tables named holdings, lots and account gains are written by the firm gold pipelines (data/cot/scripts/gold and data/inf/scripts/gold, for example B_00 canonical holdings, INF_B_00 holdings, INF_B_02 canonical lots and INF_B_03 account gains), not by the investor_reporting runners. The runner's land() writes a gold parquet and a platinum JSON, but no IRPT parquet appears in either bucket. reuses_existing_gold is recorded false for all eight tables.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api list-objects-v2 with prefix investor-reporting/qa/holdings/ in opal-data-cot and opal-data-inf: two keys each, one dated snapshot and latest.json",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@worktree lines 131-132 (PROD_PREFIX investor-reporting/holdings, QA_PREFIX investor-reporting/qa/holdings) and lines 2836-2880 (land writes gold parquet and platinum JSON)",
+      "comp-find canonical/holdings: data/cot/scripts/gold/B_00.canonical_holdings.py and data/inf/scripts/gold/INF_B_00.canonical_holdings.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S3 -- holdings_snapshot.py reads a blackdiamond/cottonwood/ prefix that the Cottonwood bucket does not hold
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T03:19:27Z",
+  "one_line": "holdings_snapshot.py reads Black Diamond model tables under blackdiamond/cottonwood/silver/, a prefix the Cottonwood bucket does not hold; its blackdiamond/ folder holds one object under cot/.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 2: read holdings_snapshot.py's firm_bucket_map and what it reads per firm for these two firms.",
+  "world_is": "holdings_snapshot.py reads blackdiamond/cottonwood/silver/fact_model_assignment, fact_model_blend, fact_model_roster and fact_holdings (its lines 2309-2322 and 2529). The Cottonwood bucket has no blackdiamond/cottonwood/ prefix; blackdiamond/ holds only cot/, and cot/ holds one object. The Black Diamond silver sits at the bucket's top-level silver/ prefix, which holds holdings, transactions, realized, unrealized, allocations and account attributes but no fact_model table. Whether the builder fails loudly on the absent prefix was not measured here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@worktree lines 2309-2322 and 2529 (blackdiamond/cottonwood/silver paths)",
+      "s3api delimiter listings of opal-data-cot at blackdiamond/, blackdiamond/cot/ and silver/ (prefix names only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S4 -- Inflection gold lots carry lot-level cost basis; the PRD's NO_LOTS rule is not confirmed or refuted by this read
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T03:19:27Z",
+  "one_line": "The Inflection bucket holds a firm gold lots prefix with dated and latest open-lot files carrying cost basis, while the PRD says Inflection lots stay NO_LOTS until Eclipse tax lots are shown populated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD C-ADAPTERS: the Inflection adapter's lots are NO_LOTS until Eclipse tax lots are shown populated.",
+  "world_is": "gold/lots in the Inflection bucket holds open-lot rows (lot index, buy date, buy price, original and current units, cost basis, account, ticker, custodian) in a latest file and dated files. The producer is data/inf/scripts/gold/INF_B_02.canonical_lots.py. Whether these lots derive from Eclipse or from Orion was not established, so the NO_LOTS rule can be neither confirmed nor refuted here. The Orion tax realized and unrealized silver are account-level aggregates only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api list-objects-v2 on opal-data-inf gold/lots/ (key names) and a range read of the latest file's schema (column names and types only)",
+      "data/inf/scripts/gold/INF_B_02.canonical_lots.py (producer, read as a file)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S5 -- A top-level LIST of the 49 Financial irpt prefix was run during the premise re-read; no answer uses it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T03:19:27Z",
+  "one_line": "During the premise check, one top-level LIST of the 49 Financial irpt/49financial/ prefix was run, which is another firm's bucket; its names were not used for any Cottonwood or Inflection answer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Bounds: never read another firm's data to answer for a firm (each firm's own bucket only).",
+  "world_is": "A LIST of s3://opal-data-49financial/irpt/49financial/ returned four top-level sub-prefix names (names only, no object read). It was run as a premise check on the irpt prefix pattern. No figure, object or partition of the 49 Financial bucket was read, and no Cottonwood or Inflection answer depends on it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/aws s3 ls s3://opal-data-49financial/irpt/49financial/ run in this worktree at the start of the read: four sub-prefix names, exit 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S6 -- comp-estate has no IRPT chain; the enumeration came from S3 LIST and repository reads
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T03:19:27Z",
+  "one_line": "comp-estate returns SUBJECT_ABSENT for the investor-reporting and irpt resources, and comp-pipescript io on holdings_snapshot.py is an AST map that runs out of the curated DAG.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 2: start from comp-estate --resource <substr> and comp-pipescript io <script>, and enumerate before listing S3.",
+  "world_is": "comp-estate --resource investor-reporting and --resource irpt each report SUBJECT_ABSENT_FROM_CORPUS across 135 chains. --resource opal-data-cot returns one chain (advi-cot). comp-pipescript io on holdings_snapshot.py reports that the script is outside the curated graph and answers from an AST derivation with 3 reads and 12 unresolved I/O sites, which it marks as needing a human. The firm inputs were therefore enumerated by S3 LIST and by reading the repository files.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-estate --resource investor-reporting, --resource irpt and --resource opal-data-cot (this worktree, 2026-10-14)",
+      "comp-pipescript io data/assets/scripts/gold/investor_reporting/holdings_snapshot.py (OUT-OF-GRAPH SCRIPT, AST-derived map)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S7 -- The IR holdings column counts (19 and 17) are carried from the CTO message, not measured
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T03:19:27Z",
+  "one_line": "columns_served for the IR holdings input uses the CTO's counts (Cottonwood 19, Inflection 17); the QA holdings artifacts are JSON, and this read's bounds allow parquet schema reads only, so the counts were not re-measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 2: columns_served uses the IR holdings column counts where that is the input.",
+  "world_is": "The counts are carried as given. The two QA holdings artifacts (one dated snapshot and a latest pointer per firm) were not opened: they are JSON, and the bounds permit LIST and parquet schema reads only. The carried counts are marked as carried in the record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task order step 2 and the CTO message quoted in the task order (Cottonwood 19 of 19, Inflection 17 of 19)",
+      "s3api LIST of investor-reporting/qa/holdings/ in both buckets: key names only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
