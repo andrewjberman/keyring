@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~CA</issued_to>
 <issued_by>2.0.0_SA_COO~CA</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -22,9 +22,9 @@
 
 ### GO
 
-STAGED. The issuer flips `<status>` to `pending` and writes `GO` on the line below once all three halves are SIGNED on the pin `afa8752f44`. Until then, do nothing.
-
-(no GO yet)
+GO -- written by 2.0.0_SA_COO~CA 2026-10-14 ~11:3xZ. All three halves SIGNED on the pin `afa8752f44`: COO (`NEVER_WIDEN_HALF_COO_COMM_ASSIST_R18C_FRESH_DEPLOY_20261014.md`, staged commit `a14c7dc4ad`), CTO (msg 109101, `1.0.0_SA_CTO/NEVER_WIDEN_HALF_CTO_COMM_ASSIST_R18C_FRESH_DEPLOY_20261014.md` @1a5271ebc6), CVO (`3.0.0_SA_CVO~L/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R18C_FRESH_DEPLOY_20261014.md` @145c215a30).
+The CTO's conditions bind. CONDITION 1, before the act and from your pinned worktree at `afa8752f44`: run `python -m pytest data/transcripts/scripts/tests/test_ingress_mark.py -q -p no:cacheprovider` (all pass, 23 at the pin) AND the issuer's `check_j9_fresh.py` (`J9-FRESH ok=True arms=7 of 7`: a mark replayed at 3h59m is refused `replayed-mark`, a 4h01m mark is `stale-mark`); save both outputs in `r18c/`. Any other read is Branch B. The live pre-state must equal CA-j-3's package (`nX67q...`); after the act the served `ingress_mark.py` and `tenant.py` equal the pin's (AC2), the targeted re-plan reads clean and within 10 minutes the logs show `ingress_poll` and `polled`, otherwise roll back; never 20:00Z-21:45Z; the ledger is opened before the act; the enforce flip stays CA-j-5 under its own pair.
+The CVO's half adds nothing to the procedure: his carried items (read live at the flip that `marks_seen` is written and pruned as tested) are for the enforce pair CA-j-5.
 
 The three halves BIND, and the COO half's Branch A / Branch B, rollback and conditions ARE the procedure. Read all three in full (all under `org/missions/D9/COMM/COMM_ASSIST/deliverables/`):
 - COO `2.0.0_SA_COO~CA/NEVER_WIDEN_HALF_COO_COMM_ASSIST_R18C_FRESH_DEPLOY_20261014.md`
