@@ -9174,3 +9174,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
+## IRPT_DASHBD-D2-S26 -- the firm registry's bucket field is not where a firm's irpt gold lives (address() is): a read of the registry field reported Cottonwood and Inflection as having no gold
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S26",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T03:38:13Z",
+  "one_line": "The firm registry's bucket field is not where a firm's irpt gold lives: data/firm_registry.json says opal-data-cot and opal-data-inf, lib/opal_naming.py address() resolves opal-data-cottonwood and opal-data-inflection, and a read of the registry field reported the two firms as having no gold.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Round 101 decomposition section 103 and DB-b-190's first record: s3://opal-data-cot/irpt/ and s3://opal-data-inf/irpt/ list empty, so no C-SHAPE table exists for Cottonwood or Inflection.",
+  "world_is": "The two registry buckets hold no irpt/ prefix, but the gold lives at the address() buckets: Cottonwood's irpt/cottonwood/gold/ holds account_return_daily (3,325 daily partitions from 2013), dim_return_method (method_version 3), holdings and holdings performance tables; Inflection's holds the holdings tables and no account_return_daily. Worker ~154 filed the same mismatch (W154-S2: the registry bucket field and the address() bucket disagree for every firm). Any bucket for a firm's gold, silver or platinum is read from address(), never from the registry's bucket field. The decomposition carries an erratum; DB-b-190 is re-seated on the real buckets.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py address('irpt', firm, 'gold', 'account_return_daily', 'date=...') for the three firms (this seat, 2026-10-14)",
+      "aws s3 ls of s3://opal-data-cottonwood/irpt/cottonwood/gold/ and s3://opal-data-inflection/irpt/inflection/gold/ top-level prefixes (this seat, 2026-10-14)",
+      "IRPT_DASHBD-D2-W154-S2 and W154-S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
