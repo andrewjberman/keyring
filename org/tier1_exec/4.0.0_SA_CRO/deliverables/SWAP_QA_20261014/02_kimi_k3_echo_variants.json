@@ -1,0 +1,31 @@
+{
+ "V3_minimal_echo_thinking_disabled": {
+  "rounds": [
+   {
+    "arg_keys": [
+     "search_result",
+     "usage"
+    ]
+   },
+   {
+    "finish": "tool_calls",
+    "http": 200,
+    "msg_keys": [
+     "content",
+     "role",
+     "tool_calls"
+    ],
+    "s": 6.67
+   },
+   {
+    "err": "{\"error\":{\"message\":\"Invalid request: tokenization failed\",\"type\":\"invalid_request_error\"}}",
+    "http": 400,
+    "s": 0.45
+   }
+  ],
+  "search_calls": 1,
+  "seconds_total": 7.12
+ },
+ "probed_at_utc": "2026-10-14T18:16:56Z",
+ "symbol": "BREIT"
+}
