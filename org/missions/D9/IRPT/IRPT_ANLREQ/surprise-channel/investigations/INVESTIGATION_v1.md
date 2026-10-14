@@ -14392,3 +14392,91 @@
   "notes": "For the CVO or the issuer to establish a full base run (the whole worktree at 83c98f380d). The worker did not patch _contracts/tests."
 }
 ```
+
+
+## IRPT_ANLREQ-D2-W139-S7 -- the commentary route, published as a DECLARED row, adds one failing case the granted folder cannot clear: its response contract is looked up by operation name under docs/contracts/investor-reporting/v1/responses/, outside the grant and outside AC3's routes.json allowance
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W139-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~139",
+  "surfaced_at": "2026-10-14T18:45:04Z",
+  "one_line": "The published row (routes.json:236-247, commit d9013483dc) makes _contracts/tests/test_seam_paired.py::test_control_a_known_good_document_conforms_and_a_known_bad_one_does_not[analysis-request-commentary-pdf] fail; the name is not in r41/baseline_failures.json, so tests_check.py prints TESTS-BAD and AC1 is not met.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-331 AMENDMENT 2 (2): publish the new route as ONE added row modelled on analysis-request-pdf, response contract as that row has it, change no other row. AC1 (AMENDED): the change adds NO failing name to _contracts/tests, _authz/tests, ops/tests or reports/tests. AC3: routes.json only ADDS one route row.",
+  "world_is": "response_contract(operation) reads responses/<operation>.response.schema.json and returns None when absent (test_seam_paired.py:351-357); the control test is parametrized over every DECLARED operation (:854-857), so the new DECLARED row creates a new failing case. No row field can satisfy it: response_schema is never read by the test, and reusing responses/analysis-request-pdf.response.schema.json would fail its operation const for this operation. The fix is a new file responses/analysis-request-commentary-pdf.response.schema.json (outside the grant; AC3 refuses any docs/ path but routes.json) and then the census pin at test_seam_paired.py:589 (len(declared) == len(published) == _denominator.declared) needs _denominator.declared 22 -> 23 and total 24 -> 25 (routes.json:299-300), a second edit to routes.json that AC3 also refuses. The worker set response_schema null with the absence reason AR-y-22 used for analysis-request-original; that is the same gap class as the baseline failure, now for a second route.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/routes.json:236-247 @d9013483dc",
+      "infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py:351-357 @d9013483dc",
+      "infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py:854-857 @d9013483dc",
+      "infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py:589 @d9013483dc",
+      "docs/contracts/investor-reporting/v1/routes.json:299-300 @d9013483dc",
+      "tests_check.py run @d9013483dc: TESTS-BAD 1 failing case(s) not in the baseline: infra.aws.lambda.investor-reporting._contracts.tests.test_seam_paired::test_control_a_known_good_document_conforms_and_a_known_bad_one_does_not[analysis-request-commentary-pdf]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Decision for the issuer (2.0.0_SA_COO~Y2): either grant docs/contracts/investor-reporting/v1/responses/analysis-request-commentary-pdf.response.schema.json plus the _denominator counts (and let AC3 allow them), or accept one new baseline name for the commentary route as the same class as analysis-request-original. The worker did not author a file under docs/, did not edit _denominator and did not change the baseline. The order stays open; the route is not closed until this is decided."
+}
+```
+
+## IRPT_ANLREQ-D2-W139-S8 -- the signer's destination check needs a per-family revision: the served irpt-x10-v1 does not hold YCHARTS_OPAL_REPORT, so the widening adds FAMILY_REVISION beside FAMILIES, a second top-level addition to ops/pdf_link.py that the grant named only as "whatever destination check it performs"
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W139-S8",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~139",
+  "surfaced_at": "2026-10-14T18:45:04Z",
+  "one_line": "Adding YCHARTS_OPAL_REPORT to FAMILIES alone does not make the signer's destination check hold: _default_destination asks the builder under POLICY_REVISION irpt-x10-v1, which refuses the family. The worker added FAMILY_REVISION = {YCHARTS_OPAL_REPORT: irpt-ycdgen-research-v1} and reads it in _default_destination; AC3 admits this as what the destination check needs, and the record states it under widening.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-331 AMENDMENT 2 (1): add ONE family to FAMILIES and make whatever destination check the signer performs for a family hold for it too; NOTHING else changes in the file. AC3: changes FAMILIES by exactly one added family (plus what the destination check needs, nothing else).",
+  "world_is": "pdf_link.py _default_destination (base :54-57) calls reporting_destination under retention.POLICY_REVISION = irpt-x10-v1. That revision's families (infra/logic/registry/reporting_policies.json:19-31) do not include YCHARTS_OPAL_REPORT; that family sits only in irpt-ycdgen-research-v1 (:71). opal_naming._reporting_destination raises ValueError 'firm or family outside reporting policy' for a family the revision does not hold. The writer and the repository retain the family under the research revision (reports/status_installed.py:78-86; reports/resident_installed.py:59-61). The commit adds FAMILY_REVISION (pdf_link.py:58) and _default_destination (:61-67) reads it; every other family keeps irpt-x10-v1. Tests: ops/tests/test_pdf_link.py -- the real default destination signs the commentary key; a wrong table, extension or firm is refused. scope_check.py rule (2) allows exactly FAMILIES, FAMILY_REVISION and _default_destination to differ at module level.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/pdf_link.py:54-57 @83c98f380d",
+      "infra/aws/lambda/investor-reporting/ops/pdf_link.py:58-67 @d9013483dc",
+      "infra/logic/registry/reporting_policies.json:71 @83c98f380d",
+      "lib/opal_naming.py:2634-2649 @83c98f380d (_reporting_destination family check)",
+      "infra/aws/lambda/investor-reporting/reports/status_installed.py:78-86 @83c98f380d",
+      "infra/aws/lambda/investor-reporting/ops/tests/test_pdf_link.py @d9013483dc: 18 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the CVO's L9 read of the widening: the signer now signs the research family's keys at the research revision, and no other family moves. Nothing ships from this order (the route is source only), so the widening is not armed."
+}
+```
+
+## IRPT_ANLREQ-D2-W139-S9 -- the name-level baseline compare cannot see that a baseline failure moved: test_every_declared_route_has_a_response_contract_whose_refs_resolve (a baseline name) now stops at the commentary route, which precedes analysis-request-original in routes.json, and the name-level verdict reads it as unchanged
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W139-S9",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~139",
+  "surfaced_at": "2026-10-14T18:45:04Z",
+  "one_line": "The baseline holds test_every_declared_route_has_a_response_contract_whose_refs_resolve. Its loop over DECLARED rows now fails at analysis-request-commentary-pdf (the row precedes analysis-request-original), a different assertion from the baseline run. AC1 compares names, so the moved failure is invisible to the checker; the failure text is recorded in the route record instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-331 AMENDMENT 2 (3) and AC1: a baseline failure is not this order's to fix; the change adds NO failing name to _contracts/tests.",
+  "world_is": "Baseline (clean full worktree at 83c98f380d, r41/baseline_failures.json): the four _contracts/tests failures are test_seam_paired.py::test_control_a...[analysis-request-original], test_every_declared_route_has_a_response_contract_whose_refs_resolve, test_the_consumer_fixture_source_is_named_and_non_empty and test_the_operation_map_covers_the_consumers_own_denominator. At d9013483dc the response-contract loop fails at analysis-request-commentary-pdf (test_seam_paired.py:543-557) before it reaches analysis-request-original. The checker's verdict is name-level by design (AC1); it does not carry the failure text.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~139/r41/baseline_failures.json (working tree at filing; committed with this row)",
+      "infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py:543-557 @d9013483dc",
+      "docs/contracts/investor-reporting/v1/routes.json:236 @d9013483dc (the commentary row precedes the original row)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. For the issuer when it decides S7: the baseline name is unchanged by this order, but its failing reason is not."
+}
+```
