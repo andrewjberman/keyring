@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-13T21:52:25Z",
+ "written_at": "2026-10-14T02:06:41Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1916,6 +1916,136 @@
     "measured_at": "2026-10-13T21:52:25Z"
    },
    "closed": null
+  },
+  {
+   "id": "sitez-20261013T215753Z-232a",
+   "project": "NFRA_OPLGTW",
+   "subject": "Name one asset manager (work email) to run the FWD-21 harvest test call from their own Claude",
+   "asked_by": "2.0.0_SA_COO~O",
+   "source": "org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md",
+   "orders": [
+    "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-hv-2.harvest-read-grant-and-release.md"
+   ],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-13T21:57:53Z",
+   "kind": "act",
+   "context": "Row NFRA_OPLGTW-Z-W64-S1: no Opal roster names the asset-management team, and the census (OG-hv-1) found 8 Opal principals with none identifiable as an asset manager. FWD-21's proof needs one real asset manager's driven call; it gates OG-hv-2 AC3 only (the tools and grant can ship without it).",
+   "rec": "Andrew names one asset manager and confirms they hold a work Claude account; if they do not, granting that account is his act (direction Z5).",
+   "scope": {
+    "measured_at": "2026-10-13T21:57:53Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_FIRMBKTS placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_DEMQUE placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_STRATID placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "sitez-20261013T233645Z-3b41",
+   "project": "NFRA_MCPORTAL",
+   "subject": "FWD-1 close run with Alyssa: your 10-08 hold waited on r29's opal_asker_query (R54), now LIVE on the gateway (ad2acc0a93). Lift the hold and sit with Alyssa once (narrow, she asks; widen, she asks)?",
+   "asked_by": "2.0.0_SA_COO~MP",
+   "source": "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-c-2.fwd1-close-run.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-13T23:36:45Z",
+   "kind": "act",
+   "context": "MP-c-2 (FWD-1 close run) is staged on G-CLOSE: r29 live, the hold lifted, the sitting done. Measured: SAFE_TOOLS at deployed ad2acc0a93 carries opal_asker_query (destructive_ops.py:34, OG-sf-1 R54). The hold record names r29 and nothing more; the old call 3587 is CLOSED. This gates MP-c-2 and FWD-1's grade.",
+   "rec": "Yes. The content your hold waited on is live, and the sitting is the only act left before the FWD-1 close run. It could pair with the MC Portal sitting (call 21d9) on the same day.",
+   "scope": {
+    "measured_at": "2026-10-13T23:36:45Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_FIRMBKTS placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_DEMQUE placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_STRATID placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/fabric-gitstate.py is on the shared branch (.tools)",
+      ".tools/tests/test_fabric_gitstate_pointer.py is on the shared branch (.tools)",
+      ".tools/tests/test_safe_ec2_deploy_manifest.py is on the shared branch (.tools)",
+      "bucket opal-data-assets is marked shared (infra/logic/registry/tiers.json homes marked shared)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "sitez-20261014T015958Z-a63a",
+   "project": "NFRA_MCPINDEX",
+   "subject": "Acknowledge an R20 declared exception so the catalog can name six existing hyphenated harvest prefixes (amgt/harvest/gold/research-backlog, -continuation, -dossier, -fund-form, -model-typecast, -sector-template) as they are spelled in the bucket",
+   "asked_by": "2.0.0_SA_COO~MI",
+   "source": "org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md",
+   "orders": [
+    "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-9.depth-durable-key-v4-rows.md"
+   ],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T01:59:58Z",
+   "kind": "fork",
+   "context": "List v4 (Andrew call 8) serves row 12b's seven research tables; six are hyphenated in opal-data-harvest. The naming gate (LGIC ENFORCE) refuses those literals as NEW out-of-pattern S3 keys (row Z-W34-S6), so their catalog rows cannot land; c9.AC2 reads 1 of 7. A catalog row only READS the key; renaming the producer's tables is AMGT_HARVST's own migration (R19).",
+   "rec": "YES: an R20 exception (one register row, the six literals, read-only catalog use, PERMANENT until AMGT_HARVST renames them). The rows are written and valid (deliverables/0.9.0_WK_NFRA_MCPINDEX~34/blocked_harvest_rows/), and the precedent is call -5bdf (two legacy BD role names).",
+   "scope": {
+    "measured_at": "2026-10-14T01:59:58Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T02:06:41Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/missions/D9/NFRA/NFRA_MCPINDEX/ledger/CTO_RULING_A63A_LEGACY_ADDRESS_ROWS_NOT_R20_20261014.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
   }
  ]
 }
