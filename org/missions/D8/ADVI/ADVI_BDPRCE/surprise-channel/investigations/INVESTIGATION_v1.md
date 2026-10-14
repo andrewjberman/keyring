@@ -2334,3 +2334,138 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "A lot with no current price yields no ratio at all, and a zero price yields a ratio of zero that would drag the median. The module skips both, which the order does not state. The effect is confined to an asset that also has usable lots; the probe's served-unit counts are computed with the skip in place. Left as built and reported here for the issuer to confirm or reverse."
 }
 ```
+
+## ADVI_BDPRCE-D1-W20-S5 -- MORGAN STANLEY FIN LLC 0% 05/03/2029 does not read per 100 under R1.3: it has no usable served pair, so its 2025-05-28 par Buy is withheld unit_unreadable and the 100.0 expectation is not produced
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S5",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T04:17:03Z",
+  "one_line": "MORGAN STANLEY FIN LLC 0% 05/03/2029 has no usable served pair, so R1.3 reads its served unit as unreadable and withholds its 2025-05-28 par Buy (executed 100.0) instead of reading 100.0 per 100.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RULE_PROBE3.json (this commit) assets entry MORGAN STANLEY FIN LLC 0% 05/03/2029 2025-05-28: kind withheld, served_unit unreadable, served_ratio_median null, withheld reasons unit_unreadable 1, row ratio 100.0",
+      "silver/prices/canonical_prices.parquet (md5 a88a7030f4506ac7e0cdb844382f9d16, read this run): MORGAN transaction_observed rows are 2025-05-28 at 1.0 and 2026-10-05 at 115.995; no other observed row in the window",
+      "C:/dev/wk-bdprce-r2-6-data/tx/2026-10-05.parquet (manifest md5 per PARTITIONS2.csv): one MORGAN row, transaction_type Transfer Out, price 116.0, units 250000.0, market_value -28998750.0; a Transfer Out is excluded by R1 clause 1",
+      "C:/dev/wk-bdprce-r2-7-data/lot_extract.csv (sha256 e7e618d7...a2b50b): no lot carries the name MORGAN STANLEY FIN LLC 0% 05/03/2029 (round-2 surprise W20-S1 measured the same)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1.000 item 3: MORGAN STANLEY FIN LLC 0% 05/03/2029 on 2025-05-28 reads 100.0 (per 100), not 1.0, once served_unit_map reads its unit from the served pairs.",
+  "world_is": "The asset has no usable pair: its one served observed row in the window is 2026-10-05 at 115.995, and the only row of the asset on 2026-10-05 is a Transfer Out, which clause 1 excludes (had it been admitted, its market_value/units of 115.995 would have read per unit, not per 100). Its 2025-05-28 served row reads 1.0, which is per unit, while its 2025-05-28 Buy executes at 100.0 with market_value/units 1.0. So the served series itself reads 1.0 on the expected date, and the unit that the 2026 served row carries (115.995) differs from it. The 2025-05-28 row is withheld unit_unreadable (ratio 100.0 printed). The probe reports the withheld row; nothing is adjusted, and the unit change inside one asset is for the issuer and CTO to rule."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S6 -- No served asset reads per 100 under the ruled 10 percent bands: 807 read per unit, 81 are unreadable, and a per-100 bond served outside 90 to 110 cannot read per 100
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S6",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T04:17:03Z",
+  "one_line": "Of the 888 served assets, served_unit_map reads 0 per100, 807 per_unit and 81 unreadable, so the served-unit count the order's record expects for per100 cannot be produced under the ruled bands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RULE_PROBE3.json served_units {assets 888, per100 0, per_unit 807, unreadable 81}; served_pairs {trade_pairs 12726, lot_pairs 151035, assets_with_no_pair 73}",
+      "measured census of the served_unit_map output this run (scratch, not committed): 815 assets with a median ratio; 807 in 0.9 to 1.1; 1 in 0.5 to 0.9 (ratio not printed here); 3 in 1.1 to 5; 3 in 5 to 50; 1 in 110 to 500 (BECTON DICKINSON & CO COM, ratio 181.4453); 0 in 90 to 110; 73 with no pair",
+      "canonical_prices.parquet (md5 a88a7030f4506ac7e0cdb844382f9d16): MORGAN STANLEY FIN LLC 0% 05/03/2029 transaction_observed 115.995 on 2026-10-05, outside the 90 to 110 per-100 band"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1.000 item 1: within 10 percent of 100 -> per100; within 10 percent of 1 -> per_unit; anything else, or no usable pair -> unreadable, with the median ratio printed beside it. Section 1.00 item 3 expects MORGAN STANLEY FIN LLC 0% 05/03/2029 to read per 100.",
+  "world_is": "No served asset's median ratio falls in the per-100 band, so the per-100 class is empty. The coarse band is the ruled width and is applied unchanged; it cannot read a per-100 series served outside 90 to 110. MORGAN at 115.995 is one such series, and the probe's per100 count of zero follows from the band, not from a data fault. The band and any widening are the issuer's and CTO's call; no number is adjusted in the probe."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S7 -- The 2026 same-date partitions sit under C:/dev/wk-bdprce-r2-6-data/tx/ and r3-14-data/tx/, not under tx_back/, which holds 2020 to 2025 only
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S7",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T04:17:03Z",
+  "one_line": "Section 1.000 item 2 names the cached partitions under C:/dev/wk-bdprce-r2-6-data/tx_back/, but the 2026 partitions for 2026-09-16 to 2026-10-14 are in tx/ (and four in r3-14-data/tx/); the probe read the manifest paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-bdprce-r2-6-data/tx_back/: 1,691 files, last 2025-12-31.parquet; zero names beginning 2026",
+      "C:/dev/wk-bdprce-r2-6-data/tx/: 237 files, 2026-10-12 and 2026-10-13 among them; PARTITIONS2.csv source_path for the other 2026-09-16..2026-10-14 dates (all but 2026-10-02, 10-08, 10-11, 10-14) names this folder",
+      "PARTITIONS2.csv (0.9.0_WK_ADVI_BDPRCE~14) source_path for 2026-10-02, 2026-10-08, 2026-10-11, 2026-10-14 names C:/dev/wk-bdprce-r3-14-data/tx/; the probe checked each local_md5 against the manifest before reading"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1.000 item 2: the same-date trade rows come from the cached partitions under C:/dev/wk-bdprce-r2-6-data/tx_back/.",
+  "world_is": "The cache is split by year: tx_back holds the pre-2026 partitions and the 2026 partitions sit in tx/. Same bytes, other folder. Round-2 row ADVI_BDPRCE-D1-W14-S7 recorded the cache split for the count; this row records the path the order names."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S8 -- The served canonical object was rewritten again after the replay read it: ETag a88a7030 at 04:03:36Z, not the 8eaa29e3 at 00:13:47Z that BP-c-2 cites
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S8",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T04:17:03Z",
+  "one_line": "silver/prices/canonical_prices.parquet now reads ETag a88a7030f4506ac7e0cdb844382f9d16 (LastModified 2026-10-14T04:03:36Z), a third version after the replay's 8eaa29e37c4e651381413b02ca2b43b2 (00:13:47Z); the probe read the current object.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api head-object --bucket opal-data-bd --key silver/prices/canonical_prices.parquet (this run): ETag a88a7030f4506ac7e0cdb844382f9d16, LastModified 2026-10-14T04:03:36+00:00, ContentLength 110077599",
+      "aws s3api get-object of the same key to C:/dev/wk-bdprce-r3-20-data/canonical_prices.parquet: md5 a88a7030f4506ac7e0cdb844382f9d16 (equal to the ETag, single part)",
+      "deliverables/0.9.0_WK_ADVI_BDPRCE~14/REPLAY2.json line 5: the replay read ETag 8eaa29e37c4e651381413b02ca2b43b2, LastModified 2026-10-14T00:13:47Z; the local copies C:/dev/wk-bdprce-r2-6-data/canonical_prices.parquet and r2-7-data copy have md5 0ba9bd51fa175917b8d2813b41d78f5d and match neither"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1.000 item 2 reads the served canonical series; BP-c-2's REPLAY2 record cites the 00:13 object as the served basis.",
+  "world_is": "The served series moved again between the replay's read and this probe. The probe's per-unit and per-100 readings, and every row it draws from the canonical series, rest on the 04:03 object. Whether REPLAY2's figures still hold on that object is not measured here; the probe does not compare the two objects."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S9 -- R1.3 still withholds per-unit-shaped Fixed Income rows as unit_unreadable, now 197 of 203 withheld rows, against 54 of 84 in the first pass (re-read of W20-S2 on the served-pair source)
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S9",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T04:17:03Z",
+  "one_line": "On the served-pair unit source the five probe dates withhold 203 Fixed Income rows as unit_unreadable, 197 of them with a ratio within 1 percent of 1, the shape R1.2 leaves alone as per unit; the cause is the served-unit read, not the clause.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RULE_PROBE3.json census: unit_unreadable_rows per date 2025-05-28 20, 2026-09-16 5, 2026-09-22 12, 2026-10-02 23, 2026-10-09 143 (total 203); per_unit_left 3847; scaled_rows 24",
+      "measured withheld ratios of the 203 rows (scratch, this run): 197 within 1 percent of 1, 1 within 1 percent of 100 (MORGAN 2025-05-28), 5 other",
+      "W20-S2 (first pass, lot-extract source): 84 withheld, 54 near 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1.00 item 2: a Fixed Income row whose unit is unreadable, or whose asset is missing from the map, is withheld unit_unreadable; a row whose ratio is near 1 under per_unit is left alone.",
+  "world_is": "Both clauses are built as written. The withheld rows belong to assets the served map reads unreadable (81 served assets) or does not carry; the record does not split the two. The count is a measured consequence of the unit source and the bands, not a defect against the clauses."
+}
+```
