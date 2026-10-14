@@ -12372,3 +12372,27 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S42",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T20:20:10Z",
+  "one_line": "Issuer's rulings on worker 175's rows W175-S8 (the kind carrier refuses INSUFFICIENT_HISTORY on a member the contract sources for the firm) and W175-S9 (the holdings overview repeats the household return and the contract left those cells ABSENT): the carrier check takes the firm, and contract 0.5.1 sources the four hold.return members like their pvs twins and adds four return equivalence classes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The round-105 kind carrier: a member the contract sources to ABSENT must be NO_SOURCE_YET; the whole-document rule: one figure, one state, across tables; the contract's equivalence map (DB-b-217): members that name one quantity for one entity compare as one.",
+  "world_is": "W175-S8: pvs.since_inception.return_cumulative keeps source ABSENT for every other firm and is sourced for Inflection by firm_sources, so for Inflection the absent kind INSUFFICIENT_HISTORY (the factor series does not reach the opening day) is true and refused only because the carrier check does not know the firm: kind_problems takes an optional firm, as check_sample_shape_k does. W175-S9: the whole-document rule reads 3 disagreements, the household return printed in the portfolio value summary for qtd, ytd and last_12_months while the holdings overview's hold.return cells for the same windows are ABSENT; they are the same household return. Not a plug: the contract (0.5.1, inside order 222's grant now) sources hold.return_<window> exactly like pvs.<window>.return_cumulative (hold.return_mtd stays absent: no pvs twin) and four equivalence classes, one per window, make the equivalence rule catch the next such pair; the DB110-1 check reads both. My order DB-b-217 missed the twins: an issuer error found by the whole-document rule on the first built sample.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 175's report and rows W175-S8 and W175-S9 at wk-IRPT_DASHBD-175 @a8813b093d (counts: 323 cells, 226 absent, 3 conflicts)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r105/p105_round105.py (kind_problems firm) and r110/p110_inflection.py (check_contract hold mirror)",
+      "this seat's dry-run of the amended DB110-1-AC1 on the worker's 0.5.0 tree: FAIL as expected (hold.return_qtd lacks the firm source)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
