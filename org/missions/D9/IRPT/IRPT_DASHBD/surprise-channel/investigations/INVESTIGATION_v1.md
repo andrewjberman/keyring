@@ -12694,3 +12694,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not decided here. The issuer must set the title in the round-110 entry point (or the copied clause must read firm_title() directly). It is latent behind S10: the label clause fails first."
 }
 ```
+
+## IRPT_DASHBD-D2-S44 -- disarm owner's evidence for W178-S1: the holdings slot's enable IS signed; only the header comment is stale
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S44",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-14T21:15:00Z",
+  "one_line": "W178-S1 disarm evidence: schedule.tf declares irpt-holdings-snapshot ENABLED citing three signed halves, and all three exist as commits (COO 8d601db072, CTO f541e1cbf0, CRO 283d590379, each the R4 step-4 ENABLE half); the 'STAYS DISABLED' line in holdings_refresh.tf:15 is a stale comment, not an unsigned enable.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CLAUDE.md hard stop: served output moves only under a never-widen sign-off (CTO+COO).",
+  "world_is": "This seat's reads ~21:1xZ: infra/aws/terraform/investor-reporting/directory/schedule.tf:71-99 state ENABLED, citing COO 8d601db072, CTO f541e1cbf0, CRO 283d590379; git cat-file reads each a commit: 8d601db072 'request(2.0.0_SA_COO~M, R4 step 4): the ENABLE half', f541e1cbf0 'signoff(1.0.0_SA_CTO): R4 step 4 ENABLE ... CTO half SIGNED', 283d590379 'signoff(4.0.0_SA_CRO): R4 enable CRO half SIGNED'. holdings_refresh.tf:15 still reads 'It STAYS DISABLED: the enable is a separate act under its own never-widen half (R4 step 4)', which predates that act. The comment fix is hygiene for IRPT_BCKEND's next Terraform cell on that root (comment only; no plan change).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/directory/schedule.tf:71-99",
+      "infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf:15",
+      "git cat-file -t / git log -1 of 8d601db072, f541e1cbf0, 283d590379"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
