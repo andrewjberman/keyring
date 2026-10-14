@@ -13316,3 +13316,31 @@ name the one known failure instead of silently inheriting it.
   "dismissal_reason": "Resolves NFRA_OPLGTW-Z-S105. The issuer re-pinned step 5 to the v3 tree (A6 @588520a159) and added a HEAD guard; at the act that guard read equal on both limbs (deploy tree HEAD == the signed release_sha, its parent == live deployed_commit), the deploy ran from C:/tmp/og-rel-r30c, and the post-deploy SSM md5 read is 105 of 105 equal to release 90967e39ba with 5 differing against the old base 43088464f5. That negative arm is what rules out the MP-n-4 / MX-r-12 regression the row named. The same guard now sits in OG-ap-17 (A1) and OG-hv-2 (A2), so the class is closed for both orders that would have recurred it."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S107",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~Z",
+  "surfaced_at": "2026-10-14T12:21:00Z",
+  "one_line": "OG-hv-2 grants the harvest read to the WRONG principal: harvest_read.py _client() makes its S3 calls through internal_role.s3_client(), which assumes INTERNAL_READER_ROLE_ARN (set on the host to gateway-global-internal-reader-role, no fallback), but the order's grant file and its Phase B simulate target opal-gateway-role. After Phase B the simulate passes and every served harvest read is AccessDenied.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/harvest_read.py:84-92 (_client: internal_role.s3_client() first; boto3 default only when it returns None)",
+      "infra/aws/ec2/opal-gateway/app/internal_role.py:3-5 (s3_client assumes env INTERNAL_READER_ROLE_ARN; AssumeRole failing raises, NO fallback)",
+      "infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:472 (.env writes INTERNAL_READER_ROLE_ARN=arn:aws:iam::313476888478:role/gateway-global-internal-reader-role)",
+      "iam simulate-principal-policy s3:GetObject, this seat ~12:2xZ 2026-10-14: gateway-global-internal-reader-role on opal-data-harvest/packs/1299_HK_Equity/input_ledger.json implicitDeny, on wsj/harvest/x implicitDeny; opal-gateway-role implicitDeny on both; control gateway-global-internal-reader-role on opal-data-portal-v2/platinum/etfs/positioning_data.json allowed",
+      "task-orders/NFRA_OPLGTW.TO-OG-hv-2.harvest-read-grant-and-release.md step 3 (aws_iam_role_policy on aws_iam_role.gw) and step 5 (simulate opal-gateway-role)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-hv-2 steps 3 and 5: one aws_iam_role_policy on aws_iam_role.gw (opal-gateway-role) grants s3:GetObject/ListBucket on the 24 prefixes, proved by simulate-principal-policy on opal-gateway-role; PRD v2.8 names 'opal-gateway-role's own S3 read' as the widening.",
+  "world_is": "The installed harvest code never uses opal-gateway-role's credentials for S3 while INTERNAL_READER_ROLE_ARN is set, and the deploy script sets it on every release. The principal that must hold the grant is gateway-global-internal-reader-role (opal-gateway-role needs only its existing sts:AssumeRole on it). A grant on opal-gateway-role widens a role the code does not use for this read, and leaves the tools refused. Step 5's simulate grades the wrong principal, so it passes. Step 7's served read (opal_packs_read) is the first check that would see it, after both ledgers have closed and the release is live. The release triggers (/health, tools +2, .env names, md5) do not include a served read. This seat's v2.7 review note ('the gateway role's own S3 reach') is where the PRD's v2.8 wording came from, and it named the role without reading the code's credential path.",
+  "notes": "Remedy is the issuer's (an amendment, no CTO ruling needed): target the policy at the internal reader role (its Terraform resource and builder name read from the module that declares it), simulate THAT role in step 5, and name its read as the widening in the ask. Alternative: change _client() to use the instance role for harvest only, which is a code change and a different widening. Signing the ask as cut would certify a grant that serves nothing."
+}
+```

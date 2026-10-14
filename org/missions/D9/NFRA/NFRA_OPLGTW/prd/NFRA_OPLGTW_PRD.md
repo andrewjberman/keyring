@@ -1037,7 +1037,8 @@ On two notes delivered with the v2.7 signatures:
 - **`2.0.0_SA_COO~ZB` F1** (msg 33767): restores the AMGT brief's "research data only" boundary as a proof arm. An
   asset manager is refused a Schwab and a Black Diamond tool unless Andrew admits it to v2.2's connected set.
 - **`3.0.0_SA_CVO~Z`** (msg 33770): the principal census reads the identity store that admission uses, never the grant
-  store. Also carried for R4's release pair: the gateway role's own S3 read on `opal-data-harvest` is a widening and is
+  store. Also carried for R4's release pair: the internal reader role's S3 read on `opal-data-harvest` (`gateway-global-internal-reader-role`, which
+  `harvest_read.py` assumes; corrected 2026-10-14 per row Z-S107, never `opal-gateway-role`) is a widening and is
   named as one in that pair.
 
 PROOF text changes, so both halves re-open at these bytes.

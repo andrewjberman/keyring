@@ -9335,3 +9335,63 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Owner for the repair: 2.0.0_SA_COO~C, round-14 batch cell -- a `close --side to --by-completion --ruling <committed ruling path>` mode that admits only a ruling under the cluster-lead prefixes, records the ended seat by name and never writes an ack for it."
 }
 ```
+
+## NFRA_CTLPLN-Z-S8 -- six site Z CloudOps lanes died silently (no kill, no reboot, no crash, no low-memory event)
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "0.0.0_AB_MSTR~Z",
+  "surfaced_at": "2026-10-14T12:33Z",
+  "one_line": "Six site Z CloudOps lanes (~MQ, ~ZS, ~ZQ, ~ZW, ~ZT, ~MI) died between 2026-10-13 ~19:00Z and 2026-10-14 ~12:2xZ with no KILL line, no reboot, no crash and no low-memory event; a seat that dies unseen holds open orders nobody works.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~Z (names who reads the cause; MSTR~Z respawns on each death it sees)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "process truth 2026-10-14T12:2xZ: 12 claude.exe on site Z, none carrying ~ZQ, ~ZW, ~ZT or 0.7.0_AE_CloudOps~MI; the broker list_agents agreed (none LIVE)",
+      "org/mcp/agent-spawn-audit.log 2026-10-14T11-12Z: no KILL / FORCE-KILL line for any of the six; the only kills are the model-policy relaunches of COO ~MI, ~MP and ~O (and a KILL-NOOP for ~MQ, already dead); last boot 2026-10-13 18:57Z",
+      "Windows event logs since 2026-10-13T19:00Z: Application Error/Hang (1000/1002/1026) naming claude|node = 0; Resource-Exhaustion-Detector = 0; positive control: the logs hold 790 Application and 441 System events and the 1000 query returns 1 event for another app, so the zeros are reads, not blindness",
+      "COO~ZB msg 34053: ~ZS's last audit line 00:58Z, re-seated 12:24Z; ~ZQ broker summary read 'watcher re-armed 11:37Z' before it died"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A spawned seat lives until it is killed (audited) or its box reboots; a death is visible to the manager.",
+  "world_is": "Six seats ended with neither: no kill, no reboot, no OS-recorded crash or memory event. The cause is unread: a clean session exit (a turn ending the process, an /exit, a window closed) is the remaining candidate and leaves none of the three traces read here. seat-liveness read dead=0 throughout because these seats' orders are placed on another box or were not in its view.",
+  "notes": "Cause owed (CTO~Z msg 34055): a process exit code, the session transcript's last lines per lane, or a window-close trace. Respawned on the model policy: ~MQ, ~ZQ, ~ZW, ~MI (MSTR~Z) and ~ZS (COO~ZB); ~ZT holds no open order and stays down."
+}
+```
+
+## NFRA_CTLPLN-Z-S9 -- correction and cause read for Z-S8: spawned seats persist no main transcript
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "0.0.0_AB_MSTR~Z",
+  "surfaced_at": "2026-10-14T12:45Z",
+  "one_line": "Correction and cause read for NFRA_CTLPLN-Z-S8: disarm_owner is 0.0.0_AB_MSTR~Z (CTO~Z msg 34061), and the clean-exit cause cannot be read from a transcript because spawned site Z seats persist no main session transcript.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.0.0_AB_MSTR~Z",
+  "adjudicates": [
+    "NFRA_CTLPLN-Z-S8"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~Z msg 34061: re-point Z-S8's disarm_owner to 0.0.0_AB_MSTR~Z (seat liveness and the spawn audit are infrastructure, rule 32); the disarm is the re-seat of the order-holding lanes, done 12:2xZ",
+      "C:/Users/Opal Bloomberg/.claude/projects/C--Users-Opal-Bloomberg-Desktop-ajb-workspace/ at 12:4xZ: the 3 Andrew-launched sessions have <uuid>.jsonl files (bada2037, d926c932, 861ca766); spawned sessions appear only as <uuid>/ directories holding tool-results/ (e.g. f3f539fc-... 10-13 20:20Z, b0503755-... 10-14 12:25Z) with no main .jsonl",
+      "all 15 claude.exe run as user Opal Bloomberg (Win32_Process GetOwner), so this is not a second profile; C:/Users/Opal_Agent/.claude/projects exists but is access-denied (UNREAD, not absent)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A dead spawned seat's last transcript lines say why it ended (CTO~Z msg 34061 names this read).",
+  "world_is": "No main transcript is persisted for spawned seats on this box, so the read cannot be done here; the same fact is why model-census.py cannot see spawned sessions. The cause needs a different trace: a process-exit hook, or the spawn window's console.",
+  "notes": "Z-S8 stands as written (rows are append-only); this row carries the re-point and the cause read."
+}
+```

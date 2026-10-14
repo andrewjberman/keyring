@@ -142,7 +142,37 @@ def main():
         print("%-10s %-34s %-16s %-18s %-8s %s | %s" % (r[0], r[1][:34], r[2], r[3], r[5], r[4], r[6]))
     print("DENOMINATOR: %d session transcript(s) in window, %d with no serial file, %d subagent transcript(s) read; "
           "%d MISMATCH" % (len(transcripts), no_serial, sub_read, mism))
+    procs = live_claude_processes()
+    if procs is not None:
+        # A spawned seat can run with no main transcript on disk (laptop and site Z, 2026-10-14), so the transcript count
+        # undercounts live seats. The command line is the second instrument: it shows the REQUESTED model, not the served one.
+        for pid, created, model in procs:
+            print("PROCESS    pid=%-7s started=%s requested_model=%s (claim: requested, from the command line)" % (
+                pid, created, model or "(no --model flag: claude default)"))
+        print("PROCESS-DENOMINATOR: %d live claude.exe process(es) vs %d session transcript(s) in window" % (
+            len(procs), len(transcripts)))
     return 1 if mism else 0
+
+
+def live_claude_processes():
+    """(pid, created, --model value) per live claude.exe on Windows; None where the process table cannot be read."""
+    if sys.platform != "win32":
+        return None
+    ps = ("Get-CimInstance Win32_Process -Filter \"Name='claude.exe'\" | ForEach-Object { "
+          "'{0}|{1}|{2}' -f $_.ProcessId, $_.CreationDate.ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ'), $_.CommandLine }")
+    try:
+        out = subprocess.run(["powershell", "-NoProfile", "-Command", ps], capture_output=True, text=True,
+                             timeout=60).stdout
+    except (OSError, subprocess.SubprocessError):
+        return None
+    rows = []
+    for line in out.splitlines():
+        parts = line.split("|", 2)
+        if len(parts) != 3:
+            continue
+        m = re.search(r"--model[ =]+\"?([^\s\"]+)", parts[2])
+        rows.append((parts[0], parts[1], m.group(1) if m else ""))
+    return rows
 
 
 if __name__ == "__main__":
