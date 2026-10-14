@@ -333,3 +333,9 @@ Correction: C-S369 carries surfaced_at 23:42:00Z; the clock read 23:40:30Z befor
 | ADVI_COTBKF round 85 (last before the park) | L9: CB85cg1-AC3 PASS; I recounted the two committed files (860 rows, 460/13/387, all keys raw; 41,826 windows from 2013-04-08). ADJUDICATION_v61 (C-S68) dismisses 9 incl. W164-S1..S3 (disarmed by D2-S136). REMEDIATION_v51: W168-S2 ARMED to COO~C2: trust round 85's side of the 6 window DIFFs; its build scripts sit in gitignored scratch, so commit and reproduce them byte for byte before the park. Slug sent | 239f84375d |
 
 Correction: the round-85 grade file header says ~00:3xZ; it was written at about 00:25Z.
+
+## Addendum, 2026-10-14 00:42Z to 00:46Z (msg 7384)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_DASHBD round 97 | ADJUDICATION_v59 (C-S70): contract 0.3.0 states the filled-report shape; I re-ran DB94-1-AC1, DB94-6-AC1, DB97-1-AC1 from their task orders: all PASS. 3 dismissed (W148-S1 ARMED: hazard gone on my re-run). Round 96 rows (W146, W147) wait for its packet. Slug sent | d506a4a6f6 |
