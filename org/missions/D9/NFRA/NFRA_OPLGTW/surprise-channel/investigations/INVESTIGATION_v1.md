@@ -15020,3 +15020,31 @@ name the one known failure instead of silently inheriting it.
   "notes": "Inert for the gateway today (no rival tool exists). The G5r spec makes the rival tools state a fund's latest report from canonical_shape's newest part, never from holdings_coverage or the manifest, until the ETFS_RIVALS pipeline owner (routed by the CTO) orders coverage after every canonical batch. The published page understating freshness is that pipeline's defect, not the gateway's."
 }
 ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S125",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T19:27:34Z",
+    "one_line": "CITES Z-W72-S2 and Z-W79-S3, which said the deploy ships app code and the trading calendar MAY fall back: it DOES. Measured on the live host -- lib/ is absent from /opt/opal-gateway entirely, lib/trading_calendar.py is absent, and the service interpreter answers ModuleNotFoundError: No module named 'lib'. So every G1 typed tool's trading_days_behind_t1 takes its guarded fallback on every call, and any freshness these tools state is NOT trading-day based.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM on i-07dccb1615503ac99 at 2026-10-14T19:2xZ: 'lib/ dir on the host: ABSENT', 'lib/trading_calendar.py: ABSENT', 'files under lib/ on the host: 0'",
+        "the SERVICE interpreter, not a bare python: /opt/opal-gateway/.venv/bin/python with sys.path including /opt/opal-gateway -> 'ModuleNotFoundError: No module named lib'",
+        "the repo's own copy exists and is current (lib/trading_calendar.py md5 6596e52fa01f2bee1160863c4e39318a), so this is a SHIPPING gap and not a missing file",
+        "app/harvest_identity.py:108-127: the import is lazy and guarded -- when it fails the tool returns (None, 'lib/trading_calendar.py is not importable on this runtime, so no trading-day lag is measured'), so the absence is REPORTED and never guessed",
+        "the deploy uploads the gateway app directory as opal-gateway-<sha>.tar.gz; lib/ is in the release WORKTREE's sparse cone but not in what the deploy ships, which is why the host has never had it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A2 of OG-ap-18: 'lib/trading_calendar.py is imported by the tools: confirm in the served read that it reaches the installed code (rows Z-W72-S2, Z-W79-S3 say the deploy ships app code and the calendar may fall back)'. CLAUDE.md also holds the calendar as the ONE frontier for any staleness claim.",
+    "world_is": "It does not reach the installed code, and this was answerable in Phase A rather than at the served read: the host has no lib/ at all. The code's guard means nothing breaks and nothing lies -- the field is absent with a stated reason instead of being filled with a wall-clock guess, which is the right failure. What the halves are signing is therefore a set of tools whose trading-day lag field never populates as deployed today. The practical consequence is narrow but real: a reader who asks one of these tools how fresh a security's coverage is gets an absent_reason, not a number, and must go to the pipeline's own freshness surface instead.",
+    "notes": "INERT: no act is owed inside OG-ap-18, the tools are safe to ship, and the ask states the limitation plainly in its own section rather than burying it. The remedy is a deploy-cone change -- ship lib/ (or at least lib/trading_calendar.py) with the gateway artifact -- which belongs to whoever owns deploy-to-ec2.sh's upload set, not to this applier order. Worth noting for whoever takes it: the guard makes the gap SILENT in the sense that no error is raised, so nobody would have found it from logs; it was found by asking the host whether the file exists."
+  }
+  ```
