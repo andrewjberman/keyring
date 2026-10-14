@@ -10784,3 +10784,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-S29 -- disarm evidence from the owner for W158-S1, W158-S4 and W158-S6 (round-105 analysis)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S29",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-14T12:15:00Z",
+  "one_line": "Disarm owner's evidence: W158-S1 met by contract 0.4.1 (percent points, unit_scale on 46 members); W158-S6 met by the render cell (the before-fee line prints only while its member is present); W158-S4 disarmed by a release gate (no report reaches a client until the absent form carries its kind and the view reads it) and remedied by the round-105 cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CLAUDE.md section 2: an ARMED hazard disarms same-turn through the row's disarm_owner; this seat is disarm_owner of the three W158 rows (CVO slug msg 7588).",
+  "world_is": "W158-S1: org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json reads contract_version 0.4.1, 'percent points' 2 hits, unit_scale on 46 members, and 'decimal fraction' only inside the 0.4.0 lineage entry (this seat's read 12:1xZ), so a component built from the contract text no longer multiplies. W158-S6: DB-b-197 prints the before-fee line only while its member is present and carries one overview note naming Fee basis (drain record IRPT_DASHBD_ROUND104_B_DRAIN_END_20261014.md; portal branch wk-IRPT_DASHBD-162-portal, LOCAL). W158-S4: the keyword inference (absentKindOf) still exists, but no report reaches a client: the renders sit in the private evidence folder and the report tab is on LOCAL worker branches only. The round-105 analysis makes the absent-form kind and the disclosure page release gates, and cuts the cell that writes and reads the kind (Carrier A).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@d939d56299 (contract_version 0.4.1; counts read by this seat)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/IRPT_DASHBD_ROUND104_B_DRAIN_END_20261014.md@3785ba739a (DB-b-197, DB-b-198)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_ROUND_105_20261014.md (the release gates and the kind ruling)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
