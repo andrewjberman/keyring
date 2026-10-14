@@ -100,7 +100,7 @@ round-2 analysis ruling 1: "the served page reads `no` for laptop and `not recor
 write half waits on F2. Check dry-run at base 9be88c9134: AC1 FAIL (run file absent). The checker's pass arm is the equality of
 independently read lists, the MP-z-6 method. Spawned when MP-pc-5 drains.
 
-<status>staged</status>
+<status>pending</status>
 <round>1</round>
 <workstream>PC</workstream>
 <slot>~24</slot>
