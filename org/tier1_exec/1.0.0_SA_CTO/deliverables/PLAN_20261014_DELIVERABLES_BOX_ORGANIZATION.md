@@ -20,7 +20,18 @@ dell2 9, site Z 3, laptop 3.
 Both items with the nearest dates, P2 (Oct 24) and P1 (Nov 15), sit on **dell2 alone**. dell2 also carries ADVI_BILLING and
 NFRA_OPSWKF. dell1 and the laptop hold mostly secondary work. If boxes stay as they are, dell2 is the bottleneck for both dates.
 
-## 3. Recommended organization (box moves need Andrew's yes; the rest is in the cluster lead's lane)
+## 3. Organization (as ANSWERED by Andrew ~18:3xZ-18:4xZ, `ANDREW_DIRECT_20261014_183xZ_FIVE_CALLS_ANSWERED_AND_BD_ASOF_CITATION.md`)
+
+**Andrew's answers override the recommendations below where they differ:**
+- **No box moves.** dell2 keeps all three Ticket Center channels ("it's all so connected, and DELL2 has the capacity").
+- **No dell1 seat goes to P1.** dell1 drives ADVI_FIRMBKTS through completion, ongoing testing and decommission, so that
+  ADVI is ready with the canonical pipeline and bucket design.
+- **dell1 is wholly ADVI/MDPF, plus overflow AMGT** (~18:5xZ, `ANDREW_DIRECT_20261014_185xZ_DELL1_WHOLLY_ADVI_MDPF_AMGT.md`):
+  ADVI_COTBKF and ADVI_BILLING move DELL2 -> DELL1 (BILLING at its next round boundary). ETFS_RIVALS' home is asked of him.
+- **The laptop takes none of the four items** and keeps driving COMM_ASSIST and NFRA_CTLPLN at the normal pace ("does not
+  lose us any ground").
+
+The original recommendations follow for the record.
 
 **dell2: P2 to Oct 24, then P1.**
 - IRPT_ANLREQ stays the lead. Its remaining blockers are Andrew's: `f61b` (the PROD execution ID), and approvals `c8c3` and
@@ -74,7 +85,7 @@ NFRA_OPSWKF. dell1 and the laptop hold mostly secondary work. If boxes stay as t
 
 ## 5. What waits on Andrew
 
-1. Yes or no on the two box moves: TCKT_VNEXT's trade and meeting channels to the laptop, and a dell1 seat lent to P1.
-2. The P2 blockers still in his queue: `f61b` and `1f3e` (dell2). `c8c3` was approved by Andrew, per 1.0.0_SA_CTO~DELL2.
+1. ANSWERED ~18:3xZ: no box moves (see section 3).
+2. The P2 blocker still in his queue: `f61b` (dell2). `c8c3` and `1f3e` are approved.
 3. The trade request form (arrives in about a week, per his note).
 4. Jeanette's mailbox spelling, to confirm (the transcript reads "Jeanette at opalinvest.com").

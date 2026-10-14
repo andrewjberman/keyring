@@ -14259,3 +14259,109 @@
 ```
 
 ---
+
+## IRPT_ANLREQ-D2-W142-S1 -- The TO names infra/aws/lambda/investor-reporting/ycharts/reports/resident_installed.py
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W142-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~142",
+  "surfaced_at": "2026-10-14T18:29:00Z",
+  "one_line": "The TO names infra/aws/lambda/investor-reporting/ycharts/reports/resident_installed.py; the file is at infra/aws/lambda/investor-reporting/reports/resident_installed.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-335 Q4 names infra/aws/lambda/investor-reporting/ycharts/reports/resident_installed.py, the packager block about line 101.",
+  "world_is": "git ls-files at base bf351147d2 lists infra/aws/lambda/investor-reporting/reports/resident_installed.py and no ycharts/reports path. The packager key check is at lines 98-104 (the key test at line 101). The record cites the real path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py:101 @bf351147d2",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py:98-104 @bf351147d2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Path premise only; no action taken. The record r41/PACKAGER_DOOR_READ.json cites the real path."
+}
+```
+
+## IRPT_ANLREQ-D2-W142-S2 -- lambda_function.py:119 and CHANGELOG.json:368 say package_ticket firm-binds the packager by its PROFILE row al
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W142-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~142",
+  "surfaced_at": "2026-10-14T18:29:00Z",
+  "one_line": "lambda_function.py:119 and CHANGELOG.json:368 say package_ticket firm-binds the packager by its PROFILE row allowedFirmIds list; the code reads no PROFILE row on that path (lines 84 and 1629 are right).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "lambda_function.py:119 (comment): package_ticket also firm-binds it by that subject's own PROFILE row allowedFirmIds LIST.",
+  "world_is": "package_ticket (lambda_function.py:1626-1727) binds the firm to PACKAGE_ALLOWED_FIRMS (lines 1666-1667) and calls neither _profile_scope nor _resolve_scope. The callers of _resolve_scope are other routes for INTERNAL callers (lines 1224, 1284, 1407, 1432, 1497, 1557, 1798, 1839). The env-list rule is what runs.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:119 @bf351147d2",
+      "infra/aws/lambda/ticket_center/lambda_function.py:1666-1667 @bf351147d2",
+      "infra/aws/terraform/ticket-center/CHANGELOG.json:368 @bf351147d2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Measured by reading source. A doc-versus-code drift in the ticket service comment and changelog; the CVO decides whether a later build cell corrects them. No action taken."
+}
+```
+
+## IRPT_ANLREQ-D2-W142-S3 -- The packager test fixture names the secret svc-irpt-packager/token
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W142-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~142",
+  "surfaced_at": "2026-10-14T18:29:00Z",
+  "one_line": "The packager test fixture names the secret svc-irpt-packager/token; the resident's IAM grant admits only the ARN prefix opal/ticketing/svc-irpt-packager-??????.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "test_opal_packager_request_id.py:35 CONFIG secret_name 'svc-irpt-packager/token' stands as a packager binding value in the fixture.",
+  "world_is": "resident.tf:171 grants secretsmanager:GetSecretValue only on opal/ticketing/svc-irpt-packager-??????. The fixture name matches no grant. It is a test value; no live binding was read, so nothing is wrong today. A binding copied from the fixture would be denied by the grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_packager_request_id.py:35 @bf351147d2",
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf:171 @bf351147d2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Naming drift between a fixture and the IAM grant. No action taken; a binding author must use the grant's secret name."
+}
+```
+
+## IRPT_ANLREQ-D2-W142-S4 -- The packager secret opal/ticketing/svc-irpt-packager has no tracked declaration: no Terraform secret resource 
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W142-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~142",
+  "surfaced_at": "2026-10-14T18:29:00Z",
+  "one_line": "The packager secret opal/ticketing/svc-irpt-packager has no tracked declaration: no Terraform secret resource and no vendor-secrets census entry, unlike the svc-analyst-intake and svc-commentary service tokens.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-READ-R31 (AQ2) reports the secret exists, created 2026-10-11. The registry row at name_rulings.json:913 names it as the IRPT_ANLREQ packager mint.",
+  "world_is": "A search of infra/aws/terraform for svc-irpt-packager returned only resident.tf:171, the ticket-center main.tf:299 comment and the CHANGELOG. No aws_secretsmanager_secret block names it. derive_vendor_secrets.py lists opal/ticketing/svc-analyst-intake (line 182) and opal/ticketing/svc-commentary (line 183) but not the packager secret. The existence and creation date are AQ2's read and were not re-measured here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf:171 @bf351147d2",
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/derive_vendor_secrets.py:183 @bf351147d2",
+      "infra/logic/registry/name_rulings.json:913 @bf351147d2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Bears on the TF_IMPORT question the CTO's packager pair decides. Not an alarm; no action taken by this worker."
+}
+```
