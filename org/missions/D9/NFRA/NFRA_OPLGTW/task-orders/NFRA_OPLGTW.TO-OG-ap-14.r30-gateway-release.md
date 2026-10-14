@@ -220,7 +220,7 @@ commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing
     BG seat's own exercise) remains AC3, after r30 AND OG-mg-1.
   - Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <slot>~AE</slot>
 <fabric>site-z</fabric>

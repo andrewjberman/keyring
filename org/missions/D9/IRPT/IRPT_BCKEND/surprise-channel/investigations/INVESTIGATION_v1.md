@@ -34156,3 +34156,106 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The sizes are consistent with one row per publish except the 2026-09-30 version. The index body was not read in this cell, so the cause is not stated. The row is an observation for the release's after-read; it does not change the replay's blast radius, which was derived from the code and the current index version."
 }
 ```
+
+## IRPT_BCKEND-D2-W380-S1 -- the pinned replay of inflection at 2026-10-12 is dated 2026-10-09, so both publish gates refuse on source_frontier_older where the packet records PUBLISHED (IB-pr-533)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W380-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~380",
+  "surfaced_at": "2026-10-14T12:00:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Pinned replay of inflection at 2026-10-12 gives a candidate dated 2026-10-09 (the prior trading day of its 2026-10-12 custody partition), so both publish gates REFUSE on source_frontier_older; the packet's PUBLISHED did not reproduce at that pin, while its mover counts did.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN A and RUN B of release_count_harness.py at the 2026-10-12 pin, inflection: business_date_built 2026-10-09; gate_before and gate_after REFUSED with conditions [source_frontier_older]; identical in RUN B (run JSON in scratch, outside the tree, deleted at the end of the order)",
+      "data/assets/scripts/gold/investor_reporting/holdings_inf.py@201e7e9c273e8274c0a4ea1ad1aa0b205f69a079 build_inf_meshed: valuation_date = hs.tcal.prev_trading_day(custody_date) (the request date is the snapshot key, the valuation date is the prior trading day)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~379/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-532.md@eb3d289c9f (the packet's inflection candidate, 2026-10-12, built at the 2026-10-14 cutoff, PUBLISHED before and after)"
+    ]
+  },
+  "spec_asserts": "The packet's stop rule compares the release counts and the gate outcome with the packet at the release; IB-pr-533 pins a candidate's source date as an input so that two runs over the same pin are a deterministic comparison.",
+  "world_is": "The packet's inflection candidate was built at the 2026-10-14 cutoff, when the custody partition read 2026-10-13 (by the valuation rule a 2026-10-12 business date implies a 2026-10-13 custody partition). A pin of 2026-10-12 selects the 2026-10-12 custody partition and a 2026-10-09 valuation, one trading day behind the served 2026-10-12 frontier, so the gate refuses. The mover counts (774 canonical, 67 fallback) match the packet at this pin, the gate does not. A release re-measure that pins 2026-10-12 for inflection will read REFUSED where the packet reads PUBLISHED; the pin must name the custody date the packet used. Nothing was changed here; the gate works as written. Disposition sits with the packet owner."
+}
+```
+
+## IRPT_BCKEND-D2-W380-S2 -- inflection's build at the 2026-10-14 cutoff refused in one reading because its accounts partition for 2026-10-14 landed before its positions partition (the producer's own custody-date guard)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W380-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~380",
+  "surfaced_at": "2026-10-14T12:00:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "At the 2026-10-14 cutoff inflection's build refused in one reading ('positions and accounts snapshots are not the same custody date'): the accounts partition dated 2026-10-14 existed while positions were still 2026-10-13; about twenty minutes later both read 2026-10-14 and the build read 2026-10-13.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN A date check of release_count_harness.py (completed about 11:24Z): newest_candidate_dates inflection ERROR:InflectionRefused; RUN B date check (completed about 11:49Z): inflection 2026-10-13 (scratch run JSON, outside the tree)",
+      "read-only partition read with the producer's own helpers (list and get only, scratch script): at the first read as_of 2026-10-14 gave accounts_partition 2026-10-14 and positions_source 2026-10-13; at the second read, about 11:44Z, both were 2026-10-14",
+      "data/assets/scripts/gold/investor_reporting/holdings_inf.py@201e7e9c273e8274c0a4ea1ad1aa0b205f69a079 load_inf_sources, lines 141-150: refuses when positions_date != accounts_date"
+    ]
+  },
+  "spec_asserts": "The first scheduled fire (14:15Z on 2026-10-14) publishes each firm's previous trading day; IB-pr-533 AC2 requires a newest candidate date for each firm in the first-fire check.",
+  "world_is": "The source partitions of one custody day can land in two steps, accounts first and positions later. A build whose cutoff falls between the two steps refuses inflection with the producer's own guard, which is the designed refusal (no wrong date is published). A refused build yields no clocks.business_date, so the first-fire check records no date for that firm while the window is open. Whether a scheduled fire inside that window misses inflection for the day was not measured, and the recurrence was not measured (one reading refused, one did not)."
+}
+```
+
+## IRPT_BCKEND-D2-W380-S3 -- at the 2026-10-14 cutoff cottonwood's newest candidate is dated 2026-10-12, one trading day short of t_minus_1 2026-10-13 (IB-pr-533 first-fire check)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W380-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~380",
+  "surfaced_at": "2026-10-14T12:00:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "At the 2026-10-14 cutoff cottonwood's newest candidate is dated 2026-10-12, one trading day short of t_minus_1 2026-10-13, so the first-fire equality reads false for cottonwood in both readings.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN A and RUN B date checks of release_count_harness.py for cottonwood at cutoff 2026-10-14: newest candidate 2026-10-12 in both (scratch run JSON, outside the tree)",
+      "lib/trading_calendar.py@201e7e9c273e8274c0a4ea1ad1aa0b205f69a079 prev_trading_day(2026-10-14) = 2026-10-13 (the hardcoded NYSE fallback answered; pandas_market_calendars is absent on this device)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~379/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-532.md@eb3d289c9f: the packet's premise that the cottonwood served index latest date is 2026-10-08"
+    ]
+  },
+  "spec_asserts": "Everything is T-1 unless declared (CLAUDE.md trading-calendar rule); the CTO's condition 8 as cited in row IRPT_BCKEND-D2-S167 of this project: each firm's first scheduled fire publishes the previous trading day.",
+  "world_is": "Cottonwood's newest source partition at the cutoff is dated 2026-10-12, so its candidate is one trading day behind T-1, while its served index (per the packet) is at 2026-10-08. The first-fire equality for cottonwood therefore reads not-yet-equal at this measurement. This reading does not say whether the 2026-10-13 cottonwood partition has not landed or has not been produced."
+}
+```
+
+## IRPT_BCKEND-D2-S168 -- Dispositions on workers 380 and 381's rows after IB-pr-533 and IB-pr-534 merged (@866f3e94d6, @40201b2539); the release re-measure is deterministic, the 2026-10-09 fire was not killed on the SSM window
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S168",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T12:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on workers 380 and 381's rows (D2-W380-S1 to S3, D2-W381-S1 to S5) after IB-pr-533 (@866f3e94d6) and IB-pr-534 (@40201b2539) merged: the release re-measure is deterministic, Inflection needs its own pin, the 2026-10-09 fire died at about 310 s of a 3600 s window, and the 2026-10-08 replay is refused by source_frontier_older.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB192-1 AC1 to AC3 and IB192-2 AC1 to AC3 on the worker worktrees before the merges: all PASS rc 0; both proof instances VALID; round-close-check --workstream ~P MAY-CLOSE (orders=2)",
+      "I read both replay/timeout records and the rows' world_is text; the drain-end packet is deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUND_192_P_DRAIN_END_20261014.md"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27).",
+  "world_is": "DISPOSITIONS. W380-S1 (Inflection pinned at 2026-10-12 builds a 2026-10-09 candidate and the gate refuses on source_frontier_older where the packet reads PUBLISHED): INERT, the gate works as written; the release re-measure pins Inflection to the custody date the packet used, and I did not re-run it at that pin. W380-S2 (a build whose cutoff falls between a custody day's accounts and positions partitions refuses Inflection by the producer's own guard): INERT, the designed refusal; whether a scheduled fire inside that window misses the day was not measured. W380-S3 (Cottonwood's newest partition is 2026-10-12 at the cutoff, one trading day behind T-1): INERT, whether the 2026-10-13 partition has landed was not read. W381-S1 (the 2026-10-09 fire was killed about 310 s into a 3600 s window; no fire of the 11 reached it): INERT; it CORRECTS the round-191 packet and D2-S164's wording, which named the SSM timeout as the cause, and the sender of the exit-137 kill is unread. W381-S2 (the 2026-10-08 replay is refused by source_frontier_older): INERT, the route is the CTO's ruling. W381-S3 (publish() does not assert that the landed date equals as_of): INERT, any bypass route must carry the assertion. W381-S4 (the gap is a failed run, the source is intact): INERT, corrects the D2-S165 premise. W381-S5 (the index version size is flat on 2026-09-30): INERT, the index body was not read. The client-data check ABSENT on dell2 was logged by both workers: it stays ARMED under W374-S1 and W376-S1 with the box manager."
+}
+```

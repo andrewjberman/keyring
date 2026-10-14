@@ -32,7 +32,7 @@ Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: i
 ## 2. BOUNDS
 
 1. One feature only, exactly the approved list; never `--features` anything else, never live DEV whole, never a client-facing page.
-2. The push is PROD in `Opal-Capital/portal` by `/prod-deploy`; never DEV, never a force push, never a rebase.
+2. The push is PROD in `Opal-Capital/portal` by `/prod-deploy`; never DEV, never a force push, never a rebase. Portal DEV is written only by `.tools/portal-merge-forward.sh cand/<box>/<slug>` on an approved row (CLAUDE.md Portal section, `fcdfc34843`, Andrew-direct ~11:4xZ 2026-10-14; relayed by MSTR~DELL1 msg 5493): the merge-forward in step 1 is that script's run by the box manager, never yours.
 3. Edit no product file. The receipt and the deploy ledger entry the skill opens are the only things you write.
 
 ## 3. SURFACES

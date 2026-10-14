@@ -285,3 +285,13 @@ The commentary Lambda's apply is held only by its own never-widen pair.
 **ENDPOINT is unchanged.** This is a contract wording change that follows the law. Per the proportionate sign-off rule, it re-opens no half.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 2 (2026-10-14 ~12:0xZ, `1.0.0_SA_CTO~DELL2`): C-ABSORB pointer -- FWD-10 and FWD-11 are issued from IRPT_ANLREQ; FWD-1..9 PARK
+
+FWD-10 and FWD-11 (the commentary drafter, `data/transcripts/scripts/commentary/*`, `commentary.tf`) are owned and issued by
+IRPT_ANLREQ under its C-ABSORB (c), workstream `2.0.0_SA_COO~T2` (`org/missions/D9/IRPT/IRPT_ANLREQ/prd/IRPT_ANLREQ_PRD.md:103`). FWD-1..9 PARK
+with both pulls still firing (pivot packet `org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_DELL2_20261013.md`
+section 4). The round-25 analysis (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_NFRA_TRNSPT_ROUND_25_20261014.md`) carries the park.
+ENDPOINT and CONTRACTS unchanged; no half re-opens.
+
+-- 1.0.0_SA_CTO~DELL2
