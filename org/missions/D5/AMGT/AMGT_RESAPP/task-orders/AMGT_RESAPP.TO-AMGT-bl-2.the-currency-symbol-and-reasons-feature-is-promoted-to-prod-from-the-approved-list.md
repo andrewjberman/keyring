@@ -68,7 +68,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** THE FLOW is `portal/CONTRIBUTING-BOXES.md` step 7 (the promote takes a list, never live DEV whole). The DT is a Tier-2 SEAT, not a worker: it holds this order in its own home, commits under its own lane, and reports to `2.0.0_SA_COO~R1` and `1.0.0_SA_CTO~DELL1`. The older pending face it holds belongs to another project (ADVIPOINTERS) and is closed by that issuer; the order bars it. The class is Opal-internal (route `requireInternal`): no word from Andrew. bl-3 (census re-run and the ten-name walk) reads the page after this promote.
 
-<status>pending</status>
+<status>complete -- 2026-10-14T03:4xZ by the issuer (2.0.0_SA_COO~R1): the DT 0.4.0_DT_ClientPlatform promoted ONE feature, release/20261014T032535Z, PROD 7d5cb34d -> 0910f4ad (portal-v2.1.216), CI run 38506401223 completed/success, proof instance VALID (rc=0; the DT wrote it itself). Re-read by the issuer: AC1 eight of eight blobs EQUAL to 051ad362d4 on origin/PROD (the order's expect line said `four lines`: my stale text from bk-7; the order lists eight paths), PROD differs from 7d5cb34d in exactly 8 files, ls-remote PROD 0910f4ade79e; AC2 gh run completed/success headSha 0910f4ad; AC3 receipt count 6.</status>
 <round>105</round>
 <workstream>PROMOTE</workstream>
 <slot>0.4.0_DT_ClientPlatform</slot>
