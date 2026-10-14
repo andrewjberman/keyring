@@ -27,6 +27,16 @@ GLD: commodities / Metals, fund, `classified_by` seed. PHYS: commodities / Metal
 - **PHYS:** shown on neither Positioning surface in the views read, so there is no Positioning value to compare; the shared list's row equals the Black Diamond page value (commodities / Metals).
 - No difference was found on any ticker that Positioning displays.
 
+## The CTO's condition (msg 5524, ruled YES with one condition): the dev build equals origin/PROD for the page, and the page read the live API (measured 2026-10-14 ~12:5xZ)
+
+- **Sources.** The running build was portal `DEV` `0a06280a40`; origin/PROD was fetched (`6a5926fc11`). `git diff origin/PROD HEAD -- src/pages/Positioning src/components/holdings`: **empty**. The browser's network log (`tmp/ui-walk/20261014T123628Z/netlog.tsv`) lists
+  **143 `/src/` files** the Positioning page loaded; **141 equal origin/PROD**, and 2 differ: `src/App.tsx` (the `/ticket-center` route guard: `isPartnerDevReach` on a dev build versus a plain `requireInternal`) and `src/lib/firmAccess.ts` (the per-firm route allowlist,
+  the demo tenant's paths and a header comment). Neither names Positioning or touches a class, a sub-class or a data read; both are access gates. The working tree also carries an uncommitted change to `src/lib/firmAccess.ts`, and uncommitted regenerated display-name files under
+  `src/pages/InvestorReporting/header/`, which Positioning does not load. The walker account is an internal Opal admin.
+- **Live API, not a fixture.** The dev build is `dev:live` (banner "Live-data development: local UI -> CloudFront -> deployed services"). The same log shows `GET 200 /api/general/positioning/positioning_data.json` and `/api/general/positioning/holdings_attribution_data.json`, three times each, through
+  CloudFront, after a real sign-in. No fixture was served.
+- **Read as:** the Positioning page's own sources equal PROD and its data is the live served data. The two differing files are shared access gates; if the CTO or CVO reads them as differing for this limb, the re-read on PROD is the remedy the ruling names (a PROD walk is a separate act).
+
 ## Not shown
 
 That the Models Holdings Breakdown table carries VXX's sub-class (cut in the capture); that PHYS is absent from Satellites 40, 60, 70 and 80 (not read); that the pages take their class from the shared list rather than from the portal's ticker constants (`etf-categories.ts`, `HoldingsBreakdownTable.tsx`, the FWD-4 copies): the render shows equal values, it does not trace the source.
