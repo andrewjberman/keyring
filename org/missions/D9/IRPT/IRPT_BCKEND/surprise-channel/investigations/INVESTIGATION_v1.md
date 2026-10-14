@@ -34284,3 +34284,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The script stderr names python3 holdings_snapshot.py --firms 49financial --upload as Killed with code 137 at about 310 s, which fits an out-of-memory kill on a 4 GiB class host and also fits any SIGKILL; nothing retained distinguishes them. The host is started for scheduled fires (launch recorded 2026-10-13 13:30Z) and will be Online again near the next fire, so a kernel-log read of the 2026-10-09 window becomes possible then only if journald persisted across the stop and start cycles; that is not known and was not tested. Because the verdict is not OOM, memory_read_for_release_fire is false per the order, yet an unreadable cause is not a cleared cause: whether the release fire's after-read should carry a memory read anyway is the issuer's and the CTO's call."
 }
 ```
+
+## IRPT_BCKEND-D2-S170 -- IB-pr-535 STOP at step 3: a mint from the release pin would change about 20 bundle members by content and add one, not only holdings_snapshot.py, because the live bundles were built from an older tree
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S170",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-14T13:10:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The digest gate of IB-pr-535 fails: building each holdings bundle from the release pin 49467335d2 differs from the live bundle version in 19 (49financial), 21 (cottonwood) and 20 (inflection) members by content after folding CRLF to LF, and adds opal_strategy_matcher.py; the packet and both halves allow only holdings_snapshot.py and SHA256SUMS. No mint was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IB193-1_digest_gate_stop.json (per-firm member lists: changed by content, changed by line endings only, added, removed)",
+      "build_bundle_payload run from the pin worktree on each declared bundle, no upload; each live bundle downloaded by the packet's Branch B version id and untarred; 45 declared members, 46 built with SHA256SUMS",
+      "two members traced to the commit whose content the live bundle carries: lib/trading_calendar.py matches a 2026-06-26 commit and data/firm_registry.json a 2026-09-30 commit, neither equal to the pin's"
+    ]
+  },
+  "spec_asserts": "COO half condition 1 and CTO half: the changed members must be exactly holdings_snapshot.py (and SHA256SUMS); any other changed member aborts the release and the packet is re-cut. Order step 3 repeats it.",
+  "world_is": "The live bundles of 2026-10-13 13:35Z carry shared-library members older than the pin (the trading calendar, the naming library, the registry files, mdpf scripts and the contract schemas), and 9 or 10 members in each live bundle carry CRLF where the pin worktree builds LF. A mint from the pin therefore moves those members too, including lib/trading_calendar.py which the CTO's condition 8 reads. Which of those changes are safe to ride is not established here and is not this seat's to decide; the options are a re-cut pin that carries only holdings_snapshot.py over the live bundles' base, or a re-cut packet that counts and signs the extra members. The re-measure harness result at the pin is separate and is reported with the release record."
+}
+```
