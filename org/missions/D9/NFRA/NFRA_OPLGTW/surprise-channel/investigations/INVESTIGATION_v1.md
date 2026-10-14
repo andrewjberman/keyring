@@ -13694,3 +13694,105 @@ name the one known failure instead of silently inheriting it.
     "dismissal_reason": "No act is owed: the code of both functions was read at the versions the twin runs, both are no-ops on the bare path, and the decision to attach neither is recorded with its reasoning here and in the Terraform. The order required a row only to say why, and this is it."
   }
   ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W73-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~73",
+  "surfaced_at": "2026-10-14T14:44:37Z",
+  "one_line": "The silver article partition is the FETCH date, not the published date, so harvest_get_article cannot locate a record from published_utc as OG-gt-2 specifies.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO NFRA_OPLGTW.TO-OG-gt-2.press-tools.md section 1, harvest_get_article: partition located from the mention row's published date; the same claim at org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G1_harvest.md:125 @0d7c29b3c5",
+      "READ-ONLY S3: bloomberg/harvest/silver/article/ (745 parts, 12 date partitions) joined to the newest gold article_security_mention part (amgt/harvest/gold/article_security_mention/date=2026-10-08/part-20261009T093755Z.parquet): 2960 of 2960 bloomberg articles found; silver date= equals the mention row's fetched_at UTC date for 2960 of 2960; equals the published_utc date for 1 of 2960",
+      "READ-ONLY S3, sampled 3 fetched-date partitions per publisher, 4 articles each, for seeking-alpha, wsj, ft and barrons: 47 of 47 articles found in the partition named by their mention row's fetched_at date",
+      "READ-ONLY S3, bloomberg: 1230 articles carry more than one silver record, all inside one partition; articles present in more than one partition: 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "harvest_get_article locates the silver partition from the mention row's published date (TO section 1; G1_harvest.md:125).",
+  "world_is": "The silver date= partition is the fetch date: the mention row's fetched_at, UTC. The tool locates the partition by fetched_at and keeps the newest record per article_key by fetched_at inside it. Measured in full on bloomberg and by sample on the other four publishers.",
+  "notes": "No served output is wrong: the tool follows the measured rule and returns absent_reason when the mention row is not in the newest gold part. The contract line and the TO wording are the CRO's to correct; the build does not wait on them."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W73-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~73",
+  "surfaced_at": "2026-10-14T14:44:37Z",
+  "one_line": "The TO joins gold article_sentiment into search with no part rule, while the contract says its parts are append batches.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO NFRA_OPLGTW.TO-OG-gt-2.press-tools.md section 1, harvest_search_articles reads: gold article_sentiment joined on article_key, no part rule named",
+      "G1_harvest.md:651 @0d7c29b3c5: article_sentiment grain 'parts are append batches'",
+      "READ-ONLY S3 listing: amgt/harvest/gold/article_sentiment/ holds 5 parts, all under date=2026-10-03",
+      "G1_harvest.md:677-680 @0d7c29b3c5: rows_all_parts 13235 and distinct_articles 13235, so the contract's own measure finds no article in two parts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The search tool joins gold article_sentiment on article_key and names no part rule for that dataset (TO section 1).",
+  "world_is": "article_sentiment is an append-batch dataset. The tool reads every part, filters to the candidate article_keys, and keeps the newest partition's row per article_key.",
+  "notes": "The copy rule is the tool's choice. With 13235 rows and 13235 distinct keys it changes no answer on the contract's measure."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W73-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~73",
+  "surfaced_at": "2026-10-14T14:44:37Z",
+  "one_line": "The TO asks for chatter_event deduplicated on event_id without naming which copy to keep, while the contract says event_id repeats across partitions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO NFRA_OPLGTW.TO-OG-gt-2.press-tools.md section 1, harvest_get_chatter reads: chatter_event deduplicated on event_id",
+      "G1_harvest.md:1424 @0d7c29b3c5: never_sum_rules 'event_id repeats across partitions; dedupe on event_id'",
+      "G1_harvest.md:1317-1320 @0d7c29b3c5: rows_all_parts 576, distinct_events 528, 10 parts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "chatter_event is deduplicated on event_id (TO section 1); no copy rule is stated.",
+  "world_is": "The contract gives no rule for which copy of a repeated event_id wins. The tool reads every chatter_event part and keeps the copy from the newest date partition, newest part name first within it.",
+  "notes": "A copy rule for a repeated event_id belongs to the chatter_event owner. Events are returned with overlap to from_day..to_day, a choice the TO does not state either."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W73-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~73",
+  "surfaced_at": "2026-10-14T14:44:37Z",
+  "one_line": "OG-gt-0 read_parquet raises on a declared column that a silver part lacks, and silver article parts carry differing column sets.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/harvest_typed.py:176-180 @de8bd420d2: read_parquet raises ValueError 'unknown column' when a named column is absent from the part",
+      "G1_harvest.md:5278-5286 @0d7c29b3c5: bloomberg silver article size block, schema_variants 717 over parts 745",
+      "READ-ONLY S3, bloomberg silver parts: 4 distinct column counts across the 745 parts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The OG-gt-0 base read_parquet projects declared columns at read, and the typed tools read through it (TO section 1, the base surface).",
+  "world_is": "Silver parts differ in their column sets, so a declared-column read on silver raises for each part that lacks a column. The OG-gt-2 tools read silver with columns=None and select the fields they return by name; a field a part lacks comes back None.",
+  "notes": "A future tool that declares silver columns will raise on the variant parts. The base is not edited by this cell: its owner is OG-gt-0."
+}
+```
