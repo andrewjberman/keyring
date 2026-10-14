@@ -229,7 +229,10 @@ if (-not $Tab -and $Serial -match '^2\.[0-9]+\.0_SA_COO') {
     Write-Error "spawn-agent: REFUSED -- a COO spawn needs -Tab <PROJECT_CODE> so its tab names the project (got none for $Serial)."
     exit 1
 }
-$inner = "[Console]::Write(([char]27).ToString() + ']0;$title' + ([char]7).ToString()); `$Host.UI.RawUI.WindowTitle = '$title'; `$env:OPAL_TAB_TITLE = '$title'; . `"$ajb`"; ajb -Headless$moFlags $Serial$extraStr $marker`: $Serial"
+# A spawner running inside a Claude Code session carries CLAUDE_CODE_CHILD_SESSION=1 into the new window, and a claude.exe
+# that inherits it saves no transcript (banner "Transcript saving is off"), so a dead seat leaves no record of why it ended.
+# The seat is a top-level session, not a child: clear the marker first (NFRA_CTLPLN-Z-S10).
+$inner = "Remove-Item Env:CLAUDE_CODE_CHILD_SESSION -ErrorAction SilentlyContinue; [Console]::Write(([char]27).ToString() + ']0;$title' + ([char]7).ToString()); `$Host.UI.RawUI.WindowTitle = '$title'; `$env:OPAL_TAB_TITLE = '$title'; . `"$ajb`"; ajb -Headless$moFlags $Serial$extraStr $marker`: $Serial"
 
 # Title path: prefer wt.exe with an explicit --title at tab CREATION (works
 # without the suppressApplicationTitle setting); the OSC/WindowTitle pair in
@@ -261,7 +264,7 @@ if ($usableWt) {
     # -ArgumentList element. Note this script never observes the child's fate
     # -- the sound oracle for a live agent is its own register_agent, not our
     # "launched" print.
-    $innerWtPayload = "[Console]::Write(([char]27).ToString() + ']0;$title' + ([char]7).ToString()); `$Host.UI.RawUI.WindowTitle = '$title'; `$env:OPAL_TAB_TITLE = '$title'; . $ajbForWt; ajb -Headless$moFlags $Serial$extraStr $marker`: $Serial"
+    $innerWtPayload = "Remove-Item Env:CLAUDE_CODE_CHILD_SESSION -ErrorAction SilentlyContinue; [Console]::Write(([char]27).ToString() + ']0;$title' + ([char]7).ToString()); `$Host.UI.RawUI.WindowTitle = '$title'; `$env:OPAL_TAB_TITLE = '$title'; . $ajbForWt; ajb -Headless$moFlags $Serial$extraStr $marker`: $Serial"
     $innerForWt = $innerWtPayload -replace ';', '\;'
     # `-w new` opens a fresh WT window (one-window-per-agent UX convention).
     & wt.exe -w new new-tab --title $title powershell.exe -NoProfile -NoExit -Command $innerForWt
