@@ -8793,3 +8793,30 @@ round.** Never edit an existing row.
   "world_is": "The files are right by their hashes and by the invariants the worker printed (9 of 15 round-82 aggregates match; the 6 that differ are named in the round-85 packet). They are not reproducible. Owner: the first cell of any un-park, which rewrites the scripts from ACTIVE_SET_V2_RECORD.json, commits them, re-runs them and compares the two hashes. Template fix by this seat: orders that build a file list the script in <paths> and require its commit before the output is written. Same class: round 82's window script (W168-S2)."
 }
 ```
+
+## ADVI_COTBKF-D2-S138 -- ARMED rows re-owned on C2's stand-down
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S138",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "1.0.0_SA_CTO~DELL2",
+ "surfaced_at": "2026-10-14T00:55:00Z",
+ "one_line": "Re-address: the 20 ARMED rows whose disarm_owner was 2.0.0_SA_COO~C2 (stood down 00:47Z, msg 7390) are owned by 1.0.0_SA_CTO~DELL2 under the PARK; held, not disarmed; the first act of any un-park re-reads each.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "0.0.0_AB_MSTR~DELL2 msg 7390: C2 stood down, its ARMED rows need re-addressing",
+   "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_ADVI_COTBKF_ROUND_86_PARK_20261014.md (the park and its un-park condition)",
+   "this channel's ARMED rows with disarm_owner 2.0.0_SA_COO~C2: ADVI_COTBKF-W12-S1, ADVI_COTBKF-S9, ADVI_COTBKF-S12, ADVI_COTBKF-D2-W48-S1, ADVI_COTBKF-D2-W50-S1, ADVI_COTBKF-D2-W50-S2, ADVI_COTBKF-D2-W50-S3, ADVI_COTBKF-D2-W53-S1, ADVI_COTBKF-D2-W66-S1, ADVI_COTBKF-D2-W78-S2, ADVI_COTBKF-D2-W78-S3, ADVI_COTBKF-D2-W80-S2, ADVI_COTBKF-D2-S95, ADVI_COTBKF-D2-W155-S1, ADVI_COTBKF-D2-W155-S3, ADVI_COTBKF-D2-W159-S1, ADVI_COTBKF-D2-W163-S1, ADVI_COTBKF-D2-W164-S1, ADVI_COTBKF-D2-W164-S3, ADVI_COTBKF-D2-W168-S2"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "An ARMED hazard has a live disarm_owner (CLAUDE.md section 2).",
+ "world_is": "The project is PARKED (status hold @b92a1413f5); none of these rows' surfaces reaches a page (route_not_live, D2-S135); the owner is now the box CTO, which holds them under the park.",
+ "disarm_owner": "1.0.0_SA_CTO~DELL2"
+}
+```
