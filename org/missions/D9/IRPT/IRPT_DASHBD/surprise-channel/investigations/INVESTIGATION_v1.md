@@ -12295,3 +12295,32 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Relevant to any date-basis ruling for weekend and holiday partitions; the file's own labels do not settle it."
 }
 ```
+
+## IRPT_DASHBD-D2-W176-S1 -- the shared as-of fix changes a date-only footer whose byte-for-byte golden sits outside the grant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W176-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~176",
+  "surfaced_at": "2026-10-14T19:29:51Z",
+  "one_line": "The shared as-of fix (DB-b-219) changes the ModelPortfolios date-only footer, and the byte-for-byte golden of iv-e-120 test (b) still pins its old 5:00p ET clock. That file is outside this cell's grant, so the whole-suite run has one new failing id and criterion DB110-4-AC3 cannot pass as written.",
+  "spec_asserts": "TO DB-b-219 criterion DB110-4-AC3 requires suite_after new_failing_ids [] (whole-scope bun test, base versus after). Its BOUNDS say an edit outside the <paths> grant is a defect: stop and file a row. The grant names footer-date-format, PageEnd and iv-e-45 as the only neighbour tests that may be re-pinned.",
+  "world_is": "At portal tip 3db44fe0 the iv-e-120 test (b) renders ModelPortfolios without the prop and compares it byte for byte with iv-e-120.golden/model_portfolios_mount.before.html. The golden holds 'September 29th, 2026, 5:00p ET' and the render now writes 'September 29th, 2026'. Base suite: 1529 tests, 15 fail. After suite: 1530 tests, 16 fail. The only new failing id is 'IVE120 ... (b) ModelPortfolios mount without the prop renders byte-for-byte as before'. The iv-e-120 test file and its golden are outside the <paths> grant and were not edited.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@3db44fe0 src/lib/dateUtils.ts formatPanelTimestamp date-only branch (the change that removes the clock from a date-only value)",
+      "portal@3db44fe0 src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-120.total-base-in-the-card.test.tsx lines 163-168 (test (b), byte-for-byte golden compare; this file is not changed by the worker)",
+      "portal@3db44fe0 src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-120.golden/model_portfolios_mount.before.html (one line carries 'September 29th, 2026, 5:00p ET')",
+      "measured 2026-10-14T19:27Z: full suite base 1529 tests 15 fail, after 1530 tests 16 fail (worker deliverables ASOF_R110.json, suite_after.new_failing_ids); measured 2026-10-14T19:28Z: bun test on the iv-e-120 file alone, 4 pass 1 fail",
+      "measured: DB110-4-AC3 checker output 'FAIL: tests: mutant_failed true, lint 0, typecheck 0, no new failing test'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided by this worker, and not edited. Options for the CTO or COO: (a) re-golden the one line of iv-e-120.golden/model_portfolios_mount.before.html to 'September 29th, 2026', the same kind of re-pin this cell made for create5pm-et.test.ts, in a grant that names that file; or (b) widen this cell's grant to name it. The worker did not choose between them."
+}
+```
