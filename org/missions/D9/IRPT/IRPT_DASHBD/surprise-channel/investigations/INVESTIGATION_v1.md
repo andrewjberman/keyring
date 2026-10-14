@@ -11739,3 +11739,276 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T17:27:13Z",
+  "one_line": "Contract 0.4.3 sources every household-grain return ABSENT, so the Orion household return that TO cell (b) and criterion DB109-1-AC1 require is not filled in the sample; the household-return clause fails as written.",
+  "spec_asserts": "TO DB-b-214 cell 4(b) and criterion DB109-1-AC1 (the round-109 CTO analysis cell 2): pvs.<window>.return_cumulative for the household take Orion's client-keyed fact_performance, and at least one household return window fills and is listed in household_return_windows.",
+  "world_is": "Contract 0.4.3 (org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@df0d2ad2f3) sources pvs.<window>.return_cumulative and hold.return_<window> as source ABSENT, reason 'A household-grain return is not carried by any sibling contract'. Its READ_RULE says a figure is never derived from a source the contract does not name, and its OPEN list says the household return members are ABSENT until a new contract exists. The shape checker (p105 check_sample_shape_k) requires an ABSENT member to hold the absent form, so a filled household return would fail the shape clause. The builder therefore writes the nine household-return members (four pvs and five hold) absent with the contract's reason (kind NO_SOURCE_YET) and household_return_windows is an empty list. Measured, not filled: the newest fact_performance partition (2026-10-14) holds the client's dates, the client series holds the anchor day of qtd, ytd and last_12_months and the as_of day, so all four windows would open if a contract sourced them.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@df0d2ad2f3 (members pvs.*.return_cumulative and hold.return_*: source ABSENT; document read_rule; open_changes item 1)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r105/p105_round105.py@df0d2ad2f3 (check_sample_shape_k: an ABSENT member must hold the absent form)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~173/build_sample_inflection.py@df0d2ad2f3 (build_values: the ABSENT branch writes the contract reason)",
+      "measured in the private build: BUILD_COUNTS.json client_performance_opens_on_anchor and household_return_windows (counts and booleans only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Stop on this point, not on the build: the rest of the sample is built and checked. The CTO's round-109 analysis says the household return comes from Orion's client grain, but the ratified contract at 0.4.3 says it is not carried, and changing that needs a contract version bump or a PRD addendum, which a worker does not write. No value was plugged. Ruling needed from the CTO: (a) a contract version that sources the household return from fact_performance, with the index-level rule, or (b) the render prints the household return as absent. The criterion clause stays FAIL until one of them lands."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T17:27:13Z",
+  "one_line": "The contract derives account first_data_date and window_status from the account return table, which this firm does not have until DB-b-216, so the build takes first data dates from Orion transactions and sets window statuses from span alone, and every spanned window reads BREAK.",
+  "spec_asserts": "TO DB-b-214 step 3 and step 4 require each account's first data date (with the method stated in words) and window_status for the four windows, as the filled-report shape requires.",
+  "world_is": "Contract 0.4.3 first_data_date_rule: the business_date of the account's first row in the account return table. window_status_rule: NOT_SPANNED when the account has no return row on the opening anchor, BREAK when a day in the window has no row, else MEASURED, read from the account return table. Neither table exists for this firm yet. The build took first data dates from the earliest transDate of the account in the newest fact_transactions partition (4 of 5 accounts), and from the earliest createdDate of its fact_positions rows for the one account with no transaction there (1 of 5). Window status: NOT_SPANNED where the first data date is after the window's opening anchor (trading-day anchor from lib/trading_calendar.py), otherwise BREAK, because no account return row exists for the window's days; since_inception opens on the first data date and reads BREAK. The sample carries 4 windows x 5 accounts = 20 statuses: 8 NOT_SPANNED and 12 BREAK.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@df0d2ad2f3 (document.filled_report.window_status_rule and first_data_date_rule)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~173/build_sample_inflection.py@df0d2ad2f3 (first-date and window-status derivation, named in its header)",
+      "measured in the private build: BUILD_COUNTS.json first_date_source_counts and HOUSEHOLD_SAMPLE.json (counts and words only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: left alone, the render prints BREAK for every spanned window, and BREAK in the contract's words means a day has no return row, which reads to a client as a broken source. The render (DB-b-215) and the issuer decide the words; the disarm owner is the issuer. The build did not invent returns, and no status is MEASURED, because no return is read for this firm yet."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T17:27:13Z",
+  "one_line": "Orion's assetClass carries 125 distinct fund-category labels and Opal's seven classes come from a classification table this build is not granted, so the allocation members are absent rather than placed by a mapping the build would invent.",
+  "spec_asserts": "TO DB-b-214 cell 4(c): hold.allocation takes each asset class's share when fact_positions carries an asset class Opal's seven classes can place, and otherwise every entry is absent NO_SOURCE_YET.",
+  "world_is": "fact_positions (newest partition) carries assetClass with 125 distinct Orion fund-category labels and productCategory with three values (Bond, Equity, Money Market). The class contract (IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json) takes class values from the etf-classifications table, read by the shared ETFClassifier through DynamoDB GetItem, which is outside this build's grant. The only class signal inside the grant is isCustodialCash, and the class rule counts money-market funds as cash, so a cash share from custodial lines alone would understate cash. The build writes hold.allocation (seven classes) and holdings.rows.class_hierarchy absent with NO_SOURCE_YET and the reason in words.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json@df0d2ad2f3 (class_source: etf-classifications, GetItem through ETFClassifier)",
+      "measured in the newest fact_positions partition: distinct assetClass and productCategory counts (counts only; no holding recorded)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The TO's fallback applies (every entry absent NO_SOURCE_YET). A ruling is needed only if the render must show an allocation for this firm: the classification read would need its own grant."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T17:27:13Z",
+  "one_line": "The served model series holds returns to 2026-10-13 and the household's as_of is 2026-10-14, so every window of the 32 benchmark members and the 12-month chart lacks its last trading day and reads SOURCE_BREAK in words.",
+  "spec_asserts": "TO DB-b-214 cell 4(d): the 32 model benchmark members and the 12-month chart fill from the served model series exactly as the sibling builder does.",
+  "world_is": "The served object (model_portfolio_timeseries, read through model_series_windows.read_served_series) carries a data_as_of of 2026-10-13 (its last trading day). The sample's as_of is the newest fact_positions partition, 2026-10-14. Under the window rule a window is filled only when every trading day from its first day to the as_of holds a return, so each window misses 2026-10-14 and the member reads 'the model series holds no return on 1 trading day(s) of the window' with kind SOURCE_BREAK. The chart reads the same way. Four stems x four windows = 16 pvs members and 16 avs members, plus the chart: 33 absent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured in the private build: BUILD_COUNTS.json model_source and model_series_trading_days (counts and dates; no value)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~173/build_sample_inflection.py@df0d2ad2f3 (bench_value and chart_value, the sibling window rule)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A timing condition of the served series, not a build defect: the builder reports it and does not repair it. A later series refresh that reaches 2026-10-14 would fill these members on the next build with no code change."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T17:27:13Z",
+  "one_line": "TO cell 4(a) fills the ending values from fact_positions, while contract 0.4.3 names the account return table as their source; the build followed the TO, and it also filled the account-grain avs ending values so the whole-document rule finds one figure.",
+  "spec_asserts": "TO DB-b-214 cell 4(a): pvs.<window>.ending_value, hold.ending_value, act.ending_value.household and act.ending_value.account take the same figure, the market value of the household's positions at as_of from fact_positions.",
+  "world_is": "Contract 0.4.3 sources pvs.<window>.ending_value, avs.<window>.ending_value and act.ending_value.* to the account return table's market_value_eod on as_of, and its READ_RULE says a figure is never derived from a source the contract does not name. The account return table is not built for this firm, so the figure comes from fact_positions currentValue summed per account at as_of (2026-10-14). The household figure is that sum; every account and window carries the same account figure. avs.<window>.ending_value is not named in the TO, but the whole-document rule groups it with act.ending_value.account, so an absent avs cell beside a filled act cell would be a conflict. The rule found 0 conflicts and 0 disagreements over the sample, and the household figure is recorded only in the private folder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@df0d2ad2f3 (READ_RULE; members pvs.*.ending_value and avs.*.ending_value)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r106/p106_round106.py@df0d2ad2f3 (figure_key and whole_document_scan: ending_value groups by entity and as_of)",
+      "measured: the issuer's whole-document scan of the private sample (0 conflicts, 0 disagreements, 0 unmapped)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The CTO rules whether fact_positions may stand in for the account return table's market value for these members, or whether they stay absent until the return table exists."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T17:27:13Z",
+  "one_line": "The TO asks for account_id in the custodian form, but the checker and the adapter key the household's accounts by Orion's account id; the build uses that key for account_id and takes last4 from the custodian account number.",
+  "spec_asserts": "TO DB-b-214 cell 3: each account's account_id in the custodian form the shape requires, and last4. The checker requires the sample's accounts to equal the adapter's account_dim accounts of the household.",
+  "world_is": "The adapter's account_dim keys each account on Orion's account id (the accountId column). The custodian account number is a separate column (accountNumber) on fact_positions. The checker compares the sample's account_id set with the dry run's account_id set, which is the Orion id. Using the custodian number as account_id would fail the account-set clause. The build therefore sets account_id to the adapter key, and last4 to the last four characters of accountNumber on the account's positions (recorded as a count only; no value is written to the repo).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_dim.py@df0d2ad2f3 (ACCOUNT_COL and the account key of build_account_dim)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r109/p109_round109.py@df0d2ad2f3 (check_sample: sorted(acc) == sorted(accts))"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A renderer that shows account_id to a reader would show Orion's internal id, not the custodian number. The render (DB-b-215) prints last4 only. A ruling on the account key for display is the CTO's."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T17:44:31Z",
+  "one_line": "After the as-of moved to the last positions date on or before the served series' end (amendment W173-S4), the household's account membership still comes from the newest positions and fact_assets partitions, so the order does not say which partition defines the membership.",
+  "spec_asserts": "TO DB-b-214 step 3 (amended): the household is chosen from the adapter's account_dim among households of 2 or more accounts, the sample's accounts are that household's accounts, and as_of is the newest fact_positions date on or before the served series' last date.",
+  "world_is": "The adapter's account_dim is built from the newest fact_positions and fact_assets partitions (2026-10-14), which is the basis of the round-108 dry run the checker recomputes the household from. The values are read at as_of (2026-10-13). The build used the newest partitions for membership and the as-of partition for values, and recorded that in method_words. Measured: all five household accounts carry position rows on 2026-10-13, and the account set equals the dry-run set. Nothing in the order says which partition defines membership when the two dates differ; a membership that held on the newest date but not on as_of would be carried into the sample with an absent or zero value.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_dim.py@4ee0fead99 (build_account_dim takes the holdings and roster frames it is given)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~173/build_sample_inflection.py@4ee0fead99 (step 1 and step 2: membership from the newest partitions, values from the as-of partition)",
+      "measured in the private build: BUILD_COUNTS.json account_positions_rows_as_of (counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded for the issuer's disposition; no value was changed. The checker's household rule is fixed to the dry-run membership, so the build kept that membership and read values at as_of."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T18:19:32Z",
+  "one_line": "Two clauses of the render checker assume a sample with an asset-class allocation and a household net gain; the Inflection sample, built as the amended order requires, has neither, so DB109-2-AC1 fails at check_render's unheld-class precondition and would fail at its note-level control even if that were met.",
+  "spec_asserts": "DB109-2-AC1 (the criterion checker, check_render, and its note_level control): the sample holds at least one unheld class entry so the dash is checked; and the two planted mutants of the whole-document and note-level rules are each reported.",
+  "world_is": "(1) check_render requires uc >= 1 (the sample holds an UNHELD class entry). The Inflection sample's hold.allocation is absent in every class, per the amended DB-b-214 step 4(c) fallback (no seven-class placement from the granted sources), so unheld_count is 0 and the clause fails with 'the sample holds no unheld class entry to check'. The dash clause itself measures 0 dashes in the export, equal to 0 unheld entries. (2) note_level's control plants a note naming hold.net_gain_ytd|household and requires the note-level rule to report it; the rule reports a note only when a printed cell carries the same key, and the sample prints no household year-to-date net gain (no source), so the planted mutant is not reported and CONTROL fails. Measured by a collecting replication of check_render (the checker itself stops at its first failing clause): every other render clause passes, 20 pages read, 0 clipped, 259 whole-document cells, 34 notes (33 absent, 1 pointer), 0 note-rule failures in either view.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r109/p109_round109.py@f093ea2189 (check_render: need(uc >= 1); the render's dash clause)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r105/p105_round105.py@f093ea2189 (unheld_count counts UNHELD entries of by_row maps)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r107/p107_round107.py@f093ea2189 (note_level: the mutant_absent_note control is reported only when a printed cell carries its key)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~173/RENDER_R109.json@d350162d (the measured record: note_level, kind_notes, chart_slots, pdf_clipping)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Stop on these two clauses, not on the render: the criterion is FAIL as written and the order stays pending. The issuer decides whether the precondition is the checker's to change (for example, a sample with no class placement exercises the dash by no entry, and the control by a figure the sample carries) or the sample's. No checker file was edited; the render was not changed to satisfy either clause."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S9",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T18:19:32Z",
+  "one_line": "The sample's last-four field takes the last four characters of the custodian account number, so four of the five account labels in the render end in non-digit characters; the labels read as fragments and do not identify an account.",
+  "spec_asserts": "TO DB-b-214 (amended) step 3: each account entry carries last4, and an account's last four digits are shown as #### in anything recorded; the render prints each account by its last4 in the account header, the footer and the note keys.",
+  "world_is": "The builder's last4 is the last four characters of the account's custodian number (fact_positions accountNumber). For four of the five household accounts those four characters include non-digit characters, so the render's labels, footers and table rows show non-digit fragments. The count of accounts whose last four characters are all digits is 1 of 5 (measured by counting only). The render prints these labels in every account page and in the Activity, Taxable and Gain and Loss tables. Nothing was typed into the repo: the fragments are in the private render only, and this row quotes none of them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~173/build_sample_inflection.py@4ee0fead99 (last4 = custodian number [-4:], step 2 of the build)",
+      "measured: the final private render, pages 5 to 19 (labels only; counts in this row, no value)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: any later render of this sample prints the same fragments to a reader. The fix is the sample's last-four rule (the builder, under DB-b-214, which is complete); this order's grant does not include the builder or the sample, so the fix is not made here. The issuer decides the rule (digits only, or a masked form) and re-issues the sample."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S10",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T18:19:32Z",
+  "one_line": "The round-106 not-held rule blanked every cell of a window the account did not span, the ending value included; the ending value is the figure at as_of, so the note rule found twelve notes naming it absent beside printed figures, and the render now prints it (a change to round-107 behaviour).",
+  "spec_asserts": "TO DB-b-215 step 4: everything else is the round-107 behaviour, unchanged; step 2: fix what the checker or the reading finds.",
+  "world_is": "valueSummaryGrid and activityGrid passed the NOT_SPANNED flag to every cell of a window column, so an account whose window was not spanned printed the words for its ending value in that window, while the sample carries the ending value at as_of for every account, and the whole-document keys (ending_value, account, as_of) are printed elsewhere. The note-level rule reported twelve contradictions in both views. The fix (commit d350162d) skips the ending-value row (pvs and avs) and the ending-value column (activity summary) in the not-held flag; every other cell, the footnote and the not-held wording are unchanged. The round-106 test that pinned the blanked ending value was edited minimally and named in that commit. The 49 Financial sample carried no NOT_SPANNED window, so this path had not been exercised before.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal commit d350162db95501c208bb805d529b5fc17b5b9480 (reportModel.ts; report-render-r106.test.tsx; report-render-r109.test.tsx test (d))",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r107/p107_round107.py@f093ea2189 (note_rule: an absent note naming a key a printed cell carries FAILS)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded for the CVO's judgment at L9 on DB109-2-J1 and for the issuer's disposition: the change is generic (not firm-keyed), and it changes the round-107 display of a not-held window's ending value from words to the figure."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S11",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T18:19:32Z",
+  "one_line": "The export's page estimate charged every grid row one line, but 'Not available yet' wraps to two or three lines in the thirteen-column holdings table, so the table ran into the footer; the estimate now counts the wrapped lines (commits e97cb4eb and 3fd628d0).",
+  "spec_asserts": "TO DB-b-215 step 6: each sheet fits one PDF page; fix what the reading finds.",
+  "world_is": "The Inflection holdings table prints the absent words in every class row, and the narrow allocation column wraps them to three lines. documentSheets.ts charged GRID_ROW_PX (21 px) per row, so the 49 Financial-shaped estimate placed too many rows on the sheet. gridRowCost() now adds GRID_LINE_PX (26 px, calibrated on the rendered page) for each further wrapped line of the widest cell, with about 110 characters across a grid. The table now splits across two sheets with its head repeated. Grids of short figures cost what they cost before; the tab has no pagination.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal commits e97cb4eb and 3fd628d0 (render/performance/report/documentSheets.ts)",
+      "measured: the final render, pages 7 and 8 (read as images)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The constant is calibrated on one table; a firm whose grid cells carry long figures would see the same estimate used. The change applies to every firm's grids, not only Inflection's."
+}
+```
