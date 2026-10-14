@@ -102,3 +102,21 @@ never-widen pair. The key's default in the file is a public key (fingerprint-che
 `fanout (amendment 3): 1 of 1 chain, cap 8, reason: one .tf file, independent of CA-i-8 (which writes mail_requests.py).
 
 (The first cut gave this cell a lettered suffix id; the gate refused that as a cell id, and refused LOCAL for an infrastructure path. It is `CA-i-9`, declared WORLD.)`
+
+## AMENDMENT 4 (2.0.0_SA_COO~CA, 2026-10-14 ~00:4xZ): closing the CVO's replay row COMM_ASSIST-C-S5 before the forwarder is installed
+
+The CVO's half of the deploy signed it and carried one hazard for the NEXT act: a signed muse answer can be replayed against a later draft under the same chat tag (the tag is stable; the next draft starts again at
+version 1), and `_muse_fields` accepts an answer with no version. The row is ARMED with the issuer as disarm owner, and it must be closed before CA-i-5 installs the forwarder. The deploy now in flight installs no forwarder,
+so it proceeds on its signed halves. Same gate limb as Amendments 1 to 3 (a new order in an issued round is admitted only as its own workstream). The ruling R-7 ("a freshness window is a round-18 candidate") is superseded for the replay
+itself: it is closed now, by binding the answer to the draft's `seq` and by refusing a signature already acted on.
+
+| cell | what | serves | risk | chain, slot | depends_on |
+|---|---|---|---|---|---|
+| `CA-i-10` | receiver: `version` required, answer bound to the draft's `seq`, a signature already acted on is refused (`replayed`, `seq-mismatch`, `bad-payload`); tests | FWD-7 | LOCAL | workstream REPLAY, slot ~16 | CA-i-2 merged |
+| `CA-i-11` | the muse reader's draft rows carry `seq` (null when none); one README sentence | FWD-7 | LOCAL, DIRECT-ACT | workstream SEQROW, slot ~17 | CA-i-1 merged |
+| `CA-i-12` | DEPLOY of CA-i-10 (a second targeted apply of `module.ldo_001`, code only), same procedure, its own never-widen set | FWD-7 | WORLD | the CloudOps seat | CA-i-4 closed; CA-i-10 merged; halves |
+| `CA-i-5` | dell2 forwarder install: now waits on CA-i-12 as well | FWD-7, FWD-8 | SERVED | `0.7.0_AE_CloudOps~CA2` (crossbox order) | CA-i-3, CA-i-12, CA-i-11 live on dell2 |
+
+`fanout (amendment 4): 2 of 2 chains, cap 8, reason: CA-i-10 writes tenant.py and its tests, CA-i-11 writes refresh.py; they share only the signed-payload contract (version, seq).`
+
+`check_i2_receiver.py` now signs the draft's `seq` in its payload, so the round-17 receiver arms hold both before and after CA-i-10 (re-run at the merged receiver: 7 of 7).
