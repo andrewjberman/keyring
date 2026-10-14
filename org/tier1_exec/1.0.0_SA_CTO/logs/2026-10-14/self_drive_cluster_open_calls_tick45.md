@@ -17,8 +17,8 @@ state: ARMED   cadence: 60m   cron: 6ca5a587   ticks covered: 45
 
 ## Acts and approvals only Andrew can give
 
-- Time-bound: **site Z 763e + 6c9f, the Bloomberg sign-in before 07:00 ET (about 1h from now) and the R2/R3 hold yes/no by
-  10:30Z.**
+- Time-bound: **site Z 763e + 6c9f, the Bloomberg sign-in before 07:00 ET (11:00Z, about 5h from now) and the R2/R3 hold
+  yes/no by 10:30Z (06:30 ET, the earlier of the two).** (Corrected in place: the first write said "about 1h".)
 - dell2 `c449` (S3 delete).
 - The muse sitting `8f2b`.
 - dell2 approvals 3635, 8500, 7b45, fde0, 7773.
