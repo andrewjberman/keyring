@@ -7644,3 +7644,54 @@ by dell1 or by this seat.
   "world_is": "The docstring's premise is false after the restore, and the helper is not broken. Whether the docstring is refreshed is for the issuer to decide inside its own grant."
 }
 ```
+
+## MDPF_SECCLASS-D1-S34 -- D1-W90-S1 disarmed: the red sibling test was ruled by amendment and the drain landed green (70 passed, 8 passed)
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S34",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-13T04:44Z",
+  "one_line": "D1-W90-S1 (BLOCKING, ARMED, disarm owner this seat): the worker's first SC-e-100 commit left test_holdings_snapshot.py::test_every_published_asset_class_enum_is_the_producers_list red on its branch; ruled by amendment 1 (@bb6e6049d3), fixed in the worker's second commit and DRAINED @7d49d6cc6d: at trunk the four sibling holdings files read 70 passed (the base was 70) and the new test 8 passed, so the hazard (a red test reaching trunk) did not materialise and is disarmed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer re-run at trunk @7d49d6cc6d: python -m pytest test_holdings_publish_gate.py test_holdings_narrowed.py test_holdings_snapshot.py test_holdings_cusip_fallback.py -q -> 70 passed; test_holdings_multi_asset_v1_enum.py -> 8 passed; r24_multi_asset_restore_check.py -> MULTI-ASSET-RESTORE ok=True copies=3 of 3 members=15",
+      "git diff 4bad100483..7d49d6cc6d: test_holdings_snapshot.py changed only in test_every_published_asset_class_enum_is_the_producers_list (6 insertions, 5 deletions); test_holdings_publish_gate.py only the helper docstring (3 insertions, 2 deletions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A worker's commit that turns a sibling test red is a stop, not a ship: the order's AC3 is the four sibling files green.",
+  "world_is": "The first commit of the worker (506096fc9a) was red on its branch by design (the test pinned the narrowing); the worker stopped on its own refusal clause and did not flip the order; the issuer's amendment changed the test's assertion to the CTO's ruling and the drain landed green."
+}
+```
+
+## MDPF_SECCLASS-D1-S35 -- the first fire after the e97b ship: C_06 re-derive served; e97 advisors clause trips on upstream AUA movement since the Oct-12 baseline, not on attribution
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S35",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-14T00:55Z",
+  "one_line": "First fire after the e97b ship (launch 2026-10-13T23:00:11Z): C_06 ran 00:20:26-00:26:17Z (351 s) and its rolling re-derive served; the e97 advisors clause reads 14 of 840 advisor-days beyond $250 because the committed baseline (Oct 12) predates a small upstream AUA restatement of the window dates (+$249 to +$263 on 14 dates, -$30,914.72 on 2026-10-09), which the served firm totals follow exactly (totals = current AUA, 15 of 15 at 0.00); not a C_06 attribution defect.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r24_legg_read.py e97 mid-chain at 00:40Z (committed d74869a9b4, LEGG_E97_MIDCHAIN_READ_20261014T0043Z.txt): unclassified_window ok (max 52,957.34 vs bound 53,010.45), w86_s5 ok, totals_aua ok max_abs 0.00 n=15, added_dropped ok 257 rows disagree 0, advisors keys=56 set_equal True rows_beyond_250=14 of 840; bars and restated PENDING (D_04 had not run: served mix_summary.json still the 10-13 05:46:47Z object)",
+      "per-date served firm total minus the committed Oct-12 AUA (R23_RADIUS/aua_vs_firm_by_date.csv aua_cp): 2026-09-25..10-08 +263.15 .. +249.09 (monotone), 2026-10-09 -30,914.72; the 14 advisor-day gaps are identical to those firm movements (13 dates on one advisor key, +252.13 .. +263.15; 2026-10-09 on another, -30,914.72), so the whole movement sits in the AUA the totals reconcile to, not in the class attribution",
+      "B_00 (the 14-day force-recent re-pull) finished 23:15:45Z this fire, before C_06: the upstream AUA could move between the Oct-12 baseline and this fire"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The CTO's acceptance reads advisor-days within $250 of the committed table; the table was computed on 2026-10-12 against the AUA of that day.",
+  "world_is": "The instrument compares served advisor-days to a frozen Oct-12 table while the served totals correctly follow the CURRENT client_performance AUA. 13 advisor-days exceed $250 by $2 to $13 and one (2026-10-09) by $30,914.72, all equal to the upstream AUA movement. I do not widen the tolerance or re-base the table in this seat: the clause is the CTO's, so the finding goes to the round-24 analysis with the final post-chain read. D_04-dependent clauses (bars, restated) are not graded here."
+}
+```

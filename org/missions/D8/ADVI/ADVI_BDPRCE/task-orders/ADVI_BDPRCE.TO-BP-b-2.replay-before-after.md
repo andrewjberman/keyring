@@ -92,7 +92,7 @@ the three largest movers (asset name, old, new), the estimated-rows count, deter
 **ISSUER NOTES:** round-1 analysis item 1 (second half); FWD-7 DEC-7 (the named list). STAGED at the cut: un-parks when `BP-b-1` is merged and PASS at the merged HEAD; its worktree is cut from that HEAD so the module is in it.
 The dollar effect on the latest snapshot and the downstream readers are `BP-b-7`'s (the join), which consumes this list and the census extract.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <workstream>REPLAY</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-b-2</to_id>
