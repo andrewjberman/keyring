@@ -14147,3 +14147,84 @@
   "notes": "The issuer names the address in the r30 cell before any edit."
 }
 ```
+
+## IRPT_ANLREQ-D2-W137-S1 -- The page's own doc says the client has no PDF call TODAY; the source has both methods on LiveClient, and neither is on the interface or the fixture plane
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W137-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~137",
+  "surfaced_at": "2026-10-14T17:35:04Z",
+  "one_line": "The doc at portal/src/pages/TicketCenter/AnalysisRequestParts.tsx:302 says the client has no getAnalysisRequestPdf call TODAY; LiveClient defines getAnalysisRequestPdf (investor-reporting.ts:1164) and getAnalysisRequestOriginal (investor-reporting.ts:1176), and neither is declared on InvestorReportingApi (:864) or FixtureAdapter (:1630).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AnalysisRequestParts.tsx:302 at base 9fb149ec07: 'the client has no such call TODAY (the route is not in its operation table)'. AR-y-329's premise repeats it.",
+  "world_is": "At base 9fb149ec07, LiveClient defines both methods (investor-reporting.ts:1164, :1176) and the operation table row for analysis-request-pdf exists (:231, status DECLARED). The interface (:864) and FixtureAdapter (:1630) do not declare them, so the fixture plane cannot open a PDF. The comment is stale against the source.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx:302 @9fb149ec07",
+      "portal/src/api/endpoints/investor-reporting.ts:1164 @9fb149ec07",
+      "portal/src/api/endpoints/investor-reporting.ts:231 @9fb149ec07"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the AR-y-329 read of org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~137/r41/COMMENTARY_PDF_ROUTE_READ.json (q3). No source edited; the correction belongs to the reader cell that touches the page."
+}
+```
+
+## IRPT_ANLREQ-D2-W137-S2 -- The premise that analysis-request-pdf serves the commentary PDF does not hold: the route returns the ANALYSIS report's own protected PDF, keyed by request id
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W137-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~137",
+  "surfaced_at": "2026-10-14T17:35:04Z",
+  "one_line": "analysis-request-pdf is keyed by request id alone and returns only the ANALYSIS report's release.protected_pdf_ref (ops/owned_report.py:303-304); no investor-reporting route reads the AR-y-327 commentary PDF by its pdf_ref or its logical id, so a portal-only change cannot open the Commentary item.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-329 Context: the ticket's pdf_ref is an I7 ref to the standalone commentary PDF, and the Commentary item should open it through the viewer's session via the analysis-request-pdf reader.",
+  "world_is": "OwnedAnalysisReader.pdf (ops/owned_report.py:292-320) reads the READY report and then release.protected_pdf_ref. Its writers are job.py:559 and resident_worker.py:485, both on the vendor path. The commentary PDF is retained under YCHARTS_OPAL_REPORT at commentary_logical_id (ycharts/research/opal_producer.py:237, :321) and is not referenced by the report. Source read only; the live route not called.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:303-304 @9fb149ec07",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py:321 @9fb149ec07",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:485 @9fb149ec07"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Record r41/COMMENTARY_PDF_ROUTE_READ.json q2: can_serve_commentary_pdf no, rides resident (ops/ is a member of the resident package and of the irpt-status Lambda), q4 recommend BACKEND_AND_PORTAL. The disposition is the CVO's."
+}
+```
+
+## IRPT_ANLREQ-D2-W137-S3 -- An OPAL_ENGINE report stores no protected_pdf_ref, so analysis-request-pdf refuses it by name; the contract fixture shows one
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W137-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~137",
+  "surfaced_at": "2026-10-14T17:35:04Z",
+  "one_line": "On the OPAL_ENGINE path the stored ANALYSIS document has release.released_revision None and no protected_pdf_ref (ycharts/research/opal_producer.py:396), so analysis-request-pdf refuses an OPAL report with ANALYSIS_PDF_NOT_RETAINED (ops/owned_report.py:309); the contract fixture _contracts/fixtures/AnalysisReport.v2.opal.valid.json:81 carries a protected_pdf_ref.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "_contracts/fixtures/AnalysisReport.v2.opal.valid.json:81 shows an OPAL document with release.protected_pdf_ref, and ops/owned_report.py:303-309 reads that member for every provider.",
+  "world_is": "From source only: the OPAL producer writes release None (opal_producer.py:396). The non-test grep of ycharts/, ops/ and reports/ finds the protected_pdf_ref writers only at job.py:559 and resident_worker.py:485, both vendor-path. No portal page item calls the route today (the pdf kind is not listed, AR-y-273), so no user path reaches the refusal now. Not read live: whether any stored OPAL report exists.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py:396 @9fb149ec07",
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:309 @9fb149ec07",
+      "infra/aws/lambda/investor-reporting/_contracts/fixtures/AnalysisReport.v2.opal.valid.json:81 @9fb149ec07"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the AR-y-329 read; the live check (does a stored OPAL report exist, and what does the route answer for it) is for the CVO or a later read-only cell."
+}
+```
