@@ -79,6 +79,8 @@ Module `infra/aws/ec2/opal-gateway/app/harvest_identity.py`.
 Contract sections in `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G1_harvest.md`: crosswalk 2102-2273; universe 4261-4416; identity 3041-3195; bloomberg bronze identity
 8772-8934; packs 3419-3537; the keyed datasets' headings are listed by `grep -n "^### " <file>`.
 
+**Ruling A1 (issuer, on your row: the naming limb).** The commit-time naming gate (LGIC_ENFORCE; `.tools/naming-gate.py`) REFUSES a NEW out-of-pattern S3 literal and has no override for it. Four live prefixes are spelled with hyphens (`research-continuation`, `research-dossier`, `research-report`, `research-report-extract`); their canonical underscore spellings hold 0 objects, and AMGT_HARVST owns any rename (R19). So: write ONLY the canonical underscore spelling of a prefix in the module (the gate grades it CONFORMANT), and resolve the LIVE spelling at run time with one helper `_live_prefix(canonical)`: list the canonical prefix through `harvest_typed.list_keys`; if it holds no key, list the same prefix with the underscores of its LAST path segment written as hyphens (built with `str.replace`, never typed) and use that if it holds keys; else the dataset is absent (`absent_reason`). Put the prefix actually read in `source_keys`. NEVER type a hyphenated S3 literal, split a string to get past the gate, or override it. The module is then tolerant of the rename. Tests: a fake holding only the hyphen spelling resolves to it; a fake holding both prefers the canonical; one holding neither is absent.
+
 ### Tests, `infra/aws/ec2/opal-gateway/tests/test_og_gt1.py` (fake client, Opal stand-in principal)
 
 - `test_oggt1_ac01`: an exact ticker resolves `exact` with a `security_key`; a company-name fragment returns `candidates`
@@ -147,6 +149,8 @@ the issuer to make at the merge.
 - The issuer registers the tools and re-pins counts at the merge (CUT BY WRITE SET: hookups belong to no cell).
 - Pre-cut: AC1 and AC2 base FAIL as expected (module, tests and probe absent).
 - Queue: staged until OG-gt-0 merges; the spawn is the GO.
+
+- A1 (issuer, 2026-10-14 ~15:4xZ, workers' rows on the naming limb): hyphenated live prefixes are resolved at run time from the canonical underscore spelling; no hyphenated literal, no override. The worker is re-seated on its uncommitted module with this amendment. No criterion moves. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>
