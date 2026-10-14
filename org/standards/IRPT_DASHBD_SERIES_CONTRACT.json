@@ -1,5 +1,12 @@
 {
-  "contract_version": "0.1.0",
+  "contract_version": "0.2.0",
+  "lineage": [
+    {
+      "contract_version": "0.1.0",
+      "sha256": "40cef6203cbfa109cae26209a9d241b82d6b1071f316c9f71f39d16913853e94",
+      "note": "the bytes of 0.1.0 before the model_windows section was added (TO-DB-b-204, round 105); the series section below is unchanged from them"
+    }
+  ],
   "project": "IRPT_DASHBD",
   "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
   "prd_contracts": ["C-SERVE", "C-SEAM"],
@@ -177,5 +184,43 @@
   "open_changes": [
     "PRD v0.4 ruling 17 (@a8a65b9f62): HOLDINGS_INCOME_FALLBACK is never emitted; the member leaves the source table contract in that file's own versioned edit, and this file changes nothing because it names the enum and not its members.",
     "PRD v0.4 ruling 18: the field that says whether the holdings guard graded a day is declared first in the source table contract with its rule-24 record; it enters `series.optional` here in the contract_version that follows that edit."
-  ]
+  ],
+  "model_windows": {
+    "scope": "the per-household compounded windows of the four Yang model benchmark stems, read at build time from the served object; the raw model series is never a gold table and never a copy in any bucket",
+    "writer": "workstream B: the sample builder reads the served object through the reader module adapters/model_series_windows.py (read_served_series, windows_from_series, source_claim); the reader writes nothing",
+    "reader": "the Performance page: the 32 benchmark members of the performance report (pvs and avs, four windows, four stems)",
+    "served_source": {
+      "bucket": "opal-data-portal-v2",
+      "key": "json/benchmarks/model_portfolio_timeseries.json",
+      "column": "index_benchmark_return",
+      "model_codes": {
+        "UST": "benchmark_ultra_short_term",
+        "ST": "benchmark_short_term",
+        "INT": "benchmark_intermediate_term",
+        "LT": "benchmark_long_term"
+      },
+      "day_basis": "trading days of lib/trading_calendar.py only; a missing return on a trading day inside a window is never interpolated"
+    },
+    "stems": ["benchmark_ultra_short_term", "benchmark_short_term", "benchmark_intermediate_term", "benchmark_long_term"],
+    "windows": {
+      "qtd": "from the first calendar day of the quarter of the as-of date",
+      "ytd": "from January 1 of the as-of year",
+      "last_12_months": "from the day after the date one calendar year before the as-of date",
+      "since_inception": "from the day after the household's first data date"
+    },
+    "value": {
+      "form": "cumulative percent points of the product of (1 + daily return) over the window's trading days, minus 1, times 100, rounded to one decimal",
+      "absent": "a window the series does not wholly hold is written as the performance report contract's absent form, carrying its reason in words and the kind that contract names; a null is never written as a figure and a missing window is never written as zero",
+      "claim_fields": {
+        "source": "the served key and its VersionId, as one string (the key, then ?VersionId=, then the version id)",
+        "data_as_of": "the ISO date of the last trading day of the series read (the live vintage, not a cited one)"
+      },
+      "claim_rule": "every model-window value carries source and data_as_of beside it; a value without both is not a measured value"
+    },
+    "placement": {
+      "home": "the firm's OWN gold, beside the household's series file (the same firm-scoped address the household's series.json.gz uses)",
+      "never": ["the raw model series in any table or bucket", "a general table such as market_topic_daily", "a firm-neutral or shared address", "a copy under any firm other than the household's own"]
+    },
+    "apply": "not in this contract version: the landing of the model windows is a later round under a never-widen pair (CTO and COO); TO-DB-b-204 writes nothing"
+  }
 }
