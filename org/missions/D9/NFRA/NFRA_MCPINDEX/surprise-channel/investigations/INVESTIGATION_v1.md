@@ -7352,6 +7352,73 @@ carries none.
       ]
     },
     "notes": "The issuer decides whether SERVE-NOW remains a report, is retired, or is replaced by the G1 table set; this cell only stopped it from refusing."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~36",
+    "surfaced_at": "2026-10-14T16:09:54Z",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W36-S5",
+    "one_line": "MX-c-13 Part 5 cannot make the whole test_tool_index_and_harvest.py file pass in this cell: two of its five red tests read the 39 committed harvest_*.yaml source rows, which are still the 11-field shape, and only MX-c-12 rewrites them.",
+    "spec_asserts": "MX-c-13 Part 5: update each of the five red tests in test_tool_index_and_harvest.py to build the table-grain row or the loader's new tool-index behaviour, so that the file passes. Paths: the file is in this cell's <paths>; catalog_entries/ rows are not (no catalog_entries/ row is written by MX-c-13).",
+    "world_is": "After the fixture fix (TABLE_ROW, six table fields) three of the five pass. test_committed_harvest_files_are_valid_and_cover_serve_now_once still fails: load_harvest_entries() reads 0 valid and 39 refused, and it asserts 39 rows where MX-c-12 writes 78. test_the_emitted_catalog_passes_the_offline_validator still fails: validate_harvest_and_tool_index() returns 273 errors, all 273 HARVEST-ROW (the 39 files), 0 TOOL-INDEX. Measured by running the file (2 failed, 22 passed) and by splitting the validator's error list. Both tests are refused rather than edited to pass (Bounds 5); the file is red until the MX-c-12 rows replace the 39.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/tests/test_tool_index_and_harvest.py@c78df77169 lines 102-109 (test_committed_harvest_files_are_valid_and_cover_serve_now_once: errs == {}, 39 rows) and lines 331-332 (test_the_emitted_catalog_passes_the_offline_validator).",
+        "workflows/atom_decomposition/validate_catalog_v02.py@c78df77169 validate_harvest_and_tool_index(): the 39 harvest_*.yaml source files are the only source of its 273 errors (measured in the worktree, same run).",
+        "Row Z-W36-S1 (same cause, disarm 2.0.0_SA_COO~MI at the MX-c-12 merge); this row records the Part 5 consequence for the test file."
+      ]
+    },
+    "notes": "Disarm = the issuer's drain merge of MX-c-12 (the 78 table rows replace the 39) before the file is graded as green. The MX-c-12 cell should also move the 39-row assertion in test_committed_harvest_files_are_valid_and_cover_serve_now_once."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~36",
+    "surfaced_at": "2026-10-14T16:09:54Z",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W36-S6",
+    "one_line": "test_a_row_on_a_prefix_never_rowed_or_not_serve_now_is_refused passes only because its VALID_ROW lacks the table fields; a complete table-grain row under the v0.5 first-segment rule is accepted for four of its seven 'refused' prefixes.",
+    "spec_asserts": "test_a_row_on_a_prefix_never_rowed_or_not_serve_now_is_refused: every one of its seven listed prefixes (amgt/harvest/gold/, amgt/harvest/gold/research-unlisted/, amgt/harvest/gold/chatter_daily/sub/, wsj/, lib/, wsj/harvest/bronze/, newprefix/v1/) is refused as never-rowed or not serve-now.",
+    "world_is": "validate_harvest() on a complete table-grain row (the TABLE_ROW shape) with the same prefixes: 'amgt/harvest/gold/research-unlisted/', 'wsj/', 'lib/' and 'wsj/harvest/bronze/' are ACCEPTED (v0.5 gates a row on the first path segment, not an exact prefix tuple); 'amgt/harvest/gold/' is refused as never-rowed; 'newprefix/v1/' is refused as not a served top-level prefix; 'amgt/harvest/gold/chatter_daily/sub/' is refused for its file name, not its prefix. The test passes today only because VALID_ROW lacks the six table fields. Not in Part 5's five, so the test is left as it is.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/tests/test_tool_index_and_harvest.py@c78df77169 lines 48-56 (the prefix list and the assertNotEqual) and line 35-41 (VALID_ROW, the 11-field shape).",
+        "workflows/atom_decomposition/emit_catalog_v02.py@c78df77169 validate_harvest() first-segment rule (HARVEST_TOP_PREFIXES) and the exact-tuple removal made by MX-c-11."
+      ]
+    },
+    "notes": "The test's intent (never-rowed and not-serve-now refused) is still the v0.5 intent only for the gold root and the unserved top segment. A later cell that owns this test should state which of the four accepted prefixes v0.5 means to refuse."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~36",
+    "surfaced_at": "2026-10-14T16:09:54Z",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W36-S7",
+    "one_line": "The round-14 loader check's docstring says 161 correct table rows; the same check grades glib.EXPECT_ROWS = 174 and prints 174 of 174.",
+    "spec_asserts": "c13_check.py module docstring: 'ac1 load_catalog_entries accepts 161 correct table rows'.",
+    "world_is": "c13_check.py ac1 grades got_new == glib.EXPECT_ROWS, and glib.py sets EXPECT_ROWS = 174 (131 + 36 + 12 + 7 less 12 already catalogued). The live run prints 'ACCEPT: 174 of 174'. The docstring figure is stale; the grading figure is 174, matching the order's own text.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round14/checks/c13_check.py@c78df77169 module docstring line 3 (161) and ac1 return condition (got_new == glib.EXPECT_ROWS).",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round14/checks/glib.py@c78df77169 EXPECT_ROWS = 174."
+      ]
+    },
+    "notes": "Doc-only. The check's verdict is not affected; the check file is the issuer's and is not edited here."
   }
 ]
 ```
