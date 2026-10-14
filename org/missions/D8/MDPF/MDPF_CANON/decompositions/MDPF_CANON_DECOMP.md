@@ -521,3 +521,15 @@ row; the note is on the face; no band is drawn; and the readback prints BEFORE-D
 
 **Checks:** `deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_2.py` (drafts at `round7/draft/checks/`). At base (the candidate branch): `build` 3 of 13 (C1, C4, N4 controls), `data` 3 of 3 by design (served inputs), `regress` 2 of 2 (the CN-i-1 arms stay green). A scratch reference
 patch (`checks/ref/make_reference_tree_i2.py`, never committed to product paths) reads `build` 13 of 13 and `regress` 2 of 2; six mutants turn C2/C3, T2, N2, N4, N3 and N1 red; the classifier fails three planted defects that CN-i-1's D1 accepted. `selftest` prints OK.
+
+
+## v7 AMENDMENT 2 -- CN-i-3, the Global AUA Trend returns to PROD's text (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-14 ~20:3xZ)
+
+**Why:** Andrew declined the Trend as built by CN-i-1 and CN-i-2 (approval row 19ae CLOSED declined; record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_201xZ_PORTFOLIOS_SMOKE_TREND_FULL_HISTORY_COTTONWOOD_SPEC.md` @caf5dc7d73) and approved every other edit, the lime repaint and the 49 Financial view. The CTO directed (msg 5831): one candidate branch, the feature's changes with the Global AUA Trend byte-equal to PROD's, the 49F view unchanged, held. `fanout: 1 of 1 chains, cap 8`, worker slot ~25, `portal_ref:` `scratch/canon-i3-base` (PROD 5ab67a65 plus the three feature commits). The cell is a per-scope choice between two texts that already exist; it writes no new Trend behaviour. The order that carries it is the CN-i-2 order file, MODIFIED and reopened (the TO issuance gate's one-issuer-per-round limb: a re-cut into the first issuance modifies its orders and adds no file); it owns CN-i-2 and CN-i-3.
+
+| cell | serves (cell_refs) | candidate | owned files | depends on | actor |
+|---|---|---|---|---|---|
+| `CN-i-3` the Global AUA Trend draws PROD's text (the five models, Non-Model, Additive SMA sleeves, Tax-Managed SMA, no custom grouping, no Client chips, no boundary note) while every other scope keeps the feature's text; the lime colour, the Other Models "as of" and the type fields stay (LOCAL: a portal candidate; client-facing at the landing, held) | FWD-9 (the Trend, held at PROD's layout pending the full-history spec) | portal / Global Trend revert by scope | `portal/src/pages/ModelPortfolios.tsx` | -- (CN-i-1, CN-i-2 and CN-l-2 merged) | ~25 (worker) |
+
+**Not in this cell:** the full-history Trend (the CRO's spec), any change to Inflection or Cottonwood beyond what the feature already does (put to the CTO), fixing DEV (`9e637fe51e` carries the declined Trend; the CTO's), the Cottonwood Trend upgrade.
+**Checks:** `round7/checks/r8_cn_i_3.py` (`sites`: P1 PROD's removed lines present, P2 the feature's added lines present; `scope`: S1 only ModelPortfolios.tsx changed, S2 the protected files byte-equal). At base: `sites` 1 of 2, `scope` 1 of 2; selftest OK. They are source-level; the issuer's real run (a render of the Global Trend against PROD's) is what proves which text each scope draws.
