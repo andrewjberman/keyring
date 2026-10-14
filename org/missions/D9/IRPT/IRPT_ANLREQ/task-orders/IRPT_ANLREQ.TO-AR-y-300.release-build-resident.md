@@ -58,6 +58,8 @@ Read also, as the method you repeat: `org/missions/D9/IRPT/IRPT_ANLREQ/task-orde
 
 <expected_criteria>AR300-y-AC1 AR300-y-AC2J</expected_criteria>
 
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-14 ~01:3xZ, after the worker's BLOCKING row `IRPT_ANLREQ-D2-W118-S2`; the worker was right).** `ycharts/research/opal_packager.py` is ALREADY in the release-19 tarball, so this release REPLACES it (a differing member), it does not add it; the census finding that the pin's builder could not package the `ycharts/research` folder concerned a different builder file (row `W118-S3`: the recipe builder ran unedited, so the builder diff is empty). The expected delta against the release-19 tarball is therefore: differing = the six replaced members, `opal_packager.py`, `resident_bindings.json` and `SHA256SUMS`; only_in_new = `lib/trading_calendar.py` only; removed 0. The checker `y300-build` is corrected to that expectation; the criterion text is unchanged. Gate limb that graded this amendment: none stated (the issuer amends its own pending order's expectation and checker).
+
 ## BOUNDS
 
 - **Grant:** exactly the `<paths>` below, plus `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~118/` and this order's file (status flip only). If a test OUTSIDE the grant fails because of your change, STOP: file a BLOCKING row naming it; the issuer amends the grant.
