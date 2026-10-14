@@ -10810,3 +10810,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-S30 -- the comp-pipescript deployed sweep cannot return a MATCH row for a gold lib file, so a ledger leg that requires one for etf_classifier.py has no independent proof source
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S30",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-14T12:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "After the TO-DB-b-183 upload, 'comp-pipescript deployed etf_classifier --pipeline bd-gold' reads SUBJECT_ABSENT_FROM_CORPUS (76 gold scripts swept, no lib/ file among them), so the packet's L2 proof line ('the comp-pipescript deployed MATCH line for the key') can be produced only from safe-deploy's own VERIFY OK line, not from a standalone sweep.",
+  "spec_asserts": "The packet (section 7, condition 1) and the ledger leg L2 require the 'comp-pipescript deployed MATCH line for the key' as proof that code/gold/lib/etf_classifier.py landed.",
+  "world_is": "safe-deploy.sh data/black_diamond/scripts/gold/lib/etf_classifier.py printed 'VERIFY OK  comp-pipescript deployed' and rc 0. A standalone 'comp-pipescript deployed etf_classifier --pipeline bd-gold' afterwards printed '0 MATCH ... No scripts matched filter ... ABSENT IN TREE [bd-gold] ONLY' with denominators gold 76, silver 15, bronze 19; the same filter given as the full repo path also matched nothing. The bytes were therefore proven by this seat's own aws s3 cp read-back (sha256 equal to the pin) and not by that sweep. Inert: the lib object is correct; the gap is that the sweep's corpus excludes lib/ members, so a future leg that cites a standalone MATCH row for a lib file cannot be met.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/bd_gold_classifier_cash/APPLY_RECORD.json (upload.pipescript_deployed_basis and upload.pipescript_deployed_limit)",
+      "comp-pipescript deployed output at 2026-10-14T12:1xZ: DENOMINATOR gold 76, silver 15, bronze 19, ANSWER-STATE SUBJECT_ABSENT_FROM_CORPUS (scoped to the bd-gold tree)",
+      "s3://opal-data-bd/code/gold/lib/etf_classifier.py read back by aws s3 cp: sha256 e7385264668e9bf746aeab809c8ff0a869f9091685f86751b1679dfc6ddd81ba, VersionId fWNdGGJ5Cc0.Y6hGALPVvW.QwjS8TSgl"
+    ]
+  }
+}
+```
