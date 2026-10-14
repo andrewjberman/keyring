@@ -13753,3 +13753,123 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W133-S1 -- BLOCKING: the grant excludes two existing test files that pin the staff behaviour AR-y-325 reverses; the TicketCenter folder reads 3 fail after the cell's change
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W133-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~133",
+  "surfaced_at": "2026-10-14T16:40:17Z",
+  "one_line": "BLOCKING: AR-y-325's change (an Opal staff filer chooses the firm; the staff-not-filing sentence leaves the render path) turns three existing TicketCenter tests red, and the two files that hold them are outside the order's grant; AC1 (folder 0 failed) cannot print PORTAL-TESTS-OK.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "TO AR-y-325 step 3: the files you must touch are among AnalysisRequestParts.tsx, analysisRequest.ts and TicketCenter.tsx plus the NEW test file; any other file is a BLOCKING row. Step 4(b): partner filingFirm is unchanged on every case the existing tests pin. ACCEPTANCE AR325-y-AC1: the folder run must show 0 failed.",
+  "world_is": "With the change applied (portal worktree, uncommitted, base origin/PROD 6a5926fc1194e1ce37e35ff267e5cf4914d9c172): bun test src/pages/TicketCenter gives 118 pass, 3 fail, 121 tests across 23 files (.scratch/folder_after.txt). The three failures are pre-existing assertions of the staff behaviour the cell removes: (1) src/pages/TicketCenter/__tests__/analysis-firm-c-firm.test.tsx, test '(d) an Opal-internal caller sees the filing-not-for-staff sentence...' (line 71 expects the staff sentence); (2) the same file, test 'the page derives the filing firm...' (line 93 expects the staff sentence in AnalysisRequestParts.tsx); (3) src/pages/TicketCenter/__tests__/analysis-firm-choice.test.tsx, test 'an internal caller is offered the READY firms of the Global context...' (line 131 expects one select for an internal caller; the Firm control is a second select). The worker edited neither file: they are not in <paths>.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/__tests__/analysis-firm-c-firm.test.tsx:69-94 (pre-change text at 6a5926fc1194e1ce37e35ff267e5cf4914d9c172)",
+      "portal/src/pages/TicketCenter/__tests__/analysis-firm-choice.test.tsx:129-135 (pre-change text at 6a5926fc1194e1ce37e35ff267e5cf4914d9c172)",
+      ".scratch/folder_after.txt (bun test src/pages/TicketCenter output after the change, 118 pass 3 fail)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not fixed by the worker. The remedy belongs to the issuer: amend the grant to name the two test files (their pinned staff assertions retire with the cell), or re-cut the cell so the staff sentence is kept as a non-render constant. The worker stopped per the order's STOP rule before the commit, the candidate branch and the proof instance."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W133-S2 -- OBSERVATION: the premise that an internal caller reads 'Choose the firm this request is filed under.' is not PROD's behaviour; PROD never loads the firm list for staff, so the hold reads 'Your firms are still loading.'
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W133-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~133",
+  "surfaced_at": "2026-10-14T16:40:17Z",
+  "one_line": "At origin/PROD an Opal staff caller's firm list is null for good: the directory-context load is skipped for internal callers, so the create form's hold reads 'Your firms are still loading', not 'Choose the firm this request is filed under.'",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-325 THE CELL: 'submitHeldReason ... reads Choose the firm this request is filed under. with nothing to choose'. Step 2 (a): say what firms holds for an INTERNAL user (null, empty, or a list) and which call loads it.",
+  "world_is": "firms is null for an internal caller at origin/PROD: TicketCenter.tsx:305-306 returns before loadAllowedFirms when internal, so no call loads it. submitHeldReason (analysisRequest.ts:221-224) therefore reads 'Your firms are still loading. Wait for them, then choose one.'; its 'Choose the firm this request is filed under.' line (analysisRequest.ts:227) is reached only with a non-empty list. The served list for staff already exists: loadAllowedFirms(client, true) (TicketCenter.tsx:97-114) reads the Global context's READY firms (selectedTenant global), the same resolveDirectoryContext call InvestorReporting/index.tsx:111-112 makes. For a partner, loadAllowedFirms(client, false) reads permittedFirms. No new endpoint is needed for the chooser.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx:304-316 at 6a5926fc1194e1ce37e35ff267e5cf4914d9c172 (the early return for internal)",
+      "portal/src/pages/TicketCenter/analysisRequest.ts:217-230 at 6a5926fc1194e1ce37e35ff267e5cf4914d9c172 (submitHeldReason)",
+      "portal/src/pages/TicketCenter/TicketCenter.tsx:97-114 at 6a5926fc1194e1ce37e35ff267e5cf4914d9c172 (loadAllowedFirms, Global READY firms)",
+      "portal/src/pages/InvestorReporting/index.tsx:111-112 at 6a5926fc1194e1ce37e35ff267e5cf4914d9c172 (the composer's Global directory read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded because the order's premise differs from PROD's behaviour. The AR-y-325 change removes the early return, so the premise becomes true in the form the cell asks for."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W133-S3 -- OBSERVATION: the order names the staff-submit check as 'lambda_function.py line 1182' with no path; the file is infra/aws/lambda/ticket_center/lambda_function.py in the workspace repo, and the portal worktree does not carry it
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W133-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~133",
+  "surfaced_at": "2026-10-14T16:55:29Z",
+  "one_line": "OBSERVATION: the order cites the ticket service as 'lambda_function.py line 1182' with no path; the file is infra/aws/lambda/ticket_center/lambda_function.py in the workspace repo (located with comp-find on _create_firm_allowed), not in the portal worktree the order names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-325 step 3: 'the route a staff filer takes ... CREATE ... lambda_function.py line 1182 ... So J7 is PORTAL-ONLY: no Lambda change. Confirm this with the file and lines in your record.' No path for the file is given.",
+  "world_is": "The ticket service source is infra/aws/lambda/ticket_center/lambda_function.py (workspace repo, HEAD 9fb71d9529). Read only: lines 1181-1182 (the SUBMIT answers.firm check), 1217-1262 (create_ticket, the CREATE path the staff form takes), 359-372 and 413-426 (the firm checks). No Lambda change was made; the file is outside the grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:1181-1182 (submit path: answers.firm must be the caller's own firm), read at workspace HEAD 9fb71d9529",
+      "infra/aws/lambda/ticket_center/lambda_function.py:1217-1262 (create_ticket: req_firm = answers firm at 1257; _create_firm_allowed refusal 400 at 1261-1262)",
+      "comp-find '_create_firm_allowed' --files: DEF hit infra/aws/lambda/ticket_center/lambda_function.py (DENOMINATOR 42 hits across 80421 files)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded because the order named a line without its file: the worker had to locate the file. The finding that J7 needs no Lambda change stands on the CREATE path read in S4, not on the path."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W133-S4 -- OBSERVATION, ARMED: the chooser offers every Global READY firm, but the ticket CREATE accepts a staff filing only for a firm inside the principal's allowedFirmIds and profile scope, and the upload door runs before CREATE
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W133-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~133",
+  "surfaced_at": "2026-10-14T16:55:29Z",
+  "one_line": "OBSERVATION: the staff chooser offers the Global READY firms; the ticket CREATE refuses a staff filing for a firm outside the principal's allowedFirmIds or profile scope with a 400, and the upload door has already been called for that firm by then.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "TO AR-y-325 step 2 (b): the chooser's list is the served list an Opal staff user may choose from. Step 3: 'if CREATE refuses a staff filing for a partner firm in a way the source shows, file a BLOCKING row naming the check'; and 'the synthetic staff user of the FWD-1 run needs the chosen firm in its allowedFirmIds (a property of that user, not of this cell)'.",
+  "world_is": "create_ticket refuses with 400 (requester_firm outside the principal's allowed firms) unless _firm_allowed (the principal's allowedFirmIds is ALL or a csv that covers the firm) AND _in_profile_scope (the INTERNAL profile scope is None or contains the firm) both hold. The staff form calls the upload door (analysisRequest.ts:245 and :251, selectedTenant = the chosen firm) before the CREATE (:279), so a refused firm has reached the door first; whether the door checks the firm was NOT read. The page then shows TICKET_FAILED_SENTENCE. An ALL principal passes both checks, so the FWD-1 user is unaffected only if its allowedFirmIds holds the chosen firm. Not BLOCKING: the refusal is conditional on the principal, not on the internal class, and the order itself assigns it to the user.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:359-372 (_firm_allowed: allowedFirmIds ALL or csv; _create_firm_allowed = _firm_allowed AND _in_profile_scope), read at workspace HEAD 9fb71d9529",
+      "infra/aws/lambda/ticket_center/lambda_function.py:413-426 (_resolve_scope and _in_profile_scope: scope None means unrestricted; a firm outside the scope is refused)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:1261-1262 (CREATE refusal 400 'requester_firm ... is outside the principal's allowed firms')",
+      "portal/src/pages/TicketCenter/analysisRequest.ts:245 and :251 (upload door before CREATE) and :279 (createTicket), at 6f4e5f67"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED because the control still offers a served firm the principal may not file under, so a staff filer who picks one sends an upload to the door and is then refused. The disarm is the issuer's: narrow the chooser to the principal's own list, or read the upload door's firm check and record it. The worker did not change either."
+}
+]
+```
