@@ -1608,3 +1608,30 @@ every named `read_tool` is served (the emit refuses otherwise); a firm principal
 **The cells.** `MX-c-14` (A4) regenerates the 174 CLEAN rows and writes both registry files; `MX-c-15` (new, ISSUED AS ROUND 15 because the gate allows one issuance per round and round 14 is issued; worker ~39 from the merged HEAD; the portal and certified-channel round is therefore round 16) changes the loader to accept the clean row and to join the registry entry, and the writer to emit `key_template`. They share no file. `MX-c-13`'s checks (`c13.AC1-AC3`) graded the previous shape and fail on the new loader by design: `c15.AC1-AC2` replace them.
 **One builder.** `glib.expected_row(contract, group)` in the round-14 checks builds BOTH the clean row and its registry entry; the reference generator, `c14` (AC1 compares the registry files to it, AC2 compares each row, AC2 scans every string and key of a row for a carrier) and `c15` (it joins and compares with the full row) all use it, so the three agree by construction. Planted arms: `plant_c14.sh` 24 of 24, `plant_c15.sh` 5 of 5.
 **Honest limit.** `catalog_tokens.py` (the worker's) reads the token sets the way the gate's `Naming.__init__` does today. If the registry's scopes change, a clean row can turn dirty; `c14.AC2`'s carrier scan uses the check's own copy of the same rule, so a drift between the two shows as a failure, not as a pass.
+
+
+## ROUND 16 (2.0.0_SA_COO~MI, 2026-10-14 ~21:3xZ) -- DRAFT FOR THE CVO'S READ, NOT ISSUED: the certified-channel corrections, the G5r rival-fund rows, and the category-views row
+
+Source: R14.6 (what round 14 left to "round 15", now round 16 because MX-c-15 took round 15), PRD v0.14 to v0.16, CTO msg 34192 (landing order) and COO~O msg 34169. Rounds 13 to 15 are drained at `66f8ea1466` (216 table rows, 78 harvest rows). This section is spec-frozen once issued. Per the CTO, the CVO reads it BEFORE issue because cell MX-c-16 edits CVO-certified text inside the emitter.
+
+### R16.1 THE CELLS -- 3 (one issuance, each cell a disjoint write set)
+
+| cell | what | write set | risk | serves |
+|---|---|---|---|---|
+| `MX-c-16` | The emitter's certified-spec corrections, each a deliberate change of what `catalog_gate` lets a partner firm read: (a) the `ft.04.portfolios-aum-metrics` twin of `pos.03` is re-ruled DENY; (b) the `mp.15.json-mdpf-legacy` rows (`json/mdpf/**`) are dropped from the catalog (rows only: no object is touched, and `json/mdpf/{firm}/account-distribution.json` stays a live served portal object); (c) the `news` channel text states the measured size (381,261 items) and the frozen / empty markers of the 6 G6 contracts that point at it; (d) `json-tiered/` stated authenticated-only is HELD until Z-S114 closes (not in this cell). | `workflows/atom_decomposition/emit_catalog_v02.py`, the round 16 tests under that folder | LOCAL | FWD-22 |
+| `MX-c-17` | The G5r rival-fund rows (PRD v0.16): the 13 gold tables and the platinum manifest of `G5r_rivalfunds_spec.md` @e1b9937129 as table-grain rows on the round 14 generator and both registry files (a new G5r group in `gen_silver_rows.py`; rows ranked after the Friday rows). The one (bucket, template) already held by ADVI_COTBKF stays that project's. | `workflows/atom_decomposition/gen_silver_rows.py`, `catalog_entries/`, `infra/logic/registry/legacy_addresses.json`, `infra/logic/registry/catalog_fork_keys.json` | LOCAL | FWD-22 |
+| `MX-c-18` | The `mdpf_get_category_views` catalog row and its `portal_index` ToolRow beside `mdpf_get_aum_metrics` (`member_arg="scope"`), asked by 2.0.0_SA_COO~O msg 34169. | `workflows/atom_decomposition/catalog_entries/`, the gateway `portal_index` ToolRow source (file named at the cut after a read of the gateway at HEAD) | LOCAL | FWD-22 |
+
+**Not a cell, and why.** Retiring the `portal_lookup.py` `mdpf` channel and correcting `mdpf-platinum` edits `org/tier0_utility/0.0.3_BG_BBGTerminal/tools/portal_lookup.py`, another seat's lane. It goes to that lane's owner as a request with the exact text, after MX-c-16 lands, and is not graded here.
+
+### R16.2 CHAINS AND FAN-OUT
+
+`MX-c-16`, `MX-c-17`, `MX-c-18` share no file and no data: 3 chains of 3, 3 workers, cap 8. `MX-r-13` (the catalog release) waits on all of round 14 to 16 draining and the OPLGTW ledgers closing.
+
+### R16.3 WHAT THE CVO IS ASKED TO READ
+
+`MX-c-16` only. The three corrections change what is served: (a) narrows (deny), (b) removes catalog rows for a superseded tree (the objects stay), (c) adds text and sizes. Each is a CONTRACTS-half change to a CVO-certified channel. The question for the CVO: does any of (a) to (c) widen a partner firm's read? The issuer's answer is no, and the test is that `catalog_gate` over the new catalog admits no key for a firm principal that it denied before (run as a difference control against the HEAD catalog).
+
+### R16.4 WHAT THIS DRAFT DOES NOT CLAIM
+
+It does not read the emitter's twin and fragment text (the cut does, with the exact before and after of each correction). It does not close the gateway ranking question (COO~O's), the `json-tiered/` note (Z-S114) or MX-r-13.
