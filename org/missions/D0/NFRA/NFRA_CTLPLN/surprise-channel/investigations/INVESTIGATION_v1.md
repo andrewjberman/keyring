@@ -9529,3 +9529,53 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Z-S9 stands as written (append-only). The fix touches spawn only; it does not restore transcripts for sessions already running."
 }
 ```
+
+## NFRA_CTLPLN-W95-S1 -- the --check-fresh checkpoint file is covered by no ignore rule
+
+```json
+{
+  "id": "NFRA_CTLPLN-W95-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~95",
+  "surfaced_at": "2026-10-14T21:44:29Z",
+  "one_line": "The --check-fresh checkpoint reached_roles_census.fresh_checkpoint.json is covered by no ignore rule, so a PARTIAL run leaves an untracked file beside the census; the ignore rule sits outside this order's write surface, so none was added.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CT-ad-4 BUILD 1: the checkpoint is gitignored if the folder's ignore rules do not already cover it, and the worker says what it found.",
+  "world_is": "git check-ignore --no-index on infra/aws/terraform/nfra-ctlpln-identity/tests/reached_roles_census.fresh_checkpoint.json returns rc=1 (no rule). The only rule that reaches this folder's files is infra/.gitignore:41 (__pycache__/). The positive control, tests/__pycache__/x.pyc, returns infra/.gitignore:41 with rc=0. The checkpoint is deleted when a check completes, so it persists only across a PARTIAL run. Adding the rule needs infra/.gitignore or a tests-folder ignore, neither in the order's paths.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git check-ignore --no-index infra/aws/terraform/nfra-ctlpln-identity/tests/reached_roles_census.fresh_checkpoint.json, worktree wk-NFRA_CTLPLN-95 at 868b773335, 2026-10-14 ~21:4xZ: rc=1",
+      "git check-ignore -v infra/aws/terraform/nfra-ctlpln-identity/tests/__pycache__/x.pyc (control): infra/.gitignore:41 __pycache__/, rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## NFRA_CTLPLN-W95-S2 -- the order's Python 3.11 is not installed on this box
+
+```json
+{
+  "id": "NFRA_CTLPLN-W95-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~95",
+  "surfaced_at": "2026-10-14T21:44:29Z",
+  "one_line": "The order names Python 3.11, but this box has no 3.11 interpreter: python is 3.12.10 and py -3.11 finds no runtime, so the new test and the AC2 control ran on 3.12.10.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CT-ad-4 RULES: ASCII only; Python 3.11.",
+  "world_is": "python --version prints Python 3.12.10; py -3.11 reports No suitable Python runtime found; python3.11 is not on PATH. The code uses no 3.10+ syntax; Path.write_text(newline=) is 3.10+ and the file's existing lines already use it. A 3.12.10 run is not a 3.11 run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python --version (worktree wk-NFRA_CTLPLN-95, 2026-10-14 ~21:3xZ): Python 3.12.10",
+      "py -3.11 --version: No suitable Python runtime found; python3.11: command not found"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
