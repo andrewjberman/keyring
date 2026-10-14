@@ -13373,3 +13373,80 @@ name the one known failure instead of silently inheriting it.
     "dismissal_reason": "The step's outcome was reached by the path safe-apply's own header prescribes for a plan (the resolved terraform binary, targeted, with the builder-fed variable), and the recorded line is exactly the one the step asks for: 1 to add, 0 to change, 0 to destroy. The NEVER rule this phrasing protects covers `terraform apply`, which this seat did not run; the apply itself is Phase B and will go through safe-apply as the rule requires. Nothing is left open."
   }
   ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S109",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-14T13:40:00Z",
+  "one_line": "Every SmartX silver object in opal-data-assets (smartx/platform/silver/, 11 fact tables) holds four firms' rows in the same file -- 49 Financial, Titleist, Canopy, Parable -- with no firm segment in any key, so FWD-22's never-cross-firms rule for a SmartX tool can be met only by an in-tool row filter on advisor_id, never by key prefix or IAM.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/parts/G2c_smartx.md (census subagent of 4.0.0_SA_CRO~Z, 2026-10-14: 923,583 keys under smartx/ listed; firm is a row field, advisor_id on the roster table; 49 Financial 10,165 allocations, Titleist 66, Canopy 6, Parable 3)",
+      "same file: Titleist, Canopy and Parable carry no firm_id in partner_roster.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_OPLGTW PRD@7878037d98 FWD-22 (:280-281, :290-291): a client-data tool takes firm, account_last4 and platform, and a call naming no firm or two firms is refused before any read; CLAUDE.md NEVER cross-firm: bucket- or key-prefix-scoped.",
+  "world_is": "The SmartX silver layer is one multi-firm object per table per date; the firm boundary exists only as a column. The IAM and key-prefix mechanisms CLAUDE.md names cannot isolate a firm here, and three of the four firms are absent from the partner roster that maps firms. No SmartX tool exists yet, so nothing is exposed today.",
+  "notes": "Inert until a SmartX tool is cut. The cut (2.0.0_SA_COO~O, under the CTO's G2 addendum) must state the advisor_id filter as the firm fence, prove it with a two-firm negative arm, and route the three missing roster firm_ids. Whether a per-firm producer split is wanted instead is the CTO's call. Filed by 4.0.0_SA_CRO~Z, which observed it through its census subagent."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S110",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-14T13:40:00Z",
+  "one_line": "The 49F Black Diamond dim converter opal-assets-bd49f-dim-convert has failed Runtime.OutOfMemory at its 1,024 MB limit (Max Memory Used 1023 MB) on its scheduled runs, and blackdiamond/49f/silver/ last wrote 2026-09-29T07:06Z, so the 49f silver tables a G2 tool would read are 11 trading days behind T-1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda get-function-configuration opal-assets-bd49f-dim-convert: MemorySize 1024, Timeout 900, LastModified 2026-07-17T16:27:58Z (read 2026-10-14 ~13:38Z)",
+      "CloudWatch /aws/lambda/opal-assets-bd49f-dim-convert REPORT lines: 2026-10-14T07:25Z and 2026-10-13T07:25Z 'Max Memory Used: 1023 MB Status: error Error Type: Runtime.OutOfMemory'; the 2026-10-12T07:09Z run used 222 MB in 98 ms with no error (3 newest streams read)",
+      "s3api list-objects-v2 opal-data-assets blackdiamond/49f/silver/dim_account_xref/: newest key date=2026-09-28/data.parquet, LastModified 2026-09-29T07:06:53Z",
+      "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/parts/G2a_blackdiamond.md (census subagent: 'producer OOM since 2026-09-29')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-22 (PRD@7878037d98 :288): freshness is stated in trading days; the census contracts name the 49f silver tables as a G2 tool source.",
+  "world_is": "The producer has not landed a 49f silver partition since 2026-09-29. The 10-12 run's 222 MB in 98 ms with no error, against the OOM on 10-13 and 10-14, says the OOM date range is not yet measured: the error streams before 10-13 were not read. The G2a census also finds the live 49F silver is written to s3://opal-data-bd/silver/, not this prefix.",
+  "notes": "Inert for the gateway (no 49f tool exists yet), but a tool cut against blackdiamond/49f/silver/ would serve 11-trading-day-old rows. Owner of the producer fix is outside this project (the assets pipeline's owner; the CTO routes it); this row asks the G2 cut to source 49F from where it is live and to state the lag. Not a deploy act of this seat."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S111",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-14T13:34:15Z",
+  "one_line": "Eclipse silver fact_portfolios_simple (opal-data-assets eclipse/inflection/silver/) has written no partition after date=2026-10-09: the converter refuses with a VendorDriftError on a new vendor column, defaultTradingEngineId, present in bronze since 2026-10-10, so a G2 Eclipse portfolio tool would serve rows 2 trading days behind T-1 and growing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3 list-objects-v2 opal-data-assets eclipse/inflection/silver/fact_portfolios_simple/: 133 keys, newest date=2026-10-09/data.parquet LastModified 2026-10-09T13:05:36Z (read by 4.0.0_SA_CRO~Z, 2026-10-14T13:34:15Z)",
+      "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/parts/G2b_orion_eclipse.md open item (3): VendorDriftError, extra column defaultTradingEngineId, since bronze 2026-10-10 (census subagent; the error text was not re-read by this seat)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-22 (PRD@7878037d98 :288): freshness stated in trading days; the census proposes an Eclipse portfolio tool over this table.",
+  "world_is": "The silver table stopped at 2026-10-09 while its vendor added a column. The drift guard refused rather than silently widening, which is the guard working; the table is now stale until the column is admitted to the schema.",
+  "notes": "Inert for the gateway (no Eclipse tool exists). The fix (admit defaultTradingEngineId to the Eclipse silver schema) belongs to the assets pipeline's owner, routed by the CTO; the G2 cut should state the lag or wait for the fix. Not this seat's act."
+}
+```

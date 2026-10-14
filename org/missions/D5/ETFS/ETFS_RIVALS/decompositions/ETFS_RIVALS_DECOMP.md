@@ -1443,3 +1443,66 @@ xc1 FAIL 4, xd1 FAIL 2 with its control PASS).
 - APPLY LEG (round-less executor order, not a cell; 2026-10-12, issuer): `TO-APPLY-R29.rivalfunds-packages-deploy-dell1` deploys the four cells'
   code to the rivalfunds packages at pin de3c6bf211 under the signed pair (COO @ff7e96adf6, CTO `ledger/NEVER_WIDEN_ROUND29_DEPLOY_CTO_HALF.md`);
   window ruled by the CTO: after the 2026-10-13 13:00Z sweep is read. It adds no cell and changes no criterion.
+
+## ROUND 30 (main workstream, the round-29 analysis's two recuts) -- APPENDED 2026-10-14, revision 1.30 of this file
+
+Input: `ledger/ROUND_ANALYSIS.round29.md` @cb3614782c (1.0.0_SA_CTO~DELL1, msg 5567); the CVO's slug msg 5565 and
+`surprise-channel/adjudications/ADJUDICATION_v2.dell1.md` @ceffeac94e (rows D1-C-S19 and D1-C-S20, both NOT MET on the cut, not the
+workers); this seat's packet `deliverables/2.0.0_SA_COO~V1/round29/ROUND29_CLOSE_PACKET.md` @76190e0167. PRD v0.21 (ADMITTED); no FWD moves.
+`round-close-check --round 29` reads MAY-CLOSE (4 of 4 orders, 2 of 2 J1 graded, 0 self-graded).
+
+Cut this round (workstream `page`): RIV-xa-2 and RIV-xc-2 (section 3 items 1 and 2). Chains (M = 2): A = RIV-xa-2 (`render.py`), B = RIV-xc-2
+(`ai_accounts.py` and its own test file). Write sets are disjoint; no edge. Checks: `deliverables/2.0.0_SA_COO~V1/round30/checks/`, dry-run at
+the base before the cut (xa2 FAIL 2, xc2 FAIL 2).
+
+Not cut in THIS issuance, with the reason (analysis section 3 item 3, "carried, unchanged"): the site-Z producer cells RIV-xe-1 (trading-day gate
+and queue-state reader), RIV-xe-2 (Z3 dividends and the field-matched owed request, C1) and RIV-xf-1 (Z4 ACWI and IWM). Their write surface
+(`enrichment_bloomberg.py`, `history_owed.py`, `universe.py`, `collector_bloomberg.py`) is disjoint from this issuance's, so they are workstream
+`sz` of round 30, issued by this same seat as its own issuance once three prerequisites are done: the consumer read for xe-2's never-widen question
+(how G3 readers treat a date partition), the `owed_size.py` re-read, and the check files dry-run at the base. Staged spec:
+`deliverables/2.0.0_SA_COO~V1/round30_prep/STAGED_CELL_enrichment_trading_gate_and_queue_reader.md`. Z-S81 goes to its owner as the analysis rules; it is not a cell.
+
+### `RIV-xa-2` -- the audit page's day-axis sentence sits beside EVERY calendar, inside each fund's own article (round-29 analysis ruling 1; row D1-C-S19; recut of RIV-xa-1) -- APPENDED 2026-10-14, revision 1.30
+- Placement: `ledger/ROUND_ANALYSIS.round29.md` section 2 ruling 1 and section 3 item 1 (msg 5567); CVO row D1-C-S19.
+- Measured (the 2026-10-14 13:00Z page): the sentence is on the page once, in the trades-section legend (`render.py:2471`); the BIDD, CGIC and SCHY
+  calendars render 13,384, 19,461 and 20,425 px below it, so with a calendar centred the legend is out of view (3 of 3). Round 28's ruling 2.1 asked
+  for the sentence "next to the calendar"; RIV-xa-1 put `render._calendar` out of bounds, so the fault was the cut.
+- Interface (`data/etfs/scripts/rivalfunds/render.py` only): a module constant `CALENDAR_AXIS_SENTENCE` holds the sentence EXACTLY as the legend
+  carries it today (ASCII; the apostrophe is U+0027): `Each calendar column is the day a holdings report was expected; a cell reads repeat when the
+  report received that day is the same holdings window as the previous report. Trade windows are dated by the report's own date, so a window can end
+  on a day this calendar marks repeat.` The legend paragraph reads it from the constant and its bytes do not change. `render._calendar(f)`, when it
+  renders the calendar table (the `ok` status), returns `<p class="muted" data-calendar-axis>` + the sentence (HTML-escaped as the file's `_e` does) +
+  `</p>` IMMEDIATELY BEFORE `<div class="calwrap">`, with nothing between them. When `f.get("calendar")` is empty (the `unavailable` status) `_calendar` is
+  unchanged: no sentence, because no calendar renders. The cell markup, hover titles, statuses and every other word of the page are unchanged.
+- Out of bounds: the legend's other words, any status rule, `_trades`, `gold_holdings_coverage.py`, `publish_page.py`, every file but `render.py`
+  and the cell's one new test file.
+- Checks: `round30/checks/xa2_axis_beside_calendar_check.py` (AC1 and AC2; base FAIL 2). J1 (the CVO's): on the served audit page at the production URL
+  (not a local render) after the deploy and the next 13:00Z sweep, the BIDD, CGIC and SCHY calendars each have the sentence visible in the same
+  viewport as the calendar when the calendar is centred (3 of 3).
+
+### `RIV-xc-2` -- the frame instrument compares FAMILIES, and a correction's reason is stored (round-29 analysis ruling 2; row D1-C-S20; recut of RIV-xc-1) -- APPENDED 2026-10-14, revision 1.30
+- Placement: `ledger/ROUND_ANALYSIS.round29.md` section 2 ruling 2 and section 3 item 2 (msg 5567); CVO row D1-C-S20.
+- Measured (the 2026-10-14 page): repetition fell from 5 of 13 to 2 of 13, but IDVZ ("is the clearest fund-specific tell") and TXUE ("is the clearest
+  tell") share one frame family with 0 corrections: `frame_of`'s five-token window splits them at token 5, so the code's own instrument passed what a
+  reader sees as one frame. `input_manifest` recorded no correction reason.
+- Interface (`data/etfs/scripts/rivalfunds/ai_accounts.py` only; `PROMPT_VERSION` stays `a1-chain/8`; no prompt text changes): `frame_of` v2.
+  1. Steps as v1 up to the token list: first sentence (split at the first `.`, `!` or `?` followed by whitespace), whitespace tokens, each stripped of
+     `,;.!?"'()` at both ends (`:` kept), a digit token is `<n>` (consecutive `<n>` collapse), a run of name-like tokens is one `<name>`, the rest lowercased.
+  2. THE CLAUSE: the tokens up to and including the first whose raw form ends in `:`; with none, the whole first sentence.
+  3. THE STOP-LIST: a module constant `FRAME_STOP = frozenset(("fund-specific", "most", "single", "particular"))`; those tokens are removed from the clause.
+     `clearest` is not in it: it stays as the head word. (The stop-list is data in the cell; its denominator is the 13 openings of the 2026-10-14 page,
+     two of which the planted pair reproduces.)
+  4. The frame is the first EIGHT tokens of the clause, joined by single spaces. `frame_of("")` is `""`.
+  Examples that must hold (the check pins them): "Alpha Co is the clearest fund-specific tell: it was bought. More." and "Beta Corp is the clearest tell:
+  it was sold." both give `<name> is the clearest tell:`; "Gamma Co stands out most: it was sold." gives `<name> stands out:`; "Alpha Co added $2.7 million
+  over 2026-09-01 to 2026-09-30." gives `<name> added <n> million over <n> to <n>`.
+  5. `run_chain`: when a direction verdict's first reply shares its frame (the existing `seen_frames` path, unchanged: ONE correction through the chain's
+     existing path), the item's `input_manifest` gains `"shared_frame_with": "<fund>"` (the fund that first used the frame), whether or not the correction
+     succeeded. A reply that STILL shares the family after the one correction is marked, not re-sent: its manifest also gains `"frame_still_shared": true`.
+     A first fund, a distinct frame and an `activity_30d` row carry neither key. First fund wins the `seen_frames` record, as today.
+- Out of bounds: every prompt constant, `opening_check`, `grounding_check`, `wording_check`, `ai_stage.py`, `sweep.py`, any vendor call (a stub client only),
+  `PROMPT_VERSION`. The round-29 check `round29/checks/xc1_frame_check.py` is SUPERSEDED by this cell's check (its AC1 pins the v1 frame) and is not run.
+- Checks: `round30/checks/xc2_frame_family_check.py` (AC1 the families and the planted IDVZ/TXUE pair reading SAME, with its control; AC2 the stored
+  reason and the marking; base FAIL 2) and the AI tests including `tests/test_riv_xc1_verdict_frame.py`, which the worker REWRITES to the v2 rule (AC3: must
+  be green). J1 (the CVO's): on the next sweep page 13 of 13 openings fall in distinct families by the normalized `frame_of`, or each shared one carries a stored
+  correction reason.
