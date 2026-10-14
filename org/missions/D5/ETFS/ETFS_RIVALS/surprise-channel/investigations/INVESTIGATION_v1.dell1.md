@@ -687,6 +687,52 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
       ]
     },
     "notes": "Recorded for the round's test authors. The flag is the package's own mechanism, so no change is made to conftest.py (outside this order's paths)."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W40-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~40",
+    "surfaced_at": "2026-10-14T14:02:24Z",
+    "one_line": "RIV-xe-3 union reader resurrects a voided action: dramatic_move's actions-void-<revision> objects are read by load_actions as rows and never applied, so a void whose action sits in an older pull comes back under the union (the old latest-pull rule dropped it only by accident). price_series honors voids; the G5 reader does not.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~V1",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-xe-3 cell (Interface): load_actions keeps every EVENT row from EVERY pull, de-duplicated on the action's own key. The cell names no void object and says every other function of the file is out of bounds.",
+    "world_is": "The corporate_actions partition also holds dramatic_move VOID objects, actions-void-<revision>.parquet (dramatic_move.py:435-436 VOID_SCHEMA carries no row_kind, as_of or revision column; written at :463-468). price_series.py:216-256 (_voids, _actions) honors them and drops the named (revision, security_id) rows; gold_trade_schedule.py load_actions honors none. Probe (scratch, not committed): one action in pull r1, a void naming r1, a short pull r2 for the same security. The OLD reader returns ex_dates [2026-09-25] (r1 dropped by the latest-pull rule); the NEW reader returns [2026-06-01, 2026-09-25] with label r1+r2, so the voided r1 action is back in G5. Not measured against the live store (no S3 read).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/price_series.py@9a1ce314dc :216-256",
+        "data/etfs/scripts/rivalfunds/dramatic_move.py@9a1ce314dc :435-436 and :463-468",
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py (worktree C:/tmp/wk-riv-r30-40, RIV-xe-3 edit, uncommitted at probe time) :983-1017",
+        "scratch probe C:/tmp/wk-riv-r30-40/.scratch/void_probe2.py: OLD ex_dates ['2026-09-25'], NEW ex_dates ['2026-06-01', '2026-09-25'] label r1+r2"
+      ]
+    },
+    "notes": "Form only. Whether load_actions applies voids is not a question the cell names and the CTO ruled the union; the issuer owns the merge and the xe-2 gate, so the disarm sits there. Not fixed by this worker: out of the cell's bounds."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W40-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~40",
+    "surfaced_at": "2026-10-14T14:02:24Z",
+    "one_line": "RIV-xe-3 cell names two row kinds (event, status) and gives no rule for any other row_kind; the worker applied the old latest-pull rule to every non-event row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-xe-3 cell (Interface): an EVENT row is kept from EVERY pull; a STATUS row follows the rule as it was. No rule is stated for a row whose row_kind is neither.",
+    "world_is": "Producers write only event and status: enrichment_bloomberg.py:211 (status) and :233 (event); dramatic_move.py:257 (event). The rows that carry no row_kind are the void objects (dramatic_move.py:435-436); they reach the non-event branch with a NaN key and are dropped (scratch probe C:/tmp/wk-riv-r30-40/.scratch/void_probe.py: one row returned, the action). load_actions therefore reads every non-event row by the old rule (_is_event and the keep mask in gold_trade_schedule.py).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py@9a1ce314dc :211 and :233",
+        "data/etfs/scripts/rivalfunds/dramatic_move.py@9a1ce314dc :257",
+        "scratch probe C:/tmp/wk-riv-r30-40/.scratch/void_probe.py: OLD 1 row, NEW 1 row (the action; the void dropped by both)"
+      ]
+    },
+    "notes": "Form only. No producer writes another kind today; the choice matters only for a future kind or a frame without the column."
   }
 ]
 ```
