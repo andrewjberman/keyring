@@ -17,3 +17,17 @@ VERBATIM:
 See the answer in the commit message and the session reply: the page is specified (NFRA_MCPORTAL PRD FWD-20 ACCEPT, C15)
 to list every channel the DEPLOYED gateway serves, generated from its definitions. It therefore shows what is served, not
 what is missing; a capability the gateway does not serve cannot appear on it.
+
+## Addendum -- the same session, ~12:5xZ to ~13:0xZ, same terminal (recorded by 2.0.0_SA_COO~MP)
+
+VERBATIM, two later messages:
+
+> I went on the /opalgateway page and it looks good, is this everything we have currently set up through the mcp ?
+
+> Are we employing an official Bloomberg MCP channel or did we just route it ourselves?
+
+What this adds, and what it does not. He reports that he opened the gateway page and that it "looks good". That is not the
+window and the words that `NFRA_MCPORTAL.TO-MP-z-6` (the FWD-20 close run) takes from its issuer line: it needs `t0` and `t1`
+for a direct load of `/gateway` and then `/control-plane`, and his words on what he read. He gave no times and named no
+`/control-plane` visit, and this record supplies neither. Call 21d9 stays OPEN. MP-z-6 stays staged. No close is inferred
+from these words.
