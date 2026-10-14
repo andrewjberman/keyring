@@ -31,6 +31,10 @@ NFRA_OPSWKF. dell1 and the laptop hold mostly secondary work. If boxes stay as t
 **laptop: takes TCKT_VNEXT's two lesser channels (MOVE, needs yes).**
 - The trade request channel is an upload of a trade request form. Build it now with a placeholder; the real form is a
   swap when it arrives in about a week.
+  - Its first read is NFRA_OPSWKF's resume packet. NFRA_OPSWKF is held on dell2 with its trade-request scope: external
+    and internal trade request, and the live 409 "not a trade_request ticket" defect on engine submit. Packet:
+    `org/missions/D9/NFRA/NFRA_OPSWKF/deliverables/2.0.0_SA_COO~O2/RESUME_PACKET_NFRA_OPSWKF_20261014.md`
+    (1.0.0_SA_CTO~DELL2, its msg 7797).
 - The meeting request channel is in-house, with no Calendly. Every request goes to Jeanette's queue, and she confirms or
   reschedules on the dashboard.
 - Both are portal work that lands through the new merge-forward route. The laptop has room for it:
@@ -71,6 +75,6 @@ NFRA_OPSWKF. dell1 and the laptop hold mostly secondary work. If boxes stay as t
 ## 5. What waits on Andrew
 
 1. Yes or no on the two box moves: TCKT_VNEXT's trade and meeting channels to the laptop, and a dell1 seat lent to P1.
-2. The P2 blockers already in his queue: `f61b`, `c8c3`, `1f3e` (dell2).
+2. The P2 blockers still in his queue: `f61b` and `1f3e` (dell2). `c8c3` was approved by Andrew, per 1.0.0_SA_CTO~DELL2.
 3. The trade request form (arrives in about a week, per his note).
 4. Jeanette's mailbox spelling, to confirm (the transcript reads "Jeanette at opalinvest.com").

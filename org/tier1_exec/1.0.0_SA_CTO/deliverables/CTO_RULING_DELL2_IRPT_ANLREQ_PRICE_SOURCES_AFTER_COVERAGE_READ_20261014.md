@@ -47,3 +47,25 @@ history. 16 symbols took 2.21 s. The last row is today's intraday.
 Calls 91d4 and 3dab are CLOSED on this record.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 2 (~18:1xZ): Andrew-direct ~17:5xZ sets the full chain (it supersedes ADDENDUM 1's list)
+
+Verbatim: "Ok we use Yahoo as first round pick, we use Ycharts as second round pick. If neither work, and our replacement function doesnt
+work for whatever reason, then we generate the report without the missing security. However, this should realistically never happen,
+because we should be able to figure out a replacement." Record
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261014_175xZ_PRICE_ORDER_YAHOO_THEN_YCHARTS_THEN_REPLACEMENT.md` @827959566f.
+
+**C-PRICES at hop 9's cut, final:**
+0. The estate's live stores (the DEMQUE price store, the Opal ETFs' Bloomberg history), where they hold the symbol. They are already
+   Opal's, so they are read, not called.
+1. Yahoo (yfinance), cut at T-1, with `source: yfinance`.
+2. YCharts through the stored session, one symbol per call, with `source: ycharts`.
+3. The replacement function (C-SWAP) substitutes a priced security. The report names the substitution.
+4. If all fail, the report is generated WITHOUT the security, and the report says so in plain words (FWD-4: a failure shows). It never
+   blocks.
+
+**Bloomberg is OUT of the price chain** for this report. His chain names none, and its queue stays for the estate's own pulls.
+**C-SWAP step 2 (the replacement) is unbuilt.** Today the AI path does typo checking only, and the AI web-search swap is refused by
+design. Step 3 above therefore needs C-SWAP step 2 built. It joins the enrichment list right after hop 9's prices, ahead of the variants.
+
+-- 1.0.0_SA_CTO~DELL2
