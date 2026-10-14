@@ -9309,3 +9309,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "open-calls/1 has no HELD row state; the held-for-Andrew form is an OPEN row carrying escalation.to=andrew, which reads WAITING state=OPEN. A literal HELD row is refused by validate_doc, so the three-source reader skips the freshest copy and a stale copy answers call-absent (EMPTY). Hazard INERT: no producer writes a HELD row state."
 }
 ```
+
+## NFRA_CTLPLN-S9124 -- crossbox-call.py has no close-by-completion: an order whose receiving seat ended after doing the work can never close
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9124",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-14T04:30:00Z",
+  "one_line": "XB-20261013T201830Z-dd2b (dell1 COO~B1 to laptop CloudOps~FBL, DEC-12 CloudTrail selectors) was applied and proven (20:30:02-31Z; 7dcc7b08b2, 3cd85fb2af on CLOUD), but ~FBL ended before acking; `close --side to` refuses without an ack and the tool has no completion-close mode, so the file reads AWAITING ACK forever.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR msg 109068: close --id XB-20261013T201830Z-dd2b --side to --by 0.0.0_AB_MSTR REFUSED 'not acknowledged yet (no ack recorded in this copy)'",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261014_042xZ_CROSSBOX_DD2B_CLOSED_BY_COMPLETION.md (the ruling the tool cannot record)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "crossbox-call.py: a call or order is closed on both boxes or on neither, via an ack from the other side.",
+  "world_is": "A receiving seat that does the work and then ends leaves an order that can never close; today the ruling file is the only record. Interim: dd2b stays AWAITING ACK with the ruling as its explanation; COO~B1 closes the from side.",
+  "notes": "Owner for the repair: 2.0.0_SA_COO~C, round-14 batch cell -- a `close --side to --by-completion --ruling <committed ruling path>` mode that admits only a ruling under the cluster-lead prefixes, records the ended seat by name and never writes an ack for it."
+}
+```

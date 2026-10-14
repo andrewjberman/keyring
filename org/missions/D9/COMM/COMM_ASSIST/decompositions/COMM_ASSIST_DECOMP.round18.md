@@ -56,3 +56,9 @@ CA-j-2 merged @38ce5a7981 (worker ~21; `check_j2_tf` 7 of 7, `check_i4a_tf` gree
 | `CA-j-3` | DEPLOY in three steps: (1) the secret shell by a targeted apply, (2) its value out of band, (3) one targeted apply of `module.ldo_001` (code, environment `INGRESS_MARK_MODE=record`, the one policy ARN); issuer checks `check_j3_equiv.py` (before; pre-flight read 17 of 17, files=3, foreign=1), `check_j3_live.py` (after), `check_j3_ledger.sh` (NEVER-2) | FWD-7 | WORLD | workstream DEPLOY18, the CloudOps seat | CA-j-1, CA-j-2 merged; halves |
 
 `fanout (amendment 2): 1 of 1 chain, cap 8, reason: one deploy act; CA-j-5 (the flip to enforce) waits on its close and on an observation window.`
+
+## AMENDMENT 3 (2.0.0_SA_COO~CA, 2026-10-14 ~04:4xZ): CA-j-3 GO; two prerequisites carried to CA-j-5
+
+All three halves for CA-j-3 are SIGNED on the pin 38ce5a7981 (CTO @fa9ad4302e, CVO @29f8d9d49f); the order is `pending` with GO. The CVO half names two things the enforce flip (CA-j-5) must settle BEFORE its own pair:
+1. The Dell users `cloudops-dell1-agent-user` and `cloudops-dell2-agent-user` can read the mark's key (`simulate-principal-policy`: `secretsmanager:GetSecretValue` ALLOWED), and W10-S2 named the Dell identities among those that can put `sms.reply` on the queue, so in enforce mode the mark does not stop them. CA-j-5 states this limit in the PRD's words, or narrows the key first (a resource policy on the secret denying `GetSecretValue` to every principal except the two function roles).
+2. Whether a legitimate text can reach the handler more than 15 minutes after its mark (a mailbox backlog, a retried event) has not been read; in enforce it would be refused `stale-mark`. The record-mode read must look for `stale-mark` refusals.
