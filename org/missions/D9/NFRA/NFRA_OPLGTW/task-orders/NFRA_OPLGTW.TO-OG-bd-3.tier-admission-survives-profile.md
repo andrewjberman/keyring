@@ -42,8 +42,12 @@ state.
    - `test_ogbd3_ac02`: the same principal at tier `standard` (or None) is DENIED it (`entitlement_denied`);
    - `test_ogbd3_ac03`: the unprofiled cases are exactly OG-bd-2's (master_admin admitted; standard or None denied),
      and a Schwab tool for a profiled master_admin still needs the grant.
-4. Update `decide()`'s docstring rule list to state the new branch. OG-bd-2's tests (`tests/test_og_bd2.py`) must
-   still pass unchanged.
+4. Update `decide()`'s docstring rule list to state the new branch.
+5. **(A1) Re-pin ONE assertion of OG-bd-2's suite.** `tests/test_og_bd2.py` `test_ogbd2_ac03` pins exactly the old rule
+   the CTO reversed: about line 70, `assert de.tool_denial(BD, profiled_admin.principal, ge.store)["code"] ==
+   "entitlement_denied"` (a profiled master_admin DENIED). Change that one line to assert `is None` (ALLOWED). Update
+   the comment above it and the test's docstring to cite ruling msg 33941. Change nothing else in that file: the
+   unprofiled cases and the narrow-profile `BD` denial (a profiled NON-admin) stay exactly as they are.
 
 ## 2. BOUNDS
 
@@ -56,6 +60,7 @@ state.
 <paths>
 infra/aws/ec2/opal-gateway/app/data_entitlement.py
 infra/aws/ec2/opal-gateway/tests/test_og_bd3.py
+infra/aws/ec2/opal-gateway/tests/test_og_bd2.py
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -84,6 +89,12 @@ your last commit with `python .tools/proof-of-spec-check.py <instance> AC1 --gov
   cell drains, naming its commit), then OG-mg-1 Phase B. OG-mg-1's halves re-sign on that base.
 - Pre-cut: bd3.AC1 base FAIL as expected (`tests/test_og_bd3.py` absent). Its control limbs read OG-bd-2's tests 3 of 3
   and the family + guard suites 0 new failing ids.
+
+- A1 (issuer, 2026-10-14 ~03:0xZ, row Z-W67-S1): `test_ogbd2_ac03` pinned the rule the CTO reversed (msg 33941), and
+  `test_og_bd2.py` was missing from `<paths>`. Both are issuer defects at the cut: the cut ran the bd-2 suite as a
+  control and never read what it asserted. Step 5 re-pins the one line, and the file joins `<paths>`. AC1 is unchanged:
+  its bd2 limb now grades the re-pinned suite.
+  Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>
