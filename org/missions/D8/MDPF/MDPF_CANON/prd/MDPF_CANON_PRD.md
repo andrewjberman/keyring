@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v2.19",
+ "prd_version": "v2.20",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -187,26 +187,25 @@ CONTRACTS changed, so both halves are owed again.
 
   FWD-9  The AUA Trend shows custom models as ONE block and the strategy groups as
          chips, in the colors the Total Assets breakdown already uses
-         v2.19 OVERRIDES, for the GLOBAL Trend (Andrew-direct 2026-10-14
-         ~20:1xZ and ~20:4xZ; L10 ADDENDUM v2.19 below): (a) FULL
-         HISTORY, Variant 1 of `org/tier1_exec/4.0.0_SA_CRO/deliverables/
-         MDPF_CANON_GLOBAL_AUA_TREND_FULL_HISTORY_SPEC_20261014.md`
-         @8025c4d7f1: every group is drawn from 2024-11-01 by that
-         spec's per-group rule table, the five models before 2026-05-15
-         from the 49 Financial series (Global = 49F alone there, diff
-         0.00) and Custom = `model_aua` minus the five; FWD-3's fold
-         does not apply to the Global TREND history, because only Opal
-         staff can open Global (Andrew's stated fact); (b) Client
-         Supervised on EVERY date = `non_model_aua` - `opal_div_sma` -
-         `opal_growth_sma`; "Other AUA" is retired on the Global Trend;
-         (c) ROLL-FORWARD: on a date with no total, and for a group's
-         null on a date with one, the group carries its last known
-         value as point class `carried` (claim held), forward only and
-         never before a group's first value; (d) exception (ii) of
-         clause (2), and the "per-model detail begins" sentence, no
-         longer apply at Global: the groups sum to the Total to the
-         cent on every dated row. Firm scopes are unchanged by (a)-(d);
-         the Cottonwood Trend is a later addendum.
+         AT GLOBAL, the Trend draws every group from 2024-11-01 by the
+         rule table of the Global Trend history (the L10 ADDENDUM
+         v2.20), and: (a) the per-model lines on dates where Global
+         holds one firm (the five models before 2026-05-15; Custom from
+         2026-05-15 to 2026-07-19) draw ONLY for an internal session
+         (`firmId` = the internal firm), read from that firm's own
+         served series, which an internal session may read; the Global
+         served leaves keep FWD-3's fold and gain no single-firm value;
+         every other session (the demo tenant, a claim with no firmId)
+         draws on those dates one "Models" band (`model_aua`) and keeps
+         exception (ii) of clause (2), its boundary sentence and its
+         printed gap; (b) Client Supervised on every date =
+         `non_model_aua` - `opal_div_sma` - `opal_growth_sma`, and
+         "Other AUA" is not drawn at Global; (c) on a date with no
+         total, and for a group's null on a date with one, the group
+         carries its last known value as point class `carried` (claim
+         held), forward only, never before the group's first value;
+         (d) for an internal session the groups sum to the Total to the
+         cent on every dated row. Firm scopes are unchanged by (a)-(d).
          DONE WHEN  EXERCISED -- on Model Portfolios > AUA TREND ANALYSIS > Trend (the
                     period-end bars, the daily area chart, the legend and the
                     tooltip), read on `bun run dev:live --port 5174` (portal
@@ -701,5 +700,14 @@ reaching dell1 at the next integrator pass. It was read here from `origin/box/de
 - **FWD-3 is unchanged for every served leaf except this one.** The Global Trend's history may show single-firm model lines: 49 Financial before 2026-05-15, and Inflection's Custom from 05-15 to 07-19. That rests on Andrew's stated fact that only Opal staff can open Global. If a partner login can ever open Global, this exception lapses.
 - **Where it lands:** the producer (`mdpf_gold_consolidator`) emits the pre-05-15 per-model values, Custom by difference, and the `carried` rows, under a never-widen pair, with every Global leaf read before and after and the headline sums byte-equal. Then the portal (`trendGrouping.ts`, `ModelPortfolios.tsx`), on a client-facing row for Andrew. Two composition steps stay and are footnoted: Inflection enters on 05-15, and Cottonwood enters on 05-28, interpolated to 07-20.
 - ENDPOINT text moves (FWD-9 head), so the ratified-text half is re-owed to `3.0.0_SA_CVO`.
+
+-- 1.0.0_SA_CTO~DELL1
+
+**v2.20 (2026-10-14 ~20:4xZ), on `3.0.0_SA_CVO`'s refusal of v2.19 (msg 5865; `org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_MDPF_CANON_v2.19_RATIFIED_TEXT_20261014.md` @897fe1d0d1):**
+- The CVO measured on PROD 5ab67a651a that the external demo tenant opens Global (`ModelPortfolios.tsx:271`, `:375-379`; `firmAccess.ts:115-117`). So "only Opal staff see Global" does not hold for every session.
+- **Ruled: the CVO's option 3, built as a READ-SIDE stitch.** The pre-2026-05-15 per-model lines, and Custom from 05-15 to 07-19, draw only for an internal session. They are read from the single firm's own served series (49 Financial; Inflection), which an internal session may already read. The Global served leaves keep FWD-3's fold and gain no single-firm value. So a non-internal login cannot reach those values through the page or through the Global API. That session keeps v2.18 exception (ii) and draws one Models band. Option 3 needs no Andrew word, and it keeps his Variant 1 for every staff session, which is the audience he named.
+- **Consequence for "Where it lands" (v2.19):** the producer cell no longer emits pre-05-15 per-model values into a Global leaf. Client Supervised by difference, ETF/ALT and `carried` remain. `carried` rows written into the Global leaf are a served change under a never-widen pair. The stitch is portal work, on a client-facing row for Andrew.
+- **Rule table and oracle:** `org/tier1_exec/4.0.0_SA_CRO/deliverables/MDPF_CANON_GLOBAL_AUA_TREND_FULL_HISTORY_SPEC_20261014.md` @8025c4d7f1 (Variant 1 for an internal session; Variant 2 for every other session).
+- Per the CVO's secondary note, provenance moved out of ENDPOINT. ENDPOINT text moves, so the ratified-text half is re-owed.
 
 -- 1.0.0_SA_CTO~DELL1
