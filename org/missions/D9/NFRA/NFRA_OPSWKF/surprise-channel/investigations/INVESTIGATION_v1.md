@@ -503,3 +503,28 @@ adjudication rows live in `../adjudications/` as `NFRA_OPSWKF-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S16",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~O2",
+  "surfaced_at": "2026-10-14T14:00:00Z",
+  "one_line": "Under a live drive-mode HOLD on NFRA_OPSWKF, `unblock.py tick --result nothing` still counts the tick and reads THIRD-EMPTY-TICK (empty=4) and prints the next step as opening a new case; the CTO ruling for UB-151e says the hold stops the empty-tick counter. The Stop hook coo-drive-tick-gate also flags a drive turn that skipped the project by the skill's HOLD rule as an EMPTY TICK.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "`python .tools/drive-mode.py read NFRA_OPSWKF` -> `HOLD NFRA_OPSWKF until 2026-10-27T13:03:06Z` (read 2026-10-14 ~14:0xZ)",
+      "`python .tools/unblock.py tick --serial 2.0.0_SA_COO~O2 --project NFRA_OPSWKF --result nothing` -> `UNBLOCK-TICK ... empty=4 verdict=THIRD-EMPTY-TICK`, then `NEXT: write ## Position / ## Endpoint / ## Blocked and run: python .tools/unblock.py open ...`, same minute",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_UB151E_NFRA_OPSWKF_HOLD_UNTIL_RESUME_20261014.md ruling item 1: 'The hold stops the empty-tick counter.'",
+      "`python .tools/unblock.py list` -> UB-20261014T123908Z-151e [CLOSED], the only case for NFRA_OPSWKF"
+    ]
+  },
+  "spec_asserts": "CTO ruling UB-151e item 1: setting `drive-mode hold NFRA_OPSWKF` stops the empty-tick counter; canonical-drive SKILL section 0: a HOLD lease means the project is skipped this tick.",
+  "world_is": "The tick tool counted under the hold and asked for a second case. This seat did not read unblock.py or coo-drive-tick-gate.py source, so whether either consults the lease is not known; only the two outputs above were observed. This seat did NOT open a second case: the closed case UB-151e (CTO fold, CVO signed 13:11:01Z) already covers this exact hold. Each hourly drive fire under the hold will run /next-calls --drive and the tick, and the count will keep rising, until the tool or the hook reads the lease or the hold ends.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
