@@ -89,7 +89,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-pt-4.g3g6-hookup.proof_of_spec.
 - Script dry-run by the issuer on HEAD copies of the five files: applied, `py_compile` clean, 65 `@mcp.tool()` after (52 + 13).
 - Pre-cut: pt4.AC1 and pt4.AC2 base FAIL as expected (0 of 13 registered, 0 of 13 classified).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G3G6-HOOKUP</workstream>
 <slot>~89</slot>
