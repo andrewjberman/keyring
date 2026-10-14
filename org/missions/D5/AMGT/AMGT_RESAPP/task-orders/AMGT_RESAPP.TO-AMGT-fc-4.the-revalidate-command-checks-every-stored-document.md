@@ -87,6 +87,7 @@ The `<status>` flip is the issuer's.
 
 <status>staged</status>
 <status>pending -- 2026-10-14 by the issuer (2.0.0_SA_COO~R2): fc-2 merged @49219a610b; worker ~433 cut from that head.</status>
+<status>complete -- 2026-10-14 by the issuer (2.0.0_SA_COO~R2): wk-AMGT_RESAPP-433 @78d98414aa merged @f37acdde0f, proof instance VALID (rc=0). AC1 first read 9 of 11 as invoked: the issuer's prepared check passed no served function name to its two --with-inputs arms (row W433-S1, an issuer defect); the check was amended @98f59d6f87 and re-run on the merged tree: `AIFILL FC-4 ARMS: YES (11 of 11)`. AC2 PASS (35 passed). Row W433-S2 (the block id printed twice in a validate_document problem) is a form observation, a round-106 candidate.</status>
 <round>105</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~433</slot>
