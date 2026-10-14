@@ -10915,3 +10915,154 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W167-S4 -- The portal branch for this order is cut from the round-104 render branch, which is on no remote and not from t
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W167-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~167",
+  "surfaced_at": "2026-10-14T13:34:22Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The portal branch for this order is cut from the round-104 render branch, which is on no remote and not from the last PROD release, and the portal contributing rule that names the branch and its base is not at this branch's head.",
+  "spec_asserts": "The order names the portal branch wk-IRPT_DASHBD-167-portal, cut from the round-104 render branch; the workspace CLAUDE.md portal rule says a portal change is made on cand/<box>/<slug> cut from the last PROD release, and portal/CONTRIBUTING-BOXES.md (the rule file) says the same.",
+  "world_is": "The round-104 render branch wk-IRPT_DASHBD-162-portal (99418063) is contained in no remote branch; origin/PROD resolves at 7db035e4 and the base is not an ancestor of it. The rule file is not at this branch's HEAD; its latest version is in portal history at b5222d78 (creation at 07f065e6). This worker committed on the named branch only (763f4998, c58bb20b, df295727) and pushed nothing; the registration for approval is the issuer's act and was not run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal git history: CONTRIBUTING-BOXES.md at b5222d78 (latest) and 07f065e6 (creation), read with git show",
+      "portal refs: origin/PROD 7db035e4; branch wk-IRPT_DASHBD-162-portal 99418063 contained in no remote branch (branch -r --contains)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~167/RENDER_R105.json (portal.branch and portal.commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W167-S5 -- The export paginator leaves two tables split with a single row on a sheet: the portfolio value summary on page
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W167-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~167",
+  "surfaced_at": "2026-10-14T13:34:22Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The export paginator leaves two tables split with a single row on a sheet: the portfolio value summary on pages 3 and 4, and the activity summary's last account on page 6; no page clips.",
+  "spec_asserts": "Order step 7: each sheet must fit one PDF page, and every page is read for clipped text, a dash where a figure belongs, a contradicting note, a template slot name, an asterisk with no footnote, or a stray build phrase.",
+  "world_is": "The 15-page render of the round-105 sample fits its sheets and clips nothing, and it shows no defect in the listed categories. The page estimate (documentSheets.ts budget and the chart cost) leaves room unused on page 3 and moves one table row alone onto the next sheet; the head repeats. Layout is not a listed category, so it is recorded and not changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~167/RENDER_R105.json (export_pdf_pages 15; pdf_clipping none clipped)",
+      "private render pages r105_3 page_03, page_04 and page_06 (read as images; no figure copied here)",
+      "portal documentSheets.ts@df295727b1 (SHEET_BUDGET_PX and the chart cost)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W167-S6 -- When the not-held footnote member is absent, a window the account did not span still prints the baseline dash
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W167-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~167",
+  "surfaced_at": "2026-10-14T13:34:22Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "When the not-held footnote member is absent, a window the account did not span still prints the baseline dash in its cell, with no footnote to explain it; the order names only the asterisk and the footnote as withheld.",
+  "spec_asserts": "Order item 4: an asterisk prints only together with its footnote, and while the footnote member (convention.not_held_for_entire_period) is absent neither the asterisk nor the footnote prints. The order says nothing about the dash cell of a window not spanned.",
+  "world_is": "The view keeps the dash of a window not spanned (window status, not footnote presence), and drops only the footnote line and the asterisks. On the round-105 sample no account has a window that prints a dash, so the case does not occur there; the synthetic fixture with the footnote member removed shows the dash without its footnote (test arm in report-render-r105.test.tsx).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal reportModel.ts@df295727b1 (figureCell notHeld, hasNotHeld gated by footnoteOn)",
+      "portal __tests__/irpt-dashbd/report-render-r105.test.tsx@df295727b1 (the footnote-absent arm)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W167-S7 -- The order's 'drop the line while its member is absent' cannot hold literally: the issuer's checker requires ev
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W167-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~167",
+  "surfaced_at": "2026-10-14T13:34:22Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's 'drop the line while its member is absent' cannot hold literally: the issuer's checker requires every contract member id in each render, so a dropped line keeps its id as a hidden, empty element.",
+  "spec_asserts": "Order item 4: a template slot line is printed as a client word if its member is present, or dropped while its member is absent. The checker DB105-2-AC1 requires all 117 member ids in each HTML output.",
+  "world_is": "A dropped line (the account-list line, and the not-held footnote row while its member is absent) renders as a hidden element with data-member, data-absent false and data-dropped true, with no label and no words. The checker's id clause passes; a visible reader sees no line. The two rules are reconciled by this rendering and nothing in the checker was changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r105/p105_round105.py (check_render, the data-member set clause)",
+      "portal PerformanceReport.tsx@df295727b1 (FieldsView dropped rows)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W167-S8 -- The SOURCE_BREAK example that the record must quote verbatim names an account by its last four digits, as the
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W167-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~167",
+  "surfaced_at": "2026-10-14T13:34:22Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The SOURCE_BREAK example that the record must quote verbatim names an account by its last four digits, as the report prints every account header, so the committed record carries those four digits.",
+  "spec_asserts": "Order step 8: counts, paths, hashes and words only, with no client name, account number or figure; and kind_notes carries the exact sentence as printed in the export, one per kind the sample carries.",
+  "world_is": "Every SOURCE_BREAK note of the round-105 sample is an account note (the account-level return members are the only source-break absences), and each names its account by the report's own header. The committed RENDER_R105.json kind_notes entry for that kind therefore holds an account's last four digits; no full account number, name or figure is in the record. The issuer decides whether a masked four-digit label is acceptable there.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~167/RENDER_R105.json (kind_notes, SOURCE_BREAK entry)",
+      "private render export page for the account overview (read as an image; the figure is not copied here)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W167-S9 -- The whole-scope portal suite already carries five failing tests outside this grant (wire generation, consumed-
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W167-S9",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~167",
+  "surfaced_at": "2026-10-14T13:34:22Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The whole-scope portal suite already carries five failing tests outside this grant (wire generation, consumed-content fixtures and a firm-access diff), at the base before any edit of this order; they are unchanged by it.",
+  "spec_asserts": "Order item 6: the whole-scope suite before and after any edit, with new_failing_ids empty.",
+  "world_is": "The base run of bun test src/pages/InvestorReporting: 1255 pass, 27 skip, 5 fail (IVE26-AC3, IVE48-AC1, IVE98, the producer fixtures row, F14-AC3). After this order's edits: 1271 pass, 27 skip, 5 fail, the same five; new_failing_ids is empty.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~167/RENDER_R105.json (tests.suite_base and tests.suite_after)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
