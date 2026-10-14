@@ -10,12 +10,16 @@
  "subject": "AMGT_HARVST HVST-bz-10 (WORLD, both halves SIGNED) and HVST-bz-11 (read, starts on bz10_t0.txt)",
  "body_path": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/CROSSBOX_BODY_HVST_BZ10_BZ11_TO_ZW_20261013.md",
  "opened_at": "2026-10-13T23:13:10Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": null,
   "bus_message_id": null
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-13T23:44:35Z",
+  "by": "0.7.0_AE_CloudOps~ZW",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
