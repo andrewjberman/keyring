@@ -9529,3 +9529,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Z-S9 stands as written (append-only). The fix touches spawn only; it does not restore transcripts for sessions already running."
 }
 ```
+
+## NFRA_CTLPLN-W94-S1 -- CT-ad-3: two mdpf Lambdas hold inline NYSE holiday sets that the copy measure does not read
+
+```json
+{
+  "id": "NFRA_CTLPLN-W94-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~94",
+  "surfaced_at": "2026-10-14T21:40:45Z",
+  "one_line": "The mdpf-daily-trigger and mdpf-freshness-checker Lambdas each hand-type a 2026-2027 NYSE holiday set and their own is_trading_day; they are not vendored copies of lib/trading_calendar.py, so CALENDAR-COPIES does not count or compare them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep of infra/aws/lambda for the library's holiday-set name (NYSE_HOLIDAYS_FALLBACK definitions) returned exactly the 4 vendored copies that CALENDAR-COPIES reads; Grep for 'NYSE_HOLIDAYS = {' returned infra/aws/lambda/mdpf-pipeline/mdpf-freshness-checker/lambda_function.py:144 and infra/aws/lambda/mdpf-pipeline/mdpf-daily-trigger/lambda_function.py:179",
+      "infra/aws/lambda/mdpf-pipeline/mdpf-freshness-checker/lambda_function.py:161-162 and infra/aws/lambda/mdpf-pipeline/mdpf-daily-trigger/lambda_function.py:192-193: def is_trading_day(d) with d.weekday() < 5 and d.isoformat() not in NYSE_HOLIDAYS; the holiday sets were not read against lib/trading_calendar.py",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~94/CALENDAR_COPIES_MEASURE_20261014.txt: found=4, discovery rule = file named trading_calendar.py or a .py defining NYSE_HOLIDAYS_FALLBACK"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ad-3 cell text: enumerate every file named trading_calendar.py or a clearly renamed vendored copy of the library's holiday set, and print the denominator.",
+  "world_is": "Two more holiday sets live in deployed Lambda code as hand-typed 2026-2027 tables with their own is_trading_day, not as vendored copies of the library. They sit outside the measured count of 4, and whether they equal the library's 2026-2027 closures was not read in this cell. A mistyped closure in either would mis-count trading days in that Lambda with no CALENDAR-COPIES line showing it. Disarm and sync are the issuer's call."
+}
+```
