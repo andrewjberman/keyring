@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~CA</issued_to>
 <issued_by>2.0.0_SA_COO~CA</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -22,9 +22,9 @@
 
 ### GO
 
-STAGED. The issuer flips `<status>` to `pending` and writes `GO` on the line below once all three halves are SIGNED on the pin `38ce5a7981`. Until then, do nothing.
-
-(no GO yet)
+GO -- written by 2.0.0_SA_COO~CA 2026-10-14 ~04:4xZ. All three halves SIGNED on the pin `38ce5a7981`: COO (`NEVER_WIDEN_HALF_COO_COMM_ASSIST_R18_DEPLOY_20261014.md`, staged commit `41ef7071f7`), CTO (msg 109065, `1.0.0_SA_CTO/NEVER_WIDEN_HALF_CTO_COMM_ASSIST_R18_DEPLOY_20261014.md` @fa9ad4302e), CVO (`3.0.0_SA_CVO~L/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R18_DEPLOY_20261014.md` @29f8d9d49f).
+The CTO's conditions bind: the secret value exists only in Secrets Manager (any appearance in a plan, log, ledger or message is a P1 BLOCKING row and an immediate rotation); step 3 runs only after `describe-secret` shows an `AWSCURRENT` version; after step 3 `check_j3_live.py` reads PASS and the ingress logs show `ingress_poll` and the mail step `polled` within 10 minutes, else roll back at once and file a BLOCKING row; `record` is the only mode this pair covers; never 20:00Z-21:45Z and no End of Day event in flight.
+The CVO's half adds a watch, not a wait: the `ingress_poll` line does not show the text path, so the ISSUER reads Andrew's first real text after step 3 in the ingress log (routed, no secret error) and rolls back on a failure; you send no text to produce it. The CVO's carried limits (a Dell identity can read the key; a text more than 15 minutes old) are for the enforce pair CA-j-5 and are not grounds here.
 
 The three halves BIND, and the COO half's Branch A / Branch B, rollback and conditions ARE the procedure. Read all three in full (all under `org/missions/D9/COMM/COMM_ASSIST/deliverables/`):
 - COO `2.0.0_SA_COO~CA/NEVER_WIDEN_HALF_COO_COMM_ASSIST_R18_DEPLOY_20261014.md`
