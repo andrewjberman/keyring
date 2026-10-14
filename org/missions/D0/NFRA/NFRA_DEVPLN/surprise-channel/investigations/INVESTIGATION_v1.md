@@ -1166,3 +1166,29 @@
   "world_is": "Nine at this promote's own head, ten at the live PROD tip, because a second approved chosen-set promote landed 6a5926fc on PROD by the time the criterion was graded. unapproved=0 holds at both. The feature count in the expectation is time-bound; the invariant is unapproved=0 plus all five dell2 merges present. The grader should read the count against the ref, not the branch tip."
 }
 ```
+
+## NFRA_DEVPLN-S7 -- issuer disposition of S6 and W1-S19; the next round's repair list
+
+```json
+{
+  "id": "NFRA_DEVPLN-S7",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~DV",
+  "surfaced_at": "2026-10-14T13:05Z",
+  "one_line": "ISSUER DISPOSITION of NFRA_DEVPLN-S6 (the DPy1-AC1 count was a moving target: amended, order complete) and NFRA_DEVPLN-W1-S19 (the never-rules gate's two DEV carve-outs: disarmed, because the pre-push limb contains them; removing them is the next round's cell).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S6 (0.4.0_DT_ClientPlatform): DPy1-AC1 asserted features=9 on origin/PROD; dell1's release 6a5926fc (Approved-By 1.0.0_SA_CTO~DELL1 @dell1-20261014T111220Z-faa4) landed after the DT's 501e998b, so the live check reads features=10 unapproved=0 ref=refs/remotes/origin/PROD sha=6a5926fc1194 (issuer re-read ~13:0xZ). The criterion was the issuer's flaw: a count of a shared trunk is not stable. RULED: amended to expect unapproved=0 ref=refs/remotes/origin/PROD; the five features stay counted by DPy1-AC2 (5 matching Approved-By: andrew @dell2- trailers, re-read by the issuer). Gate limb that graded the amendment: none (an amended expectation in an existing order; to-pipeline-gate.py does not fire on a modification except GATE (viii)). The DT's proof instance (a file in the DT's own deliverables folder, which the issuer's lane cannot commit) keeps AC1 recorded FAIL against the OLD expectation; the issuer re-ran the amended AC1 on origin/PROD and read unapproved=0 ref=refs/remotes/origin/PROD, i.e. PASS against the amended text, and the order is flipped complete on that issuer re-grade.",
+      "W1-S19 (0.9.0_WK_NFRA_DEVPLN~1): .tools/hooks/never-rules-gate.sh keeps the FAST-lease DEV carve-out (_FAST_DEV=1, lines ~715-735) and the test-only fast-forward carve-out; the file is outside DP-j-1's paths. DISARMED by the issuer (disarm_owner): the pre-push limb now refuses what both carve-outs admit and is installed in the portal repo on this box (portal/.git/hooks/pre-push, 5921 bytes, calls portal-hooks/dev_push_payload_gate.py; issuer read ~13:0xZ) and was reported installed on all four boxes (round-6 read-backs); a real approved push was ADMITTED through it on dell1 (MSTR relay 109061) and the suite case 'real pre-push refuses a plain commit onto DEV' passes (cases=21/21 on the merged tree @75b81d396c). Containment holds wherever the hook is installed; the carve-outs are dead letter beside it, not a route.",
+      "the CLAUDE.md Portal bullet (fcdfc34843) names .tools/portal-hooks/pre-push AND never-rules-gate.sh as the mechanism, so the gate file should stop admitting the two routes; it is MSTR's integrator gate and not in this project's paths."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md Portal (fcdfc34843): portal DEV is written only by portal-merge-forward.sh on an approved row; the mechanism is the pre-push limb (fail-closed on DEV/PROD) and never-rules-gate.sh.",
+  "world_is": "The pre-push limb enforces it; never-rules-gate.sh still carries two DEV carve-outs that the law no longer allows. Next round, one worker-light cell (or the CTO's ruling on whose file it is): remove the FAST-lease and test-only DEV carve-outs from never-rules-gate.sh and its test; batch with the two DP-j-1 defects (dev_push_payload_gate.py 'walk =git(' spacing; closer-drive step 5 example hard-codes --project NFRA_DEVPLN, should be <CODE>)."
+}
+```

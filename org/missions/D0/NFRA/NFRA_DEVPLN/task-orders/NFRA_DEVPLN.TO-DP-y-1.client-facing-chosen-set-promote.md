@@ -5,7 +5,7 @@
 <issued_to>0.4.0_DT_ClientPlatform</issued_to>
 <issued_by>2.0.0_SA_COO~DV</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -50,8 +50,8 @@ FOUND SOMETHING ODD OFF-TASK? Append ONE row to the investigation file named in 
 ### ACCEPTANCE
 
 <proof_of_spec>
-<criterion id="DPy1-AC1" cell_refs="DP-y-1"><invocation>bash .tools/portal-release-build.sh --check PROD --repo portal --prod-ref 63c4f9e35f259ad76071b1099aeb9dddb150409f</invocation><expect>features=9 first_parent_commits=9 unapproved=0</expect></criterion>
-`DPy1-AC1` -- PROD's first-parent line since the settlement holds nine approved features (four today plus these five) and none unapproved; the check reads `origin/PROD` (run `git -C portal fetch origin` first).
+<criterion id="DPy1-AC1" cell_refs="DP-y-1"><invocation>bash .tools/portal-release-build.sh --check PROD --repo portal --prod-ref 63c4f9e35f259ad76071b1099aeb9dddb150409f</invocation><expect>unapproved=0 ref=refs/remotes/origin/PROD</expect></criterion>
+`DPy1-AC1` -- PROD's first-parent line since the settlement holds no unapproved feature and the check reads `origin/PROD` (run `git -C portal fetch origin` first). AMENDED 2026-10-14 by the issuer: the first version also counted `features=9`, a moving target (another box's approved release landed on PROD after this promote, so the count read 10); the five features are counted by `DPy1-AC2`.
 
 <criterion id="DPy1-AC2" cell_refs="DP-y-1"><invocation>bash -c 'git -C portal log origin/PROD --first-parent --format=%B | grep -c "Approved-By: andrew @dell2-"'</invocation><expect>^5$</expect></criterion>
 `DPy1-AC2` -- exactly five release merges on PROD name Andrew as the approver, each with its dell2 row.
