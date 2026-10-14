@@ -12,13 +12,20 @@
 
 HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# The superproject's root, for a portal that is a submodule whose real hooks dir is
+# <workspace>/.git/modules/portal/hooks (portal/.git is then a file, and the ../../../ walk below
+# lands on <workspace>/.git, not the workspace). Empty when portal is not a submodule.
+SUPER_ROOT="$(git rev-parse --show-superproject-working-tree 2>/dev/null)"
+
 # Resolve the D-1 gate whether this hook runs as the canonical source
 # (.tools/portal-hooks/pre-push) or the installed copy (portal/.git/hooks/).
 D1_GATE=""
 for cand in \
   "$HOOK_DIR/d1_adapter_threading_gate.py" \
   "$HOOK_DIR/../../../.tools/portal-hooks/d1_adapter_threading_gate.py" \
+  "${SUPER_ROOT:+$SUPER_ROOT/.tools/portal-hooks/d1_adapter_threading_gate.py}" \
 ; do
+  [ -n "$cand" ] || continue
   if [ -f "$cand" ]; then
     D1_GATE="$cand"
     break
@@ -32,7 +39,9 @@ DEVPUSH_GATE=""
 for cand in \
   "$HOOK_DIR/dev_push_payload_gate.py" \
   "$HOOK_DIR/../../../.tools/portal-hooks/dev_push_payload_gate.py" \
+  "${SUPER_ROOT:+$SUPER_ROOT/.tools/portal-hooks/dev_push_payload_gate.py}" \
 ; do
+  [ -n "$cand" ] || continue
   if [ -f "$cand" ]; then
     DEVPUSH_GATE="$cand"
     break
