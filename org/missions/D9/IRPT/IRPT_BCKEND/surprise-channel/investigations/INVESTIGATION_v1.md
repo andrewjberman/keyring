@@ -33243,3 +33243,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "spec_asserts": "A refused publish leaves the firm's last good publication served, with one refusal record per firm beside current/manifest.json (holdings_snapshot.py 2895-2897 and 3068); the S3 row's question of why cottonwood has no 2026-10-09 or 2026-10-12 partition has that record as a candidate answer.",
   "world_is": "cottonwood's key listing shows partition dates 2026-10-05 to 2026-10-08 (29 objects each) and no 2026-10-09 or 2026-10-12 partition, plus current/publish_refusal.json written 2026-10-13T14:17:45Z. 49financial and inflection carry no refusal object beside their current manifests. The refusal's content (its condition and business date) is not read: outside this order's read grant. Consistent with a refused fire; not established as the cause."
 }
+```
+
+## IRPT_BCKEND-D2-W373-S5 -- the row gate counted zero new rows for S4, which was in the committed diff
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W373-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~373",
+  "surfaced_at": "2026-10-14T02:04:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Row IRPT_BCKEND-D2-W373-S4 was committed at baba4b0 without its closing json fence (the worker's defect); the surprise-row gate passed that commit with 0 new rows of 1276 and an OK line, and blocked the next commit only on the malformed block. The earlier commit 2563846c8a had reported 3 new rows of 1276 for S1 to S3.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md at baba4b084b (S4 present; git show HEAD:<path> count 2)",
+      "the commit gate output of baba4b084b: '[surprise-row-gate] ... 0 new row(s) of 1276 total checked (1276 pre-existing, NOT re-graded)' and the OK line",
+      "the commit gate output of 2563846c8a: '3 new row(s) of 1276 total checked (1273 pre-existing, NOT re-graded)'"
+    ]
+  },
+  "spec_asserts": "The surprise-row gate grades each new row of an appended investigation file at commit and reports the new count, so a row in the staged diff is counted as new.",
+  "world_is": "At baba4b0 the S4 block had no closing fence, so it did not parse as a row; the gate reported 0 new rows (total stayed 1276, not 1277) and printed OK, so the gate's OK line was not evidence that S4 was graded. The fence is repaired in the next commit; the row text is otherwise unchanged. The gate's silence on an unparsed new block at baba4b0 is the observation."
+}
+```
