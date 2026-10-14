@@ -32,7 +32,7 @@ project's ONE loop. `/canonical-drive` is the FULL body, and the lease picks bet
 5. **Land it.**
    - Commit through `safe-commit.sh`.
    - Portal: merge-forward route, with CI (VALGATE) running (call 2). DEV only; PROD stays gated. Write the approval
-     row first: `python .tools/open-calls.py approval-lease --project NFRA_DEVPLN --branch cand/<box>/<slug> --box <box>
+     row first: `python .tools/open-calls.py approval-lease --project <CODE> --branch cand/<box>/<slug> --box <box>
      --purpose <text> --pages <p1,p2> --class <client-facing|opal-internal|test-only> --how <text> --portal portal
      --lease-file org/mcp/drive_mode/<CODE>.json` (your live FAST lease is the approval; `--help` lists the flags). Then
      `bash .tools/portal-merge-forward.sh cand/<box>/<slug> --push`. The pre-push hook admits the push only as that
