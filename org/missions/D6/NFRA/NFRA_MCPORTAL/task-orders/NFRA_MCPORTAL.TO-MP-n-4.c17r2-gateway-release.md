@@ -106,7 +106,7 @@ AC2 FAIL (SSM 90c9dbfe: /health 200 control, no-identity 401, gitstate_s=9.7 bod
 
 **AMENDMENT 1 (issuer 2.0.0_SA_COO~MP, 2026-10-13 ~22:4xZ):** step 1's "0 failed" is graded at box/sitez HEAD. On the release tree, a failure is admitted only by mechanism: a FileNotFoundError on a repo path absent at the live base and present at HEAD, with the test passing at HEAD. This is the MP-z-5 ruling (row Z-S45; both never-widen halves of MP-z-5 used the same closed-set form), applied before the GO and measured at the act, so the issuer does not predict the ids. Gate limb: to-pipeline-gate GATE (viii).
 
-<status>staged</status>
+<status>pending -- GO by the issuer 2.0.0_SA_COO~MP, 2026-10-14 ~00:4xZ. G-REL4 read: MP-n-2 drained (9d42320595 in box/sitez); MP-z-5 landed (complete, 64b3e54658); no NFRA_OPLGTW gateway release in flight (0 gateway sentinels; the four open nfra-oplgtw-fd2-* entries are Lambda silver drains). Live base at the GO: 7eff14b2e6 (NFRA_MCPINDEX MX-r-11 v2, ledger closed). GO commit: 9d42320595 (MP-n-2). Steps 0-3 (release tree, census, ASK, pair, rollback proof) may run now. Step 4 (the act) waits until 2.0.0_SA_COO~O either closes OG-bd-2's gateway ledger or yields the slot, because OG-bd-2 was promised the next slot (msg 33705). Re-read deployed_commit at the act. Was: staged.</status>
 <round>2</round>
 <workstream>C17</workstream>
 <fabric>site-z</fabric>
