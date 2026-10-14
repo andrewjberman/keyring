@@ -39,17 +39,19 @@ from the file you produce. The attachments are client-confidential trade forms (
    rule R6). The issuer's probe, to be re-run by you and not trusted: `address("portal", "49financial", "bronze", "ticket-attachments",
    "trade-form")` returned `s3://opal-data-assets/portal/49financial/bronze/ticket-attachments/trade-form` and the same call at tier `state`
    returned a per-firm bucket (`opal-data-49financial`). Decide the tier by the doctrine, not by convenience, and WRITE THE DECISION WITH ITS
-   RULE NUMBER: the ticket Lambda uses ONE bucket for every firm, so the tier you choose must resolve to the SAME bucket for all three served
-   firms (`49financial`, `inflection`, `cottonwood`); if the right tier by doctrine resolves to a bucket per firm, STOP: file a BLOCKING row
-   (the Lambda's single `TICKET_ATTACH_BUCKET` cannot serve it) naming the tier, the three buckets and the rule, and do nothing else.
-2. **The key template.** From the three printed addresses derive `bucket` and `key_template`: the key part with the firm segment replaced by
-   the literal `{firm}` exactly once, ending in `/` (for example `portal/{firm}/bronze/ticket-attachments/trade-form/`); verify the template
-   with each of the three firm ids reproduces that firm's printed address key exactly (a round trip).
+   RULE NUMBER. AMENDMENT 1: your first run chose `state`, rule R21, and found it homes a bucket PER FIRM; that is right and the cell is re-cut for it
+   (the Lambda now reads a BUCKET TEMPLATE and a KEY TEMPLATE, each with `{firm}` once). The tier you choose may therefore resolve to a bucket per firm,
+   but each firm's bucket must come from ONE template over the firm id (for example `opal-data-{firm}`); if the three served firms (`49financial`,
+   `inflection`, `cottonwood`) do not fit one template, STOP: file a BLOCKING row naming the three buckets and the rule, and do nothing else.
+2. **The templates.** From the three printed addresses derive `bucket_template` (the bucket with the firm segment replaced by the literal `{firm}`
+   exactly once, for example `opal-data-{firm}`) and `key_template` (the key part with the firm segment replaced by `{firm}` exactly once, ending in
+   `/`, for example `portal/{firm}/state/ticket-attachments/trade-form/`); verify the two templates, with each of the three firm ids, reproduce that
+   firm's printed bucket and key exactly (a round trip).
 3. **Registry.** If the builder printed all three without refusal, add NO registry row (say so). If it refused or the validator needs a
    row (a source, a table name, a partition), add the MINIMUM rows under `infra/logic/registry/` in the file the doctrine names for that kind,
    copying the shape of an existing sibling row (read `systems.json`, `scopes.json`, `tiers.json` headers `_about`); then
    `python lib/opal_naming.py validate` must exit 0. Never edit `lib/opal_naming.py`.
-4. **Write `deliverables/0.9.0_WK_TCKT_VNEXT~43/ATTACH_ADDRESS.json`** with exactly: `bucket`, `key_template`, `tier`, `tier_rule` (the rule
+4. **Write `deliverables/0.9.0_WK_TCKT_VNEXT~43/ATTACH_ADDRESS.json`** with exactly: `bucket_template`, `buckets` (the three buckets keyed by firm), `key_template`, `tier`, `tier_rule` (the rule
    number and one sentence), `source`, `table`, `partition`, `addresses` (the three printed `address()` outputs keyed by firm), `builder_calls`
    (the exact call strings), `registry_rows_added` (a list, empty if none), `validate_rc`, `claim` (what this proves and what it does not:
    the bucket and its policy and CORS are NOT created or checked here), `not_read`.
@@ -59,9 +61,9 @@ from the file you produce. The attachments are client-confidential trade forms (
 
 <criterion id="R18TR1-AC1" cell_refs="R18-tf-1"><invocation>python C:/dev/wk-tckt-vnext-43/org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~43/address_check.py</invocation><expect>^ADDRESS-OK </expect></criterion>
 `R18TR1-AC1`: you write `address_check.py`: it re-computes `address(source, firm, tier, table, partition)` for the three firms by importing `lib/opal_naming.py` from
-the worktree, requires every result to carry the SAME bucket, requires `key_template` to round-trip each firm's key with `{firm}` exactly
-once and a trailing `/`, requires `ATTACH_ADDRESS.json`'s `addresses`, `bucket` and `key_template` to equal the computation, and runs
-`python lib/opal_naming.py validate` (rc 0). It prints `ADDRESS-OK <bucket> <key_template>` or `ADDRESS-BAD <why>` (exit 1).
+the worktree, requires `bucket_template` and `key_template` to round-trip each firm's bucket and key with `{firm}` exactly once in each (and a trailing `/` on the key
+template), requires `ATTACH_ADDRESS.json`'s `addresses`, `buckets`, `bucket_template` and `key_template` to equal the computation, and runs
+`python lib/opal_naming.py validate` (rc 0). It prints `ADDRESS-OK <bucket_template> <key_template>` or `ADDRESS-BAD <why>` (exit 1).
 
 <criterion id="R18TR1-AC2" cell_refs="R18-tf-1"><invocation>python C:/dev/wk-tckt-vnext-43/org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~43/mutant_check.py</invocation><expect>MUTANT-FIRES</expect></criterion>
 `R18TR1-AC2` (the one mutant that fails): you write `mutant_check.py`: it copies `ATTACH_ADDRESS.json` to a scratch folder OUTSIDE the product tree with the
@@ -78,6 +80,13 @@ registry row exists only if the builder demanded one, and nothing was created in
 
 - **Grant:** exactly the `<paths>` below, plus `org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~43/` and this order's file
   (status flip only). If a test OUTSIDE the grant fails because of your change, STOP: file a BLOCKING row naming it; the issuer amends the grant.
+- **AMENDMENT 1 (issuer `2.0.0_SA_COO~V2`, 2026-10-14; gate limb: none stated, the issuer amends its own pending order; your row `TCKT_VNEXT-D2-W43-S1` answered).** You were right: the
+  `state` tier (R21) homes a bucket PER FIRM, and the tier follows the doctrine, not the Lambda. The cell is re-cut: the Lambda reads a BUCKET TEMPLATE (`{firm}` once) and a KEY TEMPLATE
+  (`{firm}` once, trailing `/`), both of which you derive and round-trip for the three firms. Step 1, step 2, the record's keys and AC1's text above are amended; AC2 and AC3J are unchanged.
+  INHERITED STATE: your three commits (`c5c3e453d2`, `7dfcf9bc5c`, `d9832cf72a`) stay; keep row S1 and the printed addresses; add to the row's record that it is ANSWERED by this amendment
+  (a new row or a status line in your record, never an edit of the committed row). Write `ATTACH_ADDRESS.json` and both checkers, run all three criteria, regenerate the proof instance (the
+  mutant is the one AC2 describes and must FIRE), and flip `<status>` to `complete` only when `proof-of-spec-check.py` prints VALID. Keep the channel file's line endings byte-for-byte
+  (your own earlier slip, already corrected, shows why).
 - READ only: everything else, including `lib/opal_naming.py` and every Terraform file. Your next orders (`TO-R18-TR2`, `TO-R18-TR3`) edit
   `infra/aws/terraform/ticket-center/main.tf`; you do not.
 
@@ -103,7 +112,7 @@ Its `to_id` is exactly `TCKT_VNEXT.TO-R18-TR1`. The judgment criterion is record
 comp-blast: DECLARED-NOT-APPLICABLE -- a record, a checker and at most registry rows in a worker worktree; nothing is deployed, applied or created.
 comp-routes: DECLARED-NOT-APPLICABLE. comp-cache: DECLARED-NOT-APPLICABLE. comp-schedule: DECLARED-NOT-APPLICABLE -- no schedule or trigger.
 comp-iam: DECLARED-NOT-APPLICABLE -- no IAM change in this cell; the Lambda's permission is Terraform SOURCE in `TO-R18-TR3`.
-comp-adversary: RUN -- by reading rule 30 and C-ATTACH against this cell; the lens: a hand-typed address, a tier chosen for convenience, a per-firm bucket that the Lambda's single bucket cannot serve, a registry row added when the builder did not ask. NOT seen: the live bucket's existence, policy and CORS.
+comp-adversary: RUN -- by reading rule 30 and C-ATTACH against this cell; the lens: a hand-typed address, a tier chosen for convenience, a per-firm bucket that does not fit one template, a registry row added when the builder did not ask. NOT seen: the live bucket's existence, policy and CORS.
 </preflight>
 
 ---

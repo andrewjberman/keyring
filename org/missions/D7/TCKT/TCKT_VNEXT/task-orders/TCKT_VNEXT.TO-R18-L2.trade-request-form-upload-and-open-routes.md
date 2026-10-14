@@ -31,9 +31,10 @@ mail, no deploy, no apply; the S3 client is a fake in every test). A `controls.m
 form (PDF, XLSX or CSV); the OPEN ticket carries the form as an attachment opened from the ticket page. The form's bytes live in an
 S3 object at a firm-tenant key; the ticket stores the REFERENCE only; the upload and the open are by short-lived presigned URLs the
 ticket API issues after the firm fence. No trade is sent anywhere. The bucket and the key prefix are CONFIG, set by environment
-variables another cell writes into Terraform: `TICKET_ATTACH_BUCKET` and `TICKET_ATTACH_KEY_TEMPLATE` (a string with `{firm}` exactly once, ending
-in `/`, for example `portal/{firm}/bronze/ticket-attachments/trade-form/`). The firm segment is in the MIDDLE of a real key, so there is no
-fixed prefix: a firm's prefix is `KEY_TEMPLATE.format(firm=<firm>)`.*
+variables another cell writes into Terraform: `TICKET_ATTACH_BUCKET_TEMPLATE` (a string with `{firm}` exactly once, for example `opal-data-{firm}`) and
+`TICKET_ATTACH_KEY_TEMPLATE` (a string with `{firm}` exactly once, ending in `/`, for example `portal/{firm}/state/ticket-attachments/trade-form/`). Each firm's
+state-tier attachments live in THAT FIRM'S OWN bucket (doctrine R21; AMENDMENT 1), so a firm's bucket is `BUCKET_TEMPLATE.format(firm=<firm>)` and its
+prefix is `KEY_TEMPLATE.format(firm=<firm>)`; the firm segment is in the MIDDLE of a real key, so there is no fixed prefix.*
 
 The wire contract is `org/missions/D7/TCKT/TCKT_VNEXT/decompositions/TCKT_VNEXT_DECOMP_R18.md`, section WIRE CONTRACT, items 2 and 3 and the
 `trade_request` paragraph. Read it first, then in `infra/aws/lambda/ticket_center/lambda_function.py`: `TYPE_DEFINITIONS` (about 88),
@@ -54,9 +55,9 @@ The wire contract is `org/missions/D7/TCKT/TCKT_VNEXT/decompositions/TCKT_VNEXT_
    permitted to INTERNAL only): body per the contract; `firm` passes `_create_firm_allowed(pc, actor, firm)`; type, size and extension
    checks as step 2; the key is `TEMPLATE.format(firm=firm) + uuid4().hex + "/" + <safe filename>` (the safe name keeps ASCII letters,
    digits, dot, dash and underscore, replaces anything else with `_`, and is at most 100 characters); the response is the contract's. Presign with
-   `boto3.client("s3").generate_presigned_url("put_object", Params={"Bucket": os.environ["TICKET_ATTACH_BUCKET"], "Key": key, "ContentType":
-   content_type}, ExpiresIn=300)` through a module-level seam (for example `_s3_client()`), so tests replace it; `TICKET_ATTACH_BUCKET`
-   unset: 503 and nothing presigned. Nothing is written to the table.
+   `boto3.client("s3").generate_presigned_url("put_object", Params={"Bucket": BUCKET_TEMPLATE.format(firm=firm), "Key": key, "ContentType":
+   content_type}, ExpiresIn=300)` through a module-level seam (for example `_s3_client()`), so tests replace it; `TICKET_ATTACH_BUCKET_TEMPLATE`
+   (`BUCKET_TEMPLATE` is `os.environ["TICKET_ATTACH_BUCKET_TEMPLATE"]`, read at call time, validated like the key template: `{firm}` exactly once) unset or malformed: 503 and nothing presigned. Nothing is written to the table.
 4. **The open route.** `GET /api/scoped/tickets/{ticketId}/attachment` (`attachment_open_ticket(event, tid)`, `MATRIX` action `ATTACH_OPEN`
    permitted exactly as the existing GET action is): the ticket lookup and scope test are `get_ticket`'s (404 for not found or out of
    scope); the ticket must carry an `attachment` whose `key` starts with `TEMPLATE.format(firm=<the ticket's answers.firm>)`, else 404; the response
@@ -68,7 +69,7 @@ The wire contract is `org/missions/D7/TCKT/TCKT_VNEXT/decompositions/TCKT_VNEXT_
    attachment is refused; an unknown member, a size of 0 and of 10485761, a `.exe` name, a type and extension that disagree are refused;
    `TICKET_ATTACH_KEY_TEMPLATE` unset, with no `{firm}`, with two, or not ending in `/` refuses 503; the upload route admits an INTERNAL human for a firm in scope and refuses a firm outside it, a
    CLIENT caller and a service subject (403), and a bad type or size (400); the presign is called with exactly the returned key and
-   content type and `ExpiresIn` 300; `TICKET_ATTACH_BUCKET` unset is 503 with no presign; the open route returns a presigned URL for a ticket
+   content type and `ExpiresIn` 300; `TICKET_ATTACH_BUCKET_TEMPLATE` unset or malformed is 503 with no presign, and the presign's Bucket is the REQUESTED firm's bucket; the open route returns a presigned URL for a ticket
    in scope and 404 for another firm's ticket, for a ticket with no attachment and for a key outside the firm's prefix; the old
    `analysis_request` cases still pass (run `test_analysis_request.py` and `test_submit_analysis_request.py` and print their counts).
 7. **Write `deliverables/0.9.0_WK_TCKT_VNEXT~41/mutant_check_tf2.py`** (AC2) and a short `R18_L2_RECORD.json`: the lines changed, the
