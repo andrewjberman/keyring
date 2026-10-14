@@ -62,6 +62,12 @@ Build, in the gateway app at `infra/aws/ec2/opal-gateway/`:
    breakdown's `_scan_principals`, which carries `tid` and `oid`); every other row is `null`, including the population row. A
    person who appears in several sources and has a profile gets the profile's `tid`/`oid`. Change nothing else in the body or in
    how rows are built or ordered.
+   **AMENDMENT 1 (issuer, after your first report): the one existing assertion that pins the exact row key set moves with the
+   added key.** In `tests/test_admin_people.py`, inside `test_people_lists_every_candidate_even_holding_nothing`, the line
+   `assert set(p) == {"who", "kind", "how", "tier", "channels"}` becomes `assert set(p) == {"who", "kind", "how", "tier", "channels",
+   "principal"}`. That is the ONLY edit to that test. Then re-run AC2: it must read named tests PASSED 4 of 4. Your two
+   observations (the pinned `ROUND1_PEOPLE` literal in the never-leaks test, and the Lambda base not yet carrying the writer
+   half) stand as filed and need no change.
 3. **Do NOT edit** `app/admin_gateway_breakdown.py`, `app/admin_grants.py`, `app/admin_api.py`, `app/access_state.py`, or the
    writer Lambda. The two route lines and the import in `app/admin_api.py` belong to the release cell; name the line in your report.
 
