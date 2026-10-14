@@ -189,6 +189,18 @@ def scenario_test_only(clone, base, case_root, fixture):
     return local, base
 
 
+def scenario_test_only_merge(extra=None):
+    """A two-parent test-only merge, as portal-merge-forward.sh writes it: Feature: and Approved-By: test-only @-."""
+    def setup(clone, base, case_root, fixture):
+        files = {"src/lib/__tests__/bar.ts": "b\n"}
+        files.update(extra or {})
+        feature_branch(clone, base, "cand/laptop/t2", files)
+        git(clone, "merge", "-q", "--no-ff", "-m", "Merge cand/laptop/t2 into DEV (approved feature)", "-m",
+            "Feature: cand/laptop/t2\nApproved-By: test-only @-", "cand/laptop/t2")
+        return git(clone, "rev-parse", "HEAD"), base
+    return setup
+
+
 def scenario_back_merge(clone, base, case_root, fixture):
     git(clone, "checkout", "-q", "PROD")
     write_commit(clone, {"portal/prod-only.md": "prod\n"}, "prod-only change")
@@ -262,7 +274,12 @@ def main():
         expect_checker("routeA refused: reader output unparsable", root, fixture, 1, "REFUSED",
                        scenario_route_a(mode="garbage"))
         expect_checker("plain commit refused", root, fixture, 1, "REFUSED", scenario_plain)
-        expect_checker("test-only commit admitted (route B)", root, fixture, 0, "ADMITTED", scenario_test_only)
+        expect_checker("plain test-only commit refused (route B needs a two-parent merge)", root, fixture, 1,
+                       "REFUSED", scenario_test_only)
+        expect_checker("test-only merge with Approved-By: test-only @- admitted (route B)", root, fixture, 0,
+                       "ADMITTED", scenario_test_only_merge())
+        expect_checker("test-only trailer on a merge that changes a non-test path refused", root, fixture, 1,
+                       "REFUSED", scenario_test_only_merge(extra={"portal/x.md": "x\n"}))
         expect_checker("PROD-into-DEV back-merge admitted (route C)", root, fixture, 0, "ADMITTED",
                        scenario_back_merge)
         expect_checker("non-DEV ref skipped", root, fixture, 0, "SKIPPED", scenario_plain,
@@ -270,7 +287,7 @@ def main():
         expect_checker("delete refused", root, fixture, 1, "REFUSED", scenario_delete)
         expect_checker("new ref refused", root, fixture, 1, "REFUSED", scenario_new_ref)
         expect_checker("non-fast-forward refused", root, fixture, 1, "REFUSED", scenario_non_ff)
-        expect_checker("live FAST lease for the serial admitted", root, fixture, 0, "ADMITTED",
+        expect_checker("live FAST lease for the serial admits nothing", root, fixture, 1, "REFUSED",
                        scenario_plain_fast_lease(lambda: _lease(SERIAL, "FAST", now + 3600)))
         expect_checker("expired FAST lease admits nothing", root, fixture, 1, "REFUSED",
                        scenario_plain_fast_lease(lambda: _lease(SERIAL, "FAST", now - 60)))
