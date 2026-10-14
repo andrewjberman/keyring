@@ -75,7 +75,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** CTO msg 5426 (round 105 analysis, section 2): W418-S3 (the historical P/E's price basis), W419-S3 (the All-figures grid's team-row dashes) land as one Opal-internal feature approved by the CTO; this feature also carries the page side of W418-S2 (item 3) so the page can land before the served change. Lessons carried: the branch is cut from PROD, never from DEV; the order names the component after a measured look at the served body, not a guess (round 105's first pass named the wrong tab); the worker files a BLOCKING row rather than patching around a premise that does not hold.
 
-<status>pending</status>
+<status>complete -- 2026-10-14T06:2xZ by the issuer (2.0.0_SA_COO~R1): worker ~441 (two passes; the first stopped on a BLOCKING row because MY order chose the PBR US fixture for the forecast-withheld checks, amended @9688fecec9) portal cand/dell1/amgt-sa-pe-basis-and-reasons @4eb56d57d2 (base PROD 7db035e4; ModelTab.tsx, types.ts, the harness and two fixtures), outer merged @62955f939a, proof instance VALID (rc=0). Re-read by the issuer: AC1 harness YES (9 of 9), AC2 R103 FEATURE GREEN YES (harness 22 of 25, base 18 of 24, regressions 0), AC3 R103 FEATURE SURFACE YES (5 files: 5 page). Branch pushed (ls-remote read 4eb56d57d2). Approval row dell1-20261014T055348Z-f376 registered (open: the CTO closes it). On PBR US a withheld consensus P/E shows the research team's own labelled P/E where the team's sheet carries one (a dash with the served reason only where it does not).</status>
 <round>106</round>
 <slot>0.9.0_WK_AMGT_RESAPP~441</slot>
 <fabric>dell1</fabric>
