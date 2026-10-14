@@ -8285,3 +8285,26 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Found while reading the served-date source. Form only. Disarm: none (INERT) while the guard halts on any holdings read error."
 }
 ```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S58",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-14T13:37:09Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "FB-l-5 act 2's exercise: the publisher fired and wrote the snapshots, but inf-portal-advisor-publisher fails on a Scheduler event (AttributeError at _extract_run_date), so a clock floor would publish no advisor artifacts.",
+  "spec_asserts": "COO half a6e2df30dc: the exercise 'produces a publisher invocation and a LastModified after the exercise time on the three snapshots; all keys written are inside the named set; the publisher does not error'.",
+  "world_is": "Measured 2026-10-14 13:30Z-13:36Z. The one-time at() schedule invoked inf-portal-publisher once (13:30:27Z-13:30:41Z, no error, 3 snapshots written, 0 keys outside the named set in 8847 objects under platinum/ and gold/meta/). The publisher fans out to inf-portal-advisor-publisher with the same event (lambda_function.py:1030-1033); the advisor publisher's _extract_run_date (lambda_function.py:1017-1019) calls event.get('detail', {}).get('run_date'), and a Scheduler event's detail is a string, so it raises AttributeError on all 3 async attempts and writes 0 advisor files. The S3-notification path is unaffected (its event has Records, no detail). Branch B was run for the snapshots (restored from prior VersionIds, byte-equal) and CloudFront invalidated again.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/EXERCISE_RECORD.json",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/EXERCISE_ROLLBACK_RESULT.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: the floor is DISABLED and the S3 notification is still the live trigger. Act 3 (enable the floor) must not run until the advisor publisher accepts a Scheduler event: a code fix in inf-portal-advisor-publisher (its own pair) or an explicit Input of {} on the floor target (config only; a second exercise needs a new half). The C4 readiness-halt cell should carry whichever is chosen."
+}
+```
