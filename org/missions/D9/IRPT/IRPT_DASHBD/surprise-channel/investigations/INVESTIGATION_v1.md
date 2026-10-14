@@ -12324,3 +12324,27 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not decided by this worker, and not edited. Options for the CTO or COO: (a) re-golden the one line of iv-e-120.golden/model_portfolios_mount.before.html to 'September 29th, 2026', the same kind of re-pin this cell made for create5pm-et.test.ts, in a grant that names that file; or (b) widen this cell's grant to name it. The worker did not choose between them."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S40",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T19:50:49Z",
+  "one_line": "Issuer's rulings on worker 175's rows W175-S2 and W175-S3 (two earlier checks pinned the contract members byte for byte), W175-S4 (non-positive factor rows) and its wording note: the two checks are amended to ignore the per-firm source keys, S4 is disarmed, the claim words are corrected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-217 step 5: the 14 earlier live criteria still pass after the contract edit; step 3 (amended): the factor is a positive index level; step 4 (d): the claim says the figure is reported by the platform at client grain and not computed by Opal.",
+  "world_is": "W175-S2 and W175-S3 (BLOCKING): DB105-1-AC1 requires the members byte for byte equal to the 0.4.1 members and DB106-1-AC1 requires version 0.4.3 and the same; contract 0.5.0 adds firm_sources and firm_absent to the four household return members, which the order itself requires, so the two conventions could not both hold: an issuer error in the checks, not a regression. Ruled: both checks compare the members with the per-firm source keys stripped (a later per-firm source does not change what 0.4.1 to 0.4.3 said), DB106-1-AC1 accepts version 0.4.3 or later and the 0.4.3 bytes in the sample record; with those edits all 14 earlier criteria read PASS on worker 175's contract 0.5.0 tree (this seat's own run). W175-S4 (ARMED, mine): the newest Orion fact_performance partition holds 409 rows (276 zero, 133 negative) of 482,971, in 2 of 315 clients; the sample household's 807 rows are all positive and the fold reads a window absent when either factor is not positive, so no figure is computed from a non-positive factor; disarmed, with the 2 clients named as a count for the next consumer. Wording note: the claim 'not computed by Opal' sits beside a fold that divides two platform factor values; the claim is corrected to say the figure is derived from the platform's reported client performance factor, as the ratio of two dated factor values, and that the factor itself is reported by the platform, not computed by Opal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 175's report and contract 0.5.0 at wk-IRPT_DASHBD-175 @0f44011dd8 (equivalence classes, firm_sources); this seat's run of the 14 earlier criteria on that tree after the check edits: 14 of 14 PASS",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r105/p105_round105.py (strip_firm) and r106/p106_round106.py",
+      "worker row IRPT_DASHBD-D2-W175-S4 (counts)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
