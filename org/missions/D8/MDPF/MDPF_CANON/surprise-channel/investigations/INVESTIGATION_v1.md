@@ -2161,3 +2161,72 @@
   "disarm_owner": "1.0.0_SA_CTO~DELL1"
 }
 ```
+```json
+{
+  "id": "MDPF_CANON-D1-W27-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~27",
+  "surfaced_at": "2026-10-14T21:47:51Z",
+  "one_line": "CN-p-2 step 9 retires the Global Other AUA and its gates, but the period-end row filter (the plottedKeys block in ModelPortfolios.tsx) also read the retired hasGlobalEnterprise; it now reads timeSeriesData.isPerFirm, the same gate as the Non-Model show chain.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-p-2 section 1 step 9: the Bar and Area show gates become 'non_model shown only when timeSeriesData.isPerFirm'. The step names the show gates and the legend; it does not name the all-plotted-null row filter that also reads the retired constant.",
+  "world_is": "The plottedKeys block (pre-edit ModelPortfolios.tsx line 2298, portal base f8c7d310) pushed Non-Model into the Global plotted key set on hasGlobalEnterprise, a constant step 9 deletes. Left in place, a Global Non-Model key would survive the row filter while the Global show gate no longer draws it. Changed to timeSeriesData.isPerFirm (one line). W3 of the wiring check requires the constant absent.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/ModelPortfolios.tsx@f8c7d310:2298 'if (timeSeriesData.isPerFirm || hasGlobalEnterprise) {'",
+      "org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-p-2.portal-variant1-trend-stitch-and-approved-edits.md@0e60da2afb (section 1, step 9)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on its own worktree branch; the surprise is the page text, not its significance."
+}
+```
+```json
+{
+  "id": "MDPF_CANON-D1-W27-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~27",
+  "surfaced_at": "2026-10-14T21:47:51Z",
+  "one_line": "CN-p-2 step 11 renders the Variant 1 composition footnote with no scope gate, so it also shows on the per-firm views of an internal session; the module returns it for every Variant 1 call.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-p-2 step 11: '<p data-trend-composition>{compositionFootnote(trendMode)}</p>', each rendered only when its text is non-null; section 2 bound 8 forbids a per-scope fork. The module docstring for compositionFootnote says 'Internal sessions only: it names two partner firms'.",
+  "world_is": "compositionFootnote('variant1') is non-null on every Variant 1 render. The composition sentence (Inflection enters 2026-05-15, Cottonwood 2026-05-28) therefore shows on the 49 Financial and Inflection per-firm views for internal sessions as well as on Global. Built literally as written; a Global-only gate is the issuer's decision.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round9/checks/ref/cn_p_2_helpers.ts@0e60da2afb compositionFootnote, lines 150-155 (returns the text for variant1 with no scope argument)",
+      "portal/src/pages/ModelPortfolios.tsx (worktree, the data-trend-composition paragraph under the detail note)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Display text only; the Variant 2 demo tenant gets null. Filed for the issuer to decide the scope."
+}
+```
+```json
+{
+  "id": "MDPF_CANON-D1-W27-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~27",
+  "surfaced_at": "2026-10-14T21:47:51Z",
+  "one_line": "CN-p-2 step 4 says the Inflection series take 'the same mapping' as the 49 Financial series, but the primary-label filter would drop Inflection's Custom members; the Inflection mapping keeps every non-SMA member and folds it through groupCustomModelsSeries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-p-2 step 4: firm49 keeps only labels in GLOBAL_PRIMARY_LABELS; inflectionCustom is 'the same mapping for the Inflection series', then rollBlendsIntoArchetypeSeries, then groupCustomModelsSeries(...)[CUSTOM_MODELS_LABEL].",
+  "world_is": "Inflection's Custom Models value is the fold of its non-primary members, so a primary-label filter applied to Inflection would empty the series and the Variant 1 window 2026-05-15 .. 2026-07-19 would draw no Custom line. The worker applied the SMA-cohort exclusion to Inflection and no primary-label filter; 'the same mapping' is read as the cohort rule only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round9/checks/ref/cn_p_2_helpers.ts@0e60da2afb indexByPeriod(stitch.inflectionCustom) used for Custom inside the window",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round9/checks/r9_cn_p_2.py@0e60da2afb V2 arm (Variant 1 draws Inflection's own series, 53)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The V2 arm passes on the built page, so the reading matches the issuer's check."
+}
+```

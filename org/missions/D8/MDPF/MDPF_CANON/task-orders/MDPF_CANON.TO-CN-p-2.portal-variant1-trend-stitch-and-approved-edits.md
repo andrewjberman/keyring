@@ -94,7 +94,7 @@ Report once: the portal branch and commit hash, the diff stat (one line), the ou
 
 **Fanout:** 2 of 2 chains with `CN-p-1`; no shared file with another open cell. `portal_ref:` `scratch/canon-i3-base` (f8c7d310).
 
-<status>pending</status>
+<status>complete</status>
 <round>9</round>
 <to_id>MDPF_CANON.TO-CN-p-2</to_id>
 <slot>~27</slot>
