@@ -34259,3 +34259,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. W380-S1 (Inflection pinned at 2026-10-12 builds a 2026-10-09 candidate and the gate refuses on source_frontier_older where the packet reads PUBLISHED): INERT, the gate works as written; the release re-measure pins Inflection to the custody date the packet used, and I did not re-run it at that pin. W380-S2 (a build whose cutoff falls between a custody day's accounts and positions partitions refuses Inflection by the producer's own guard): INERT, the designed refusal; whether a scheduled fire inside that window misses the day was not measured. W380-S3 (Cottonwood's newest partition is 2026-10-12 at the cutoff, one trading day behind T-1): INERT, whether the 2026-10-13 partition has landed was not read. W381-S1 (the 2026-10-09 fire was killed about 310 s into a 3600 s window; no fire of the 11 reached it): INERT; it CORRECTS the round-191 packet and D2-S164's wording, which named the SSM timeout as the cause, and the sender of the exit-137 kill is unread. W381-S2 (the 2026-10-08 replay is refused by source_frontier_older): INERT, the route is the CTO's ruling. W381-S3 (publish() does not assert that the landed date equals as_of): INERT, any bypass route must carry the assertion. W381-S4 (the gap is a failed run, the source is intact): INERT, corrects the D2-S165 premise. W381-S5 (the index version size is flat on 2026-09-30): INERT, the index body was not read. The client-data check ABSENT on dell2 was logged by both workers: it stays ARMED under W374-S1 and W376-S1 with the box manager."
 }
 ```
+
+## IRPT_BCKEND-D2-S169 -- the 2026-10-09 kill cause (IB-pr-537) is UNREADABLE today: the runner host is stopped and not in SSM, and no memory metric of any kind is retained for it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S169",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-14T12:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-537 reads UNREADABLE: the runner host is stopped (user-initiated, 2026-10-13 17:21Z) and absent from SSM, so no kernel read was sent; the host is a t3.medium (4 GiB class) with 0 CWAgent metrics and no memory metric in any namespace, so OOM cannot be confirmed or excluded from retained data.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IB193-3_kill_cause.json (reads list: 256 SSM commands listed, 1 match, plugin code 137 after about 310 s, describe-instances state stopped, list-metrics 29 metrics none memory, describe-instance-information no row)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IB193-3_criteria_output.txt (IB193-3-AC1 to AC3 PASS rc 0)"
+    ]
+  },
+  "spec_asserts": "The order IB-pr-537 and the CTO's round-193 item 3: read the host's own record for the 2026-10-09 window and state OOM, NOT_OOM or UNREADABLE; if OOM, the release fire's after-read carries a memory read.",
+  "world_is": "The script stderr names python3 holdings_snapshot.py --firms 49financial --upload as Killed with code 137 at about 310 s, which fits an out-of-memory kill on a 4 GiB class host and also fits any SIGKILL; nothing retained distinguishes them. The host is started for scheduled fires (launch recorded 2026-10-13 13:30Z) and will be Online again near the next fire, so a kernel-log read of the 2026-10-09 window becomes possible then only if journald persisted across the stop and start cycles; that is not known and was not tested. Because the verdict is not OOM, memory_read_for_release_fire is false per the order, yet an unreadable cause is not a cleared cause: whether the release fire's after-read should carry a memory read anyway is the issuer's and the CTO's call."
+}
+```
