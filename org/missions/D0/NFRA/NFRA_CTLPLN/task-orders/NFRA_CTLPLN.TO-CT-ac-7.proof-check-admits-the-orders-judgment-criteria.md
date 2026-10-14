@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~91</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run: PROOF-JUDGMENT-EXPECTED cases=4/4 ok=True and proof-of-spec-check --self-test RESULT: 63 of 63 arm(s) behaved (base 59); proof instance VALID on the committed state. Rows W91-S1 (the order's crits-map premise was wrong; judgment read via the round-close-check rule) and W91-S2 (coverage-frame line prints as VIOLATION:, pre-existing, verdict unaffected) accepted as INERT observations.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
