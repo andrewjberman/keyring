@@ -959,3 +959,29 @@
   "world_is": "A lease seat that pushes a delete or a non-fast-forward of DEV is still refused, because the structural refusals run before the lease check. The lease therefore exempts only the commit payload walk. The order's 'whole push' wording would admit a delete or a history rewrite; the built order does not. Reported for the lane owner's ruling, not changed here."
 }
 ```
+
+## NFRA_DEVPLN-W2-S12 -- the one-variable seam needs a test-only guard keyed on OPAL_STATE_ROOT, or the no-source case reads the real origin/box refs
+
+```json
+{
+  "id": "NFRA_DEVPLN-W2-S12",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~2",
+  "surfaced_at": "2026-10-14T01:00:28Z",
+  "one_line": "With OPAL_GIT_READ_ROOT removed, a test with OPAL_CLOUD_READ_LOCAL unset would still read the git source from the real checkout ROOT. The cell skips the git source when OPAL_STATE_ROOT is set and OPAL_CLOUD_READ_LOCAL is not, so test case 4 (no readable source) stays hermetic. The order names no such guard.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DP-f-2 build step 1: remove OPAL_GIT_READ_ROOT entirely; OPAL_CLOUD_READ_LOCAL stands in for the git source when set; production reads (variable unset) are unchanged; the tests use no real git ref and no S3.",
+  "world_is": "With OPAL_CLOUD_READ_LOCAL unset, _source_git runs git show against ROOT's real origin/box/<box> refs, so test case 4 (cluster=False, no working-tree copy) would read the real list for a foreign box and fail its UNREADABLE assertion. The cell adds a guard in _source_git: when OPAL_STATE_ROOT is set and OPAL_CLOUD_READ_LOCAL is unset, the git source is skipped with a reason. The guard is reached only under a test switch; production, with both variables unset, is unchanged. Four other first-party tools also name OPAL_STATE_ROOT (open-calls-scan.py, seat-list.py, xadj.py, open-calls.py); I did not read the first three, so whether any sets it in production is UNVERIFIED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "wk-NFRA_DEVPLN-2 .tools/open-calls.py _source_git (uncommitted at 6d46d2db81 plus this cell's edit): 'if os.environ.get(\"OPAL_STATE_ROOT\", \"\").strip(): raise _Skip(\"git copy not read under the test switch (OPAL_STATE_ROOT)\")' placed after the OPAL_CLOUD_READ_LOCAL branch",
+      "comp-find --files 'OPAL_STATE_ROOT' .tools: DENOMINATOR 30 hit(s) across 535 file(s) scanned in scope [corpus=all]; BANDS SURFACED=16 TEST=14",
+      "python .tools/tests/test_open_calls_cloudread.py: cases=8/8 ok=True; test_open_calls.py 19/19, _approval 13/13, _register 10/10, _waiver 11/11, _withdraw 7/7, each ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
