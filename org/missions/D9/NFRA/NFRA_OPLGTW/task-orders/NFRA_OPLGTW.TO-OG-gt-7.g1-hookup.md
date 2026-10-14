@@ -97,7 +97,7 @@ the issuer to make at the merge.
 - The hookup the issuer owes at the merge (CUT BY WRITE SET). The gateway app files are in lane CLOUD_OPS_OR_ETL, which the COO cannot commit: a worker order grants them, so no lane escape is taken. Rides `OG-ap-18`.
 - Pre-cut: gt7.AC1 and gt7.AC2 base FAIL as expected (no tool registered, none classified).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>FWD22-W4</workstream>
 <slot>~78</slot>
