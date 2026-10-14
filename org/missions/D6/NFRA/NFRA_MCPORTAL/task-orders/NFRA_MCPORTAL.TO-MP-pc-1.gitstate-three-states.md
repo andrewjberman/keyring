@@ -103,7 +103,7 @@ seam to the page is the fixed PC.2 shape, graded at the release. Lives through M
 
 **AMENDMENT 1 (issuer, 2026-10-14 ~03:3xZ, before the spawn):** the worktree path moved from `C:/tmp/mp-pc-20` to `C:/tmp/mp-pc-20b`. The first provisioning was killed by the issuer's own 300 s timeout and left an orphan directory, which is not deleted (a recursive delete needs a human word). The branch and the `<paths>` grant are unchanged.
 
-<status>pending</status>
+<status>complete -- flipped by the issuer 2.0.0_SA_COO~MP, 2026-10-14 ~04:0xZ (the worker's <paths> do not grant the order file). AC1 PASS (18 of 18, named 5 of 5); instance VALID (worktree checker, rc=0); mutant control in the instance. Worker commits 90ad6bfa00, 12d990e43d; drained @94e904d9c1. Drain hygiene: py_compile OK; 48 of 48 across the five admin test files on the merged trunk. Live only through MP-pc-5. Was: pending.</status>
 <round>1</round>
 <workstream>PC</workstream>
 <slot>~20</slot>
