@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v3.0",
+  "prd_version": "v3.2",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -277,14 +277,15 @@ FWD-22  — An Opal employee reaches every contracted bucket table through a typ
 
 DONE WHEN: EXERCISED — for each census group that lands (G1 harvest, G2 assets silver, G3 portal-v2, G4 mdpf gold delta,
 G5 ETFs, G6 news), one real Opal principal's driven call to one of that group's typed tools returns rows carrying
-`as_of`, `source_keys[]`, a denominator and `absent_reason`. A client-data tool takes `firm`, `account_last4` and
+`as_of`, `source_keys[]`, a denominator and `absent_reason`. REALIZED only at 6 of 6 groups; a group whose measured
+delta is empty (G4 may be) lands with zero tools and counts. A client-data tool takes `firm`, `account_last4` and
 `platform`, and a call that names no firm, or two firms, is refused before any read.
 
 ACCEPT: The tools are the ones the census contracts propose (`4.0.0_SA_CRO~Z` deliverables
 `GATEWAY_DATA_CONTRACTS_20261014/G<n>_*.md`), each marked keep / extend / retire against the deployed `tool_index`.
 Admission is unchanged: the Opal-users-only gate (v2.3 item 4), C2, tier admission and C-PERSON run first. Every new
 S3, Lambda or DynamoDB read by a gateway role is a widening with its never-widen sign-off (CLAUDE.md NEVER-1). No
-resource name is typed (rule 30). Answers project to 50 KB by default. A last-4 that is ambiguous within a firm returns
+resource name is typed (rule 30). Answers project to 50 KB by default (G1 section 3). A last-4 that is ambiguous within a firm returns
 the candidates, never a guess. Freshness is stated in trading days.
 
 PROOF: Per landed group, one driven call. Negative arms: a non-Opal principal refused; for a client-data group, a
@@ -1120,3 +1121,107 @@ the fan-out.
 
 **Sign-off.** ENDPOINT changes (FWD-22 added), so the ratified-text half re-opens for `3.0.0_SA_CVO~Z`. The brief half
 is the CRO's G1 census, written by the CRO (proportionate sign-off). Later group enrichments are CONTRACTS-only.
+
+### v3.1 addendum (2026-10-14 ~14:1xZ, 1.0.0_SA_CTO~Z) -- FWD-22 enrichment for G2, G3, G5, G6; the client-data tool shape
+
+**Input.** `4.0.0_SA_CRO~Z` census, `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/INDEX.md` (commits 339a2804d7, 35f45893a7): G2 assets silver (131 contracts),
+G3 portal-v2 (42), G5 ETFs (36), G6 news (12). G4 (mdpf gold delta) is still running. `3.0.0_SA_CVO~Z` msg 34081 notes:
+FWD-22 DONE WHEN now says REALIZED at 6 of 6, and the 50 KB default cites G1 section 3.
+
+**Ruling 1 -- client data is served by ONE set of question-shaped tools, not one tool per vendor table.** G2 proposes 40
+vendor-specific tools. Andrew's word is "We need to be able to decide what accounts and what firm we are looking for and
+what platform we are looking for", so firm and platform are INPUTS and the vendor is an adapter behind the tool:
+- `client_resolve_account(firm, account_last4, platform?)` -> candidate list (last-4 is never unique: 49F BD 2,741 of
+  6,186 collide, Schwab about 54%, SmartX 2,692 of 5,999). Every other client tool takes a resolved account id.
+- `client_get_holdings`, `client_get_transactions`, `client_get_allocation` (model assignment + targets),
+  `client_get_lots` (unrealized + realized), `client_get_performance`, `client_get_fees`, `client_get_profile`; BD-only
+  `client_get_insurance`. Each takes `firm` (one), `account`, `platform?`, `as_of`.
+- The adapters are the G2 contracts (BD 30, Orion/Eclipse 9, SmartX 13, Schwab 57, Commonwealth 12, Tax SMA 1). A table no
+  question reaches is catalogued (MCPINDEX) but gets no adapter this round.
+- `blackdiamond_list_fees` is kept (it reads live 49F fees); `client_get_fees` wraps it and adds Cottonwood behind a
+  one-firm fence. The existing `schwab_*` family is kept; its `dim_*` views become the Schwab adapter.
+
+**Ruling 2 -- admission for client data is the DATA-GRANT class.** Every `client_*` tool goes in `DATA_GRANT_TOOLS`,
+never `NATIVE_TOOLS`. A principal reads a firm only with that firm's data grant (as `schwab_*` today). Being an Opal
+user is not enough for client data. The harvest, portal, ETF and news tools stay in the read class.
+
+**Ruling 3 -- the firm fence, per vendor (G2 finding 2).** Where the firm is a key segment (BD, Orion, Eclipse, Schwab,
+Commonwealth), the adapter reads only that firm's prefix. Where it is a ROW column (SmartX, four firms per object, Z-S109;
+Tax SMA's RIA column), the adapter filters rows in code before anything is returned, and the cell proves it with a
+two-firm negative arm. Firm spellings map to one canonical input: `49financial` (= `49f`, Schwab masters
+08242234/08335338/08403355), `cottonwood`, `inflection` (= `orion/4698`). Schwab masters overlap (7,534 accounts of
+08242234 and all 30 of 08403355 also sit under 08335338): the adapter dedupes by account and never sums across masters.
+
+**Ruling 4 -- the platform input matches the source's own label.** The labels conflict across SmartX/BlackDiamond, Tax
+SMA and MAM (G2 finding 8). No crosswalk is guessed: each answer carries `platform_label` and `platform_label_source`, and
+`platform` filters on the source's own label. A crosswalk is a later enrichment once one is declared.
+
+**Ruling 5 -- read where the data is live.** Live 49F BD silver is `s3://opal-data-bd/silver/`, not
+`opal-data-assets/blackdiamond/49financial/` (G2 finding 4). The adapter reads the live store. The `49-schwab-conv`
+skill tables in `opal-data-bd` stopped on 2026-07-23 and are NOT served. Snapshot-in-every-partition tables (Orion
+`fact_transactions`/`fact_performance`, BD `dim_advisor_fee_role`) are read from the newest partition only. 08403355 is
+added to `NFRA_OPLGTW_CONTRACT.json` and `infra/logic/registry/scopes.json` in the same cell (G2 finding 5).
+
+**G3 portal-v2 (no firm fork except mdpf scopes):** keep the five `portal_index` tools; build the 9 purpose-built tools of
+G3 section 3.4 (`mdpf_get_category_views`, `portal_get_model_positioning`, `portal_get_model_attribution`,
+`portal_get_market_returns`, `portal_get_market_regime`, `portal_get_macro`, `portal_get_valuation`,
+`portal_get_security_scan`, `portal_get_pipeline_freshness`). The internal reader already reads `json/*` and `platinum/*`.
+`json-tiered/*` (market returns) is a widening and goes in the G3 ask. ADVI perfrp, tickets and trade submissions are NOT
+served (catalog holds and PII, unchanged). Row Z-S114 (`/json-tiered/*` public at the edge) is ruled separately: close it
+(msg to `2.0.0_SA_COO~O` 13:53Z).
+
+**G5 ETFs (Opal funds and partner ownership):** wave A = `etfs_get_partner_ownership` (firm REQUIRED),
+`etfs_get_ownership_rollup` (returns the platinum dashboard's own totals; the tool sums nothing across firms),
+`etfs_get_monthly_report`, `etfs_get_fund_holdings`, `etfs_get_fund_nav_history`, and `etfs_get_positioning` EXTENDED with
+`as_of` and `fund_ticker`. Wave B = the rival-fund tools (peer group, trades, flows, compare, who-holds, security reference,
+coverage, research notes; each passes the row's `claim` through) and `etfs_get_new_securities`,
+`etfs_get_fund_bloomberg_profile`. Rule: re-run parts supersede, so read the newest part per date and never sum parts.
+
+**G6 news:** build the 5 tools of G6 (c) (`news_search_articles` with a 14-day window cap, `news_trending_topics`,
+`news_keyword_intelligence`, `news_market_mood`, `news_for_security`: harvest mention index first, then a text match
+labelled `match: text`). The frozen semantic chain, the Seeking Alpha URL ledger, the empty `opal-harvest-articles` and
+`market-updates` are NOT served. Nothing is deleted: whether to revive or retire those pipelines is outside this
+project.
+
+**Widenings: ONE never-widen ask per group, not per tool.** Each ask lists every prefix or table the group's tools read,
+the role and the rollback per key: G2 (`opal-data-assets` silver prefixes and `opal-data-bd/silver/`), G3
+(`opal-data-portal-v2/json-tiered/*`), G5 (`opal-data-etfs` prefixes), G6 (the four live news DynamoDB tables + the two
+portal singletons). The reads go through `gateway-global-internal-reader-role`, as OG-hv-2 does.
+
+**Order to Friday 2026-10-16** (`2.0.0_SA_COO~O` sets the fan-out; up to 8 workers):
+1. G1 harvest tools (cut on v3.0).
+2. G3 portal tools (almost no widening) and the G2 core: `client_resolve_account`, `client_get_holdings`,
+   `client_get_transactions`, `client_get_allocation`, `client_get_fees`.
+3. G6 news tools and G5 wave A.
+4. G2 rest (lots, performance, profile, insurance), G5 wave B.
+Pipeline defects the census found (49f converter OOM Z-S110, Eclipse stall Z-S111, ETF canon fan-in Z-S112, Sept report
+coverage Z-S113) are not gateway work: each tool states the freshness it reads, in trading days.
+
+**Sign-off.** ENDPOINT changes (FWD-22 DONE WHEN and the ACCEPT citation), so the ratified-text half re-opens for
+`3.0.0_SA_CVO~Z`. The brief half is the CRO's census (proportionate sign-off).
+
+### v3.2 addendum (2026-10-14 ~14:0xZ, 1.0.0_SA_CTO~Z) -- G2 client data reads through firm-scoped roles, never the global internal reader
+
+On `3.0.0_SA_CVO~Z` msg 34104 (v3.1 review `org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_OPLGTW_v3.1_RATIFIED_TEXT_20261014_Z.md`).
+It amends v3.1's widening paragraph for G2 only:
+- **Key-segment vendors (BD, Orion, Eclipse, Schwab, Commonwealth) read through firm- or vendor-scoped reader roles**
+  whose S3 grant is prefix-conditioned to ONE firm. The existing Schwab / Black Diamond / firm reader roles are used first
+  (build ladder step 2). A missing one is a new role named by `lib/opal_naming.py`. The fence holds at IAM, not only in
+  code.
+- **Only the mixed-firm objects (SmartX, four firms per object; Tax SMA's RIA column) rely on the code row filter.** G2's ask
+  names the role that reads them and states that the fence there is code, with its two-firm negative arm.
+- `gateway-global-internal-reader-role` NEVER gains a G2 client-data read. G1, G3, G5 and G6 (Opal's own data) still read
+  through it.
+
+CONTRACTS-side; ENDPOINT unchanged.
+
+**CRO~Z brief-half corrections (msg 34106, review `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/L4R_REVIEW_NFRA_OPLGTW_v3.1_BRIEF_20261014.md@9a10f91cf8`), adopted as contract text:**
+1. **G1 (binds the first cut):** `chatter_daily`, `article_security_mention` and `chatter_window` are read from the NEWEST
+   part of the newest date partition only. `harvest_get_chatter` returns `data_status` per day, so 0 articles never reads
+   as "no chatter". `harvest_resolve_security` answers a CUSIP with `not_held`.
+2. **G5 `etfs_get_monthly_report`:** each partner's coverage comes from that partner's report CSV (`# coverage:` line),
+   never from `coverage_verdict.json`. For September the verdict says 21/21; the CSVs say Cottonwood 20/21 and Inflection
+   18/21 (Z-S113). Z-S113 is a correctness defect, not a freshness one.
+3. **G2 firm inputs:** SmartX rows whose firm has no canonical input (Titleist, Canopy, Parable: no `firm_id` in
+   `partner_roster.json`) are never returned until that firm is registered. An unknown `advisor_id` is never mapped to
+   the nearest firm.

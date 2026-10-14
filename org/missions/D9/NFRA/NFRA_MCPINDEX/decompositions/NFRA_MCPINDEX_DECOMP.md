@@ -1449,3 +1449,82 @@ passed while 10 of 11 claims were wrong.
 Drain hygiene: the Z-S107 suite re-baseline. After the round, the project parks at ROUND_CLOSE on the round-9 un-park
 conditions.
 
+
+## ROUND 13 (2.0.0_SA_COO~MI, 2026-10-14 ~14:0xZ) -- PRD v0.11 FWD-22: the one catalog at TABLE grain from the CRO's G1 harvest contracts
+
+Source: PRD v0.11 @7878037d98 (`1.0.0_SA_CTO~Z`, msg 34078), the G1 enrichment list (6 items), and G1 @0d7c29b3c5
+(`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G1_harvest.md`, 78 contracts). Andrew-direct
+~12:4xZ (`ANDREW_DIRECT_20261014_124xZ_GATEWAY_DATA_CONTRACTS_CENSUS_CRO_FANOUT.md`); the gateway is to be live with the census
+tables by Friday 2026-10-16. The ratified-text half is SIGNED by `3.0.0_SA_CVO~Z` at v0.11 (`prd-signoff.py status` ADMITTED); the brief half is
+auto-signed. Later groups (G2 to G6) arrive as CONTRACTS-only enrichment lists and take the same pipeline: **the generator and the loader built here are
+the pipeline they reuse**, so the schema below is written once.
+
+### R13.1 THE CELLS -- 2 (and the release, which is round 12's `MX-r-13`, amended)
+
+| Cell | Serves | What | Base | Risk |
+|---|---|---|---|---|
+| `MX-c-11` | FWD-22 items 3, 6 and the loader | The catalog's one writer accepts a TABLE-grain harvest row (6 new fields, one per dataset, any depth below the 24 served top-level prefixes) and refuses a bad one; the tool index lists `harvest_list` and `harvest_read` (member b) only once the census serves them (`pending_members.yaml`); a harvest row may name only a served tool (`harvest_read_tool_errors`, refusing the emit); the header becomes v0.5 carrying Andrew's verbatim; discover answers a row's `retired` flag (a retired row is never a tool target) and matches a row by its `nl_tags` | at issuance | WORLD |
+| `MX-c-12` | FWD-22 items 1, 2, 4, 5 | `gen_harvest_rows.py` writes the 78 rows from G1 (grain, freshness, keys, size, producer claim, never-sum rules, tags, common queries, the retire list, the read_tool policy), preserving the round-12 routing text of the 39 existing rows; the catalog source rows become those 78 | at issuance | LOCAL |
+| `MX-r-13` (round 12, AMENDED A2) | FWD-22 live | The one catalog release now ships the round-13 catalog and discover change too, behind OG-hv-2, OG-ap-18 and OG-ap-17 | after both cells drain and the OPLGTW releases close | WORLD |
+
+**Chains (fan-out 2 of 2, cap 8):** [MX-c-11] and [MX-c-12] are independent: disjoint write sets (the emitter, validator, tool index,
+discover and their tests, against the generator, `catalog_entries/` and its test), and no cell consumes the other's output. They meet only
+at the drain, where the issuer regenerates the catalog (R13.4). A third chain does not exist: items 3 and 6 need the loader, items 1, 2, 4 and 5 need
+the generator, and the release is not a build cell. Workers `0.9.0_WK_NFRA_MCPINDEX~36` (c-11) and `~37` (c-12), model haiku, effort high (MP-20261010);
+`0.7.0_AE_CloudOps~MI` releases.
+
+### R13.2 THE ROW SCHEMA (the issuer's choice inside its decomposition; written once, reused by G2 to G6)
+
+A harvest source row (`catalog_entries/harvest_<slug>.yaml`) is the 11 fields of today (`HARVEST_FIELDS`) plus `table`, `layer`, `format`,
+`contract`, `nl_tags`, `retired` (and `retired_reason` iff retired). `contract` = {`id`, `size`, `keys`, `freshness`, `partition`, `producer`}: G1's own objects
+verbatim, each already carrying its `claim` (`measured` / `inferred` / `absent`), so a consumer can reject on the claim (CLAUDE.md "a value must carry its claim").
+G1's `securities` object is named `keys` in the row. The rest is derived by rule from the contract and graded against G1 at the pin.
+
+Rule 24 record (a schema an agent authors):
+- (i) MECE over the declared domain: the domain is the 78 G1 contracts; the subtraction is `set(G1 prefixes) - set(row prefixes)` and its reverse, printed in c12.AC1 (base: 52 missing, 13 extra). Each layer value is one of four; a dataset has one row.
+- (ii) Same grain: one row per dataset (table), where the base mixed 26 table rows with 13 source-level rows that stood for 50 tables. The source-level rows are deleted.
+- (iii) Intent coherence: `retired` is one axis (is it a tool target), distinct from `read_tool` (which reader), so a retired row names no reader.
+- (iv) State coherence: `read_tool` null (no reader deployed) is a different state from `retired` true (no reader wanted); retiring a row does NOT move `contract.freshness`, and a new deployment does NOT un-retire a row.
+Word-boundary token census at HEAD 35f45893a7 (`\b(nl_tags|retired|table|layer)\b` over `emit_catalog_v02.py`: 10 hits; `\b(nl_tags|retired|contract)\b` over discover's `integration.py`: 1 hit): every hit is prose or a local variable of the gold-prefix check (lines 6, 86, 526, 556-559, 1058, 1068, 1519 of the emitter; line 41 of discover), and none reads a harvest row's key of those names. `format` and `contract` were not censused over the emitter (`format` is `str.format` noise there, so a token census is meaningless); MX-c-11 reports every reader of the six keys it finds.
+
+### R13.3 BATTERY (base HEAD 35f45893a7, G1 pin 0d7c29b3c5, round-12 rows pin 8c74d1d902; `deliverables/2.0.0_SA_COO~MI/round13/checks/`)
+
+| check | base | planted arms (clause 1: exercised at the cut) |
+|---|---|---|
+| c12.AC1 | FAIL: 39 files, prefix set unequal (52 missing, 13 extra), contract.id 0 of 78 | `plant_c12.sh`: the reference 78 rows PASS; dropping a row, a wrong contract.id, a legacy hyphen table typed as a literal prefix: each FAIL |
+| c12.AC2 | FAIL: graded 26 of 78; fields failing on every row | the reference set PASS; an object count off by one, a producer text silent about an inferred claim, emptied nl_tags, an un-retired `publications/v1/`, a research-dossier retired with no evidence file, a dropped round-12 example question, a lost derived_from: each FAIL |
+| c12.AC3 | FAIL: the generator is absent | the reference generator PASS under 5 deployed-tool sets (390 of 390 rows); a generator that always names `harvest_read` FAIL |
+| c11.AC1 | FAIL at ACCEPT 0 of 78 (the loader refuses every table-grain row); REFUSE 11 of 11 holds trivially at the base | `plant_c11.sh`: the reference loader PASS (78 accepted, 11 refused); a lax loader that accepts everything FAIL |
+| c11.AC2 | FAIL: arms B, C, F (3 of 6 pass at the base: A, D, E are the preserved behaviours) | the reference tool index PASS 6 of 6 |
+| c11.AC3 | FAIL: 1 of 6 (the record file holds the verbatim; the emitter does not) | the reference header PASS 6 of 6 |
+| c11.AC4 | FAIL: the three named tests are absent (0 of 3) | the named-test pattern (round 12's c10.AC2/AC3 used the same) |
+
+The 13 stale source-level rows are not graded away by a delete-count; c12.AC1's `extra 0` is what removes them.
+
+### R13.4 THE DRAIN (the issuer's acts, not a worker's)
+
+After both cells merge (one commit per chain end, `safe-merge.sh`):
+1. Regenerate the catalog: run the emitter (it writes `infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml`). Checks on the result: `version: 0.5` and the verbatim present; `harvest_datasets` has 78 entries each with the six new fields; `harvest_read_tool_errors` empty; `tool_index` carries `harvest_list` / `harvest_read` only if the census serves them (else the printed `pending` lines).
+2. The round-12 instruments against the regenerated catalog (c10.AC1 depth 11 of 11, c10.AC2 routing 7 of 7 with anchors 2 of 2, c10.AC3 answer-time): the research-table routing was tuned by hand in round 12 and the new example questions must not displace it.
+3. The gateway suite by failing-ID delta; the known failures are listed (Z-S97, Z-S107).
+4. Tighten `test_every_harvest_row_is_reachable_by_its_own_example_question` to `== 78`.
+
+### R13.5 CHOICES THIS CUT MAKES (the issuer's, recorded)
+
+1. **ONE release, not two.** `MX-r-13` was cut for the round-12 catalog and waits behind the gateway queue (now OG-hv-2, OG-ap-18, OG-ap-17). A second release for round 13 would take another
+   gateway slot, and the catalog is one file. So `MX-r-13` is amended (A2) to ship the round-13 catalog; its criteria gain a fourth (the round-13 content live) at the PHASE A GO, once its check exists
+   and has been dry-run. Round 12 therefore closes after round 13's cells drain; both rounds' orders close at the same `round-close-check`.
+2. **read_tool is a function of the deployed census, computed at emit time.** No row names a tool the census does not serve (PRD item 3: "never point a row at an undeployed tool"). The committed rows are generated with
+   `--deployed-tools census`; the release re-derives them against the live ref before the GO names the blobs. So a row reads `harvest_read` (or its typed tool) only after OG-hv-2 (or OG-ap-18) has closed.
+3. **The generator, not hand-written YAML.** 78 rows of 17 fields each are a transcription of G1; a generator makes the transcription mechanical and checkable, and G2 to G6 reuse it (the build ladder, step 7 only after 2 to 6).
+4. **`pending_members.yaml`, not an edit to `members.yaml`.** `members.yaml` refuses an entry for an unserved tool (by design); the harvest tools are entries that wait for the census.
+5. **research-dossier (hyphen) is retired only on a measurement** (PRD item 5, "only once the round reads that `research_dossier` supersedes it"): `MX-c-12` item 5 lists both prefixes, read-only, and the check accepts either outcome.
+6. **Scope of Andrew's verbatim in the v0.5 header:** only the harvest sentence. The "all of it" sentence about `opal-data-assets` silver is the scope of G2 and is NOT quoted by this round's version.
+7. **Retired rows stay in the catalog** (PRD item 5: "rows stay, marked retired") and discover still matches them but never names a tool for them.
+
+### R13.6 WHAT THIS CUT DOES NOT CLAIM
+
+- It does not claim any of the 12 typed tools exists: they are `NFRA_OPLGTW`'s (OG-ap-18). Until each is deployed, a row names `harvest_read` or nothing.
+- It does not read a table: every number in a row is G1's, claimed as G1 claims it (a sample of 1 object per JSON dataset stays `measured on 1 object`).
+- It does not touch the producers' schedules (G1 open item: unread), nor G2 to G6.
+- It does not widen any IAM or served output: the catalog is metadata; the release carries its own never-widen pair as in `MX-r-12` / `MX-r-13`.

@@ -30,7 +30,7 @@ Code: `data/etfs/scripts/rivalfunds/` (run from `data/etfs/scripts`, package `ri
   (every other key and value unchanged). The generic machinery stays: the `index_control` role value, the `"leg": "pending"` mechanism, the gates, `collector_bloomberg.CONTROL_ROW_CAP` and `split_units`, because no served output depends on them and a
   benchmark may return as a map entry. Rewrite the tests that name the two funds to the new facts (a map entry for a benchmark is exercised through a synthetic map or a monkeypatched `_is_control`, never the shipped map).
 - Out of bounds: `universe.py`, `collector_bloomberg.py` (code), every other map entry, any gate value in `leg_gates.json`, any S3 or vendor call.
-- Checks: `round30/checks/xf1_acwi_iwm_removed_check.py` (AC1 in four gate states no ACWI or IWM and the same 13 funds; AC2 the holdings plan with every gate on is the 13 funds in one unit; AC3 the budget config no longer sizes the two funds;
+- Checks: `round30/checks/xf1_acwi_iwm_removed_check.py` (AC1 in four gate states no ACWI or IWM and the same 13 funds; AC2 the holdings plan with every gate on is the 7 bloomberg_primary funds in one unit (AMENDMENT 1, issuer, row W42-S1: `request_plan` plans the `bloomberg_primary` funds only, 7 with ENABLE on, so the prior plan was these 7 plus ACWI and IWM and the change removes exactly the two); AC3 the budget config no longer sizes the two funds;
   base FAIL 5, the all-gates-off control PASS = DELTA 0) and the tests you rewrite (AC4: the three test files below, green). J1: none (a LOCAL cell; the deploy is site Z's under the CTO~Z half).
 
 ## 2. WHAT YOU NEED TO KNOW (measured at the cut, base box/dell1)
@@ -63,7 +63,7 @@ org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (each invocation LITERAL, run from the repository root)
 
 - **AC1** -- no gate state brings ACWI or IWM back, and the 13 funds are unchanged.
-- **AC2** -- the holdings plan with every gate on is the 13 funds in one unit.
+- **AC2** -- the holdings plan with every gate on is the 7 bloomberg_primary funds in one unit.
 - **AC3** -- the budget config no longer sizes the two funds.
 - **AC4** -- the three rewritten test files are green (a fourth criterion: this cell rewrites existing tests).
 <proof_of_spec>
@@ -87,7 +87,7 @@ The deploy is not a worker's act: xe-3 a Lambda deploy under its own pair (and t
 
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>30</round>
 <workstream>5</workstream>
 <slot>~42</slot>

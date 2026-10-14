@@ -687,6 +687,92 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
       ]
     },
     "notes": "Recorded for the round's test authors. The flag is the package's own mechanism, so no change is made to conftest.py (outside this order's paths)."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W39-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~39",
+    "surfaced_at": "2026-10-14T13:43:51Z",
+    "one_line": "RIV-xc-2 rule 3, read as written, drops the colon of a stop-listed clause terminator; the cell's own example needs it kept",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-xc-2 rule 3: the tokens of FRAME_STOP are removed from the clause; the example 'Gamma Co stands out most: it was sold.' gives '<name> stands out:' (the colon survives).",
+    "world_is": "Removing the token 'most:' by the rule as written also removes its colon, which gives '<name> stands out', not the example's '<name> stands out:'. The cell does not say where the colon goes. Implemented in ai_accounts.py frame_of step 3: a clause that ended in a colon keeps it on the last token that remains. With that, every example in the cell and check AC1 hold (1 passed, rc 0). The literal reading was reasoned from the token rule, not run.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round30/checks/xc2_frame_family_check.py@ca6eedbb6d:78-80",
+        "org/missions/D5/ETFS/ETFS_RIVALS/task-orders/ETFS_RIVALS.TO-RIV-xc-2.frame-families-and-stored-reason.md@ca6eedbb6d (section 1, rule 3 and the examples)"
+      ]
+    },
+    "notes": "Judgement call by the worker. The CVO or the issuer should confirm the colon carry when the cell is re-read; the frame's shape depends on it."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W39-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~39",
+    "surfaced_at": "2026-10-14T13:43:51Z",
+    "one_line": "RIV-xc-2 does not say whether frame_still_shared is set when the one correction raises and the first reply stands",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-xc-2 step 5: a reply that STILL shares the family after the one correction is marked (frame_still_shared), not re-sent; shared_frame_with is stored whether or not the correction succeeded.",
+    "world_is": "When the correction raises, the first reply stands and it still shares the family. The cell names the mark for 'after the one correction' and is silent on a correction that errored. Implemented: frame_still_shared is set, because the standing reply does share the frame; correction_error already records the failure (ai_accounts.py run_chain, still_shared). No test in this order exercises that path.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/ai_accounts.py (run_chain, the except branch and still_shared) at worktree wk-ETFS_RIVALS-39 HEAD ca6eedbb6d plus the uncommitted edit of this order",
+        "org/missions/D5/ETFS/ETFS_RIVALS/task-orders/ETFS_RIVALS.TO-RIV-xc-2.frame-families-and-stored-reason.md@ca6eedbb6d (section 1, step 5)"
+      ]
+    },
+    "notes": "Judgement call by the worker. A test for the errored-correction path would be an added assertion outside the cell's checks, so none was written."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W41-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~41",
+    "surfaced_at": "2026-10-14T14:02:22Z",
+    "one_line": "The deploy packager does not stage data/mdpf/scripts/demque/, so in the deployed Lambda RIV-xe-1's _queue_state import fails and returns 'unreadable'; the ask path would then refuse every history-owed draw on the packaged function.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/etfs-pipeline/rivalfunds_package.py@c78a4c9722 STAGED tuple lines 33-43: staged are data/etfs/scripts/rivalfunds, lib/opal_naming.py, lib/trading_calendar.py, lib/research/identity, infra/logic/registry, org/standards/NAMING_SCHEMA.json, gold/etf_positioning_gold.py and data/find/dualbiz/scripts; a Grep of the file for 'mdpf|rivalfunds|data/' shows no data/mdpf entry",
+        "rivalfunds_package.py@c78a4c9722 docstring line 17: the layer attached by the .tf carries pandas-pyarrow-requests only, so no other path supplies data/mdpf",
+        "data/mdpf/scripts/demque/standing.py@c78a4c9722:79 read_state exists; the cell's reader works in the worktree only because the worktree carries data/ (AC2 6 passed, run from data/etfs/scripts)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-xe-1 interface (enrichment_bloomberg.py): _queue_state imports data.mdpf.scripts.demque.standing.read_state; the reader fails closed on ImportError (the cell's own words).",
+    "world_is": "The packaged function's zip carries data/ only as data/find/dualbiz/scripts, so 'data.mdpf' is not found in the Lambda; the function-level catch returns 'unreadable', and every ask-mode draw refuses with 'queue state unreadable'. Fail-closed: no Bloomberg request, no spend. The switch RIVALFUNDS_HISTORY_OWED is OFF and this cell does not set it, so nothing is affected today. The test suite cannot see the gap because the worktree carries data/.",
+    "notes": "Not fixed here: rivalfunds_package.py is outside this order's paths. Before the site-Z deploy of RIV-xe-1 (under 1.0.0_SA_CTO~Z's half) the issuer chooses between staging data/mdpf/scripts/demque/ (and whatever standing.py itself imports, not verified here) in STAGED, or redirecting the reader. A deploy-side import check would settle it."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W42-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~42",
+    "surfaced_at": "2026-10-14T14:05Z",
+    "one_line": "RIV-xf-1 AC2 cannot pass as worded: request_plan(date) with no sink plans only the bloomberg_primary funds (7 of 13) with every gate on, so the check's expectation of the 13 funds in the plan fails once the two entries are gone (the base held 9: those 7 plus ACWI and IWM)",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/collector_bloomberg.py request_plan (base box/dell1, read at worktree wk-ETFS_RIVALS-42): docstring 'Without a sink s the issuer-first fallbacks cannot be checked, so the plan is the bloomberg_primary funds'; body sets wanted = universe_funds('bloomberg_primary') unless event funds is given",
+        "measured in worktree C:/tmp/wk-riv-r30-42 after this cell's edits with RIVALFUNDS_LEG_ENABLE=1: request_plan('2026-09-29') funds = IDVZ, TXUE, BIDD, CGIC, INEQ, SCHY, PFOE (names 7); universe.funds() = 13; split_units(universe.funds()) is one unit at RIVAL_ROW_CAP (True)",
+        "xf1_acwi_iwm_removed_check.py test_ac2 at this worker's post-edit tree: 1 failed, 'Right contains 6 more items, first extra item: PCLG'; the base run before the edit failed the same assertion with 'Right contains 4 more items' while the held set still had ACWI and IWM"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-xf-1 AC2 (cell section 4, check test_ac2): with every gate on, the holdings plan is the 13 funds in one unit, and no benchmark is queried on its own.",
+    "world_is": "The no-sink holdings plan returns the bloomberg_primary funds only, 7 under every gate on. The 13-fund set is reached only through funds_for_day with a sink (issuer-first fallbacks), which the check does not call. The single-unit half holds. Removing the two entries cannot make the sinkless plan carry the six issuer-first funds, because request_plan is code outside this order's paths. Whether the served plan takes the sink path was not measured by this seat.",
+    "notes": "Not worked around: the check and collector_bloomberg.py are outside this order's paths, and the expectation belongs to the issuer. The order stays open on AC2. Ruling needed from 2.0.0_SA_COO~V1 on whether AC2 reads the sink plan (funds_for_day) or the bloomberg_primary set, with 1.0.0_SA_CTO~DELL1 if the criterion changes."
   }
 ]
 ```

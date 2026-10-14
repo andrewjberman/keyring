@@ -1433,3 +1433,84 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "The sixth test is in the order's test file, so it stays inside <paths>. It is recorded so the count of new tests is not read as five."
 }
 ```
+
+## COMM_ASSIST-W25-S1 -- the H1 control pins SOURCES to the four original names; the cell's contract makes it six, so the two checks cannot both pass
+
+```json
+{
+  "id": "COMM_ASSIST-W25-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~25",
+  "surfaced_at": "2026-10-14T14:00:00Z",
+  "one_line": "CAj13-AC3 (check_h1_failure_shape.py) requires sorted(SOURCES) to equal the four original names; the cell's contract makes SOURCES six names, so AC3 reads ok=False after the cell is built, while AC1 (check_k2_reader.py) requires both new names in SOURCES.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r16/checks/check_h1_failure_shape.py@4b23bc3cce: lines 23-25 -- names = list(getattr(m, 'SOURCES', ())); if sorted(names) != ['drafts', 'eod_today', 'open_calls', 'sprint_today']: out(False, 'SOURCES=%r')",
+      "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r18/checks/check_k2_reader.py@4b23bc3cce: line 122 -- if 'mentions' not in R.SOURCES or 'mail_log' not in R.SOURCES ... return False",
+      "org/missions/D9/COMM/COMM_ASSIST/task-orders/COMM_ASSIST.TO-CA-j-13.reader-publishes-mentions-and-mail-log.md@4b23bc3cce: THE CONTRACT sets SOURCES to six names; CAj13-AC3 says the H1 check passes at base and must still pass",
+      "data/transcripts/scripts/muse_reader/refresh.py@81fb6249fb: SOURCES = ('open_calls', 'drafts', 'eod_today', 'sprint_today', 'mentions', 'mail_log'); measured: check_h1_failure_shape.py prints H1-FAILURE-SHAPE ok=False reason=SOURCES=[six names] at this commit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CAj13 CONTRACT: SOURCES becomes ('open_calls', 'drafts', 'eod_today', 'sprint_today', 'mentions', 'mail_log'). CAj13-AC3: check_h1_failure_shape.py ok=True arms as named, passes at base and must still pass.",
+  "world_is": "Both premises were built as written and they conflict. check_h1_failure_shape.py prints H1-FAILURE-SHAPE ok=False reason=SOURCES=['open_calls', 'drafts', 'eod_today', 'sprint_today', 'mentions', 'mail_log'] at commit 81fb6249fb. check_k2_reader.py prints K2-READER ok=True arms=7 of 7 at the same commit. No repair and no widening were made, as the order's RULES require; CAj13-AC3 is recorded FAIL and the order stays pending.",
+  "notes": "The issuer chooses between the two checks (or amends H1 as a control). The order is not flipped to complete while AC3 fails. Filed under the order's surprise rule; no hazard is armed (no deploy)."
+}
+```
+
+## COMM_ASSIST-W25-S2 -- the order does not say what an expiry time that is null or unparsable does; the reader keeps such an entry
+
+```json
+{
+  "id": "COMM_ASSIST-W25-S2",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~25",
+  "surfaced_at": "2026-10-14T14:00:00Z",
+  "one_line": "THE CONTRACT drops an entry whose seen_at (mentions) or considered_at (mail_log) is older than 7 days and says nothing about a null or unparsable value; the reader keeps such an entry, with a null age, rather than dropping it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/muse_reader/refresh.py@81fb6249fb: read_mentions and read_mail_log -- 'if seen is not None and seen < cutoff: continue' and 'if considered is not None and considered < cutoff: continue'",
+      "data/transcripts/scripts/muse_reader/refresh.py@81fb6249fb: newest_first -- an item with no parsable time sorts last",
+      "org/missions/D9/COMM/COMM_ASSIST/task-orders/COMM_ASSIST.TO-CA-j-13.reader-publishes-mentions-and-mail-log.md@4b23bc3cce: THE CONTRACT, the 7-day drop sentence (no null rule)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CAj13 CONTRACT: entries whose seen_at is older than 7 days before now_dt are dropped; mail entries likewise by considered_at. No rule for a missing or unparsable time.",
+  "world_is": "A null or unparsable expiry time is kept with age_minutes null, following with_age's existing rule that an item with no parsable time is kept. No test covers this branch. Not measured on the live table.",
+  "notes": "Kept rather than dropped so that an entry is never hidden on a guess. Left for the issuer to confirm or change; a change is one comparison in each reader."
+}
+```
+
+## COMM_ASSIST-W25-S3 -- two strings still describe the four-source reader: the CLI --root help and the scan label
+
+```json
+{
+  "id": "COMM_ASSIST-W25-S3",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~25",
+  "surfaced_at": "2026-10-14T14:00:00Z",
+  "one_line": "The CLI --root help text still says 'the four files', and scan_table prints 'READ drafts' on every scan, including the new mentions and mail_log scans.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/muse_reader/refresh.py@81fb6249fb: main() add_argument('--root', help='the folder to write (the four files, INDEX.json, README.txt)')",
+      "data/transcripts/scripts/muse_reader/refresh.py@81fb6249fb: scan_table -- print('READ drafts table=%s rows_scanned=%d pages=%d' ...)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CAj13: nothing else changes (the CLI, the exit codes, INDEX.json's shape now lists six).",
+  "world_is": "Both strings are unchanged per the order's CLI rule, so the help text is stale (it says four files) and the scan label names drafts for every scan. Cosmetic; no behaviour depends on either.",
+  "notes": "Not changed here: the order fixes the CLI. The issuer may amend the help text in a later cell."
+}
+```
