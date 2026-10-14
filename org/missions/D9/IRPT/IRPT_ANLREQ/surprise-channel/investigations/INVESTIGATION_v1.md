@@ -13114,3 +13114,34 @@
 ```
 
 ---
+
+## IRPT_ANLREQ-D2-W127-S1 -- AR317-y-AC2 names a mutant run against a copy outside the product tree; the copy's '@/' imports need a scratch tsconfig and an import redirect (TO-AR-y-317, worker 0.9.0_WK_IRPT_ANLREQ~127)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W127-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~127",
+  "surfaced_at": "2026-10-14T13:42:12Z",
+  "one_line": "TO-AR-y-317 AC2 runs the new test file against a copy of analysisRequest.ts in a scratch folder outside the product tree; the copy's imports are '@/' aliases, so the run needed a scratch tsconfig.json mapping '@/*' to the portal src and the test copy's one import redirected to the copy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-317 AC2 (mutant_check.py): copy analysisRequest.ts to a scratch folder OUTSIDE the product tree with the member made conditional on answers.add_commentary === true, run the new test file against the copy, print MUTANT-FIRES only when that run FAILS. The order names no mechanism for resolving the copy's imports.",
+  "world_is": "analysisRequest.ts imports only '@/' aliases (portal/src/pages/TicketCenter/analysisRequest.ts lines 18-29), and the test imports the module by '@/pages/TicketCenter/analysisRequest'. The run therefore used a scratch tsconfig.json whose paths map '@/*' to the portal src, and the test copy's import redirected to './analysisRequest'. The product file was never written: its sha256 was printed before and after and matched. The control copy (unmutated) passed 7 of 7; the mutant failed 4 of 7.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/analysisRequest.ts lines 18-29 (all imports are '@/' aliases)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~127/mutant_check.py (scratch tsconfig and import redirect)",
+      "mutant_check.py run 2026-10-14: control rc=0 pass=7 fail=0 of 7; mutant rc=1 pass=3 fail=4 of 7; MUTANT-FIRES"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "owner: 2.0.0_SA_COO~Y2 (the issuer reads whether a scratch-tsconfig run meets 'against the copy', or amends the cell's mechanism). Nothing pushed; the portal candidate is local on cand/dell2/anlreq-commentary-always-requested at 406345bce120cdec5d9b7a0cef00bd7b80b680e9."
+}
+]
+```
+
+---
