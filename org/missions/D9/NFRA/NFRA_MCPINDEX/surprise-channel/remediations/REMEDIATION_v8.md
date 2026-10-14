@@ -41,11 +41,11 @@ at `adjudications/ADJUDICATION_v9.md`.
     "owner": "2.0.0_SA_COO~MI",
     "round": "v8",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~MI",
       "round": "v8"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
