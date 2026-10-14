@@ -80,6 +80,16 @@ was planned or applied.
   (status flip only). If anything OUTSIDE the grant fails because of your change, STOP: file a BLOCKING row naming it.
 - If `ATTACH_ADDRESS.json` is absent from your branch, or `TR1` filed a BLOCKING row about the tier, STOP on this order and file a BLOCKING row
   naming it: you do not choose a bucket.
+- **AMENDMENT 2 (issuer, 2026-10-14; gate limb: none stated; answers your row `TCKT_VNEXT-D2-W43-S2`; verified by the issuer against `python .tools/naming-gate.py --diff <probe> --enforce`).** The commit-time naming
+  gate refused three things, and each has a conformant form (the probe graded them): (1) the table segment: the key template becomes `portal/{firm}/state/ticket_attachments/trade-form/` (snake_case;
+  `TO-R18-TR1` is reopened to record it; read the new `ATTACH_ADDRESS.json` when it is on your branch, and use its `key_template` byte for byte); (2) the IAM policy name must end in `-policy`:
+  `opal-ticket-attachments-trade-form-policy` graded CONFORMANT; (3) the three firm ARNs may not be hand-typed (the gate: "hand-kept carrier of '49financial' outside every permitted context: read it
+  through lookup()"): derive each ARN's bucket and firm segment from the `opal_name` module (`infra/aws/terraform/modules/opal_name`, outputs `bucket`, `scope_bucket`, `scope_long`), with ONE module
+  call per served firm whose input is `scope = "<firm>"`, exactly as `infra/aws/terraform/inf-pipeline/inf-portal-publisher-floor.tf` does for names (the module call input IS a permitted context),
+  and build the ARN with `format()` from those outputs and the key template with `{firm}` replaced by the firm taken from the module. Run `python .tools/naming-gate.py --diff <your staged diff> --enforce`
+  yourself BEFORE committing; the gate is the oracle and a form it still refuses is a BLOCKING row quoting its text, never a bypass. The environment value `TICKET_ATTACH_BUCKET_TEMPLATE`
+  (`opal-data-{firm}`) graded RAISE-EXISTING (a warning, not a refusal) and stays. Update `tf_shape_check_tf3.py` (AC1) to read the module-derived expressions (it must still prove: two actions exactly, three
+  per-firm buckets, the three prefixes, no wildcard on the firm, no other statement widened) and re-run all criteria. Your uncommitted TR3 edits are your inherited state; keep what is right.
 - AMENDMENT 1 (issuer, 2026-10-14, after worker 43's row `TCKT_VNEXT-D2-W43-S1`): the tier is `state` (R21) and homes a bucket PER FIRM, so the environment is a bucket TEMPLATE and a key
   TEMPLATE and the permission names three buckets; the single-bucket wording of the first cut is superseded.
 - READ only: everything else.
