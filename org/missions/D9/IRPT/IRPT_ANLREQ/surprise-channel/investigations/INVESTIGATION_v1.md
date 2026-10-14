@@ -13693,3 +13693,63 @@
   "notes": "Resolves IRPT_ANLREQ-D2-S100. The lesson stands: a pair that grants a read on an encrypted table reads the table's encryption as well as the role's policy."
 }
 ```
+
+---
+
+## IRPT_ANLREQ-D2-W135-S1 -- The order's Q3 premise, that the resident already holds a ticket-service port or secret, does not hold in the code: the packager attach refuses PACKAGER_PRINCIPAL_UNSET and no tracked packager binding exists
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W135-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~135",
+  "surfaced_at": "2026-10-14T16:52:49Z",
+  "one_line": "The order's Q3 premise, that the resident already holds a ticket-service port or secret, does not hold in the code: the packager attach refuses PACKAGER_PRINCIPAL_UNSET and no tracked packager binding exists (OBSERVATION, INERT)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-326 Q3: name the smallest existing port or secret the resident already holds toward the ticket service (live_ticket_ports config keys api_base and secret_name, the packager's svc-irpt-packager token), and say whether that identity could read a ticket by id.",
+  "world_is": "No such held identity exists in the code. live_attach raises PACKAGER_PRINCIPAL_UNSET until AR-v-12's later pair (ycharts/research/opal_packager.py:227-231). live_ticket_ports returns an unset refusal unless a packager member with exactly api_base and secret_name is supplied (opal_packager.py:274-278). The bindings validator (reports/resident_installed.py:98-106) checks a member that no tracked file under infra/aws/lambda/investor-reporting sets: a search for secret_name and api_base returns code lines only, and the one tracked resident_bindings file is a test under org/tier1_exec.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py@d77f69a1bb:227-231 and 274-278",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py@d77f69a1bb:51 and 98-106",
+      "git ls-files -- '*resident_bindings*' at d77f69a1bb: 1 tracked match, org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/test_build_resident_bindings.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+---
+
+## IRPT_ANLREQ-D2-W135-S2 -- The report read's ticket binding compares the asker's ticket_id with a value the client sent on the accepted record, so it binds to a client-chosen id, not to a ticket read
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W135-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~135",
+  "surfaced_at": "2026-10-14T16:52:49Z",
+  "one_line": "The report read's ticket binding (ops/owned_report.py _require_ticket) compares the asker's ticket_id with a value the client sent on the accepted record, so it binds to a client-chosen id, not to a ticket read (OBSERVATION, INERT)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "ops/owned_report.py _require_ticket docstring (lines 67-75): the report read refuses a request filed under a different ticket than the one asking, so the report stays bound to its ticket.",
+  "world_is": "The comparison at owned_report.py:76-77 is equality between the asker's ticket_id and record['ticket_id']. acceptance.py:136-137 copies that field from the client body. submission.py:78-79 checks its shape only, and no ticket read exists (AR-y-326 Q3). A client that files with any well-formed TCK id has that id bound to its own request, so the report binding is only as honest as the client-sent id.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py@d77f69a1bb:67-77",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py@d77f69a1bb:136-137",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py@d77f69a1bb:78-79"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
