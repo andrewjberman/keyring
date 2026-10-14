@@ -33903,3 +33903,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The CTO's round-191 question 'whether the next fire recovered it' reads NO: the next fire published its own date, so 2026-10-08 is missing from 49financial's served series. 'Whether any served key of that date is partial': there is no served key of that date (the index holds no 10-08 row); the dates that ARE in the index each carry a manifest pointer with a hash, not re-read object by object here. The earlier dates of the series are sparse (09-22, 09-28, 09-30), so the series is not complete before October either; that is not read further. The release must not widen or hide this gap: a page that asks for 2026-10-08 on 49financial has no row, before and after the release. A one-date backfill is a separate act, not in this round."
 }
 ```
+
+## IRPT_BCKEND-D2-W379-S1 -- the candidate node carries no per-node class_source: the cash-rule layer split was read by re-running the producer's classifier on each mover (IB-pr-532)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W379-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~379",
+  "surfaced_at": "2026-10-14T05:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A built SECURITY node carries asset_class_basis but no class_source, and the build census holds class_source only as totals, so the canonical versus fallback split of the cash-rule movers is not readable from the candidate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@49467335d2 lines 1032-1049: annotate_classification pops class_source from classify_security's answer (found.pop) and writes only the rest onto the node (n.update(found)); the census returns by_class_source as totals per source",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@49467335d2 lines 963-1005: classify_security returns asset_class_basis TABLE on a canonical hit, and _classifier_basis (927-940) also returns TABLE for a fallback ticker held in the fallback table, so basis does not separate the layers",
+      "harness run 2026-10-14 (scratch, read only): the producer's classify_security re-run on each mover's display fields reproduced the built node's asset_class for every mover on 49financial, cottonwood and inflection (mismatch 0 of 32, 249 and 841)"
+    ]
+  },
+  "spec_asserts": "Split the cash-rule movers by layer using the node's own classification basis or source; if the node does not carry it, find it in the build's census.",
+  "world_is": "Neither the node nor the census carries the layer per node: class_source is a census-only key popped before the node update, its census entry is a per-source total, and asset_class_basis is TABLE for both a canonical hit and a fallback table hit. The worker split each firm's movers by re-running the producer's own classify_security on the mover's display symbol, description and security_id, reading class_source from that answer (the same inputs annotate_classification uses), and says so in the record's notes. Whether the release should carry a per-node layer is not decided here."
+}
+```
+
+## IRPT_BCKEND-D2-W379-S2 -- the round-189/190 Cottonwood expectation (38 canonical and 215 fallback) was measured at the 2026-10-08 snapshot; the producer's own rule builds a 2026-10-12 candidate (IB-pr-532)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W379-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~379",
+  "surfaced_at": "2026-10-14T05:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Cottonwood's round-189 fallback expectation of 215 does not transfer to the candidate the producer builds today (business date 2026-10-12): canonical 38 matches, fallback reads 211.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~375/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-528.md@1d3605e19c lines 13-19: cottonwood 2026-10-08 snapshot, 253 movers = 38 canonical + 215 fallback",
+      "harness run 2026-10-14 (scratch, read only): build_snapshot('cottonwood') with select_business_date() gave business_date 2026-10-12, 17966 nodes, 249 movers = 38 canonical + 211 fallback; the served index latest_date is still 2026-10-08",
+      "IB190-3_producer_census.json@5bc47c4693 (the census is read by path in the worktree deliverables folder)"
+    ]
+  },
+  "spec_asserts": "Cottonwood's expected cash-rule movers at its 2026-10-08 snapshot are canonical 38 and fallback 215, and the release counts must match them.",
+  "world_is": "The producer's date rule at this run builds a 2026-10-12 Cottonwood candidate, so the 2026-10-08 figures are not the release candidate's figures. Canonical matches at 38; fallback is 4 lower (211). The cause of the 4 is not decomposed (no per-node diff across the two dates was run). Under the packet's own definition counts_match_expectation is false, and the packet's stop rule governs the release. The deployed producer carries no rule and refuses Cottonwood today, so the current state is unchanged by this observation."
+}
+```
+
+## IRPT_BCKEND-D2-W379-S3 -- the producer's cutoff reads 2026-10-14 while every candidate carries the 2026-10-12 source date, and the trading calendar answered from its hardcoded fallback (IB-pr-532)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W379-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~379",
+  "surfaced_at": "2026-10-14T05:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "select_business_date() returned 2026-10-14 at a pre-session run, the candidates carry source business date 2026-10-12, and the calendar warned that it answered from its hardcoded NYSE fallback.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "harness output C:/dev/_scratch379/out_inflection.json (scratch, read only) business_date_cutoff 2026-10-14 with candidate business_date 2026-10-12 for all three firms, run 2026-10-14 about 05:10Z",
+      "harness log C:/dev/_scratch379/log_49financial.txt first line: WARN trading_calendar pandas_market_calendars absent; answering from the hardcoded NYSE fallback",
+      "lib/trading_calendar.py via holdings_snapshot.py select_business_date (line 3109-3111) at 49467335d2: the producer's own rule, not re-derived here"
+    ]
+  },
+  "spec_asserts": "The producer's business date is the expected last trading day (T-1 unless declared), read from lib/trading_calendar.py.",
+  "world_is": "At this run (Wednesday 2026-10-14, before the 10:15 ET fire) the cutoff read 2026-10-14, the candidates carry the source completion date 2026-10-12, and 2026-10-13 (a Tuesday) has no candidate. The calendar used its hardcoded fallback because pandas_market_calendars is absent on this device. Not resolved here: whether 2026-10-13 sources are missing or the cutoff reads one day ahead. The first-fire after-read in the release ledger must name the business date it expects, once that is settled."
+}
+```
