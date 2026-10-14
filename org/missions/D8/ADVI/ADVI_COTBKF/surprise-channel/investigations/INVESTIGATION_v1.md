@@ -8769,3 +8769,27 @@ round.** Never edit an existing row.
   "world_is": "The old round-82 pair (tokens) stays in the tree as a record, superseded by the V2/V3 pair; it is still exempt by its pins. NOT closed by this row: W168-S2 (ARMED, mine): the round-82 window counts are not reproducible, 6 of 15 aggregate invariants DIFF (window rows 42,319 vs 41,462 on the same 769 accounts); the CVO grades which side is trusted. The 139 snapshot accounts with only zero or null units are excluded by the worker's reading of 'open'; flagged to the CTO."
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S137",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-14T00:42:39Z",
+  "one_line": "Lesson: a worker order that BUILDS a file must name the build script as a committed path in its <paths> and keep only the outputs in .scratch. Round 85's build scripts were uncommitted scratch in worker ~168's worktree; the issuer removed the worktree after the merge and the scripts are gone, so ACTIVE_COTTONWOOD_SET_V2.csv and REVERSE_MATCH_V3.csv cannot be reproduced. Their bytes are intact and hashed at 4d427d3bbb",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 7376 (the park condition: commit the scripts and re-hash) and msg 7380/7381 (ruling A: park on the hashes; the gap in the park record; the rewrite cell is the first act on any un-park; this lesson as a row)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-cg-1.set-and-reverse-match-open-accounts.md: its bounds say 'Run outputs go under your own worktree .scratch/ (never committed)'; the record names no script path",
+      "measured 2026-10-14T00:3xZ: C:/dev/wk-cotbkf-168 does not exist; a disk search outside the repository finds no script; the harness keeps only a meta.json per subagent, no transcript; the files re-hash 5cef7ab0 and 0783f088 from git show 4d427d3bbb"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md section 4: a value must carry its claim; a produced file with no committed producer carries no way to reject it.",
+  "world_is": "The files are right by their hashes and by the invariants the worker printed (9 of 15 round-82 aggregates match; the 6 that differ are named in the round-85 packet). They are not reproducible. Owner: the first cell of any un-park, which rewrites the scripts from ACTIVE_SET_V2_RECORD.json, commits them, re-runs them and compares the two hashes. Template fix by this seat: orders that build a file list the script in <paths> and require its commit before the output is written. Same class: round 82's window script (W168-S2)."
+}
+```
