@@ -9174,3 +9174,135 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
+## IRPT_DASHBD-D2-S26 -- the firm registry's bucket field is not where a firm's irpt gold lives (address() is): a read of the registry field reported Cottonwood and Inflection as having no gold
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S26",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T03:38:13Z",
+  "one_line": "The firm registry's bucket field is not where a firm's irpt gold lives: data/firm_registry.json says opal-data-cot and opal-data-inf, lib/opal_naming.py address() resolves opal-data-cottonwood and opal-data-inflection, and a read of the registry field reported the two firms as having no gold.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Round 101 decomposition section 103 and DB-b-190's first record: s3://opal-data-cot/irpt/ and s3://opal-data-inf/irpt/ list empty, so no C-SHAPE table exists for Cottonwood or Inflection.",
+  "world_is": "The two registry buckets hold no irpt/ prefix, but the gold lives at the address() buckets: Cottonwood's irpt/cottonwood/gold/ holds account_return_daily (3,325 daily partitions from 2013), dim_return_method (method_version 3), holdings and holdings performance tables; Inflection's holds the holdings tables and no account_return_daily. Worker ~154 filed the same mismatch (W154-S2: the registry bucket field and the address() bucket disagree for every firm). Any bucket for a firm's gold, silver or platinum is read from address(), never from the registry's bucket field. The decomposition carries an erratum; DB-b-190 is re-seated on the real buckets.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py address('irpt', firm, 'gold', 'account_return_daily', 'date=...') for the three firms (this seat, 2026-10-14)",
+      "aws s3 ls of s3://opal-data-cottonwood/irpt/cottonwood/gold/ and s3://opal-data-inflection/irpt/inflection/gold/ top-level prefixes (this seat, 2026-10-14)",
+      "IRPT_DASHBD-D2-W154-S2 and W154-S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W152-S1 -- the export PDF cannot be read as an image on this device: no PDF rasteriser is installed and the Read tool refuses the file, so the page-by-page read of DB-b-187 is not done
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W152-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~152",
+  "surfaced_at": "2026-10-14T03:02:00Z",
+  "one_line": "The export PDF cannot be read as an image on this device: no PDF rasteriser is installed and the Read tool refuses the file, so the page-by-page clipping read of DB-b-187 step 4 is not done and no clipping entry is recorded.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO DB-b-187 step 4: open FWD21_EXPORT_49F_SAMPLE.pdf with the Read tool, pages 1-5, then 6-10, then onward, and record one clipping entry per page (clipped bool, one sentence of words).",
+  "world_is": "The Read tool returns the error 'pdftoppm is not installed' for the 17-page export PDF. Absent on this device: pdftoppm, pdftocairo, gs, gswin64c, magick, mutool, qpdf. Not importable: Python fitz, pypdfium2, pdf2image, pdfplumber (PIL is present). The PDF page count from its page objects is 17; the page read is not made, so pdf_pages_read is 0 and no page is graded clipped or clear.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read tool, file_path C:/dev/_irpt_private_evidence_20261009/fwd21_sample_r101/FWD21_EXPORT_49F_SAMPLE.pdf, pages 1-5: error 'pdftoppm is not installed'",
+      "command -v over the seven rasteriser binaries, all absent; python -I find_spec over fitz, pypdfium2, pdf2image, pdfplumber, all absent (PIL present); counts only",
+      "the harness run of the real sample at portal commit 3bfc2ab1 wrote the PDF (17 page objects, counts only) into the private folder fwd21_sample_r101"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W152-S2 -- the W146-S1 premise does not hold at the checked sample hash: the real sample renders on the unmodified portal, so the crash that row names is not reproduced
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W152-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~152",
+  "surfaced_at": "2026-10-14T03:02:00Z",
+  "one_line": "The W146-S1 premise does not hold at the checked sample hash: the real sample renders on the unmodified portal (base commit 091ae64e, exit 0, 117 member ids per HTML), so the buildReportModel crash that row names is not reproduced.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W146-S1 (still ARMED, disarm owner 2.0.0_SA_COO~D2): the sample's household.accounts entries carry account_key and last_four with no window_status, and its window statuses sit under a top-level windows key; buildReportModel throws on account window_status.",
+  "world_is": "At sample sha256 76a48793, the checked file, the top-level keys are household and values; household carries accounts, as_of, first_data_date, household_ref; each account entry carries account_id, last4, first_data_date, window_status; the 117 values are 62 absent, 36 by_row, 18 numbers, 1 text. The unmodified harness run at the base read the file with exit 0. The W146 key names were not found at this hash, so either that run read a different file or the file moved after it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "keys-only probe of the checked sample (key names and value kinds, no values) run by python -I at this worker's worktree",
+      "the unmodified render_sample.ts of 0.9.0_WK_IRPT_DASHBD~146 run at base portal 091ae64e: exit 0, tab and export 117 member ids, 18 PDF pages (run log in the private folder, counts only)",
+      "sha256 of C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~141/HOUSEHOLD_SAMPLE.json = 76a48793d6979ba66358d4e1d2cdc3d59d34c9a5217df1b7b421715925ddf16d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W152-S3 -- the sheet height that makes each export sheet fit one PDF page is set inside the component, because the page geometry sits in render/print.css, which is outside this order's grant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W152-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~152",
+  "surfaced_at": "2026-10-14T03:32:40Z",
+  "one_line": "Each export sheet is printed at an inline height of 7.6in on the sheet root, because the page geometry that sets min-height 8.5in sits in render/print.css, which is outside this order's grant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO DB-b-187 step 2: the known defect (12 sheets numbered, 17 PDF pages) is fixed by print CSS or sheet content height, editing only the two report component directories and their tests.",
+  "world_is": "render/print.css sets .ir-page-performance-landscape-letter min-height 8.5in, taller than the 7.7in printable area of a landscape letter page, so every sheet ran onto a second page. print.css is outside the grant, so the fix is an inline height and minHeight 0 on the sheet root in PerformanceReportDocument.tsx, and documentSheets.ts splits sheets to a height budget. The document is not yet wired (its header says the hookup belongs to the issuer at the merge), so until then the inline height is the only guard: a consumer that prints this class without it re-creates the overflow.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal render/print.css, rule .ir-page-performance-landscape-letter (min-height 8.5in), read at portal commit 3bfc2ab1 and unchanged at 9304556192550be",
+      "measured: the 12-sheet render at 3bfc2ab1 printed 17 PDF pages; the 14-sheet render at 9304556192550be prints 14 pages, one sheet per page, each read as an image",
+      "PerformanceReportDocument.tsx header comment: NOT WIRED, the hookup into PrintEntry and export/Preview belongs to the issuer at the merge"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W152-S4 -- the render harness has no fixture mode, so FWD21_FIXTURE_EXPORT.html was rendered by the unmodified harness from the synthetic fixture exported to a scratch JSON, then copied
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W152-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~152",
+  "surfaced_at": "2026-10-14T03:32:40Z",
+  "one_line": "The render harness writes three files and takes no fixture, so the fixture export was made by running the unmodified harness on the synthetic fixture exported to a scratch JSON, then copying its export HTML to the private folder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-187 step 3: copy the harness and let it write four outputs, including FWD21_FIXTURE_EXPORT.html from the synthetic fixture; follow the README for the run.",
+  "world_is": "The harness copy (sha256 1221092ae235a83840de8cbd63ffbe448de0b839f4ba016a23408ad7d03acb86, equal to the ~146 file) and its README write the tab HTML, the export HTML and the export PDF only; no path takes a fixture. The fixture export was rendered by that unedited harness from SYNTHETIC_REPORT_ALPHA (made-up data) exported to a scratch JSON, into a scratch folder, and its export HTML was copied to the private folder as FWD21_FIXTURE_EXPORT.html: 117 member ids, 3 svg.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the ~146 README.txt Behaviour section: the harness writes three files",
+      "render_sample.ts sha256 1221092ae235a83840de8cbd63ffbe448de0b839f4ba016a23408ad7d03acb86 equals the ~146 file; no fixture branch in it",
+      "RENDER_FIX.json outputs.fixture_html records the copied file (hash and bytes only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

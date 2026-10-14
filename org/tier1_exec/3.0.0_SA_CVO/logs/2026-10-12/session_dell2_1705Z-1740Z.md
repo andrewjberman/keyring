@@ -371,3 +371,9 @@ Correction: C-S370's grounding cites msg 7389; the packet message is 7387. The r
 | item | result | commit |
 |---|---|---|
 | IRPT_BCKEND round 188 (~P) | ADJUDICATION_v89 (C-S372), no remediation file: Design B packaged, not released (live reporting-gold read unchanged). 10 dismissed. S158 ARMED held with the CTO: Cottonwood IR holdings stale; my trading-day count puts it 2 trading days behind its peers (the packet's four is the library's UTC-date frontier). Slug sent | ea8a848d93 |
+
+## Addendum, 2026-10-14 03:40Z to 03:44Z (msg 7496)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 189 (~P) | ADJUDICATION_v90 (C-S373), no remediation file: the IR cash rule built canonical-only; I re-ran IB189-1-AC1 to AC3: all PASS. Blast radius 844 nodes; fallback-served cash stays Fixed Income (cross-page call for the CTO). 7 dismissed; S158 (CTO) and W374-S1 (box manager: client-data check absent on dell2; my commits show the same WARN) held with their owners. Slug sent | 488fe2c4d2 |
