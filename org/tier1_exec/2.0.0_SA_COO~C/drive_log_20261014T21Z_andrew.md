@@ -1,0 +1,17 @@
+# Drive log 2.0.0_SA_COO~C NFRA_CTLPLN, ticks 18Z-21Z 2026-10-14 (host andrew)
+
+## tick 2026-10-14T18:10:03Z 2.0.0_SA_COO~C (cron 0839a6b3) WAITING CALL -> /next-calls --drive
+NFRA_CTLPLN | EXECUTING | round 13 | 6 of 7 complete | CT-ac-5 gated on open call laptop-20261014T130915Z-6d7e (OPEN, dell1 21:00Z, CTO msg 109198: precondition met) | inbox empty | 0 FREE options | committed the 09Z-18Z drive log
+## 2026-10-14T18:11:27Z 2.0.0_SA_COO~C event: CTO msg 109203 (Andrew: CTLPLN efficiency project, finish then close or hold; cut no new round) -> drafted REMAINS_FOR_CLOSE_OR_HOLD_20261014.md; send after CT-ac-5 and the 21:00Z restart
+## 2026-10-14T18:40:31Z 2.0.0_SA_COO~C event: CTO msg 109207 REVERSES 109203 (Andrew ~18:4xZ: laptop drives COMM_ASSIST and NFRA_CTLPLN, no loss) -> keep driving at normal pace; round 14 may be cut after round 13 closes; REMAINS_FOR_CLOSE_OR_HOLD_20261014.md is NOT sent (kept as round-14 input); 21:00Z restart stands
+## tick 2026-10-14T19:09:23Z 2.0.0_SA_COO~C (cron 0839a6b3) WAITING CALL -> /next-calls --drive
+NFRA_CTLPLN | EXECUTING | round 13 | 6 of 7 complete | CT-ac-5 gated on call laptop-20261014T130915Z-6d7e (OPEN; dell1 21:00Z; dell1 seats doing pre-restart hygiene per origin/box/dell1 18Z logs; no S0 from CT1 yet) | inbox empty | 0 FREE options (round-13 analysis not in hand, so no round-14 cut)
+## 2026-10-14T19:11:26Z 2.0.0_SA_COO~C /next-calls --drive (Stop-hook rerun of the 19:08Z tick)
+0 calls at Andrew beyond 6d7e (queued, OPEN, own box); 0 FREE options: CT-ac-5 EVENT-GATED on dell1 21:00Z; every NFRA_CTLPLN order file in U7/project dirs reads complete (U7's summary is stale); round-14 cut needs the CTO's round-13 analysis (after CT-ac-5); MSTR summary says dell1 ack and the 21:00Z restart pending. Tick recorded WAITING (empty=0).
+## 2026-10-14T19:47:47Z 2.0.0_SA_COO~C event: MSTR msg 109221 (CTO~DELL1: 3 uncommitted generated portal files on dell1, land or discard) -> acked; answered via MSTR: not a CTLPLN artifact (FWD-28 is the caller-tier fence on two functions); regenerate-and-diff, equal = redundant, differ = generator owner (IRPT/ADVI_FIRMBKTS); no destructive step taken
+## tick 2026-10-14T20:09:42Z 2.0.0_SA_COO~C (cron 0839a6b3) DRIVE FORWARD (send)
+NFRA_CTLPLN | EXECUTING | round 13 | 6 of 7 complete | CT-ac-5 gated on call 6d7e (dell1 21:00Z); CT1 unseated and no S0 on origin/box/dell1 at 20:08Z -> asked MSTR for MSTR~DELL1 to seat CT1 for S0 by 20:55Z | inbox empty | 0 other FREE options
+## 2026-10-14T20:22:09Z 2.0.0_SA_COO~C event: MSTR msg 109234 (from MSTR~DELL1) -> CT-ac-5 S0 written and pushed (403fbe344e; read on origin/box/dell1 1f6fa7e8b6): final line 'S0 at=2026-10-14T20:15:08Z head=51f1051aa1 unpublished=1 uncommitted=256 orders_open=9 ledger_open=4 seats_live=19', exact form OK; S1 follows after the 21:00Z restart and the re-seat; acked
+## 2026-10-14T20:53:49Z 2.0.0_SA_COO~C event: MSTR 109244 and CTO 109245 -- Andrew HELD the dell1 restart (~20:49Z) -> CT-ac-5 rebooked undated (AMENDMENT 3, commit 53c8d3cc7c, LOCAL); call 6d7e CLOSED; new undated act call laptop-20261014T205216Z-7841 carries the wait; round 13 stays open on CT-ac-5 alone
+## tick 2026-10-14T21:09:42Z 2.0.0_SA_COO~C (cron 0839a6b3) DRIVE FORWARD (send)
+NFRA_CTLPLN | EXECUTING | round 13 | 6 of 7 complete | CT-ac-5 undated, gated on call laptop-20261014T205216Z-7841 (OPEN) | inbox empty | asked the CTO: close r13 carrying CT-ac-5 as a qualified wait on Andrew's word, or hold open
