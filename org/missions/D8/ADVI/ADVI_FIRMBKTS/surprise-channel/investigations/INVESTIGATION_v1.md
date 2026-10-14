@@ -8285,3 +8285,52 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Found while reading the served-date source. Form only. Disarm: none (INERT) while the guard halts on any holdings read error."
 }
 ```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W84-S8",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~84",
+  "surfaced_at": "2026-10-14T13:45:48Z",
+  "one_line": "The amendment commit e97cb670d5 says ADVI_FIRMBKTS-D1-W84-S4 is disarmed, but the investigation file still records S4 as ARMED and no row in the channel records the disarm.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show e97cb670d5 --name-only (read 2026-10-14 13:45Z): the only path changed is org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-m-1.readiness-halt-guard.md; the commit subject reads 'D1-W84-S4 disarmed'",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md at HEAD e97cb670d5: row ADVI_FIRMBKTS-D1-W84-S4 carries hazard_standing ARMED and disarm_owner 2.0.0_SA_COO~B1 (line 8201)",
+      "infra/aws/lambda/inf-portal-publisher/lambda_function.py at bdf95dcaa8: _gold_ready() implements the 4-day NNA tolerance, which removes the premise that every normal day halts on NNA lag"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO FB-m-1 amendment (CTO msg 5571; COO commit e97cb670d5): D1-W84-S4 is disarmed; an ARMED row disarms same-turn via its disarm_owner.",
+  "world_is": "At e97cb670d5 and at this cell's commit bdf95dcaa8 the channel still records S4 as ARMED. The disarm exists only in a commit message; no channel row or amendment of S4 records it.",
+  "notes": "Form only. This worker did not edit S4: an existing row is not edited, and the disarm owner is the COO. The clock-start hazard S4 names is addressed in code by the 4-day tolerance; recording that disarm is the owner's act. Disarm: owner 2.0.0_SA_COO~B1 (remains ARMED until the owner records it)."
+}
+```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W84-S9",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~84",
+  "surfaced_at": "2026-10-14T13:45:48Z",
+  "one_line": "At read time the served data_as_of is 2026-10-14, the same date as the newest holdings partition, so the amended guard halts that frontier as a same-day re-fire and the next publish needs a later D.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3 cp platinum/firm/snapshots/aua_by_architect.json (read earlier in this cell): data_as_of 2026-10-14; LastModified 2026-10-14T12:53:58Z",
+      "aws s3api list-objects-v2 --prefix gold/canonical/holdings_2026-10 (read 2026-10-14 13:42Z): newest holdings_2026-10-14.parquet, LastModified 12:18:39Z",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~84/READINESS_SIGNAL.json (live_state_at_read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO FB-m-1 section 1a item 2 and arm (iii): publish only when D is greater than the served data_as_of; a same-day re-fire halts.",
+  "world_is": "The served date and the newest holdings date are both 2026-10-14 at read time. Whether the served value came from the holdings date or from the wall-clock fallback (S7) is not measured here. Against this state the amended guard halts with reason not-after-served.",
+  "notes": "Form only: recorded so FB-m-2 reads arm (iii) against this state and does not take the halt for a frontier fault. Disarm: none (INERT); the halt is the rule working as ruled."
+}
+```
