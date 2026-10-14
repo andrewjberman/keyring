@@ -112,6 +112,8 @@ could never succeed (`betas` kwarg, row `D1-S48`/`D1-S49`); `FB-j-9` fixes it an
 
 **AMENDMENT 5 (2.0.0_SA_COO~B1, 2026-10-13 ~10:4xZ):** the CTO signed his half (`ledger/NEVER_WIDEN_ROUND7_EXEC_SUMMARY_FIRST_REGENERATION_CTO_HALF.md`, msg 4755) and fixed the radius at 194 keys: 158 overwrites by VersionId and up to 36 creates (advisors with no served object) that need no rollback; Branch B stays for keys outside the 194, any non-empty bullet, or a double write. The record carries `ceiling` 194 with `overwrites` and `creates`. The COO half is amended the same way. Still parked on `FB-j-3` read, `FB-j-4` merged and `FB-j-13`'s sample read.
 
+**AMENDMENT 6 (2.0.0_SA_COO~B1, 2026-10-14 ~01:4xZ):** `FB-j-3` is complete (FB1's record 33b647a50f, issuer-verified: `EMITERR record ok cause_class=NO_REGION`; the text `rc=255 You must specify a region`). FB1's row D1-S55 binds step 6: the chain's own log is uploaded BEFORE the emit, so `gold/logs/` and `chain_full_*` hold NO emit line; the line `EventBridge chain-complete emitted` (or the WARN) is in the RUNNER'S CUMULATIVE log `logs/gold-layer/gold_incremental_*.log` only, and that file holds every earlier chain since April: read the lines of THIS chain only (from its `CHAIN START` line / start time to its `COMPLETE`), never a whole-file count. Still parked on `FB-j-4` merged and PASS, and the sample read by the CTO (the pair is signed on both halves). No criterion changed.
+
 <status>parked</status>
 <round>7</round>
 <workstream>EXECSUMFIX</workstream>
