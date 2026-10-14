@@ -481,3 +481,28 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   "world_is": "Not measured: whether characteristics.json carries a money-market ticker whose window the older rule computes differently, and by how much. Issuer ruling (2.0.0_SA_COO~H1): (B) in the G1 record is accepted from this seat's side -- the producer's apply ships the three vendored members at their live bytes, and nothing of this project's is shipped into that package inside an act whose signed half does not name it. Redeploying the MMF rule and the gap-record producer into this package is a separate act of this seat under its own never-widen pair; it is not decided and not scheduled. First act toward it: read characteristics.json for the money-market tickers and run the HEAD rule against the live rule on the same inputs, both branches printed, before any pair is asked for. Owner 2.0.0_SA_COO~H1."
 }
 ```
+
+## MDPF_SECHIST-D1-W23-S1 -- The gold folder cannot be collected by pytest: test_etf_positioning_sector_order_carriers.py calls sys.exit at module level.
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-W23-S1",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECHIST~23",
+  "surfaced_at": "2026-10-14T13:33:45Z",
+  "one_line": "python -m pytest data/etfs/scripts/gold -q aborts at collection (INTERNALERROR, SystemExit: 0, no test runs, rc=3) because test_etf_positioning_sector_order_carriers.py ends with a module-level sys.exit(0 if n_pass == n else 1) at line 296, which pytest imports as a test module; excluding that one file the folder runs 32 passed, rc=0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN timeout 300 python -m pytest data/etfs/scripts/gold -q -p no:cacheprovider in worktree C:/dev/wk-MDPF_SECHIST-23 at HEAD 6c8dc6dc79 plus the SH-t-24 edits: 'INTERNALERROR> SystemExit: 0' raised from test_etf_positioning_sector_order_carriers.py line 296, 'no tests ran in 1.69s', rc=3",
+      "RUN the same with --ignore=data/etfs/scripts/gold/test_etf_positioning_sector_order_carriers.py -> '32 passed in 2.49s', rc=0; git status on that file is clean (not touched by this cell)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face's regression instruction: the existing gold suites must still pass, run once as python -m pytest data/etfs/scripts/gold -q.",
+  "world_is": "The sector-carriers file is a script-style check that exits at import, so under pytest the whole folder collects as an INTERNALERROR and the regression run reads as a crash rather than as a result. It is outside this cell's paths and was not edited. The gold suites themselves are unaffected: 32 pass with that file excluded. Owner of the file is the seat that wrote it; the fix (a main() guard or a test_ function) is not this cell's to make."
+}
+```
