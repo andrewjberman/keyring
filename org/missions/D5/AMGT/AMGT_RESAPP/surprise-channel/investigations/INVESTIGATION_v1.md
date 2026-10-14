@@ -26599,3 +26599,55 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The header and the file disagree; the channel's owner decides which is the rule. The row was placed as the existing rows are placed."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S28",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~RA1",
+  "surfaced_at": "2026-10-14T00:25:18Z",
+  "one_line": "AMGT-bk-2 AC2 cannot read YES on the captures its own order names: r104_pe_delta.py compares check_face whole (the half says the PE check rows follow the served figure) and counts served/withheld from model.fiscal_year_figures, which aw4_capture.py does not keep.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "AC2 expects 'pe totals names 95 served S withheld W and R104 PE DELTA: YES (no per-name DIFF line)'. COO half: the PE_RATIO check rows (fiscal_year_line_item:PE_RATIO:<year>) follow the served figure and a withheld row's check row goes with it; model.fiscal_row_count moves with the withheld count.",
+  "world_is": "Literal AC2 on .scratch_bk2/thesis_pre.json and thesis_post.json printed 69 per-name DIFF lines (check_face on 69 names, model.fiscal_row_count on 29) and 'pe totals names 95 served 0 withheld 0' and 'R104 PE DELTA: NO', exit=1. The instrument reads served/withheld from model.fiscal_year_figures and aw4_capture.py's KEEP_MODEL omits that key, so S and W print 0 on any capture; its OTHER_TOP includes check_face, which legitimately changes. A supplementary run of the half's own normalization on the same captures (PE figure rows, PE fiscal_unresolved entries and PE check rows set aside; top-level figures list counted) read PE rows 618 -> 464 (154 withheld), 154 PE fiscal_unresolved entries added, row_count moved on 29 names consistently with the withheld count, OTHER differing paths 0 over 95 names. The live bytes match the half's expected outcome; the grading instrument cannot say so.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round104_prep/checks/r104_pe_delta.py: OTHER_TOP tuple and the served/withheld counters read ma/mb fiscal_year_figures of the model block",
+      "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round47/aw4_capture.py: KEEP_MODEL lists line_names, forecast_figures, fiscal_unresolved, team_sheet, forecast_reason, forecast_periods, forecast_source_counts, fiscal_row_count, model_status (no fiscal_year_figures)",
+      "scratchpad bk2/ac2_literal.log (literal AC2 run) and bk2/pe_supplement.log (the supplement)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The apply STANDS; AC2 is recorded FAIL on its literal output with the supplement beside it, and the order is not flipped to complete. Amending the instrument (check_face PE rows set aside, counts from the top-level list or a capture that keeps model.fiscal_year_figures) and the verdict are the issuer's."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S29",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~RA1",
+  "surfaced_at": "2026-10-14T00:25:18Z",
+  "one_line": "AMGT-bk-2's pre-act route baseline straddled 00:00Z (23:58:35Z to 00:02:49Z), so the first 174 requests read the 2026-10-13 date and the replay read 2026-10-14; 2,596 overlay paths differ from the baseline for that reason alone, and the baseline holds 528 keys against the half's 527.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "COO half Branch 1: replay of the route baseline: status moved 0, paths outside the generation clocks and the /thesis P/E rows 0. The half and the order name a 527-request baseline.",
+  "world_is": "bf1_capture.py compare of the 528-request baseline (one key more than bj-2's: series:TRENDING/CHATTER, none fewer) against the replay (00:08:03Z-00:11:47Z) read status moved 0, missing 0, and 2,596 name-class paths, ALL on the 84 overlay requests among the first 174 requests (cumulative 82.6 s of the baseline, midnight at about 85 s): axis_reads as_of_date and requested_as_of (2026-10-13 -> 2026-10-02 latest ranking), feed window dates, chatter_absent_reason, provenance reasons, feed items. The 354 requests after midnight differ on generation clocks (15) and the thesis P/E rows only (18,952 paths, the half's number, and 22 noise). CONTROL: the OLD merged pin c558bffbcc handler (worktree C:/tmp/bj2-build) run locally now against the live pool, for all 174 pre-midnight name requests, differs from the live new function on 0 non-noise paths, so the new code serves what the old code serves on today's date.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scratchpad bk2/compare.json (diffs by request; the pre/post split by cumulative elapsed against 85.4 s from the 23:58:35Z start)",
+      "scratchpad bk2/old_code_control.log: 'old-code local vs live-new: requests 174 | noise paths 0 | non-noise differing paths 0'",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~RA1/BK2_POST_APPLY_COMPARE_20261014.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The seat started the capture 85 s before the UTC date change and did not guard for it; the control above is the repair, not a re-baseline (the old code is gone from the function). A GO for a capture near 00:00Z should name a start after the change."
+}
+```

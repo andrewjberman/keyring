@@ -4,21 +4,21 @@
   "basis": "history backfill quoted over NON-trading days (weekends and NYSE holidays, lib/trading_calendar.py is_trading_day) at the measured ceiling per day; a trading day's backfill allowance is 0 (production draws history on trading days); counted only on days a scheduled drawer fires (drawer_schedule.py)",
   "basis_note": "Option C depth (flow dates plus month-ends before 2026-04-22, daily after), floor max(first held, 2012-01-01); PX_LAST with the client's income rows from the transactions, TOT_RETURN_INDEX_GROSS_DVDS for the 11 long-held bonds; the 8 funds Yahoo rejected joined; 0 one-dollar funds skipped, 194 UNREAD cash equivalents pulled. Frozen before it runs; NOT drawn (the hold stands until Andrew's form is complete). The finish counts only days a scheduled drawer fires (non-trading days).",
   "cells": {
-    "bloomberg_history": 34223
+    "bloomberg_history": 34437
   },
-  "cells_remaining": 34223,
+  "cells_remaining": 34437,
   "claims": {
     "ceiling": "measured",
     "reserve": "held"
   },
-  "correction": "2026-10-13 ~22:5xZ, issuer: rebuilt on DQ-t-57 (merged @2ff948f093): clipped to dell2's active Cottonwood set (sha256-verified, commit ec617572b8) -- 99 CUSIPs shrunk, 1 emptied, 4 outside the set and the P2 fund held back (CTO msgs 5216, 5227). 613 CUSIPs and 37,439 cells before; the earlier 'correction' (ABNFX hand edit) is superseded by the builder holding P2/P3 back itself.",
+  "correction": "2026-10-14 ~00:5xZ, issuer: rebuilt on DQ-t-60 (merged @a571c06ff9): clipped to dell2's active Cottonwood set V2 (commit 4d427d3bbb, sha256 5cef7ab0c9e1..., 860 accounts, 3,368 securities; CTO msg 5292). 613 CUSIPs, 34,437 cells, 1 held back (the match-open fund); V1 gave 608 CUSIPs and 34,223 cells. The 4 bond and T-bill CUSIPs V1 lacked window in, and 9128334Y3 (emptied under V1) returns.",
   "finish_date": "2026-11-01",
   "finish_date_claim": "measured",
   "frozen_by": "2.0.0_SA_COO~Q1",
   "label": "full-request quote",
   "page": "client performance (Cottonwood), via MDPF_SECHIST's one series per security",
-  "quoted_at": "2026-10-13T22:34:16Z",
-  "quoted_for_today": "2026-10-13",
+  "quoted_at": "2026-10-14T00:39:28Z",
+  "quoted_for_today": "2026-10-14",
   "request_id": "MDPF_SECHIST-CARD-A-B1-OPTION-C",
-  "securities_count": 608
+  "securities_count": 613
 }

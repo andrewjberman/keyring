@@ -1,12 +1,12 @@
 {
   "prd": "NFRA_MCPINDEX_PRD.md",
-  "prd_version": "v0.9",
-  "prd_pin": "e581c26ab44edbbd4968b695610f3b4a01a3d463",
+  "prd_version": "v0.10",
+  "prd_pin": "301af339c71f2b76f0a29503122e12c9df95c2a4",
   "half": "ratified-text",
-  "half_hash": "208993f4f47329829cd9241d1e6b07ee993588d7d2d514bbc48d96389e5fb3ab",
-  "endpoint_hash": "4c91f16d46b1d6fd643600bdea9a14744cbb07f2c09847dd1211c225070344e6",
+  "half_hash": "be6514742258dc83182fd7a14cac0e6622647d6639da51644745b30ffd38aeaa",
+  "endpoint_hash": "5e0d2474958a2da6b9d5b3a9ea4a7e16e06d9972639a2f32d889a80183580e50",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_MCPINDEX_v0.9_CURE_RATIFIED_TEXT_20261013_Z.md@552de8f694",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_MCPINDEX_v0.10_RATIFIED_TEXT_20261014_Z.md@7ad4247d80",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-10-13T19:42:44Z"
+  "signed_at": "2026-10-14T00:33:36Z"
 }

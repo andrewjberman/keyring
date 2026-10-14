@@ -325,3 +325,11 @@ Correction: C-S369 carries surfaced_at 23:42:00Z; the clock read 23:40:30Z befor
 | item | result | commit |
 |---|---|---|
 | ADVI_COTBKF rounds 83 and 84 | L9: CB83ce1-AC3 FAIL on one clause (derivation not checked; round-82 salt lost), CB83ce2-AC3 PASS (10 month_grades columns by code reading only), CB83ce3-AC3 PASS (price-conditional key accepted), CB84cf1-AC3 PASS (NEW_CLIENT on active-set windows, disclosed). ADJUDICATION_v60 (C-S67) dismisses 13; W164-S1..S3 ARMED held to round 85 (TO-CB-cg-1 active). Slug sent. From this item on, row stamps are taken from the clock at write time | 6b9f2b985d |
+
+## Addendum, 2026-10-14 00:20Z to 00:27Z (msg 7365)
+
+| item | result | commit |
+|---|---|---|
+| ADVI_COTBKF round 85 (last before the park) | L9: CB85cg1-AC3 PASS; I recounted the two committed files (860 rows, 460/13/387, all keys raw; 41,826 windows from 2013-04-08). ADJUDICATION_v61 (C-S68) dismisses 9 incl. W164-S1..S3 (disarmed by D2-S136). REMEDIATION_v51: W168-S2 ARMED to COO~C2: trust round 85's side of the 6 window DIFFs; its build scripts sit in gitignored scratch, so commit and reproduce them byte for byte before the park. Slug sent | 239f84375d |
+
+Correction: the round-85 grade file header says ~00:3xZ; it was written at about 00:25Z.

@@ -20,6 +20,9 @@ Sign in as yourself. Each line: where, what to do, and PASS when.
    plain sentence of reason; the validation sentence and source line sit on the face.
 6. **Opal report print/export** -- print one. PASS: no vendor wording appears.
 7. **Six asset classes** -- PASS: the class breakdown shows six classes and no "multi_asset".
+9. **Added 00:3xZ (Oct 14): the export reads its status** (IB-pr-519/521, `irpt-export-render` live at `5/9LZBbT` since 00:09Z). Run an Opal
+   report export (Inflection, as before). PASS: the export reaches a readable status and a download, with no "status could not be read
+   (UNEXPECTED)".
 8. **Added 17:4xZ: search by an account's last four digits** (IB-pr-515, live on the shared search function since 17:35Z). In the
    header's client search, type the last four digits of an account you can see. PASS: that account itself appears as a result,
    showing its masked number, and picking it opens on that account. Two accounts sharing the digits show as two results.

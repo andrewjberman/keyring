@@ -10858,3 +10858,16 @@ it adds to it); no endpoint changes.
 Keyed `<workstream>LAND</workstream>` (the gate refuses a newly added order into round 104's workstream-less issuance). **Not this cell's:** the branch push and the merge-forward onto DEV (the issuer asks the box manager; the
 gate decides who pushes), and the promote (`.tools/portal-release-build.sh --features <list>`, the portal release seat). **bk-5** waits on this feature being on PROD as well as on bk-2. Edge: none into bk-6; bk-6 -> the
 merge-forward -> the promote -> bk-5. fanout: 1 of 1 chains, cap 8.
+
+### 113f. ADDENDUM 2 -- THE PROMOTE OF `AMGT-bk-3`, 2026-10-14 ~00:4xZ
+
+The approval row `dell1-20261014T001511Z-633a` is CLOSED APPROVED (CTO msg 5289), the feature is on portal DEV `5e40e54119` (MSTR msg 5293) and the CTO named the portal release seat for this promote
+(`0.4.0_DT_ClientPlatform`, msg 5297; seated by `0.0.0_AB_MSTR~DELL1` at 00:25:22Z). The promote is `.tools/portal-release-build.sh --features <list>` then `/prod-deploy`, a DT act: the issuer holds no
+PROD push. This is the issuer's own decomposition; no endpoint changes.
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-bk-7` | the approved list (one feature, `cand/dell1/amgt-sa-header-money-and-dash-reasons`, tip `624e2533f6`) is built into a release from PROD `10e7664d` and promoted by `/prod-deploy`; the receipt names `/security-analysis` as Opal-internal and the CI conclusion is read | `0.4.0_DT_ClientPlatform` | seat (DT) | SERVED | the portal repository's release branch and PROD, one receipt | FWD-40 (a), item 2 (i), (ii): the page on PROD |
+
+Keyed `<workstream>PROMOTE</workstream>` (LAND already holds its issuance, bk-6; the gate refuses a second order into it). **Edge:** bk-6 -> the merge-forward -> bk-7 -> bk-5. **One project per Tier-2 seat:** this DT holds an older pending face of another project
+(`OPAL_ADVIPOINTERS.P4-PROMOTE-49F`) that reads shipped; the order bars it, and its issuer on the laptop closes it. fanout: 1 of 1 chains, cap 8.

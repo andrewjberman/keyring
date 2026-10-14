@@ -3,7 +3,7 @@
   "project": "NFRA_MCPINDEX",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v0.9",
+  "prd_version": "v0.10",
   "step": 4,
   "brief_ref": "docs/briefs/opal-mcp-tool-index-brief-20260917.md@826ac6925a",
   "endpoint_outcomes": [
@@ -301,8 +301,10 @@ FWD-20  Every tool the gateway serves names its catalog index, that index's hist
                     "unowned"; (c) is not a data read (e.g. send_email, whoami). Each (a) tool carries
                     its index's history depth (earliest served date) and freshness (latest served date)
          ACCEPT     the tool list is read from the deployed gateway's definitions, never a hand-kept
-                    list; freshness is read at answer time (FWD-13's rule); depth and freshness each
-                    carry a claim (measured / inferred / absent), and "absent" is said, never blank;
+                    list; freshness AND depth are read at answer time from the served artifact
+                    (FWD-13's rule): depth is a first-date field or the dated series' first element,
+                    a snapshot's depth is its one as-of; each carries a claim (measured / inferred /
+                    absent), and "absent" is said only where no served artifact carries any date;
                     the values are readable by NFRA_MCPORTAL through the existing catalog read
          PROOF      the census with N and the three member counts printed; for one (a) tool, the depth
                     and freshness compared with the served artifact by a second instrument
@@ -314,13 +316,13 @@ FWD-21  An asset manager's research question routes to the servable harvest data
          DONE WHEN  EXERCISED -- opal_discover for "harvested news articles and chatter" and for
                     "security analysis research pack" each return catalogued datasets, not
                     catalogued: false; the Schwab positive control still returns its datasets
-         ACCEPT     one catalog row per SERVE prefix in the servable-prefix list v3 @0b2778751a,
-                    named exactly as listed (row 8 is six table prefixes, never
-                    amgt/harvest/gold/ whole); a WITHHOLD prefix gets no data row; the existing
+         ACCEPT     one catalog row per prefix in the servable-prefix list v4 @7e0da2dfee (all 24
+                    prefixes SERVE to Opal principals, Andrew call 8), named exactly as listed
+                    (row 8's gold tables by table prefix, never amgt/harvest/gold/ whole); the existing
                     catalog read tools are used first (build ladder step 2), and a prefix no
                     existing tool can read is a GAP entry naming its owner
          PROOF      the three discover calls; the catalog's harvest rows counted against the
-                    list's 11 SERVE rows (denominator printed)
+                    list v4's 24 prefixes (denominator printed)
          SOURCE     Andrew's AMGT voice memo 2026-10-13 ("set up the MCP index for that bucket ...
                     so that the asset managers can use that with their cloud"), via XB-4d72 Z4/Z5
 
@@ -609,3 +611,21 @@ else. `0.7.0_AE_CloudOps~MI` keeps its MX-s-19 read on 2026-10-19/20.
   `org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_MCPINDEX_v0.9_RATIFIED_TEXT_20261013_Z.md`): FWD-20 is a
   three-member partition summing to N (a: names its index; b: data read with no index yet, owner or unowned; c: not a
   data read). GAP keeps its v0.7 meaning, "a need with no tool". The SOURCE line no longer names a seat.
+
+### v0.10 addendum (2026-10-14 ~00:4xZ, 1.0.0_SA_CTO~Z) -- FWD-21 re-pinned to list v4; FWD-20 depth read from the served artifact
+
+The L10 answer to `3.0.0_SA_CVO~Z`'s round-10 slug (REMEDIATION_v8 @e660242ac7, msg 33840). It carries row Z-S105.
+
+1. **FWD-21 re-pins to list v4 @7e0da2dfee.** Andrew-direct 2026-10-13 ~20:0xZ (call 8, verbatim in that file): every
+   prefix SERVES to Opal principals, raw included. v0.9 contract item 1 ("the V1 rule holds: derived layers and article
+   links") is superseded for Opal principals. Non-Opal principals are refused on every prefix (NFRA_OPLGTW FWD-21). Round
+   10 served v3's rows (FWD-21 REALIZED on v3); round 11 adds the prefixes v4 adds.
+2. **FWD-20 depth is read at answer time from the served artifact,** the same rule as freshness (row Z-W33-S1).
+   - "absent" on 11 of 11 (a) tools was a wrong claim. MX-c-8's bound 4 forbade reading a body, yet the served AUA
+     timeseries carries `as_of_first = 2024-11-01`.
+   - A first-date field or the dated series' first element gives a measured depth.
+   - A live-queried row's depth is its served window, claimed `inferred` where it is not read.
+   - "absent" is kept only where no served artifact carries any date.
+
+ENDPOINT text changes, so the ratified-text half re-opens for `3.0.0_SA_CVO~Z`. The brief half is unchanged in substance
+(the CRO's alignment reports on Andrew's memos).
