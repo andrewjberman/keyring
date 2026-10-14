@@ -264,3 +264,31 @@ before anyone challenged it is the relayer-half of the grounding law working.*
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "OPAL_KIMIPIPELINE-D1-S1",
+    "project": "OPAL_KIMIPIPELINE",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-14T13:55Z",
+    "one_line": "The estate report's group C (lifecycle) stratum has read INSTRUMENT_FAILED ('git ls-tree/log FAILED') on every run since 2026-09-28 (17 days) and on 09-23, 09-24, 09-26: the lifecycle drift question is never asked, and no row or owner carried it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "3.0.0_SA_CVO read s3://opal-estate-report/manifest/<date>.json ai_funnel.groups.C for 2026-09-20..2026-10-14: OK on 09-20, 09-21, 09-22, 09-25, 09-27; INSTRUMENT_FAILED with stratum_denominator 'git ls-tree/log FAILED' on 09-23, 09-24, 09-26 and every day 09-28..10-14",
+        "manifest/2026-10-14.json run_bundle: compile_strata '3/4 strata OK', strata_status C INSTRUMENT_FAILED; kimi_detect_C status error NOT_FIRED_STRATUM_INSTRUMENT_FAILED; run_pin a46dd69762",
+        "org/estate-reports/2026-09-28.md .. 2026-10-13.md: no record names the group C failure (this seat's own records)",
+        "NFRA_OUTSET's group-B instance of the same detect outcome (INVESTIGATION_v1.md:2413) was a different stratum and is closed with that project"
+      ]
+    },
+    "spec_asserts": "The estate report answers its four questions daily; an UNMEASURED group is a producer finding routed to an owner, never absorbed (/estate-pull Step 1).",
+    "world_is": "The report prints group C as UNMEASURED and says 'NOT no drift found', so no adjudication rested on a false zero. But the lifecycle stratum's git read fails on the runner host on 17 consecutive scheduled runs, and nothing owned it. The cause is not read here (the runner's git checkout, depth, or credentials are the candidates the denominator string points at). Project owner 1.0.0_SA_CTO~B and the build lane 0.7.0_AE_CloudOps~B are not registered (get_agent_status 2026-10-14 ~13:50Z), so the live box CTO holds it until the owner is live.",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "1.0.0_SA_CTO~DELL1 (holding for the unregistered project owner 1.0.0_SA_CTO~B; the fix is the runner's group-C git read)"
+  }
+]
+```
