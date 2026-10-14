@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "laptop",
- "written_at": "2026-10-14T03:08:36Z",
+ "written_at": "2026-10-14T05:22:12Z",
  "written_by": "1.0.0_SA_CTO",
  "rows": [
   {
@@ -910,6 +910,44 @@
     }
    },
    "closed": null
+  },
+  {
+   "id": "laptop-20261014T051226Z-97c6",
+   "project": "COMM_ASSIST",
+   "subject": "Before the ingress mark goes to enforce (CA-j-5): narrow the mark's key to the two function roles, or accept the Dell-user limit in the PRD?",
+   "asked_by": "2.0.0_SA_COO~CA",
+   "source": "org/missions/D9/COMM/COMM_ASSIST/decompositions/COMM_ASSIST_DECOMP.round18.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T05:12:26Z",
+   "kind": "fork",
+   "context": "CVO half of CA-j-3 (AMENDMENT 3): cloudops-dell1/dell2-agent-user can read teams/global/ingress-mark, and W10-S2 named Dell identities among those that can put sms.reply on the queue, so enforce does not stop them. Gates CA-j-5 (WORLD, own pair).",
+   "rec": "Narrow: a resource policy on the secret denying GetSecretValue to every principal except the two function roles (an admin can still change it, by a recorded management write: the residual the CTO accepted for muse). Cut as its own WORLD cell before the flip; state the residual in the PRD either way.",
+   "scope": {
+    "measured_at": "2026-10-14T05:12:26Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T05:22:12Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261014_052xZ_COMM_ASSIST_INGRESS_MARK_KEY_NARROWED.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
   }
  ]
 }
