@@ -595,3 +595,32 @@ Filed by 0.7.0_AE_CloudOps~ZS executing TO-Z6-R6 step 3, which directs this row 
   "notes": "Remedy is one table cell, owned by whoever may write org/tier0_utility/0.0.3_BG_BBGTerminal/refs/ (this seat held a one-commit GIT_COMMIT_AUTHOR_OVERRIDE=TIER0_UTILITY grant for R6's two named files only, and did not stretch it to a third file). Suggested text, matching the landed allowlist: 'as_of_date, then _provenance.source_vintages (oldest when several), then none -- LastModified is WRITE TIME only'. Low urgency: nothing serves off this line mechanically. NOT a blocker on R6, whose AC1 and AC2 both PASS."
 }
 ```
+
+### OPAL_BBGTML-Z-S20 -- disarm record: Z-S17 answered by Andrew's 'no hold' (R2 stays, R3 released); Z-S14 parked by Andrew's 'not a priority, TCKT is dell2's'
+
+Filed by 2.0.0_SA_COO~ZB at the Z6 drain end.
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S20",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~ZB",
+  "surfaced_at": "2026-10-14T09:35:59Z",
+  "one_line": "Disarm record for the two ARMED rows this seat owns: Z-S17 (the no-modify reading) is ANSWERED by Andrew-direct 2026-10-14 ~09:0xZ, 'There should be no hold', so R2 stays and R3 is released; Z-S14 (the expired intake fetch token) is PARKED by Andrew-direct 2026-10-13 ~20:5xZ, intake 'not a priority right now + TCKT work is on DELL2', so nothing re-mints the token or moves the pin from site Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZB",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_090xZ_NO_HOLD_ON_BLOOMBERG_SIGN_IN_REPAIRS.md (CLOUD @dd20a5edf4): VERBATIM 'What is the hold you are referring to? There should be no hold'; call sitez-20261013T215225Z-6c9f CLOSED --ruled-by andrew (open-calls.py close refused at 09:2xZ as already CLOSED). Acts: revert cron deleted; TO-Z6-R3 released @b066255b05.",
+      "READ org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_205xZ_TICKET_INTAKE_NOT_PRIORITY_TCKT_IS_DELL2.md (CTO msg 33761); TO-Z6-R4 cancelled @ed9719f0b4; both never-widen halves marked WITHDRAWN. No re-mint, backlog read or pin edit ran: runner_config.json line 11 is unchanged at HEAD and the secret's AWSCURRENT is unchanged (no act of this seat or its lanes wrote it)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-S17 and Z-S14 each read hazard_standing ARMED with disarm_owner 2.0.0_SA_COO~ZB.",
+  "world_is": "Z-S17's hazard (an edit to a held surface) no longer exists: Andrew says there is no hold, and what binds is only 'do not accidentally overwrite Positioning pipeline or ETFS view operations'. Z-S14's hazard (a first good intake pass posting a backlog into the client ticket channel) cannot fire from site Z: it needs a re-mint AND the pin, and both are withdrawn by Andrew's word. It re-arms only if someone re-opens the intake fix; that work is TCKT's on dell2.",
+  "notes": "A new citing row rather than an in-place edit, because rows are append-only. Graduation of Z-S14..S19 is the CVO's. The OPAL_BBGTML Z6 drain-end message to 1.0.0_SA_CTO~Z carries all of Z-S14..S20."
+}
+```
