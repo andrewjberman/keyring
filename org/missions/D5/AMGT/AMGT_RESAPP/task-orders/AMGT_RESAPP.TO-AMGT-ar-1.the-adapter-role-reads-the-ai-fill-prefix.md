@@ -78,10 +78,11 @@ Flip `<status>` to `complete` only if every criterion PASSES.
 
 **ISSUER NOTES:** GO 2026-10-14 by the issuer (`2.0.0_SA_COO~R2`) -- the conditions, read: BOTH HALVES SIGNED (COO half in this round's ledger, CTO half `ledger/NEVER_WIDEN_ROUND104_AIFILL_STORE_GRANT_REDEPLOY_CTO_HALF.md`, CTO msg 5304 naming `0.7.0_AE_CloudOps~RA1` as the applier of steps 1 and 3). This step is independent of `2.0.0_SA_COO~R1`'s `AMGT-bk-2` (an IAM grant, not the function's code) and may run now; the function's code is untouched. The policy values (7 statements, 34 pool resources, sha16 `77c69f8359764942`) were read by the issuer at ~00:05Z; the check's control re-derives the sha16 on every run, and it read the same value again at the cut. The prefix is EMPTY; the grant is additive. The seat has no GO message from this file: the issuer tells it by the broker, with the path.
 
-<status>pending</status>
+<status>complete</status>
 <round>104</round>
 <workstream>AIFILLREL</workstream>
 <slot>0.7.0_AE_CloudOps~RA1</slot>
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+<proof_genre>DEPLOY</proof_genre>
