@@ -159,7 +159,7 @@ def decide(args):
     if anc != 0:
         return "REFUSED", "unreadable-history", "-", [
             "REFUSED: could not read history between %s and %s" % (remote[:10], local[:10])]
-    walk =git(portal, "rev-list", "--first-parent", "--reverse", "%s..%s" % (remote, local))
+    walk = git(portal, "rev-list", "--first-parent", "--reverse", "%s..%s" % (remote, local))
     if walk.returncode != 0:
         return "REFUSED", "unreadable-history", "-", ["REFUSED: rev-list failed: %s" % walk.stderr.strip()[:200]]
     commits = walk.stdout.split()
