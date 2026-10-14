@@ -260,6 +260,7 @@ The issuer then continues you with MX-r-12's PHASE A.
 <status>issued</status>
 <status>complete</status>
 <status>issued</status>
+<status>complete</status>
 <round>11</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

@@ -7127,6 +7127,28 @@ carries none.
     "spec_asserts": "A3: 'The catalog names each of the six keys THROUGH lib/opal_naming.py legacy_address(): the emitter resolves the prefix from the row. Never type the literal.' and 'If the gate cannot be satisfied without a write outside your <paths>, file a BLOCKING row'. The ruling (@d5e0b1a0b6) expects a registry row to be the carrier the gate honours.",
     "world_is": "The source files never type the literal, but the emitter writes the resolved prefix into refs/DATA_CATALOG.yaml as a graded .yaml scalar, and neither .tools/naming-gate.py nor lib/opal_naming.py grade() reads legacy_addresses.json, so a registered legacy READ address is still a NEW out-of-pattern literal wherever a graded data file carries it.",
     "notes": "Fix needs a write outside this order's <paths> (MSTR/naming-gate lane, or the CTO): make the gate treat a graded literal that equals a registered legacy_addresses.json (bucket, template) of the same file's reader as a citation (permitted, like _packaged_citations), then re-run safe-commit unchanged. NOT used, on purpose: an R20 or a naming-place override (A3 forbids both) and a pre-image comment trick (committing the literal in a catalog comment first so the later scalar reads EXISTING) which would pass the gate by gaming its NEW test rather than by the registry row being honoured. The work is complete and waits uncommitted in the worktree; once the gate honours the rows, one safe-commit of the listed paths plus the proof instance and the status flip closes the order."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W34-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~34",
+    "surfaced_at": "2026-10-14T03:12:00Z",
+    "one_line": "A4 says to stage 'a path under this project's home' so the gate derives the committing project, but .tools/safe-commit.sh hands the naming gate only .py .js .mjs .ts .tf .json .yaml .yml files, so a .txt/.out/.md/.sh deliverable under the project home is invisible to the derivation and the catalog commit was REFUSED the first time (6 REFUSE of 18 graded) until a .json deliverable under the home was added.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh attempt 1 of A3's catalog commit (project-home paths staged: c9.AC1.out, c9.AC2.out, c9.AC3.out, catalog_diff_summary.txt, mkoverlay.sh, suite_delta_full.txt): 'NAMING-GATE: REFUSE 18 graded', six 'NAMING REFUSE ...DATA_CATALOG.yaml:3049.. amgt/harvest/gold/research-<table>/' lines. Attempt 2, same paths plus deliverables/0.9.0_WK_NFRA_MCPINDEX~34/a4_gate_evidence.json: 'NAMING-GATE: PASS 18 graded', commit 95e9e73d03.",
+        ".tools/safe-commit.sh lines 1086-1090 (@0fce89bb11): the NGATE_FILES loop admits only *.py|*.js|*.mjs|*.ts|*.tf|*.json|*.yaml|*.yml; the gate's --diff is built from NGATE_FILES (line 1101), so the committing-project derivation in .tools/naming-gate.py committing_project() sees only those staged paths."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A4 step 4: 'Stage a path under this project's home in the same commit (e.g. a deliverable under deliverables/0.9.0_WK_NFRA_MCPINDEX~34/)'; the derivation reads 'the staged paths' project home'.",
+    "world_is": "The gate derives the project from the paths safe-commit passes to it, which is the graded-extension subset of the staged set, so only a project-home path with one of those eight extensions counts. No change to the derivation was made: widening safe-commit.sh is outside this order's <paths>.",
+    "notes": "Any later committer relying on the A4 branch must stage a .json/.yaml (or .py/.tf) path under its own project home, e.g. its proof instance. The gate's own self-test and g1.AC2 are unaffected (they pass the diff directly)."
   }
 ]
 ```
