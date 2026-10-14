@@ -74,6 +74,7 @@ Module `infra/aws/ec2/opal-gateway/app/harvest_press.py`.
   co_mentioned_securities, sentiment label and score, then title, url, words from silver. Reads: gold
   `article_security_mention` (newest part, correction 1) and `article_sentiment`, joined on `article_key` to
   `<publisher>/harvest/silver/article/`. Newest first by `published_utc`.
+  **Ruling A1 (issuer, from gt-3's row Z-W74-S2):** the sentiment join reads `article_sentiment` per this rule: `article_sentiment` is an APPEND-BATCH table (grain: one row per scored article, `parts are append batches`: 5 parts, 13,235 rows over all parts, the newest part holds 2,674). It is NOT one of the three snapshot tables, so the newest-part rule does NOT apply to it: read ALL its parts and keep the NEWEST batch's row per `article_key`; `source_keys` names every part read and the denominator states parts read and rows after the dedupe. A newest-part read would cover about 20% of scored articles and answer with no error. The newest-part rule stays for exactly `chatter_daily`, `chatter_window` and `article_security_mention`.
 - **`harvest_get_article(article_key: str, publisher: str, include_text: bool = False)`**. Returns title, url, published_utc,
   words, content_status, mentioned security_keys; the text or `body_blocks` ONLY when `include_text` is true. Reads the
   newest record per `article_key` under `<publisher>/harvest/silver/article/`, the partition located from the mention row's
@@ -154,6 +155,9 @@ the issuer to make at the merge.
 - The issuer registers the tools and re-pins counts at the merge (CUT BY WRITE SET: hookups belong to no cell).
 - Pre-cut: AC1 and AC2 base FAIL as expected (module, tests and probe absent).
 - Queue: staged until OG-gt-0 merges; the spawn is the GO.
+
+- A1 (issuer, 2026-10-14 ~15:3xZ, from row NFRA_OPLGTW-Z-W74-S2): the `article_sentiment` join reads ALL parts, newest batch wins per article_key. The worker, if still running, is
+  continued with this amendment. No criterion moves. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>

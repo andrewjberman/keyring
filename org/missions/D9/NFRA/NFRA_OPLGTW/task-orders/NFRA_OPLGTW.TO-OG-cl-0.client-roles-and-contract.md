@@ -51,12 +51,15 @@ proved by a two-firm negative arm.
    account, never summed; snapshot-in-every-partition tables read from the newest partition only; live 49F Black Diamond silver is
    `opal-data-bd/silver/`; unregistered SmartX firms Titleist, Canopy and Parable are never returned; the `49-schwab-conv` tables that stopped on
    2026-07-23 are not served).
-   **Two rulings for the Black Diamond adapter (CTO msg 34130, from the CRO's G2f census `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/parts/G2f_bd_live_prefixes.md` @5e5d312ada; read it):**
-   (1) per table, the adapter reads whichever store has the newest MEASURED partition: `opal-data-bd/silver/<table>/YYYY-MM-DD.parquet` or
-   `opal-data-assets/blackdiamond/49financial/` (49F is behind on row Z-S110). Every answer states its store and its trading-day lag;
-   `assets` is 80 trading days behind and `transactions_enriched` 122, so neither may answer as current. (2) Increment versus snapshot is
-   UNMEASURED: the adapter cell measures it per table before any tool sums or spans dates. Carry both rulings into the Black Diamond clauses
-   of `client_get_holdings`, `client_get_transactions`, `client_get_allocation` and `client_get_fees`, and name the unmeasured grain as an open item.
+   **Andrew-direct ~15:0xZ (CTO msg 34134, record @9a314c1e98; it SUPERSEDES the CTO's 15:03Z "freshest store wins" ruling, msg 34130):**
+   "opal-data-bd is not a bucket we want to use for this at all, the only client-data we want to be using explicitly at this time is the
+   silver vendor folders in opal-data-assets". So every `client_*` adapter reads ONLY `opal-data-assets/<vendor>/<firm>/silver/`: no
+   `opal-data-bd`, no `opal-data-mdpf` feeds, no per-firm Tax SMA gold. The Black Diamond adapter reads `blackdiamond/<firm>/silver/` and states
+   its trading-day lag on every answer (49F is behind on row Z-S110; `assets` is 80 trading days behind and `transactions_enriched` 122, so
+   neither may answer as current). Increment versus snapshot is UNMEASURED: the adapter cell measures it per table before any tool sums or spans
+   dates; name that grain as an open item. In `W/G2_ROLES.json` a vendor with no opal-data-assets vendor-silver prefix to read (Tax SMA today)
+   takes status `MISSING` with a `why` that says so; do not inventory roles for the excluded stores, except to name them as NOT USED.
+   G2's `ask_inputs` name `opal-data-assets` vendor silver prefixes only.
 3. **The registry additions, as a proposal only.** Write `W/G2_SCOPES_PROPOSAL.md`: the exact additions that put master `08403355` into
    `NFRA_OPLGTW_CONTRACT.json` and `infra/logic/registry/scopes.json` (read both files; show the current rows and the added rows). Apply NOTHING.
 4. **The ask inputs.** In `W/G2_ROLES.json` under `"ask_inputs"`, list for the G2 never-widen ask: every prefix the core tools read, the role that
@@ -116,8 +119,12 @@ the issuer to make at the merge.
 - READ ONLY: no write outside `W/` and the investigation file.
 - Pre-cut: g20.AC1 and g20.AC2 base FAIL as expected (the records are absent).
 
-- A1 (issuer, 2026-10-14 ~15:1xZ, CTO msg 34130): two Black Diamond rulings added to step 2 and the G2f census added to `<paths>`. The worker was
+- A1 (issuer, 2026-10-14 ~15:1xZ, CTO msg 34130): two Black Diamond rulings added to step 2 and the G2f census added to `<paths>`; ruling (1) is superseded by A2. The worker was
   already running; it is continued with this amendment when it reports. No criterion moves. Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
+- A2 (issuer, 2026-10-14 ~15:2xZ, CTO msg 34134, Andrew-direct): client data reads ONLY `opal-data-assets/<vendor>/<firm>/silver/`; step 2 rewritten
+  (no opal-data-bd, no mdpf feeds, no per-firm Tax SMA gold); the role inventory keeps its seven vendor rows (Tax SMA may read MISSING). The worker is
+  continued with A1+A2 when it reports. No criterion moves. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>
