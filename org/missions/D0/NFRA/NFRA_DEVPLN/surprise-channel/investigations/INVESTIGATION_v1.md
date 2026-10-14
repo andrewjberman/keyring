@@ -1139,3 +1139,30 @@
   "world_is": "The Bash-layer gate still admits a direct DEV push by a lease seat and a test-only fast-forward, and the git pre-push checker refuses both. The checker is the containing limb only where .tools/portal-hooks/pre-push is installed on the box; that installation is not measured in this cell. Cutting the two carve-outs is an edit to .tools/hooks/never-rules-gate.sh, which is not in this cell's <paths> and CLAUDE.md forbids it to this cell."
 }
 ```
+
+## NFRA_DEVPLN-S6 -- DPy1-AC1 reads features=10, not 9, once another seat promoted a dell1 feature on top of this promote
+
+```json
+{
+  "id": "NFRA_DEVPLN-S6",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.4.0_DT_ClientPlatform",
+  "surfaced_at": "2026-10-14T12:50:31Z",
+  "one_line": "TO-DP-y-1 criterion DPy1-AC1 expects features=9 on origin/PROD, but PROD moved to 6a5926fc (a dell1 amgt-sa-pe-basis-and-reasons promote, tag portal-v2.1.219) after this promote's 501e998b, so the invocation as written reads features=10. Id note: the TO names the form NFRA_DEVPLN-DT-S<k>, which proof-of-spec-check.py SURPRISE_ID_RE (line 1212, one letter between hyphens) cannot read, and the surprise-row gate reads a lane letter as a device coordinate (registered: D1, D2, Z), so the row id is the plain laptop form NFRA_DEVPLN-S6.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal ls-remote origin PROD printed 501e998b1e57 right after this promote's push; a later fetch read origin/PROD = 6a5926fc1194 with 'merge feature cand/dell1/amgt-sa-pe-basis-and-reasons into release/20261014T123810Z', Approved-By 1.0.0_SA_CTO~DELL1 @dell1-20261014T111220Z-faa4, authored 0.9.0_WK_AMGT_RESAPP~423",
+      "bash .tools/portal-release-build.sh --check PROD --repo portal --prod-ref 63c4f9e35f259ad76071b1099aeb9dddb150409f -> RELEASE-CHECK features=10 first_parent_commits=10 unapproved=0",
+      "same check on this promote's own release branch (local ref release/20261014T122041Z, head 501e998b): RELEASE-CHECK features=9 first_parent_commits=9 unapproved=0",
+      "git -C portal log origin/PROD --first-parent --format=%B | grep -c 'Approved-By: andrew @dell2-' -> 5 (DPy1-AC2 holds)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DPy1-AC1: after this promote origin/PROD's first-parent line since 63c4f9e3 holds nine approved features and none unapproved (features=9 first_parent_commits=9 unapproved=0).",
+  "world_is": "Nine at this promote's own head, ten at the live PROD tip, because a second approved chosen-set promote landed 6a5926fc on PROD by the time the criterion was graded. unapproved=0 holds at both. The feature count in the expectation is time-bound; the invariant is unapproved=0 plus all five dell2 merges present. The grader should read the count against the ref, not the branch tip."
+}
+```
