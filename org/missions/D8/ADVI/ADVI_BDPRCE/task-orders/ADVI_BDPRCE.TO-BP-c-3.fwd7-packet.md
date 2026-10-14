@@ -40,7 +40,7 @@ Before any served price may move, Andrew sees, per fix, a named list of what mov
 ### 1b. The record: `org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~15/PACKET2.json`
 
 ```json
-{"order": "BP-c-3", "read_at": "<ISO UTC>", "claim": "measured", "calls": ["read lot_extract.csv sha256 ...", "..."], "amendment": "R1.1",
+{"order": "BP-c-3", "read_at": "<ISO UTC>", "claim": "measured", "calls": ["read lot_extract.csv sha256 ...", "..."], "amendment": "R1.2",
  "snapshot_date": "YYYY-MM-DD", "snapshot_share": 0.0, "lots_outside_snapshot": 0,
  "price_changes": 0, "assets_changed": 0, "lots_touched": 0, "touched_not_moved": 0,
  "dollar_effect_latest_snapshot": 0.0,
