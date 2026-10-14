@@ -27122,3 +27122,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only, but it gates the complete flip. A future worker that runs the file's invocation verbatim gets a void walk. The fix is the issuer's: the file carries the prefix. Not edited here: the order file is outside this worker's write grant."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W450-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~450",
+  "surfaced_at": "2026-10-14T05:45:31Z",
+  "one_line": "AMGT-gr-1 AC2 cannot read PASS: the cell's join rule makes the existing test test_final_segment_text_is_joined_with_no_separator fail, and the order says touch no other test",
+  "spec_asserts": "The cell's join rule (one space between final-segment text blocks where a sentence ends) and the order's bound 1 (touch no other test) both hold; AC2 expects the three test modules to read N passed with no failed line.",
+  "world_is": "test_final_segment_text_is_joined_with_no_separator (test_model_final_answer.py@d88fca1f84 lines 101-103) asserts the old no-separator result 'now.MUFG announced.'; with the cell's join it reads 'now. MUFG announced.' and the three-module run prints '1 failed, 97 passed'. The bound and the join cannot both hold at this HEAD.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/tests/test_model_final_answer.py@d88fca1f84 lines 101-103: test_final_segment_text_is_joined_with_no_separator feeds the final segments _text('now.'), _text('MUFG'), _text(' announced.') and asserts the result equals 'now.MUFG announced.', which is the no-separator join the cell replaces.",
+      "Worker worktree wk-AMGT_RESAPP-450 with the cell's change applied (lib/research/aifill/sentences.py and the join in lib/research/aifill/model.py): pytest on test_sentences.py, test_model_final_answer.py and test_model_inputs.py prints 'AssertionError: assert 'now. MUFG announced.' == 'now.MUFG announced.'' and '1 failed, 97 passed in 0.54s'.",
+      "The order AMGT_RESAPP.TO-AMGT-gr-1 (section 2 bound 1 and section 1 Tests) allows one new test in test_model_final_answer.py and says touch no other test, so the pinned old assertion is outside this cell's write grant."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only: the cell's join rule and the old pin cannot both hold. The worker did not edit the old test (bound 1). The one red test is the only failure of the three modules; the other 97 pass. Resolution is the issuer's: either the grant admits updating that one assertion to 'now. MUFG announced.' or the pin is retired as superseded. ARMED because the red test stays red in the suite until a disarm, and the merge of this package would carry it."
+}
+```
