@@ -52,5 +52,11 @@ registration from this seat and did not attempt one.
   `bg-relaunch-teams-watch-identity-defect-held.md`
 - Engine owner: `0.5.0_AE_OpalETL~Z` (`.claude/skills/teams-assist/teams-watch.py`)
 
-**This file is written, not committed.** This seat does no git work; `0.0.0_AB_MSTR` is the named
-integrator of these paths and sweeps them.
+**Written by this seat, which does no git work; `0.0.0_AB_MSTR` is the named integrator of these
+paths.** SWEPT and now durable: `0.0.0_AB_MSTR~Z` committed this file and the TTL log at
+**`7bae14c2f1`**, reported in msg 33731 and VERIFIED here rather than taken on the report --
+`git ls-tree -r 7bae14c2f1` lists both paths (positive control: a bogus path returns empty),
+`git ls-remote origin refs/heads/box/sitez` returns `7bae14c2f16437052a31d7f8fa54d7622dbb311e`,
+and `merge-base --is-ancestor` agrees. **Push state: ON ORIGIN @7bae14c2f1 (ls-remote read,
+2026-10-13T20:2xZ).** The sweep took no act on the TTL, the app registration or `teams-watch.py`;
+Andrew reserved those and MSTR~Z said so unprompted.
