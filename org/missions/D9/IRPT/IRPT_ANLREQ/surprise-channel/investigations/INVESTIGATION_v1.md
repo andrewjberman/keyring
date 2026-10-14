@@ -11531,3 +11531,194 @@
   "notes": "Not rendered in a browser. The words are read from code. The issuer decides the held sentence for staff; this worker did not change it."
 }
 ```
+
+## IRPT_ANLREQ-D2-W113-S1 -- the AR-y-280 cell is drained in the census premise, but its order is pending and its package step is stopped
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W113-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~113",
+  "surfaced_at": "2026-10-13T23:54:10Z",
+  "one_line": "the AR-y-280 cell is drained in the census premise, but its order is pending and its package step is stopped",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-295 input list: AR-y-280 (the ticket service SUBMIT-FORM takes an analysis request) is among the FWD-1 cells drained since the last releases.",
+  "world_is": "The order TO-AR-y-280 reads status pending. Its record r23/SUBMIT_ANALYSIS_REQUEST.json stops at step 3 (the package writes report_ref once), and the BLOCKING row IRPT_ANLREQ-D2-W101-S1 is filed in channel commit 245924c8ee. The submit-form build is on trunk (336168cde3, an ancestor of origin/CLOUD at 0d83fda956); the package step is not built. The census counts AR-y-280 as partial and does not propose a 280 release beyond the SUBMIT-FORM member.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-280.submit-form-takes-analysis-request.md (status line)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~101/r23/SUBMIT_ANALYSIS_REQUEST.json (built, not_built)",
+      "git: 245924c8ee (BLOCKING W101-S1), 336168cde3 (build), both ancestors of 0d83fda956"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Read only. The census record names the 280 change as the ticket-service member; it does not decide the 280 disposition."
+}
+```
+
+## IRPT_ANLREQ-D2-W113-S2 -- the release-21 pair start state is stale: the Lambda was redeployed after its R0b read
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W113-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~113",
+  "surfaced_at": "2026-10-13T23:54:10Z",
+  "one_line": "the release-21 pair start state is stale: the Lambda was redeployed after its R0b read",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "The release-21 pair section 5, step R0b: the irpt-ycharts-generate CodeSha256 reads hpNfkhLt... and the S3 latest version is ennO07to..., otherwise ABORT.",
+  "world_is": "Live reads at this census (get-function-configuration; s3api list-object-versions on the exact key): CodeSha256 xP47NQDn..., 621892 bytes, LastModified 2026-10-13T22:48:27Z; latest VersionId VXbWnMBm... of 53 versions. The map deployed_code_sha256 is xP47NQDn... (last_deployed_at 22:51:27Z, ledger irpt-ycg-catalogue-ultrashort-20261013). R0b would ABORT. The pair's rollback object ennO07... is still present but is no longer the live version. The pair is written, not applied, and a CTO half may be signed on it, so the stale start state is armed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/release21/NEVER_WIDEN_PAIR_ANLREQ_RELEASE21_READER_R193_TWO_LEG.md section 2 and section 5 R0b",
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-ycharts-generate (deployed_code_sha256, last_deployed_at)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~113/r28/FWD1_RELEASE_CENSUS.json (live block of the irpt-ycharts-generate entry)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The census does not move anything. The pair's owner must re-read R0b before any apply order is cut.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
+
+## IRPT_ANLREQ-D2-W113-S3 -- the release-21 pair premise that uploads.py is unchanged does not hold on trunk, and the matrix covers the reader only
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W113-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~113",
+  "surfaced_at": "2026-10-13T23:54:10Z",
+  "one_line": "the release-21 pair premise that uploads.py is unchanged does not hold on trunk, and the matrix covers the reader only",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "The release-21 pair section 1: intake/uploads.py stays 176682cb (the bytes both legs hold), and the AR-y-226 matrix covers the reader change with uploads unchanged.",
+  "world_is": "On trunk 0d83fda956 intake/uploads.py is 80ace2d376 and intake/portfolio.py is d1232a1255 (both changed by AR-y-245 d9d34f0b77 and AR-y-293 9441d74dbb). The AR-y-226 matrix therefore covers only the reader. The resident root pin blobs are uploads.py 47f89e0b and template_reader.py 76795b75, not the 176682cb and 83ab9b45 the pair says the resident holds; the root name ends -r19, so the running bytes are not the pin bytes, and the running bytes were not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 0d83fda956927e6e9bc98ebb3d97f270d8d3a3ac:infra/aws/lambda/investor-reporting/intake/uploads.py (sha256 80ace2d376...)",
+      "git diff --name-only 0485393f3a..0d83fda956 -- infra/aws/lambda/investor-reporting/intake (intake/uploads.py listed)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~113/r28/FWD1_RELEASE_CENSUS.json (members_in_release, resident pin_vs_running_note)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The census proposes the uploads and portfolio members for both legs and states the matrix gap. No apply order is cut here.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
+
+## IRPT_ANLREQ-D2-W113-S4 -- the resident builder at the root pin excludes ycharts/research, where the packager lives
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W113-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~113",
+  "surfaced_at": "2026-10-13T23:54:10Z",
+  "one_line": "the resident builder at the root pin excludes ycharts/research, where the packager lives",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-285 release_needs: the packager (ycharts/research/opal_packager.py) is in the resident's in-process tree (resident_installed.py wires it).",
+  "world_is": "reports/build_resident_package.py at the root pin 0485393f3a has DIRS without ycharts/research (lines 37-38). Trunk adds it at commit 3775a93368 (2026-10-12, IB-pr-485). A tarball built from the pin, by the release-19/21 one-member swap, cannot carry opal_packager.py, and resident_installed.py makes the packager from that path (its line 326). A packager change released by that method would fail at import (INFERRED; not run).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 0485393f3a:infra/aws/lambda/investor-reporting/reports/build_resident_package.py (DIRS, lines 37-38)",
+      "git show origin/CLOUD commit 3775a93368 (adds ycharts/research to DIRS)",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py line 326 on trunk"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The resident leg for AR-y-285 must be built from the trunk builder, not by the one-member swap."
+}
+```
+
+## IRPT_ANLREQ-D2-W113-S5 -- lib/trading_calendar.py is imported by intake/portfolio.py but is carried by neither the upload Lambda nor the resident builder
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W113-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~113",
+  "surfaced_at": "2026-10-13T23:54:10Z",
+  "one_line": "lib/trading_calendar.py is imported by intake/portfolio.py but is carried by neither the upload Lambda nor the resident builder",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-245: the upload's price date defaults to the previous trading day; the calendar member lib/trading_calendar.py ships if the package carries it.",
+  "world_is": "The irpt-ycharts-generate map entry has no calendar member (N=0 across the 235 entries for the ycharts path); the resident builder adds only lib/opal_naming.py (build_resident_package.py:75). intake/portfolio.py imports the calendar lazily through three routes (lines 44-54); the default price date path reaches them. The six other Lambdas carry the calendar at their own pins and this release does not change them. The census adds the calendar to the two packages as the minimum extra member.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json: the member census (deliverables/0.9.0_WK_IRPT_ANLREQ~113/r28/member_writers in org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~113/r28/FWD1_RELEASE_CENSUS.json)",
+      "git show 0d83fda956:infra/aws/lambda/investor-reporting/intake/portfolio.py lines 44-54",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py line 75 on trunk"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The ImportError reach is INFERRED from the code; no upload-path run was made."
+}
+```
+
+## IRPT_ANLREQ-D2-W113-S6 -- AR-y-292's yfinance checker is imported by no production module, and no order owns its wiring
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W113-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~113",
+  "surfaced_at": "2026-10-13T23:54:10Z",
+  "one_line": "AR-y-292's yfinance checker is imported by no production module, and no order owns its wiring",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-292 ships the yfinance history checker for unknown holdings through the resident's SecurityResolver.",
+  "world_is": "git grep on 0d83fda956: intake/yfinance_check.py is imported only by its two tests (intake/tests/test_kept_holding.py and intake/tests/test_yfinance_check.py). No production module passes checker=YfinanceChecker(). AR-y-293's release_needs names the resident wiring as outside its grant. No cell or order names an owner. Shipping AR-y-292 alone is dead code until the wiring lands.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git grep -n yfinance_check 0d83fda956927e6e9bc98ebb3d97f270d8d3a3ac -- infra/aws/lambda/investor-reporting",
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~110/r23/KEPT_STATE.json (release_needs, resident leg)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~113/r28/FWD1_RELEASE_CENSUS.json (checker_wiring)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The census records the owner as not assigned in the records read; it does not assign one."
+}
+```
+
+## IRPT_ANLREQ-D2-W113-S7 -- origin/CLOUD moved during the read, so the census pins trunk to a sha and the worktree is behind it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W113-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~113",
+  "surfaced_at": "2026-10-13T23:54:10Z",
+  "one_line": "origin/CLOUD moved during the read, so the census pins trunk to a sha and the worktree is behind it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The AR-y-295 face reads the drain against the trunk HEAD by git diff <pin>..HEAD.",
+  "world_is": "The worktree branch wk-IRPT_ANLREQ-113 is at a87a7973ef, an ancestor of origin/CLOUD by 89 commits. origin/CLOUD read 110b208b46 at the start and 0d83fda956 later in the same read (73 integration commits from box-sync). The census reads trunk by the fixed sha 0d83fda956927e6e9bc98ebb3d97f270d8d3a3ac and does not fetch, rebase or merge. The member differences were rerun on the fixed sha and did not change.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse --short origin/CLOUD (read at the start: 110b208b46; later: 0d83fda956)",
+      "git rev-list --count a87a7973ef..0d83fda956 = 89 (at read time)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~113/r28/FWD1_RELEASE_CENSUS.json (trunk block)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded so the CVO reads the census against the pinned sha, not the moving ref."
+}
+```

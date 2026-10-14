@@ -13,7 +13,7 @@
 <preflight>
 comp-schedule: DECLARED-NOT-APPLICABLE -- nothing is scheduled; a library module and its tests.
 comp-iam: DECLARED-NOT-APPLICABLE -- no AWS call, grant, key or policy is touched; the cell writes and tests local Python only.
-comp-adversary: RUN at the cut -- `check_fa4_mgmt_recent.py` is a prepared acceptance check (12 arms, the model stubbed); at the base it exits 1 on `ModuleNotFoundError: No module named 'lib.research.aifill'`, the build check failing as expected.
+comp-adversary: RUN at the cut -- `check_fa4_mgmt_recent.py` is a prepared acceptance check (17 arms, the model stubbed); at the base it exits 1 on `ModuleNotFoundError: No module named 'lib.research.aifill'`, the build check failing as expected.
 EGRESS CLASS, declared: NONE. No network call by the cell or its checks (the model is a stub or a recorded response); no Bloomberg call.
 </preflight>
 
@@ -74,6 +74,16 @@ Your own pytest module (no `__init__.py`): a stub model, the fixture with the fe
 
 Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: id form `AMGT_RESAPP-D1-W425-S<k>`, `disarm_owner` `2.0.0_SA_COO~R2`.
 
+## 1b. AMENDMENT 2 -- the live thread run found two defects in this cell's spec; they apply on top of everything above (the issuer's, 2026-10-13 ~00:1xZ)
+
+The producer was run for real (real served inputs, the real model with web search) on one name, and measured: the model's replies run 1,100 to 1,900 characters against a 1,200-character contract limit (so blocks were withheld as too long), and an Opal path whose facts do not support a text dead-ended in NONE instead of trying the web.
+
+1. CHARACTER LIMITS. Every prompt this builder sends states the limit in the exact words `no more than <L> characters` (the L for each block is in the table below). A reply whose folded text is longer than the block's CAP is NOT withheld: it is CUT at the last sentence end that fits within the cap (a `.`, `!` or `?` followed by a space or by the end of the text), and the cut text is what is stored (the citations stay as they are). If no sentence end fits within the cap the block is NONE with the reason `The model's text was too long to keep, so it was withheld.` (unchanged).
+2. OPAL FIRST, THEN WEB. When the OPAL path yields NONE for any of its reasons (the model answered NO_INFORMATION or an empty text; the numeric guard voided the text; the text was too long to cut), the builder does not stop: it runs the WEB path exactly as specified above for a block with no Opal source (one more `ctx.model` call, `web_search_max_uses=3`, the web system prompt). If the web path produces a block, that block is the result. If the web path yields NONE too, the result is NONE whose reason is the Opal path's reason, one space, then the web path's reason (so `figure` or `nothing it could support` still appears). A builder whose Opal path produced a block is unchanged. A model exception from either call still propagates.
+
+Limits of this order:
+- `mgmt_recent`: prompt limit `no more than 700 characters`; cap 800 characters. Opal path then web path (rule 2).
+
 ## 2. BOUNDS
 
 
@@ -94,7 +104,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (literal; each invocation bounded by its own `timeout`; set your shell tool's timeout to 600000 ms)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-fa-4"><invocation>cd C:/dev/wk-resapp-425 &amp;&amp; PYTHONPATH="$(pwd)" timeout 300 python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa4_mgmt_recent.py" | tail -4; echo "exit=${PIPESTATUS[0]}"</invocation><expect>the line `AIFILL FA-4 ARMS: YES (N of N)` with N equal to the count printed and N at least 12, no `FAIL` arm line above it; and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-fa-4"><invocation>cd C:/dev/wk-resapp-425 &amp;&amp; PYTHONPATH="$(pwd)" timeout 300 python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa4_mgmt_recent.py" | tail -4; echo "exit=${PIPESTATUS[0]}"</invocation><expect>the line `AIFILL FA-4 ARMS: YES (N of N)` with N equal to the count printed and N at least 17, no `FAIL` arm line above it; and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-fa-4"><invocation>cd C:/dev/wk-resapp-425 &amp;&amp; PYTHONPATH="$(pwd)" timeout 300 python -m pytest -q --color=no -p no:cacheprovider lib/research/aifill/tests/test_block_mgmt_recent.py | tail -3; echo "exit=${PIPESTATUS[0]}"</invocation><expect>the last non-empty line before `exit=` reads `N passed` (N at least the count your test module's functions define) with no `failed` and no `error` in the last 3 lines; and exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -114,11 +124,14 @@ The `<status>` flip is the issuer's.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
+**AMENDMENT 2 (2026-10-13 ~00:1xZ, the issuer; no gate limb graded it: the order is reopened by the issuer, `<placeholders>NONE` stands):** the first live run of the producer (AMD_US_Equity, real served inputs, real model) showed replies of 1,100 to 1,900 characters against the 1,200 contract limit and an Opal path that dead-ends in NONE. Spec defects of the issuer, not the worker's: the order is reopened (a mis-flipped or defective order is reopened by the issuer, never re-cut). The check gains five arms (character limit stated, cut at a sentence end, no sentence end withheld, Opal-to-web fall-through, fall-through that ends NONE keeps the reason).
+
 **ISSUER NOTES:** STAGED behind `AMGT-fa-1`'s merge. "Do not serve raw publisher article text through the gateway in V1" (cluster direction): this builder sends headlines and links only, by construction. The 90-day window and the keyword pattern are the issuer's first cut; a miss on the 93-name census is round 104's input.
 
 <status>staged</status>
 <status>pending -- GO 2026-10-13T23:0xZ by the issuer (2.0.0_SA_COO~R2): fa-1 merged @ebe4c8d287, so `contract.py` and `orchestrate.py` exist at the base this worktree is cut from.</status>
 <status>complete -- 2026-10-13T23:4xZ by the issuer (2.0.0_SA_COO~R2): wk-AMGT_RESAPP-425 @bd91e2adb3 merged @6c10ae95c6, proof instance VALID (rc=0). AC1 PASS (`AIFILL FA-4 ARMS: YES (12 of 12)`, re-run by the issuer in the worker's tree and on the integrated package), AC2 PASS (28 passed); `ruff check lib/research/aifill` clean.</status>
+<status>pending -- REOPENED 2026-10-13 by the issuer (2.0.0_SA_COO~R2) for AMENDMENT 2 (character limits, the sentence cut, Opal-then-web); the earlier complete line stands as the first pass.</status>
 <round>104</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~425</slot>
