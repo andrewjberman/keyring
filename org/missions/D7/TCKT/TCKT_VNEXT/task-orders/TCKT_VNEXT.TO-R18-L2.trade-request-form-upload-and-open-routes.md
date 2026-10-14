@@ -72,13 +72,18 @@ The wire contract is `org/missions/D7/TCKT/TCKT_VNEXT/decompositions/TCKT_VNEXT_
    content type and `ExpiresIn` 300; `TICKET_ATTACH_BUCKET_TEMPLATE` unset or malformed is 503 with no presign, and the presign's Bucket is the REQUESTED firm's bucket; the open route returns a presigned URL for a ticket
    in scope and 404 for another firm's ticket, for a ticket with no attachment and for a key outside the firm's prefix; the old
    `analysis_request` cases still pass (run `test_analysis_request.py` and `test_submit_analysis_request.py` and print their counts).
-7. **Write `deliverables/0.9.0_WK_TCKT_VNEXT~41/mutant_check_tf2.py`** (AC2) and a short `R18_L2_RECORD.json`: the lines changed, the
+7. **DISARM row `TCKT_VNEXT-D2-W41-S6` (AMENDMENT 1, below).** Add `tests/_no_live.py` with `install()`, which replaces `lambda_function._ses_client` with a function that RAISES
+   (a clear message, no AWS client built); every `if __name__ == "__main__":` block in `infra/aws/lambda/ticket_center/tests/*.py` that calls `unittest.main` calls
+   `_no_live.install()` first (list the files you changed, found by listing every file there that contains `unittest.main`; `test_authz_matrix.py` is the proven one). New
+   test file `tests/test_no_live_by_path.py`: for EVERY `.py` in `tests/` whose source contains `unittest.main`, the source also contains `_no_live.install()` before it; and
+   `install()` makes `_ses_client()` raise. **From now on you run NO test file by path (`python <file>`): pytest only, `-p no:cacheprovider`.**
+8. **Write `deliverables/0.9.0_WK_TCKT_VNEXT~41/mutant_check_tf2.py`** (AC2) and a short `R18_L2_RECORD.json`: the lines changed, the
    counts, the before-arm (the new tests on the base FAIL), the exact environment variable names the Terraform cell must set, `not_read`.
 
 ### ACCEPTANCE
 
-<criterion id="R18L2-AC1" cell_refs="R18-tf-2"><invocation>python -m pytest C:/dev/wk-tckt-vnext-41/infra/aws/lambda/ticket_center/tests/test_trade_form_attachment.py C:/dev/wk-tckt-vnext-41/infra/aws/lambda/ticket_center/tests/test_trade_request_type.py -q -p no:cacheprovider --color=no</invocation><expect>^[0-9]+ passed</expect></criterion>
-`R18L2-AC1`: both files pass, every case of step 6 named in a test, no failures or errors. Also run the whole
+<criterion id="R18L2-AC1" cell_refs="R18-tf-2"><invocation>python -m pytest C:/dev/wk-tckt-vnext-41/infra/aws/lambda/ticket_center/tests/test_trade_form_attachment.py C:/dev/wk-tckt-vnext-41/infra/aws/lambda/ticket_center/tests/test_trade_request_type.py C:/dev/wk-tckt-vnext-41/infra/aws/lambda/ticket_center/tests/test_no_live_by_path.py -q -p no:cacheprovider --color=no</invocation><expect>^[0-9]+ passed</expect></criterion>
+`R18L2-AC1`: the three files pass, every case of step 6 named in a test and the by-path guard of step 7, no failures or errors. Also run the whole
 `infra/aws/lambda/ticket_center/tests/` folder once and record the counts (a drain check; the issuer re-runs it).
 
 <criterion id="R18L2-AC2" cell_refs="R18-tf-2"><invocation>python C:/dev/wk-tckt-vnext-41/org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~41/mutant_check_tf2.py</invocation><expect>MUTANT-FIRES</expect></criterion>
@@ -97,6 +102,9 @@ guessing.
 
 - **Grant:** exactly the `<paths>` below, plus `org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~41/` and this order's file
   (status flip only). If a test OUTSIDE the grant fails because of your change, STOP: file a BLOCKING row naming it; the issuer amends the grant.
+- **AMENDMENT 1 (issuer `2.0.0_SA_COO~V2`, 2026-10-14; gate limb: none stated, the issuer amends its own pending order; answers your row `TCKT_VNEXT-D2-W41-S6`).** You were right to stop and
+  to file it: the SES guard of `conftest.py` is a pytest fixture, so a by-path run of `test_authz_matrix.py` reached the real notifier. The send is on the record (recipient unknown; the file's
+  requester fixtures are `client@example.test`-class addresses). The disarm is step 7 and its test is in AC1. Do not run any test file by path again.
 - READ only: everything else, including `infra/aws/terraform/` (routes, environment and the IAM permission are `TO-R18-TR3`) and `lib/opal_naming.py`
   (the bucket and prefix values come from `TO-R18-TR1`; this cell reads them from the environment and imports no naming module).
 
