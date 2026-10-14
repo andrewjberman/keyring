@@ -7375,6 +7375,49 @@ carries none.
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "The issuer decides the route: R20 entries for the 78 contract ids and prefixes (Andrew acknowledges), or registry rows and the R19 migration. Once the route is set, the generator regenerates the rows deterministically (AC3-style rerun) and the cell commits rows, deletions and proof together."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W37-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~37",
+    "surfaced_at": "2026-10-14T16:02:00Z",
+    "one_line": "The regeneration invocation in TO step 2 names no evidence argument, but TO item 6 sets the research-dossier hyphen row retired only on its evidence; the worker passed the generator's --supersession flag with the item-6 evidence file so that rule could run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-12 step 2: run the generator with --out workflows/atom_decomposition/catalog_entries --deployed-tools census. Item 6: set the hyphen row retired true ONLY IF the hyphen table holds no security_key the underscore table lacks AND the underscore table newest write is not older than the hyphen newest write; the retired_reason names the evidence file path.",
+    "world_is": "research_dossier_supersession.json (committed at 875734d449) measures both conditions as met: 95 security_keys each, hyphen-minus-underscore 0 and underscore-minus-hyphen 0; newest LastModified hyphen 2026-09-29T09:36:58+00:00, underscore 2026-10-12T00:25:15+00:00. The step-2 invocation carries no --supersession argument, so without it the hyphen row is written retired false although the condition holds. The regeneration ran with the flag; the research-dossier row is retired true with a reason naming the evidence file. AC2 accepts either outcome.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~37/research_dossier_supersession.json@875734d449: hyphen and underscore security_keys counts 95 and 95, both difference lists empty, newest_last_modified 2026-09-29T09:36:58+00:00 and 2026-10-12T00:25:15+00:00",
+        "workflows/atom_decomposition/gen_harvest_rows.py supersession() and the --supersession argument: the retirement is written only when the evidence file is passed",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-12.harvest-rows-table-grain-generator.md@ff2710841f: step 2 invocation and item 6 retirement rule"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The issuer confirms whether the step-2 invocation should carry --supersession for item 6. No criterion is affected: AC2 grades either outcome, and the retired row cites an evidence file that exists."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W37-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~37",
+    "surfaced_at": "2026-10-14T16:35:08Z",
+    "one_line": "The commit-time naming gate grades the 78 amended contract.id values (colon form, opal-data-harvest:<layer>:<dotted id>) as RAISE, not REFUSE: it reads them as a bucket name and calls the rule or registry a defect; the commit verdict is not blocked by them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-12 amendment A1 item 1 and the order's contract.id row: contract.id = contract_id with every '/' replaced by ':' (an identifier the commit-time naming gate accepts), so the rows land under safe-commit.sh.",
+    "world_is": "safe-commit.sh naming gate, first attempt on the final rows: 78 RAISE lines, each 'RAISE as S3_BUCKET: rule or registry defect, not a refusal: B2: harvest:<layer>:<id> after opal-data- is no scope key' (for example harvest_ai_fill.yaml:18 opal-data-harvest:gold:amgt.harvest.gold.ai_fill). The verdict line is decided by REFUSE only; the REFUSE lines of the first attempt were the generator's own typed prefixes (gen_harvest_rows.py:54-56), which the worker removed by reading the nine prefixes from legacy_addresses.json.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~37/naming_gate_refusal_attempt2.txt: the commit-gate output of the attempt (the 78 RAISE lines and the three REFUSE lines), worktree file",
+        "workflows/atom_decomposition/catalog_entries/harvest_ai_fill.yaml:18 (contract.id line) graded RAISE as S3_BUCKET, reason B2 (naming gate output above)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The gate's B2 rule for an opal-data-harvest bucket reads the colon-separated id as a scope; the owner of the naming gate decides whether the rule or the id form changes. No criterion is affected and no row is blocked by this entry."
   }
 ]
 ```
