@@ -8793,3 +8793,55 @@ round.** Never edit an existing row.
   "world_is": "The files are right by their hashes and by the invariants the worker printed (9 of 15 round-82 aggregates match; the 6 that differ are named in the round-85 packet). They are not reproducible. Owner: the first cell of any un-park, which rewrites the scripts from ACTIVE_SET_V2_RECORD.json, commits them, re-runs them and compares the two hashes. Template fix by this seat: orders that build a file list the script in <paths> and require its commit before the output is written. Same class: round 82's window script (W168-S2)."
 }
 ```
+
+## ADVI_COTBKF-D2-S138 -- ARMED rows re-owned on C2's stand-down
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S138",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "1.0.0_SA_CTO~DELL2",
+ "surfaced_at": "2026-10-14T00:55:00Z",
+ "one_line": "Re-address: the 20 ARMED rows whose disarm_owner was 2.0.0_SA_COO~C2 (stood down 00:47Z, msg 7390) are owned by 1.0.0_SA_CTO~DELL2 under the PARK; held, not disarmed; the first act of any un-park re-reads each.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "0.0.0_AB_MSTR~DELL2 msg 7390: C2 stood down, its ARMED rows need re-addressing",
+   "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_ADVI_COTBKF_ROUND_86_PARK_20261014.md (the park and its un-park condition)",
+   "this channel's ARMED rows with disarm_owner 2.0.0_SA_COO~C2: ADVI_COTBKF-W12-S1, ADVI_COTBKF-S9, ADVI_COTBKF-S12, ADVI_COTBKF-D2-W48-S1, ADVI_COTBKF-D2-W50-S1, ADVI_COTBKF-D2-W50-S2, ADVI_COTBKF-D2-W50-S3, ADVI_COTBKF-D2-W53-S1, ADVI_COTBKF-D2-W66-S1, ADVI_COTBKF-D2-W78-S2, ADVI_COTBKF-D2-W78-S3, ADVI_COTBKF-D2-W80-S2, ADVI_COTBKF-D2-S95, ADVI_COTBKF-D2-W155-S1, ADVI_COTBKF-D2-W155-S3, ADVI_COTBKF-D2-W159-S1, ADVI_COTBKF-D2-W163-S1, ADVI_COTBKF-D2-W164-S1, ADVI_COTBKF-D2-W164-S3, ADVI_COTBKF-D2-W168-S2"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "An ARMED hazard has a live disarm_owner (CLAUDE.md section 2).",
+ "world_is": "The project is PARKED (status hold @b92a1413f5); none of these rows' surfaces reaches a page (route_not_live, D2-S135); the owner is now the box CTO, which holds them under the park.",
+ "disarm_owner": "1.0.0_SA_CTO~DELL2"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W96-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~96",
+  "surfaced_at": "2026-10-11T10:31:00Z",
+  "one_line": "CB-bm-3 cannot be made in commonwealth_flows.py alone: a versioned flow rule needs commonwealth_daily_returns.py (line 118 calls fl.rides_withdrawal(t) with no rule, line 156 tests the rule name) and commonwealth_sweeps.py (CASH_LEGS), both outside the grant; an in-place edit of rides_withdrawal would change method_r25 to method_r28 for every earlier run. Stopped before any code edit (refusal clause). Reach measured: 4,115 cash-withholding account-days, 71 with no same-day cash lo, 7 of those measured days.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_daily_returns.py:117-118 (worktree wk-cotbkf-82 HEAD): `if flow_rule in fl.R25_FLOW_RULES: t[\"_chg\"] |= ... | fl.rides_withdrawal(t)` -- rides_withdrawal takes only the frame, so no rule version can reach it from flows.py alone; line 156 selects the in-kind repair by `flow_rule == fl.FLOW_RULE_METHOD_R28`, so a new rule name given only in flows.py would silently drop that repair",
+      "data/assets/scripts/silver/commonwealth_flows.py:156-161 and commonwealth_sweeps.py:93-97: the flow rule names are the cash-leg names (CASH_LEG_METHOD_R28, CASH_LEG_DEFAULT = method_r28, CASH_LEGS); the runner passes the leg name as the flow rule (tests test_commonwealth_split_repair.py:188), so a rule version is selectable only through commonwealth_sweeps.py",
+      "this worker's reads 2026-10-11, counts only, script .scratch/w96/reach.py (not committed), 14 tx_cache parquet files, 1,416,497 rows: cash-balance-CUSIP ftax/stax account-days by Trade_Date 4,115 (4,310 rows); with no same-day cash lo 71 (147 rows; 30 accounts, all 30 present in the returns table); of those 71, measured (non-null return) in fwd3_serve_r34/daily_returns.parquet 7 (same 7 by raw Trade_Date and by next_trading_day), 71 of 71 present as rows. Join: exact string equality of Account_Number to account (both 7-17 character strings), date as a calendar date. Returns table: 1,691,729 rows, 107,316 measured",
+      "baseline, variable unset: env -u COTBKF_SWEEPS_CONFIG python -m pytest data/assets/scripts/silver/tests -q -> 802 passed, 12 skipped, 25 warnings in 60.60s"
+    ]
+  },
+  "spec_asserts": "CB-bm-3 worker face: the change is made in commonwealth_flows.py alone, versioned the file's own way with earlier versions reproducible; the reach is two measured days.",
+  "world_is": "The reach is 7 measured days, not 2, and the version convention needs two files outside the grant. The two ways to stay inside the grant both fail the face: an in-place edit of rides_withdrawal changes method_r25..method_r28 (r28 is the default) for every earlier run; a new rule constant in flows.py alone is neither selectable nor consumed. Not established: whether the issuer wants the unversioned in-place change, or a widened grant to commonwealth_daily_returns.py (a rule argument to rides_withdrawal at line 118, and r29 beside r28 at line 156) and commonwealth_sweeps.py (the cash-leg name). No code, test or deliverable was changed.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
