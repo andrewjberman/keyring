@@ -24,6 +24,13 @@ EGRESS CLASS, declared: NONE (the run writes no AWS; the instrument blocks and r
 build as before. No one-firm day has happened in production, so that arm has never run end to end. Your job is to DRIVE it once, in QA, and file the record.
 You build NOTHING: the instrument `r7_cn_n_1.py` (issuer's, read-only for you) does the run and the grading.
 
+**AMENDMENT 1 (the issuer's, 2026-10-14 ~15:0xZ; you are the RE-SEATED worker on this slot).** A first seat drove the run once and it ended RAISED, not with a Global refusal. Its record is already on your
+branch's base under `deliverables/0.9.0_WK_MDPF_CANON~21/run/` and its rows are `MDPF_CANON-D1-W21-S1` to `-S3` in the investigation file (inherited state; do not edit them). The cause was the
+INSTRUMENT's plant, not the guard: it edited the firm artifacts in place, so the inflection category-views build saw peers that no longer summed to the total, and it blanked `model_value` without `account_count`,
+so the cross-axis presence gate failed Global first. The issuer has fixed the instrument (the plant now edits deep COPIES handed to the Global builder only and blanks the count with the value; a RAISED run
+records `writes: []`). This is a NEW outcome on a corrected instrument, so the "run once" rule restarts: run `selftest`, `plan`, the clock check, then `drive` ONCE more into the SAME `run/` directory
+(it overwrites the first seat's files, which are in git history), then section 4. If this run also does not behave, Step 3 applies unchanged.
+
 **The instrument** (`org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_n_1.py`; read its header and the functions `plant_single_firm_pool` and `cmd_drive`; never edit it):
 - `drive --run-dir DIR` calls the consolidator's `build_all(trigger, dry_run=True, out_dir=<temp>)` ONCE. `dry_run=True` writes nothing to S3 (the handler documents QA-local mode as "ZERO S3
   writes anywhere"). The instrument also installs a guard on every botocore call: any operation not named Get, Head, List, Describe, Lookup or Simulate RAISES and is recorded. It wraps

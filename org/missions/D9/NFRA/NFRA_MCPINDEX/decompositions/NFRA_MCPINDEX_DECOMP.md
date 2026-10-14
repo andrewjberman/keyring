@@ -1528,3 +1528,72 @@ After both cells merge (one commit per chain end, `safe-merge.sh`):
 - It does not read a table: every number in a row is G1's, claimed as G1 claims it (a sample of 1 object per JSON dataset stays `measured on 1 object`).
 - It does not touch the producers' schedules (G1 open item: unread), nor G2 to G6.
 - It does not widen any IAM or served output: the catalog is metadata; the release carries its own never-widen pair as in `MX-r-12` / `MX-r-13`.
+
+## ROUND 14 (2.0.0_SA_COO~MI, 2026-10-14 ~15:0xZ) -- PRD v0.12 + v0.13 FWD-22: the one catalog's TABLE rows for G2 (client assets silver), G4 (mdpf delta), G5 (ETFs) and G6 (news)
+
+Source: PRD v0.12 @95d985d1a5 (`1.0.0_SA_CTO~Z` msg 34100, CONTRACTS-only, ADMITTED) and v0.13 @bb9d1ece12 (msg 34117, G4); the CRO's contracts G2 @339a2804d7 (131), G4 @7ec87a87e5 (7), G5 and G6 @35f45893a7
+(36 and 12). Round 13 (G1 harvest) is issued at bc6905342f and running; v0.12 arrived while it was being cut, so it is cut as round 14 now (the CTO's own instruction: "If it is issued, cut them as
+round 14 now"). The generator and loader pattern of round 13 is reused; the row schema below is the silver sibling of R13.2.
+
+### R14.1 THE CELLS -- 2 new orders (plus the third on a chain)
+
+| Cell | Serves | What | Base | Risk |
+|---|---|---|---|---|
+| `MX-c-13` | FWD-22 items 1 and 5, v0.13 | The one catalog writer loads, validates and writes a TABLE-grain silver row (11 new fields, among them `fork_keys` and `contract`), `silver_catalog_row`; its header records that `opal-data-mdpf` gold is a measured mirror of the served platinum; discover answers a table row (fork_keys, contract, retired, tags) and keeps firm-scoped rows fail-closed | after MX-c-11 drains (same worker, same files) | WORLD |
+| `MX-c-14` | FWD-22 items 1, 3, 4, 5, v0.13 | `gen_silver_rows.py` + `client_tool_map.json` write the 174 in-scope table rows from G2 (119 of 131), G4 (7 of 7), G5 (36 of 36) and G6 (12 of 12); frozen or empty tables read NOT CURRENT or EMPTY in their meaning; the two do-not-serve G4 feeds are retired | at issuance | LOCAL |
+| `MX-r-13` (round 12, A2) | FWD-22 live | The one release ships round 14's catalog too (amendment A3, at the PHASE A GO) | after all build cells drain and the OPLGTW releases close | WORLD |
+
+**Chains (fan-out 2 of 2, cap 8):** chain A = [`MX-c-11` -> `MX-c-13`] on worker `~36` (both edit `emit_catalog_v02.py`, its validator, discover and their tests, so they are one queue); chain B = [`MX-c-14`] on a NEW worker
+`0.9.0_WK_NFRA_MCPINDEX~38` (haiku, effort high; a generator, a JSON map and rows: no file in common with chain A or with round 13's `MX-c-12`). `MX-c-14` and `MX-c-12` write different files in the same directory
+(`catalog_entries/`): `harvest_*.yaml` against the 174 `opal_data_*`, `dynamodb_*` names; their paths are disjoint by name, and the drain's merge checks it.
+
+### R14.2 THE TABLE ROW (silver sibling of R13.2; the issuer's choice, written once for G2 to G6)
+
+A silver table row (`catalog_entries/<entity>.yaml`, `entity` = the slug of `contract_id`) is the C1 schema (9 fields + `read_tool`) plus `bucket`, `prefix`, `table`, `layer`, `format`, `contract`
+(`id`, `size`, `freshness`, `partition`, `producer`: the CRO's own objects verbatim, each carrying its `claim`), `fork_keys` (the contract's firm / account / platform fork, verbatim, with its own claims and its measured last-4
+collisions), `nl_tags`, `retired` (+`retired_reason`), `open_items` and `gap_owner`. `firm_scope_rule` is derived: `firm-scoped` when the firm fork names a client firm, else `opal-internal-only`.
+
+Rule 24 record:
+- (i) MECE over the declared domain: the domain is the 186 contracts of G2, G4, G5, G6; the subtraction is `set(in-scope contracts) - set(rows)` and its reverse (c14.AC1: base missing 174, extra 0). 12 contracts are OUT of scope because
+  an existing `silver_datasets` row already catalogues them (the Schwab dim contracts); they are listed, not dropped.
+- (ii) Same grain: one row per contract (table); G3's portal artifacts are NOT in this round (R14.6), so no row in this section mixes grains.
+- (iii) Intent coherence: `firm_scope_rule` (who may see the row) is one axis; `read_tool` (which reader) a second; `retired` (is it a tool target) a third; a row's visibility is never derived from its reader.
+- (iv) State coherence: `read_tool` null (no reader deployed) is a different state from `retired` true (no reader wanted); a do-not-serve row stays retired when a reader later deploys for its sibling; a client table's `firm-scoped` does not move when its
+  `read_tool` appears (discover shows a client row only to opal-internal principals either way, `_silver_answer`).
+Word-boundary token census: the six names `table layer format contract nl_tags retired` were censused in R13.2; `fork_keys`, `open_items`, `bucket`, `prefix`, `gap_owner` are keys of the harvest rows (R13) and of no silver reader.
+
+### R14.3 BATTERY (base HEAD a60fffec88 plus the round 14 files; pins G2 339a2804d7, G4 7ec87a87e5, G5/G6 35f45893a7; `deliverables/2.0.0_SA_COO~MI/round14/checks/`)
+
+| check | base | planted arms (clause 1: exercised at the cut) |
+|---|---|---|
+| c14.AC1 | FAIL: 0 files, missing 174, extra 0 | `plant_c14.sh`: the reference 174 rows PASS; a dropped row, an extra table row, a wrong contract.id: each FAIL |
+| c14.AC2 | FAIL: graded 0 of 174 | the reference set PASS; a changed fork_keys block, a flipped firm_scope_rule, a dropped question, cleared open_items, a silent inferred producer, a wrong freshness_field, tools disagreeing with read_tool, a do-not-serve row not retired, a frozen table not marked, a current table marked, a retired table row: each FAIL |
+| c14.AC3 | FAIL: the generator is absent | the reference generator PASSES under 5 deployed-tool sets (870 of 870 rows); a generator that names an undeployed tool FAILS |
+| c13.AC1 | FAIL at ACCEPT 0 of 174 (the loader refuses every table row); the existing 10 rows load; REFUSE 12 of 12 holds trivially at the base | `plant_c13.sh`: the reference loader PASS (174 accepted, 10 old rows load, 12 refused); a lax table validator FAIL |
+| c13.AC2 | FAIL: the three named tests are absent (0 of 3) | the named-test pattern |
+| c13.AC3 | FAIL: `silver_catalog_row` absent, the mirror unrecorded | the reference writer and header PASS 5 of 5 |
+
+### R14.4 THE DRAIN (the issuer's acts)
+
+After both chains merge: regenerate the catalog (the emitter), then check: `silver_datasets` holds the 5 old rows + 174 table rows, each table row with its 11 fields and `fork_keys`; `harvest_datasets` 78 (R13.4); `version: 0.5`; header records the mdpf mirror;
+every named `read_tool` is served (the emit refuses otherwise); a firm principal gets no match on any `firm-scoped` row (discover, all 174, denominator printed); the round-12 instruments (c10.AC1-AC3) and the full gateway suite by failing-ID delta.
+
+### R14.5 CHOICES THIS CUT MAKES (the issuer's, recorded)
+
+1. **Rows for every contract no existing silver row catalogues (174 of 186).** The 12 G2 Schwab silver contracts map to 4 existing `schwab_dim_*` silver rows and are NOT regenerated (their enrichment is a later cell). The 6 G6 contracts that point at the certified `news` channel text and the portal row are IN scope: the channel text is not a table-grain row, so each table gets its row while the channel keeps its text (its correction is round 15).
+2. **`client_tool_map.json`**: G2 proposes 40 vendor-specific tools; OPLGTW v3.1 ruling 1 serves client data as ONE `client_*` set. The map (29 pairs) points each table at the question-shaped tool its question belongs to; a table no question reaches stays unmapped and reads `read_tool: null` ("catalogued but no adapter this round"). The map is data the OPLGTW cells may extend.
+3. **No row names a tool the census does not serve** (v0.12 item 5): `read_tool` is a function of the deployed census at emit time; the release re-derives the rows against the live ref.
+4. **Client rows are `firm-scoped`, so discover shows them only to an opal-internal principal** (existing rule, `_silver_answer`); a firm principal gets no match even after a `client_*` tool exists, because a `client_*` tool is DATA_GRANT-class (OPLGTW ruling 2) and the catalog row carries no firm field to scope by.
+5. **`retired` carries do-not-serve** (v0.13): the two feeds read `retired: true` with `do-not-serve: <G4's routing text>`, one axis (is it a tool target).
+6. **Frozen or empty is never current** (v0.12 item 4): a table more than 5 trading days behind T-1 reads `NOT CURRENT: <n> trading days behind T-1.` in its meaning, and an empty table `EMPTY: no objects.`, data-driven from the contract.
+7. **The census's measured location is the row's location.** PRD v0.12 item 1 says "live 49F BD rows name `opal-data-bd/silver/`". G2's contracts for 49F BD carry `opal-data-assets/blackdiamond/49f/...` (a one-off partition and a stalled converter, Z-S110) and the live store only in
+   prose (`open_items`). No per-table live prefix is in the contracts, so none is invented: the rows carry the measured location and the `open_items`, and the live-prefix enrichment waits for the CRO's per-table prefixes (carried to the CTO, R14.6).
+
+### R14.6 WHAT THIS CUT DOES NOT CLAIM, AND WHAT ROUND 15 CARRIES
+
+- **G3 portal-v2 (42 contracts) and the G6 `news` row corrections are NOT in this round.** The portal channels and the `news` channel are not `catalog_entries/` source rows: they are CVO-certified specs inside the emitter itself (`EMISSION_MAP`, the `ft.04` / `pos.03` twins, the `news` fragment).
+  Editing them is a certified-spec change that widens or narrows what a partner firm can read through `catalog_gate`, so it needs its own decomposition and the CVO's read. Round 15 carries: the 9 live uncatalogued datasets; `ft.04.portfolios-aum-metrics` to deny; the `json/mdpf/**` rows dropped; the `portal_lookup` `mdpf`
+  channel retired and `mdpf-platinum` corrected; `json-tiered/` stated authenticated-only once Z-S114 closes; the `news` row's sizes (381,261 items) and the frozen / empty markers on the channel text.
+- It does not claim any `client_*`, `etfs_*` or `news_*` tool exists: they are `NFRA_OPLGTW`'s. Until each is deployed, a row reads `read_tool: null`.
+- It does not read a table: every number is the CRO's, claimed as the CRO claims it.
+- It does not settle the 49F live-prefix question (R14.5.7), the SmartX firm fence (Z-S109) or the platform-label crosswalk (OPLGTW ruling 4).

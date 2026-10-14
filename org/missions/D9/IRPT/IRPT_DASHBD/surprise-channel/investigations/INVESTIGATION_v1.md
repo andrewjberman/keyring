@@ -11242,3 +11242,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "INERT for this round's render. The five names are carried in the record's suite_base and suite_after blocks; the CVO may place their owner."
 }
 ```
+
+
+## IRPT_DASHBD-D2-S32 -- disarm owner's rulings on W169-S1 and W169-S4 and the issuer's ruling on W169-S3 (round 106 chain A)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S32",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T14:47:23Z",
+  "one_line": "Disarm owner's rulings on W169-S1 and W169-S4 (the NOT_SPANNED words still say the not-held dash in the builder reason and in a contract footnote) and the issuer's ruling on W169-S3 (the builder calls the reader's private _model_lo): the wording is inert and carried to the next edit of each file; the private call is accepted for this round.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CLAUDE.md section 2: an ARMED hazard disarms same-turn through the row's disarm_owner; this seat is disarm_owner of W169-S1 and W169-S4. DB-b-206 step 2 changes document.absent_rule only; DB-b-206 step 3 says the reader is read-only and a missing public accessor is a row and a stop.",
+  "world_is": "W169-S1: the builder's reason words for a NOT_SPANNED window still say the not-held dash, but the sample holds 0 such forms (the checker counts 55 and then 51 absent forms with none NOT_SPANNED), the reason text prints only as a data-reason attribute and never as visible text, and the view now prints words, so no client reads it; the builder's hash is bound in BUILD_R106.json, so editing it now would void the record: the wording is fixed at the builder's next edit. W169-S4: the contract footnote for a not-spanned window still says it prints a dash; document.absent_rule is 0.4.3 and says words, never the dash; the footnote is documentation text, no code reads it; fixed in the next contract edit. W169-S3: the worker called the reader's private _model_lo to classify an absent window because the reader has no public accessor; no window came back empty in this sample (32 of 32 filled), so the call never ran for a client-visible figure; accepted for this round, and the next round gives the reader a public accessor (a cell for the issuer to cut). All three hazards are disarmed. Also: round 105's own checks were re-bound to the lineage (the contract moved from 0.4.2 to 0.4.3 by text only): DB105-1-AC1 now accepts 0.4.2 or later and the 0.4.2 bytes in a record's contract_sha256.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/BUILD_R106.json and RENDER_R106.json at the merge bfe336aef3 (32 of 32 members, 0 NOT_SPANNED forms, the view prints words)",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at 0.4.3 (document.absent_rule); the issuer's checker p106_round106.py check_build",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r105/p105_round105.py (the lineage amendment; the three round-105 criteria PASS on the landed tree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

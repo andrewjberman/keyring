@@ -228,7 +228,7 @@ Fork 3: ALT stays vermilion500 (Andrew 2026-10-01), the pin test stands; the fir
 **Fanout:** 1 of 1 chains, cap 8 beside CN-h-1 (no shared file: CN-h-1 owns `dim_mdpf_aggregate_aua_timeseries.py` and tests, this owns portal files); 2 of 2
 independent chains if both are issued in one round. `portal_ref:` the portal `DEV` HEAD at the cut.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <to_id>MDPF_CANON.TO-CN-i-1</to_id>
 <slot>~18</slot>
