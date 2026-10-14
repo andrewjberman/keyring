@@ -13873,3 +13873,62 @@
 }
 ]
 ```
+
+---
+
+## IRPT_ANLREQ-D2-W134-S1 -- the layout at 2362755bd3 carries no DRAFT mark and no disclaimer, so the standalone commentary's DRAFT mark is new code here
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W134-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~134",
+  "surfaced_at": "2026-10-14T16:48:00Z",
+  "one_line": "AR-y-327 step 1 says _commentary_section (layout_overview.py about line 1079) is the branded page with the DRAFT mark and disclaimer, which build_commentary_only must reuse. At 2362755bd3 neither the DRAFT mark nor any disclaimer exists in the research tree: _commentary_section emits a Commentary title, the paragraphs and the footer credit only. The DRAFT mark is therefore added by this order as a draft keyword on _commentary_section, default off, so build(..., commentary=...) output is unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "ORDER AR-y-327 step 1 and PRD v0.11 FWD-1 item 4: _commentary_section is 'the branded page with the DRAFT mark and disclaimer', and build_commentary_only carries 'the same brand, logo, DRAFT mark, Opal disclaimer and page chrome that _commentary_section gives today'.",
+  "world_is": "MEASURED at base 2362755bd3: git show of layout_overview.py, case-insensitive grep for draft or disclaim returns two docstring lines only (1080 and 1099) and no DRAFT mark and no disclaimer text. brand/brand.json and the research tree carry no disclaimer text either. The hazard is not live: opal_packager.py live_attach raises PACKAGER_PRINCIPAL_UNSET (line 231 at 2362755bd3), so no commentary PDF reaches a ticket from this code today.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py@2362755bd3 lines 1079-1092 (_commentary_section) and 1131-1132",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py@2362755bd3 line 231 (live_attach raises PACKAGER_PRINCIPAL_UNSET)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+---
+
+## IRPT_ANLREQ-D2-W134-S2 -- no Opal disclaimer wording exists in the repo; the disclaimer rendered by this order is a placeholder for ratification
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W134-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~134",
+  "surfaced_at": "2026-10-14T16:48:30Z",
+  "one_line": "PRD v0.11 C-PACKAGER and ADDENDUM v0.10 item 2 say the DRAFT mark and Opal's disclaimer stay on the commentary PDF, and criterion AR327-y-AC1 asks for the disclaimer text in the HTML. No Opal disclaimer wording exists in the repo, so this order's DISCLAIMER_TEXT in layout_overview.py is a worker placeholder that a seat with the wording must replace before any release.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD v0.11 C-PACKAGER and ADDENDUM v0.10 item 2: the commentary PDF is marked DRAFT and carries Opal's disclaimer; the disclaimer is a stated, existing element that stays.",
+  "world_is": "MEASURED 2026-10-14: a case-insensitive grep for disclaimer over infra/aws/lambda returns map_pdf.py (a performance-disclaimer section of the YCharts map), licence texts and exec-summary prompts; none is an Opal disclaimer for a commentary page. The placeholder wording is DISCLAIMER_TEXT in layout_overview.py, written by 0.9.0_WK_IRPT_ANLREQ~134 and not ratified by any seat.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/prd/IRPT_ANLREQ_PRD.md@98eacceda3 (ADDENDUM v0.10 item 2, the DRAFT mark and Opal's disclaimer stay)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/map_pdf.py@2362755bd3 (the performance disclaimer, not an Opal page disclaimer)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The placeholder is labelled in the page text as pending ratification. Disarm owner: the CRO, who holds the brief half and the Opal wording."
+}
+]
+```
