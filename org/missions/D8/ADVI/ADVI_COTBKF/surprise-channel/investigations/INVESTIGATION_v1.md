@@ -8467,3 +8467,154 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D2-W168-S1 -- The task order defines the round-82 769 as a non-cash position with units above zero; the 769 and the 875 reproduce only with non-zero units
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W168-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~168",
+  "surfaced_at": "2026-10-14T00:00:23Z",
+  "one_line": "TO ADVI_COTBKF.TO-CB-cg-1 worker face item 1 defines the 769 as \"a non-cash position with units above zero\". On the 2026-10-12 snapshot, non-cash units above zero give 766 accounts; non-cash units non-zero (negative units included) give 769, the round-82 count. The 90-day 875 reproduces with non-zero non-cash rows only (above zero gives 872).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-cot/silver/holdings/2026-10-12.parquet read (counts only): non-cash non-zero 769 accounts, non-cash positive 766",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~161/ACTIVE_SET_RECORD.json@70616e8c1b definition.primary: non-zero units"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-cg-1 worker face item 1: count_769 = a non-cash position with units above zero.",
+  "world_is": "The round-82 record (ACTIVE_SET_RECORD.json definition.primary) states non-zero units, and the 769 and the 875 reproduce on that rule. The task order sentence is the defect. The worker used non-zero units and reports count_769 = 769.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W168-S2 -- The round-82 window counts cannot be reproduced from committed material: the rebuild on raw keys matches the start date, the account count and the reverse match, and differs on every window count
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W168-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~168",
+  "surfaced_at": "2026-10-14T00:00:23Z",
+  "one_line": "The rebuild of the round-82 window method on the 769 set gives 41,462 window rows against 42,319 (DIFF), 6,850 joined rows against 6,736, 18,882 Commonwealth-side rows against 15,894, 15,730 Black Diamond-side rows against 19,689, and 770 not_established rows against 472. Earliest start, account count and all six reverse-match counts match. The round-82 window script is not committed and its output carries salted tokens, so no row can be matched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_cotbkf_active_set_20261013/ACTIVE_COTTONWOOD_SET.csv@eb9dd0c3f6def67eab31c1b931e7fe66ad07ef37e2600908733da0a154afebfc: 42319 rows; side counts 15894 commonwealth, 19689 black_diamond incl. not_established, 6736 both; 472 not_established",
+      "worker record ACTIVE_SET_V2_RECORD.json invariants (uncommitted at filing): 9 of 15 match"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-cg-1 item 4: rebuilt windows must reproduce 42,319 rows, 3,357 securities, 6,736 joined and the side counts of the round-82 files.",
+  "world_is": "The window segmentation of round 82 is not in any committed file and its keys are tokens. The invariants DIFF and the worker reports the DIFF without forcing it. The former-client and stop-list counts move with the windows; the issuer decides which method the set is cut under before dell1 draws on it.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~C2"
+}
+```
+
+## ADVI_COTBKF-D2-W168-S3 -- The 47 no-snapshot gold keys carry no cusip and no cash_equivalent column, so the cash flag is not established for their rows
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W168-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~168",
+  "surfaced_at": "2026-10-14T00:00:23Z",
+  "one_line": "The 47 gold canonical keys dated 2026-04-22 to 2026-06-07 have no cusip and no cash_equivalent column (the 88 later keys have both). The task order keeps cash-equivalent rows as windows, which is not established for the 107,511 rows of those keys. The worker keeps them as windows and takes the CUSIP from a one-CUSIP-per-asset_name map where the name is unique; 834 window rows of the set are not_established.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-cot/gold/canonical/holdings/ 135 keys, column names read per key: 47 keys without cusip and cash_equivalent",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~161/ACTIVE_SET_RECORD.json@70616e8c1b sources: the no-snapshot branch (47 keys)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-cg-1 item 2 and the round-82 record: the gold canonical columns read include cash_equivalent on every key.",
+  "world_is": "Schema probe of all 135 gold keys (column names only): 47 lack cusip and cash_equivalent; the no-snapshot branch built them. The cash flag cannot be applied to those keys.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W168-S4 -- One Black Diamond id is the candidate of two waiting Commonwealth accounts, so a near-match predecessor_key cannot hold one raw key
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W168-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~168",
+  "surfaced_at": "2026-10-14T00:00:23Z",
+  "one_line": "22 AWAITING_PERSON crosswalk rows name 21 distinct Black Diamond ids; one id is the candidate of two Commonwealth accounts. In the set reverse match that id carries both raw Commonwealth keys separated by a semicolon in one predecessor_key cell, which the task order does not allow (one raw key or none).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/commonwealth/cottonwood/silver/crosswalk/date=2026-06-23/crosswalk.csv read (counts only): 22 AWAITING_PERSON rows, 21 distinct candidate ids",
+      "C:/dev/_cotbkf_active_set_20261013/REVERSE_MATCH_V3.csv (worker output, uncommitted at filing): one near row with a semicolon in predecessor_key"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-cg-1 item 3: predecessor_key is the raw Commonwealth account number or none.",
+  "world_is": "Crosswalk shape: 22 AWAITING_PERSON rows, none without an id, none with more than one id, 21 distinct ids. The duplicate is in the set file as one near row with a semicolon. The worker keeps both keys in that cell and says so.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W168-S5 -- Round 84 counted NEW_CLIENT_AFTER_MIGRATION on window starts; the list defines the test as a partition read, which gives 145 on the same 273 rows
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W168-S5",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~168",
+  "surfaced_at": "2026-10-14T00:00:23Z",
+  "one_line": "On the 273 reasonless rows of the 769 set, the partition test as the closed list defines it (first date any row of the account appears in gold or silver holdings, on or after 2026-06-23) gives NEW_CLIENT 145, MISMATCH 96, OTHER 32, HOUSEHOLD 0. Round 84 reported 152 / 89 / 32 / 0 on window starts, which its own record names as a substitute for the partition read (tokens).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~167/NONE_REASON_LIST.md@b8de2ba358 test 2",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~167/NONE_REASONS_RECORD.json@b8de2ba358 by_code 152 / 89 / 32 / 0"
+    ]
+  },
+  "spec_asserts": "NONE_REASON_LIST.md test 2: the earliest partition date in which the Black Diamond account_id appears in gold canonical holdings or silver holdings is on or after M = 2026-06-23.",
+  "world_is": "With raw keys the partition read is possible. Seven accounts move from NEW_CLIENT to MISMATCH. The round-84 record is not changed by this worker.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W168-S6 -- The candidate test of the closed list does not discriminate: candidate sets run from 1 to 751 Commonwealth accounts
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W168-S6",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~168",
+  "surfaced_at": "2026-10-14T00:00:23Z",
+  "one_line": "The MISMATCH_NO_IDENTIFIER candidate test (a Commonwealth account with a pre-migration transaction in a CUSIP the account holds on 2026-10-12) finds candidate sets of 1 to 751 Commonwealth accounts across the 101 MISMATCH rows of the set, because shared and cash-equivalent CUSIPs are traded by many accounts. A MISMATCH code records that a shared CUSIP exists and that no key join exists; it does not record that a match was attempted and failed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~167/NONE_REASON_LIST.md@b8de2ba358 test 3",
+      "worker run of the closed-list tests on the set (counts only; candidate-set sizes 1 to 751)"
+    ]
+  },
+  "spec_asserts": "NONE_REASON_LIST.md test 3 and its note: a candidate exists and no crosswalk or account_links row joins it; identifiers that would settle a match are absent.",
+  "world_is": "The test is applied literally, cash-equivalent CUSIPs included. The L9 reader should weigh MISMATCH as an absence of a key join, not as evidence of a failed match.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
