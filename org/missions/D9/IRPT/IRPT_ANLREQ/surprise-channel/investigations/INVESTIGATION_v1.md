@@ -13297,3 +13297,125 @@
 ```
 
 ---
+
+## IRPT_ANLREQ-D2-W129-S1 -- the legacy-row premise of TO-AR-y-319 item 2 does not hold on the measured evidence; no reader was built; the refusal owner carried home_firm_id on the REQUEST owner (TO-AR-y-319, worker 0.9.0_WK_IRPT_ANLREQ~129)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W129-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~129",
+  "surfaced_at": "2026-10-14T14:39:11Z",
+  "one_line": "The legacy-row premise of TO-AR-y-319 item 2 does not hold on the measured evidence: the stored owner of an ordinary viewer's input carries no home_firm_id, so no reader for legacy rows was built; the home_firm_id that refused the advisor was on the REQUEST owner, which the writer fix closes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "TO-AR-y-319 item 2: a LEGACY retained row (a FIRM_ADVISOR owner that still carries home_firm_id; the release-29 D1 input and any ordinary viewer's input) is turned into a conforming owner by a reader in ycharts/generate/submission.py or reports/request_composition.py; if that needs a file outside the grant, file a BLOCKING row.",
+  "world_is": "The stored D1 input owner has no home_firm_id: worker 128's session log records the owner field names advisor_id, firm_id, ownership_fingerprint, principal_class, principal_id, schema_version and 'the input owner has no home_firm_id (False)'. The served CREATE path for a non-internal subject passes no access object, so the guard's owner is resolve_prospect_owner, which carries no home_firm_id. home_firm_id on an ordinary owner came only from InteractiveAccess.prospect_owner() used as the REQUEST owner (prospect_submission.py lines 72-73), which the writer fix closes. Whether any STORED FIRM_ADVISOR owner with home_firm_id exists was NOT read (no live call by this worker). If one exists, the reader would need composition_admission.py (step 2 runs before every in-grant step), prospect_submission.py line 107 and intake/uploads.py line 681, all outside the grant, and this row becomes BLOCKING.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~128/session_log.txt lines 11 and 21 @1b9c92aa4a (D1 input owner field names; the input owner has no home_firm_id)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py lines 1017 and 1043-1045 @1b9c92aa4a (access is None for a non-internal CREATE; the resolver is resolve_prospect_owner)",
+      "infra/aws/lambda/investor-reporting/_scope/prospect.py lines 77-78 @1b9c92aa4a (resolver = resolve_owner or resolve_prospect_owner; actor_owner = resolver(...))",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/prospect_submission.py lines 72-73 @1b9c92aa4a (request owner = repository_owner of access.prospect_owner())"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The writer fix is in the order's commit: interactive_access.py prospect_owner() omits home_firm_id for every class but OPAL_GLOBAL, fingerprint over the stored owner. No reader was built. The step-2 refusal of a home-bearing owner is pinned by ycharts/generate/tests/test_ordinary_owner_legacy_row.py (see IRPT_ANLREQ-D2-W129-S2). The COO's disarm is one read of the stored input owners of FIRM_ADVISOR rows."
+}
+]
+```
+
+---
+
+## IRPT_ANLREQ-D2-W129-S2 -- TO-AR-y-319 item 4(d) cannot be met as written: no legacy reader was built, so the file pins the step-2 refusal of a home-bearing owner and those pins pass on the base tree (TO-AR-y-319, worker 0.9.0_WK_IRPT_ANLREQ~129)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W129-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~129",
+  "surfaced_at": "2026-10-14T14:39:11Z",
+  "one_line": "TO-AR-y-319 item 4(d) cannot be met as written: no legacy reader was built, so ycharts/generate/tests/test_ordinary_owner_legacy_row.py pins the step-2 refusal of a home-bearing owner instead, and those pins pass on the base tree, so the (d) before-arm does not FAIL.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Item 4(d): a LEGACY FIRM_ADVISOR owner carrying home_firm_id is turned into a conforming owner by the reader and then passes all five steps of CompositionAdmission.validate; before_arm: (d) FAILs on the tree without the change.",
+  "world_is": "The new file has three tests. The fixed owner shape passes all five steps (passes on the base tree and on the fixed tree). A home-bearing resolved.owner is refused at step 2 with the single log line COMPOSITION-REFUSED step=2 error_class=ValidationError (passes on both trees, because it pins current schema behaviour, not the writer). A home-bearing resolved.input_owner is refused the same way (passes on both trees). The owner-level before-arm failures are in test_ordinary_owner_composition.py: tests a and c FAIL on the base tree (2 failed, 2 passed).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_ordinary_owner_legacy_row.py (added by this order; base-tree run: 3 passed)",
+      "docs/contracts/investor-reporting/v1/RequestComposition.schema.json lines 599-605 and 1009-1013 @1b9c92aa4a (the else branches of the owner and inputOwner definitions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Pinned as measured, not as the order asked. The issuer may re-cut item 4(d) against the measured premise named in IRPT_ANLREQ-D2-W129-S1."
+}
+]
+```
+
+---
+
+## IRPT_ANLREQ-D2-W129-S3 -- the offline session log that TO-AR-y-319 places beside COMPOSITION_CAUSE.json is at the root of the worker 128 deliverable folder, not in r40/ (TO-AR-y-319, worker 0.9.0_WK_IRPT_ANLREQ~129)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W129-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~129",
+  "surfaced_at": "2026-10-14T14:39:11Z",
+  "one_line": "The session log that TO-AR-y-319 places beside COMPOSITION_CAUSE.json is not in r40/; it sits at the root of the worker 128 deliverable folder, and it was read from there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-319: the record is at deliverables/0.9.0_WK_IRPT_ANLREQ~128/r40/COMPOSITION_CAUSE.json; read it first, and session_log.txt beside it for the offline method.",
+  "world_is": "The worker 128 r40/ folder holds COMPOSITION_CAUSE.json only. session_log.txt is at deliverables/0.9.0_WK_IRPT_ANLREQ~128/session_log.txt. Its content was read and used for IRPT_ANLREQ-D2-W129-S1; the offline method of the cause record was also read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~128/r40/ listing @1b9c92aa4a (COMPOSITION_CAUSE.json only)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~128/session_log.txt @1b9c92aa4a (the file at the folder root)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+---
+
+## IRPT_ANLREQ-D2-W129-S4 -- the new scope test file is not self-contained: the firm registry is found by a walk up from the _ids module, so a copy of the tree outside the repo refuses every firm token (TO-AR-y-319, worker 0.9.0_WK_IRPT_ANLREQ~129)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W129-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~129",
+  "surfaced_at": "2026-10-14T14:39:11Z",
+  "one_line": "The new scope test file is not self-contained as the order says: ids.firm_ids resolves data/firm_registry.json by a walk up from the _ids module, so a copy of the tree outside the repo refuses every firm token unless the registry is copied in or IRPT_FIRM_REGISTRY is set; mutant_check.py copies the registry into its scratch tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-319 item 4: the tests file is NEW and self-contained, run with python -m pytest; AR319-y-AC2 runs a mutant copy of the tree outside the product tree.",
+  "world_is": "Running the new file from a scratch copy of infra/aws/lambda/investor-reporting and docs/contracts without data/firm_registry.json fails all four tests with ids.IdRefused (the firm registry was not found). With data/firm_registry.json copied to the copy root, the mutant check fires as expected (2 failed, 2 passed). The product tree is unchanged by this.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_ids/ids.py lines 113-125 @1b9c92aa4a (_find_registry: env, then a bounded walk up for data/firm_registry.json, then a copy beside the module)",
+      "data/firm_registry.json @1b9c92aa4a (the registry the walk finds)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~129/mutant_check.py (copies the registry into its scratch tree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+---
