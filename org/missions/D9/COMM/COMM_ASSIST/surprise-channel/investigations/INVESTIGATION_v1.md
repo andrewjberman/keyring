@@ -1170,3 +1170,107 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Not measured against a live muse answer in this cell. A live answer's signed_at is the observation to take before the deploy cell."
 }
 ```
+
+## COMM_ASSIST-W19-S1 -- the task order places two sms.reply re-sends in on_owner_text; one is in on_owner_text and the other in on_owner_reply
+
+```json
+{
+  "id": "COMM_ASSIST-W19-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~19",
+  "surfaced_at": "2026-10-14T03:23:18Z",
+  "one_line": "The task order says on_owner_text holds two ctx.send of sms.reply; on_owner_text holds one, and the second sits in on_owner_reply. The count of four producer sites holds, and all four are stamped.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/tenant.py@063dff2307 line 999: ctx.send(item['object_id'], 'sms.reply', ...) inside on_owner_text, the one re-send in that function",
+      "data/transcripts/scripts/teams_chat/tenant.py@063dff2307 line 1043: ctx.send(act['object_id'], 'sms.reply', ...) inside on_owner_reply, the #1 confirmation re-send"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-j-1 build step 2: in on_owner_text there are two ctx.send of sms.reply (the handler's own re-sends); read the whole file, there may be others. Four producer sites in total.",
+  "world_is": "on_owner_text holds one ctx.send of sms.reply; the second is in on_owner_reply. The four sites at 063dff2307 are _route_commands owner.text (line 1263), _route_commands sms.reply (line 1287), on_owner_text (line 999) and on_owner_reply (line 1043). All four are stamped at 7af9d5d1f4.",
+  "notes": "Both re-sends are stamped; the check's source arm reads four sites. No scope change; the premise wording only."
+}
+```
+
+## COMM_ASSIST-W19-S2 -- test_teams_chat_natural.py compares the handler re-sends as exact payloads, is outside the grant, and now fails
+
+```json
+{
+  "id": "COMM_ASSIST-W19-S2",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~19",
+  "surfaced_at": "2026-10-14T03:23:18Z",
+  "one_line": "test_teams_chat_natural.py compares the sms.reply payloads of on_owner_text and on_owner_reply as exact dicts; the mark now sits in those payloads, so the test fails, and the file is not in the task order's paths.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/tests/test_teams_chat_natural.py@063dff2307 lines 49-50 and 58: sent_events == [('19:yang', 'sms.reply', {tag C608, action edit, notes, version 2})] and reply.sent_events == [('19:aj', 'sms.reply', {... version 1})]",
+      "measured at 7af9d5d1f4 with PYTHONPATH on the tests dir: FAILED test_teams_chat_natural.py::test_a_send_is_echoed_for_a_1_and_a_redraft_goes_at_once; the 15-file set reads 174 passed, 1 failed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-j-1 build step 4 and the rules: existing tests must still pass; CAj1-AC2 is the assistant's flow tests, the text path included; the order's paths are the write grant.",
+  "world_is": "The two handler re-sends now carry mark_at and mark, so their exact-payload assertions fail. The file that holds them is not in the order's paths, so this worker could not update it. CAj1-AC2's invocation (test_teams_chat_tenant.py only) prints I2-REGRESSION ok=True passed=64, so the bound does not reach the sibling file.",
+  "notes": "Not edited: outside the grant. The stamp is required by CAj1-AC1 (the source arm reads every site), so the two assertions cannot pass unchanged. The issuer decides: add the file to the paths and compare unmarked(payload), or rule otherwise. Blocks the order's proof row CAj1-AC2 until ruled."
+}
+```
+
+## COMM_ASSIST-W19-S3 -- INGRESS_MARK_MODE with a value other than off, record or enforce is not specified; the handler raises for a text-driven event
+
+```json
+{
+  "id": "COMM_ASSIST-W19-S3",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~19",
+  "surfaced_at": "2026-10-14T03:23:18Z",
+  "one_line": "The task order gives three mode values and says unset or empty means off; it says nothing about any other value. The handler raises ValueError on a text-driven event for an unknown value, so the event is not acted on and the mode is not silently off.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/tenant.py@7af9d5d1f4 _mark_mode(): raises ValueError when the stripped value is not in MARK_MODES; dispatch calls it only when ctx.kind is in ingress_mark.KINDS",
+      "data/transcripts/scripts/tests/test_ingress_mark.py@7af9d5d1f4 test_an_unknown_mode_is_loud_on_a_text_event: the value enforced raises and acts on nothing"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-j-1 THE CONTRACT: INGRESS_MARK_MODE values off (unset or empty means off: no check at all), record, enforce; read at call time.",
+  "world_is": "A typo such as enforced neither turns enforcement off nor acts unverified: a text-driven event fails loud, and other event kinds are not touched. A failing text is a dropped text until the variable is corrected.",
+  "notes": "The choice is the worker's. The issuer may rule a different value (for example, treat an unknown value as enforce). Not deployed; this order sets no mode anywhere."
+}
+```
+
+## COMM_ASSIST-W19-S4 -- the flow-test harness reaches the ingress secret through a private cache, because a patch of a.secret inside the harness is overwritten by the issuer check's own patch
+
+```json
+{
+  "id": "COMM_ASSIST-W19-S4",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~19",
+  "surfaced_at": "2026-10-14T03:23:18Z",
+  "one_line": "The order does not say how the flow tests keep stamped sends off AWS. Patching a.secret inside the harness's Fakes overrode the issuer check's own a.secret patch (J1-MARK read 5 of 9); the harness now seeds the module secret cache instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/tests/test_teams_chat_tenant.py@7af9d5d1f4 Fakes.__init__: monkeypatch.setitem(a._SECRETS, the ingress_mark secret name, MARK_KEY)",
+      "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r18/checks/check_j1_mark.py@063dff2307 arm(): patches a.secret, then calls fresh(mp), which constructs Fakes(mp)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-j-1 step 4 and the rules: no AWS call, no network. The issuer check patches a.secret for each arm and then builds the harness.",
+  "world_is": "With a.secret patched in Fakes, the stamp and the verify used different keys and J1-MARK read 5 of 9. With the cache seeded instead, the check reads 9 of 9. The harness now depends on the private name assist._SECRETS.",
+  "notes": "Test-only seed. If assist renames _SECRETS, monkeypatch.setitem fails loudly rather than reading AWS. Surfaced for the issuer; not a production change."
+}
+```
