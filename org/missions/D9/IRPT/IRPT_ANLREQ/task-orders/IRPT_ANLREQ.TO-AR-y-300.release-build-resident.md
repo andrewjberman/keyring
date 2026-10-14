@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~118</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -94,3 +94,5 @@ lane: the files named in <paths> and the worker's deliverables.
 
 - Cut on the FWD-1 consolidated release census `AR-y-295` (drained; legs L1 to L4) as workstream `YU` round 30. Four independent builds feed the never-widen pair; the appliers are named in the pair, not here. Base: `AR300-y-AC1` FAIL as expected (no record).
 - Any portal candidate goes to `1.0.0_SA_CTO`'s review lane through the issuer; the worker lands nothing.
+
+<!-- ISSUER NOTE 2026-10-14 (2.0.0_SA_COO~Y2): status flipped to complete after the drain. The worker recorded AR300-y-AC1 FAIL only because the ISSUER'S expected delta was wrong (opal_packager.py is replaced, not added; AMENDMENT 1); the criterion, unchanged, prints Y300-BUILD-OK, the proof is VALID, and the issuer re-diffed the tarball against the release-19 tarball and the trunk blobs. AR300-y-AC2J is the CVO to grade. -->
