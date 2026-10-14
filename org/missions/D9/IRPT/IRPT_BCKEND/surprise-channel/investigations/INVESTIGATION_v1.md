@@ -33296,3 +33296,100 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "STATE: a firm's client-facing holdings are four trading days behind (2026-10-08 served; 10-09, 10-12 and later not published) because the publish guard refuses a candidate that LOSES an account (one account here). NOT READ by me: why the account is absent from the candidate (a terminated account, a data gap in the source, a mapping break), whether the refusal clears on its own, who owns the acceptance path (the guard's code and its override are in the holdings publisher; not read), and whether other firms have a refusal record (49financial and inflection are at 2026-10-12, so none is blocking). This is a SERVED, client-facing staleness and a guard decision, not a build for this seat: it is put to the CTO in the L10 slug for a ruling on the owner and the path; ARMED until a person decides or it clears."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W372-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~372",
+  "surfaced_at": "2026-10-14T02:05:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "No reader of the activity table account_activity_daily is named anywhere in the repository; the round-188 packet asked for its readers and the census could not name one.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep over infra/aws/lambda (excluding tests) for account_activity_daily or TABLE_ACTIVITY at worktree base 9f41eeeec9: only infra/aws/lambda/investor-reporting/reporting-gold/handler.py names it (the producer side)",
+      "Grep over lib/ and data/assets/ for account_activity_daily: lib/ none; data/assets/ the producer account_activity_lots.py and its test only",
+      "Grep over portal/ (checkout) for account_activity_daily: none; the portal perfrp files match account_return_daily only",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~372/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-525.md section Consumers states this as not inferred"
+    ]
+  },
+  "spec_asserts": "Step 9 of IRPT_BCKEND.TO-IB-pr-525 asks the packet to name the readers of the activity table from the repository.",
+  "world_is": "The repository names the activity table's producer and no reader. The consumers of the returns table are named (reporting-publish handler; portal perfrp contract files). The activity readers are not in this tree, so the consumer side of the activity backfill is not checkable here."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W372-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~372",
+  "surfaced_at": "2026-10-14T02:05:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The handler's chunk bound is 25 trading days, but the function's 900-second timeout cannot hold a 25-day lots-only run at the measured 216.7 seconds per day; the code admits a run the timeout cannot finish.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py line 119 at base 9f41eeeec9: MAX_BACKFILL_DAYS = 25 (the chunk bound of one backfill invocation)",
+      "aws lambda get-function-configuration irpt-49f-reporting-gold-lambda at 2026-10-13: Timeout 900, MemorySize 3008",
+      "round-186 census (deliverables/0.9.0_WK_IRPT_BCKEND~369/BACKFILL_PLAN_PACKET_IB-pr-522.md): 216.7 seconds per trading day with the lots stage; 25 x 216.7 = 5417 seconds (derived here)"
+    ]
+  },
+  "spec_asserts": "A backfill chunk of up to 25 trading days is an admitted run of one invocation (the handler's chunk bound).",
+  "world_is": "The bound admits a run about six times the timeout at the measured rate (derived). The operational chunk is about 4 days (900 / 216.7 = 4.15, derived). The packet uses 4 days and the handler still admits 25, so the chunk length is an operator choice that the code does not enforce."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W372-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~372",
+  "surfaced_at": "2026-10-14T02:05:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The lots-only chunk time is not measured. A 4-day chunk at the round-186 rate uses 866.8 of the 900-second timeout; the one-day all-stage durations in the ledgers (389 s and 348 s) show the margin depends on the lots-only stage being the cheaper rate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/change_management/20261009T1247Z_irpt-dashbd-r37-delta-1008_deploy_completion.md leg B1: one-day backfill 2026-10-08 with all stages, REPORT Duration 389121.20 ms",
+      "org/critical_paths/change_management/20261012T1350Z_irpt-dashbd-r45-refresh4-20261012_deploy_completion.md leg L4: one-day dry run 2026-10-08 with all stages, Duration 348795.73 ms (the ledger's L6 of 20261013T1228Z reads 348133.23 ms for the same day)",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~372/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-525.md section Branch A (b): 4 x 216.7 = 866.8 seconds derived"
+    ]
+  },
+  "spec_asserts": "The first real chunk is a one-day lots-only run that times the lots-only stage, and the 4-day chunk length follows from the measured lots rate under the 900-second timeout.",
+  "world_is": "The lots-only stage has no measurement in the ledgers: the only measured one-day durations include the returns and class stages. A 4-day chunk at 216.7 seconds per day leaves about 33 seconds of timeout margin, so the chunk length is set by an unmeasured number."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W372-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~372",
+  "surfaced_at": "2026-10-14T02:05:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The function's trunk deploy ledger for irpt-dashbd-thresholds-swap-20261013 reads HELD at leg L7 while the live function already runs that deploy's bytes (CodeSha256 J6M/92MhjYM/); nine stale worktree HEADs still read its marker OPEN.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/change_management/20261013T1228Z_irpt-dashbd-thresholds-swap-20261013_deploy_completion.md status line: HELD-SOVEREIGN-GATED, gate the scheduled 07:41 ET fire at 2026-10-14T11:41Z",
+      "aws lambda get-function-configuration irpt-49f-reporting-gold-lambda 2026-10-13: CodeSha256 J6M/92MhjYM/... equal to the source map artifact_sha256 for deploy_ledger irpt-dashbd-thresholds-swap-20261013",
+      "git -C <each of 32 worktrees> cat-file -p HEAD:org/critical_paths/.open_deploys/irpt-dashbd-thresholds-swap-20261013.json: HELD at 10 worktree HEADs (trunk included), OPEN at 9 stale HEADs"
+    ]
+  },
+  "spec_asserts": "The release sequencing waits for every open ledger naming the function to close, and an open ledger proves only that a device saw no completion.",
+  "world_is": "The live code is the held deploy's code, so the held ledger's gate and the live state disagree in their wording. The release must order after this ledger's closure; the packet names that sequencing and closes nothing."
+}
+```
