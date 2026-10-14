@@ -34437,3 +34437,132 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The AC3 check is HEAD-relative: it passes only on the worker's own branch and fails on any later trunk. D2-S171's 'all PASS on the landed trees' holds for the worker tree, not for the merged trunk. A re-read at L8, or a successor's, will read FAIL with nothing wrong in the product. Remedy for the issuer: diff base_commit against the record's tip (or the merge's second parent), not HEAD."
 }
 ```
+
+## IRPT_BCKEND-D2-W383-S1 -- IB194-1-AC1 cannot pass: p194_cells.py evidence_sets() indexes the stop evidence's flat lists as [1] and crashes before any table row is read (IB-pr-538)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W383-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~383",
+  "surfaced_at": "2026-10-14T13:47:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The AC1 check reads the stop evidence's flat path lists as if each were a pair ([1]); on the evidence file as committed it raises IndexError for every firm, so the moved-member table can never equal the evidence sets and AC1 cannot read PASS whatever the record holds. The check is not edited (order bound); the order stays open on AC1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r194/p194_cells.py at 54b77779e4 lines 95-96: evidence_sets() reads f[\"changed_by_content\"][1], f[\"changed_by_line_endings_only\"][1] and f[\"added_in_built\"][1] from each firm of IB193-1_digest_gate_stop.json",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IB193-1_digest_gate_stop.json at 54b77779e4: each firm's changed_by_content, changed_by_line_endings_only and added_in_built is a flat list of path strings; added_in_built holds exactly one element per firm",
+      "probe on box/dell2 worktree at 54b77779e4 (2026-10-14 ~13:4xZ), import of the check with ROOT set, no edit: evidence_sets() raised IndexError: list index out of range at added_in_built[1] (the first firm), exit 1"
+    ]
+  },
+  "spec_asserts": "IB194-1-AC1 grades the record's member table against the stop evidence's moved and added members for each firm, reading those members from the evidence file as the check defines them.",
+  "world_is": "The evidence file's lists are flat path lists, so the check's [1] indexing selects a string (changed_by_content and changed_by_line_endings_only would yield character sets) and selects a missing element (added_in_built). The check fails before it reads any row of the record, so AC1 is not passable as written by any table. The fix belongs to the issuer (the check or the evidence shape); the worker does not edit either."
+}
+```
+
+## IRPT_BCKEND-D2-W383-S2 -- the pin copy of holdings_snapshot.py carries more than the two signed changes against the live copy (IB-pr-538)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W383-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~383",
+  "surfaced_at": "2026-10-14T13:47:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The v1 packet's change set names two changes to holdings_snapshot.py (the IR cash rule and the publish-gate exemption repair). Measured against the live bundle copies, the pin copy also carries the additive account_id member, the keyed publish-gate summary, the SC-e-56 CUSIP fallback and the multi_asset line, for the cottonwood and inflection copies; the 49financial copy already carries account_id and the keyed summary.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "difflib of the downloaded live holdings_snapshot.py copies against the pin blob 3a19dcf5912798f7d94e9756ae04f64dd2ce7ea0 at 49467335d2: the 49financial copy has 6 changed hunks (registry header, apply_cash_rule, two cash returns, the carried-forward marker and directory_marks_no_closures); the cottonwood copy 18 hunks and the inflection copy 17 hunks, including the account_id region near line 589, cusip_key near line 943, the multi_asset line near line 852 and the keyed gate summary near line 2889",
+      "git log 49467335d2 -- data/assets/scripts/gold/investor_reporting/holdings_snapshot.py: commits 3f2bdda578 (IB-pr-414 keyed gate), 7ace854890 (IB-pr-493 account_id), 01e843ce2e (SC-e-56 port) and 1464de48be, f3a42b2ab8, ec20f73ff8, 9e41657727 (the signed changes)",
+      "IB193-1_digest_gate_stop.json and NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-532.md (deliverables/0.9.0_WK_IRPT_BCKEND~379) name only the cash rule and the exemption repair as the producer change set"
+    ]
+  },
+  "spec_asserts": "The signed never-widen packet's change set for holdings_snapshot.py is the two signed changes (cash rule and exemption repair); the mint changes only that file's signed behaviour.",
+  "world_is": "The live copies predate several producer commits that are on the pin. A full pin mint therefore changes holdings_snapshot.py by more than the two signed changes, and the cottonwood and inflection copies move by the account_id, keyed-gate, CUSIP-fallback and multi_asset commits as well. Packet v2 characterises these in the effect lines; the COO and CTO halves decide whether the characterisation is the signed scope."
+}
+```
+
+## IRPT_BCKEND-D2-W383-S3 -- the three live copies of holdings_snapshot.py are three distinct byte sets, none equal to a commit, so the live bundles were not built from one producer commit (IB-pr-538)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W383-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~383",
+  "surfaced_at": "2026-10-14T13:47:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The holdings_snapshot.py member of each firm's live bundle has a different sha256 (three values), matches no commit in its history (CRLF folded), and the three copies differ from each other in the generated registry header line and in producer hunks; a full mint's per-firm moved-member set therefore differs by firm for the same member.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "sha256sum of x_49f, x_cot and x_inf copies of data/assets/scripts/gold/investor_reporting/holdings_snapshot.py extracted from the version ids named in the v1 packet (scratch, outside the worktree): three distinct digests",
+      "table run at 54b77779e4 over git log 54b77779e4 for holdings_snapshot.py path: 71 commits searched for each firm's live folded hash, zero matches",
+      "49financial copy generated header reads registry revision f1800b494773650a where the pin reads 9f1cc0a3d5a5997b (line 179)"
+    ]
+  },
+  "spec_asserts": "A bundle member's live bytes equal one commit's blob of that path, so the live state is a producer commit that the move can be characterised against.",
+  "world_is": "The live bytes of this member are not a commit's bytes for any firm, and each firm's bundle holds its own variant. The characterisation uses the pin blob and the nearest commits per hunk; the packet records live_commit null and class behaviour for the member, as the order's rule requires."
+}
+```
+
+## IRPT_BCKEND-D2-W383-S4 -- the order's rows_written counter reads 0 while the same order directs surprise rows; the counter's meaning is not stated (IB-pr-538)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W383-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~383",
+  "surfaced_at": "2026-10-14T13:47:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's bound counters include rows_written, which AC3 requires to read 0, and the same order directs the worker to file surprise-channel rows. The order does not say which rows the counter counts. The record reports rows_written 0 on the reading that it counts data rows written to a store; the surprise rows filed under the surprise rule are reported, not counted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_BCKEND.TO-IB-pr-538 order text, bounds section: the six counters are functions_invoked, sign_ins_made, aws_writes_made, rows_written, figures_written and vendor_requests_sent, and the surprise rule asks for rows with ids IRPT_BCKEND-D2-W383-S<k>",
+      "p194_cells.py ac3() at 54b77779e4 line 242-244: each of the six counters must equal 0 in the record"
+    ]
+  },
+  "spec_asserts": "rows_written is a bound counter that reads 0 for this order.",
+  "world_is": "The surprise rows of this order are filed in the channel, which the order requires, so a reading of rows_written that counted channel rows would make AC3 and the surprise rule contradict each other. The record's rows_written 0 is the reading of data rows; the COO should confirm the counter's meaning when it reads the packet."
+}
+```
+
+## IRPT_BCKEND-D2-S173 -- Dispositions on worker 383's rows; the signed counts measure the cash rule alone, the live producer matches no commit, the differential comes before any signature
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S173",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T14:25:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on worker 383's rows (D2-W383-S1 to S4) after IB-pr-538 merged (@55d4929a90): packet v2 characterizes 73 moved members but the live holdings_snapshot.py matches no commit and differs between firms, so the signed counts measure the cash rule alone and not the full pin's effect on the served output; I will measure that differential before I sign.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB194-1 AC1 to AC3 on the landed tree and the proof instance: PASS, VALID; round-close-check --workstream ~P MAY-CLOSE (orders=1); merge 55d4929a90",
+      "I read the record IB194-1_packet_v2_record.json (73 rows: 24/25/24; classes; calendar holiday sets identical over 2026-10-01 to 2027-12-31 and T-1 identical for the next three fires; seven write shapes per firm equal; the matcher imported by rebalancer_schemas.py; the re-measure equal to the signed counts) and the worker's notes and rows",
+      "drain-end packet deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUND_194_P_DRAIN_END_20261014.md"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27); a sign-off covers what the release moves, measured, not what its two named changes move.",
+  "world_is": "DISPOSITIONS. D2-W383-S1 (BLOCKING, the IB194-1-AC1 check cannot read the stop evidence): my check's defect, the second this session; it read the flat path lists as count-and-path pairs and my control encoded the same wrong shape; repaired @90a0952879, the worker's AC1 row re-graded PASS on the landed tree @7b46d4a24d; INERT. D2-W383-S2 (the live copies predate several producer commits on the pin, so a full pin mint changes holdings_snapshot.py by more than the two signed changes; cottonwood and inflection by the account_id, keyed-gate, CUSIP-fallback and multi_asset commits as well): LOAD-BEARING. The signed counts compare the pin with the cash rule against the pin without it; they say nothing about the delta between the code that serves now and the pin. Not a hazard by itself (nothing minted), but v2 cannot be signed on static effect lines: the differential on the same pinned inputs (live code against pin code, node by node) is the measurement, taken by the issuer as a direct read and recommended to the CTO as a cell. D2-W383-S3 (the live holdings_snapshot.py matches no commit and each firm's bundle holds its own variant): INERT as a hazard, LOAD-BEARING as provenance: the live producer for each firm is code no commit holds (a bundle minted from a working tree), which is the fact that makes the differential necessary; whoever minted those bundles from an unrecorded tree is not read here. D2-W383-S4 (the meaning of rows_written): INERT; confirmed as data rows written to a store, not surprise-channel rows."
+}
+```
