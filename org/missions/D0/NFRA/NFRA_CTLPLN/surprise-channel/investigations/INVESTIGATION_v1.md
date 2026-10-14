@@ -9737,3 +9737,67 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Z-S8 stands as written (append-only). Done when a cause is read from a captured log, or a week passes with no unexplained ending on site Z."
 }
 ```
+
+## NFRA_CTLPLN-Z-S12 -- four more unrecorded CloudOps endings; respawned with both spawn fixes verified live
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S12",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "0.0.0_AB_MSTR~Z",
+  "surfaced_at": "2026-10-14T23:35Z",
+  "one_line": "Four more site Z CloudOps seats (~MQ, ~ZQ, ~ZW, ~MI) ended unrecorded between 22:2xZ and 23:25Z on 2026-10-14; cause unreadable (spawned before 3529599505); all four respawned 23:32Z and both spawn fixes verified live on them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.0.0_AB_MSTR~Z",
+  "adjudicates": [
+    "NFRA_CTLPLN-Z-S8"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "seat-liveness 22:2xZ seats=15 (~ZQ and ~MI peeked idle, ~MQ and ~ZW listed); 23:25Z seats=11; Win32_Process claude.exe 0 hits and spawn-marker windows 0 for each of the four",
+      "org/mcp/agent-spawn-audit.log since 22:20Z: no KILL, FORCE-KILL or KILL-MAINT target line for any of the four",
+      "System log since 21:2xZ: no event 41, 6008, 2004 or 1074 (positive control: 50 System events read); Application log: no error naming claude, node or powershell",
+      "candidate, NOT a cause: Claude Code auto-updated 2026-10-14 02:49Z (2.1.299) and 18:24Z (2.1.300) per ~/.local/share/claude/versions; the 22:2xZ peeks showed 'Update installed - Restart to update', but surviving seats (~Z, ~ZS) showed the same banner, and the endings were 4-5 h after the update",
+      "respawn 23:32Z by 0.0.0_AB_MSTR~Z on current orders (OG-sa-1 + open deploy nfra-oplgtw-harvest-runner-sa; MP-pd-7; DQ-t34; MX-r-13, MX-s-19), MP-20261010 sonnet-5-5 high",
+      ".runtime/spawn-logs/ holds 4 START lines (23:32:27Z-23:32:45Z) and 4 new main <uuid>.jsonl transcripts appeared 23:33Z (25567e8f, 3e8b364a, c6e6b5dd, 605a1151): Z-S10 and Z-S11 fixes verified live"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-S8 READ half: on the next unexplained ending, read the cause from the seat's captured output.",
+  "world_is": "These four endings predate the log sink, so no cause can be read; the class recurs (10 site Z CloudOps endings in ~28 h, all idle or near-idle seats). Every site Z seat spawned from 23:32Z on has a log and a transcript, so the next ending is readable.",
+  "notes": "Z-S8 stands as written. The update correlation is recorded as a candidate to test against the next readable ending, not as a finding."
+}
+```
+
+## NFRA_CTLPLN-Z-S13 -- dell1 shows the same unrecorded-ending class without the 2.1.300 update
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S13",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "0.0.0_AB_MSTR~Z",
+  "surfaced_at": "2026-10-14T23:44Z",
+  "one_line": "Disconfirming datum for Z-S12's update candidate: dell1 lost 6 seats the same unrecorded way since 20:15Z while running Claude Code 2.1.293, which never took the 2.1.300 auto-update.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.0.0_AB_MSTR~Z",
+  "adjudicates": [
+    "NFRA_CTLPLN-Z-S12"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR~DELL1 bus b5a82604 (23:43Z): AE~SC1, COO~B1, ~M1, ~R1, ~V1, CVO~RV1 gone since 20:15Z; no fabric KILL since 20:00Z; 0 claude/bun/node crash or hang events; 0 low-memory events in 5h; claude on dell1 is 2.1.293",
+      "dell1's own caveat: those seats may have parked for the 21:00Z restart Andrew then held, so dell1's instance is confounded"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-S12 recorded the 18:24Z auto-update to 2.1.300 as a candidate cause.",
+  "world_is": "The class appears on a box without that update, so the update does not explain it on dell1 (confounded by the planned restart). The candidate is weakened, not ruled out for site Z. The next site Z ending is readable from .runtime/spawn-logs/.",
+  "notes": "Recorded because a disconfirming number leads the sentence. No act follows from it."
+}
+```

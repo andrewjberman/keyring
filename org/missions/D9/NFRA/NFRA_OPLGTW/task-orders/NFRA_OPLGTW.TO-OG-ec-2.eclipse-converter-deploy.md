@@ -80,7 +80,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ec-2.eclipse-converter-deploy.p
 
 - A1 (issuer, 2026-10-14 ~23:1xZ, row Z-S131, msg 34274): Phase B had no artifact-upload step, so an apply alone moves only the pin. Ruled IN: the package is built from the repo's bytes and uploaded to the module's artifact key before the apply, as the prior eclipse release did; the prior object's version and sha256 are the rollback; the ask (section order, rollback) names the upload. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G2-ECLIPSE</workstream>
 <slot>~AE</slot>
