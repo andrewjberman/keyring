@@ -12148,3 +12148,82 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Measured here, not classed as a blocking premise failure: the amended step 3 requires positivity on the rows tested, and the rows tested (the household's) are positive. The disarm is the builder's honouring of the fold's absent clause in DB-b-222, which this worker has not started."
 }
 ```
+
+## IRPT_DASHBD-D2-W175-S5 -- two of the five accounts share a custodian last four, so DB-b-222 step 2(g) stops the build (BLOCKING)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T20:04:16Z",
+  "one_line": "The household's five accounts carry four distinct custodian last-four values: two accounts share one, so DB-b-222 step 2(g) requires a BLOCKING row stating the count and a stop; no sample is built.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-222 step 2(g): each account's last4 is the last four characters of its custodian number as the silver stores it, distinct within the household; if two accounts of the household share a last four, file a BLOCKING row stating only the count and stop.",
+  "world_is": "Read at HEAD of wk-IRPT_DASHBD-175 on 2026-10-14 ~20:03Z: the newest fact_positions partition (adapter GET-only reader), the household picked by the round-108 rule (5 accounts). Each account carries one distinct stored custodian number; the last four characters give 4 distinct values over 5 accounts. Count: 1 pair of accounts shares a last four.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/orion/inflection/silver/fact_positions/date=2026-10-14/ read through InflectionSilverReader (1 GET), 2026-10-14T20:02Z; counts only",
+      "C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~171/ACCOUNT_DIM_DRY_RUN.parquet (the round-108 household rule, counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. The issuer must rule on the label rule for a shared last four; the order's own rule stops the build. No account id or last four is written in this row."
+}
+```
+
+## IRPT_DASHBD-D2-W175-S6 -- two accounts' custodian last-four values carry a punctuation character, which DB110-2-AC1's label clause (four letters or digits) refuses (BLOCKING)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T20:04:16Z",
+  "one_line": "Two of the five accounts' stored custodian numbers end in a last-four window that holds one punctuation character; the order says letters are allowed and nothing else is changed, and DB110-2-AC1 requires each last four to be four letters or digits, so the label clause cannot hold as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-222 step 2(g): each account's last4 is the last four characters of its custodian number as the silver stores it (letters allowed, nothing else changed); DB110-2-AC1: each last4 is four letters or digits, distinct, never an ordinal.",
+  "world_is": "The same read as S5: 2 of 5 accounts have one non-alphanumeric character among the last four characters of the stored number (one punctuation mark each); 3 of 5 are letters and digits only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/orion/inflection/silver/fact_positions/date=2026-10-14/ read through InflectionSilverReader, 2026-10-14T20:02Z; character classes counted, values not printed",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r110/p110_inflection.py check_sample, the last4 clause (read at HEAD)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. A label rule that admits the punctuation mark, or the issuer's ruling on what the label prints, is needed before a sample can carry these two last fours. The row carries counts and classes only."
+}
+```
+
+## IRPT_DASHBD-D2-W175-S7 -- the client's factor series does not reach the household's first data date, so the since-inception household return cannot be filled as DB110-2-AC1 requires (BLOCKING)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T20:04:16Z",
+  "one_line": "The household's since-inception return opens on the household's first data date, which has no row in Orion's client factor series (the series opens about four years later), so the amended rule files that window absent for this sample; DB110-2-AC1 instead requires every window the contract sources to hold a number.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-217 step 3 (amended) and DB-b-222 step 2(f): each pvs return the contract sources for Inflection is the client-grain figure; a window whose opening day or as_of has no factor row is absent for that sample (the builder files it). DB110-2-AC1: the household return is filled in exactly the windows the contract sources, and each sourced window is a number.",
+  "world_is": "Read on 2026-10-14 ~20:03Z: the newest fact_performance partition holds the household's client factor rows from a start about four years after the household's first data date (earliest positions row among its accounts), through the newest date; so the factor row on the first data date is absent. The qtd, ytd and last_12_months opening days and the as_of day each have a row. Only since_inception is affected.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/orion/inflection/silver/fact_performance/date=2026-10-14/ read through InflectionSilverReader, 2026-10-14T20:02Z; the client's dates counted, not printed",
+      "C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~174/work/positions_daily_cache.parquet (first positions date per household account, read-only)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r110/p110_inflection.py check_sample, the household return clause (sourced windows must be numbers)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. Two readings are open: the amended rule (absent for this sample, kind INSUFFICIENT_HISTORY) against the checker's clause (every sourced window a number). The build is not started, so no value was filled or substituted."
+}
+```
