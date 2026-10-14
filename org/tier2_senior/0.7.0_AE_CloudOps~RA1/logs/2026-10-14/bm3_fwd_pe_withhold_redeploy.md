@@ -4,6 +4,10 @@
 **Task Order:** AMGT_RESAPP.TO-AMGT-bm-3.redeploy-the-scoped-api-carrying-the-forward-pe-withhold-from-a-merged-pin-and-drive-its-first-cold-request
 **Status:** APPLIED AND KEPT; AC2 and AC3 PASS; AC1 reads NO (5 of 7) on a concurrent pool refresh, KEEP named by the CTO (msg 5561, ADDENDUM 1 @358b460431); ledger CLOSED 11 of 11. The order's `<status>` is left `pending` for the issuer: AC1 does not pass on its literal expectation.
 
+## Addendum -- 13:27Z-13:30Z: AC1 as amended by the issuer (99237557be, msg 5568)
+
+The issuer amended AC1 to read the OLD code's handler (`C:/tmp/bm3-old` at `0447f2df38`) against the deployed function name by name, adjacent in time, so the pool the harvest runner refreshes is the same on both sides. Run as written (13:27:36Z-13:29:43Z, workers 3, exit=0): `names 95 | captured forward P/E rows 278 | deployed 218 | withheld 60 (population 60) | names with a withheld row 20 | status not (200, 200): []`, PASS F1 to PASS F7, `R106 FORWARD PE DEPLOYED: YES (7 of 7 arms)`. The instance is re-recorded with AC1 PASS (AC2 and AC3 as they stood) and `proof-of-spec-check` reads VALID on it; the order's `<status>` flip stays the issuer's. The deployed function is therefore graded against the pre-change code on the same pool, which is the discriminating control the first form lacked.
+
 ## Objective
 
 One code leg of `opal-amgt-scoped-api` from the MERGED pin `3818736e6b`: `scoped_amgt.py` `1f5de89912e5` -> `a75ab14fd16d`, so a forward P/E whose price and EPS currencies differ is absent from `model.forecast_figures` and present in `model.forecast_withheld` with a reason naming both codes (60 rows on 20 names), and every name gains the key `model.forecast_withheld`. Eight `lib/research/aifill` members differ in the tree and are not packaged. The `AMGT_AIFILL_ROOT` hold stays.
