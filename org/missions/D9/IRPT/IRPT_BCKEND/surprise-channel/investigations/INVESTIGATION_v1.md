@@ -34032,3 +34032,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The cutoff is the current day by design, so a pre-session read of select_business_date() answers the current day at any hour of a trading day (the CVO's observation, W379-S3, is the function working as written, not a clock error). The PUBLISHED date is the newest source partition dated at or before the cutoff: T-1 only because silver partitions are dated by business day and land after the close, so at the 10:15 ET fire the newest partition is yesterday's. A source partition dated TODAY existing at fire time (an intraday or partial landing) would be selected and stamped as the current day: that is the failure mode condition 8 guards, and nothing in the producer refuses it. The check for the release is therefore on the CANDIDATE's clocks.business_date at the release (the newest landed partition per firm), compared with the calendar's previous trading day of the fire date, and again at the after-read. Today's candidates are dated 2026-10-12 (the 2026-10-13 partitions had not landed at ~05:00Z), so the check reads NOT-YET-EQUAL until they land. A fix (a refusal of a current-day source partition, or a T-1 cutoff) is a later cell under its own pair; not built here."
 }
 ```
+
+## IRPT_BCKEND-D2-W380-S1 -- the pinned replay of inflection at 2026-10-12 is dated 2026-10-09, so both publish gates refuse on source_frontier_older where the packet records PUBLISHED (IB-pr-533)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W380-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~380",
+  "surfaced_at": "2026-10-14T12:00:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Pinned replay of inflection at 2026-10-12 gives a candidate dated 2026-10-09 (the prior trading day of its 2026-10-12 custody partition), so both publish gates REFUSE on source_frontier_older; the packet's PUBLISHED did not reproduce at that pin, while its mover counts did.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN A and RUN B of release_count_harness.py at the 2026-10-12 pin, inflection: business_date_built 2026-10-09; gate_before and gate_after REFUSED with conditions [source_frontier_older]; identical in RUN B (run JSON in scratch, outside the tree, deleted at the end of the order)",
+      "data/assets/scripts/gold/investor_reporting/holdings_inf.py@201e7e9c273e8274c0a4ea1ad1aa0b205f69a079 build_inf_meshed: valuation_date = hs.tcal.prev_trading_day(custody_date) (the request date is the snapshot key, the valuation date is the prior trading day)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~379/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-532.md@eb3d289c9f (the packet's inflection candidate, 2026-10-12, built at the 2026-10-14 cutoff, PUBLISHED before and after)"
+    ]
+  },
+  "spec_asserts": "The packet's stop rule compares the release counts and the gate outcome with the packet at the release; IB-pr-533 pins a candidate's source date as an input so that two runs over the same pin are a deterministic comparison.",
+  "world_is": "The packet's inflection candidate was built at the 2026-10-14 cutoff, when the custody partition read 2026-10-13 (by the valuation rule a 2026-10-12 business date implies a 2026-10-13 custody partition). A pin of 2026-10-12 selects the 2026-10-12 custody partition and a 2026-10-09 valuation, one trading day behind the served 2026-10-12 frontier, so the gate refuses. The mover counts (774 canonical, 67 fallback) match the packet at this pin, the gate does not. A release re-measure that pins 2026-10-12 for inflection will read REFUSED where the packet reads PUBLISHED; the pin must name the custody date the packet used. Nothing was changed here; the gate works as written. Disposition sits with the packet owner."
+}
+```
+
+## IRPT_BCKEND-D2-W380-S2 -- inflection's build at the 2026-10-14 cutoff refused in one reading because its accounts partition for 2026-10-14 landed before its positions partition (the producer's own custody-date guard)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W380-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~380",
+  "surfaced_at": "2026-10-14T12:00:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "At the 2026-10-14 cutoff inflection's build refused in one reading ('positions and accounts snapshots are not the same custody date'): the accounts partition dated 2026-10-14 existed while positions were still 2026-10-13; about twenty minutes later both read 2026-10-14 and the build read 2026-10-13.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN A date check of release_count_harness.py (completed about 11:24Z): newest_candidate_dates inflection ERROR:InflectionRefused; RUN B date check (completed about 11:49Z): inflection 2026-10-13 (scratch run JSON, outside the tree)",
+      "read-only partition read with the producer's own helpers (list and get only, scratch script): at the first read as_of 2026-10-14 gave accounts_partition 2026-10-14 and positions_source 2026-10-13; at the second read, about 11:44Z, both were 2026-10-14",
+      "data/assets/scripts/gold/investor_reporting/holdings_inf.py@201e7e9c273e8274c0a4ea1ad1aa0b205f69a079 load_inf_sources, lines 141-150: refuses when positions_date != accounts_date"
+    ]
+  },
+  "spec_asserts": "The first scheduled fire (14:15Z on 2026-10-14) publishes each firm's previous trading day; IB-pr-533 AC2 requires a newest candidate date for each firm in the first-fire check.",
+  "world_is": "The source partitions of one custody day can land in two steps, accounts first and positions later. A build whose cutoff falls between the two steps refuses inflection with the producer's own guard, which is the designed refusal (no wrong date is published). A refused build yields no clocks.business_date, so the first-fire check records no date for that firm while the window is open. Whether a scheduled fire inside that window misses inflection for the day was not measured, and the recurrence was not measured (one reading refused, one did not)."
+}
+```
+
+## IRPT_BCKEND-D2-W380-S3 -- at the 2026-10-14 cutoff cottonwood's newest candidate is dated 2026-10-12, one trading day short of t_minus_1 2026-10-13 (IB-pr-533 first-fire check)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W380-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~380",
+  "surfaced_at": "2026-10-14T12:00:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "At the 2026-10-14 cutoff cottonwood's newest candidate is dated 2026-10-12, one trading day short of t_minus_1 2026-10-13, so the first-fire equality reads false for cottonwood in both readings.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN A and RUN B date checks of release_count_harness.py for cottonwood at cutoff 2026-10-14: newest candidate 2026-10-12 in both (scratch run JSON, outside the tree)",
+      "lib/trading_calendar.py@201e7e9c273e8274c0a4ea1ad1aa0b205f69a079 prev_trading_day(2026-10-14) = 2026-10-13 (the hardcoded NYSE fallback answered; pandas_market_calendars is absent on this device)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~379/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-532.md@eb3d289c9f: the packet's premise that the cottonwood served index latest date is 2026-10-08"
+    ]
+  },
+  "spec_asserts": "Everything is T-1 unless declared (CLAUDE.md trading-calendar rule); the CTO's condition 8 as cited in row IRPT_BCKEND-D2-S167 of this project: each firm's first scheduled fire publishes the previous trading day.",
+  "world_is": "Cottonwood's newest source partition at the cutoff is dated 2026-10-12, so its candidate is one trading day behind T-1, while its served index (per the packet) is at 2026-10-08. The first-fire equality for cottonwood therefore reads not-yet-equal at this measurement. This reading does not say whether the 2026-10-13 cottonwood partition has not landed or has not been produced."
+}
+```
