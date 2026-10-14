@@ -27246,3 +27246,83 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Recorded so the next harness on these slices maps the envelope the same way."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W450-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~450",
+  "surfaced_at": "2026-10-14T05:45:31Z",
+  "one_line": "AMGT-gr-1 AC2 cannot read PASS: the cell's join rule makes the existing test test_final_segment_text_is_joined_with_no_separator fail, and the order says touch no other test",
+  "spec_asserts": "The cell's join rule (one space between final-segment text blocks where a sentence ends) and the order's bound 1 (touch no other test) both hold; AC2 expects the three test modules to read N passed with no failed line.",
+  "world_is": "test_final_segment_text_is_joined_with_no_separator (test_model_final_answer.py@d88fca1f84 lines 101-103) asserts the old no-separator result 'now.MUFG announced.'; with the cell's join it reads 'now. MUFG announced.' and the three-module run prints '1 failed, 97 passed'. The bound and the join cannot both hold at this HEAD.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/tests/test_model_final_answer.py@d88fca1f84 lines 101-103: test_final_segment_text_is_joined_with_no_separator feeds the final segments _text('now.'), _text('MUFG'), _text(' announced.') and asserts the result equals 'now.MUFG announced.', which is the no-separator join the cell replaces.",
+      "Worker worktree wk-AMGT_RESAPP-450 with the cell's change applied (lib/research/aifill/sentences.py and the join in lib/research/aifill/model.py): pytest on test_sentences.py, test_model_final_answer.py and test_model_inputs.py prints 'AssertionError: assert 'now. MUFG announced.' == 'now.MUFG announced.'' and '1 failed, 97 passed in 0.54s'.",
+      "The order AMGT_RESAPP.TO-AMGT-gr-1 (section 2 bound 1 and section 1 Tests) allows one new test in test_model_final_answer.py and says touch no other test, so the pinned old assertion is outside this cell's write grant."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only: the cell's join rule and the old pin cannot both hold. The worker did not edit the old test (bound 1). The one red test is the only failure of the three modules; the other 97 pass. Resolution is the issuer's: either the grant admits updating that one assertion to 'now. MUFG announced.' or the pin is retired as superseded. ARMED because the red test stays red in the suite until a disarm, and the merge of this package would carry it."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W451-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~451",
+  "surfaced_at": "2026-10-14T05:46:08Z",
+  "one_line": "fetch_source reports a 2xx image or octet-stream body as OK with decoded binary text: the order names no non-text rung, so the spec's 'else the body is decoded' rule applied to a PNG and a zip body alike.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_AIFILL_DECOMP.md@d88fca1f84: the cell's interface names the seven status words and only PDF as a 2xx exception",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round106_aifill_prep/checks/check_gr2_sources.py@d88fca1f84: 21 arms, none for a non-text 2xx content type",
+      "lib/research/aifill/sources.py@wk-AMGT_RESAPP-451 (uncommitted at filing; _classify): a 2xx body that is neither PDF nor HTML/text falls through to the decode and extract path",
+      "Measured on the worktree with a stub transport: (200, image/png, PNG magic + 10,240 bytes) -> status OK, chars 9935, text begins with the replacement character and the PNG header bytes; (200, application/octet-stream, PK zip header + binary) -> status OK, chars 9884"
+    ]
+  },
+  "spec_asserts": "Cell section 1, lib/research/aifill/sources.py interface: '2xx: a content_type starting application/pdf, or a body starting %PDF-, -> UNSUPPORTED (note pdf, text \"\"); else the body is decoded ... and extract_text gives (title, text)'; the STATUS words are OK, REFUSED, NOT_FOUND, ERROR, EMPTY, PAYWALL, UNSUPPORTED.",
+  "world_is": "Built as written: a 2xx non-text, non-PDF body (image/*, application/octet-stream, a zip) is decoded and parsed as HTML, so it reports OK with binary-decoded text. No status word covers 'not a readable page' for these bodies, and no check arm exercises them. A grounding step that keys on status OK would take that text as a cited source.",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "notes": "Not changed in the module: the order's rule was followed literally and the status vocabulary is closed. The issuer decides whether a non-text rung (UNSUPPORTED, note 'content type <t>') is added to the cell or to a later round. Frequency of image or binary citations was not measured here; the CVO's 78-citation census names only PDFs."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W456-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~456",
+  "surfaced_at": "2026-10-14T05:48:16Z",
+  "one_line": "The pre-commit gate on the nested portal worktree checked none of a two-file frontend commit: commit-gate reported 'checked 0 of 2 file(s)' and the risk reflex answered PARTIAL_OR_BLIND on a 199.3h-stale danger map, so the only content check on the commit was the worker's own run of the prepared acceptance checks.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "CLAUDE.md rule 14: every edit passes .tools/commit-gate.sh (py_compile + ds-precommit + ruff py39), 'Universal'; the order (section 5) names safe-commit as the commit act and presents it as the commit path for the portal branch. The gate's own scope note names what it reads: .py / .sh / .tf / org/projects/*.json.",
+  "world_is": "On the nested portal checkout (C:/dev/wk-resapp-456/portal, branch cand/dell1/aifill-provenance, commit 31337460) the safe-commit run printed 'comp-pulse: the caller toplevel ... carries no .tools/comp-pulse -- EXECUTING THE BAKED PATH C:/dev/ajb_workspace/.tools/comp-pulse', the risk reflex returned ANSWER STATE PARTIAL_OR_BLIND (danger map STALE, 199.3h old), and commit-gate printed 'checked 0 of 2 file(s) -- NOTHING WAS CHECKED' for the two .tsx files. The commit landed; the tool's own note says to use tsc and eslint for a frontend artifact, which AC2 (R103 feature green) ran.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at portal commit 31337460fcf771e46ab239429446b2e857041caf (branch cand/dell1/aifill-provenance): '[risk-reflex] WARN: comp-pulse: the caller toplevel C:/dev/wk-resapp-456/portal carries no .tools/comp-pulse -- EXECUTING THE BAKED PATH C:/dev/ajb_workspace/.tools/comp-pulse instead'",
+      "safe-commit output at 31337460: '[risk-reflex]   ANSWER STATE: PARTIAL_OR_BLIND' and 'danger map: 199.3h old  !! STALE' and 'NOT-DECIDABLE: danger map STALE -- the reflex CANNOT clear this diff'",
+      "safe-commit output at 31337460: '[commit-gate] WARN: commit-gate checked 0 of 2 file(s) -- NOTHING WAS CHECKED.' and 'This gate reads only .py / .sh / .tf / org/projects/*.json; every other suffix falls through unexamined.'",
+      "AC2 run on the same head: org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round103_prep/checks/r103_feature_green_v2.sh output 'typecheck rc 0 | lint rc 0 | harness 21 of 24 pass | base 18 of 24 | regressions 0' (rc=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. Every frontend commit made through safe-commit from the nested portal worktree will show the same three lines until the reflex carries a .tools of its own or a danger map is current; the FEATURE branch's own green check is the substitute instrument this round. Not edited here: the tooling is outside this worker's write grant."
+}
+```
