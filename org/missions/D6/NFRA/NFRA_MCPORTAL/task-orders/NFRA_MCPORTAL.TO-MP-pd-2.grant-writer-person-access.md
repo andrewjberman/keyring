@@ -143,7 +143,7 @@ PC.7's field names. Facts behind the cut (PD.0): the Lambda's tests stage the ga
 MP-pd-7 is gated on that release. Checks dry-run at base 18:0xZ: AC1 FAIL (test file absent), AC2 FAIL (24 passed, needs 31).
 Writes stay Andrew-only (C2): the header check is unchanged and runs first.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <workstream>PC</workstream>
 <slot>~26</slot>
