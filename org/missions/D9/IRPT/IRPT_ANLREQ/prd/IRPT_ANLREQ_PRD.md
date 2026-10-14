@@ -5,7 +5,7 @@
  "project": "IRPT_ANLREQ",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.9",
+ "prd_version": "v0.10",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_223xZ_ANALYSIS_REQUEST_END_TO_END_ONE_PROJECT_CLOSER_TRACE.md@2b21a349d1",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
@@ -31,11 +31,11 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
                     Analysis Request form and uploads a holdings CSV or XLSX. The form carries the variant chosen
                     (Overview, Comparison, Multi-Comp) and the report produced is that variant, the Opal-model checkboxes and other tickers. Every
                     downstream hop binds to the chosen firm. Nobody touches anything after Submit. The still-OPEN ticket then carries four attachments, each opened from the ticket
-                    page by an Opal person: (1) the original upload, (2) the form as filled, (3) the Opal-generated report (the Opal
-                    producer, not YCharts), (4) the AI commentary draft. A partner-firm filing (Alyssa's first real request) grades it again (the
+                    page by an Opal person: (1) the original holdings upload, (2) the form selections as filed, (3) the Opal-generated report (the Opal
+                    producer, not YCharts), (4) the AI commentary as a STANDALONE branded Opal PDF, marked DRAFT. A partner-firm filing (Alyssa's first real request) grades it again (the
                     organic arm, never the gate; it waits on the Ticket Center being shown to client users)
          ACCEPT     an Opal person opens the still-open ticket and finds the four items, without asking anyone and without anyone having forwarded
-                    a file; the branded Opal PDF with the commentary inside is a later enrichment, not FWD-1
+                    a file; each of the four is its own attachment (the commentary is not a page inside the report PDF)
          SOURCE     Andrew 2026-10-08 ~22:3xZ; Andrew's dell2 voice memo 2026-10-13 ("they should see the CSV or XLSX that the advisor uploaded.
                     They should see the form ... the generated report ... the commentary that we AI generated ... That is the deliverable");
                     call 2 approved ~17:4xZ (synthetic advisor); pivot direction XB-20261013T180328Z-d4a5 O1; the filer is re-pointed
@@ -50,8 +50,8 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
          SOURCE     Andrew ("typo check and swap ability completely ironed out"); CRO trace hops 1-2
 
   FWD-3  The investment commentary is written from the report itself, and stays a draft until a person sends it
-         DONE WHEN  EXERCISED -- the commentary for FWD-1's request is drafted from that report's key surfaces (abstract fields only, no client identity)
-                    and shown on the ticket as a DRAFT
+         DONE WHEN  EXERCISED -- the commentary for FWD-1's request is drafted from that report's key surfaces (abstract fields only, no client identity),
+                    rendered as a standalone branded Opal PDF marked DRAFT, and opened from the ticket
          ACCEPT     the commentary talks about this report's portfolio and comparison, not a generic text; it says DRAFT; nothing is sent to an advisor
                     without a person
          SOURCE     Andrew ("running over key surfaces in that report to feed the investment commentary summary"); NFRA_TRNSPT FWD-10, C-KIMI
@@ -127,8 +127,7 @@ on its own artifact.
 3. FWD-4: each driven failure named on the ticket.
 4. FWD-5: another firm refused the ticket and each package file, repeatably.
 5. FWD-6: the Analysis tab as the manual path, landing on the same ticket.
-6. After FWD-1: the branded Opal PDF with the commentary inside, rendered by the Opal engine's layout (L4 ruling 1, S4), attached as one more
-   package kind (brief item 8; ADDENDUM v0.5).
+6. RETIRED into FWD-1 by ADDENDUM v0.10: the commentary is its own standalone branded PDF, not a page inside the report PDF.
 
 ## 4. Rulings closed at L4
 
@@ -160,7 +159,7 @@ on its own artifact.
 | 5 | a ticket in the open Ticket Center page | FWD-1. An `analysis_request` ticket, open until the package lands, filed by an Opal staff user who chooses the partner firm (the Ticket Center is shown to Opal users only; ADDENDUM v0.6). The driven arm is a synthetic Opal staff user; `2e30` stays SUPERSEDED. S2. Proof gap: the synthetic staff user's filing end to end; that identity is never minted or left live outside its never-widen pair |
 | 6 | the backend generates the full report | FWD-1. Generation submit and the Opal engine (C-ABSORB a, b). S3 and S4 |
 | 7 | commentary from the report's key surfaces | FWD-3. The drafter reads the report's composition through `get()`, tenant-bound, with abstract fields only (C-KIMI). S5 |
-| 8 | the package attached | FWD-1 carries the four items of the 10-13 memo: the original upload, the form as filled (J6, a new package kind), the Opal report and the commentary draft, each a pointer through `POST /tickets/{id}/package` (C-PACKAGE) by the one packager (J5). The brief's branded Opal PDF with the commentary moves to section 3 as a named enrichment (memo section 1.1; direction :152-155). S2 and S6. Proof gap: four pointers set on one ticket, each opened from the ticket page |
+| 8 | the package attached | FWD-1 carries the four items of the 10-13 memo: the original upload, the form as filled (J6, a new package kind), the Opal report and the commentary as a standalone branded Opal PDF (Andrew-direct 2026-10-14 ~16:0xZ, ADDENDUM v0.10), each a pointer through `POST /tickets/{id}/package` (C-PACKAGE) by the one packager (J5). S2 and S6. Proof gap: four pointers set on one ticket, each opened from the ticket page |
 | 9 | ONE workflow, the form primary | FWD-1 and C-ONE-JOURNEY |
 | 10 | the Analysis tab after, as the manual path | FWD-6. S7, cut after FWD-1 |
 | 11 | measure each COO workstream | Section 1, the nine-hop state measured per lane (`~Y2`, `~G2`, `~T2`, `~V2`, `~P2`) |
@@ -326,5 +325,28 @@ Authority: Andrew at the dell2 terminal, verbatim: "I am ok with a single data c
    and its source label go into the request's trace. A failed call falls through to yfinance and says so.
 4. **The trace's hop 9** (the CRO's gap brief, sequence item 2, "a report worth reading") is the first enrichment after FWD-1. It is now:
    compose SECHIST plus the one YCharts call into the Opal producer.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.10 (2026-10-14 ~16:0xZ, 1.0.0_SA_CTO~DELL2) -- Andrew-direct ~16:0xZ: the commentary is a standalone branded PDF; four standalone attachments
+
+Authority: Andrew at the dell2 terminal, verbatim: "Yes it should be a standalone branded PDF. If you mean the original holdings csv as
+the "form" then yes that is an attachment. If you mean the results from the form selection on the ticket issuance, yes that is also a
+standalone attachment." Record `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261014_160xZ_COMMENTARY_STANDALONE_BRANDED_PDF_AND_ATTACHMENTS.md`
+@98eacceda3 (answers the CRO's R2).
+
+1. **FWD-1 and FWD-3 are re-worded (above).** The four attachments are standalone:
+   - the original holdings upload;
+   - the form selections as filed;
+   - the Opal report;
+   - the AI commentary as a standalone branded Opal PDF, marked DRAFT.
+   The "branded PDF is a later enrichment" line and backlog item 6 are retired. The ENDPOINT changed, so both halves re-open.
+2. **New hop (from the CRO trace, hops 15 and 19):** no standalone commentary PDF renderer exists. The drafter writes JSON text, and
+   `opal_packager.py` renders only the combined package PDF. The ticket page has no commentary reader. Two cells join round 41's thread:
+   - a commentary-PDF renderer in the Opal brand, reusing the packager's branded layout. The commentary is its only body; the
+     DRAFT mark and Opal's disclaimer stay;
+   - the ticket page's reader for that PDF. It replaces the round-41 ADDENDUM's item 5, "commentary reader and branded-PDF reader".
+3. **The combined package PDF** (report plus a commentary page) is NOT an attachment of FWD-1. If the packager keeps rendering it, it is
+   not posted as a fifth item.
 
 -- 1.0.0_SA_CTO~DELL2
