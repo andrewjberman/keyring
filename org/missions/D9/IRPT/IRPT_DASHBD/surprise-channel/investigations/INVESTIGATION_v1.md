@@ -8795,3 +8795,56 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W152-S1 -- the export PDF cannot be read as an image on this device: no PDF rasteriser is installed and the Read tool refuses the file, so the page-by-page read of DB-b-187 is not done
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W152-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~152",
+  "surfaced_at": "2026-10-14T03:02:00Z",
+  "one_line": "The export PDF cannot be read as an image on this device: no PDF rasteriser is installed and the Read tool refuses the file, so the page-by-page clipping read of DB-b-187 step 4 is not done and no clipping entry is recorded.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO DB-b-187 step 4: open FWD21_EXPORT_49F_SAMPLE.pdf with the Read tool, pages 1-5, then 6-10, then onward, and record one clipping entry per page (clipped bool, one sentence of words).",
+  "world_is": "The Read tool returns the error 'pdftoppm is not installed' for the 17-page export PDF. Absent on this device: pdftoppm, pdftocairo, gs, gswin64c, magick, mutool, qpdf. Not importable: Python fitz, pypdfium2, pdf2image, pdfplumber (PIL is present). The PDF page count from its page objects is 17; the page read is not made, so pdf_pages_read is 0 and no page is graded clipped or clear.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read tool, file_path C:/dev/_irpt_private_evidence_20261009/fwd21_sample_r101/FWD21_EXPORT_49F_SAMPLE.pdf, pages 1-5: error 'pdftoppm is not installed'",
+      "command -v over the seven rasteriser binaries, all absent; python -I find_spec over fitz, pypdfium2, pdf2image, pdfplumber, all absent (PIL present); counts only",
+      "the harness run of the real sample at portal commit 3bfc2ab1 wrote the PDF (17 page objects, counts only) into the private folder fwd21_sample_r101"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W152-S2 -- the W146-S1 premise does not hold at the checked sample hash: the real sample renders on the unmodified portal, so the crash that row names is not reproduced
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W152-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~152",
+  "surfaced_at": "2026-10-14T03:02:00Z",
+  "one_line": "The W146-S1 premise does not hold at the checked sample hash: the real sample renders on the unmodified portal (base commit 091ae64e, exit 0, 117 member ids per HTML), so the buildReportModel crash that row names is not reproduced.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W146-S1 (still ARMED, disarm owner 2.0.0_SA_COO~D2): the sample's household.accounts entries carry account_key and last_four with no window_status, and its window statuses sit under a top-level windows key; buildReportModel throws on account window_status.",
+  "world_is": "At sample sha256 76a48793, the checked file, the top-level keys are household and values; household carries accounts, as_of, first_data_date, household_ref; each account entry carries account_id, last4, first_data_date, window_status; the 117 values are 62 absent, 36 by_row, 18 numbers, 1 text. The unmodified harness run at the base read the file with exit 0. The W146 key names were not found at this hash, so either that run read a different file or the file moved after it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "keys-only probe of the checked sample (key names and value kinds, no values) run by python -I at this worker's worktree",
+      "the unmodified render_sample.ts of 0.9.0_WK_IRPT_DASHBD~146 run at base portal 091ae64e: exit 0, tab and export 117 member ids, 18 PDF pages (run log in the private folder, counts only)",
+      "sha256 of C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~141/HOUSEHOLD_SAMPLE.json = 76a48793d6979ba66358d4e1d2cdc3d59d34c9a5217df1b7b421715925ddf16d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
