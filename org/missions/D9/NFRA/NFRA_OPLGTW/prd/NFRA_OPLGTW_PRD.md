@@ -1214,3 +1214,14 @@ It amends v3.1's widening paragraph for G2 only:
   through it.
 
 CONTRACTS-side; ENDPOINT unchanged.
+
+**CRO~Z brief-half corrections (msg 34106, review `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/L4R_REVIEW_NFRA_OPLGTW_v3.1_BRIEF_20261014.md@9a10f91cf8`), adopted as contract text:**
+1. **G1 (binds the first cut):** `chatter_daily`, `article_security_mention` and `chatter_window` are read from the NEWEST
+   part of the newest date partition only. `harvest_get_chatter` returns `data_status` per day, so 0 articles never reads
+   as "no chatter". `harvest_resolve_security` answers a CUSIP with `not_held`.
+2. **G5 `etfs_get_monthly_report`:** each partner's coverage comes from that partner's report CSV (`# coverage:` line),
+   never from `coverage_verdict.json`. For September the verdict says 21/21; the CSVs say Cottonwood 20/21 and Inflection
+   18/21 (Z-S113). Z-S113 is a correctness defect, not a freshness one.
+3. **G2 firm inputs:** SmartX rows whose firm has no canonical input (Titleist, Canopy, Parable: no `firm_id` in
+   `partner_roster.json`) are never returned until that firm is registered. An unknown `advisor_id` is never mapped to
+   the nearest firm.
