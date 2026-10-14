@@ -66,8 +66,8 @@ python workflows/atom_decomposition/gen_silver_rows.py --g2 <file> --g4 <file> -
 | `contract` | a mapping: `id` = `contract_id` with every `/` replaced by `:` (an IDENTIFIER, not an S3 address: the commit-time naming gate grades any slash-bearing string as an S3 key and refuses it); `size`, `freshness`, `partition`, `producer` = the contract's own objects verbatim |
 | `fork_keys` | the contract's `fork_keys` object, verbatim |
 | `nl_tags` | the contract's `nl_tags` list, verbatim |
-| `retired` | `true` for exactly four contracts, else `false`: `opal-data-mdpf/feeds/partner_held_etf_49financial` and `opal-data-mdpf/feeds/non_model_aua` (PRD v0.13: do-not-serve), and `opal-data-mdpf/feeds/model_aua_positions_49financial` and `opal-data-mdpf/feeds/model_aua_positions_inflection` (PRD v0.14: Andrew-direct restricts client data to the `opal-data-assets` vendor silver folders, so the account-grain MDPF feed is not served) |
-| `retired_reason` | on those four only. For the first two: `do-not-serve: ` followed by the contract's `routing` string, verbatim. For the last two, exactly: `not_served: ANDREW_DIRECT_20261014_150xZ_CLIENT_DATA_ONLY_OPAL_DATA_ASSETS_VENDOR_SILVER.md @9a314c1e98 -- client data only from the opal-data-assets vendor silver folders` |
+| `retired` | `true` for exactly four contracts, else `false`, decided by these two rules and NEVER by a typed contract id or firm name (the naming gate refuses them in code): (1) DO-NOT-SERVE (PRD v0.13): the contract has a `routing` string that contains `do NOT build a tool` or `must not be served` (2 contracts); (2) NOT-SERVED (PRD v0.14: Andrew-direct restricts client data to the `opal-data-assets` vendor silver folders, so the account-grain MDPF feed is not served): the contract's `table` starts `model_aua_positions` (2 contracts) |
+| `retired_reason` | on those four only. For rule (1): `do-not-serve: ` followed by the contract's `routing` string, verbatim. For rule (2), exactly: `not_served: ANDREW_DIRECT_20261014_150xZ_CLIENT_DATA_ONLY_OPAL_DATA_ASSETS_VENDOR_SILVER.md @9a314c1e98 -- client data only from the opal-data-assets vendor silver folders` |
 | `open_items` | the contract's `open_items` list, verbatim |
 
 Write the keys in this order: `bucket prefix business_meaning example_questions grain freshness_field firm_scope_rule never_sum_rules producer tools read_tool gap_owner table layer format contract fork_keys nl_tags retired` (then `retired_reason` if any) `open_items`.
@@ -75,7 +75,7 @@ Write the keys in this order: `bucket prefix business_meaning example_questions 
 **read_tool policy (PRD v0.12 item 5; a tool that is not deployed is NEVER named).** Let D be the deployed-tools set. For a contract, its CANDIDATES are, in the order of its `proposed_tools`: take each tool's `name`, cut it at the first space (so `blackdiamond_list_fees (extend)` becomes
 `blackdiamond_list_fees`), skip a name that starts `none`, then map it through `client_tool_map.json` (a name that is not a key stays as it is). The `read_tool` is the first candidate in D, else null.
 
-**`workflows/atom_decomposition/client_tool_map.json`** is a JSON object, vendor tool name -> `client_*` tool (OPLGTW PRD v3.1 ruling 1: client data is one tool set with vendor adapters). Write exactly these 29 pairs:
+**`workflows/atom_decomposition/client_tool_map.json`** is a JSON object, vendor tool name -> `client_*` tool (OPLGTW PRD v3.1 ruling 1: client data is one tool set with vendor adapters). Write exactly these 28 pairs:
 ```
 schwab_resolve_account, blackdiamond_resolve_account, commonwealth_resolve_account            -> client_resolve_account
 blackdiamond_get_holdings, schwab_get_positions, orion_get_holdings                           -> client_get_holdings
@@ -84,10 +84,10 @@ blackdiamond_get_model_assignment, blackdiamond_get_model_targets, orion_get_all
 blackdiamond_get_unrealized_lots, blackdiamond_list_realized, schwab_get_realized_lots, schwab_get_tax_lot_detail, schwab_get_unrealized_lots -> client_get_lots
 orion_get_household_performance, orion_get_account_performance, commonwealth_get_performance  -> client_get_performance
 blackdiamond_get_account_fee_roles, blackdiamond_list_fees                                    -> client_get_fees
-blackdiamond_get_account_profile, smartx_account_lookup                                       -> client_get_profile
+smartx_account_lookup                                                                         -> client_get_profile
 blackdiamond_list_insurance                                                                   -> client_get_insurance
 ```
-A G2 tool not listed here (balances, find_holders, flows, documents, delivery, the Eclipse tools, prices, workbook rows, platform lists) is NOT mapped: its tables are catalogued with `read_tool` null (OPLGTW: "a table no question reaches is catalogued but gets no adapter this round").
+(`blackdiamond_get_account_profile` is deliberately NOT mapped: the commit-time naming gate reads that exact string in a JSON key as a resource name and refuses it. Its table stays `read_tool: null`; this is reported to the CTO.) A G2 tool not listed here (balances, find_holders, flows, documents, delivery, the Eclipse tools, prices, workbook rows, platform lists) is NOT mapped: its tables are catalogued with `read_tool` null (OPLGTW: "a table no question reaches is catalogued but gets no adapter this round").
 
 ### The registry rows (CTO msg 34143: the existing legacy-address branch of the naming gate, no gate edit)
 
@@ -113,7 +113,7 @@ The other 44 in-scope contracts (the `none` DynamoDB ones, the `{param}` templat
 1. You change only the files in `<paths>`. Do NOT edit `emit_catalog_v02.py`, `validate_catalog_v02.py`, `DATA_CATALOG.yaml`, the tool index, an existing `catalog_entries/` row or the gateway: `2.0.0_SA_COO~MI` regenerates the catalog at the drain, and the loader is another cell's.
    At your commit the loader still refuses your rows (it expects the old shape). That is expected and is not yours to fix. Do not run the emitter.
 2. No AWS call, no deploy, no push.
-3. The shape of a row is exactly the table above. Do not add, rename or reorder a field. A string the contract holds is copied, never paraphrased.
+3. No contract id, firm name or product name is typed as a literal in `gen_silver_rows.py` (the naming gate refuses a NEW hand-kept firm or product token in code; the tests under `tests/` are exempt). The tool map is JSON data and carries vendor tool names, which the gate accepts except the one named above. The shape of a row is exactly the table above. Do not add, rename or reorder a field. A string the contract holds is copied, never paraphrased.
 4. A commit through the naming gate needs a staged `.json` under this project's home if it must derive the project (row Z-W34-S8).
 5. REFUSE a criterion you cannot meet as written, and report it with its measurement.
 
@@ -164,7 +164,7 @@ The issuer then regenerates the catalog from the merged rows and the loader cell
 (1.0.0_SA_CTO~Z msg 34100) items 1, 3, 4 (the not-yet-catalogued tables) and 5, and PRD v0.13 @bb9d1ece12 (msg 34117). G3 and the `news` / `ft.04` / `mdpf` channel
 corrections are not in this order: they edit CVO-certified channel specs (decomposition R14.6). Battery and planted arms: decomposition R14.3.
 
-**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-14 ~15:3xZ).** Two rulings arrived while you were building. (1) Andrew-direct ~15:0xZ (CTO msg 34135, PRD v0.14 @26a247b289): client data comes ONLY from the `opal-data-assets` vendor silver folders, so the two `model_aua_positions` MDPF feeds are `not_served` (retired, with the record cited), and no row names `opal-data-bd`. The 49F Black Diamond rows keep the contract's `opal-data-assets` location and state their lag through the NOT CURRENT mark. (2) The commit-time naming gate refuses a slash-bearing `contract.id` as an S3 key, so `contract.id` is written with `:` for `/` (the first worker's rows showed it). (3) CTO ruling msg 34143: the gate's legacy-address branch makes a prefix literal CONFORMANT when a committed `legacy_addresses.json` row of this project names it, so the generator also writes those registry rows (130), they land in their OWN commit first, and the rows the gate still refuses (firm tokens in `fork_keys` and ids, `{param}` and `none` prefixes, news buckets) are HELD, not forced: commit what passes and report the residual by kind. The checks were amended to the same rules. Gate limb that graded this modification: none (LIMB 6 does not fire on a modification; `<placeholders>NONE`).
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-14 ~15:3xZ).** Two rulings arrived while you were building. (1) Andrew-direct ~15:0xZ (CTO msg 34135, PRD v0.14 @26a247b289): client data comes ONLY from the `opal-data-assets` vendor silver folders, so the two `model_aua_positions` MDPF feeds are `not_served` (retired, with the record cited), and no row names `opal-data-bd`. The 49F Black Diamond rows keep the contract's `opal-data-assets` location and state their lag through the NOT CURRENT mark. (2) The commit-time naming gate refuses a slash-bearing `contract.id` as an S3 key, so `contract.id` is written with `:` for `/` (the first worker's rows showed it). (4) The gate refused 3 strings in your first code files: the `blackdiamond_get_account_profile` key of the map (dropped), and the contract ids typed in the generator (replaced by the two rules in the `retired` row). (3) CTO ruling msg 34143: the gate's legacy-address branch makes a prefix literal CONFORMANT when a committed `legacy_addresses.json` row of this project names it, so the generator also writes those registry rows (130), they land in their OWN commit first, and the rows the gate still refuses (firm tokens in `fork_keys` and ids, `{param}` and `none` prefixes, news buckets) are HELD, not forced: commit what passes and report the residual by kind. The checks were amended to the same rules. Gate limb that graded this modification: none (LIMB 6 does not fire on a modification; `<placeholders>NONE`).
 
 <status>issued</status>
 <round>14</round>

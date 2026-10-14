@@ -88,6 +88,11 @@ lane: CloudOps applies under both signed halves (COO @77af4ef06f, CTO NEVER_WIDE
       STOP 3 RESULT: BRANCH A, 0 failures (control: a doctored memory_size is caught).
       My first grader run FAILED on a defect of its own, not of the plan: it counted an all-false `after_unknown` container (`architectures: [false]`) as unknown. I fixed it to
       count a value unknown only if it contains a true, kept the doctored control, and re-ran: the plan text itself showed only last_modified and source_code_hash all along.
+      CORRECTION 2026-10-14 ~16:2xZ (found while grading the round-7 gold plan): that fixed grader still SKIPPED every attribute whose `after_unknown` entry was an
+      all-false container (architectures, ephemeral_storage, layers, logging_config, tracing_config, environment), so it never compared those by value; environment,
+      layers, memory, timeout, role, handler and runtime were compared by its separate equality list, but architectures, ephemeral_storage, logging_config and tracing_config
+      were not. RE-GRADED on the saved plan JSON with every one of the 46 attributes compared by value (computed only where `after_unknown` carries a true): on each of the
+      five movers the only value-changed attribute is `source_code_hash` and the only computed one is `last_modified`. The STOP 3 conclusion stands; the method was weaker than stated.
 
     Environment KEY sets (names only), BEFORE and AFTER identical on all five:
       etfs-rivalfunds-daily-lambda: BD_SERP_ZONE, RIVALFUNDS_AI_ENABLE, RIVALFUNDS_OPENAI_SECRET, RIVALFUNDS_SERP_SECRET
