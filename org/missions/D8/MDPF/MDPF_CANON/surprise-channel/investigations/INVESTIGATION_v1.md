@@ -1354,3 +1354,27 @@
   "notes": "Filed by the worker. The issuer owns the face's expect wording; the record keeps the criterion text and the checker's matching rule decides the verdict."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W23-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~23",
+  "surfaced_at": "2026-10-14T14:46:19Z",
+  "one_line": "The commit-time naming gate WARNs on the new provenance URI f\"s3://{GOLD_BUCKET}/{dated[0][1]}\" at lambda_function.py:558 ('segment 1 {x} is neither a source nor a tier'). The same f-string shape exists unchanged at line 414 (_publish_one) and is not graded there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face section 1 Step 1/2 and bounds: add no bucket, prefix or name; the publisher's serve keys are existing-pipeline f-strings, and the naming gate's non-application for an existing pipeline applies. CLAUDE.md section 4: every S3 address is lib/opal_naming.py output, R19 migration is per project.",
+  "world_is": "The provenance source_keys entries reuse GOLD_BUCKET and the listed gold key, the same way _publish_one does (line 414). Commit 4e954e2d8b passed with the naming gate WARN (NAMING-GATE: WARN 1 graded). The WARN grades only added lines, so the existing pattern is graded only where it is newly typed. No new bucket, prefix or name is typed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit 4e954e2d8b: '[naming-gate] NAMING RAISE infra/aws/lambda/opal-assets/opal-assets-mdpf-portal-publisher/lambda_function.py:558 s3://{x}/{x} -> (rule or registry defect)'",
+      "git show 8ae1cfdafb:infra/aws/lambda/opal-assets/opal-assets-mdpf-portal-publisher/lambda_function.py line 414: source_keys [f\"s3://{GOLD_BUCKET}/{src['key']}\"]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker. A naming-gate rule question for the LGIC owner; the existing publisher line is outside this cell and was not changed."
+}
+```
