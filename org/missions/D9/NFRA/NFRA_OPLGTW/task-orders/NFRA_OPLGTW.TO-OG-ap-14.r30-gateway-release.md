@@ -185,6 +185,16 @@ commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing
   - The rollback target is `b0c75d24f1`.
   - Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
+- A5 (issuer, 2026-10-14 ~04:3xZ): **PHASE B2 GO re-issued at `90967e39ba`, effective at or after 11:00Z 2026-10-14.**
+  - A4's GO lapsed under C3 when NFRA_MCPINDEX MX-r-12 moved live, first to 027fedfda4, then (catalog-only v2) to
+    `43088464f5`. The one re-cut waited for v2.
+  - The re-cut `90967e39ba` (on `rel-nfra-oplgtw-r30c`) carries the identical change: patch-id `eac7550c45`, measured
+    by the issuer.
+  - Both halves are RE-SIGNED: COO ADDENDUM 2 @ab3eda5984, CTO ADDENDUM 2 @0314607f88 (msg 33985).
+  - C2 binds. C3 binds on live still `43088464f5` at the act.
+  - The rollback target is `43088464f5`.
+  - Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>37</round>
 <slot>~AE</slot>
