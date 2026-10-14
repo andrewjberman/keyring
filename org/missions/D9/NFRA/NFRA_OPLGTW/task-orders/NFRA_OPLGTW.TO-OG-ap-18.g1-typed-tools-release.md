@@ -140,6 +140,10 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-18.g1-typed-tools-release.pr
   - Phase B adds, after deploy: the md5 read-back of `lib/trading_calendar.py` on the host, and the served `harvest_resolve_security`/`harvest_security_coverage` answers carry `trading_days_behind_t1` (a number, not the absent reason): this CLOSES row Z-S125.
   The CVO's condition from A3 stands: `harvest_search_articles` is read through `mcp.opalinvest.dev` (ALB idle timeout 60 s); a 502/504 or a call over 60 s pulls only that tool. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
+- A5 (issuer, 2026-10-14 ~21:5xZ): `OG-gt-9` is MERGED at `73804a2c4a` (worker commits `661838f224`, `16242f3121`, `4d4674daa9`): take `app/harvest_press.py` and `tests/test_og_gt9.py` whole at that merge. `OG-gt-8` merged at `43e5e0383e`, `OG-gt-10` at `d7aec6640c` (portal modules; they ride `OG-ap-19`, not this release). PHASE A OPENS NOW on A4.
+  Know before you cut: the pruned no-window `harvest_search_articles` call measures 38-48 s from this box's link (the silver join dominates and cannot shrink without changing the answer; worker rows Z-W88-S1/S3/S6). The host is in-region; Phase B's read through the public endpoint is the measurement that counts, against the ALB's 60 s.
+  The `/yearinreview` refresh (CRO pin `947fc522a8`) is NOT in this release: the CTO ruled it ships as its own one-file release right after this one (`NFRA_OPLGTW.TO-OG-yr-1`). Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>37</round>
 <workstream>G1-TYPED</workstream>
