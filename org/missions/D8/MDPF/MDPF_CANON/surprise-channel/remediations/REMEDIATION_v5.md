@@ -21,7 +21,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-12T17:51:00Z. Graduated at ADJUDICATION_v8
     "owner": "2.0.0_SA_COO~D1",
     "round": "v6",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~D1",
       "round": "v6"
     },
@@ -30,7 +30,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-12T17:51:00Z. Graduated at ADJUDICATION_v8
       "owner": "2.0.0_SA_COO~D1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "MDPF_CANON-D1-C-S65",
@@ -46,7 +46,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-12T17:51:00Z. Graduated at ADJUDICATION_v8
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v6",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v6"
     },
@@ -55,7 +55,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-12T17:51:00Z. Graduated at ADJUDICATION_v8
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

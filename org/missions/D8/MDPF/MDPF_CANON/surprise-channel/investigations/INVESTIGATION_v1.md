@@ -1258,3 +1258,29 @@
   "notes": "Repair is one LOCAL line of the tool (compare against the git blob, or normalise EOL) plus its test: it batches into round 7's repair cell once the CTO's round-6 analysis is in hand; not cut here (the round-6 spec and decomposition are frozen)."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S24",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-14T14:05:00Z",
+  "one_line": "The round-6 packet's /portfolios card (client-facing, for Andrew) reads Total Holdings 8,607 -> 8,607 (delta 0) because it was run with --date 2026-10-13; at the documented run date 2026-10-14 the same tool reads 8,607 -> 8,430 (-177), the pair's named delta within roster drift.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "3.0.0_SA_CVO python org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/portfolios_card.py after --date 2026-10-13: Total Holdings 8607 8607 0 (the account-distribution object is keyed by RUN date, so <= 2026-10-13 returns the unfolded 2026-10-13.json, the same object the BEFORE snapshot pinned)",
+      "3.0.0_SA_CVO python org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/portfolios_card.py after --date 2026-10-14: Total Holdings 8607 8430 -177; AFTER folded objects ['aum-metrics', 'account-distribution', 'aggregate-aua-timeseries']",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/portfolios_card.py docstring: 'Run on 2026-10-14 after the first folded fire:  python portfolios_card.py after --date 2026-10-14'",
+      "round6/NEVER_WIDEN_PAIR_R6_CN_F_1.md section 6: 'Total Holdings -185'"
+    ]
+  },
+  "spec_asserts": "The card to Andrew states the client-visible deltas the fold makes, read on the folded objects (pair section 6; the tool's own run instruction).",
+  "world_is": "Total Holdings did move: -177 (the pair said -185; the 8-account gap is the roster drift R7 prints, 211 vs 207). The packet's 'delta 0' is a read of the unfolded distribution against itself. Every other card row is the same at either date. Nothing served is wrong; the card is wrong if it goes as written.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1"
+}
+```

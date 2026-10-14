@@ -13083,3 +13083,217 @@
 ```
 
 ---
+
+## IRPT_ANLREQ-D2-S99 -- the Shares upload stores no input but retains its original file bytes (release 29 D5)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S99",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-14T13:40:19Z",
+  "one_line": "TO-EXERCISE-R29 D5: the Shares upload that answers NEEDS_CORRECTION stores no input but DOES retain its original file bytes in original_holdings, so 'D5 must store nothing' is not what the door does.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO half (c) and TO-EXERCISE-R29 step 6: D5 'must store nothing (as in release 28's D3), and the after-read lists the prefix to prove it'.",
+  "world_is": "Measured 2026-10-14 13:38Z by a before/after listing of opal-data-irpt/irpt/49financial/ (285 -> 291 versions, 0 delete markers, 0 vanished): the sitting wrote 6 objects, 3 original_holdings (one per upload: D1, D5, D6), 2 normalized_portfolios (D1 and D6 inputs only) and 1 request_compositions (D6b). Attribution is by content hash: original_holdings 4a2b1a8c.. is the sha256 of the Shares file bytes sent at D5. D5 stored NO normalized input (its answer carried input_id null), consistent with intake/uploads.py's docstring 'Original bytes are retained before parsing'. The delete list the CTO registers for Andrew therefore includes the Shares file's retained original, an object the order said would not exist. cottonwood: 234 -> 234, nothing written by D4.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r29/OBJECTS_WRITTEN_R29.txt (6 OBJ lines with attribution comments)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r29/DOOR_DETAIL_R29.txt (D5 input_id none, words equal)",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py docstring lines 1-7"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "owner: 1.0.0_SA_CTO~DELL2 (the delete list for Andrew is exactly OBJECTS_WRITTEN_R29.txt, 6 keys; whether a refused upload should retain its original is a design call). Nothing was changed by this seat."
+}
+]
+```
+
+---
+
+## IRPT_ANLREQ-D2-W127-S1 -- AR317-y-AC2 names a mutant run against a copy outside the product tree; the copy's '@/' imports need a scratch tsconfig and an import redirect (TO-AR-y-317, worker 0.9.0_WK_IRPT_ANLREQ~127)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W127-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~127",
+  "surfaced_at": "2026-10-14T13:42:12Z",
+  "one_line": "TO-AR-y-317 AC2 runs the new test file against a copy of analysisRequest.ts in a scratch folder outside the product tree; the copy's imports are '@/' aliases, so the run needed a scratch tsconfig.json mapping '@/*' to the portal src and the test copy's one import redirected to the copy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-317 AC2 (mutant_check.py): copy analysisRequest.ts to a scratch folder OUTSIDE the product tree with the member made conditional on answers.add_commentary === true, run the new test file against the copy, print MUTANT-FIRES only when that run FAILS. The order names no mechanism for resolving the copy's imports.",
+  "world_is": "analysisRequest.ts imports only '@/' aliases (portal/src/pages/TicketCenter/analysisRequest.ts lines 18-29), and the test imports the module by '@/pages/TicketCenter/analysisRequest'. The run therefore used a scratch tsconfig.json whose paths map '@/*' to the portal src, and the test copy's import redirected to './analysisRequest'. The product file was never written: its sha256 was printed before and after and matched. The control copy (unmutated) passed 7 of 7; the mutant failed 4 of 7.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/analysisRequest.ts lines 18-29 (all imports are '@/' aliases)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~127/mutant_check.py (scratch tsconfig and import redirect)",
+      "mutant_check.py run 2026-10-14: control rc=0 pass=7 fail=0 of 7; mutant rc=1 pass=3 fail=4 of 7; MUTANT-FIRES"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "owner: 2.0.0_SA_COO~Y2 (the issuer reads whether a scratch-tsconfig run meets 'against the copy', or amends the cell's mechanism). Nothing pushed; the portal candidate is local on cand/dell2/anlreq-commentary-always-requested at 406345bce120cdec5d9b7a0cef00bd7b80b680e9."
+}
+]
+```
+
+---
+## IRPT_ANLREQ-D2-W128-S1 -- the order names ycharts/generate/served.py for the cause read; the file is absent at that path (TO-AR-y-318, worker 0.9.0_WK_IRPT_ANLREQ~128)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W128-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~128",
+  "surfaced_at": "2026-10-14T14:10:22Z",
+  "one_line": "TO-AR-y-318 names ycharts/generate/served.py in its read list; that path is absent in the worktree, and the verified-subject lookup the analysis route imports as served is defined at _authz/served.py line 323.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-318 step 3 reads the analysis route in ycharts/generate/served.py (the order's read list names that path).",
+  "world_is": "The file is not in the worktree at HEAD 345ae95c52. The import the route uses, from served import verified_internal_subject (_scope/interactive_access.py line 79), resolves to _authz/served.py line 323. The cause read stubbed that lookup and did not read the file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py line 323 @345ae95c52 (def verified_internal_subject)",
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py line 79 @345ae95c52 (from served import verified_internal_subject)",
+      "Glob of infra/aws/lambda/investor-reporting/ycharts/generate for served.py returned no match @345ae95c52"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Read-only finding; nothing was changed for it. Owner of the path question: 2.0.0_SA_COO~Y2."
+}
+]
+```
+
+---
+
+## IRPT_ANLREQ-D2-W128-S2 -- the offline D1 composition borrows the advisor's profile fields from the stored D6 composition; the live profile reads were not on the read list (TO-AR-y-318, worker 0.9.0_WK_IRPT_ANLREQ~128)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W128-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~128",
+  "surfaced_at": "2026-10-14T14:10:22Z",
+  "one_line": "The cause read could not run the analysis route's own composition for the advisor: its profile, organization and source descriptors need live profile reads that TO-AR-y-318 does not list, so the D1 candidate borrows them from the stored D6 composition.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-318 step 3: build, offline and with the product's own functions, the frozen composition the analysis route would build for each input, then run the five steps one at a time.",
+  "world_is": "resolve_profile_fields (prospect_submission.py lines 93-97) needs live get_user, get_partner_profile and get_organization reads, which are not among the order's reads. The D1 candidate takes profile, profile_provenance, comparison_catalog and source_descriptors from the stored D6 composition and rebinds each source binding to the D1 owner. The step-2 failure sits on resolved.owner, not on the borrowed fields; steps 3 to 5 for D1 are conditional on the borrow. The D6 row and the control are one stored object, not a rebuild.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/prospect_submission.py lines 93-100 @345ae95c52 (resolve_profile_fields and resolve_comparison_fields calls with live ports)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~128/r40/COMPOSITION_CAUSE.json not_read (the borrowed-fields item)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 2.0.0_SA_COO~Y2, who reads whether steps 3 to 5 need a live profile read before the fix cell."
+}
+]
+```
+
+---
+
+## IRPT_ANLREQ-D2-W128-S3 -- the cause of the advisor's owned-input refusal: the request owner carries home_firm_id, which the owner schema forbids for every principal but OPAL_GLOBAL (TO-AR-y-318, worker 0.9.0_WK_IRPT_ANLREQ~128)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W128-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~128",
+  "surfaced_at": "2026-10-14T14:10:22Z",
+  "one_line": "A FIRM_ADVISOR's owned-input analysis is refused at step 2 of CompositionAdmission.validate, because the request owner carries home_firm_id and the owner schema forbids home_firm_id for any principal class other than OPAL_GLOBAL.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "CTO msg 7677, S97: log which check fails and reproduce offline on advisor A's frozen D1 composition against D6's; the fix follows under the next intake pair, and the cause is not fixed in this cell.",
+  "world_is": "Step 2 fails for D1 with keyword not at resolved.owner. The else branch of the owner definition (docs/contracts/investor-reporting/v1/RequestComposition.schema.json lines 599-605) forbids home_firm_id. InteractiveAccess.current() sets home_firm_id for every ordinary viewer (_scope/interactive_access.py line 97), and prospect_owner() carries it into the owner (line 134). Removing only home_firm_id from the D1 request owner makes all five steps PASS offline. D6 (OPAL_GLOBAL, home_firm_id required) passes all five. The cause is named here, not fixed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/RequestComposition.schema.json lines 599-605 @345ae95c52 (the else branch of the owner allOf)",
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py lines 97 and 134 @345ae95c52 (home_firm_id set for an ordinary viewer; carried by prospect_owner)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~128/r40/COMPOSITION_CAUSE.json (step table, negative control, cause record)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: an advisor's owned-input analysis is refused on every attempt until the next intake pair fixes the cause; the fix is out of this cell by the CTO ruling."
+}
+]
+```
+
+---
+
+## IRPT_ANLREQ-D2-W128-S4 -- aws dynamodb get-item through the shim prints nothing for an absent item, so an empty stdout reads as absence (TO-AR-y-318, worker 0.9.0_WK_IRPT_ANLREQ~128)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W128-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~128",
+  "surfaced_at": "2026-10-14T14:10:22Z",
+  "one_line": "Through the .tools/aws shim, dynamodb get-item of a key that holds no item writes an empty stdout with rc 0; a file written from it is zero bytes, and --query Item prints None.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-318 step 2 reads the retained owner record with dynamodb get-item on irpt-requests, and prints the status, size and sha256 of each read.",
+  "world_is": "For a key with no item, --output json writes nothing to stdout (rc 0). The debug trace shows a body of two characters, an empty object. The same key with --query Item prints None. A zero-byte read is absence only when the body length is checked.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/aws @345ae95c52 (the bash shim passes argv to the AWS CLI unchanged)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~128/session_log.txt (the zero-byte reads, the debug body length and the --query None result, 2026-10-14)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Read-only trap for later readers of this instrument; no fix in this cell."
+}
+]
+```
+
+---
+
+## IRPT_ANLREQ-D2-W128-S5 -- test_composition_admission.py errors 13 cases with fixture world not found in a combined pytest run, on the base sources as well (TO-AR-y-318, worker 0.9.0_WK_IRPT_ANLREQ~128)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W128-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~128",
+  "surfaced_at": "2026-10-14T14:10:22Z",
+  "one_line": "In one pytest run with the other retained-upload and submission test files, test_composition_admission.py errors 13 cases with fixture 'world' not found; the same run on the base sources gives the identical 86 passed, 20 skipped, 13 errors.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-318 regression: the existing suites that touch the admission and the owner lookup stay green.",
+  "world_is": "The file alone passes 13 of 13 with the change. The world fixture comes from a pytest_plugins import of test_retained_uploads in that file (line 13), and a combined collection does not resolve it for that file. The errors are not caused by this cell: the base sources give the same counts.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_composition_admission.py line 13 @345ae95c52 (pytest_plugins = test_retained_uploads)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~128/session_log.txt (combined run on the changed and on the base sources, same counts)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Pre-existing; the admission file passes when run alone. No change made for it."
+}
+]
+```
+
+---
