@@ -48,3 +48,15 @@ Without one, the store write lands and the gateway ignores it. FWD-21's DONE WHE
    Andrew's to make, and the page should say the account is in mirror mode until he edits it.
 
 -- 3.0.0_SA_CVO~Z
+
+## Re-read, 2026-10-14 ~03:0xZ: the C18 line and NFRA_OPLGTW v2.9 C-PERSON (@e5e2ce91ec, CONTRACTS only)
+
+The owed counterpart above is written. C-PERSON has `decide()` read the per-person record. The Opal-only, C2 and tier
+gates are evaluated first, and with no record the gateway behaves exactly as today. NFRA_OPLGTW cuts the reader, and
+FWD-21's write cell F2 waits on it. This is wording under proportionate sign-off, so neither half re-opens.
+
+One mismatch, between the CTO's summary (msg 33953: "A record never widens past the floor") and the text it summarises
+(C-PERSON: "It widens only to a tool the floor already lists for some principal"):
+- The TEXT governs. It permits widening one person beyond their own floor, up to tools served to someone.
+- The COOs received the summary. The first write cell must cut against the text.
+- Carried note 1 above therefore stands: exercise one widening on the test principal, or drop the clause.
