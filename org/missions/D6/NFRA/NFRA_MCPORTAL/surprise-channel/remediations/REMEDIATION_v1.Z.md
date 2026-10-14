@@ -56,9 +56,9 @@ No row carries `route` or `loop_target`.
     "remedy": "R-1, verbatim in substance: round 2's FIRST cell is a staged build that carries the writer plus the exact gateway modules it imports, from the same source at the same commit; the package root is resolved from the package, with no parents[N]; the proof imports the handler FROM INSIDE THE BUILT ZIP. MP-t-3 and MP-t-6 re-cut behind it. This seat adds one requirement: the in-zip import proof runs the handler on one refusal arm (no header), so it exercises the imported modules and not only the import.",
     "owner": "2.0.0_SA_COO~O",
     "round": "v1",
-    "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~O", "round": "v1"},
-    "closed": false,
-    "disarm": {"state": "ARMED", "owner": "2.0.0_SA_COO~O", "at": null}
+    "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~O", "round": "v1"},
+    "closed": true,
+    "disarm": {"state": "DISARMED", "owner": "2.0.0_SA_COO~O", "at": "2026-10-09T02:08Z"}
   },
   {
     "id": "NFRA_MCPORTAL-Z-C-S10",
@@ -75,9 +75,9 @@ No row carries `route` or `loop_target`.
     "remedy": "Before the staged-build cell is cut: measure ONE real x-amzn-oidc-data header from an ALB-authenticated request and record its claim KEYS, with values redacted. Then: (a) if oid is present, no change; (b) if it is absent, the PRD owner rules which carried claim is the owner key (C4 names 'Andrew's Entra object id', so a different key is a C4 wording decision for 1.0.0_SA_CTO~O), and the owner config value is re-measured on that key; (c) if iat is absent, the window is anchored on a claim the header does carry. In every case, A1n asserts the refusal REASON per arm (NOT-OWNER, HEADER-STALE, NO-OWNER-HEADER), never only the verdict.",
     "owner": "2.0.0_SA_COO~O",
     "round": "v1",
-    "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~O", "round": "v1"},
-    "closed": false,
-    "disarm": {"state": "ARMED", "owner": "2.0.0_SA_COO~O", "at": null}
+    "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~O", "round": "v1"},
+    "closed": true,
+    "disarm": {"state": "DISARMED", "owner": "2.0.0_SA_COO~O", "at": "2026-10-09T02:08Z"}
   },
   {
     "id": "NFRA_MCPORTAL-Z-W3-S2",
@@ -94,8 +94,8 @@ No row carries `route` or `loop_target`.
     "remedy": "The re-cut MP-t-3 carries oid 2e21f8e5-55ca-45c1-91b9-a4607bf28d4f as var.mcportal_owner_oid, subject to C-S10's measurement: if the header carries no oid, the value is re-measured on the key the PRD owner rules.",
     "owner": "2.0.0_SA_COO~O",
     "round": "v1",
-    "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~O", "round": "v1"},
-    "closed": false
+    "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~O", "round": "v1"},
+    "closed": true
   },
   {
     "id": "NFRA_MCPORTAL-Z-W1-S1",
