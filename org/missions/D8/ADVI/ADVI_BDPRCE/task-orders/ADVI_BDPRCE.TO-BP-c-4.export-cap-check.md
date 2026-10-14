@@ -75,7 +75,7 @@ Instance at the path above. Commit your scripts, `CAP.json` and `CAP.md` FIRST, 
 
 **ISSUER NOTES:** round-2 analysis item 3 (first read); row `W10-S3`. `BP-c-5` (the lot-key fixture proof) is staged on this cell's verdict, the CTO's order being check, then proof, then apply. Read-only; class LOCAL.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <workstream>CAPCHECK</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-c-4</to_id>
