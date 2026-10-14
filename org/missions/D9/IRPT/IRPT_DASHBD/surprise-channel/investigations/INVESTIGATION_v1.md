@@ -9174,6 +9174,7 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
 ## IRPT_DASHBD-D2-S26 -- the firm registry's bucket field is not where a firm's irpt gold lives (address() is): a read of the registry field reported Cottonwood and Inflection as having no gold
 
 ```json
@@ -9332,3 +9333,202 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W156-S1 -- the portal worktree is on branch wk-IRPT_DASHBD-156-portal, not the branch the order names; the fixed commit is its HEAD
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W156-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~156",
+  "surfaced_at": "2026-10-14T03:56:25Z",
+  "one_line": "The order names the portal branch wk-IRPT_DASHBD-152-portal; the worktree is on wk-IRPT_DASHBD-156-portal. Its HEAD is the DB-b-187 fix commit the record names, so the fixed components are present.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face, portal: the portal worktree is cut from the branch that carries the fixed components, named wk-IRPT_DASHBD-152-portal.",
+  "world_is": "The portal worktree at C:/dev/wk-irpt-dashbd-156/portal is on branch wk-IRPT_DASHBD-156-portal; its HEAD is 9304556192550be29f70bbd05000d099f0d71a90, the DB-b-187 fix commit that RENDER_FIX.json names. The render ran against that HEAD. No portal file was edited and no bun install was run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal rev-parse HEAD returned 9304556192550be29f70bbd05000d099f0d71a90 and git -C portal rev-parse --abbrev-ref HEAD returned wk-IRPT_DASHBD-156-portal",
+      "RENDER_FIX.json portal.commit records 9304556192550be29f70bbd05000d099f0d71a90 on branch wk-IRPT_DASHBD-152-portal"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W156-S2 -- the render prints return and allocation percentages at one hundred times their stored scale (account overview pages and the holdings allocation table)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W156-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~156",
+  "surfaced_at": "2026-10-14T03:56:25Z",
+  "one_line": "Cumulative return and allocation percentages print about one hundred times the size their stored values and the dollar rows beside them support; the printed allocation rows total one hundred times one hundred percent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Section 6 Account Overview and section 3 Holdings Overview print the sample's return (Cumulative) and allocation values at their stored scale (contract members avs.<window>.return_cumulative and hold.allocation).",
+  "world_is": "The sample stores percentages in percent units: the four stored allocation values total one hundred percent, and each account's stored YTD and QTD return equals its net gain over beginning value in percent units (booleans read in the seat's scale check). The export PDF prints the same values one hundred times larger: the page 6 allocation rows total one hundred times one hundred percent as printed, and the pages 8 to 10 return rows read one hundred times the size of the net gain ratio beside them. The HTML carries the same printed values. The cause is not located in this seat, which reads the components and does not edit them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scale check (booleans only): allocation values total 100 in stored units; avs ytd and qtd return_cumulative equal net gain over beginning value in percent units for all compared accounts",
+      "export pages read as images: C:/dev/_irpt_private_evidence_20261009/fwd21_sample_r101_final/pages/r101/page_06.png, page_08.png, page_09.png, page_10.png (private folder, not repo)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W156-S3 -- the client-facing render prints build and contract language as the absent reasons and as lead-in notes on most sections
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W156-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~156",
+  "surfaced_at": "2026-10-14T03:56:25Z",
+  "one_line": "The absent reasons name contracts, sibling sources, table names, an issuer ruling and the word baseline; 20 lead-in Covers paragraphs print above the sections. The baseline prints no build notes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Contract read rule: an ABSENT member prints its reason in words. The baseline export (the target) prints the report's own words and no build notes.",
+  "world_is": "The export HTML carries 20 Covers lead-in paragraphs, the word sibling 16 times, contract 11 times, gold 7 times, baseline 6 times, issuer 2 times and build 2 times; the reasons name table and field names (for example gold account_activity_daily and dim_return_method). The tab HTML carries the same words. A reader of the client report sees these build notes on most of the 14 pages.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "word counts in the private export HTML and tab HTML (counts only, read by grep -o -i into a count)",
+      "page images C:/dev/_irpt_private_evidence_20261009/fwd21_sample_r101_final/pages/r101/page_01.png to page_14.png show the Covers paragraphs and the absent reasons"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W156-S4 -- two baseline elements with no contract member print nothing and carry no absent note (account-grain charts; class rows under each account in the gain or loss review)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W156-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~156",
+  "surfaced_at": "2026-10-14T03:56:25Z",
+  "one_line": "The baseline's account-grain allocation and performance charts, and the class-hierarchy rows under each account, are silently absent from the render because the contract has no member for them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The baseline schema (section 5 Account Overview, section 6 Gain/Loss Review by Account, by class) is the target shape; an element the contract does not carry should print an absent note, not nothing.",
+  "world_is": "The contract has 117 members and none for an account-grain chart or a class row. The render prints three account value tables under Account Overview with no chart headings and no absent note, and one gain or loss table per account with a single account row and no class rows. Nothing says these elements are missing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "contract members listed by section: account_overview 36 members, all avs.* value or benchmark rows; gain_loss_review_by_account 4 members, all glr.* columns",
+      "page images C:/dev/_irpt_private_evidence_20261009/fwd21_sample_r101_final/pages/r101/page_08.png to page_13.png show no chart heading and no class row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W156-S5 -- the holdings overview is a transposed field list with asset-class rows; the class and sub-class table of the baseline is not drawn
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W156-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~156",
+  "surfaced_at": "2026-10-14T03:56:25Z",
+  "one_line": "The holdings section prints the window columns as rows and seven asset-class rows; the baseline's class and sub-class table (US, international, taxable bonds and so on) is not drawn, and the one note says sub-class rows are not carried.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Baseline section 3: a Holdings Overview table with class and sub-class rows, and columns Ending Value, Allocation, then Net Gain and Return for each window.",
+  "world_is": "Page 5 prints a field list (ending value, then net gain and return per window, one row each); page 6 prints an allocation table of seven asset classes with three absent rows. The class hierarchy is not drawn; the contract member holdings.rows.class_hierarchy is a note string, not a row set. The footnote says a class with no holding prints a dash, and the three absent rows do not show that.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "contract member holdings.rows.class_hierarchy holds a text note in the sample (a string, not a row set)",
+      "page images C:/dev/_irpt_private_evidence_20261009/fwd21_sample_r101_final/pages/r101/page_05.png and page_06.png"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W156-S6 -- labels and conventions differ from the baseline: no report title, footer labels, date forms, benchmark wording, and a fee-basis member absent beside printed fee words
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W156-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~156",
+  "surfaced_at": "2026-10-14T03:56:25Z",
+  "one_line": "No page prints the report title; footers read Household or Account Performance Report; the cover's as-of is in year-month-day form; benchmark rows lack return wording; the fee-basis member is absent while its words print.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Baseline page footer: the household or account name, the report title '49 Financial Performance Report', As of, and Page n of N; benchmark rows 'Benchmark: <tier> Return (Cumulative)'; the fee-basis words print beside every Opal return figure (contract read rule).",
+  "world_is": "The title is not printed on any page and the cover heading reads Cover. Footers read Household Performance Report or Account ending ... Performance Report, with the as-of date in long form, while the cover shows it year-month-day. Benchmark rows read Opal Model Benchmark, <tier>. The member convention.fee_basis_label is absent in the sample, and page 2 says the fee-basis label is absent in words, yet page 3 prints the fee-basis words as fixed text beside the value table, with the absent form on the same rows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the export HTML contains no 49 Financial title (count zero) and the footer label Household Performance Report (8 occurrences)",
+      "sample member convention.fee_basis_label is in the absent form; contract read_rule requires the fee-basis words beside every Opal return"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W156-S7 -- DB101-5-AC1 refuses its own required record: the baseline_schema_read path carries an eight-digit date stamp and the record-shape check does not exempt that key
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W156-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~156",
+  "surfaced_at": "2026-10-14T03:56:25Z",
+  "one_line": "The checker's digit-run rule refuses baseline_schema_read, the one key the order requires to hold the baseline file's real path; the criterion FAILS as written and is not repaired by this seat.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB101-5-AC1: the record holds no run of eight or more digits; the record field baseline_schema_read is the repo-relative path of the baseline schema file the seat read (TO worker face, step 4).",
+  "world_is": "The baseline schema file name carries an eight-digit date stamp, so its path holds such a run. The checker exempts only keys ending sha256 and the keys path, commit, portal_commit, file, key and checked_by; baseline_schema_read is not exempt. The run printed FAIL: the record holds a run of 8 or more digits at /baseline_schema_read, and DB101-5-AC1 FAIL. Every other check in the criterion passed before that line. The order stays open at pending.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 python p101_round101.py . DB101-5-AC1 printed: FAIL: the record holds a run of 8 or more digits at ['/baseline_schema_read'] and DB101-5-AC1 FAIL (rc 1)",
+      "checks/r101/p101_round101.py long_digit_runs exemption list (line 64) and check_section zero_effects call (line 325)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W156-S8 -- the order's proof section asks for a judgment row the validator's expected set refuses
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W156-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~156",
+  "surfaced_at": "2026-10-14T03:58:40Z",
+  "one_line": "The order asks the proof instance to carry a DB101-5-J1 row, but the proof-of-spec checker refuses any row outside the expected set (DB101-5-AC1 only); J1 is stated in declared_exclusions instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO proof_of_spec section: criterion ids DB101-5-AC1 (mechanical) and DB101-5-J1 (judgment, recorded UNVERIFIABLE-BY-INSTRUMENT with a status_reason naming the CVO); validate with the expected id DB101-5-AC1 only.",
+  "world_is": "With a DB101-5-J1 acceptance row present, proof-of-spec-check reports coverage: expected 1, carried 2, and an unexpected addition for DB101-5-J1, and returns INVALID (rc 1). The checker does not admit a judgment row outside the expected set. The seat moved the J1 record to declared_exclusions, which states its status and names the CVO, and left the acceptance rows to DB101-5-AC1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 python .tools/proof-of-spec-check.py <instance> DB101-5-AC1 printed VIOLATION: coverage: instance row 'DB101-5-J1' is NOT in the TO's expected set and INVALID (rc=1)",
+      "the TO's expected_criteria element names DB101-5-AC1 only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
