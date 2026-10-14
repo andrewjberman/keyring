@@ -76,6 +76,7 @@ def main() -> int:
         if hashlib.sha256(open(p, "rb").read()).hexdigest() != hashlib.sha256(open(q, "rb").read()).hexdigest():
             return _bad("not byte-identical across two builds: " + rid)
         reqs[rid] = json.load(open(p, encoding="utf-8"))
+    sys.path.insert(0, os.getcwd())  # the worktree root, so `lib` resolves on a plain run (row W55-S4)
     sys.path.insert(0, D)
     import bbg_quote
     from lib import trading_calendar as tc

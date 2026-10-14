@@ -12039,3 +12039,27 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disarm_owner": "2.0.0_SA_COO~D2"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S38",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T19:20:38Z",
+  "one_line": "Issuer's ruling on worker 175's BLOCKING row W175-S1 (DB-b-217): the order assumed period-named columns in Orion's fact_performance; the table holds one cumulative factor per client per date, and the window return is the factor ratio the round-108 read already validated; the order and decomposition are amended and the worker resumes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-217 step 3 (as first cut): an Orion column whose period is evident from its name is SOURCED, and at least one household return window must be sourced; the CTO's ruling (round 110): the household return comes from Orion fact_performance at the client grain with its source claimed.",
+  "world_is": "W175-S1: the newest fact_performance partition holds 482,971 rows for 315 clients and the columns client_id, date, factor and platform metadata; no column names a period, so the order's name rule sourced no window. An issuer error: the round-108 read (COVERAGE_READS_R108.json) had already read the table as a cumulative index level and validated the reading (the reported window return, the factor on the last day over the factor on the first, sat within tolerance of the with-income computed return, 762 transactions checked). Ruled: all four windows are sourced by one fold, 100 * (factor(as_of) / factor(opening day) - 1) in percent points, the opening day being the contract's opening anchor for qtd, ytd and last_12_months and the household's first_data_date for since_inception; a window with no factor row on either date is absent in that sample. The CTO's ruling and the contract's change rule stand; no other firm's member moves. Order DB-b-217 step 3 and decomposition section 112 decision (b) are amended; the worker is resumed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~175/PERF_SHAPE_R110.json on wk-IRPT_DASHBD-175 @eaf511cdbe (column names and counts)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~172/COVERAGE_READS_R108.json (orion_dividends: the factor read as an index level)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-217.contract-0-5-0-equivalence-map-and-inflection-household-return-source.md step 3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
