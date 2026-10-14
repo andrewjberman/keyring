@@ -10,16 +10,20 @@
  "subject": "c449: one Andrew-approved S3 version delete that no Dell principal may run (DenyS3DeletesOnProductionData stands)",
  "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CROSSBOX_BODY_C449_S3_VERSION_DELETE_OFF_DELL_20261014.md",
  "opened_at": "2026-10-14T12:13:56Z",
- "state": "OPEN",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-14T14:31:34Z",
   "bus_message_id": "8b569828-9ea4-4958-a544-fbd992196166"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-14T14:33:54Z",
+  "by": "1.0.0_SA_CTO",
+  "bus_message_id": "3a658a4d-7598-483d-841d-bbfbcd05730f"
+ },
  "closed": {
-  "from_at": null,
-  "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "from_at": "2026-10-14T14:36:26Z",
+  "from_by": "1.0.0_SA_CTO~DELL2",
+  "to_at": "2026-10-14T14:37:10Z",
+  "to_by": "0.0.0_AB_MSTR"
  }
 }
