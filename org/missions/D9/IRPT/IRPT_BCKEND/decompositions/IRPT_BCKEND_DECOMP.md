@@ -3752,3 +3752,19 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r186/p186_cells.py`, dry-run at the b
 | `IB-pr-522` | the `account_activity_daily` backfill censused: writers counted, tables per firm, demand under the 2012 floor, the observed rate, the plan and its packet; reads only | FWD-3 | SERVED (reads listings, logs and the repository; writes only the worker's records) | none | P186-b |
 
 fanout: 2 of 2 chains, cap 8, reason: two independent chains. One worker spawn (slot ~369) and one live seat (`0.7.0_AE_CloudOps~IB2`).
+
+
+## 179. ROUND 187, WORKSTREAM ~P (2026-10-14 ~01:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round-187 analysis (@718356ee39, msg 7389): ruling 1 Design (B) for the 49F activity backfill; ruling 2 Cottonwood and Inflection activity per the Opal Shape)
+
+Round 186 closed (IB-pr-521 applied; IB-pr-522 census @a377bb4d49; packet @4556bc40d4). The CTO's round-187 list has three items. (1) The 49F activity backfill, Design (B), "the code change and its never-widen pair": **CUT now the CODE CHANGE** as `IB-pr-523` (a BUILD-only order: the backfill event gains a `stages` key; an activity-and-lots-only run never writes returns or class); the pair (census, packet, signed halves) and the apply and the chunked runs are later cells (one order per round per cell; the pair needs the built candidate first). (2) IB-pr-456 on Andrew's execution ID: **NOT cut now: an unmet dependency (open call `f61b`); it re-censuses against the then-live `irpt-ycharts-generate`; owner me.** (3) The one read cell for Cottonwood and Inflection: **CUT now** as `IB-pr-524` (read only: the landed transaction source of each firm and its mapping to the `account_activity_daily` shape; no new vendor pull). NOT cut and not owed here: the producer build for the two firms (after the mapping is read), the two per-firm censuses and pairs.
+
+Two cuts, independent chains: the build changes `reporting-gold/handler.py` and one new test file offline; the read lists prefixes and reads code.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r187/p187_cells.py`, dry-run at the base: IB187-1 and IB187-2 AC1, AC2, AC3 all FAIL (no new tests and the default event runs the returns under a lots-only request; no record); positive controls pass all three of each cell (IB187-1 in a throwaway git worktree at HEAD with my own hand implementation: 95 tests; IB187-2 in a temp root); eleven negatives each fail their own arm; control roots removed. The first control attempt in a partial copy of the tree failed 34 tests for want of the repository's other modules: the control moved to a real worktree.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-523` | the reporting-gold backfill event gains a `stages` key: absent runs all stages as today, exactly ["lots"] runs the activity and lots stages only (no compute, no returns emit, no class emit), anything else is refused by name; tests; offline build only | FWD-3 | WORLD (the gate infers the floor from the infrastructure path; the order is BUILD ONLY and applies nothing) | the census IB-pr-522 (merged) | P187-a |
+| `IB-pr-524` | the landed transaction sources of Cottonwood and Inflection read, each shape column mapped, derived or marked absent, per firm; reads only | FWD-3 | SERVED (reads listings and the repository; writes only the worker's records) | none | P187-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two independent chains. Two worker spawns (slots ~370 and ~371).

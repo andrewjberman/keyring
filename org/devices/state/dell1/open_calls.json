@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-14T00:17:47Z",
+ "written_at": "2026-10-14T00:58:01Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -3048,6 +3048,82 @@
     "ruled_by": "cto",
     "xadj": null,
     "decision": "approved"
+   }
+  },
+  {
+   "id": "dell1-20261014T005530Z-42c6",
+   "project": "ADVI_BDPRCE",
+   "subject": "ADVI_BDPRCE: under R1, do Dividend Reinvestment, Income Reinvestment and Transfer In price rows count as trades? 240 of 285 carry-forwards depend on them",
+   "asked_by": "2.0.0_SA_COO~K1",
+   "source": "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~6/REPLAY.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T00:55:30Z",
+   "kind": "fork",
+   "context": "BP-b-2 (merged @4a03d59451) replayed R1 variant A (Buy and Sale only) over the 1,657 served rows: 285 become carry-forwards, and for 240 of them the served price is reproduced only by non-trade rows (153 Transfer In, 51 Dividend Reinvestment, 26 Income Reinvestment). Variant B (adds Dividend Reinvestment) prices 636 of 822 non-trade-sourced changed rows. The answer sets what the FWD-7 before/after list shows Andrew and what C5 builds.",
+   "rec": "Count Dividend Reinvestment and Income Reinvestment buys (an executed price per unit) as trades; keep Transfer In, Journal, cash legs and every row without an executed market price out. Then replay once more so the list Andrew reads carries the ruled variant.",
+   "scope": {
+    "measured_at": "2026-10-14T00:55:30Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T00:58:00Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D8/ADVI/ADVI_BDPRCE/ledger/CTO_RULING_R1_THE_PRICE_RULE_20261013.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
+  },
+  {
+   "id": "dell1-20261014T005532Z-3d72",
+   "project": "ADVI_BDPRCE",
+   "subject": "ADVI_BDPRCE: R1 uses the executed price column; for par-quoted bonds it is per 100 while the served price is per 1 (8 rows read 100x). Which unit does R1 serve?",
+   "asked_by": "2.0.0_SA_COO~K1",
+   "source": "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~6/REPLAY.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T00:55:32Z",
+   "kind": "fork",
+   "context": "BP-b-2 row W6-S2 (ARMED): MIAMI-DADE CNTY FLA EDL FACS A 5.25% 04/01/2031 2026-10-09 serves 1.0419 and R1 reads 104.19; two more municipal bonds the same; eight changed rows in all. R1 clause 3 says the trade's executed price column, not a derived amount over units, and the column is quoted per 100 of par for these assets. Served 100x if applied as written.",
+   "rec": "Serve the per-unit price (executed price divided by 100 for par-quoted fixed-income assets), identified by the asset dimension's class or by the ratio of price to market_value over units; the replay then lists these as UNCHANGED, not as 8 movers.",
+   "scope": {
+    "measured_at": "2026-10-14T00:55:32Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T00:58:01Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D8/ADVI/ADVI_BDPRCE/ledger/CTO_RULING_R1_THE_PRICE_RULE_20261013.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
    }
   }
  ]

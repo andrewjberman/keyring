@@ -77,8 +77,9 @@ OWN-BOX means this box's CTO may settle the call. An act only Andrew can do stil
 prints that sentence and decides nothing about which acts those are.
 
 Environment (tests only): OPAL_STATE_ROOT replaces org/devices/state; OPAL_CROSSBOX_ROOT replaces org/devices/crossbox;
-OPAL_CLOUD_READ_LOCAL=<dir> stands in for the cluster copy for approval-status reads (box=<box>/open_calls.json, read only);
-OPAL_GIT_READ_ROOT=<repo> replaces the repository whose origin/box/<box> refs approval-status reads.
+OPAL_CLOUD_READ_LOCAL=<dir> stands in for the two foreign sources of approval-status reads, read only: <dir>/box=<box>/open_calls.json
+is the cluster copy and <dir>/git=<box>/open_calls.json is the origin/box/<box> copy. Set, it reads no real git ref.
+OPAL_STATE_ROOT set with OPAL_CLOUD_READ_LOCAL unset skips the git source too (no real ref is read under a test switch).
 Exit: 0 done (either verdict is a result), 1 refused, 2 usage or an unresolved box, 3 an unreadable register or list file.
 """
 from __future__ import annotations
@@ -1463,10 +1464,6 @@ class _Skip(Exception):
     """One source of an approval list that is absent or unreadable: skipped, its reason kept for the refusal."""
 
 
-def _git_root() -> str:
-    return os.environ.get("OPAL_GIT_READ_ROOT", "").strip() or ROOT   # tests: a repository standing in for ROOT
-
-
 def _is_this_box(box: str) -> bool:
     """True only when this box resolves and is `box`. An unresolved identity is not this box: every source is read."""
     dev = load_mod("opal_devices", "lib/devices.py")
@@ -1487,9 +1484,20 @@ def _source_working_tree(box: str) -> tuple:
 
 
 def _source_git(box: str) -> tuple:
+    local = os.environ.get("OPAL_CLOUD_READ_LOCAL", "").strip()
+    if local:   # tests: <dir>/git=<box>/open_calls.json stands in for origin/box/<box> (read only)
+        path = os.path.join(local, "git=%s" % box, "open_calls.json")
+        if not os.path.isfile(path):
+            raise _Skip("git copy absent (%s)" % path)
+        try:
+            return json.load(open(path, encoding="utf-8")), path
+        except (OSError, ValueError) as exc:
+            raise _Skip("git copy unreadable (%s)" % exc)
+    if os.environ.get("OPAL_STATE_ROOT", "").strip():   # a test switch with no stand-in: never read the real refs
+        raise _Skip("git copy not read under the test switch (OPAL_STATE_ROOT)")
     where = "origin/box/%s:org/devices/state/%s/open_calls.json" % (box, box)
     try:
-        got = subprocess.run(["git", "-C", _git_root(), "show", where], capture_output=True, text=True, encoding="utf-8",
+        got = subprocess.run(["git", "-C", ROOT, "show", where], capture_output=True, text=True, encoding="utf-8",
                              errors="replace")
     except OSError as exc:
         raise _Skip("git unavailable (%s)" % exc)
