@@ -26402,3 +26402,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The tool's output is reported verbatim in the worker report. The row is not closed and was not edited after the add."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W424-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~424",
+  "surfaced_at": "2026-10-14T00:09:26Z",
+  "one_line": "Amendment 2 does not order the numeric guard against the sentence cut, nor the cut against the citation check on the web path; the builder chose guard-then-cut on the Opal path and cut-then-citations on the web path, without a ruling.",
+  "spec_asserts": "AMGT-fa-3 face, 1b AMENDMENT 2, rule 1: a reply over the cap is CUT at the last sentence end within the cap and the cut text is stored; if no sentence end fits, the block is NONE with the too-long reason. The first-pass Opal rule: every digit run in the folded text must appear in the supplied facts. Rule 2 lists 'the numeric guard voided the text' and 'the text was too long to cut' as Opal NONE reasons. The face gives no order between the guard and the cut, and none between the cut and the citation check on the web path.",
+  "world_is": "lib/research/aifill/block_mgmt_bio.py at this order's commit: _opal_attempt runs the digit guard on the folded reply BEFORE _cut, so a figure present only in the cut-away tail voids the block; _web_block runs _cut BEFORE _web_citations, so a reply both too long and without a citable source reports the too-long reason. Neither order publishes a figure the facts do not hold, because the stored text is a prefix of the guarded reply. The check arms opal_guard_falls_to_web_then_none and long_text_cut read neither order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/block_mgmt_bio.py _opal_attempt (digit guard, then _cut) and _web_block (_reply_text, then _cut, then _web_citations) in worktree C:/dev/wk-resapp-424 @31be9c28ac base, edited in this order's commit.",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa3_mgmt_bio.py arms opal_guard_falls_to_web_then_none and long_text_cut, read at the same worktree: neither asserts the order of guard, cut and citation check."
+    ]
+  },
+  "notes": "Form only. Filed by the worker; the issuer owns the disposition. The builder keeps both choices; a different order is a one-line move in each function if the issuer rules otherwise."
+}
+```
