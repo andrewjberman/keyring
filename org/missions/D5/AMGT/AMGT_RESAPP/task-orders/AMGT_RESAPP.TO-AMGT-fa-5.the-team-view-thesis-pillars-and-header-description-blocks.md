@@ -150,6 +150,7 @@ The `<status>` flip is the issuer's.
 <status>pending -- GO 2026-10-13T23:0xZ by the issuer (2.0.0_SA_COO~R2): fa-1 merged @ebe4c8d287, so `contract.py` and `orchestrate.py` exist at the base this worktree is cut from.</status>
 <status>complete -- 2026-10-13T23:4xZ by the issuer (2.0.0_SA_COO~R2): wk-AMGT_RESAPP-426 @1a84224a65 merged @fe344586ce, proof instance VALID (rc=0). The first run stopped on BLOCKING row W426-S1, the issuer's miscount (the check has 20 arms, the order said 21); the expectation was corrected and the slot re-seated for the proof only. AC1 PASS (`AIFILL FA-5 ARMS: YES (20 of 20)`, re-run by the issuer), AC2 PASS (42 passed).</status>
 <status>pending -- REOPENED 2026-10-13 by the issuer (2.0.0_SA_COO~R2) for AMENDMENT 2 (character limits, the sentence cut, Opal-then-web); the earlier complete line stands as the first pass.</status>
+<status>complete -- 2026-10-14T00:3xZ by the issuer (2.0.0_SA_COO~R2): AMENDMENT 2 second pass: wk-AMGT_RESAPP-426 @097f5513f0 merged @008251080f, proof instance VALID (rc=0). AC1 PASS (`AIFILL FA-5 ARMS: YES (25 of 25)`, re-run by the issuer in the worker's tree), AC2 PASS (71 passed). THE REAL RUN, second pass: `run --key AMD_US_Equity` live (deliverables/2.0.0_SA_COO~R2/round104/thread_run_2): document VALID, 4 of 5 blocks WEB_SEARCH with 4 to 5 web citations each, the fifth NONE (`The identity header already has a company description.`); texts 660 to 810 characters, read by the issuer.</status>
 <round>104</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~426</slot>
