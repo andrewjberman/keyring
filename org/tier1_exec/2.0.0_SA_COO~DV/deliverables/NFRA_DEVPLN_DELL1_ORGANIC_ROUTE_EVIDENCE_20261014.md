@@ -1,0 +1,24 @@
+# NFRA_DEVPLN -- a second feature reached portal DEV through the route, organically, from another box (issuer read, 2026-10-14 ~00:30Z)
+
+Not a cell and not a grade: a measured record for the CTO's and CVO's grade reads of FWD-1, FWD-4 and FWD-7. Read by `2.0.0_SA_COO~DV` from origin, on the laptop, with the tools the project built.
+
+## What happened
+
+At ~20:20 local (see the commit) a worker `0.9.0_WK_AMGT_RESAPP~423` landed `cand/dell1/amgt-sa-header-money-and-dash-reasons` on portal DEV: merge commit `5e40e541`, first parent `24877b67` (the laptop feature's merge), second parent `624e2533f665bf786e41594adba17b82c447aa7d`. Neither this project's workers nor the issuer touched it.
+
+## The reads (all from the laptop; dell1 is a foreign box)
+
+| read | result |
+|---|---|
+| merge body, last lines | `Feature: cand/dell1/amgt-sa-header-money-and-dash-reasons` and `Approved-By: 1.0.0_SA_CTO~DELL1 @dell1-20261014T001511Z-633a` |
+| `python .tools/open-calls.py approval-status --branch cand/dell1/amgt-sa-header-money-and-dash-reasons` | `NOTE: dell1 list read from cluster written_at=2026-10-14T00:17:47Z` then `state=APPROVED valid=yes row=dell1-20261014T001511Z-633a by=1.0.0_SA_CTO~DELL1 head_sha=624e2533f665 commits=1 class=opal-internal box=dell1 pages=Security Analysis` |
+| the row's bound head equals the merge's second parent | `624e2533f665` on both sides |
+| `python .tools/portal-hooks/dev_push_payload_gate.py --portal portal --remote-ref refs/heads/DEV --remote-sha 24877b67 --local-sha 5e40e541` | `PASS 5e40e54119 route=A` then `DEV-PUSH-GATE result=ADMITTED reason=- commits=1` |
+| `python .tools/portal-dev-approval-read.py --portal portal` | `first_parent_commits=5 approved=2 unapproved=3` (the three unapproved are the dell2 ANLREQ merges that predate the route) |
+
+## What it shows, and what it does not
+
+- The approval route ran from a box other than the laptop: an `opal-internal` feature approved by that box's CTO lane (`_SA_CTO` closer, class rule `valid=yes`), landed with both trailers. That is FWD-7's class line operating on organic work, and FWD-4's per-commit read naming the feature and approver for each approved commit.
+- Three round-2/4/5 tools composed on real data: the cluster-first read found a row on dell1's list that the laptop's working-tree copy does not hold (`DP-e-2`); the payload limb admitted the push as route A against that row's bound head (`DP-f-1`); the per-commit read listed it (`DP-c-1`).
+- It does NOT show the client-facing case. This feature is Opal-internal (Security Analysis, staff-only). FWD-1's client-facing close still waits on Andrew ruling the dell2 rows (`3635`, `8500`, `7b45`, `fde0`).
+- Not measured here: which route the worker took to push (the script versus a typed push). The merge is a two-parent merge with both trailers and a valid row either way. The payload limb is not installed on any box, so it did not gate this push.
