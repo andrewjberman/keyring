@@ -12720,3 +12720,111 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W180-S1 -- the portal rule file CONTRIBUTING-BOXES.md is absent from the portal branch this order grants, so the rule could not be read before the portal change
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W180-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~180",
+  "surfaced_at": "2026-10-14T21:46:04Z",
+  "one_line": "CLAUDE.md names portal/CONTRIBUTING-BOXES.md as the rule to read before any change under portal/; the file is absent from the portal branch this order grants (wk-IRPT_DASHBD-180-portal, cut from wk-IRPT_DASHBD-175-portal), so the portal change was made under the order's grant alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CLAUDE.md, Portal section: portal/CONTRIBUTING-BOXES.md is the rule; read it before you touch portal/.",
+  "world_is": "git -C portal cat-file -e 02fb789e863bac627490db7e2c5a0676e54e8f34:CONTRIBUTING-BOXES.md and the same path under portal/ both fail (the file is not in the round-110 tip this branch is cut from). git -C portal ls-files returns zero names matching contributing at the worker commit c81d54ff31b0. git -C portal log --all -- CONTRIBUTING-BOXES.md shows the file was added at 07f065e6 and last changed at b5222d78, so it lives in other history, not on this branch.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal cat-file -e 02fb789e863bac627490db7e2c5a0676e54e8f34:CONTRIBUTING-BOXES.md (absent)",
+      "git -C portal ls-files, grep -i contributing at c81d54ff31b0 (zero matches)",
+      "git -C portal log --all -- CONTRIBUTING-BOXES.md (07f065e6, b5222d78)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here."
+}
+```
+
+## IRPT_DASHBD-D2-W180-S2 -- a plain git commit in the portal repo refuses without a committer identity; the commit used a per-command committer name and address
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W180-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~180",
+  "surfaced_at": "2026-10-14T21:46:04Z",
+  "one_line": "The order commits portal files with plain git and the worker's author line; on this device the portal repo has no committer identity, so the first plain commit refused and the worker supplied the committer for that one command.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face: portal files commit in the portal repo with plain git and your author line.",
+  "world_is": "git -C portal commit with --author set and no committer identity refused: 'Committer identity unknown ... unable to auto-detect email address'. The worker set GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL to its own serial on that one command and wrote no git configuration. Commit c81d54ff31b0 carries the serial as author and as committer, and it did not pass through safe-commit.sh (the order's plain-git route). The workspace commit ade84c588d did pass through safe-commit.sh and needed no such setting.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal commit output of the first attempt (refusal, rc 128)",
+      "git -C portal log -1 at c81d54ff31b0 (author and committer 0.9.0_WK_IRPT_DASHBD~180)",
+      "git -C C:/dev/wk-irpt-dashbd-180 log at ade84c588d (safe-commit author line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here."
+}
+```
+
+## IRPT_DASHBD-D2-W180-S3 -- the whole-scope InvestorReporting suite fails 20 tests at the round-110 portal tip here, where the round-110 record measured 5; the failing set is unchanged by this round
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W180-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~180",
+  "surfaced_at": "2026-10-14T21:46:04Z",
+  "one_line": "The whole-scope suite base at the round-110 portal tip is 1294 pass and 20 fail in this worktree, where the round-110 record measured 1298 pass and 5 fail; the 20 failing tests are outside the label surface and are the same before and after this round's change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The round-110 render record (RENDER_R110.json, tests.suite_base) measured the whole-scope suite base at pass 1298, skip 27, fail 5, with no new failing id.",
+  "world_is": "bun test src/pages/InvestorReporting at base 02fb789e863b in this worktree: 1294 pass, 27 skip, 20 fail of 1341 tests in 403 files. The failing names are in the route-table, producer-fixture, request-corpus, envelope, version-header and fixture-set suites (F14-AC3, F14-AC13, F14-AC15, F14-AC16, F57-AC2, IVE26-AC3, IVE48-AC1, IVE98 and the fixture cases). After the round-111 change: 1300 pass, 27 skip, 20 fail of 1347 tests in 404 files; the failing set equals the base set. The cause of the difference from the round-110 count is not measured here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test src/pages/InvestorReporting at 02fb789e863b (the private output suite_base.txt, its failing list fail_base.txt)",
+      "bun test src/pages/InvestorReporting at c81d54ff31b0 (suite_after.txt, fail_after.txt; comm of the two lists is empty)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~175/RENDER_R110.json tests.suite_base"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here."
+}
+```
+
+## IRPT_DASHBD-D2-W180-S4 -- safe-commit could not run its client account-id check on the round-111 record commit: the hashed account-id list is absent on this device
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W180-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~180",
+  "surfaced_at": "2026-10-14T21:46:04Z",
+  "one_line": "On the round-111 record commit safe-commit printed that its client account-id check did not run, because the hashed account-id list is absent at the device path; the worker's own committed content was read and holds no account id.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Client data lives only under the private evidence folder: no account id, last four or figure in the repo, a row or a report (the worker face bounds).",
+  "world_is": "safe-commit.sh on commit ade84c588d printed: WARN client-data-check: hashed account-id list ABSENT at the user profile path (.opal folder, account_id_hashes.txt) -- this commit was NOT checked for client account ids. The commit holds the relabel record (counts, hashes, a private folder path, words) and the harness copy only. The worker read both files and wrote no account id, last four or figure into them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for ade84c588d (the WARN line)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~180/BUILD_R111.json at ade84c588d",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~180/render_sample.ts at ade84c588d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. The later portal commit c81d54ff31b0 also passed no client-data check (see W180-S2)."
+}
+```
