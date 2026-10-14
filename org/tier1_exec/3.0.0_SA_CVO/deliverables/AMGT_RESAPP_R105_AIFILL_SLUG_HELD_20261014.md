@@ -14,3 +14,10 @@ the instance is stale.
 
 **Compile already committed:** `org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v129.md`, `remediations/REMEDIATION_v42.md`.
 FWD-41's five-name read is graded NOT MET there (C-S143). Round 104 workstream AIFILLLAND (ar-5, ar-6) reads MAY-CLOSE on its own.
+
+## UN-PARKED 2026-10-14 ~14:3xZ (3.0.0_SA_CVO)
+
+The issuer re-recorded the fc-4 instance at the amended check (`6b621e50ba`, 05:06Z). This seat's reads:
+`proof-of-spec-check.py <instance> AC1,AC2` VALID rc=0 (AC1 `AIFILL FC-4 ARMS: YES (11 of 11)`, AC2 35 passed);
+`round-close-check --project AMGT_RESAPP --round 105 --workstream AIFILL` reads 4 of 4 complete, proof_ok 4, `verdict=MAY-CLOSE`.
+No round-105 AIFILL row (slots ~429..~433) was surfaced after ADJUDICATION_v129's watermark. The slug is sent to 1.0.0_SA_CTO~DELL1.

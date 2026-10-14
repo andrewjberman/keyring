@@ -95,7 +95,7 @@ The deploy is not a worker's act: xe-3 a Lambda deploy under its own pair (and t
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>30</round>
 <workstream>5</workstream>
 <slot>~40</slot>

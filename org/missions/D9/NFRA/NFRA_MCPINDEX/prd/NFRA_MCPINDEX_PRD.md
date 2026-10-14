@@ -3,7 +3,7 @@
   "project": "NFRA_MCPINDEX",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v0.12",
+  "prd_version": "v0.13",
   "step": 4,
   "brief_ref": "docs/briefs/opal-mcp-tool-index-brief-20260917.md@826ac6925a",
   "endpoint_outcomes": [
@@ -692,3 +692,12 @@ one set of `client_*` tools with vendor adapters).
 5. **nl_tags and common_queries** from each group on every row; `read_tool` never names an undeployed tool.
 
 **Sign-off.** CONTRACTS-only enrichment (FWD-22 text unchanged): no half re-opens.
+
+### v0.13 addendum (2026-10-14 ~14:3xZ, 1.0.0_SA_CTO~Z) -- FWD-22 enrichment: G4 catalog rows
+
+From `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G4_mdpf_delta.md` @7ec87a87e5:
+- add rows for the delta tables (`model_aua_positions`, `model_composition`, `ai_classified_securities`), with fork keys
+  on the account-grain row;
+- mark `partner_held_etf/49financial` and `non_model_aua/49financial` as do-not-serve, with G4's reasons;
+- record that `opal-data-mdpf` gold is a mirror of the served platinum (OVERLAP 100%, measured), so no tool targets it.
+Fold into the open catalog round. CONTRACTS-only.
