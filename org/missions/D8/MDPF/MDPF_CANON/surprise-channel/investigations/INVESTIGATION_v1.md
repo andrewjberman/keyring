@@ -1690,3 +1690,126 @@
   "disarm_owner": "2.0.0_SA_COO~D1"
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W20-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~20",
+  "surfaced_at": "2026-10-14T14:48:43Z",
+  "one_line": "The worker face handed to CN-m-1 carries the issuer's RECORD FACE section (pre-read values, expected record shape, the four ANCHORS readers) under a marker that says it does not travel to the worker.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-m-1.staged-global-aggregate-reader-census.md@0c1a6cac3c lines 143-183: the RECORD FACE section (ISSUER NOTES, THE ISSUER'S PRE-READ, expected shape of the record); the same text is in the worker face file handed to the worker",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_m_1.py@0c1a6cac3c lines 30-35: ANCHORS, the four readers V2 requires the record to list"
+    ]
+  },
+  "spec_asserts": "The census is written blind: the RECORD FACE does not travel to the worker (the order's own marker at its RECORD FACE section; the spine's L7 rule that the record face never travels).",
+  "world_is": "The RECORD FACE was readable by the worker before grounding. No value from it is cited; every count in the record derives from this worker's own reads. The anchors are known to the worker, so V2 can be met by listing them and cannot tell a blind census from a sighted one. Pre-read counts (universe 28 of 8,831; staged ETag and size) also differ from this worker's live reads (universe 28 of 8,812), which is why no pre-read value was used.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed so the CVO can grade AC3 and the round-7 close knowing the census was not blind. The worker has not altered the check, the order or the RECORD FACE."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W20-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~20",
+  "surfaced_at": "2026-10-14T14:48:43Z",
+  "one_line": "The pre-read says the publisher and egress-publisher roles both cover the staged key; Terraform and the live publisher Lambda config disagree on which role the portal publisher runs as, and only the portal-publisher role's Terraform grants the key.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function-configuration --function-name opal-assets-mdpf-portal-publisher: Role opal-assets-mdpf-egress-publisher-role, LastModified 2026-10-09T22:21:52Z",
+      "infra/aws/terraform/opal-assets/mdpf_portal_publisher.tf:45,89-90: role opal-assets-mdpf-portal-publisher-role with GetObject on gold/mdpf_revamp/*",
+      "infra/aws/terraform/opal-assets/mdpf_egress_publisher.tf:85,171-172: egress role GetObject on portal/gold/mdpf/* only; no gold/mdpf_revamp grant",
+      "comp-iam simulate opal-assets-mdpf-egress-publisher-role s3:GetObject on the staged key --no-control: STATE NOT-DECIDABLE (s3:prefix missing from the context)"
+    ]
+  },
+  "spec_asserts": "Pre-read: the publisher and egress-publisher roles both cover gold/mdpf_revamp/* (issuer notes, IAM bullet).",
+  "world_is": "The live publisher runs as the egress role, whose Terraform does not grant the staged key. The portal-publisher role's Terraform grants the key but is not the live Lambda role. The publisher code reads portal/gold/mdpf/ only, so the reach of the code is unchanged.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "CN-m-1 records the portal-publisher role in iam_static (grant present) and the egress role in iam_live (NOT-DECIDABLE, not a deny)."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W20-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~20",
+  "surfaced_at": "2026-10-14T14:48:43Z",
+  "one_line": "Two repo notes give the accrual bridge fire time as 14:10Z and 15:45Z; the live schedule mdpf-accrual-bridge-daily is cron(40 13 * * ? *), 13:40Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/EC2_MANIFEST.json:482 (accrual_bundle note: mdpf-accrual-trigger 14:10Z UTC scheduler)",
+      "infra/aws/terraform/mdpf-pipeline/CHANGELOG.json:23 (Scheduler cron(45 15)Z)",
+      "aws scheduler get-schedule --name mdpf-accrual-bridge-daily: ScheduleExpression cron(40 13 * * ? *), State ENABLED"
+    ]
+  },
+  "spec_asserts": "The accrual bridge leg fires at 14:10Z (EC2 manifest note at infra/aws/ec2/EC2_MANIFEST.json:482).",
+  "world_is": "The live schedule fires at 13:40Z. CN-m-1 uses the live time. The repo notes are stale.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W20-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~20",
+  "surfaced_at": "2026-10-14T14:48:43Z",
+  "one_line": "aws s3api get-bucket-logging returns empty stdout with rc 0 on every opal-data bucket sampled, so server access logging reads as absent, with no in-estate positive case of a LoggingEnabled block to control the call shape.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api get-bucket-logging --bucket opal-data-assets --output json: rc 0, 0 bytes of stdout",
+      "same call on opal-data-bd, opal-data-cot, opal-data-inf, opal-data-49financial, opal-data-portal-v2: rc 0, 0 bytes each",
+      "aws s3api get-bucket-location --bucket opal-data-assets --output json (same shim): rc 0, 38 bytes, LocationConstraint null"
+    ]
+  },
+  "spec_asserts": "server_access_logging is true only if the logging call returns a LoggingEnabled block; an empty object means none (CN-m-1 Step 1, trail).",
+  "world_is": "The empty result is recorded as false per the spec. No sampled bucket returned a LoggingEnabled block, so the call shape has no observed positive case here. The false value is an absence, not an exercised negative (ABSENT != EXERCISED-AGAINST).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W20-S5",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~20",
+  "surfaced_at": "2026-10-14T14:48:43Z",
+  "one_line": "The code universe scan (suffix and literal-key match) cannot see a reader whose key comes from a config row: .tools/comp-freshness GETs the staged key in content mode from served_freshness_config.yaml:115 and names no literal key.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/comp-freshness:1090-1097 (_fetch_object_doc runs s3 cp on the config's s3_key_prefix); :1119 is its call under as_of content mode",
+      "data/served_freshness_config.yaml:115 (s3_key_prefix of mdpf_leg_gold_revamp_staging_aggregate, as_of_field as_of_last)",
+      "check universe mode at HEAD 0c1a6cac3c: 28 files naming both strings; comp-freshness is absent (no .py suffix, no literal key)"
+    ]
+  },
+  "spec_asserts": "The code class is the repo's consumers found by the universe scan (CN-m-1 Step 1, code).",
+  "world_is": "A config-driven reader exists outside the scan and is listed by hand in CN-m-1. The scan method cannot show that no other config-driven reader exists.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
