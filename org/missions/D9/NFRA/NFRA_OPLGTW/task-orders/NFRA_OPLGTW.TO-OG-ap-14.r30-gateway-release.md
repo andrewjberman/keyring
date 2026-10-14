@@ -208,6 +208,18 @@ commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing
   - Carried to the cut template: a release order names its deploy source by `release_sha`, never by a worktree path.
   - Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
+- A7 (issuer, 2026-10-14 ~05:3xZ, msg 33996): **`bbg_identity_admitted_8` resolves the identity from the INSTALLED
+  code.**
+  - `identity_scope.check(email, tool, client_id)` keys on EMAIL, and before OG-mg-1 the Bloomberg principal holds no
+    grant-store record, so the field's "by its oid from the grant store" has no referent.
+  - Use the email pinned in the installed module (`identity_scope`'s `OPAL_USERS_ONLY` naming
+    `opalbloomberg@opalinvest.com`), read on the host, never typed. Record only its hash and the constant's name.
+  - What the field measures, stated plainly: OG-tg-1's UNSCOPING. After r30, `check()` returns None for that unscoped
+    identity on every served tool. That is the widening C1 named and C2 grades.
+  - The data-grant family is governed by `decide()`, a different path, and OG-mg-1 writes it. The end-to-end read (the
+    BG seat's own exercise) remains AC3, after r30 AND OG-mg-1.
+  - Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>37</round>
 <slot>~AE</slot>
