@@ -1534,6 +1534,12 @@ are site Z's under `1.0.0_SA_CTO~Z`'s half and of xe-3 a Lambda deploy under its
 - Checks: `round30/checks/xe3_union_reader_check.py` (AC1 the short pull keeps the older actions; AC2 one action in two pulls appears once with the latest pull's values; AC3 status rows follow the
   old rule, a full-snapshot store reads as before, an empty store returns the old triple; base FAIL 3, the empty-store control PASS). The live-store arm (the new reader's G5 output equals today's,
   DELTA = 0, read-only, BEFORE any deploy) is the issuer's drain act, not a worker criterion. J1: none (a LOCAL cell; the Lambda deploy goes under its own pair).
+- AMENDMENT 1 (2026-10-14, issuer 2.0.0_SA_COO~V1, on the worker's row ETFS_RIVALS-D1-W40-S1, ARMED): `load_actions` honours the void records exactly as `price_series._actions` does. An object under
+  `corporate_actions/date=<D>/` whose file name starts `actions-void-` (`price_series._is_void_uri`) is NOT an action row: its rows are not in the returned frame, and the (`void_revision`, normalised
+  `security_id`) pairs of every such object (`price_series._voids(s)`, over all dates) drop every EVENT row whose (`revision`, normalised `security_id`) they name, before the union is taken. Reuse those two
+  functions (import them lazily inside `load_actions` if a module import would be circular); do not copy the normalisation. The returned `uris` still lists every object read, void objects included (lineage).
+  The live store holds 11 objects, none a void or an inferred object, so the live DELTA = 0 read is unaffected. The check gains AC4 (`-k ac4`, 1 passed). Row S2 (a row that is neither event nor status follows the old
+  latest-pull rule) is accepted as built.
 
 ### `RIV-xe-1` -- the enrichment leg runs on TRADING days only, and reads the standing request's queue state before a history-owed draw (analysis section 2.3; CTO msg 4568; row D1-S2; round-22 ADDENDUM 7 condition 1) -- APPENDED 2026-10-14, revision 1.31
 - Placement: this seat's staged cell `round30_prep/STAGED_CELL_enrichment_trading_gate_and_queue_reader.md` (items 1 and 2); CTO msg 4568 ("one cell with the gate, at the site-Z window -- accepted").
@@ -1561,5 +1567,5 @@ are site Z's under `1.0.0_SA_CTO~Z`'s half and of xe-3 a Lambda deploy under its
   (every other key and value unchanged). The generic machinery stays: the `index_control` role value, the `"leg": "pending"` mechanism, the gates, `collector_bloomberg.CONTROL_ROW_CAP` and `split_units`, because no served output depends on them and a
   benchmark may return as a map entry. Rewrite the tests that name the two funds to the new facts (a map entry for a benchmark is exercised through a synthetic map or a monkeypatched `_is_control`, never the shipped map).
 - Out of bounds: `universe.py`, `collector_bloomberg.py` (code), every other map entry, any gate value in `leg_gates.json`, any S3 or vendor call.
-- Checks: `round30/checks/xf1_acwi_iwm_removed_check.py` (AC1 in four gate states no ACWI or IWM and the same 13 funds; AC2 the holdings plan with every gate on is the 13 funds in one unit; AC3 the budget config no longer sizes the two funds;
+- Checks: `round30/checks/xf1_acwi_iwm_removed_check.py` (AC1 in four gate states no ACWI or IWM and the same 13 funds; AC2 the holdings plan with every gate on is the 7 bloomberg_primary funds in one unit (AMENDMENT 1, issuer, row W42-S1: `request_plan` plans the `bloomberg_primary` funds only, 7 with ENABLE on, so the prior plan was these 7 plus ACWI and IWM and the change removes exactly the two); AC3 the budget config no longer sizes the two funds;
   base FAIL 5, the all-gates-off control PASS = DELTA 0) and the tests you rewrite (AC4: the three test files below, green). J1: none (a LOCAL cell; the deploy is site Z's under the CTO~Z half).
