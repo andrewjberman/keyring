@@ -86,7 +86,7 @@ Your report carries the profile numbers, the premise's violation count, and the 
 
 - A1 (issuer, 2026-10-14 ~21:2xZ): the worker profiled it (row Z-W88-S1): the silver join is the cost, not the sentiment read, and the pruning that keeps the answer identical brings the no-window call from 43-47 s to 38-42.5 s on this box's link (issuer re-run 42.5 s: the 40 s bar passed the worker's run by noise, S3). AC2's no-window bound is 50 s (the ALB cuts at 60 s); the 7-day bound stays 40 s. The real gate is Phase B's read through the public endpoint from the host (CVO condition on OG-ap-18), which sits in-region and reads S3 faster than this box. The slot is re-seated to re-record the criteria. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G1-FIX</workstream>
 <slot>~88</slot>
