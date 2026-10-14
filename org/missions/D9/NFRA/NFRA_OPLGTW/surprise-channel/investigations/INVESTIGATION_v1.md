@@ -15295,3 +15295,54 @@ name the one known failure instead of silently inheriting it.
     "notes": "The remedy is the issuer's and already in motion (OG-gt-8: a safe root plus lib/ staged into the artifact), and this row does not ask for anything. What it adds for the re-cut: the census says there is exactly ONE line of this class in the shipped app code, so a single fix closes it, and the fix should be checked AT THE INSTALL DEPTH rather than in a checkout. The cheap general control, which I did not run and will from now on: import the shipped modules with the app root at the depth the host uses -- or simply assert that no shipped module derives a path from __file__ beyond its own package -- because `parents[N]` is silently correct in every repo tree and silently fatal in the install tree. Related: Z-S125 (the calendar never reaches the host), which is the other half of this same line's purpose."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W87-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~87",
+    "surfaced_at": "2026-10-14T20:33:44Z",
+    "one_line": "The same parents[5] line that OG-gt-8 removes from harvest_identity.py and news_typed.py also sits in app/portal_macro.py and app/portal_models.py, outside this cell's paths, so it is not removed here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: infra/aws/ec2/opal-gateway/app/portal_macro.py:55 @fdf8d53ccb -- _REPO_ROOT = Path(__file__).resolve().parents[5], guarded by a sys.path append at lines 82-83",
+        "CODE: infra/aws/ec2/opal-gateway/app/portal_models.py:39 @fdf8d53ccb -- the same line, guarded by a sys.path append at lines 74-75",
+        "CENSUS: a read of infra/aws/ec2/opal-gateway for _REPO_ROOT @fdf8d53ccb (worktree, by path) found app/harvest_identity.py:86 and app/news_typed.py:24 (both removed by OG-gt-8), app/portal_macro.py:55, app/portal_models.py:39, ops/schwab_status.py:53, ops/schwab_entitlement_admin.py:55; tests/test_admin_fabric_overlap.py carries an unrelated _REPO_ROOT",
+        "IMPORT: deploy-to-ec2.sh:265-269 @fdf8d53ccb tars app/ whole and tars ops/ not at all, so both app/ lines ride into every artifact built from this tree; whether the running service imports either module at startup was not measured"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-gt-8 names two lines, GW/app/harvest_identity.py line 86 and GW/app/news_typed.py line 24, as the parents[5] defect class to fix, and its paths are those two modules and the deploy script.",
+    "world_is": "app/portal_macro.py:55 and app/portal_models.py:39 carry the same fixed-depth line on the same host-shaped path, and they are in app/, which the artifact ships whole. Neither file is in this cell's paths, so neither is edited here. ops/schwab_status.py:53 and ops/schwab_entitlement_admin.py:55 also carry it; ops/ is not in the tar list, so they are not on the host import path.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "ARMED: an artifact built from this tree before the two lines are removed would carry them; the disarm is a one-line change in each file, owned by the issuer's cell routing. The census is one grep, not a full import audit: the import closure of the two app modules was not walked."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W87-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~87",
+    "surfaced_at": "2026-10-14T20:33:44Z",
+    "one_line": "The deploy script's md5 read-back names app/server.py and app/oauth_as.py only, not app/, deploy/ and dashboard/ as the order's premise states, and it names no lib/ file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:525 @fdf8d53ccb -- md5sum ${REMOTE_DIR}/app/server.py ${REMOTE_DIR}/app/oauth_as.py, the last line of the remote heredoc",
+        "CODE: infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:322-324 @fdf8d53ccb -- the only host-side removals before extraction are deploy/mail_sender_table.txt and deploy/mail_sender_domain_table.txt; no rm of REMOTE_DIR precedes the tar -xzf at line 324, so lib/ extracts with the rest of the artifact"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order states that the md5 read-back in the deploy script names only app/, deploy/ and dashboard/, and it asks the worker to report that read-back rather than edit it.",
+    "world_is": "The read-back at line 525 names two app/ files and nothing in deploy/ or dashboard/, and no lib/ file either. It does not decide whether lib/ landed. Nothing was edited there; the premise difference is recorded here.",
+    "notes": "INERT: a read-back print with no removal or gate effect. The calendar's absence on the host degrades to the reported absent reason, as the modules already do."
+  }
+  ```
