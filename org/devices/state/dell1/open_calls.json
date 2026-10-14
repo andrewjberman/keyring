@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-13T12:27:10Z",
+ "written_at": "2026-10-14T00:17:47Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -1476,7 +1476,7 @@
    "source": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_ANALYSIS.round88.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-11T03:36:43Z",
    "kind": "act",
    "context": "AMGT_RESAPP r89 item 7 wants the Security Analysis empty-state card (Opal-internal) on PROD, but /prod-deploy ships live DEV whole. TicketCenter, AdvisorIntelligence and InvestorReporting may open to partner logins; unsure = client-facing, so Andrew's word. Item 7 parks; nothing else waits.",
@@ -1516,7 +1516,14 @@
      ]
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-13T20:37:44Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261013_140xZ_FOUR_OPEN_CALLS_ANSWERED_DEVPLN_TAILNET_SSH_BDFEE_CTLPLN_SCOPE.md",
+    "crossbox": "XB-20261013T180327Z-ba46",
+    "ruled_by": "cto",
+    "xadj": null
+   },
    "escalation": {
     "to": "andrew",
     "ref": null,
@@ -2174,6 +2181,873 @@
     "at": "2026-10-13T12:22:22Z",
     "by": "1.0.0_SA_CTO~DELL1",
     "reason": "Valuation basis of an Andrew-approved design is his word"
+   }
+  },
+  {
+   "id": "dell1-20261013T190223Z-deeb",
+   "project": "ADVI_FIRMBKTS",
+   "subject": "Turn on billed CloudTrail write logging for opal-data-bd, -inf and -cot (DEC-12)? REC yes",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/missions/D8/ADVI/ADVI_FIRMBKTS/prd/ADVI_FIRMBKTS_PRD.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-13T19:02:23Z",
+   "kind": "fork",
+   "context": "Before an old firm bucket is deleted, FWD-6 must prove nothing wrote to it for 45 days; today writes are logged only under platinum/firm/. Gates the legacy-bucket decommission.",
+   "rec": "Yes: without it the 45-day no-write proof cannot be made for gold, bronze, silver, code or state.",
+   "scope": {
+    "measured_at": "2026-10-13T19:02:23Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/portal-auth"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/portal-auth declares /aws/lambda/auth-validator-edge, /aws/lambda/cache-control-injector, /aws/lambda/opal-portal-authorizer (+53), also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/portal-auth declares cross-firm-secret-deny, also declared by root infra/aws/terraform/shared-infra named by IRPT_BCKEND on dell2"
+     ],
+     "shared": [
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-13T20:09:31Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_200xZ_NINE_OPEN_CALLS_ANSWERED_FIRMBKTS_DEMQUE_BRIEF_HARVEST.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-13T19:02:58Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "Andrew's word: carded to him at the dell1 terminal 2026-10-13 ~19:0xZ"
+   }
+  },
+  {
+   "id": "dell1-20261013T190225Z-0e5d",
+   "project": "ADVI_FIRMBKTS",
+   "subject": "Retire Inflection's pipeline done-marker (opal-data-inf/gold/meta/pipeline-complete.json) and its watcher rule (DEC-13 Door 6)? REC yes",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/missions/D8/ADVI/ADVI_FIRMBKTS/prd/ADVI_FIRMBKTS_PRD.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-13T19:02:25Z",
+   "kind": "fork",
+   "context": "When Inflection moves to its own bucket, the marker either gets a successor or is retired with mdpf-feeder-accelerator. No act on opal-data-inf starts until both DEC-13 answers are in.",
+   "rec": "Retire both, after the box CTO confirms no other live consumer reads the marker.",
+   "scope": {
+    "measured_at": "2026-10-13T19:02:25Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/portal-auth"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/portal-auth declares /aws/lambda/auth-validator-edge, /aws/lambda/cache-control-injector, /aws/lambda/opal-portal-authorizer (+53), also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/portal-auth declares cross-firm-secret-deny, also declared by root infra/aws/terraform/shared-infra named by IRPT_BCKEND on dell2"
+     ],
+     "shared": [
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-13T20:09:32Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_200xZ_NINE_OPEN_CALLS_ANSWERED_FIRMBKTS_DEMQUE_BRIEF_HARVEST.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-13T19:03:01Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "Andrew's word: carded to him at the dell1 terminal 2026-10-13 ~19:0xZ"
+   }
+  },
+  {
+   "id": "dell1-20261013T190226Z-0b6f",
+   "project": "ADVI_FIRMBKTS",
+   "subject": "Keep the self-refreshing Orion login token (opal-data-inf/orion/jwt/current.json) in place, with the old bucket open for that one file (DEC-13 B2)? REC yes",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/missions/D8/ADVI/ADVI_FIRMBKTS/prd/ADVI_FIRMBKTS_PRD.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-13T19:02:26Z",
+   "kind": "fork",
+   "context": "Moving the live token breaks the chain that refreshes it; it is Andrew's standing exception. No act on opal-data-inf starts until both DEC-13 answers are in.",
+   "rec": "Yes: keep it in place; moving a live credential breaks its refresh.",
+   "scope": {
+    "measured_at": "2026-10-13T19:02:26Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/portal-auth"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/portal-auth declares /aws/lambda/auth-validator-edge, /aws/lambda/cache-control-injector, /aws/lambda/opal-portal-authorizer (+53), also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/portal-auth declares cross-firm-secret-deny, also declared by root infra/aws/terraform/shared-infra named by IRPT_BCKEND on dell2"
+     ],
+     "shared": [
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-13T20:09:34Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_200xZ_NINE_OPEN_CALLS_ANSWERED_FIRMBKTS_DEMQUE_BRIEF_HARVEST.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-13T19:03:03Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "Andrew's word: carded to him at the dell1 terminal 2026-10-13 ~19:0xZ"
+   }
+  },
+  {
+   "id": "dell1-20261013T190228Z-05d7",
+   "project": "ADVI_FIRMBKTS",
+   "subject": "Retire the mockadv test account (user rows, firm dropdown, two router map entries, registry rows) in one change with rollback (DEC-14)? REC yes",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/missions/D8/ADVI/ADVI_FIRMBKTS/prd/ADVI_FIRMBKTS_PRD.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-13T19:02:28Z",
+   "kind": "fork",
+   "context": "Andrew: 'almost certainly deprecated/useless'. A repo census finds it still referenced in user records, the dropdown, the router, the naming registry and IRPT runners.",
+   "rec": "Yes, after a consumer census reads zero live use; tests keep a fixture.",
+   "scope": {
+    "measured_at": "2026-10-13T19:02:28Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/portal-auth"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/portal-auth declares /aws/lambda/auth-validator-edge, /aws/lambda/cache-control-injector, /aws/lambda/opal-portal-authorizer (+53), also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/portal-auth declares cross-firm-secret-deny, also declared by root infra/aws/terraform/shared-infra named by IRPT_BCKEND on dell2"
+     ],
+     "shared": [
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-13T20:09:35Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_200xZ_NINE_OPEN_CALLS_ANSWERED_FIRMBKTS_DEMQUE_BRIEF_HARVEST.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-13T19:03:05Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "Andrew's word: carded to him at the dell1 terminal 2026-10-13 ~19:0xZ"
+   }
+  },
+  {
+   "id": "dell1-20261013T190230Z-1189",
+   "project": "AMGT_HARVST",
+   "subject": "Restore the 3 AM WSJ/FT morning brief email to Andrew and Austin (failed to send 31 of 31 days)? REC yes if still wanted, else switch the run off",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/missions/D8/MDPF/MDPF_HEALGAP/ledger/ROUND_ANALYSIS.round4.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-13T19:02:30Z",
+   "kind": "fork",
+   "context": "A stale send_ses.py in the S3 code bundle fails every send; the alert goes to a topic with 0 subscribers (MDPF_HEALGAP row D1-S17). The fix uploads that one file, with rollback.",
+   "rec": "Yes if still wanted; otherwise switch the nightly run off instead of leaving it failing silently.",
+   "scope": {
+    "measured_at": "2026-10-13T19:02:30Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/harvest"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/logic/registry overlaps the write set of IRPT_BCKEND placed on dell2 (infra/logic/registry)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~2/check_e2e.py is under the home of project AMGT_RESAPP (org/missions/D5/AMGT/AMGT_RESAPP)",
+      "org/critical_paths/.open_deploys/harvst-bx2-enqueue-fence-20261012.json overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/harvst-bx2-enqueue-fence-20261012.json overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/harvst-bx2-enqueue-fence-20261012.json overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/.open_deploys)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/opal_data_harvest/worker.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/transport.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/test_ab3_account_402_fresh_session.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/tab_transport.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/test_aw1_origin_load_wait.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/publishers.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-13T20:09:36Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_200xZ_NINE_OPEN_CALLS_ANSWERED_FIRMBKTS_DEMQUE_BRIEF_HARVEST.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-13T19:03:06Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "Andrew's word: carded to him at the dell1 terminal 2026-10-13 ~19:0xZ"
+   }
+  },
+  {
+   "id": "dell1-20261013T190232Z-11df",
+   "project": "MDPF_DEMQUE",
+   "subject": "Spend about 227 Bloomberg cells (one fund-type field per Cottonwood cash equivalent) to find the fixed-$1.00 money market funds? REC yes",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/DEMQUE_QUEUE_FORM_ANDREW_20261013.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-13T19:02:32Z",
+   "kind": "fork",
+   "context": "No readable source holds fund type, so the approved $1.00 skip matched 0 of 227. Pulling all 227 at depth (c) costs about 8,300 cells (about 3 days).",
+   "rec": "Yes: under a tenth of a day may save up to 3 days; a fund skips only when Bloomberg says its price is held at $1.00, and anything unclear is pulled.",
+   "scope": {
+    "measured_at": "2026-10-13T19:02:32Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-13T20:09:37Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_200xZ_NINE_OPEN_CALLS_ANSWERED_FIRMBKTS_DEMQUE_BRIEF_HARVEST.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-13T19:03:08Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "Andrew's word: carded to him at the dell1 terminal 2026-10-13 ~19:0xZ"
+   }
+  },
+  {
+   "id": "dell1-20261013T190233Z-f040",
+   "project": "MDPF_DEMQUE",
+   "subject": "Keep history (backfill) Bloomberg draws to non-trading days only (B1 finishes about Nov 7)? REC yes",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/DEMQUE_QUEUE_FORM_ANDREW_20261013.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-13T19:02:33Z",
+   "kind": "fork",
+   "context": "Trading days carry production pulls. Site Z hit its weekly Bloomberg limit this week, and that blocked a production pull on 10-13.",
+   "rec": "Yes: history is not needed day to day, and a missed production day is lost.",
+   "scope": {
+    "measured_at": "2026-10-13T19:02:33Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-13T20:09:39Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_200xZ_NINE_OPEN_CALLS_ANSWERED_FIRMBKTS_DEMQUE_BRIEF_HARVEST.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-13T19:03:10Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "Andrew's word: carded to him at the dell1 terminal 2026-10-13 ~19:0xZ"
+   }
+  },
+  {
+   "id": "dell1-20261013T190235Z-c09b",
+   "project": "MDPF_DEMQUE",
+   "subject": "Surface E (Opal ad-hoc via the Opal Agent): split oversized requests over up to 5 days (larger to Andrew), any staff may file with name recorded, results stored for reuse? REC yes",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/DEMQUE_QUEUE_FORM_ANDREW_20261013.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-13T19:02:35Z",
+   "kind": "fork",
+   "context": "Surface E holds 10 pct of the daily allowance; its three remaining rules decide what happens when a request exceeds the reserve, who may file, and whether a repeat costs nothing.",
+   "rec": "Yes to all three: fair on budget, accountable, and no paying twice for the same data.",
+   "scope": {
+    "measured_at": "2026-10-13T19:02:35Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-13T20:09:40Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_200xZ_NINE_OPEN_CALLS_ANSWERED_FIRMBKTS_DEMQUE_BRIEF_HARVEST.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-13T19:03:11Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "Andrew's word: carded to him at the dell1 terminal 2026-10-13 ~19:0xZ"
+   }
+  },
+  {
+   "id": "dell1-20261013T190238Z-ce58",
+   "project": "AMGT_HARVST",
+   "subject": "Does 'any data in our AWS cloud is available to our team' also lift the harvest V1 rule, so asset managers can read raw stored articles and raw vendor responses? REC yes if meant",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/SERVABLE_PREFIXES_OPAL_DATA_HARVEST_20261013.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-13T19:02:38Z",
+   "kind": "fork",
+   "context": "Andrew's 19:0xZ answer lifted the Bloomberg-licence hold. The cluster's V1 rule (derived layers and article links only) is separate, and 13 prefixes stay withheld under it.",
+   "rec": "Yes, if that is what was meant; until answered they stay withheld.",
+   "scope": {
+    "measured_at": "2026-10-13T19:02:38Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/harvest"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/logic/registry overlaps the write set of IRPT_BCKEND placed on dell2 (infra/logic/registry)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~2/check_e2e.py is under the home of project AMGT_RESAPP (org/missions/D5/AMGT/AMGT_RESAPP)",
+      "org/critical_paths/.open_deploys/harvst-bx2-enqueue-fence-20261012.json overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/harvst-bx2-enqueue-fence-20261012.json overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/harvst-bx2-enqueue-fence-20261012.json overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/.open_deploys)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/opal_data_harvest/worker.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/transport.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/test_ab3_account_402_fresh_session.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/tab_transport.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/test_aw1_origin_load_wait.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/publishers.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-13T20:09:41Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_200xZ_NINE_OPEN_CALLS_ANSWERED_FIRMBKTS_DEMQUE_BRIEF_HARVEST.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-13T19:03:13Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "Andrew's word: carded to him at the dell1 terminal 2026-10-13 ~19:0xZ"
+   }
+  },
+  {
+   "id": "dell1-20261013T205110Z-244d",
+   "project": "AMGT_HARVST",
+   "subject": "Stop EC2 instance i-059405dfefcb4b44a (the astn box), started by the bz-8 user_data apply? REC yes",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/missions/D5/AMGT/AMGT_HARVST/ledger/NEVER_WIDEN_ROUND84_BZ8_CTO_HALF.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-13T20:51:10Z",
+   "kind": "act",
+   "context": "The brief schedule is now DISABLED, but applying its user_data change started the stopped instance at 20:48:11Z; nothing should run on it and it bills. Stopping EC2 needs Andrew's confirmation (CLAUDE.md Agent Autonomy).",
+   "rec": "Yes: it should be stopped, as it was before the act; nothing is lost.",
+   "scope": {
+    "measured_at": "2026-10-13T20:51:10Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/astn-pipeline",
+     "infra/aws/terraform/harvest"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/logic/registry overlaps the write set of IRPT_BCKEND placed on dell2 (infra/logic/registry)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~2/check_e2e.py is under the home of project AMGT_RESAPP (org/missions/D5/AMGT/AMGT_RESAPP)",
+      "org/critical_paths/.open_deploys/harvst-bx2-enqueue-fence-20261012.json overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/harvst-bx2-enqueue-fence-20261012.json overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/harvst-bx2-enqueue-fence-20261012.json overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/.open_deploys)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/opal_data_harvest/worker.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/transport.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/test_ab3_account_402_fresh_session.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/tab_transport.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/test_aw1_origin_load_wait.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/publishers.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-13T21:02:34Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D5/AMGT/AMGT_HARVST/ledger/NEVER_WIDEN_ROUND84_BZ8_CTO_HALF.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-13T20:51:36Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "EC2 stop: Andrew's confirmation (CLAUDE.md Agent Autonomy); carded 20:5xZ"
+   }
+  },
+  {
+   "id": "dell1-20261013T212600Z-239a",
+   "project": "ADVI_BDPRCE",
+   "subject": "ADVI_BDPRCE: amend the PRD lot key (account_id, asset_id, open_date, unit_cost) before the exact-lot export change is applied? It folds 15,553 export rows",
+   "asked_by": "2.0.0_SA_COO~K1",
+   "source": "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~10/LOT_PROOF.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-13T21:26:00Z",
+   "kind": "fork",
+   "context": "BP-b-6 (merged @e33999e30b) measured on the 2026-10-09 export (500,000 rows): the PRD CONTRACTS lot key folds 15,553 rows, and 14,514 of 14,696 colliding groups differ on Relationship ID (row ADVI_BDPRCE-D1-W10-S2, ARMED). Applying the template change under that key would drop distinct lots. Gates the WORLD apply of the Units and Cost Basis switch (PRD C1); a PRD CONTRACTS row, so the CTO's to amend.",
+   "rec": "Amend the key to add the relationship id column (or the export's lot identifier if one exists), then re-run BP-b-6's fixture proof on the new key as one small cell before any apply; the apply stays under its never-widen pair.",
+   "scope": {
+    "measured_at": "2026-10-13T21:26:00Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-13T21:28:45Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D8/ADVI/ADVI_BDPRCE/prd/ADVI_BDPRCE_PRD.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
+  },
+  {
+   "id": "dell1-20261013T214300Z-eb2a",
+   "project": "MDPF_DEMQUE",
+   "subject": "Sign two never-widen pairs so the COO can cut the SERVED cells: (A) wire the proven Yahoo incremental path into the nightly run, (B) label Yahoo client prices UNVERIFIED until the porting test passes? REC A yes now, B after the consumer list",
+   "asked_by": "2.0.0_SA_COO~Q1",
+   "source": "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_SA_COO~Q1/CALL_NEVER_WIDEN_PAIRS_YAHOO_INCREMENTAL_AND_UNVERIFIED_20261013.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-13T21:43:00Z",
+   "kind": "fork",
+   "context": "Both change served output in the per-CUSIP Yahoo store (CLAUDE.md section 5). A is proven 50 of 50 cell-equal plus a split arm (DQ-t-48); B waits on the porting-test draw for its pass condition. Gates the two cells only; the rest of round 9 does not wait.",
+   "rec": "Sign A as a pair now; sign B once the consumer list is printed",
+   "scope": {
+    "measured_at": "2026-10-13T21:43:00Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-13T22:06:33Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261013_220xZ_DELL1_EB2A_DEMQUE_YAHOO_PAIRS.md",
+    "crossbox": null,
+    "ruled_by": "cluster-lead",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261013T220001Z-17f5",
+    "at": "2026-10-13T22:00:01Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell1-20261013T234201Z-0430",
+   "project": "AMGT_RESAPP",
+   "subject": "AMGT_RESAPP FWD-41: Security Analysis AI-fill blocks (staff-only page), candidate branch for the CTO's Opal-internal approval",
+   "asked_by": "2.0.0_SA_COO~R2",
+   "source": "cand/dell1/aifill-blocks",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-13T23:42:01Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/aifill-blocks",
+    "purpose": "Five machine-written text blocks (management bio summary, recent management developments, a gap fill for the research team's management passage, a gap fill for the thesis pillars, and the header company description when none is held), each with its source class, citations as links and a Machine-written chip. Degrades to today's page when the served data carries no ai_fill.",
+    "pages": [
+     "Security Analysis (/security-analysis): Exec Management tab",
+     "Thesis tab",
+     "identity header"
+    ],
+    "class": "opal-internal",
+    "how": "Run the render harness: cd portal checkout on the branch; node src/pages/SecurityAnalysis/__harness__/aiFill.harness.cjs (11 arms). Real data appears only after the serve change is deployed and a fill document is stored for a name.",
+    "head_sha": "85d5749fb133b1e395f00308bacb2dd2231b93db",
+    "commits": 2
+   },
+   "scope": {
+    "measured_at": "2026-10-13T23:42:01Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/harvest",
+     "infra/aws/terraform/yang-pipeline",
+     "infra/aws/terraform/nfra-agentbus-alyssa01",
+     "infra/aws/terraform/seeking-alpha"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/research/filings/analyze.py is on the shared branch (lib)",
+      "lib/research/filings/tests/test_reverify_stated_value.py is on the shared branch (lib)",
+      "lib/research/api/scoped_amgt.py is on the shared branch (lib)",
+      "lib/research/api/monthly_chatter.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_classification_withheld.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_names_read_agreement.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-13T23:43:29Z",
+    "by": "2.0.0_SA_COO~R2",
+    "ruling": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104/APPROVAL_DUPLICATE_WITHDRAWN.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "withdrawn"
+   }
+  },
+  {
+   "id": "dell1-20261013T234218Z-cf85",
+   "project": "AMGT_RESAPP",
+   "subject": "AMGT_RESAPP FWD-41: Security Analysis AI-fill blocks (staff-only page), candidate branch for the CTO's Opal-internal approval",
+   "asked_by": "2.0.0_SA_COO~R2",
+   "source": "cand/dell1/aifill-blocks",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-13T23:42:18Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/aifill-blocks",
+    "purpose": "Five machine-written text blocks (management bio summary, recent management developments, a gap fill for the research team's management passage, a gap fill for the thesis pillars, and the header company description when none is held), each with its source class, citations as links and a Machine-written chip. Degrades to today's page when the served data carries no ai_fill.",
+    "pages": [
+     "Security Analysis (/security-analysis): Exec Management tab",
+     "Thesis tab",
+     "identity header"
+    ],
+    "class": "opal-internal",
+    "how": "Run the render harness: cd portal checkout on the branch; node src/pages/SecurityAnalysis/__harness__/aiFill.harness.cjs (11 arms). Real data appears only after the serve change is deployed and a fill document is stored for a name.",
+    "head_sha": "85d5749fb133b1e395f00308bacb2dd2231b93db",
+    "commits": 2
+   },
+   "scope": {
+    "measured_at": "2026-10-13T23:42:18Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/harvest",
+     "infra/aws/terraform/yang-pipeline",
+     "infra/aws/terraform/nfra-agentbus-alyssa01",
+     "infra/aws/terraform/seeking-alpha"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/research/filings/analyze.py is on the shared branch (lib)",
+      "lib/research/filings/tests/test_reverify_stated_value.py is on the shared branch (lib)",
+      "lib/research/api/scoped_amgt.py is on the shared branch (lib)",
+      "lib/research/api/monthly_chatter.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_classification_withheld.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_names_read_agreement.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T00:00:21Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_APPROVAL_PORTAL_CAND_AIFILL_BLOCKS_20261014.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell1-20261014T001511Z-633a",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell1/amgt-sa-header-money-and-dash-reasons",
+   "asked_by": "2.0.0_SA_COO~R1",
+   "source": "cand/dell1/amgt-sa-header-money-and-dash-reasons",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T00:15:11Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/amgt-sa-header-money-and-dash-reasons",
+    "purpose": "AMGT_RESAPP bk-3: the Security Analysis header prints USD as $ and every dash tile shows its reason",
+    "pages": [
+     "Security Analysis"
+    ],
+    "class": "opal-internal",
+    "how": "cd portal && bun run dev:live --port 5174; /security-analysis, TSM US and HSBA LN",
+    "head_sha": "624e2533f665bf786e41594adba17b82c447aa7d",
+    "commits": 1
+   },
+   "scope": {
+    "measured_at": "2026-10-14T00:15:11Z",
+    "paths": "hit",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      ".tools/tests/test_dev_push_payload_gate.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_open_calls_cloudread.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)"
+     ],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell1"
+     ],
+     "resources": [],
+     "shared": [
+      ".tools/portal-hooks/dev_push_payload_gate.py is on the shared branch (.tools)",
+      ".tools/portal-hooks/pre-push is on the shared branch (.tools)",
+      ".tools/tests/test_dev_push_payload_gate.py is on the shared branch (.tools)",
+      ".tools/open-calls.py is on the shared branch (.tools)",
+      ".tools/tests/test_open_calls_cloudread.py is on the shared branch (.tools)",
+      ".tools/portal-merge-forward.sh is on the shared branch (.tools)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T00:17:47Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~417/FEATURE_RECEIPT.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "approved"
    }
   }
  ]
