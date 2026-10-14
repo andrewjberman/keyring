@@ -1384,3 +1384,53 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "The missing weekday partitions in 2026 are 2026-02-18, 04-03, 04-21, 05-01, 05-25, 06-19, 06-22 and 06-23. 2026-06-22 and 06-23 are not market holidays. None of the window's 20 weekday partitions is missing. In 2020-03 to 2025-12 there are 436 dates without a partition, 101 of them weekdays."
 }
 ```
+
+## Rows filed by `0.9.0_WK_ADVI_BDPRCE~16` under `ADVI_BDPRCE.TO-BP-c-4.export-cap-check` (denominator at its write: 2 rows, `ADVI_BDPRCE-D1-W16-S1..S2`)
+
+```json
+[
+  {
+    "id": "ADVI_BDPRCE-D1-W16-S1",
+    "project": "ADVI_BDPRCE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~16",
+    "surfaced_at": "2026-10-14T01:48:33Z",
+    "one_line": "The bronze prefix forwardfill_v2/unrealized/ holds no UNREALIZED_DAILY key for 12 of the 14 calendar days 2026-09-30 to 2026-10-13; keys exist only on Fridays from 2026-07-10 on.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~K1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws s3api list-objects-v2 --bucket opal-data-bd --prefix forwardfill_v2/unrealized/ read 2026-10-14T01:4xZ: 91 keys, 76 UNREALIZED_DAILY and 15 _complete sidecars; org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~16/unreal_listing.txt@72e3acc775",
+        "data/cot/scripts/bronze/cot_bronze_ingest.py@72e3acc775:481 writes forwardfill_v2/{table}/{TABLE}_DAILY_{date}.xlsx for each run date, so a key per run date is the expected landing"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Task order BP-c-4 section 1a step 1: find the bronze unrealized export key for each of at least the last 14 run dates by listing the bronze prefix with list-objects-v2, and record rows_per_day for each.",
+    "world_is": "Keys sit on most weekdays from 2026-03-27 to 2026-07-09 (with 9 header-only stubs), then only on 2026-07-10, 07-17, 07-24, 07-31, 08-07, 08-14, 08-21, 08-28, 09-04, 09-11, 09-18, 09-25, 10-02 and 10-09, all Fridays. The matching _complete sidecars exist only for the same Fridays. The cause (runner cadence, lifecycle expiry or a move) is not established by this read, and the cell's 14-day count is therefore 2 dates, not 14."
+  },
+  {
+    "id": "ADVI_BDPRCE-D1-W16-S2",
+    "project": "ADVI_BDPRCE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~16",
+    "surfaced_at": "2026-10-14T01:48:33Z",
+    "one_line": "The daily unrealized export holds exactly 500000 data rows on each of 15 non-stub days from 2026-07-08 to 2026-10-09, the count of a vendor cap, so those exports are not the complete lot population.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~K1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~16/CAP.json@72e3acc775: verdict CAP, days_checked 76, days_at_500000 15, rows_per_day for every key read; counts_all.jsonl@72e3acc775 holds the sheet-XML count per file with dimension refs agreeing on all 76",
+        "openpyxl read_only iter_rows on UNREALIZED_DAILY_2026-10-09.xlsx: 500001 rows including the header, 500000 data rows (positive control for the sheet-XML count, read 2026-10-14)",
+        "data/black_diamond/scripts/bronze/templates/unrealized.json@72e3acc775:497 isLimitSize false; data/cot/scripts/bronze/cot_bronze_ingest.py@72e3acc775:247-248 reads the whole response body and :430 pops isLimitSize before v1/run, so the runner sets no row limit"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Task order BP-c-4 and its cell text: a round-number count is the signature of a vendor cap, and a capped export silently drops lots, the opposite of the project's exact-lot outcome; the cap question is answered before any apply of the Units and Cost Basis switch.",
+    "world_is": "The count is exactly 500000 on 15 of the 67 non-stub days, every one from 2026-07-08 on, and the 52 earlier non-stub days vary with the book from 408467 to 489203. The round-2 fixture 2026-10-09 holds the same 500000 rows. No repo setting yields 500000, so the cap sits on the Black Diamond side and is inferred from the count pattern; lots beyond the cap are not in those exports, and any silver partition built from them carries the same truncation (not measured here). The apply of the Units and Cost Basis switch waits on this row's disposition."
+  }
+]
+```
