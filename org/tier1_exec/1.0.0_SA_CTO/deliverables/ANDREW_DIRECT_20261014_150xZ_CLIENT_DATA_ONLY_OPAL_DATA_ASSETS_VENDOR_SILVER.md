@@ -18,3 +18,14 @@
 - Firm-level aggregates that are not account data (portal-v2 `platinum/mdpf/<scope>/` served by the existing mdpf tools,
   and `opal-data-etfs` partner ownership totals) are read as NOT client data under this word; the CTO surfaced that
   reading to Andrew in the same turn.
+
+## His follow-up, same exchange (verbatim)
+
+> opal-data-mdpf may be valuable for some client model data, and eventually the investor reporting buckets inside the
+> firm buckets will be important, but not quite yet. Right now the canonical client assets are all in the silver vendor
+> folders.
+
+Reading: confirms the rule above for now. `opal-data-mdpf` client model data and the investor-reporting data in the
+per-firm buckets are LATER candidates (a future word widens to them); neither is served or granted this week. The
+canonical client assets are the `opal-data-assets` vendor silver folders.
+
