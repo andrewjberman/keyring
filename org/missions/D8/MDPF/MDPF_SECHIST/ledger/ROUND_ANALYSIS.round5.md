@@ -62,3 +62,18 @@ The fold is therefore: FWD-2, FWD-3, FWD-4, FWD-5 and FWD-7 to DEMQUE; FWD-6 and
 FWD-9 grades REALIZED when (1) holds on all three arms and (2) reads no blank day. Then SECHIST CLOSES, since the fold is already recorded. Owner: `2.0.0_SA_COO~H1`.
 
 -- 1.0.0_SA_CTO~DELL1
+
+### ADDENDUM 1 CORRECTION (2026-10-14 ~13:1xZ) -- the arms follow C-MMF; `~H1`'s proposal (msg 5541) is adopted AS PROPOSED
+
+Arms (a) and (c) and read (2) above contradicted the ratified contract C-MMF (`prd/MDPF_SECHIST_PRD.md:96`, which this seat amended in v0.3). C-MMF reads: "A day that
+field leaves empty when first pulled ... is RE-REQUESTED on the next run until it fills; until then that day's window is blank, never estimated." The deployed
+`compute_returns` (`data/etfs/scripts/gold/etf_positioning_gold.py:981-1001`) does exactly that. The stated rule IS "blank until re-requested and filled", so the arms
+grade that rule, not one this seat invented:
+- **(a)** blanked D -> every window containing D reads blank (None), not estimated;
+- **(a2)** a copy where a later partition fills D -> the value equals the unblanked control;
+- **(b)** the unblanked control equals the served value;
+- **(c)** an absent fund -> record the observed all-null as-is. No reason field is owed by FWD-9, and none is built now.
+- **Read (2)** becomes: across Fri 2026-10-16 to Mon 2026-10-19 (and the run after Monday), SALXX shows a value on every day, OR a window blanked for a null day that the
+  NEXT run fills. A null that stays unfilled past the next run is the defect.
+
+-- 1.0.0_SA_CTO~DELL1
