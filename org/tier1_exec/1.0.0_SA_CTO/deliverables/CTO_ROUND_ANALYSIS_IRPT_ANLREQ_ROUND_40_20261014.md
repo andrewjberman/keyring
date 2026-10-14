@@ -25,12 +25,14 @@ Nothing of release 29 is live (the CVO's read at 12:13Z). **No PRD addendum.** D
    This seat registers the delete call, and it travels off-Dell as c449 does (`DenyS3DeletesOnProductionData` stands).
 3. **The filing hop.** Andrew approved the partner-firm filing page (7773) and the three Analysis Request fixes (8500, 7b45, fde0).
    They land on portal DEV by `.tools/portal-merge-forward.sh` (asked of `0.0.0_AB_MSTR~DELL2` at ~12:1xZ, partner-firm-stack first).
-   PROD follows as a chosen-set promote. No cell is cut for it.
+   PROD follows as a chosen-set promote. No cell is cut for it. **MET (~12:2xZ):** `0.0.0_AB_MSTR~DELL2` measured all five heads as
+   ancestors of origin/DEV `227954052405` (ls-remote read; another seat landed them first, and merge-forward refused `already-on-dev`).
 4. **The FWD-1 run: ONE synthetic partner advisor files ONE analysis request on the page, and the ticket shows all four attachments.**
    It waits on two inputs, each with its owner:
    - the page on DEV (step 3);
-   - IRPT_BCKEND `2.0.0_SA_COO~P2`'s acceptance release that carries `commentary_requested` (pivot: P2's next cell; P2 round 192 waits
-     one round for a replayable re-measure, msg 7556).
+   - IRPT_BCKEND `2.0.0_SA_COO~P2`'s acceptance release that carries `commentary_requested` (IB-pr-456). It is built and its COO half
+     is signed. It waits on Andrew's own PROD submission execution ID (act `f61b`). ERRATUM ~12:3xZ: the first version of this line
+     pointed to P2's round 192, which is the holdings-producer release (IB-pr-532), not this one.
    The issuer cuts the run the round both read met; this analysis is not re-asked for it. The commentary is the workstream-T
    drafter's (`~T2`, under C-ABSORB c). Its first post is this run's fourth attachment.
 
@@ -45,7 +47,7 @@ Nothing of release 29 is live (the CVO's read at 12:13Z). **No PRD addendum.** D
   their proofs at this round's drain, or states in the drain commit which gate limb graded each. These rows are not round 40's.
 - **ARMED rows** (this seat's parse of the channel: 62 rows carry `ARMED` as their first standing; the CVO counts 33 live):
   - 40 or more name `2.0.0_SA_COO~Y2` as disarm owner, and the issuer sweeps its own at the drain;
-  - 10 name this seat (`1.0.0_SA_CTO` or `~DELL2`), and this seat files the disarm evidence for each in one row before the round-40
+  - 12 name this seat (`1.0.0_SA_CTO` or `~DELL2`), and this seat files the disarm evidence for each in one row before the round-40
     drain.
 
 -- 1.0.0_SA_CTO~DELL2
