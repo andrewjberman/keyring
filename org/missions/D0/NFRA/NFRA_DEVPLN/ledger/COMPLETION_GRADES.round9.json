@@ -1,0 +1,60 @@
+{
+ "kind": "COMPLETION_GRADES",
+ "schema_version": "1.0",
+ "project": "NFRA_DEVPLN",
+ "round": 9,
+ "graded_by": "1.0.0_SA_CTO",
+ "graded_utc": "2026-10-14T14:59Z",
+ "report_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/ledger/COMPLETION_REPORT.round9.json@138d920b73",
+ "rows": [
+  {
+   "fwd_id": "FWD-1",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/ledger/ROUND_ANALYSIS.round8.md@8cc3f585e7",
+   "state_observed": "EXERCISED",
+   "note": "Five dell2 features were followed from the candidate branch through Andrew's approval (by=andrew), the merge-forward to DEV (A14a) and the chosen-set promote to PROD (portal-v2.1.218, CI 38563449756, five Approved-By trailers, --check PROD unapproved=0). The live bundles carry the strings. Limit stated in round 8: graded on deployed code, with no signed-in client session; the partner-firm route is DEV-gated."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/ledger/ROUND_ANALYSIS.round3.md@a846bbe0eb",
+   "state_observed": "EXERCISED",
+   "note": "Declined arm: row e89f was declined, and both merge-forward and the release builder refused cand/laptop/declined-example, with DEV unchanged (round 3). Approve arm: the five dell2 rows closed by andrew, approved, and were read back by merge-forward (round 8)."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/ledger/ROUND_ANALYSIS.round4.md@e8db882826",
+   "state_observed": "EXERCISED",
+   "note": "A direct DEV push from a box seat was refused. The typed-command gate S03 carries an identical blob on four boxes (round 4); the pre-push payload limb is on four boxes and fails closed (round 6, ROUND_ANALYSIS.round6.md@1c15e2b56b). The same work landed through merge-forward (A14a). The FAST-lease and test-only carve-outs were removed from never-rules-gate.sh @a0dff64b2c."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/ledger/ROUND_ANALYSIS.round8.md@8cc3f585e7",
+   "state_observed": "APPLIED",
+   "note": "Every commit landing on DEV and PROD since the settlement carries its approval trailer. portal-release-build.sh --check PROD reads features=10 first_parent_commits=10 unapproved=0 at refs/remotes/origin/PROD."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/ledger/ROUND_ANALYSIS.round6.md@1c15e2b56b",
+   "state_observed": "EXERCISED",
+   "note": "Chosen-set promotes shipped in rounds 2, 6 and 8. In round 6, PROD 7d5cb34d shipped dell1's feature alone and left seven unapproved dell2 DEV commits behind (unapproved=0 on PROD)."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/ledger/SETTLEMENT_LIST.md@c08817cb03",
+   "state_observed": "EXERCISED",
+   "note": "Settled in round 1 on Andrew's word per group. PROD was folded back, and DEV and PROD read as one line of history from there. Nothing was rewritten or deleted."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/ledger/ROUND_ANALYSIS.round8.md@8cc3f585e7",
+   "state_observed": "APPLIED",
+   "note": "The line is stated in portal/CONTRIBUTING-BOXES.md and in CLAUDE.md's Portal rule @fcdfc34843 (client-facing waits for Andrew, Opal-internal for the building box's CTO, test-only for no one). The approval row's class is what merge-forward and the payload gate read."
+  }
+ ]
+}

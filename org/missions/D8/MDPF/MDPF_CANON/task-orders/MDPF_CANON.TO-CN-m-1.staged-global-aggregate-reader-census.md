@@ -180,7 +180,7 @@ pre-read already covers most of the substance, the issuer MAY instead record the
 **Not in this cell:** re-pointing any reader (a later cell under a never-widen pair, cut only if the census finds a PARTNER-FACING or PARTNER-FACING-CANDIDATE reader and the CTO rules it a re-point);
 moving the staging write behind the fold guard; retiring the staged key; enabling any trail or access log.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <to_id>MDPF_CANON.TO-CN-m-1</to_id>
 <slot>~20</slot>
