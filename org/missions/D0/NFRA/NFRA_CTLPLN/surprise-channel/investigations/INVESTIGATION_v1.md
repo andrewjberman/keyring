@@ -9335,3 +9335,32 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Owner for the repair: 2.0.0_SA_COO~C, round-14 batch cell -- a `close --side to --by-completion --ruling <committed ruling path>` mode that admits only a ruling under the cluster-lead prefixes, records the ended seat by name and never writes an ack for it."
 }
 ```
+
+## NFRA_CTLPLN-Z-S8 -- six site Z CloudOps lanes died silently (no kill, no reboot, no crash, no low-memory event)
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "0.0.0_AB_MSTR~Z",
+  "surfaced_at": "2026-10-14T12:33Z",
+  "one_line": "Six site Z CloudOps lanes (~MQ, ~ZS, ~ZQ, ~ZW, ~ZT, ~MI) died between 2026-10-13 ~19:00Z and 2026-10-14 ~12:2xZ with no KILL line, no reboot, no crash and no low-memory event; a seat that dies unseen holds open orders nobody works.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~Z (names who reads the cause; MSTR~Z respawns on each death it sees)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "process truth 2026-10-14T12:2xZ: 12 claude.exe on site Z, none carrying ~ZQ, ~ZW, ~ZT or 0.7.0_AE_CloudOps~MI; the broker list_agents agreed (none LIVE)",
+      "org/mcp/agent-spawn-audit.log 2026-10-14T11-12Z: no KILL / FORCE-KILL line for any of the six; the only kills are the model-policy relaunches of COO ~MI, ~MP and ~O (and a KILL-NOOP for ~MQ, already dead); last boot 2026-10-13 18:57Z",
+      "Windows event logs since 2026-10-13T19:00Z: Application Error/Hang (1000/1002/1026) naming claude|node = 0; Resource-Exhaustion-Detector = 0; positive control: the logs hold 790 Application and 441 System events and the 1000 query returns 1 event for another app, so the zeros are reads, not blindness",
+      "COO~ZB msg 34053: ~ZS's last audit line 00:58Z, re-seated 12:24Z; ~ZQ broker summary read 'watcher re-armed 11:37Z' before it died"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A spawned seat lives until it is killed (audited) or its box reboots; a death is visible to the manager.",
+  "world_is": "Six seats ended with neither: no kill, no reboot, no OS-recorded crash or memory event. The cause is unread: a clean session exit (a turn ending the process, an /exit, a window closed) is the remaining candidate and leaves none of the three traces read here. seat-liveness read dead=0 throughout because these seats' orders are placed on another box or were not in its view.",
+  "notes": "Cause owed (CTO~Z msg 34055): a process exit code, the session transcript's last lines per lane, or a window-close trace. Respawned on the model policy: ~MQ, ~ZQ, ~ZW, ~MI (MSTR~Z) and ~ZS (COO~ZB); ~ZT holds no open order and stays down."
+}
+```
