@@ -47,15 +47,16 @@ exactly: [COO half](file:///C:/dev/ajb_workspace/org/missions/D8/MDPF/MDPF_DEMQU
    `test_a_gained_split_or_a_restated_overlap_bar_is_held_restatement_and_the_name_keeps_its_files`,
    `test_a_gap_beyond_five_days_pulls_from_the_stored_max_and_appends_only`,
    `test_the_receipt_lists_names_appended_without_a_relock_and_a_failed_lock_check_makes_the_name_held`.
-   Existing tests keep passing (the order is amended below: SEVEN named tests); a test that pins "a stored name is re-pulled over its whole range" changes that assertion and nothing else.
+   Existing tests keep passing (the order is amended below: EIGHT named tests); a test that pins "a stored name is re-pulled over its whole range" changes that assertion and nothing else.
 
 ### ACCEPTANCE
 
 <criterion id="DQ9-t58-AC1" cell_refs="DQ-t-58"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t58_tests.py</invocation><expect>WIRE-OK</expect></criterion>
 <criterion id="DQ9-t58-AC2" cell_refs="DQ-t-58"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t58_equal.py</invocation><expect>WIREEQ-OK</expect></criterion>
+<criterion id="DQ9-t58-AC3" cell_refs="DQ-t-58"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t58_census.py</invocation><expect>CENSUS-OK</expect></criterion>
 `DQ9-t58-AC1` -- the four named tests. `DQ9-t58-AC2` -- the merged 50-name report: all equal INCLUDING the TR columns, the split arm HELD with its files unchanged, plus a live `--spot 5 --tr` equal 5 of 5 with TR cells compared. Report the whole folder `pytest data/mdpf/scripts/demque` once, the `incremental` receipt key from a stub night verbatim, and the report's key numbers.
 
-<expected_criteria>DQ9-t58-AC1,DQ9-t58-AC2</expected_criteria>
+<expected_criteria>DQ9-t58-AC1,DQ9-t58-AC2,DQ9-t58-AC3</expected_criteria>
 
 Run each invocation from the worktree root. At the base: `WIRE-BAD no file ...test_demque_incremental_wiring.py`; `WIREEQ-BAD no file ...INCREMENTAL_WIRED_EQUALITY_REPORT.json`.
 
@@ -89,6 +90,21 @@ a mismatch confined to the NEW days would be written. Pair A condition 2 names t
 Add a SEVENTH named test: `test_a_window_only_trade_mismatch_holds_the_name_even_when_the_combined_relock_passes` (synthetic data: 20 agreeing trades in the stored history, one mismatching trade inside the appended window; the combined check reads LOCKED, the window check REJECTED, the name is held and its files are untouched).
 `dq_t58_tests.py` lists it and is placed on your branch. Re-run both acceptance checks and the folder; the 50-name report needs no re-pull. Regenerate the proof, validate it, flip the status in the same commit. The issuer disarms S6 after the merge.
 
+
+### AMENDED 2026-10-13 ~00:1xZ 10-14 (issuer; no gate limb graded it) -- the COMBINED relock is WRONG for names whose trades predate the stored window: a REAL-store census (row D1-W50-S8 to follow from the issuer) and the fourth pass
+
+Your fourth-pass work (commits `342308b1d3`, `a3699210a9`, `8eae4987c8`) is inherited state; the appended-window check, the unresolved-fold fix and S7 (the window-start anchor) are ACCEPTED. **The issuer ran the wired `daily_draw.py` on a LOCAL copy of five stored names with the real Yahoo fetch (rc 0, no crash) and then a read-only census of the REAL store
+(326 CUSIP directories, 687,657 transaction rows): `combined_relock` over the stored data alone returns REJECTED for 121 of the 265 names that have trade rows while their stored lock is LOCKED: 107 `REJECTED:PRICE_MISMATCH` and 14 `REJECTED:LOW_TRADE_AGREEMENT`.** The 107 are an artifact: the stored file holds only the held window (for Agilent, from 2026-04-14), the one trade
+is dated 2019-11-22, the stored lock proved the identity at lock time (`observations_checked` 1, `trades_through` 2019-11-22) using the FULL Yahoo history, and a relock over the stored rows alone sees 0 observations. Left as built, the first nightly run would hold 107 healthy names AND `locks` would open 107 `REJECTED:PRICE_MISMATCH` rows on the
+unresolved list for names that are LOCKED. The other 14 (LCEYX and FTHSX among them, confirmed REJECTED by a fresh full pull) have trades INSIDE the stored window and are real.
+- **Fix: the combined check runs ONLY where the stored data can reproduce the observation.** `combined_relock` is APPLICABLE when at least one trade row is dated inside the stored price date range [min date, max date]. Otherwise (trades exist but all predate or follow the stored range) it is NOT run: the name proceeds after the appended-window check and is listed in `appended_without_relock` with
+  `relock_reason` = `trades predate the stored window; identity was proven on the full history at lock time`. Names with no trade rows at all stay listed as before. An applicable name keeps the third-pass rules (a non-LOCKED state holds it; only an identity rejection registers in `locks`).
+- **EIGHTH named test**: `test_a_name_whose_trades_all_predate_the_stored_window_is_not_held_by_the_combined_check_and_is_listed_without_relock` (synthetic: one trade in 2019, stored window from 2026-04-14, the stored lock LOCKED: the name is appended, not held, listed without a relock, and the unresolved list gets no row for it).
+- **`incremental_equal.py --relock-census [--limit N]`** (NEW, read only: S3 and the transactions, no Yahoo, no write): for the first N CUSIPs of the store (ascending; N omitted = all) run `combined_relock` on the stored data alone and print ONE JSON line `{"names", "no_trade_rows", "not_applicable", "applicable", "locked", "held_by_combined": [{"symbol","state","trades_inside"}], "price_mismatch_holds"}`
+  exactly as `dq_t58_census.py` reads it. The criterion **`DQ9-t58-AC3`** (new, the order now carries THREE mechanical criteria) runs it with `--limit 60` and must finish inside 115 seconds: load the transactions once and read the store files in a thread pool, as `index()` does.
+  Run it ONCE for the whole store and put the line in your report; the issuer measured 144 locked, 14 held, 107 not applicable, 61 without trade rows before the fix.
+- Re-run AC1, AC2 and AC3 and the folder; the Yahoo budget is spent (120 of 120): AC2's live `--spot 5 --tr` needs 5 requests, so it is PRE-APPROVED for ONE more run of 5 requests only; do not run it twice. Regenerate the proof with all three criteria, validate it, flip the status in the same commit. The issuer disarms S6 and files S8 after the merge.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below plus your deliverables folder and this order's file. Scaffolding goes under `.scratch/`, uncommitted.
@@ -118,8 +134,8 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: DQ9-t58-AC1, DQ9-t58-AC2. Instance at `org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/0.9.0_WK_MDPF_DEMQUE~50/MDPF_DEMQUE.TO-DQ-t58.wire-yahoo-incremental.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> DQ9-t58-AC1,DQ9-t58-AC2` BEFORE the flip.
+Criterion ids: DQ9-t58-AC1, DQ9-t58-AC2, DQ9-t58-AC3. Instance at `org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/0.9.0_WK_MDPF_DEMQUE~50/MDPF_DEMQUE.TO-DQ-t58.wire-yahoo-incremental.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> DQ9-t58-AC1,DQ9-t58-AC2,DQ9-t58-AC3` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** the files, every check's output, the stub-night `incremental` receipt verbatim, the 50-name report's key numbers, how a stored name's window is chosen, what `HELD_RESTATEMENT` names, the folder count, commits.
