@@ -2450,3 +2450,27 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W26-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~26",
+  "surfaced_at": "2026-10-14T22:05:41Z",
+  "one_line": "TO CN-p-1 says the touched files are CRLF; at HEAD three of the four are LF (0 CRLF lines). Each file was edited with the endings it has, so the diff is not a line-ending rewrite.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-p-1 section 1 (code, preamble) and steps 4 and 5: the files mdpf_gold_consolidator.py, mdpf_category_registry.py and test_stratid_round2_inside_model.py are CRLF; keep their line endings.",
+  "world_is": "At 92ecb84add: data/mdpf/scripts/gold/mdpf_gold_consolidator.py 0 of 3476 lines CRLF; data/mdpf/scripts/gold/mdpf_category_registry.py 0 of 1438 CRLF; data/mdpf/tests/stratid/test_stratid_round2_inside_model.py 0 of 136 CRLF; data/mdpf/tests/canon/test_global_trend_groups.py 153 of 153 CRLF (the file this order creates, from the first pass).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "byte count of CRLF pairs and newlines per file, read in the worktree at 92ecb84add before the edit (python, open(...,'rb'))",
+      "post-edit byte count: consolidator wiring block edited with the Edit tool, no line-ending change; test (f) appended to the CRLF test file with CRLF endings (218 of 218 lines CRLF)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A premise mismatch only; no code path reads line endings. Kept as found."
+}
+```
