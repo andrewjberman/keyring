@@ -45,8 +45,8 @@ implicitDeny on the bucket; `harvest_read.py` reads through the second (`interna
    - `s3:ListBucket` on `arn:aws:s3:::opal-data-harvest` with `Condition StringLike s3:prefix` = those 24 prefixes, each with
      and without a trailing `*`;
    - nothing else: no Put, no Delete, no bucket-wide object read.
-   Run a targeted plan through `safe-apply` plan mode (never bare `terraform`) and record it: 1 to add, 0 to change, 0 to
-   destroy.
+   Run a targeted `terraform plan -target=...` directly (`safe-apply` gates `apply` only; a plan is non-destructive: A6)
+   and record it: 1 to add, 0 to change, 0 to destroy. The APPLY in step 5 is `safe-apply`, targeted at the one resource.
 4. **The ask**, `W/NEVER_WIDEN_ASK_OG-hv-2.md`, for THREE halves (`1.0.0_SA_CTO~Z`, `2.0.0_SA_COO~O`, `3.0.0_SA_CVO~Z`; it
    WIDENS the gateway's reach). It carries: the release diff by file; **two widenings, each named as one** (PRD v2.8): the
    gateway's reach to the 24 prefixes for Opal principals, AND `gateway-global-internal-reader-role`'s own S3 read on `opal-data-harvest` (the role `harvest_read` assumes);
@@ -185,6 +185,11 @@ the ONE `<status>` tag to `complete` only if AC1 and AC2 PASS. Report once per p
     reader. The `<expect>` regexes are unchanged (both appended text sits after the matched fields).
   - The widening to name is the internal reader's S3 read on `opal-data-harvest` (that role is assumed only by the gateway).
   - Gate limb: GATE (viii) on the modified order (placeholders NONE); no other limb fires on a modification.
+
+- A6 (issuer, 2026-10-14 ~13:4xZ, row Z-S108 from `0.7.0_AE_CloudOps~Z`; OBSERVATION / INERT, disarm_owner this seat):
+  step 3 named an instrument that does not exist. `.tools/safe-apply.sh:16-17,63` gates `apply` only and refuses other
+  subcommands, so a targeted plan runs through `terraform` directly. The step now says so; the apply stays `safe-apply`.
+  No criterion moves. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>
