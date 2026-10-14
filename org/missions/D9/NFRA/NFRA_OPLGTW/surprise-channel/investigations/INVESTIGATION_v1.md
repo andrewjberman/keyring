@@ -13531,3 +13531,125 @@ name the one known failure instead of silently inheriting it.
   "notes": "Whether a public market-overview path is intended (a landing page) or a leftover is the CTO's call, not this seat's; no CloudFront change is proposed here. If unintended, the remedy is a CloudFront behavior change (a deploy, with its ledger). Either way, a G3 tool must never treat json-tiered/ as an authenticated store. The security-scanner behavior needs one authorizer read before it is classed."
 }
 ```
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W83-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~83",
+  "surfaced_at": "2026-10-14T15:20:00Z",
+  "one_line": "The order's node-type token IamRole matches no graph node type: the same enumeration with IAM_ROLE scans 297 role nodes, while IamRole scans 0 and exits 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find --corpus aws 'gateway' IamRole (worktree C:/tmp/wk-oplgtw-83, read 2026-10-14): 'DENOMINATOR: 0 hit(s) across 0 aws node(s) scanned [corpus=aws types=IAMROLE]', rc=0",
+      "comp-find --corpus aws -i '<role-reader token pattern>' IAM_ROLE (read 2026-10-14): 'DENOMINATOR: 67 hit(s) across 297 aws node(s) scanned [corpus=aws types=IAM_ROLE]'",
+      "comp-find --help, --corpus aws usage: 'pathspecs = node_type filters (LAMBDA, IAM_ROLE, S3_BUCKET, ...)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-cl-0 section 1 step 1 names the role enumeration as comp-find --corpus aws '<pattern>' IamRole.",
+  "world_is": "The served graph's node-type token is IAM_ROLE. The token IamRole scans 0 nodes and prints a zero denominator with rc 0, which reads as an empty role set. The same pattern with IAM_ROLE scans 297 nodes.",
+  "notes": "Not disarmed by this cell: the order's invocation text is the issuer's, and any cell that cites it is the issuer's to correct. This cell's inventory used IAM_ROLE and the live IAM read described in the next row."
+}
+```
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W83-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~83",
+  "surfaced_at": "2026-10-14T15:20:00Z",
+  "one_line": "The served graph's IAM role nodes do not carry S3 grant statements, so a search over the client-data bucket names returns zero of 297 roles; the role inventory had to come from live IAM.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find --corpus aws 'opal-data-assets|opal-data-bd|opal-data-49financial|opal-data-cottonwood|opal-data-portal|opal-data-mdpf|opal-data-etfs' IAM_ROLE (read 2026-10-14): 'DENOMINATOR: 0 hit(s) across 297 aws node(s) scanned' and 'NO HITS'",
+      "aws iam get-account-authorization-details --filter Role (read only, 2026-10-14): RoleDetailList 304, IsTruncated false; inline and attached default-version policy documents read from this call",
+      "build_roles.py and finalize_roles.py in the worker scratch (not committed); output G2_ROLES.json in the W folder"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-cl-0 step 1 enumerates the IAM roles that can read the client-data buckets from the served graph, then probes each candidate live with get-role, list-role-policies and get-role-policy.",
+  "world_is": "The graph models role names, trust principals and managed-policy names, not the inline statements where the S3 grants sit. A bucket-name pattern over the 297 role nodes matches nothing, so the graph cannot be the candidate list for a grant question.",
+  "notes": "One read-only call covered all 304 roles; per-candidate probes over the graph's name matches would have covered only the candidates the name pattern produced. The surface the output states is the one the order names plus the two surfaces in the next row."
+}
+```
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W83-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~83",
+  "surfaced_at": "2026-10-14T15:20:00Z",
+  "one_line": "The served graph holds 297 IAM role nodes and live IAM lists 304 roles; the two sets are not reconciled, so a graph-only role inventory is incomplete.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find --corpus aws IAM_ROLE (read 2026-10-14): 'DENOMINATOR: 67 hit(s) across 297 aws node(s) scanned'; 'DRIFT (scanned): DECLARED=283 LIVE-no-DECLARED=11 MULTI_STATE_MANAGED=3'; vintage 'Built from the estate as of 2026-10-14 14:45:38 UTC'",
+      "aws iam list-roles (read only, 2026-10-14): 304 roles"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The served cloud graph is the role enumeration OG-cl-0 uses as its denominator source.",
+  "world_is": "The graph's role count is 297 against 304 live roles at the same hour. Its drift line accounts for all 297 nodes (DECLARED 283, LIVE-no-DECLARED 11, MULTI_STATE_MANAGED 3). Since 297 nodes cover at most 297 of the 304 live roles, at least seven live roles are outside the graph's denominator.",
+  "notes": "This cell reports the live count (304) as roles_scanned and does not attempt to reconcile the sets. The reconciliation is the graph owner's."
+}
+```
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W83-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~83",
+  "surfaced_at": "2026-10-14T15:20:00Z",
+  "one_line": "The client-data surface the order names omits the Tax SMA served table and the bucket-wide Black Diamond grants that the live roles hold, so the cell counted both surfaces and the ask input carries them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "G2 census part G2e (org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G2_assets_silver.md, section G2e, added msg 34115): the Tax SMA served table is at opal-data-49financial/mdpf/49financial/gold/taxsma_assets/ and opal-data-cottonwood/mdpf/cottonwood/gold/taxsma_assets/",
+      "live role policies (get-account-authorization-details, read 2026-10-14): object grants on those gold prefixes held by mdpf-49f-taxsma-role and mdpf-cot-taxsma-role; bucket-wide GetObject on opal-data-bd/* held by 11 roles"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-cl-0 section 1 step 1 names the client-data buckets as opal-data-assets silver prefixes (blackdiamond/, orion/, eclipse/, smartx/, schwab/, commonwealth/) and opal-data-bd/silver/.",
+  "world_is": "The Tax SMA served table is a per-firm gold table in two buckets outside the named surface, and eleven live roles hold bucket-wide object grants on opal-data-bd that cover silver/ and every other prefix. Both are client data under G2e and the v3.2 fence.",
+  "notes": "The cell's client_surface (G2_ROLES.json) states the surface it counted. The roles the surface adds are mdpf-49f-taxsma-role and mdpf-cot-taxsma-role, which are not gateway-trusted. The bucket-wide readers are pipeline roles; none is gateway-trusted."
+}
+```
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W83-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~83",
+  "surfaced_at": "2026-10-14T15:20:00Z",
+  "one_line": "The 08403355 registry addition cannot be written exactly: the contract label for that master is unruled (O-3), and the sibling registry rows name a bucket the census does not measure for Schwab silver.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/NFRA_OPLGTW_CONTRACT.json lines 6-9: masters map 08242234 to 'SmartX' and 08335338 to 'BlackDiamond'; no 08403355 entry",
+      "G2 census section 3.2 (the CTO ruling calls 08242234 and 08403355 the Tax SMA masters) and section 5 open item O-3 (platform labels conflict)",
+      "infra/logic/registry/scopes.json MASTER rows for 08242234 and 08335338 carry bucket 'opal-data-49financial'; census section 2.2 measures Schwab silver under opal-data-assets/schwab/<master>/",
+      "lib/opal_naming.py validate() on a scratch copy with both proposed edits returns ([], []), the same as the unmodified registry"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The registry proposal lists the exact additions that put master 08403355 into NFRA_OPLGTW_CONTRACT.json and infra/logic/registry/scopes.json.",
+  "world_is": "The additions are exact except two fields: the contract label for 08403355 has no ruling, and the bucket value copied from the sibling rows is not the one the census measures. The gateway IAM already grants the 08403355 dim tables, so the gap is registry-only.",
+  "notes": "The proposal carries the label as a placeholder and the bucket as the sibling value, and names both as open. Neither is decided by this cell; both are the CTO's and the registry owner's."
+}
+```
