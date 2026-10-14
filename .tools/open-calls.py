@@ -76,10 +76,12 @@ LAST line: CALL-SCOPE project=<CODE> device=<d> paths=<clear|hit> placement=<cle
 OWN-BOX means this box's CTO may settle the call. An act only Andrew can do still goes to him, named as that act: the tool
 prints that sentence and decides nothing about which acts those are.
 
-Environment (tests only): OPAL_STATE_ROOT replaces org/devices/state; OPAL_CROSSBOX_ROOT replaces org/devices/crossbox;
+Environment (tests only): OPAL_STATE_ROOT replaces org/devices/state; OPAL_CROSSBOX_ROOT replaces org/devices/crossbox.
 OPAL_CLOUD_READ_LOCAL=<dir> stands in for the two foreign sources of approval-status reads, read only: <dir>/box=<box>/open_calls.json
-is the cluster copy and <dir>/git=<box>/open_calls.json is the origin/box/<box> copy. Set, it reads no real git ref.
-OPAL_STATE_ROOT set with OPAL_CLOUD_READ_LOCAL unset skips the git source too (no real ref is read under a test switch).
+is the cluster copy and <dir>/git=<box>/open_calls.json is the origin/box/<box> copy. It is honoured ONLY when OPAL_STATE_ROOT is
+also set (the test switch, DP-h-1); without it the variable is ignored, a NOTE line says so, and the production sources are read.
+Set with OPAL_STATE_ROOT, it reads no real git ref. OPAL_STATE_ROOT set with OPAL_CLOUD_READ_LOCAL unset skips the git source too
+(no real ref is read under a test switch).
 Exit: 0 done (either verdict is a result), 1 refused, 2 usage or an unresolved box, 3 an unreadable register or list file.
 """
 from __future__ import annotations
@@ -1483,8 +1485,16 @@ def _source_working_tree(box: str) -> tuple:
         raise _Skip("working-tree copy unreadable (%s)" % exc)
 
 
+def _seam_dir() -> str:
+    """The test stand-in for the foreign sources (OPAL_CLOUD_READ_LOCAL), honoured ONLY under the test switch
+    OPAL_STATE_ROOT (DP-h-1). Without the switch it is ignored and "" is returned: the production sources are read."""
+    if not os.environ.get("OPAL_STATE_ROOT", "").strip():
+        return ""
+    return os.environ.get("OPAL_CLOUD_READ_LOCAL", "").strip()
+
+
 def _source_git(box: str) -> tuple:
-    local = os.environ.get("OPAL_CLOUD_READ_LOCAL", "").strip()
+    local = _seam_dir()
     if local:   # tests: <dir>/git=<box>/open_calls.json stands in for origin/box/<box> (read only)
         path = os.path.join(local, "git=%s" % box, "open_calls.json")
         if not os.path.isfile(path):
@@ -1510,7 +1520,7 @@ def _source_git(box: str) -> tuple:
 
 
 def _source_cluster(box: str) -> tuple:
-    local = os.environ.get("OPAL_CLOUD_READ_LOCAL", "").strip()
+    local = _seam_dir()
     if local:   # tests: a directory holding box=<box>/open_calls.json stands in for the cluster object (read only)
         path = os.path.join(local, "box=%s" % box, "open_calls.json")
         if not os.path.isfile(path):
@@ -1549,6 +1559,8 @@ def approval_read(box: str, store_dir) -> tuple:
         except ValueError as exc:
             raise BadFile("%s: not JSON (%s)" % (where, exc))
         return validate_doc(doc, box, where), where
+    if os.environ.get("OPAL_CLOUD_READ_LOCAL", "").strip() and not _seam_dir():   # DP-h-1: once per call, never silent
+        print("NOTE: OPAL_CLOUD_READ_LOCAL ignored: it is a test seam and OPAL_STATE_ROOT is not set", file=sys.stderr)
     this = _is_this_box(box)
     order = ([("working-tree", _source_working_tree), ("git", _source_git)] if this else
              [("cluster", _source_cluster), ("git", _source_git), ("working-tree", _source_working_tree)])
