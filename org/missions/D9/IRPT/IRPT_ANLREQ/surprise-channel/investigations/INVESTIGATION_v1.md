@@ -15998,3 +15998,240 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S105 -- DISARMS W136-S2: the opal_map member: the release-31 bindings carry it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S105",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T23:08:42Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W136-S2 (the opal_map member: the release-31 bindings carry it).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The row it disarms names the hazard and the disarm owner 2.0.0_SA_COO~Y2.",
+  "world_is": "MEASURED by this seat 2026-10-14: the extracted reports/resident_bindings.json of the staged tarball (sha256 22193944...) carries opal_map {path ../ycharts/research/overview_map.json, sha256 21a8f6d6...}; release 29 already carried it (row W144-S3), so a listed principal's job is not refused OPAL_MAP_BINDING_REQUIRED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~144/r41/RESIDENT_R31_BUILD.json",
+      "extracted tarball read by this seat"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The basis of the cited row is closed by the evidence in world_is.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W136-S2."
+}
+```
+
+## IRPT_ANLREQ-D2-S106 -- DISARMS W141-S1: the commentary key and the branch-A test: re-pinned and shipped with the packager block
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S106",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T23:08:42Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W141-S1 (the commentary key and the branch-A test: re-pinned and shipped with the packager block).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The row it disarms names the hazard and the disarm owner 2.0.0_SA_COO~Y2.",
+  "world_is": "RECORD AR-y-336 (merged c4c2afe896): the one test that pinned the commentary key's absence is re-pinned; the extracted bindings carry commentary_ready_queue_url AND the packager block together (read by this seat).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "extracted tarball bindings read by this seat",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~143/r41/RESIDENT_R31_PACKAGER_BINDINGS_RECORD.json"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The basis of the cited row is closed by the evidence in world_is.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W141-S1."
+}
+```
+
+## IRPT_ANLREQ-D2-S107 -- DISARMS W141-S2: RESIDENT_PACKAGER_REQUIRED: the bindings the builder writes now carry the packager block with the commentary key
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S107",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T23:08:42Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W141-S2 (RESIDENT_PACKAGER_REQUIRED: the bindings the builder writes now carry the packager block with the commentary key).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The row it disarms names the hazard and the disarm owner 2.0.0_SA_COO~Y2.",
+  "world_is": "MEASURED by this seat: the extracted bindings hold both keys; the installed factory's rule (a commentary key requires a packager block) is satisfied by construction (tests of AR-y-336, RECORD, re-run by the build record's checkers).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "extracted tarball bindings read by this seat"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The basis of the cited row is closed by the evidence in world_is.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W141-S2."
+}
+```
+
+## IRPT_ANLREQ-D2-S108 -- DISARMS W141-S5: the MSYS path rewrite of opal_map.path: the staged tarball is clean
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S108",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T23:08:42Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W141-S5 (the MSYS path rewrite of opal_map.path: the staged tarball is clean).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The row it disarms names the hazard and the disarm owner 2.0.0_SA_COO~Y2.",
+  "world_is": "MEASURED by this seat: the extracted bindings' opal_map.path is the relative path ../ycharts/research/overview_map.json, with no C:/Program Files/Git prefix; the build ran with MSYS_NO_PATHCONV=1 as the record's build_note requires.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "extracted tarball bindings read by this seat"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The basis of the cited row is closed by the evidence in world_is.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W141-S5."
+}
+```
+
+## IRPT_ANLREQ-D2-S109 -- DISARMS W145-S1: the irpt-status CI build: the path defect was the order's own MSYS_NO_PATHCONV=1
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S109",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T23:08:42Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W145-S1 (the irpt-status CI build: the path defect was the order's own MSYS_NO_PATHCONV=1).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The row it disarms names the hazard and the disarm owner 2.0.0_SA_COO~Y2.",
+  "world_is": "The order told the worker to set MSYS_NO_PATHCONV=1 for build-and-upload.sh, which relies on MSYS converting the env path for node (the issuer's error, amendment a38cc067ac). Re-run with the variable UNSET the build produced the zip twice, byte-identical (AR-y-339 pass 3; checkers re-run by this seat). The stray C:\\c\\dev tree remains for a human to delete.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~145/r41/IRPT_STATUS_R31_BUILD.json"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The basis of the cited row is closed by the evidence in world_is.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W145-S1."
+}
+```
+
+## IRPT_ANLREQ-D2-S110 -- DISARMS W145-S5: the shared stage folder: the two builds now stage separately
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S110",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T23:08:42Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W145-S5 (the shared stage folder: the two builds now stage separately).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The row it disarms names the hazard and the disarm owner 2.0.0_SA_COO~Y2.",
+  "world_is": "AR-y-339 stages only under C:/dev/irpt-release-r31s/ and AR-y-338 under C:/dev/irpt-release-r31/ (amendment 1 of order 339); both staged artifacts were re-hashed by this seat (zip 3dc18af8..., tarball 22193944...) and the lost live download was re-made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "staged zip and tarball re-hashed by this seat"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The basis of the cited row is closed by the evidence in world_is.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W145-S5."
+}
+```
+
+## IRPT_ANLREQ-D2-S111 -- DISARMS W145-S8: the map edit that left status_installed.py without a source: corrected
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S111",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T23:08:42Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W145-S8 (the map edit that left status_installed.py without a source: corrected).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The row it disarms names the hazard and the disarm owner 2.0.0_SA_COO~Y2.",
+  "world_is": "The corrected edit (order 339 amendment 3) removes the entry.py and owned_report.py rows and re-pins the status_installed.py row to c4c2afe896; the net map diff against the base was read by this seat (two rows removed, one re-pinned, pin and sha256 only) and the build succeeded (merge 3fefcd3142).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff 69c3e39c2b 3fefcd3142 -- infra/aws/lambda/ci/lambda-source-map.json, read by this seat"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The basis of the cited row is closed by the evidence in world_is.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W145-S8."
+}
+```
+
+## IRPT_ANLREQ-D2-S112 -- DISARMS W144-S1: acceptance.py is a member of the resident release
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S112",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T23:08:42Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W144-S1 (acceptance.py is a member of the resident release).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The row it disarms names the hazard and the disarm owner 2.0.0_SA_COO~Y2.",
+  "world_is": "AR-y-338 amendment 1: ycharts/generate/acceptance.py is in the tarball at the pin blob 0c4acec625...; its difference from the release-29 member is exactly two hunks, attributed (IB-pr-478 06557b6618 get_commentary_ref; IB-pr-455 74bbdbb322, inert in the resident); the AR-y-331 route tests pass 6 of 6 on the extracted tree (build_check, re-run by this seat).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tarball members diffed against release 29 by this seat: 15 differing, acceptance.py among them"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The basis of the cited row is closed by the evidence in world_is.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W144-S1."
+}
+```
+
+## IRPT_ANLREQ-D2-S113 -- DISARMS W144-S12: two writers under serial 0.9.0_WK_IRPT_ANLREQ~144: the worker of record is the newer instance
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S113",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T23:08:42Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W144-S12 (two writers under serial 0.9.0_WK_IRPT_ANLREQ~144: the worker of record is the newer instance).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The row it disarms names the hazard and the disarm owner 2.0.0_SA_COO~Y2.",
+  "world_is": "Ruled 2026-10-14 by this seat (tick log ~22:5xZ): the nudge resumed the older instance while a same-window re-seat started a second; the older instance stopped without overwriting; the newer instance a4dab3c9cbc68cd76 is the worker of record and its commit a98bac333a is the one drained (merge 1cfc6ed5f4). Both instances independently built the same tarball (sha256 22193944345ce2dd52d2b732ce0ac8d569aa2359958601686239b7e1da8e6021), which this seat recomputed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 1cfc6ed5f4",
+      "tarball sha256 recomputed by this seat"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The basis of the cited row is closed by the evidence in world_is.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W144-S12."
+}
+```
