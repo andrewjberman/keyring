@@ -7419,6 +7419,160 @@ carries none.
       ]
     },
     "notes": "Doc-only. The check's verdict is not affected; the check file is the issuer's and is not edited here."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W37-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~37",
+    "surfaced_at": "2026-10-14T14:28:09Z",
+    "one_line": "The census that the --deployed-tools census denominator reads names no harvest_list or harvest_read, while G1 section 2 item 2 calls both deployed; read_tool is null on all 78 rows.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-c-12 step 2 runs --deployed-tools census; the read_tool policy example reads D = [harvest_list, harvest_read] as the raw tools. G1 section 2 item 2 (G1 pinned at 0d7c29b3c5): 'The two deployed raw tools, harvest_list and harvest_read (app/harvest_read.py), are not in tool_index'.",
+    "world_is": "tool_census.py at the EC2 manifest deployed_commit 90967e39ba lists 68 served tools and no name containing harvest, so the census-derived D is empty and read_tool is null on 78 of 78 rows (gap_owner NFRA_OPLGTW on 78 of 78). The base row comments measured harvest_read and harvest_list as trunk-only, not deployed, at 7eff14b2e6; G1 calls them deployed. The rows follow the census because the policy names no tool that is not deployed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/tool_census.py run in worktree C:/tmp/wk-mcpindex-r13-37 (branch wk-NFRA_MCPINDEX-37, HEAD 7fc8fb3907): rc=0, n=68, deployed_commit 90967e39ba, no tools[].tool containing harvest",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~37/G1_pinned.md (= G1_harvest.md @0d7c29b3c5) section 2 item 2; base row workflows/atom_decomposition/catalog_entries/harvest_bloomberg_harvest.yaml@7fc8fb3907 header comment (7eff14b2e6: not deployed)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not resolved by this cell. A later cell that wants harvest_read named needs the census to list it, or the deployed commit to move."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W37-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~37",
+    "surfaced_at": "2026-10-14T14:28:09Z",
+    "one_line": "No G1 freshness.derived_from names a column, so the task order's FIELD:<column> rule yields zero rows; the word 'date' in two derived_from strings is not a column reference.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-c-12 freshness_field: FIELD:<column> only when the contract's freshness.derived_from names a column that is in its columns list; otherwise 'NONE -- ' followed by derived_from verbatim. The task order does not define 'names'.",
+    "world_is": "Over the 78 contracts derived_from takes two values: 'newest object LastModified (UTC); no date partition' (48) and 'date= partition in the key' (30). Neither equals a column name, so the exact-match reading gives 0 FIELD rows and 78 NONE rows. Two contracts (bloomberg/harvest/bronze/histdata/ and histdata_daily_px/) carry a column named date; a word-match reading would emit FIELD:date for them although their derived_from names the LastModified field. The generator applies the exact match.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~37/G1_pinned.md (= G1_harvest.md @0d7c29b3c5): survey of freshness.derived_from and columns over the 78 contract dicts",
+        "workflows/atom_decomposition/gen_harvest_rows.py@7fc8fb3907 (working tree) freshness_field(): exact-match branch"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The CVO or the CRO may want a derived_from that names its column. Until then the freshness field is NONE for every table."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W37-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~37",
+    "surfaced_at": "2026-10-14T14:28:09Z",
+    "one_line": "The task order says social/v1/ has no harvest row; a row exists at its child prefix social/v1/_measurement/, and the stale-file rule deletes it, so its business_meaning and example_questions are not carried to social/v1/.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-c-12 'What exists at the base': two datasets have no row at their own prefix, amgt/harvest/gold/ai_fill/ and social/v1/. Step 2 deletes the 13 stale source-level files, and preservation matches a row by its resolved prefix.",
+    "world_is": "The base carries workflows/atom_decomposition/catalog_entries/harvest_social_v1_measurement.yaml with prefix social/v1/_measurement/ (a child of the G1 contract social/v1/) and its own business_meaning and example_questions. The prefixes differ, so nothing is preserved; harvest_social_v1_measurement.yaml is one of the 13 deleted files, and social/v1/ is written from G1 text only (new file harvest_social_v1.yaml).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show 7fc8fb3907:workflows/atom_decomposition/catalog_entries/harvest_social_v1_measurement.yaml (prefix: social/v1/_measurement/)",
+        "generator run: preserved existing text for 26 of 78 rows; removed harvest_social_v1_measurement.yaml (listed in the run output)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The CVO may want the _measurement row's text carried to social/v1/ in the drain. This cell applies the resolved-prefix rule as written."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W37-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~37",
+    "surfaced_at": "2026-10-14T14:40:37Z",
+    "one_line": "The completion flip (APPEND <status>complete</status>) targets the task-order file, which is outside this order's <paths>; this worker does not make the flip.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-c-12 section 5 step 2: APPEND <status>complete</status> to the task order when all three criteria PASS, then commit instance, deliverables and the flip together. Worker face: <paths> is the write grant, and a path the order lacks is a BLOCKING row, never an override.",
+    "world_is": "The task order NFRA_MCPINDEX.TO-MX-c-12.harvest-rows-table-grain-generator.md is not among the five <paths> entries (the write grant is the generator, the test, catalog_entries, the deliverables folder and this investigation file). All three criteria PASS and the instance is VALID, but the flip would edit a path outside the grant, so the order stays <status>issued</status> at this commit for the issuer to flip.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-12.harvest-rows-table-grain-generator.md@7fc8fb3907: <status>issued</status> at line 144; the Surfaces section lists five <paths> entries and no task-orders path",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~37/NFRA_MCPINDEX.TO-MX-c-12.harvest-rows-table-grain-generator.proof_of_spec.json: .tools/proof-of-spec-check.py AC1,AC2,AC3 rc=0 VALID"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The issuer appends the status tag on its word, or widens the grant for this path. No criterion is affected by this row."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W37-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~37",
+    "surfaced_at": "2026-10-14T15:01:39Z",
+    "one_line": "The commit-time naming gate (ENFORCE) refuses the 78 harvest rows: their G1 contract ids and s3_prefix values, which the TO requires verbatim, are graded as out-of-pattern S3 keys, so the rows cannot land under this grant.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-c-12 rows: 'prefix' = the contract's s3_prefix verbatim; 'contract.id' = contract_id verbatim (checked by AC1 and AC2). CLAUDE section 4: every S3 address is lib/opal_naming.py output; a builder refusal is a missing registry row to add (infra/logic/registry/), never a hand-typed workaround; a deliberate departure is an R20 entry Andrew acknowledges; existing pipelines reach conformance by their own migration (R19).",
+    "world_is": "safe-commit.sh in ENFORCE mode returns NAMING-GATE: REFUSE 206 graded with 81 NAMING REFUSE lines in 78 files, all under workflows/atom_decomposition/catalog_entries/harvest_*.yaml (the added lines of the 52 new rows and the 26 rewritten rows). The gate is fail-closed and cannot be satisfied without a registry row per name (infra/logic/registry, outside <paths>) or an R20 entry. No naming override was used and none was taken. The row commit of the 78 rows and the 13 deletions is not landed; the generator, its tests and the evidence are committed without the rows.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~37/naming_gate_refusal_attempt1.txt@7fc8fb3907 (worktree file, ANSI stripped): NAMING-GATE: REFUSE 206 graded; 81 NAMING REFUSE lines in 78 catalog_entries files",
+        "workflows/atom_decomposition/catalog_entries/harvest_ai_fill.yaml (added line 18, contract.id) graded: opal-data-harvest/gold/amgt.harvest.gold.ai_fill -> {source}/{scope}/gold/amgt.harvest.gold.ai_fill: NEW and OUT-OF-PATTERN as S3Key: REFUSE",
+        ".tools/safe-commit.sh lines 1053-1067 (naming limb; ENFORCE when org/mcp/naming-gate.enforce exists)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The issuer decides the route: R20 entries for the 78 contract ids and prefixes (Andrew acknowledges), or registry rows and the R19 migration. Once the route is set, the generator regenerates the rows deterministically (AC3-style rerun) and the cell commits rows, deletions and proof together."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W37-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~37",
+    "surfaced_at": "2026-10-14T16:02:00Z",
+    "one_line": "The regeneration invocation in TO step 2 names no evidence argument, but TO item 6 sets the research-dossier hyphen row retired only on its evidence; the worker passed the generator's --supersession flag with the item-6 evidence file so that rule could run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-12 step 2: run the generator with --out workflows/atom_decomposition/catalog_entries --deployed-tools census. Item 6: set the hyphen row retired true ONLY IF the hyphen table holds no security_key the underscore table lacks AND the underscore table newest write is not older than the hyphen newest write; the retired_reason names the evidence file path.",
+    "world_is": "research_dossier_supersession.json (committed at 875734d449) measures both conditions as met: 95 security_keys each, hyphen-minus-underscore 0 and underscore-minus-hyphen 0; newest LastModified hyphen 2026-09-29T09:36:58+00:00, underscore 2026-10-12T00:25:15+00:00. The step-2 invocation carries no --supersession argument, so without it the hyphen row is written retired false although the condition holds. The regeneration ran with the flag; the research-dossier row is retired true with a reason naming the evidence file. AC2 accepts either outcome.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~37/research_dossier_supersession.json@875734d449: hyphen and underscore security_keys counts 95 and 95, both difference lists empty, newest_last_modified 2026-09-29T09:36:58+00:00 and 2026-10-12T00:25:15+00:00",
+        "workflows/atom_decomposition/gen_harvest_rows.py supersession() and the --supersession argument: the retirement is written only when the evidence file is passed",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-12.harvest-rows-table-grain-generator.md@ff2710841f: step 2 invocation and item 6 retirement rule"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The issuer confirms whether the step-2 invocation should carry --supersession for item 6. No criterion is affected: AC2 grades either outcome, and the retired row cites an evidence file that exists."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W37-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~37",
+    "surfaced_at": "2026-10-14T16:35:08Z",
+    "one_line": "The commit-time naming gate grades the 78 amended contract.id values (colon form, opal-data-harvest:<layer>:<dotted id>) as RAISE, not REFUSE: it reads them as a bucket name and calls the rule or registry a defect; the commit verdict is not blocked by them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-12 amendment A1 item 1 and the order's contract.id row: contract.id = contract_id with every '/' replaced by ':' (an identifier the commit-time naming gate accepts), so the rows land under safe-commit.sh.",
+    "world_is": "safe-commit.sh naming gate, first attempt on the final rows: 78 RAISE lines, each 'RAISE as S3_BUCKET: rule or registry defect, not a refusal: B2: harvest:<layer>:<id> after opal-data- is no scope key' (for example harvest_ai_fill.yaml:18 opal-data-harvest:gold:amgt.harvest.gold.ai_fill). The verdict line is decided by REFUSE only; the REFUSE lines of the first attempt were the generator's own typed prefixes (gen_harvest_rows.py:54-56), which the worker removed by reading the nine prefixes from legacy_addresses.json.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~37/naming_gate_refusal_attempt2.txt: the commit-gate output of the attempt (the 78 RAISE lines and the three REFUSE lines), worktree file",
+        "workflows/atom_decomposition/catalog_entries/harvest_ai_fill.yaml:18 (contract.id line) graded RAISE as S3_BUCKET, reason B2 (naming gate output above)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The gate's B2 rule for an opal-data-harvest bucket reads the colon-separated id as a scope; the owner of the naming gate decides whether the rule or the id form changes. No criterion is affected and no row is blocked by this entry."
   }
 ]
 ```
