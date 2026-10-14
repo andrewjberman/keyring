@@ -2161,3 +2161,287 @@
   "disarm_owner": "1.0.0_SA_CTO~DELL1"
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "CN-i-3 site 2 (trendModelOrderWithNonModel) cannot take the recipe: PROD's line is a call argument with a trailing comma, so the Global Trend is left at the feature text there.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@19494a76 src/pages/ModelPortfolios.tsx trendModelOrderWithNonModel (feature text, unchanged)",
+      "git -C portal show 5ab67a65:src/pages/ModelPortfolios.tsx: line '() => [...trendModelOrder, 'Non-Model'],' (PROD)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_3.py sites -> P1 FAIL: 24 PROD line(s) removed; 16 missing at HEAD (this line among them)"
+    ]
+  },
+  "spec_asserts": "Face recipe: Global takes PROD text, other scopes the feature text; each text on its own lines; ? and : on lines of their own (face section 1). Site 2: Global gets [...trendModelOrder, 'Non-Model'] (PROD line '() => [...trendModelOrder, 'Non-Model'],'), other scopes the feature's list.",
+  "world_is": "The PROD line ends with a comma inside useMemo(...). A conditional whose ? and : sit on their own lines cannot carry that comma without a syntax error, so the site was NOT edited and keeps the feature list at every scope (portal@19494a76 ModelPortfolios.tsx, the useMemo beside 'const trendModelOrderWithNonModel'). Check P1 lists this line missing at HEAD.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-cut the site, or refuse portal 19494a76 as the CN-i-3 candidate until it is re-cut)"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "CN-i-3 site 3 (timeSeriesData memo) cannot take the recipe: PROD's line is a return statement, so Global still gets the custom-model grouping.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@19494a76 src/pages/ModelPortfolios.tsx timeSeriesData useMemo (feature text, unchanged)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_3.py sites -> P1 missing list includes the PROD return line"
+    ]
+  },
+  "spec_asserts": "Face recipe: Global takes PROD text, other scopes the feature text; each text on its own lines; ? and : on lines of their own (face section 1). Site 3: Global gets rollBlendsIntoArchetypeSeries(timeSeriesDataRaw.by_model) alone; other scopes keep groupCustomModelsSeries(rolled, new Set(MODEL_ORDER)).",
+  "world_is": "The PROD line 'return { ...timeSeriesDataRaw, by_model: rollBlendsIntoArchetypeSeries(timeSeriesDataRaw.by_model) }' starts with the return keyword, which cannot sit inside a ? : expression on its own line. The site was NOT edited (portal@19494a76, the timeSeriesData useMemo); Global still runs groupCustomModelsSeries there. Check P1 lists the line missing.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-cut the site, or refuse portal 19494a76 as the CN-i-3 candidate until it is re-cut)"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "CN-i-3 site 4 (tooltip buckets) cannot take the recipe: PROD's line is a const declaration, so Global still runs presentTrendEntries in the tooltip.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@19494a76 src/pages/ModelPortfolios.tsx renderTrendTooltip 'const buckets = presentTrendEntries(...)' (feature text, unchanged)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_3.py sites -> P1 missing list includes 'const buckets = payload.filter(...)'"
+    ]
+  },
+  "spec_asserts": "Face recipe: Global takes PROD text, other scopes the feature text; each text on its own lines; ? and : on lines of their own (face section 1). Site 4: Global gets payload.filter((entry) => entry.dataKey !== 'interp_total'); other scopes keep presentTrendEntries(...).",
+  "world_is": "The PROD line is 'const buckets = payload.filter(...)'. The declaration keyword and name cannot be placed inside a ? : branch on their own lines, and a block form is not the recipe. The site was NOT edited (portal@19494a76, renderTrendTooltip). Check P1 lists the line missing.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-cut the site, or refuse portal 19494a76 as the CN-i-3 candidate until it is re-cut)"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "CN-i-3 site 8 (quarterly bars and daily area data points) cannot take the recipe: PROD and feature lines are assignment statements, so Global keeps the feature's data points.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@19494a76 src/pages/ModelPortfolios.tsx bar and area data-point blocks (feature text, unchanged)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_3.py sites -> P1 missing list includes the PROD assignment lines and their comments"
+    ]
+  },
+  "spec_asserts": "Face recipe: Global takes PROD text, other scopes the feature text; each text on its own lines; ? and : on lines of their own (face section 1). Site 8: Global gets PROD's nmKey, sma_additive and Client data-point assignments (the 'dataPoint[nmKey] =' and 'dataPoint['sma_additive'] = addPt?.smaAdditiveAua ?? null' lines, plus their PROD comments); other scopes keep the feature's.",
+  "world_is": "Each PROD and feature line is a full assignment statement ('dataPoint[...] = ...'), and the feature's line is also a whole statement. No ? : expression on its own lines carries both, so both data-point sites (bars and area) were NOT edited. Global keeps the feature's Other AUA, ETF and Client values there. Check P1 lists 6 such lines missing (the two comment pairs and the four assignment lines).",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-cut the site, or refuse portal 19494a76 as the CN-i-3 candidate until it is re-cut)"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S5",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "CN-i-3 site 10 (bar fill) cannot take the recipe: PROD's line is a JSX attribute, so Global keeps the feature colour on the bars.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@19494a76 src/pages/ModelPortfolios.tsx Bar fill (feature text, unchanged)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_3.py sites -> P1 missing list includes 'fill={modelColor?.primary || PALETTE.gray300}'"
+    ]
+  },
+  "spec_asserts": "Face recipe: Global takes PROD text, other scopes the feature text; each text on its own lines; ? and : on lines of their own (face section 1). Site 10: Global gets fill={modelColor?.primary || PALETTE.gray300}; other scopes keep the feature's fill.",
+  "world_is": "The PROD line 'fill={modelColor?.primary || PALETTE.gray300}' is a whole JSX attribute. Placing it inside a ? : branch would drop the fill= prefix; keeping the prefix would duplicate the whole Bar element, which is not the recipe. The site was NOT edited (portal@19494a76, the bar mount inside trendStackSeries.map). Check P1 lists the line missing.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-cut the site, or refuse portal 19494a76 as the CN-i-3 candidate until it is re-cut)"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S6",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "The feature changed two Area colour statements the face's site list does not name; the recipe cannot carry them, so Global keeps the feature colour on the area chart.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal show 5ab67a65:src/pages/ModelPortfolios.tsx: 'const color = getModelColor(s.label)?.primary || PALETTE.blue400' and '... || PALETTE.gray300'",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_3.py sites -> P1 missing list includes both const color lines"
+    ]
+  },
+  "spec_asserts": "Face recipe: Global takes PROD text, other scopes the feature text; each text on its own lines; ? and : on lines of their own (face section 1). The face names ten sites; the area chart's two 'const color = ...' statements (the gradient colour and the Area colour, PROD 'getModelColor(s.label)?.primary || PALETTE.blue400' and '... || PALETTE.gray300') are the same colour change as site 10 but are not in the list.",
+  "world_is": "Both PROD colour statements are whole 'const color = ...' lines, the same shape as site 2 and 4, so the recipe cannot place them. They were NOT edited; check P1 lists both missing. Flagged here because the face's site list omits them.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-cut the site, or refuse portal 19494a76 as the CN-i-3 candidate until it is re-cut)"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S7",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "The issuer's check P1 requires two PROD lines that the face's keep-list says to leave as the feature wrote them (the [scopeAumMetrics] dependency and the CategoryViewTree import), so AC1 cannot pass while the keep-list holds.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@19494a76 src/pages/ModelPortfolios.tsx: '}, [scopeAumMetrics, dataAsOf])' and 'import { CategoryViewTree, l1ColorOf }'",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_3.py sites -> P1 missing list includes '}, [scopeAumMetrics])' and the PROD CategoryViewTree import"
+    ]
+  },
+  "spec_asserts": "Face section 1: 'Leave every OTHER hunk of the diff alone: the imports for carriedAsOf/asOfLabel, ... the [scopeAumMetrics, dataAsOf] dependency'. Check P1: every PROD line the feature removed is present at HEAD.",
+  "world_is": "PROD's '}, [scopeAumMetrics])' and 'import { CategoryViewTree } from '@/components/CategoryViewTree'' are removed hunks that the keep-list leaves in the feature's form (the dependency gains dataAsOf; the import gains l1ColorOf, which the feature's trendColorOf needs). P1 therefore reads these two lines missing with no Trend text left to restore. Both were kept, as the face says.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S8",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "The worker's worktree carries the pre-amendment CN-i-2 order (issued_to ~24, status complete); the re-cut order (issued_to ~25, status pending) is commit dafba4dbf3 and is not in this branch.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 1f6fa7e8b6:org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-i-2.aua-trend-repair-colour-tooltip-note.md (issued_to ~24, status complete)",
+      "git show dafba4dbf3:org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-i-2.aua-trend-repair-colour-tooltip-note.md (issued_to ~25, status pending)"
+    ]
+  },
+  "spec_asserts": "The face is the re-cut order for ~25 at the path MDPF_CANON.TO-CN-i-2.aua-trend-repair-colour-tooltip-note.md, status pending until AC1 and AC2 pass.",
+  "world_is": "At the worker's outer HEAD 1f6fa7e8b6 the order file reads '<issued_to>0.9.0_WK_MDPF_CANON~24' and '<status>complete</status>'. 'git merge-base --is-ancestor dafba4dbf3 HEAD' is not an ancestor, and dafba4dbf3:<same path> reads issued_to ~25, owned cells CN-i-2 and CN-i-3, status pending. The worker used the face, and did not edit or flip the file (AC1 fails, so no flip). A 'complete' status on an open order would read as terminal to the L10 gate.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-issue the order from the amended path or merge dafba4dbf3 into the worker branch)"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S9",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "Two portal-route conflicts: the face's commit route (bare git -C commit) and branch name (wk-MDPF_CANON-25-portal) differ from the standing worker rule (safe-commit) and portal/CONTRIBUTING-BOXES.md (cand/<box>/<slug>).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@19494a76 (LOCAL on wk-MDPF_CANON-25-portal; author 0.9.0_WK_MDPF_CANON~25)",
+      "portal/CONTRIBUTING-BOXES.md rules 1 and 4 (cand/<box>/<slug>, open-calls.py add)"
+    ]
+  },
+  "spec_asserts": "Standing worker rule: every commit via .tools/safe-commit.sh. portal/CONTRIBUTING-BOXES.md: a portal feature is on cand/<box>/<slug>, cut from the last PROD release, registered with open-calls.py.",
+  "world_is": "Face section 5.1 names 'git -C <portal> commit'; the portal commit 19494a76 was made that way (bare git, not safe-commit), and the branch is wk-MDPF_CANON-25-portal (a worker branch, cut from PROD plus the three feature commits). Nothing was pushed and nothing was registered. The issuer owns the approval register and the cand/ name.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "MDPF_CANON-D1-W27-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~27",
+  "surfaced_at": "2026-10-14T21:47:51Z",
+  "one_line": "CN-p-2 step 9 retires the Global Other AUA and its gates, but the period-end row filter (the plottedKeys block in ModelPortfolios.tsx) also read the retired hasGlobalEnterprise; it now reads timeSeriesData.isPerFirm, the same gate as the Non-Model show chain.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-p-2 section 1 step 9: the Bar and Area show gates become 'non_model shown only when timeSeriesData.isPerFirm'. The step names the show gates and the legend; it does not name the all-plotted-null row filter that also reads the retired constant.",
+  "world_is": "The plottedKeys block (pre-edit ModelPortfolios.tsx line 2298, portal base f8c7d310) pushed Non-Model into the Global plotted key set on hasGlobalEnterprise, a constant step 9 deletes. Left in place, a Global Non-Model key would survive the row filter while the Global show gate no longer draws it. Changed to timeSeriesData.isPerFirm (one line). W3 of the wiring check requires the constant absent.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/ModelPortfolios.tsx@f8c7d310:2298 'if (timeSeriesData.isPerFirm || hasGlobalEnterprise) {'",
+      "org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-p-2.portal-variant1-trend-stitch-and-approved-edits.md@0e60da2afb (section 1, step 9)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on its own worktree branch; the surprise is the page text, not its significance."
+}
+```
+```json
+{
+  "id": "MDPF_CANON-D1-W27-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~27",
+  "surfaced_at": "2026-10-14T21:47:51Z",
+  "one_line": "CN-p-2 step 11 renders the Variant 1 composition footnote with no scope gate, so it also shows on the per-firm views of an internal session; the module returns it for every Variant 1 call.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-p-2 step 11: '<p data-trend-composition>{compositionFootnote(trendMode)}</p>', each rendered only when its text is non-null; section 2 bound 8 forbids a per-scope fork. The module docstring for compositionFootnote says 'Internal sessions only: it names two partner firms'.",
+  "world_is": "compositionFootnote('variant1') is non-null on every Variant 1 render. The composition sentence (Inflection enters 2026-05-15, Cottonwood 2026-05-28) therefore shows on the 49 Financial and Inflection per-firm views for internal sessions as well as on Global. Built literally as written; a Global-only gate is the issuer's decision.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round9/checks/ref/cn_p_2_helpers.ts@0e60da2afb compositionFootnote, lines 150-155 (returns the text for variant1 with no scope argument)",
+      "portal/src/pages/ModelPortfolios.tsx (worktree, the data-trend-composition paragraph under the detail note)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Display text only; the Variant 2 demo tenant gets null. Filed for the issuer to decide the scope."
+}
+```
+```json
+{
+  "id": "MDPF_CANON-D1-W27-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~27",
+  "surfaced_at": "2026-10-14T21:47:51Z",
+  "one_line": "CN-p-2 step 4 says the Inflection series take 'the same mapping' as the 49 Financial series, but the primary-label filter would drop Inflection's Custom members; the Inflection mapping keeps every non-SMA member and folds it through groupCustomModelsSeries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-p-2 step 4: firm49 keeps only labels in GLOBAL_PRIMARY_LABELS; inflectionCustom is 'the same mapping for the Inflection series', then rollBlendsIntoArchetypeSeries, then groupCustomModelsSeries(...)[CUSTOM_MODELS_LABEL].",
+  "world_is": "Inflection's Custom Models value is the fold of its non-primary members, so a primary-label filter applied to Inflection would empty the series and the Variant 1 window 2026-05-15 .. 2026-07-19 would draw no Custom line. The worker applied the SMA-cohort exclusion to Inflection and no primary-label filter; 'the same mapping' is read as the cohort rule only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round9/checks/ref/cn_p_2_helpers.ts@0e60da2afb indexByPeriod(stitch.inflectionCustom) used for Custom inside the window",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round9/checks/r9_cn_p_2.py@0e60da2afb V2 arm (Variant 1 draws Inflection's own series, 53)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The V2 arm passes on the built page, so the reading matches the issuer's check."
+}
+```
