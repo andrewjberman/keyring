@@ -6,6 +6,70 @@ From `4.0.0_SA_CRO~DELL1` to `1.0.0_SA_CTO~DELL1`, on msg 5830. Andrew's record:
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_201xZ_PORTFOLIOS_SMOKE_TREND_FULL_HISTORY_COTTONWOOD_SPEC.md`
 @caf5dc7d73. All reads were made on 2026-10-14 at ~20:2xZ against the served objects named below. Read-only.
 
+## RULED 2026-10-14 ~20:4xZ: Variant 1 (Andrew-direct)
+
+> "Call 3, only opal staff see global, that is correct. therefore your assessment is correct with rec a, that is the
+> easiest stitch."
+
+Record: `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261014_204xZ_MDPF_GLOBAL_TREND_VARIANT_1_AND_SATELLITE_GLD_RETURNS.md`.
+Build Variant 1. Variant 2 below is retired.
+
+## AMENDMENT 1, 2026-10-14 ~20:5xZ: the SMA strategies over full history; Muni is a custom model (Andrew-direct)
+
+Andrew, verbatim, in session at the 4.0.0_SA_CRO~DELL1 terminal: "Close but we might as well put the SMA strategies in
+there, we do have them" / "no muni in SMAs, Muni is no longer SMA" / "muni is just a custom model".
+
+**This amendment supersedes the ETF Strategies, Client Supervised, Custom Models and ALT Strategies rows of the rule
+table, and the oracle, below.**
+
+**The SMA history exists, measured.** SMArtX `s3://opal-data-assets/smartx/platform/silver/fact_model_aum_daily/date=2026-10-14/data.parquet`
+carries `closing_equity` per model per day. Model names come from `smartx/platform/silver/fact_model_allocation_roster`
+(`rmid` -> `model_name`):
+
+| SMArtX model (rmid) | Served as | First day | 2026-10-13 |
+|---|---|---|---|
+| Opal Dividend Income (`ea6cbb22-...`) | `opal_div_sma` "Dividend SMA" | 2021-09-02 | 17.14M |
+| Pathfinder Focused Opportunities (`ab0a2a03-...`) | `opal_growth_sma` "Opal Equity Growth SMA" | 2024-08-08 | 3.98M |
+| Opal Global All Equity Total Return (`4d85401b-...`) | a Custom member | 2024-08-30 (last 2025-03-26) | 0 |
+
+- **SMArtX equals the gold carve-outs exactly:** max |gold - SMArtX| = $0.00 over all 103 overlap dates (2026-05-18
+  onward).
+- Before 2026-05-18 those dollars sit inside 49F `non_model_aua`. Subtracting them makes Client Supervised continuous
+  across the old boundary: 268.52 (05-14), 268.10 (05-15), 267.08 (05-18). The $24.9M step on 05-18 is gone.
+- SMArtX covers every pre-05-18 dated row (0 missing).
+
+**Amended rows:**
+
+| Group | Dates | Source | Claim |
+|---|---|---|---|
+| ETF Strategies | 2024-11-01 .. 2026-05-17 | SMArtX Opal Dividend Income + Pathfinder Focused Opportunities `closing_equity` | measured |
+| ETF Strategies | 2026-05-18 .. as-of | G `opal_div_sma` + `opal_growth_sma` + `sma_additive_aua` (PFDE) | measured |
+| Client Supervised | all dates | G `non_model_aua` - Dividend - Growth (from SMArtX before 05-18, G after) - Opal Global All Equity Total Return (SMArtX, before 2025-03-27) | measured (difference) |
+| Custom Models | before 2026-05-15 | Opal Global All Equity Total Return (SMArtX; about $0.05M, 2024-08-30 .. 2025-03-26) | measured |
+| Custom Models | 2026-05-15 .. as-of | G `model_aua` - the five primary lines; **Muni is a member here** (Cottonwood's `opal_muni_sleeve`, from 2026-09-28, is already inside the residual) | measured (residual) |
+| ALT Strategies | 2026-09-30 .. as-of | G `tax_additive_aua` (Tax-Managed SMA) **only; Muni is not an SMA** | measured. The first observation is 2026-09-30, when 13 accounts enrolled (`tax_coverage`; 486 earlier rows read NOT_OBSERVED). Before that date the accounts were not Tax SMA, so there is no history to draw. |
+
+**Category-views follow-up:** the served `SMA > ALT Strategies` node still lists a "Muni SMA" member (aum null).
+Andrew's word moves Muni to Custom; the producer's category tree drops it from ALT.
+
+**Amended oracle, $M (Variant 1; the last dated row on or before the period end; each row sums to its Total, and max
+|sum - total| = $0.00 over all 487 dated rows):**
+
+| period end | UST | ST | INT | LT | ULT | Custom | Client Sup. | ETF | ALT | Total |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 2024-12-31 | 0.0 | 64.3 | 182.4 | 118.6 | 146.6 | 0.0 | 356.8 | 5.8 | 0.0 | 874.6 |
+| 2025-03-31 | 72.7 | 68.4 | 201.5 | 192.8 | 152.8 | 0.0 | 275.8 | 13.1 | 0.0 | 977.0 |
+| 2025-06-30 | 59.9 | 69.9 | 225.6 | 279.4 | 182.8 | 0.0 | 234.3 | 17.2 | 0.0 | 1069.1 |
+| 2025-09-30 | 51.6 | 76.6 | 246.2 | 361.4 | 189.0 | 0.0 | 239.4 | 19.9 | 0.0 | 1184.0 |
+| 2025-12-31 | 55.6 | 80.1 | 257.1 | 506.0 | 191.0 | 0.0 | 268.8 | 22.2 | 0.0 | 1380.8 |
+| 2026-03-31 | 58.7 | 93.4 | 262.3 | 600.0 | 189.1 | 0.0 | 250.7 | 23.7 | 0.0 | 1477.9 |
+| 2026-06-30 | 48.4 | 111.3 | 365.1 | 755.8 | 204.1 | 34.3 | 228.6 | 23.1 | 0.0 | 1770.6 |
+| 2026-09-30 | 68.4 | 131.9 | 451.6 | 872.9 | 205.6 | 66.9 | 266.6 | 21.2 | 24.8 | 2109.9 |
+| 2026-10-13 | 70.0 | 138.3 | 456.7 | 888.5 | 211.3 | 69.2 | 292.3 | 21.5 | 29.2 | 2177.1 |
+
+**Where it lands, added:** the producer reads the SMArtX table for the pre-05-18 SMA legs (a new read in
+`mdpf_gold_consolidator`; check the naming gate and the registry row for its key before the commit, as for XA-ad15).
+
 ## Verdict: DOABLE from served data, with no new pull
 
 With the rule below, the Trend groups **partition the Global total exactly on every one of the 487 dates that carry a
