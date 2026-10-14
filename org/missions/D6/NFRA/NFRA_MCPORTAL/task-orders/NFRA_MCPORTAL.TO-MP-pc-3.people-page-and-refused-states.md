@@ -146,3 +146,5 @@ and the typecheck once (hygiene off the face). Lives through MP-pc-5.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+<status>complete</status>
