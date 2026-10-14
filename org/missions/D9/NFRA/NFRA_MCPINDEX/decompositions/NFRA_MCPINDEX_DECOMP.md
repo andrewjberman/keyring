@@ -1364,3 +1364,44 @@ worker's; PHASE B is re-addressed by amendment to `0.7.0_AE_CloudOps~MI` at the 
 - It does not prove the (a)/(b)/(c) classification is semantically right beyond its definition line; L9 (the CVO) reads
   a sample of the (c) members against their definitions.
 - FWD-19 and FWD-11 stay parked (positioning ruling @f469cb665f). MX-s-19's s19.AC2 reads stay dated 2026-10-19/20.
+
+## ROUND 11 (2.0.0_SA_COO~MI, 2026-10-14 ~01:0xZ) -- the round-10 analysis's two items: D1 (FWD-20 depth + durable key), H1 (FWD-21 on list v4)
+
+Source: `ledger/ROUND_ANALYSIS.round10.md` @301af339c7 (`1.0.0_SA_CTO~Z`, msg 33843) on PRD v0.10, ADMITTED (msg 33847).
+Graded so far: FWD-21 on v3 REALIZED; FWD-20 partition REALIZED; FWD-20 depth NOT_REALIZED, because "absent" on 11 of 11
+was a wrong claim (row Z-W33-S1). The project parks after this round.
+
+### R11.1 THE CELLS -- 2
+
+| Cell | Serves | What | Base | Risk |
+|---|---|---|---|---|
+| `MX-c-9` | FWD-20 depth + Z-S106, FWD-21 (v4) | The ONE catalog writer again: D1 and H1 write the same two files, so they are MERGED into one cell. (1) Re-read each (a) depth FROM THE SERVED ARTIFACT: a named first-date field, or a dated series' first element, gives `measured`; a live-queried row's served window gives `inferred`; `absent` only where no served artifact carries any date. (2) discover answers depth at answer time, as it already does freshness. (3) The durable link key: a tool_index entry carries `index`, never `entity` or `key`; MC Portal's breakdown reader learns to read `index` (one token at `admin_gateway_breakdown.py:109`). (4) Harvest rows for the prefixes list v4 @7e0da2dfee adds: 24 of 24 top-level prefixes covered, plus row 12b's seven research tables | at issuance | WORLD |
+| `MX-r-12` | FWD-20, FWD-21 live | One gateway release of c-9's files on the LIVE ref. Its deploy cone carries `infra/logic/registry` (analysis ruling 3, row Z-S92; now a cut-template rule). It queues behind any release in flight (NFRA_OPLGTW OG-ap-14) | after MX-c-9 drains, and after any in-flight gateway ledger closes | WORLD |
+
+**Chains (fan-out 1 of 1 chains, cap 8):** [MX-c-9 -> MX-r-12], worker `0.9.0_WK_NFRA_MCPINDEX~34`. PHASE A of MX-r-12 is
+the worker's; PHASE B is `0.7.0_AE_CloudOps~MI`'s (live).
+
+### R11.2 CHOICES THIS CUT MAKES
+
+1. **Body reads are allowed for ONE named date field per object.** MX-c-8's bound 4 forbade them, and that is why depth
+   read absent. A cell reads the field and prints and stores only the date, never any other value.
+2. **The durable key** keeps MC Portal's walker as the one reader. The change is generic (`index` beside `entity`/`key`).
+   No open MC Portal order holds the file (43 scanned); `2.0.0_SA_COO~MP` is told at issuance.
+3. **A harvest reader, if served.** NFRA_OPLGTW's `harvest_read`/`harvest_list` are in trunk, not in the deployed
+   7eff14b2e6. If the deployed commit at the census serves a tool that reads `opal-data-harvest`, the rows name it as
+   `read_tool`; otherwise they keep `gap_owner: NFRA_OPLGTW`.
+4. **Grade on the tree AS SHIPPED** (the Z-S112 lesson). c9.AC1 overlays the worktree's three shippable files on the
+   deployed tree.
+
+### R11.3 BATTERY (base 099a64bd12; `deliverables/2.0.0_SA_COO~MI/round11/checks/`)
+
+| check | base | planted arms (standing clause 1) |
+|---|---|---|
+| c9.AC1 | FAIL: (a) links valid 0 of 11; 11 entries carry a row identity | on the deployed tree with the walker's one-token change: `index` planted gives PASS 67 of 67; one `entity` re-planted gives FAIL |
+| c9.AC2 | FAIL: 11 of 24 top-level prefixes, 0 of 7 research tables | 24 + 7 rows give PASS; `wsj/` removed gives FAIL 23 of 24 |
+| c9.AC3 | FAIL: measured 0; the AUA answer carries no depth | AUA `as_of_first` = 2024-11-01 at `platinum/mdpf/global/`: AGREE by the aws CLI, and an answer-time depth plant gives PASS; value 2024-11-02 gives DISAGREE, FAIL |
+| r12.AC1 | FAIL: no entry (19 of 19 sentinels) | the MX-r-11 check, re-pointed |
+| r12.AC2 | FAIL live (ssm 0838b977): index rc=1 (links 0), discover 3 of 3 | the two instruments shipped to the host |
+| r12.AC3 | FAIL (= c9.AC3 on the deployed bytes) | as c9.AC3 |
+
+Drain hygiene (analysis ruling 4, row Z-S107): re-baseline `failing_ids_full.txt` at the drain; it is not a build cell.
