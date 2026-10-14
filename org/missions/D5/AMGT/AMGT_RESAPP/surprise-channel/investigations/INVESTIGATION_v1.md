@@ -26478,6 +26478,104 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
 
 ```json
 {
+  "id": "AMGT_RESAPP-D1-W418-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~418",
+  "surfaced_at": "2026-10-14T01:13:05Z",
+  "one_line": "The AC1 draw script does not create its --out directory; the deliverables folder named by the order was absent in the worktree, so the named invocation failed until the folder was made.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The first run of r103_walk_draw.py with --out org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~418/walk_draw.json printed the ten draw rows, raised FileNotFoundError at the json.dump open(a.out, 'w') and exited 1, at HEAD 14d1c44bda4a701cc302a68570c9f4213339eb6b.",
+      "After mkdir -p of the same folder, the same invocation printed 'R103 WALK DRAW: 10 of 93 drawn (date 2026-10-14)' and exited 0."
+    ]
+  },
+  "spec_asserts": "The order names the deliverables folder as the write grant, and the AC1 invocation writes walk_draw.json into it; the invocation is to be run as it stands.",
+  "world_is": "The folder was absent in the worktree. The script opens its --out path without creating the directory, so the named invocation exits 1 until the folder exists. The draw content was not changed.",
+  "notes": "Form only. The folder was created with mkdir -p inside the worker's own deliverables path."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W418-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~418",
+  "surfaced_at": "2026-10-14T01:13:05Z",
+  "one_line": "PBR US Model tab prints P/E 2026E 5.2x and 2027E 6.3x with no reason beside them, beside a header price in USD ($25.30) and EPS in BRL; the printed figures do not reproduce 5.2x.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ui-walk-evidence/bk-5/B/20261014T010116Z/shots/015-PBR-US-Model.png: 'Figures in BRL'; P/E (multiple) 2026E 5.2x and 2027E 6.3x; EPS (per share, BRL) 2026E 24.38 and 2027E 19.88.",
+      "C:/dev/ui-walk-evidence/bk-5/B/20261014T010116Z/shots/004-PBR-US-overlay.png: header PRICE '$25.30'; MARKET CAP, ENTERPRISE VALUE and NET DEBT tiles read '--' with 'Bloomberg does not confirm this figure's currency'."
+    ]
+  },
+  "spec_asserts": "Round 104 change: the historical P/E is price over reported EPS of the same fiscal year, and a year whose price and EPS are in different currencies shows a stated reason instead of a value.",
+  "world_is": "The 2026E and 2027E P/E cells show values with no reason beside them. The header price is USD $25.30 and the EPS rows are BRL; 25.30 / 24.38 is 1.04x, so the printed price and EPS do not reproduce 5.2x, and the page does not print which price basis the cell uses.",
+  "notes": "Form only. Recorded as a spec-vs-world mismatch seen on the walk; the price basis is for the CVO to read from the shots at L9."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W418-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~418",
+  "surfaced_at": "2026-10-14T01:13:05Z",
+  "one_line": "The printed 2025 P/E does not follow from the header price and printed 2025 EPS on GOOGL US (28.7x printed; 351.66 / 10.91 = 32.2x) and ISP IM (11.2x printed; 6.19 / 0.53 = 11.7x); the price basis for the historical year is not printed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ui-walk-evidence/bk-5/A/20261014T005546Z/shots/093-GOOGL-US-Model.png: EPS (per share, USD) 2025 10.91; P/E (multiple) 2025 28.7x; header PRICE $351.66.",
+      "C:/dev/ui-walk-evidence/bk-5/C/20261014T010702Z/shots/012-ISP-IM-Model.png: EPS (per share, EUR) 2025 0.53; P/E (multiple) 2025 11.2x; header PRICE EUR 6.19."
+    ]
+  },
+  "spec_asserts": "Round 104 change: the historical P/E is now price over reported EPS of the same fiscal year.",
+  "world_is": "On two of the ten names the printed 2025 P/E cell does not equal header price over printed 2025 EPS (32.2x and 11.7x would be the quotient). The price used for the historical year is not printed on the page.",
+  "notes": "Form only. The other 2025 and 2026E P/E cells walked (for example BATS LN 2025 12.0x, 8035 JP 2027E 36.0x) reproduce from printed figures to rounding."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W418-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~418",
+  "surfaced_at": "2026-10-14T01:13:05Z",
+  "one_line": "The Model tab Key Figures table prints '--' in cells with no reason beside them on all ten names walked, including P/E and EBITDA margin rows; the round-104 rule says every dash shows its reason in words.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ui-walk-evidence/bk-5/A/20261014T005546Z/shots/011-8316-JP-Model.png: P/E (multiple) 2026 '--' with no reason beside it; Earnings margin and ROE 2027E '--' with no reason.",
+      "C:/dev/ui-walk-evidence/bk-5/A/20261014T005546Z/shots/085-GOOGL-US-overlay.png and 093-GOOGL-US-Model.png: EBITDA margin 2026E and 2027E '--' with no reason beside them."
+    ]
+  },
+  "spec_asserts": "The order's round-104 change: every dash tile shows its reason in words (Not served for this name, or the served reason).",
+  "world_is": "Dash cells in the Model Key Figures table carry no reason on the ten names walked. Whether a table cell is a dash tile in the spec's sense is not settled by the order text; the reading is for the CVO.",
+  "notes": "Form only. Header tiles on the same pages do carry reasons where they are dashes; this row covers the Key Figures table cells only."
+}
+```
+
+```json
+{
   "id": "AMGT_RESAPP-D1-W425-S3",
   "project": "AMGT_RESAPP",
   "fabric": "dell1",
