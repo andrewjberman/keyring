@@ -1,4 +1,4 @@
-# ADVI_BDPRCE task order -- `BP-c-3` -- THE FWD-7 PACKET ANDREW READS, ON THE R1.3 LIST (JOIN, STAGED, READ-ONLY)
+# ADVI_BDPRCE task order -- `BP-c-3` -- THE FWD-7 PACKET ANDREW READS, ON THE R1.3 LIST (JOIN, READ-ONLY)
 
 <!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
 
@@ -87,7 +87,7 @@ the identity count, AC1, AC2 and the FULL commit hash.
 **ISSUER NOTES:** round-2 analysis item 2 (the BP-b-7 re-cut); PRD DEC-7. STAGED at the cut: un-parks when `BP-c-2` is merged and PASS and the extract's sha256 reads equal; its worktree is cut from that HEAD. The packet carries the decision asked of Andrew; the COO sends it to the CTO, who puts it to Andrew (FWD-7); nothing is served meanwhile.
 Round 2's worker for this cell was stopped five minutes in (no commit) when R1 was amended; nothing carries over.
 
-<status>staged</status>
+<status>pending</status>
 <round>3</round>
 <workstream>PACKET2</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-c-3</to_id>

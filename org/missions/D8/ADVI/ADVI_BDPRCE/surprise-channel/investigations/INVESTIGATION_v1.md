@@ -2578,3 +2578,134 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "The median is taken over all pairs as ruled. For this asset the usable lot pairs sit far from its trade pairs (the lot ratios spread widely), so the lot source sets the median against the asset's own same-date trades, which read 1.0 (per unit) on the served date. The extract's market_value/quantity does not track the trade-implied unit for this asset. Nothing is adjusted: the record prints the unreadable unit and this row carries the measured disagreement. Whether lot pairs belong in the median is the CTO's call."
 }
 ```
+
+## ADVI_BDPRCE-D1-W21-S1 -- The canonical price file was rewritten after the second seat's read: 1,689 transaction_observed rows in the window, not 1,664, and six CASH AND MARGIN INTEREST rows are gone
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W21-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~21",
+  "surfaced_at": "2026-10-14T05:23:00Z",
+  "one_line": "The canonical price object read at this order holds 1,689 transaction_observed rows in the window against the second seat's 1,664; six CASH AND MARGIN INTEREST rows the second seat listed are absent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api head-object silver/prices/canonical_prices.parquet at this read: ETag a88a7030f4506ac7e0cdb844382f9d16, LastModified 2026-10-14T04:03:36Z, ContentLength 110077599; the local copy C:/dev/wk-bdprce-r3-21-data/canonical_prices.parquet has the same md5 as the ETag",
+      "deliverables/0.9.0_WK_ADVI_BDPRCE~14/REPLAY2.md@043f4e5a35 line 7: the second seat read ETag 8eaa29e37c4e651381413b02ca2b43b2, LastModified 2026-10-14T00:13:47Z, with 1,664 transaction_observed rows in the window",
+      "this read, window 2026-09-16..2026-10-13: 1,689 transaction_observed rows over 888 assets, 0 duplicate asset-dates; 1,658 keys are common to the second seat's list; 31 are added and 6 removed relative to it; relative to round 2's 1,657 rows, 32 are added and none removed",
+      "deliverables/0.9.0_WK_ADVI_BDPRCE~14/BEFORE_AFTER2.csv@043f4e5a35 lists the CASH AND MARGIN  INTEREST rows of 2026-09-24, 09-25, 09-29, 09-30, 10-06 and 10-12 as observed; this object holds no CASH AND MARGIN  INTEREST row in the window, and 21 of the second seat's interpolated rows for that asset are absent too (ESTIMATED_ROWS2.csv@043f4e5a35)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1.00 (BP-c-2, same served set): the served set is the 1,657 round-2 rows, re-read at the cut, and a difference from it is to be stated.",
+  "world_is": "The served set read at this order is 1,689 rows: 32 more than round 2 and 25 more than the second seat's 1,664. The replay is keyed on the object read at 04:03:36Z; the difference from the second seat is stated in REPLAY3.md and the table compares the 1,658 common keys."
+}
+```
+
+## ADVI_BDPRCE-D1-W21-S2 -- The window withheld census under R1.3 reads 12,070 Fixed Income trade rows on 102 assets, not the second seat's 442 on 25: 11,687 rows sit on 88 Fixed Income assets the served map does not carry
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W21-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~21",
+  "surfaced_at": "2026-10-14T05:23:00Z",
+  "one_line": "Under R1.3 the window census withholds 12,070 Fixed Income trade rows on 102 assets; 11,687 of them are on 88 assets the served unit map does not carry, which the module reads as unit_unreadable.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_ADVI_BDPRCE~21/REPLAY3.json (this order's record): withheld_assets lists 14 served assets with 383 ratio-withheld rows and 88 non-served assets whose 11,687 rows are all unit_unreadable; the non-served assets carry 0 ratio rows",
+      "data/black_diamond/scripts/silver/bd_price_rule.py@043f4e5a35: _served_unit returns 'unreadable' for an asset missing from served_units, and _par_decide withholds every Fixed Income trade row of an unreadable asset (PAR_UNIT_UNREADABLE)",
+      "deliverables/0.9.0_WK_ADVI_BDPRCE~14/REPLAY2.json@043f4e5a35: withheld_fi_trade_rows 442, withheld_assets_count 25, withheld_assets_in_served_set 14"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1.00 item 4: compare the withheld Fixed Income trade rows and assets with the second seat's 442 rows on 25 assets (14 served); section 1.00 item 2: never guess a unit.",
+  "world_is": "The comparison basis changed. The served map carries the 888 served assets only, and the module reads an asset absent from the map as unreadable, so every Fixed Income trade row of the 88 non-served assets is withheld in the census. The 14 served assets carry 383 ratio-withheld rows. No served row and no interpolated row is priced from those 88 assets, so no list value depends on them. REPLAY3.md states the split."
+}
+```
+
+## ADVI_BDPRCE-D1-W21-S3 -- The MORGAN STANLEY 0% 05/03/2029 case reads 27 interpolated rows in the window and 503 over the history, not the 214 the order names
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W21-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~21",
+  "surfaced_at": "2026-10-14T05:23:00Z",
+  "one_line": "The MORGAN STANLEY 0% 05/03/2029 carry reads 27 interpolated rows in the replay window and 503 canonical interpolated rows over its history; the order names 214 and no count taken here reproduces it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_ADVI_BDPRCE~14/ESTIMATED_ROWS2.csv@043f4e5a35: 27 interpolated rows of the asset in the window, all fate last_traded_date with r1_price 1.0 observed 2025-05-28; this read gives the same 27 rows at 100.0 (ESTIMATED_ROWS3.csv in this order's deliverables)",
+      "canonical_prices.parquet at ETag a88a7030f4506ac7e0cdb844382f9d16: 505 rows for the asset, 2 transaction_observed and 503 linear_interpolation dated 2025-05-29 to 2026-10-14",
+      "REPLAY3.json rep.named_case_morgan: the only trade date in the store with a qualifying or withheld row for the asset is 2025-05-28, a Buy kept at 100.0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1.00 item 3: 2026-10-05 reads from the 2025-05-28 par Buy at 100.0 against the old 115.995, and 214 interpolated rows shared the case.",
+  "world_is": "The case reads as the order expects: 2026-10-05 is carried at 100.0 from 2025-05-28 with that observation date, and the 27 window interpolated rows carry the same 100.0. The figure 214 is not reproduced (27 in the window; 503 over the history of the canonical object, of which 476 lie outside the window and are not fated by this replay). The basis of 214 is not stated in the order."
+}
+```
+
+## ADVI_BDPRCE-D1-W21-S4 -- Three cached silver/transactions partitions no longer match their S3 metadata and 2026-10-14 was absent from the cache; each was refetched and md5-matched
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W21-S4",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~21",
+  "surfaced_at": "2026-10-14T05:23:00Z",
+  "one_line": "Partitions 2026-10-02, 2026-10-08 and 2026-10-11 differ in size from their S3 head-object and 2026-10-14 is missing from the cache; the second seat's verified manifest no longer holds for them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_ADVI_BDPRCE~14/PARTITIONS2.csv@043f4e5a35: 1,926 VERIFIED_MD5 and 2 VERIFIED_SIZE_MULTIPART over 1,928 dated partitions",
+      "head-object at this read (heads file C:/dev/wk-bdprce-r3-21-data/heads.tsv): silver/transactions/2026-10-02 315148 bytes, 2026-10-08 4507465 bytes, 2026-10-11 35306 bytes, 2026-10-14 180056 bytes; the verifier reported MISMATCH_SIZE for the first three and MISSING for 2026-10-14",
+      "deliverables/0.9.0_WK_ADVI_BDPRCE~21/PARTITIONS3.csv: after four get-object refetches (C:/dev/wk-bdprce-r3-21-data/tx/), 1,926 VERIFIED_MD5 and 2 VERIFIED_SIZE_MULTIPART; the refetched md5 equals each head ETag"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The second seat's PARTITIONS2.csv verifies all 1,928 partitions against S3 head-object and is the verified cache the order says to read.",
+  "world_is": "Three cached copies no longer match S3 and one is absent. The replay keys on the refetched copies. 2026-10-14 is the current day's partition. The two multipart ETags are verified by size only, as the verifier names them."
+}
+```
+
+## ADVI_BDPRCE-D1-W21-S5 -- Priority by source moves SIX FLAGS ENTERTAINMENT CORP COM from a per_unit pooled median to unreadable on one earlier trade at 0.370
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W21-S5",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~21",
+  "surfaced_at": "2026-10-14T05:23:00Z",
+  "one_line": "The one-source-per-asset priority reads SIX FLAGS ENTERTAINMENT CORP COM unreadable from one nearest-earlier trade at a median ratio of 0.370; the pooled probe read it per_unit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_ADVI_BDPRCE~20/RULE_PROBE3.json@043f4e5a35: the pooled served map leaves SIX FLAGS out of unit_census.unreadable_assets (63 unreadable in all)",
+      "deliverables/0.9.0_WK_ADVI_BDPRCE~21/UNIT_MAP.csv: SIX FLAGS ENTERTAINMENT CORP COM, unit unreadable, median_ratio 0.3703962758569913, pairs 1, source nearest_earlier_trade (no same-date trade pair for the asset)",
+      "silver/bd_assets_dim.parquet: asset_super_class_bd Equities for the asset; bd_price_rule.py keeps a non-Fixed-Income row at its price whatever its unit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1.00 item 1: one source per asset in priority order (same-date trade, then nearest earlier trade, then lot), and served_unit_map on the pairs of that one source.",
+  "world_is": "The priority rule gives this Equities asset a one-pair median of 0.370 from its nearest earlier trade, between the bands, so its unit reads unreadable where the pooled median read per_unit. No list row for the asset changes, since an Equities row is not withheld by unit. The served map totals are 1 per100, 827 per_unit and 60 unreadable, against the probe's 1, 824 and 63."
+}
+```

@@ -101,7 +101,7 @@ the interpolated fates, the keying mode and its limits, the three largest movers
 **ISSUER NOTES:** round-2 analysis item 1 (second half); FWD-7 DEC-7. STAGED at the cut: un-parks when `BP-c-1` is merged and PASS at the merged HEAD; its worktree is cut from that HEAD so the amended module is in it. The packet (dollar effect, readers) is `BP-c-3`'s, which consumes this list.
 Round 2's replay took about four hours, mostly the lookback download; this order reuses that cache, so it should take far less. Class LOCAL.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <workstream>REPLAY2</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-c-2</to_id>
