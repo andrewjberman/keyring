@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v3.1",
+  "prd_version": "v3.2",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -1199,3 +1199,18 @@ coverage Z-S113) are not gateway work: each tool states the freshness it reads, 
 
 **Sign-off.** ENDPOINT changes (FWD-22 DONE WHEN and the ACCEPT citation), so the ratified-text half re-opens for
 `3.0.0_SA_CVO~Z`. The brief half is the CRO's census (proportionate sign-off).
+
+### v3.2 addendum (2026-10-14 ~14:0xZ, 1.0.0_SA_CTO~Z) -- G2 client data reads through firm-scoped roles, never the global internal reader
+
+On `3.0.0_SA_CVO~Z` msg 34104 (v3.1 review `org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_OPLGTW_v3.1_RATIFIED_TEXT_20261014_Z.md`).
+It amends v3.1's widening paragraph for G2 only:
+- **Key-segment vendors (BD, Orion, Eclipse, Schwab, Commonwealth) read through firm- or vendor-scoped reader roles**
+  whose S3 grant is prefix-conditioned to ONE firm. The existing Schwab / Black Diamond / firm reader roles are used first
+  (build ladder step 2). A missing one is a new role named by `lib/opal_naming.py`. The fence holds at IAM, not only in
+  code.
+- **Only the mixed-firm objects (SmartX, four firms per object; Tax SMA's RIA column) rely on the code row filter.** G2's ask
+  names the role that reads them and states that the fence there is code, with its two-firm negative arm.
+- `gateway-global-internal-reader-role` NEVER gains a G2 client-data read. G1, G3, G5 and G6 (Opal's own data) still read
+  through it.
+
+CONTRACTS-side; ENDPOINT unchanged.
