@@ -12720,3 +12720,233 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W181-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~181",
+  "surfaced_at": "2026-10-14T21:39:36Z",
+  "one_line": "Premise check on the Orion accountNumber field: on the newest partition it carries a digit run on every dry-run account and one value per account, so the premise that it holds text fragments and no number does not hold there (measured, counts only).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "Worker face, Why: the field the sample builder took for the custodian account number (accountNumber in Orion fact_positions) carries text fragments, not a number, so the labels read fragments.",
+  "world_is": "Newest partition date=2026-10-14 of Orion fact_positions (37008 rows): accountNumber holds one value per account for all 980 dry-run accounts, each with a digit run of 4 or more, unique per account, and one value per account across the five sampled dated partitions where the account appears. 73 accounts carry an alphabetic character in the value. Same column name and value shape in Orion fact_assets. Counts only; no value copied.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~181/RD_ACCOUNT_NUMBER_FIELD_R111.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r111/p111_acctfield.py",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_dim.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W181-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~181",
+  "surfaced_at": "2026-10-14T21:39:36Z",
+  "one_line": "The stability clause names an Eclipse positions table, but no Eclipse silver table is named as positions; the one account-keyed Eclipse table is fact_portfolios_simple, which was measured for stability instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face step 4: stability for every string column of fact_positions and of the Eclipse positions table.",
+  "world_is": "The round-108 record names four Eclipse silver tables: fact_model_composition, fact_models, fact_portfolios_full, fact_portfolios_simple. None is named positions. Only fact_portfolios_simple carries an account key (accountId); the other three carry none, so their columns are keyed false. Stability was measured for all 18 string columns of fact_portfolios_simple over five dated partitions, and for any other column passing the digit-run and uniqueness tests.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~172/READ_COVERAGE_RUN_R108.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~181/RD_ACCOUNT_NUMBER_FIELD_R111.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S45",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T21:45:36Z",
+  "one_line": "Issuer's disposition of worker 181's row W181-S1 (the Orion accountNumber holds a digit run on every account, against the ruling's premise that it holds text fragments): the field qualifies as the custodian number under the round-111 rule; this round's labels use no stored field, so the hazard is disarmed here and the finding goes to the CTO's next round analysis.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The CTO's round-111 ruling: Inflection's accountNumber field carries text fragments, not a custodian number; DB-b-226 reads which field holds the custodian number (95 percent of accounts with a digit run of at least 4, stable across sampled partitions, unique).",
+  "world_is": "W181-S1 (ARMED, mine): of 217 string columns over 8 silver tables and 20 partitions, 3 qualify: Orion fact_positions accountNumber (980 distinct values over the 980 dry-run accounts, a digit run of 4 or more on each, the same value across five sampled partitions), Orion fact_assets accountNumber and Eclipse fact_portfolios_simple accountNumber (753 keys). The round-109 and round-110 labels printed the LAST FOUR CHARACTERS of that value, which for some accounts are letters, so the label showed a text tail: the value is an identifier that holds a digit run AND other characters, not a text fragment and not digits only. Disarmed for this round: DB-b-225 prints 'Account <n> of <N>' for every account and reads no stored field, so no render prints a fragment; the finding for the next round, for the CTO to rule: the label may take the last four DIGITS of the value's longest digit run, printed as 'ending NNNN', from fact_positions.accountNumber (the field this read names), keeping the position label for an account without a run of 4 digits. Not decided here (a label rule is the CTO's ruling).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~181/RD_ACCOUNT_NUMBER_FIELD_R111.json at the merge edaefd57d3 (counts and column names)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r111/p111_acctfield.py: DB111-3-AC1 PASS on the landed tree",
+      "worker 181's row W181-S1 and report"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S46",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T21:52:57Z",
+  "one_line": "Issuer's ruling on worker 179's BLOCKING row W179-S1 (4 of 5701 one-account household window comparisons differ from their account, all since inception, on carried large-flow days): my method chained summed values and flows in the endpoint form, which does not reproduce the account series' linked return; the method becomes the prior-day-value weighted combination of the accounts' own returns, and the order, the check and the decomposition are amended.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-224: a one-account household equals its account's cumulative return in every window (hard clause, 1e-9); the household daily return chains summed values and external flows.",
+  "world_is": "W179-S1: the worker read 570 partitions of the firm's account return gold and 4013 households (1742 multi-account) and found the maximum one-account gap 4.04e-4 in 4 of 5701 window comparisons, all since inception, in 4 households; at day level 6 of 907,548 day pairs differ, all on LARGE_FLOW days with carried days: the producer's total_return_daily links through intervening custodian valuations there (its amendment 5(e)), which the endpoint form (sum V_t - sum F_t) / sum V_p - 1 does not reproduce. An issuer error in the method, not a data fault. Ruled: the household daily return is the prior-day-value weighted combination of its accounts' own total_return_daily (the same as the summed-values-and-flows form wherever each account's return is the endpoint form; for a one-account household it is the account's return, exactly); an account whose return is None makes the day ACCOUNT_MISSING; no enum change. The checker's independent function and synthetic arm carry a linked day (25 self-test arms), and a control shows the endpoint form disagrees on it. The worker's tie-out counts (windows, bins, reasons) are to be re-measured on the amended method; the first-cut counts are not accepted as the record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 179's report and row W179-S1 at wk-IRPT_DASHBD-179 @806e1b9873 (counts)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r111/p111_household.py (expected, expected_endpoint, synthetic; self-test 25 arms)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-224.firm49-household-daily-return-twr-and-range-tie-out.md step 3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W180-S1 -- the portal rule file CONTRIBUTING-BOXES.md is absent from the portal branch this order grants, so the rule could not be read before the portal change
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W180-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~180",
+  "surfaced_at": "2026-10-14T21:46:04Z",
+  "one_line": "CLAUDE.md names portal/CONTRIBUTING-BOXES.md as the rule to read before any change under portal/; the file is absent from the portal branch this order grants (wk-IRPT_DASHBD-180-portal, cut from wk-IRPT_DASHBD-175-portal), so the portal change was made under the order's grant alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CLAUDE.md, Portal section: portal/CONTRIBUTING-BOXES.md is the rule; read it before you touch portal/.",
+  "world_is": "git -C portal cat-file -e 02fb789e863bac627490db7e2c5a0676e54e8f34:CONTRIBUTING-BOXES.md and the same path under portal/ both fail (the file is not in the round-110 tip this branch is cut from). git -C portal ls-files returns zero names matching contributing at the worker commit c81d54ff31b0. git -C portal log --all -- CONTRIBUTING-BOXES.md shows the file was added at 07f065e6 and last changed at b5222d78, so it lives in other history, not on this branch.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal cat-file -e 02fb789e863bac627490db7e2c5a0676e54e8f34:CONTRIBUTING-BOXES.md (absent)",
+      "git -C portal ls-files, grep -i contributing at c81d54ff31b0 (zero matches)",
+      "git -C portal log --all -- CONTRIBUTING-BOXES.md (07f065e6, b5222d78)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here."
+}
+```
+
+## IRPT_DASHBD-D2-W180-S2 -- a plain git commit in the portal repo refuses without a committer identity; the commit used a per-command committer name and address
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W180-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~180",
+  "surfaced_at": "2026-10-14T21:46:04Z",
+  "one_line": "The order commits portal files with plain git and the worker's author line; on this device the portal repo has no committer identity, so the first plain commit refused and the worker supplied the committer for that one command.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face: portal files commit in the portal repo with plain git and your author line.",
+  "world_is": "git -C portal commit with --author set and no committer identity refused: 'Committer identity unknown ... unable to auto-detect email address'. The worker set GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL to its own serial on that one command and wrote no git configuration. Commit c81d54ff31b0 carries the serial as author and as committer, and it did not pass through safe-commit.sh (the order's plain-git route). The workspace commit ade84c588d did pass through safe-commit.sh and needed no such setting.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal commit output of the first attempt (refusal, rc 128)",
+      "git -C portal log -1 at c81d54ff31b0 (author and committer 0.9.0_WK_IRPT_DASHBD~180)",
+      "git -C C:/dev/wk-irpt-dashbd-180 log at ade84c588d (safe-commit author line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here."
+}
+```
+
+## IRPT_DASHBD-D2-W180-S3 -- the whole-scope InvestorReporting suite fails 20 tests at the round-110 portal tip here, where the round-110 record measured 5; the failing set is unchanged by this round
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W180-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~180",
+  "surfaced_at": "2026-10-14T21:46:04Z",
+  "one_line": "The whole-scope suite base at the round-110 portal tip is 1294 pass and 20 fail in this worktree, where the round-110 record measured 1298 pass and 5 fail; the 20 failing tests are outside the label surface and are the same before and after this round's change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The round-110 render record (RENDER_R110.json, tests.suite_base) measured the whole-scope suite base at pass 1298, skip 27, fail 5, with no new failing id.",
+  "world_is": "bun test src/pages/InvestorReporting at base 02fb789e863b in this worktree: 1294 pass, 27 skip, 20 fail of 1341 tests in 403 files. The failing names are in the route-table, producer-fixture, request-corpus, envelope, version-header and fixture-set suites (F14-AC3, F14-AC13, F14-AC15, F14-AC16, F57-AC2, IVE26-AC3, IVE48-AC1, IVE98 and the fixture cases). After the round-111 change: 1300 pass, 27 skip, 20 fail of 1347 tests in 404 files; the failing set equals the base set. The cause of the difference from the round-110 count is not measured here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test src/pages/InvestorReporting at 02fb789e863b (the private output suite_base.txt, its failing list fail_base.txt)",
+      "bun test src/pages/InvestorReporting at c81d54ff31b0 (suite_after.txt, fail_after.txt; comm of the two lists is empty)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~175/RENDER_R110.json tests.suite_base"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here."
+}
+```
+
+## IRPT_DASHBD-D2-W180-S4 -- safe-commit could not run its client account-id check on the round-111 record commit: the hashed account-id list is absent on this device
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W180-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~180",
+  "surfaced_at": "2026-10-14T21:46:04Z",
+  "one_line": "On the round-111 record commit safe-commit printed that its client account-id check did not run, because the hashed account-id list is absent at the device path; the worker's own committed content was read and holds no account id.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Client data lives only under the private evidence folder: no account id, last four or figure in the repo, a row or a report (the worker face bounds).",
+  "world_is": "safe-commit.sh on commit ade84c588d printed: WARN client-data-check: hashed account-id list ABSENT at the user profile path (.opal folder, account_id_hashes.txt) -- this commit was NOT checked for client account ids. The commit holds the relabel record (counts, hashes, a private folder path, words) and the harness copy only. The worker read both files and wrote no account id, last four or figure into them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for ade84c588d (the WARN line)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~180/BUILD_R111.json at ade84c588d",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~180/render_sample.ts at ade84c588d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. The later portal commit c81d54ff31b0 also passed no client-data check (see W180-S2)."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W179-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~179",
+  "surfaced_at": "2026-10-14T21:45:32Z",
+  "one_line": "The one-account equality the face and criterion DB111-1-AC1 require (a one-account household equals its account's window return within 1e-9) fails on the 49 Financial gold: 4 of 5,701 one-account household-window comparisons differ, all in since_inception, max gap 4.04e-4; the producer's total_return_daily is the linked form of amendment 5(e), not the endpoint form.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-224 step 6 (org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2 issuance, cell DB-b-224): every ONE-ACCOUNT household equals its account's cumulative return in every window where both exist, within 1e-9, and that equality is a hard requirement. The premise behind it: the account series total_return_daily is the endpoint form r_t = (V_t - F_t) / V_(t-1) - 1 (producer header, data/assets/scripts/gold/irpt_reporting/account_return_daily.py line 9), so the household method over one account reproduces it.",
+  "world_is": "The endpoint form does not reproduce the producer on every day. Scratch day-level read of the same 570 partitions (not committed): 907,548 consecutive-row pairs of one-account accounts compared; 6 differ beyond 1e-9 (max day gap 1.10e-3), all on LARGE_FLOW days with carried_days above zero, where the producer links through custodian valuations (its amendment 5(e), producer lines 1366-1381). Driver window tie-out (dry_run_household_return_r111.py, HOUSEHOLD_TIEOUT_R111.json): 2,176 one-account households compared; 4 household-window comparisons differ beyond 1e-9, 4 distinct households, all in since_inception; qtd, ytd and last_12_months have none; max absolute gap 4.04e-4. Per the face the method was NOT adjusted to make them equal; criterion DB111-1-AC1 FAILS on this clause and the order stays open. Nothing sources this table yet: the report's household members stay ABSENT (report contract open_changes line 1).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py line 9 at 332465706b: header states r_t = (V_t - F_t) / V_(t-1) - 1",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 1366-1381 at 332465706b: amendment 5(e) links through every custodian valuation in the window; the endpoint form only with no intervening valuation",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py line 1355 at 332465706b: carried_days = len(carried) on every row",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~179/HOUSEHOLD_TIEOUT_R111.json (counts; driver sha256 in its driver field) and the driver's stdout ONE-ACCOUNT MISMATCH line: 4 household-window comparisons, all since_inception"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker; the method was not adjusted. The CTO rules whether the household series over one account must reproduce the linked producer form (LARGE_FLOW days with carried days), or whether the account-return members of the report need the same endpoint form. Counts only: no household or account id and no client value is recorded."
+}
+```
