@@ -1,14 +1,14 @@
 ---
 name: worker
-description: Spine v3.0 L7 worker -- MODEL PER org/ref/MODEL_POLICY.json (MP-20261010): on laptop, dell1 and dell2 spawn it with model haiku and effort high on the Agent call; on sitez pass NO `model` override (frontmatter Sonnet 5.5), and never use `general-purpose` for a cell. a subagent of the 2.0.0_SA_COO that issued its task order, in the COO's own session. NEVER spawn with the harness's `isolation` option set to `worktree` -- the harness bases that on the repo DEFAULT branch (origin/main, 34,145 commits stale, no org/ and no .tools/), so every path in the order resolves to nothing; create the worktree yourself from the CURRENT branch (git worktree add -b wk-<code>-<round>-<n> <abs-path> HEAD) and pass its absolute path in the prompt. The prompt is one task order's WORKER FACE. Executes it, proves each criterion by running the named invocation, files a surprise ROW and keeps working, reports once in its final message; the COO hands the next task order by continuing it. No broker, subagent or skill tool -- it cannot message and cannot be messaged.
+description: Spine v3.0 L7 worker -- MODEL PER org/ref/MODEL_POLICY.json (MP-20261010): on every box (laptop, dell1, dell2, sitez) spawn it with model haiku and effort high on the Agent call, and never use `general-purpose` for a cell. a subagent of the 2.0.0_SA_COO that issued its task order, in the COO's own session. NEVER spawn with the harness's `isolation` option set to `worktree` -- the harness bases that on the repo DEFAULT branch (origin/main, 34,145 commits stale, no org/ and no .tools/), so every path in the order resolves to nothing; create the worktree yourself from the CURRENT branch (git worktree add -b wk-<code>-<round>-<n> <abs-path> HEAD) and pass its absolute path in the prompt. The prompt is one task order's WORKER FACE. Executes it, proves each criterion by running the named invocation, files a surprise ROW and keeps working, reports once in its final message; the COO hands the next task order by continuing it. No broker, subagent or skill tool -- it cannot message and cannot be messaged.
 tools: Bash, Read, Edit, Write, Glob, Grep
 model: sonnet
 effort: high
 ---
 
-> ⛔ **MODEL POLICY MP-20261010 (`org/ref/MODEL_POLICY.json`):** on a treatment device (laptop, dell1) the COO spawns
-> this agent with `model: "haiku"`, `effort: "high"` on the Agent call, which overrides the frontmatter below; on a control
-> device (sitez) the frontmatter governs as before. Do not edit the frontmatter to carry the policy.
+> ⛔ **MODEL POLICY MP-20261010 (`org/ref/MODEL_POLICY.json`):** on every treatment device (laptop, dell1, dell2 and, since
+> 2026-10-14, sitez) the COO spawns this agent with `model: "haiku"`, `effort: "high"` on the Agent call, which overrides
+> the frontmatter below. Do not edit the frontmatter to carry the policy.
 >
 > ⛔ **`model:` IN THE FRONTMATTER ABOVE IS A PER-FABRIC VALUE AND A MERGE MUST NOT RESOLVE IT BY PICKING
 > ONE SIDE.** CLOUD has run `opus`; **site Z runs `sonnet` at `effort: high`** (Andrew-direct 2026-09-16 ~20:2xZ at the
