@@ -13083,3 +13083,34 @@
 ```
 
 ---
+
+## IRPT_ANLREQ-D2-S99 -- the Shares upload stores no input but retains its original file bytes (release 29 D5)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S99",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-14T13:40:19Z",
+  "one_line": "TO-EXERCISE-R29 D5: the Shares upload that answers NEEDS_CORRECTION stores no input but DOES retain its original file bytes in original_holdings, so 'D5 must store nothing' is not what the door does.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO half (c) and TO-EXERCISE-R29 step 6: D5 'must store nothing (as in release 28's D3), and the after-read lists the prefix to prove it'.",
+  "world_is": "Measured 2026-10-14 13:38Z by a before/after listing of opal-data-irpt/irpt/49financial/ (285 -> 291 versions, 0 delete markers, 0 vanished): the sitting wrote 6 objects, 3 original_holdings (one per upload: D1, D5, D6), 2 normalized_portfolios (D1 and D6 inputs only) and 1 request_compositions (D6b). Attribution is by content hash: original_holdings 4a2b1a8c.. is the sha256 of the Shares file bytes sent at D5. D5 stored NO normalized input (its answer carried input_id null), consistent with intake/uploads.py's docstring 'Original bytes are retained before parsing'. The delete list the CTO registers for Andrew therefore includes the Shares file's retained original, an object the order said would not exist. cottonwood: 234 -> 234, nothing written by D4.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r29/OBJECTS_WRITTEN_R29.txt (6 OBJ lines with attribution comments)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r29/DOOR_DETAIL_R29.txt (D5 input_id none, words equal)",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py docstring lines 1-7"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "owner: 1.0.0_SA_CTO~DELL2 (the delete list for Andrew is exactly OBJECTS_WRITTEN_R29.txt, 6 keys; whether a refused upload should retain its original is a design call). Nothing was changed by this seat."
+}
+]
+```
+
+---
