@@ -2123,3 +2123,44 @@ COO refused OG-mg-1's halves because profiling Andrew would end his master_admin
 
 **Gateway queue now:** (MX-r-12 if closed by 10:00Z) -> OG-ap-14 (r30) -> OG-ap-17 (bd-3) -> OG-hv-2 -> OG-ap-16 (cd-1, next round) -> the C-PERSON reader's release.
 
+**R3-T.49 A4 (2.0.0_SA_COO~O, 2026-10-14 ~12:1xZ) -- Andrew-direct "accelerate this use case".** Queue is now OG-hv-2 -> OG-ap-17 -> MX-r-13
+(OG-ap-17 re-cuts on hv-2's live release). R3-T.50 below then places OG-ap-18 between OG-hv-2 and OG-ap-17.
+
+## ADDENDUM R3-T.50 (2.0.0_SA_COO~O, 2026-10-14 ~13:2xZ) -- round 37, workstream G1-TYPED (FWD-22, PRD v3.0 @7878037d98)
+
+**Source.** `1.0.0_SA_CTO~Z` msg 34077: Andrew-direct ~12:4xZ, the gateway is live with the census tables by Friday 2026-10-16,
+harvest first ("I would prioritize that as number one"). The G1 enrichment list is PRD v3.0's addendum; the contracts are
+`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G1_harvest.md` @0d7c29b3c5 section 3 (the tool
+registry). **THE CUT IS HELD until `prd-signoff.py status NFRA_OPLGTW` reads ADMITTED** (both halves are STALE at v3.0; owed by
+`3.0.0_SA_CVO~Z` and `4.0.0_SA_CRO~Z`, both asked). Only the plan is written here.
+
+**Seam.** All ten tools admit through `harvest_read.admit()` and write its audit row; each answers with `as_of`,
+`source_keys[]`, a denominator and `absent_reason`, projected to 50 KB. `harvest_describe_dataset` is NOT built (the catalog
+serves it); `publication-links/v1/` and `publications/v1/` are not tool targets. Hookups (the `tools.py` registrations and
+the `data_entitlement.py` family rows for the new names) belong to no cell: the issuer adds them at the merge, in one commit.
+
+| cell | what | writes (new files only) | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-gt-0` | the typed-tool base: the envelope (`as_of`, `source_keys`, denominator, `absent_reason`), the 50 KB projection, the newest-part read over `harvest_read`'s capped client, one admit-and-audit wrapper; offline tests with a fake client | `app/harvest_typed.py`, `tests/test_og_gt0.py` | LOCAL | ~71 | worker |
+| `OG-gt-1` | `harvest_resolve_security`, `harvest_security_coverage` (crosswalk/universe/identity; one ListObjectsV2 per keyed prefix) | `app/harvest_identity.py`, `tests/test_og_gt1.py` | LOCAL | ~72 | worker |
+| `OG-gt-2` | `harvest_get_chatter`, `harvest_search_articles`, `harvest_get_article` (gold chatter and mentions joined to publisher silver) | `app/harvest_press.py`, `tests/test_og_gt2.py` | LOCAL | ~73 | worker |
+| `OG-gt-3` | `harvest_get_fundamentals`, `harvest_query_columns` (model_block, bestdata, refdata, histdata, segments, price; the tabular allow-list) | `app/harvest_figures.py`, `tests/test_og_gt3.py` | LOCAL | ~74 | worker |
+| `OG-gt-4` | `harvest_get_research`, `harvest_get_filing_analysis`, `harvest_get_peers_and_scores` | `app/harvest_research.py`, `tests/test_og_gt4.py` | LOCAL | ~75 | worker |
+| `OG-gt-5` | `harvest_get_published_analysis` (invokes `opal-amgt-scoped-api`) with its read-grant file and its own never-widen ask; ships only when that ask is signed | `app/harvest_published.py`, `tests/test_og_gt5.py` | WORLD | ~76 | worker |
+| `OG-ap-18` | APPLY: gt-0..gt-4's gateway release on hv-2's live ref, served read of each tool under an Opal and a non-Opal principal; gt-5 follows on its own ask | (applier's paths) | WORLD | ~AE | worker |
+
+`app/` is `infra/aws/ec2/opal-gateway/app/`; each tool cell reads its contract section in G1 by line range (inlined on its face).
+A cell over about 300 product lines (gt-2, gt-3, gt-4 may be) takes the full limbs and `worker`; none is `worker-light`.
+
+**Chains.**
+- `OG-gt-0` -> `OG-gt-1`, `OG-gt-2`, `OG-gt-3`, `OG-gt-4`, `OG-gt-5` (each imports the base; a data edge). After gt-0's merge the
+  five are independent: disjoint new files, no shared write.
+- `OG-hv-2` -> `OG-ap-18` (the grant first: every tool reads through it); `OG-ap-18` -> `OG-ap-17` -> `MX-r-13`.
+- Applier queue for `0.7.0_AE_CloudOps~Z`: OG-hv-2, OG-ap-18, OG-ap-17, then MX-r-13's slot (NFRA_MCPINDEX).
+
+**fanout (plan):** wave 1: 1 (OG-gt-0, the base). Wave 2: 5 of 5 independent chains after gt-0's merge, cap 8; `OG-gt-5` rides its
+own ask and may trail. Spawn model per `org/ref/MODEL_POLICY.json` (haiku, effort high).
+
+**Cut-time reads (not done here):** each check a file dry-run at the base; `<paths>` carry `change_management/` and the
+`.open_deploys/` sentinels on OG-ap-18 only; the risk class each `<paths>` implies is read from GATE xii before the cut.
+

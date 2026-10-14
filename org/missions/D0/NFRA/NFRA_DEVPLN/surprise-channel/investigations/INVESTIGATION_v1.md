@@ -1192,3 +1192,33 @@
   "world_is": "The pre-push limb enforces it; never-rules-gate.sh still carries two DEV carve-outs that the law no longer allows. Next round, one worker-light cell (or the CTO's ruling on whose file it is): remove the FAST-lease and test-only DEV carve-outs from never-rules-gate.sh and its test; batch with the two DP-j-1 defects (dev_push_payload_gate.py 'walk =git(' spacing; closer-drive step 5 example hard-codes --project NFRA_DEVPLN, should be <CODE>)."
 }
 ```
+
+## NFRA_DEVPLN-S8 -- issuer disarm of W1-S19 and ruling on S6 (carrier row)
+
+```json
+{
+  "id": "NFRA_DEVPLN-S8",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~DV",
+  "surfaced_at": "2026-10-14T13:15Z",
+  "one_line": "Issuer disarm of NFRA_DEVPLN-W1-S19 and issuer ruling closing NFRA_DEVPLN-S6, as recorded in NFRA_DEVPLN-S7: both dispositioned DISMISSED_WITH_REASON by this carrier row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "NFRA_DEVPLN-S7 (same project, committed @e4f3acfcc8) holds the evidence for both: S6 is a criterion the issuer wrote that counted a shared trunk (amended; the DT re-graded its proof instance PASS @8a351af853 and round-close-check reads MAY-CLOSE); W1-S19 is contained by the installed pre-push limb (hook present on this box, 21/21 suite on the merged tree @75b81d396c, a real approved push admitted through it on dell1).",
+      "W1-S19's remaining work is NOT dismissed: removing the FAST-lease and test-only carve-outs from .tools/hooks/never-rules-gate.sh (MSTR's integrator gate, outside this project's paths) is carried to the next round's list in the drain-end read and in S7."
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "S6: the criterion text was the issuer's flaw (a count of a shared trunk) and is amended; W1-S19: the hazard is contained by the installed pre-push limb and the remaining carve-out removal is carried as a next-round item, so no armed row stands.",
+  "adjudicates": [
+    "NFRA_DEVPLN-S6",
+    "NFRA_DEVPLN-W1-S19"
+  ],
+  "spec_asserts": "An ARMED hazard disarms same-turn via the row's disarm_owner (CLAUDE.md section 2); the channel is append-only, so a disposition moves by a later row naming the target in adjudicates.",
+  "world_is": "S6 and W1-S19 read DISMISSED_WITH_REASON from this row; the hazard W1-S19 named stays contained by the pre-push limb and its cleanup is a carried enrichment item, not a live armed row."
+}
+```
