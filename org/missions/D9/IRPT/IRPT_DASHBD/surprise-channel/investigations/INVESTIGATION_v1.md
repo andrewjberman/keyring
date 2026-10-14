@@ -10836,3 +10836,28 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   }
 }
 ```
+
+## IRPT_DASHBD-D2-W168-S1 -- the trading calendar answers from its hardcoded NYSE fallback on this box (pandas_market_calendars absent), so the live read's trading days come from that table
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W168-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~168",
+  "surfaced_at": "2026-10-14T12:36:09Z",
+  "one_line": "the trading calendar answers from its hardcoded NYSE fallback on this box: pandas_market_calendars is absent, so the live read's trading days come from the fallback table",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-204 step 2: the reader keeps trading days of lib/trading_calendar.py, and the windows' day basis is that calendar's answer.",
+  "world_is": "At the single live read on dell2 (run 2026-10-14), lib/trading_calendar printed WARN: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027; regenerate before 2028). The 616 trading days per stem and the 32 of 32 fills were computed on that fallback. Past its coverage the calendar raises a coverage error and does not answer silently.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~168/live_read_model_windows.py (the WARN line printed on the one live read, run 2026-10-14)",
+      "lib/trading_calendar.py@b2b7488660 (the fallback announcement and the NYSE/hardcoded-fallback source string)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
