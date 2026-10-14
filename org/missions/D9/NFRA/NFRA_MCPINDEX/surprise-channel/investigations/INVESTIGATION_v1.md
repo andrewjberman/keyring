@@ -7104,6 +7104,29 @@ carries none.
     "spec_asserts": "Row 12b's seven research tables each get a harvest_datasets row.",
     "world_is": "Six rows wait on six legacy_addresses rows, which the re-opened MX-c-9 adds.",
     "notes": "Disarm when c9.AC2 reads 7 of 7 with validate PASS at the drained index."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W34-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~34",
+    "surfaced_at": "2026-10-14T02:41:00Z",
+    "one_line": "BLOCKING c9.AC2 (A3): the six legacy_addresses.json rows land and validate (python lib/opal_naming.py validate exit 0) and the six catalog SOURCE files resolve their prefix through legacy_address() and pass the commit-time naming gate, but the EMITTED refs/DATA_CATALOG.yaml must carry each prefix as a plain YAML value (consumers and c11_harvest.py read the `prefix` field), and .tools/naming-gate.py never consults legacy_addresses.json, so those six values are still graded as NEW OUT-OF-PATTERN S3Key and the commit is REFUSED. The gate cannot be satisfied inside this order's <paths>.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh on the A3 commit (rc=1, 'BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode)'): six lines 'NAMING REFUSE infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:3049/3066/3083/3100/3117/3134 amgt/harvest/gold/research-<table>/ -> amgt/harvest/gold/research_<table>/ ... NEW and OUT-OF-PATTERN as S3Key: REFUSE'. The same run graded the six source files harvest_research-*.yaml (prefix_key, no literal) CONFORMANT: 'NAMING-GATE: REFUSE 18 graded', 12 CONFORMANT, 6 REFUSE, all six in the emitted catalog.",
+        "Read of .tools/naming-gate.py @c409c269a9: judge() (line 1998) has no branch for a registered legacy address. The only waivers that reach a NEW literal are the R20 kind (line 2021, excluded by the order); the live limb (line 1964) reads the AWS resource plane, not S3 key prefixes; _resolves_to_tracked (line 971) tests git paths. lib/opal_naming.py grade() (line 2428) likewise never reads legacy_addresses.json; only validate() (line 794) and legacy_address() (line 2515) do. The ADVI_COTBKF precedent rows landed because the .py readers call legacy_address() and never carry the literal; a generated DATA file must carry it.",
+        "State kept in worktree wk-NFRA_MCPINDEX-34, UNCOMMITTED (the commit is refused): legacy_addresses.json +6 rows (validate OK 54 system rows, 14 scope rows, rc=0); six catalog_entries/harvest_research-*.yaml; emit_catalog_v02.py (_resolve_prefix_key, HARVEST_NAMING_PENDING = ()); validate_catalog_v02.py; the two test files at 39; DATA_CATALOG.yaml re-emitted, 39 harvest rows, idempotent; c9.AC1/AC2/AC3 all PASS rc=0 (AC2: research tables rowed 7 of 7, held 0); gateway suite 48 failing ids identical to the pre-A3 set."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A3: 'The catalog names each of the six keys THROUGH lib/opal_naming.py legacy_address(): the emitter resolves the prefix from the row. Never type the literal.' and 'If the gate cannot be satisfied without a write outside your <paths>, file a BLOCKING row'. The ruling (@d5e0b1a0b6) expects a registry row to be the carrier the gate honours.",
+    "world_is": "The source files never type the literal, but the emitter writes the resolved prefix into refs/DATA_CATALOG.yaml as a graded .yaml scalar, and neither .tools/naming-gate.py nor lib/opal_naming.py grade() reads legacy_addresses.json, so a registered legacy READ address is still a NEW out-of-pattern literal wherever a graded data file carries it.",
+    "notes": "Fix needs a write outside this order's <paths> (MSTR/naming-gate lane, or the CTO): make the gate treat a graded literal that equals a registered legacy_addresses.json (bucket, template) of the same file's reader as a citation (permitted, like _packaged_citations), then re-run safe-commit unchanged. NOT used, on purpose: an R20 or a naming-place override (A3 forbids both) and a pre-image comment trick (committing the literal in a catalog comment first so the later scalar reads EXISTING) which would pass the gate by gaming its NEW test rather than by the registry row being honoured. The work is complete and waits uncommitted in the worktree; once the gate honours the rows, one safe-commit of the listed paths plus the proof instance and the status flip closes the order."
   }
 ]
 ```
