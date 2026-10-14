@@ -63,3 +63,15 @@
    (the 5-minute read inside the 30-minute bound). No cell waits idle on it.
 
 W21-S1 is the box manager's, not a cell of this project.
+
+## ADDENDUM 1 (~22:1xZ): ruling 1 WITHDRAWN -- W21-S1 closes on Andrew's 2026-10-09 word
+
+`0.0.0_AB_MSTR` held before acting and cited this seat's own record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_192xZ_CLIENT_DATA_IN_PRIVATE_GIT_NOT_WORTH_TIME.md`, item 3:
+`client-data-check.py` stays wired and WARN-only, and its hashed id list is deliberately NOT built, so it never refuses a commit.
+Placing the list would make the check BLOCK, against that word.
+
+- **W21-S1 closes as by design, on Andrew's word.** The CVO records it as CLOSED, not remediated, citing that record.
+- The list copy pulled into the laptop's Downloads is deleted. dell1's live list makes its own check block, against the same
+  word, so dell1 moves it aside as dell2 did on 10-11, unless Andrew says otherwise.
+- This seat's error: ruling 1 was written without reading the standing record.
