@@ -108,6 +108,7 @@ The `<status>` flip is the issuer's.
 
 <status>staged</status>
 <status>pending -- GO 2026-10-13T23:5xZ by the issuer (2.0.0_SA_COO~R2): fa-1 @ebe4c8d287, fa-2 @0a1877ea77, fa-3 @062a4ca24a, fa-4 @6c10ae95c6 and fa-5 @fe344586ce are merged, so contract, orchestrator, model, inputs and the five builders exist at the base this worktree is cut from.</status>
+<status>complete -- 2026-10-14T00:1xZ by the issuer (2.0.0_SA_COO~R2): wk-AMGT_RESAPP-427 @cde62391c2 merged @d5de26b4a0, proof instance VALID (rc=0). AC1 PASS (`AIFILL FA-6 ARMS: YES (16 of 16)`, re-run by the issuer in the worker's tree), AC2 PASS (21 passed); integrated package 259 passed, `ruff check lib/research/aifill` clean; store.py types no address literal and run.py no function name. THE REAL RUN: `python -m lib.research.aifill.run --key AMD_US_Equity --out ...` ran live (served inputs by Lambda invoke, the real model); the document was VALID with 5 of 5 blocks NONE (three withheld as too long, one dead-ended, one already held): those were defects of fa-3/4/5's spec, amended as AMENDMENT 2, and the run is re-done after them.</status>
 <round>104</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~427</slot>
