@@ -13,9 +13,19 @@
 <preflight>
 comp-schedule: DECLARED-NOT-APPLICABLE -- no cron, alarm, monitor or cadence is added or changed; the cell adds fields to an object the existing scheduled run already writes.
 comp-iam: RUN by the issuer (2.0.0_SA_COO~D1) on DELL1: `comp-iam simulate mdpf-gold-lambda-role s3:GetObject <arn>` on the aum-daily key and on the allocation-roster key (date=2026-10-14) -- decision=allowed on both, APPLIED plane (simulated, not EXERCISED; a real read is the first scheduled fire). No IAM change is made.
-comp-adversary: RUN by the issuer on DELL1 at box/dell1 -- r9_cn_p_1.py pure 2 of 7 (M0, P0 controls), seams 2 of 6 (S0, T2 controls), oracle 2 of 7 (O0, Om controls) at base; a scratch reference tree reads 7 of 7, 6 of 6, 7 of 7 (the arms can pass); six planted defects (a typed s3 literal, a missing Global All Equity TR subtraction, an unedited existing test, Muni kept, keys on Global only, a mutated input) each turn at least one arm red.
+comp-adversary: RUN by the issuer on DELL1 at box/dell1 -- r9_cn_p_1.py pure 2 of 7 (M0, P0 controls), seams 2 of 7 (S0, T2 controls), oracle 2 of 7 (O0, Om controls) at base; a scratch reference tree reads 7 of 7, 7 of 7, 7 of 7 (the arms can pass); eight planted defects (a typed s3 literal, a missing Global All Equity TR subtraction, an unedited existing test, Muni kept, keys on Global only, a mutated input, a loader raise swallowed into empty legs, a loader raise that empties every scope) each turn at least one arm red; `r9_cn_p_1.py selftest` prints `CN-P-1 SELFTEST: OK`. AMENDMENT 1 re-ran all of it; the built branch @7d171b2281 reads seams 6 of 7 (S7 red).
 EGRESS CLASS, declared: NONE (the worker writes no AWS).
 </preflight>
+
+## 0. AMENDMENT 1 -- READ THIS FIRST (you inherit built work)
+
+Your branch `wk-MDPF_CANON-26` @`7d171b2281` already holds items 1, 2, 4, 5 and 6 below: keep them as they are. **Only item 3 (the `build_all` wiring) and one added test, (f), change.** Your own row `MDPF_CANON-D1-W26-S2` is right: the wiring `_smx = _isolated(...) or ({}, None)` turns the loader's `C2-SIBLING FAIL-LOUD` raise (a denied or failed SMArtX read) into empty legs, so Global would be built and published with null pre-2026-05-18 groups. That is a fail-open. A raise must leave Global refused ALONE (`arts["global"] = None`, `apply_global_trend_groups` not called); only `({}, None)` (no partition in the lookback: the honest absent, already WARNed) applies with empty legs.
+
+What to do, in this order:
+1. Bring trunk into your branch with a merge (`git merge box/dell1`, never a rebase) to receive the amended `round9/checks/r9_cn_p_1.py` (new arm S7, new `selftest` mode) and this amended order.
+2. Replace the two wiring lines at about `mdpf_gold_consolidator.py:3060-3061` with the item 3 block below (CRLF file: Edit tool, keep its line endings). Nothing else in that file changes.
+3. Add test (f) to `data/mdpf/tests/canon/test_global_trend_groups.py` (item 6) and keep (a)-(e).
+4. Re-run all three criteria (AC2 now reads 7 of 7). Update your proof instance, then commit with a message file written by the Write tool.
 
 ## 1. THE CELL -- `CN-p-1` (round 9)
 
@@ -31,7 +41,7 @@ EGRESS CLASS, declared: NONE (the worker writes no AWS).
 
 **SMArtX read.** Two registry rows exist (landed in `infra/logic/registry/legacy_addresses.json`; read-only for you): call `legacy_address("smartx-platform-silver-fact-model-aum-daily", date=<d>)` and `legacy_address("smartx-platform-silver-fact-model-allocation-roster", date=<d>)`. Each returns `s3://opal-data-assets/smartx/platform/silver/<name>/date=<d>/data.parquet`; `.split("/", 3)[3]` leaves the key for `get_object(Bucket=ASSETS_BUCKET, ...)`. A call without `date` raises. Each partition carries the FULL history: read ONE partition (the newest that exists among the run date and the 9 days before it), not one per day. The code types NO `smartx/...` or `fact_model...` string. Columns: aum-daily `rmid`, `day` (a date), `closing_equity`; roster `rmid`, `model_name`. Model names: `Opal Dividend Income`, `Pathfinder Focused Opportunities`, `Opal Global All Equity Total Return`.
 
-**The code (statement-level edits, in this order; the file is CRLF: keep its line endings; use the Edit tool).** File: `data/mdpf/scripts/gold/mdpf_gold_consolidator.py`. The checks grade BEHAVIOUR by calling these three functions and by AST (no typed address; call order in `build_all`), so a different but equivalent body is acceptable; the names, signatures and return shapes are the contract.
+**The code (statement-level edits, in this order; the file is CRLF: keep its line endings; use the Edit tool).** File: `data/mdpf/scripts/gold/mdpf_gold_consolidator.py`. The checks grade BEHAVIOUR by calling these three functions, by AST (no typed address; call order in `build_all`) and by EXECUTING the `build_all` statements from the load call to the apply call with stubs (arm S7), so a different but equivalent body is acceptable; the names, signatures and return shapes are the contract.
 
 1. Import, directly ABOVE the line `from lib.opal_naming import address as taxsma_address  # noqa: E402 -- TX-a-2's own two` (leave that line and its comment continuation as they are):
 
@@ -157,18 +167,24 @@ def apply_global_trend_groups(arts: dict, smartx: dict, smartx_partition: "str |
     return out
 ```
 
-3. In `build_all`, directly BELOW the line that reads `arts, fold_report = guard_global_min_firms_fold(arts, _isolated)   # CN-f-1: ...`, add:
+3. In `build_all`, directly BELOW the line that reads `arts, fold_report = guard_global_min_firms_fold(arts, _isolated)   # CN-f-1: ...`, add (a raise from the loader is a denied or failed SMArtX read: Global is refused ALONE, as the fold's refusal leaves it, and `apply_global_trend_groups` is NOT called; `({}, None)` is the honest absent and still applies):
 
 ```
-    _smx = _isolated("global", lambda: load_smartx_sma_legs(s3, process_start.date().isoformat())) or ({}, None)
-    arts = apply_global_trend_groups(arts, _smx[0], _smx[1])
+    _smx = _isolated("global", lambda: load_smartx_sma_legs(s3, process_start.date().isoformat()))
+    if _smx is None:
+        arts = dict(arts)
+        arts["global"] = None
+    else:
+        arts = apply_global_trend_groups(arts, _smx[0], _smx[1])
 ```
+
+No `or ({}, None)` on the first statement: it turns a raise into empty legs and publishes Global with null groups before 2026-05-18. Do not empty any scope other than Global (S7 grades both). `_isolated` already records the error in the manifest, so the run reads non-green.
 
 4. Muni leaves the tree. File `data/mdpf/scripts/gold/mdpf_category_registry.py` (CRLF): in `SMA_MEMBERS`, delete the `("muni", "muni", "Muni SMA", True, "ALT Strategies", SMA_BASIS_CARVE_OUT),` tuple and its seven-line comment above it; put ONE comment line in their place: `# muni: removed (Andrew-direct 2026-10-14: "no muni in SMAs, Muni is no longer SMA" / "muni is just a custom model").` Do not touch `SMA_BASIS_VERIFIED`, the crosswalk or any other line. Existing non-ASCII elsewhere in these files stays as it is.
 
 5. The one existing test that names Muni: `data/mdpf/tests/stratid/test_stratid_round2_inside_model.py` (CRLF), the line `assert set(rows) >= {"divz", "pfoe", "muni", "tax", "idvz", "pfde"}` becomes `assert set(rows) >= {"divz", "pfoe", "tax", "idvz", "pfde"} and "muni" not in rows`. Nothing else in that file changes.
 
-6. New test file `data/mdpf/tests/canon/test_global_trend_groups.py`, synthetic data only, no network, at least FIVE tests: (a) the difference, ETF sum and roll-forward on a small dict that straddles 2026-05-18; (b) a pre-cut-off row with no SMArtX leg is None, not zero; (c) ALT is never filled before its first value and the first dated row is never in `carried_dates`; (d) `apply_global_trend_groups` gives every non-None scope the four keys, leaves a None scope None and does not mutate its input; (e) `load_smartx_sma_legs` on a fake S3 reads exactly two objects when today's partition exists and raises `C2-SIBLING FAIL-LOUD` on AccessDenied. Idiom of `data/mdpf/tests/stratid/test_stratid_round2_inside_model.py` (module import via `sys.path`). The issuer's check `round9/checks/r9_cn_p_1.py` (`FakeS3`, `_smx_fixture`; read it, never edit it) shows the fake client and parquet fixtures.
+6. New test file `data/mdpf/tests/canon/test_global_trend_groups.py`, synthetic data only, no network, at least SIX tests: (a) the difference, ETF sum and roll-forward on a small dict that straddles 2026-05-18; (b) a pre-cut-off row with no SMArtX leg is None, not zero; (c) ALT is never filled before its first value and the first dated row is never in `carried_dates`; (d) `apply_global_trend_groups` gives every non-None scope the four keys, leaves a None scope None and does not mutate its input; (e) `load_smartx_sma_legs` on a fake S3 reads exactly two objects when today's partition exists and raises `C2-SIBLING FAIL-LOUD` on AccessDenied; (f) the `build_all` wiring: parse the module with `ast`, take `build_all`'s top-level statements from the first one that calls `load_smartx_sma_legs` to the last one that calls `apply_global_trend_groups`, `exec` them with stubs for `arts`, `_isolated` (returns None when the callable raises), `s3`, `process_start`, the loader and apply -- a loader that raises `RuntimeError("C2-SIBLING FAIL-LOUD: x")` leaves `arts["global"]` None, the other scopes unchanged and apply uncalled; a loader returning `({}, None)` calls apply exactly once with `({}, None)`. Idiom of `data/mdpf/tests/stratid/test_stratid_round2_inside_model.py` (module import via `sys.path`). The issuer's check `round9/checks/r9_cn_p_1.py` (`FakeS3`, `_smx_fixture` for the fake client and parquet fixtures; `_grade_wiring` for how test (f) can slice and exec the wiring; read it, never edit it).
 
 ## 2. BOUNDS
 
@@ -197,7 +213,7 @@ Read-only: the whole repository, in particular `infra/logic/registry/legacy_addr
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="CN-p-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round9/checks/r9_cn_p_1.py" pure; echo "exit=$?"</invocation><expect>CN-P-1 PURE: 7 of 7 arms -- and exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="CN-p-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round9/checks/r9_cn_p_1.py" seams; echo "exit=$?"</invocation><expect>CN-P-1 SEAMS: 6 of 6 arms -- and exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="CN-p-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round9/checks/r9_cn_p_1.py" seams; echo "exit=$?"</invocation><expect>CN-P-1 SEAMS: 7 of 7 arms -- and exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="CN-p-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round9/checks/r9_cn_p_1.py" oracle; echo "exit=$?"</invocation><expect>CN-P-1 ORACLE: 7 of 7 arms -- and exit=0</expect></criterion>
   <criterion id="AC4" cell_refs="CN-p-1" judgment="true"/>
 </proof_of_spec>
@@ -217,6 +233,8 @@ Report once: the diff (one line per file), the output line of every criterion, t
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
+**AMENDMENT 1 (issuer, 2.0.0_SA_COO~D1, after the worker's row MDPF_CANON-D1-W26-S2; the amendment commit states which gate limb graded the modification, or that none did): the item 3 wiring was fail-open (`or ({}, None)` turned the loader's FAIL-LOUD raise into empty legs); corrected to refuse Global alone; check arm S7 added (behavioural, seams 6 -> 7), test (f) added, AC2 expect 6 -> 7. The CTO reads it at the round-N analysis. Built state inherited: branch `wk-MDPF_CANON-26` @7d171b2281 holds items 1, 2, 4, 5, 6.**
+
 **ISSUER NOTES:** round 9, issuer 2.0.0_SA_COO~D1, on the CTO's msgs 5868-5886 and PRD v2.19-v2.21 (Andrew: Variant 1, "we might as well put the SMA strategies in there, we do have them", "Muni is just a custom model"). Spec: `org/tier1_exec/4.0.0_SA_CRO/deliverables/MDPF_CANON_GLOBAL_AUA_TREND_FULL_HISTORY_SPEC_20261014.md` @686f769e63.
 - **Measured by the drafter (read-only, 2026-10-14):** on the served 2026-10-13 Global object the rule above reproduces the CRO's amended period-end oracle at all 9 period ends (max diff 0.00M); `model_aua + groups + the pre-05-15 Global All Equity TR leg` equals the total on all 487 dated rows (max 0.00); the 9 no-total dates are the 9 named; SMArtX equals Global's carve-outs on 103 overlap dates (max diff 0.00); SMArtX covers all 384 pre-05-18 dated rows. Client Supervised from the rule is continuous across 05-18 (checked by the CRO; the oracle arms O2/O3 grade it).
 - **Contract fixed for CN-p-2 (portal), served on Global:** top-level `client_supervised_aua[]`, `etf_strategies_aua[]`, `alt_strategies_aua[]` (number or null, aligned to `dates[]`; null before the group's first value, never back-filled) and `carried_dates[]` (ISO strings). `point_class[]` is NOT changed (the headline must stay byte-equal), so the portal marks a carried point from `carried_dates`. Custom Models is NOT served by this cell (the portal takes the difference `model_aua` - the five primary lines from 2026-05-15; before 05-15 the internal-session stitch supplies it).
@@ -227,7 +245,7 @@ Report once: the diff (one line per file), the output line of every criterion, t
 - **Fanout:** one cell, one chain, slot ~26. Base box/dell1.
 - **Not in this cell:** the portal (CN-p-2); Custom Models; any pre-2026-05-15 per-model value in any Global leaf (PRD v2.20: the portal stitches it read-side); `point_class`; a `R2_RULED_EXTRAS` entry; the deploy; the pair.
 
-<status>pending</status>
+<status>complete</status>
 <round>9</round>
 <to_id>MDPF_CANON.TO-CN-p-1</to_id>
 <slot>~26</slot>

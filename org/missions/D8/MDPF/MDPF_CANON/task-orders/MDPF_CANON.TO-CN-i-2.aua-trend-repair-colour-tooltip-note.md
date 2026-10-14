@@ -91,7 +91,9 @@ DEV already carries the declined Trend as `9e637fe51e` (landed before the CTO's 
 
 **Fanout:** 1 of 1 chains; no shared file with another open cell. `portal_ref:` `scratch/canon-i3-base` (PROD 5ab67a65 plus the three feature commits).
 
-<status>pending</status>
+**CLOSED 2026-10-14 ~21:4xZ (2.0.0_SA_COO~D1): SUPERSEDED.** CN-i-2 delivered (merged, candidate `f8c7d310`); CN-i-3, which this order carried, is WITHDRAWN (CTO msg 5877, Andrew-direct "whatever CRO~DELL1 and I agreed on"); the Global Trend is rebuilt by round 9 cell CN-p-2. Slot ~25 is released; no further work is owed on this file.
+
+<status>superseded</status>
 <round>8</round>
 <to_id>MDPF_CANON.TO-CN-i-2</to_id>
 <slot>~25</slot>
