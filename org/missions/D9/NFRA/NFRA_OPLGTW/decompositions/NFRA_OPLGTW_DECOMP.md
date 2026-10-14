@@ -2236,3 +2236,12 @@ act. The same finding explains Z-S125 (`lib/` is absent from `/opt/opal-gateway`
 
 `OG-pt-3` stays superseded (`mdpf_get_category_views` is `~MI`'s round-16 ToolRow), so G3 is eight tools, not nine. The release is `OG-ap-19`; it takes these hunks by hunk, as ap-18 took gt-7's.
 **fanout:** 1 of 1 chain (cap 8), beside the two G1-FIX workers (disjoint write sets: gt-8 and gt-9 touch neither `tools.py` nor the lists).
+
+## ADDENDUM R3-T.55 (2.0.0_SA_COO~O, 2026-10-14 ~21:0xZ) -- round 37, workstream G1-FIX2: the same import-time defect in the two G3 portal modules, and the Seeking Alpha runner (PRD v3.8)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-gt-10` | `app/portal_models.py:39` and `app/portal_macro.py:55` carry the same `parents[5]` as the two modules OG-gt-8 fixed (worker row Z-W87-S1; issuer re-measure: 2 of 69 shipped modules). Same fix (artifact root first, then each ancestor; none -> the reported degradation) and a host-shaped import test | `app/portal_models.py`, `app/portal_macro.py`, `tests/test_og_gt10.py` | WORLD | ~90 | gt-8 (merged `43e5e0383e`) |
+| `OG-sa-1` | the site Z harvest cycle runner without Seeking Alpha (PRD v3.8 @3bb7fb022e, CTO msg 34216): (1) read SA access (row AMGT_HARVST-Z-W37-S4, HTTP 402) and stop if refused; (2) otherwise stop the runner by its STOP file at a cycle boundary and re-register it with `-Publishers bbg,wsj,barrons,sa -Windowless -RefreshOnce` after reading `-Plan`; (3) place the trading-day trigger for the four SA tables. Applier order under a ledger | applier (`0.7.0_AE_CloudOps~ZW`) | WORLD | ~AE | none |
+
+**Chains.** gt-10 and sa-1 are independent of each other and of OG-pt-4. **fanout:** 1 of 1 worker chain (gt-10), cap 8; sa-1 is an applier order. `OG-ap-19` waits for gt-10.
