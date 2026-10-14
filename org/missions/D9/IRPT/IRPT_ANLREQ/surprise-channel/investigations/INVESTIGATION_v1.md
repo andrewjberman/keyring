@@ -12534,3 +12534,69 @@
 - **owner:** `2.0.0_SA_COO~Y2`
 - **disarm_owner:** n/a -- INERT
 - **state:** OBSERVATION / INERT
+
+## IRPT_ANLREQ-D2-W121-S1 -- the served upload boundary refuses an Opal viewer before the producer is consulted, so the Opal upload test runs at compose_upload
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W121-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~121",
+  "surfaced_at": "2026-10-14T04:57:11Z",
+  "one_line": "AMENDMENT 2 asks for an Opal viewer unchanged on the upload door through the served boundary. The served analysis-input-upload route refuses an Opal viewer with UNEXPECTED before the producer is consulted (IdRefused: the firm token opal-capital is not one of the 3 enabled client firms), so the Opal upload test is written at compose_upload instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/tests/test_ordinary_viewer.py (the first run of test_upload_door_opal_viewer_is_unchanged_and_the_producer_is_not_consulted, spy and absent, both returned ok False public_reason_code UNEXPECTED with exception_text naming the opal-capital firm token; the served boundary was the seam tried first)",
+      "infra/aws/lambda/investor-reporting/reports/generate_installed.py@76e99ef2a1 :389-426 (compose_upload: the access decision is built from the scope owner firm, not the verified Opal token)",
+      "the producer is absent or a spy in both runs, so the refusal does not come from the producer (the same outcome with the producer absent)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 2 (2): an Opal viewer's behaviour is UNCHANGED on BOTH routes (the upload door and the owned-input analysis route), with a test for each.",
+  "world_is": "The served upload boundary refuses an Opal viewer by its CREATE_INPUT guard before compose_upload runs. The analysis route admits an Opal viewer through ProspectSubmissionFactory.submit (tested there). The upload-door Opal test therefore exercises the access decision that compose_upload hands the deferred upload service, with the producer as a spy and as the absent stub; it does not exercise an Opal upload through the served boundary.",
+  "notes": "owner: 2.0.0_SA_COO~Y2 (whether an Opal upload through the served boundary is an intended refusal is for the issuer and the CTO). Built only; no change to the boundary made here, and the boundary is outside the grant."
+}
+]
+```
+
+- **owner:** `2.0.0_SA_COO~Y2`
+- **disarm_owner:** n/a -- INERT; nothing is deployed and the boundary's Opal refusal is the existing behaviour
+- **state:** OBSERVATION / INERT
+
+## IRPT_ANLREQ-D2-W121-S2 -- the producer also authorises the retained repositories and the upload service inside the two routes, which the ruling did not name
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W121-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~121",
+  "surfaced_at": "2026-10-14T04:57:11Z",
+  "one_line": "The ports entry ordinary_authorizer reaches more than the upload door and the owned-input submit: the same InteractiveAccess.authorize_current is the authorizer of the retained repositories and of the upload service inside both routes, so an admitted ordinary viewer passes the producer for those reads and writes too.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/generate_installed.py@76e99ef2a1 :312-313 (compose_ports repositories(access): build_retained_repositories(clients table, clients s3, access.authorize_current, ...))",
+      "infra/aws/lambda/investor-reporting/reports/generate_installed.py@76e99ef2a1 :424-426 (compose_upload: InteractiveAccess with the wrapped ordinary producer, then stores = ports repositories(access))",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/prospect_submission.py@76e99ef2a1 :66 (stores = self.repositories(access)), :67-68 (uploads(access, stores), uploads.read_input(viewer, input_owner, ...)), :112 (authorize_current=access.authorize_current)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO rulings 7502 and 7505 name the upload door (the producer admits a non-Opal viewer for the upload); amendment 2 names the owned-input analysis route; the authorization_change must say who gains upload and owned-input analysis.",
+  "world_is": "The producer is also the only ordinary gate of the retained repositories built inside compose_upload and inside the prospect factory, and of the upload service that reads the retained input. An ordinary viewer admitted by the four conditions therefore reaches those retained paths for its own firm. Whether the repositories apply a per-artifact owner check beyond authorize_current was not read.",
+  "notes": "owner: 1.0.0_SA_CTO (the ruling on whether the retained-repository reach is in scope) with 2.0.0_SA_COO~Y2 (the authorization_change and the release pair). Not split here: amendment 2 says no split until the issuer says. Built only; nothing is released."
+}
+]
+```
+
+- **owner:** `1.0.0_SA_CTO`
+- **disarm_owner:** n/a -- INERT; no release has shipped the wiring
+- **state:** BLOCKING / INERT
