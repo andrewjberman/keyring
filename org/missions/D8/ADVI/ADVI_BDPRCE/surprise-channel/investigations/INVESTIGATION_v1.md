@@ -1384,3 +1384,360 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "The missing weekday partitions in 2026 are 2026-02-18, 04-03, 04-21, 05-01, 05-25, 06-19, 06-22 and 06-23. 2026-06-22 and 06-23 are not market holidays. None of the window's 20 weekday partitions is missing. In 2020-03 to 2025-12 there are 436 dates without a partition, 101 of them weekdays."
 }
 ```
+
+## Rows filed by `0.9.0_WK_ADVI_BDPRCE~16` under `ADVI_BDPRCE.TO-BP-c-4.export-cap-check` (denominator at its write: 2 rows, `ADVI_BDPRCE-D1-W16-S1..S2`)
+
+```json
+[
+  {
+    "id": "ADVI_BDPRCE-D1-W16-S1",
+    "project": "ADVI_BDPRCE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~16",
+    "surfaced_at": "2026-10-14T01:48:33Z",
+    "one_line": "The bronze prefix forwardfill_v2/unrealized/ holds no UNREALIZED_DAILY key for 12 of the 14 calendar days 2026-09-30 to 2026-10-13; keys exist only on Fridays from 2026-07-10 on.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~K1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws s3api list-objects-v2 --bucket opal-data-bd --prefix forwardfill_v2/unrealized/ read 2026-10-14T01:4xZ: 91 keys, 76 UNREALIZED_DAILY and 15 _complete sidecars; org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~16/unreal_listing.txt@72e3acc775",
+        "data/cot/scripts/bronze/cot_bronze_ingest.py@72e3acc775:481 writes forwardfill_v2/{table}/{TABLE}_DAILY_{date}.xlsx for each run date, so a key per run date is the expected landing"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Task order BP-c-4 section 1a step 1: find the bronze unrealized export key for each of at least the last 14 run dates by listing the bronze prefix with list-objects-v2, and record rows_per_day for each.",
+    "world_is": "Keys sit on most weekdays from 2026-03-27 to 2026-07-09 (with 9 header-only stubs), then only on 2026-07-10, 07-17, 07-24, 07-31, 08-07, 08-14, 08-21, 08-28, 09-04, 09-11, 09-18, 09-25, 10-02 and 10-09, all Fridays. The matching _complete sidecars exist only for the same Fridays. The cause (runner cadence, lifecycle expiry or a move) is not established by this read, and the cell's 14-day count is therefore 2 dates, not 14."
+  },
+  {
+    "id": "ADVI_BDPRCE-D1-W16-S2",
+    "project": "ADVI_BDPRCE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~16",
+    "surfaced_at": "2026-10-14T01:48:33Z",
+    "one_line": "The daily unrealized export holds exactly 500000 data rows on each of 15 non-stub days from 2026-07-08 to 2026-10-09, the count of a vendor cap, so those exports are not the complete lot population.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~K1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~16/CAP.json@72e3acc775: verdict CAP, days_checked 76, days_at_500000 15, rows_per_day for every key read; counts_all.jsonl@72e3acc775 holds the sheet-XML count per file with dimension refs agreeing on all 76",
+        "openpyxl read_only iter_rows on UNREALIZED_DAILY_2026-10-09.xlsx: 500001 rows including the header, 500000 data rows (positive control for the sheet-XML count, read 2026-10-14)",
+        "data/black_diamond/scripts/bronze/templates/unrealized.json@72e3acc775:497 isLimitSize false; data/cot/scripts/bronze/cot_bronze_ingest.py@72e3acc775:247-248 reads the whole response body and :430 pops isLimitSize before v1/run, so the runner sets no row limit"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Task order BP-c-4 and its cell text: a round-number count is the signature of a vendor cap, and a capped export silently drops lots, the opposite of the project's exact-lot outcome; the cap question is answered before any apply of the Units and Cost Basis switch.",
+    "world_is": "The count is exactly 500000 on 15 of the 67 non-stub days, every one from 2026-07-08 on, and the 52 earlier non-stub days vary with the book from 408467 to 489203. The round-2 fixture 2026-10-09 holds the same 500000 rows. No repo setting yields 500000, so the cap sits on the Black Diamond side and is inferred from the count pattern; lots beyond the cap are not in those exports, and any silver partition built from them carries the same truncation (not measured here). The apply of the Units and Cost Basis switch waits on this row's disposition."
+  }
+]
+```
+
+## ADVI_BDPRCE-D1-W13-S1 -- The ruled candidate test (Fixed Income and coupon_rate not null) selects 2 of the 8 round-2 scale_100x rows; the other 6 stay at 100x
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W13-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~13",
+  "surfaced_at": "2026-10-14T01:47:11Z",
+  "one_line": "The ruled candidate test (Fixed Income and coupon_rate not null) selects 2 of the 8 round-2 scale_100x rows; the other 6 are Fixed Income with a null coupon and stay at 100x.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/RULE_PROBE2.json@cd073f6a13 par_quoted block: unit_scale_rows_unchanged 2 of 8; fixed_income_unscaled_with_ratio_near_100 lists the six",
+      "silver/bd_assets_dim.parquet read live from opal-data-bd (get_object, READ only, 2026-10-14); md5 in RULE_PROBE2.json sources_md5",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~6/BEFORE_AFTER.csv scale_100x rows (eight)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-1 1a.2: a par-quoted candidate is asset_super_class_bd == 'Fixed Income' AND coupon_rate not null. BP-c-1 1c: unit_scale_rows_unchanged counts how many of the eight round-2 scale_100x rows now read equal to the served price.",
+  "world_is": "The test selects MIAMI-DADE CNTY FLA EDL FACS A 5.25% 04/01/2031 and MISSOURI ST HEALTH & EDL FACS 5% 05/01/2033 (both now read the served price). Six scale_100x rows are Fixed Income with coupon_rate null and are not selected: BANK MIDWEST SPIRIT LAKE IOWA 3.85% 2026, PNC BANK NATIONAL ASSOCIATION 4.1% 2027, STATE BK INDIA NEW YORK NY 3.95% 2027, TRUIST BK 3.9% 2026, WELLS FARGO BANK NATL ASSN 3.8% 2026 (2026-09-16) and CITIGROUP INC 5.3% 07/22/2032 (2026-09-22). They read 99.662, 99.5823, 99.629, 99.722, 99.6876 and 97.021, unchanged from round 2, and each has price/(market_value/units) within 1 percent of 100. The probe lists them in fixed_income_unscaled_with_ratio_near_100 and does not scale them. The count is 2 of 8, not 8 of 8."
+}
+```
+
+## ADVI_BDPRCE-D1-W13-S2 -- Four asset names in the asset dimension carry rows that disagree on the candidate test; the amendment does not say how to key them
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W13-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~13",
+  "surfaced_at": "2026-10-14T01:47:11Z",
+  "one_line": "Four asset_name values in silver/bd_assets_dim.parquet have rows that disagree on the candidate test, so the name cannot identify one class; the amendment is silent on this.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver/bd_assets_dim.parquet read live (get_object, READ only): 12,232 rows, 12,007 distinct asset_name values, 115 null names",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/RULE_PROBE2.json@cd073f6a13 par_quoted.dimension_names_conflicting_excluded"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-1 1a.2: the asset dimension's class field is the identifier of a par-quoted asset; the candidate set is built from the dimension.",
+  "world_is": "Four names carry dimension rows that disagree on Fixed Income plus coupon_rate not null: JPMORGAN CHASE BK N A 5.5% 2024 (one Cash and Cash Equivalents row), NEW YORK ST DORM AUTH ST PERS 5% 03/15/2036 (one row with a null coupon), NEW YORK TRANSN DEV CORP SPL F 5% 12/01/2030 (one To Be Classified row), PREMONT TEX IND SCH DIST 3.625% 08/15/2047. R1.1 treats a name as a candidate only when every row qualifies, so none of the four is scaled. The candidate set is 1,129 names from 1,163 qualifying rows."
+}
+```
+
+## ADVI_BDPRCE-D1-W13-S3 -- The 2026-10-02 partition carries 8 rows of transaction_type Corporate Action, a type round 2 did not see; R1.1 counts them UNCLASSIFIED
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W13-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~13",
+  "surfaced_at": "2026-10-14T01:47:11Z",
+  "one_line": "silver/transactions/2026-10-02.parquet holds 8 rows of transaction_type Corporate Action, a type not in round 2's thirteen; the module counts them UNCLASSIFIED and excludes them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver/transactions/2026-10-02.parquet read live (get_object, READ only); 8 rows, 2 distinct transaction_id, prices 0.0 and 31.3, all trade_date 2026-10-02",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/RULE_PROBE2.json@cd073f6a13 census 2026-10-02 excluded_by_type UNCLASSIFIED 8"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-1 1c: report the types seen and anything that could not be classified. Round 2 (RULE_PROBE.md) reported thirteen types, all known, unclassified none.",
+  "world_is": "Corporate Action is a transaction_type value present on 2026-10-02 and in no earlier round's type list. It is not a trade under R1.1 and is excluded and counted as UNCLASSIFIED."
+}
+```
+
+## ADVI_BDPRCE-D1-W13-S4 -- The task order's probe dates omit 2026-09-16, which holds five of the eight round-2 scale_100x rows
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W13-S4",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~13",
+  "surfaced_at": "2026-10-14T01:47:11Z",
+  "one_line": "The named probe dates (2026-10-09, 09-22, 10-08, 10-02) omit 2026-09-16, the date of five of the eight scale_100x rows that unit_scale_rows_unchanged counts; the probe read that partition too.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~6/BEFORE_AFTER.csv: scale_100x rows dated 2026-09-16 (five) and 2026-09-22 (one) and 2026-10-09 (two)",
+      "silver/transactions/2026-09-16.parquet and 2026-09-17.parquet read live (get_object, READ only), in addition to the named dates"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-1 1c: run the amended module over partitions 2026-10-09, 2026-09-22, 2026-10-08 and 2026-10-02, reading each date's partition and the next; unit_scale_rows_unchanged counts the eight round-2 scale_100x rows.",
+  "world_is": "Five of the eight scale_100x rows are dated 2026-09-16, outside the named dates. The eight-row count cannot be taken without that partition. The probe covers 2026-09-16, 09-22, 10-02, 10-08 and 10-09 (each with its next day)."
+}
+```
+
+## ADVI_BDPRCE-D1-W13-S5 -- BEFORE_AFTER.csv carries a variant-A price for BLACKROCK INC COM on 2026-09-22, where the round-2 probe records variant A as absent
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W13-S5",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~13",
+  "surfaced_at": "2026-10-14T01:47:11Z",
+  "one_line": "Two round-2 records disagree on the variant-A value for BLACKROCK INC COM on 2026-09-22: the before/after list gives new_price_A 1078.04 with 0 distinct trades; the probe record says A is absent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~6/BEFORE_AFTER.csv line 489: 2026-09-22,BLACKROCK INC COM, new_price_A 1078.04, new_price_B 1074.9259, distinct_trades 0",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~5/RULE_PROBE.md: BLACKROCK INC COM 2026-09-22, A absent (no Buy or Sale rows); B 1074.9259"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-1 1a: round 2 read BLACKROCK INC COM on 2026-09-22 as absent under buys and sells and 1,074.9259 with reinvestment.",
+  "world_is": "The before/after list carries a non-null variant-A price (1078.04) for an asset-date with zero distinct trades. R1.1 reads 1074.9259 from four distinct reinvestment transaction ids (733524155, 733526392, 733527817, 733530060). The before/after variant-A column is not used by this cell."
+}
+```
+
+## ADVI_BDPRCE-D1-W13-S6 -- Two Sale rows with price 0.0 on 2026-09-22 are excluded as no-price, against round 2's record of zero no-price trade rows
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W13-S6",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~13",
+  "surfaced_at": "2026-10-14T01:47:11Z",
+  "one_line": "silver/transactions/2026-09-22.parquet holds two Sale rows with price 0.0 for INVESCO DISCOVERY Y; round 2 recorded no trade row lacking a valid price.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver/transactions/2026-09-22.parquet read live (get_object, READ only): transaction_id 734745995 and 734745996, transaction_type Sale, price 0.0, trade_date 2026-09-22",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/RULE_PROBE2.json@cd073f6a13 census 2026-09-22 no_price_excluded 2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-b-2 record (RULE_PROBE.md, round 2): no trade row lacked a valid price; no_price_excluded 0 under both variants.",
+  "world_is": "Two Sale rows on 2026-09-22 carry price 0.0. R1.1 excludes them under clause 3 and counts them in no_price_excluded; they are not a price."
+}
+```
+
+## ADVI_BDPRCE-D1-W13-S7 -- The commit-time naming gate refused the module's candidate function for naming a dimension column; the function now takes its field names as parameters
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W13-S7",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~13",
+  "surfaced_at": "2026-10-14T01:47:11Z",
+  "one_line": "The naming gate (LGIC_ENFORCE) refused a new string in the module that is a dimension column name ending in the firm short form; the module now takes the field names as arguments and the probe passes them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-commit.sh first attempt on the module: naming-gate REFUSE at bd_price_rule.py line 177 (asset_super_class_bd -> lookup('49financial')), NAMING-GATE REFUSE 1 graded",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/rule_probe2.py passes the dimension column names; org/ paths are outside the naming gate domain (EXCLUDED org/, docs/ in the gate output)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-1 2 bounds and 1a.2: the module stays free of AWS and takes the candidate set as a parameter; the PROBE builds the set from the dimension. Rule 30 of the worker's standing rules: a builder refusal is a registry row to add, never a hand-typed workaround.",
+  "world_is": "The gate treats a dimension's own column name as a hand-kept carrier of the firm code and suggests a registry lookup, which does not name a column. The candidate test now lives in the module as a generic function over caller-named fields, and the probe (outside the gate's domain) passes the Black Diamond column names. Behaviour is unchanged: the probe record is byte-equal before and after the change (md5 523247e6fb2779774f613747a6f08827)."
+}
+```
+
+## ADVI_BDPRCE-D1-W18-S1 -- The round-2 record dates the runner's oldest readable log event to 2026-09-30; the live group's first event from 2026-09-14 is 2026-10-01T00:00:19Z
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W18-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~18",
+  "surfaced_at": "2026-10-14T01:53:18Z",
+  "one_line": "CAUSE.json (BP-b-5) gives the runner's oldest readable event as 2026-09-30T00:00Z; the live group returns 2026-10-01T00:00:19Z as its first event from 2026-09-14, so no runner log line for 2026-09-29 or 2026-09-30 can be read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws logs filter-log-events --region us-east-1 --log-group-name /aws/lambda/bd-49f-runner --start-time 2026-09-14T00:00Z --limit 1 returned timestamp 1790812819121 ms, which is 2026-10-01T00:00:19Z (read 2026-10-14T01:3xZ, SENTINEL.json oldest_readable_runner_event)",
+      "aws logs describe-log-groups --log-group-name-prefix /aws/lambda/bd-49f-runner: retentionInDays 14",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~9/CAUSE.json@33b647a50f states the runner group's oldest readable event as 2026-09-30T00:00Z in its evidence for 2026-09-29"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-b-5 record CAUSE.json (round 2): log retention ended on 2026-09-30, and the oldest readable event in the runner group is 2026-09-30T00:00Z.",
+  "world_is": "The oldest readable runner event on this read is 2026-10-01T00:00:19Z. The 2026-09-30 events are past the 14-day retention, so that date is not classifiable from logs. No count in BP-c-6 changes, because the readable log dates are 10-01 to 10-14 in either reading."
+}
+```
+
+## ADVI_BDPRCE-D1-W18-S2 -- Commit 3709ae40d6 says the runner role has no s3:GetObject on bronze/*; the live role grants GetObject on bronze/*/_BRONZE_COMPLETE.json only, and the read-back on that key works
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W18-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~18",
+  "surfaced_at": "2026-10-14T01:53:18Z",
+  "one_line": "The role bd-49f-runner-role grants s3:GetObject on bronze/*/_BRONZE_COMPLETE.json (statement ReadBackBdBronzeSentinel), not on bronze/* as commit 3709ae40d6 describes; the narrower grant covers the read-back, and the post-deploy runs print sentinel emitted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws iam get-role-policy --role-name bd-49f-runner-role --policy-name bd-49f-runner-policy (read 2026-10-14T01:3xZ): statement ReadBackBdBronzeSentinel, Allow s3:GetObject on arn:aws:s3:::opal-data-bd/bronze/*/_BRONZE_COMPLETE.json; no GetObject on bronze/* as a whole",
+      "aws logs filter-log-events RESULT on /aws/lambda/bd-49f-runner, 2026-10-08 to 2026-10-14: each RESULT line carries sentinel emitted, which needs the head_object read-back (lambda_function.py@33b647a50f :192-198) to succeed",
+      "git show 3709ae40d6 commit message: the live runner role has no s3:GetObject on bronze/*, so the required head_object read-back is refused"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Commit 3709ae40d6 message: the runner role needs s3:GetObject on bronze/* for the head_object read-back of the sentinel.",
+  "world_is": "The live role grants GetObject on the sentinel key only, which is the key the read-back reads, and the read-back succeeds in production. The date the narrow grant was added was not read in this cell, so the commit's bronze/* wording is no longer the live state."
+}
+```
+
+## ADVI_BDPRCE-D1-W18-S3 -- Eight Monday and Tuesday run dates have no bronze sentinel, not the six the round-2 record lists; 2026-09-14 and 2026-09-15 hold no bronze objects at all
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W18-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~18",
+  "surfaced_at": "2026-10-14T01:53:18Z",
+  "one_line": "S3 has no bronze/<date>/_BRONZE_COMPLETE.json for 2026-09-14 and 2026-09-15 either; the round-2 list of six sentinel-less Monday and Tuesday dates is short by those two, and neither date has any bronze object.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api head-object on bronze/<date>/_BRONZE_COMPLETE.json (2026-09-14 to 2026-10-14): 404 for 09-14, 09-15, 09-21, 09-22, 09-28, 09-29, 10-05 and 10-06; present for 10-12 (363 bytes) and 10-13 (277 bytes)",
+      "aws s3api list-object-versions --prefix bronze/2026-09-14/ and bronze/2026-09-15/: zero versions, zero delete markers (SENTINEL.json calls)",
+      "CAUSE.json@33b647a50f lists six sentinel-less dates: 2026-09-21, 09-22, 09-28, 09-29, 10-05 and 10-06"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-b-5 record CAUSE.json (round 2): the Monday and Tuesday run dates with no bronze sentinel are six: 2026-09-21, 09-22, 09-28, 09-29, 10-05 and 10-06.",
+  "world_is": "Eight Monday and Tuesday run dates have no sentinel: the six, plus 2026-09-14 and 2026-09-15. Neither of the two has any bronze object. Whether the sentinel path existed on those two dates is not read here. Their runner logs are past retention."
+}
+```
+
+## ADVI_BDPRCE-D1-W18-S4 -- The post-deploy runner completes a day on a header-only transactions export, so the 2026-10-12 and 2026-10-13 sentinels exist over zero transaction rows
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W18-S4",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~18",
+  "surfaced_at": "2026-10-14T01:53:18Z",
+  "one_line": "EMPTY_WINDOW_OK_TABLES accepts a measured-empty transactions export as complete, so the 2026-10-12 and 2026-10-13 sentinels were emitted over header-only transactions (4358 and 4354 bytes); every Monday and Tuesday will complete the same way until the window is fixed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda_function.py@33b647a50f :118 EMPTY_WINDOW_OK_TABLES = frozenset(('transactions',)); :137 has_data_rows == 0 accepted; :163 complete-empty state; :197 note measured-empty window accepted",
+      "aws logs: 2026-10-12 RESULT and OK bronze sentinel emitted (event prefix 399576695212, 00:11:10Z) and 2026-10-13 OK bronze sentinel emitted with the measured-empty note (event prefix 399595967749, 00:11:31Z); sentinel objects 363 and 277 bytes",
+      "aws s3api get-object forwardfill_v2/transactions/TRANSACTIONS_DAILY_<date>.xlsx for 2026-10-12 (VersionId 2FPO.Dwpi81bBbPhVMwVUk31qW6U1rPf, 4358 bytes) and 2026-10-13 (VersionId 13q3LKubG7cq5_7vZqAhPuhQ4hcPdTFN, 4354 bytes): zero data rows"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "bd-49f-runner docstring at 33b647a50f, lines 30-33: the bronze sentinel fires the silver merge ONLY on a COMPLETE bronze, and a partial pull must NOT advance silver. Lines 35-41: a Monday or Tuesday window can be genuinely empty.",
+  "world_is": "The Monday and Tuesday windows are not genuinely empty: SENTINEL.json gives EXPORT_WINDOW_RULE, and the last published trade day lies outside the span. The runner still accepts the empty transactions table, so the sentinels for 10-12 and 10-13 exist over zero transaction rows, and the sentinel is what triggers bd-silver-merge (BP-b-5 record). Whether silver for those two dates was built on the header-only content is not read in this cell."
+}
+```
+
+## ADVI_BDPRCE-D1-W18-S5 -- The runner file sets no transactions window: it calls mod._window_for, the window and its 3-day chunking live in the shared module, and the chunk size is a deployed environment value
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W18-S5",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~18",
+  "surfaced_at": "2026-10-14T01:53:18Z",
+  "one_line": "The BP-c-6 order points to asOfDate in the runner; the runner has no asOfDate, git log -S asOfDate on the runner file returns no commit, and the transactions window is set in data/cot/scripts/bronze/cot_bronze_ingest.py with BD_TXN_CHUNK_DAYS=3 in the deployed environment.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log -S asOfDate -- infra/aws/lambda/bd-pipeline/bd-49f-runner/lambda_function.py at 33b647a50f returns no commit; the positive control git log -S _window_for on the same file returns 9d44d6af5b and f6ca77914b",
+      "lambda_function.py@33b647a50f :236 start, end = mod._window_for(table, run_date) and :244 mod.ingest_table(...); the window is cot_bronze_ingest.py :131, :320-321, :327-335, :338-362, :797-798",
+      "aws lambda get-function-configuration --function-name bd-49f-runner: Environment BD_TXN_CHUNK_DAYS=3 and BD_SNAPSHOT_ASOF_LAG_BDAYS=1 (values printed; secret-named keys redacted)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-c-6 1a.4: find where the runner or the template sets the transactions window (look for asOfDate, startDate, endDate, today, utcnow); the P1 history in git log -S asOfDate on the runner file is a hint.",
+  "world_is": "The runner file sets no window and delegates to the shared module. The deployed environment sets the chunk size. The hint's history search on the runner file is empty, so the window is measured from cot_bronze_ingest.py and the environment, not from the runner."
+}
+```

@@ -224,3 +224,39 @@ fanout:
   no_s3_deletes: true
   egress: none by either order
 ```
+
+## 12. ADDENDUM 3 -- ROUND 105 OF WORKSTREAM `AIFILL`: THE NARRATION / TRANSLITERATION DISARM (CVO C-S133), 2026-10-14
+
+Source: the CTO's round-104 analysis (`ledger/ROUND_ANALYSIS.round104.AIFILL.md`, msg 5345) and the CVO's read of the stored documents (C-S133). Measured defects: 11 stored blocks over 10 names open with the model's narration glued to the answer
+(`I'll research this now.MUFG announced ...`), caused by `model.parse_response` joining every text block of a web-search reply; and `Nestl` stored for `Nestle` (`fold_text` DROPPED the accented letter). Both are served by the API;
+neither has reached a person. The CTO's ruling: the disarm is in the producer, never by hand-editing documents; a full re-validate of all 95 stored documents against the new contract reading 0 refused is the gate for the page to land.
+
+| id | cell | slot | class | risk | write set | serves |
+|---|---|---|---|---|---|---|
+| `AMGT-fc-1` | the seam keeps only the final answer segment (`parse_response`) | worker `~430` | worker | LOCAL | `lib/research/aifill/model.py`, one new test module (and one existing test if it asserted the old joining) | FWD-41 (all five) |
+| `AMGT-fc-2` | the contract: transliterate, refuse a dropped letter, refuse process narration, the name-mangling finder | worker `~431` | worker | LOCAL | `lib/research/aifill/contract.py`, one new test module (and one existing test if it asserted the old drop) | FWD-41 (all five) |
+| `AMGT-fc-3` | the five builders: two prompt rules each and truthful refusal reasons | worker `~432` (STAGED on fc-2) | worker | LOCAL | five `block_*.py`, three existing test modules | FWD-41 (all five) |
+| `AMGT-fc-4` | the re-validate command (`python -m lib.research.aifill.revalidate`) | worker `~433` (STAGED on fc-2) | worker | LOCAL | `lib/research/aifill/revalidate.py`, one new test module | FWD-41 census gate |
+
+Three lines of defence, each its own cell: the structural fix at the seam (fc-1), the backstop that makes a narrated or letter-dropped document unwritable (fc-2), and the model-facing prompts plus truthful reasons (fc-3). fc-4 is the instrument for the CTO's gate.
+No cell writes S3, deploys or calls the model for real; every model call in a check is a stub or the recorded response.
+
+**Edges.** fc-1 and fc-2 write disjoint files and have no unmet dependency (PENDING at the issuance). fc-3 exercises the NEW contract (a narrated reply must be refused and named) and fc-4 calls `contract.name_mangling_problems`, so both are STAGED until fc-2 merges and are cut into worktrees from the merged head.
+fc-3 and fc-4 write disjoint files. M = 3 chains (fc-1; fc-2 -> fc-3; fc-2 -> fc-4), 4 orders, cap 8.
+
+```
+fc-1   (independent head)
+fc-2 -> fc-3 ; fc-2 -> fc-4
+fanout:
+  cap: 8
+  orders_total: 4 (fc-1 to fc-4)
+  chains_total: 3
+  wave_pending: [fc-1 ~430, fc-2 ~431]
+  wave_staged: [fc-3 ~432, fc-4 ~433 (after fc-2 merges)]
+  no_s3_deletes: true
+  egress: none by any order
+```
+
+**Uncovered, with owners (not holes).** (1) The re-run of the narrated and mangled names through the producer (the 10 narrated names, NESN SW, and any name the re-validate then refuses): the issuer, under the round-104 store half (75 USD ceiling, 42.24 USD spent), after fc-1..fc-3 merge, with the driver's retry rule extended
+to the two new reasons; each key written once by its own run. (2) The full re-validate of all 95 with `--with-inputs`, 0 refused and 0 missing: the issuer, the gate for the landing. (3) The page landing (`AIFILLLAND` `ar-5`, `ar-6`): held until (2) reads 0 refused; `ar-5` (a branch cut, no push) runs meanwhile.
+(4) The CVO's five-name read, including NESN SW and one previously narrated name. (5) Round-106 candidates, not cut: a retry on a reply truncated at max tokens (4 blocks), file-name safety for `*` in `run --out`, source quality (one blog among filings), the spend-ceiling bookkeeping.
