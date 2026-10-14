@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "laptop",
- "written_at": "2026-10-14T03:07:38Z",
+ "written_at": "2026-10-14T03:08:36Z",
  "written_by": "1.0.0_SA_CTO",
  "rows": [
   {
@@ -836,7 +836,7 @@
    "source": "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r17/MUSE_ANSWER_CARD.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-14T02:31:51Z",
    "kind": "act",
    "context": "The answer path is live end to end: dell2's forwarder runs every 2 minutes and the assistant accepts only muse's signature, bound to the draft's version and seq and to a 24-hour window. A forged answer was refused in test; the one thing left is one real answer from muse, which only you can ask for. It gates FWD-7's grade and FWD-8.",
@@ -864,7 +864,14 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-14T03:08:36Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261014_030xZ_COMM_ASSIST_CD2D_FOLDED_INTO_ONE_MUSE_SITTING.md",
+    "crossbox": null,
+    "ruled_by": "cluster-lead",
+    "xadj": null
+   }
   },
   {
    "id": "laptop-20261014T030622Z-8f2b",
