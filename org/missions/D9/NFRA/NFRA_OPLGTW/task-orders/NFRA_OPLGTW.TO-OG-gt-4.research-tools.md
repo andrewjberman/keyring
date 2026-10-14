@@ -151,7 +151,7 @@ the issuer to make at the merge.
 
 - A1 (issuer, 2026-10-14 ~15:4xZ, workers' rows on the naming limb): hyphenated live prefixes are resolved at run time from the canonical underscore spelling; no hyphenated literal, no override. The worker is re-seated on its uncommitted module with this amendment. No criterion moves. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G1-TYPED</workstream>
 <slot>~75</slot>
