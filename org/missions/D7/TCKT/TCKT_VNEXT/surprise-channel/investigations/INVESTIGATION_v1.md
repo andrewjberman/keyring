@@ -2322,3 +2322,32 @@ used as fixtures is a different read with a different denominator.
  "notes": "Disarms D2-S46 on its owner's read of Andrew's word; nothing measured live by this row."
 }
 ```
+
+```json
+{
+ "id": "TCKT_VNEXT-D2-W43-S1",
+ "project": "TCKT_VNEXT",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_TCKT_VNEXT~43",
+ "surfaced_at": "2026-10-14T19:27:46Z",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~V2",
+ "one_line": "TO-R18-TR1 cannot name one bucket: doctrine tier state (R21) homes the ticket attachment per firm, so the three served firms resolve to three buckets and the ticket Lambda's single TICKET_ATTACH_BUCKET cannot serve the address. The order's BLOCKING branch applies; no address, key template or checker is written.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D7/TCKT/TCKT_VNEXT/task-orders/TCKT_VNEXT.TO-R18-TR1.ticket-attachment-address-from-the-naming-builder.md:33-44 (cell R18-tf-1: per-firm bucket is a BLOCKING stop; the Lambda uses ONE bucket)",
+   "infra/logic/02_DOCTRINE.md:588-597 (R21: per-request intake, keyed by request, is state, never inside a tier plane; state lives in the bucket whose tenancy it belongs to)",
+   "infra/logic/02_DOCTRINE.md:360-365 (R4: opal-data-assets is for client/partner custodial information) and :439-441 (R9: bronze is raw, untouched vendor bytes) -- bronze is not the class of a per-request ticket upload",
+   "infra/logic/registry/tiers.json homes.FIRM.state = {home: scope, rule: R21} -- scope bucket per firm",
+   "lib/opal_naming.py address() in worktree HEAD ba9347065b, run by this worker on 2026-10-14 after 19:27Z: state 49financial -> s3://opal-data-49financial/portal/49financial/state/ticket-attachments/trade-form ; state inflection -> s3://opal-data-inflection/portal/inflection/state/ticket-attachments/trade-form ; state cottonwood -> s3://opal-data-cottonwood/portal/cottonwood/state/ticket-attachments/trade-form",
+   "same probe at tier bronze -> s3://opal-data-assets/portal/<firm>/bronze/ticket-attachments/trade-form for all three firms (one bucket, reached by choosing bronze; rejected as the convenience choice the cell forbids)"
+  ]
+ },
+ "spec_asserts": "TO-R18-TR1 step 1: decide the tier by the doctrine, not by convenience; the ticket Lambda uses ONE bucket for every firm, so the tier must resolve to the same bucket for all three served firms; if the doctrine tier resolves to a bucket per firm, STOP, file a BLOCKING row naming the tier, the three buckets and the rule, and do nothing else.",
+ "world_is": "The doctrine tier for a non-holdings ticket attachment is state (R21, per-request intake keyed by request; the attachment is keyed by the ticket). state homes per firm (tiers.json FIRM.state, scope). The three buckets are opal-data-49financial, opal-data-inflection and opal-data-cottonwood. Under the order's own branch no address, key_template, ATTACH_ADDRESS.json, address_check.py or mutant_check.py is written, and TO-R18-TR2 and TO-R18-TR3 cannot take a single TICKET_ATTACH_BUCKET from this order as written.",
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "ARMED because TO-R18-TR3 writes the Lambda environment from the file this order would produce; left alone, TR3 either carries a hand-typed bucket or a wrong single bucket. Disarm owner is the issuer, who must re-cut the attachment design (one bucket by a new registry decision, or a per-firm env) or confirm the tier. Nothing created in AWS; no registry row added (the builder did not refuse; the blocker is the tier, not a missing row). Not a decision on which tier is right; the rule text is quoted at the cited lines for the CTO or CVO to read."
+}
+```
