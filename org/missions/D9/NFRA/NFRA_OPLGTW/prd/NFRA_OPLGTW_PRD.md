@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v3.2",
+  "prd_version": "v3.3",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -1225,3 +1225,33 @@ CONTRACTS-side; ENDPOINT unchanged.
 3. **G2 firm inputs:** SmartX rows whose firm has no canonical input (Titleist, Canopy, Parable: no `firm_id` in
    `partner_roster.json`) are never returned until that firm is registered. An unknown `advisor_id` is never mapped to
    the nearest firm.
+
+### v3.3 addendum (2026-10-14 ~14:3xZ, 1.0.0_SA_CTO~Z) -- FWD-22 enrichment for G4 (mdpf gold delta); census 6 of 6 landed
+
+**Input.** `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G4_mdpf_delta.md` @7ec87a87e5 (msg 34112). Every gold table in `opal-data-mdpf` equals what portal-v2
+serves, leaf for leaf (aum_metrics 173/173, account_distribution 550/550, aggregate_aua 17,360/17,360 cells). The delta
+is the feed layer: account-grain model AUA, per-model composition, and the AI security-classification index.
+
+**G4 enrichment list:**
+1. The four existing `mdpf_get_*` tools are KEPT unchanged this week.
+2. **Account-grain model AUA is client data.** It is NOT a separate `mdpf_get_account_model_aua` tool. It becomes the
+   MDPF adapter of `client_get_allocation` (Ruling 1): the canonical Opal `model_key`, `cohort_class` and
+   `model_value` per account. It is read from `opal-data-mdpf/mdpf/feeds/model_aua_positions/<firm>/` through a
+   one-firm reader role (v3.2), newest partition only. Feed label D carries served period D-1, and the tool states it.
+3. **`mdpf_get_model_composition(firm, model_key)`**: firm-level, no account. It returns the as-implemented model holdings
+   (ticker, target_weight, product_class, is_opal_etf) from `mdpf/feeds/model_composition/<firm>/`. Wave 3.
+4. **Not served:** `partner_held_etf/49financial` (rolls a 2026-07-23 value forward) and `non_model_aua/49financial` (the
+   superseded v0_9 method, about 69M USD off the served figure). G5 `etfs_get_partner_ownership` and
+   `mdpf_get_aggregate_aua` answer those questions with current values. `etf_net_assets` gets no tool (G5 reads the
+   upstream issuer silver).
+5. **Wave B:** `mdpf_get_security_classification` against the canonical DynamoDB `etf-classifications`
+   (`org/standards/MDPF_SECCLASS_CONTRACT.json`), with the G4 index as provenance; `as_of` history on
+   `mdpf_get_aum_metrics` / `mdpf_get_account_distribution`, read from the dated per-firm gold
+   (`opal-data-{49financial,inflection,cottonwood}/mdpf/<firm>/gold/`). That gold is OVERLAP on its latest date (G4 3.1).
+
+**Coverage gap ruling (G4 3.1):** no G7. `opal-data-assets/portal/gold/mdpf/` and the per-firm `mdpf/<firm>/gold/`
+are the producer side of what portal-v2 serves, and are equal on the latest date. They matter only as dated history,
+which is item 5. The uncensused `taxsma_assets/` gold in `opal-data-49financial` and `opal-data-cottonwood` (14 keys
+each) is client data. `4.0.0_SA_CRO~Z` contracts it as a G2 part, as the Tax SMA adapter's served form.
+
+CONTRACTS-only; ENDPOINT unchanged. The census has landed 6 of 6 groups.
