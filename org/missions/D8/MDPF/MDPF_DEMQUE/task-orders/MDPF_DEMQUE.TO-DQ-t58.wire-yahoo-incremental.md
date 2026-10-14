@@ -4,7 +4,7 @@
 <issued_to>0.9.0_WK_MDPF_DEMQUE~50</issued_to>
 <issued_by>2.0.0_SA_COO~Q1</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -47,7 +47,7 @@ exactly: [COO half](file:///C:/dev/ajb_workspace/org/missions/D8/MDPF/MDPF_DEMQU
    `test_a_gained_split_or_a_restated_overlap_bar_is_held_restatement_and_the_name_keeps_its_files`,
    `test_a_gap_beyond_five_days_pulls_from_the_stored_max_and_appends_only`,
    `test_the_receipt_lists_names_appended_without_a_relock_and_a_failed_lock_check_makes_the_name_held`.
-   Existing tests keep passing (the order is amended below: EIGHT named tests); a test that pins "a stored name is re-pulled over its whole range" changes that assertion and nothing else.
+   Existing tests keep passing (the order is amended below: NINE named tests); a test that pins "a stored name is re-pulled over its whole range" changes that assertion and nothing else.
 
 ### ACCEPTANCE
 
@@ -104,6 +104,18 @@ unresolved list for names that are LOCKED. The other 14 (LCEYX and FTHSX among t
   exactly as `dq_t58_census.py` reads it. The criterion **`DQ9-t58-AC3`** (new, the order now carries THREE mechanical criteria) runs it with `--limit 60` and must finish inside 115 seconds: load the transactions once and read the store files in a thread pool, as `index()` does.
   Run it ONCE for the whole store and put the line in your report; the issuer measured 144 locked, 14 held, 107 not applicable, 61 without trade rows before the fix.
 - Re-run AC1, AC2 and AC3 and the folder; the Yahoo budget is spent (120 of 120): AC2's live `--spot 5 --tr` needs 5 requests, so it is PRE-APPROVED for ONE more run of 5 requests only; do not run it twice. Regenerate the proof with all three criteria, validate it, flip the status in the same commit. The issuer disarms S6 and files S8 after the merge.
+
+
+### AMENDED 2026-10-14 ~00:2xZ (issuer; no gate limb graded it) -- the applicability rule was STILL too loose: ANY trade before the stored window makes the combined check inapplicable (tonight's run grew the store from 326 to 483 names)
+
+Your fifth-pass work (commits `d309b25e61`, `80a8479c2f`) is inherited state; the unresolved-fold, the window check and the "all trades predate" gate stand. **Tonight's scheduled run (the old full path, rc 0, 81 minutes) stored 157 more names (index 483), and the issuer re-ran your whole-store census on them: applicable 215, locked 198, held 17 (14 `LOW_TRADE_AGREEMENT`, 3 `PRICE_MISMATCH`), not applicable 188, no trade rows 80.**
+The 3 `PRICE_MISMATCH` are FUEPX, FWMMX and ORCL: names with trades BOTH before and inside the stored window. The issuer probed them: the stored locks read 7 of 7, 13 of 13 and 30 of 33 observations passed (`trades_through` 2026-06 and 2026-05, using trades dated before the stored window from 2026-04-14), while the stored rows alone see 1, 1 and 3 observations and `lock.check` returns `REJECTED:PRICE_MISMATCH` (not enough early-third observations). Those are the same artifact as the 107, in a partial form.
+- **Rule (replaces "at least one trade inside the stored range"):** `combined_relock` is APPLICABLE only when NO trade row is dated before the stored price date range's first day AND at least one trade row is dated inside [first day, last day]. A name with ANY trade before its stored window is NOT applicable: it is not held, proceeds after the appended-window check, and is listed in `appended_without_relock` with the existing reason text.
+  A name whose trade rows are all dated after the stored last day counts under no trade rows (reason `no trade falls inside the stored window`). The sound statement: the stored-rows relock equals the full relock only when the stored window contains every trade the full relock uses.
+- **NINTH named test**: `test_a_name_with_some_trades_before_the_stored_window_is_not_held_by_the_combined_check_and_is_listed_without_relock` (synthetic: one trade in 2019 and two inside the stored window from 2026-04-14, stored lock LOCKED with 3 observations; the name is appended, not held, listed without a relock, and the unresolved list gets no row).
+- **Census (`--relock-census`)**: held entries gain `trades_before_window`; `applicable` follows the new rule. **The criterion `DQ9-t58-AC3` now runs the census over the WHOLE store (no `--limit`, 59 seconds for 483 names)** and requires `price_mismatch_holds` 0 and every held name to have `trades_before_window` 0; `dq_t58_census.py` and `dq_t58_tests.py` (nine names) are placed on your branch. Keep `--limit` working.
+- The 50-name equality report and the Yahoo budget are unchanged: AC2's live `--spot 5 --tr` is NOT pre-approved again (you have used 125); run AC2 only if its report file and a spot result already on your branch satisfy it; if the check cannot pass without a new Yahoo request, say so in the report and file a row, and the issuer will grade it.
+- Re-run AC1 and AC3 and the folder, regenerate the proof, validate, flip. Expected from the issuer's measure on today's 483 names before the fix: 17 held; after it, the 3 PRICE_MISMATCH leave the held list and the real 14 `LOW_TRADE_AGREEMENT` remain only where every trade sits inside the window.
 
 ## BOUNDS
 
