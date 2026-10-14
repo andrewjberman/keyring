@@ -7549,3 +7549,153 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Issuer's call: amend the criterion to the instruments that can see the put (emitted line + AWS/Events TriggeredRules >= 1), or accept the record as is. This seat did not edit the record to 1 and did not flip <status>. D1-W65-S1 disarm read: the chain emitted, the rule fired and the generator ran, so the disarm condition is met on that evidence."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W82-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~82",
+  "surfaced_at": "2026-10-14T12:33:00Z",
+  "one_line": "A routed-alias flip alone cannot move the Cottonwood canonical platinum list: platinum_destinations.json holds no cottonwood rows, so the generated CANONICAL_PLATINUM_BUCKETS and OWNERSHIP_KEYS cannot gain opal-data-cottonwood.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/platinum_destinations.json: grep count cottonwood = 0; grep count 49financial = 14 (read at worktree HEAD 7ee8e70830)",
+      "lib/opal_naming.py:1284-1293 and 1299-1307: CANONICAL_PLATINUM_BUCKETS and OWNERSHIP_KEYS derive from the platinum destination rows",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~82/PLAN_COTTONWOOD.json moves M5 and M13"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Plan premise (FWD-9 move order): the canonical-home move is a registry flip after which the generated router, ownership and IRPT maps follow.",
+  "world_is": "The generator reads the platinum destination rows for the canonical list, and Cottonwood has none, so the flip needs new rows first (plan M5) before regeneration (plan M13).",
+  "notes": "Plan records M5 as a prerequisite. No registry or generated file was edited by this worker. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W82-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~82",
+  "surfaced_at": "2026-10-14T12:33:00Z",
+  "one_line": "PLANINV marks edge-auth-validator-edge as no legacy touch, but its ownership-map read resolves through FIRM_CONFIG to the firm bucket, and the Lambda@Edge execution role grants GetObject on opal-data-bd only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda-edge/_shared/firm-config.mjs:65-101 (FIRM_CONFIG cottonwood bucket opal-data-cot; OWNERSHIP_KEYS); infra/aws/lambda-edge/auth-validator-edge/tests/ownership_key.spec.mjs:3-9 (imports FIRM_CONFIG and ownershipMapKey)",
+      "live IAM: role lambda-edge-execution-role, policy lambda-edge-ownership-map-read, single statement Resource arn:aws:s3:::opal-data-bd/platinum/*/ownership_map.json (one policy document read)",
+      "PLAN_COTTONWOOD.json move M14 and open question Q13"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PLANINV_COTTONWOOD_SERVING_CROSSWALK row edge-auth-validator-edge: legacy_touch n, reads not stated.",
+  "world_is": "The validator's ownership read is keyed by FIRM_CONFIG, which names opal-data-cot for cottonwood, and the role has no grant on that bucket. Whether the cottonwood read succeeds through another path is not established.",
+  "notes": "Read-only finding. The inventory row needs correction at the next PLANINV revision. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W82-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~82",
+  "surfaced_at": "2026-10-14T12:33:00Z",
+  "one_line": "opal-data-cottonwood is in no CloudTrail data-event selector, so the canonical firm bucket has no read or write instrument for the FWD-6 record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws cloudtrail get-event-selectors --trail-name opal-organization-trail (read): data resources for opal-data-49financial, opal-data-bd, opal-data-cot, opal-data-inf; no opal-data-cottonwood",
+      "aws cloudtrail get-event-selectors --trail-name opal-served-key-write-trail (read): advanced selector limited to platinum/firm/ prefixes on opal-data-inf, opal-data-bd, opal-data-cot",
+      "aws s3api get-bucket-logging --bucket opal-data-cottonwood (read): no logging configuration"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD DEC-12 and the firm-bucket CONTRACTS row: each firm bucket is born with read logging.",
+  "world_is": "The canonical Cottonwood bucket is outside the organisation trail's data-event selectors. The legacy bucket is inside them.",
+  "notes": "PLAN_COTTONWOOD.json move M4 proposes the selector add with a saved rollback. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W82-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~82",
+  "surfaced_at": "2026-10-14T12:33:00Z",
+  "one_line": "The opal-data-cottonwood bucket-policy Deny admits only role names matching role/*-cot-*, so the satellites producer roles and the performance adapter role are explicitly denied on the new home.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api get-bucket-policy --bucket opal-data-cottonwood (read): statement DenyForeignFirmPrincipals, ArnNotLike aws:PrincipalArn over role/*-cot-*, irpt-holdings-role and three users",
+      "aws iam simulate-principal-policy with that policy as --resource-policy: cot-satellites-registry-producer-role PutObject and GetObject on platinum/satellites/registry.json explicitDeny; cot-satellites-characteristics-producer-role and cot-rebalancer-runner-role explicitDeny; irpt-performance-adapter-role explicitDeny; irpt-holdings-role GetObject on its manifest allowed (calibration)",
+      "PLAN_COTTONWOOD.json move M11 and open question Q6"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD F4: the new firm bucket carries the scope-derived fence, and its admit list covers the Cottonwood roles that write it.",
+  "world_is": "The admit glob does not match role names that begin with cot- (no leading hyphen), so those roles are refused by the fence on the new home.",
+  "notes": "No writer has moved, so no live effect today. The move fails closed if M11 is skipped. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W82-S5",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~82",
+  "surfaced_at": "2026-10-14T12:33:00Z",
+  "one_line": "The write half of PRD DEC-12 does not match the live trail: the organisation trail records WriteOnly data events on all of opal-data-cot/, not only platinum/firm/.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws cloudtrail get-event-selectors --trail-name opal-organization-trail (read): WriteOnly selector, AWS::S3::Object, value arn:aws:s3:::opal-data-cot/ (whole bucket)",
+      "aws cloudtrail get-event-selectors --trail-name opal-served-key-write-trail (read): writes limited to platinum/firm/ prefixes",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/prd/ADVI_FIRMBKTS_PRD.md DEC-12 (read at its section)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD DEC-12: writes are recorded only under platinum/firm/, so writes to gold/, bronze/, silver/, code/ and state/ would be invisible during the window.",
+  "world_is": "The whole-bucket WriteOnly selector covers those prefixes on opal-data-cot today. The configuration date is not read, so the stamp that starts the window is open (PLAN_COTTONWOOD.json Q8).",
+  "notes": "The 45-day window basis in the plan cites the organisation trail, not the served-key trail. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W82-S6",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~82",
+  "surfaced_at": "2026-10-14T12:33:00Z",
+  "one_line": "cot-etf-ownership-daily is marked legacy_touch no in PLANINV, but its live role still reads opal-data-cot and its live environment still names opal-data-cot.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function-configuration --function-name cot-etf-ownership-daily (read): SRC_BUCKET=opal-data-cot",
+      "aws iam get-role-policy --role-name cot-etf-ownership-daily-role --policy-name s3-etf-ownership (read): GetObject on opal-data-cot gold/canonical/holdings/* and ListBucket on opal-data-cot",
+      "infra/aws/terraform/cot-pipeline/cot-etf-ownership-daily.tf:27 (the prior grant is left in place) and infra/aws/lambda/cot-pipeline/cot-etf-ownership-daily/lambda_function.py:1-12 (code reads opal-data-assets)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PLANINV_COTTONWOOD_PIPELINE row lambda.cot-etf-ownership-daily: legacy_touch no; env SRC_BUCKET stale (surprise S4).",
+  "world_is": "The function still holds a live read grant and a live env value on the legacy bucket. The code reads neither. PLAN_COTTONWOOD.json move M1 removes all three together.",
+  "notes": "Corrects the legacy_touch flag for this function in the plan. Disarm: none (INERT)."
+}
+```
