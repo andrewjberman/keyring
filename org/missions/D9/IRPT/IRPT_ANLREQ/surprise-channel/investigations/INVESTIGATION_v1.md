@@ -13986,3 +13986,54 @@
   "notes": "Resolves IRPT_ANLREQ-D2-W133-S4. Carried: the FWD-1 run order mints the synthetic staff user with the chosen firm in allowedFirmIds and reads the upload door's firm check first."
 }
 ```
+
+## IRPT_ANLREQ-D2-W138-S1 -- the TO asks to replace a comment above COMMENTARY_DISCLAIMER; the only comment is the trailing one on the constant's line
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W138-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~138",
+  "surfaced_at": "2026-10-14T17:34:16Z",
+  "one_line": "AR-y-330 step 2 says to replace the comment above COMMENTARY_DISCLAIMER; at base 6abbfec7cf there is no comment line above it, only a trailing comment on the constant's second line naming surprise row IRPT_ANLREQ-D2-W134-S2. The new two-line comment was written directly above the new constant and the trailing comment went with the prose; the diff is one hunk.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-330 step 2 (TO IRPT_ANLREQ.TO-AR-y-330): 'Replace the comment above it so it says: the approved wording is held for Andrew (call 095e), this label stands in for it, and the approved wording is a release gate for any client delivery.'",
+  "world_is": "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:71 is the DRAFT-mark comment; lines 72-73 carry the constant, and its only comment is the trailing '# placeholder: surprise row IRPT_ANLREQ-D2-W134-S2' on line 73. No line sits above the constant to replace.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:71-73 @6abbfec7cf49384fd99ba5b734567f184f9a997a",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:72-73 @a825824b31f366f0183e8b288c653bd86932b91a (the two comment lines and the label constant)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W138-S2 -- a lone copy of layout_overview.py cannot run the AC2 mutant: load_brand reads HERE/brand, so the mutant copies the research modules and brand/
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W138-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~138",
+  "surfaced_at": "2026-10-14T17:34:16Z",
+  "one_line": "AR330-y-AC2 copies layout_overview.py alone to a scratch folder; that copy cannot load the brand asset, so mutant_check.py copies the research modules and brand/ into .scratch/ar330_mutant (gitignored, outside infra/) and pre-loads the copy as the layout_overview module, printing the loaded path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR330-y-AC2 (TO IRPT_ANLREQ.TO-AR-y-330): 'it copies layout_overview.py to a scratch folder OUTSIDE the product tree with COMMENTARY_DISCLAIMER set back to the old text, runs the new test file against the copy (with the copy first on the import path)'.",
+  "world_is": "layout_overview.py:77 sets PACKAGED_DIR = HERE / 'brand', and load_brand (layout_overview.py:119-127) reads brand.json and the logo from that folder; a lone copy with no brand/ beside it refuses at load_brand. The new test file inserts the research folder at sys.path[0] itself (test file lines 14-17), so a copy placed first on sys.path is shadowed; the copy is therefore pre-loaded in sys.modules as layout_overview. With that, the mutant run FAILS on cases (a), (b) and (d); MUTANT-FIRES requires case (a) among the failures.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:53-55 and 77 @6abbfec7cf49384fd99ba5b734567f184f9a997a",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:119-127 @6abbfec7cf49384fd99ba5b734567f184f9a997a",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_commentary_disclaimer_pending.py:14-17 @a825824b31f366f0183e8b288c653bd86932b91a"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
