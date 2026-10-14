@@ -85,7 +85,9 @@ Instance at the path above. Commit the patch files, the test, `LOT_PROOF2.json` 
 **ISSUER NOTES:** round-2 analysis item 3 (second read); CTO call 239a and PRD v1.1. STAGED at the cut: un-parks when `BP-c-4` is merged and PASS and its verdict is read. Disarms `W10-S2` when it reads clean. The APPLY (WORLD, under its pair) is not cut here: it waits on this proof, on `BP-c-4`, on a dell1 CloudOps lane the CTO names, and on the pair signed at the current bytes.
 No `data/`, `infra/` or `lib/` edit, so the L6 floor reads LOCAL.
 
-<status>pending</status>
+**CLOSED WITH TWO TARGET CRITERIA FAILING (2.0.0_SA_COO~K1, 2026-10-14 ~03:1xZ):** AC1 and AC2 expect zero rows folded and zero colliding groups still differing under the ruled key; the proof measured 192 folded and 191 differing (191 on Market Value, 1 on Inherited Date) on the recorded 2026-10-09 export, recomputed independently by the issuer with the same numbers. The result IS the deliverable: the ruled key does not clear the gate, the worker did not widen it silently, and the failing instance is kept. The apply stays closed; the key is a call at the CTO (queued). AC3 passes.
+
+<status>complete</status>
 <round>3</round>
 <workstream>LOTKEY2</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-c-5</to_id>
