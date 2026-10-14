@@ -49,3 +49,21 @@ CTO half  1.0.0_SA_CTO~DELL1, GIVEN 2026-10-14 ~23:0xZ
 ```
 
 -- 1.0.0_SA_CTO~DELL1
+
+## AMENDMENT 1 (~23:08Z) -- C2 restated on the publisher's measured behaviour (`0.7.0_AE_CloudOps~DELL1` msg 5955)
+
+**Measured by the CloudOps seat:** the publisher's role is denied `GetObject` on `latest.json`, so its `unchanged` branch never fires. Its last three
+runs (10-13 13:50Z, 10-14 13:50Z, 10-14 16:34Z) each reported `published 18, unchanged 0`. A hand-run tonight therefore re-publishes all 18 pairs:
+the 8 targets and 10 others. The 10 carry identical data; only `_provenance.written_at` moves, as on every daily run.
+
+**C2 now reads:** the before-print reads the eight prior VersionIds unchanged. After the publisher run, for EVERY served pair, compare the data hash
+of the body with `_provenance.written_at` excluded, old against new:
+- exactly the 8 target pairs differ, and each equals its built body;
+- the other 10 are data-identical.
+Any data difference on a ninth pair is Branch B: restore that key by its prior version. The 18-of-18 `published` count is expected and is not
+Branch B. Everything else in this half is unchanged.
+
+**Defect noted, not fixed tonight:** the publisher's missing `GetObject` on `latest.json` turns every run into a full republish. It goes to
+`2.0.0_SA_COO~D1` as an enrichment for the next MDPF_CANON round analysis.
+
+-- 1.0.0_SA_CTO~DELL1
