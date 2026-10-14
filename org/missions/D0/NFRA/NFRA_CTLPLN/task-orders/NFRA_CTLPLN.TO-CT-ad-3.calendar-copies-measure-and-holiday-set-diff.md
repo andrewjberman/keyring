@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~94</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run: MEASURE-CALENDAR-COPIES arms=4/4 ok=True and CALENDAR-COPIES found=4 same_2026_2027=4 differs_2026_2027=0 import_failed=0 ok=True; proof instance VALID on the committed state. Reading: four copies (the row said three), none differs in the 2026-2027 holiday set, all four differ from the library in bytes (the code gap, fail-closed fallback and coverage past 2027, is not measured and stays open); no deploy cell is needed for 2026-2027 holidays. Row W94-S1 accepted (mdpf-daily-trigger and mdpf-freshness-checker hold a hand-typed NYSE_HOLIDAYS set of their own; not vendored copies; a round-15 measure candidate).</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>

@@ -167,7 +167,7 @@ Report once: the diff (one line per file), the output line of every criterion, t
 - **Pre-cut dry run (base box/dell1 @388e5e5e9b):** AC1 6 of 14 (A1, A2, A4, A11, A13, A14 are controls), AC2 4 of 5 (S2-S5 controls), AC3 2 of 6 (K1, K3 controls). Reference tree 14/5/6; the reference tree simulates the missing carrier by appending the block the generator must emit. `worker-light` was considered and refused: the cell is about 90 product lines but the thirteen-mutant test arm wants care; class `worker`.
 - **Fanout:** one cell, one chain, slot ~28, no edge to the other two cells. Base box/dell1.
 
-<status>pending</status>
+<status>complete</status>
 <round>9</round>
 <to_id>MDPF_CANON.TO-CN-q-1</to_id>
 <slot>~28</slot>

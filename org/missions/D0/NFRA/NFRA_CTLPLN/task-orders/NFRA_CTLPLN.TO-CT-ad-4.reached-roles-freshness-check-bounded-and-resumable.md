@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~95</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run: CHECK-FRESH-BOUNDED arms=5/5 ok=True and the offline ROLE-CENSUS line unchanged (175 of 175 roles, ok=True); proof instance VALID on the committed state. Tested only with an injected fake; no AWS call, and the real --check-fresh was not run against the account. Slices run sequentially, so a full check takes longer than the parallel take(); the bound is the point. Rows W95-S1 (the checkpoint file name is covered by no ignore rule, INERT: a stray checkpoint could be staged; a round-15 item with the ignore files) and W95-S2 (Python 3.11 not installed, 3.12.10 used) accepted. The UNREAD-role path in the checkpoint is read from code, no arm exercises it (declared).</status_reason>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>

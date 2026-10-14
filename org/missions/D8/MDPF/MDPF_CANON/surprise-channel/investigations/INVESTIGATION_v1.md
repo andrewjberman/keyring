@@ -2164,6 +2164,32 @@
 
 ```json
 {
+  "id": "MDPF_CANON-D1-W28-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~28",
+  "surfaced_at": "2026-10-14T21:42:39Z",
+  "one_line": "CN-q-1 commit refused by the LGIC naming limb: the new edge module infra/aws/lambda-edge/auth-validator-edge/mdpf_gate.mjs carries the firm names 49financial, inflection and cottonwood as literals (lines 40-42), refused as hand-kept carriers outside every permitted context; nothing committed on wk-MDPF_CANON-28; the three criteria pass on the uncommitted worktree.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh rc=1 at HEAD 0e60da2afb for infra/aws/lambda-edge/auth-validator-edge/{mdpf_gate.mjs,index.mjs,tests/mdpf_gate.spec.mjs}: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.'",
+      "[naming-gate] NAMING REFUSE mdpf_gate.mjs:40 49financial -> lookup('49financial'); :41 inflection -> lookup('inflection'); :42 cottonwood -> lookup('cottonwood'); NAMING-GATE: REFUSE 3 graded (DENOMINATOR 3 path(s))",
+      "git status after the refusal: index.mjs M (unstaged, 18 insertions), mdpf_gate.mjs and tests/mdpf_gate.spec.mjs untracked, git diff --cached empty",
+      "harness r9_cn_q_1.py on the worktree (uncommitted): handler 14 of 14 arms exit=0; seam 5 of 5 arms exit=0; control 5 of 5 arms exit=0"
+    ]
+  },
+  "spec_asserts": "Order CN-q-1 worker face: step 1 says mdpf_gate.mjs may copy the issuer reference verbatim and imports nothing; the firm map (49financial, inflection, cottonwood, demo to global) is the page's own map and is written as literal strings; section 3 grants write on exactly the three product files. No clause names a naming-gate lookup or a registry row.",
+  "world_is": "The LGIC naming limb (ENFORCE) refuses the three firm-name literals in the new edge module and refuses the commit. The route its message names, lookup(), is the Python naming library, which the import-nothing .mjs edge module cannot call; a registry row or an R20 register entry lies outside the order's paths. The worker did not edit the gate, bypass it, or rename the literals.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Left ARMED by this row: the leak S27 (MDPF_CANON-D1-S27, disarm 1.0.0_SA_CTO~DELL1), which this cell closes once it lands. This row does not change S27's standing."
+}
+```
+
+```json
+{
   "id": "MDPF_CANON-D1-W25-S1",
   "project": "MDPF_CANON",
   "fabric": "dell1",

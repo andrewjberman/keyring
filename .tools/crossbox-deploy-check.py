@@ -13,7 +13,9 @@ the laptop -- only when there is an open call, a potential project overlap, or a
   OPEN-CALL    an unfinished cross-box call (org/devices/crossbox/*.json, state OPEN or ACKED) or an open_calls row
                (org/devices/state/*/open_calls.json) that names this root by its PATH (infra/aws/terraform/<root> or
                <root>/), by a root named in its own roots field, or a project whose write set covers the root. A bare
-               name in free text is NOT a match (CTO ruling on D2-S32; cell CT-ab-5). Line: OPEN-CALL calls_scanned= matched=.
+               name in free text is NOT a match (CTO ruling on D2-S32; cell CT-ab-5). An open_calls row of kind act (an act
+               only Andrew can do) matches ONLY through the roots its own roots field names, so an act row with no roots matches
+               none (CTO ruling on NFRA_CTLPLN D2-S3). Line: OPEN-CALL calls_scanned= matched=.
   OVERLAP      a live project placed on ANOTHER box (project.json `placement`, else its `fabric` box) whose write set shares
                a path with the root -- .tools/placement-check.py's own read_projects() and overlaps(), imported.
   UPSET        a live deploy notice (org/devices/deploy_notices/<id>.json) that names the root: rule "no-apply" hits any
@@ -186,6 +188,12 @@ def projects_covering(pc, dev, reg, rel: str, files=None) -> tuple:
     return out, findings
 
 
+def is_act_row(row) -> bool:
+    """An open_calls row of kind act (an act only Andrew can do), compared on the stripped, case-folded value. A row with no
+    kind, or kind fork, is not one: it keeps every match rule."""
+    return isinstance(row, dict) and str(row.get("kind", "")).strip().lower() == "act"
+
+
 def measure_open_call(repo_root, rel, covering, now, files=None) -> tuple:
     """files None, or a Terraform root: a live call or row hits when its text names the root or a covering project. A
     non-Terraform root in FILES MODE: it hits only when it names a carried file or a project covering one (MDPF_SECCLASS
@@ -241,8 +249,13 @@ def measure_open_call(repo_root, rel, covering, now, files=None) -> tuple:
                 scanned += 1
                 if str(row.get("state", "")).upper() in CLOSED_WORDS:
                     continue
-                why = (roots_field_hit(row, rel) if not narrow else "") or project_field_hit(row, codes) \
-                    or mentions(json.dumps(row), pats)
+                if is_act_row(row):
+                    # CTO ruling (NFRA_CTLPLN D2-S3): an act row matches only through the roots its own roots field names.
+                    hit = roots_field_hit(row, rel)
+                    why = ("act row " + hit) if hit else ""
+                else:
+                    why = (roots_field_hit(row, rel) if not narrow else "") or project_field_hit(row, codes) \
+                        or mentions(json.dumps(row), pats)
                 if why:
                     hits.append("%s row %s %s" % (name, row.get("id", "?"), why))
                     lines.append("  HIT %s" % hits[-1])

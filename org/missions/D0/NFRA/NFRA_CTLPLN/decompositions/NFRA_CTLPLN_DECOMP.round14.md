@@ -33,3 +33,7 @@
 ## Dependency chains and fan-out
 
 Five chains, no dependency among them. `fanout: 5 of 5 chains, cap 8, reason: five laptop worker cells with disjoint write sets and no shared dependency`
+
+## Amendment 1 (2026-10-14 ~22:1xZ, issuer 2.0.0_SA_COO~C; gate limb: none graded this modification, no cell and no criterion changed)
+
+`W89-S3` is ROUTED by the CTO (msg 109260, reply to the issuer's withhold) to `ADVI_FIRMBKTS` (dell1): appending `fence_scoped_allow_statements` on the lgic firm buckets rides the same never-widen apply as the trade-form exemptions (`org/tier1_exec/1.0.0_SA_CTO/deliverables/RULING_20261014_195xZ_TCKT_TRADE_FORM_FIRM_BUCKET_ACCESS_ROUTE.md`), because the scoped rows need their matching Allow statements or the ticket API stays refused on inflection and cottonwood. It is not a CTLPLN cell; the CTO reads the row as routed. Nothing else in this document changes.

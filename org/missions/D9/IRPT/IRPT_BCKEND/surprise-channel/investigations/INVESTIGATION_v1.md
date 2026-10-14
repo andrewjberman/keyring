@@ -35052,3 +35052,82 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. DISARM D2-W384-S1 (the pin's bundle closure lacked opal_unidentified.py): the closure now holds it on the new pin b1d354cfc9, every .py closure member imports under python -I from each firm's built bundle, and the differential was re-run on the built bundles (IB-pr-540 and IB-pr-541). D2-W385-S1 (the pin commit refused by the TO issuance gate): RESOLVED, my order's design: the issuer made the pin commit with an audited suite-gate bypass (three unrelated tests red on trunk too). D2-W385-S2 (SHA256SUMS counted in bundle_delta): INERT, the generated index changes by one line with the added member. D2-W386-S1 (the live bundles lack the matcher and unidentified modules): INERT, expected from the evidence. D2-W386-S2 (the live and built served readers differ in shape, each gate runs on its own code's reader against one captured index): INERT, recorded. D2-W386-S3 (python -I writes __pycache__ despite PYTHONDONTWRITEBYTECODE): INERT, scratch only. D2-W387-S1, S2, S3 (the four reverts conflict at the new pin: later commits touch the same hunks; at the new pin the multi_asset line is already replaced by the CUSIP port): RESOLVED by IB-pr-542 AMENDMENT 1 (my order's design). D2-W387-S4 and S5 (the amendment applied; a CRLF write slip caught by the byte-level diff and redone): INERT. D2-W387-S6 (232 of 236 beyond-rule nodes removed by the CUSIP fallback toggle alone, 0 by the others, 4 unattributed because the signed cash rule overdetermines their asset_class change): the STOP, carried to the CTO with the recommendation of one combined toggle; hazard INERT (nothing minted), LOAD-BEARING for the release."
 }
 ```
+
+## IRPT_BCKEND-D2-W392-S1 -- OBSERVATION: the 45 blanked Cottonwood nodes carry CUSIP display symbols, not ticker-shaped symbols
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W392-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~392",
+  "surfaced_at": "2026-10-14T22:14:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's cell text asks for each of the 45 blanked nodes' ticker-shaped symbol; the display symbol on every one of them is a nine-character CUSIP identifier, carried under a CUSIP security_id namespace.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~392/IB197-4_cusip_sub_class_read.json causes[0].securities_public_symbols: 44 distinct nine-character CUSIP values for the 45 nodes",
+      "scratch comparison of the built and live snapshots at the pin's bundle: security_id namespace CUSIP on 45 of 45 blanked nodes; display symbol equal to the security_id value on 45 of 45"
+    ]
+  },
+  "spec_asserts": "Cell IB-pr-547: for each of the 45 nodes, keep the node's public ticker-shaped symbol and its asset class.",
+  "world_is": "No ticker-shaped symbol exists on these 45 nodes; the display symbol is the CUSIP of the security. The symbols are public security identifiers and are recorded as such in the read's causes list. No account, node identifier or holding name is recorded.",
+  "notes": "Form only: the read proceeded with the CUSIP symbols as the public security identifiers the causes list names."
+}
+```
+
+## IRPT_BCKEND-D2-W392-S2 -- OBSERVATION: the CUSIP-keyed canonical rows behind the 45 blanked values carry no sub_asset_class and name one writer
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W392-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~392",
+  "surfaced_at": "2026-10-14T22:14:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "The CUSIP-keyed canonical rows that the port's branch reads for the 45 nodes have no sub_asset_class key, and all 45 were last updated by one named writer; any release of the port blanks these values until the rows or the branch change.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scratch read of the canonical table by the 45 CUSIP keys through the pin's classifier: identifier_namespace CUSIP on 45 of 45, classified_by scheduled on 45 of 45, updated_by mdpf-secclass-clean-names-v2 on 45 of 45, sub_asset_class key present on 0 of 45",
+      "trace of classify_security at the pin on the 45 nodes: symbol lookup miss then CUSIP lookup hit on 45 of 45; the served sub-class is None on 45 of 45 (holdings_snapshot.py:993)"
+    ]
+  },
+  "spec_asserts": "Cell IB-pr-547 and the port's own release: the port follows as its own release after this READ, and the sub-class the port serves for a CUSIP-keyed security comes from the row it reaches.",
+  "world_is": "The CUSIP branch returns the row without a sub-class for these 45 keys; the row's writer is the named scheduled writer mdpf-secclass-clean-names-v2, whose source was not read in this order. The hazard is ARMED because a release of the port carries the blank into the served holdings snapshot on the next build.",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "notes": "Disarm condition for the issuer: the option is ruled by the CTO and the port's release carries the chosen option (keep the prior sub-class, a documented correction, or a backfill of the rows). Recorded for the issuer; no disarm is made by this worker."
+}
+```
+
+## IRPT_BCKEND-D2-W392-S3 -- OBSERVATION: the classifier's canonical-table reads are DynamoDB get_item calls outside the stated read surface
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W392-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~392",
+  "surfaced_at": "2026-10-14T22:14:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The trace read the canonical classification table by DynamoDB get_item through the classifier object the harness's build already uses; the harness's read wrapper covers S3 only, so these reads were not on the order's stated read surface.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pin infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py lines 60-84: get_classification calls table.get_item only; no write method is called on this path",
+      "the trace made 90 canonical lookups on the 45 nodes (symbol and CUSIP key per node), all get_item reads; the two snapshot builds made further per-node lookups that were not counted"
+    ]
+  },
+  "spec_asserts": "Bounds: the only AWS calls are s3api get-object on live bundle keys by version id and the harness's get and list reads with the worker's identity.",
+  "world_is": "The classifier reads the canonical table through a DynamoDB resource, which is not wrapped by the harness's S3 read wrapper; the reads are get_item only and none writes. The order's bound did not name this read path.",
+  "notes": "Form only: no write, invoke or send was made on this path. Counted here so the read surface is on the record."
+}
+```
