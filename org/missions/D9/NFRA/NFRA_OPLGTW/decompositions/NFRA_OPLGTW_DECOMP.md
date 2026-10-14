@@ -2212,3 +2212,18 @@ Releases queue behind `OG-ap-18` in the order ap-19, ap-20, ap-21, then `OG-ap-1
 **G2 order of cells (CTO msgs 34176 and the Andrew-direct 49F decision, PRD v3.6 @6d6702425a).** Schwab first (its gateway-trusted role exists; resolve source = the distinct account ids in Schwab silver, last-4 over them, candidates, deduped across the overlapping masters), then 49F Black Diamond (reads `opal-data-bd/silver/` through its own scoped role and ask, CRO's G2f; increment versus snapshot measured first; `assets` and `transactions_enriched` answer with their lag stated), then Orion/Inflection (Eclipse after Z-S117), BD Cottonwood, SmartX (row filter), Commonwealth; each of the last four with one prefix-conditioned role and one ask. Gateway code types no S3 key: each adapter reads its key from its DATA_CATALOG row (CTO msg 34173).
 
 **Rival funds (G5r, v3.7).** Build order: after the Friday set and ahead of the remaining G2 vendors (after Schwab and 49F Black Diamond). Cells are cut when the rival catalog rows exist (gateway code types no S3 key).
+
+## ADDENDUM R3-T.53 (2.0.0_SA_COO~O, 2026-10-14 ~20:0xZ) -- round 37, workstream G1-FIX: two defects found at the OG-ap-18 Phase B GO (FWD-22)
+
+**The finding (measured, not inferred).** `app/harvest_identity.py:86` and `app/news_typed.py:24` set `_REPO_ROOT = Path(__file__).resolve().parents[5]`. On the host the
+file is `/opt/opal-gateway/app/<module>.py`, which has 4 parents, so `parents[5]` raises `IndexError` AT IMPORT, and `tools.py` imports `harvest_identity`: the
+service would not start. The release `4275edccad` (all three halves signed) is therefore NOT deployable as cut. The GO was withheld by a HOLD to `~Z` before any
+act. The same finding explains Z-S125 (`lib/` is absent from `/opt/opal-gateway`). OG-ap-18 re-cuts on the fix; its three halves re-sign at the new `release_sha`.
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-gt-8` | (1) both modules resolve the calendar's root WITHOUT a fixed-depth parent index: the artifact root (the app dir's parent, where the deploy stages `lib/`), then each ancestor in turn, the first holding `lib/trading_calendar.py`; absent -> the existing reported degradation. (2) `deploy-to-ec2.sh` stages `lib/trading_calendar.py` from the repo into the artifact as `lib/` (fail closed if the source is missing) and the tar names it. (3) a host-shaped import test | `app/harvest_identity.py`, `app/news_typed.py`, `deploy-to-ec2.sh`, `tests/test_og_gt8.py` | WORLD | ~87 | none |
+| `OG-gt-9` | `harvest_search_articles` reads the gold `article_sentiment` partitions only from the earliest `fetched_at` day of the page onward (a sentiment row cannot predate its article's fetch; the premise is MEASURED on the real bucket and its violation count printed), so a 7-day window reads a few partitions, not all. The denominator states partitions read of partitions total | `app/harvest_press.py`, `tests/test_og_gt9.py` | WORLD | ~88 | none |
+| `OG-ap-18` (re-cut) | the applier re-cuts the release on the live ref with gt-8 and gt-9 merged; the three halves re-sign at the new `release_sha`; Phase B reads `harvest_search_articles` through the public endpoint (CVO condition: ALB idle timeout 60 s) | applier | WORLD | ~AE | gt-8, gt-9 |
+
+**Chains.** gt-8 and gt-9 are independent (disjoint write sets). **fanout:** 2 of 2 chains, cap 8. Nothing here edits a shared file; the hookup is already merged.
