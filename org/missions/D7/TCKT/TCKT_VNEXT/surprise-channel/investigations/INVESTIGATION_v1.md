@@ -2621,3 +2621,59 @@ used as fixtures is a different read with a different denominator.
   "notes": "The order's sentence is read as the member set, not as a widening of the analysis interface. The CVO may rule the shape differently."
 }
 ```
+
+```json
+{
+ "id": "TCKT_VNEXT-D2-W43-S1",
+ "project": "TCKT_VNEXT",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_TCKT_VNEXT~43",
+ "surfaced_at": "2026-10-14T19:27:46Z",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~V2",
+ "one_line": "TO-R18-TR1 cannot name one bucket: doctrine tier state (R21) homes the ticket attachment per firm, so the three served firms resolve to three buckets and the ticket Lambda's single TICKET_ATTACH_BUCKET cannot serve the address. The order's BLOCKING branch applies; no address, key template or checker is written.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D7/TCKT/TCKT_VNEXT/task-orders/TCKT_VNEXT.TO-R18-TR1.ticket-attachment-address-from-the-naming-builder.md:33-44 (cell R18-tf-1: per-firm bucket is a BLOCKING stop; the Lambda uses ONE bucket)",
+   "infra/logic/02_DOCTRINE.md:588-597 (R21: per-request intake, keyed by request, is state, never inside a tier plane; state lives in the bucket whose tenancy it belongs to)",
+   "infra/logic/02_DOCTRINE.md:360-365 (R4: opal-data-assets is for client/partner custodial information) and :439-441 (R9: bronze is raw, untouched vendor bytes) -- bronze is not the class of a per-request ticket upload",
+   "infra/logic/registry/tiers.json homes.FIRM.state = {home: scope, rule: R21} -- scope bucket per firm",
+   "lib/opal_naming.py address() in worktree HEAD ba9347065b, run by this worker on 2026-10-14 after 19:27Z: state 49financial -> s3://opal-data-49financial/portal/49financial/state/ticket-attachments/trade-form ; state inflection -> s3://opal-data-inflection/portal/inflection/state/ticket-attachments/trade-form ; state cottonwood -> s3://opal-data-cottonwood/portal/cottonwood/state/ticket-attachments/trade-form",
+   "same probe at tier bronze -> s3://opal-data-assets/portal/<firm>/bronze/ticket-attachments/trade-form for all three firms (one bucket, reached by choosing bronze; rejected as the convenience choice the cell forbids)"
+  ]
+ },
+ "spec_asserts": "TO-R18-TR1 step 1: decide the tier by the doctrine, not by convenience; the ticket Lambda uses ONE bucket for every firm, so the tier must resolve to the same bucket for all three served firms; if the doctrine tier resolves to a bucket per firm, STOP, file a BLOCKING row naming the tier, the three buckets and the rule, and do nothing else.",
+ "world_is": "The doctrine tier for a non-holdings ticket attachment is state (R21, per-request intake keyed by request; the attachment is keyed by the ticket). state homes per firm (tiers.json FIRM.state, scope). The three buckets are opal-data-49financial, opal-data-inflection and opal-data-cottonwood. Under the order's own branch no address, key_template, ATTACH_ADDRESS.json, address_check.py or mutant_check.py is written, and TO-R18-TR2 and TO-R18-TR3 cannot take a single TICKET_ATTACH_BUCKET from this order as written.",
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "ARMED because TO-R18-TR3 writes the Lambda environment from the file this order would produce; left alone, TR3 either carries a hand-typed bucket or a wrong single bucket. Disarm owner is the issuer, who must re-cut the attachment design (one bucket by a new registry decision, or a per-firm env) or confirm the tier. Nothing created in AWS; no registry row added (the builder did not refuse; the blocker is the tier, not a missing row). Not a decision on which tier is right; the rule text is quoted at the cited lines for the CTO or CVO to read."
+}
+```
+
+```json
+{
+ "id": "TCKT_VNEXT-D2-W43-S2",
+ "project": "TCKT_VNEXT",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_TCKT_VNEXT~43",
+ "surfaced_at": "2026-10-14T19:57:06Z",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~V2",
+ "one_line": "TO-R18-TR3 cannot be committed as written: the naming gate refuses the attachment key template because the table segment ticket-attachments is not snake_case (NAMING_SCHEMA key.table_case), though address() printed it without refusal; the issuer must decide the table name in TO-R18-TR1.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python .tools/naming-gate.py (safe-commit of the TR3 source staged on top of a8a40f308b, ENFORCE): NAMING REFUSE infra/aws/terraform/ticket-center/main.tf:321 portal/{firm}/state/ticket-attachments/trade-form/ -> portal/{firm}/state/ticket_attachments/trade-form/ (NEW and OUT-OF-PATTERN as S3Key); commit aborted, log at .scratch/tr3_commit.log in the worktree",
+   "org/standards/NAMING_SCHEMA.json key.table_case (line 49 of the file, @worktree HEAD 2e0b4b59f8 and later): snake_case; kebab-case binds only NEW served platinum leaves (.json)",
+   "lib/opal_naming.py address(portal, 49financial, state, ticket-attachments, trade-form) returned s3://opal-data-49financial/portal/49financial/state/ticket-attachments/trade-form with no refusal (TO-R18-TR1 ATTACH_ADDRESS.json, commit 2e0b4b59f8)",
+   "same gate run also REFUSES: line 223 IAM policy name opal-ticket-attachments-trade-form (owed suffix -policy), lines 232-234 the three firm ARN literals (hand-kept carriers outside the lookup() context)"
+  ]
+ },
+ "spec_asserts": "TO-R18-TR1 step 4 and TO-R18-TR3 steps 2 and 3: the key template is builder output copied as a literal (rule 30, every S3 address is lib/opal_naming.py address() output), and the permission names one ARN per firm from that record.",
+ "world_is": "The builder printed a table segment (ticket-attachments) that NAMING_SCHEMA key.table_case does not admit (snake_case), and it did not refuse it. The commit-time naming gate grades the key canonically and refuses the template and the three ARNs built on it. TR3 source cannot land as the cell is written. Its fix is a table-name decision (re-run address() with a snake_case table, which changes ATTACH_ADDRESS.json and every template), owned by the issuer, not a hand-typed workaround.",
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "Filed by the worker on TO-R18-TR3 (AMENDMENT 1 record). The order is left pending and its source is NOT committed: the working-tree edits to infra/aws/terraform/ticket-center/main.tf, the TR3 checkers, R18_TR3_RECORD.json and the instance are uncommitted in the worktree. No bypass of the naming gate was attempted. The TR2 meeting change and the TR1 record are unaffected."
+}
+```
