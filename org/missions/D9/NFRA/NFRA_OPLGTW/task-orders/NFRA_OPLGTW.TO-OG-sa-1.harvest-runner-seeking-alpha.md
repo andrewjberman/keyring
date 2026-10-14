@@ -32,6 +32,12 @@ Live today (CTO read ~20:3xZ, issuer read 20:4xZ): the task "Opal Data Harvest -
    is copied from that profile into the runner's. The runner's profile carrying no login is a person act (a sign-in), not yours.
 2. **If ACCESS_REFUSED: STOP.** Change nothing on the runner. Write `W/SA1_PROOF.json` = `{"branch": "refused", "runner_changed": false}`, file an OBSERVATION row naming the status, and report once: the renewal is Andrew's act and
    no capture runs against a refusing account. No ledger is opened on this branch.
+2b. **If the ACCOUNT half holds (a 2xx) and only `runner_profile_login` is false (CTO ruling, msg 34240, A2):** do not stop; try the profile copy before any new login is asked of Andrew.
+   (i) Copy the previous `SA1_ACCESS.json` to `W/SA1_ACCESS_BEFORE.json`. (ii) Stop the runner by its STOP file at a cycle boundary. (iii) Back up the runner's empty SA profile
+   (`<pin>/.runtime/opal-data-harvest/browser-profiles/sa`) to a sibling folder on THIS box, then copy the main tree's SA browser profile into it. NEVER copy the profile off this box and NEVER commit it or any cookie value.
+   (iv) Read the cookie NAMES: the `user_id` cookie count in the runner's profile must be 1 or more, and make ONE authenticated read through the RUNNER's profile (the same account call as step 1). (v) Re-read the main tree's profile the same way.
+   (vi) If both sessions hold (200 from each), rewrite `W/SA1_ACCESS.json` with the runner-profile read (`http_status` 200, `runner_profile_login` true, `outcome` ACCESS_HOLDS, `reason` saying the copy worked) and go to step 3 (the runner is already stopped at the boundary).
+   (vii) If SA invalidated either session, or any read fails: restore the runner's backup, restart the runner as it was (Running, bbg wsj barrons), rewrite `SA1_ACCESS.json` as ACCESS_REFUSED with the reason, write `W/SA1_PROOF.json` = `{"branch": "refused", "runner_changed": false}`, and report: the sign-in is then Andrew's act and the CTO lists it.
 3. **If ACCESS_HOLDS:** open ledger `nfra-oplgtw-harvest-runner-sa`, entry AND sentinel first. Read `install-cycle-schedule.ps1 -Plan` with `-Publishers bbg,wsj,barrons,sa -Windowless -RefreshOnce` and the current state dir and runtime root
    (unchanged: the live task's `--state-dir` and `--runtime-root` arguments). Stop the runner by its own STOP file at a cycle boundary (zero pairs lost, as bz-10 proved), then re-register through
    `install-cycle-schedule.ps1 -Publishers bbg,wsj,barrons,sa -Windowless -RefreshOnce`. Wait for the task to be Running. Rollback: re-register with `-Publishers bbg,wsj,barrons`.
@@ -87,7 +93,11 @@ A refused-access outcome is a complete order with branch "refused": say so in th
   Ruled: the one allowed request goes through the main tree's SA profile and reads the account state; the outcome needs the runner profile's login as well (a sign-in is Andrew's act, routed by the issuer to the CTO). `SA1_ACCESS.json` gains `runner_profile_login`
   and `reason`; `http_status` may be null. sa1.AC1 reads the new consistency rule. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>complete</status>
+
+- A2 (issuer, 2026-10-14 ~22:1xZ, CTO ruling msg 34240 on the refused result of A1): step 2b added. The account holds (HTTP 200) and the main tree's SA profile is signed in, so a profile copy is tried before Andrew is asked for a new login. The order is reopened to pending; the GO is a message citing this order.
+  Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
+<status>pending</status>
 <round>37</round>
 <workstream>G1-FIX2</workstream>
 <slot>~AE</slot>
