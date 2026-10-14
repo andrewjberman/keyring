@@ -3,13 +3,13 @@
   "project": "NFRA_MCPORTAL",
   "directive": "D6",
   "fabric": "site-z",
-  "prd_version": "v0.7",
+  "prd_version": "v0.8",
   "step": 4,
   "brief_ref": "docs/briefs/mcportal-tech-ops-dashboard-brief-20260917.md@8d1f5c362b",
   "endpoint_outcomes": [
     "FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7",
     "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13",
-    "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"
+    "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22"
   ],
   "status": "DRAFT"
 }
@@ -207,6 +207,39 @@ and ACCEPT are verbatim, and SOURCE lines are dropped.
                     (C15); each lists its tools and catalog indexes (`refs/DATA_CATALOG.yaml`); each
                     shows the principals holding an active grant on it now, read from the entitlement
                     and grant stores (C4); a channel with no grant reads "no one", never blank
+
+  FWD-21 Andrew picks a person and sees, then changes, what that person reaches through the gateway:
+         channels, tools on each, tier, and each tool's history depth and poll cadence (v0.8)
+         DONE WHEN  EXERCISED -- on a test principal, one channel switched off and back on, one tool
+                    switched off and back on, and the person stopped and restored, each from the page;
+                    each change is read back from the grant store and honoured on that person's next
+                    gateway call; then the same per-person view read for one real person and checked
+                    against the stores it reads
+         ACCEPT     the per-person view lists Andrew, every staff principal and the Bloomberg account
+                    (opalbloomberg@opalinvest.com) like any other person; each channel shows its tools,
+                    each tool its history depth and poll cadence with their claims (NFRA_OPLGTW FWD-20
+                    and NFRA_MCPINDEX FWD-20 supply them; "absent" said, never blank); every write goes
+                    through the one grant writer (C18) and lands in the change history (FWD-4) with
+                    before and after; writes are Andrew's only (C2); the stop is FWD-10's control,
+                    pulled forward
+         SOURCE     Andrew's site Z memo 2026-10-13: "All that needs to be visible and controlled through
+                    MC Portal ... this way we have one master control panel"; direction
+                    XB-20261013T185926Z-4d72 Z2
+
+  FWD-22 Andrew reads, per box, the Claude account each Claude Code login is signed in to and how
+         much of its 5-hour and weekly limits remain (v0.8)
+         DONE WHEN  EXERCISED -- Andrew reads all four boxes' accounts and remaining limits on the
+                    control-plane page without asking any agent
+         ACCEPT     per box and per login: the account's email, plan and organization from the box's
+                    own login record, never a token; 5-hour and weekly remaining, each with its reset
+                    time and claim (MEASURED or ABSENT with its reason, never a guess or a stale copy);
+                    each figure's age. Display only: no alert or notification (standing moratorium).
+                    The first cell is a READ of where Claude Code or the account exposes the limits,
+                    before anything is built
+         SOURCE     Andrew-direct 2026-10-13 ~20:4xZ (dell2): "i want the mcp.opalinvest.dev/control-plane
+                    function to include the logged in account + usage remaining on 5hr and weekly basis
+                    by box"; record ANDREW_DIRECT_20261013_204xZ_CONTROL_PLANE_SHOWS_CLAUDE_ACCOUNT_AND_
+                    USAGE_PER_BOX.md; row Z-S47
 
 ## CONTRACTS
 
@@ -543,3 +576,36 @@ anything for FWD-20.
 
 **Sign-off.** ENDPOINT changes, so the ratified-text half re-opens for `3.0.0_SA_CVO~Z`. The brief half is Andrew's own word
 recorded verbatim (PROPORTIONATE SIGN-OFF).
+
+### v0.8 addendum (2026-10-14 ~02:5xZ, 1.0.0_SA_CTO~Z) -- FWD-21 control and depth per person; FWD-22 Claude account and usage per box; CONTRACT C18
+
+**Input.**
+- Andrew's site Z memo 2026-10-13, verbatim in `org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_SITEZ_20261013.md`
+  section 1.1 (direction Z2: write FWD-21 after FWD-20 ships; FWD-20 shipped as MP-z-5 @64b3e54658).
+- Andrew-direct ~20:4xZ at dell2, carried by XB-20261013T202846Z-111f, row Z-S47.
+- The laptop CTO's ruling @f469cb665f: yes to control; writes stay Andrew-only.
+
+**Endpoint.** FWD-21 and FWD-22 are ADDED. FWD-21 composes FWD-1 (one colleague's access changed from the page) and
+FWD-10's stop, pulled forward. FWD-3 to FWD-13 not named here stay deferred behind FWD-21.
+
+**C18 -- One writer for per-person tool, channel and tier access: the grant store.**
+- **Today:** tool and tier admission lives in two deploy-time files (`identity_tool_allowlist.txt`, and the rosters in
+  `deploy-to-ec2.sh`), which change only by a gateway release. The data grants live in `gateway-access-state-table`,
+  written by the existing grant writer.
+- **The choice:** a per-person tool, channel or tier change is a NEW record kind in the SAME grant store, written by the
+  SAME grant writer, and honoured on the next call. It is not a release raised from the panel.
+  - The reason is Andrew's stated need: "otherwise it's just too difficult to operate in the fast moving environment".
+  - A release per edit is the slow path his words rule out.
+- **The deploy-time files stay as the FLOOR.** A store record can narrow what the floor admits for a person. It widens
+  beyond the floor only for a tool the floor already lists for some principal, never for a tool the deployed gateway
+  does not serve.
+- **Rollback per change:** the FWD-4 change history's before/after, re-written through the same writer.
+- **Rollback of the mechanism:** delete the new record kind, and the floor governs exactly as today.
+- **No new resource name is typed:** any new store key or name is `lib/opal_naming.py` output (rule 30).
+
+**Order.** FWD-21 first, then FWD-22. FWD-22's first cell is a read only. Both start after Andrew's FWD-20 sitting is
+listed; neither waits on it.
+
+**Sign-off.** ENDPOINT and CONTRACTS change, so the ratified-text half re-opens for `3.0.0_SA_CVO~Z`. The brief half is
+the CRO's site Z alignment report on Andrew's memo plus the 204xZ record, accepted as written (rule 27, PROPORTIONATE
+SIGN-OFF).
