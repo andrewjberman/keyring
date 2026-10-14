@@ -48,13 +48,13 @@ The page's adapter (`portal/src/pages/Positioning/shared/etfAdapter.ts`, `toCurr
 
 <criterion id="SH6-t25-AC2" cell_refs="SH-t-25"><invocation>cd C:/dev/wk-MDPF_SECHIST-24 &amp;&amp; timeout 590 bash "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round103_prep/checks/r103_feature_green_v2.sh" "C:/dev/wk-MDPF_SECHIST-24/portal" 6a5926fc11 | tail -2; echo "exit=${PIPESTATUS[0]}"</invocation><expect>R103 FEATURE GREEN: YES</expect></criterion>
 
-<criterion id="SH6-t25-AC3" cell_refs="SH-t-25"><invocation>cd C:/dev/wk-MDPF_SECHIST-24/portal &amp;&amp; python "C:/dev/wk-MDPF_SECHIST-24/org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round103_prep/checks/r103_feature_surface_check.py" --portal . --base 6a5926fc11 --head HEAD --receipt "C:/dev/wk-MDPF_SECHIST-24/org/missions/D8/MDPF/MDPF_SECHIST/deliverables/0.9.0_WK_MDPF_SECHIST~24/FEATURE_RECEIPT.md"; echo "exit=$?"</invocation><expect>R103 FEATURE SURFACE: YES</expect></criterion>
+<criterion id="SH6-t25-AC3" cell_refs="SH-t-25"><invocation>cd C:/dev/wk-MDPF_SECHIST-24 &amp;&amp; python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/R6_CHECKS/r6_portal_surface.py C:/dev/wk-MDPF_SECHIST-24/portal 6a5926fc11 HEAD; echo "exit=$?"</invocation><expect>PORTAL-SURFACE-OK files=7</expect></criterion>
 
 <criterion id="SH6-t25-AC4" cell_refs="SH-t-25" judgment="true"/>
 
 <expected_criteria>SH6-t25-AC1,SH6-t25-AC2,SH6-t25-AC3,SH6-t25-AC4</expected_criteria>
 
-AC1 FAILS at the base (the harness does not exist; once written it prints `NO`). AC2 and AC3 are read once at the base by the issuer only as far as the tools exist (the tools are the AMGT_RESAPP feature checks; they take the base ref as an argument). AC4 is the CVO's: the reading of the labelled cells and the note on the screenshot, not yours. Each invocation is bounded by its own `timeout`; set your shell tool's timeout to 600000 ms. For AC4 evidence only, you may produce one screenshot of the page against `frontierFixture.json` through `scripts/ui-smoke.mjs` if it runs without credentials; if it does not, say so in your report and move on.
+AC1 FAILS at the base (the harness does not exist; once written it prints `NO`). AC2 is the AMGT_RESAPP feature check (it takes the base ref as an argument). AC3 was AMENDED by the issuer after the first pass (worker row MDPF_SECHIST-D1-W24-S1: the AMGT surface checker `r103_feature_surface_check.py` accepts Security Analysis files only, so it cannot pass a Positioning feature); it is now `R6_CHECKS/r6_portal_surface.py`, which names the exact seven allowed paths and the four never-carried files; it FAILS at the base (`PORTAL-SURFACE-BAD ... missing=[...]`, 7 files missing) and PASSES at the candidate head. AC4 is the CVO's: the reading of the labelled cells and the note on the screenshot, not yours. Each invocation is bounded by its own `timeout`; set your shell tool's timeout to 600000 ms. For AC4 evidence only, you may produce one screenshot of the page against `frontierFixture.json` through `scripts/ui-smoke.mjs` if it runs without credentials; if it does not, say so in your report and move on.
 
 ### BOUNDS
 
