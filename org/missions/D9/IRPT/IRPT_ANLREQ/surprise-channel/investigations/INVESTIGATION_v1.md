@@ -12909,3 +12909,29 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S95 -- disarms W123-S2: the release-29 staging folder's concurrent writers were the round's own three builds, no collision
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S95",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T12:03:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W123-S2 (the release-29 staging folder had three concurrent writers and the builder's zip temp path is one fixed name per function): the three writers were the three round-39 build workers, each on a different package; the staged artifacts re-hash to what each worker reported.",
+  "spec_asserts": "W123-S2: C:/dev/irpt-release-r29 has other concurrent writers and the ci builder writes ${TMPDIR:-/tmp}/lambda-artifact-<function>.zip, one fixed path per function, so two builds of ONE function would collide.",
+  "world_is": "MEASURED 2026-10-14 ~11:35 to 12:00Z by this seat. The other writers were the issuer's own workers 124 (irpt-ycharts-generate) and 125 (the resident tarball), spawned in the same issuance; no two of the three builds were of one function (irpt-status, irpt-ycharts-generate, and the resident, which does not use the ci script's zip path), and worker 123 ran its builds under a private TMPDIR (C:/dev/irpt-release-r29/tmp-w123-release). All three artifacts were re-hashed by this seat after the drain: irpt-status-r29.zip c8da70e3..., irpt-resident-0485393f3a-r29.tar.gz 2de2adce..., irpt-ycharts-generate-r29.zip e5344565..., each equal to its worker's report and to the value its checker (y309-build, y311-build, y310-build) recomputes (Y309-BUILD-OK, Y311-BUILD-OK, Y310-BUILD-OK). The hazard was a collision between builds of one function; none occurred. For the next release of this shape the face names a private TMPDIR per slot (worker 123's form). W123-S1 (the map's last_deployed_commit does not reproduce the live zip) is not disarmed here: it is the applier's, closed by the applier's map close commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ar21_checks.py y309-build, y310-build and y311-build re-run by this seat in the worker worktrees before the merges (Y309-BUILD-OK, Y310-BUILD-OK, Y311-BUILD-OK), proof-of-spec-check VALID on all three instances",
+      "sha256sum of the three staged artifacts in C:/dev/irpt-release-r29, read by this seat after the drain",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~123/r39/IRPT_STATUS_BUILD.json (artifact.built_from, TMPDIR private)"
+    ]
+  }
+}
+```
