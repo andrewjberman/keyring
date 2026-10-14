@@ -13297,3 +13297,33 @@
 ```
 
 ---
+## IRPT_ANLREQ-D2-W130-S1 -- the step-2 no-move control at the order's base 97d2d4bede reproduces the PREVIOUS live package, not the live one; rebuilt at 4279513f95 (the release-28 input) it reproduces the live package byte-identically (TO-AR-y-320, worker 0.9.0_WK_IRPT_ANLREQ~130)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W130-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~130",
+  "surfaced_at": "2026-10-14T14:41:42Z",
+  "one_line": "The no-move control at the TO's base 97d2d4bede builds CodeSha256 4sDK8P5..., which is the package live BEFORE release 28; the live CodeSha256 is C/Rt/FnSq..., built at 4279513f95, the release-28 input. Rebuilt at 4279513f95, the control reproduces the live zip byte-identically.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-320 step 2: rebuild the live package at the base named in the release-28 record (97d2d4bede), BUILD_ONLY with a private TMPDIR; its CodeSha256 must equal the live one and differs_from_live must be []; if it cannot be reproduced, STOP with a BLOCKING row.",
+  "world_is": "Live moved at release 28 (LastModified 2026-10-14T01:58:04Z, A_AFTER_R28a.txt) to the package built at trunk 4279513f95. At 97d2d4bede the same build command gives CodeSha256 4sDK8P5mtgodi1IkSfaFQZi1YgmJq6URLeypEcaULu8= and zip sha256 e2c0caf0... (31405 bytes), which is the previous version _EWULf4C. At 4279513f95 the same command gives CodeSha256 C/Rt/FnSqOj7SnZC1GeoEilj8jbCKdvAUHnxYrnNZNM=, zip sha256 0bf46dfc59d2a8e8fb4a7642d467a8122963f236c229dbc05079f162b9cd64d3 (34057 bytes), byte-identical to the live download; differs_from_live []. The order's base therefore no longer reproduces live; the control used for the record is the 4279513f95 rebuild, and the 97d2d4bede build is kept as a stated base control.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~130/r40/OPAL_TICKET_API_BUILD.json no_move_control and base_control_97d2d4bede @9e57944d19 (this worker's record: both builds, both digests, the comparator result)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r28/A_AFTER_R28a.txt lines 4-5 @83eb798a08 (live CodeSha256 C/Rt/FnSqOj7SnZC1GeoEilj8jbCKdvAUHnxYrnNZNM=, LastModified 2026-10-14T01:58:04.000+0000)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~115/r30/OPAL_TICKET_API_BUILD.json no_move_control (base 97d2d4bede, code_sha256 4sDK8P5mtgodi1IkSfaFQZi1YgmJq6URLeypEcaULu8=) @83eb798a08 (the pre-release-28 control this order inherited)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a block: the control reproduces the live bytes at 4279513f95, so the no-move gate of step 2 is met by that control and the release proceeds. For the issuer: a no-move control's base must be the commit that built the live bytes; after a release that base moves, and a base copied from an earlier record reproduces the old package. Nothing uploaded, applied, deployed or invoked; the AWS calls were read-only."
+}
+]
+```
+
+---
