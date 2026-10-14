@@ -5,10 +5,10 @@
  "project": "TCKT_VNEXT",
  "directive": "D7",
  "fabric": "dell2",
- "prd_version": "v0.4",
+ "prd_version": "v0.5",
  "step": 4,
  "brief_ref": "docs/briefs/d7-ticket-center-request-types-analysis-request-first-brief-20261007.md@750ec86588",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
  "status": "DRAFT"
 }
 ```
@@ -77,6 +77,22 @@ IRPT_YCDGEN's PRD. Each is cited in section 1.
          ACCEPT     an Opal person opens the request's ticket while it is still open and finds the report, the branded PDF with the commentary and the
                     advisor's original Excel there, without asking anyone; the attach is refused for another ticket type, a closed ticket and a human caller
          SOURCE     Andrew 2026-10-08 ~22:3xZ (ADDENDUM 2, C-PACKAGE)
+  FWD-10 An Opal person files a Trade Request in the Ticket Center by uploading the trade request form, and the ticket carries the form
+         DONE WHEN  EXERCISED -- on DEV, then PROD by 2026-10-24: a synthetic Opal staff user opens the Ticket Center, chooses Trade Request,
+                    chooses the firm, uploads the trade request form, and submits; the OPEN ticket carries the uploaded form as an attachment opened
+                    from the ticket page. Until the real form arrives (Andrew: "in the next week or so"), a placeholder form is named as such;
+                    the real form is a swap of that one file
+         ACCEPT     an Opal person opens the Trade Request ticket and opens the form from it; no trade is sent anywhere by the ticket
+         SOURCE     Andrew-direct 2026-10-14 ~17:3xZ ("the trade request which will be very simple. We simply need to upload a trade request
+                    form"); ~18:3xZ ("DELL2 has the capacity to manage it")
+
+  FWD-11 A Meeting Request filed in the Ticket Center goes to Opal's meeting coordinator, who confirms or reschedules it on the dashboard
+         DONE WHEN  EXERCISED -- on DEV, then PROD by 2026-10-24: a synthetic Opal staff user files a Meeting Request (who, purpose, proposed
+                    times); the OPEN ticket lands in the coordinator's queue; the coordinator confirms one time or proposes another on the
+                    ticket; the filer sees the outcome on the same ticket. In-house, no Calendly
+         ACCEPT     the coordinator works every meeting request from one queue and the filer reads confirmed or rescheduled on the ticket
+         SOURCE     Andrew-direct 2026-10-14 ~17:3xZ ("The meeting request will go through Jeanette at opalinvest.com ... she will be able to do
+                    something on the dashboard that provides confirmation or rescheduling ... We do not need to use Calendly")
 ```
 
 ## 1. What exists (the L4 reads; MEASURED unless marked)
@@ -271,5 +287,28 @@ project's PRD cites it.
   twin that is refused is rolled back at once. Each status is read from a parsed value.
 - **Not closed by this:** row D2-S46 (any holder of the invoke permission can be any caller): this narrows what a direct invoke
   can be, and does not close it.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 5 (2026-10-14 ~18:5xZ, `1.0.0_SA_CTO~DELL2`): the Trade Request and Meeting Request channels (FWD-10, FWD-11), due Oct 24 on dell2
+
+**Authority:** Andrew-direct ~17:3xZ, the "Deliverables" voice note, P2 "Ticket Center, all three channels ... by October 24th at the latest"
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_173xZ_DELIVERABLES_FOUR_PRIORITIES_AND_DATES.md`). And ~18:3xZ, call 2
+DECLINED: dell2 keeps all three channels, "it's all so connected, and DELL2 has the capacity to manage it"
+(`ANDREW_DIRECT_20261014_183xZ_FIVE_CALLS_ANSWERED_AND_BD_ASOF_CITATION.md`).
+
+1. **Two outcomes are added (above).** The Analysis Request remains IRPT_ANLREQ's (C-ABSORB e). This project keeps the non-analysis
+   types. FWD-7 (a second type without rebuilding) is served by FWD-10 and is graded on it. The ratified-text half re-opens on this
+   ENDPOINT change.
+2. **The Trade Request is an upload only.** The `trade_request` type exists in the ticket Lambda. The form is the attachment. No trade
+   engine submission is in scope: the engine path and its 409 "not a trade_request ticket" defect stay with NFRA_OPSWKF, which is on HOLD.
+   Its resume packet (`RESUME_PACKET_NFRA_OPSWKF_20261014.md`) is read first for the type's existing shape.
+3. **The Meeting Request is a new type with a coordinator queue.** The coordinator is the person Andrew named ("Jeanette at
+   opalinvest.com" in the machine transcript; the spelling is unconfirmed). This seat confirms the mailbox against the users table before
+   the type ships. If it is not found, it is one question to Andrew. Routing is the Ticket Center's own assignee and queue. **No new
+   email or notification sender is built** (the CLAUDE.md moratorium); a mail to the coordinator waits on Andrew's explicit ask.
+4. **The filer is Opal staff for now.** The Ticket Center is internal-only (Andrew ~15:2xZ). Firm choice follows IRPT_ANLREQ C-FIRM.
+5. **Driver:** `2.0.0_SA_COO~V2`, re-seated on TCKT_VNEXT for FWD-10 and FWD-11 (LIVE_ARMS, this seat). Each channel is ONE live journey
+   on DEV first, then PROD through merge-forward. Each is a client-facing candidate by class, so Andrew approves it.
 
 -- 1.0.0_SA_CTO~DELL2
