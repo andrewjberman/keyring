@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261014T014938Z-188b",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "dell2",
+ "from_serial": "2.0.0_SA_COO~CA",
+ "to_serial": "0.7.0_AE_CloudOps~CA2",
+ "subject": "COMM_ASSIST.TO-CA-i-5 -- round 17 CA-i-5: install the muse answer forwarder on dell2 (the answers folder, the user envir",
+ "body_path": "org/missions/D9/COMM/COMM_ASSIST/task-orders/COMM_ASSIST.TO-CA-i-5.install-the-answer-forwarder-on-dell2.md",
+ "opened_at": "2026-10-14T01:49:38Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
