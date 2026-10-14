@@ -12950,3 +12950,55 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker; the method was not adjusted. The CTO rules whether the household series over one account must reproduce the linked producer form (LARGE_FLOW days with carried days), or whether the account-return members of the report need the same endpoint form. Counts only: no household or account id and no client value is recorded."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W183-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~183",
+  "surfaced_at": "2026-10-14T22:32:18Z",
+  "one_line": "A household whose only table date is the as_of day has zero window days in since_inception: round 111 counts it not comparable, the round-112 checker recount counts it a figure over zero days, so the two tie-outs differ by one (2,563 against 2,564 none; 1,450 against 1,449 figures).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "DB-b-228 step 2 (the since_inception window is the household's days after its first date) and the round-112 checker's window rule (p112_household.py recount: n_wd and n_h over the window days); the round-111 tie-out HOUSEHOLD_TIEOUT_R111.json counts since_inception not_comparable 2,564 and households_compared 1,449, and the round-111 driver returns None for a household with no days in its window.",
+  "world_is": "The one household whose first table date is the as_of day (2026-10-13) has zero days in its since_inception window: n_wd and n_h are both zero, so the checker's rule counts it neither NONE nor INSUFFICIENT_HISTORY but a figure over zero days, giving since_inception households_none 2,563 and figure 1,450 against the round-111 2,564 and 1,449. The round-111 driver returns None for the same household. Measured by a count of first dates in the private table (one household on the as_of day, zero on the day before); no household id recorded.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r112/p112_household.py lines 236-245 at c33edfe326: n_wd and n_h over the window days, and the figure branch when neither a bad day nor a no-row day exists",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~179/dry_run_household_return_r111.py lines 93-96 at c33edfe326: household_cum returns None when the days list is empty",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~179/HOUSEHOLD_TIEOUT_R111.json windows.since_inception: not_comparable 2564, households_compared 1449",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~183/RD_HOUSEHOLD_NONE_CAUSE_R112.json windows.since_inception: households_none 2563 with the four kind counts; the worker's private measurement counts one first date on the as_of day"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker; the window rule was not adjusted and the record follows the checker's rule. The issuer rules the zero-day window: a figure over no days (the checker) or not comparable (round 111). Counts only: no household or account id and no client value is recorded."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W183-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~183",
+  "surfaced_at": "2026-10-14T22:37:29Z",
+  "one_line": "The commit-time client-data check did not run on dell2 for commit 85cb94a3a2: the hashed account-id list is absent at its default path, so safe-commit printed WARN and passed the commit unchecked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "DB-b-228 step 7 and the Bounds (no account or household id in the repo, a row or the report), with the commit gate of safe-commit.sh as the mechanism that checks a commit for client account ids before it lands; the worker's own scan of its content is not the gate.",
+  "world_is": "On this device the hashed account-id list is absent at its default path (the gate prints ABSENT at the user profile path and says absent is not empty; OPAL_ACCOUNT_ID_HASHES is not set for this run), so the client-data check printed WARN and the commit 85cb94a3a2 landed with the check not run. The commit holds counts, dates, words and one tracked script with no id literal; that is a worker reading, not the gate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output of commit 85cb94a3a2 (worker log under the worktree scratch folder): WARN client-data-check: hashed account-id list ABSENT at the user profile path; this commit was NOT checked for client account ids",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~183/household_none_cause_r112.py and RD_HOUSEHOLD_NONE_CAUSE_R112.json at 85cb94a3a2: counts, dates, words and a sha256 only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker; the commit was not re-run and no list was placed on the device. Counts only: no household or account id and no client value is recorded. The issuer routes the hashed list to the device owner."
+}
+```
