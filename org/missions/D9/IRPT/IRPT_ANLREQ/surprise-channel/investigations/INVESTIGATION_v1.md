@@ -14365,3 +14365,236 @@
   "notes": "Bears on the TF_IMPORT question the CTO's packager pair decides. Not an alarm; no action taken by this worker."
 }
 ```
+
+## IRPT_ANLREQ-D2-W141-S1 -- the commentary queue key that AR-y-333 binds breaks an existing branch-A test outside this grant
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W141-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~141",
+  "surfaced_at": "2026-10-14T18:12:46Z",
+  "one_line": "The builder now writes commentary_ready_queue_url (AR-y-333 (a)), and reports/tests/test_resident_package_imports.py::test_branch_a_without_commentary_ready_queue_url_resolves_every_import fails at its own _bind assertion (line 102), which requires the builder's document to carry NO commentary_ready_queue_url. That test is outside this order's grant, so the order's STOP applies.",
+  "spec_asserts": "TO-AR-y-333 (a) adds commentary_ready_queue_url to the builder bindings and (b) leaves the packager binding out of this cell. test_resident_package_imports.py:102 asserts the branch-A document has no commentary_ready_queue_url; :99 sets it only for branch B together with a packager block.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (amend the grant and the test, or sequence the packager block with the commentary queue key in one cell)",
+  "world_is": "At commit 53f683857c the tracked builder writes commentary_ready_queue_url with no packager key (build_resident_package.py:96). In the worktree, pytest on reports/tests/test_resident_package_imports.py gives 1 failed, 4 passed: the failing case is the branch-A test, AssertionError at the _bind assertion. The branch-B case and the difference controls pass. Nothing was deployed or called.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/tests/test_resident_package_imports.py:102 @6d348e26a9",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:96 @53f683857c",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~136/r41/RESIDENT_BINDINGS_READ.json recommendation @6d348e26a9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The worker stopped on this row per the order (a test outside the grant fails because of the change). Not fixed: the test file is not in <paths>. The issuer decides the grant amendment. Commit of this row is the only later act."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W141-S2 -- resident_installed refuses a bindings document with a commentary queue key and no packager block
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W141-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~141",
+  "surfaced_at": "2026-10-14T18:12:46Z",
+  "one_line": "load_bindings raises RESIDENT_PACKAGER_REQUIRED for any document that carries commentary_ready_queue_url without a packager block, so the bindings the builder now writes cannot be loaded by the installed factory until the packager block lands in the same dict.",
+  "spec_asserts": "RESIDENT_BINDINGS_READ.json recommendation (1) puts the queue keys and the packager block in one builder dict for the single release; TO-AR-y-333 defers the packager block to a later cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (no release build from commit 53f683857c alone; the release cell carries the packager block)",
+  "world_is": "reports/resident_installed.py:105-106 raises RESIDENT_PACKAGER_REQUIRED when commentary_ready_queue_url is present and packager is absent; reports/tests/test_resident_packager_binding.py:78-80 pins that refusal. Consequence, read from source only: a release built from this commit would fail at load. Not measured live (no host, no build of a release).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py:105-106 @6d348e26a9",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_resident_packager_binding.py:78-80 @6d348e26a9",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:96 @53f683857c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Companion to IRPT_ANLREQ-D2-W141-S1. The packager block (api_base, secret_name) has no declared source yet (the issuer asks the CTO), so the release cell that carries it is not this one."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W141-S3 -- the builder reads no queue names file; the URL was typed as a literal
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W141-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~141",
+  "surfaced_at": "2026-10-14T18:12:46Z",
+  "one_line": "TO-AR-y-333 (a) says the queue NAMES come from the names file the builder already reads (about line 84). The builder at 6d348e26a9 reads no names file: line 84 is a typed queue URL literal. This cell adds the read of data/transcripts/scripts/commentary/NAMES.json at PIN.",
+  "spec_asserts": "TO-AR-y-333 read-first step 1: the queue NAMES file the builder already reads (line about 84 of the builder) gives the queue names, never typed a second way.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "world_is": "build_resident_package.py at 6d348e26a9 types the URL literal https://sqs.us-east-1.amazonaws.com/313476888478/irpt-generation at line 84 and has no names read. At 53f683857c the builder reads NAMES.json through git show at PIN (line 87) and builds the two queue URLs from its ready_queue and commentary_ready_queue name() outputs; the core queue_url is built from the same prefix constant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:84 @6d348e26a9",
+      "data/transcripts/scripts/commentary/NAMES.json:35-42 @6d348e26a9",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:87 @53f683857c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Premise difference only. Names are the lib/opal_naming.py name() output recorded in NAMES.json."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W141-S4 -- the r19 opal_map source was never a member of the tracked builder's tar
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W141-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~141",
+  "surfaced_at": "2026-10-14T18:12:46Z",
+  "one_line": "The opal_map binding names a file that the tracked builder never packaged (the r19 recipe packaged it by a step the tracked builder does not have), so binding the path alone would point at an absent member. This cell adds one explicit member: the tracked IRPT_YCDGEN overview_map.json at ycharts/research/overview_map.json, sha256 21a8f6d6 (equal to the tracked blob and to the r19 value).",
+  "spec_asserts": "TO-AR-y-333 (c): the builder gains the opal_map binding (path and sha256) the way the r19 recipe bound it, and the map file is found in tracked source.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "world_is": "The map is tracked at org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json. The tracked builder's member walk (DIRS, build_resident_package.py:37-38) covers ycharts/research but not that org path, and the tracked builder has no --opal-map step. The r19 recipe step 6 recorded the packaging as ycharts/research/overview_map.json. This cell adds the member (build_resident_package.py:88). Offline builder run at 53f683857c: 186 members, opal_map.sha256 21a8f6d690bbd28cf7eedfc979c3edcfa8d8a156336d9de779e8438c4913310f.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/r19/RESIDENT_RECIPE_AND_DELTA.json recipe_steps n=6 @6d348e26a9",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:37-38 @6d348e26a9",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:88-89 @53f683857c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The tar now carries one more member than the tracked builder at base produced. The release build cell must regenerate WANT_TAR and the member sums (r30 derivation) for it."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W141-S5 -- without MSYS_NO_PATHCONV=1 the builder rewrites the host path of the opal_map binding
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W141-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~141",
+  "surfaced_at": "2026-10-14T18:12:46Z",
+  "one_line": "Run on this box without MSYS_NO_PATHCONV=1, the builder wrote opal_map.path as C:/Program Files/Git/opt/irpt-resident/x/ycharts/research/overview_map.json; with the variable set it wrote /opt/irpt-resident/x/... The builder's own docstring (lines 7-9) names this hazard for the census path.",
+  "spec_asserts": "build_resident_package.py docstring lines 7-9: on this box the builder runs with MSYS_NO_PATHCONV=1 and a Windows WORKTREE path, otherwise Git Bash rewrites the absolute HOST_ROOT inside the bindings.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (the release-build cell runs the builder with MSYS_NO_PATHCONV=1 and checks every absolute path in the bindings)",
+  "world_is": "Measured offline at 53f683857c, two runs of the same builder: the first without the variable produced a mangled opal_map.path; the second with MSYS_NO_PATHCONV=1 produced /opt/irpt-resident/x/ycharts/research/overview_map.json. The new test subprocess sets the variable. No release was built.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:7-9 @6d348e26a9",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:97 @53f683857c",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_resident_r31_source.py:46 @53f683857c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The mangled path would make the installer's _opal_map_loader raise PINNED_FILE_ABSENT:opal_map for a listed principal, not at load."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W141-S6 -- eleven resident and installed test files collide on one module name when run in one pytest process
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W141-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~141",
+  "surfaced_at": "2026-10-14T18:12:46Z",
+  "one_line": "Run as one pytest process, the eleven resident/installed/producer test files stop at collection with 2 errors: reports/tests/test_generate_installed.py and test_generate_installed_custody.py assert that module entry resolves to ops/entry.py, not ycharts/generate/entry.py. The same two errors occur on the base copy at 6d348e26a9, so this predates AR-y-333.",
+  "spec_asserts": "TO-AR-y-333 AC1 runs the neighbouring resident/producer/bindings/installed/build test files and requires 0 failed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "world_is": "Each file alone passes (test_generate_installed.py 14 passed; test_generate_installed_custody.py 6 passed). The checker tests_check.py therefore runs each file in its own process and sums the counts: 137 passed, 1 failed (the W141-S1 test), 0 errors, 8 skipped.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed.py @6d348e26a9",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed_custody.py @6d348e26a9",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~141/tests_check.py per-file run, uncommitted at filing"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A test-harness defect, not a product defect. The collision is the module name entry imported from two sys.path folders."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W141-S7 -- the tracked builder has no packager binding to leave as it is
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W141-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~141",
+  "surfaced_at": "2026-10-14T18:26:18Z",
+  "one_line": "TO-AR-y-333 step 2(b) says to leave the packager binding exactly as it is. The tracked builder never wrote a packager binding, so there was nothing to leave; this cell adds none, as the amendment requires.",
+  "spec_asserts": "TO-AR-y-333 step 2(b): the packager binding is not in this cell; leave the packager binding exactly as it is and say so in the record.",
+  "world_is": "build_resident_package.py at 6d348e26a9 and at 9d5d6d0228 has no packager key in its bindings dict (lines 91-111 at 9d5d6d0228); the word packager appears in that file nowhere. The packager block is therefore absent from the builder's output at both commits, which is the state the order's later cell AR-y-336 starts from. Nothing was changed for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:91-111 @9d5d6d0228",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py (no packager match) @6d348e26a9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Premise difference only. The packager binding's api_base and secret_name have no declared source (the issuer asks the CTO); the record states the absence rather than inventing a block."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W141-S8 -- the bindings test builds from the committed HEAD, so an uncommitted builder edit is not what it tests
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W141-S8",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~141",
+  "surfaced_at": "2026-10-14T18:26:18Z",
+  "one_line": "The module-scoped bindings fixture in reports/tests/test_resident_r31_source.py runs the on-disk builder with PIN set to git rev-parse HEAD, and the builder reads every member and NAMES.json from git show at PIN. A test run before the commit therefore checks the committed members, not the working tree's source. The order's before-arm was run by swapping the two source files to base bytes in place, then restoring them (cmp-verified, git status clean).",
+  "spec_asserts": "TO-AR-y-333 step 3: the new tests run on the base so (a), (c), (d), (f) FAIL; the bindings the builder writes are tested as the tracked builder writes them.",
+  "world_is": "Measured at 9d5d6d0228: the base run gave 6 failed, 1 passed (the failing cases are (a), (b), (c), (d), (e), (f)); the in-place swap was restored byte for byte. Consequence for future cells: a builder edit is only exercised by this fixture after it is committed, and the in-place swap is the only way to run a before-arm on this box without a second checkout.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/tests/test_resident_r31_source.py:39-54 @9d5d6d0228",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:53-54 @9d5d6d0228"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Test-harness shape, not a product defect. The release-build cell should run the builder against a pin it names, not HEAD by default."
+}
+]
+```
