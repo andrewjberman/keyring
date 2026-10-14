@@ -135,3 +135,14 @@ SEQUENCE (a risk stated and refused): NFRA_CTLPLN also applies this module, so a
 | `CA-j-5` | DEPLOY: one targeted apply of `module.ldo_001` from the pinned CA-j-17 commit (environment only), its own never-widen set (the halves read `marks_seen` against `unmarked_seen`, which is `check_j5_obs`), `check_j5_live.py`; then the issuer's real runs: Andrew's next real text read as marked and acted on, and a forged `sms.reply` of the issuer's making refused and recorded | FWD-7 | WORLD | the CloudOps seat | CA-j-17 built; halves |
 
 `fanout (amendment 9): 1 of 1 chain, cap 8, reason: one line in one file (chat_assist.tf); it runs beside the FWD-13 workers (CA-j-12, CA-j-13), which touch no Terraform.`
+
+## AMENDMENT 10 (2.0.0_SA_COO~CA, 2026-10-14 ~16:0xZ): the dell2 pick-up cut as a read-only order (CA-j-15)
+
+CA-j-5 is CLOSED (real runs (a) and (b) read PASS; the trunk reads `enforce`); CA-j-14 (the records deploy) is released at the CloudOps seat. CA-j-13's merge `0ea947e32d` is already on `origin/box/dell2` (read with `git branch -r --contains`), so dell2's checkout can hold the new reader after its own sync. CA-j-15 is therefore a READ-ONLY order to the dell2 seat `0.7.0_AE_CloudOps~CA2` (crossbox ORDER, issued by MSTR): confirm the checkout holds the merge, start the EXISTING `MuseReaderRefresh` task once, and read the folder back with the issuer's `check_k4_folder.py`: six sources in `INDEX.json`, `mentions.json` and `mail_log.json` present as `ok` or `absent` (until the assistant deploy and a real mention or considered mail, `absent`: honest, never an empty list), fresh, contracted keys, the README naming both, and no address, key or token shaped string in any file (FWD-11, the CVO's carried re-read). It changes nothing on dell2. `check_k4_folder.py` was proved on a generated folder (good 6 of 6; a missing file, a four-source INDEX, a stray address and an unreadable source each fail exactly one arm).
+
+| cell | what | serves | risk | chain, slot | depends_on |
+|---|---|---|---|---|---|
+| `CA-j-15` | dell2 pick-up: the checkout holds `0ea947e32d`; the existing task run once; the folder read back with `check_k4_folder.py` | FWD-13 | SERVED (read-only) | workstream DELL2PICKUP, `0.7.0_AE_CloudOps~CA2` (crossbox order) | CA-j-13 merged |
+| `CA-j-16` | FWD-13's exercise (restated): one real Teams item and one real C-MAIL mail each reach Andrew as a muse alert within 30 minutes of receipt, one not-for-him item none | FWD-13 | SERVED | needs the assistant deploy (CA-j-14), a real mention and a real mail (Andrew's calls 44eb and e435), and muse's own scheduled read, alert ledger and wake mechanism (Andrew's and muse's) | CA-j-14, CA-j-15; muse's build |
+
+`fanout (amendment 10): 1 of 1 chain, cap 8, reason: one read-only seat order on another box; it runs beside the CA-j-14 deploy and touches nothing the deploy touches.`

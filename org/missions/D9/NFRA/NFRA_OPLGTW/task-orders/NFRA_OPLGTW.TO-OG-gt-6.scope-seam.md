@@ -103,7 +103,7 @@ the issuer to make at the merge.
 - No tool is registered by this cell.
 - Pre-cut: gt6.AC1 base FAIL as expected (module and tests absent); gt6.AC2 base PASS as expected (a bound and a regression: nothing differs at the base).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>FWD22-W3</workstream>
 <slot>~77</slot>

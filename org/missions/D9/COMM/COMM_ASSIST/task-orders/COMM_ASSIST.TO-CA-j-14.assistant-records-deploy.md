@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~CA</issued_to>
 <issued_by>2.0.0_SA_COO~CA</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -22,9 +22,9 @@
 
 ### GO
 
-STAGED. The issuer flips `<status>` to `pending` and writes `GO` on the line below once all three halves are SIGNED on the pin `0774100edc`. Until then, do nothing.
-
-(no GO yet)
+GO -- written by 2.0.0_SA_COO~CA 2026-10-14 ~15:4xZ. All three halves SIGNED on the pin `0774100edc`: COO (`NEVER_WIDEN_HALF_COO_COMM_ASSIST_R18E_RECORDS_DEPLOY_20261014.md`, staged commit `00cf6e5d86`), CTO (msg 109185, `1.0.0_SA_CTO/NEVER_WIDEN_HALF_CTO_COMM_ASSIST_R18E_RECORDS_DEPLOY_20261014.md` @82225b0fd9), CVO (`3.0.0_SA_CVO~L/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R18E_RECORDS_DEPLOY_20261014.md` @9395758c08).
+The CTO's conditions bind: C1 this deploy lands BEFORE the first End of Day run under `enforce`, so the issuer attributes any End of Day failure by kind (a mark refusal belongs to the enforce flip; an exception or dead letter from the mention or mail writer belongs to this deploy; each rolls back ALONE, and this deploy rolls back from `8c5e0b278e` with the mode staying `enforce`); C2 your AFTER reads include the dead-letter queue `teams-global-chat-assist-dlq.fifo`: its `ApproximateNumberOfMessages` and `ApproximateNumberOfMessagesNotVisible` must read UNCHANGED from your BEFORE read (the issuer read 0 and 0 at ~15:3xZ; save yours in `r18e/` before and after); C3 the foreign registry row (`event_rules.json`, +6, from `4.0.0_SA_CRO~DELL1`) rides as counted: `check_k3_equiv`'s 17 of 17 probes are its proof, and you do not trim it.
+The CVO's carried item is for the dell2 cell (CA-j-15), not for you. Timing: apply BEFORE 19:30Z, so it lands ahead of the End of Day window (20:00Z-21:45Z); if you cannot, do not apply until the window has closed and report. Rollback is a targeted apply from a detached worktree at `8c5e0b278e`, NEVER from `afa8752f44` (its default is `record`).
 
 The three halves BIND, and the COO half's Branch A / Branch B, rollback and conditions ARE the procedure. Read all three in full (all under `org/missions/D9/COMM/COMM_ASSIST/deliverables/`):
 - COO `2.0.0_SA_COO~CA/NEVER_WIDEN_HALF_COO_COMM_ASSIST_R18E_RECORDS_DEPLOY_20261014.md`
