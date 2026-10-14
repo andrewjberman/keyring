@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~92</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run: ROUND14-BATCH arms=9/9 ok=True; proof-of-spec-check self-test RESULT: 63 of 63 arm(s) behaved (unchanged); FENCE-SCOPED rows_today=45 ... ok=True (unchanged); proof instance VALID on the committed state; the routes.tf diff holds only the two comment lines. Rows W92-S1..S3 accepted as INERT: the fence check calls AWS read-only on every run, so batch arm 2 compares the executable AST with the base instead; the coverage frame prints only beside a coverage violation, so the NOTE assertion sits on the one-unexpected fixture; proof-of-spec-check refuses instances outside its tree, so fixtures sit under the ignored .scratch/. coverage_check now takes an optional frames list; the self-test arm that filtered coverage-frame lost that filter, output byte-identical. The instance's expect for CTad1-AC2 is the regex arm\(s\) behaved (criterion text unchanged).</status_reason>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
