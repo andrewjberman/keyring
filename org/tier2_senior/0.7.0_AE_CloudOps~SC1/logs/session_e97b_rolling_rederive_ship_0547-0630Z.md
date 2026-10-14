@@ -47,6 +47,16 @@ data keys to restore are at their own destination (the file names the bucket per
 Leg G is the issuer's; the entry is HELD. The order is left `in_progress`. The next fires: 23:00Z fallback
 tonight (2026-10-13 is a Tuesday), else 04:00Z.
 
+## First fire that ran C_06 after the ship (23:00:11Z 2026-10-13, read back ~01:30Z 2026-10-14)
+
+Reported in `deliverables/E97_FIRST_FIRE_REPORT_20261014.md`. The two launches in between (09:46:59Z, 12:45:16Z)
+ran S_00/A_00/A_02 only, so the waiter was keyed to a C_06 telemetry object newer than the ship plus a stopped
+runner, not to "a fire". C_06 wall 353.1 s; chain launch-to-stop 8,065 s (+298 s over the 04:00:46Z fire, +150 s
+over the SC-e-91 first fire; STOP threshold +1,800 s: not fired). `C06-ROLLING-REDERIVE ... relationships_rewritten=3274
+keys_written=13096`; `C06-ROLLING-RULE-UNREADABLE` absent (the runner has `gold_dispatch.sh` beside C_06).
+Reported and not judged: C_06 RSS peak 11.6 GB against 6.4 GB (PSS 6.5 GB; r6i.4xlarge, system memory used
+peaked at 9.9 percent). Leg G stays the issuer's; nothing was restored.
+
 ## Compiler Tools
 
 | tool | invocation | result |
