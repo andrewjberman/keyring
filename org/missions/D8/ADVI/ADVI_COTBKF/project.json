@@ -2,13 +2,13 @@
   "project_code": "ADVI_COTBKF",
   "macro_code": "ADVI",
   "directive": "D8",
-  "fabric": "dell2",
+  "fabric": "dell1",
   "pipeline": "cottonwood-commonwealth-backfill",
   "status": "hold",
   "dep_stage": "EXECUTING",
   "created": "2026-10-06",
   "registered_under_tree": "2026-10-06",
-  "placement": "DELL2",
+  "placement": "DELL1",
   "pods": [],
   "related": [
     "MDPF_SECCLASS",
@@ -48,7 +48,7 @@
     "cto": "1.0.0_SA_CTO",
     "coo": "2.0.0_SA_COO~C (CTO reading of Andrew's 'All agreed', record ANDREW_DIRECT_20261006_174xZ; seating 0.0.0_AB_MSTR's)"
   },
-  "placement_ruling": "TARGET BOX dell2, the box that runs IRPT_CUSTDY, on Andrew-direct 2026-10-07 ~06:2xZ at the 1.0.0_SA_CTO terminal, VERBATIM 'Ok that means that whatever box is doing IRPT_CUSTDY should also be working on the COTBKF project.' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_061xZ_PROCEED_NFRA_CTLPLN_COO_C_ON_IT_ONLY_NOT_COTBKF.md). Replaces the dell1 target of the four-box layout. A live project moves between rounds, never mid-round (NFRA_CTLPLN FWD-13).",
+  "placement_ruling": "1.0.0_SA_CTO L3, 2026-10-14 ~18:5xZ: DELL2 -> DELL1 on Andrew-direct \"Moving all advisor intelligence ops to DELL1. Basically devote DELL1 wholly to ADVI/MDPF work as well as any overflow AMGT work.\" (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_185xZ_DELL1_WHOLLY_ADVI_MDPF_AMGT.md). On hold, so the move is effective now. || superseded: TARGET BOX dell2, the box that runs IRPT_CUSTDY, on Andrew-direct 2026-10-07 ~06:2xZ at the 1.0.0_SA_CTO terminal, VERBATIM 'Ok that means that whatever box is doing IRPT_CUSTDY should also be working on the COTBKF project.' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_061xZ_PROCEED_NFRA_CTLPLN_COO_C_ON_IT_ONLY_NOT_COTBKF.md). Replaces the dell1 target of the four-box layout. A live project moves between rounds, never mid-round (NFRA_CTLPLN FWD-13).",
   "last_updated": "2026-10-09",
   "blocking": "PARKED 2026-10-14 by 1.0.0_SA_CTO~DELL2 (round-86 analysis CTO_ROUND_ANALYSIS_ADVI_COTBKF_ROUND_86_PARK_20261014.md; pivot direction XB-20261013T180328Z-d4a5 O4). Un-park: Andrew's word, or the ARD route to a page being applied."
 }
