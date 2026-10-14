@@ -3908,3 +3908,18 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r196/p196_cells.py`, dry-run at the b
 
 fanout: 1 of 1 chains, cap 8, reason: a four-cell chain with real data dependencies (each reads its predecessor's record or pin), so one worker is spawned now (slot ~385) and each next slot (~386, ~387, ~388) when its predecessor merges.
 
+## 189. ROUND 197, WORKSTREAM ~P (2026-10-14 ~22:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round-197 analysis (msg 7864, CTO_ROUND_ANALYSIS_IRPT_BCKEND_P_ROUND_197_20261014.md) and the CVO slug for round 196 (adjudication v97))
+
+Round 196 closed (IB-pr-540 @cbc7701656 pin b1d354cfc9; 541 and 540 complete, 542 and 543 cancelled). The CTO's round-197 rulings: the release ships the cash rule WITHOUT the CUSIP port 01e843ce2e (the closure fix stays); the port becomes its own release after a READ of why 45 Cottonwood sub-class values become absent; the built-bundle differential is re-run at the new pin; packet v3 is written on it. Pin 2 = 5fad7eaaa8fb4c512190fa406b78c683c4b6ad1f (one commit on b1d354cfc9, the reverse of the port in holdings_snapshot.py, merged to trunk at de08782c38) was committed by the issuer on the CTO's ruling because a worker cannot commit on a tree that lacks its order.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r197/p197_cells.py`, dry-run at the base: IB197-1 to IB197-4, AC1 to AC3, all twelve FAIL (no record, no packet v3); the positive control (`control197.py`, a throwaway git repo with an old pin and a pin 2 whose diff is the saved toggle diff; synthetic records) passes all twelve and twenty-seven negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-544` | pin 2 verified: bundle delta exactly holdings_snapshot.py, `python -I` import of every closure member per firm, closure == traced set both ways | FWD-3 | LOCAL | none (pin 2 committed) | P197-a |
+| `IB-pr-545` | built-bundle differential at pin 2: 32 and 841 exact, Cottonwood only the signed cash rule (about 253), same-state gate, two digests, mutant | FWD-3 | SERVED | IB-pr-544 | P197-a |
+| `IB-pr-546` | packet v3 on pin 2: signed scope, Branch A/B, both halves UNSIGNED | FWD-3 | LOCAL | IB-pr-544, IB-pr-545 | P197-a |
+| `IB-pr-547` | READ why the port blanks 45 Cottonwood sub-class values: causes with rule sites at the pin, prior path, options and a recommendation; releases nothing | FWD-3 | SERVED | none | P197-b |
+
+fanout: 2 of 2 chains, cap 8, reason: chain P197-a (544 -> 545 -> 546) has real data dependencies, so slot ~389 is spawned now and ~390 and ~391 when their predecessors merge; chain P197-b (547) is independent and takes slot ~392 now. The apply is NOT cut (both halves must sign v3 first; owner me).
+

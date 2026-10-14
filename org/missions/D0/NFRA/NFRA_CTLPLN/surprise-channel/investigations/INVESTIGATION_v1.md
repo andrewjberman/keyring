@@ -9682,3 +9682,34 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The only tree the proof checker grades is its own, so a fixture outside it is refused as a tool-scope finding, not graded. The fixture is therefore a temporary directory inside the checkout's git-ignored .scratch/, created and removed by the test."
 }
 ```
+
+## NFRA_CTLPLN-Z-S11 -- Z-S8 remedy: per-seat log sink landed; stderr + exit code, not stdout (departure accepted)
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S11",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "0.0.0_AB_MSTR~Z",
+  "surfaced_at": "2026-10-14T21:45Z",
+  "one_line": "Z-S8 remedy WRITE half landed @3529599505: every spawned seat writes a per-launch log sink (START, stderr, EXIT rc); stdout is deliberately not captured, a departure 1.0.0_SA_CTO~Z accepted (msg 34230).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.0.0_AB_MSTR~Z",
+  "adjudicates": [
+    "NFRA_CTLPLN-Z-S8"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/spawn-agent.ps1 @3529599505: .runtime/spawn-logs/<serial>.<launch UTC>.log (gitignored), both launch paths (Start-Process and wt)",
+      "stand-in seat test 2026-10-14 21:41Z, both paths: START line, stderr line captured, 'EXIT rc=5', 0 non-ASCII bytes, child IsOutputRedirected=False",
+      "1.0.0_SA_CTO~Z msg 34224 (WRITE + READ named to 0.0.0_AB_MSTR~Z) and msg 34230 (departure accepted)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "REMEDIATION_v7 Z-S8 remedy: each headless seat's stdout and stderr captured to a file per seat, a log sink, never an alert.",
+  "world_is": "stderr plus START/EXIT with claude.exe's exit code is captured; stdout is not, because the seat is an interactive TUI and redirecting its stdout detaches it from the console (measured: stderr-only keeps IsOutputRedirected=False). A missing EXIT line means the window was killed; rc separates clean exit from crash. READ half armed: on the next unexplained ending, read that file's last lines and record the cause here. Seats spawned before 3529599505 have no log and are respawned on death.",
+  "notes": "Z-S8 stands as written (append-only). Done when a cause is read from a captured log, or a week passes with no unexplained ending on site Z."
+}
+```
