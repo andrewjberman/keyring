@@ -15346,3 +15346,51 @@ name the one known failure instead of silently inheriting it.
     "notes": "INERT: a read-back print with no removal or gate effect. The calendar's absence on the host degrades to the reported absent reason, as the modules already do."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W90-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~90",
+    "surfaced_at": "2026-10-14T21:19:14Z",
+    "one_line": "The OG-gt-10 cell cites row NFRA_OPLGTW-Z-W90-S1 as the finding of the portal parents[5] defect; no such row exists in this channel, and the defect's finding row is NFRA_OPLGTW-Z-W87-S1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CHANNEL: org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md @5ded7131ea -- a Grep for 'Z-W90-S' and 'W90' returns no match before this row; the parents[5] finding is row NFRA_OPLGTW-Z-W87-S1 (the ISSUER NOTES of the cell also say 'Found by the worker of OG-gt-8 (row Z-W87-S1)')",
+        "CODE: infra/aws/ec2/opal-gateway/app/portal_models.py:39 and app/portal_macro.py:55 @5ded7131ea -- both lines parents[5], IndexError on the host path; re-measured by the AC2 base run of this worker at 5ded7131ea: 2 of 69 file(s) scanned"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The OG-gt-10 cell says the defect was found by the worker of OG-gt-10 and cites row NFRA_OPLGTW-Z-W90-S1 for it.",
+    "world_is": "No row NFRA_OPLGTW-Z-W90-S1 exists before this one, so the citation resolves to nothing. The defect is the same one that row NFRA_OPLGTW-Z-W87-S1 (ARMED, disarm_owner 2.0.0_SA_COO~O) records. Commit 4cbbf2f64a removes both parents[5] lines in the two modules, so that ARMED hazard is disarmed in this worktree. The W87 row is not edited here; the disarm record stays with its disarm_owner.",
+    "notes": "INERT: the defect is removed by 4cbbf2f64a in this worktree. The citation mismatch is a cite-only premise difference; the cell's criteria do not depend on it."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W90-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~90",
+    "surfaced_at": "2026-10-14T21:19:14Z",
+    "one_line": "On this worker's interpreter the staged lib/trading_calendar.py answers from its hardcoded NYSE fallback, because pandas_market_calendars is absent, and the fallback table is flagged for regeneration before 2028.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: timeout 120 bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/gt10.AC1.sh at 4cbbf2f64a (C:/tmp/wk-oplgtw-90, Python 3.14.7) -- output line 1: 'WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027; regenerate with lib/tests/gen_nyse_closures.py --write before 2028)'; the same run printed 'calendar importable yes; T-1 computable yes' and RESULT: PASS",
+        "NOT MEASURED: the host's interpreter and whether it carries pandas_market_calendars; this row records the worker's interpreter only"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The OG-gt-10 cell asserts the modules find the staged calendar and compute T-1 from lib/trading_calendar.py, with no note on which calendar source answers.",
+    "world_is": "The staged calendar on this interpreter answers from the hardcoded fallback table, not from the market-calendar package, and the module's own warning says that table must be regenerated before 2028. The module's answers are still a date, so the AC passes.",
+    "notes": "INERT: no behaviour of the two portal modules changes; the warning is the trading_calendar module's own. Filed so the host's calendar source is measured before any release relies on it. Nothing was edited for this row."
+  }
+  ```
