@@ -33114,3 +33114,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The two writers disagree on the extra columns. The mapping used only the names both carry (accountId, transAmount, transTypeId). Which writer the activity build reads is not decided here."
 }
 ```
+
+## IRPT_BCKEND-D2-S157 -- dispositions on workers 370 and 371's rows; the Cottonwood and Inflection readings
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S157",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T01:31:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on workers 370 and 371's rows (D2-W370-S1, D2-W371-S1 to S4) after IB-pr-523 and IB-pr-524 merged (@0009c27ae2, @8dfd755758), and the readings the CTO needs for the Cottonwood and Inflection activity producer: Cottonwood can produce the whole shape, Inflection all but two lot-based columns.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 370's report and commits 5243b0008c, 5492787785, d6860a1b7d (merged @0009c27ae2); I re-ran IB187-1 AC1 to AC3 on the merged tree: PASS (96 tests); I read the handler.py diff against its base blob",
+      "worker 371's report and commits cb779d2d7f, e6aac5794e, 728fa8234a (merged @8dfd755758); I re-ran IB187-2 AC1 to AC3: PASS; I read its summary deliverables/0.9.0_WK_IRPT_BCKEND~371/TRANSACTION_SOURCE_MAPPING_SUMMARY.md",
+      "the census record deliverables/0.9.0_WK_IRPT_BCKEND~371/IB187-2_transaction_source_mapping.json (19 shape columns; names, counts and dates only)"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27); a premise the order asserted without reading it is the issuer's defect.",
+  "world_is": "DISPOSITIONS: W370-S1 (the docstring hunk): MY DEFECT in the order and its control (step 4 asked for a module-docstring paragraph the check's hunk-label rule rejects, and my control never changed a docstring); the worker documented the key in run_backfill's docstring; the module doc is unchanged; INERT. W371-S1 (Inflection has two landed transaction places with different spans: canonical silver from 2026-05-12, 145 partitions; legacy flat history from 2020-05-26, 1,656 files; Cottonwood's two agree at 123 days from 2026-03-09): carried as a design input: the history a 2012-floor activity backfill can read for those two firms starts where each firm's landed data starts, not in 2012. W371-S2 (the three firms' account key spaces differ: 49F zero-padded to 10, Black Diamond prefixed, Orion int64, none compared): a condition of any producer build (the shape's account_id must be one key space). W371-S3 (the premise of the same shape for Inflection's realized and in-kind columns fails: the Orion landed feeds carry no lot table): INERT, the reading itself. W371-S4 (two Orion writers with two column sets): INERT, named for the build. READINGS FOR THE CTO: Cottonwood (Black Diamond) can_produce_shape YES (0 of 19 columns ABSENT; transactions, realized, unrealized and holdings tables landed, silver partitions 2026-03-09 to 2026-10-13); Inflection (Orion) PARTIAL (2 of 19 ABSENT: realized and inkind_departure_gain, because no lot-level table is landed); the producer reads ONE declared source today, so the first build is the multi-source read with a custody declaration per firm. NOT measured: value signs, vocabularies as data, any row value, any key-space comparison. DECISION for the CTO: whether an Inflection activity table with two ABSENT columns serves the default report (contributions, withdrawals and income are mapped or derived; the two absent columns are gains), or waits for a lot feed."
+}
+```
