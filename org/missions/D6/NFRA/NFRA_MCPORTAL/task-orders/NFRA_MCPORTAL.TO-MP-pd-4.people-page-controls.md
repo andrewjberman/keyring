@@ -135,7 +135,7 @@ base: AC1 FAIL in the issuer's tree (`mcportal/src/pages/people` absent there, t
 in the worker's nested worktree the people folder exists, and a `git grep` of the eight names at mcportal 17dcbb2 finds 1 of 8
 (only `routes json equals the app routes`; measured 18:2xZ), so the count reads 1 of 8 there.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <workstream>PC</workstream>
 <slot>~28</slot>
