@@ -8089,3 +8089,26 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Corrects the legacy_touch flag for this function in the plan. Disarm: none (INERT)."
 }
 ```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S57",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-14T13:08:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-l-5 act 1 (M01) rests on a false premise: the live exec-summary-trigger rule is ALREADY in Terraform state, and HEAD's exec-summary main.tf would destroy it; restoring the declaration is refused by the LGIC naming gate.",
+  "spec_asserts": "COO half a6e2df30dc act 1 and PLAN_INFLECTION M01: Terraform declares only the DISABLED placeholder; replace it with the rule exec-summary-trigger and IMPORT it; the plan after the import shows zero changes.",
+  "world_is": "Measured 2026-10-14 ~13:0xZ. terraform state list (exec-summary) holds aws_cloudwatch_event_rule.exec_summary_trigger, the target and the lambda permission: applied 2026-04-27 from ecc9b2a508. The stray commit 64b6b9d65a (a COMP_LEARNS log commit) reverted main.tf, outputs.tf, iam.tf, the lock file and CHANGELOG.json the same day, so HEAD declares exec_summary_trigger_placeholder. Baseline plan at HEAD (read-only, -lock=false): 'Plan: 3 to add, 1 to change, 3 to destroy' (create the placeholder rule; replace the target and permission; destroy the live rule) -- an un-targeted apply at HEAD would destroy the live trigger. The 1 change is aws_iam_role_policy.exec_summary_generator: iam.tf says cloudwatch:namespace ExecSummary, live holds Opal/ExecSummary (hotfix e27aa49afa, reverted by the same stray commit), so an un-targeted apply would also drop the PutMetricData grant for the live namespace. Restoring main.tf/outputs.tf from ecc9b2a508 (no import needed) gives: scoped plan on rule+target+permission 'No changes', describe-rule ENABLED with the same pattern. safe-commit then REFUSED that commit: naming gate hole-count-ratchet on infra/aws/terraform/exec-summary (1 HOLE now, 0 at HEAD: EVENT_RULE exec-summary-trigger, on-{event} token not ruled), so the edit is not committed; it is saved as deliverables/0.7.0_AE_CloudOps~FB1/M01_RESTORE_EXEC_SUMMARY_TRIGGER.patch and the shared tree is clean.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/M01_BASELINE_PLAN_AT_HEAD.txt",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/M01_RESTORE_EXEC_SUMMARY_TRIGGER.patch"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT while every apply in this directory is -target scoped (the FB-j-7 and FB-j-13 applies were). Needs the issuer's and CTO's call: a registry ruling for the rule name (or an R20 departure the CTO signs) so the restore can commit; iam.tf's namespace line is outside the pair and needs its own half."
+}
+```
