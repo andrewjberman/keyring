@@ -697,7 +697,7 @@ if [ -n "$_PUSHPULL_HIT" ] \
     # DT never needs to push DEV; live DEV is never merged whole again. DEV is written by .tools/portal-merge-forward.sh,
     # which refuses without an approved row. That script pushes from inside itself, so this gate (which sees only the
     # command a seat types) admits it by construction and the script is the enforcement point. The DT keeps PROD.
-    # Fates (iii) FAST lease and (iv) test-only stay as they are: both are CLAUDE.md law, changed only on Andrew's word.
+    # Fates (iii) FAST lease and (iv) test-only ended on Andrew's word 2026-10-14 (below).
     if [ "$BRANCH" = "DEV" ] && printf '%s' "$_PUSHPULL_HIT" | grep -qE -- "$_RE_PUSH_ONLY" \
        && printf '%s' "$_CALLER" | grep -qE -- '^[0-9]+\.[0-9]+\.[0-9]+_DT_'; then
         case "$(git -C "$REPO" config --get remote.origin.url 2>/dev/null)" in
@@ -712,87 +712,13 @@ if [ -n "$_PUSHPULL_HIT" ] \
             *[/:]Opal-Capital/portal|*[/:]Opal-Capital/portal.git) _DT_PORTAL_PROD=1 ;;
         esac
     fi
-    # --- FAST-LEASE PORTAL-DEV CARVE-OUT (report 2 call 2, Andrew-approved 2026-09-24, record
-    # org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_153xZ_REPORT2_ALL_SEVEN_RECS_APPROVED.md):
-    # while a FAST lease is live, ITS seat lands product changes on portal DEV itself. Scoped four ways, all
-    # required: verb push; branch exactly DEV; origin Opal-Capital/portal; the caller is the `seat` of a live
-    # FAST lease in $DRIVE_MODE_DIR (default $WS/org/mcp/drive_mode, written by .tools/drive-mode.py). An
-    # absent, expired or unreadable lease admits nothing (fail-closed). PROD stays gated. The DEV hazard
-    # (publishing other seats' local commits) moves to /closer-drive step 5, which checks origin/DEV..HEAD.
-    _FAST_DEV=0
-    _DM_DIR="${DRIVE_MODE_DIR:-$WS/org/mcp/drive_mode}"
-    if [ "$BRANCH" = "DEV" ] && [ -n "$_CALLER" ] && [ -d "$_DM_DIR" ] \
-       && printf '%s' "$_PUSHPULL_HIT" | grep -qE -- "$_RE_PUSH_ONLY"; then
-        _origin_url="$(git -C "$REPO" config --get remote.origin.url 2>/dev/null)"
-        case "$_origin_url" in
-            *[/:]Opal-Capital/portal|*[/:]Opal-Capital/portal.git)
-                _dm_now="$(date +%s 2>/dev/null | tr -dc '0-9')"
-                for _lf in "$_DM_DIR"/*.json; do
-                    [ -f "$_lf" ] && [ -n "$_dm_now" ] || continue
-                    if "$JQ" -e --arg s "$_CALLER" --argjson n "$_dm_now" \
-                         '.mode == "FAST" and .seat == $s and ((.expires_epoch | tonumber) > $n)' \
-                         "$_lf" >/dev/null 2>&1; then
-                        _FAST_DEV=1; break
-                    fi
-                done ;;
-        esac
-    fi
-    # --- TEST-ONLY PORTAL-DEV CARVE-OUT (Andrew-direct 2026-09-24, cut 2, record
-    # org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_141xZ_YES_TO_ALL_SIX_PROCESS_CUTS.md, VERBATIM:
-    # "TEST-ONLY PORTAL CANDIDATES land on DEV without CTO review -- the author fast-forwards test and fixture changes").
-    # Row DSGN_AMGTV1-Z-S17 limb 2: the law admitted it and the gate never implemented it. Scoped six ways, all
-    # required: verb push; branch exactly DEV; origin Opal-Capital/portal; caller resolved; NO force (+, -f, --force*);
-    # and the PAYLOAD -- every path in <remote DEV tip>..<src> matches _RE_TESTPATH, read against the remote tip from
-    # ls-remote at check time, as a fast-forward. Anything unreadable denies (fail-closed). The pattern is
-    # deliberately narrow (tests, harnesses, fixtures, mocks): an instrument script under scripts/ is NOT test-only here.
-    _TESTONLY_DEV=0
-    _TO_WHY=""
-    _RE_TESTPATH='(^|/)(__tests__|__harness__|__fixtures__|__mocks__)/|\.(test|spec)\.[cm]?[jt]sx?$|(^|/)(tests?|e2e|fixtures?)/'
-    if [ "$BRANCH" = "DEV" ] && [ -n "$_CALLER" ] && printf '%s' "$_PUSHPULL_HIT" | grep -qE -- "$_RE_PUSH_ONLY"; then
-        _origin_url="$(git -C "$REPO" config --get remote.origin.url 2>/dev/null)"
-        case "$_origin_url" in
-            *[/:]Opal-Capital/portal|*[/:]Opal-Capital/portal.git)
-                _toks="$(printf '%s' "$_PUSHPULL_HIT" | sed -E 's/#.*$//' | tr ' \t' '\n\n' | awk 'NF')"
-                if printf '%s\n' "$_toks" | grep -qE -- '^(\+|-f$|--force)'; then
-                    _TO_WHY="a force push"
-                else
-                    _src=""
-                    while IFS= read -r _t; do
-                        _d="$(printf '%s' "$_t" | sed -e 's#^.*:##' -e 's#^refs/heads/##' -e 's#^origin/##')"
-                        if [ "$_d" = "DEV" ]; then
-                            case "$_t" in *:*) _src="${_t%%:*}" ;; *) _src="$_t" ;; esac
-                            break
-                        fi
-                    done <<EOF_TESTONLY
-$_toks
-EOF_TESTONLY
-                    [ -n "$_src" ] || _src="HEAD"
-                    _tip="$(git -C "$REPO" ls-remote origin refs/heads/DEV 2>/dev/null | awk 'NR == 1 { print $1 }')"
-                    _srcsha="$(git -C "$REPO" rev-parse --verify --quiet "${_src}^{commit}" 2>/dev/null)"
-                    if [ -z "$_tip" ] || [ -z "$_srcsha" ]; then
-                        _TO_WHY="the remote DEV tip or the source ref is unreadable (tip='${_tip}', src='${_src}')"
-                    elif ! git -C "$REPO" cat-file -e "${_tip}^{commit}" 2>/dev/null; then
-                        _TO_WHY="remote DEV tip ${_tip} is not present locally (fetch first)"
-                    elif ! git -C "$REPO" merge-base --is-ancestor "$_tip" "$_srcsha" 2>/dev/null; then
-                        _TO_WHY="not a fast-forward of remote DEV ${_tip}"
-                    else
-                        _paths="$(git -C "$REPO" diff --name-only "$_tip" "$_srcsha" 2>/dev/null | awk 'NF')"
-                        _np="$(printf '%s\n' "$_paths" | awk 'NF' | wc -l | tr -d ' ')"
-                        _nprod="$(printf '%s\n' "$_paths" | awk 'NF' | grep -vE -- "$_RE_TESTPATH" | wc -l | tr -d ' ')"
-                        if [ "$_np" -eq 0 ]; then
-                            _TO_WHY="an empty payload"
-                        elif [ "$_nprod" -gt 0 ]; then
-                            _TO_WHY="$_nprod of $_np paths are not test/fixture paths (first: $(printf '%s\n' "$_paths" | awk 'NF' | grep -vE -- "$_RE_TESTPATH" | head -1))"
-                        else
-                            _TESTONLY_DEV=1
-                        fi
-                    fi
-                fi ;;
-        esac
-    fi
-    if [ "$_DT_PORTAL_PROD" -eq 0 ] && [ "$_FAST_DEV" -eq 0 ] && [ "$_TESTONLY_DEV" -eq 0 ] \
+    # --- The FAST-lease and test-only portal-DEV carve-outs are REMOVED (Andrew-direct 2026-10-14 ~11:4xZ, answer 6,
+    # record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_114xZ_EIGHT_OPEN_CALLS_ANSWERED.md; CLAUDE.md
+    # Portal). Both now reach DEV through .tools/portal-merge-forward.sh like every other change: a live FAST lease is its
+    # seat's approval row (open-calls.py approval-lease), a test-only change needs no approver. NFRA_DEVPLN W1-S19.
+    if [ "$_DT_PORTAL_PROD" -eq 0 ] \
        && ! printf '%s' "$_CALLER" | grep -qE -- '^0\.0\.0_AB_MSTR(~[A-Za-z0-9]+)?$'; then
-        deny "BLOCKED (LD-0367 rule 2 / LD-0368 -- INTEGRATOR-ONLY push/pull on shared branch '$BRANCH'): only 0.0.0_AB_MSTR (base) / 0.0.0_AB_MSTR~Z (site-Z) may push or pull the shared branch; you are '${_CALLER:-UNRESOLVED}'. ONE EXCEPTION EXISTS AND IT DID NOT ADMIT THIS CALL (Andrew-direct 2026-09-01): a DT serial may push branch PROD or DEV in the PORTAL repo (/prod-deploy Steps 1a + 4; Andrew-direct 2026-09-01 and 2026-09-02), scoped to branch in {PROD,DEV} AND an origin remote of Opal-Capital/portal AND verb push -- so a DT is still denied on the workspace branches and on any pull, and any non-DT is still denied in the portal. An Andrew-directed non-DT uses this same audited override, citing his word (Andrew-direct 2026-09-02). WHY: a push from any other seat PUBLISHES EVERY OTHER SEAT'S LOCAL COMMITS along with yours -- neither of you chooses it and you cannot see what you carried (proven integration-window #1, 2026-07-31: a seat's push carried the site-Z integrator's held commit). Commit your work to a SEAM; the hourly INTEGRATION WINDOW (LD-0367) moves it -- the integrator MSTR runs the pull+push. 'git fetch' (incl. fetch-by-hash, LD-0367 rule 4) is NOT blocked. A scratch branch is your own business (this fired because HEAD is the shared '$BRANCH'). Audited override (rare -- coordinate with the integrator FIRST, because it still republishes the tree): append '# never-override: <reason>' to the SAME simple command.${_TO_WHY:+ The TEST-ONLY portal-DEV carve-out (Andrew-direct 2026-09-24 cut 2: the author fast-forwards test and fixture changes) did not admit this push: ${_TO_WHY}.}"
+        deny "BLOCKED (LD-0367 rule 2 / LD-0368 -- INTEGRATOR-ONLY push/pull on shared branch '$BRANCH'): only 0.0.0_AB_MSTR (base) / 0.0.0_AB_MSTR~Z (site-Z) may push or pull the shared branch; you are '${_CALLER:-UNRESOLVED}'. ONE EXCEPTION EXISTS AND IT DID NOT ADMIT THIS CALL (Andrew-direct 2026-09-01): a DT serial may push branch PROD or DEV in the PORTAL repo (/prod-deploy Steps 1a + 4; Andrew-direct 2026-09-01 and 2026-09-02), scoped to branch in {PROD,DEV} AND an origin remote of Opal-Capital/portal AND verb push -- so a DT is still denied on the workspace branches and on any pull, and any non-DT is still denied in the portal. An Andrew-directed non-DT uses this same audited override, citing his word (Andrew-direct 2026-09-02). WHY: a push from any other seat PUBLISHES EVERY OTHER SEAT'S LOCAL COMMITS along with yours -- neither of you chooses it and you cannot see what you carried (proven integration-window #1, 2026-07-31: a seat's push carried the site-Z integrator's held commit). Commit your work to a SEAM; the hourly INTEGRATION WINDOW (LD-0367) moves it -- the integrator MSTR runs the pull+push. 'git fetch' (incl. fetch-by-hash, LD-0367 rule 4) is NOT blocked. A scratch branch is your own business (this fired because HEAD is the shared '$BRANCH'). Audited override (rare -- coordinate with the integrator FIRST, because it still republishes the tree): append '# never-override: <reason>' to the SAME simple command."
     fi
 fi
 

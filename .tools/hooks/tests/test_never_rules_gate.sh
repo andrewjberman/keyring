@@ -457,18 +457,18 @@ check_as '0.4.0_DT_ClientPlatform~Z' "SITEZ: non-integrator push DENIED (LD-0367
 check_as '0.4.0_DT_ClientPlatform~Z' "SITEZ: non-integrator pull DENIED"              'git pull origin SITEZ' DENY
 check_as '0.0.0_AB_MSTR~Z'           "SITEZ: integrator push still PASS"              'git push origin SITEZ' PASS
 
-# FAST-LEASE PORTAL-DEV CARVE-OUT (report 2 call 2, Andrew-approved 2026-09-24). One positive; the negatives
-# are the cells of the scope (verb push / branch DEV / portal origin / the caller is a LIVE FAST lease's seat).
-# PROVEN-RED: the positive renders DENY against the pre-carve-out hook (NRG_HOOK=<CLOUD@b359af6ba2 hook>).
+# FAST-LEASE PORTAL-DEV CARVE-OUT, REMOVED (Andrew-direct 2026-10-14 ~11:4xZ answer 6; NFRA_DEVPLN W1-S19). The former
+# positive is now a DENY: a live FAST lease's seat goes through portal-merge-forward.sh like every seat.
+# PROVEN-RED: the first arm renders PASS (want DENY) against the hook before this removal.
 echo ""
-echo "FAST-LEASE PORTAL-DEV CARVE-OUT (report 2 call 2) -- positive + negatives:"
+echo "FAST-LEASE PORTAL-DEV CARVE-OUT REMOVED (Andrew-direct 2026-10-14, W1-S19) -- a live lease admits nothing:"
 export DRIVE_MODE_DIR="$(mktemp -d 2>/dev/null || echo "/tmp/nrg_dm_$$")"
 _dm_now=$(date +%s)
 printf '{"code":"T_FAST","mode":"FAST","seat":"2.0.0_SA_COO~D","expires_epoch":%s}' $((_dm_now + 3600)) > "$DRIVE_MODE_DIR/T_FAST.json"
 printf '{"code":"T_OLD","mode":"FAST","seat":"2.0.0_SA_COO~X","expires_epoch":%s}' $((_dm_now - 60)) > "$DRIVE_MODE_DIR/T_OLD.json"
 printf '{"code":"T_HOLD","mode":"HOLD","seat":"2.0.0_SA_COO~H","expires_epoch":%s}' $((_dm_now + 3600)) > "$DRIVE_MODE_DIR/T_HOLD.json"
 printf '{not json' > "$DRIVE_MODE_DIR/T_BAD.json"
-check_as '2.0.0_SA_COO~D' "FAST seat pushes portal DEV (the carve-out)"          'git -C portal push origin DEV'  PASS
+check_as '2.0.0_SA_COO~D' "a LIVE FAST seat pushing portal DEV DENIED (carve-out ended)" 'git -C portal push origin DEV'  DENY
 check_as '2.0.0_SA_COO~D' "neg: FAST seat pushing portal PROD DENIED"            'git -C portal push origin PROD' DENY
 check_as '2.0.0_SA_COO~D' "neg: FAST seat PULLing portal DEV DENIED"             'git -C portal pull origin DEV'  DENY
 check_as '2.0.0_SA_COO~D' "neg: FAST seat pushing workspace CLOUD DENIED"        'git push origin CLOUD'          DENY
