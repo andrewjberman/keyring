@@ -144,7 +144,7 @@ READ-SIDE tools, so one cell serves them.
   own instrument and the equality tool is an operator tool; neither changes a served byte.
 - **Fanout:** one cell, one chain, slot ~22. No shared file with `CN-h-1`, `CN-i-1`, `CN-j-1` (their owned files are gold scripts, portal files and the publisher). Base box/dell1.
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <round>7</round>
 <to_id>MDPF_CANON.TO-CN-k-1</to_id>
