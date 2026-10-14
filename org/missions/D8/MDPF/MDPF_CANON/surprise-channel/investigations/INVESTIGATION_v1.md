@@ -1989,3 +1989,100 @@
   "notes": "Filed by the fourth seat (0.9.0_WK_MDPF_CANON~21, AMENDMENT 3 drive). Observation of the instrument's teardown only; the record is complete and the run's exit is 0. The instrument is read-only for this order; resolution owner: 2.0.0_SA_COO~D1. The refusal itself matched the expected min-firms prefix (see the proof instance, AC1 6 of 6)."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W24-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~24",
+  "surfaced_at": "2026-10-14T19:20:16Z",
+  "one_line": "The face says read portal/CONTRIBUTING-BOXES.md before touching portal/, but that file is not on the candidate branch at its head 34cd12d2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face section 1 preamble and the portal rule: read portal/CONTRIBUTING-BOXES.md before any change under portal/. The base is the candidate branch cand/dell1/mdpf-canon-aua-trend-groups-and-as-of at head 34cd12d2.",
+  "world_is": "git -C portal ls-tree HEAD lists no CONTRIBUTING-BOXES.md at 34cd12d2. The file exists at 07f065e6 (NFRA_DEVPLN DP-b-4) and is reachable from PROD and other cand/dell1 branches. The worker read it with git show from 07f065e6 after the edits and before the commit, read-only. Its rule is unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@34cd12d2 git ls-tree HEAD --name-only: no CONTRIBUTING-BOXES.md (read 2026-10-14 in the worktree C:/dev/wk-canon-r7-24/portal)",
+      "portal@07f065e6 CONTRIBUTING-BOXES.md (introducing commit; git show read-only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_MDPF_CANON~24 on the CN-i-2 drive. Form only. Resolution owner: 2.0.0_SA_COO~D1."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W24-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~24",
+  "surfaced_at": "2026-10-14T19:20:16Z",
+  "one_line": "Face section 5.1 names git -C portal commit for the nested portal repository; CLAUDE rule 14a and the NEVER list refuse a bare git commit, so the commit went through safe-commit.sh run from the portal directory.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face section 5.1 step 1: commit the four portal files with git -C <worktree>/portal commit --author ... -F <msgfile>. CLAUDE rule 14a: commit via .tools/safe-commit.sh; NEVER a bare git commit.",
+  "world_is": "The commit was made with bash ../.tools/safe-commit.sh run from the portal directory, so the portal repository was the commit target. Same author string, a Write-tool message file, the four paths named. Result: commit 71ed7393 on wk-MDPF_CANON-24-portal, 4 files, 40 insertions, 3 deletions; msg-verify MATCH. No bare git commit was run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@71ed7393 (LOCAL on wk-MDPF_CANON-24-portal), safe-commit output: committed, msg-verify MATCH len=1357",
+      "CLAUDE.md rule 14a and the NEVER list: commit via safe-commit.sh, never a bare git commit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_MDPF_CANON~24. The face's git -C form and the CLAUDE rule differ for a nested repo; the safe-commit form was taken. Resolution owner: 2.0.0_SA_COO~D1."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W24-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~24",
+  "surfaced_at": "2026-10-14T19:20:16Z",
+  "one_line": "The commit gates read none of the four .ts/.tsx portal files; the risk reflex answered PARTIAL_OR_BLIND on a stale danger map.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1",
+  "spec_asserts": "CLAUDE rules 14 and 14a: every commit passes the commit gates. Face section 5.1: if a portal hook refuses, file a row. The face names no frontend gate and no typecheck.",
+  "world_is": "The output of commit 71ed7393 reads: commit-gate WARN 'checked 0 of 4 file(s) -- NOTHING WAS CHECKED' (the gate reads only .py/.sh/.tf and org/projects JSON); comp-pulse risk-reflex ANSWER STATE PARTIAL_OR_BLIND, danger map STALE at 212.9h, scanned 0 of 4, and the tool ran from the base checkout's path because the portal carries no .tools. The four frontend files reached the repository with no gate read. The worker's own bun run typecheck (tsc -b --noEmit) returned rc=0; it is not a gate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@71ed7393 safe-commit output: '[commit-gate] WARN: commit-gate checked 0 of 4 file(s) -- NOTHING WAS CHECKED' and '[risk-reflex] ANSWER STATE: PARTIAL_OR_BLIND'",
+      "portal/package.json script typecheck = tsc -b --noEmit (read-only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: left alone, every portal .ts/.tsx commit passes the commit-time gate unread. The worker changed no gate (outside its paths). Disarm owner 2.0.0_SA_COO~D1 routes gate coverage for portal frontend files. Filed by 0.9.0_WK_MDPF_CANON~24."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W24-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~24",
+  "surfaced_at": "2026-10-14T19:20:16Z",
+  "one_line": "The face gives the new Trend detail note the class text-white/60, which the portal colour law lists as illegal on the canvas and on white panels.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face section 1d(iii): the note paragraph className is '-mt-3 mb-4 text-xs text-white/60', verbatim. Portal CLAUDE.md colour law: text-white* is illegal on the canvas (#F4F6FA) and on white panels, legal only on the band (#0A1733).",
+  "world_is": "The sibling window paragraph directly above the note, in the same Trend block of ModelPortfolios.tsx, carries the same text-white/60 idiom, so the note inherits its ground. The worker did not render and did not measure the ground the Trend block sits on. The face's class was kept verbatim.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@71ed7393 src/pages/ModelPortfolios.tsx: the added note paragraph carries className text-xs text-white/60 (the sibling window paragraph carries the same idiom)",
+      "portal/CLAUDE.md section 'Color law' (read-only): text-white* illegal on canvas and white panels"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The judgment grader (AC4, round close) reads the rendered ground. Filed by 0.9.0_WK_MDPF_CANON~24."
+}
+```
