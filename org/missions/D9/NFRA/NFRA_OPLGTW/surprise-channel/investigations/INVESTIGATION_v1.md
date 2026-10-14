@@ -13288,3 +13288,31 @@ name the one known failure instead of silently inheriting it.
   "notes": "The correction is one path and one ref: deploy from C:/tmp/og-rel-r30c with DEPLOY_BASE_REF=43088464f51c81e9fe3528b080c6ca8ce5fa90fe. I will not deploy from the written path, and I am not amending the order myself -- the issuer owns step 5. Disarm is a one-line amendment. This is the shape CLAUDE.md 22a's CODE layer warns about from the other direction: here the BUILD INPUT is correct and identical by patch-id, while the TREE around it is two releases stale, so every hunk-level rung passes."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-14T11:45:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-S106",
+  "one_line": "Z-S105 is DISARMED: the issuer re-pinned step 5 to the v3 tree (A6), its new HEAD guard read equal at the act, and the deploy was taken from C:/tmp/og-rel-r30c -- the running bytes are 105 of 105 equal to release 90967e39ba and 5 differing against the old base, so no regression of MP-n-4 or MX-r-12 occurred.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "A6 @588520a159 re-pinned step 5 to C:/tmp/og-rel-r30c with DEPLOY_BASE_REF=43088464f51c81e9fe3528b080c6ca8ce5fa90fe and added the guard; A7 @ac4d20c17a settled the identity resolution. The same guard was placed in OG-ap-17 (A1) and OG-hv-2 (A2) @f8ca2c9406, so the class is closed for the two orders that would have recurred it.",
+      "RAN the guard at the act, not from the earlier dry run: deploy tree HEAD 90967e39ba4bdca17c6f84d9806c29cc67f8482e equals the signed release_sha, and its parent 43088464f51c81e9fe3528b080c6ca8ce5fa90fe equals live deployed_commit. PASS.",
+      "RAN one SSM md5 read of the RUNNING path after the deploy: 105 of 105 equal to the release, 0 differing; and 5 DIFFERING against the old base 43088464f5. The negative arm is what rules out the regression Z-S105 named -- had the v1 tree shipped, admin_fabric_gitstate.py and DATA_CATALOG.yaml would have read their old blobs.",
+      "The guard only reads equal because release_sha was corrected to the full 40-char form at 8c77888cdf; the short form would have made HEAD != release_sha and STOPped the act."
+    ]
+  },
+  "spec_asserts": "Z-S105 asserted that step 5's written source (C:/tmp/og-rel-r30c after A6) is the signed release and sits directly on live, so the deploy cannot carry a stale tree.",
+  "world_is": "It did. The deploy ran from the re-pinned tree, the guard read equal on both limbs at the act, and the post-deploy read-back shows the host on the release with a demonstrable delta from the prior ref. Nothing regressed.",
+  "notes": "Disarmed by this seat at the act on the issuer's instruction (msg 33994, 'Disarm Z-S105 at the act once the guard reads equal'); the disarm_owner remains the issuer of record. The guard only reads equal because release_sha was corrected to the full 40-char form at 8c77888cdf; the short form would have made HEAD != release_sha and STOPped the act.",
+  "dismissal_reason": "Resolves NFRA_OPLGTW-Z-S105. The issuer re-pinned step 5 to the v3 tree (A6 @588520a159) and added a HEAD guard; at the act that guard read equal on both limbs (deploy tree HEAD == the signed release_sha, its parent == live deployed_commit), the deploy ran from C:/tmp/og-rel-r30c, and the post-deploy SSM md5 read is 105 of 105 equal to release 90967e39ba with 5 differing against the old base 43088464f5. That negative arm is what rules out the MP-n-4 / MX-r-12 regression the row named. The same guard now sits in OG-ap-17 (A1) and OG-hv-2 (A2), so the class is closed for both orders that would have recurred it."
+}
+```
