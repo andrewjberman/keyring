@@ -26,7 +26,10 @@ Live today (CTO read ~20:3xZ, issuer read 20:4xZ): the task "Opal Data Harvest -
 
 1. **Read Seeking Alpha access first**, before anything is changed. Row AMGT_HARVST-Z-W37-S4 recorded HTTP 402 ("renewal pending, at the account holder"). Read the access the way the harvester's own SA capture does it
    (the same account and entry point; read-only, one request, no capture), name the source, and write `W/SA1_ACCESS.json` =
-   `{"read_at": "<iso>", "source": "<what you read>", "http_status": N, "outcome": "ACCESS_HOLDS"|"ACCESS_REFUSED"}`. A 2xx is ACCESS_HOLDS; anything else is ACCESS_REFUSED.
+   `{"read_at": "<iso>", "source": "<what you read>", "http_status": N|null, "runner_profile_login": true|false, "reason": "<one sentence>", "outcome": "ACCESS_HOLDS"|"ACCESS_REFUSED"}`.
+   ACCESS_HOLDS needs BOTH a 2xx from the account read AND `runner_profile_login` true (the runner's own SA profile carries a login, so the capture can authenticate). Anything else is ACCESS_REFUSED, with `reason` saying which half failed
+   (`http_status` is null when no request was made). A1 (issuer): the one request step 1 allows is made through the main tree's SA profile (the profile the account is signed in under); it reads the ACCOUNT state only and nothing
+   is copied from that profile into the runner's. The runner's profile carrying no login is a person act (a sign-in), not yours.
 2. **If ACCESS_REFUSED: STOP.** Change nothing on the runner. Write `W/SA1_PROOF.json` = `{"branch": "refused", "runner_changed": false}`, file an OBSERVATION row naming the status, and report once: the renewal is Andrew's act and
    no capture runs against a refusing account. No ledger is opened on this branch.
 3. **If ACCESS_HOLDS:** open ledger `nfra-oplgtw-harvest-runner-sa`, entry AND sentinel first. Read `install-cycle-schedule.ps1 -Plan` with `-Publishers bbg,wsj,barrons,sa -Windowless -RefreshOnce` and the current state dir and runtime root
@@ -60,7 +63,7 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (literal; run from the repo root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-sa-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/sa1.AC1.sh; echo "exit=$?"</invocation><expect>(?s)access read: status \d+, outcome ACCESS_(HOLDS|REFUSED), source named yes, read_at in the order window yes, outcome consistent with status yes.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-sa-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/sa1.AC1.sh; echo "exit=$?"</invocation><expect>(?s)access read: status (?:\d+|none), outcome ACCESS_(HOLDS|REFUSED), source named yes, read_at in the order window yes, outcome consistent with status yes.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-sa-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/sa1.AC2.sh; echo "exit=$?"</invocation><expect>(?s)branch (refused: runner Running, publishers .*sa registered False|restored: runner Running, publishers .*sa registered True, --refresh-once True).*sentinel at HEAD 0 \(want 0\).*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -78,6 +81,11 @@ A refused-access outcome is a complete order with branch "refused": say so in th
 - Round 37, workstream G1-FIX2 (addendum R3-T.55). PRD v3.8 ADMITTED at the cut (CTO msg 34215). A defect cell on a producer that keeps a FWD-22 table (`seeking-alpha/harvest/silver/*`) from landing; not a gateway release, so no never-widen halves.
 - Seat: `0.7.0_AE_CloudOps~ZW` (ran HVST-bz-10; live, idle at the cut). The GO is the issuer's message citing this order.
 - Pre-cut: sa1.AC1 and sa1.AC2 base FAIL as expected (the two records are absent). The AC2 parsing was dry-run on a simulated refused record against the live task (Running; publishers bbg wsj barrons).
+
+
+- A1 (issuer, 2026-10-14 ~21:5xZ, rows Z-S127/Z-S128, msg 34228): at pin 3d88eccbc3 `sa` is a browser-tab publisher whose account id is the profile's `user_id` cookie, and the runner's own SA profile holds no login: step 1 as written returned NotAuthorized with 0 requests.
+  Ruled: the one allowed request goes through the main tree's SA profile and reads the account state; the outcome needs the runner profile's login as well (a sign-in is Andrew's act, routed by the issuer to the CTO). `SA1_ACCESS.json` gains `runner_profile_login`
+  and `reason`; `http_status` may be null. sa1.AC1 reads the new consistency rule. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>
