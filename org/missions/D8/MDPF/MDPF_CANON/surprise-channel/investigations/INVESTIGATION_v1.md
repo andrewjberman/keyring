@@ -1284,3 +1284,78 @@
   "disarm_owner": "2.0.0_SA_COO~D1"
 }
 ```
+
+
+```json
+{
+  "id": "MDPF_CANON-D1-W17-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~17",
+  "surfaced_at": "2026-10-14T14:42:41Z",
+  "one_line": "The order's premise that the served frontier cell is the 2026-10-09 roster does not hold at filing: the live comparator reads served objects at as_of_last 2026-10-13.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-h-1 (face section 1) names the served 2026-10-09 frontier counts as the 2026-08-17 roster wearing a 2026-10-09 date, and AC3 reads those served objects.",
+  "world_is": "r6_cn_h_1.py comparator at 2026-10-14 on box/dell1, worktree HEAD 7df957722b: K0 reads served objects with as_of_last 2026-10-13; served frontier counts equal the staged roster on 17 of 17 mapped keys (the freeze holds on the 10-13 cell); K1 at axis 2026-10-13 returns as-of 2026-10-13 for global, 49financial and inflection. The served cell is dated 10-13, not 10-09. The freeze finding stands; only the date named in the order differs.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r6_cn_h_1.py comparator (K0 and K1 lines, exit 0)",
+      "data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py@7df957722b load_account_dist_frontier_counts (A4 selection, WARN on no qualifying key)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker at AC3 for the issuer (2.0.0_SA_COO~D1). The round-7 AC4 judgment is graded on the objects after the first scheduled run that carries the code."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W17-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~17",
+  "surfaced_at": "2026-10-14T14:42:41Z",
+  "one_line": "data/mdpf/scripts/gold/tests/test_global_fold_flag2.py replaces the module-level loader with a stub and never restores it, so every later test in the same pytest process reads the stub.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A test of the loader exercises the real function and reads the A4 objects through an injected fake S3 client (CN-h-1 step 4, idiom of test_global_served_identity.py).",
+  "world_is": "test_global_fold_flag2.py line 46 (_stub) assigns spine.load_account_dist_frontier_counts = lambda ... at module level with no monkeypatch. Run in one process with test_canplat_p1_1.py and data/mdpf/tests/canon/, six tests of the new file failed (KeyError and DID NOT RAISE) before the new file pinned the real function with an autouse fixture. After the pin the combined run shows only the three pre-existing flag2 reds (MDPF_CANON-D1-S1).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q data/mdpf/scripts/gold/tests/test_canplat_p1_1.py data/mdpf/scripts/gold/tests/test_global_fold_flag2.py data/mdpf/tests/canon/ (6 failed before the pin; 3 failed after, all pre-existing)",
+      "data/mdpf/scripts/gold/tests/test_global_fold_flag2.py@7df957722b:46 (_stub)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker. The stub is not in this order's paths; its owner is the global fold's test owner. The new file does not depend on the stub's absence."
+}
+```
+
+
+```json
+{
+  "id": "MDPF_CANON-D1-W17-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~17",
+  "surfaced_at": "2026-10-14T14:47:25Z",
+  "one_line": "The commit-time naming gate refuses the A4 account-distribution key the face prescribes (a new literal portal/gold/mdpf/{x}/account-distribution/ prefix, out of the canonical portal pattern); the order's code cannot land without a registry row or an R20 entry that is outside this order's paths.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-h-1 step 1 (face) names the key portal/gold/mdpf/{scope}/account-distribution/<date>.json as the loader's source; CLAUDE.md rule 30 requires every S3 address to be lib/opal_naming.py address() output and a builder refusal to be a missing registry row, never a hand-typed workaround.",
+  "world_is": "safe-commit at 0.9.0_WK_MDPF_CANON~17 on wk-MDPF_CANON-17 (HEAD 7df957722b) refused: NAMING REFUSE data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py:798 portal/gold/mdpf/{x}/account-distribution/ -> portal/{scope}/gold/mdpf/{x}/account-distribution/ (NEW and OUT-OF-PATTERN as S3Key; LGIC_ENFORCE ENFORCE mode). lib/opal_naming.py has no builder for the portal A4 home (its portal functions cover firm-access and display maps only). The pre-existing line 694 carries the same shape and is not refused because it is not new. The worker did not rewrite the key to evade the gate. The loader change, the two stub edits and the new test file are uncommitted in the worktree; AC1-AC3 PASS on that tree (reader 8 of 8, seams 4 of 4, comparator 5 of 5).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit -F .scratch/msg1.txt -- <four paths> at 0.9.0_WK_MDPF_CANON~17 (rc=1; NAMING-GATE: REFUSE 1 graded, line 798)",
+      "data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py@7df957722b:694 (pre-existing portal/gold/mdpf/{served_firm_id}/aggregate-aua-timeseries/ prefix, not new)",
+      "lib/opal_naming.py@7df957722b (no portal A4 address builder; grep of portal names returns firm-access and display-map entries only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker as a BLOCKING row. Resolution owner: 2.0.0_SA_COO~D1 with the CTO -- either a naming registry row under infra/logic/registry/ (outside this order's paths) or an R20 register entry Andrew acknowledges. The order's status stays pending until the code lands."
+}
+```
