@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-14T09:23:04Z",
+ "written_at": "2026-10-14T09:39:34Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1828,7 +1828,7 @@
    "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_OPAL_BBGTML_Z6_REPAIR_DISPOSITIONS_20261013_Z.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-13T20:07:19Z",
    "kind": "act",
    "context": "The 14:57 ET reboot left no wintrv.exe running. bbcomm holds port 8194, so the 07:00 ET unattended fallback will refuse to sign in and the daily pull exits 50 again (AMGT induction at 09:00 too). Gates the Bloomberg agent (XB-4d72 Z6).",
@@ -1844,7 +1844,14 @@
     "evidence": {},
     "measured_at": "2026-10-13T20:07:19Z"
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-14T09:39:34Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier1_exec/2.0.0_SA_COO~ZB/deliverables/OPAL_BBGTML_Z6_DRAIN_END_20261014.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
   },
   {
    "id": "sitez-20261013T213807Z-21d9",
