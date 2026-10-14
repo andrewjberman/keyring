@@ -2710,6 +2710,121 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
 }
 ```
 
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W22-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~22",
+  "surfaced_at": "2026-10-14T05:51:37Z",
+  "one_line": "726 of the 819 lots in the snapshot's moving assets carry a current price other than the served price; the served-price headline ($90,964.76) and the lot-price basis ($358,069.95) differ by $267,105.19.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_ADVI_BDPRCE~21/BEFORE_AFTER3.csv@6002ee6dcc (old_price is the served price per asset and date)",
+      "C:/dev/wk-bdprce-r2-7-data/lot_extract.csv sha256 e7e618d76516c8b7977179aefb3f77ce4fc13c17fbcf1dbeb92001a6e0a2b50b (current_price per lot; VANGUARD MORNINGSTAR GROWTH ETF has 300 lots at 83.78 and 274 at 91.9833)",
+      "deliverables/0.9.0_WK_ADVI_BDPRCE~22/PACKET3.json (dollar_effect_latest_snapshot on the served basis, dollar_effect_lot_basis beside it; computed by packet3_compute.py)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-c-3 section 1a item 2 takes the effect as (new_price - old_price) * quantity with old_price from BEFORE_AFTER3.csv, and states the basis as quantity * price on the extract lots.",
+  "world_is": "The extract's current_price for these lots is not the served old_price of the asset: 93 of 819 agree. The packet states the headline on the served basis, as the formula says, and the lot-price basis beside it. Which basis is the true change for the book is not settled by the order, and the page asks Andrew to see both."
+}
+```
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W22-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~22",
+  "surfaced_at": "2026-10-14T05:51:37Z",
+  "one_line": "Only 15 served prices move on the snapshot date, so the task order's 25 largest movers cannot be filled; the list holds all 15.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_ADVI_BDPRCE~21/BEFORE_AFTER3.csv@6002ee6dcc (63 rows dated 2026-10-09: CHANGED 8, NOW_CARRY_FORWARD 7, UNCHANGED 17, NOT_RECOMPUTABLE 31)",
+      "deliverables/0.9.0_WK_ADVI_BDPRCE~22/MOVERS3.csv (15 rows; 9 with snapshot lots, 6 Fidelity rows with none)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-c-3 section 1a item 3: the 25 largest movers by absolute dollar effect on the snapshot, with the total and the count of assets and lots touched.",
+  "world_is": "The snapshot date has 15 moving rows, not 25. The movers file, the total and the counts are taken over those 15. The window's 754 differing served rows are in BEFORE_AFTER3.csv and are not padded into the snapshot list."
+}
+```
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W22-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~22",
+  "surfaced_at": "2026-10-14T05:51:37Z",
+  "one_line": "34 lots of the extract carry the text nan for current_price and market_value; the census identity count leaves them out without naming them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-bdprce-r2-7-data/lot_extract.csv sha256 e7e618d76516c8b7977179aefb3f77ce4fc13c17fbcf1dbeb92001a6e0a2b50b (34 rows, all data_as_of 2026-10-09, price_class PRICED_OFF_NO_CANONICAL, current_price nan)",
+      "deliverables/0.9.0_WK_ADVI_BDPRCE~7/CENSUS.json@e7588a0117 (market_value_identity.lots_checked 198261 = 198295 - 34)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Census CENSUS.json market_value_identity counts lots_checked over the extract, and the order's identity count is taken over the snapshot lots.",
+  "world_is": "34 snapshot lots (for example nine of MAGENTA THERAPEUTICS CONTINGENT VALUE RIGHT) have no price. None is in a moving asset. The packet excludes them from the value denominator (196,641 priced lots of 196,675) and reports them as unpriced."
+}
+```
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W22-S4",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~22",
+  "surfaced_at": "2026-10-14T05:51:37Z",
+  "one_line": "323 of the 649 interpolated rows dated 2026-10-09 change price on the replay, and the order's dollar effect does not count them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_ADVI_BDPRCE~21/ESTIMATED_ROWS3.csv@6002ee6dcc (date 2026-10-09: 649 rows; fate last_traded_date 562, unresolved 87; 323 with r1_price differing from canonical_price)",
+      "deliverables/0.9.0_WK_ADVI_BDPRCE~22/PACKET3.md section 8 (the supplementary figure $5,227.11 over 826 lots, not added to the headline)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-c-3 section 1a item 2 takes the dollar effect over BEFORE_AFTER3.csv rows classed CHANGED or NOW_CARRY_FORWARD on the snapshot date; item 4 fates the interpolated rows.",
+  "world_is": "The served canonical object also holds interpolated rows that the replay re-prices. Those moves on the snapshot date are outside the headline dollar effect and are stated separately, with their basis."
+}
+```
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W22-S5",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~22",
+  "surfaced_at": "2026-10-14T05:51:37Z",
+  "one_line": "The task order gives no verbatim decision sentence for Andrew, only its content; the sentence in PACKET3.md section 11 is composed from that content.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BDPRCE/task-orders/ADVI_BDPRCE.TO-BP-c-3.fwd7-packet.md@4ae59163c9 (section 1a item 6, the parenthetical content with no quoted sentence)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-c-3 section 1a item 6: the exact sentence of the decision asked of Andrew, with his review per fix and the rule that nothing is served until he has seen it.",
+  "world_is": "The order states the content of the decision and no quoted sentence. The page carries one sentence built from that content and flags it as composed, so the issuer can replace it verbatim."
+}
+```
+
 ## ADVI_BDPRCE-D1-W23-S1 -- The v1.3 zero cannot be measured on the recorded export (no Units column); the synthetic units fold nothing by construction, and the grader's lots=500000 is a synthetic count.
 
 ```json
