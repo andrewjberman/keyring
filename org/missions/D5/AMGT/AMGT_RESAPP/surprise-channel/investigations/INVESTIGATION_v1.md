@@ -27122,3 +27122,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only, but it gates the complete flip. A future worker that runs the file's invocation verbatim gets a void walk. The fix is the issuer's: the file carries the prefix. Not edited here: the order file is outside this worker's write grant."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W456-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~456",
+  "surfaced_at": "2026-10-14T05:48:16Z",
+  "one_line": "The pre-commit gate on the nested portal worktree checked none of a two-file frontend commit: commit-gate reported 'checked 0 of 2 file(s)' and the risk reflex answered PARTIAL_OR_BLIND on a 199.3h-stale danger map, so the only content check on the commit was the worker's own run of the prepared acceptance checks.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "CLAUDE.md rule 14: every edit passes .tools/commit-gate.sh (py_compile + ds-precommit + ruff py39), 'Universal'; the order (section 5) names safe-commit as the commit act and presents it as the commit path for the portal branch. The gate's own scope note names what it reads: .py / .sh / .tf / org/projects/*.json.",
+  "world_is": "On the nested portal checkout (C:/dev/wk-resapp-456/portal, branch cand/dell1/aifill-provenance, commit 31337460) the safe-commit run printed 'comp-pulse: the caller toplevel ... carries no .tools/comp-pulse -- EXECUTING THE BAKED PATH C:/dev/ajb_workspace/.tools/comp-pulse', the risk reflex returned ANSWER STATE PARTIAL_OR_BLIND (danger map STALE, 199.3h old), and commit-gate printed 'checked 0 of 2 file(s) -- NOTHING WAS CHECKED' for the two .tsx files. The commit landed; the tool's own note says to use tsc and eslint for a frontend artifact, which AC2 (R103 feature green) ran.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at portal commit 31337460fcf771e46ab239429446b2e857041caf (branch cand/dell1/aifill-provenance): '[risk-reflex] WARN: comp-pulse: the caller toplevel C:/dev/wk-resapp-456/portal carries no .tools/comp-pulse -- EXECUTING THE BAKED PATH C:/dev/ajb_workspace/.tools/comp-pulse instead'",
+      "safe-commit output at 31337460: '[risk-reflex]   ANSWER STATE: PARTIAL_OR_BLIND' and 'danger map: 199.3h old  !! STALE' and 'NOT-DECIDABLE: danger map STALE -- the reflex CANNOT clear this diff'",
+      "safe-commit output at 31337460: '[commit-gate] WARN: commit-gate checked 0 of 2 file(s) -- NOTHING WAS CHECKED.' and 'This gate reads only .py / .sh / .tf / org/projects/*.json; every other suffix falls through unexamined.'",
+      "AC2 run on the same head: org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round103_prep/checks/r103_feature_green_v2.sh output 'typecheck rc 0 | lint rc 0 | harness 21 of 24 pass | base 18 of 24 | regressions 0' (rc=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. Every frontend commit made through safe-commit from the nested portal worktree will show the same three lines until the reflex carries a .tools of its own or a danger map is current; the FEATURE branch's own green check is the substitute instrument this round. Not edited here: the tooling is outside this worker's write grant."
+}
+```
