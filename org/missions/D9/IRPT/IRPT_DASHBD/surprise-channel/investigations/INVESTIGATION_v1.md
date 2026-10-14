@@ -9816,3 +9816,131 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W160-S1 -- the contract names the gold file as Cottonwood's producer, but the adapter that mints those partitions is the silver one
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W160-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~160",
+  "surfaced_at": "2026-10-14T05:12:13Z",
+  "one_line": "The contract names the gold file as Cottonwood's producer, but the adapter that mints those partitions is the silver one",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json line 10 names data/assets/scripts/gold/irpt_reporting/account_return_daily.py as the producer of account_return_daily, and TO-DB-b-195 step 1 asks for the writer of Cottonwood's partitions.",
+  "world_is": "The Cottonwood partitions are minted by the ADVI_COTBKF adapter data/assets/scripts/silver/commonwealth_account_return_daily.py (header lines 1-10): it imports the gold file unedited and calls its emit_day. The gold file's own main() takes its source from sources.json, which declares one custody source, the 49 Financial key, so the producer the contract names does not write Cottonwood by itself. The manifests carry source_pipeline irpt-reporting-adapter, which is the gold file's constant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py@HEAD lines 1-10 and 135 (PERF_DATE), read in the worktree at 2026-10-14",
+      "data/assets/scripts/gold/irpt_reporting/sources.json@HEAD: one custody source key (the 49 Financial key) and one underscore-prefixed delivery entry",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py@HEAD line 2081 (--source default: the only one) and lines 2008-2011 (method version from the declared source)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~79/ard_cottonwood_manifest.json (adapter, producer and run_commit fields)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W160-S2 -- the one enabled reporting-gold schedule writes the 49 Financial scope, so it does not keep Cottonwood's account_return_daily current
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W160-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~160",
+  "surfaced_at": "2026-10-14T05:12:13Z",
+  "one_line": "The one enabled reporting-gold schedule writes the 49 Financial scope, so it does not keep Cottonwood's account_return_daily current",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "infra/aws/terraform/investor-reporting/reporting-gold/schedule.tf describes itself as the daily production trigger for the reporting gold (account_return_daily), so a reader can take it as the trigger for every firm's account_return_daily.",
+  "world_is": "irpt-49f-reporting-gold-daily exists and is ENABLED at cron(41 7 ? * MON-FRI *) in America/New_York; its target irpt-49f-reporting-gold-lambda is Active with LastUpdateStatus Successful. The root builds its names from irpt_rg_firm, the registry scope of the one declared source (locals.tf line 50), so no schedule for the Cottonwood scope is built by that root.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-gold/schedule.tf@HEAD lines 74-103 and locals.tf@HEAD line 50",
+      "live aws scheduler get-schedule on irpt-49f-reporting-gold-daily (rc 0, read 2026-10-14)",
+      "live aws lambda get-function-configuration on irpt-49f-reporting-gold-lambda (rc 0, read 2026-10-14)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W160-S3 -- Cottonwood's Commonwealth silver input is one snapshot dated 2026-06-23 with no newer partition, and the adapter pins that date in code
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W160-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~160",
+  "surfaced_at": "2026-10-14T05:12:13Z",
+  "one_line": "Cottonwood's Commonwealth silver input is one snapshot dated 2026-06-23 with no newer partition, and the adapter pins that date in code",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-195 step 4 asks whether the inputs a resume reads are current.",
+  "world_is": "The Commonwealth Cottonwood silver daily_returns prefix holds one partition, date=2026-06-23, and the adapter's PERF_DATE constant (line 135) pins that same date. At the read, the newest gold day is 80 trading days behind 2026-10-14, so a resume reads a stale input unless a newer Commonwealth delivery lands and the constant is changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3 ls of the Commonwealth Cottonwood silver daily_returns prefix (named prefix, rc 0, one entry, read 2026-10-14)",
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py@HEAD line 135 (PERF_DATE)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W160-S4 -- the trading-calendar frontier answered from its hardcoded NYSE fallback, because pandas_market_calendars is absent on this box
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W160-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~160",
+  "surfaced_at": "2026-10-14T05:12:13Z",
+  "one_line": "The trading-calendar frontier answered from its hardcoded NYSE fallback, because pandas_market_calendars is absent on this box",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CLAUDE.md section 5 names lib/trading_calendar.py as the one frontier for trading-day counts, and the criterion DB103-3-AC1 recomputes the count with it.",
+  "world_is": "Every run of lib/trading_calendar.py on this box prints WARN: pandas_market_calendars absent and answers from the hardcoded fallback NYSE/hardcoded-fallback-2010-2027, which covers 2010 to 2027 and asks for regeneration before 2028. The 80-trading-day count in the record is therefore a fallback count. Both manifests carry the same calendar_source string. The count agrees with a hand count of weekdays after 2026-06-22 through 2026-10-14 less the 2026 July 3 and September 7 closures.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "output of python lib/trading_calendar.py (trading_days_between 2026-06-22 to 2026-10-14) run in the worktree at 2026-10-14: WARN line and 81 entries",
+      "manifest calendar_source fields of the newest and the 2013 manifest.json (keys read by S3 GET, no values recorded)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W160-S5 -- the newest and the 2013 manifests were both rewritten on 2026-10-11 and the series still ends at 2026-06-22; who ran that write is not established
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W160-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~160",
+  "surfaced_at": "2026-10-14T05:12:13Z",
+  "one_line": "The newest and the 2013 manifests were both rewritten on 2026-10-11 and the series still ends at 2026-06-22; who ran that write is not established",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-195 step 3 asks why the newest partition stops at 2026-06-22, and names a manual producer last run then as one possible answer.",
+  "world_is": "The manifest.json objects of the 2026-06-22 partition and of the 2013-04-03 partition both carry LastModified 2026-10-11 (07:17 and 07:03 UTC), and their data.parquet objects carry the same write day. So a write over existing history ran on 2026-10-11 and did not extend the series past 2026-06-22. Two partitions were read, not all 3325, so whether it was a whole-history re-mint is NOT_ESTABLISHED, and so is who ran it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3 ls of the newest and the 2013 partition prefixes (named prefixes, rc 0, read 2026-10-14)",
+      "aws s3api get-object of the two manifest.json objects (headers and keys read; written only to the worktree scratch folder)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
