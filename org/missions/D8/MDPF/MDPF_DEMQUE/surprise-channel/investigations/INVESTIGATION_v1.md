@@ -2703,3 +2703,270 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
   }
 }
 ```
+
+## Rows filed by 0.9.0_WK_MDPF_DEMQUE~50 (DQ-t-58, merged by the issuer: union by id of the worker branch onto HEAD)
+
+```json
+[
+  {
+    "id": "MDPF_DEMQUE-D1-W50-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~50",
+    "surfaced_at": "2026-10-13T22:38:24Z",
+    "one_line": "The order's proof call 'incremental_equal.py --n 10 --tr' cannot select 10 names: the stratified sampler is cut for n=50, so the 50-name proof ran as five --piece I/K chunks of one selection.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/batch_equality.py _select raises unless the QUOTA sums to n (QUOTA = 19+16+11+4 = 50) @502c991c40",
+        "data/mdpf/scripts/demque/incremental_equal.py _piece_of and the --piece flag (this branch)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DQ-t-58 build item 7: run incremental_equal.py --n 10 --tr --out <part> five times, distinct names per piece, and merge the parts.",
+    "world_is": "--n 10 exits at _select with 'this proof is cut for n=50'. The worker selected the 50-name stratified sample once and ran --n 50 --tr --piece I/K for I = 1..5 (10 names each, distinct cusips, merged by a scratch script; 50 of 50 distinct). The split arm rides piece 1/5 only."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W50-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~50",
+    "surfaced_at": "2026-10-13T22:38:24Z",
+    "one_line": "Two names whose served lock reads LOCKED (claim held) get REJECTED:LOW_TRADE_AGREEMENT from a fresh lock.check over today's trades; the append carries the served lock and extends its valid_to.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/0.9.0_WK_MDPF_DEMQUE~50/INCREMENTAL_WIRED_EQUALITY_REPORT.json no_split_arm.lock_record (6 differences over 50 names, all on LCEYX and FTHSX)",
+        "data/mdpf/scripts/demque/lock.py check (unchanged) run by incremental_equal.py _relock over the full history on the same trades"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "COO half, pair A: the append carries claim, trades_through, state, observations and run_id unchanged; whether a full re-lock would differ is measured by incremental_equal.py and reported (never assumed); a name with no trade in its appended window is appended without a re-lock and listed.",
+    "world_is": "LCEYX and FTHSX: served lock state LOCKED, claim held, trades_through null. A fresh lock.check over the full history on the same trades gives REJECTED:LOW_TRADE_AGREEMENT, claim measured (LCEYX trades_through 2020-02-24; FTHSX trades_through 2026-06-02). Neither name has a trade in its appended window, so the wired draw appends both without a re-lock and extends their valid_to to the frontier. No full re-pull runs for a name without a split or restatement, so nothing in the wired path re-checks them."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W50-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~50",
+    "surfaced_at": "2026-10-13T22:38:24Z",
+    "one_line": "At 22:21Z on 2026-10-13 Yahoo held no 2026-10-13 bar for the sampled mutual funds; 19 of 50 proof names appended 4 rows where the window has 5 trading days.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "yahoo_pull.pull('ACTSX') at 2026-10-13T22:2xZ (scratch check): status OK, last price date 2026-10-12",
+        "INCREMENTAL_WIRED_EQUALITY_REPORT.json no_split_arm.names tr_rows (19 names at 4, 31 at 5)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DQ-t-58 build item 1 and the COO half: the window is the last five trading days ending at the last closed session (lib/trading_calendar.py; before 21:00 UTC today's bar is not final).",
+    "world_is": "The 2026-10-13 session counts as closed at 22:21Z, but Yahoo had published no 10-13 bar for ACTSX at that time. Both the full path and the incremental path see the same 4 rows, so the equality holds. The gap is one trading day; it is not measured to close on a later night (the next request starts at the stored max by construction)."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W50-S4",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~50",
+    "surfaced_at": "2026-10-13T22:38:24Z",
+    "one_line": "price_store.index read its 326 names one at a time (50.5 s measured), too slow for the 100-second subprocess limit on the live --spot run in dq_t58_equal.py; index() now reads them in a 16-thread pool with the same rows and order (4.0 s).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "scratch timing of price_store.index over the served store, sequential: 50.5 s, 326 rows; Bloomberg load tr_compare.load_bloomberg 2.8-3.3 s, 37 partitions",
+        "data/mdpf/scripts/demque/price_store.py index and _index_row (this branch); test_demque_store.py index tests pass unchanged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DQ-t-58 AC2: the live spot check 'incremental_equal.py --spot 5 --tr' runs inside dq_t58_equal.py's 100-second subprocess timeout.",
+    "world_is": "A sequential index read alone used half the timeout. The index is a read only; the parallel read changes its speed, not its rows or order. The nightly write_index call runs the same function."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W50-S5",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~50",
+    "surfaced_at": "2026-10-13T23:01:33Z",
+    "one_line": "The re-seating message asks for the commit trailer Co-Authored-By: Claude Sonnet 5.5; this worker runs as claude-haiku-5-5, so its commits carry the Haiku 5.5 trailer that the session attribution rule names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the worker's model identity in the session environment: claude-haiku-5-5 (Haiku 5.5)",
+        "commit 9449d5f48e on wk-MDPF_DEMQUE-50 carries Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Re-seating instruction (launching agent, 2026-10-13): commits end with 'Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>'.",
+    "world_is": "The worker runs as claude-haiku-5-5. Attribution must name the model that produced the work, so the commit carries Claude Haiku 5.5; the Sonnet trailer was not written."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W50-S6",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~50",
+    "surfaced_at": "2026-10-13T23:17:25Z",
+    "one_line": "The wired run checks identity over the COMBINED history only: the appended-window lock.check that the amended pair A condition 2 keeps was dropped at 9449d5f48e, so a trade that disagrees only inside the appended window can be written (measured: combined LOCKED 20 of 21; window-only REJECTED:PRICE_MISMATCH 0 of 1).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/daily_draw.py on_incremental on branch wk-MDPF_DEMQUE-50 at aeb1c69990: the only pair A condition 2 term is combined_relock (line ~242); no lock.check runs on the appended days (data/mdpf/scripts/demque/incremental_append.py:45 says lock.check is not re-run there)",
+        "data/mdpf/scripts/demque/daily_draw.py at 39c3a3e402 lines 227-235 carried 'relock: <state> on the appended window'; 9449d5f48e replaced it with the combined check only",
+        "measured on synthetic data (scratch .scratch/window_gap_measure.py, not committed): 20 agreeing stored trades plus one window trade at 1.5x; lock.check over the combined history LOCKED (20 of 21), lock.check on the appended window REJECTED:PRICE_MISMATCH (0 of 1)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMENDED 2026-10-13 ~23:0xZ (ruling on S2), MDPF_DEMQUE.TO-DQ-t58 and build item 4 (pair A condition 2): 'After building the appended window, run lock.check on the appended days'; 'The appended-window check stays.' The combined history relock is added beside it, not in its place.",
+    "world_is": "The tree runs one identity check, over the combined history. A name whose appended window carries a trade that disagrees with Yahoo, while its stored trades agree, is LOCKED by that check and its window is written; the appended-window check would hold it. No named test isolates a window-only mismatch (test 4 and test 5 each carry a mismatch that fails the combined check too). Nothing is written by this row; the fix is the issuer's decision."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W50-S7",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~50",
+    "surfaced_at": "2026-10-13T23:32:34Z",
+    "one_line": "The amended appended-window check names the trades and the appended rows but not lock.check's valid_from. With valid_from at the window's first day, lock.check's early-third rule rejects an agreeing trade that falls late in the window (measured 1 of 1 agreeing, REJECTED:PRICE_MISMATCH). The wired window_relock takes valid_from at the window's first in-window trade, as the full path starts a name's range at its first trade (measured 1 of 1 agreeing, LOCKED).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/lock.py check(): early_end = valid_from + (valid_to - valid_from) / 3; a passed trade must sit on or before early_end (lock.py lines 102-104, base 362d75e8fa)",
+        "scratch measurement .scratch/vf_measure.py (not committed, this pass): one agreeing trade on the last window day 2026-10-13 against appended closes 2026-10-06..2026-10-13: valid_from 2026-10-06 gives REJECTED:PRICE_MISMATCH 1 of 1; valid_from 2026-10-13 gives LOCKED 1 of 1",
+        "data/mdpf/scripts/demque/daily_draw.py window_relock (this pass, branch wk-MDPF_DEMQUE-50, base 362d75e8fa): valid_from = the first trade dated inside (stored max, frontier]; test_a_stored_name_takes_the_five_day_window... depends on the last-day trade reading LOCKED"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMENDED 2026-10-13 ~23:5xZ (ruling on S6), MDPF_DEMQUE.TO-DQ-t58 item (1): 'lock.check over the appended rows with the trades that fall inside the appended window'. No valid_from is named for that check.",
+    "world_is": "lock.check's early-third rule makes the check's valid_from decide whether an agreeing late-window trade can pass. The wired check anchors valid_from at the window's first in-window trade, so the early-third rule applies to the window's own trades; the 90 pct floor and the three-trade minimum are unchanged. The issuer is asked to confirm this reading or name another valid_from. Nothing is written by this row."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W50-S8",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~50",
+    "surfaced_at": "2026-10-14T04:05:05Z",
+    "one_line": "AC2 (dq_t58_equal.py) was NOT re-run after the second applicability rule: its live --spot 5 --tr needs 5 Yahoo requests, the budget is spent (125 of 120) and no new spot is pre-approved. The 50-name report and its live spot are carried from commit 80a8479c2f; the issuer grades AC2 on the existing report.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t58.wire-yahoo-incremental.md at c11bc60ca9: AMENDED 2026-10-14 ~00:2xZ, 'AC2's live --spot 5 --tr is NOT pre-approved again'",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/0.9.0_WK_MDPF_DEMQUE~50/INCREMENTAL_WIRED_EQUALITY_REPORT.json at 80a8479c2f (the 50-name report, unchanged by this pass)",
+        "whole-store census of this pass (read only, no Yahoo): held names LCEYX and FTHSX are still REJECTED:LOW_TRADE_AGREEMENT with trades_before_window 0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMENDED 2026-10-14 ~00:2xZ, MDPF_DEMQUE.TO-DQ-t58: 'The 50-name equality report and the Yahoo budget are unchanged ... run AC2 only if its report file and a spot result already on your branch satisfy it; if the check cannot pass without a new Yahoo request, say so in the report and file a row'.",
+    "world_is": "AC2 was not run this pass. The second rule changes the relock step only for names with a trade before their stored window; the held list of the whole-store census is unchanged for the two sample names it holds (LCEYX, FTHSX). The report's relock_measured key was produced under the previous rule and may list names the new rule does not relock. Nothing is written by this row."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W50-S9",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~50",
+    "surfaced_at": "2026-10-14T04:05:05Z",
+    "one_line": "The ninth named test builds its stored window from the helper's DAYS range (the first trading day 90 calendar days before the frontier), not from 2026-04-14 as the order's synthetic description reads. The rule tested depends on the order of the dates, not on the start date.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/test_demque_incremental_wiring.py at c11bc60ca9: DAYS = tc.trading_days_between(F - timedelta(days=90), F); _store_name writes the stored window from DAYS[0]",
+        "the ninth test, added this pass: test_a_name_with_some_trades_before_the_stored_window_is_not_held_by_the_combined_check_and_is_listed_without_relock, one trade on 2019-11-22 and two trades on DAYS[1] and DAYS[2]; WIRE-OK 9 of 9"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMENDED 2026-10-14 ~00:2xZ, item (3) of MDPF_DEMQUE.TO-DQ-t58: 'synthetic: one trade in 2019 and two inside the stored window from 2026-04-14, stored lock LOCKED with 3 observations'.",
+    "world_is": "The synthetic helpers start the stored window at DAYS[0], so the stored window does not begin on 2026-04-14. The 2026-04-14 date appears in the order as the real-store probe's start and is not a helper input. The stored lock carries observations_checked 3 and observations_passed 3 as the order requires. Nothing is written by this row."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W50-S10",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~50",
+    "surfaced_at": "2026-10-14T04:05:05Z",
+    "one_line": "Under the second rule, 238 of the 483 stored names carry a trade before their stored window and are appended without the combined relock. Where their appended window also holds no trade, no identity check runs on their appended days at all; the receipt lists them under appended_without_relock.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "whole-store census of this pass (read only): not_applicable 238 of 483 names (before the change: 188); applicable 165; locked 151; held 14",
+        "data/mdpf/scripts/demque/daily_draw.py window_relock at c11bc60ca9: returns None when no trade falls in (stored max, frontier], and combined_relock returns None under the second rule for a not_applicable name, so neither check runs on those appended days"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MDPF_DEMQUE.TO-DQ-t58 item 4 (pair A condition 2): 'After building the appended window, run lock.check on the appended days.' The amended order's rule (AMENDED 2026-10-14 ~00:2xZ) lists such a name as appended_without_relock and proceeds after the appended-window check.",
+    "world_is": "The census counts 238 names with a trade before the stored window. How many of them also have no trade in the appended window was not measured this pass; for each of those the appended days are written with no identity check. The first nightly run after the merge would write them unless the issuer decides otherwise. Nothing is written by this row."
+  }
+]
+```
+
+## Row filed by 2.0.0_SA_COO~Q1 (the stored-rows relock is not the full-history relock; measured on the real store)
+
+```json
+{
+  "id": "MDPF_DEMQUE-D1-S17",
+  "project": "MDPF_DEMQUE",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~Q1",
+  "surfaced_at": "2026-10-14T04:19:34Z",
+  "one_line": "A relock over a name's STORED rows alone is not the full-history relock: the store keeps only the held window, so a name with any trade dated before that window reads REJECTED on the stored rows while its stored lock proved the identity on the full history.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DQ-t-58 order amendment ~23:0xZ 2026-10-13 (issuer): the wired incremental path runs a no-network relock over stored as_traded_close plus the appended rows, which the issuer expected to reproduce the full-history lock.check.",
+  "world_is": "Measured 2026-10-14 by a read-only census of the real store (S3 and the client transactions, no Yahoo): over 326 names the stored-rows relock read REJECTED for 121 of 265 names with trade rows while their stored locks read LOCKED (107 REJECTED:PRICE_MISMATCH with every trade before the stored window; 14 REJECTED:LOW_TRADE_AGREEMENT with every trade inside); over 483 names after the 22:30 ET run, 3 more PRICE_MISMATCH (FUEPX, FWMMX, ORCL) with trades both before and inside the window (stored observations passed 7 of 7, 13 of 13, 30 of 33; stored rows alone see 1, 1 and 3). The combined check now runs only where no trade predates the stored window and one lies inside it; the whole-store census then holds the 14 real names and 0 price-mismatch names. Left unfixed, the first wired night would have held about 110 healthy names and opened as many false REJECTED rows on the unresolved list.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t58.wire-yahoo-incremental.md (amendments ~00:1xZ and ~00:2xZ 2026-10-14)",
+      "incremental_equal.py --relock-census (merged @ea0dd99e4e), RELOCK_CENSUS_WHOLE_STORE.json under deliverables/0.9.0_WK_MDPF_DEMQUE~50/",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/DISARM_EVIDENCE_D1_W50_S2_S6_S10_20261014.md"
+    ]
+  }
+}
+```
+
+## Rows filed by 0.9.0_WK_MDPF_DEMQUE~53 (DQ-t-61, merged by the issuer: union by id of the worker branch onto HEAD)
+
+```json
+[
+  {
+    "id": "MDPF_DEMQUE-D1-W53-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~53",
+    "surfaced_at": "2026-10-14T04:17:40Z",
+    "one_line": "The order's message-file instruction ends each commit with a Co-Authored-By line naming Claude Sonnet 5.5, but the agent executing this order is Claude Haiku 5.5; the commits of this order carry the Haiku 5.5 trailer.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t61 (dispatch instruction): the commit message file ends with 'Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>'.",
+    "world_is": "The executing model is Claude Haiku 5.5 (claude-haiku-5-5). The session attribution instruction for commits this agent creates names Claude Haiku 5.5. The commits of this order end with 'Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>'; the --author identity is the one ordered (0.9.0_WK_MDPF_DEMQUE~53). The same mismatch is recorded as MDPF_DEMQUE-D1-W52-S1. No check or verdict depends on the trailer's model name.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t61.yahoo-failed-14-bloomberg-request.md (Bounds and REPORT wording) @838bd5190c",
+        "session attribution instruction for commits created by this agent (Claude Haiku 5.5) @838bd5190c",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/surprise-channel/investigations/INVESTIGATION_v1.md (row MDPF_DEMQUE-D1-W52-S1, the same mismatch) @838bd5190c"
+      ]
+    }
+  }
+]
+```

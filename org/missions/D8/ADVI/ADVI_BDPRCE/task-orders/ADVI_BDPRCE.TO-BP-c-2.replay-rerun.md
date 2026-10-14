@@ -1,4 +1,4 @@
-# ADVI_BDPRCE task order -- `BP-c-2` -- THE REPLAY RE-RUN ON THE AMENDED RULE, WITH THE FATE OF EVERY INTERPOLATED ROW (STAGED, READ-ONLY)
+# ADVI_BDPRCE task order -- `BP-c-2` -- THE REPLAY RE-RUN ON THE AMENDED RULE (R1.3), WITH THE FATE OF EVERY INTERPOLATED ROW (STAGED, READ-ONLY)
 
 <!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
 
@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D8/ADVI/ADVI_BDPRCE/decompositions/ADVI_BDPRCE_DECOMP_R3.md</decomp_doc>
 <owned_cells>BP-c-2</owned_cells>
 </decomp_ref>
-<issued_to>0.9.0_WK_ADVI_BDPRCE~14</issued_to>
+<issued_to>0.9.0_WK_ADVI_BDPRCE~21</issued_to>
 <issued_by>2.0.0_SA_COO~K1</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -22,7 +22,18 @@ Round 2 replayed R1 over the 1,657 served `transaction_observed` rows (`org/miss
 (`org/missions/D8/ADVI/ADVI_BDPRCE/ledger/CTO_RULING_R1_THE_PRICE_RULE_20261013.md`), and `BP-c-1` put it into the module (merged into your worktree: `data/black_diamond/scripts/silver/bd_price_rule.py`, its test and `org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/RULE_PROBE2.md`; read all three).
 You re-run the replay on the AMENDED module so the list Andrew sees carries it. You change nothing served.
 
-### 1a. What to do
+### 1.00 AMENDMENT 3 -- THIS ORDER IS REOPENED A SECOND TIME (issuer, 2026-10-14 ~04:0xZ); it REPLACES sections 1b, 4 and the paths where they differ
+
+You are the THIRD seat of this slot. The first two seats' work is merged in your tree (`org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~14/`: `replay_r1_r3.py`, `verify_partitions.py`, `REPLAY2.*`, `BEFORE_AFTER2.csv`, `ESTIMATED_ROWS2.csv`, `PARTITIONS2.csv`; read `REPLAY2.md` first). The CTO ruled AMENDMENT 3 (call 19b2; `org/missions/D8/ADVI/ADVI_BDPRCE/ledger/CTO_RULING_R1_THE_PRICE_RULE_20261013.md`, section AMENDMENT 3): **R1 changes a price's value, never an asset's unit; each asset is served in the unit of its own served series.** `BP-c-1`'s third seat built it into the module (merged into your tree: `data/black_diamond/scripts/silver/bd_price_rule.py` at `AMENDMENT = "R1.3"`, with `served_unit_map(lots)` and the REQUIRED keyword `served_units` on `price_for_date`; read the module and `RULE_PROBE3.md` under `deliverables/0.9.0_WK_ADVI_BDPRCE~20/` first). Round 3's second seat found row `W14-S5`: MORGAN STANLEY FIN LLC 0% 05/03/2029 would have moved 115.995 to 1.0 (a 100x unit change) and 214 interpolated carries shared it. You re-run the replay so none does. You change nothing served.
+Do exactly the section 1a work again (copy `replay_r1_r3.py` and `verify_partitions.py` into your folder and adapt; same served set, same four classes, same tolerance, same keying across all partitions, same fates for interpolated rows, same determinism arm) with these differences:
+1. **The unit map.** Build `served_units` with the module's `served_unit_map(pairs)` (read the merged module and `RULE_PROBE3.md`: a pair is `asset_name`, `served_price`, `per_unit_value`; coarse 10 percent bands). The pairs are the SERVED canonical rows with source `transaction_observed` in the window paired with the Buy / Sale / reinvestment trade rows of that asset on that trade_date (per_unit_value = |market_value| / |units|, from the verified partitions you key anyway), PLUS the lot pairs (`current_price`, |market_value| / |quantity|) of the extract `C:/dev/wk-bdprce-r2-7-data/lot_extract.csv` (its sha256 must read `e7e618d76516c8b7977179aefb3f77ce4fc13c17fbcf1dbeb92001a6e0a2b50b`, else a BLOCKING row and you stop). The lot extract alone covers only 507 of the 888 served assets: it is a second source, never the only one. Write `UNIT_MAP.csv` (asset_name, unit, median_ratio, pairs, source) and carry the same build in `RULE_PROBE3`'s way. Every module call passes the map. The record carries `served_units` = `{"assets": n, "per100": n, "per_unit": n, "unreadable": n}` over the served assets.
+2. **An unreadable unit withholds.** A served row of a Fixed Income asset whose unit is `unreadable` (or absent from the map) is `NOT_RECOMPUTABLE` with the reason `unit_unreadable`; count them in `unit_withheld_rows`, and list the assets in `REPLAY3.md`. Never guess a unit.
+3. **No row changes unit.** `unit_changed_rows` = the number of served rows (CHANGED or NOW_CARRY_FORWARD) whose `new_price / old_price` is within 1 percent of 100 or of 0.01. It must be 0; a row that is not 0 is a BLOCKING row naming it, not a number you adjust. State in `REPLAY3.md` what MORGAN STANLEY FIN LLC 0% 05/03/2029 on 2026-10-05 reads now (expected: from the 2025-05-28 par Buy, 100.0 against the old 115.995, with its observation date) and how the 214 interpolated rows that shared the case read now.
+4. **Compare with round 3's second seat.** `REPLAY3.md` has a short table: each class count under `REPLAY2` and under `REPLAY3`, the number of withheld Fixed Income trade rows and assets (442 rows on 25 assets, 14 served, before), and the interpolated fates (29 / 15,997 / 2,394 before).
+Outputs, in `org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~21/`: `REPLAY3.json`, `REPLAY3.md`, `BEFORE_AFTER3.csv`, `ESTIMATED_ROWS3.csv`, `UNIT_MAP.csv`, `PARTITIONS3.csv` if you re-verify partitions (the verified cache of the second seat is read; refetch any partition whose S3 ETag or length differs; state the count). Record: the section 1b record with `"amendment": "R1.3"`, `"list_file": "BEFORE_AFTER3.csv"`, plus `"served_units"`, `"unit_map_file": "UNIT_MAP.csv"`, `"unit_changed_rows": 0`, `"unit_withheld_rows": n`. Downloads go to `C:/dev/wk-bdprce-r3-21-data/`. Row ids `ADVI_BDPRCE-D1-W21-S<k>`.
+Proof (replaces section 4): AC1 runs `r3_checks.py replay3 --file org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~21/REPLAY3.json` and expects the line `REPLAY3 record ok served=N moved=N unchanged=N unit_changed=0 unit_withheld=N deterministic=true`; AC2 is the write-surface bound (`--root /c/dev/wk-bdprce-r3-21`, allowing `~21/`, the investigation file and this order file). Where the text below names `~14`, `REPLAY2`, `R1.2` or `r3-14`, THIS section wins.
+
+### 1a. What to do (the first seat's text; section 1.00 above wins where it differs)
 
 0. **AMENDMENT 2 binds (CTO call d799, `ledger/CTO_RULING_R1_THE_PRICE_RULE_20261013.md` AMENDMENT 2):** par-quoted is decided PER ROW by the module: Fixed Income class AND price over (market value / units) within 1 percent of 100 -> scaled; within 1 percent of 1 -> per unit, left alone; any other ratio -> withheld with its printed ratio. The caller passes the set of Fixed Income asset names (`asset_super_class_bd == 'Fixed Income'` from `silver/bd_assets_dim.parquet`), not a coupon-based set. All EIGHT round-2 `scale_100x` rows must read UNCHANGED and no Fixed Income fund may scale; a withheld row prints its ratio in the flags. `BP-c-1` is reopened and its second seat's merge is what you receive.
 0b. **What the merged second seat found (read `org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/RULE_PROBE2.md`):** on the four probe dates all eight `scale_100x` rows read UNCHANGED, 24 Fixed Income rows scaled (none a fund), and 9 rows of two Fixed Income FUNDS were WITHHELD because their ratio sits outside both 1 percent bands (VANGUARD SHORT-TERM INVESTMENT-GRADE INV 1.0844; POLEN OPPORTUNISTIC HIGH YIELD INS 1.0433).
@@ -65,16 +76,16 @@ Also write `REPLAY2.md` (one page in plain words for a reader who has not seen t
 ## 3. SURFACES
 
 <paths>
-org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~14/
+org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~21/
 org/missions/D8/ADVI/ADVI_BDPRCE/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
 ## 4. PROOF OF SPEC (literal)
 
 <proof_of_spec>
-Instance at `org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~14/ADVI_BDPRCE.TO-BP-c-2.replay-rerun.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="BP-c-2"><invocation>cd /c/dev/wk-bdprce-r3-14 &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/2.0.0_SA_COO~K1/round3/checks/r3_checks.py replay2 --file org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~14/REPLAY2.json</invocation><expect>^REPLAY2 record ok served=[0-9]+ moved=[0-9]+ unchanged=[0-9]+ par_unchanged=[0-9]+ deterministic=true$</expect></criterion>
-  <criterion id="AC2" cell_refs="BP-c-2"><invocation>cd /c/dev/wk-bdprce-r3-14 &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_scope.py --root /c/dev/wk-bdprce-r3-14 --allow org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~14/ --allow org/missions/D8/ADVI/ADVI_BDPRCE/surprise-channel/investigations/INVESTIGATION_v1.md</invocation><expect>^ROUND 4 SCOPE: OK [0-9]+ changed, 0 outside, 0 required missing$</expect></criterion>
+Instance at `org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~21/ADVI_BDPRCE.TO-BP-c-2.replay-rerun.proof_of_spec.json`.
+  <criterion id="AC1" cell_refs="BP-c-2"><invocation>cd /c/dev/wk-bdprce-r3-21 &amp;&amp; timeout 120 python org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/2.0.0_SA_COO~K1/round3/checks/r3_checks.py replay3 --file org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~21/REPLAY3.json</invocation><expect>^REPLAY3 record ok served=[0-9]+ moved=[0-9]+ unchanged=[0-9]+ unit_changed=0 unit_withheld=[0-9]+ deterministic=true$</expect></criterion>
+  <criterion id="AC2" cell_refs="BP-c-2"><invocation>cd /c/dev/wk-bdprce-r3-21 &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_scope.py --root /c/dev/wk-bdprce-r3-21 --allow org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~21/ --allow org/missions/D8/ADVI/ADVI_BDPRCE/surprise-channel/investigations/INVESTIGATION_v1.md --allow org/missions/D8/ADVI/ADVI_BDPRCE/task-orders/ADVI_BDPRCE.TO-BP-c-2.replay-rerun.md</invocation><expect>^ROUND 4 SCOPE: OK [0-9]+ changed, 0 outside, 0 required missing$</expect></criterion>
 </proof_of_spec>
 
 AC1 grades the record's shape, arithmetic, determinism, the par-quoted rows and read-only discipline; AC2 is the write-surface bound (its printed label says ROUND 4 because the checker is reused unchanged). The issuer re-computes sample rows with the module.
@@ -82,7 +93,7 @@ AC1 grades the record's shape, arithmetic, determinism, the par-quoted rows and 
 ## 5. WHEN YOU ARE DONE
 
 Instance at the path above. Commit your scripts, `REPLAY2.json`, `REPLAY2.md`, `BEFORE_AFTER2.csv` (if under the bound) and `ESTIMATED_ROWS2.csv` (if under the bound) FIRST, your rows and the instance second. **Do not flip this order's `<status>`**. Row ids:
-`ADVI_BDPRCE-D1-W14-S<k>` (D1 coordinate required), `k` from 1, `surfaced_at` from `date -u +%FT%TZ`. Report once: the window, the denominator, the four class counts, the changed-and-carry count, the par rows (of eight, how many UNCHANGED, how many withheld), the Transfer-In carry-forwards with dates,
+`ADVI_BDPRCE-D1-W21-S<k>` (D1 coordinate required), `k` from 1, `surfaced_at` from `date -u +%FT%TZ`. Report once: the window, the denominator, the four class counts, the changed-and-carry count, the par rows (of eight, how many UNCHANGED, how many withheld), the Transfer-In carry-forwards with dates,
 the interpolated fates, the keying mode and its limits, the three largest movers, determinism, AC1, AC2 and the FULL commit hash.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
@@ -90,11 +101,11 @@ the interpolated fates, the keying mode and its limits, the three largest movers
 **ISSUER NOTES:** round-2 analysis item 1 (second half); FWD-7 DEC-7. STAGED at the cut: un-parks when `BP-c-1` is merged and PASS at the merged HEAD; its worktree is cut from that HEAD so the amended module is in it. The packet (dollar effect, readers) is `BP-c-3`'s, which consumes this list.
 Round 2's replay took about four hours, mostly the lookback download; this order reuses that cache, so it should take far less. Class LOCAL.
 
-<status>complete</status>
+<status>staged</status>
 <round>3</round>
 <workstream>REPLAY2</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-c-2</to_id>
-<slot>~14</slot>
+<slot>~21</slot>
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>

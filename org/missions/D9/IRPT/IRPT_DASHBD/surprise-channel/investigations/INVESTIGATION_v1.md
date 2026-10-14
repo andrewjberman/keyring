@@ -9532,3 +9532,287 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W157-S1 -- the producer reads no gold parquet, so the gold path of the cell has no input
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W157-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~157",
+  "surfaced_at": "2026-10-14T04:03:27Z",
+  "one_line": "The producer reads no gold parquet; its only dated inputs are pickle snapshots in the portal bucket, so the gold path the cell names has no input.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-192 steps 1 and 3: find the gold parquet that the producer reads or writes, and LIST each gold input for a dated daily model series with date= partitions.",
+  "world_is": "At HEAD the producer reads benchmarks/LATEST.json and one data_*_v1.pkl pickle snapshot and writes three served JSON keys; it has no parquet read or write. The yang source has no gold home in the canon (address() refuses it). The LIST of the benchmarks/ prefix returned 229 keys, 218 dated pickles, no date= partition.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-model-portfolio-benchmarks/lambda_function.py@f0ad572779 get_latest_data_pkl_key and load_pkl read the pointer and the pickle; upload_json writes the three keys",
+      "named-prefix LIST s3 opal-data-portal-v2 benchmarks/ (read only, this order): 229 keys, 218 .pkl, 0 date= partitions"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W157-S2 -- a dated daily model series is served beside the period-window object the tool reads
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W157-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~157",
+  "surfaced_at": "2026-10-14T04:03:27Z",
+  "one_line": "A dated daily model series is served as json/benchmarks/model_portfolio_timeseries.json next to the period-window object, outside gold and outside the tool the cell names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-192 Why: the Opal model returns are served as period windows 1D to since-inception, current vintage only, no dated series.",
+  "world_is": "The object mdpf_get_model_benchmarks reads carries no dated series, as stated. The same producer writes a sibling object, json/benchmarks/model_portfolio_timeseries.json, with one row per date and model, and it is present in the bucket (LIST of json/benchmarks/: 6 objects). The tool does not read it. The catalog names it as mp.04.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-model-portfolio-benchmarks/lambda_function.py@f0ad572779 lines 430-431 write the timeseries key; build_timeseries emits a date field per row",
+      "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@f0ad572779 names portal_mdpf_model_benchmarks and the mp.04 timeseries row",
+      "named-prefix LIST s3 opal-data-portal-v2 json/benchmarks/ (read only, this order): 6 objects"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W157-S3 -- address() has no gold home for the yang source, so no Yang gold bucket comes from the canon
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W157-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~157",
+  "surfaced_at": "2026-10-14T04:03:27Z",
+  "one_line": "lib/opal_naming.py address() resolves yang platinum to the served bucket but refuses yang gold, so a builder cannot take a Yang gold bucket from the canon.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-192 bounds: every bucket comes from lib/opal_naming.py address() or the catalog, never from a registry bucket field.",
+  "world_is": "address() for source yang at tier gold of scope global raises no home bucket for tier gold of scope global: yang. The served bucket opal-data-portal-v2 is what address() gives for yang at tier platinum. scopes.json lists 14 scopes and none is a yang product row, so the source-homed composite gold has no bucket for yang.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py@f0ad572779 address() and _home_bucket: source-homed tier resolves through lookup(source) and finds no yang bucket",
+      "infra/logic/registry/scopes.json@f0ad572779 14 scopes, no yang product row",
+      "address('yang','global','platinum',...) returned the served bucket (read only, this order)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W157-S4 -- the lineage map describes SmartX sidecar reads the producer no longer makes
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W157-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~157",
+  "surfaced_at": "2026-10-14T04:03:27Z",
+  "one_line": "The yang lineage map says the producer reads the SmartX daily and monthly sidecars and writes a SmartX realized series; the producer at HEAD has no SmartX read and says the override is removed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "docs/reference/yang-pipeline-lineage-map.md (sections 1a, 1c, 5b, 6.14a and 6.14c) states the producer's reads and writes, including the SmartX sidecars.",
+  "world_is": "SmartX appears in the producer only in comments that say the SmartX override is removed. The served folder still holds _smartx_model_daily.json and _smartx_model_monthly.json with no reader in the producer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-model-portfolio-benchmarks/lambda_function.py@f0ad572779 lines 52-54, 292-296 and 403-406 state the SmartX override is removed",
+      "docs/reference/yang-pipeline-lineage-map.md@f0ad572779 lines 54, 82, 548 and 590 name the SmartX reads"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-S27 -- the Opal model benchmark returns have no gold (a pickle becomes served JSON); the report's builder lands them as an input, and the gold home is MDPF's own migration
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S27",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T04:11:51Z",
+  "one_line": "The Opal model benchmark returns have no gold: MDPF's yang-model-portfolio-benchmarks reads a pickle snapshot and writes served JSON (a period object and a dated daily series), and no gold table holds them; the performance report's builder lands them in the report's gold as an input with its source and data_as_of claimed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The report serves only from Opal's own gold (C-SHAPE); the contract's 32 benchmark members were sourced ABSENT because Opal holds no benchmark return series.",
+  "world_is": "Worker ~157's read (DB-b-192): the producer reads one pickle snapshot (no parquet) and writes three JSON keys under json/benchmarks/ in the portal-v2 bucket; address() has no gold home for it; the served period object has a trailing 365-day 1Y and an annualized since-inception, and a dated daily series is served beside it. The CTO ruled (msg 7511): the builder reads the dated series as an INPUT, computes every window cumulatively by compounding it, drops the period object, and the report still serves only from gold. The gold home for the model series is MDPF's own migration (R19), not a rider on this project.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~157/BENCHMARK_SOURCE_READ.json; rows W157-S1 to S3",
+      "1.0.0_SA_CTO~DELL2 msg 7511"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S8 -- The silver that would feed seven of the eight tables is code-named at shared or legacy buckets outside the grant, so no source could be listed under the own-bucket bound
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T04:04:39Z",
+  "one_line": "The silver that would feed seven of the eight tables is code-named at shared or legacy buckets outside the grant, so no source could be listed under the own-bucket bound",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-190 steps 2 and 3 (amended): find each firm's existing gold or silver inputs and record whether a source exists, reading each firm's own bucket, with the bucket taken from lib/opal_naming.py address() and never from the registry. The bound reads: each firm's own bucket only.",
+  "world_is": "address() resolves the silver and bronze of both firms to the shared bucket opal-data-assets (blackdiamond/cottonwood/silver, eclipse/inflection/silver, orion/inflection/silver). holdings_snapshot.py reads the Cottonwood Black Diamond silver from opal-data-assets blackdiamond/cottonwood/silver/ and the Inflection Eclipse and accounts_v2 silver from the legacy bucket opal-data-inf. None of these was listed, because each sits outside the firm's own bucket under the bound. source_exists is false for the seven tables with no gold, and the gap text gives the reason. One decision is needed before the first adapter order: whether a read of the firm's own prefix in the shared bucket is granted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py address() probe run per firm, source silver or bronze: s3://opal-data-assets/blackdiamond/cottonwood/silver/ and s3://opal-data-assets/eclipse/inflection/silver/ and orion/inflection/silver",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py: bucket set to opal-data-assets for the Cottonwood silver reads, and INF_SOURCE_BUCKET set to opal-data-inf for the Inflection silver reads",
+      "FIRM_READINESS.json at 0.9.0_WK_IRPT_DASHBD~155: source_exists false with the reason in gap_in_words for the seven tables"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S9 -- The registry bucket field and the generated firm_bucket_map name opal-data-cot and opal-data-inf for the two firms, while address() resolves their gold to opal-data-cottonwood and opal-data-inflection
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S9",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T04:04:39Z",
+  "one_line": "The registry bucket field and the generated firm_bucket_map name opal-data-cot and opal-data-inf for the two firms, while address() resolves their gold to opal-data-cottonwood and opal-data-inflection",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "TO DB-b-190 amendment 1: the registry bucket field is not where gold lives; get each bucket from lib/opal_naming.py address(), never from the registry.",
+  "world_is": "data/firm_registry.json gives bucket opal-data-inf for inflection and opal-data-cot for cottonwood. holdings_snapshot.py firm_bucket_map, generated from the identity registry, names the same two legacy buckets. address() resolves the gold tier to opal-data-cottonwood and opal-data-inflection, and the gold exists there. A reader that takes the registry field or the generated map finds a legacy bucket and reports no gold, which is how the first seat's void record arose. The harm stays live while readers keep the registry field.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/firm_registry.json: the inflection row bucket opal-data-inf and the cottonwood row bucket opal-data-cot",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py lines 183-187: firm_bucket_map generated from the identity registry",
+      "lib/opal_naming.py address() probe: s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/ and s3://opal-data-inflection/irpt/inflection/gold/ resolve, and the Cottonwood prefix lists its date partitions"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D2"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S10 -- Cottonwood account_return_daily gold is stale: its newest partition is 2026-06-22, 114 days before the read, and the Cottonwood performance tables end on 2026-09-25
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S10",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T04:04:39Z",
+  "one_line": "Cottonwood account_return_daily gold is stale: its newest partition is 2026-06-22, 114 days before the read, and the Cottonwood performance tables end on 2026-09-25",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "TO DB-b-190 step 3: for each table, record whether it exists in gold and how many date partitions were listed; account_return_daily is the existing Cottonwood gold the report would read.",
+  "world_is": "Cottonwood account_return_daily holds 3325 date partitions from 2013-04-03 to 2026-06-22, all date-named, with no other prefix. The Cottonwood holdings_performance_daily and holdings_performance_manifest end on 2026-09-25, and the Cottonwood holdings end on 2026-10-08, while the Inflection equivalents end on 2026-10-12. This read does not say why the Cottonwood producer's newest partition stopped. A report built on it would show Cottonwood figures months old.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3 ls of s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/: 3325 PRE lines, all date=YYYY-MM-DD, first and last recorded",
+      "newest partition listing: data.parquet and manifest.json present; data.parquet footer read by one range GET (19 columns, schema equal to the contract)",
+      "aws s3 ls of the Cottonwood and Inflection holdings_performance_daily and holdings prefixes: last partitions recorded in FIRM_READINESS.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S11 -- The gold holdings parquet carries 6 columns in each firm, so the IR holdings counts of 19 and 17 are page columns, not this file's columns
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S11",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T04:04:39Z",
+  "one_line": "The gold holdings parquet carries 6 columns in each firm, so the IR holdings counts of 19 and 17 are page columns, not this file's columns",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-190 step 2: columns_served for the holdings input uses the IR holdings column counts (Cottonwood 19 of 19, Inflection 17 of 19) carried from the CTO message.",
+  "world_is": "The newest holdings partition's parquet footer carries 6 columns (double and string types) in each firm. The holdings_qa footer also carries 6 columns in each firm with a schema identical to holdings. The 19 and 17 counts therefore describe the served IR page's columns, which this read did not reconstruct. The record carries them as the CTO's counts and says so.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "parquet footers of the newest holdings partition in each firm, read by one range GET each (6 columns)",
+      "parquet footers of the newest holdings_qa partition in each firm (6 columns, identical schema)",
+      "FIRM_READINESS.json columns_served entries marked as CTO counts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S12 -- The only household crosswalk recorded is 49 Financial's; the Cottonwood crosswalk input sits at the shared bucket and its coverage could not be read under the bound
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S12",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T04:04:39Z",
+  "one_line": "The only household crosswalk recorded is 49 Financial's; the Cottonwood crosswalk input sits at the shared bucket and its coverage could not be read under the bound",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-190 step 4: household_dimension for each firm is the ADVI household crosswalk's coverage of the firm, or none.",
+  "world_is": "The ADVI_BILLING household crosswalk record gives its S3 key in opal-data-49financial, so it covers 49 Financial only. The ADVI_FIRMBKTS FB-k-4 read names a Cottonwood crosswalk input at opal-data-assets commonwealth/cottonwood/silver/crosswalk, whose coverage was not read (outside the bound). No Inflection crosswalk is named in the repo's crosswalk records across two pages of comp-find results.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BILLING/deliverables/0.9.0_WK_ADVI_BILLING~3/AB_E5_RECORD.json: s3_key under opal-data-49financial",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~79/PLANINV_COTTONWOOD_SERVING_CROSSWALK.json: the commonwealth cottonwood silver crosswalk named in its read calls",
+      "comp-find household_crosswalk, pages 1 and 2 (69 hits across 77062 files scanned)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S13 -- The DB-b-190 order already reads complete, set on the first seat's void record; this round's passing record re-grounds the status
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S13",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T04:04:39Z",
+  "one_line": "The DB-b-190 order already reads complete, set on the first seat's void record; this round's passing record re-grounds the status",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-190 REPORT and step 6: the order's status is flipped to complete only when DB101-4-AC1 passes on the record.",
+  "world_is": "The order file at HEAD already reads complete, set by commit 441a46fe71 on the first seat's record, which amendment 1 declares void. The flip was not derived from a passing criterion on the amended premise. This round's record is the first passing one, and its proof instance carries the status.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log of the order file and of the deliverables folder: commit 441a46fe71 (proof, flip to complete) and commit 6f8f52e7f2 (first seat's read)",
+      "the amendment text in the order's WORKER FACE, AMENDMENT 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

@@ -33620,3 +33620,261 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. W374-S1 (the safe-commit client-data check is ABSENT on dell2, a WARN): STAYS ARMED, owner me for the record, the repair is the box manager's (placing the hashed account-id list); until it is placed no commit on this box is scanned for account ids, and my own files carry counts, dates, public symbols and hash prefixes only. W375-S1 (the producer carries no apply_cash_rule at base): resolved by the merge, the function exists at dff35d95da; the packet's Branch A is still the release of a rule-bearing build whose mechanics are NOT read. W375-S2 (the ticker shape admits Black Diamond-prefixed and CUSIP-shaped identifiers): ruled inside my decomposition, they are counted and never listed, fallback_tickers stays empty. W375-S3 (101 nodes of 49financial carry no display symbol; none a mover): INERT, the reason is unread. W375-S4 (the runner's schedule and deploy target not located): the next round's CENSUS cell must read them before any pair is signed. MEASURED: FDRXX on Inflection resolves on the canonical branch (row found fixed_income with sub Cash; 757 FDRXX nodes in the 2026-10-12 snapshot), so the rule is canonical-only as ruled; the blast radius is 844 nodes (49financial 32, cottonwood 38, inflection 774); the 215 and 67 fallback-branch cash-sub holdings on cottonwood and inflection stay fixed_income as served (a cross-page consistency fact for the CTO). The Cottonwood count is at the 2026-10-08 snapshot, since the page cannot publish until the directory exemption is repaired (CTO 7489)."
 }
 ```
+
+## IRPT_BCKEND-D2-W377-S1 -- the trading calendar answers from its hardcoded NYSE fallback on dell2
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W377-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~377",
+  "surfaced_at": "2026-10-14T04:13:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "On dell2 neither pandas_market_calendars nor exchange_calendars is installed, so lib/trading_calendar answers from its hardcoded NYSE fallback (2010-2027) during the IB-pr-530 replay; the criterion passed and the fallback is not the vendor calendar.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB190-2-AC3 output, deliverables/0.9.0_WK_IRPT_BCKEND~377/IB190-2_criteria_output.txt @f3a42b2ab8: WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027; regenerate with lib/tests/gen_nyse_closures.py --write before 2028)",
+      "python -c 'import pandas_market_calendars' in the worktree on dell2 (2026-10-14T04:1xZ): ModuleNotFoundError; exchange_calendars: ModuleNotFoundError"
+    ]
+  },
+  "spec_asserts": "The publish gate's source-frontier arm counts trading days through lib/trading_calendar (IB-pr-530 criterion AC3: the same directory with an older source frontier is still refused).",
+  "world_is": "On dell2 the calendar's vendor libraries are absent, so trading_calendar answers from the hardcoded NYSE closures table, which the checker says must be regenerated before 2028. The AC3 result stands for 2026; the calendar source on this box is not the vendor calendar. The reason the libraries are absent on dell2 was not read."
+}
+```
+
+## Round 190, IB-pr-529 -- worker 0.9.0_WK_IRPT_BCKEND~376's row
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W376-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~376",
+  "surfaced_at": "2026-10-14T04:13:55Z",
+  "one_line": "The safe-commit client-data check did not run on the IB-pr-529 commit 9e41657727: the hashed account-id list is absent on dell2, so this box still commits unscanned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "dell2 box manager (placing the hashed account-id list), per IRPT_BCKEND-W374-S1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 9e41657727 in worktree C:/dev/wk-IRPT_BCKEND-376: 'WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids'",
+      "the same condition is recorded by IRPT_BCKEND-W374-S1 in this file (dell2, STAYS ARMED); the IB-pr-529 commit touches holdings_snapshot.py and test_holdings_cash_rule.py only and writes no account identifier"
+    ]
+  },
+  "spec_asserts": "A commit made through .tools/safe-commit.sh passes the commit gates, the client-data check among them, before it lands.",
+  "world_is": "On dell2 the client-data check is ABSENT (the hashed account-id list is not placed), so the gate prints a WARN and reports the commit as NOT checked for client account ids. The commit itself carries code and tests with no account identifier; no other commit on this box is scanned until the list is placed.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## Round 190, IB-pr-529 -- worker 0.9.0_WK_IRPT_BCKEND~376's second row
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W376-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~376",
+  "surfaced_at": "2026-10-14T04:20:00Z",
+  "one_line": "The one-writer gate warns that the order's investigation path is the laptop's unsuffixed file; a dell2 worker appended a row to it at commit 770a469992.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 770a469992 in worktree C:/dev/wk-IRPT_BCKEND-376: '[one-writer] WARN: org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md is the laptop's (unsuffixed) file, written from dell2; per-box file <stem>.dell2.<ext> (WARN until C-QUEUE)'",
+      "the order IRPT_BCKEND.TO-IB-pr-529 names this unsuffixed path as the row file (its paths block and step 6), so the worker wrote where the order pointed"
+    ]
+  },
+  "spec_asserts": "Rows go to the investigation file the task order names (INVESTIGATION_v1.md), and a worker's row is appended there.",
+  "world_is": "The one-writer gate reads that file as the laptop's and says a dell2 writer should use the per-box file INVESTIGATION_v1.dell2.md until the C-QUEUE repair lands. The gate passed the commit (WARN only), and this row is the only write to the file from this worktree.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-W378-S1 -- S71 re-arm trigger: the schedule reads ENABLED while the three served bundles lack the same four runner-opened registry files (IB-pr-531, census)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W378-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~378",
+  "surfaced_at": "2026-10-14T04:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The S71 re-arm trigger reads ARMED by its own rule: irpt-holdings-snapshot is ENABLED live while each of the three served standalone bundles lacks the same four repo files the runner's probe opens, so the rearm test verdict is FAIL.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/tests/test_holdings_rearm_trigger.py@5bc47c4693: rearm_verdict returns ok = not (state == ENABLED and missing); served_bundle_members reads each bundle's SHA256SUMS",
+      "aws scheduler get-schedule --name irpt-holdings-snapshot --group-name default (read, 2026-10-14): State ENABLED, cron(15 10 ? * MON-FRI *) America/New_York",
+      "tar SHA256SUMS of the three bundles (read to scratch, 2026-10-14) against the probe list of 24 opened repo files: missing 4 per firm, infra/logic/registry/feeds.json, firm_pages.json, legacy_addresses.json, platinum_destinations.json",
+      "lib/opal_naming.py@5bc47c4693 lines 58-59 (OPTIONAL_REGISTRY_FILES) and 303-305 (an absent optional file is read as None)",
+      "aws ssm list-commands (read, 2026-10-14): Comment irpt holdings refresh <firm> 2026-10-13, Status Success for all three firms"
+    ]
+  },
+  "spec_asserts": "S71: the rearm trigger is INERT while irpt-holdings-snapshot is DISABLED and arms when the schedule reads ENABLED while a served standalone bundle lacks a repo file the runner opens (test_holdings_rearm_trigger.py rearm_verdict).",
+  "world_is": "The schedule reads ENABLED and all three bundles lack the same four files, so by the test's own rule the trigger is ARMED and its verdict is FAIL. The scheduled fires run anyway: the four files are optional in the naming library and each firm's 2026-10-13 fire reads Success with a record written after its bundle. Nothing was changed here (no schedule, bundle or test edit); the disarm is the issuer's via disarm_owner."
+}
+```
+
+## IRPT_BCKEND-D2-W378-S2 -- the holdings_refresh.tf header names a dispatch path that does not exist (holdings/ instead of holdings_refresh/)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W378-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~378",
+  "surfaced_at": "2026-10-14T04:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The header of infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf names the dispatch source as infra/aws/lambda/investor-reporting/holdings/refresh_dispatch.py; no such file exists, and the dispatch source is at holdings_refresh/refresh_dispatch.py.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf@5bc47c4693 line 10 names infra/aws/lambda/investor-reporting/holdings/refresh_dispatch.py",
+      "infra/aws/lambda/investor-reporting/holdings/ at 5bc47c4693 lists no refresh_dispatch.py (ls and Glob read)",
+      "infra/aws/lambda/investor-reporting/holdings_refresh/refresh_dispatch.py@5bc47c4693 holds lambda_handler, the schedule target handler"
+    ]
+  },
+  "spec_asserts": "The dispatch source named in the holdings_refresh.tf header resolves to the file the schedule's Lambda is built from.",
+  "world_is": "The header path resolves to holdings/, which holds no refresh_dispatch.py; the source is at holdings_refresh/. The Lambda's build input was not read, so which path the artifact is built from is not established here."
+}
+```
+
+## IRPT_BCKEND-D2-W378-S3 -- the round-189 comparison values for the manifest version ids are not in the worker face
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W378-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~378",
+  "surfaced_at": "2026-10-14T04:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-531 step 6 asks whether the served manifest version ids moved since the round-189 packet read them, but the round-189 values are not in the worker face, so the moved or not-moved statement cannot be made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-531.holdings-producer-census.md@5bc47c4693 step 6 of the worker face names the round-189 read",
+      "aws s3api list-object-versions on each firm's current/manifest.json (read, 2026-10-14): IsLatest version ids recorded in the census rollback_by_manifest_version"
+    ]
+  },
+  "spec_asserts": "The rollback targets per firm are compared with the values the round-189 packet read on 2026-10-14 ~03:3xZ, and any move is stated.",
+  "world_is": "The round-189 values are not in the worker face, so no comparison is made; the values served at read time are recorded with their LastModified in the census."
+}
+```
+
+## IRPT_BCKEND-D2-W378-S4 -- the --mint-bundle release path writes no change-management ledger entry
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W378-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~378",
+  "surfaced_at": "2026-10-14T04:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The standalone-bundle release path (safe-deploy.sh --mint-bundle, which replaces a served S3 object) opens no change-management ledger entry, while NEVER-2 requires an entry for a confirmed deploy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe_deploy_core.py@5bc47c4693 lines 1523-1549: the --mint-bundle branch calls find_bundle, the SERVE-HELD check and mint_bundle, then returns; no ledger call is made",
+      ".tools/safe_deploy_core.py@5bc47c4693 lines 1192-1250: mint_bundle uploads with aws s3 cp and verifies the ETag and the echoed stamp; it writes no ledger entry",
+      "org/critical_paths/change_management/ holds one deploy_completion file per release, for example 20261013T1123Z_irpt-holdings-key-restore-20261013_deploy_completion.md (Glob read)"
+    ]
+  },
+  "spec_asserts": "NEVER-2: a confirmed deploy opens a ledger entry under org/critical_paths/change_management/ at start and closes it at completion.",
+  "world_is": "The mint tool opens no entry itself; the release entries are written outside the tool. The census records ledger_required true. Whether each mint has its own entry was not checked entry by entry."
+}
+```
+
+## IRPT_BCKEND-D2-W378-S5 -- the 2026-10-09 scheduled fire for 49financial reads Failed in SSM history
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W378-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~378",
+  "surfaced_at": "2026-10-14T04:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "In SSM history the 2026-10-09 scheduled holdings fire for 49financial reads Failed, while the other firms' 2026-10-09 fires and the 49financial fires of 2026-10-08, 10-12 and 10-13 read Success; the cause was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws ssm list-commands (read, 2026-10-14), client-side filter on Comment prefix irpt holdings refresh: Comment irpt holdings refresh 49financial 2026-10-09, RequestedDateTime 2026-10-09T10:15:24 -04:00, Status Failed",
+      "the same listing: Comment irpt holdings refresh 49financial 2026-10-08, 2026-10-12 and 2026-10-13, Status Success",
+      "aws s3api list-object-versions on irpt/49financial/platinum/holdings/current/manifest.json (read, 2026-10-14): IsLatest LastModified 2026-10-13T14:20:49+00:00"
+    ]
+  },
+  "spec_asserts": "Each scheduled fire of the holdings producer reads Success in SSM history for each firm, or the failure is named with its cause.",
+  "world_is": "The 2026-10-09 fire for 49financial failed; every later listed fire for that firm reads Success. The cause and any refusal written by that fire were not read (list-command-invocations was not called and no command output was read)."
+}
+```
+
+## IRPT_BCKEND-D2-S163 -- Dispositions on workers 376, 377 and 378's rows (D2-W376-S1, S2; D2-W377-S1; D2-W378-S1 to S5) after IB-pr-529
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S163",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T04:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on workers 376, 377 and 378's rows (D2-W376-S1, S2; D2-W377-S1; D2-W378-S1 to S5) after IB-pr-529, IB-pr-530 and IB-pr-531 merged (@1464de48be, @4db49e0a27, @ace53f9692); the S71 re-arm trigger is DISARMED on the census's evidence.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker commits merged at 4db49e0a27 (377), 1464de48be (376), ace53f9692 (378); I re-ran IB190-2 and IB190-3 AC1 to AC3 on the merged tree: PASS, and IB190-1 AC1 to AC3 at worker 376's own head in a throwaway worktree: PASS (on the merged tree its AC1 file-list arm reads the sibling order's test file; the combined ten-file set passes 119 tests); round-close-check verdict MAY-CLOSE (orders=3)",
+      "I read the census record in full: schedule irpt-holdings-snapshot ENABLED cron(15 10 ? * MON-FRI *) America/New_York; three standalone bundles (45 members each, none carrying apply_cash_rule); the four absent registry files are OPTIONAL_REGISTRY_FILES in lib/opal_naming.py and each firm's 2026-10-13 scheduled SSM fire reads Success with a record written after its bundle"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27).",
+  "world_is": "DISPOSITIONS. W378-S1 (the S71 re-arm trigger reads FAIL: the schedule is ENABLED and each bundle lacks the same four registry files): DISARMED by me (disarm owner): the four files are optional in the naming library the runner loads, and every firm's 2026-10-13 scheduled fire reads Success and wrote a record after its bundle, so the trigger's premise (the bundled runner cannot load its contract) is false for these four files; the trigger test still prints FAIL because it counts optional files as required: a stale guard, a one-line repair for a later cell, never a reason to disable the schedule. W378-S4 (the mint tool opens no change-management ledger): the release order must open the NEVER-2 ledger explicitly; named as a condition of the pair. W378-S5 (49financial's 2026-10-09 scheduled fire reads Failed; every later fire Success; cause unread): the round-191 packet reads it before blast radius is signed. W378-S2, S3 and W377-S1 (a stale header path in a tf comment; a baseline the worker could not see; the NYSE fallback calendar): INERT. W376-S1 (the client-data check is ABSENT on dell2): STAYS ARMED with the box manager, as W374-S1. W376-S2 (the one-writer gate warns that workers append to the laptop's unsuffixed channel file): INERT, the channel is append-only and shared here by the standing practice of this project. MEASURED: the producer is the Lambda irpt-holdings-refresh-lambda dispatching one SSM command per firm that fetches the firm's standalone bundle (deployed by safe-deploy.sh --mint-bundle, no ledger of its own); rollback by the prior bundle object version and the prior manifest version per firm; cottonwood is the only firm with a publish_refusal record. NOT measured: the cause of the 2026-10-09 failure, any command output."
+}
+```
+
+## IRPT_BCKEND-D2-S164 -- The cause of 49financial's failed 2026-10-09 scheduled holdings fire (D2-W378-S5): the SSM command TIMED OUT a
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S164",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T04:45:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cause of 49financial's failed 2026-10-09 scheduled holdings fire (D2-W378-S5): the SSM command TIMED OUT and its process was killed (status ExecutionTimedOut, shell exit 137, python holdings_snapshot.py --firms 49financial Killed).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ssm list-commands (comment prefix 'irpt holdings refresh', 2026-10-09 onward): the 49financial command of 2026-10-09 10:15 ET reads Failed; 49financial's fires of 2026-10-12 and 2026-10-13 and both other firms' fires of every listed day read Success",
+      "ssm list-command-invocations --details for that one command id: StatusDetails ExecutionTimedOut, plugin aws:runShellScript TimedOut, ResponseCode 137, the last output line the shell reporting the python process Killed; the rest of the 2,500-byte output is public-ticker classification warnings (read in memory, error lines only out)"
+    ]
+  },
+  "spec_asserts": "A scheduled holdings fire completes within the SSM command's execution window; the packet's blast radius assumes the run finishes.",
+  "world_is": "One of five listed 49financial fires ran past the command's execution window and was killed; the next two fires finished. 49financial is the largest book (124,441 SECURITY nodes at 2026-10-12). Whether the fire was slow that day (a larger or slower source) or the window is marginal was NOT read (no run durations, no window setting read). A rule-bearing build adds one dict wrap per node: no measured cost, not expected to matter. The round-191 packet should state the window and the observed durations for 49financial before any release timing is signed."
+}
+```

@@ -70,6 +70,7 @@ The `<status>` flip is the issuer's.
 
 <status>staged</status>
 <status>pending -- 2026-10-14 GO by the issuer (2.0.0_SA_COO~R2): gate met (95 of 95 re-validated, 0 refused; CTO GO msg 5377); candidate cand/dell1/aifill-blocks-prod @53de2b9d approved (rows cf85, a565) and merged forward to DEV by 0.0.0_AB_MSTR~DELL1 (DEV ab8ecc5662, msg 5379); the builder reads the branch from the local ref (the remote cand branch was deleted after the merge). PROD read 0910f4ad at this GO (R1's bl-1 landed there; types.ts differs from the candidate by bl-1's three added lines, a clean dry merge was run). AC1/AC2 amended by the issuer for that head: no gate limb graded the amendment (a staged seat order).</status>
+<status>complete -- 2026-10-14 by the issuer (2.0.0_SA_COO~R2): seat order run by 0.4.0_DT_ClientPlatform (its seating bar lifted by the CTO, msg 5397). PROD 0910f4ad -> 7db035e4 (ls-remote read by the issuer: 7db035e448d9), tag portal-v2.1.217, CI run 38508112643 completed/success (re-read by the issuer: gh run list headSha 7db035e4 success). AC1 PASS as amended (ten EQUAL, one DIFFERS types.ts; re-run by the issuer), AC2 PASS, AC3 6. Receipt PROMOTE_RECEIPT_AIFILL.md (DT commit 1f7519ec4a, LOCAL on box/dell1 at the DT's report).</status>
 <round>104</round>
 <workstream>AIFILLLAND</workstream>
 <slot>0.4.0_DT_ClientPlatform</slot>

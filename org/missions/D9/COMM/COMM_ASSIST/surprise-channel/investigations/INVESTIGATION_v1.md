@@ -1354,3 +1354,30 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "The criterion was run as written and recorded. The wider scope was measured by the directory run (544 of 544, the natural file 8 of 8) and recorded beside it. The invocation is the issuer's and was not edited."
 }
 ```
+
+## COMM_ASSIST-W21-S1 -- the commit gate's client-data check printed WARN on this box (no hashed account-id list), so commit 6cfb79f314 was not checked for client account ids
+
+```json
+{
+  "id": "COMM_ASSIST-W21-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~21",
+  "surfaced_at": "2026-10-14T03:56:52Z",
+  "one_line": "The commit gate's client-data check printed WARN because the hashed account-id list is absent on this box, so commit 6cfb79f314 was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "UNMEASURED: no file this worker read names the owner of the box's account-id list at C:\\Users\\AndrewBerman\\.opal\\account_id_hashes.txt",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh run for 6cfb79f314 (branch wk-COMM_ASSIST-21, this worktree) printed: WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\AndrewBerman\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids",
+      "the same run printed [commit-gate] OK for 1 of 3 files and the naming, to-pipeline and surprise-row gates; only the client-data check reported the absent list"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "safe-commit.sh's client-data-check checks each commit's content for client account ids against the hashed list at OPAL_ACCOUNT_ID_HASHES or the default path, and a commit it cannot check is reported as checked-or-not.",
+  "world_is": "On this box the list is absent at the default path and OPAL_ACCOUNT_ID_HASHES is not set in this worker's shell, so the check printed WARN and recorded the commit as not checked. Every commit from this box is unchecked until the list is in place.",
+  "notes": "Observed, not fixed: placing the list and naming its owner are outside this order's <paths>. The commit touches chat_assist.tf, the order file and this worker's deliverables. The base chat_assist.tf already carries the account number 313476888478 inside its ARNs; this worker did not compare it with the list, which it does not hold. The gate's own WARN states the not-checked outcome."
+}
+```
