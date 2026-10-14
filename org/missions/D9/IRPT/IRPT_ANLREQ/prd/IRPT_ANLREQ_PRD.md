@@ -5,7 +5,7 @@
  "project": "IRPT_ANLREQ",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.7",
+ "prd_version": "v0.8",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_223xZ_ANALYSIS_REQUEST_END_TO_END_ONE_PROJECT_CLOSER_TRACE.md@2b21a349d1",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
@@ -153,7 +153,7 @@ on its own artifact.
 | 2 | Opal-model checkboxes and an other-ETF input | FWD-2. Model checkboxes from the comparison catalogue; free ETF tickers, each resolved before filing. S1 and S3 |
 | 3 | the holdings Excel attached | FWD-1. Through the upload door (C-ONE-DOOR, TCKT_VNEXT); the ticket stores the handle, never the bytes. S3 |
 | 4 | typo check and swap, frontend and backend | FWD-2. A mistyped ETF gets a correction offer verified against the registry and yfinance. An unknown or unpriceable holding takes C-SWAP's one pass: KNOWN, then the yfinance check (KEEP), then classify, then a deterministic proxy from the designated-proxy table (MDPF_SECCLASS, dell1, a pre-arranged input), then RECORD with `proxy_for` / `method` / `confidence`. The model-proposed swap is retired. The frontend is S1. Proof gap: the C-SWAP path exercised on one unknown holding |
-| 5 | a ticket in the open Ticket Center page | FWD-1. An `analysis_request` ticket, open until the package lands, filed by a partner-firm advisor. Opal staff do not file in the Ticket Center (Andrew's 10-13 memo), the driven arm is a synthetic partner-firm advisor, and `2e30` is SUPERSEDED (ADDENDUM v0.5). S2. Proof gap: the synthetic advisor's filing end to end; that identity is never minted or left live outside its never-widen pair |
+| 5 | a ticket in the open Ticket Center page | FWD-1. An `analysis_request` ticket, open until the package lands, filed by an Opal staff user who chooses the partner firm (the Ticket Center is shown to Opal users only; ADDENDUM v0.6). The driven arm is a synthetic Opal staff user; `2e30` stays SUPERSEDED. S2. Proof gap: the synthetic staff user's filing end to end; that identity is never minted or left live outside its never-widen pair |
 | 6 | the backend generates the full report | FWD-1. Generation submit and the Opal engine (C-ABSORB a, b). S3 and S4 |
 | 7 | commentary from the report's key surfaces | FWD-3. The drafter reads the report's composition through `get()`, tenant-bound, with abstract fields only (C-KIMI). S5 |
 | 8 | the package attached | FWD-1 carries the four items of the 10-13 memo: the original upload, the form as filled (J6, a new package kind), the Opal report and the commentary draft, each a pointer through `POST /tickets/{id}/package` (C-PACKAGE) by the one packager (J5). The brief's branded Opal PDF with the commentary moves to section 3 as a named enrichment (memo section 1.1; direction :152-155). S2 and S6. Proof gap: four pointers set on one ticket, each opened from the ticket page |
@@ -300,5 +300,9 @@ C-FIRM is restated in the CONTRACTS table as ADDENDUM v0.6 item 2 states it, plu
 msg 7713). FWD-1's DONE WHEN loses the dated attribution (it stays in SOURCE) and reads "the original upload". The partner organic arm, in
 FWD-1 and C-ONE-JOURNEY, waits on the Ticket Center being shown to client users. ENDPOINT and CONTRACTS both changed, so both halves are
 owed at these bytes.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## v0.8 (2026-10-14 ~15:4xZ, 1.0.0_SA_CTO~DELL2) -- on `4.0.0_SA_CRO~DELL2`'s brief-half refusal R1 (review @6f40d4010f): BRIEF COVERAGE row 5 names the Opal staff filer. Row 8 (the commentary as a branded PDF, R2) waits on Andrew's answer to the CRO.
 
 -- 1.0.0_SA_CTO~DELL2
