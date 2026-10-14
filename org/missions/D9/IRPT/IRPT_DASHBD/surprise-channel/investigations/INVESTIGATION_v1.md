@@ -9634,3 +9634,28 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-S27 -- the Opal model benchmark returns have no gold (a pickle becomes served JSON); the report's builder lands them as an input, and the gold home is MDPF's own migration
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S27",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T04:11:51Z",
+  "one_line": "The Opal model benchmark returns have no gold: MDPF's yang-model-portfolio-benchmarks reads a pickle snapshot and writes served JSON (a period object and a dated daily series), and no gold table holds them; the performance report's builder lands them in the report's gold as an input with its source and data_as_of claimed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The report serves only from Opal's own gold (C-SHAPE); the contract's 32 benchmark members were sourced ABSENT because Opal holds no benchmark return series.",
+  "world_is": "Worker ~157's read (DB-b-192): the producer reads one pickle snapshot (no parquet) and writes three JSON keys under json/benchmarks/ in the portal-v2 bucket; address() has no gold home for it; the served period object has a trailing 365-day 1Y and an annualized since-inception, and a dated daily series is served beside it. The CTO ruled (msg 7511): the builder reads the dated series as an INPUT, computes every window cumulatively by compounding it, drops the period object, and the report still serves only from gold. The gold home for the model series is MDPF's own migration (R19), not a rider on this project.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~157/BENCHMARK_SOURCE_READ.json; rows W157-S1 to S3",
+      "1.0.0_SA_CTO~DELL2 msg 7511"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
