@@ -14598,3 +14598,60 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W143-S1 -- the before-arm expects (a), (b), (d), (f) to FAIL on the base builder; (c) also FAILS there, because its precondition asserts the builder's document carries the commentary key
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W143-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~143",
+  "surfaced_at": "2026-10-14T19:12:15Z",
+  "one_line": "The order's before-arm expects (a), (b), (d), (f) to FAIL on the base builder; (c) also FAILS there, because its precondition asserts the builder's document carries the commentary key.",
+  "spec_asserts": "TO-AR-y-336 step 3: the new tests run on the base so (a), (b), (d), (f) FAIL.",
+  "world_is": "Measured at 4dace80bda (the new file run against the base builder through IRPT_R31_BUILDER): 5 failed (a, b, c, d, f), 1 passed (e). Case (c) fails at its own precondition assert, not at the refusal; (e) passes on base, as it should. The measured set is a superset of the order's expectation; no existing test was weakened.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/tests/test_resident_r31_packager_bindings.py:72-80 @26b34d0449",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:91-110 @4dace80bda"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Expectation-only mismatch; the measured set is carried in the record JSON before_arm block. The order's list is a subset of the measured failures, not a contradiction."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W143-S2 -- the commit-time client-data check did not scan commit 26b34d0449: the hashed account-id list is absent on this box, so the gate printed WARN and passed the commit unchecked for client account ids
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W143-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~143",
+  "surfaced_at": "2026-10-14T19:12:15Z",
+  "one_line": "The commit-time client-data check did not scan commit 26b34d0449: the hashed account-id list is absent on this box, so the gate printed WARN and passed the commit unchecked for client account ids until the list is placed.",
+  "spec_asserts": "client-data-check.py header (CTO_RULING_CLIENT_ACCOUNT_DATA_IN_REPO_CONTAINMENT_20261009 item 6): a commit is scanned for client account ids against the hashed list held outside the repo; an absent list is a loud WARN, and absent is not empty.",
+  "world_is": "On this box the list is ABSENT at the default ~/.opal/account_id_hashes.txt and OPAL_ACCOUNT_ID_HASHES is unset. safe-commit of 26b34d0449 printed 'WARN: client-data-check ... this commit was NOT checked for client account ids'. The gate did not measure the three files; this worker's own reading of the added lines names no client account id, but that reading is not the gate's check.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (owner of the client-data gate per its header; placing the list on this box is its disarm)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/git-hooks/client-data-check.py:11-17 @4dace80bda (the list lives outside the repo; absent is not empty)",
+      ".tools/git-hooks/client-data-check.py:78-79 @4dace80bda (the ABSENT WARN text)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The WARN is loud and was read at commit time. The row records the instrument gap on this box; it does not claim that a client account id is present."
+}
+]
+```
