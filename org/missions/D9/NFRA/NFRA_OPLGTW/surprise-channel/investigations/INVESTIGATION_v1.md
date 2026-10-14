@@ -14937,3 +14937,31 @@ name the one known failure instead of silently inheriting it.
   "notes": "Filed by the worker on the FIRST ACT. No module, test, probe or catalog row was written. Resolution is the issuer's: a registry row or builder output for the portal-v2 layout, or a ruling on the gate's canonical form. The naming gate was not overridden and no key was typed by splitting."
 }
 ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S122",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T18:27:29Z",
+    "one_line": "A2 fixed zs1.AC2's branch LOGIC but not the <expect> REGEX that grades it. The fixed check prints 'WebACL rules identical before and after, updatewebacl_calls 0' and exits 0 with RESULT: PASS -- and the order's expect admits only '...identical..., updatewebacl_calls 1' or '...not changed by this apply, updatewebacl_calls 0', never the true third combination of identical AND zero. So the criterion cannot be PROVEN while it PASSES, and OG-zs-1's status tag stays staged on work that is fully landed.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "zs1.AC2.sh at fd4e8e0bcb (2.0.0_SA_COO~O, the A2 fix) run by this seat: 'ledger CLOSED 1 of 1; sentinel at HEAD 0' / 'WebACL rules identical before and after, updatewebacl_calls 0' / 'live bare path unauthenticated: 401; twin unauthenticated: 401' / 'proof file: bare 401, twin authenticated 200, scanner authorizer read yes' / 'RESULT: PASS' / exit=0",
+        "the order's AC2 <expect> at 858549a2b7, the WebACL clause verbatim: 'WebACL (rules identical before and after, updatewebacl_calls 1|not changed by this apply, updatewebacl_calls 0)' -- an alternation of exactly two phrasings",
+        "proof-of-spec-check on the instance with AC2 marked PASS: 'VIOLATION: acceptance[AC2]: status=PASS but output_evidence does NOT match expect ... INVALID (rc=1)'",
+        "the same instance with AC2 marked FAIL and a status_reason: VALID (rc=0)",
+        "the <status> tag was flipped to complete and then REVERTED to staged in the same turn, uncommitted, because the order flips it only if AC1 and AC2 both PASS"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A2 (ruling on Z-S121): 'updatewebacl_calls of 0 is accepted beside your before and after snapshots (equal rules_sha256)... zs1.AC2 branch logic was unmeetable for your case and is fixed; my live re-run reads RESULT: PASS. Re-run it on your side, refresh the instance, flip the status to complete.'",
+    "world_is": "The re-run does read PASS, so the issuer's own instruction is satisfiable at the CHECK. It is not satisfiable at the CRITERION: a proof instance must quote both the real output and the order's expect, and the expect cannot match the output the fixed check now produces. The fix moved the check's acceptance from 'zero only when no snapshots exist' to 'zero beside equal snapshots' without widening the expect's alternation to describe that state, and the expect is what proof-of-spec-check grades. The gap is narrow and entirely in the order's own two halves -- nothing in the world is wrong and nothing needs re-applying.",
+    "notes": "What this seat did NOT do, because it is the tempting move: edit the <expect> inside its own instance so the strings match. The expect IS the criterion; copying a different one into the instance would be grading myself, and the invocation-alignment limb exists to catch exactly that. The remedy is one amendment by the issuer -- admit the third phrasing, e.g. 'rules identical before and after, updatewebacl_calls [01]' -- after which AC2 is marked PASS, the instance is refreshed and the tag flips. GENERAL FORM, worth more than this instance: when a ruling fixes a CHECK, the <expect> that grades the check is a SECOND surface and does not move with it. Z-S119's ruling had the same shape and did amend both (A3 replaced the criterion as well as the check), which is why that one closed cleanly."
+  }
+  ```
