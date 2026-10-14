@@ -76,7 +76,7 @@ and report once. Your report states the commit, the two modules' new `_calendar(
 - Round 37, workstream G1-FIX2 (addendum R3-T.55). Found by the worker of OG-gt-8 (row Z-W87-S1), re-measured by the issuer (gt10.AC2 base: 2 of 69 files). The G3 modules ride `OG-ap-19`; this fix must be merged before that release is cut.
 - Pre-cut: gt10.AC1 FAIL (IndexError on both portal modules), gt10.AC2 FAIL (2 of 69), gt10.AC3 FAIL (no test file).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G1-FIX2</workstream>
 <slot>~90</slot>
