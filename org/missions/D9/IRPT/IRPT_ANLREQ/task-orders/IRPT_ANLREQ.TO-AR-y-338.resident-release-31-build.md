@@ -1,0 +1,93 @@
+# TO IRPT_ANLREQ.TO-AR-y-338.resident-release-31-build -- BUILD the release-31 resident tarball and its host scripts from the merged tree (BUILD ONLY: nothing uploaded, installed, applied or run on a host)
+
+<to_id>IRPT_ANLREQ.TO-AR-y-338</to_id>
+<project>IRPT_ANLREQ</project>
+<issued_to>0.9.0_WK_IRPT_ANLREQ~144</issued_to>
+<issued_by>2.0.0_SA_COO~Y2</issued_by>
+<issued_date>2026-10-14</issued_date>
+<status>pending</status>
+<direct_act>false</direct_act>
+<risk>WORLD</risk>
+<worker_class>worker</worker_class>
+<placeholders>NONE</placeholders>
+<round>40</round>
+<workstream>ZX</workstream>
+
+**Directive:** D9 | **Fabric:** dell2 | **Risk:** WORLD (the class the `<paths>` imply; source and tests only, the worker deploys NOTHING)
+**Decomp cell:** `AR-y-338` (`decompositions/IRPT_ANLREQ_DECOMP_R40A_Y.md`) | **outcome_ref:** FWD-1 | **depends_on:** `AR-y-318`, `AR-y-319`, `AR-y-327`, `AR-y-330`, `AR-y-331`, `AR-y-333`, `AR-y-336` (all merged; last `c4c2afe896`)
+
+---
+
+## WORKER FACE
+
+You are `0.9.0_WK_IRPT_ANLREQ~144`.
+- **Worktree:** `C:/dev/wk-irpt-anlreq-144` (branch `wk-IRPT_ANLREQ-144`), provisioned by the issuer. Commit WORKSPACE files with `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~144 <0.9.0_WK_IRPT_ANLREQ~144@opal.agent>" -F <msgfile> -- <paths>`.
+- Write every message file with the Write tool. `surfaced_at` of any row = `date -u +%FT%TZ` at filing; a row id has the form `IRPT_ANLREQ-D2-W144-S<k>` (take the next free `<k>`). The workspace worktree shows ` M portal` (and may show a modified `.parquet` fixture): never commit either to the WORKSPACE repository. Every `.py` you add or change passes `bash .tools/commit-gate.sh <file>` (Python 3.9 syntax). No non-ASCII in what you add.
+- The proof instance: artifact rows use a `kind` the schema admits; a judgment row needs `method`, `invocation` and `denominator`; every non-PASS row carries a `status_reason`; a `controls.mutant` MUST be a mutant that FIRES. No live call, NO PUSH, no deploy, no upload, no apply, no invoke, no AWS call. Scratch outside the product tree.
+
+### THE CELL (`AR-y-338`, inlined)
+
+*The CTO ruled (msg 7767 and the round-41 path msg 7723 item 4) that ONE resident release binds the three queues and the packager and carries the synthetic producer address. Every source cell of it is merged on `box/dell2`: the intake members (`AR-y-318`, `AR-y-319`), the standalone commentary PDF (`AR-y-327`) and its pending-label disclaimer (`AR-y-330`), the commentary route and signer widening (`AR-y-331`, merged `a1015b40f9`), the resident source (`AR-y-333`, merged `6ad1e0d97a`) and the queue and packager bindings (`AR-y-336`, merged `c4c2afe896`). This cell is the BUILD of the release-31 resident tarball and its host scripts from that tree, the way `AR-y-324` built release 30 (which was never released and is SUPERSEDED by this release). Nothing is uploaded, installed, applied, invoked or run on a host.*
+
+**Release input (fixed):** the commit `c4c2afe896`: print its full 40-hex with `git rev-parse c4c2afe896` and use THAT value as `--pin`; it is a commit on `box/dell2` (the Dell manager pushes its work to CLOUD; the pin is a sha, not a branch). The running root is `/opt/irpt-resident/0485393f3a-r29` (the release-29 record; the live host is not read here); the new root is `/opt/irpt-resident/0485393f3a-r31`. The live base is the release-29 tarball `C:/dev/irpt-release-r29/irpt-resident-0485393f3a-r29.tar.gz` (sha256 `2de2adce622f8bb9bbd5ebc071e862446b056303c0d9ffd7d41b050bd17f51a4`, 299 members including `SHA256SUMS`).
+
+1. **Read first:** the build record of `AR-y-324` (`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~132/r40/RESIDENT_BUILD.json`, especially `release_input.arguments`, `two_builds`, `host_script`, `gate_dry_run`, `rollback`, `scripts`) and its scratch recipe in the same folder (`make_scripts_r30.py`, `compare_r30.py`, `pack_delta_r30.json`, `gate_dryrun.sh`, `install_r30.sh`, `pre_read_r30.sh`, `rollback_r30.sh`, `resident_host_install_0485393f3a-r30.sh`, `files_from_r30.txt`): you REPEAT that method for r31. Also read `AR-y-333`'s and `AR-y-336`'s records (`.../0.9.0_WK_IRPT_ANLREQ~141/r41/RESIDENT_R31_SOURCE_RECORD.json` and `.../0.9.0_WK_IRPT_ANLREQ~143/r41/RESIDENT_R31_PACKAGER_BINDINGS_RECORD.json`, their `build_note`s: run the builder with `MSYS_NO_PATHCONV=1`), the builder `infra/aws/lambda/investor-reporting/reports/build_resident_package.py` at the pin, and `infra/aws/terraform/investor-reporting/ycharts/resident.tf`.
+2. **Build (BUILD ONLY):** create a clean release worktree OUTSIDE the repository at the pin (`git -c core.longpaths=true worktree add --detach C:/dev/irpt-release-r31/wt-release-c4c2afe896 <full sha>`; `git status` clean; remove it when done), export `BUILD_ONLY=1` and `MSYS_NO_PATHCONV=1`, print `git show <pin>:infra/aws/lambda/ci/build-and-upload.sh` with its `BUILD_ONLY` count before each build as `AR-y-324` did, and run the builder with the SAME argument set as `AR-y-324`'s `release_input.arguments` except `--pin` (this pin) and the output folder, plus the `--opal-map` and `--member` lines it used (read them from the record). Build TWICE into `C:/dev/irpt-release-r31/build_a` and `build_b` with the clock held to one instant; compare member by member (name and sha256): they must be identical. Pack ONE tarball `C:/dev/irpt-release-r31/irpt-resident-0485393f3a-r31.tar.gz` with the SAME deterministic packer `AR-y-324` used (SHA256SUMS first, sorted names, mode 0644, uid/gid/mtime zero, gzip mtime zero); write its sha256 and a `SHA256SUMS` copy beside it. No `aws` call of any kind (the builder runs with `--state-json` as before).
+3. **The delta against the live base (member by member):** extract the r29 tarball and the r31 tarball and list `unchanged`, `differing`, `only_in_release`, `only_in_live` with each differing name. EXPECT, and state in the record whether it holds: `SHA256SUMS`, `reports/resident_bindings.json` (the bindings gain `analysis_ready_queue_url`, `commentary_ready_queue_url`, the `packager` block {api_base, secret_name} and the `opal_map` member), `ycharts/generate/resident_worker.py` (the producer list gains `fwd1-staff-r41a@opal.invalid`), `ycharts/generate/composition_admission.py`, `_scope/interactive_access.py`, `intake/uploads.py`, `ycharts/research/layout_overview.py`, `ycharts/research/opal_producer.py`, `ycharts/research/opal_packager.py`, the `ops/` members of the commentary route (`ops/entry.py`, `ops/owned_report.py`, `ops/pdf_link.py`), `reports/status_installed.py`, `reports/resident_installed.py` if it changed, and the new member `ycharts/research/overview_map.json` if the builder adds it. ANY other differing or added member is a surprise row naming it (the delta is exactly what the merged cells changed). Print the bindings diff (keys only; values of `api_base` and `secret_name` and the queue URLs may be printed, no secret exists in them) and the `provenance` change.
+4. **The host scripts (derive from the r30 ones; never run them):** write into your deliverable folder `pre_read_r31.sh`, `install_r31.sh`, `rollback_r31.sh` and the single script `resident_host_install_0485393f3a-r31.sh` the way `make_scripts_r30.py` made the r30 set: the new root, the new tarball name and sha256 pins (the two gates), one quoted member-check line per DIFFERING member from step 3 (each equal to the extracted r31 tarball's bytes), `WANT_LIBRARY` and `WANT_WRAPPER` equal to the tarball's `ycharts-host` members, the running root r29 as the rollback target. The pre-read must FAIL CLOSED if the running root is not `0485393f3a-r29`. The install prints the expected producer list; the checks it makes of the unit must still refuse `IRPT_ANALYSIS_READY_QUEUE_URL` in the unit. ASCII only, `bash -n` rc 0 for each. Dry-run the two gate lines as `AR-y-324` did (`gate_dryrun.sh`): unchanged file rc 0, one-byte change non-zero.
+5. **Tests:** run the test files `AR-y-324` ran (read its `tests` block) plus `reports/tests/test_resident_r31_source.py`, `reports/tests/test_resident_r31_packager_bindings.py`, `ycharts/research/tests/test_commentary_standalone_pdf.py`, `ycharts/research/tests/test_commentary_disclaimer_pending.py` and `ops/tests/test_commentary_pdf_route.py`, ONE PROCESS PER FILE, from the release worktree; any failure is explained against a control run on the r29 tree as `AR-y-324` did.
+6. **Write `r41/RESIDENT_R31_BUILD.json`** in your deliverable folder with: `artifact` {path, bytes, sha256, member_count}, `release_input` {pin full sha, arguments, the BUILD_ONLY guard counts}, `two_builds` {files_compared, identical}, `delta_vs_live` {counts, the four lists}, `expected_delta_holds` (true/false and which names differ from the expectation), `bindings_diff`, `scripts` {name, path, sha256, bytes, bash_n_rc, ascii_only}, `gate_dry_run`, `tests`, `rollback` {rollback_root, base_tarball_sha256}, `supersedes` (the unreleased r30 artifacts: say they are untouched), `claim`, `not_read` (the live host, the live S3 objects, the live root and cutover receipt, the release-31 key).
+7. **Write the three checker scripts** named in ACCEPTANCE into your deliverable folder. In your report: the artifact sha256, the counts, the delta, the surprise rows, anything that departed from the expectation.
+
+
+### ACCEPTANCE
+
+<criterion id="AR338-y-AC1" cell_refs="AR-y-338"><invocation>python C:/dev/wk-irpt-anlreq-144/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~144/build_check.py</invocation><expect>^BUILD-OK </expect></criterion>
+`AR338-y-AC1`: you write `build_check.py`: it prints `BUILD-OK <members> members, builds identical <n> of <n>, delta <d> differing 0 only_in_release_unexplained 0 only_in_live` only when (1) the sha256 of `C:/dev/irpt-release-r31/irpt-resident-0485393f3a-r31.tar.gz` equals the record's, (2) `build_a` and `build_b` agree member by member, (3) re-extracting the tarball and the r29 base and diffing them reproduces the record's delta lists exactly, (4) the differing set is a SUBSET of the expected names of step 3 plus any member the record explains by a surprise row, (5) the extracted `reports/resident_bindings.json` carries the keys `analysis_ready_queue_url`, `commentary_ready_queue_url`, `packager` (exactly `api_base` and `secret_name`) and `opal_map`, and `OPAL_PRODUCER_PRINCIPALS` in the extracted `ycharts/generate/resident_worker.py` is exactly the two-entry tuple, (6) no JWT-shaped string and no `"token"` JSON member appears in any extracted text member; otherwise `BUILD-BAD <why>` and exit 1.
+
+<criterion id="AR338-y-AC2" cell_refs="AR-y-338"><invocation>python C:/dev/wk-irpt-anlreq-144/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~144/scripts_check.py</invocation><expect>^SCRIPTS-OK </expect></criterion>
+`AR338-y-AC2`: you write `scripts_check.py`: it prints `SCRIPTS-OK <n> scripts, member checks <m> of <m> equal the tarball, gates fail on one byte` only when each of the four scripts is ASCII-only and `bash -n` rc 0, every quoted member-check line equals the sha256 of the same member in the extracted r31 tarball (m of m, and m equals the number of differing members), the two tarball gates' pinned sha256 equal the tarball's, `WANT_LIBRARY` and `WANT_WRAPPER` equal the tarball's `ycharts-host` members, the pre-read contains the fail-closed check of the running root `0485393f3a-r29`, and the gate dry run (unchanged rc 0, one byte changed non-zero) holds; otherwise `SCRIPTS-BAD <why>` and exit 1.
+
+<criterion id="AR338-y-AC3" cell_refs="AR-y-338"><invocation>python C:/dev/wk-irpt-anlreq-144/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~144/scope_check.py</invocation><expect>SCOPE-OK</expect></criterion>
+`AR338-y-AC3` (a third check, with a reason: the cell is BUILD ONLY and a build that touched the repository or the cloud is a release nobody signed): you write `scope_check.py`: it prints `SCOPE-OK` only when `git diff --name-only <base> HEAD` (`<base>` = the parent of your first commit, printed) lists only paths under `org/missions/D9/IRPT/IRPT_ANLREQ/` (your deliverable folder and the surprise channel file), `git status --porcelain` of the product tree shows nothing untracked or modified under `infra/`, and the staged artifacts all live under `C:/dev/irpt-release-r31/` (none inside the repository); otherwise `SCOPE-BAD <why>`, exit 1.
+
+<criterion id="AR338-y-AC4J" cell_refs="AR-y-338" judgment="true"/>
+`AR338-y-AC4J` (judgment, graded at L9, never by you): the release-31 resident tarball is exactly the merged cells' changes on top of the live release-29 base, the host scripts pin that tarball and refuse a wrong running root, nothing was uploaded or run, and no credential appears anywhere.
+
+<expected_criteria>AR338-y-AC1 AR338-y-AC2 AR338-y-AC3 AR338-y-AC4J</expected_criteria>
+
+## BOUNDS
+
+- **Grant:** exactly the `<paths>` below, plus `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~144/` and this order's file (status flip only). If a test OUTSIDE the grant fails because of your change, STOP: file a BLOCKING row naming it; the issuer amends the grant.
+- READ only: everything else.
+
+<paths>
+
+org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+<decomp_ref>
+<decomp_doc>org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R40A_Y.md</decomp_doc>
+<owned_cells>AR-y-338</owned_cells>
+</decomp_ref>
+
+<proof_of_spec>
+Criterion ids: see ACCEPTANCE. The instance is at
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~144/IRPT_ANLREQ.TO-AR-y-338.resident-release-31-build.proof_of_spec.json`.
+Its `to_id` is exactly `IRPT_ANLREQ.TO-AR-y-338`. The judgment criterion is recorded under `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming `3.0.0_SA_CVO` (never PASS or FAIL). Validate it AFTER its commit with
+`python .tools/proof-of-spec-check.py <instance> "AR338-y-AC1,AR338-y-AC2,AR338-y-AC3,AR338-y-AC4J"`; flip `<status>` to `complete` only when it prints VALID.
+</proof_of_spec>
+
+<preflight>
+comp-blast: DECLARED-NOT-APPLICABLE -- a BUILD ONLY order: local files outside the repository; nothing is uploaded, installed, applied, invoked or run on a host. The release is applied later by an applier under a signed never-widen pair that names the widenings.
+comp-routes: DECLARED-NOT-APPLICABLE -- no route is called or changed by the worker; any route this cell adds is source only and is served only after a later signed release. comp-cache: DECLARED-NOT-APPLICABLE. comp-schedule: DECLARED-NOT-APPLICABLE -- no schedule or trigger. comp-iam: DECLARED-NOT-APPLICABLE -- this order makes no AWS call and changes no policy.
+comp-adversary: RUN -- by reading the CTO rulings (msg 7767, 7777) and the merged cells against the build; the lens: a member in the tarball that no merged cell changed, a script that pins the wrong tarball, a pre-read that does not refuse a wrong running root, an aws call or upload, a credential or token in any member or script, a producer list other than the two-entry tuple. The cell requires the delta to equal the expectation, two identical builds, scripts equal to the tarball and nothing outside the stage folder. NOT seen (blind): the live system and the deployed bytes; denominator: 299 base members, 4 scripts, 3 checkers.
+</preflight>
+
+
+---
+
+## RECORD FACE
+
+- Cut on the CTO's rulings msg 7767 and 7777, after the source cells merged (`c4c2afe896`). Workstream `ZX` of round 40. Base: `AR338-y-AC1`, `AC2`, `AC3` FAIL as expected (no checker files).
+- Supersedes the never-released release-30 artifacts of `AR-y-323`/`AR-y-324` (they stay where they are). The apply is a later applier order under the COO half of a never-widen pair that names: the producer-list address, the signer family, the new served route, the queue and packager bindings (the packager calls the ticket package door as `svc-irpt-packager`, firm-bound to `PACKAGE_ALLOWED_FIRMS`), the `opal_map` member.

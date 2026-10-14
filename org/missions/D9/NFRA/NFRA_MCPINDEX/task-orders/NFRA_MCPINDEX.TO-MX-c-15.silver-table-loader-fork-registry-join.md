@@ -30,7 +30,7 @@ fork, so the tokens move out of the rows and into `infra/logic/registry/catalog_
 loader JOINS the registry entry back, so the catalog the gateway loads still holds the full values.
 
 **The clean row (what `MX-c-14` writes).** The table row you already accept, with these differences:
-- `prefix` is a non-empty string OR null (null when the prefix is absent or carries a token); `table` is a non-empty string OR null;
+- `bucket`, `prefix` and `table` are each a non-empty string OR null (null when the value is absent or carries a token);
 - `contract` has exactly the keys `id label size freshness partition producer`: `id` a hashed id such as `c-068b87add1de` (non-empty string), `label` a non-empty string, the other four mappings (their string leaves may be null where a token was removed);
 - `fork_keys` is a mapping whose keys are a SUBSET of `firm account platform`, each a mapping or null (a token key or value was dropped from it); an empty mapping is valid;
 - `nl_tags`, `open_items` and `example_questions` are lists of strings (a token item was dropped);
@@ -108,3 +108,4 @@ Battery and planted arms: decomposition R14.7.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+<status>complete</status>
