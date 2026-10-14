@@ -1274,3 +1274,57 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Test-only seed. If assist renames _SECRETS, monkeypatch.setitem fails loudly rather than reading AWS. Surfaced for the issuer; not a production change."
 }
 ```
+
+## COMM_ASSIST-W19-S5 -- test_teams_chat_natural.py does not collect when run alone from the root; the directory run collects it
+
+```json
+{
+  "id": "COMM_ASSIST-W19-S5",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~19",
+  "surfaced_at": "2026-10-14T03:38:07Z",
+  "one_line": "test_teams_chat_natural.py does not collect when run alone from the root: it imports its sibling test module by bare name, and pytest.ini does not put the tests directory on the path. The directory run collects it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/tests/test_teams_chat_natural.py@53be82a3cd line 6: from test_teams_chat_tenant import CHAT, NOW, Ctx, Fakes, a, msg, t",
+      "pytest.ini@53be82a3cd: pythonpath = data/black_diamond/scripts and . (the tests directory is not on the path)",
+      "measured at 53be82a3cd: python -m pytest data/transcripts/scripts/tests/test_teams_chat_natural.py -q gives ModuleNotFoundError: No module named 'test_teams_chat_tenant', rc 2; with PYTHONPATH=data/transcripts/scripts/tests it gives 8 passed, rc 0",
+      "measured on the working tree after the edit: python -m pytest data/transcripts/scripts/tests -q from the root gives 544 passed, rc 0, the natural file collected"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-j-1 AC2 and its order text: run the whole flow-test set under data/transcripts/scripts/tests from the worktree root; if test modules do not import from the root, run it the way check_i2_regression.py runs them and say which.",
+  "world_is": "The natural file's bare import resolves only when the tests directory is on sys.path. Run alone from the root it fails at collection. Run as part of the directory it is collected and passes (8 of 8), by a path this worker did not identify.",
+  "notes": "Pre-existing: the import line is unchanged from its only commit fa2e17f953. Not fixed here: the file is outside this order's work except for the two exact-payload asserts. The set run was used for the wider count; the single-file run used PYTHONPATH on the tests directory and is named as such in the proof."
+}
+```
+
+## COMM_ASSIST-W19-S6 -- CAj1-AC2's invocation runs the tenant file only, so its ok=True does not show the sibling flow file
+
+```json
+{
+  "id": "COMM_ASSIST-W19-S6",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~19",
+  "surfaced_at": "2026-10-14T03:38:07Z",
+  "one_line": "CAj1-AC2's invocation, check_i2_regression.py, runs test_teams_chat_tenant.py only, so its printed ok=True does not show the sibling flow file the criterion names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r17/checks/check_i2_regression.py@53be82a3cd: TARGET = data/transcripts/scripts/tests/test_teams_chat_tenant.py, one pytest run on that file",
+      "measured on the working tree: check_i2_regression.py prints I2-REGRESSION ok=True passed=64 failed=0 reason=none (rc 0); the directory run over data/transcripts/scripts/tests prints 544 passed (rc 0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CAj1-AC2: the bound, a control that PASSES at the base and must still pass with the updated and added tests: the assistant's flow tests, the text path included. Invocation: check_i2_regression.py, expect I2-REGRESSION ok=True.",
+  "world_is": "The invocation's own scope is one file. The printed ok=True is true of that file (64 of 64) and says nothing about test_teams_chat_natural.py, which the criterion's scope includes (row S2 measured it failing at 7af9d5d1f4).",
+  "notes": "The criterion was run as written and recorded. The wider scope was measured by the directory run (544 of 544, the natural file 8 of 8) and recorded beside it. The invocation is the issuer's and was not edited."
+}
+```
