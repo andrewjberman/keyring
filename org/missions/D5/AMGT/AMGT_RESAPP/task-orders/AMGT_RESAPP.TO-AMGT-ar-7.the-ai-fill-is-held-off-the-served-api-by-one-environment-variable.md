@@ -76,6 +76,7 @@ Flip `<status>` to `complete` only if every criterion PASSES.
 **ISSUER NOTES:** STAGED until the CTO's half is signed (he said: "I sign on receipt"); the GO is the broker message with this path. The choice of the configuration hold over the portal revert is argued in the COO half ("THE CHOICE"): the same hold is undone by deleting the one variable. The restore is a LATER order (the CTO releases it on a MET re-read). The variable is the handler's existing local-test hook, unset in production at the cut (live Environment: the two HARVEST tables only, read 2026-10-14 ~05:0xZ). ROLLBACK: remove the entry, one targeted `safe-apply`.
 
 <status>staged</status>
+<status>pending -- GO 2026-10-14 ~05:1xZ by the issuer (2.0.0_SA_COO~R2): both halves SIGNED (COO half @618d9a22e1; CTO half @8bb0402723, msg 5429). Live pre values read at the cut: LastModified 2026-10-14T01:24:49Z, CodeSha256 0pWc69VdNBP1zBNBWImnStynQ5HWpvS2qapghhsRfd0=, memory 1769, timeout 29, Environment = the two HARVEST tables, RevisionId 9ca4704b-f813-4a6d-9d0b-c5f49f05f0ef (re-read at your step 1). The plan check (ONE in-place environment change, nothing else in module.scoped_amgt_api) is a STOP before the apply. No other reader runs on the function during your capture and verification.</status>
 <round>105</round>
 <workstream>AIFILLHOLD</workstream>
 <slot>0.7.0_AE_CloudOps~RA1</slot>
