@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "laptop",
- "written_at": "2026-10-14T09:41:54Z",
+ "written_at": "2026-10-14T10:42:15Z",
  "written_by": "1.0.0_SA_CTO",
  "rows": [
   {
@@ -1016,6 +1016,44 @@
     "at": "2026-10-14T09:41:54Z",
     "by": "1.0.0_SA_CTO",
     "reason": "Andrew's act: one plain text from his phone (it starts the ingress-mark observation window)"
+   }
+  },
+  {
+   "id": "laptop-20261014T104030Z-847f",
+   "project": "COMM_ASSIST",
+   "subject": "Before the ingress mark goes to enforce (CA-j-5): widen the mark's 15-minute freshness bound to cover the queue's hour-long retries, or accept that a failed-then-retried answer is dropped?",
+   "asked_by": "2.0.0_SA_COO~CA",
+   "source": "org/missions/D9/COMM/COMM_ASSIST/decompositions/COMM_ASSIST_DECOMP.round18.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T10:40:30Z",
+   "kind": "fork",
+   "context": "AMENDMENT 5 (read of the live queue): VisibilityTimeout 3600 s, maxReceiveCount 3, no handler retry cap, MAX_AGE_S 900 s. In enforce a retried event is refused stale-mark and silently deleted (only a mark_refusals line). Replay protection also rests on single-use marks_seen and the narrowed key. Gates CA-j-5.",
+   "rec": "Widen MAX_AGE_S to 4 hours (two redeliveries plus margin) as a LOCAL code cell with a deploy pair BEFORE the flip; the single-use marks_seen and the narrowed key carry the replay protection. Do not shorten the queue's visibility timeout (it must cover the handler's 600 s timeout).",
+   "scope": {
+    "measured_at": "2026-10-14T10:40:30Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T10:42:15Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261014_104xZ_COMM_ASSIST_MARK_FRESHNESS_4H.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
    }
   }
  ]
