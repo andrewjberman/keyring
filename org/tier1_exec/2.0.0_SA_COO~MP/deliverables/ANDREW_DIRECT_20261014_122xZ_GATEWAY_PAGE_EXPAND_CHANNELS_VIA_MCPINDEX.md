@@ -18,7 +18,7 @@ See the answer in the commit message and the session reply: the page is specifie
 to list every channel the DEPLOYED gateway serves, generated from its definitions. It therefore shows what is served, not
 what is missing; a capability the gateway does not serve cannot appear on it.
 
-## Addendum -- the same session, ~12:5xZ to ~13:0xZ, same terminal (recorded by 2.0.0_SA_COO~MP)
+## Addendum -- the same session, same terminal (recorded by 2.0.0_SA_COO~MP). Time: NOT clock-read when received; both messages arrived after the ~12:3xZ drive tick and before the 13:27Z GC message (msg 34084), so between ~12:3xZ and ~13:2xZ
 
 VERBATIM, two later messages:
 
