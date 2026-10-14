@@ -1,5 +1,5 @@
 {
-  "contract_version": "0.3.0",
+  "contract_version": "0.4.0",
   "lineage": [
     {
       "contract_version": "0.1.0",
@@ -10,6 +10,11 @@
       "contract_version": "0.2.0",
       "sha256": "1c5cf7ba7abff38d0ce887cc83200873f3edd9778171355621d830e515c54cd7",
       "reason": "the filled-report shape stated: document.filled_report names the top-level keys, the household and account entry fields, the window statuses, the by_row form of a per-row value and the derivation of window_status and first_data_date, as the tested components read it"
+    },
+    {
+      "contract_version": "0.3.0",
+      "sha256": "ca633614a32e85f4caa4ee07fdc08923d8398fd287adfc31c7f532efae89b574",
+      "reason": "the 0.3.0 bytes, before the 32 model benchmark members and the 12-month chart were sourced from the served dated model series (input model_portfolio_timeseries) at version 0.4.0"
     }
   ],
   "project": "IRPT_DASHBD",
@@ -240,8 +245,13 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Benchmark: Ultra-Short Term Return (Cumulative)",
       "label": "Opal model benchmark, ultra short term, cumulative, quarter to date",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Ultra-Short Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative qtd return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is the first calendar day of the as-of date's quarter (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "pvs.qtd.benchmark_short_term",
@@ -249,8 +259,13 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Benchmark: Short-Term Return (Cumulative)",
       "label": "Opal model benchmark, short term, cumulative, quarter to date",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Short Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative qtd return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is the first calendar day of the as-of date's quarter (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "pvs.qtd.benchmark_intermediate_term",
@@ -258,8 +273,13 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Benchmark: Intermediate-Term Return (Cumulative)",
       "label": "Opal model benchmark, intermediate term, cumulative, quarter to date",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Intermediate Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative qtd return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is the first calendar day of the as-of date's quarter (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "pvs.qtd.benchmark_long_term",
@@ -267,8 +287,13 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Benchmark: Long-Term Return (Cumulative)",
       "label": "Opal model benchmark, long term, cumulative, quarter to date",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Long Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative qtd return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is the first calendar day of the as-of date's quarter (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "pvs.ytd.beginning_value",
@@ -333,8 +358,13 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Benchmark: Ultra-Short Term Return (Cumulative)",
       "label": "Opal model benchmark, ultra short term, cumulative, year to date",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Ultra-Short Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative ytd return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is January 1 of the as-of date's year (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "pvs.ytd.benchmark_short_term",
@@ -342,8 +372,13 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Benchmark: Short-Term Return (Cumulative)",
       "label": "Opal model benchmark, short term, cumulative, year to date",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Short Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative ytd return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is January 1 of the as-of date's year (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "pvs.ytd.benchmark_intermediate_term",
@@ -351,8 +386,13 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Benchmark: Intermediate-Term Return (Cumulative)",
       "label": "Opal model benchmark, intermediate term, cumulative, year to date",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Intermediate Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative ytd return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is January 1 of the as-of date's year (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "pvs.ytd.benchmark_long_term",
@@ -360,8 +400,13 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Benchmark: Long-Term Return (Cumulative)",
       "label": "Opal model benchmark, long term, cumulative, year to date",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Long Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative ytd return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is January 1 of the as-of date's year (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "pvs.last_12_months.beginning_value",
@@ -426,8 +471,13 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Benchmark: Ultra-Short Term Return (Cumulative)",
       "label": "Opal model benchmark, ultra short term, cumulative, last 12 months",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Ultra-Short Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative last 12 months return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is one calendar year before the as-of date, plus one day (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "pvs.last_12_months.benchmark_short_term",
@@ -435,8 +485,13 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Benchmark: Short-Term Return (Cumulative)",
       "label": "Opal model benchmark, short term, cumulative, last 12 months",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Short Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative last 12 months return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is one calendar year before the as-of date, plus one day (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "pvs.last_12_months.benchmark_intermediate_term",
@@ -444,8 +499,13 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Benchmark: Intermediate-Term Return (Cumulative)",
       "label": "Opal model benchmark, intermediate term, cumulative, last 12 months",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Intermediate Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative last 12 months return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is one calendar year before the as-of date, plus one day (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "pvs.last_12_months.benchmark_long_term",
@@ -453,8 +513,13 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Benchmark: Long-Term Return (Cumulative)",
       "label": "Opal model benchmark, long term, cumulative, last 12 months",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Long Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative last 12 months return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is one calendar year before the as-of date, plus one day (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "pvs.since_inception.beginning_value",
@@ -519,8 +584,13 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Benchmark: Ultra-Short Term Return (Cumulative)",
       "label": "Opal model benchmark, ultra short term, cumulative, since inception",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Ultra-Short Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative since inception return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is the day after the household's first data date (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "pvs.since_inception.benchmark_short_term",
@@ -528,8 +598,13 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Benchmark: Short-Term Return (Cumulative)",
       "label": "Opal model benchmark, short term, cumulative, since inception",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Short Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative since inception return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is the day after the household's first data date (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "pvs.since_inception.benchmark_intermediate_term",
@@ -537,8 +612,13 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Benchmark: Intermediate-Term Return (Cumulative)",
       "label": "Opal model benchmark, intermediate term, cumulative, since inception",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Intermediate Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative since inception return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is the day after the household's first data date (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "pvs.since_inception.benchmark_long_term",
@@ -546,8 +626,13 @@
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Benchmark: Long-Term Return (Cumulative)",
       "label": "Opal model benchmark, long term, cumulative, since inception",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Long Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative since inception return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is the day after the household's first data date (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "act.beginning_value.household",
@@ -975,8 +1060,13 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Benchmark: Ultra-Short Term Return (Cumulative)",
       "label": "Opal model benchmark, ultra short term, cumulative, quarter to date",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Ultra-Short Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative qtd return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is the first calendar day of the as-of date's quarter (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "avs.qtd.benchmark_short_term",
@@ -984,8 +1074,13 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Benchmark: Short-Term Return (Cumulative)",
       "label": "Opal model benchmark, short term, cumulative, quarter to date",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Short Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative qtd return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is the first calendar day of the as-of date's quarter (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "avs.qtd.benchmark_intermediate_term",
@@ -993,8 +1088,13 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Benchmark: Intermediate-Term Return (Cumulative)",
       "label": "Opal model benchmark, intermediate term, cumulative, quarter to date",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Intermediate Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative qtd return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is the first calendar day of the as-of date's quarter (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "avs.qtd.benchmark_long_term",
@@ -1002,8 +1102,13 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Benchmark: Long-Term Return (Cumulative)",
       "label": "Opal model benchmark, long term, cumulative, quarter to date",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Long Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative qtd return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is the first calendar day of the as-of date's quarter (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "avs.ytd.beginning_value",
@@ -1071,8 +1176,13 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Benchmark: Ultra-Short Term Return (Cumulative)",
       "label": "Opal model benchmark, ultra short term, cumulative, year to date",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Ultra-Short Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative ytd return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is January 1 of the as-of date's year (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "avs.ytd.benchmark_short_term",
@@ -1080,8 +1190,13 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Benchmark: Short-Term Return (Cumulative)",
       "label": "Opal model benchmark, short term, cumulative, year to date",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Short Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative ytd return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is January 1 of the as-of date's year (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "avs.ytd.benchmark_intermediate_term",
@@ -1089,8 +1204,13 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Benchmark: Intermediate-Term Return (Cumulative)",
       "label": "Opal model benchmark, intermediate term, cumulative, year to date",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Intermediate Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative ytd return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is January 1 of the as-of date's year (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "avs.ytd.benchmark_long_term",
@@ -1098,8 +1218,13 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Benchmark: Long-Term Return (Cumulative)",
       "label": "Opal model benchmark, long term, cumulative, year to date",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Long Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative ytd return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is January 1 of the as-of date's year (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "avs.last_12_months.beginning_value",
@@ -1167,8 +1292,13 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Benchmark: Ultra-Short Term Return (Cumulative)",
       "label": "Opal model benchmark, ultra short term, cumulative, last 12 months",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Ultra-Short Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative last 12 months return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is one calendar year before the as-of date, plus one day (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "avs.last_12_months.benchmark_short_term",
@@ -1176,8 +1306,13 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Benchmark: Short-Term Return (Cumulative)",
       "label": "Opal model benchmark, short term, cumulative, last 12 months",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Short Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative last 12 months return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is one calendar year before the as-of date, plus one day (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "avs.last_12_months.benchmark_intermediate_term",
@@ -1185,8 +1320,13 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Benchmark: Intermediate-Term Return (Cumulative)",
       "label": "Opal model benchmark, intermediate term, cumulative, last 12 months",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Intermediate Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative last 12 months return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is one calendar year before the as-of date, plus one day (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "avs.last_12_months.benchmark_long_term",
@@ -1194,8 +1334,13 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Benchmark: Long-Term Return (Cumulative)",
       "label": "Opal model benchmark, long term, cumulative, last 12 months",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Long Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative last 12 months return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is one calendar year before the as-of date, plus one day (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "avs.since_inception.beginning_value",
@@ -1263,8 +1408,13 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Benchmark: Ultra-Short Term Return (Cumulative)",
       "label": "Opal model benchmark, ultra short term, cumulative, since inception",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Ultra-Short Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative since inception return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is the day after the household's first data date (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "avs.since_inception.benchmark_short_term",
@@ -1272,8 +1422,13 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Benchmark: Short-Term Return (Cumulative)",
       "label": "Opal model benchmark, short term, cumulative, since inception",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Short Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative since inception return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is the day after the household's first data date (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "avs.since_inception.benchmark_intermediate_term",
@@ -1281,8 +1436,13 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Benchmark: Intermediate-Term Return (Cumulative)",
       "label": "Opal model benchmark, intermediate term, cumulative, since inception",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Intermediate Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative since inception return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is the day after the household's first data date (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "avs.since_inception.benchmark_long_term",
@@ -1290,8 +1450,13 @@
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Benchmark: Long-Term Return (Cumulative)",
       "label": "Opal model benchmark, long term, cumulative, since inception",
       "unit": "percent",
-      "source": "ABSENT",
-      "reason": "Opal holds no benchmark return series. None of the sibling contracts carries the four model benchmark returns. It would come from a benchmark return series contract that does not exist yet; until it does, the cell prints this reason in words and no figure."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_name": "Long Term",
+        "series_column": "index_benchmark_return",
+        "fold": "cumulative since inception return: the product of (1 + the daily index-benchmark return of the served model series) over the series' trading days d with start <= d <= the as-of date, minus 1, as a percent rounded to 1 dp; start is the day after the household's first data date (the household-level start, the same for every account column); absent in words, never zero and never interpolated, when the series does not open on the start or holds no return on a trading day of the window"
+      }
     },
     {
       "id": "glr.cost_basis",
@@ -1389,8 +1554,18 @@
       "baseline": "section 1(b) chart Portfolio Performance Last 12 Months (household, portfolio line and four benchmark lines)",
       "label": "Household performance, last 12 months, with benchmark lines",
       "unit": "series",
-      "source": "ABSENT",
-      "reason": "The household performance line needs a household daily return series, which no sibling carries (household return rule), and the four benchmark lines, which no sibling carries (benchmark rule). Each account's own performance line is served from its series object."
+      "source": {
+        "input": "model_portfolio_timeseries",
+        "served_object": "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+        "served_names": [
+          "Ultra-Short Term",
+          "Short Term",
+          "Intermediate Term",
+          "Long Term"
+        ],
+        "series_column": "index_benchmark_return",
+        "fold": "one series per model, named with its served name; a point on each trading day d of the series with one calendar year before the as-of date, plus one day, <= d <= the as-of date, carrying the cumulative percent of the product of (1 + the daily index-benchmark return) from that start through d, minus 1, rounded to 1 dp; the last point of each series equals that model's last_12_months benchmark member; the household's own line is not in this member"
+      }
     },
     {
       "id": "accounts.chart.allocation_by_account",
@@ -1482,7 +1657,7 @@
   "read_rule": "values are read by member id; an ABSENT member prints its reason in words; a figure is never derived from a source this contract does not name; the fee-basis words print beside every Opal return and gain figure and every baseline Net Gain figure",
   "open_changes": [
     "the household return series and the household daily return: a new contract (household return rule); until then the household return members are ABSENT",
-    "the four model benchmark return series: a new contract (benchmark rule); until then the benchmark members are ABSENT",
+    "the four model benchmark return series: sourced at version 0.4.0 from the served dated model series (input model_portfolio_timeseries); the 32 benchmark members and the 12-month chart are compounded from its daily returns, each window's start stated in its fold; a figure whose window the series does not open on, or whose trading days it does not hold, prints its absent reason in words",
     "month to date: a ruling is needed before a sibling carries it; until then the month-to-date members are ABSENT",
     "the registration names and the disclosure text: no sibling holds them; the cover, account rows and disclosure page print absent forms",
     "the since-inception convention: the baseline's conventions note says since inception is annualized past one year, while its Portfolio Value Summary row reads Return (Cumulative); the served figure is cumulative and is printed as cumulative until a ruling says otherwise",
