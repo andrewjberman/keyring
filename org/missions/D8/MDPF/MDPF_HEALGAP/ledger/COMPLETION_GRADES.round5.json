@@ -1,0 +1,53 @@
+{
+ "kind": "COMPLETION_GRADES",
+ "schema_version": "1.0",
+ "project": "MDPF_HEALGAP",
+ "round": 5,
+ "graded_by": "1.0.0_SA_CTO~DELL1",
+ "graded_utc": "2026-10-14T11:21Z",
+ "report_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/ledger/COMPLETION_REPORT.round5.json@8e6fc5c816",
+ "rows": [
+  {
+   "fwd_id": "FWD-1",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.7.0_AE_CloudOps~F/MDPF_HEALGAP.TO-HG-d3.fwd1-exercise-induced-morning-failure.proof_of_spec.json@2b865978c3",
+   "state_observed": "EXERCISED",
+   "note": "Carried REALIZED from round 1 (ROUND_ANALYSIS.round2.md@1974b85f4e row FWD-1). The artifact is the deliberately induced morning failure, followed through to that day's figures (TO-HG-d3). No later round touched this outcome's substance."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/ledger/ROUND_ANALYSIS.round2.md@1974b85f4e",
+   "state_observed": "EXERCISED",
+   "note": "EXERCISED 2026-10-10. The run's own result versions read PARTIAL with rebalancer_accounts missing, and no completion stamp existed until the 11:34Z heal (round-2 grade, carried)."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/critical_paths/change_management/20261012T1353Z_healgap-r3-act-ht10-fwd3-exercise-20261013_deploy_completion.md@1b179a3e8e",
+   "state_observed": "EXERCISED",
+   "note": "Repair limb: the named-in-advance repair act ran in the world on 2026-10-13 (7 of 7 legs). An induced same-day hole in rebalancer_accounts read PARTIAL, and one repair.py act closed it (ROUND_ANALYSIS.round3.md@f19cedfddc). Marked-missing limb: the 11 -missing.json objects for 2026-08-31 to 2026-09-10 (round-2 grade @1974b85f4e)."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/ledger/ROUND_ANALYSIS.round2.md@1974b85f4e",
+   "state_observed": "APPLIED",
+   "note": "The retry settings in place predicted exactly the 3 attempts observed on 2026-10-10 (round-2 grade, carried)."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/critical_paths/change_management/20261011T1339Z_healgap-r3-act-ht5-runner-fire-1245z-20261011_deploy_completion.md@ae80d303de",
+   "state_observed": "APPLIED",
+   "note": "The live rule cot-rebalancer-runner-daily reads cron(45 12 * * ? *) ENABLED, after the session refresh, and the characteristics producer sits at cron(25 13) (t14). Its 12:45Z fires on 2026-10-12 and 2026-10-13 read SKIP-IDEMPOTENT (ROUND_ANALYSIS.round3.md ADDENDUM 1 @f19cedfddc)."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D8/MDPF/MDPF_HEALGAP/ledger/ROUND_ANALYSIS.round4.md@91d26ce18b",
+   "state_observed": "APPLIED",
+   "note": "ADDENDUM 1 regrade. All 7 exposed-manual pulls carry a re-attempt or a named reason (t17 DISP-OK). Named reasons: D1-W14-S3 ASTN FT is HELD on Andrew's word ('Dont attempt FT until I return'); D1-W14-S2 SDD session restore is a named human act (sdd-daily-pull.ps1 :257-272); D1-W14-S4 is routed out of scope. Round 5's HG-t-18 FT re-attempt code is merged to source but NOT deployed (no round-5 deploy ledger): this grade does not rest on it, and any deploy of astn-wsjft-orchestrator or tools/astn_wsjft ships it, which the FT hold binds."
+  }
+ ]
+}
