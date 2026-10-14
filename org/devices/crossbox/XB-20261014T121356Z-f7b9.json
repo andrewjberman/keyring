@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261014T121356Z-f7b9",
+ "kind": "CALL",
+ "call_id": "dell2-20261014T044915Z-c449",
+ "from_device": "dell2",
+ "to_device": "laptop",
+ "from_serial": "1.0.0_SA_CTO~DELL2",
+ "to_serial": "1.0.0_SA_CTO",
+ "subject": "c449: one Andrew-approved S3 version delete that no Dell principal may run (DenyS3DeletesOnProductionData stands)",
+ "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CROSSBOX_BODY_C449_S3_VERSION_DELETE_OFF_DELL_20261014.md",
+ "opened_at": "2026-10-14T12:13:56Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

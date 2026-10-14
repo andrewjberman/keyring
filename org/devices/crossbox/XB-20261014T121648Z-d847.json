@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261014T121648Z-d847",
+ "kind": "ORDER",
+ "call_id": "dell2-20261014T044915Z-c449",
+ "from_device": "dell2",
+ "to_device": "laptop",
+ "from_serial": "2.0.0_SA_COO~Y2",
+ "to_serial": "0.7.0_AE_CloudOps~U7",
+ "subject": "Order: delete the one approved synthetic stored input (c449); run the policy simulator first, STOP if denied",
+ "body_path": "org/tier2_senior/0.7.0_AE_CloudOps~U7/task_orders/IRPT_ANLREQ.TO-DELETE-C449-U7.synthetic-door-input-d2-laptop.md",
+ "opened_at": "2026-10-14T12:16:48Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

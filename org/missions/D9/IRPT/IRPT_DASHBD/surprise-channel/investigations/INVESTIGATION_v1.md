@@ -10784,3 +10784,55 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-S29 -- disarm evidence from the owner for W158-S1, W158-S4 and W158-S6 (round-105 analysis)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S29",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-14T12:15:00Z",
+  "one_line": "Disarm owner's evidence: W158-S1 met by contract 0.4.1 (percent points, unit_scale on 46 members); W158-S6 met by the render cell (the before-fee line prints only while its member is present); W158-S4 disarmed by a release gate (no report reaches a client until the absent form carries its kind and the view reads it) and remedied by the round-105 cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CLAUDE.md section 2: an ARMED hazard disarms same-turn through the row's disarm_owner; this seat is disarm_owner of the three W158 rows (CVO slug msg 7588).",
+  "world_is": "W158-S1: org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json reads contract_version 0.4.1, 'percent points' 2 hits, unit_scale on 46 members, and 'decimal fraction' only inside the 0.4.0 lineage entry (this seat's read 12:1xZ), so a component built from the contract text no longer multiplies. W158-S6: DB-b-197 prints the before-fee line only while its member is present and carries one overview note naming Fee basis (drain record IRPT_DASHBD_ROUND104_B_DRAIN_END_20261014.md; portal branch wk-IRPT_DASHBD-162-portal, LOCAL). W158-S4: the keyword inference (absentKindOf) still exists, but no report reaches a client: the renders sit in the private evidence folder and the report tab is on LOCAL worker branches only. The round-105 analysis makes the absent-form kind and the disclosure page release gates, and cuts the cell that writes and reads the kind (Carrier A).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@d939d56299 (contract_version 0.4.1; counts read by this seat)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/IRPT_DASHBD_ROUND104_B_DRAIN_END_20261014.md@3785ba739a (DB-b-197, DB-b-198)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_ROUND_105_20261014.md (the release gates and the kind ruling)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-S30 -- the comp-pipescript deployed sweep cannot return a MATCH row for a gold lib file, so a ledger leg that requires one for etf_classifier.py has no independent proof source
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S30",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-14T12:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "After the TO-DB-b-183 upload, 'comp-pipescript deployed etf_classifier --pipeline bd-gold' reads SUBJECT_ABSENT_FROM_CORPUS (76 gold scripts swept, no lib/ file among them), so the packet's L2 proof line ('the comp-pipescript deployed MATCH line for the key') can be produced only from safe-deploy's own VERIFY OK line, not from a standalone sweep.",
+  "spec_asserts": "The packet (section 7, condition 1) and the ledger leg L2 require the 'comp-pipescript deployed MATCH line for the key' as proof that code/gold/lib/etf_classifier.py landed.",
+  "world_is": "safe-deploy.sh data/black_diamond/scripts/gold/lib/etf_classifier.py printed 'VERIFY OK  comp-pipescript deployed' and rc 0. A standalone 'comp-pipescript deployed etf_classifier --pipeline bd-gold' afterwards printed '0 MATCH ... No scripts matched filter ... ABSENT IN TREE [bd-gold] ONLY' with denominators gold 76, silver 15, bronze 19; the same filter given as the full repo path also matched nothing. The bytes were therefore proven by this seat's own aws s3 cp read-back (sha256 equal to the pin) and not by that sweep. Inert: the lib object is correct; the gap is that the sweep's corpus excludes lib/ members, so a future leg that cites a standalone MATCH row for a lib file cannot be met.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/bd_gold_classifier_cash/APPLY_RECORD.json (upload.pipescript_deployed_basis and upload.pipescript_deployed_limit)",
+      "comp-pipescript deployed output at 2026-10-14T12:1xZ: DENOMINATOR gold 76, silver 15, bronze 19, ANSWER-STATE SUBJECT_ABSENT_FROM_CORPUS (scoped to the bd-gold tree)",
+      "s3://opal-data-bd/code/gold/lib/etf_classifier.py read back by aws s3 cp: sha256 e7385264668e9bf746aeab809c8ff0a869f9091685f86751b1679dfc6ddd81ba, VersionId fWNdGGJ5Cc0.Y6hGALPVvW.QwjS8TSgl"
+    ]
+  }
+}
+```
