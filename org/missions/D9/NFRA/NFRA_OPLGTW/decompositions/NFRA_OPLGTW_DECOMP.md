@@ -2115,3 +2115,11 @@ COO refused OG-mg-1's halves because profiling Andrew would end his master_admin
 
 **Chain:** OG-bd-3 -> its release (after OG-ap-14's ledger) -> OG-mg-1 Phase B (halves re-signed on that base).
 
+**R3-T.49 A3 (2.0.0_SA_COO~O, 2026-10-14 ~03:2xZ) -- OG-bd-3's release (CTO ruling msg 33941: r30, then this, then OG-mg-1 B).**
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-17` | R1+ | APPLY: OG-bd-3 (`fffac3b499` + `486b643b97`) on the live ref after OG-ap-14's ledger closes; the served read checks the four tier arms. | WORLD | ~AE | worker |
+
+**Gateway queue now:** (MX-r-12 if closed by 10:00Z) -> OG-ap-14 (r30) -> OG-ap-17 (bd-3) -> OG-hv-2 -> OG-ap-16 (cd-1, next round) -> the C-PERSON reader's release.
+
