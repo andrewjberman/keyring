@@ -11531,3 +11531,59 @@
   "notes": "Not rendered in a browser. The words are read from code. The issuer decides the held sentence for staff; this worker did not change it."
 }
 ```
+
+## IRPT_ANLREQ-D2-W114-S1 -- The y296-armed checker (checks/r21/ar21_checks.py line 756) reads the channel with a regex
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W114-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~114",
+  "surfaced_at": "2026-10-14T00:09:06Z",
+  "one_line": "The y296-armed checker (checks/r21/ar21_checks.py line 756) reads the channel with a regex that matches only blocks opening with an object brace, so 86 of the 406 fenced json blocks (the array blocks, 117 rows) are never parsed: it prints 320 rows, 32 ARMED-OWNED, 22 left, where a parse of every fenced block gives 437 rows, 43 ARMED-OWNED, 12 already disarmed, 31 left.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (fix the checker's parse, or carry the nine unparsed left rows into the L10 slug by name)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py line 756 (a regex opened on the json fence token that matches only a brace-opened body) at 295d98d389",
+      "the channel file at 295d98d389: 406 fenced json openings, 320 whose first character is an object brace, 86 whose first character is an array bracket",
+      "worker census: org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~114/r29/ARMED_ROWS_CENSUS.json (denominator block)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AR-y-296 step 1: parse every fenced json block of the channel file and print the denominator; a count different from the issuer's 320 / 32 / 22 is a finding, and the finding says which rows differ and why.",
+  "world_is": "All 406 fenced blocks parse (0 failures). The 9 left rows the checker never sees are W52-S29, W52-S33, W52-S35, W52-S36, W52-S37, W57-S1, W57-S2, W90-S3 and W107-S4. The checker's disarm search also skips DISARMS rows held in array blocks; two of the eleven hidden ARMED-OWNED rows (W52-S24, W52-S31) are disarmed by a row that the full parse finds.",
+  "notes": "A finding about the instrument, not a disarm. The worker filed no disarm row and changed no channel row."
+}
+```
+
+## IRPT_ANLREQ-D2-W114-S2 -- The worker worktree C:/dev/wk-irpt-anlreq-114 holds its named paths on disk but its git in
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W114-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~114",
+  "surfaced_at": "2026-10-14T00:09:06Z",
+  "one_line": "The worker worktree C:/dev/wk-irpt-anlreq-114 holds its named paths on disk but its git index is empty: git ls-files returns 0 entries, and git status shows 80,527 staged deletions plus 24 untracked entries covering the whole tree, so the index does not describe HEAD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (re-index or re-cut the worktree; the worker repaired nothing, per the rule against reconstructing a tree)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-irpt-anlreq-114 ls-files | wc -l returned 0; git status --short returned 80527 lines beginning with D and 24 beginning with ??",
+      "the channel file on disk hashes to 9b794a63756a0721705676d742ec4a60b2b8996d, equal to git rev-parse HEAD:<channel path> at 295d98d389, so the named path is carried",
+      "TO IRPT_ANLREQ.TO-AR-y-296 first act: a worktree that does not carry the named paths is a BLOCKING row and a stop"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task order's first act: the worktree is a checkout of its branch and carries the paths the task order names; a worktree that does not is a BLOCKING row and a stop, never a rebuild.",
+  "world_is": "The named paths exist on disk with HEAD's bytes, but no index entries exist. Any git operation that reads the index (status, or a commit without an explicit path filter) reports the whole tree as deleted. The worker committed through explicit path lists only and did not run any index-changing git command.",
+  "notes": "Not repaired: no checkout, reset, clean, add or worktree change was made in this worktree."
+}
+```
