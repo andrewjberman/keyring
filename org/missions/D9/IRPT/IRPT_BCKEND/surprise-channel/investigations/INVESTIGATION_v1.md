@@ -32967,3 +32967,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS: W369-S1 (the function name) and S2 (one custody source, so no producer for cottonwood and inflection): MY DEFECTS, ruled by amendment 1 (@8d14148d96): I named the function from the repo directory and assumed a producer for all three firms without reading the producer's source count. W369-S3 (the 2026-10-03 passes logged no activity line; 23 invocations, 562 days, 21 to 63 s each): the earlier returns-only backfill predates the lots stage; INERT. W369-S4 (a backfill rewrites the returns days of its range, 565 landed partitions): carried into the packet as Design (A)'s cost; INERT until the CTO chooses. W369-S5 (LOTS_SKIPPED on 2026-10-07 and 10-08, later landed): an unstable refusal on the realized-lot key check, cause NOT read; INERT, a condition of any run. W369-S6 (a 25-day chunk at 216.7 s/day is past the 900 s timeout): the 23 invocations are a floor; about 4 days a chunk, about 142 invocations (derived). W369-S7 (activity rows 6901 vs 6904 for one day): the stage is NOT idempotent; a re-run changes content. W369-S8 (the trading calendar answered from its hardcoded NYSE fallback): the 565-day count rests on it; INERT, re-measured at the run. W369-S9 (the schedule is an EventBridge Scheduler schedule outside the read): INERT. TWO DECISIONS for the CTO (asked in the L10 slug): (1) Design (A), the existing event in timeout-sized chunks, which rewrites 565 landed returns partitions and whose activity stage is not idempotent, or Design (B), a small code change so a backfill event selects its stages (activity and lots only), which never touches the served returns but needs its own release and pair; I recommend (B) on what was measured (it keeps served returns untouched), with its chunk time unmeasured. (2) cottonwood and inflection have NO activity producer: the default report's activity figures stay ABSENT for them until a producer exists; that is a scope question (the CTO's, and Andrew's if it adds a source), not this census's. NOT shown: that any backfilled table fills the default report (a person's read on DEV after a run)."
 }
 ```
+
+
+## IRPT_BCKEND-D2-W370-S1 -- the module docstring hunk is not module level to the IB187-1-AC1 check (IB-pr-523)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W370-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~370",
+  "surfaced_at": "2026-10-14T01:14:01Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Step 4 of IB-pr-523 (a module docstring paragraph naming stages) is not module level to the IB187-1-AC1 check: git labels a hunk inside the module docstring with the nearest preceding prose line, and the check accepts only the labels '', backfill_days, run and run_backfill. The paragraph was moved into the run_backfill docstring; the module docstring is unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "handler.py@149d7d8384 line 1 opens the module docstring with a quote and line 3 is the first line beginning with a letter; line 38 begins 'written, so a day is never half-rewritten)', the prose line the first build's hunk was labelled with",
+      "p187_cells.py IB187-1-AC1 on my first build (module docstring paragraph after line 38): FAIL: handler.py hunks may sit only in ['', 'backfill_days', 'run', 'run_backfill']; found ['backfill_days', 'run', 'run_backfill', \"written, so a day is never half-rewritten). The scheduled fire's path is untouch\"]",
+      "p187_cells.py IB187-1-AC1 on the rebuilt handler (paragraph inside run_backfill docstring): PASS, 'OK: 96 tests pass; the change is confined' (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~370/IB187-1_criteria_output.txt)"
+    ]
+  },
+  "spec_asserts": "Step 4 of the order: update the module docstring paragraph that documents the backfill event; this hunk sits before the first function and is allowed as module level (the check's hunk label '').",
+  "world_is": "git's default function-name regex labels a hunk with the last line beginning with a letter, underscore or dollar sign before it. Every module-docstring line after line 3 begins with a letter or a prose word, so a module-docstring hunk carries a prose label and the check refuses it; only a hunk before line 3 would carry the empty label. The stages paragraph now sits in run_backfill's docstring, whose label is run_backfill, an allowed label."
+}
+```
