@@ -729,6 +729,28 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
       ]
     },
     "notes": "Judgement call by the worker. A test for the errored-correction path would be an added assertion outside the cell's checks, so none was written."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W41-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~41",
+    "surfaced_at": "2026-10-14T14:02:22Z",
+    "one_line": "The deploy packager does not stage data/mdpf/scripts/demque/, so in the deployed Lambda RIV-xe-1's _queue_state import fails and returns 'unreadable'; the ask path would then refuse every history-owed draw on the packaged function.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/etfs-pipeline/rivalfunds_package.py@c78a4c9722 STAGED tuple lines 33-43: staged are data/etfs/scripts/rivalfunds, lib/opal_naming.py, lib/trading_calendar.py, lib/research/identity, infra/logic/registry, org/standards/NAMING_SCHEMA.json, gold/etf_positioning_gold.py and data/find/dualbiz/scripts; a Grep of the file for 'mdpf|rivalfunds|data/' shows no data/mdpf entry",
+        "rivalfunds_package.py@c78a4c9722 docstring line 17: the layer attached by the .tf carries pandas-pyarrow-requests only, so no other path supplies data/mdpf",
+        "data/mdpf/scripts/demque/standing.py@c78a4c9722:79 read_state exists; the cell's reader works in the worktree only because the worktree carries data/ (AC2 6 passed, run from data/etfs/scripts)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-xe-1 interface (enrichment_bloomberg.py): _queue_state imports data.mdpf.scripts.demque.standing.read_state; the reader fails closed on ImportError (the cell's own words).",
+    "world_is": "The packaged function's zip carries data/ only as data/find/dualbiz/scripts, so 'data.mdpf' is not found in the Lambda; the function-level catch returns 'unreadable', and every ask-mode draw refuses with 'queue state unreadable'. Fail-closed: no Bloomberg request, no spend. The switch RIVALFUNDS_HISTORY_OWED is OFF and this cell does not set it, so nothing is affected today. The test suite cannot see the gap because the worktree carries data/.",
+    "notes": "Not fixed here: rivalfunds_package.py is outside this order's paths. Before the site-Z deploy of RIV-xe-1 (under 1.0.0_SA_CTO~Z's half) the issuer chooses between staging data/mdpf/scripts/demque/ (and whatever standing.py itself imports, not verified here) in STAGED, or redirecting the reader. A deploy-side import check would settle it."
   }
 ]
 ```
