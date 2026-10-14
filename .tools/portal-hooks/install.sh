@@ -3,11 +3,14 @@
 # Usage: bash .tools/portal-hooks/install.sh
 
 PORTAL_DIR="$(git rev-parse --show-toplevel)/portal"
-HOOK_DIR="$PORTAL_DIR/.git/hooks"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-if [ ! -d "$HOOK_DIR" ]; then
-  echo "ERROR: $HOOK_DIR not found -- is portal submodule initialized?"
+# The real hooks dir, from git itself: portal/.git/hooks when portal/.git is a directory, and
+# <workspace>/.git/modules/portal/hooks when portal is a submodule and portal/.git is a gitlink FILE.
+HOOK_DIR="$(cd "$PORTAL_DIR" 2>/dev/null && d="$(git rev-parse --git-path hooks 2>/dev/null)" && [ -n "$d" ] && [ -d "$d" ] && cd "$d" && pwd)"
+
+if [ -z "$HOOK_DIR" ] || [ ! -d "$HOOK_DIR" ]; then
+  echo "ERROR: portal hooks dir not found (git rev-parse --git-path hooks in $PORTAL_DIR) -- is portal submodule initialized?"
   exit 1
 fi
 

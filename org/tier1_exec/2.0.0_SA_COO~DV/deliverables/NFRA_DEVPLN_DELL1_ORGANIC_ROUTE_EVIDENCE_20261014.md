@@ -22,3 +22,14 @@ At ~20:20 local (see the commit) a worker `0.9.0_WK_AMGT_RESAPP~423` landed `can
 - Three round-2/4/5 tools composed on real data: the cluster-first read found a row on dell1's list that the laptop's working-tree copy does not hold (`DP-e-2`); the payload limb admitted the push as route A against that row's bound head (`DP-f-1`); the per-commit read listed it (`DP-c-1`).
 - It does NOT show the client-facing case. This feature is Opal-internal (Security Analysis, staff-only). FWD-1's client-facing close still waits on Andrew ruling the dell2 rows (`3635`, `8500`, `7b45`, `fde0`).
 - Not measured here: which route the worker took to push (the script versus a typed push). The merge is a two-parent merge with both trailers and a valid row either way. The payload limb is not installed on any box, so it did not gate this push.
+
+## Addendum ~01:30Z -- the second feature also reached PROD, as a chosen-set promote, with no word from the project
+
+`origin/PROD` moved from `10e7664d` (the laptop feature's promote) to `7d5cb34d`: a release merge of the dell1 feature alone, first parent `10e7664d`, second parent `624e2533f665` (the row's bound head), made by `0.9.0_WK_AMGT_RESAPP~423` on `release/20261014T003210Z`; message body `Feature: cand/dell1/amgt-sa-header-money-and-dash-reasons` and `Approved-By: 1.0.0_SA_CTO~DELL1 @dell1-20261014T001511Z-633a`. Tag `portal-v2.1.215` is at the tip. CI run `38491072873` concluded success on `7d5cb34daabce225bb9a2635c541f6ff3fd64e52`.
+
+Reads, direct from git on `origin/PROD` (the project's release-check tool resolved `PROD` to the stale LOCAL branch `PROD` @`10e7664d` and is NOT cited; a row for that is owed):
+- first-parent walk from the settlement `63c4f9e3`: 2 commits (`10e7664d` for `cand/laptop/contributing-boxes`, `7d5cb34d` for the dell1 feature), each a two-parent merge with `Feature:` and `Approved-By:`: `unapproved=0`.
+- None of the seven unapproved dell2 DEV commits (`62d455f5 9ef6a359 923f7d69 794b7df4 73d8d3a4 0101dd66 a577cba5`) is on PROD. The dell1 DEV merge `5e40e541` is not on PROD either (PROD holds its own release merge of the same feature, as for the first feature).
+- The class is `opal-internal` (Security Analysis), so the push law needed no word from Andrew.
+
+What it adds: the PROD side of the route ran organically too, on a second box, shipping only the approved feature and leaving the unapproved DEV commits behind, the property FWD-5 asks for. What it does not: the client-facing case (FWD-1's close) still waits on Andrew's rulings on the dell2 rows.
