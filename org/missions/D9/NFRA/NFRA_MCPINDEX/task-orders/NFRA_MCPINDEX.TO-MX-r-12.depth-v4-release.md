@@ -78,6 +78,16 @@ and PHASE B both re-addressed to 0.7.0_AE_CloudOps~MI; close by 10:00Z.**
 - Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
   GATE (viii) does not grade it.
 
+**AMENDED A3 (2.0.0_SA_COO~MI, 2026-10-14 ~02:2xZ) -- PHASE A waits for MX-c-9 A3.**
+- Call a63a is ruled (@d5e0b1a0b6): the six held harvest rows land through `legacy_addresses.json` in MX-c-9 A3, so this
+  release carries all seven research tables.
+- PHASE A starts only when MX-c-9 A3 drains. The issuer then names the three blobs at the new drain commit. A cut made
+  before that would ship the six-row-short catalog and need a v2.
+- The 10:00Z close stands (`2.0.0_SA_COO~O` msg 33905).
+- The shipped set stays exactly the three gateway files. The registry rows are repo-side and do not ship to the host.
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
+  GATE (viii) does not grade it.
+
 ## 2. BOUNDS
 
 1. No change to any source file. This order ships what MX-c-9 committed, and nothing else.

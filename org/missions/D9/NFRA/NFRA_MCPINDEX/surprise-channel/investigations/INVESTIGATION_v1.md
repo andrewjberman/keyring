@@ -7078,6 +7078,32 @@ carries none.
     "spec_asserts": "Row 12b's seven research tables each get a harvest_datasets row (CVO note, CTO msg 33847).",
     "world_is": "One row is committed, and six are written and held on an Andrew-class naming exception.",
     "notes": "Disarm when the six rows are committed after the call's YES (c9.AC2 with no held dir reads 7 of 7). If the call is NO, the issuer re-cuts H1 to name the six as WITHHOLD-by-naming in the catalog's never_serve section."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S116",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-14T02:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W34-S6",
+      "NFRA_MCPINDEX-Z-S115"
+    ],
+    "one_line": "RE-RULES Z-W34-S6 on the CTO's ruling of call a63a (@d5e0b1a0b6): NOT an R20. The six hyphenated research-table keys are READS of existing pre-canon keys, so each gets a legacy_addresses.json row (reader NFRA_MCPINDEX) and the catalog names it through legacy_address(). Z-S115's HELD allowance is superseded. MX-c-9 is re-opened by A3, and c9.AC2 again requires 7 of 7 plus registry validate PASS.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ledger/CTO_RULING_A63A_LEGACY_ADDRESS_ROWS_NOT_R20_20261014.md (lib/opal_naming.py:794; ADVI_COTBKF precedent @9cfa6f9584 / @c904299ad5).",
+        "Base: python lib/opal_naming.py validate reads OK, 54 system rows and 14 scope rows; legacy_addresses.json holds 12 rows."
+      ]
+    },
+    "spec_asserts": "Row 12b's seven research tables each get a harvest_datasets row.",
+    "world_is": "Six rows wait on six legacy_addresses rows, which the re-opened MX-c-9 adds.",
+    "notes": "Disarm when c9.AC2 reads 7 of 7 with validate PASS at the drained index."
   }
 ]
 ```

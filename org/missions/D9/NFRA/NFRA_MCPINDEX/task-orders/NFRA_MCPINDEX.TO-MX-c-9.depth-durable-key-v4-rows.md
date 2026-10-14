@@ -128,6 +128,36 @@ naming gate (row Z-W34-S6, ruled by the row that follows it).**
 - Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
   GATE (viii) does not grade it.
 
+**AMENDED A3 (2.0.0_SA_COO~MI, 2026-10-14 ~02:2xZ) -- RE-OPENED: call a63a RULED NOT an R20 (`1.0.0_SA_CTO~Z`
+@d5e0b1a0b6, `ledger/CTO_RULING_A63A_LEGACY_ADDRESS_ROWS_NOT_R20_20261014.md`). The six rows land NOW through
+`legacy_addresses.json`. This supersedes A2's HELD allowance.**
+- Add six rows to `infra/logic/registry/legacy_addresses.json`, one per hyphenated table (`research-backlog`,
+  `research-continuation`, `research-dossier`, `research-fund-form`, `research-model-typecast`,
+  `research-sector-template`). Use the closed field set `key, bucket, template, shape, params, reader, evidence, note`:
+  - `bucket: opal-data-harvest`;
+  - `template: amgt/harvest/gold/<table>/`;
+  - `shape: prefix`;
+  - `params: []`;
+  - `reader: NFRA_MCPINDEX`;
+  - `key`: a lowercase kebab key per table;
+  - `evidence`: the read-only `list-objects-v2 --prefix` read that shows the prefix exists (a count, no content);
+  - `note`: "AMGT_HARVST owns any rename (R19)".
+  Follow the ADVI_COTBKF precedent rows already in the file.
+- The catalog names each of the six keys THROUGH `lib/opal_naming.py legacy_address()`: the emitter resolves the
+  prefix from the row. Never type the literal. Then:
+  1. copy the six held files from `deliverables/0.9.0_WK_NFRA_MCPINDEX~34/blocked_harvest_rows/` into
+     `catalog_entries/`;
+  2. empty `HARVEST_NAMING_PENDING`;
+  3. re-emit with the same overlay;
+  4. set the test counts to 39.
+- If the validator refuses `bucket` because `opal-data-harvest` is not a bucket `scopes.json` knows, add that one
+  registry row the same way (in `scopes.json` or `bucket.standing_shared`). Never use an R20 or an override.
+- **c9.AC2 now requires** `python lib/opal_naming.py validate` exit 0 AND research tables rowed 7 of 7 (no held
+  allowance). AC1 and AC3 are unchanged and are re-run.
+- `<paths>` gain `infra/logic/registry/legacy_addresses.json` and `infra/logic/registry/scopes.json`.
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
+  GATE (viii) does not grade it.
+
 ## 2. BOUNDS
 
 1. You change only the files in `<paths>`. Print the regenerated catalog's diff summary by top-level section.
@@ -140,6 +170,8 @@ naming gate (row Z-W34-S6, ruled by the row that follows it).**
 
 <paths>
 workflows/atom_decomposition/tool_census.py
+infra/logic/registry/legacy_addresses.json
+infra/logic/registry/scopes.json
 workflows/atom_decomposition/emit_catalog_v02.py
 workflows/atom_decomposition/validate_catalog_v02.py
 workflows/atom_decomposition/catalog_entries/
@@ -195,6 +227,7 @@ The issuer then continues you with MX-r-12's PHASE A.
 
 <status>issued</status>
 <status>complete</status>
+<status>issued</status>
 <round>11</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
