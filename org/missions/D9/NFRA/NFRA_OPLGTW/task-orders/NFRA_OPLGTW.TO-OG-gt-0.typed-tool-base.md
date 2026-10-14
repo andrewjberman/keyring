@@ -67,8 +67,9 @@ absent returns an empty body with `absent_reason` set (a string naming WHY), nev
    - `admit_typed` is `harvest_read.admit(tool, ref, *extra)` and nothing else.
 3. **Tests,** `infra/aws/ec2/opal-gateway/tests/test_og_gt0.py`, S3 replaced by a recording fake client (monkeypatch
    `harvest_read._client`), a principal stand-in patched at `harvest_read.get_current_principal`:
-   - `test_oggt0_ac01`: `envelope` returns the four keys beside the body; an empty body with `absent_reason=None` is allowed
-     but `envelope({}, ...)` with `absent_reason` falsy raises `ValueError` (an empty body must say why).
+   - `test_oggt0_ac01`: `envelope` returns the four keys beside a non-empty body (`absent_reason` may be `None` then);
+     `envelope({}, ...)` with `absent_reason` falsy raises `ValueError` (an empty body must say why), and with a non-empty
+     `absent_reason` string it returns the four keys and no more.
    - `test_oggt0_ac02`: a 200 KB list field is projected to at most 51,200 bytes of JSON, `truncated` is True, the four
      envelope keys survive, and the input object is unchanged.
    - `test_oggt0_ac03`: over a fake listing of `p/date=2026-10-07/part-20261008T010000Z.parquet`,
@@ -134,6 +135,10 @@ the issuer to make at the merge.
 - The issuer registers the tools and re-pins counts at the merge (CUT BY WRITE SET: hookups belong to no cell).
 - Pre-cut: AC1 and AC2 base FAIL as expected (module, tests and probe absent).
 - Wave 1: this cell spawns first. gt-1..gt-5 are staged behind its merge (their worktrees branch from the merge).
+
+- A1 (issuer, 2026-10-14 ~13:5xZ, before the spawn): `test_oggt0_ac01` contradicted itself (an empty body both allowed and
+  raising). The face now says: a non-empty body may carry `absent_reason=None`; an empty body must carry a reason. No
+  criterion moves. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>
