@@ -33,6 +33,8 @@ Your workspace worktree is `C:/dev/wk-irpt-dashbd-176` (branch `wk-IRPT_DASHBD-1
 6. **Gates.** In the portal: `bun run lint` and `bun run typecheck` after your last commit (0 errors); the whole-scope suite once before any edit as the base and once after (`bun test` from the portal, output to `C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~176/`), `new_failing_ids` []. Commit the portal work on `wk-IRPT_DASHBD-176-portal` as one or more commits.
 7. **Record** `ASOF_R110.json` in your folder: `portal` {`branch` "wk-IRPT_DASHBD-176-portal", `commit` (the tip), `files_changed` (portal-relative paths)}, `callers` {`files_scanned`, `date_only_callers`, `real_timestamp_callers`} (integers from your census), `tests` {`new_file`, `mutant_failed` true, `lint_errors`, `typecheck_errors`, `suite_before`, `suite_after` {`new_failing_ids`}}, `pushed` false, `deployed` false, `reads` (the page-level reads you did, in words). Counts, paths and words only.
 
+**Issuer amendment (row `W176-S1`): one golden is re-pinned.** The byte-for-byte golden `portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-120.golden/model_portfolios_mount.before.html` (read by `iv-e-120.total-base-in-the-card.test.tsx` test (b)) holds the invented clock in the ModelPortfolios footer ("September 29th, 2026, 5:00p ET"). That one footer sentence is the behaviour this order removes, so the golden is now in your grant for exactly that edit: change ONLY the date sentence in that file to the date-only words your fix prints ("September 29th, 2026"), nothing else in the file, and leave `iv-e-120.total-base-in-the-card.test.tsx` itself untouched. Name this edit in your report with the others. Then re-run the whole-scope suite: `new_failing_ids` must be [] and DB110-4-AC3 must read PASS.
+
 <criterion id="DB110-4-AC1" cell_refs="DB-b-219"><invocation>python -I "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r110/p110_asof.py" . DB110-4-AC1</invocation><expect>DB110-4-AC1 PASS</expect></criterion>
 `DB110-4-AC1` -- the new test file exists and holds the required cases (including the before-5-PM negative case under `setSystemTime`), and `bun test` on it passes under TZ=UTC and under TZ=America/Los_Angeles, printing its verdict line. Base: FAIL (no test file).
 <criterion id="DB110-4-AC2" cell_refs="DB-b-219"><invocation>python -I "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r110/p110_asof.py" . DB110-4-AC2</invocation><expect>DB110-4-AC2 PASS</expect></criterion>
@@ -63,6 +65,7 @@ portal/src/pages/Valuation/tabs/RiskPremiumTab.tsx
 portal/src/pages/Positioning/panels/footer-date-format.test.ts
 portal/src/pages/Positioning/shared/PageEnd.test.tsx
 portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-45.face-batch.test.tsx
+portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-120.golden/model_portfolios_mount.before.html
 </paths>
 
 <decomp_ref>

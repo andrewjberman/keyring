@@ -107,6 +107,13 @@ sizes only, never a figure.
 after the load, waits `PRESS_SETTLE_MS` (12,000 ms), then shoots and checks the step `<route>-press-<label>`. A label
 carrying a DO_NOT_CLICK word is refused and recorded as `walker:press-refused`. Use it to reach a chart behind a tab.
 
+`--hover-after-press "<css>@<xfrac>"` (repeatable, plain routes) runs AFTER every `--press`. It moves the mouse onto the
+first match of `<css>` at x = `xfrac` (0 to 1) of its width, at mid-height, waits 600 ms, then writes
+`shots/hover-after-press-<k>-viewport.png` and checks the step `<route>-hover-after-press-<k>`. A selector with no match
+or no visible box is recorded as `hover:no-match`. Use it for a hover-only popup behind page state that no URL carries,
+for example a chart tooltip on a toggled view:
+`--press "Trend" --hover-after-press ".recharts-wrapper@0.3"`. `--hover` runs before the presses and cannot reach these.
+
 `--security-press "<css>"` (repeatable, on `/security-analysis` with `--security`) presses the first visible match for that selector
 after the name's overlay shot, waits 2.5 s and the load state, then shoots and checks the step `<security>-press-<k>`. A text carrying
 a DO_NOT_CLICK word is refused (`walker:press-refused`); no visible match is `walker:press-not-found`. GETs only: the guard is unchanged.
