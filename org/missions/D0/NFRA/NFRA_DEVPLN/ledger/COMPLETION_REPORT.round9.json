@@ -1,0 +1,444 @@
+{
+ "kind": "COMPLETION_REPORT",
+ "schema_version": "1.0",
+ "project": "NFRA_DEVPLN",
+ "round": 9,
+ "written_by": "2.0.0_SA_COO~DV",
+ "written_utc": "2026-10-14T14:56Z",
+ "decomposition_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/decompositions/NFRA_DEVPLN_DECOMP.round9.md@a191d1a8ea",
+ "denominators": {
+  "fwd_in_prd_header": 7,
+  "cells_in_decomposition": 22,
+  "task_orders": 21,
+  "task_orders_terminal_with_valid_proof": 21
+ },
+ "outcomes": [
+  {
+   "fwd_id": "FWD-1",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- one real feature followed from the box where it was built to the page a client opens, with its approval read along the way",
+   "cells": [
+    {
+     "cell_id": "DP-b-2",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-b-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~2/NFRA_DEVPLN.TO-DP-b-2.portal-merge-forward.proof_of_spec.json@ceb543775a"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-b-5",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-b-5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~1/NFRA_DEVPLN.TO-DP-b-5.registration-facts-and-lease.proof_of_spec.json@22ab897fb5"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-d-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-d-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~1/NFRA_DEVPLN.TO-DP-d-1.registration-waiver.proof_of_spec.json@cbc59f2b37"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-x-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-x-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.4.0_DT_ClientPlatform/NFRA_DEVPLN.TO-DP-x-1.live-chosen-set-promote.proof_of_spec.json@833a3008f4"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-y-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-y-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.4.0_DT_ClientPlatform/NFRA_DEVPLN.TO-DP-y-1.client-facing-chosen-set-promote.proof_of_spec.json@8a351af853"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-2",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- one feature approved and one declined from that list, each answer read back by the box that asked",
+   "cells": [
+    {
+     "cell_id": "DP-b-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-b-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~1/NFRA_DEVPLN.TO-DP-b-1.approval-kind.proof_of_spec.json@e2c9f07062"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-e-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-e-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~1/NFRA_DEVPLN.TO-DP-e-1.withdraw-decision.proof_of_spec.json@4d40d2552f"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-e-2",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-e-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~1/NFRA_DEVPLN.TO-DP-e-2.cluster-first-read.proof_of_spec.json@ede88d94cf"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-f-2",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-f-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~2/NFRA_DEVPLN.TO-DP-f-2.repair-batch.proof_of_spec.json@99c914d99b"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-h-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-h-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~1/NFRA_DEVPLN.TO-DP-h-1.seam-guard.proof_of_spec.json@c0b55035ef"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-i-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-i-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~1/NFRA_DEVPLN.TO-DP-i-1.release-check-ref.proof_of_spec.json@7503ee1e9d"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-j-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-j-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~1/NFRA_DEVPLN.TO-DP-j-1.dev-route-only-merge-forward.proof_of_spec.json@17ae06e178"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-r-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-r-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~2/NFRA_DEVPLN.TO-DP-r-1.repair-batch.proof_of_spec.json@c5f98acca7"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-3",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- one direct DEV push from a box seat refused, and the same work landing through the approved route",
+   "cells": [
+    {
+     "cell_id": "DP-b-2",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-b-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~2/NFRA_DEVPLN.TO-DP-b-2.portal-merge-forward.proof_of_spec.json@ceb543775a"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-b-4",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-b-4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~4/NFRA_DEVPLN.TO-DP-b-4.contributing-boxes.proof_of_spec.json@912e97b0e2"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-b-5",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-b-5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~1/NFRA_DEVPLN.TO-DP-b-5.registration-facts-and-lease.proof_of_spec.json@22ab897fb5"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-d-2",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-d-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~2/NFRA_DEVPLN.TO-DP-d-2.merge-forward-local-branch.proof_of_spec.json@1047bfafec"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-e-3",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-e-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~2/NFRA_DEVPLN.TO-DP-e-3.merge-base-warning.proof_of_spec.json@4c0c719482"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-f-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-f-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~1/NFRA_DEVPLN.TO-DP-f-1.dev-push-payload-limb.proof_of_spec.json@b3f6e5ca0b"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-f-2",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-f-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~2/NFRA_DEVPLN.TO-DP-f-2.repair-batch.proof_of_spec.json@99c914d99b"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-k-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-k-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~1/NFRA_DEVPLN.TO-DP-k-1.closing-repair.proof_of_spec.json@5b74d90e1e"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-r-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-r-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~2/NFRA_DEVPLN.TO-DP-r-1.repair-batch.proof_of_spec.json@c5f98acca7"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Coverage claim only. Cell DP-g-1 (the gate edit, S03) carries no task order: it was the CTO's own edit of never-rules-gate.sh (1.0.0_SA_CTO, @a846bbe0eb), later widened by the CTO's removal of the lease and test-only carve-outs (@a0dff64b2c). The CTO grades the exercised artifacts, not this row."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "done_when_state": "APPLIED",
+   "done_when_text": "APPLIED -- the record in place and readable for every commit that lands after it",
+   "cells": [
+    {
+     "cell_id": "DP-b-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-b-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~1/NFRA_DEVPLN.TO-DP-b-1.approval-kind.proof_of_spec.json@e2c9f07062"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-b-2",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-b-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~2/NFRA_DEVPLN.TO-DP-b-2.portal-merge-forward.proof_of_spec.json@ceb543775a"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-c-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-c-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~1/NFRA_DEVPLN.TO-DP-c-1.dev-approval-read.proof_of_spec.json@d63fff2989"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-f-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-f-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~1/NFRA_DEVPLN.TO-DP-f-1.dev-push-payload-limb.proof_of_spec.json@b3f6e5ca0b"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-5",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- one promote that carried a chosen set of approved features and left an unapproved change on DEV behind",
+   "cells": [
+    {
+     "cell_id": "DP-b-3",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-b-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~3/NFRA_DEVPLN.TO-DP-b-3.chosen-set-release.proof_of_spec.json@4ec435ce7f"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-e-2",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-e-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~1/NFRA_DEVPLN.TO-DP-e-2.cluster-first-read.proof_of_spec.json@ede88d94cf"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-h-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-h-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~1/NFRA_DEVPLN.TO-DP-h-1.seam-guard.proof_of_spec.json@c0b55035ef"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-i-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-i-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~1/NFRA_DEVPLN.TO-DP-i-1.release-check-ref.proof_of_spec.json@7503ee1e9d"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-j-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-j-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~1/NFRA_DEVPLN.TO-DP-j-1.dev-route-only-merge-forward.proof_of_spec.json@17ae06e178"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-x-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-x-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.4.0_DT_ClientPlatform/NFRA_DEVPLN.TO-DP-x-1.live-chosen-set-promote.proof_of_spec.json@833a3008f4"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-y-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-y-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.4.0_DT_ClientPlatform/NFRA_DEVPLN.TO-DP-y-1.client-facing-chosen-set-promote.proof_of_spec.json@8a351af853"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-6",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- Andrew's decision recorded per feature group, PROD's own work folded back, and the two trunks read as one line of history from there",
+   "cells": [
+    {
+     "cell_id": "DP-s-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-s-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~5/NFRA_DEVPLN.TO-DP-s-1.settlement-list.proof_of_spec.json@94e772d5a3"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-7",
+   "done_when_state": "APPLIED",
+   "done_when_text": "APPLIED -- the line stated where every box reads it, and the gate that admits a DEV merge reads the same line",
+   "cells": [
+    {
+     "cell_id": "DP-b-4",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-b-4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~4/NFRA_DEVPLN.TO-DP-b-4.contributing-boxes.proof_of_spec.json@912e97b0e2"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-d-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-d-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.9.0_WK_NFRA_DEVPLN~1/NFRA_DEVPLN.TO-DP-d-1.registration-waiver.proof_of_spec.json@cbc59f2b37"
+      }
+     ]
+    },
+    {
+     "cell_id": "DP-y-1",
+     "task_orders": [
+      {
+       "id": "NFRA_DEVPLN.TO-DP-y-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_DEVPLN/deliverables/0.4.0_DT_ClientPlatform/NFRA_DEVPLN.TO-DP-y-1.client-facing-chosen-set-promote.proof_of_spec.json@8a351af853"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  }
+ ]
+}
