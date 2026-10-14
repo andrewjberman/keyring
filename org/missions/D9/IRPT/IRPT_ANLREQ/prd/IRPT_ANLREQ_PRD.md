@@ -5,7 +5,7 @@
  "project": "IRPT_ANLREQ",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.5",
+ "prd_version": "v0.6",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_223xZ_ANALYSIS_REQUEST_END_TO_END_ONE_PROJECT_CLOSER_TRACE.md@2b21a349d1",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
@@ -26,10 +26,11 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
 
 ```
   FWD-1  One Analysis Request goes from the Ticket Center form to FOUR attachments on the same open ticket, with no person in between
-         DONE WHEN  EXERCISED -- on DEV, a SYNTHETIC partner-firm advisor (minted and deleted under a never-widen pair) signs in, opens the Ticket
-                    Center, fills the Analysis Request form and uploads a holdings CSV or XLSX. The form carries the variant the advisor chose
-                    (Overview, Comparison, Multi-Comp) and the report produced is that variant, the Opal-model checkboxes and other tickers. The firm comes from the signed-in user, not a
-                    choice. Nobody touches anything after Submit. The still-OPEN ticket then carries four attachments, each opened from the ticket
+         DONE WHEN  EXERCISED -- on DEV, a SYNTHETIC Opal staff user (minted and deleted under a never-widen pair) signs in, opens the Ticket
+                    Center (shown to Opal users only, Andrew 2026-10-14 ~15:2xZ), CHOOSES the partner firm the request is filed under, fills the
+                    Analysis Request form and uploads a holdings CSV or XLSX. The form carries the variant chosen
+                    (Overview, Comparison, Multi-Comp) and the report produced is that variant, the Opal-model checkboxes and other tickers. Every
+                    downstream hop binds to the chosen firm. Nobody touches anything after Submit. The still-OPEN ticket then carries four attachments, each opened from the ticket
                     page by an Opal person: (1) the advisor's original upload, (2) the form as filled, (3) the Opal-generated report (the Opal
                     producer, not YCharts), (4) the AI commentary draft. A partner-firm filing (Alyssa's first real request) grades it again (the
                     organic arm, never the gate)
@@ -37,7 +38,8 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
                     a file; the branded Opal PDF with the commentary inside is a later enrichment, not FWD-1
          SOURCE     Andrew 2026-10-08 ~22:3xZ; Andrew's dell2 voice memo 2026-10-13 ("they should see the CSV or XLSX that the advisor uploaded.
                     They should see the form ... the generated report ... the commentary that we AI generated ... That is the deliverable");
-                    call 2 approved ~17:4xZ (synthetic advisor); pivot direction XB-20261013T180328Z-d4a5 O1
+                    call 2 approved ~17:4xZ (synthetic advisor); pivot direction XB-20261013T180328Z-d4a5 O1; the filer is re-pointed
+                    to Opal staff by Andrew-direct 2026-10-14 ~15:2xZ (ADDENDUM v0.6)
 
   FWD-2  The form fits the request and catches a bad request before it files
          DONE WHEN  EXERCISED -- the form offers the analysis types and the Opal models as checkboxes plus a field for other ETFs; a mistyped ETF is caught
@@ -262,3 +264,32 @@ Authority: crossbox ORDER `XB-20261013T180328Z-d4a5`, body `org/tier1_exec/1.0.0
      silent submit (AR-y-265) is the first proof of that.
 5. **Commentary model:** ship on the wired Kimi K3 so the chain is proved. Andrew's "Astra" is one card on dell2's list; it becomes
    a setting once the first draft lands.
+
+## ADDENDUM v0.6 (2026-10-14 ~15:3xZ, 1.0.0_SA_CTO~DELL2) -- Andrew-direct ~15:2xZ: Opal staff file for testing; the Ticket Center is internal-only for now
+
+Authority: Andrew at the dell2 terminal, verbatim: "Opal staff should not be "held" from filing, they can file they just realistically
+won't, but we should have that available for testing. Ticket Center does not need to be displayed for client users at this time, only
+opal users need to see it, so that part is accurate." Record
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261014_152xZ_OPAL_STAFF_MAY_FILE_TICKET_CENTER_INTERNAL_ONLY.md` @011515bb70.
+
+1. **FWD-1's driven arm is a SYNTHETIC Opal staff user** (above). This supersedes ADDENDUM v0.5's "the driven arm is a synthetic
+   partner-firm advisor" and its "Opal staff do not file in the Ticket Center". The four attachments, the ACCEPT and "nobody touches
+   anything after Submit" are unchanged. The ENDPOINT changed, so the ratified-text half re-opens and `3.0.0_SA_CVO` re-signs it.
+2. **C-FIRM, restated:** an Opal staff filer CHOOSES the request's firm from the served partner tenants, and every hop binds to that firm.
+   A partner-firm user's firm is the signed-in user's and is never a choice. The partner UI path is out of FWD-1 while the Ticket Center
+   is internal-only; its API path stays guarded (release 29b, the owner check on `input_id` for CLIENT-class callers).
+3. **New hop cell J7:** the internal-user submit hold is a defect against his word. The form's "Choose the firm this request is filed
+   under" must accept a chosen firm (`filingFirm` returns `''` for internal users, `AnalysisRequestParts.tsx:100-104`; the hold at
+   `analysisRequest.ts:227`, both @6a5926fc). It is a portal candidate under the approval route; the class (client-facing or
+   Opal-internal) is read from the pages it touches.
+4. **Parked, not cancelled:** the partner-firm UI reach cells (AR-y-282, AR-y-283; `isPartnerDevReach`, `firmAccess.ts:141-153`) wait
+   until Andrew shows the Ticket Center to client users. Row S97 (a partner advisor's own-input analysis refused
+   CLOSED_COMPOSITION_REQUIRED) leaves FWD-1's critical path: the internal viewer's analysis was accepted in release 29's sitting (D6b).
+   It stays a defect for the partner path, fixed under the next intake pair.
+5. **Release 29b's positive arm** (an owner's own client filing, 201) no longer rides the FWD-1 run, because the FWD-1 filer is internal
+   and its submit is not owner-checked. Until a client-class filing exists, the 201 path is covered by its 21 unit tests. The CTO half's
+   condition 3 (a 400 on the FWD-1 owner filing rolls the code back) is therefore inert.
+6. **What FWD-1 still waits on:** IB-pr-456 (`commentary_requested` on the backend; Andrew's act f61b), the portal sending
+   `commentary_requested` (AR-y-317, an approval row), and J7.
+
+-- 1.0.0_SA_CTO~DELL2
