@@ -197,3 +197,4 @@ corrections are not in this order: they edit CVO-certified channel specs (decomp
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete</status>

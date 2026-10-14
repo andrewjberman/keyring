@@ -2135,3 +2135,29 @@
   "disarm_owner": "0.0.0_AB_MSTR~DELL1"
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S27",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-14T20:55:00Z",
+  "one_line": "Per-firm MDPF leaves are reachable by ANY authenticated login: /api/general/mdpf/* is rewritten to platinum/mdpf/* behind the JWT check alone, with no firm scoping, so a demo-tenant or partner login can fetch another firm's per-firm series (e.g. /api/general/mdpf/49financial/...) by URL.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-routes behaviors: '/api/general/*' -> S3-opal-data-portal-v2-json [AUTH] [ROUTER]; viewer-request auth-validator-edge, origin-request public-data-router",
+      "infra/aws/lambda-edge/public-data-router/index.mjs:51-54: '/api/general/mdpf/' -> '/platinum/mdpf/' rewrite, no firm check",
+      "infra/aws/lambda-edge/auth-validator-edge/aggregate_gate.mjs:24-27: the only firm gate on the /api/general/* paths is AGGREGATE_PATHS (opal_aggregate.json)",
+      "portal origin/PROD src/pages/ModelPortfolios.tsx:240: the page interpolates the firmId into /api/general/mdpf/{firmId}/... (the client chooses the path)"
+    ]
+  },
+  "spec_asserts": "Firm data separation (CLAUDE.md section 5; MDPF_CANON FWD-3): a partner or demo login sees no other firm's data; the CTO's v2.20 note (msg 5867) states the demo tenant 'cannot reach those values through the page or the API'.",
+  "world_is": "From source, the separation is enforced only in the page (effectiveFirmId), not at the edge for the mdpf family: the per-firm leaves under platinum/mdpf/{firm}/ answer any valid JWT. NOT read: the deployed bytes of the two edge functions (read from repo source) and a live request with a partner token. v2.20's Global-leaf fold is correct in itself; this row is the pre-existing route gap its premise leans on.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO~DELL1"
+}
+```
