@@ -14256,3 +14256,139 @@
   "notes": "Decision for the issuer (2.0.0_SA_COO~Y2): widen the grant to the source map (and the import chain the map must then stage), or name a stage-safe source of the commentary logical-id rule. The worker did not re-type the rule and did not edit the map. The order's own tests cannot prove the deployed zip, only the repo tree, which holds the import chain."
 }
 ```
+
+## IRPT_ANLREQ-D2-W139-S2 -- the new route is not published in docs/contracts routes.json, so the census test that reads the published table fails inside the granted _authz/tests folder, and the fix is outside the grant
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W139-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~139",
+  "surfaced_at": "2026-10-14T18:24:12Z",
+  "one_line": "The route GET .../analysis/requests/{requestId}/commentary-pdf is declared by irpt-status (ops/entry.py, reports/status_installed.py) but is not a row of docs/contracts/investor-reporting/v1/routes.json, so _authz/tests/test_unguarded_census.py::test_every_entry_carries_the_published_route_table_it_serves fails with 'declares route ... which the published file does not contain'.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-331 step 2(d) and the grant: every table or test that lists the operations and pins them is updated for the one new operation, inside the grant; the grant names _authz/tests/ and ops/, reports/ and _contracts/tests/, and does not name docs/contracts/investor-reporting/v1/routes.json, the published route file the census reads.",
+  "world_is": "The published route file lists analysis-request-pdf (routes.json:227-234) and analysis-request-original, and the census asserts every route an entry declares is a published row with the same operation and handler. The new route is declared by irpt-status in ops/entry.py:240 and reports/status_installed.py HISTORY_ROUTES, and is not published, so the census test fails at test_unguarded_census.py:271. Measured in the worktree: 1 failed, 43 passed across test_unguarded_census.py and test_svc_custody_statement.py; 353 passed, 1 failed across all of _authz/tests. Publishing the row is a contract change under docs/, outside this order's <paths>.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/routes.json:227-234 @83c98f380d",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_unguarded_census.py:231-281 @2a535a7859",
+      "infra/aws/lambda/investor-reporting/ops/entry.py:240 @2a535a7859",
+      "pytest run: test_every_entry_carries_the_published_route_table_it_serves FAILED, 'irpt-status declares route GET /api/scoped/investor-reporting/analysis/requests/{requestId}/commentary-pdf, which the published file does not contain' @2a535a7859"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Blocks TO-AR-y-331 from closing: the order's own granted folder carries a red test that only a publication under docs/ clears. Decision for the issuer (2.0.0_SA_COO~Y2): widen the grant to docs/contracts/investor-reporting/v1/routes.json (and the response schema the row names), or confirm the route is published in a later contract cell. Not patched by the worker."
+}
+```
+
+## IRPT_ANLREQ-D2-W139-S3 -- the signer admits only the three ORIGINAL families, so signing the commentary family YCHARTS_OPAL_REPORT refuses PDF_LINK_FAMILY; the route cannot serve until ops/pdf_link.py admits the family, which is outside the grant
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W139-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~139",
+  "surfaced_at": "2026-10-14T18:24:12Z",
+  "one_line": "TO-AR-y-331 step 2(a) says sign the commentary artifact with the same signer; PdfSigner.sign refuses any family outside its FAMILIES tuple before it reads the key, so the commentary family YCHARTS_OPAL_REPORT is refused with PDF_LINK_FAMILY in production, and ops/pdf_link.py is outside the grant.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-331 step 2(a): commentary_pdf signs the commentary artifact with the same signer as pdf (ops/owned_report.py, pdf_link.PdfSigner); the grant names ops/owned_report.py, ops/entry.py, reports/status_installed.py and the test folders, and does not name ops/pdf_link.py.",
+  "world_is": "ops/pdf_link.py:19-21 sets FAMILIES = (ORIGINAL_VENDOR_PDF, ORIGINAL_HOLDINGS, ORIGINAL_CSV) and sign() at :86-87 raises PdfLinkRefused(PDF_LINK_FAMILY) for any other family before the key is read. Reproduced offline with no AWS call: PdfSigner().sign(firm, key, sha, 'YCHARTS_OPAL_REPORT') raises PdfLinkRefused PDF_LINK_FAMILY. The route's tests pass only because they use a recording fake signer. The destination check for the commentary key (reporting_destination for the family must equal the stored blob key) is also unverified and needs the same file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/pdf_link.py:19-21 @83c98f380d",
+      "infra/aws/lambda/investor-reporting/ops/pdf_link.py:83-98 @83c98f380d",
+      "offline run: PdfSigner().sign(..., 'YCHARTS_OPAL_REPORT') -> PdfLinkRefused PDF_LINK_FAMILY, rc=0 @2a535a7859",
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py commentary_pdf signer.sign(firm, key, sha, COMMENTARY_FAMILY) @2a535a7859"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not armed: nothing ships until a signed release carries the route. Needed before any release: pdf_link.FAMILIES admits YCHARTS_OPAL_REPORT and its destination binding is checked against the stored commentary key. Decision for the issuer (2.0.0_SA_COO~Y2): widen the grant to ops/pdf_link.py, or name a stage-safe signer for the commentary family. The worker did not edit pdf_link.py."
+}
+```
+
+## IRPT_ANLREQ-D2-W139-S4 -- commentary_pdf takes the owner gate of persist_inputs (re-read, artifact read, final re-read) rather than running read(), so it does not require the report to be READY; the cell asked for exactly what pdf does
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W139-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~139",
+  "surfaced_at": "2026-10-14T18:24:12Z",
+  "one_line": "TO-AR-y-331 step 2(a) asks for the owner re-read, retention and final re-reads exactly as pdf does; pdf performs them through read(), which also requires the report to be READY and its report row retained, and commentary_pdf performs the same owner, retention and final re-reads through _materialize, the artifact read and _final without read().",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-331 step 2(a): commentary_pdf does EXACTLY what pdf does for owner re-read, retention and final re-reads, resolving the artifact from the acceptance record's commentary_ref.",
+  "world_is": "pdf calls self.read() (ops/owned_report.py:299), which runs _materialize, _final, the READY-state check and the report row's retention; commentary_pdf (ops/owned_report.py, beside pdf) calls _materialize, the repository head (retention checked inside _get) and _final, the pattern persist_inputs uses (ops/owned_report.py:272-290), and so does not require a READY report. The packager attaches the commentary only after the report is READY, so the answer is the same for every request the ticket page shows, but the route as written does not depend on the report state. Not exercised: the admitted side of OPAL_GLOBAL, which this offline world refuses for pdf too (the test compares the two routes' answers).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:292-299 @83c98f380d",
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:272-290 persist_inputs @83c98f380d",
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py commentary_pdf @2a535a7859"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Judgment for L9 (AC4J): whether the owner gate is the one the cell means. If the issuer wants the READY dependency, commentary_pdf calls self.read() first; one line, no other change."
+}
+```
+
+## IRPT_ANLREQ-D2-W139-S5 -- tests_check.py's listed set (the name filter in AC1) does not include _authz/tests/test_unguarded_census.py, so the checker's TESTS-OK does not show the failing census test (row S2)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W139-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~139",
+  "surfaced_at": "2026-10-14T18:24:12Z",
+  "one_line": "AR331-y-AC1 names the test files whose name contains pdf, route, entry, status, owned or operation; test_unguarded_census.py matches none of them, so tests_check.py prints TESTS-OK 6 new, 239 others, 0 failed while the same folder run shows the census test failing (row S2).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR331-y-AC1: the checker runs the new file and every test file under ops/tests/, reports/tests/ and _authz/tests/ whose name contains pdf, route, entry, status, owned or operation, and prints TESTS-OK only when the new file passes and the others have 0 failed.",
+  "world_is": "The name filter is a file-name test; the census file that asserts the published route table is named test_unguarded_census.py. The checker's verdict is therefore true to its spec and silent on the census file. The worker did not widen the criterion (the order's file list is the issuer's).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~139/tests_check.py listed-file output (14 files) @2a535a7859",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_unguarded_census.py:271 @2a535a7859"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The census file is the one the worker's wider run caught; the issuer decides whether the criterion's name filter should name it."
+}
+```
+
+## IRPT_ANLREQ-D2-W139-S6 -- four cases in _contracts/tests/test_seam_paired.py fail in this worktree; the worker did not establish a clean baseline, and none of the four reads ops/entry.py or the installed history table
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W139-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~139",
+  "surfaced_at": "2026-10-14T18:24:12Z",
+  "one_line": "_contracts/tests/ reports 4 failed, 122 passed in this worktree: test_the_consumer_fixture_source_is_named_and_non_empty (19 != 12), test_the_operation_map_covers_the_consumers_own_denominator, test_every_declared_route_has_a_response_contract_whose_refs_resolve (analysis-request-original has no response schema) and its control; the worker judges them not caused by this change, but has no clean base run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-331 grant: _contracts/tests/ is a granted test folder, and an order's own folder should run clean on the change it makes.",
+  "world_is": "A base run from git archive 83c98f380d fails 18 cases, because the archive lacks files the suite reads (only docs/contracts, infra/aws/lambda/ci and data/firm_registry.json were extracted), so the comparison is not clean. The four worktree failures read the consumer fixture and the routes.json declared set; test_seam_paired.py never names ops/entry.py, status_installed.py or HISTORY_ROUTES. The analysis-request-original schema gap is recorded before this change at docs/contracts/investor-reporting/v1/routes.json:246 (response_schema_absent_reason, AR-y-22).",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "pytest _contracts/tests run @2a535a7859: 4 failed, 122 passed",
+      "infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py grep: no reference to entry, status_installed, HISTORY_ROUTES @2a535a7859",
+      "base snapshot .scratch/before (git archive 83c98f380d, partial): 18 failed, 108 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the CVO or the issuer to establish a full base run (the whole worktree at 83c98f380d). The worker did not patch _contracts/tests."
+}
+```
