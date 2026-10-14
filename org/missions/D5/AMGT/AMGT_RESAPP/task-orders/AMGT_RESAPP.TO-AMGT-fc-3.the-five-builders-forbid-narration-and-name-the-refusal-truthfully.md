@@ -92,6 +92,7 @@ The `<status>` flip is the issuer's.
 
 <status>staged</status>
 <status>pending -- 2026-10-14 by the issuer (2.0.0_SA_COO~R2): fc-2 merged @49219a610b; worker ~432 cut from that head.</status>
+<status>complete -- 2026-10-14 by the issuer (2.0.0_SA_COO~R2): wk-AMGT_RESAPP-432 @39ddc3fa71 merged @6fd4030c31, proof instance VALID (rc=0). AC1 PASS (`AIFILL FC-3 ARMS: YES (17 of 17)`, re-run by the issuer on the merged tree, same line), AC2 PASS (168 passed in the worker's tree; the aifill package 498 passed on the merged tree), AC3 PASS (FA-3 20/20, FA-4 17/17, FA-5 25/25). Worker rows W432-S1 (departure: a foreign letter beyond the sentence cut also refuses; accepted, stricter than the order) and W432-S2 (the base read 4 of 17, not 2) are observations.</status>
 <round>105</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~432</slot>
