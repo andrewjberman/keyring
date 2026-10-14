@@ -12131,3 +12131,138 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W117-S1 -- a one-row staged_from entry for lib/trading_calendar.py does not ship the calendar: the builder zips only files[] and its parity limb refuses an unlisted top-level .py
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W117-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~117",
+  "surfaced_at": "2026-10-14T01:10:16Z",
+  "one_line": "a one-row staged_from entry for lib/trading_calendar.py does not ship the calendar: the builder zips only files[] and its parity limb refuses an unlisted top-level .py",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-299 step 3: ADD one staged_from row for lib/trading_calendar.py packaged as trading_calendar.py at the package root, in the map entry only, following the shape of the six other Lambda entries.",
+  "world_is": "At base 0c0ae5a8f5 build-and-upload.sh zips exactly the files[] list (the PowerShell zip block takes FN_FILES) and its ADHC_DRIFTD.002 parity block refuses a top-level *.py in source_dir that is in neither files[] nor outside_package. A staged calendar lands at source_dir root, so one staged row alone is either refused by parity or left out of the zip. The six entries that already carry the calendar also list it in files[] (irpt-directory-search and irpt-directory-refresh list trading_calendar.py; the others list lib/trading_calendar.py). Measured in the release worktree C:/dev/r30-release: with the files[] entry appended the build packages 68 .py files and the zip holds trading_calendar.py as only_in_release. No builder was edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/build-and-upload.sh@0c0ae5a8f5 (ADHC_DRIFTD.002 parity block; PowerShell zip block over FN_FILES)",
+      "infra/aws/lambda/ci/lambda-source-map.json@origin/CLOUD functions.irpt-directory-search.files and functions.irpt-performance-adapter.files",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~117/r30/ycharts_release_input.diff",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~117/r30/IRPT_YCHARTS_GENERATE_BUILD.json (release_input, import_closure)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The files[] entry has to travel with the staged row in the one map commit of the L3 release. The issuer or the applier owns that commit; this worker did not commit the map (outside the grant)."
+}
+```
+
+## IRPT_ANLREQ-D2-W117-S2 -- a staged_from pin move must move its declared sha256 too: the builder refuses a blob whose sha256 differs from the declared value
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W117-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~117",
+  "surfaced_at": "2026-10-14T01:10:16Z",
+  "one_line": "a staged_from pin move must move its declared sha256 too: the builder refuses a blob whose sha256 differs from the declared value",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-299 step 3: move the map pins of template_reader.py, portfolio.py, uploads.py and security_resolution.py to commits whose blobs equal the trunk HEAD's blobs.",
+  "world_is": "The builder's staging step reads each staged blob with git show <pin>:<repo_path>, hashes it, and refuses 'staged_from BLOB HASH MISMATCH' when the hash differs from the row's declared sha256, before it writes any byte. A pin-only move would fail the build. The release-21 pair records the same rule (section 3b, row W72-S1). The release worktree moved pin and declared sha256 together: template_reader.py to 55d1755d39 / a61cd0c6, portfolio.py and uploads.py and security_resolution.py to 9441d74dbb / d1232a12, 80ace2d3 and 1248f6c0. Each pin's blob equals the trunk blob (git rev-parse on both sides).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/build-and-upload.sh@0c0ae5a8f5 (staged_from materialization, BLOB HASH MISMATCH check)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/release21/NEVER_WIDEN_PAIR_ANLREQ_RELEASE21_READER_R193_TWO_LEG.md (section 3b)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~117/r30/ycharts_release_input.diff"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The order's wording names pins only. The declared sha256 has to move in the same map commit or the staged row is refused."
+}
+```
+
+## IRPT_ANLREQ-D2-W117-S3 -- the signed IB184-1 source-map row diff does not apply with git apply at its base unless --unidiff-zero is given
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W117-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~117",
+  "surfaced_at": "2026-10-14T01:10:16Z",
+  "one_line": "the signed IB184-1 source-map row diff does not apply with git apply at its base unless --unidiff-zero is given",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-299 steps 2 and 3: the no-move control and the release input are built at the live package's base with its diff applied, as the control.",
+  "world_is": "The IB184-1 row diff (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~367/IB184-1_source_map_row_diff.txt on origin/CLOUD) carries zero-context hunks. git apply --check at 0c0ae5a8f5 fails with 'patch failed: infra/aws/lambda/ci/lambda-source-map.json:4216'. With git apply --unidiff-zero the check passes and the applied blob is 0c78b0db55, equal to the index line of that diff. The control built from that base reproduced the live CodeSha256 xP47NQDnZNZ8Lui1XQKUxUtTMTasR8Cj/A1sQnRDZYY=.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~367/IB184-1_source_map_row_diff.txt@origin/CLOUD",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~117/r30/IRPT_YCHARTS_GENERATE_BUILD.json (no_move_control)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Invocation nuance only. The control and the release base are both 0c0ae5a8f5 plus this row."
+}
+```
+
+## IRPT_ANLREQ-D2-W117-S4 -- the map field last_deployed_commit of irpt-ycharts-generate names 0d0e9e1229, which is not the commit the live package was built from (0c0ae5a8f5)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W117-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~117",
+  "surfaced_at": "2026-10-14T01:10:16Z",
+  "one_line": "the map field last_deployed_commit of irpt-ycharts-generate names 0d0e9e1229, which is not the commit the live package was built from (0c0ae5a8f5)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-299 step 2: find the base the live package was built from, from the map entry and the ledger of the last release; the map field would be read as that base.",
+  "world_is": "origin/CLOUD infra/aws/lambda/ci/lambda-source-map.json, functions.irpt-ycharts-generate: last_deployed_commit 0d0e9e1229c099817988758bce973b06a6a969a2, last_deployed_at 2026-10-13T22:51:27Z, deployed_code_sha256 xP47NQDnZNZ8Lui1XQKUxUtTMTasR8Cj/A1sQnRDZYY=. The ledger org/critical_paths/change_management/20261013T2236Z_irpt-ycg-catalogue-ultrashort-20261013_deploy_completion.md records the build at base 0c0ae5a8f5 with the IB184-1 row diff. The control built at 0c0ae5a8f5 reproduces the live digest, so the base is 0c0ae5a8f5 and the map field is not the build base. The map's _deploy_record_correction note describes the field as the last commit touching source_dir at the pin.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json@origin/CLOUD functions.irpt-ycharts-generate (last_deployed_commit, _deploy_record_correction)",
+      "org/critical_paths/change_management/20261013T2236Z_irpt-ycg-catalogue-ultrashort-20261013_deploy_completion.md (Log and L2 row)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~117/r30/IRPT_YCHARTS_GENERATE_BUILD.json (no_move_control)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The live base is named only by the ledger entry. Nothing was changed in the map for this row."
+}
+```
+
+## IRPT_ANLREQ-D2-W117-S5 -- the calendar module, imported from the release package, prints a WARN and answers from a hardcoded NYSE table that its own message says to regenerate before 2028
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W117-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~117",
+  "surfaced_at": "2026-10-14T01:10:16Z",
+  "one_line": "the calendar module, imported from the release package, prints a WARN and answers from a hardcoded NYSE table that its own message says to regenerate before 2028",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "intake/portfolio.py docstring: the calendar is the estate's one trading-day frontier, imported and never copied; the cell adds the member so the default price date path resolves.",
+  "world_is": "In the flat release layout (the zip extracted to an empty folder, run with python -I and that folder on sys.path, local Python 3.14), importing trading_calendar prints 'WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027; regenerate with lib/tests/gen_nyse_closures.py --write before 2028)'. The package carries no pandas_market_calendars. The fallback answered default_price_date(None, today=2026-10-13) with 2026-10-12. portfolio._trading_calendar resolves route 1 (the flat import) to the packaged member.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py@origin/CLOUD (try import pandas_market_calendars, NYSE hardcoded fallback and its WARN text)",
+      "intake/portfolio.py@origin/CLOUD (_trading_calendar, three import routes)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~117/r30/IRPT_YCHARTS_GENERATE_BUILD.json (import_closure.route_1_flat_smoke)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Observed, not judged. The regeneration horizon is 2028 as the module states."
+}
+```
