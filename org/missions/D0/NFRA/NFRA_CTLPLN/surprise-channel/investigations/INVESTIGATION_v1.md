@@ -9529,3 +9529,80 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Z-S9 stands as written (append-only). The fix touches spawn only; it does not restore transcripts for sessions already running."
 }
 ```
+
+## NFRA_CTLPLN-W92-S1 -- the fence check cannot run inside the batch test without AWS
+
+```json
+{
+  "id": "NFRA_CTLPLN-W92-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~92",
+  "surfaced_at": "2026-10-14T21:53:15Z",
+  "one_line": "The batch test's arm 2, which runs check_fence_scoped_rows.py on its saved inputs, cannot run under the cell's no-AWS rule, because the check calls sts get-caller-identity and iam simulate-custom-policy on every run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/shared-infra/tests/check_fence_scoped_rows.py@868b773335 line 37 docstring: 'AWS calls: sts get-caller-identity and iam simulate-custom-policy only'",
+      ".tools/tests/test_round14_batch.py arm 2b: executable code (docstring removed, AST) equal to the base copy read by git show into a temporary directory -- passes",
+      "CTad1-AC3 run of the check after the edits: FENCE-SCOPED rows_today=45 unchanged_today=True scoped_rendered=38/38 sim_ok=31/31 refusals_ok=5/5 ok=True (rc=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ad-1 BUILD item 5 (2): the batch test runs check_fence_scoped_rows.py on its saved inputs and compares its result lines with the base copy. RULES: no aws call in the test.",
+  "world_is": "The check reads AWS on every run, so arm 2 cannot execute it under the no-AWS rule. The arm proves the executable code equals the base, which fixes the printed result lines on the same inputs; the check's own result line is read at CTad1-AC3 (ok=True, rc=0)."
+}
+```
+
+## NFRA_CTLPLN-W92-S2 -- the coverage frame is printed only beside a coverage violation, so the all-expected fixture carries no NOTE line
+
+```json
+{
+  "id": "NFRA_CTLPLN-W92-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~92",
+  "surfaced_at": "2026-10-14T21:53:15Z",
+  "one_line": "The batch test's arm 3 asks for the all-expected fixture to print the coverage-frame line beginning NOTE:; the base code prints the frame only when a coverage violation exists, so the arm asserts NOTE: on the one-unexpected fixture and no VIOLATION frame on the clean one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/proof-of-spec-check.py@868b773335 coverage_check: 'v.insert(0, coverage-frame ...) if v else None' -- the frame exists only when v is non-empty",
+      "worktree probe after the edit: predecessor instance NFRA_CTLPLN.TO-CT-ac-1 with CTac1-AC1,CTac1-AC2,CTac1-AC3 -> violations=0 and no coverage line; plus one extra row X9 -> violations=1 and '  NOTE: coverage-frame: expected=3 carried=4 matched=3'",
+      ".tools/tests/test_round14_batch.py arms 3a and 3b pass on that basis"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ad-1 BUILD item 5 (3): a fixture whose acceptance rows are all expected prints violations=0 and the coverage-frame line begins NOTE:. The frame is informational, not a refusal.",
+  "world_is": "A clean instance prints no coverage-frame line at all, so a NOTE: line cannot appear on the all-expected fixture. The frame is kept conditional (no change to clean output); the NOTE: assertion is made on the one-unexpected fixture."
+}
+```
+
+## NFRA_CTLPLN-W92-S3 -- the proof checker refuses an instance outside its tree, so the coverage fixtures live under the ignored .scratch/
+
+```json
+{
+  "id": "NFRA_CTLPLN-W92-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~92",
+  "surfaced_at": "2026-10-14T21:53:15Z",
+  "one_line": "The batch test's coverage fixtures cannot sit in the system temp directory: proof-of-spec-check refuses an instance outside its own tree with CHECKER-SCOPE, so they are written to a temporary directory under the worktree's ignored .scratch/.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "probe 2026-10-14 ~21:5xZ: proof-of-spec-check.py <copy of the committed predecessor instance in the system temp directory> CTac1-AC1,CTac1-AC2,CTac1-AC3 -> 'VIOLATION: artifact-resolution/CHECKER-SCOPE ... OUTSIDE that tree' and violations=1",
+      "same copy under <worktree>/.scratch/ -> violations=0; the batch test's arms 3a and 3b run under .scratch/ and remove it afterwards (r14-* directories: 0 left)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ad-1 BUILD: the batch test uses temporary directories only and writes no file in the repository.",
+  "world_is": "The only tree the proof checker grades is its own, so a fixture outside it is refused as a tool-scope finding, not graded. The fixture is therefore a temporary directory inside the checkout's git-ignored .scratch/, created and removed by the test."
+}
+```
