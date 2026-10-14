@@ -15295,3 +15295,121 @@ name the one known failure instead of silently inheriting it.
     "notes": "The remedy is the issuer's and already in motion (OG-gt-8: a safe root plus lib/ staged into the artifact), and this row does not ask for anything. What it adds for the re-cut: the census says there is exactly ONE line of this class in the shipped app code, so a single fix closes it, and the fix should be checked AT THE INSTALL DEPTH rather than in a checkout. The cheap general control, which I did not run and will from now on: import the shipped modules with the app root at the depth the host uses -- or simply assert that no shipped module derives a path from __file__ beyond its own package -- because `parents[N]` is silently correct in every repo tree and silently fatal in the install tree. Related: Z-S125 (the calendar never reaches the host), which is the other half of this same line's purpose."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W88-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~88",
+    "surfaced_at": "2026-10-14T21:02:46Z",
+    "one_line": "The task order's premise that the gold article_sentiment read is the cost is refuted: the sentiment dataset is 5 parts in one date partition, 2.1 MB; the silver join is 38.2 of the 42.3 s of the no-window call.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-OG-gt-9 section 1, 'The defect': 'The earlier CTO reading was that the gold article_sentiment join scans one ~110 MB partition; the numbers above say the silver join may cost as much. Profile first, then fix what dominates.' Step 3: 'read only the silver partitions of the page's own articles'.",
+    "world_is": "Measured read only on opal-data-harvest with box credentials: article_sentiment holds 5 parts, 2,096,262 bytes, all in date=2026-10-03 (13,235 rows), 0.7 s wall on the no-window call. The silver join reads 849 parts, 172,503,185 bytes, 38.2 s wall. The base already reads only the page's silver partitions; the cost is the part count inside them (no manifest or index exists; one sa partition holds 1,086 parts).",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: profile of harvest_search_articles(ASML, limit=5) and a 7-day window on opal-data-harvest, read only, from C:/tmp/wk-oplgtw-88 at base ae365fc589; per-stage seconds and bytes by prefix (scratch profile, not committed)",
+        "CODE: infra/aws/ec2/opal-gateway/app/harvest_press.py@ae365fc589 -- _silver_join groups the page's (publisher, fetched day) partitions only and reads every part of each"
+      ]
+    },
+    "notes": "The sentiment pruning is still implemented (its premise measured clean, see S4). The no-window silver cost is what the one-hour cut removes part of (S2, S3)."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W88-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~88",
+    "surfaced_at": "2026-10-14T21:02:46Z",
+    "one_line": "Silver parts are pruned by their name stamp against a measured lateness bound: the bound holds on every sampled row (under one second), but it is a measurement of this bucket, not a guarantee, and a part whose records lag its stamp by more than the one-hour margin would drop a record from the answer without an error.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "spec_asserts": "TO-OG-gt-9 step 2: 'Measure that premise on the real bucket before relying on it ... widen the cut by the measured slack and say so'. Step 3: 'Keep the answer's content identical for the same inputs.'",
+    "world_is": "The silver part stamp (part-YYYYMMDDTHHMMSSZ) is not a bound on fetched_at as stated, but every violation is small: 1,050 of 9,356 rows on the no-window partitions (844 of 849 parts) and 351 of 6,897 rows on the 7-day partitions (145 of 145 parts) carry a fetched_at after their stamp, and the latest lag was 0.999789 s and 0.993040 s. The module skips a part when its stamp plus a one-hour margin is before its partition's earliest page fetch: 156 of 849 parts on the no-window call and 79 of 145 on the 7-day call. The three sampled calls returned answers identical to the unpruned read (articles compared field by field).",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: per-part stamp against the max fetched_at of its rows over every part of the no-window and 7-day page partitions, read only, box credentials, from C:/tmp/wk-oplgtw-88 at base ae365fc589 (scratch measurement, not committed)",
+        "CODE: infra/aws/ec2/opal-gateway/app/harvest_press.py -- SILVER_LATENESS, _stamp, _prunable and the fallback in _silver_join (this commit)"
+      ]
+    },
+    "notes": "HAZARD, not measured to fire: if a future writer stamps a part earlier than its records' fetch by more than SILVER_LATENESS, the pruned read misses those records with no error. Disarm options for the issuer: (a) measure the lateness over every silver partition and widen SILVER_LATENESS to the observed maximum with margin; (b) drop the silver prune (PRUNE = False) and accept the 42-47 s no-window call. The sentiment prune is a separate premise (0 violations) and is not ARMED."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W88-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~88",
+    "surfaced_at": "2026-10-14T21:02:46Z",
+    "one_line": "The no-window call answers in 38.1 s against the 40 s bar after the silver prune, on a 1.9 s margin; the stated method (reading less, identical answers) has no further lever in the module.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-OG-gt-9 section 4 AC2: 'on the real bucket both calls answer under 40 s'. Section 1 step 3: 'Reduce whatever else dominates the profile by reading less, not by caching across calls'.",
+    "world_is": "No-window seconds: 42.3 before (profile run), 47.5 before (dump run); 38.1 after (AC2 run) and 39.5 after (dump run). Silver parts read 693 of 849. The residual is 693 single-object GETs of about 0.2 MB at about 0.44 s each through a 10-thread pool (PART_THREADS, which the module comment ties to the boto3 connection-pool default). A further cut needs a partition index or more concurrency; neither is reading less with identical answers.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: AC2 check gt9.AC2.sh and the dump runs, read only, from C:/tmp/wk-oplgtw-88 at base ae365fc589 and the working tree of this commit"
+      ]
+    },
+    "notes": "Margin measured over two after-runs and one AC2 run only; a further run may land nearer 40 s. PART_THREADS was not changed: that is outside the stated method."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W88-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~88",
+    "surfaced_at": "2026-10-14T21:02:46Z",
+    "one_line": "The article_sentiment partition pruning removes nothing on this bucket: the dataset is one date partition (2026-10-03), so both calls read 1 of 1 sentiment partitions.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-OG-gt-9 step 2: 'read only article_sentiment partitions dated on or after the earliest fetched_at UTC day among the page's rows'. AC3: the denominator carries sentiment_partitions_read of sentiment_partitions_total.",
+    "world_is": "article_sentiment holds 5 parts, all in date=2026-10-03. The page's earliest fetch day is on or before 2026-10-03 on both sampled calls, so the cut keeps that one partition. The premise measured clean: 0 sentiment rows dated before their article's fetch day in 13,195 rows, so the slack is 0 days.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: every article_sentiment part read whole and each row compared to its article's fetched day from the newest article_security_mention part, read only, from C:/tmp/wk-oplgtw-88 at base ae365fc589 (scratch measurement)"
+      ]
+    },
+    "notes": "The pruning is implemented and tested offline (test_oggt9_ac01..ac03); on this bucket it has nothing to cut yet, and it will when the dataset gains dated partitions."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W88-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~88",
+    "surfaced_at": "2026-10-14T21:02:46Z",
+    "one_line": "BLOCKING for the final step only: the task order's <status> flip to complete is in the task-order file, which is outside this order's <paths>, so this worker did not make it.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-OG-gt-9 section 5: 'flip the ONE <status> tag to complete only if both PASS, and report once'. Section 3 <paths> lists three files: harvest_press.py, tests/test_og_gt9.py and the investigation file.",
+    "world_is": "Both criteria PASS at the commit of this instance (AC1 3 of 3 named tests; AC2 38.1 s and 10.9 s). The flip edits org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-gt-9.search-window-pruning.md, which is not in my write grant, so it is not made.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-gt-9.search-window-pruning.md section 3 <paths> (three entries, the task-order file not among them)"
+      ]
+    },
+    "notes": "BLOCKING for the final flip only. The code, the tests and the proof instance are complete and valid. The issuer flips the tag, or the CTO grants the path."
+  }
+  ```
