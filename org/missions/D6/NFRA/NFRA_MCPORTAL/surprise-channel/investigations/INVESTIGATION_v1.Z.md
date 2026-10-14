@@ -1951,3 +1951,49 @@
   }
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W28-S3",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~28",
+  "surfaced_at": "2026-10-14T19:51:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The MP-pd-4 AC1 check prints 'bun test rc=$rc' but $rc is the exit status of the trailing tr/sed stage of its pipeline, not bun's.",
+  "spec_asserts": "pd4.AC1.sh reports 'bun test rc=<n>' as the exit status of `bun test src`, and its RESULT line requires rc=0.",
+  "world_is": "In org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pd/checks/pd4.AC1.sh the line out=$(cd mcportal && ... bun test src 2>&1 | tr | sed ...); rc=$? takes the status of the last pipeline stage (sed). Positive control: sh -c 'exit 3' | cat leaves $? = 0. The verdict still fails closed on the parsed pass and fail counts (fail must read 0, pass must be at least 8), so a failing run still reads FAIL; the printed rc just cannot show bun's own exit code. Not repaired here: the script is outside this cell's write paths.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pd/checks/pd4.AC1.sh (the out=$(... | tr | sed) line and the rc=$? line)",
+      "positive control in the worker shell: sh -c 'exit 3' | cat, then echo $? printed 0"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W28-S4",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~28",
+  "surfaced_at": "2026-10-14T19:55:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The worker procedure asks for the task order's <status> to be flipped to complete with the instance; the order's <paths> does not grant the task-order file, so this worker did not flip it.",
+  "spec_asserts": "Worker procedure: flip the task order's <status> to complete and commit the instance, deliverables and flip together; the order's <paths> is the write grant (mcportal src/pages/people, src/api/admin.ts, src/api/admin.test.ts, the deliverables folder, the surprise-channel investigations folder).",
+  "world_is": "The <status> line is in the record face of org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pd-4.people-page-controls.md (line 138, pending), a path outside <paths>. The instance validates rc=0 (proof-of-spec-check, AC1). The launcher message did not ask for the flip. Left for the COO to flip.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pd-4.people-page-controls.md@31df432618 line 138 (<status>pending</status>, after the RECORD FACE marker) and section 3 <paths>",
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~28/NFRA_MCPORTAL.TO-MP-pd-4.people-page-controls.proof_of_spec.json (rc=0 from .tools/proof-of-spec-check.py)"
+    ]
+  }
+}
+```
