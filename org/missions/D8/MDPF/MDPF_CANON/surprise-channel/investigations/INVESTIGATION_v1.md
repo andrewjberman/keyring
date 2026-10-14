@@ -1888,3 +1888,54 @@
   "notes": "Filed by the worker as a BLOCKING row. Resolution owner: 2.0.0_SA_COO~D1 with the CTO -- either a naming registry row under infra/logic/registry/ (outside this order's paths) or an R20 register entry Andrew acknowledges. The order's status stays pending until the code lands."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W21-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~21",
+  "surfaced_at": "2026-10-14T15:04:10Z",
+  "one_line": "The corrected CN-n-1 QA drive (re-seated run, one drive) did not refuse Global on the min-firms guard: manifest_errors.global reads 'AssertionError: CROSS-AXIS COHERENCE GATE FAILED (global) -- REFUSING TO EMIT' with presence disagreement (v), so the refusal arm the order names is not demonstrated.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-n-1 Step 2 and FWD-3 third arm: on a one-firm Global pool build_all completes with status non-green, errors ['global'], writes 0 and blocked-calls 0, and manifest_errors.global carries the prefix 'GLOBAL MIN-FIRMS FOLD REFUSED:'. CN-n-1 Step 3: a refusal text other than the min-firms prefix is a finding about the guard or the plant; keep the record, file a row, stop on AC1.",
+  "world_is": "Measured 2026-10-14T14:59Z-15:02Z by one drive (r7_cn_n_1.py drive, one run into run/, after selftest OK and plan planted true). run/qa_run.json: status non-green, errors ['global'], a4_objects_built 12 of 16, writes 0, blocked-calls 0 (run/s3_ops.json blocked []). manifest_errors.global (exact first line): 'AssertionError: CROSS-AXIS COHERENCE GATE FAILED (global) -- REFUSING TO EMIT', then '(v) presence disagreement: 2 across 1 date(s)' naming two by_model lines on 2026-10-13 with model_value None and account_count set. run/qa_run.log: 'SCOPE FAILED (isolated): global -- AssertionError: CROSS-AXIS COHERENCE GATE FAILED (global)'; the string 'GLOBAL MIN-FIRMS FOLD REFUSED' does not appear. AC1 grade: 4 of 6 arms, rc=1 (N2 and N5 FAIL). AC2 served 4 of 4 and AC3 guard control 5 of 5 PASS. The min-firms guard is therefore not shown to run before the cross-axis gate in this build.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~21/run/qa_run.json (manifest_errors.global, status non-green, writes 0)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~21/run/qa_run.log (line 'SCOPE FAILED (isolated): global -- AssertionError: CROSS-AXIS COHERENCE GATE FAILED')",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_n_1.py (cmd_drive plant call, blank_counts=True at line 297)",
+      "data/mdpf/scripts/gold/mdpf_gold_consolidator.py (build_all guard call order: guard_global_served_identity then guard_global_min_firms_fold, as recorded in MDPF_CANON-D1-W21-S2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the re-seated worker. Not repaired here: the plant, the instrument, the guard and the consolidator are read-only for this order. The record is QA and not production evidence. Resolution owner: 2.0.0_SA_COO~D1 (decides whether the plant must also reach the presence gate, see MDPF_CANON-D1-W21-S2 and -S5). The order's status stays pending; AC1 is FAIL."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W21-S5",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~21",
+  "surfaced_at": "2026-10-14T15:04:10Z",
+  "one_line": "Amendment 1 says the corrected plant blanks account_count with model_value, but on the re-seated drive the presence gate still read account_count set on the two blanked by_model lines.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-n-1 AMENDMENT 1 (issuer, 2026-10-14 ~15:0xZ): the plant now edits deep COPIES for the Global builder only and blanks the count with the value; a RAISED run records writes []. The corrected plant is expected to let the cross-axis presence gate read a clean one-firm day.",
+  "world_is": "The worktree HEAD instrument calls plant_single_firm_pool(..., blank_counts=True) for the drive (r7_cn_n_1.py line 297) and the plant record reads planted true, lines_blanked 2, fold_lines 9, kept_firm cottonwood, blanked_firms inflection. Yet the run's cross-axis presence gate (v) reports the same two by_model lines with model_value None and account_count still set, so the count blanking did not reach the gate's read in this drive. The cause is not established here: the blanking is guarded by isinstance(account_count, list) at line 121, and that condition and the index mapping were not examined. This repeats the mechanism of MDPF_CANON-D1-W21-S2 on the corrected instrument.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_n_1.py (plant_single_firm_pool lines 94-122, blank_counts guard at 121; cmd_drive call at 297)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~21/run/qa_run.json (plant record; manifest_errors.global presence disagreement)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~21/run/qa_run.log (presence disagreement (v) block)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the re-seated worker as an observation of the premise, not a repair. The issuer owns the plant. Related: MDPF_CANON-D1-W21-S2 (same mechanism, first run) and MDPF_CANON-D1-W21-S4 (the AC1 consequence)."
+}
+```

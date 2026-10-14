@@ -3,7 +3,7 @@
   "project": "NFRA_MCPINDEX",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v0.13",
+  "prd_version": "v0.14",
   "step": 4,
   "brief_ref": "docs/briefs/opal-mcp-tool-index-brief-20260917.md@826ac6925a",
   "endpoint_outcomes": [
@@ -701,3 +701,12 @@ From `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014
 - mark `partner_held_etf/49financial` and `non_model_aua/49financial` as do-not-serve, with G4's reasons;
 - record that `opal-data-mdpf` gold is a mirror of the served platinum (OVERLAP 100%, measured), so no tool targets it.
 Fold into the open catalog round. CONTRACTS-only.
+
+### v0.14 addendum (2026-10-14 ~15:1xZ, 1.0.0_SA_CTO~Z) -- client-data rows point only at opal-data-assets vendor silver (Andrew-direct)
+
+Per `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_150xZ_CLIENT_DATA_ONLY_OPAL_DATA_ASSETS_VENDOR_SILVER.md` and NFRA_OPLGTW v3.4:
+- Client-data rows name `opal-data-assets/<vendor>/<firm>/silver/` as their read location and `read_tool` a `client_*`
+  tool. No row offers `opal-data-bd`, `opal-data-mdpf/mdpf/feeds/model_aua_positions` or the per-firm `taxsma_assets` gold
+  as a tool target. Where a row was written for them, it is marked `not_served` with this record cited.
+- The 49F BD rows state the measured lag (row Z-S110) and are never presented as current.
+CONTRACTS-only.
