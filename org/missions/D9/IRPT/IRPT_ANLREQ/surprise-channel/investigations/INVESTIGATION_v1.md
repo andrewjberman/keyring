@@ -11722,3 +11722,32 @@
   "notes": "Recorded so the CVO reads the census against the pinned sha, not the moving ref."
 }
 ```
+
+## IRPT_ANLREQ-D2-W116-S1 -- the base the map record names for the live irpt-status package (e93258c650) does not rebuild the live bytes; the trunk head a4b7c48fad does
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W116-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~116",
+  "surfaced_at": "2026-10-14T00:36:26Z",
+  "one_line": "the commit the map record names as last_deployed_commit for irpt-status (e93258c650) does not rebuild the live zip; the trunk head a4b7c48fad rebuilds it byte for byte",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-298 step 2 (lambda-leg method, TO-AR-y-228 step 2) names the base the live package was built from as the map entry's staged_from pins and last_deployed_commit, and requires a BUILD_ONLY rebuild at that base to reproduce the live CodeSha256 with differs_from_live empty.",
+  "world_is": "At e93258c650 (guard count 8) with the map at that commit: CodeSha256 6idtFvAmYk73wJdr5DPRIyEPrLeWgzjlqbdNr5f1wxc= not equal to the live vlGh380QUKvBMOhJn0GJGgDi1/WLI9qTaSP2uETmdP4=; differs_from_live = loaders.py, served.py, status.py, because that map pins those three rows at 361c44fa9d while the live bytes are at 69679b90e3, 564e604838 and e93258c650. At a4b7c48fad (trunk head, guard count 8) with the map at that commit: CodeSha256 vlGh380QUKvBMOhJn0GJGgDi1/WLI9qTaSP2uETmdP4= equal to live, zip sha256 hex be51a1dfcd1050abc130e8499f41891a00e2d7f58b23da936923f6b844e674fe equal to the live download, differs_from_live = []. The trunk map carries the live pin for all 44 staged rows of irpt-status.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show e93258c650b369df46e22210d94add7cbb0d1749:infra/aws/lambda/ci/lambda-source-map.json (irpt-status staged_from rows at 361c44fa9d)",
+      "git show a4b7c48fad0559ff06155e505b51e97b3c5f6437:infra/aws/lambda/ci/lambda-source-map.json (irpt-status staged_from rows at the live pins)",
+      "C:/dev/irpt-release-r28/tmp-control-base/build.log (BUILD_ONLY at e93258c650, SHA256 6idtFvAm...)",
+      "C:/dev/irpt-release-r28/tmp-control-trunk/build.log (BUILD_ONLY at a4b7c48fad, SHA256 vlGh380Q...)",
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~113/r28/FWD1_RELEASE_CENSUS.json (irpt-status live block, CodeSha256 and artifact versions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not raised as BLOCKING: the live package reproduces at a4b7c48fad, so the no-move control and the release are both cut on that base, and the release moves only ops/status.py. The record's last_deployed_commit does not name a rebuildable base; the issuer should correct the premise before the record is used as a base again. Nothing was uploaded, applied or deployed."
+}
+```
