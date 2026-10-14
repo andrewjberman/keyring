@@ -15105,3 +15105,35 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W145-S6 -- AMENDMENT 1 step S2 STOP: entry.py and owned_report.py carry hunks that are not commentary-pdf route work (AR-y-71 ticket_id and reason, AR-y-32 retained_ref), so the source map is not edited
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W145-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~145",
+  "surfaced_at": "2026-10-14T20:03:30Z",
+  "one_line": "BLOCKING STOP under AMENDMENT 1 (S2): for entry.py and owned_report.py, the diff from the pin 361c44fa9d to the release input c4c2afe896 holds hunks that belong to AR-y-71 (420fc49e0e, 359da3005f) and AR-y-32 (94713492d8), not to AR-y-331. The order says do not edit the map. No map edit, no commit of the map, no release worktree, no build.",
+  "spec_asserts": "TO-AR-y-339 AMENDMENT 1 (S2): BEFORE editing infra/aws/lambda/ci/lambda-source-map.json, for EACH of ops/entry.py, ops/owned_report.py and reports/status_installed.py print git diff 361c44fa9d <pin> -- <repo_path> and list its hunks; every hunk must be the commentary-pdf route work (the route, operation and table entries and the AR-y-331 helper), nothing else; if ANY hunk belongs to another cell's pending change, DO NOT edit the map: STOP with a BLOCKING row naming the member, the hunk and the commit that introduced it.",
+  "world_is": "Pin 361c44fa9d40992c8cacfd625cc789536f84b920; release input c4c2afe89639071f41242fc9f663cadaffa0ffd8 (ancestor of HEAD). Positive control: git show 361c44fa9d:<member> hashes to the map's staged_from rows: ops/entry.py 4a5dd2e8..., ops/owned_report.py 542047cf...,reports/status_installed.py 326fed4f.... reports/status_installed.py: ONE hunk, the commentary-pdf route key, AR-y-331 (2a535a7859). ops/entry.py: FIVE hunks. AR-y-331 (2a535a7859): the commentary_pdf operation, the route and operation table entries, owner_read_modes and record_id_parameters. NOT AR-y-331: (a) issued(event, parameter, admit=()) and the sections() ticket_id selector (420fc49e0e, AR-y-71); (b) the reasons entry ReportTicketMismatch -> REPORT_TICKET_MISMATCH (359da3005f, AR-y-71 amendment 1). ops/owned_report.py: SEVEN hunks. AR-y-331 (2a535a7859): COMMENTARY_FAMILY and _commentary_logical_id, and the commentary_pdf method. NOT AR-y-331: class ReportTicketMismatch (359da3005f); _ticket_id and _require_ticket and the read() ticket_id parameter and check (420fc49e0e, AR-y-71); sections() ticket_id and its retained_ref projection, the _CheckedReport class and the read() return value (94713492d8, AR-y-32). The AR-y-331 COMMENTARY_FAMILY block sits in the same hunk as the AR-y-32 _CheckedReport class, so the member cannot be shipped with the route alone by a hunk-level edit. The pin bytes equal the live package, so these hunks are NOT released: they are pending changes of AR-y-71 and AR-y-32 in the merged tree.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (issuer: decide whether the pending AR-y-71 and AR-y-32 hunks ship in irpt-status release 31, and either re-pin these members or ship them knowingly under a cell that owns them; until then no worker removes the staged_from rows and no BUILD_ONLY of irpt-status runs; a later map edit that drops these rows would ship the unreviewed hunks)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff 361c44fa9d c4c2afe896 -- infra/aws/lambda/investor-reporting/ops/entry.py (worktree @9d3ee40a42)",
+      "git diff 361c44fa9d c4c2afe896 -- infra/aws/lambda/investor-reporting/ops/owned_report.py (worktree @9d3ee40a42)",
+      "git diff 361c44fa9d c4c2afe896 -- infra/aws/lambda/investor-reporting/reports/status_installed.py (worktree @9d3ee40a42)",
+      "git log -S attribution over 361c44fa9d..c4c2afe896: 420fc49e0e, 359da3005f, 94713492d8, 2a535a7859",
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-status staged_from rows for the three members, pin 361c44fa9d, UNCHANGED (no edit made)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A measured world row, not a judgment on whether the AR-y-71 and AR-y-32 changes should ship. The worker made no map edit, ran no CI builder, staged nothing and made no AWS call in this pass. The AMENDMENT 1 expected delta (four members) is not measurable until the issuer decides the pending hunks."
+}
+]
+```
