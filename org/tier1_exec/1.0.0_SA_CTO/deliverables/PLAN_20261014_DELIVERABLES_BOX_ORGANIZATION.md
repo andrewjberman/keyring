@@ -26,6 +26,8 @@ NFRA_OPSWKF. dell1 and the laptop hold mostly secondary work. If boxes stay as t
 - **No box moves.** dell2 keeps all three Ticket Center channels ("it's all so connected, and DELL2 has the capacity").
 - **No dell1 seat goes to P1.** dell1 drives ADVI_FIRMBKTS through completion, ongoing testing and decommission, so that
   ADVI is ready with the canonical pipeline and bucket design.
+- **dell1 is wholly ADVI/MDPF, plus overflow AMGT** (~18:5xZ, `ANDREW_DIRECT_20261014_185xZ_DELL1_WHOLLY_ADVI_MDPF_AMGT.md`):
+  ADVI_COTBKF and ADVI_BILLING move DELL2 -> DELL1 (BILLING at its next round boundary). ETFS_RIVALS' home is asked of him.
 - **The laptop takes none of the four items** and keeps driving COMM_ASSIST and NFRA_CTLPLN at the normal pace ("does not
   lose us any ground").
 

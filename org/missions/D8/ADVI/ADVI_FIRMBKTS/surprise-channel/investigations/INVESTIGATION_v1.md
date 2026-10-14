@@ -8381,3 +8381,53 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Form only. Recorded so that an in-place edit of a channel file is checked against its parent by numstat before commit. Disarm: none (INERT)."
 }
 ```
+
+## Row filed by 2.0.0_SA_COO~B1 (CTO msg 5683: the CRO's P3 Cottonwood census, Q-A and Q-C)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S59",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-14T18:34:11Z",
+  "one_line": "Q-A (CRO census, CTO msg 5683): Cottonwood silver/account_attributes stopped on 2026-08-20, 38 trading days behind, because the SSM document opal-cot-silver-run never runs --table account_attributes while the bronze pull lands daily.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/P3_COTTONWOOD_BACKEND_CENSUS_AND_PORTFOLIO_GROUP_20261014.md@1b7cad0123 (Q-A addendum: the writer is data/cot/scripts/silver/cot_silver_merge.py TABLE_CONFIG['account_attributes']; the SSM document at cot-pipeline ssm.tf:236-251 and the live document omit the --table line; forwardfill_v2 (6 tables including account_attributes) holds 1,103 objects, newest 2026-10-14 11:30-11:32Z; silver/account_attributes holds one partition, 2026-08-19, written 2026-08-20 17:41)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The Cottonwood plan (PLAN_COTTONWOOD.json, FB-l-2) lists the Cottonwood pipeline functions and their repairs as moves M1 to M5 without a silver account_attributes row; the daily Cottonwood silver run is assumed to merge every bronze table that lands.",
+  "world_is": "The daily Cottonwood silver run does not merge account_attributes; the table lands in bronze every day but is never merged, so gold/dimensions/accounts_dimension_latest.parquet joins a silver partition from 2026-08-19.",
+  "notes": "For the Cottonwood plan, a repair in the M1-M5 class: one non-gating --table account_attributes line in the SSM document plus its manifest, under its own never-widen pair, proven by the next silver partition carrying 2026-10-13's 1,119 rows. The fix is not made here. Disarm: none (INERT); the repair is a round-9 candidate, owner this seat to cut."
+}
+```
+
+## Row filed by 2.0.0_SA_COO~B1 (CTO msg 5683: the CRO's P3 Cottonwood census, Q-A and Q-C)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S60",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-14T18:34:11Z",
+  "one_line": "Q-C (CRO census, CTO msg 5683): the secret opal/bd/cottonwood/credentials is live, declared by no Terraform, readable by 0 of 304 roles and unaccessed since 2026-05-26; it is a retire candidate for the Cottonwood plan.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/P3_COTTONWOOD_BACKEND_CENSUS_AND_PORTFOLIO_GROUP_20261014.md@1b7cad0123 (Q-C: metadata only, no value read; the working credential path is blackdiamond/cot/credentials, readable by 3 roles; the undeclared secret describes the EC2 download scripts of the Cottonwood tenant)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The Cottonwood plan's retire list (PLAN_COTTONWOOD.json retire R1 to R6) names six legacy operations and does not include this secret.",
+  "world_is": "A second Black Diamond credential object for the Cottonwood tenant exists in AWS Secrets Manager outside Terraform, with no role able to read it and no access since 2026-05-26.",
+  "notes": "Add to the Cottonwood plan's retire list with its consumer census (0 of 304 roles can read it). Its deletion is destructive and needs Andrew's confirmation at the moment it runs (CLAUDE.md Agent Autonomy); the retirement is a round-9 or later change under its own pair. Disarm: none (INERT)."
+}
+```
