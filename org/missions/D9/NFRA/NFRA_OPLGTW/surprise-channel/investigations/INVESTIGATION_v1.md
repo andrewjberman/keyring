@@ -13425,3 +13425,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "Inert for the gateway (no 49f tool exists yet), but a tool cut against blackdiamond/49f/silver/ would serve 11-trading-day-old rows. Owner of the producer fix is outside this project (the assets pipeline's owner; the CTO routes it); this row asks the G2 cut to source 49F from where it is live and to state the lag. Not a deploy act of this seat."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S111",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-14T13:34:15Z",
+  "one_line": "Eclipse silver fact_portfolios_simple (opal-data-assets eclipse/inflection/silver/) has written no partition after date=2026-10-09: the converter refuses with a VendorDriftError on a new vendor column, defaultTradingEngineId, present in bronze since 2026-10-10, so a G2 Eclipse portfolio tool would serve rows 2 trading days behind T-1 and growing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3 list-objects-v2 opal-data-assets eclipse/inflection/silver/fact_portfolios_simple/: 133 keys, newest date=2026-10-09/data.parquet LastModified 2026-10-09T13:05:36Z (read by 4.0.0_SA_CRO~Z, 2026-10-14T13:34:15Z)",
+      "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/parts/G2b_orion_eclipse.md open item (3): VendorDriftError, extra column defaultTradingEngineId, since bronze 2026-10-10 (census subagent; the error text was not re-read by this seat)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-22 (PRD@7878037d98 :288): freshness stated in trading days; the census proposes an Eclipse portfolio tool over this table.",
+  "world_is": "The silver table stopped at 2026-10-09 while its vendor added a column. The drift guard refused rather than silently widening, which is the guard working; the table is now stale until the column is admitted to the schema.",
+  "notes": "Inert for the gateway (no Eclipse tool exists). The fix (admit defaultTradingEngineId to the Eclipse silver schema) belongs to the assets pipeline's owner, routed by the CTO; the G2 cut should state the lag or wait for the fix. Not this seat's act."
+}
+```
