@@ -27326,3 +27326,81 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Every frontend commit made through safe-commit from the nested portal worktree will show the same three lines until the reflex carries a .tools of its own or a danger map is current; the FEATURE branch's own green check is the substitute instrument this round. Not edited here: the tooling is outside this worker's write grant."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W452-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~452",
+  "surfaced_at": "2026-10-14T06:10:22Z",
+  "one_line": "The order does not say what a CONTRADICTED sentence records in its source and quote fields; the module records both null, so the record does not name the newer source that contradicted a sentence.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/grounding.py@wk-AMGT_RESAPP-452 (uncommitted at filing; _judge returns source None and quote None for a CONTRADICTED row)",
+      "lib/research/aifill/tests/test_grounding.py@wk-AMGT_RESAPP-452 (uncommitted at filing): test_contradicted_is_dropped_and_recorded_as_such passes with source None",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round106_aifill_prep/checks/check_gr3_grounding.py: the contradicted arm reads the verdict only and passes (18 of 18)"
+    ]
+  },
+  "spec_asserts": "Cell section 1, grounding.py interface: 'A CONTRADICTED row records CONTRADICTED.' The record's sentence keys are text, verdict, source and quote; the source and quote of a CONTRADICTED row are not stated.",
+  "world_is": "Built as chosen: a CONTRADICTED sentence is recorded with source null and quote null. A reviewer cannot read from the record which shown source contradicted the sentence. The contract checks nothing for CONTRADICTED rows, so either choice passes it.",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "notes": "Not changed for the issuer: the choice is one line to reverse if the record should carry the contradicting source index. The issuer decides whether CONTRADICTED carries source and quote in cell gr-4 or a later round."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W452-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~452",
+  "surfaced_at": "2026-10-14T06:10:22Z",
+  "one_line": "Read literally, the verification rule accepts a SUPPORTED quote that normalises to nothing (a run of punctuation of 12 or more characters), because the empty string is a substring of every text; the module refuses it, which the order does not state.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/grounding.py@wk-AMGT_RESAPP-452 (uncommitted at filing; _judge: 'if not nq or nq not in norm_full[k - 1]')",
+      "Measured: the Python expression '' in 'anything' evaluates True, so a normalised empty quote is a substring of every normalised source text",
+      "lib/research/aifill/tests/test_grounding.py@wk-AMGT_RESAPP-452 (uncommitted at filing): test_a_quote_of_punctuation_only_is_downgraded passes"
+    ]
+  },
+  "spec_asserts": "Cell section 1, grounding.py interface: a SUPPORTED row counts only if its quote is a string of at least 12 characters and the quote, normalised, is a substring of the normalised full text of that source.",
+  "world_is": "Built with one added clause: a quote whose normalised form is empty is downgraded to UNSUPPORTED. Without the clause, a model that copies only punctuation passes the mechanical check and keeps the sentence on a quote that verifies nothing.",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "notes": "The added clause is a reading of the order's rule, not a change to it. The issuer confirms the reading, or states the empty-quote case in the cell."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W452-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~452",
+  "surfaced_at": "2026-10-14T06:10:22Z",
+  "one_line": "A web source with status OK and empty text is not usable, but the record keeps its status OK, so the record shows a source as readable that grounded nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/grounding.py@wk-AMGT_RESAPP-452 (uncommitted at filing; _prepare_sources re-records status only for the paywall case)",
+      "Measured on the worktree: an OK source with text '   ' is recorded with status OK, is absent from used_urls, and a second live source grounds the one kept sentence (used_urls = [the live url])",
+      "lib/research/aifill/sources.py@wk-AMGT_RESAPP-452: the module docstring gives EMPTY for a 2xx page under 200 characters, so fetch_source does not emit OK with empty text"
+    ]
+  },
+  "spec_asserts": "Cell section 1: a source is USABLE when its status is OK and its text is not empty; the record lists every source with its status; only a paywall title changes the recorded status (PAYWALL).",
+  "world_is": "Built as written: an OK source with empty or whitespace text keeps status OK in the record. The case arises only for a hand-built source; a fetched source is EMPTY under the fetch rule.",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "notes": "Not changed: the order's status rule is followed literally. The issuer decides whether a record should re-record such a source as EMPTY in a later round."
+}
+```
