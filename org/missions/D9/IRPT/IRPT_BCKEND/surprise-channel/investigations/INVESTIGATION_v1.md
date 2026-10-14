@@ -34566,3 +34566,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W383-S1 (BLOCKING, the IB194-1-AC1 check cannot read the stop evidence): my check's defect, the second this session; it read the flat path lists as count-and-path pairs and my control encoded the same wrong shape; repaired @90a0952879, the worker's AC1 row re-graded PASS on the landed tree @7b46d4a24d; INERT. D2-W383-S2 (the live copies predate several producer commits on the pin, so a full pin mint changes holdings_snapshot.py by more than the two signed changes; cottonwood and inflection by the account_id, keyed-gate, CUSIP-fallback and multi_asset commits as well): LOAD-BEARING. The signed counts compare the pin with the cash rule against the pin without it; they say nothing about the delta between the code that serves now and the pin. Not a hazard by itself (nothing minted), but v2 cannot be signed on static effect lines: the differential on the same pinned inputs (live code against pin code, node by node) is the measurement, taken by the issuer as a direct read and recommended to the CTO as a cell. D2-W383-S3 (the live holdings_snapshot.py matches no commit and each firm's bundle holds its own variant): INERT as a hazard, LOAD-BEARING as provenance: the live producer for each firm is code no commit holds (a bundle minted from a working tree), which is the fact that makes the differential necessary; whoever minted those bundles from an unrecorded tree is not read here. D2-W383-S4 (the meaning of rows_written): INERT; confirmed as data rows written to a store, not surprise-channel rows."
 }
 ```
+
+## IRPT_BCKEND-D2-S174 -- The issuer's direct live-against-pin differential read: 32 / 485 / 841 changed nodes, and on Cottonwood the pin's holdings_snapshot.py alone reproduces all 485
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S174",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T15:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The issuer's direct read of the live-against-pin differential (round 195 cross-check, scratch outside the repository): the full pin changes 32 / 485 / 841 SECURITY nodes (49financial / Cottonwood / Inflection), and on Cottonwood swapping in the pin's holdings_snapshot.py ALONE reproduces all 485.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live bundles downloaded by the signed packet's version ids (49financial UHOCIkWj..., cottonwood oyIYMVdh..., inflection PzhCs97q...) and untarred; the pin 49467335d2 as a detached worktree; one process per code, the pin built first, its source receipts pre-seeded into the live build; per-node field hashes compared by node id; scratch files in C:/dev/_scratchP2, not committed",
+      "Cottonwood member swap: for each of the 21 behaviour, data and added members of the v2 table, the LIVE tree with that ONE member replaced by the pin's bytes, same receipts: 18 swaps changed 0 nodes, holdings_snapshot.py changed 485, and 2 swaps (build_cottonwood_mdpf_slice.py, rebalancer_schemas.py) could not build alone because the pin's rebalancer_schemas.py imports the added opal_strategy_matcher.py that the live tree lacks"
+    ]
+  },
+  "spec_asserts": "The signed counts (32 / 249 / 841) are the whole of what the full pin mint changes in the served holdings output.",
+  "world_is": "MEASURED, one pass each, not the cell's (the cell IB-pr-539 measures it twice, with a mutant and an attribution). 49financial: 156,504 nodes on both codes, 32 SECURITY nodes differ, asset_class only (fixed_income to cash) = the signed 32. Inflection: 36,702 nodes, 841 differ, asset_class only (fixed_income to cash) = the signed 841. Cottonwood: 17,966 nodes, 485 differ: asset_class 253 (fixed_income to cash; 249 are the signed cash rule), asset_class_basis 236 (NAME_ALIAS 234 and NAME_PATTERN 2 to TABLE), sub_asset_class 51 (Investment Grade to nothing 29, Intermediate to nothing 12, Cash to Money Market 4, Investment Grade to Municipal 2, Cash to nothing 2, US Small Cap to nothing 1, Municipal to nothing 1). No node added or removed on any firm; no ACCOUNT node changed in any field; clocks differ only by the wall-clock timestamp. On Cottonwood the pin's holdings_snapshot.py alone reproduces all 485 and no other member's swap changes a node (two members could not be swapped alone, above, but the full pin adds nothing beyond the snapshot swap: both are 485). So Cottonwood's scope beyond the signed rule (4 class, 236 basis, 51 sub-class changes) lives inside holdings_snapshot.py; the commits there since the live copies include the 2026-10-07 port of SC-e-56 (01e843ce2e) and the 2026-10-12 account_id member (7ace854890); which of them causes which change is the cell's attribution, not this row's. The sub-class values that become nothing are a served-output loss for those holdings and are named, with counts, as part of the release's scope in packet v3."
+}
+```
