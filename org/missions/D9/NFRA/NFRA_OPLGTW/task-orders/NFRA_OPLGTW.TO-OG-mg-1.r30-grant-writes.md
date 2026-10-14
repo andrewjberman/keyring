@@ -174,6 +174,18 @@ commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing
     source does not resolve to exactly one value at the act, STOP with a BLOCKING row.
   - Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
+- A3 (issuer, 2026-10-14 ~02:3xZ, row Z-S104, msg 33932): **route (i) ruled.** Alyssa's revision-4 scope is already
+  contract-MAXIMAL: `dates` `{mode: rolling_complete_window, calendar_months: 13}`, and operations = every operation the
+  contract approves (`describe`, `download_filtered`, `list`, `query`). So:
+  - R1 is that scope with identity replaced, and R2 is R1's mirror. Neither adds or removes a key.
+  - Step 4's branch (a) vs (b) on operations is STRUCK. It was vacuous, which is the issuer's defect at the cut.
+  - The ask instead carries ONE measurement for the halves: where Alyssa's no-download rule (PRD v2.2 item 4) actually
+    lives (a profile-level field, the contract's `portal_only_schwab_tools`, the hidden classes, or nowhere in force),
+    and whether R1 and R2 INHERIT it by being built from her record. Name either outcome; never change it.
+  - Andrew's word is 13 months, and v2.2 says any account and any source. Route (iii) (narrower than the template) is
+    not taken.
+  - Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>37</round>
 <workstream>R37-GRANTS</workstream>
