@@ -2322,3 +2322,144 @@ used as fixtures is a different read with a different denominator.
  "notes": "Disarms D2-S46 on its owner's read of Andrew's word; nothing measured live by this row."
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W41-S1",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~41",
+  "surfaced_at": "2026-10-14T19:35:44Z",
+  "one_line": "TO-R18-L1 asked that no existing assertion about another type or action change, but three existing assertions treat meeting_request as an untyped type, so each was edited to match the new definition (old and new text in R18_L1_RECORD.json).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/tests/test_analysis_request.py@023b5ce5b0 (test_four_existing_types_unchanged loop and test_requester_claims_and_completes_own_ticket types list both include meeting_request, creating it with no answers)",
+      "infra/aws/lambda/ticket_center/tests/test_trade_request_type.py@023b5ce5b0 (test_other_untyped_types_unchanged asserts meeting_request questions == [])",
+      "infra/aws/lambda/ticket_center/tests/test_authz_matrix.py@023b5ce5b0 (test_layer_coverage asserts 11 actions and a ROUTES list with no meeting route)"
+    ]
+  },
+  "spec_asserts": "TO-R18-L1 step 1: the four existing types keep their exact rows. Step 5: edit an existing test only where a fixture needs the new action or definition; no existing assertion about another type or another action may change.",
+  "world_is": "Three existing assertions encode meeting_request as an untyped type with no questions and no answers. The new definition makes them false. Edited: the untyped loop in test_four_existing_types_unchanged and the untyped loop in test_other_untyped_types_unchanged drop meeting_request; the self-claim types loop keeps meeting_request and supplies its required answers; test_layer_coverage goes from 11 to 12 actions with one ROUTES entry. Every edited assertion is about meeting_request, the type this order changes; no assertion about another type or action changed.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W41-S2",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~41",
+  "surfaced_at": "2026-10-14T19:35:44Z",
+  "one_line": "The order's refusal order (non-coordinator 403 before not-found 404) conflicts with its own AC3J requirement that a refusal reveal nothing about tickets outside the caller's scope; the handler applies scope and existence first, then the coordinator test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py@023b5ce5b0 (_new_item copies ROUTING_MATRIX into the item's routing.primary, so the coordinator is readable only after the ticket is read)",
+      "infra/aws/lambda/ticket_center/lambda_function.py@023b5ce5b0 (get_ticket answers 404 for a ticket outside the caller's profile scope, the refusal this order names as the one to match)"
+    ]
+  },
+  "spec_asserts": "TO-R18-L1 step 2 lists the rules in order: not INTERNAL 403; caller not in routing.primary 403 naming no one; ticket not found or outside scope 404. AC3J: a refusal reveals nothing about tickets outside the caller's scope.",
+  "world_is": "routing.primary sits on the ticket, so the coordinator test cannot run before the ticket is read. A literal 403-first order would answer 403 for an existing out-of-scope ticket and 404 for a missing one, which reveals existence across scope. Implemented: read; missing or out of firm scope gives the get_ticket 404; then the coordinator test gives 403; then type 409, completed 409, body 400, time 400, one conditional write.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W41-S3",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~41",
+  "surfaced_at": "2026-10-14T19:35:44Z",
+  "one_line": "The order asks that no notify_* run on any path, but CREATE of every ticket type already calls notify_dl_isolated (the W-E first-line DL send), so a meeting filing sends it; the outcome route sends nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py@023b5ce5b0 (create_ticket calls notify_dl_isolated(item) unconditionally before the 201)",
+      "infra/aws/lambda/ticket_center/tests/test_meeting_request.py (test_create_keeps_the_existing_dl_first_line_and_sends_no_client_notice pins the create-time call; the outcome tests assert the spy list is empty)"
+    ]
+  },
+  "spec_asserts": "TO-R18-L1 step 4: no notify_* function is called on any path (a spy). AC3J: no mail or notice is sent.",
+  "world_is": "The 'any path' reading would forbid the existing CREATE-time DL line that W-E attaches to every ticket create. Implemented: confirm, propose and every refusal of the outcome route call no notifier; the filing keeps the existing DL line, which the spy test pins. Whether a filing keeps that line is the issuer's call.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W41-S4",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~41",
+  "surfaced_at": "2026-10-14T19:35:44Z",
+  "one_line": "The before-arm expected every case of the new file to fail on the base handler; 31 of 33 failed and two controls passed: test_other_untyped_types_keep_their_shape (unchanged service_request behaviour) and test_create_keeps_the_existing_dl_first_line_and_sends_no_client_notice (the existing CREATE-time DL line).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run of the new test file against the base lambda_function.py at 023b5ce5b0 (git archive HEAD into .scratch/base_arm): 31 failed, 2 passed (the passing cases are test_other_untyped_types_keep_their_shape and test_create_keeps_the_existing_dl_first_line_and_sends_no_client_notice)"
+    ]
+  },
+  "spec_asserts": "TO-R18-L1 step 6: the before-arm, the new tests run on the base, every case FAILS.",
+  "world_is": "Two controls pass on the base by construction: one on an unchanged type and one on the existing CREATE-time DL line. They cannot fail there. They were kept as regression guards, not rewritten to fail. Recorded as the before-arm result.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W41-S5",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~41",
+  "surfaced_at": "2026-10-14T19:35:44Z",
+  "one_line": "Decomposition row R18-mt-1 says the outcome route refuses a non-assignee, but the wire contract and the order gate it on routing.primary (the coordinator); the handler follows the order and the wire contract.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/decompositions/TCKT_VNEXT_DECOMP_R18.md@023b5ce5b0 (row R18-mt-1 reads 'refused for a non-assignee')",
+      "org/missions/D7/TCKT/TCKT_VNEXT/decompositions/TCKT_VNEXT_DECOMP_R18.md@023b5ce5b0 (WIRE CONTRACT item 1: caller is an INTERNAL human whose email is in routing.primary)"
+    ]
+  },
+  "spec_asserts": "TO-R18-L1 step 2 and the WIRE CONTRACT item 1: the caller must be an INTERNAL human whose email is in the ticket's routing.primary (the coordinator); anyone else 403.",
+  "world_is": "The decomposition row's 'non-assignee' wording differs from the contract. claim_ticket sets the assignee to whoever claims, so the assignee is not the coordinator unless that person claims. Implemented the routing.primary rule as the order and the wire contract state.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W41-S6",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~41",
+  "surfaced_at": "2026-10-14T19:37:23Z",
+  "one_line": "Running tests/test_authz_matrix.py by path reaches the real SES notifier: my by-path run printed one WE_CLIENT_SENT kind=pickup line with a real SES message_id from tickets@opalinvest.dev, a live send the worker bound forbids.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~V2 (issuer of TCKT_VNEXT round 18; owns test_authz_matrix.py). Until disarmed, no run of that file by path (python <file>) -- pytest only, where conftest.py's guard applies.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py@023b5ce5b0 line 1121 (notify_client calls _ses_client().send_raw_email(Source=EMAIL_FROM, ...) with no guard of its own)",
+      "infra/aws/lambda/ticket_center/tests/test_authz_matrix.py@023b5ce5b0 lines 342-343 (__main__ runs unittest.main with no notifier stub; MatrixTests claim tickets, which reaches notify_client_isolated)",
+      "infra/aws/lambda/ticket_center/tests/conftest.py@023b5ce5b0 (the SES guard is an autouse pytest fixture; it does not apply to a by-path run)",
+      "worker run at 2026-10-14T19:3xZ: python infra/aws/lambda/ticket_center/tests/test_authz_matrix.py printed WE_CLIENT_SENT kind=pickup ticket=TCK-20261014-8279bd23 with a real SES message_id; the pytest runs of the same folder printed no such line"
+    ]
+  },
+  "spec_asserts": "Worker face, TO-R18-L1: no live call of any kind -- no AWS, no network, no mail, no deploy, no apply; tests/conftest.py refuses a real call.",
+  "world_is": "The file's own __main__ run is not guarded, because the conftest guard exists only under pytest. Its claim tests reach the unstubbed notifier, which sends through SES from the pinned sender. The hazard is in the base file too; the R18-L1 edit changed only an action count and one ROUTES entry. Not re-run after the send was seen; the ticket and recipient owner must check whether the message was delivered.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
