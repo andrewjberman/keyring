@@ -197,6 +197,87 @@ Andrew, verbatim, in session at the 4.0.0_SA_CRO~DELL1 terminal:
 4. Close the deploy ledger with the invoke's request id, the object's new LastModified, and the three read values. Only
    then report done.
 
+## Addendum 2, 2026-10-14 ~20:0xZ: trailing returns = the models' realized returns blended with GLD (Andrew-direct)
+
+Andrew, verbatim, in session at the 4.0.0_SA_CRO~DELL1 terminal:
+
+> "One other piece of feedback on the satellites. The trailing performance logic is not quite right. What it should be
+> is we take the weighted average performance of the underlying constituent opal models, blended with the performance
+> of the commodities exposure (GLD ticker). This shouldn't require a frontend change (aside from getting rid of the
+> disclaimer about the snapshot lookback method, as this is method change)."
+>
+> "We already have the models actual performance in the given windows so this shouldnt require additional calculation
+> aside from the pro-rating/averaging, that data already exists in the BenchmarkHeatMap component on Model Portfolios
+> page" / "so its being served from somewhere."
+
+**This supersedes section 1, "Returns" (the holdings backcast).**
+
+### The served inputs (read ~19:5xZ)
+
+- **Model returns**, the same figures the Model Portfolios `BenchmarkHeatmap` shows:
+  - Route: `getModelPortfolioBenchmarks()` reads `/api/general/benchmarks/model_portfolio_benchmarks.json`
+    (`src/api/portal-proxy.ts:833`).
+  - Object: `s3://opal-data-portal-v2/json/benchmarks/model_portfolio_benchmarks.json` (LastModified
+    2026-10-14 11:06:00Z, 19,691 bytes).
+  - Field: `models[code=<book>].returns[<window>].model`, in percent, `model_source: "yang_design"`.
+  - Source: "data.pkl -> return_daily (Yang canonical)", `data_as_of` 2026-10-13.
+  - Windows served: 1D, WTD, MTD, 1M, QTD, 1Q, YTD, 1Y (all eight the factsheet shows), plus Since Inception and TTW.
+- **GLD returns:** `characteristics.json` `tickers.GLD.returns` (source bbg; BBG partition 2026-10-13).
+- **GLD weight `g`:** the GLD row's `weight` / 100 in the served `holdings.json` for that satellite.
+
+### The rule
+
+For each satellite and window w:
+
+    R_sat(w) = (1 - g) * [ sum_m s_m * R_m(w) / sum_m s_m ] + g * R_GLD(w)
+
+- `s_m`: the registry's declared sleeve weights (sum to 100).
+- `R_m(w)`: the model's served `returns[w].model`.
+- The sum runs over models with a value for w.
+- If `R_GLD(w)` is null, publish the model part alone (the sleeves are the pie) and name GLD in a `returns_note`. Never
+  count it as zero.
+- No holdings-level returns, no backcast, no coverage-weighted sum.
+
+### Oracle (computed from the three served objects above; 2 dp)
+
+| Satellite | g (GLD) | 1D | WTD | MTD | 1M | QTD | 1Q | YTD | 1Y |
+|---|---|---|---|---|---|---|---|---|---|
+| 15 (ST 100) | 0.0803 | -0.01 | -0.01 | 0.51 | -0.91 | 0.51 | -0.47 | 0.46 | 1.93 |
+| 30 (INT 25 + ST 75) | 0.0698 | -0.01 | -0.03 | 0.56 | -0.93 | 0.56 | -0.44 | 1.72 | 3.42 |
+| 40 (INT 50 + ST 50) | 0.0593 | -0.01 | -0.06 | 0.60 | -0.96 | 0.60 | -0.40 | 3.01 | 4.95 |
+| 50 (INT 75 + ST 25) | 0.0488 | -0.01 | -0.09 | 0.65 | -1.00 | 0.65 | -0.36 | 4.33 | 6.51 |
+| 60 (INT 100) | 0.0383 | -0.01 | -0.13 | 0.69 | -1.03 | 0.69 | -0.32 | 5.68 | 8.10 |
+| 70 (LT 50 + INT 50) | 0.0294 | -0.02 | -0.17 | 0.75 | -1.12 | 0.75 | -0.43 | 6.66 | 9.61 |
+| 80 (LT 100) | 0.0204 | -0.02 | -0.21 | 0.82 | -1.21 | 0.82 | -0.55 | 7.66 | 11.14 |
+| 90 (ULT 100) | **0** | -0.04 | -0.25 | 0.89 | -1.13 | 0.89 | -0.78 | 8.37 | 12.15 |
+| 98 (ULT 100) | **0** | -0.04 | -0.25 | 0.89 | -1.13 | 0.89 | -0.78 | 8.37 | 12.15 |
+
+For comparison, the live holdings-backcast figures for Satellite 40 are YTD 3.52 and 1Y 5.21; the rule gives 3.01 and
+4.95.
+
+**Discrepancy to surface to Andrew, not fix:** the served `holdings.json` carries **no GLD (no commodities row) for
+Satellites 90 and 98**. Andrew described Satellite 90 as "ULT with some added Gold exposure". Under the rule they read
+as pure ULT. If they should carry gold, the gap is upstream in Black Diamond's rebalancer model definitions (the
+holdings source), not in this producer.
+
+### Where it lands
+
+- **Producer:** `data/assets/scripts/gold/build_satellites_characteristics.py`, the `returns` per satellite. Rewrite the
+  `method` text so its returns half states this rule and the benchmarks object as source, and drop the returns coverage
+  block.
+- **The producer's new read** is `opal-data-portal-v2` `json/benchmarks/model_portfolio_benchmarks.json`. This needs:
+  - (a) an IAM read grant for `cot-satellites-characteristics-producer-role`, in Terraform;
+  - (b) a `legacy_addresses.json` row (bucket opal-data-portal-v2, template
+    `json/benchmarks/model_portfolio_benchmarks.json`, object, no params, reader POSN_ASTTAX), or the naming gate
+    refuses the new literal. It is the same shape as XA-ad15. `key_rulings.json` already carries its canonical
+    (`yang/global/platinum/benchmarks/model-portfolio-benchmarks.json`), but key_rulings does not clear a typed literal
+    (XA-c328 finding). 4.0.0_SA_CRO writes the row on the CTO's word.
+- **Frontend, the only change Andrew allows:** delete the snapshot-lookback disclaimer under Trailing Returns ("today's
+  holdings at today's weights over each period ...") and the exclusions footnote. Both describe the retired method.
+  No other frontend change.
+- **Then rerun** the producer once (Addendum 1's act), read S3 and the served route against the oracle above, and close
+  the deploy ledger with the values.
+
 ## Not read
 
 - The live CW render after the change.
