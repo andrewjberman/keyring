@@ -8189,3 +8189,99 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Recorded as the coupling the CTO weighs with ADVI_FIRMBKTS-D1-W84-S1. Disarm: none (INERT) while nothing reads the object as a gate."
 }
 ```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W84-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~84",
+  "surfaced_at": "2026-10-14T13:24:02Z",
+  "one_line": "On the completed 2026-10-14 chain day the NNA newest partition is 2026-10-13 and canonical_nna_2026-10-14.parquet is absent, so the ruled frontier rule would see the three dated inputs at different dates.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api head-object --bucket opal-data-inf --key gold/canonical/canonical_nna_2026-10-14.parquet (read, 2026-10-14 ~13:2xZ): 404 Not Found",
+      "aws s3api list-objects-v2 --prefix gold/canonical/ (read, 2026-10-14 ~13:1xZ): 9159 objects; newest canonical_nna_ key canonical_nna_2026-10-13.parquet of 1476 matches; newest holdings_ key holdings_2026-10-14.parquet of 2514 matches",
+      "aws s3 cp s3://opal-data-inf/gold/meta/pipeline-complete.json (read): completed_at 2026-10-14T12:53:39Z (see ADVI_FIRMBKTS-D1-W84-S1)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~84/READINESS_SIGNAL.json (frontier_rule, live_prediction_not_content)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO FB-m-1 section 1a items 1-2 and CTO msg 5552: the readiness signal is the data frontier; publish only when every dated input reads the same date D (NNA read from its newest partition) and D is after the served date.",
+  "world_is": "At read time the chain had completed 2026-10-14 (pipeline-complete 12:53:39Z) and holdings carries 2026-10-14, but the NNA newest partition is 2026-10-13 and the 2026-10-14 partition is absent. The rule as ruled would halt the publish of a completed day. Whether the NNA partition lands later each day, or lags by design, is not measured here.",
+  "notes": "Form only: the premise that the NNA partition for the completed day exists is not what the bucket showed at read time. ARMED: left alone, a clock-started publisher with this guard would halt daily while NNA lags. The disarm owner decides whether FB-m-2 may start the publisher on a clock before NNA day-partition timing is measured or the CTO re-rules the frontier. No deploy act was taken in this cell."
+}
+```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W84-S5",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~84",
+  "surfaced_at": "2026-10-14T13:24:02Z",
+  "one_line": "The served-date glob aua_by_*.json matches a fourth snapshot object, aua_by_tax_status.json, last written 2026-06-30; a minimum over the glob would freeze the served date and defeat the same-day halt.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-objects-v2 --prefix platinum/firm/snapshots/ (read this cell, 2026-10-14, before 13:24Z): aua_by_architect, aua_by_region, aua_by_state at 2026-10-14T12:53:58Z; aua_by_tax_status.json at 2026-06-30T17:18:23Z",
+      "aws s3api head-object --key platinum/firm/snapshots/aua_by_tax_status.json (read, 2026-10-14 ~13:2xZ): 155 bytes, LastModified 2026-06-30T17:18:23+00:00",
+      "infra/aws/lambda/inf-portal-publisher/lambda_function.py:11 (three output files; tax-status snapshot write removed per ADVI_INFREF EG-1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO FB-m-1 section 1a item 2: the served data_as_of is read from the existing platinum/firm/snapshots/aua_by_*.json objects.",
+  "world_is": "The glob matches four objects; one is stale and no longer written by the publisher. The guard reads only the three keys the publisher writes (architect, state, region), so the stale object is not read.",
+  "notes": "Recorded so that a reader who globs the served set does not reproduce the hazard. Disarm: none (INERT); the guard names the three keys."
+}
+```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W84-S6",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~84",
+  "surfaced_at": "2026-10-14T13:24:02Z",
+  "one_line": "The existing reader _load_parquet prints a 'Loaded <key>' line on every read, so the guard's date-only reads add lines to the halt path beside the one READINESS HALT line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/inf-portal-publisher/lambda_function.py:88 (print in _load_parquet, base blob 371eb01b42e5c1e4f6ce1c8ddac20071c0636762)",
+      "infra/aws/lambda/inf-portal-publisher/lambda_function.py (_date_max calls _load_parquet with columns=['date'] for three inputs)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO FB-m-1 section 1a item 4: on a halt the handler prints exactly one line READINESS HALT and does nothing else; the guard reads each dated input with the existing _load_parquet.",
+  "world_is": "The reader prints one progress line per read. On a halt the log carries up to three 'Loaded' lines before the single HALT line. The HALT line itself is exactly one; the tests assert it.",
+  "notes": "Taken as the spec's reader; the progress lines are the existing reader's own output and were not suppressed. Disarm: none (INERT)."
+}
+```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W84-S7",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~84",
+  "surfaced_at": "2026-10-14T13:24:02Z",
+  "one_line": "build_snapshots writes data_as_of from the wall-clock date when holdings has no dated rows, so a served date can be a run date rather than a data date.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/inf-portal-publisher/lambda_function.py:782 (data_as_of = datetime.date.today()) and :783-786 (overwritten only when holdings has a non-empty date column)",
+      "infra/aws/lambda/inf-portal-publisher/lambda_function.py:766 (_snapshot_response writes data_as_of)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO FB-m-1 section 1a item 2: the served data_as_of is the data date the publisher stamped; the rule compares D to it.",
+  "world_is": "With empty or undated holdings the publisher stamps today's wall-clock date. The guard's own holdings read fails first on an empty file or a missing date column (a read error, a halt), so the guard is not exposed to this path, but a served value written by an unguarded run can exceed the data date.",
+  "notes": "Found while reading the served-date source. Form only. Disarm: none (INERT) while the guard halts on any holdings read error."
+}
+```
