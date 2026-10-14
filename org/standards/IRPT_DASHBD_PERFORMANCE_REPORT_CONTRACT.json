@@ -1,10 +1,15 @@
 {
-  "contract_version": "0.2.0",
+  "contract_version": "0.3.0",
   "lineage": [
     {
       "contract_version": "0.1.0",
       "sha256": "53fce40546882c90b634decb91ec5176a54ddf3c3b4622270bfc5cc35f66991b",
       "reason": "window figures re-sourced to the account return table"
+    },
+    {
+      "contract_version": "0.2.0",
+      "sha256": "1c5cf7ba7abff38d0ce887cc83200873f3edd9778171355621d830e515c54cd7",
+      "reason": "the filled-report shape stated: document.filled_report names the top-level keys, the household and account entry fields, the window statuses, the by_row form of a per-row value and the derivation of window_status and first_data_date, as the tested components read it"
     }
   ],
   "project": "IRPT_DASHBD",
@@ -73,7 +78,33 @@
     }
   ],
   "document": {
-    "shape": "One filled report per household. A filled report is one JSON object with: household {household_ref, as_of, accounts (one entry per account of the household, in account_id order)}; windows (the five windows below, each with its start rule); values, an object keyed by member id with exactly one entry per member in members; rows, the variable rows (one per account, and the class rows under each account and under the household). A value is a number, a text, or {\"absent\": \"<reason in words>\"}. A member whose source is ABSENT always holds the absent form, never zero and never a default. Units follow each member's unit: dollars as whole dollars with thousands separators; percent from the decimal fraction to one decimal place; text as written; series as the list the chart reads. The sample builder writes this object from the sibling contracts named in each member's source; the tab and the export read it by member id and print every absent form as its words. Neither the tab nor the export derives a figure from another source.",
+    "shape": "One filled report per household. A filled report is one JSON object with exactly two keys, household and values (document.filled_report states the layout). household is {household_ref, as_of, first_data_date, accounts}: household_ref is the household's reference, as_of the report date, first_data_date the earliest first_data_date of its accounts, and accounts one entry per account of the household in account_id order, each entry {account_id, last4, first_data_date, window_status}. values is an object keyed by member id with exactly one entry per member in members. A member whose grain is an account or an asset class holds {\"by_row\": {\"<account_id or asset class>\": figure}} (filled_report.per_row_member_form); a chart member holds a list of series {name, points: [{date, value}]}, a point with no measured figure left out, and a chart with no measured point holds its absent form. A value is a number, a text, or {\"absent\": \"<reason in words>\"}. A member whose source is ABSENT always holds the absent form, never zero and never a default. Units follow each member's unit: dollars as whole dollars with thousands separators; percent from the decimal fraction to one decimal place; text as written; series as the list the chart reads. The sample builder writes this object from the sibling contracts named in each member's source; the tab and the export read it by member id and print every absent form as its words. Neither the tab nor the export derives a figure from another source.",
+    "filled_report": {
+      "top_level_keys": [
+        "household",
+        "values"
+      ],
+      "household_fields": [
+        "household_ref",
+        "as_of",
+        "first_data_date",
+        "accounts"
+      ],
+      "account_entry_fields": [
+        "account_id",
+        "last4",
+        "first_data_date",
+        "window_status"
+      ],
+      "window_status_values": [
+        "MEASURED",
+        "NOT_SPANNED",
+        "BREAK"
+      ],
+      "per_row_member_form": "a member whose grain is an account (the account value summaries, the activity account rows, the realized-lot members and the account gain-loss review) or an asset class (hold.allocation) holds {\"by_row\": {\"<account_id or asset class>\": figure}}, with one key per account of the household or per asset class; a figure is a number, a text, or the absent form; a household-grain member holds its figure or its absent form directly, never a by_row map",
+      "window_status_rule": "for each of the four windows (qtd, ytd, last_12_months, since_inception), with the window's opening anchor day (for since_inception, the account's first_data_date): NOT_SPANNED when the account has no account_return_daily row on the opening anchor day; BREAK when the opening anchor day is SOURCE_LAG, or when a day inside the window (after the anchor, up to and including as_of) has no row, a SOURCE_LAG row, a null total_return_daily or a GRADED_DISAGREED guard_state; else MEASURED, read from the account return table",
+      "first_data_date_rule": "an account's first_data_date is the business_date of its first row in the account return table, across every date= partition; the household's first_data_date is the earliest of its accounts' first_data_date values"
+    },
     "row_dimensions": {
       "account": {
         "order": "the household's accounts in account_id order; one row per account, labelled with its registration name and last four digits (the registration name is absent, so the label carries the absent form until a name source exists)",

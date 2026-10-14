@@ -9201,5 +9201,32 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-Z-S120",
+     "project": "AMGT_HARVST",
+     "fabric": "site-z",
+     "surfaced_by": "0.7.0_AE_CloudOps~ZW",
+     "surfaced_at": "2026-10-14T00:15Z",
+     "one_line": "The cycle runner's graceful-stop mechanism points at a file whose PARENT DIRECTORY no component of the system creates: creating the stop file the task's own --stop-file argument names failed with DirectoryNotFoundException, and the registration this act just made carries the same shape, so the next operator to stop the runner by the book hits the same error.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "disarm_owner": "2.0.0_SA_COO~W1",
+     "spec_asserts": "HVST-bz-10 section 2(i): 'Read the stop-file path from the task's own arguments (--stop-file \"<path>\") and create that file. The runner finishes its current pair, writes the cycle record and exits.' The order treats creating that file as a single step, and HVST-bz-1 and bz-4 are cited in the same order as having stopped the runner this way with zero pairs lost. The COO never-widen half's C-d says 'The stop is by the runner's own stop file; a runner that ignores it is a stop with a row, never a kill.'",
+     "world_is": "Measured on site Z, 2026-10-13T23:49Z-2026-10-14T00:15Z. (1) THE CREATE FAILED: the path read out of the live task's own Arguments was C:\\Users\\Opal Bloomberg\\Desktop\\wk-harvest-runner-pin-995adcaeaa\\.runtime\\harvest-cycle\\STOP, and New-Item -ItemType File returned DirectoryNotFoundException. Test-Path per component: the pin directory TRUE, '.runtime' TRUE, '.runtime\\harvest-cycle' FALSE. The old pin's .runtime held only 'opal-data-harvest', because the runner's runtime root lives under a DIFFERENT pin (c1be67f53c) and nothing ever created a harvest-cycle directory under 995adcaeaa. (2) THE REMEDY WAS ONE DIRECTORY, and the mechanism then worked exactly as specified: after creating the directory and the file at 23:51:41Z, the runner logged at 23:53:59Z 'STOP-FILE ... present: ending after the current job (108 pairs done)' and then 'no further cycle', and wrote <state>/cycles/bbg/20261013T185816Z.cycle.json with ended_at 2026-10-13T23:53:59Z, stopped stopped_by_operator, failed 0. ZERO pairs lost. So this is a reachability defect in the stop PATH, never a defect in the stop LOGIC. (3) NOBODY CREATES IT, read in both sources at the new pin rather than inferred: install-cycle-schedule.ps1 computes the path only ($StopFile = Join-Path $base 'STOP', line 16; interpolated into the arguments at line 30) and calls no New-Item for it; cycle_runner.py polls it only (line 301, bool(args.stop_file and Path(args.stop_file).exists())). An existence poll needs no directory, which is exactly why the gap is silent until a human tries to write the file. (4) THE DEFECT CARRIES FORWARD, which is the reason this row exists at all rather than a note in an .out file: the registration this act just made (00:08Z) names --stop-file C:\\Users\\Opal Bloomberg\\Desktop\\wk-harvest-runner-pin-3d88eccbc3\\.runtime\\harvest-cycle\\STOP, and on that fresh worktree Test-Path reads FALSE for '.runtime' itself, for '.runtime\\harvest-cycle' and for the STOP file. The next seat told to stop this runner by its own argument will hit the identical error. (5) IT ALSO MOVES C-g's REASONING, not its act: C-g feared the OLD stop file would end the NEW runner at once because 'the new pin keeps the old runtime root'. This installer derives the stop path from -RepoRoot, not from the runtime root, so the new runner watches its own pin's path and the old file could not have ended it. The old file was deleted anyway at 23:58:06Z with Test-Path reading False, as C-g requires.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round85/bz10_stopped.out -- the stop-file path as read from the task's Arguments, the DEVIATION paragraph, the three verbatim runner log lines, the cycle record's fields, and the C-g delete with Test-Path before and after",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round85/bz10_plan.out -- the graded plan, including the note that the NEW task's --stop-file sits under the new pin",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round85/bz10_register.out -- the registration and the task read back from the scheduler, carrying the new --stop-file path",
+       "Test-Path per path component on both pins (995adcaeaa: pin TRUE, .runtime TRUE, .runtime\\harvest-cycle FALSE; 3d88eccbc3: all three FALSE), run before and after the create",
+       "install-cycle-schedule.ps1 lines 16 and 30 and cycle_runner.py line 301, read at the NEW pin (3d88eccbc3) -- the two places that could have created the directory and do not",
+       "<state>/cycle_runner.log lines 8698, 8811 and 8812, and <state>/cycles/bbg/20261013T185816Z.cycle.json"
+      ]
+     },
+     "notes": "WHY THIS IS AN OBSERVATION AND NOT BLOCKING: nothing is degraded and no act of bz-10 was prevented -- the stop worked, zero pairs were lost, and the fix was one mkdir. It is filed because the NEXT graceful stop will hit the same error on the new pin, and because a seat following the order's own wording ('create that file') has no reason to expect a DirectoryNotFoundException. ASK FOR THE ISSUER, cheap and read-only to decide: either the installer creates the stop file's parent at registration (one New-Item -ItemType Directory -Force on the STOP path's parent, in install-cycle-schedule.ps1 beside line 16), or the order's stop step says 'create the directory and the file'. The first is a producer change under a pair and is not this seat's to make; the second is a one-line order amendment. Either closes it for every future pin. WHAT THIS ROW DOES NOT CLAIM: that bz-1 or bz-4 ever failed. Their stop paths were under pins whose harvest-cycle directories did exist (1c69fa35a3's STOP line is in the log at 07:59:03Z, so that one was writable), and nothing here was re-measured on them.",
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
