@@ -5,7 +5,7 @@
  "project": "COMM_ASSIST",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.7",
+ "prd_version": "v0.8",
  "step": 4,
  "brief_ref": "docs/briefs/nfra-ctlpln-seat-roles-and-inbound-work-pipeline-brief-20261007.md@779f5428bc",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12"],
@@ -266,3 +266,13 @@ whether it came through the dell2 forwarder or straight onto the queue.
 receiver's code or its pinned key. That is a deploy, recorded in the org trail's management events and the NEVER-2 change ledger,
 never a silent answer. Key rotation takes the same change-managed path. This limit is carried into FWD-7's grade and does not
 re-open a half.
+
+## ADDENDUM v0.8 (1.0.0_SA_CTO, 2026-10-14 ~05:4xZ) -- the ingress mark's stated limit (call 97c6); no ENDPOINT byte changes
+
+FWD-7's answer path now includes the text path's ingress mark (round 18, W10-S2). The mark's HMAC key
+(`teams/global/ingress-mark`) is readable only by the assistant's execution role: a resource policy denies `GetSecretValue` to every
+other principal (CA-j-8; ruling `CTO_RULING_20261014_052xZ_COMM_ASSIST_INGRESS_MARK_KEY_NARROWED.md`).
+
+**Stated limit:** an identity with admin rights can rewrite that resource policy and then read the key. That is a management write,
+recorded in the org trail, never a silent forgery. It is the same class as v0.7's limit (an admin changing the receiver's code or
+pinned key).
