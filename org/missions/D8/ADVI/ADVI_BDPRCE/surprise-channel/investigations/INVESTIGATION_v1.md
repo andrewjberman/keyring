@@ -1945,3 +1945,210 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "The checker measures from the merge-base with the primary checkout, which is e82f01c4ff, so the issuer's task order edit on this branch counts as a change of this cell. Every path this seat wrote is inside its grant. The seat did not write the task order and did not rewrite history to clear the row. The base or the issuer's cut point has to change for AC3 to read OK."
 }
 ```
+
+## ADVI_BDPRCE-D1-W14-S1 -- The canonical prices object was rewritten after round 2 read it: 1,664 served window rows, not 1,657; the seven added rows and 3,814 interpolated-to-yahoo rows are the difference
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W14-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~14",
+  "surfaced_at": "2026-10-14T03:26:07Z",
+  "one_line": "silver/prices/canonical_prices.parquet was rewritten at 2026-10-14T00:13:47Z; the window holds 1,664 transaction_observed rows, not the 1,657 round 2 served.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get-object of silver/prices/canonical_prices.parquet in this session: ContentLength 105405895, ETag 8eaa29e37c4e651381413b02ca2b43b2, LastModified 2026-10-14T00:13:47+00:00; round 2 REPLAY.json@0.9.0_WK_ADVI_BDPRCE~6 recorded ETag 0ba9bd51... modified 2026-10-13T12:48:05Z",
+      "served_vs_round2 in REPLAY2.json@6a39e57498: round2 rows 1657, current rows 1664, added 7 (six CASH AND MARGIN  INTEREST at 1.0 on 2026-09-24, 09-25, 09-29, 09-30, 10-06, 10-12; GLOBAL X S&P 500 TAIL RISK ETF on 2026-10-12), removed 0, common price differs 0",
+      "python comparison of the round-2 canonical copy (C:/dev/wk-bdprce-r2-6-data) with the current copy over 2026-09-16..2026-10-13: 3,814 rows that were linear_interpolation in round 2 are yahoo_finance now (2026-10-12 among them); 28 keys added, none removed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-2 1a.1: same served set (the 1,657 rows; re-read canonical_prices.parquet for the window and print the denominator; if it differs, say so).",
+  "world_is": "The served set is 1,664 transaction_observed rows. The replay lists all 1,664 under the current canonical object. The count is said here, as the spec asks. No round-2 served row is missing and no common price changed. The round-2 interpolated count of 18,566 is 18,420 on the current object over 887 assets; the 3,814 source changes to yahoo_finance are the likely cause, not measured per asset."
+}
+```
+
+## ADVI_BDPRCE-D1-W14-S2 -- Three 2026 transaction partitions (2026-10-02, 2026-10-08, 2026-10-11) carry different bytes in S3 from round 2's cached copies; they were rewritten at 2026-10-14T00:11 to 00:13Z, after round 2 read them
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W14-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~14",
+  "surfaced_at": "2026-10-14T03:26:07Z",
+  "one_line": "Round 2's cached copies of three 2026 transaction partitions fail the head-object size and ETag check; the current S3 objects were fetched and verified and are the ones the replay reads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PARTITIONS2.csv@6a39e57498 (first verification pass): 2026-10-02 cached 308,240 bytes vs S3 315,148; 2026-10-08 cached 4,468,744 vs 4,507,465; 2026-10-11 cached 391,262 vs 35,306 (MISMATCH_SIZE)",
+      "get-object of the three keys at 2026-10-14T00:11:32Z, 00:12:55Z and 00:13:00Z (LastModified in the response); the refetched copies verify by MD5 against head-object ETag (PARTITIONS2.csv@6a39e57498, second pass: 0 needing fetch)",
+      "round 2's replay read its cached copies (C:/dev/wk-bdprce-r2-6-data/tx and tx_back); those bytes differ from the S3 objects now, whose LastModified is 2026-10-14T00:11 to 00:13Z, so round 2's list was built on the earlier bytes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-2 1a.3: round 2's cache is READ, and each partition is verified against S3 head-object ContentLength and ETag before reliance; a mismatch is refetched.",
+  "world_is": "The mismatch was found and refetched as specified. The other 1,925 cached copies match S3 by MD5 (two multipart objects match by size). Round 2's before-after list was built on the earlier bytes of these three partitions, so the round-2 numbers for window dates that read them are not comparable to round 3 without this note."
+}
+```
+
+## ADVI_BDPRCE-D1-W14-S3 -- The silver/transactions store holds a 2026-10-14 partition at the read (2,921 rows, 2,804 dated 2026-10-12) and no 2026-10-13 partition; leaving 2026-10-14 out changes one served row
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W14-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~14",
+  "surfaced_at": "2026-10-14T03:26:07Z",
+  "one_line": "The store has a 2026-10-14 partition written at 00:13:04Z holding late-landed trades dated 10-12 and earlier, and no 2026-10-13 partition; trades dated 10-13 are not in the store at the read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "list-objects-v2 of silver/transactions/ at the read: 1,928 dated keys, last 2026-10-14; no 2026-10-13 key (tx_listing.json in C:/dev/wk-bdprce-r3-14-data, outside the checkout)",
+      "2026-10-14 partition: 2,921 rows; trade_date 2026-10-12 2,804, 2026-10-11 6, 2026-10-10 32, 2026-10-09 52, 2026-10-08 22, 2026-10-01 5 (python read of the partition, trade_date column only)",
+      "sensitivity run with --exclude-day 2026-10-14 (REPLAY2.md, section The lookback and its limits): one served row differs, GLOBAL X S&P 500 TAIL RISK ETF 2026-10-12, CHANGED 29.349 with the partition, NOT_RECOMPUTABLE without it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-2 1a.3: key the replay on trade_date across all partitions held or fetched; the replay is as of the read; round 2 read the partitions to 2026-10-13.",
+  "world_is": "The 2026-10-14 partition is keyed, as the spec asks, and it is the reason one served row reads CHANGED. The 2026-10-13 partition does not exist, so the 886 interpolated rows dated 10-13 carry the last trade before that day, and no trade dated 10-13 is visible to this list."
+}
+```
+
+## ADVI_BDPRCE-D1-W14-S4 -- The spec's interpolation sentence covers every window linear_interpolation row (239,490 over 11,135 assets), while its count (18,566 over 886) is the served-asset subset; the fates here cover the served assets only
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W14-S4",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~14",
+  "surfaced_at": "2026-10-14T03:26:07Z",
+  "one_line": "The window holds 239,490 linear_interpolation rows over 11,135 assets; the 18,420 rows on the 887 served assets are fated, the other 221,070 are not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "window_source_counts and interpolated_window_all_assets in REPLAY2.json@6a39e57498: linear_interpolation 239,490; interpolated_window_all_assets_names 11135; interpolated_rows 18,420 over 887 served assets",
+      "task order BP-c-2 1a.4 text: 'Every (date, asset) in the window whose canonical source is linear_interpolation (18,566 rows over 886 assets in round 2, re-count)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-2 1a.4: every (date, asset) in the window whose canonical source is linear_interpolation gets its fate under the amended R1, and interpolated.rows equals their count.",
+  "world_is": "The literal sentence and the stated count disagree by scope. I fated the served-asset scope, which is the scope of the stated count, and state the other 221,070 rows as not fated. Fating them would mean keying about 10,250 more assets over the whole history. Widening the scope is a ruling for the issuer."
+}
+```
+
+## ADVI_BDPRCE-D1-W14-S5 -- MORGAN STANLEY FIN LLC 0% 05/03/2029 carries 1.0 per unit from a 2025 par Buy while its served series is per 100 (115.995); 214 interpolated rows carry values from par-scaled trades with the same exposure
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W14-S5",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~14",
+  "surfaced_at": "2026-10-14T03:26:07Z",
+  "one_line": "The largest per-unit mover (115.995 to 1.0 on 2026-10-05) is a 16-month-old carry of a par-scaled Buy; the served series for this asset is in per-100 units, so the carry is a 100x unit change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BEFORE_AFTER2.csv@6a39e57498 row 2026-10-05 MORGAN STANLEY FIN LLC 0% 05/03/2029: old 115.995 transaction_observed, new 1.0 NOW_CARRY_FORWARD, observation 2025-05-28, reason carry_forward_from_2025-05-28",
+      "2025-05-28 partition (round 2 cache tx_back): one row, Buy, price 100.0, units 250000.0, market_value 250000.0 for this asset; R1.2 reads ratio 100 and scales it to 1.0",
+      "canonical window rows 2026-09-28..2026-10-04 for this asset: linear_interpolation 114.37 to 115.76, the per-100 series; REPLAY2.json carry_forwards_from_par_scaled_trade 0 (served), interpolated_carry_from_par_scaled_trade 214"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO ruling AMENDMENT 1 clause 2: R1 serves the PER-UNIT price, the same unit as today's served price; the 100x quote is divided by 100.",
+  "world_is": "For this asset today's served price is not per unit: its series is per 100 and the 1.0 is per unit. The rule's unit and the served unit disagree for the asset, and no ruling says which unit a carried par-quoted price takes. Any writer that publishes the list's carry would move this served price by 100x. The packet (BP-c-3) reads the list, so the disarm is to keep this asset and the 214 par-scaled interpolated carries out of that packet until the CTO rules the unit."
+}
+```
+
+## ADVI_BDPRCE-D1-W14-S6 -- The spec is silent on a carry-forward whose last trade date holds a withheld row; this list refuses such carries (3 served rows, 126 interpolated rows), where the other reading would carry the last kept price
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W14-S6",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~14",
+  "surfaced_at": "2026-10-14T03:26:07Z",
+  "one_line": "A carry-forward whose latest trade date carries a withheld row is classed NOT_RECOMPUTABLE with reason ratio_unrecognised_carry, the spec does not say this; 3 served rows and 126 interpolated rows are affected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BEFORE_AFTER2.csv@6a39e57498: reason ratio_unrecognised_carry on 2026-09-24 and 2026-09-25 MFS TOTAL RETURN BOND R6, and 2026-10-09 T. ROWE PRICE US TREASURY INTERM IDX",
+      "ESTIMATED_ROWS2.csv@6a39e57498: reason ratio_unrecognised_carry 126; ratio_unrecognised 1; these are the rows the refusal moves to unresolved",
+      "REPLAY2.json@6a39e57498 interpolated.reasons and withheld_rows_via_carry_refusal 3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-2 0 and 1b: withheld rows count as NOT_RECOMPUTABLE with the reason ratio_unrecognised; never guess a price for them.",
+  "world_is": "Read literally, the spec covers withheld rows, not carries that pass over a withheld date. I took the conservative reading, so a refused carry is unresolved, not a stale price. The other reading would carry the last kept price. The count is in the record and the CTO rules before any widening."
+}
+```
+
+## ADVI_BDPRCE-D1-W14-S7 -- The task order's cache premise (about 1,300 pre-2026 partitions) does not match the cache on disk (1,691 pre-2026 partitions and 237 in 2026); the cache was used as found, each partition verified
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W14-S7",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~14",
+  "surfaced_at": "2026-10-14T03:26:07Z",
+  "one_line": "The round-2 cache holds 1,691 pre-2026 partitions, not about 1,300 as the task order says; the worker prompt that carried the order says about 1,700.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "directory count of C:/dev/wk-bdprce-r2-6-data/tx_back at the read: 1,691 files, 2020-03-06 to 2025-12-31; C:/dev/wk-bdprce-r2-6-data/tx: 237 files",
+      "PARTITIONS2.csv@6a39e57498: 1,928 dated keys verified, of which 1,691 pre-2026 from the cache and 237 2026 keys (3 refetched, 1 fetched)",
+      "task order BP-c-2 1a.3 says about 1,300 partitions; the worker prompt says about 1,700"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-2 1a.3: round 2's scratch cache (about 1,300 partitions, 2020-03 to 2026-10) is on this disk and is used, each partition verified.",
+  "world_is": "The cache is on disk with 1,691 pre-2026 partitions. The count is a number in the premise, not a reading the replay depends on, because every partition is verified before use."
+}
+```
+
+## ADVI_BDPRCE-D1-W14-S8 -- Nine unrelated Fixed Income funds read trade-to-market-value ratios of 1.0925 to 1.0931 on 2026-10-06, a common offset that points at the market-value field of that date rather than at the trades
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W14-S8",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~14",
+  "surfaced_at": "2026-10-14T03:26:07Z",
+  "one_line": "On 2026-10-06 nine funds (COLUMBIA, FIDELITY ADVISOR, JPMORGAN CORE R6, MFS HIGH INCOME R6, PIMCO and VANGUARD ULTRA SHORT-TERM names among them) all withhold at ratios 1.0925 to 1.0931; a shared offset is the signature of a same-day market-value quirk, not of separate trade prices.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "REPLAY2.json@6a39e57498 withheld_assets: nine assets with dates 2026-10-06 and ratios 1.09259 to 1.09307",
+      "REPLAY2.md@6a39e57498, section Par-quoted rows and the withheld band"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-2 0b: the 1 percent band withholds the funds whose ratio sits outside both bands; the withheld rows are quantified so the CTO can see what the band costs before any widening.",
+  "world_is": "The band costs 442 Fixed Income trade rows on 25 assets. A cluster of nine unrelated funds at one ratio on one date suggests the corroborating ratio, not the trades, carries the offset. Not investigated; the list's classes are the rule's output as written."
+}
+```
