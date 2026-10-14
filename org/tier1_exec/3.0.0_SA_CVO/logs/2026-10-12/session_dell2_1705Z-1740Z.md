@@ -339,3 +339,11 @@ Correction: the round-85 grade file header says ~00:3xZ; it was written at about
 | item | result | commit |
 |---|---|---|
 | IRPT_DASHBD round 97 | ADJUDICATION_v59 (C-S70): contract 0.3.0 states the filled-report shape; I re-ran DB94-1-AC1, DB94-6-AC1, DB97-1-AC1 from their task orders: all PASS. 3 dismissed (W148-S1 ARMED: hazard gone on my re-run). Round 96 rows (W146, W147) wait for its packet. Slug sent | d506a4a6f6 |
+
+## Addendum, 2026-10-14 00:47Z to 00:53Z (msg 7387)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 186 (~P) | ADJUDICATION_v87 (C-S370), no remediation file (IB-pr-497 parked): irpt-export-render live at 5/9LZBbT (my read, 00:09:26Z); two person-reads owed (export, catalogue). 9 dismissed; S152 and S155 (backfill design A/B; no COT/INF activity producer) stay with the issuer for the CTO. Slug sent | 7246aa34b3 |
+
+Correction: C-S370's grounding cites msg 7389; the packet message is 7387. The row is immutable; recorded here.
