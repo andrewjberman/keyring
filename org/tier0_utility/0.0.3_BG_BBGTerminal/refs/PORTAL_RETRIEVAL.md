@@ -40,7 +40,7 @@ trust neither until reconciled.
 | trending | `json/trending/` | `data_as_of` | `latest.json` 154KB: bullish[10]/bearish[10] with analysis + tickers. (`json/semantic-trending/` is FROZEN Feb-26 — do not serve) |
 | benchmarks | `json/benchmarks/` | `data_as_of` | 6 JSON views: benchmark_returns, model_portfolio_benchmarks (5 models, UST/ST/INT/LT/ULT), model_portfolio_timeseries 716KB. **NEVER fetch `benchmarks/*.pkl`** (8MB binary pipeline inputs) |
 | mdpf | `json/mdpf/{firm}/` | `period` | firms: 49financial, cottonwood, inflection, global. account-distribution / aggregate-aua-timeseries / aum-metrics. **`account-distribution.json` is the LIVE SERVED PORTAL BELL — read-only, never touch.** Cottonwood may run a slower feed cadence (07-23 seen on 08-06) — check its cadence before calling it stale |
-| mdpf-platinum | `platinum/mdpf/` | `as_of_date` | 461 objects; per-firm mirrors + `aggregate_aua/YYYY-MM-DD.json` daily snapshots since 2024-11-01 with reconciliation PASS/FAIL + provenance blocks — richest MDPF surface |
+| mdpf-platinum | `platinum/mdpf/` | `as_of_date`, else `_provenance.source_vintages` (oldest); LastModified is write time only | 461 objects; per-firm mirrors + `aggregate_aua/YYYY-MM-DD.json` daily snapshots since 2024-11-01 with reconciliation PASS/FAIL + provenance blocks — richest MDPF surface |
 | pipeline-status | `json/latest/` | `generated_at` | `manifest.json`: last Yang pipeline run + source inputs. Answers "is the dashboard fresh" together with the trading calendar |
 
 ## NEWS PIPELINE (DynamoDB — read-only data plane)
