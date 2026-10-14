@@ -36,6 +36,12 @@ Code: `data/etfs/scripts/rivalfunds/` (run from `data/etfs/scripts`, package `ri
 - Checks: `round30/checks/xe3_union_reader_check.py` (AC1 the short pull keeps the older actions; AC2 one action in two pulls appears once with the latest pull's values; AC3 status rows follow the
   old rule, a full-snapshot store reads as before, an empty store returns the old triple; base FAIL 3, the empty-store control PASS). The live-store arm (the new reader's G5 output equals today's,
   DELTA = 0, read-only, BEFORE any deploy) is the issuer's drain act, not a worker criterion. J1: none (a LOCAL cell; the Lambda deploy goes under its own pair).
+- AMENDMENT 1 (2026-10-14, issuer 2.0.0_SA_COO~V1, on the worker's row ETFS_RIVALS-D1-W40-S1, ARMED): `load_actions` honours the void records exactly as `price_series._actions` does. An object under
+  `corporate_actions/date=<D>/` whose file name starts `actions-void-` (`price_series._is_void_uri`) is NOT an action row: its rows are not in the returned frame, and the (`void_revision`, normalised
+  `security_id`) pairs of every such object (`price_series._voids(s)`, over all dates) drop every EVENT row whose (`revision`, normalised `security_id`) they name, before the union is taken. Reuse those two
+  functions (import them lazily inside `load_actions` if a module import would be circular); do not copy the normalisation. The returned `uris` still lists every object read, void objects included (lineage).
+  The live store holds 11 objects, none a void or an inferred object, so the live DELTA = 0 read is unaffected. The check gains AC4 (`-k ac4`, 1 passed). Row S2 (a row that is neither event nor status follows the old
+  latest-pull rule) is accepted as built.
 
 ## 2. WHAT YOU NEED TO KNOW (measured at the cut, base box/dell1)
 
@@ -67,15 +73,17 @@ org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v
 - **AC1** -- short incremental pull keeps every older action.
 - **AC2** -- the same action in two pulls appears once, with the latest pull's values.
 - **AC3** -- status rows follow the old rule, a full-snapshot store reads as before, an empty store returns the old triple.
+- **AC4** -- a void object is not an action row and a voided action does not come back (a fourth criterion: AMENDMENT 1, one clause of the union rule).
 <proof_of_spec>
   <criterion id="AC1" cell_refs="RIV-xe-3"><invocation>cd data/etfs/scripts; python -m pytest -q -p no:cacheprovider ../../../org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round30/checks/xe3_union_reader_check.py -k ac1</invocation><expect>1 passed</expect></criterion>
   <criterion id="AC2" cell_refs="RIV-xe-3"><invocation>cd data/etfs/scripts; python -m pytest -q -p no:cacheprovider ../../../org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round30/checks/xe3_union_reader_check.py -k ac2</invocation><expect>1 passed</expect></criterion>
   <criterion id="AC3" cell_refs="RIV-xe-3"><invocation>cd data/etfs/scripts; python -m pytest -q -p no:cacheprovider ../../../org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round30/checks/xe3_union_reader_check.py -k ac3</invocation><expect>2 passed</expect></criterion>
+  <criterion id="AC4" cell_refs="RIV-xe-3"><invocation>cd data/etfs/scripts; python -m pytest -q -p no:cacheprovider ../../../org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round30/checks/xe3_union_reader_check.py -k ac4</invocation><expect>1 passed</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
 
-Add `rivalfunds/tests/test_riv_xe3_union_reader.py`: a copy of the three planted-store scenarios of the check at the cell's own test path (so the suite carries them). Run `python -m pytest -q rivalfunds/tests/test_g52_trade_schedule_v2.py rivalfunds/tests/test_r10rp2_g5_code_replay.py rivalfunds/tests/test_r9gd1_g5_drift.py` and report the final line (the readers' neighbours).
+Add `rivalfunds/tests/test_riv_xe3_union_reader.py`: a copy of the four planted-store scenarios of the check at the cell's own test path (so the suite carries them). Run `python -m pytest -q rivalfunds/tests/test_g52_trade_schedule_v2.py rivalfunds/tests/test_r10rp2_g5_code_replay.py rivalfunds/tests/test_r9gd1_g5_drift.py` and report the final line (the readers' neighbours).
 Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~40/ETFS_RIVALS.TO-RIV-xe-3.union-reader-for-corporate-actions.proof_of_spec.json` with `to_id` `ETFS_RIVALS.TO-RIV-xe-3.union-reader-for-corporate-actions`. Report once: each criterion's verdict line with the output above it;
 files written; every existing test assertion you changed or retired and why; rows filed (id + one line); anything the issuer must do at the merge. Leave the `<status>` flip to the issuer.
 
