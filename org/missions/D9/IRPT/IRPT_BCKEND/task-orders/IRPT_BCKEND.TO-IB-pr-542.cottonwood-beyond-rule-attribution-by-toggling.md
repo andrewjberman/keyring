@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~387</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>pending</status>
+<status>cancelled</status>
+<status_reason>STOPPED on its own rule: IB196-3-AC1 reads 4 UNATTRIBUTED beyond-rule nodes of Cottonwood's 236 (232 are removed entirely by the CUSIP fallback toggle, 0 by account_id, the keyed gate or multi_asset); the 4 carry an asset_class change that is an interaction of the CUSIP fallback with the signed cash rule and no single toggle removes it; evidence deliverables/0.9.0_WK_IRPT_BCKEND~387/IB196-3_toggle_attribution.json, row D2-W387-S6; AC2 and AC3 PASS; merged @15ead085bb as a measured STOP; the CTO rules the next step</status_reason>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>

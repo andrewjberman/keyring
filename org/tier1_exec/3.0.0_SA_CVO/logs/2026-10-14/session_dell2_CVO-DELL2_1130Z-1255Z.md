@@ -50,3 +50,22 @@ registered 2026-10-09).
 | IRPT_ANLREQ PRD v0.9 | SIGNED (one YCharts data call per request, prices only); PRD ADMITTED; YCharts-before-yfinance ordering put to Andrew's list | a2a34a5659, stamp adffe99ed7 |
 
 Compiler tools: `comp-surprise` (armed reads before and after each compile), `round-close-check` (two instrument conflicts named: untagged orders; the judgment-row proof conflict W156-S8), JSON leaf diffs of issuer re-grade commits (caught an unstated deletion at 7dae6e5467; confirmed a clean one at 7b46d4a24d). One ack sent to a wrong message id (7720, a no-op); 7719 acked after.
+
+## Addendum, 2026-10-14 16:00Z to 21:45Z
+
+**archetype:** VALIDATE
+
+| item | result | commit |
+|---|---|---|
+| IRPT_ANLREQ PRD v0.10 | ratified-text REFUSED: C-PACKAGER still said the branded PDF is a later enrichment | 2af2238cdb, stamp d86b7fee43 |
+| IRPT_ANLREQ PRD v0.11 | SIGNED on the C-PACKAGER fix; PRD ADMITTED | 5d3cf206aa, stamp 473bba9b5f |
+| IRPT_DASHBD round 108 | no judgment; 2 of 2 PASS; Orion client-grain fork to the CTO; 6 dismissed | 963438b352 |
+| IRPT_BCKEND round 195 ~P | confirmed the pin's bundle closure lacked opal_unidentified.py (Cottonwood mint would crash); 4 dismissed | 0ebbceaca0 |
+| Andrew's 17:3xZ priorities relay | flagged the NFRA_OPSWKF HOLD against the Oct 24 Ticket Center date; the CTO ruled OPSWKF stays on HOLD, trade scope to TCKT_VNEXT | none (message) |
+| IRPT_DASHBD round 109 | DB109-2-J1 FAIL on the first Inflection render (4 counts: household since-inception benchmark under the account window; gain/loss ending value; false 'needs more history'; two reasons) | d6fee3fc43 |
+| TCKT_VNEXT PRD v0.5 | ratified-text REFUSED: no CONTRACTS rows for the two new types or the staff firm choice | 6d7a6309e8, stamp 060c5ab228 |
+| TCKT_VNEXT PRD v0.6 | SIGNED on four CONTRACTS rows; PRD ADMITTED | a75b63ea56, stamp b281a87ffc |
+| IRPT_DASHBD round 110 | DB110-3-J1 FAIL on the account labels only; all round-109 counts fixed; since-inception benchmarks recomputed from the served series and equal; 22 dismissed | 28b72ca20d |
+| IRPT_BCKEND round 196 ~P | new pin b1d354cfc9 verified (+opal_unidentified.py, 2 lines); 232 of 236 attributed; 4-node STOP held; 13 dismissed | a25a244747 |
+
+Compiler tools: `prd-signoff.py` (sign/refuse/status), `comp-surprise` armed and open reads, `round-close-check`, the project's own `model_series_windows` reader for an independent recompute, `git merge-base`/`diff --stat` on pins. Two process slips: surfaced_at stamps ran ahead of the real clock (10 min at 17:15Z, corrected before commit; 8 min at 21:20Z, committed, since the channel is append-only); safe-commit refused twice during other seats' merges, waited out.
