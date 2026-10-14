@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-14T09:39:34Z",
+ "written_at": "2026-10-14T09:51:36Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1802,7 +1802,7 @@
    "source": "org/tier2_senior/0.7.0_AE_CloudOps~RV/task_orders/OPAL_BBGTML.TO-GUARD-4.tzero-tripwire-cix-recency-port.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-13T02:15:38Z",
    "kind": "act",
    "context": "Your no-modify order on integrations/bloomberg/ was lifted for GUARD-3's two edits only, so this third file needs your word. AC1 PASS, five arms (3b65362444); not merged by instruction. Re-kinded fork->act 2026-10-13 ~03:1xZ on the laptop cluster-lead ruling (CTO_RULING_SITEZ_39FC_8ABA_2DA6_..._20261013.md): lifting the no-modify hold is Andrew's act; REC yes rides.",
@@ -1818,7 +1818,14 @@
     "evidence": {},
     "measured_at": "2026-10-13T02:15:38Z"
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-14T09:51:36Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_2DA6_GUARD4_MERGE_NO_HOLD_20261014_Z.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
   },
   {
    "id": "sitez-20261013T200719Z-763e",
