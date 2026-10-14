@@ -7801,6 +7801,30 @@ by dell1 or by this seat.
 }
 ```
 
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W91-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~91",
+  "surfaced_at": "2026-10-14T12:35:38Z",
+  "one_line": "R25 clause 4 names no baseline for a bar's class dollars: graded 'as in clause 2' against the baseline firm day at the bar end date, the bar classes differ from that day by up to 112.89 on the 2026-10-14 capture, so the grading basis is a choice the read has to state.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e101.rebase-read-instrument.md@3e1365fdaa: clause 4 (lines 59-61) says the class dollars are graded as in clause 2; clause 2 (lines 54-56) grades firm[d] class values against the baseline firm[d]; no baseline is named for the bar classes",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R25_CHECKS/baseline/REBASE_BASELINE_20261014.json: bars[label].classes against firm[bar end] of the same file; max abs gap 112.89 (end 2026-09-30: bars 2026-Q3 and 2026-09) and 67.52 (end 2026-10-12: bars 2026-Q4, 2026-10 and 2026); key sets equal on all five; all inside TOL_ROUND 250.00",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R25_CHECKS/r25_rebase_read.py grade_all bars block: bar classes graded against the baseline firm[end] with that date's move (the basis this worker chose)"
+    ]
+  },
+  "spec_asserts": "R25 clause 4 (bars): the live bar total equals the live AUA at the bar's live end date within TOL_AUA; if the live end date is a baseline date at or after rt, the class dollars are graded as in clause 2. The order names no baseline for the bar class dollars.",
+  "world_is": "A bar's class dollars and the same-date firm day's class dollars are two served figures that differ by up to 112.89, not zero. Grading against the baseline firm day and grading against the baseline bar classes give different residuals; both are inside TOL_ROUND on today's capture, so the read passes either way. The worker graded against the baseline firm day at the bar end date. Nothing is served wrong by this; the basis is recorded for the CTO's round-25 analysis.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
 ## MDPF_SECCLASS-D1-W92-S1 -- the order names the C_06 loader _load_c06; the file defines no such name, and the sibling suites load the module through _load
 
 ```json
