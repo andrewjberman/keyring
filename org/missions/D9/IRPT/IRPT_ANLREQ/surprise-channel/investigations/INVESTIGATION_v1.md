@@ -12743,3 +12743,61 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W125-S1 -- the release-29 build ran the release-28 recipe builder from a copy, because the worktree HEAD builder is a later blob
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W125-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~125",
+  "surfaced_at": "2026-10-14T11:35:44Z",
+  "one_line": "The recipe builder at the worktree HEAD (blob 46e3bae9) is not the release-28 recipe builder (blob e1e58c2d, commit aaa458aa4f); the release-29 build ran the e1e58c2d blob copied to a builder root outside the repository, with GIT_DIR set to the common git directory.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py@2ba904ab11: git ls-tree HEAD blob 46e3bae9223ae367ac6f729722a2cdc23cd5fa96 (sha256 c674e2e8...), changed after aaa458aa4f by commits 3f5321ad36 and 049834ad31",
+      "git show aaa458aa4f:org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py | git hash-object --stdin = e1e58c2d94a8d0b6fc4c16320fa385bf39e5d8a8; sha256 afe7d574bb26b6ac3ebae5322e9da30725a2ea1cc5a12699c9c97b317167aa76, equal to the r28 scratch copy C:/dev/irpt-r28-build (the AR-y-300 scratch location)",
+      "C:/dev/irpt-release-r29/builder-root/org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py: the e1e58c2d copy, sha256 afe7d574 checked before the build; build_a and build_b rc=0 (out/build_a_stdout.json, out/build_b_stdout.json); the delta against the release-28 tarball is the four expected members"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AR-y-311 step 1 and AR-y-300 step 2: the release uses the same recipe as AR-y-227 (the recipe builder, the same arguments, the clock held to the recorded generated_at).",
+  "world_is": "The recipe builder is named by path only; the worktree copy at HEAD is a later version, so running it at its own path would change the recipe. The release-28 blob was run from a root outside the repository so that the builder's WORKTREE (its parents[5]) resolves there. The r29 package reproduces the release-28 member set except the expected four members.",
+  "notes": "owner: 2.0.0_SA_COO~Y2 (which builder blob is the recipe for release 29). Built only; nothing uploaded, installed, applied or invoked. The HEAD builder was not run."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W125-S2 -- the named ops status test runs on the extracted package only with trunk helper folders and ycharts/generate on the path
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W125-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~125",
+  "surfaced_at": "2026-10-14T11:35:44Z",
+  "one_line": "ops/tests/test_status.py imports fixtures from _authz/tests and the status path imports submission from ycharts/generate; neither test folder is in the tarball, so the named test runs on the extracted package only with those trunk folders and paths added.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/tests/test_status.py@f812980d12 lines 15-27 (sys.path to _authz/tests; import fixtures as fx) and ops/prospect_dates.py@f812980d12 line 18 (from submission import input_repository_owner)",
+      "C:/dev/irpt-release-r29/irpt-resident-0485393f3a-r29.tar.gz: ycharts/generate/submission.py present; the tests are excluded by the builder, so _authz/tests/fixtures.py is absent",
+      "C:/dev/irpt-release-r29/tests_out/test_status.txt: 23 passed with PYTHONPATH separated by semicolons and the trunk _authz/tests and _scope/tests folders added; the first run with colon separators (mangled on Windows) gave 19 failed, 4 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AR-y-311 step 5: the ops status tests that run on the extracted package are part of the named test set.",
+  "world_is": "The named set runs on the extracted package only when the trunk _authz/tests and _scope/tests folders and the ycharts/generate path are supplied. With them: correction_words 9 of 9, shares_not_composed 10 of 10, deferred_resolution 15 of 15, ops test_status 23 of 23.",
+  "notes": "owner: 2.0.0_SA_COO~Y2 (whether the step-5 named set carries its helper folders). No action taken on this row."
+}
+]
+```
