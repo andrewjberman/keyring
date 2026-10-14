@@ -9771,3 +9771,33 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Z-S8 stands as written. The update correlation is recorded as a candidate to test against the next readable ending, not as a finding."
 }
 ```
+
+## NFRA_CTLPLN-Z-S13 -- dell1 shows the same unrecorded-ending class without the 2.1.300 update
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S13",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "0.0.0_AB_MSTR~Z",
+  "surfaced_at": "2026-10-14T23:44Z",
+  "one_line": "Disconfirming datum for Z-S12's update candidate: dell1 lost 6 seats the same unrecorded way since 20:15Z while running Claude Code 2.1.293, which never took the 2.1.300 auto-update.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.0.0_AB_MSTR~Z",
+  "adjudicates": [
+    "NFRA_CTLPLN-Z-S12"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR~DELL1 bus b5a82604 (23:43Z): AE~SC1, COO~B1, ~M1, ~R1, ~V1, CVO~RV1 gone since 20:15Z; no fabric KILL since 20:00Z; 0 claude/bun/node crash or hang events; 0 low-memory events in 5h; claude on dell1 is 2.1.293",
+      "dell1's own caveat: those seats may have parked for the 21:00Z restart Andrew then held, so dell1's instance is confounded"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-S12 recorded the 18:24Z auto-update to 2.1.300 as a candidate cause.",
+  "world_is": "The class appears on a box without that update, so the update does not explain it on dell1 (confounded by the planned restart). The candidate is weakened, not ruled out for site Z. The next site Z ending is readable from .runtime/spawn-logs/.",
+  "notes": "Recorded because a disconfirming number leads the sentence. No act follows from it."
+}
+```
