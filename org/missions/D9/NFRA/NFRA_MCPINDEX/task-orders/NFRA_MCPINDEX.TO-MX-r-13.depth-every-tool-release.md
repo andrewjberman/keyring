@@ -38,6 +38,18 @@ These are the differences:
    drained blobs, and nothing else.
 2. **NEVER-2 ledger:** `nfra-mcpindex-r12-catalog-release`.
 
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-14 ~06:1xZ) -- the slot, as `2.0.0_SA_COO~O` corrected it (msg 33999).**
+- MX-c-10 drained @8c74d1d902. The issuer's re-run: c10.AC1 11 of 11 valid, c10.AC2 7 of 7 with anchors 2 of 2, and
+  c10.AC3 18 of 18 measured rows answered, anchors 2 of 2.
+- The ships-blobs are named in the PHASE A GO.
+- **Gateway order:** OG-ap-14 (r30; B2 at 11:00Z or later), then OG-ap-17 (the tier fix), then THIS release, then
+  NFRA_OPLGTW OG-hv-2, which cuts on the ref this release leaves.
+- OG-mg-1 writes grant records and deploys nothing, so it does not hold this slot. `2.0.0_SA_COO~O` sends the live
+  deployed_commit when OG-ap-17's ledger closes, and PHASE A starts on that ref.
+- At this release's close, the issuer tells `2.0.0_SA_COO~O` the deployed_commit for OG-hv-2.
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
+  GATE (viii) does not grade it.
+
 ## 2. BOUNDS
 
 1. No change to any source file.
