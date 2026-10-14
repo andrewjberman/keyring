@@ -16,6 +16,12 @@ HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # <workspace>/.git/modules/portal/hooks (portal/.git is then a file, and the ../../../ walk below
 # lands on <workspace>/.git, not the workspace). Empty when portal is not a submodule.
 SUPER_ROOT="$(git rev-parse --show-superproject-working-tree 2>/dev/null)"
+# From a throwaway portal worktree (git worktree add --detach, as portal-merge-forward.sh and the release build use)
+# the line above prints EMPTY. The installed hook's own location does not depend on the working directory: when it
+# sits in <workspace>/.git/modules/<name>/hooks, the workspace is four levels up.
+case "$HOOK_DIR" in
+  */.git/modules/*/hooks) [ -n "$SUPER_ROOT" ] || SUPER_ROOT="$(cd "$HOOK_DIR/../../../.." && pwd)" ;;
+esac
 
 # Resolve the D-1 gate whether this hook runs as the canonical source
 # (.tools/portal-hooks/pre-push) or the installed copy (portal/.git/hooks/).
