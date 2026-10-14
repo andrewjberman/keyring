@@ -31,6 +31,11 @@ per file class"; 0.0.0_AB_MSTR msg 107365: "the integrator should regenerate gen
      bypass appends a line; 0.0.0_AB_MSTR msgs 107817, 107847): resolved as a LINE UNION -- CLOUD's file, then the
      box-only lines in the box's order. Not a byte-prefix test: hand unions reorder lines, and a prefix test then HELD.
 
+  5. A CROSS-ADJUDICATION record (`org/critical_paths/cross_adjudication/*.md`; laptop CTO ruling 2026-10-14 ~06:4xZ, reply to
+     MSTR msg 109085, "only when equal after EOL normalisation"): an ADD/ADD whose two copies are byte-equal after CRLF->LF and trailing-blank-line normalisation
+     resolves to CLOUD's copy (--cloud is REQUIRED for this class). ANY other difference HOLDS: a real disagreement between
+     two rulings is never auto-picked. Only an add/add (no base) is resolved.
+
 Anything else is UNRESOLVED and the caller falls back to its normal conflict path.
 
 USAGE:  python .tools/merge-resolve-known.py --base B --ours P1 --theirs P2 --tree T [--cloud ours|theirs] <path> [...]
@@ -56,6 +61,7 @@ CHANNEL_RE = re.compile(r'(^|/)surprise-channel/(investigations|remediations|adj
                         r'|^org/surprise_channel/(.+/)?[A-Z]+_v\d+\.md$')
 GENERATED_RE = re.compile(r'^org/projects/[^/]+\.json$')
 CROSSBOX_RE = re.compile(r'^org/devices/crossbox/XB-[^/]+\.json$')
+XADJ_RE = re.compile(r'^org/critical_paths/cross_adjudication/[^/]+\.md$')
 XB_BLOCKS = ('sent', 'ack', 'closed')
 APPEND_ONLY = ('org/mcp/agent-spawn-audit.log', 'org/law-edit-audit.log', 'org/safe-deploy-bypass-audit.log',
                'org/git-author-override-audit.log', 'org/mcp/drive-mode.log')   # the five of CTO ruling 1 @ba20ac668b
@@ -341,6 +347,24 @@ def union_append(base, ours, theirs, cloud='ours'):
     return head + ''.join(extra), 'append-only line union cloud+box-only=%d' % len(extra)
 
 
+def resolve_xadj(base, ours, theirs, cloud=None):
+    """(text, how) for an ADD/ADD of one cross-adjudication record, or (None, why). Resolves to CLOUD's copy only when the two
+    copies are byte-equal after CRLF->LF and trailing-blank-line normalisation; any other difference HOLDS."""
+    if base is not None:
+        return None, 'a cross-adjudication record with a base is not an add/add; only an add/add is resolved'
+    if ours is None or theirs is None:
+        return None, 'a cross-adjudication record is absent on one side'
+    if cloud not in ('ours', 'theirs'):
+        return None, 'a cross-adjudication add/add needs --cloud to name the CLOUD side'
+
+    def norm(t):
+        return t.replace('\r\n', '\n').rstrip('\n') + '\n'
+
+    if norm(ours) != norm(theirs):
+        return None, 'the two copies differ beyond line endings and trailing blank lines: HOLD (a real disagreement between rulings is never auto-picked)'
+    return (ours if cloud == 'ours' else theirs), 'cross-adjudication add/add, equal after EOL and trailing-blank normalisation: CLOUD copy (%s)' % cloud
+
+
 def fold_crossbox(base, ours, theirs):
     """Fold a crossbox record written on both ends (GS-f-4). Same rule as `crossbox-call.py merge` (read, not edited): the
     identity and body fields, and each of the `sent`, `ack`, `closed` blocks, take the side that moved from the base; a block
@@ -510,6 +534,9 @@ def main(argv):
                 text, how = None, 'a crossbox record is absent on one side'
             else:
                 text, how = fold_crossbox(*sides)
+        elif XADJ_RE.match(p):
+            sides = [show(opts[k], p) for k in ('base', 'ours', 'theirs')]
+            text, how = resolve_xadj(*sides, cloud=opts.get('cloud'))
         elif p in APPEND_ONLY:
             sides = [show(opts[k], p) for k in ('base', 'ours', 'theirs')]
             if sides[1] is None or sides[2] is None:

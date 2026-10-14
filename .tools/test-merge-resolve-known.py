@@ -86,6 +86,31 @@ arms = [
      lambda: m.union_append(None, "a\r\nBOX\r\n", "a\n", cloud="theirs")[0] == "a\nBOX\r\n"),
     ("APPEND: a line the box holds twice and CLOUD once -> one copy added",
      lambda: m.union_append(None, "x\nx\n", "x\n", cloud="theirs")[0] == "x\nx\n"),
+    # CROSS-ADJUDICATION records (laptop CTO ruling, MSTR LD-0650): an add/add equal after CRLF->LF and trailing-blank
+    # normalisation resolves to CLOUD's copy; ANY other difference HOLDS.
+    ("XADJ: add/add, CRLF plus one trailing blank line, CLOUD is theirs -> CLOUD's own bytes",
+     lambda: m.resolve_xadj(None, "# X\n\nruled\n", "# X\r\n\r\nruled\r\n\r\n", cloud="theirs")[0] == "# X\r\n\r\nruled\r\n\r\n"),
+    ("XADJ: same pair, CLOUD is ours -> CLOUD's (ours) bytes",
+     lambda: m.resolve_xadj(None, "# X\r\n\r\nruled\r\n\r\n", "# X\n\nruled\n", cloud="ours")[0] == "# X\r\n\r\nruled\r\n\r\n"),
+    ("XADJ: byte-identical copies -> resolved",
+     lambda: m.resolve_xadj(None, "a\n", "a\n", cloud="theirs")[0] == "a\n"),
+    ("XADJ: ONE CHANGED WORD -> HOLD (never auto-picked)",
+     lambda: (lambda r: r[0] is None and "HOLD" in r[1])(m.resolve_xadj(None, "ruled yes\n", "ruled no\n", cloud="theirs"))),
+    ("XADJ: a changed word hidden behind the CRLF difference -> still HOLD",
+     lambda: m.resolve_xadj(None, "ruled yes\n", "ruled no\r\n", cloud="ours")[0] is None),
+    ("XADJ: an extra non-blank line -> HOLD",
+     lambda: m.resolve_xadj(None, "a\n", "a\nb\n", cloud="theirs")[0] is None),
+    ("XADJ: --cloud not given -> HOLD (an add/add must know which side is CLOUD)",
+     lambda: m.resolve_xadj(None, "a\n", "a\n", cloud=None)[0] is None),
+    ("XADJ: a base exists (both sides edited) -> HOLD; only an add/add resolves",
+     lambda: m.resolve_xadj("a\n", "a\nb\n", "a\nb\n", cloud="theirs")[0] is None),
+    ("XADJ: absent on one side -> HOLD",
+     lambda: m.resolve_xadj(None, None, "a\n", cloud="theirs")[0] is None),
+    ("XADJ: the path class matches cross_adjudication/*.md and nothing else",
+     lambda: bool(m.XADJ_RE.match("org/critical_paths/cross_adjudication/20261014T0552Z_XA-x.md"))
+     and not m.XADJ_RE.match("org/critical_paths/cross_adjudication/sub/x.md")
+     and not m.XADJ_RE.match("org/critical_paths/cross_adjudication/x.json")
+     and not m.XADJ_RE.match("org/critical_paths/other/x.md")),
     ("APPEND: nothing is dropped -- every line of either side is in the result",
      lambda: (lambda r: all(x in r.splitlines() for x in ["q", "a", "b", "z"]))(
          m.union_append("a\nb\n", "a\nz\n", "q\na\nb\n", cloud="theirs")[0])),

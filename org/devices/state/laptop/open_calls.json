@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "laptop",
- "written_at": "2026-10-14T05:22:12Z",
+ "written_at": "2026-10-14T10:42:15Z",
  "written_by": "1.0.0_SA_CTO",
  "rows": [
   {
@@ -944,6 +944,113 @@
     "at": "2026-10-14T05:22:12Z",
     "by": "1.0.0_SA_CTO",
     "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261014_052xZ_COMM_ASSIST_INGRESS_MARK_KEY_NARROWED.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
+  },
+  {
+   "id": "laptop-20261014T061102Z-b509",
+   "project": "NFRA_CTLPLN",
+   "subject": "Be at dell1's console about 14:30Z today (Wed 10-14) to sign in after the FWD-11 restart, or name another hour you will be?",
+   "asked_by": "2.0.0_SA_COO~C",
+   "source": "org/missions/D0/NFRA/NFRA_CTLPLN/decompositions/NFRA_CTLPLN_DECOMP.round13.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-14T06:11:02Z",
+   "kind": "act",
+   "context": "FWD-11 needs one deliberate dell1 restart (you said 'Yes sure', at most 15 minutes). Dell1 has no auto-logon and none will be set, so after the restart only your console sign-in brings its manager and seats back. The manager (0.0.0_AB_MSTR~DELL1) restarts ONLY when you are at the box; booked 14:30-14:45Z, otherwise the next hour you are. Order: CT-ac-5.",
+   "rec": "Name an hour you will be at the dell1 console (14:30Z today works if you are); the restart then runs once and CT-ac-5 closes.",
+   "scope": {
+    "measured_at": "2026-10-14T06:11:02Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "laptop-20261014T093827Z-16cc",
+   "project": "COMM_ASSIST",
+   "subject": "Send ONE plain text from your phone to the assistant's number (for example the word: status). It starts the ingress mark's observation window and is the first real read of the narrowed key",
+   "asked_by": "2.0.0_SA_COO~CA",
+   "source": "org/tier1_exec/2.0.0_SA_COO~CA/drive_log_20261014T06Z_andrew.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-14T09:38:27Z",
+   "kind": "fork",
+   "context": "The ingress mark has been live in record mode since 04:52Z and the key narrowed since 06:38Z, but no text has reached the handler (check_j5_obs: NO-EVIDENCE, 0 marked texts). The flip to enforce (CA-j-5) and the round's close wait on at least 3 marked texts; the first one also reads the narrowed key on a cold container (the CTO and CVO's watch). A plain text only asks the assistant a question; nothing is sent in his name without his #1.",
+   "rec": "Send the single word 'status' once now, and again twice over the next day as you normally would. A plain text acts on nothing; the assistant answers and asks before any action.",
+   "scope": {
+    "measured_at": "2026-10-14T09:38:27Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-14T09:41:54Z",
+    "by": "1.0.0_SA_CTO",
+    "reason": "Andrew's act: one plain text from his phone (it starts the ingress-mark observation window)"
+   }
+  },
+  {
+   "id": "laptop-20261014T104030Z-847f",
+   "project": "COMM_ASSIST",
+   "subject": "Before the ingress mark goes to enforce (CA-j-5): widen the mark's 15-minute freshness bound to cover the queue's hour-long retries, or accept that a failed-then-retried answer is dropped?",
+   "asked_by": "2.0.0_SA_COO~CA",
+   "source": "org/missions/D9/COMM/COMM_ASSIST/decompositions/COMM_ASSIST_DECOMP.round18.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T10:40:30Z",
+   "kind": "fork",
+   "context": "AMENDMENT 5 (read of the live queue): VisibilityTimeout 3600 s, maxReceiveCount 3, no handler retry cap, MAX_AGE_S 900 s. In enforce a retried event is refused stale-mark and silently deleted (only a mark_refusals line). Replay protection also rests on single-use marks_seen and the narrowed key. Gates CA-j-5.",
+   "rec": "Widen MAX_AGE_S to 4 hours (two redeliveries plus margin) as a LOCAL code cell with a deploy pair BEFORE the flip; the single-use marks_seen and the narrowed key carry the replay protection. Do not shorten the queue's visibility timeout (it must cover the handler's 600 s timeout).",
+   "scope": {
+    "measured_at": "2026-10-14T10:40:30Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T10:42:15Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261014_104xZ_COMM_ASSIST_MARK_FRESHNESS_4H.md",
     "crossbox": null,
     "ruled_by": "cto",
     "xadj": null

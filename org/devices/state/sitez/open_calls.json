@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-14T02:06:41Z",
+ "written_at": "2026-10-14T09:54:03Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1802,7 +1802,7 @@
    "source": "org/tier2_senior/0.7.0_AE_CloudOps~RV/task_orders/OPAL_BBGTML.TO-GUARD-4.tzero-tripwire-cix-recency-port.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-13T02:15:38Z",
    "kind": "act",
    "context": "Your no-modify order on integrations/bloomberg/ was lifted for GUARD-3's two edits only, so this third file needs your word. AC1 PASS, five arms (3b65362444); not merged by instruction. Re-kinded fork->act 2026-10-13 ~03:1xZ on the laptop cluster-lead ruling (CTO_RULING_SITEZ_39FC_8ABA_2DA6_..._20261013.md): lifting the no-modify hold is Andrew's act; REC yes rides.",
@@ -1818,7 +1818,14 @@
     "evidence": {},
     "measured_at": "2026-10-13T02:15:38Z"
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-14T09:51:36Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_2DA6_GUARD4_MERGE_NO_HOLD_20261014_Z.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
   },
   {
    "id": "sitez-20261013T200719Z-763e",
@@ -1828,7 +1835,7 @@
    "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_OPAL_BBGTML_Z6_REPAIR_DISPOSITIONS_20261013_Z.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-13T20:07:19Z",
    "kind": "act",
    "context": "The 14:57 ET reboot left no wintrv.exe running. bbcomm holds port 8194, so the 07:00 ET unattended fallback will refuse to sign in and the daily pull exits 50 again (AMGT induction at 09:00 too). Gates the Bloomberg agent (XB-4d72 Z6).",
@@ -1844,7 +1851,14 @@
     "evidence": {},
     "measured_at": "2026-10-13T20:07:19Z"
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-14T09:39:34Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier1_exec/2.0.0_SA_COO~ZB/deliverables/OPAL_BBGTML_Z6_DRAIN_END_20261014.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
   },
   {
    "id": "sitez-20261013T213807Z-21d9",
@@ -1899,7 +1913,7 @@
    "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_201xZ_BLOOMBERG_NO_MODIFY_IS_POSITIONING_AND_ETFS_VIEW_RESEARCH_OUTSIDE_OPEN_SEASON.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-13T21:52:25Z",
    "kind": "act",
    "context": "Lifting a hold he set by name: 10-06 'Unchanged' clause keeps the no-modify order on the vehicle and the sign-in scripts. R2 fixes the 8194 gate that blocks the 07:00 unattended sign-in; R3 fixes the focus loss that aborted it today. Row OPAL_BBGTML-Z-S17; COO~ZB and CTO~Z REC (a) lift for these change-managed repairs.",
@@ -1915,7 +1929,14 @@
     "evidence": {},
     "measured_at": "2026-10-13T21:52:25Z"
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-14T09:23:04Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_090xZ_NO_HOLD_ON_BLOOMBERG_SIGN_IN_REPAIRS.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   },
   {
    "id": "sitez-20261013T215753Z-232a",
@@ -2046,6 +2067,52 @@
     "ruled_by": "cto",
     "xadj": null
    }
+  },
+  {
+   "id": "sitez-20261014T095403Z-def4",
+   "project": "NFRA_MCPORTAL",
+   "subject": "Sit once with Alyssa (FWD-1 close run): from the dashboard narrow her access, she asks a question, widen it, she asks again -- the 10-08 hold ended on its own condition (r29 live)",
+   "asked_by": "1.0.0_SA_CTO~Z",
+   "source": "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-c-2.fwd1-close-run.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-14T09:54:03Z",
+   "kind": "act",
+   "context": "Replaces row 3b41. The 10-08 hold was an approved REC 'until r29 is live'; r29's opal_asker_query is live (destructive_ops.py:34 at the deployed ref), so nothing is left to lift. What remains is a person act: Andrew's dashboard change and Alyssa's own questions (agents do not message Alyssa).",
+   "rec": "",
+   "scope": {
+    "measured_at": "2026-10-14T09:54:03Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_FIRMBKTS placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_DEMQUE placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_STRATID placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/fabric-gitstate.py is on the shared branch (.tools)",
+      ".tools/tests/test_fabric_gitstate_pointer.py is on the shared branch (.tools)",
+      ".tools/tests/test_safe_ec2_deploy_manifest.py is on the shared branch (.tools)",
+      "bucket opal-data-assets is marked shared (infra/logic/registry/tiers.json homes marked shared)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null
   }
  ]
 }
