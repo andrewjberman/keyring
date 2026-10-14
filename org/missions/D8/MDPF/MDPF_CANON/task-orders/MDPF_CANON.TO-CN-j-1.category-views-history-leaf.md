@@ -192,7 +192,7 @@ single-pointer-read claim, the commit hash, and any row.
 - **Not provable offline, graded after deploy (AC4 and the pair's read-back):** the edge reaching the new leaf (CloudFront behaviours and WAF were not read), the served bytes
   of the four leaves, the deployed publisher's `CodeSha256` and manifest, and the portal fetch (CN-i-1's).
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <to_id>MDPF_CANON.TO-CN-j-1</to_id>
 <slot>~23</slot>
