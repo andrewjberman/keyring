@@ -8795,3 +8795,104 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W153-S1 -- the served fee-basis row (method_version 3) is not landed in the 49 Financial gold dim_return_method table
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W153-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~153",
+  "surfaced_at": "2026-10-14T02:55:50Z",
+  "one_line": "The gold dim_return_method prefix holds method_version 1 and 2 only, while the household's activity rows carry method_version 3, so the fee-basis member has no landed row to read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-188 step 1 classes every absent member; the performance contract sources convention.fee_basis_label from dim_return_method field fee_basis (served fee basis GROSS_ONLY); the sample builder's record names method_version 3 as the fee-basis row.",
+  "world_is": "The 49 Financial gold prefix lists dim_return_method partitions method_version=1 and method_version=2 only (LIST, 2 partitions, each with data.parquet and manifest.json). The household's activity rows carry method_version 3 (the build counts file, activity_method_versions_in_household [3]). The fee-basis member is therefore classed (c): no landed row for the served version.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S3 LIST of opal-data-49financial irpt/49financial/gold/dim_return_method/ by this box identity, partition names only (2 partitions: method_version=1, method_version=2), during this run, 2026-10-14 UTC",
+      "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json method_versions block lists rows 1 and 2 only; enum fee_basis is GROSS_ONLY, at 166228e0d5",
+      "the build counts file in the 0.9.0_WK_IRPT_DASHBD~141 private folder (counts only): activity_method_versions_in_household [3]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W153-S2 -- three client-summary members name a platinum summary contract as source, which has no 49 Financial gold table
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W153-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~153",
+  "surfaced_at": "2026-10-14T02:55:50Z",
+  "one_line": "The client summary is a platinum product with no gold table under the 49 Financial prefix; the (a) and (b) classes of its three members rest on account_return_daily, the summary contract's own sibling.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The performance contract sources cover.as_of_date, convention.inception_per_household_and_account and convention.not_held_for_entire_period from IRPT_DASHBD_CLIENT_SUMMARY_CONTRACT.json (fields as_of, first_data_date, window_status); DB-b-188 asks each absent member to be classed by a gold table or a ratified rule.",
+  "world_is": "The client summary is a platinum product keyed by issued client id (its address template is platinum/reporting/client=<id>/summary.json), and its contract lists account_return_daily and series as siblings. No client summary table exists under the 49 Financial gold prefix. The first two members are classed (a) from account_return_daily business_date; the third is classed (b) by the window_status rule written in the summary contract.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S3 LIST of opal-data-49financial irpt/49financial/gold/ (11 prefixes, none a client summary table) by this box identity, during this run, 2026-10-14 UTC",
+      "org/standards/IRPT_DASHBD_CLIENT_SUMMARY_CONTRACT.json address and siblings blocks, at 166228e0d5"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W153-S3 -- three of the eight C-SHAPE tables the builder and checker name have no contract file and no 49 Financial gold table
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W153-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~153",
+  "surfaced_at": "2026-10-14T02:55:50Z",
+  "one_line": "account_transaction, account_dim and market_topic_daily are named as C-SHAPE tables but have no contract under org/standards and no table under the 49 Financial gold prefix.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-188 step 1 reads the sibling table contracts, one per C-SHAPE table, and lists the ones that exist; the builder header and the round checker name eight C-SHAPE tables.",
+  "world_is": "Five of the eight have a contract file in org/standards (account_return_daily, account_class_daily, account_activity_daily, account_lot_realized, account_lot_unrealized_daily). account_transaction, account_dim and market_topic_daily have no contract file and no table under the 49 Financial gold prefix. The benchmark holder is therefore named in words, not as a table.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls of org/standards filtered to the IRPT_DASHBD contracts at 166228e0d5 (nine contract files, none for the three names)",
+      "S3 LIST of opal-data-49financial irpt/49financial/gold/ by this box identity (11 prefixes, none for the three names)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W153-S4 -- the two allocation charts name a daily share series, but the performance contract states no depth for either
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W153-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~153",
+  "surfaced_at": "2026-10-14T02:55:50Z",
+  "one_line": "accounts.chart.allocation_by_account and overview.chart.allocation_by_asset_class are daily share series with no stated depth, so their class (c) rests on a conservative reading rather than a contract rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The performance contract sources both charts as each share on each day (ending_value from account_activity_daily, market_value_eod from account_class_daily), and the section baselines give no window for either chart.",
+  "world_is": "Each gold table holds 4 trading days (2026-10-07 to 2026-10-12). The sample builder left both charts absent as history not yet built. The contract does not say how deep the daily series must be, so both are classed (c) under the refusal clause. A depth ruling would move them to (a) or keep them at (c).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json members accounts.chart.allocation_by_account and overview.chart.allocation_by_asset_class, at 166228e0d5",
+      "S3 LIST of account_activity_daily and account_class_daily under irpt/49financial/gold/ (4 partitions each) by this box identity"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
