@@ -2351,3 +2351,30 @@ used as fixtures is a different read with a different denominator.
  "notes": "ARMED because TO-R18-TR3 writes the Lambda environment from the file this order would produce; left alone, TR3 either carries a hand-typed bucket or a wrong single bucket. Disarm owner is the issuer, who must re-cut the attachment design (one bucket by a new registry decision, or a per-firm env) or confirm the tier. Nothing created in AWS; no registry row added (the builder did not refuse; the blocker is the tier, not a missing row). Not a decision on which tier is right; the rule text is quoted at the cited lines for the CTO or CVO to read."
 }
 ```
+
+```json
+{
+ "id": "TCKT_VNEXT-D2-W43-S2",
+ "project": "TCKT_VNEXT",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_TCKT_VNEXT~43",
+ "surfaced_at": "2026-10-14T19:57:06Z",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~V2",
+ "one_line": "TO-R18-TR3 cannot be committed as written: the naming gate refuses the attachment key template because the table segment ticket-attachments is not snake_case (NAMING_SCHEMA key.table_case), though address() printed it without refusal; the issuer must decide the table name in TO-R18-TR1.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python .tools/naming-gate.py (safe-commit of the TR3 source staged on top of a8a40f308b, ENFORCE): NAMING REFUSE infra/aws/terraform/ticket-center/main.tf:321 portal/{firm}/state/ticket-attachments/trade-form/ -> portal/{firm}/state/ticket_attachments/trade-form/ (NEW and OUT-OF-PATTERN as S3Key); commit aborted, log at .scratch/tr3_commit.log in the worktree",
+   "org/standards/NAMING_SCHEMA.json key.table_case (line 49 of the file, @worktree HEAD 2e0b4b59f8 and later): snake_case; kebab-case binds only NEW served platinum leaves (.json)",
+   "lib/opal_naming.py address(portal, 49financial, state, ticket-attachments, trade-form) returned s3://opal-data-49financial/portal/49financial/state/ticket-attachments/trade-form with no refusal (TO-R18-TR1 ATTACH_ADDRESS.json, commit 2e0b4b59f8)",
+   "same gate run also REFUSES: line 223 IAM policy name opal-ticket-attachments-trade-form (owed suffix -policy), lines 232-234 the three firm ARN literals (hand-kept carriers outside the lookup() context)"
+  ]
+ },
+ "spec_asserts": "TO-R18-TR1 step 4 and TO-R18-TR3 steps 2 and 3: the key template is builder output copied as a literal (rule 30, every S3 address is lib/opal_naming.py address() output), and the permission names one ARN per firm from that record.",
+ "world_is": "The builder printed a table segment (ticket-attachments) that NAMING_SCHEMA key.table_case does not admit (snake_case), and it did not refuse it. The commit-time naming gate grades the key canonically and refuses the template and the three ARNs built on it. TR3 source cannot land as the cell is written. Its fix is a table-name decision (re-run address() with a snake_case table, which changes ATTACH_ADDRESS.json and every template), owned by the issuer, not a hand-typed workaround.",
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "Filed by the worker on TO-R18-TR3 (AMENDMENT 1 record). The order is left pending and its source is NOT committed: the working-tree edits to infra/aws/terraform/ticket-center/main.tf, the TR3 checkers, R18_TR3_RECORD.json and the instance are uncommitted in the worktree. No bypass of the naming gate was attempted. The TR2 meeting change and the TR1 record are unaffected."
+}
+```
