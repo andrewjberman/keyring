@@ -11,6 +11,7 @@ ADDENDUM 1 (2026-10-14 ~13:1xZ, @fa26b50ebc) as corrected @f443ae70d2 (CTO msgs 
 | 1b | FWD-9 | `SH-t-24` closed-market frontier (CTO ADDENDUM 2 @d3206f14a8, msg 5564, added 2026-10-14 ~14:0xZ beside SH-t-23): `frontier_returns` in the gold script (carry the last vendor day with its date; bound 4 calendar days; `absent_count` 0; a NULL reading still blank), the holding column `return_frontier`, the publisher's optional keys `returns_frontier` / `returns_frontier_holdings`, one offline test file | `TO-SH-t24` | `~23` | none (the deploy that moves served returns is a separate act under its own never-widen pair) | SERVED |
 | 1c | FWD-9 | `SH-t-25` the Positioning page passes and shows the frontier date (CTO half condition C1, msg 5585): adapter pass-through of `returns_frontier` / `returns_frontier_holdings`, a small mark under a carried holding's windows, a one-line note under the table; a portal candidate `cand/dell1/sechist-frontier-label` cut from PROD `6a5926fc11`; client-facing (Andrew's word for the approval row and the promote); the SH-t-24 producer apply follows its PROD promote | `TO-SH-t25` | `~24` | none | LOCAL |
 | 1d | FWD-9 | `SH-t-26` the Positioning label is promoted to PROD by the seated DT lane `0.4.0_DT_ClientPlatform~H1` from the approved list (row c822, Andrew-approved ~18:3xZ): release `release/20261014T184507Z` head `fa10e75861ab` on PROD `6a5926fc11`, `/prod-deploy`, CI read, receipt; the SH-t-24 producer apply (CloudOps) follows it | `TO-SH-t26` | DT seat `~H1` | SH-t-25 drained; approval row c822 approved | SERVED |
+| 1e | FWD-9 | `SH-t-27` the SH-t-24 producer apply: `etf-positioning-producer` re-packaged at pin `87a0dcf14d` (same 14 members, two member bytes), `safe-apply`, no IAM change, under the signed never-widen pair (COO half @9c0ab8819a, CTO half @2b58d0caf5 with C1); sent after the Positioning rung read live on PROD (fa10e75861ab, CI success 2026-10-14 18:57Z) | `TO-SH-t27` | CloudOps lane `~SH1` | SH-t-26 promote live | WORLD |
 | 2 | FWD-9 | NOT A CELL: the served week read, Fri 2026-10-16 through Mon 2026-10-19 plus the run after Monday, by this seat; and the organic blank-then-fill pair for FXFXX 2026-10-12 (listed in the 10-14 pull, requested ~2026-10-15 11:07Z) | this seat's reads | -- | EVENT: the scheduled runs | LOCAL |
 
 ## Corrections carried into the cell (read before the cut)
@@ -21,7 +22,7 @@ ADDENDUM 1 (2026-10-14 ~13:1xZ, @fa26b50ebc) as corrected @f443ae70d2 (CTO msgs 
 
 ## Rule 24
 
-Domain: ADDENDUM 1 items 1 and 2, and ADDENDUM 2's one cell. Subtraction: 1 -> SH-t-23; 1b -> SH-t-24; 1c -> SH-t-25; 1d -> SH-t-26; 2 -> this seat's scheduled reads (not a cell). Remainder: none. State coherence: SH-t-23 reads S3
+Domain: ADDENDUM 1 items 1 and 2, and ADDENDUM 2's one cell. Subtraction: 1 -> SH-t-23; 1b -> SH-t-24; 1c -> SH-t-25; 1d -> SH-t-26; 1e -> SH-t-27; 2 -> this seat's scheduled reads (not a cell). Remainder: none. State coherence: SH-t-23 reads S3
 through a client that refuses every call but get_object / list_objects_v2 / head_object and moves no served value; the served prefix listing is equal before and after.
 
 ## Write sets
