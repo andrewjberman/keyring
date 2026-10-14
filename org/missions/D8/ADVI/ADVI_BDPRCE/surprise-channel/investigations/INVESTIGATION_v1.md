@@ -2469,3 +2469,112 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "Both clauses are built as written. The withheld rows belong to assets the served map reads unreadable (81 served assets) or does not carry; the record does not split the two. The count is a measured consequence of the unit source and the bands, not a defect against the clauses."
 }
 ```
+
+## ADVI_BDPRCE-D1-W20-S10 -- Re-read of W20-S1 on the second correction: the lot extract still holds no lot for the nine named and scale names
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S10",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T04:43:17Z",
+  "one_line": "Re-read of W20-S1 on the second correction: the lot extract still carries no lot for any of the nine names (MORGAN STANLEY FIN LLC 0% 05/03/2029 and the eight round-2 scale_100x names), so their served units come from trade and served pairs only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-bdprce-r2-7-data/lot_extract.csv (sha256 e7e618d76516c8b7977179aefb3f77ce4fc13c17fbcf1dbeb92001a6e0a2b50b): 198,295 lots; 0 lots for each of the nine names, counted this run",
+      "RULE_PROBE3.json (commit 33195e2009): MORGAN reads per100 from its nearest earlier Buy of 2025-05-28; the eight scale names read per_unit from same-date and nearest earlier trade pairs, 8 of 8 equal to the served price"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1.000 item 1 (served units read from served pairs) and section 1.0000 item (b): the lot extract is a further source; a name it does not carry is a gap in that one source only.",
+  "world_is": "Still true: the lot extract holds no lot for these nine names. The units are read without it, so the gap moves no unit. Nothing reads the lot extract as the sole unit source."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S11 -- Re-read of W20-S9: 202 Fixed Income rows are withheld unit_unreadable, 190 on assets the served map does not carry and 12 on an asset whose median sits between the bands
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S11",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T04:43:17Z",
+  "one_line": "Re-read of W20-S9 on the second correction: 202 Fixed Income rows are withheld unit_unreadable on the five probe dates; 190 belong to 17 assets the served map does not carry, and 12 belong to ISHARES CORE U.S. AGGREGATE BOND ETF, whose served median ratio (3.549831616098765) lies between the bands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RULE_PROBE3.json (commit 33195e2009) census unit_unreadable_rows per date: 2025-05-28 19, 2026-09-16 5, 2026-09-22 12, 2026-10-02 23, 2026-10-09 143 (total 202)",
+      "RULE_PROBE3.json par_quoted.withheld_unit_unreadable_by_asset: 18 assets; 17 with served_unit unreadable by default (absent from the served map), 190 rows; VANGUARD INTERMEDIATE-TERM CORPORATE BOND ETF 137 rows on 2026-10-09; ISHARES CORE U.S. AGGREGATE BOND ETF 12 rows on 2026-09-22",
+      "canonical_prices.parquet (md5 a88a7030f4506ac7e0cdb844382f9d16): the 17 unserved assets have no transaction_observed row in 2026-09-16..2026-10-13; VANGUARD INTERMEDIATE-TERM CORPORATE BOND ETF has yahoo_finance and linear_interpolation rows only in that window",
+      "C:/dev/wk-bdprce-r2-6-data/tx/2026-09-23.parquet: 12 ISHARES CORE U.S. AGGREGATE BOND ETF Sale rows with trade_date 2026-09-22, prices 40.0 to 110.0, each market_value/units equal to its price (row ratio 1.0)",
+      "RULE_PROBE3.json par_quoted.withheld_ratios: 202 printed ratios, 197 within 1 percent of 1, 5 at 1.0844, none within 1 percent of 100"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1.00 AMENDMENT 3 item 2 and section 1.0000: a Fixed Income row whose asset is missing from served_units, or whose unit is unreadable, is withheld unit_unreadable with its reason; the row's own ratio is not used to read the unit.",
+  "world_is": "The clause is built as written and the count is its measured consequence of served-map coverage and the bands. The 190 rows of the 17 unserved assets carry no served unit, so R1 prices none of them on those dates. The 12 ISHARES rows read per-unit-shaped on their own ratio (1.0) and are withheld only because the served median is outside both bands (see W20-S12 and W20-S13). Nothing is adjusted; the counts are as measured."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S12 -- Four served assets have a median served-pair ratio between the bands and read unreadable
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S12",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T04:43:17Z",
+  "one_line": "Four served assets have a median served-pair ratio between the bands, so R1.3 reads their served units as unreadable: CALL NVIDIA CORP $250 EXP 10/02/26 at 0.4972, ISHARES CORE U.S. AGGREGATE BOND ETF at 3.5498, VANGUARD FTSE ALL-WORLD EX-US SMALL-CAP ETF at 3.8175 and VISTANCE NETWORKS INC COM at 3.7725.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RULE_PROBE3.json (commit 33195e2009) unit_census.unreadable_assets: the four entries with a median_ratio and reason ratio_outside_bands, exact values 0.4972393179404657, 3.549831616098765, 3.817494809041611, 3.7725",
+      "RULE_PROBE3.json served_units: 888 served assets = 824 per_unit + 1 per100 + 63 unreadable (59 with no usable pair, these four with a pair)",
+      "RULE_PROBE3.json par_quoted.withheld_unit_unreadable_by_asset: of the four, only ISHARES CORE U.S. AGGREGATE BOND ETF has withheld rows on the probe dates (12); the other three have none",
+      "lot_extract.csv (sha256 e7e618d76516c8b7977179aefb3f77ce4fc13c17fbcf1dbeb92001a6e0a2b50b): CALL NVIDIA CORP and VISTANCE NETWORKS INC COM carry 0 lots; VANGUARD FTSE ALL-WORLD EX-US SMALL-CAP ETF carries 479 lots"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT R1.3 second correction (order section 1.0000 item (a)): a median served-pair ratio in [50, 200] is per100, in [0.5, 2] is per_unit, and anything else is unreadable with the median printed beside it.",
+  "world_is": "The bands are applied as ruled. The four ratios fall outside both bands: three in the gap between 2 and 50 and one just below 0.5. They are the only served assets whose median sits in those gaps. The rule reads them unreadable and prints each ratio. Only ISHARES has withheld rows on the probe dates (W20-S11); the other three have none, and kept non-Fixed-Income rows keep their price whatever the unit."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S13 -- The lot pairs set the served-unit median of ISHARES CORE U.S. AGGREGATE BOND ETF against its own trade pairs
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S13",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T04:43:17Z",
+  "one_line": "The lot pairs dominate the served-unit median of ISHARES CORE U.S. AGGREGATE BOND ETF: its 12 same-date trade pairs have a median of 1.0 and its 61 usable lots a median of 5.397952, so the all-pairs median reads 3.549831616098765 and the unit unreadable, where the asset's own trades read per unit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "probe trade_pairs (commit 33195e2009 code path, re-run this session): ISHARES same-date pairs on 2026-09-22 against served price 97.5, 12 pairs with ratios 1.0263, 1.0, 1.1471, 0.907, 0.8864, 2.4375, 0.8864, 1.0118, 0.963, 1.0, 1.625, 0.8864; median 1.0",
+      "lot_extract.csv: ISHARES 361 lots; 61 with nonzero quantity and market value, median ratio 5.397952, 23 percent of them within 0.9 to 1.1; the other 300 are skipped (zero market value or quantity)",
+      "lot_extract.csv: VANGUARD FTSE ALL-WORLD EX-US SMALL-CAP ETF 479 lots, 83 usable, lot-only median ratio 4.964683, 26.5 percent within 0.9 to 1.1",
+      "RULE_PROBE3.json served_pairs: lot_pairs 151,035 across 503 assets; served_unit_map takes one median over all pairs of an asset"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1.0000 item (a) and section 1.000 item 1: the unit is the median over all of an asset's pairs, the lot extract's (current_price, |market_value| / |quantity|) pairs being one source among the served pairs.",
+  "world_is": "The median is taken over all pairs as ruled. For this asset the usable lot pairs sit far from its trade pairs (the lot ratios spread widely), so the lot source sets the median against the asset's own same-date trades, which read 1.0 (per unit) on the served date. The extract's market_value/quantity does not track the trade-implied unit for this asset. Nothing is adjusted: the record prints the unreadable unit and this row carries the measured disagreement. Whether lot pairs belong in the median is the CTO's call."
+}
+```
