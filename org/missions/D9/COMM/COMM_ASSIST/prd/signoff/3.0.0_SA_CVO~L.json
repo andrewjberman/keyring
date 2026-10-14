@@ -1,12 +1,13 @@
 {
   "prd": "COMM_ASSIST_PRD.md",
-  "prd_version": "v0.6",
-  "prd_pin": "e7bde907ba2868368ff4333afa8a8f77bc57d201",
+  "prd_version": "v0.9",
+  "prd_pin": "98f61b8a2e90dbc93f25ebc0bb8377c199b14903",
   "half": "ratified-text",
-  "half_hash": "ad2003c6513df39d01aae360d1d0cc60810f84823ef2d8f8405860b903c2f2d5",
-  "endpoint_hash": "c31d59115e34055d8efe9efe93bc3bf35c174234ca9648a6e50ff85a3b7f130b",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/COMM_ASSIST_PRD_V06_RATIFIED_TEXT_REVIEW_20261013.md@88aa6e2037",
+  "half_hash": "2ecbb13c8f5bdd0d309d13203ccfc0fd85f5c93fd961bb06efbb6a1044058d39",
+  "endpoint_hash": "d3d65c7f904473aae2899a1a7eb94fff8d4cbfdc27e25ddda4d35ee007e03370",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/COMM_ASSIST_PRD_V09_RATIFIED_TEXT_REVIEW_20261014.md@1133e778c7",
   "signed_by": "3.0.0_SA_CVO~L",
-  "signed_at": "2026-10-13T16:46:18Z"
+  "signed_at": "2026-10-14T11:52:05Z",
+  "reason": "FWD-13: mail scope drops C-MAIL's five-domain test, 'soon' has no bound, 'not for him' undefined; three one-clause fixes in the review"
 }
