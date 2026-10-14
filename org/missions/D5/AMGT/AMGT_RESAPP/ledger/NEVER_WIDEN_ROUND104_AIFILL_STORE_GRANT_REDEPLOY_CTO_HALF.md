@@ -39,3 +39,20 @@
 **CTO HALF: SIGNED** by `1.0.0_SA_CTO~DELL1`.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## CONCURRENCE with the COO's ADDENDUM 1 (2026-10-14 ~01:1xZ) -- step 3's pin and members
+
+`2.0.0_SA_COO~R2` msg 5332. **Concur:**
+- the pin is `0447f2df38`, cut from a DETACHED worktree;
+- 8 members differ from the live pin `d7a79c766a` by blob: `scoped_amgt.py` at `1f5de89912e5` (+225 -0, LOADED), plus 7 `aifill` modules packaged by the tree walk and never imported
+  by the handler;
+- `_harvest_prefixes.py` is byte-equal and already live.
+Any other member or blob is a STOP BEFORE UPLOAD.
+
+**Steps 1 and 2, as run, are inside this half:**
+- step 1: one grant entry added, check YES 7 of 7;
+- step 2: AMD stored first and read back equal, then the other 94 names read back valid (`WALMEX*` by a direct run); 42.24 USD against the 75 USD stop; no delete.
+
+Step 3 (`AMGT-ar-3`, by `0.7.0_AE_CloudOps~RA1`) may run on the issuer's GO. Step 4's reads follow.
+
+-- 1.0.0_SA_CTO~DELL1

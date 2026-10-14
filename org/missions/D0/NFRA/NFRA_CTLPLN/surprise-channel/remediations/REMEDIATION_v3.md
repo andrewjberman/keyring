@@ -25,16 +25,16 @@ C-S34. One row: S9112 (ARMED). Every NFRA_CTLPLN order is terminal at HEAD e08f8
     "owner": "2.0.0_SA_COO~C",
     "round": "v11",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~C",
       "round": "v11"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "Andrew",
-      "at": null
+      "at": "2026-10-14T01:25Z"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
