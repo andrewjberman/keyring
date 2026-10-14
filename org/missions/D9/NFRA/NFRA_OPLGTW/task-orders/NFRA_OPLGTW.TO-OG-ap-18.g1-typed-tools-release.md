@@ -125,6 +125,11 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-18.g1-typed-tools-release.pr
   read that it reaches the installed code (rows Z-W72-S2, Z-W79-S3 say the deploy ships app code and the calendar may fall back); `harvest_search_articles` reads one silver partition of about 110 MB for its sentiment join and took 65-97 s
   in its live probe: record the served latency in the ask. The order may be cut beside OG-ap-17's Phase A; the first fully signed one deploys and the other re-cuts on the new live ref. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
+- A3 (issuer, 2026-10-14 ~19:5xZ): ALL THREE HALVES SIGNED at `4275edccad` (CTO `7a485c883a`, COO `9a6a7eed58`, CVO `85ddb61584`). **PHASE B GO.** The CVO's condition replaces my 120 s STOP for `harvest_search_articles`: the live ALB `opal-gateway` has an
+  idle timeout of 60 s, so Phase B reads that tool THROUGH THE PUBLIC ENDPOINT (`mcp.opalinvest.dev`) as well as on the host; a 502 or 504, or a call over 60 s, pulls ONLY that tool, with an ARMED row naming this seat (the release stays). Owed after this
+  release, both Friday work: `OG-gt-8` (the trading calendar staged into the artifact) and `OG-gt-9` (the sentiment join reads only silver partitions inside the asked date window). Because ap-18 deploys first, `OG-ap-17` re-cuts on the new live ref.
+  Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>37</round>
 <workstream>G1-TYPED</workstream>

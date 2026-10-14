@@ -121,7 +121,7 @@ status-line command, proven on site Z first." The snapshot object is PD.4. The p
 item 3): this cell makes the snapshot, MP-pd-6 enables it and sees one live payload. Checks dry-run at base 18:0xZ: AC1 FAIL (test
 file absent), AC2 FAIL (script absent). The `rate_limits` layout is INFERRED (U1); the script must degrade to `absent`, not guess.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <workstream>PC</workstream>
 <slot>~29</slot>

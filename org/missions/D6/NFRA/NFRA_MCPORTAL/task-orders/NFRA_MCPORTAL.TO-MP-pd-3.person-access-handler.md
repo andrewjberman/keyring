@@ -142,7 +142,7 @@ only (round-1's MP-pc-2 is complete). `MP-pd-4` builds the page against PD.3, so
 `*admin_people_access.routes` to `app/admin_api.py` as its step 0. Checks dry-run at base 18:0xZ: AC1 FAIL (test file absent);
 AC2 FAIL, named tests PASSED 2 of 4 (the two seam tests pass at base, the two new ones are absent: the bound arm holds).
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <workstream>PC</workstream>
 <slot>~27</slot>
