@@ -1,0 +1,7 @@
+# Drive log 2026-10-14 16Z-17Z -- 2.0.0_SA_COO~Y2 on dell2 -- IRPT_ANLREQ
+
+- **R30 run 2 closed.** The issuer re-read TICKET_ARMS_R30.txt (6 of 6 lines: R0I owner row present and not B; K1, K2, K3 each 400 INPUT_NOT_AVAILABLE; one body hash; TICKETS_COUNT_EQUAL 31) and counted the tickets table itself (31). CTO live read (msg 7755) confirms both statements and the code. Row D2-S100 disarmed by new row D2-S101 (rows are immutable). TO-EXERCISE-R30 and four earlier applier orders flipped complete after AQ2 repaired six proof instances (commit pins, the criterion's own invocation, a status_reason; AQ2 commit 1a2db78240). TO-EXERCISE-R29 stays pending: R29E-AC1 is a recorded FAIL.
+- **PRD v0.11 signed by both halves** (CVO ratified-text, CRO brief); the withheld round-41 orders are released.
+- **Cut (round 40, new workstreams):** AR-y-325 J7 the filer's firm (ZK, slot 133, 197bc6fc4f; the first worker stopped on three existing portal cases outside its grant, grant amended at 7e8315063f, slot re-seated); AR-y-327 the commentary as a standalone branded Opal PDF marked DRAFT (ZL, slot 134, 9bd820fa7b); AR-y-326 the C-SWITCH read (ZM, slot 135, 305798384c). Decomposition R40A_Y gains the tenth to twelfth chains. fanout 3 workers, cap 8.
+- **Still to cut:** the C-SWITCH never-widen pair and release cell (after AR-y-326), the ticket-page commentary reader (after AR-y-327), ONE resident release (S26 depth read at step 0).
+- **Push state:** all LOCAL on box/dell2; no portal branch pushed.
