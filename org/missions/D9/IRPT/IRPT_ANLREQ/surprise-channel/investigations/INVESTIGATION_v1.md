@@ -12466,3 +12466,61 @@
 - **owner:** `2.0.0_SA_COO~Y2`
 - **disarm_owner:** n/a -- INERT; a missing feature, nothing degrades while it waits
 - **state:** BLOCKING / INERT
+
+## IRPT_ANLREQ-D2-W122-S1 -- the words the cell asks for name a Market Value column that the upload reader does not take
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W122-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~122",
+  "surfaced_at": "2026-10-14T05:23:50Z",
+  "one_line": "TO-AR-y-308 asks for words that name a Market Value column, but the upload reader takes the unit only from cell B1 (Dollars, Shares, Target Weight or Current Weight); a Market Value header is refused as UNIT_UNRECOGNIZED. The words shipped say put Dollars in cell B1 and enter the market value of each holding in column B.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py:24-25 (BASES = dollars, shares, target weight, current weight) and :427-430 (any other cell B1 value emits UNIT_UNRECOGNIZED) @7e083e0beb",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-308.shares-not-composed-words.md step 2 and the cell text (in a Market Value column) @7e083e0beb",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_shares_not_composed_words.py @15a387dd36 (the words are read back through the real upload path)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-308 step 2 and its cell: the words ask for each holding as a market value in dollars in a Market Value column, then upload the file again.",
+  "world_is": "The template reader takes the unit only from cell B1, and no Market Value header is accepted there or anywhere the reader reads. A file that follows the literal words is turned back with UNIT_UNRECOGNIZED. The words shipped instead name cell B1 (Dollars) and column B (the market value of each holding). Making the literal words true needs a template_reader.py change, which is outside this order's grant.",
+  "notes": "owner: 2.0.0_SA_COO~Y2, to rule whether the shipped words stand or the reader gains a Market Value header (a template_reader.py change). Nothing is released. The words sit byte-equal in intake/uploads.py and ops/status.py on worktree branch wk-IRPT_ANLREQ-122 at 15a387dd36 (LOCAL)."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W122-S2 -- the order expects the code-count lock to move for the new code, but the lock counts emitted finding literals and the new code is not one
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W122-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~122",
+  "surfaced_at": "2026-10-14T05:23:50Z",
+  "one_line": "TO-AR-y-308 step 3 expects intake/tests/test_correction_words.py to change for the code count; the count stays at 33 because the lock counts finding codes that template_reader.py and portfolio.py emit as literals, and SHARES_PRICE_SOURCE_NOT_COMPOSED reaches the door as a call argument of _not_composed, so no edit was made to that file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/tests/test_correction_words.py:111-120 (finding_codes_in_the_code reads emit, finding and TemplateRefused literals) and :130-132 (len(codes) == 33) @7e083e0beb",
+      "infra/aws/lambda/investor-reporting/intake/upload_resolution.py:112 and :133 (the code is an argument of _not_composed, not a finding literal) @7e083e0beb",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_correction_words.py run unchanged @15a387dd36: 9 of 9 pass"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AR-y-308 step 3: edit intake/tests/test_correction_words.py ONLY for the code count, and list the edit.",
+  "world_is": "The code count is 33 before and after the change, so the lock needed no edit. No edit was made to test_correction_words.py. The new code is covered by the new file's own census test (test_every_not_composed_code_the_door_can_raise_has_words_or_is_refusal_only).",
+  "notes": "No action taken on this row. Recorded so the L9 reader does not look for a count edit that the lock does not need."
+}
+]
+```
