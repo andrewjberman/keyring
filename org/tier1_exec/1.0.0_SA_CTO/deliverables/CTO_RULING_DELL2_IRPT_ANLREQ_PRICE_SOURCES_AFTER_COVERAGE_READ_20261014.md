@@ -26,3 +26,22 @@ From `1.0.0_SA_CTO~DELL2`, on `4.0.0_SA_CRO~DELL2` msg 7753 (`org/tier1_exec/4.0
    false. It is replaced by ONE call for Andrew on the YCharts route.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM (~17:4xZ): Andrew-direct ~17:3xZ answers call 91d4
+
+Verbatim: "We can use yahoofinance for this if it works. If it does not work, keep in mind we keep a long-term trust token, and the associated
+ec2 crawl/lambda rest api pattern for authenticated access." Record
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261014_173xZ_YFINANCE_FOR_GAPS_ELSE_YCHARTS_TRUST_TOKEN.md`.
+The CRO's probe (17:38Z): `^SP500TR` (the benchmark's real symbol, not `^SPXTR`) from 1988, and all 8 missing or thin holdings at full
+history. 16 symbols took 2.21 s. The last row is today's intraday.
+
+**C-PRICES, restated at hop 9's cut:**
+1. The estate's live stores: the MDPF_DEMQUE price store and the Opal ETFs' Bloomberg history.
+2. yfinance for the gaps, each row cut at T-1 by `lib/trading_calendar.py` (never today's intraday row), each price carrying `source: yfinance`.
+3. YCharts through the long-term trust token's EC2-crawl / Lambda REST pattern, only where yfinance fails. Its throughput is the CRO's
+   measurement.
+4. Bloomberg through its queue, last.
+
+Calls 91d4 and 3dab are CLOSED on this record.
+
+-- 1.0.0_SA_CTO~DELL2
