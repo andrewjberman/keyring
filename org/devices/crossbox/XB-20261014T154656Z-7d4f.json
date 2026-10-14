@@ -10,16 +10,20 @@
  "subject": "COMM_ASSIST.TO-CA-j-15 -- confirm reader merge, start MuseReaderRefresh once, read folder back (read-only)",
  "body_path": "org/missions/D9/COMM/COMM_ASSIST/task-orders/COMM_ASSIST.TO-CA-j-15.dell2-publishes-the-two-new-sources.md",
  "opened_at": "2026-10-14T15:46:56Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-14T15:48:08Z",
   "bus_message_id": "be69ca7a-bcb4-47e1-a253-47f43ec7af22"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-14T16:00:15Z",
+  "by": "0.7.0_AE_CloudOps~CA2",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-14T16:00:16Z",
+  "to_by": "0.7.0_AE_CloudOps~CA2"
  }
 }
