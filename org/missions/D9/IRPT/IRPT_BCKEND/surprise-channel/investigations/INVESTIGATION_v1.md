@@ -33828,3 +33828,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The 2026-10-09 fire for 49financial failed; every later listed fire for that firm reads Success. The cause and any refusal written by that fire were not read (list-command-invocations was not called and no command output was read)."
 }
 ```
+
+## IRPT_BCKEND-D2-S163 -- Dispositions on workers 376, 377 and 378's rows (D2-W376-S1, S2; D2-W377-S1; D2-W378-S1 to S5) after IB-pr-529
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S163",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T04:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on workers 376, 377 and 378's rows (D2-W376-S1, S2; D2-W377-S1; D2-W378-S1 to S5) after IB-pr-529, IB-pr-530 and IB-pr-531 merged (@1464de48be, @4db49e0a27, @ace53f9692); the S71 re-arm trigger is DISARMED on the census's evidence.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker commits merged at 4db49e0a27 (377), 1464de48be (376), ace53f9692 (378); I re-ran IB190-2 and IB190-3 AC1 to AC3 on the merged tree: PASS, and IB190-1 AC1 to AC3 at worker 376's own head in a throwaway worktree: PASS (on the merged tree its AC1 file-list arm reads the sibling order's test file; the combined ten-file set passes 119 tests); round-close-check verdict MAY-CLOSE (orders=3)",
+      "I read the census record in full: schedule irpt-holdings-snapshot ENABLED cron(15 10 ? * MON-FRI *) America/New_York; three standalone bundles (45 members each, none carrying apply_cash_rule); the four absent registry files are OPTIONAL_REGISTRY_FILES in lib/opal_naming.py and each firm's 2026-10-13 scheduled SSM fire reads Success with a record written after its bundle"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27).",
+  "world_is": "DISPOSITIONS. W378-S1 (the S71 re-arm trigger reads FAIL: the schedule is ENABLED and each bundle lacks the same four registry files): DISARMED by me (disarm owner): the four files are optional in the naming library the runner loads, and every firm's 2026-10-13 scheduled fire reads Success and wrote a record after its bundle, so the trigger's premise (the bundled runner cannot load its contract) is false for these four files; the trigger test still prints FAIL because it counts optional files as required: a stale guard, a one-line repair for a later cell, never a reason to disable the schedule. W378-S4 (the mint tool opens no change-management ledger): the release order must open the NEVER-2 ledger explicitly; named as a condition of the pair. W378-S5 (49financial's 2026-10-09 scheduled fire reads Failed; every later fire Success; cause unread): the round-191 packet reads it before blast radius is signed. W378-S2, S3 and W377-S1 (a stale header path in a tf comment; a baseline the worker could not see; the NYSE fallback calendar): INERT. W376-S1 (the client-data check is ABSENT on dell2): STAYS ARMED with the box manager, as W374-S1. W376-S2 (the one-writer gate warns that workers append to the laptop's unsuffixed channel file): INERT, the channel is append-only and shared here by the standing practice of this project. MEASURED: the producer is the Lambda irpt-holdings-refresh-lambda dispatching one SSM command per firm that fetches the firm's standalone bundle (deployed by safe-deploy.sh --mint-bundle, no ledger of its own); rollback by the prior bundle object version and the prior manifest version per firm; cottonwood is the only firm with a publish_refusal record. NOT measured: the cause of the 2026-10-09 failure, any command output."
+}
+```
