@@ -2916,3 +2916,29 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
   }
 ]
 ```
+
+## Row filed by 2.0.0_SA_COO~Q1 (the stored-rows relock is not the full-history relock; measured on the real store)
+
+```json
+{
+  "id": "MDPF_DEMQUE-D1-S17",
+  "project": "MDPF_DEMQUE",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~Q1",
+  "surfaced_at": "2026-10-14T04:19:34Z",
+  "one_line": "A relock over a name's STORED rows alone is not the full-history relock: the store keeps only the held window, so a name with any trade dated before that window reads REJECTED on the stored rows while its stored lock proved the identity on the full history.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DQ-t-58 order amendment ~23:0xZ 2026-10-13 (issuer): the wired incremental path runs a no-network relock over stored as_traded_close plus the appended rows, which the issuer expected to reproduce the full-history lock.check.",
+  "world_is": "Measured 2026-10-14 by a read-only census of the real store (S3 and the client transactions, no Yahoo): over 326 names the stored-rows relock read REJECTED for 121 of 265 names with trade rows while their stored locks read LOCKED (107 REJECTED:PRICE_MISMATCH with every trade before the stored window; 14 REJECTED:LOW_TRADE_AGREEMENT with every trade inside); over 483 names after the 22:30 ET run, 3 more PRICE_MISMATCH (FUEPX, FWMMX, ORCL) with trades both before and inside the window (stored observations passed 7 of 7, 13 of 13, 30 of 33; stored rows alone see 1, 1 and 3). The combined check now runs only where no trade predates the stored window and one lies inside it; the whole-store census then holds the 14 real names and 0 price-mismatch names. Left unfixed, the first wired night would have held about 110 healthy names and opened as many false REJECTED rows on the unresolved list.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t58.wire-yahoo-incremental.md (amendments ~00:1xZ and ~00:2xZ 2026-10-14)",
+      "incremental_equal.py --relock-census (merged @ea0dd99e4e), RELOCK_CENSUS_WHOLE_STORE.json under deliverables/0.9.0_WK_MDPF_DEMQUE~50/",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/DISARM_EVIDENCE_D1_W50_S2_S6_S10_20261014.md"
+    ]
+  }
+}
+```
