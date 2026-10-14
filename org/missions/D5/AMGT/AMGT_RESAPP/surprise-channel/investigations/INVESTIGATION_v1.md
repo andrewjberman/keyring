@@ -27272,3 +27272,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only: the cell's join rule and the old pin cannot both hold. The worker did not edit the old test (bound 1). The one red test is the only failure of the three modules; the other 97 pass. Resolution is the issuer's: either the grant admits updating that one assertion to 'now. MUFG announced.' or the pin is retired as superseded. ARMED because the red test stays red in the suite until a disarm, and the merge of this package would carry it."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W451-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~451",
+  "surfaced_at": "2026-10-14T05:46:08Z",
+  "one_line": "fetch_source reports a 2xx image or octet-stream body as OK with decoded binary text: the order names no non-text rung, so the spec's 'else the body is decoded' rule applied to a PNG and a zip body alike.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_AIFILL_DECOMP.md@d88fca1f84: the cell's interface names the seven status words and only PDF as a 2xx exception",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round106_aifill_prep/checks/check_gr2_sources.py@d88fca1f84: 21 arms, none for a non-text 2xx content type",
+      "lib/research/aifill/sources.py@wk-AMGT_RESAPP-451 (uncommitted at filing; _classify): a 2xx body that is neither PDF nor HTML/text falls through to the decode and extract path",
+      "Measured on the worktree with a stub transport: (200, image/png, PNG magic + 10,240 bytes) -> status OK, chars 9935, text begins with the replacement character and the PNG header bytes; (200, application/octet-stream, PK zip header + binary) -> status OK, chars 9884"
+    ]
+  },
+  "spec_asserts": "Cell section 1, lib/research/aifill/sources.py interface: '2xx: a content_type starting application/pdf, or a body starting %PDF-, -> UNSUPPORTED (note pdf, text \"\"); else the body is decoded ... and extract_text gives (title, text)'; the STATUS words are OK, REFUSED, NOT_FOUND, ERROR, EMPTY, PAYWALL, UNSUPPORTED.",
+  "world_is": "Built as written: a 2xx non-text, non-PDF body (image/*, application/octet-stream, a zip) is decoded and parsed as HTML, so it reports OK with binary-decoded text. No status word covers 'not a readable page' for these bodies, and no check arm exercises them. A grounding step that keys on status OK would take that text as a cited source.",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "notes": "Not changed in the module: the order's rule was followed literally and the status vocabulary is closed. The issuer decides whether a non-text rung (UNSUPPORTED, note 'content type <t>') is added to the cell or to a later round. Frequency of image or binary citations was not measured here; the CVO's 78-citation census names only PDFs."
+}
+```
