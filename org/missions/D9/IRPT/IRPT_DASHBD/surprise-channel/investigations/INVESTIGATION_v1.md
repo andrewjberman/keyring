@@ -12720,3 +12720,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W179-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~179",
+  "surfaced_at": "2026-10-14T21:45:32Z",
+  "one_line": "The one-account equality the face and criterion DB111-1-AC1 require (a one-account household equals its account's window return within 1e-9) fails on the 49 Financial gold: 4 of 5,701 one-account household-window comparisons differ, all in since_inception, max gap 4.04e-4; the producer's total_return_daily is the linked form of amendment 5(e), not the endpoint form.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-224 step 6 (org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2 issuance, cell DB-b-224): every ONE-ACCOUNT household equals its account's cumulative return in every window where both exist, within 1e-9, and that equality is a hard requirement. The premise behind it: the account series total_return_daily is the endpoint form r_t = (V_t - F_t) / V_(t-1) - 1 (producer header, data/assets/scripts/gold/irpt_reporting/account_return_daily.py line 9), so the household method over one account reproduces it.",
+  "world_is": "The endpoint form does not reproduce the producer on every day. Scratch day-level read of the same 570 partitions (not committed): 907,548 consecutive-row pairs of one-account accounts compared; 6 differ beyond 1e-9 (max day gap 1.10e-3), all on LARGE_FLOW days with carried_days above zero, where the producer links through custodian valuations (its amendment 5(e), producer lines 1366-1381). Driver window tie-out (dry_run_household_return_r111.py, HOUSEHOLD_TIEOUT_R111.json): 2,176 one-account households compared; 4 household-window comparisons differ beyond 1e-9, 4 distinct households, all in since_inception; qtd, ytd and last_12_months have none; max absolute gap 4.04e-4. Per the face the method was NOT adjusted to make them equal; criterion DB111-1-AC1 FAILS on this clause and the order stays open. Nothing sources this table yet: the report's household members stay ABSENT (report contract open_changes line 1).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py line 9 at 332465706b: header states r_t = (V_t - F_t) / V_(t-1) - 1",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 1366-1381 at 332465706b: amendment 5(e) links through every custodian valuation in the window; the endpoint form only with no intervening valuation",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py line 1355 at 332465706b: carried_days = len(carried) on every row",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~179/HOUSEHOLD_TIEOUT_R111.json (counts; driver sha256 in its driver field) and the driver's stdout ONE-ACCOUNT MISMATCH line: 4 household-window comparisons, all since_inception"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker; the method was not adjusted. The CTO rules whether the household series over one account must reproduce the linked producer form (LARGE_FLOW days with carried days), or whether the account-return members of the report need the same endpoint form. Counts only: no household or account id and no client value is recorded."
+}
+```
