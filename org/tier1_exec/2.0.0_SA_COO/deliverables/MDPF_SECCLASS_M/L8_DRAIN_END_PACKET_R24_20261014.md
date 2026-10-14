@@ -58,4 +58,39 @@ the Q3/September bars restated is MET only as `restated_through` present, not as
 
 ## The 17-FWD board (owed by the PIVOT DIRECTION, O7)
 
-PENDING: the board is compiled from recorded states with citations and added to this packet in a following commit. No FWD is claimed REALIZED by this packet.
+Denominator **17 of 17** (`prd/MDPF_SECCLASS_PRD.md` lines 24-204). **No FWD is claimed REALIZED by this packet, and the CVO grades, not this seat.** Every state word below is `held`: it is
+the LAST RECORDED word, and every one of those records predates round 20 (the newest per-FWD board in any record is round 9; the "round-18 state" that the round-19 analysis points to has no per-FWD
+content, and a round-7 board that round 8 cites is not on file). CTA = `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_MDPF_SECCLASS_ROUND_<n>_*.md`; R1/R4-5 = `ROUND1_ANALYSIS_MDPF_SECCLASS_20260930.md`
+and `ROUND4_5_ANALYSIS_MDPF_SECCLASS_20260930.md` in the same folder. Citations were compiled by a read-only agent and spot-checked by this seat (round 8, 9 and 19 lines and the R15 packet line printed and matched).
+
+| FWD | last recorded state (held) | recorded | citation | still missing per that record |
+|---|---|---|---|---|
+| 1 | NOT REALIZED | CTO~DELL1, 10-11 (r19) | CTA19:27, :82 | the BD half is read again for REALIZED after e87 leg G; the r19 reason (23 securities the list can place still in the BD mix) was fixed in code by SC-e-87 and shipped 10-12 06:20Z (e87b), but its D_04 leg G was NOT MET (D1-S30); the e97b rebuild is now served. NOT SHOWN here: that the 23 are placed in the served mix |
+| 2 | NOT REALIZED on BD | CTO~DELL1, 10-07 (r9) | CTA9:18 | SC-e-22 (HoldingsSnapshot enum) never issued, as then recorded; W38-S6. Not re-read this round; SC-e-100 touched the same schema family (`multi_asset` in the frozen v1 copies) and whether that bears on W38-S6 is not shown |
+| 3 | not REALIZED (no FWD word after r5) | CTO, 09-30 (r4-5) | R4-5:43 | first correction (VNQI) served; waits on FWD-7's first scheduled-fire read |
+| 4 | NOT_REALIZED | CTO, 09-30 (r1) | R1:26 | a fourth classify site existed (W3-S3); the check did not read zero; no later word |
+| 5 | NOT REALIZED | CTO~DELL1, 10-07 (r9) | CTA9:14 | first reader switch a07 built and signed, not deployed; E_18 not switched (W31-S1); the deletion confirmation is Andrew's act and has not been asked (r19:86) |
+| 6 | NOT YET SERVED | CTO, 09-30 (r1) | R1:28 | no cell cut; r8 lists it "as at round 7", that board is not on file |
+| 7 | NOT_REALIZED | CTO, 09-30 (r1) | R1:29 | the ordinary scheduled run not yet read (R4-5:43-45) |
+| 8 | NOT_REALIZED | CTO, 09-30 (r1) | R1:30 | `instrument_kind` absent on 2,163 of 2,309 rows (as of r1) |
+| 9 | NOT REALIZED | CTO~DELL1, 10-07 (r8) | CTA8:15 | history half unfilled (W15-S1); 7 stocks with no Bloomberg id (W14-S5) |
+| 10 | AT RISK | CTO~DELL1, 10-07 (r9) | CTA9:15 | SC-e-57 would stop the producer writing new US stocks (W38-S4); since then e57e61 APPLIED and proven 10-08, its L3 verification waits on a scheduled run that plans US stocks (above) |
+| 11 | NOT REALIZED | CTO~DELL1, 10-07 (r9) | CTA9:16 | served acts (e48, e49, e32/e50) built, held for their halves |
+| 12 | NOT REALIZED | CTO~DELL1, 10-07 (r9) | CTA9:17 | sector writer not applied (laptop cloud-ops apply) |
+| 13 | NOT REALIZED on BD (grouped "FWD-2/13") | CTO~DELL1, 10-07 (r9) | CTA9:18 | as FWD-2 |
+| 14 | NOT REALIZED | CTO~DELL1, 10-07 (r9) | CTA9:16 | served acts held for halves (r8:18: 2,624 unnamed rows) |
+| 15 | NOT REALIZED | CTO~DELL1, 10-07 (r9) | CTA9:16 | served acts held (r8:19: 1,046 held with no old row); r12:35 adds 99 UNPLACED-KEY entries |
+| 16 | NOT REALIZED | CTO~DELL1, 10-07 (r8) | CTA8:20 | 3 screen disagreements (W23-S2) |
+| 17 | NOT REALIZED | CTO~DELL1, 10-07 (r9) | CTA9:16 | served acts built, held; population and held definition open (r8:21, W25-S2); cash W26-S6 |
+
+**Conflict, FWD-1:** the round-15 packet of this seat (`L8_DRAIN_END_PACKET_R15_20261009.md:45`) says the thread is "live for Investor Reporting and for the Black Diamond firm Mix page"; the
+round-19 analysis (newer) says NOT REALIZED for the BD half. No record states REALIZED for any FWD. `STATUS.md` carries FWD-1's live-thread rows (IR Holdings live since 2026-09-30, held; BD Mix and
+Cottonwood rows measured 10-12). **Measured today (not graded):** `r24_legg_read.py e91` prints `d04_page_unclassified_now=781389.47` against the pre-ship line 1,846,332.73, and the e97 served
+checks above (Unclassified per date, totals = AUA 15/15). Whether that closes the BD half of FWD-1 is the CVO's grade; the client-facing BD Mix push waits on Andrew.
+
+**What this board is not:** a re-measurement of 16 other outcomes. Each FWD's DONE WHEN is EXERCISED (PRD lines 27-203); re-exercising all 17 is not a round-24 cell and nothing in the PIVOT DIRECTION
+asks for it (it asks that the board be printed). Under the pivot no seat is added to the non-BD FWDs this week, and the other FWDs stay UNCUT until the CTO's CONTRACTS rows arrive.
+
+**Owed at the next recut (round 25), from the round-23 analysis and the pivot:** the bars and advisors clauses re-based as a class; the sorted-keys change in C_06 (own pair); the DEMQUE<->SECCLASS
+sync cell (classify the 23 of 131 landed DEMQUE fund names with no `etf-classifications` row on the scheduled path and prove one end to end; state how a CUSIP-only security keys into a ticker-hashed
+table under C-DEMQUE-SECCLASS-SYNC); and the CVO's grade of FWD-1's BD half.
