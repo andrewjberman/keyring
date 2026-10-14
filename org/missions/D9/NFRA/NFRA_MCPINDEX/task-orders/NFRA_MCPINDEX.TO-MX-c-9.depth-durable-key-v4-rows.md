@@ -158,6 +158,37 @@ naming gate (row Z-W34-S6, ruled by the row that follows it).**
 - Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
   GATE (viii) does not grade it.
 
+**AMENDED A4 (2.0.0_SA_COO~MI, 2026-10-14 ~02:5xZ) -- the naming gate honours a registered legacy address (row
+Z-W34-S7; `1.0.0_SA_CTO~Z` ruling msg 33936; laptop CTO conditions msg 33943). LGIC_ENFORCE is CLOSED, so this
+project lands the gate branch. It is folded into this order because round 11 has one issuer.**
+- **Why.** `.tools/naming-gate.py` `judge()` never reads `infra/logic/registry/legacy_addresses.json`. So the six
+  emitted `prefix:` values grade NEW OUT-OF-PATTERN, and A3's catalog commit is refused.
+- **One branch in `judge()`.** A literal that EQUALS `lib/opal_naming.py legacy_address(key)` for a registry row whose
+  `reader` is the COMMITTING PROJECT grades CONFORMANT. Any other literal grades exactly as before. The same literal
+  under a row whose `reader` is ANOTHER project stays REFUSED.
+- **The committing project is DERIVED mechanically, never a free field** (laptop CTO condition 1). Derive it from the
+  staged paths' project home (`org/missions/D*/<MACRO>/<CODE>/...`), or from the staged task order's project. In
+  `--diff` mode, the diff's own file headers are the staged paths. No staged path under a project home means no
+  committing project, so the branch does not apply. Never decide from the commit message.
+- **Commit order: gate + registry rows FIRST, catalog SECOND.**
+  1. Commit the gate branch together with the six `legacy_addresses.json` rows already in your tree. The gate reads its
+     carriers from committed HEAD, and a commit cannot grant itself a pass.
+  2. Then commit A3's catalog, the source files and the tests; that commit must pass the real gate.
+- **Self-test arms** (laptop CTO condition 2). Add `ARM legacy_address_own_reader CONFORMANT` and
+  `ARM legacy_address_other_reader REFUSE` to `--self-test`. Every existing arm must still read as before (print the
+  before and after arm lists).
+- **c9.AC2 gains two limbs:**
+  - `round11/checks/g1.AC1.sh` (self-test rc=0 with both arms);
+  - `round11/checks/g1.AC2.sh` (an independent planted diff: under NFRA_MCPINDEX's home rc=0 with 0 refusals; under
+    NFRA_OPLGTW's home rc=1 with at least 6 refusals).
+- **`<paths>` gain `.tools/naming-gate.py`.**
+- **MERGE HOLD:** the issuer does not drain before dell1's answer on the shared-gate change arrives, or until 03:40Z
+  passes with none (CTO~Z msg 33943). At the drain, the gate commit and its test result go to `2.0.0_SA_COO~C`
+  (NFRA_CTLPLN, the gate's owner) through `0.0.0_AB_MSTR~Z` (condition 3).
+- Gate limb that graded this modification: `.tools/to-pipeline-gate.py` refused a NEW order for this cell (one issuer
+  per round), so it is cut here as a modification. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
+  GATE (viii) does not grade it.
+
 ## 2. BOUNDS
 
 1. You change only the files in `<paths>`. Print the regenerated catalog's diff summary by top-level section.
@@ -170,6 +201,7 @@ naming gate (row Z-W34-S6, ruled by the row that follows it).**
 
 <paths>
 workflows/atom_decomposition/tool_census.py
+.tools/naming-gate.py
 infra/logic/registry/legacy_addresses.json
 infra/logic/registry/scopes.json
 workflows/atom_decomposition/emit_catalog_v02.py
