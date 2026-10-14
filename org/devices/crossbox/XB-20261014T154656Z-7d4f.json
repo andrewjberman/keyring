@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261014T154656Z-7d4f",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "dell2",
+ "from_serial": "2.0.0_SA_COO~CA",
+ "to_serial": "0.7.0_AE_CloudOps~CA2",
+ "subject": "COMM_ASSIST.TO-CA-j-15 -- confirm reader merge, start MuseReaderRefresh once, read folder back (read-only)",
+ "body_path": "org/missions/D9/COMM/COMM_ASSIST/task-orders/COMM_ASSIST.TO-CA-j-15.dell2-publishes-the-two-new-sources.md",
+ "opened_at": "2026-10-14T15:46:56Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
