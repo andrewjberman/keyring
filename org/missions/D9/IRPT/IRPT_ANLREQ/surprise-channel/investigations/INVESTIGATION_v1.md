@@ -11778,3 +11778,128 @@
   "notes": "Not repaired: no checkout, reset, clean, add or worktree change was made in this worktree."
 }
 ```
+
+## IRPT_ANLREQ-D2-S86 -- (disarm row; this seat's own) five live deploys of 12:39-12:55Z answer two rows
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S86",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T00:23:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARMS rows IRPT_ANLREQ-D2-W3-S1 (the original-sign family list vs PdfSigner.sign) and IRPT_ANLREQ-D2-W61-S2 (the map deployed_code_sha256 of the three group-A functions vs live).",
+  "spec_asserts": "W3-S1: the order has the original sign through the signer the pdf route uses, but PdfSigner.sign admitted only the one family. W61-S2: the live CodeSha256 values of irpt-performance-adapter, irpt-narrative and irpt-status equalled their map artifact_sha256 but not their map deployed_code_sha256.",
+  "world_is": "RECORD (worker 0.9.0_WK_IRPT_ANLREQ~114, org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~114/r29/ARMED_ROWS_CENSUS.json, rows W3-S1 and W61-S2, live reads 2026-10-13T23:40Z to 23:55Z with the zips downloaded and sha256-checked) and MEASURED by this seat (get-function-configuration, 2026-10-14 ~00:0xZ): irpt-status CodeSha256 vlGh380QUKvBMOhJn0GJGgDi1/WLI9qTaSP2uETmdP4=, LastModified 2026-10-13T12:55:10Z. W3-S1: the live irpt-status pdf_link.py has sign(self, firm, storage_key, sha256, family=FAMILY) and FAMILIES = (FAMILY, ORIGINAL_HOLDINGS, ORIGINAL_CSV); the trunk's pdf_link.py (62880e9bfc) is the same. W61-S2: on the trunk map, for each of the three functions deployed_code_sha256 = artifact_sha256 = the live CodeSha256, and last_deployed_at = the LastModified the worker read (12:51:39Z, 12:39:03Z, 12:55:10Z). The historical ledger 20261012T1340Z still records the earlier value at its line 165 and is not corrected by this row. NOT re-read by this seat: the other two functions' live configuration (the worker's reads are the record).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~114/r29/ARMED_ROWS_CENSUS.json",
+      "ar21_checks.py y296-armed (parse of every fenced block, 439 rows at the worker's read)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-S87 -- (disarm row; this seat's own) the live irpt-ycharts-generate package agrees with the trunk pins that three rows doubted
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S87",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T00:23:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARMS rows IRPT_ANLREQ-D2-W51-S13 (the reader pair's pins vs the r14 census pins), IRPT_ANLREQ-D2-W51-S16 (the release build moves six members, not two) and IRPT_ANLREQ-D2-W52-S33 (the pinned reader has no account check).",
+  "spec_asserts": "W51-S13: AR-y-192's premise that the reader pair's release pins were the r14 census pins. W51-S16: a build against the unpatched map moved six members because four native members were unpinned. W52-S33: the Lambda's pinned reader (3f29017cfc) lacked the account check and total-row refusal.",
+  "world_is": "RECORD (worker ~114, org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~114/r29/ARMED_ROWS_CENSUS.json) and MEASURED by this seat (get-function-configuration, 2026-10-14 ~00:0xZ): irpt-ycharts-generate live CodeSha256 xP47NQDnZNZ8Lui1XQKUxUtTMTasR8Cj/A1sQnRDZYY=, 621892 bytes, LastModified 2026-10-13T22:48:27Z. The worker's download of that zip (sha256-checked): uploads.py sha256 176682cb15 and template_reader.py sha256 83ab9b45d5 (READER_VERSION irpt-template-reader.r18.1), the trunk map pins (e93258c650 and da7b3b10bc); the four native members acceptance.py, submission.py, submission_service.py, durable_job.py are each equal to their trunk pin's sha256 (138da769bd, 82c47bd021, 24b793e8ab, afba08fefb), so the six-member difference no longer exists; the live reader contains ACCOUNT_COLUMN_SEVERAL_VALUES and TOTAL_ROW_PRESENT. The r19 resident record (20261013T0607Z, V1) carries the same uploads.py and reader bytes on the host. Caveat carried: the row W52-S33 measured the reader in process; the live reader was not re-run in process (that is the still-open row W52-S36). The consolidated release moves these members again; their start state is the census AR-y-295 record, not these rows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~114/r29/ARMED_ROWS_CENSUS.json",
+      "ar21_checks.py y296-armed (parse of every fenced block, 439 rows at the worker's read)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-S88 -- (disarm row; this seat's own) the generate upload door answers NEEDS_CORRECTION with a reason the DEV reader requires
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S88",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T00:23:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARMS rows IRPT_ANLREQ-D2-W57-S1 and IRPT_ANLREQ-D2-W57-S2 (adaptAnalysisUpload threw EnvelopeMismatch on a NEEDS_CORRECTION body with no reason, at PROD 37aa1247 and DEV 64980b4d).",
+  "spec_asserts": "The portal reader refused a template-lane NEEDS_CORRECTION body that carried no non-empty string reason.",
+  "world_is": "RECORD (worker ~114, org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~114/r29/ARMED_ROWS_CENSUS.json) with MEASURED reads by the worker: the live uploads.py (sha256 176682cb15) builds the template-lane NEEDS_CORRECTION answer with a reason key (its lines 470 and 510); portal origin/DEV 24877b67 src/pages/InvestorReporting/contracts/envelope.ts lines 255-256 require a non-empty string reason, which the deployed body carries. NOT read by this seat or the worker: a served create response (no call was made) and the PROD reader at 37aa1247; the body the rows measured predates the current deployed bytes. The consolidated release changes uploads.py again (AR-y-245, -293); the NEEDS_CORRECTION reason path is not touched by those cells, which their records state.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~114/r29/ARMED_ROWS_CENSUS.json",
+      "ar21_checks.py y296-armed (parse of every fenced block, 439 rows at the worker's read)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-S89 -- (disarm row; this seat's own) the install scripts no longer carry the st31 rollback root
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S89",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T00:23:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W55-S27 (line 112 of the st32 host script re-installs the st31 root).",
+  "spec_asserts": "A rollback in the st32 host script would install the st31 root, not the root running before it.",
+  "world_is": "RECORD (worker ~114, org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~114/r29/ARMED_ROWS_CENSUS.json): release19/install_r19.sh line 7 sets OLD=0485393f3a-st32 (the root the P1 pre-read recorded as running); deliverables ~71/r21/resident_host_install_0485393f3a-r193.sh line 8 sets OLD=0485393f3a-r19; the st32 script's line 6 (OLD=19b02b2971-st31) is not used by any pair installed after st32. The consolidated release's host script is a new file (AR-y-300) whose OLD is checked in that cell. NOT read: the host (the applier's step 0 reads the running root).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~114/r29/ARMED_ROWS_CENSUS.json",
+      "ar21_checks.py y296-armed (parse of every fenced block, 439 rows at the worker's read)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-S90 -- (disarm row; this seat's own) status_installed.py no longer imports the research revision and its test passes
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S90",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T00:23:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARMS rows IRPT_ANLREQ-D2-W7-S1 (the BUILD_ONLY irpt-status closure failed on OPAL_RESEARCH_REVISION) and IRPT_ANLREQ-D2-W7-S2 (the fake policy accessor in test_status_installed.py).",
+  "spec_asserts": "W7-S1: with status_installed.py importing OPAL_RESEARCH_REVISION from resident_installed, the build closure measured missing=1. W7-S2: the test's fake policy accessor asserted policy_id == REPORTING_POLICY_ID.",
+  "world_is": "RECORD (worker ~114, org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~114/r29/ARMED_ROWS_CENSUS.json): on the trunk reports/status_installed.py has no OPAL_RESEARCH_REVISION reference (its only resident_installed import is make_authorize, line 130) and the live irpt-status zip's status_installed.py has none either, so the missing=1 closure failure cannot reproduce from these bytes; reports/tests/test_status_installed.py:54 returns the row unchanged for any other policy id and the worker's run on a git-archive snapshot of the trunk gave 4 passed (rc 0). QUESTION CARRIED, not decided: the import that AMENDMENT 6 of the old order asked for is not on the trunk; whether the research-revision composition is still wanted is the issuer's and no cell asks for it now.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~114/r29/ARMED_ROWS_CENSUS.json",
+      "ar21_checks.py y296-armed (parse of every fenced block, 439 rows at the worker's read)"
+    ]
+  }
+}
+```
