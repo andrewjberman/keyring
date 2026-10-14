@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v2.20",
+ "prd_version": "v2.21",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -199,8 +199,15 @@ CONTRACTS changed, so both halves are owed again.
          draws on those dates one "Models" band (`model_aua`) and keeps
          exception (ii) of clause (2), its boundary sentence and its
          printed gap; (b) Client Supervised on every date =
-         `non_model_aua` - `opal_div_sma` - `opal_growth_sma`, and
-         "Other AUA" is not drawn at Global; (c) on a date with no
+         `non_model_aua` minus the two Opal SMA strategies (Dividend,
+         Growth) and, before 2025-03-27, Opal Global All Equity Total
+         Return, each from SMArtX `fact_model_aum_daily`
+         `closing_equity` before 2026-05-18 and from the served
+         carve-outs after; "Other AUA" is not drawn at Global; (e) ETF
+         Strategies draw from 2024-11-01 (SMArtX before 2026-05-18,
+         the served carve-outs plus `sma_additive_aua` after); ALT
+         Strategies = `tax_additive_aua` only, and Muni is a Custom
+         member, never ALT; (c) on a date with no
          total, and for a group's null on a date with one, the group
          carries its last known value as point class `carried` (claim
          held), forward only, never before the group's first value;
@@ -709,5 +716,14 @@ reaching dell1 at the next integrator pass. It was read here from `origin/box/de
 - **Consequence for "Where it lands" (v2.19):** the producer cell no longer emits pre-05-15 per-model values into a Global leaf. Client Supervised by difference, ETF/ALT and `carried` remain. `carried` rows written into the Global leaf are a served change under a never-widen pair. The stitch is portal work, on a client-facing row for Andrew.
 - **Rule table and oracle:** `org/tier1_exec/4.0.0_SA_CRO/deliverables/MDPF_CANON_GLOBAL_AUA_TREND_FULL_HISTORY_SPEC_20261014.md` @8025c4d7f1 (Variant 1 for an internal session; Variant 2 for every other session).
 - Per the CVO's secondary note, provenance moved out of ENDPOINT. ENDPOINT text moves, so the ratified-text half is re-owed.
+
+-- 1.0.0_SA_CTO~DELL1
+
+**v2.21 (2026-10-14 ~20:5xZ), on the Global Trend spec amendment 1 (`org/tier1_exec/4.0.0_SA_CRO/deliverables/MDPF_CANON_GLOBAL_AUA_TREND_FULL_HISTORY_SPEC_20261014.md` @686f769e63; CRO msg 5869):**
+- Andrew, VERBATIM (at the `4.0.0_SA_CRO~DELL1` terminal): "Close but we might as well put the SMA strategies in there, we do have them" / "no muni in SMAs, Muni is no longer SMA" / "muni is just a custom model".
+- FWD-9's head gains (e), and (b) is restated. The SMArtX `closing_equity` equals the served carve-outs to $0.00 on all 103 overlap dates, so Client Supervised is continuous across 2026-05-18, and the partition stays exact on 487 dated rows (the amended oracle in the spec).
+- The SMA strategies are Opal products, which FWD-3's fold already reads as held at no firm (the fe9b ruling). They therefore draw for EVERY session, not only internal ones.
+- **Where it lands, added:** a new SMArtX read in `mdpf_gold_consolidator`. Its key is checked against the naming gate and the registry before the commit; a refusal is a registry row (the XA-ad15 precedent). The category tree drops "Muni SMA" from `SMA > ALT Strategies`. That is a served change to category-views, under the same never-widen pair.
+- ENDPOINT text moves again before the CVO's signature, so one re-sign covers v2.20 and v2.21.
 
 -- 1.0.0_SA_CTO~DELL1
