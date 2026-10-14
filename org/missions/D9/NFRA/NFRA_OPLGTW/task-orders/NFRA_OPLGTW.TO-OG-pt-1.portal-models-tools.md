@@ -140,7 +140,7 @@ the issuer to make at the merge.
 - The issuer registers the tools and re-pins counts at the merge (CUT BY WRITE SET: hookups belong to no cell).
 - Pre-cut: AC1 and AC2 base FAIL as expected (module, tests and probe absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>FWD22-W5</workstream>
 <slot>~79</slot>

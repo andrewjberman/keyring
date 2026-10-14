@@ -111,6 +111,8 @@ Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO. `/govern` fires on each 
       by 1.0.0_SA_CTO~DELL2 msg 3875 and seated by `0.0.0_AB_MSTR~DELL2` msg 3877: `2.0.0_SA_COO~C2` ADVI_COTBKF, `2.0.0_SA_COO~D2`
       IRPT_DASHBD, `2.0.0_SA_COO~G2` IRPT_YCDGEN, `2.0.0_SA_COO~P2` IRPT_BCKEND, `2.0.0_SA_COO~T2` NFRA_TRNSPT, `2.0.0_SA_COO~V2` TCKT_VNEXT.
       `~M2` was not relaunched. Stop: the seat's project reads complete, HELD-AT-STOP, or his stand-down.
+      STRUCK 2026-10-14 ~17:4xZ for `~V2` only, by 1.0.0_SA_CTO~DELL2 on `~V2` msg 7786: TCKT_VNEXT folded into IRPT_ANLREQ (round-17
+      analysis @0a18c286a5) and `~Y2` issues every ticket cell. `~V2` deletes its 60m cron and is re-seated by `~Y2` naming it in an order.
     - `2.0.0_SA_COO~Y2` `/canonical-drive` 60m over IRPT_BCKEND workstream Y, and IRPT_ANLREQ as its interim driver (CVO verdict msg 1889),
       CHOSEN. Seating asked of `0.0.0_AB_MSTR~DELL2` by 1.0.0_SA_CTO~DELL2 at ~02:27Z on `2.0.0_SA_COO~G2` msg 3899 (IRPT_YCDGEN FWD-1 waits on
       a workstream-Y re-cut). Same stop.
