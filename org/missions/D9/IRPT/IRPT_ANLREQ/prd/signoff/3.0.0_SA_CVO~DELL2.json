@@ -1,12 +1,13 @@
 {
   "prd": "IRPT_ANLREQ_PRD.md",
-  "prd_version": "v0.9",
-  "prd_pin": "c642900a882bcaedcea444eef23ddac4e8640b54",
+  "prd_version": "v0.10",
+  "prd_pin": "c31b76cd191eab8e8162206afb4bda21e6f9670e",
   "half": "ratified-text",
-  "half_hash": "06bd2303d5005ffdd0822b44eb7644636cac62f2b890e76ea5ad6f6c8650e155",
-  "endpoint_hash": "6a998d324e9b6d44f13842ed69022e85cd22f5ed644baf719fdc89980451d4d4",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_PRD_v0.9_RATIFIED_TEXT_REVIEW_20261014.md@a2a34a5659",
+  "half_hash": "ef6d3966392c01bc753a373d51cb5cbcd583721cc4d0a003a0289db70ec3ccf8",
+  "endpoint_hash": "4a11972140008a5398ee2a41672c5a45b30d230c0a07b99b9710bc30f78ac7b7",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_PRD_v0.10_RATIFIED_TEXT_REVIEW_20261014.md@2af2238cdb",
   "signed_by": "3.0.0_SA_CVO~DELL2",
-  "signed_at": "2026-10-14T15:58:55Z"
+  "signed_at": "2026-10-14T16:04:30Z",
+  "reason": "CONTRACTS C-PACKAGER still says the branded PDF is a later enrichment, not this hop, while FWD-1 now attaches the commentary as a standalone branded PDF; the no-fifth-item limit is only in ADDENDUM v0.10"
 }
