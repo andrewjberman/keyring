@@ -12063,3 +12063,27 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S39",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T19:35:49Z",
+  "one_line": "Issuer's rulings on worker 176's BLOCKING row W176-S1 (the as-of fix changes one byte-for-byte golden) and worker 177's BLOCKING row W177-S1 (no independent close series inside the grant): the golden is re-pinned inside the grant; the independent series is named in the order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-219 AC3: the whole-scope suite after has no new failing test; DB-b-220 step 3: the offset is measured against an independent close series, never one derived from the holdings file.",
+  "world_is": "W176-S1: the date-only fix prints 'September 29th, 2026' where the ModelPortfolios footer printed 'September 29th, 2026, 5:00p ET', and iv-e-120's golden compares that mount byte for byte, so one test (b) newly fails. The golden pins the very clock the order removes: ruled re-pinned, that one sentence only, with the golden file added to the order's paths; the test file stays untouched. W177-S1: the worker's grant was one S3 prefix and no independent close series was reachable. An issuer error: my order said 'for example the model benchmark's served series' and granted no read of it. The YCharts gateway returns 403 (an access refusal, not worked around), so the independent series is the served dated model series (four daily index_benchmark_return series) already read through model_series_windows; the offset is estimated by correlating the bond ETFs' day-to-day price change in the holdings files with that series at three offsets, one estimate per security-and-series pair at a correlation of 0.5 or more, at least 4 pairs else UNDETERMINED; the checker counts offset estimates; the worker also records the share of securities unchanged across the weekend and holiday partition pairs. The issuer's own count-only probe of the Cottonwood files around 12 to 15 June and 18 to 22 June found: Friday to Saturday differ, Saturday to Sunday identical, Sunday to Monday differ; for the 19 June market holiday, Thursday to Friday differ and Friday, Saturday and Sunday are identical: the pattern fits neither 'the file holds its own date's close' nor 'the file holds the prior trading day's close' cleanly, which is why the read needs the independent series. Orders DB-b-219 and DB-b-220 and the BD check are amended; both workers are resumed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 176's report and portal commit 3db44fe0e9 on wk-IRPT_DASHBD-176-portal (suite after: one new failing id)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~177/RD_BD_DATE_R110.json on wk-IRPT_DASHBD-177 @e3fb825188 (date carriers; 0 files compared)",
+      "this seat's count-only probe of silver fact_holdings partitions 2026-06-11 to 2026-06-23 (price equality shares between consecutive partitions; no value recorded)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
