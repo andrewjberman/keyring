@@ -8538,3 +8538,81 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "Steps 0, 1(a) and 1(b) were taken; steps 1(c) (chain in flight), 2 (re-hash and pin), 3 (tests and import smoke) and 4 (the upload) were NOT taken because 1(b) already stops the act. Nothing was uploaded, no job was started, no DynamoDB write. The pair does not name either ledger. Whether FB-j-3's ledger and the e97 hold count as 'on the BD gold tree' for this pair is the issuer's and the CTO's to rule; this seat read them as on it (same code/gold/ prefix, same consumers). To proceed: FB-j-3's ledger is closed or released by its owner (its upload appears to have landed), and the e97 gate reads are recorded, or a ruling says neither blocks. The order stays pending; the ledger was closed with the gate-refused path (nothing created)."
 }
 ```
+
+## IRPT_DASHBD-D2-W149-S1 -- the discovery route the order names lists no Investor Reporting page
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W149-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~149",
+  "one_line": "The order says to find the IR holdings view with comp-cluster --list; that listing names 15 page clusters and no InvestorReporting page, so the view was found by path instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-184 step 1: start at the portal Investor Reporting holdings view, found with comp-cluster --list and comp-cluster <Page> --json.",
+  "world_is": "comp-cluster --list (vintage 2026-10-14 00:50:49 UTC, rc 0) prints 15 page clusters and none is InvestorReporting. The holdings tab was located by path under portal/src/pages/InvestorReporting/tabs/holdings at commit 5860c35e98.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-cluster --list run in the worktree at 5860c35e98: PAGES (15), no InvestorReporting row",
+      "portal/src/pages/InvestorReporting/tabs/holdings/HoldingsTab.tsx@5860c35e98 line 280: getHoldingsSnapshot call"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "surfaced_at": "2026-10-14T01:06:00Z"
+}
+```
+
+## IRPT_DASHBD-D2-W149-S2 -- a money-market name outside the canonical table is served as Fixed Income by a drifted copy of the gold classifier
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W149-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~149",
+  "one_line": "The IR holdings assignment falls through to bd_securities_fallback.py, a verbatim copy of the pre-SC-t-1 gold classifier that reads the legacy table, has no sub_asset_class cash rule, and maps money-market and cash-reserve names to fixed_income.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO DB-b-184 steps 2 and 4: name the one assignment site, say whether it copies the gold classifier, and say a drifted copy as a finding.",
+  "world_is": "A money-market name the canonical etf-classifications table does not hold is served class fixed_income, which the page shows as Fixed Income (bd_securities_fallback.py lines 54-55 and 152-153 via holdings_snapshot.py lines 985-993). The copy is the declared FWD-6 fallback and was never brought onto the gold release's cash rule, so this stays true after the release until the fallback is retired.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/bd_securities_fallback.py@5860c35e98 lines 1-24 (header: verbatim copy of the pre-SC-t-1 gold classifier, git show 1f327f52a2)",
+      "data/assets/scripts/gold/investor_reporting/bd_securities_fallback.py@5860c35e98 lines 54-55, 152-153 (money-market and cash-reserve names to fixed_income)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@5860c35e98 lines 985-993 (fallback answer assigned as the node class)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "surfaced_at": "2026-10-14T01:06:00Z"
+}
+```
+
+## IRPT_DASHBD-D2-W149-S3 -- the gold release's cash rule does not reach the IR canonical branch, which serves the stored asset_class verbatim
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W149-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~149",
+  "one_line": "The IR canonical branch never reads sub_asset_class, so the gold release (e340e07f4e) that types cash rows as cash does not change the class the IR page serves for a canonical row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO DB-b-184 step 3: decide whether the page's class comes from output the gold classifier release will change; if not, a rule keyed on sub_asset_class is proposed.",
+  "world_is": "classify_security takes a canonical row's asset_class as stored (holdings_snapshot.py lines 978-984). The gold library's _row_class (etf_classifier.py lines 104-116) changes that value for a row whose sub_asset_class is cash, and the IR branch does not call it. A canonical row typed cash by sub_asset_class but stored under another asset_class stays on that class in the IR page. The number of such rows was not read; DynamoDB is outside this grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@5860c35e98 lines 977-984 (canonical row asset_class verbatim)",
+      "data/black_diamond/scripts/gold/lib/etf_classifier.py@5860c35e98 lines 104-116 (_row_class cash rule, commit e340e07f4e)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "surfaced_at": "2026-10-14T01:06:00Z"
+}
+```
