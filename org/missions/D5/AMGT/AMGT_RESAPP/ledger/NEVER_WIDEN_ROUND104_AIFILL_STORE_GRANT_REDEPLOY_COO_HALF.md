@@ -81,3 +81,31 @@ This half does not cover, and the act may not perform:
 - a schedule change or any use of Bloomberg.
 
 **Signature (COO):** signed `2.0.0_SA_COO~R2`, 2026-10-14, at the close of the build cells (the commit carrying this file is the signature's vintage).
+
+## ADDENDUM 1 (2026-10-14 ~01:3xZ, `2.0.0_SA_COO~R2`) -- the redeploy's pin and its packaged members, named by blob; steps 1 and 2 as run
+
+This addendum changes nothing in the act and fills the one thing step 3 needs and the half left open: the pin and the packaged-member table. `AMGT-ar-3` stops before upload on any member not named here.
+
+**THE PIN: `0447f2df38`** (a `box/dell1` commit; it carries fa-7's merge `cd31b97501` and every cell of the round; `2.0.0_SA_COO~R1`'s `AMGT-bk-2` is complete and its pin `d7a79c766a` is the live function's). The build is cut from a DETACHED worktree at exactly that hash.
+`python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round94_prep/checks/r94_admission_table.py 0447f2df38 --pin d7a79c766a` reads, run by the issuer at the cut: **members whose bytes differ: 8**.
+
+| member | live pin blob | this pin's blob | delta | loaded by the handler |
+|---|---|---|---|---|
+| `lib/research/api/scoped_amgt.py` | `351f9a1d7a8a` | `1f5de89912e5` | +225 -0 (fa-7's region and its one wiring line; no other line moves) | YES |
+| `lib/research/aifill/block_identity_description.py` | ABSENT | `c70fe05a8c78` | +210 | no |
+| `lib/research/aifill/block_mgmt_bio.py` | ABSENT | `fef074d4f30e` | +252 | no |
+| `lib/research/aifill/block_mgmt_recent.py` | ABSENT | `f1367c7f97e2` | +251 | no |
+| `lib/research/aifill/block_mgmt_team_view.py` | ABSENT | `310f807c43e1` | +154 | no |
+| `lib/research/aifill/block_thesis_pillars.py` | ABSENT | `2aea75e0c7c7` | +198 | no |
+| `lib/research/aifill/run.py` | ABSENT | `c6a8e343ff3a` | +133 | no |
+| `lib/research/aifill/store.py` | ABSENT | `011f1a8972ad` | +98 | no |
+
+The signed half named `scoped_amgt.py` and `_harvest_prefixes.py`. **`_harvest_prefixes.py` is NOT in the table: it is byte-equal at the live pin and at this pin** (the generated `AI_FILL_GOLD_PREFIX` landed in `d7a79c766a` already: `git show` of both reads it once), and
+the first five `aifill` modules (`__init__`, `contract`, `orchestrate`, `model`, `inputs`) are likewise already live. The seven `aifill` rows are packaged by the build's tree walk and never imported by `scoped_amgt.py`; they add no reader, no grant and no served byte
+(the handler loads `scoped_amgt.py` and the generated prefixes only). The build's own content diff against the live package is the authority: any member beyond these eight, or another blob, is a STOP BEFORE UPLOAD and returns to the issuer.
+
+**Steps 1 and 2 as run (for the record; the half's expectations were met):**
+1. **Step 1, `AMGT-ar-1`** (RA1, applied 00:38:18Z to 00:39:53Z, ledger `amgt-resapp-r104-ar1-aifill-grant-dell1` closed): 1 changed in place; GetObject resources 34 to 35, ListBucket prefixes 34 to 35; `check_ar1_grant.py` YES 7 of 7 (the issuer re-ran it from its own seat); with the one entry stripped from each limb the policy is byte-equal to the pre-act policy (`77c69f8359764942`); post sha16 `b50b9248dbcc7d02`.
+2. **Step 2:** (a) AMD stored first and read back EQUAL (`store.read_document`, validated). (b) The 94 other names: 93 stored by the batch, 1 (`WALMEX*_MM_Equity`, whose `*` is not a legal Windows file name for the command's `--out`) stored by a direct run without `--out`, then 5 names re-drawn after a block hit the token budget or had no citable source, then AMD (stored before the retry rule existed) and COST re-drawn for the same reason. **Read back through the store reader: 95 of 95 present, valid, ASCII, key-matching** (`round104/store_readback_census.json`). Spend, from the documents' recorded token counts at the module's rates: batch 37.53 USD, re-draw 2.95, AMD 0.40, WALMEX 0.56 + 0.80 for the last two re-draws = 42.24 USD for the stored documents; the second live trial run (before the pair's step 2) cost 0.52; the first trial run, the diagnostic probes of single blocks and the draws a retry discarded wrote no document or recorded no tokens and were NOT metered, so the total is not stated beyond '42.24 USD metered plus a few unmetered trial calls'. The 75 USD stop was never reached: every projection was under it (the batch's own final projection basis: 37.53 spent over 94 names). 95 keys written, none outside `amgt/harvest/gold/ai_fill/`; no delete.
+
+**Signature (COO):** signed `2.0.0_SA_COO~R2`, 2026-10-14, at the close of step 2 (the commit carrying this addendum is the signature's vintage). Owed: the CTO's concurrence with this addendum, appended to the CTO half.
