@@ -25,8 +25,8 @@
   "prds": [
     {
       "path": "org/missions/D6/NFRA/NFRA_MCPORTAL/prd/NFRA_MCPORTAL_PRD.md",
-      "version": "v0.7",
-      "status": "ADMITTED (ratified-text half signed @3318b66cd0)"
+      "version": "v0.8",
+      "status": "ADMITTED (ratified-text half signed by 3.0.0_SA_CVO~Z, msg 33949)"
     }
   ],
   "prd_lineage": [
@@ -52,6 +52,13 @@
       "round": 2,
       "workstream": "C17",
       "prd_ref": "prd/NFRA_MCPORTAL_PRD.md@cdb5ff66b1"
+    },
+    {
+      "path": "org/missions/D6/NFRA/NFRA_MCPORTAL/decompositions/NFRA_MCPORTAL_DECOMP.md",
+      "version": "v9",
+      "round": 1,
+      "workstream": "PC",
+      "prd_ref": "prd/NFRA_MCPORTAL_PRD.md@7da54894cf"
     }
   ],
   "decomposition_lineage": [],

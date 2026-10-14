@@ -23,16 +23,16 @@ C-S36. One row: W73-S2 (ARMED). Every NFRA_CTLPLN order is terminal at HEAD 4f3a
     "owner": "2.0.0_SA_COO~C",
     "round": "v12",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~C",
       "round": "v12"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~C",
-      "at": null
+      "at": "2026-10-14T03:30Z"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

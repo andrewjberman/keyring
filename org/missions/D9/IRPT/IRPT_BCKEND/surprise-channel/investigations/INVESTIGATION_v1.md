@@ -33468,3 +33468,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The canonical row exists and carries the Cash sub-class, so the rule reaches FDRXX wherever the canonical branch answers. Whether Inflection's FDRXX NODES come through that branch (rather than the fallback) is measured by IB-pr-528 (the node count and the split). Cash-subclass holdings that the fallback layer serves (215 on Cottonwood and 67 on Inflection by IB-pr-526's upper bound) stay fixed_income under a canonical-only rule: the cross-page consistency question goes in the packet and to the CTO. TIMXX, which Andrew's upload named, has no canonical row, so a proxy is the right path for it; not this round."
 }
 ```
+
+## IRPT_BCKEND-D2-W374-S1 -- the commit-time client-data check did not run on dell2: the hashed account-id list is absent
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W374-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~374",
+  "surfaced_at": "2026-10-14T03:14:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The safe-commit client-data check printed WARN, not FAIL, for commit ec20f73ff8: the hashed account-id list is absent on dell2, so that commit (and every commit on this box until the list is placed) was not checked for client account ids.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there), printed by .tools/safe-commit.sh for commit ec20f73ff8 (IRPT_BCKEND-TO-IB-pr-527, 2026-10-14 ~03:14Z)",
+      "the committed diff ec20f73ff8 holds 0 added lines with a 9-plus digit run and 0 added lines containing the token account (a self-read, not the gate)"
+    ]
+  },
+  "spec_asserts": "The commit gate checks each commit for client account ids (safe-commit client-data-check); the order's BOUNDS and worker face say commit with safe-commit and name no account-id check.",
+  "world_is": "On this box the hashed account-id list is not placed, so the check reports ABSENT and skips the scan while the commit proceeds. Absent is not empty: the gate does not fail, so the skip is silent to a worker that reads only the exit code (rc 0).",
+  "notes": "Filed by a worker whose commit holds no account identifier (code, offline tests, criteria output). The list's placement is the issuer's or the box owner's call; this row does not place it."
+}
+```
