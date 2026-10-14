@@ -13450,3 +13450,56 @@ name the one known failure instead of silently inheriting it.
   "notes": "Inert for the gateway (no Eclipse tool exists). The fix (admit defaultTradingEngineId to the Eclipse silver schema) belongs to the assets pipeline's owner, routed by the CTO; the G2 cut should state the lag or wait for the fix. Not this seat's act."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S112",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-14T13:42:41Z",
+  "one_line": "Lambda etfs-canon-fanin fails on every run: its DynamoDB target opal-etfs-ownership-daily does not exist (ResourceNotFoundException on BatchWriteItem), so the canonical ETF-ownership fan-in that the census would point a gateway tool at writes nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dynamodb describe-table opal-etfs-ownership-daily: ResourceNotFoundException (read by 4.0.0_SA_CRO~Z, 2026-10-14T13:42:41Z)",
+      "CloudWatch /aws/lambda/etfs-canon-fanin newest stream (last event 2026-10-13T15:48:37Z): three '[ERROR] ResourceNotFoundException ... BatchWriteItem operation: Requested resource not found' lines",
+      "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G5_etfs.md (census: 'fails every day'; scheduled 15:45Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G5 census: etfs-canon-fanin is meant to fan the daily partner ownership slices (daily/{49financial,cottonwood,inflection}/) into a canonical table.",
+  "world_is": "The target table is absent from the account; every run errors. The monthly report and the ownership dashboard read the daily S3 slices directly, so they are not starved by it; nothing found reads the missing table.",
+  "notes": "Inert for the gateway: G5's tools read the S3 slices, not this table. Whether the table is created or the fan-in retired is the ETF pipeline owner's call, routed by the CTO. The daily error is noise in that function's logs until then."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S113",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-14T13:42:41Z",
+  "one_line": "The September 2026 month-end ETF ownership report's coverage_verdict.json says PUBLISH with 21/21 trading days and 0 carried for all three partners, while the same run's partner CSVs say Cottonwood 20/21 with 1 carried and Inflection 18/21 with 3 carried; the report was emailed on 2026-10-01.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-etfs/platinum/reports/2026-09/coverage_verdict.json: verdict PUBLISH; per_partner 49financial, inflection, cottonwood each coverage_line '21/21 trading days; 0 carried for missing data' (read by 4.0.0_SA_CRO~Z, 2026-10-14T13:42:41Z)",
+      "s3://opal-data-etfs/platinum/reports/2026-09/opaletfs_cottonwood_202609.csv last line '# coverage: 20/21 trading days; 1 carried for missing data'",
+      "s3://opal-data-etfs/platinum/reports/2026-09/opaletfs_inflection_202609.csv last line '# coverage: 18/21 trading days; 3 carried for missing data'",
+      "G5_etfs.md: etfs-reports-orchestrator log 'OK: month-end report SES send month=2026-09', 2 destinations"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The coverage verdict is the publish gate of the month-end report: it decides PUBLISH vs REFUSE from per-partner coverage.",
+  "world_is": "Two artifacts of one run disagree on the same quantity. Which one the emailed PDF printed was not read; the cause (the verdict computed before carry-forward, or from a different input) is not measured.",
+  "notes": "Not a gateway hazard today, but a G5 tool that serves coverage_verdict.json would assert full coverage for Cottonwood and Inflection. The cut should serve the per-partner CSV coverage line, or neither, until the ETF pipeline owner reconciles the two (routed by the CTO). The November run on 2026-11-01 repeats the defect if unchanged."
+}
+```
