@@ -8745,3 +8745,27 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S136",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-14T00:15:40Z",
+  "one_line": "Disarm of D2-W164-S1, S2 and S3 (disarm owners this seat for S1 and S3, the CTO for S2) on the round-85 cell's read, as the CTO ruled (msg 7360): one key space, the raw account ids, on both sides; the definition of active ruled (msg 7343); dell1's four identifiers now carry one row each",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 7360: \"W164-S1 to S3 disarm on that cell's read\"; msg 7343: the definition",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~168/ACTIVE_SET_V2_RECORD.json (merged bd08ff5eb4): 860 accounts, all 860 reverse-match keys are 11-character raw ids, no token; the four identifiers 1 row each",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ACTIVE_COTTONWOOD_SET_V2.csv and REVERSE_MATCH_V3.csv committed @4d427d3bbb; the scan reads 871 files, 0 hits, 4 of 4 named files exempt; a wrong pin on either new file makes the scan fail (measured)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An ARMED hazard disarms same-turn via its disarm_owner (CLAUDE.md section 2).",
+  "world_is": "The old round-82 pair (tokens) stays in the tree as a record, superseded by the V2/V3 pair; it is still exempt by its pins. NOT closed by this row: W168-S2 (ARMED, mine): the round-82 window counts are not reproducible, 6 of 15 aggregate invariants DIFF (window rows 42,319 vs 41,462 on the same 769 accounts); the CVO grades which side is trusted. The 139 snapshot accounts with only zero or null units are excluded by the worker's reading of 'open'; flagged to the CTO."
+}
+```
