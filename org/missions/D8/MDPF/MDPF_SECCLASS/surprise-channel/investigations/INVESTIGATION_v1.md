@@ -7800,3 +7800,129 @@ by dell1 or by this seat.
   "disarm_owner": "2.0.0_SA_COO~M1"
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W91-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~91",
+  "surfaced_at": "2026-10-14T12:35:38Z",
+  "one_line": "R25 clause 4 names no baseline for a bar's class dollars: graded 'as in clause 2' against the baseline firm day at the bar end date, the bar classes differ from that day by up to 112.89 on the 2026-10-14 capture, so the grading basis is a choice the read has to state.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e101.rebase-read-instrument.md@3e1365fdaa: clause 4 (lines 59-61) says the class dollars are graded as in clause 2; clause 2 (lines 54-56) grades firm[d] class values against the baseline firm[d]; no baseline is named for the bar classes",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R25_CHECKS/baseline/REBASE_BASELINE_20261014.json: bars[label].classes against firm[bar end] of the same file; max abs gap 112.89 (end 2026-09-30: bars 2026-Q3 and 2026-09) and 67.52 (end 2026-10-12: bars 2026-Q4, 2026-10 and 2026); key sets equal on all five; all inside TOL_ROUND 250.00",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R25_CHECKS/r25_rebase_read.py grade_all bars block: bar classes graded against the baseline firm[end] with that date's move (the basis this worker chose)"
+    ]
+  },
+  "spec_asserts": "R25 clause 4 (bars): the live bar total equals the live AUA at the bar's live end date within TOL_AUA; if the live end date is a baseline date at or after rt, the class dollars are graded as in clause 2. The order names no baseline for the bar class dollars.",
+  "world_is": "A bar's class dollars and the same-date firm day's class dollars are two served figures that differ by up to 112.89, not zero. Grading against the baseline firm day and grading against the baseline bar classes give different residuals; both are inside TOL_ROUND on today's capture, so the read passes either way. The worker graded against the baseline firm day at the bar end date. Nothing is served wrong by this; the basis is recorded for the CTO's round-25 analysis.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## MDPF_SECCLASS-D1-W92-S1 -- the order names the C_06 loader _load_c06; the file defines no such name, and the sibling suites load the module through _load
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W92-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~92",
+  "surfaced_at": "2026-10-14T12:29:56Z",
+  "one_line": "TO-SC-e102's worker face says the new test loads the C_06 module without side effects through _load_c06. No such name exists in the tests folder; the sibling test_c06_rolling_rederive_r23.py defines _load, which runs the same spec_from_file_location load. The new test uses the sibling's _load; the criteria and the difference control are unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/tests/test_c06_rolling_rederive_r23.py:33-40 at worktree HEAD 009326809739 defines _load (spec_from_file_location + exec_module); the file has no _load_c06",
+      "grep of data/black_diamond/scripts/gold/tests for 'def _load_c06' returned no match in worktree C:/dev/wk-secclass-92"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e102 worker face: 'Read test_c06_rolling_rederive_r23.py in the same folder first: it loads the C_06 module without side effects (_load_c06)'.",
+  "world_is": "The sibling file loads the module through a function named _load, not _load_c06. Nothing in the tree is named _load_c06. The new test follows the sibling's pattern and does not add a second loader name."
+}
+```
+
+## MDPF_SECCLASS-D1-W92-S2 -- D_03 writes firm_daily and each advisor's daily dict in iteration order into served objects, so the first D_03 fire after the C_06 sorted-keys ship moves their bytes with no content change
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W92-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~92",
+  "surfaced_at": "2026-10-14T12:29:56Z",
+  "one_line": "Reader survey of mix_daily_summary.json: D_03 re-serialises firm_daily (D_03:510) and each advisor_daily entry (D_03:556) with json.dumps in the dict's iteration order, and writes them to gold/artifacts/firm_mix_views_daily.json and gold/entities/advisors/{id}/mix_daily.json (with their legacy aliases). After sort_keys lands, the parsed file's date and class order is sorted, so those served bytes change once, with the same content, on the first D_03 fire after the ship.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/D_03.composition_artifacts.py:491-492 reads summary['firm'] and summary['advisors'] from the C_06 object; :510 daily_body = json.dumps(firm_daily, separators=(',', ':')) written at :513 and :518 to FIRM_MIX_VIEWS_DAILY (+ legacy alias) at worktree HEAD 009326809739",
+      "D_03.composition_artifacts.py:551 for adv_name, adv_data in advisor_daily.items(); :556 daily_body = json.dumps(adv_data, separators=(',', ':')) written at :560 and :565 to advisor_mix_daily_key (+ legacy alias)",
+      "data/black_diamond/scripts/gold/lib/s3_layout.py:206 FIRM_MIX_VIEWS_DAILY = 'gold/artifacts/firm_mix_views_daily.json'; :255-256 advisor_mix_daily_key = 'gold/entities/advisors/{id}/mix_daily.json'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md section 5: never move served output without never-widen sign-off naming the blast radius; verified DELTA=0 needs no hold. TO-SC-e102 names the ship pair as the issuer's next act and says it names the objects whose bytes move with no content change.",
+  "world_is": "The mix_daily_summary.json object is the only C_06 output the order's blast radius names. D_03 republishes two families of served objects from it in insertion order: the firm daily accumulator and one mix_daily.json per advisor. Their order is C_06's insertion order today and sorted order after the ship. Served period views (firm_mix_views.json, advisor mix.json) are not affected: compute_period_views sorts its input (data/black_diamond/scripts/gold/lib/mix_views.py:68, :74). The ship pair must name the two families or the first fire moves them unsigned. Disarm: the issuer names them in the never-widen pair."
+}
+```
+
+## MDPF_SECCLASS-D1-W92-S3 -- D_04 sums C_06's class values in snapshot iteration order, so the served firm mix_summary composition total can move in its last float digit after sort_keys
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W92-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~92",
+  "surfaced_at": "2026-10-14T12:29:56Z",
+  "one_line": "Reader survey of mix_daily_summary.json: D_04 builds c06_classes in the iteration order of the latest firm snapshot (D_04:511-517) and sums it in that order (D_04:545, total_c06_mv); the fallback total at D_04:455 is also a sum in snapshot order. Float addition is order-dependent, so after sort_keys the total can differ in the last digit, which can flip a round(..., 2) or round(..., 6) on the served platinum/firm/mix_summary.json composition. The mix dict's own key order is fixed by CANONICAL_MIX_CLASSES and does not move.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:503-511 iterates the latest firm snapshot's keys; :514-517 fills c06_classes in that order; :544-545 total_c06_mv = sum(v['market_value'] for v in c06_classes.values()) at worktree HEAD 009326809739",
+      "D_04.client_portal_summary.py:452-457 _firm_top_level_mix: covered is built in CANONICAL_MIX_CLASSES order; the total falls back to a sum over snap.items() only when snap total is absent or zero; :578 writes platinum/firm/mix_summary.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e102 report item: state for each reader whether it depends on the insertion order of advisors or firm.",
+  "world_is": "D_04 depends on firm's class iteration order only at the last float bit of two sums, and the composition values are rounded to 2 and 6 decimals, so a served byte moves only if a rounding boundary is crossed. No served key order changes. The ship pair should list platinum/firm/mix_summary.json as a possible last-digit mover."
+}
+```
+
+## MDPF_SECCLASS-D1-W92-S4 -- E_25 reads the key firm_daily from mix_daily_summary.json, which C_06 never writes (it writes firm), so the reader returns its error dict on every object this writer produces
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W92-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~92",
+  "surfaced_at": "2026-10-14T12:29:56Z",
+  "one_line": "Reader survey of mix_daily_summary.json: E_25 load_mix_summary_latest reads summary.get('firm_daily', {}) from gold/views/mix_daily_summary.json, a key no writer in the gold tree produces (C_06 writes 'firm'), so it returns {'error': 'firm_daily key missing ...'} for every object C_06 writes. The reader does not depend on insertion order; it is wrong on the key name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/E_25.aua_decomposition_audit.py:138 firm_daily = summary.get('firm_daily', {}); :140 returns the error dict when empty, at worktree HEAD 009326809739",
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py:669 payload = {'firm': firm_daily, 'advisors': advisor_daily, 'restated_through': restated_through}; the only 'firm_daily' string in the gold tree is E_25:138"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e102 report item: state for each reader whether it depends on the insertion order of advisors or of firm.",
+  "world_is": "E_25 is wrong on the key name, not on order: it sorts the dates itself (E_25:142) and reads one day's values by key. Whether E_25 still runs in the scheduled gold chain was not measured in this order."
+}
+```
