@@ -5,7 +5,8 @@
 <issued_to>0.7.0_AE_CloudOps~IB2</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>pending</status>
+<status>cancelled</status>
+<status_reason>STOPPED at step 3 (digest gate, condition 1) by 0.7.0_AE_CloudOps~IB2 before any ledger or mint: a mint from the release pin changes about 20 members per bundle, not the producer file alone; evidence deliverables/0.7.0_AE_CloudOps~IB2/IB193-1_digest_gate_stop.json, row D2-S170; the packet is re-cut (round 194, CTO)</status_reason>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>

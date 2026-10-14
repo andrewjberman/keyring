@@ -34384,3 +34384,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The check is a WARN, not a refusal, and the literal is the order's exact firm value; replacing it with lookup() was not done because the order names the firm literal and the gate's own text says the carrier is WARN-only. A later owner decides whether the literal should read through lookup()."
 }
 ```
+
+## IRPT_BCKEND-D2-S171 -- Dispositions on the round-193 rows; the release stopped at its own digest gate and its packet is re-cut; DISARM of D2-W374-S1 and D2-W376-S1
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S171",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T13:25:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on the round-193 rows (D2-S169, D2-S170, D2-W382-S1 to S3) and the DISARM of D2-W374-S1 and D2-W376-S1: the release stopped at its own digest gate and its packet is re-cut; the 2026-10-09 kill cause is unreadable; my AC2 check was the defect on IB-pr-536.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB193-3 and IB193-2 AC1 to AC3 and both proof instances on the landed trees: all PASS, VALID; round-close-check --workstream ~P MAY-CLOSE (orders=3); merge b80e382520 (IB-pr-536)",
+      "I read IB193-1_digest_gate_stop.json (19/21/20 members by content, plus opal_strategy_matcher.py added) and the order-535 record; the drain-end packet is deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUND_193_P_DRAIN_END_20261014.md",
+      "Andrew's record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_192xZ_CLIENT_DATA_IN_PRIVATE_GIT_NOT_WORTH_TIME.md and the CTO's msg 7618 (MSTR~DELL2 msg 7617: the WARN-only client-data check on dell2 is deliberate)"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27); an ARMED row with a ruled state is disarmed with its evidence.",
+  "world_is": "DISPOSITIONS. D2-S170 (the digest gate of IB-pr-535 fails: the pin mint moves about 20 members per bundle): the stop is the signed rule working; INERT as a hazard, LOAD-BEARING as a finding: the packet is re-cut by the CTO's round-194 ruling (characterize the moved members and sign the full pin mint, which is the code the signed counts were measured on, or prove a one-file overlay), and the live fires run on a trading calendar about 3.5 months old. D2-S169 (the kill cause is UNREADABLE: the runner host is stopped and no memory metric is retained): INERT, unresolved by evidence. D2-W382-S1 (BLOCKING, the AC2 mutant check cannot import the producer from its temp copy): my check's defect, repaired @751632840a, the worker's AC2 row re-graded PASS on the merged tree; INERT. D2-W382-S2 (the literal step-3 scratch layout fails at import for the same cause): INERT, the record discloses the repo-depth layout; the re-run in place measures the mutant. D2-W382-S3 (the naming-gate WARN on the 49financial literal in main): INERT, the order names the literal; whether it should read through lookup() is a later owner's. DISARM D2-W374-S1 and D2-W376-S1: the absent client-data hash list on dell2 is the RULED state, not a hazard: Andrew-direct 2026-10-09 ~19:2xZ (the record named above) and the CTO's msg 7618 name it, and MSTR~DELL2 msg 7617 confirms the check runs WARN-only on dell2 on purpose; both rows are disarmed here by their disarm_owner (D2-W374-S1: me; D2-W376-S1: the dell2 box manager, relayed by the CTO's instruction to me to file the evidence). Workers may treat that WARN as expected (the CTO's msg 7618)."
+}
+```
