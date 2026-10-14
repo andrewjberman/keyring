@@ -1037,3 +1037,51 @@
   "world_is": "Case (a) cannot run without the production git source, because the seam is ignored when OPAL_STATE_ROOT is unset. The production source then issues git show against the real origin/box/zz9 ref. The ref does not exist, so nothing is read and the case passes, but the test does touch the real repo's ref namespace. A box that did have a real origin/box ref would be read. The tests-read-no-real-ref rule holds only because zz9 is absent. Reported for the lane owner's ruling; the production path is unchanged and no test switch was added to the git source for this case."
 }
 ```
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S17",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-14T02:05:30Z",
+  "one_line": "The order says every existing selftest case stays, yet cases 1 and 9 of portal-release-build.sh --selftest match the RELEASE-CHECK line with grep -qx, an exact-line match that the appended ref= sha= suffix breaks",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/portal-release-build.sh@bd5ddc194744 (uncommitted edit in wk-NFRA_DEVPLN-1): selftest case 1 and case 9 grep -qx lines before this edit; the RELEASE-CHECK line now ends with ref=<ref> sha=<12-char sha>",
+      "bash .tools/portal-release-build.sh --selftest after the edit: CASE 1 ok=True, CASE 9 ok=True, RELEASE-SELFTEST cases=12/12 ok=True, rc=0",
+      "the two greps were changed to prefix matches (^RELEASE-CHECK ... unapproved=0 ref=refs/heads/<rel1> sha=, and ^RELEASE-CHECK ... unapproved=1 ref=) with the counts unchanged; the case meanings are kept"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every existing selftest case stays (DP-i-1 step 3), and the RELEASE-CHECK prefix is unchanged for every consumer (step 2).",
+  "world_is": "The prefix is unchanged, but an exact-line assertion on the whole RELEASE-CHECK line cannot hold once the suffix is appended. The two greps were made prefix matches with the counts kept, so both cases still test what they tested. Reported so the lane owner can rule on the grep edit, which the order did not name."
+}
+```
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S18",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-14T02:05:30Z",
+  "one_line": "Case 9 is the only case the order names for GIT_DIR isolation, but the test helper run() now pops an inherited GIT_DIR for all ten cases, a wider change than the order states",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/tests/test_open_calls_cloudread.py@bd5ddc194744 (uncommitted edit in wk-NFRA_DEVPLN-1): run() pops GIT_DIR from the inherited environment on every call and sets it only when git_dir is passed (case 9)",
+      "python .tools/tests/test_open_calls_cloudread.py after the edit: OPEN-CALLS-CLOUDREAD-TEST cases=10/10 ok=True, rc=0; GIT_DIR occurs 5 times in the file",
+      "the empty repository is created by git init with GIT_DIR and GIT_WORK_TREE removed from the init environment, so the init cannot land in an inherited repository"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Case 9 runs its subprocess with GIT_DIR pointing at an empty temporary repository; the other cases and the test's assertions are unchanged (DP-i-1 step 4).",
+  "world_is": "The pop is the isolation a git hook needs: a hook exports GIT_DIR to its children, which would reach the real repository from any case. In a normal shell the pop is a no-op. It widens the edit beyond case 9, so the lane owner can rule on keeping it."
+}
+```
