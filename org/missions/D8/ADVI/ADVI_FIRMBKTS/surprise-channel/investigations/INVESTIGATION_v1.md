@@ -7480,3 +7480,49 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "A verifier of FB-j-4 / FB-j-7 should read the runner's cumulative log (tail window), not gold/logs/ or chain_full_*, for the emit line; the cumulative log is cumulative back to January, so count only the chain's own lines."
 }
 ```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W71-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~71",
+  "surfaced_at": "2026-10-14T01:30:28Z",
+  "one_line": "The AC2 awsdiff check reads AWSDIFF: FAIL on the uncommitted script edit and passes only after the commit, because it compares committed HEAD with the merge-base.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round7/checks/r7_checks.py:47-65 at 90be6506d6: the hunks come from git diff -U0 base HEAD (committed content) and ok = same and not outside and bool(hunks)",
+      "pre-commit run on the working tree of wk-ADVI_FIRMBKTS-71: changed hunks 0, AWSDIFF: FAIL; post-commit run on f0055f3942: changed hunks 2, changed lines outside the function and the variable [], AWSDIFF: OK"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-FB-j-4 section 5: commit the script edit FIRST, then the instance; section 4 AC2 grades the awsdiff bound on the change.",
+  "world_is": "The awsdiff check grades committed HEAD against the merge-base, so it reads FAIL on a working-tree edit and OK only once the edit is committed.",
+  "notes": "Not a defect in the edit: the order's commit-first sequence was followed and AC2 reads OK on HEAD f0055f3942. Disarm: none (INERT)."
+}
+```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W71-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~71",
+  "surfaced_at": "2026-10-14T01:30:28Z",
+  "one_line": "The commit-time risk reflex printed HOLD for data/black_diamond/scripts/gold/gold_dispatch.sh by file basename against a COT freshness claim in data/cot/scripts/gold/gold_dispatch.sh.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/references/FRESHNESS_GATE_MANIFEST_20260717.md:74 (R2) at 90be6506d6: the claim names check_freshness keyed on silver/allocations at data/cot/scripts/gold/gold_dispatch.sh:174-177",
+      "safe-commit output for f0055f3942: [risk-reflex] HOLD on data/black_diamond/scripts/gold/gold_dispatch.sh and on data/cot/scripts/gold/gold_dispatch.sh, both matched to the same R2 claim; the commit proceeded"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The commit-time risk reflex grades the touched node: here the FB-j-4 edit to emit_chain_complete in the BD gold_dispatch.sh.",
+  "world_is": "The cited claim R2 describes check_freshness in the COT copy, not emit_chain_complete in the BD file; the match was by basename, and the reflex's own HOLD line named both paths.",
+  "notes": "The FB-j-4 edit does not touch check_freshness. Disarm: none (INERT)."
+}
+```
