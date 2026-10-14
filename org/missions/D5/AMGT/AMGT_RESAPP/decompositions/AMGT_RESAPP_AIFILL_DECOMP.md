@@ -167,3 +167,34 @@ fanout:
 - 2026-10-13 ~22:3xZ, `2.0.0_SA_COO~R2`: the first commit attempt was REFUSED by `.tools/to-pipeline-gate.py` on two limbs, both amended before any order was issued, so no frozen order moved:
   (1) fa-7 `<risk>LOCAL` below its floor WORLD because its `<paths>` named `infra/aws/terraform/harvest/gen_harvest_prefixes.py`: the generator entry is split into `AMGT-fa-9` (WORLD) and fa-7 is staged behind it and stays LOCAL (the limb that graded the amendment: spine v3.19 L6 / GATE xii);
   (2) `project.json` read `dep_stage='ROUND_CLOSE'` (round 103 closed by `~R1`): the issuance commit flips it `EXECUTING` (spine s.4 carrier 2). Also renumbered round 103 -> 104: round 103 is CLOSED and the CTO's round-103 analysis gives this workstream its own round.
+
+## 10. ADDENDUM 1 -- THE RELEASE SCOPE `AIFILLREL` (round 104), 2026-10-14 ~00:4xZ
+
+The build round's nine cells are terminal (s.4) and the never-widen pair for the store, the read grant and the redeploy is SIGNED in both halves (`ledger/NEVER_WIDEN_ROUND104_AIFILL_STORE_GRANT_REDEPLOY_{COO,CTO}_HALF.md`;
+CTO conditions, msg 5304: `0.7.0_AE_CloudOps~RA1` applies steps 1 and 3 after `~R1`'s apply reads back; AMD is stored and read back before the others; a run projecting over 75 USD stops; the page lands only after step 4).
+The gate refuses a new order into the issued (`AIFILL`, 104) key, so the release cells are their own scope of round 104, as `~R1` did for the walk (`V1WALK`, s.112i): `<workstream>AIFILLREL</workstream>`.
+
+| id | cell (the pair's step) | slot | class | risk | write surface | serves |
+|---|---|---|---|---|---|---|
+| `AMGT-ar-1` | step 1: the adapter role's read grant for the AI-fill prefix (one list entry in `scoped-amgt-api.tf`, a targeted apply, a live re-read) | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | `infra/aws/terraform/harvest/scoped-amgt-api.tf`, the change-management ledger | FWD-41 serve |
+| `AMGT-ar-3` | step 3: the redeploy carrying `fa-7` and `fa-9`, the first cold request driven alone, the served `ai_fill` verified (step 4's read) | `0.7.0_AE_CloudOps~RA1` | seat order, STAGED | WORLD | the function's code, the change-management ledger | FWD-41 serve |
+
+Step 2 (the store) is the issuer's own act under the pair, not a cell: `run --to-s3 --confirm-write`, AMD first, read back by `store.read_document`, then the remaining resolved names, each key written once by its own run, the 75 USD stop applied
+from the model calls' reported token counts. Step 4's page landing is a later, separate act under the CTO's approval (call cf85).
+
+**Edges.** `ar-1` has no unmet dependency. `ar-3` waits on ALL of: `2.0.0_SA_COO~R1`'s `AMGT-bk-2` complete and read back (one applier at a time on the function); `ar-1` complete; step 2(a) done (AMD stored and read back). One chain, one
+seat: N = 1 of M = 1, cap 8.
+
+```
+ar-1 -> ar-3   (and bk-2 [~R1] -> ar-3 ; step 2(a) [issuer] -> ar-3)
+fanout:
+  cap: 8
+  orders_total: 2 (ar-1, ar-3)
+  chains_total: 1
+  wave_pending: [ar-1]
+  wave_staged: [ar-3 (after bk-2 complete, ar-1 complete, AMD stored)]
+  no_s3_deletes: true
+  egress: none by either order
+```
+
+**Uncovered, with owners (not holes):** step 2 (the issuer, above); the page landing (the CTO's approval, then the release seat); the 95-name census and the CVO's five-name read (round 105).
