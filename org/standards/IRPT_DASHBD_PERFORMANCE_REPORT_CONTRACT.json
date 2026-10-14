@@ -1,5 +1,5 @@
 {
-  "contract_version": "0.4.1",
+  "contract_version": "0.4.2",
   "lineage": [
     {
       "contract_version": "0.1.0",
@@ -20,6 +20,11 @@
       "contract_version": "0.4.0",
       "sha256": "45c6c2005663ae5cf356ae890133f90cc1579093be0b0fb27e85c0f3d9710523",
       "reason": "the 0.4.0 bytes, before the percent-points sentence and the unit_scale field on each percent member: the 0.4.0 shape said percent prints from the decimal fraction, while the sample builder stores percent points (a stored 1.5 means 1.5 percent)"
+    },
+    {
+      "contract_version": "0.4.1",
+      "sha256": "c43306eb8681648025fbdbe548afc9de3d175d132ab9db81afcc42f0630124e5",
+      "reason": "the 0.4.1 bytes, before the absent-kind carrier: an absent form was {absent} only, and the case of an asset class the household holds none of was an absent form; 0.4.2 adds kind beside absent (three kinds, NO_SOURCE_YET, INSUFFICIENT_HISTORY, SOURCE_BREAK) and makes the none-held case the text UNHELD inside a by_row asset-class map"
     }
   ],
   "project": "IRPT_DASHBD",
@@ -111,7 +116,7 @@
         "NOT_SPANNED",
         "BREAK"
       ],
-      "per_row_member_form": "a member whose grain is an account (the account value summaries, the activity account rows, the realized-lot members and the account gain-loss review) or an asset class (hold.allocation) holds {\"by_row\": {\"<account_id or asset class>\": figure}}, with one key per account of the household or per asset class; a figure is a number, a text, or the absent form; a household-grain member holds its figure or its absent form directly, never a by_row map",
+      "per_row_member_form": "a member whose grain is an account (the account value summaries, the activity account rows, the realized-lot members and the account gain-loss review) or an asset class (hold.allocation) holds {\"by_row\": {\"<account_id or asset class>\": figure}}, with one key per account of the household or per asset class; a figure is a number, a text, or the absent form {absent, kind}, and an asset-class entry the household holds none of is the text UNHELD (document.unheld_rule); a household-grain member holds its figure or its absent form directly, never a by_row map",
       "window_status_rule": "for each of the four windows (qtd, ytd, last_12_months, since_inception), with the window's opening anchor day (for since_inception, the account's first_data_date): NOT_SPANNED when the account has no account_return_daily row on the opening anchor day; BREAK when the opening anchor day is SOURCE_LAG, or when a day inside the window (after the anchor, up to and including as_of) has no row, a SOURCE_LAG row, a null total_return_daily or a GRADED_DISAGREED guard_state; else MEASURED, read from the account return table",
       "first_data_date_rule": "an account's first_data_date is the business_date of its first row in the account return table, across every date= partition; the household's first_data_date is the earliest of its accounts' first_data_date values"
     },
@@ -184,7 +189,13 @@
       "gain_loss_review_by_account",
       "disclosure"
     ],
-    "absent_rule": "ABSENT is never zero. A member with source ABSENT carries {\"absent\": reason} in values and prints the reason in words; a window with no measured figure prints its absent form, and a window the account did not span prints the not-held dash"
+    "absent_rule": "ABSENT is never zero. A figure with no value holds the form {\"absent\": reason, \"kind\": KIND} in values: the reason is printed in words, and KIND is one of document.absent_kinds. NO_SOURCE_YET: Opal has no source for the figure yet. INSUFFICIENT_HISTORY: the source holds too little history for the period, and the remedy is time. SOURCE_BREAK: a source repair is the remedy, as for a missing row, a lagging row, a null return or a disagreeing guard. A member with source ABSENT carries NO_SOURCE_YET. A window with no measured figure prints its absent form; a window the account did not span (NOT_SPANNED) carries INSUFFICIENT_HISTORY and prints the not-held dash. The kind is read from the kind field, never inferred from the reason text.",
+    "absent_kinds": [
+      "NO_SOURCE_YET",
+      "INSUFFICIENT_HISTORY",
+      "SOURCE_BREAK"
+    ],
+    "unheld_rule": "An asset-class entry in a by_row map (hold.allocation) that holds the text UNHELD means the household holds none of that asset class on as_of. It prints the baseline's dash, never a reason and never zero. UNHELD is not an absent form, so it carries no kind, and it may appear only as the value of an asset-class key of a by_row map."
   },
   "members": [
     {
