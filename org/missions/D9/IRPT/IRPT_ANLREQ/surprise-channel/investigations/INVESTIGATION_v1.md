@@ -14228,3 +14228,57 @@
   "notes": "Filed by the AR-y-329 read; the live check (does a stored OPAL report exist, and what does the route answer for it) is for the CVO or a later read-only cell."
 }
 ```
+
+## IRPT_ANLREQ-D2-W140-S1 -- The commentary reader's response is parsed through IR_DATA_ADAPTER, which has no entry for analysis-request-commentary-pdf; the adapter map sits in envelope.ts, outside this order's grant
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T18:09:09Z",
+  "one_line": "LiveClient.getAnalysisRequestCommentaryPdf sends the new operation through send(), and parseIrEnvelope takes the adapter from IR_DATA_ADAPTER, which has no entry for it, so a well-formed envelope is refused as EnvelopeMismatch('operation') (envelope.ts:384-385). The entry belongs in portal/src/pages/InvestorReporting/contracts/envelope.ts, which is not in this order's grant; the live half of the cell cannot work without it.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-332 (PRD ADDENDUM v0.10 item 2): a LiveClient method beside getAnalysisRequestPdf, the same shape and refusals. The order's change list (investor-reporting.ts, AnalysisRequestParts.tsx and tests only; record r41/COMMENTARY_PDF_ROUTE_READ.json q4) names no envelope.ts change.",
+  "world_is": "Stub-transport probe, no network (.scratch/envelope_probe.ts run under bun in the portal tree): for analysis-request-commentary-pdf the LiveClient method threw EnvelopeMismatch with 'response envelope field operation does not satisfy the v1 contract' on a well-formed envelope; the URL built was /api/scoped/investor-reporting/analysis/requests/{id}/commentary-pdf?selected_tenant=fir_test. The control (getAnalysisRequestPdf on the same stub) returned the signed URL, because analysis-request-pdf has an entry at envelope.ts:197. The page reader and the method are in the candidate; the live path is not usable until the adapter entry lands. Not called live.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/contracts/envelope.ts:384-385 @6a5926fc11",
+      "portal/src/pages/InvestorReporting/contracts/envelope.ts:197 @6a5926fc11",
+      "portal/src/api/endpoints/investor-reporting.ts:1053-1066 @6a5926fc11"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed on the STOP of 0.9.0_WK_IRPT_ANLREQ~140 (see IRPT_ANLREQ-D2-W140-S2). The candidate is not committed. The grant amendment and the disposition are the issuer's (2.0.0_SA_COO~Y2)."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S2 -- The new IR_ROUTE_TABLE row fails seven InvestorReporting tests outside this order's grant that pass on origin/PROD
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T18:09:09Z",
+  "one_line": "Declaring analysis-request-commentary-pdf as a DECLARED row of IR_ROUTE_TABLE moves the route set and its count, which seven route, header, corpus and generator tests pin against the contract's routes.json and a hard-coded total. Those tests are outside the grant, so the worker stopped under the BOUNDS rule.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-332 step 3: declare the operation in IR_ROUTE_TABLE and IrDeclaredOperation. BOUNDS: if a test OUTSIDE the grant fails because of the change, STOP and file a BLOCKING row naming it; the issuer amends the grant.",
+  "world_is": "bun test on src/pages/InvestorReporting (1273 tests, 401 files): origin/PROD 14 fail; the candidate working tree 21 fail; the 7 added failures are the ones below and the other 14 are the same on both. Added: fe-s-14/header.test.ts (F14-AC15 HEADER SENT, TOTAL_ROUTES at :81); fe-s-13/routes.test.ts (three 'the operation table is routes.json' cases, count at :163); fe-s-13/request-corpus.test.ts ('one record per DECLARED route'); mvp-selection/selection.test.ts ('canonical producer route table and all browser routes match'); dsgn-irptv1/iv-e-98.generators-drift.test.ts (IVE98). The TicketCenter folder is 121 pass, 0 fail with the change (115 before, plus the 6 new). Not committed; the working tree was restored to the candidate after the PROD baseline run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-14/header.test.ts:81 @6a5926fc11",
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-13/routes.test.ts:163 @6a5926fc11",
+      "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-98.generators-drift.test.ts:38 @6a5926fc11"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The test outputs are in the worker's scratch (.scratch/base_ir_fails.txt, .scratch/after_ir_fails.txt), not committed. The counts move with the contract, which is not in this grant: the issuer decides whether the route row lands with the contract change and an amended grant."
+}
+```
