@@ -1047,3 +1047,135 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "The export holds exactly 500,000 rows, which matches a row cap. The fixture cannot establish whether the export is complete. The read of :1138-1215 shows no row-count check in the step. The premise binds the legacy table and the lot table alike."
 }
 ```
+
+## ADVI_BDPRCE-D1-W6-S1 -- 361 of 1,657 served rows have no R1 trade inside the 55-partition read window; reading the store back to 2020-03-06 resolves 149 of them and leaves 212 with no R1 trade anywhere.
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W6-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~6",
+  "surfaced_at": "2026-10-14T00:47:00Z",
+  "one_line": "361 of 1,657 served rows have no R1 trade inside the 55-partition read window; reading the store back to 2020-03-06 resolves 149 of them and leaves 212 with no R1 trade anywhere.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "REPLAY.json@b11d7534d0: classes CHANGED 539, NOW_CARRY_FORWARD 285, NOT_RECOMPUTABLE 212, UNCHANGED 621; lookback_source assets 242, A_resolved 52, B_resolved 59",
+      "lookback.csv@b11d7534d0: 242 residual assets, 52 with a variant-A observation and 59 with a variant-B observation, all dated before 2026",
+      "LOOKBACK_FETCH.txt@b11d7534d0: 2,127 unique dates scanned from 2025-12-31 back to the 2020-03-06 floor; 436 of them have no partition",
+      "Worker scratch runs (not committed, worker data folder): the same replay over the 55-partition window gave NOW_CARRY_FORWARD 136 and NOT_RECOMPUTABLE 361; over 2026-01-01 onward, 226 and 271"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-b-2 1a.2 and 1b: NOW_CARRY_FORWARD is the last observed R1 price with its observation date, and NOT_RECOMPUTABLE is no partition or no valid row; the cell reads the window 2026-08-20..2026-10-13 (55 partitions).",
+  "world_is": "The window holds no R1 trade for 361 served rows, so they can only be carried forward from history before 2026-08-20. Reading to 2026-01-01 leaves 271 rows without a window trade. The lookback to 2020-03-06 (lookback.csv) gives 285 NOW_CARRY_FORWARD, 59 of them observed before 2026, and 212 NOT_RECOMPUTABLE. For 190 of the 242 residual assets no R1 trade exists in any partition from 2020-03-06 to 2026-10-13."
+}
+```
+
+## ADVI_BDPRCE-D1-W6-S2 -- Eight bond and certificate rows in the window carry an executed price exactly 100 times the served unit price (1.0419 served, 104.19 traded), so applying R1 unchanged would move them by a factor of 100.
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W6-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~6",
+  "surfaced_at": "2026-10-14T00:47:00Z",
+  "one_line": "Eight bond and certificate rows in the window carry an executed price exactly 100 times the served unit price (1.0419 served, 104.19 traded), so applying R1 unchanged would move them by a factor of 100.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BEFORE_AFTER.csv@b11d7534d0: MIAMI-DADE CNTY FLA EDL FACS A 5.25% 04/01/2031, 2026-10-09: old 1.0419, new_price_A 104.19, flags estimated_row=0|scale_100x",
+      "BEFORE_AFTER.csv@b11d7534d0: MISSOURI ST HEALTH & EDL FACS 5% 05/01/2033, 2026-10-09: old 1.0401, new_price_A 104.01, flags estimated_row=0|scale_100x",
+      "REPLAY.json@b11d7534d0: scale_100x 8, all in class CHANGED",
+      "data/black_diamond/scripts/silver/bd_price_rule.py@8956787a11: clause 3 reads the price column as the executed price per unit and applies no scale"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO ruling R1 clause 3, as bd_price_rule.py states it: the value is the trade's own executed price per unit (the price column), with no scale handling; served prices are per unit of 1.",
+  "world_is": "For eight changed rows the R1 price is 100.0 times the served price within 1e-3. All eight fall between 2026-09-16 and 2026-10-09 and all are bond or certificate names. The replay flags them scale_100x and does not decide the scale rule; the 8 rows need a ruling before any served price moves."
+}
+```
+
+## ADVI_BDPRCE-D1-W6-S3 -- Trade rows land in partitions dated after their trade date: 229,666 of 5.29 million rows in the 2026 partitions, 61,583 of them more than one day late and up to 519 days late; the lookback reads only one partition after the trade date.
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W6-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~6",
+  "surfaced_at": "2026-10-14T00:47:00Z",
+  "one_line": "Trade rows land in partitions dated after their trade date: 229,666 of 5.29 million rows in the 2026 partitions, 61,583 of them more than one day late and up to 519 days late; the lookback reads only one partition after the trade date.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Worker scratch measurement (not committed): silver/transactions 2026-01-01..2026-10-13 read by aws s3api get-object; 5,294,039 trade rows, 5,064,373 with file date equal to trade date, 229,666 with file date after trade date, none before; lag over 1 day 61,583, maximum 519",
+      "REPLAY.json@b11d7534d0: file_day_vs_trade_date_differs 33, seam_rows_in_window 9409",
+      "REPLAY.md@b11d7534d0: Late-landed trades paragraph under What stays unknown"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-b-2 1a.2: keyed on trade_date, reading the partition of that date and the next partition when a row of the target trade_date sits there; a row belongs to the target date when its trade_date equals the target date (CTO ruling clause 6).",
+  "world_is": "No 2026 partition holds a row dated before its own file date. 9,409 trade rows dated inside the window sit outside their trade-date partition, and 33 served rows price differently under own-day keying. Rows landing more than one day late fall outside the lookback's t and t+1 read, so a pre-2026 observation from the lookback may be older than the true latest. The window R1 reads every 2026 partition, so it is unaffected; trades that land after 2026-10-13 are not seen."
+}
+```
+
+## ADVI_BDPRCE-D1-W6-S4 -- The canonical window holds no carry_forward source value, so the order's estimated-row clause (linear_interpolation or carry_forward) selects linear_interpolation rows only.
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W6-S4",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~6",
+  "surfaced_at": "2026-10-14T00:47:00Z",
+  "one_line": "The canonical window holds no carry_forward source value, so the order's estimated-row clause (linear_interpolation or carry_forward) selects linear_interpolation rows only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "canonical_prices.parquet ETag 0ba9bd51fa175917b8d2813b41d78f5d, LastModified 2026-10-13T12:48:05Z, read by aws s3api get-object into the worker data folder: window source counts as stated",
+      "ESTIMATED_ROWS.csv@b11d7534d0: 18,566 lines, canonical_source linear_interpolation on every line",
+      "REPLAY.json@b11d7534d0: estimated_rows_listed 18566"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-b-2 1a.3: list every (date, asset) whose canonical source is linear_interpolation or carry_forward and whose asset has at least one transaction_observed row in the window.",
+  "world_is": "In canonical_prices.parquet for 2026-09-16..2026-10-13 the source values are linear_interpolation 243,283, yahoo_finance 65,141, transaction_observed 1,657, scoped_override 120 and bd_txn_price 60; carry_forward appears 0 times. The estimated list therefore holds 18,566 linear_interpolation rows for 886 assets."
+}
+```
+
+## ADVI_BDPRCE-D1-W6-S5 -- silver/transactions has no object for 50 dates between 2026-01-01 and 2026-08-19, 8 of them weekdays, and for 436 dates in 2020-03 to 2025-12; the replay reads a missing date as a day with no trades.
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W6-S5",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~6",
+  "surfaced_at": "2026-10-14T00:47:00Z",
+  "one_line": "silver/transactions has no object for 50 dates between 2026-01-01 and 2026-08-19, 8 of them weekdays, and for 436 dates in 2020-03 to 2025-12; the replay reads a missing date as a day with no trades.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api get-object over silver/transactions/<date>.parquet for 2026-01-01..2026-08-19 (worker scratch, not committed): 50 NoSuchKey responses",
+      "LOOKBACK_FETCH.txt@b11d7534d0: NO_PARTITION lines for 2020-03-07..2025-12-27, 436 unique dates, 101 weekdays"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-b-2 1b: NOT_RECOMPUTABLE is no partition or no valid row; a missing partition makes the day unrecomputable, and a day present with no trade for the asset is a carry-forward.",
+  "world_is": "The missing weekday partitions in 2026 are 2026-02-18, 04-03, 04-21, 05-01, 05-25, 06-19, 06-22 and 06-23. 2026-06-22 and 06-23 are not market holidays. None of the window's 20 weekday partitions is missing. In 2020-03 to 2025-12 there are 436 dates without a partition, 101 of them weekdays."
+}
+```
