@@ -1903,3 +1903,51 @@
   }
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W28-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~28",
+  "surfaced_at": "2026-10-14T18:51:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "one_line": "MP-pd-4 does not say which HTTP status carries a REFUSED verdict; the client throws on every non-2xx, so a REFUSED sent with a non-2xx status shows its status and body, not its reason and detail.",
+  "spec_asserts": "setPersonAccess returns the verdict object whether WRITTEN or REFUSED and throws only on a transport failure, the way narrowGrant handles a refusal (worker face lines 52-53); a REFUSED verdict shows its reason and detail on the page and a 403 shows 'not allowed' (lines 66-67).",
+  "world_is": "narrowGrant's readJson throws on every non-2xx, so both halves of that sentence hold only if the writer answers REFUSED with a 2xx, and the contract (lines 46-47) does not state the status. Built: a non-2xx throws AdminStatusError carrying its status and body, a 2xx returns the verdict object, a 403 reads 'not allowed' and is never retried. Not checked against the live writer (no network call in this cell). If the writer answers REFUSED with a non-2xx, the page shows 'admin API <status>: <body>' and not the reason.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "mcportal@c24bcd0 src/api/admin.ts statusOrJson(): throws AdminStatusError when !response.ok, before any verdict is read",
+      "mcportal@17dcbb2 src/api/admin.ts readJson() and narrowGrant(): throws on !response.ok, the refusal path the contract cites",
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pd-4.people-page-controls.md@ef2a5b14e1 lines 46-47, 52-53, 66-67"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W28-S2",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~28",
+  "surfaced_at": "2026-10-14T18:51:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The route header at mcportal 17dcbb2 lists ten /api/admin routes, but the client also calls GET /api/admin/people (MP-pc-3) and that route is absent from the header.",
+  "spec_asserts": "The header of src/api/admin.ts is the fixed set of /api/admin routes the client calls, as its first line says.",
+  "world_is": "At 17dcbb2 getPeople() calls /api/admin/people and the header omits it, so the header is one route short of the calls. This cell adds the two person-access route lines and reworded the header so it no longer claims the People read is listed; it does not add the missing line, which is a neighbouring defect outside the order. Nothing reads the header at runtime.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "mcportal@17dcbb2 src/api/admin.ts lines 2-12: the header's route list, with no GET /api/admin/people line",
+      "mcportal@17dcbb2 src/api/admin.ts getPeople(): fetch('/api/admin/people', { credentials: 'include' })"
+    ]
+  }
+}
+```
