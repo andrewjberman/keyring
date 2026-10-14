@@ -2998,3 +2998,73 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
   }
 ]
 ```
+
+## Rows filed by 0.9.0_WK_MDPF_DEMQUE~51 (DQ-t-59, merged by the issuer: union by id of the worker branch onto HEAD)
+
+```json
+[
+  {
+    "id": "MDPF_DEMQUE-D1-W51-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~51",
+    "surfaced_at": "2026-10-14T04:34:48Z",
+    "one_line": "The order's message-file instruction ends each commit with a Co-Authored-By line naming Claude Sonnet 5.5, but the agent executing this order is Claude Haiku 5.5; the commits of this order carry the Haiku 5.5 trailer.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t59 (dispatch instruction): the commit message file ends with 'Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>'.",
+    "world_is": "The executing model is Claude Haiku 5.5 (claude-haiku-5-5). The session attribution instruction names Claude Haiku 5.5 for commits this agent creates, so the commits of this order end with 'Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>'. The same mismatch is recorded as MDPF_DEMQUE-D1-W52-S1 and MDPF_DEMQUE-D1-W53-S1. No check or verdict depends on the trailer's model name.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t59.porting-verdict-column.md (Proof of spec and REPORT wording) @2de831ee1b",
+        "session attribution instruction for commits created by this agent (Claude Haiku 5.5) @2de831ee1b",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/surprise-channel/investigations/INVESTIGATION_v1.md (row MDPF_DEMQUE-D1-W53-S1, the same mismatch) @2de831ee1b"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W51-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~51",
+    "surfaced_at": "2026-10-14T04:34:48Z",
+    "one_line": "The signed never-widen pair and the check docstring name 326 CUSIPs in the store; the live index read by the real preview holds 483 rows, so the stated row count is stale. AC2 accepts 300 or more, so its verdict is unaffected.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Never-widen pair B COO half (ledger/NEVER_WIDEN_R9_YAHOO_B_COO_HALF.md: 'the porting-test request (326 CUSIPs, 3,195 cells)' and 'row count 326') and dq_t59_real.py docstring ('rows == the number of CUSIP directories in the store (326 today, read live)').",
+    "world_is": "The real index read by price_store.py --index-preview (S3 read only, verdicts file absent) returned rows=483, the nine old columns plus porting_verdict, every row UNVERIFIED, in this worker's run on 2026-10-14 before this row was surfaced. The figure 326 is from an earlier read and does not describe the store today.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_DEMQUE/ledger/NEVER_WIDEN_R9_YAHOO_B_COO_HALF.md @2de831ee1b",
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t59_real.py (docstring, arm 1) @2de831ee1b",
+        "live read: python data/mdpf/scripts/demque/price_store.py --index-preview (rc=0; rows 483; sample_cusips 00039J772, 00130H105, 001419423) in this worker's run on 2026-10-14"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W51-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~51",
+    "surfaced_at": "2026-10-14T04:34:48Z",
+    "one_line": "A plain script run of price_store.py cannot resolve lib.opal_naming, so the default S3 root (s3_root) would fail; the worker added a repo-root sys.path guard at the top of price_store.py, the same pattern priority_gate.py uses.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t59 (AC2 invocation, run from the worktree root): python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t59_real.py runs price_store.py --index-preview against the real S3 index, with no PYTHONPATH set.",
+    "world_is": "With PYTHONPATH unset, a script run puts the script directory on sys.path, not the repo root; 'import lib' resolves to an unrelated site-packages namespace package (pywin32 win32 lib) that has no opal_naming. s3_root() therefore cannot import lib.opal_naming on a plain run. The worker added ROOT (four levels up from the script) to sys.path in price_store.py, with a guard, before the pandas import. After that change AC2 reads VERDICT-REAL-OK.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/price_store.py s3_root() (from lib.opal_naming import address) @2de831ee1b",
+        "data/mdpf/scripts/demque/priority_gate.py lines 26-30 (the ROOT sys.path pattern) @2de831ee1b",
+        "measured in this worker's run on 2026-10-14: PYTHONPATH unset; find_spec('lib') from a cwd outside the repo returns the site-packages win32 namespace package"
+      ]
+    }
+  }
+]
+```
