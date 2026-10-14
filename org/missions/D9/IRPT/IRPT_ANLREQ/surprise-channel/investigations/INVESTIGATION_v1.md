@@ -13753,3 +13753,63 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W133-S3 -- OBSERVATION: the order names the staff-submit check as 'lambda_function.py line 1182' with no path; the file is infra/aws/lambda/ticket_center/lambda_function.py in the workspace repo, and the portal worktree does not carry it
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W133-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~133",
+  "surfaced_at": "2026-10-14T16:55:29Z",
+  "one_line": "OBSERVATION: the order cites the ticket service as 'lambda_function.py line 1182' with no path; the file is infra/aws/lambda/ticket_center/lambda_function.py in the workspace repo (located with comp-find on _create_firm_allowed), not in the portal worktree the order names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-325 step 3: 'the route a staff filer takes ... CREATE ... lambda_function.py line 1182 ... So J7 is PORTAL-ONLY: no Lambda change. Confirm this with the file and lines in your record.' No path for the file is given.",
+  "world_is": "The ticket service source is infra/aws/lambda/ticket_center/lambda_function.py (workspace repo, HEAD 9fb71d9529). Read only: lines 1181-1182 (the SUBMIT answers.firm check), 1217-1262 (create_ticket, the CREATE path the staff form takes), 359-372 and 413-426 (the firm checks). No Lambda change was made; the file is outside the grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:1181-1182 (submit path: answers.firm must be the caller's own firm), read at workspace HEAD 9fb71d9529",
+      "infra/aws/lambda/ticket_center/lambda_function.py:1217-1262 (create_ticket: req_firm = answers firm at 1257; _create_firm_allowed refusal 400 at 1261-1262)",
+      "comp-find '_create_firm_allowed' --files: DEF hit infra/aws/lambda/ticket_center/lambda_function.py (DENOMINATOR 42 hits across 80421 files)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded because the order named a line without its file: the worker had to locate the file. The finding that J7 needs no Lambda change stands on the CREATE path read in S4, not on the path."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W133-S4 -- OBSERVATION, ARMED: the chooser offers every Global READY firm, but the ticket CREATE accepts a staff filing only for a firm inside the principal's allowedFirmIds and profile scope, and the upload door runs before CREATE
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W133-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~133",
+  "surfaced_at": "2026-10-14T16:55:29Z",
+  "one_line": "OBSERVATION: the staff chooser offers the Global READY firms; the ticket CREATE refuses a staff filing for a firm outside the principal's allowedFirmIds or profile scope with a 400, and the upload door has already been called for that firm by then.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "TO AR-y-325 step 2 (b): the chooser's list is the served list an Opal staff user may choose from. Step 3: 'if CREATE refuses a staff filing for a partner firm in a way the source shows, file a BLOCKING row naming the check'; and 'the synthetic staff user of the FWD-1 run needs the chosen firm in its allowedFirmIds (a property of that user, not of this cell)'.",
+  "world_is": "create_ticket refuses with 400 (requester_firm outside the principal's allowed firms) unless _firm_allowed (the principal's allowedFirmIds is ALL or a csv that covers the firm) AND _in_profile_scope (the INTERNAL profile scope is None or contains the firm) both hold. The staff form calls the upload door (analysisRequest.ts:245 and :251, selectedTenant = the chosen firm) before the CREATE (:279), so a refused firm has reached the door first; whether the door checks the firm was NOT read. The page then shows TICKET_FAILED_SENTENCE. An ALL principal passes both checks, so the FWD-1 user is unaffected only if its allowedFirmIds holds the chosen firm. Not BLOCKING: the refusal is conditional on the principal, not on the internal class, and the order itself assigns it to the user.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:359-372 (_firm_allowed: allowedFirmIds ALL or csv; _create_firm_allowed = _firm_allowed AND _in_profile_scope), read at workspace HEAD 9fb71d9529",
+      "infra/aws/lambda/ticket_center/lambda_function.py:413-426 (_resolve_scope and _in_profile_scope: scope None means unrestricted; a firm outside the scope is refused)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:1261-1262 (CREATE refusal 400 'requester_firm ... is outside the principal's allowed firms')",
+      "portal/src/pages/TicketCenter/analysisRequest.ts:245 and :251 (upload door before CREATE) and :279 (createTicket), at 6f4e5f67"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED because the control still offers a served firm the principal may not file under, so a staff filer who picks one sends an upload to the door and is then refused. The disarm is the issuer's: narrow the chooser to the principal's own list, or read the upload door's firm check and record it. The worker did not change either."
+}
+]
+```
