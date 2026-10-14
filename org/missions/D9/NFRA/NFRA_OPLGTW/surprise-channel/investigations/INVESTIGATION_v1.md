@@ -13926,3 +13926,128 @@ name the one known failure instead of silently inheriting it.
   "notes": "The commit-gate also printed UNRESOLVED-LANE for FIRM_ID = 'opal' at harvest_published.py:36 (no file_lanes declaration); advisory in that run. The ruff and py_compile limbs were clean after two fixes in the worker's own files."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W74-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~74",
+  "surfaced_at": "2026-10-14T14:56:10Z",
+  "one_line": "candidate_universe rows carry security_key on 3 of 2,856 rows of the 2026-10-02 object (ASML is in the universe under ticker B929F4 with no key), so a security_keys filter silently returns zero rows; harvest_query_columns refuses security_keys for this dataset.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read-only live list and get of amgt/harvest/gold/candidate_universe/date=2026-10-02/candidate_universe.json (box credentials, 2026-10-14): rows 2856, non-null security_key 3, distinct 3, ticker non-null 2856; ASML row ticker B929F4 name 'ASML Holding NV'",
+      "infra/aws/ec2/opal-gateway/app/harvest_figures.py _parse_args candidate_universe refusal @d79e6dda9a",
+      "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G1_harvest.md section 3 harvest_query_columns security_keys: optional list"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "harvest_query_columns takes optional security_keys on candidate_universe (G1 section 3: 'security_keys: optional list'); a key filter returns the universe rows of that security.",
+  "world_is": "security_key is non-null on 3 of 2,856 candidate_universe rows; every row carries ticker and name. A key filter on this dataset answers 'not in the universe' for names that are in it.",
+  "notes": "This cell's disarm is the refusal (security_keys refused for candidate_universe, with the measured count in the message). Whether the universe should carry a key is the CRO's or the scanner owner's call; no contract edit by this seat."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W74-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~74",
+  "surfaced_at": "2026-10-14T14:56:10Z",
+  "one_line": "article_sentiment is an append-batch table (5 parts, 13,235 rows over all parts in the contract census); the face's rule 'the newest part of the dataset' returns one batch (2,674 rows, part 2026-10-03).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "G1_harvest.md section 4 article_sentiment: grain 'one row per scored article (article_key), FinBERT; parts are append batches'; freshness parquet_parts 5, rows_all_parts 13235",
+      "read-only live: harvest_query_columns('article_sentiment', ...) at d79e6dda9a read source_keys [amgt/harvest/gold/article_sentiment/date=2026-10-03/part-20261003T212418Z.parquet] denominator rows_in_object 2674",
+      "infra/aws/ec2/opal-gateway/app/harvest_figures.py dataset_note for article_sentiment @d79e6dda9a"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G1 section 3 harvest_query_columns reads 'the newest part/object of the dataset'; OG-gt-3 face applies that rule to every dataset other than the chatter and mention tables.",
+  "world_is": "For article_sentiment the newest part is one append batch, not the dataset: a sentiment answer built from it covers 2,674 of 13,235 scored rows and the envelope does not say the total.",
+  "notes": "Built per the face and disarmed only partly: the body carries dataset_note and source_keys names the one part. ARMED until the issuer rules between reading every part of the prefix (five small parts) and refusing the dataset. This seat did not choose the read rule."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W74-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~74",
+  "surfaced_at": "2026-10-14T14:56:10Z",
+  "one_line": "bestdata, model_block and candidate_universe are JSON objects whose sub-fields (BEST_* per fiscal year, figure fields, candidate rows) the contract does not declare as columns; the tools declare them from one measured sample object each.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "G1_harvest.md section 4: bestdata columns 1FY, 2FY, 3FY, requests (object, object, object, array); model_block figures (array); candidate_universe rows (array); column_notes 'measured on 1 object (sample of 1)'",
+      "infra/aws/ec2/opal-gateway/app/harvest_figures.py BEST_FIELDS, MODEL_COLUMNS, CANDIDATE_UNIVERSE @d79e6dda9a"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The face: 'columns must be declared columns of the dataset's contract (an unknown column is refused harvest_bad_argument naming it)'.",
+  "world_is": "The contract declares no sub-field of these three JSON datasets; the declared list used by the tools is this seat's derivation from one sampled object each (17 BEST_* fields, 9 figure columns, 22 candidate row fields).",
+  "notes": "A sub-field that a later object carries and the tuple lacks is refused as an unknown column (explicit, not silent); a declared sub-field an object lacks reads null. The issuer or the contract owner can ratify the list."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W74-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~74",
+  "surfaced_at": "2026-10-14T14:56:10Z",
+  "one_line": "The figures grain is (scope, fiscal_year, mnemonic), and the face's figure field list omits scope; harvest_get_fundamentals model returns scope as well so a forecast row is not read as a reported figure.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "G1_harvest.md section 4 derived/model_block: 'one object per (security_key, pull stamp); figures[] one row per (scope, fiscal_year, mnemonic)'",
+      "read-only live: derived/model_block/ASML_NA_Equity newest object holds 870 figures; scope counts fiscal_year_line_item 799, forecast 48, header 23; no (mnemonic, fiscal_year) pair spans two scopes",
+      "infra/aws/ec2/opal-gateway/app/harvest_figures.py FIG_FIELDS @d79e6dda9a"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The face, section 1: model figures carry (mnemonic, fiscal_year, value, unit, vintage, source).",
+  "world_is": "The grain names scope; the measured object has no collision that scope would separate, but forecast rows (scope forecast) sit beside reported line items in the same figures array.",
+  "notes": "scope is an addition to the returned fields, not a removal. No duplicate was measured; the field is kept because it states what kind of figure each row is."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W74-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~74",
+  "surfaced_at": "2026-10-14T14:56:10Z",
+  "one_line": "A call refused on its arguments (unknown kind, dataset, column or op; security_keys on candidate_universe) writes no audit row: the typed base audits admission refusals and served calls, and no helper audits a denied argument.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/harvest_read.py module docstring: 'Every call writes one audit record'",
+      "infra/aws/ec2/opal-gateway/app/harvest_typed.py audit_ok: 'The one audit row of a served call' (served-only)",
+      "infra/aws/ec2/opal-gateway/app/harvest_figures.py _parse_args runs before ht.admit_typed @d79e6dda9a"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "harvest_read.py states every call writes one audit record; the OG-gt-0 base states audit_ok is the one audit row of a served call.",
+  "world_is": "The argument refusals of the figures tools return before any audit and before any S3 call; a tool module may not import get_current_principal, so it cannot audit a denied argument itself.",
+  "notes": "No data is read or served on these calls, so the exposure is nil; the gap is the audit trail. The issuer can rule either a denied-argument audit helper in harvest_typed (a base edit) or the rule restated as served calls plus admission refusals."
+}
+```
