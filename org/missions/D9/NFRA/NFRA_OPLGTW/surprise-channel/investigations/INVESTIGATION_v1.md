@@ -13635,3 +13635,30 @@ name the one known failure instead of silently inheriting it.
   "notes": "Needed from the registry owner before landing: a reader row for NFRA_OPLGTW on the four prefixes in infra/logic/registry/ (outside this order's write grant), or a deliberate-departure entry Andrew acknowledges (R20). AC1 and AC2 pass on the worktree; the order stays open until the module lands."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W72-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~72",
+  "surfaced_at": "2026-10-14T15:41:32Z",
+  "one_line": "Ruling A1's premise fails for research_dossier: its canonical underscore spelling holds objects (both spellings hold ASML keys), so the prefer-canonical rule reads only the canonical listing and drops the hyphen-only dates.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read-only list_objects_v2 of amgt/harvest/gold/research_dossier/ this session -- KeyCount 1000 (the page cap), not 0; the ruling (A1) states the canonical underscore spellings hold 0 objects",
+      "read-only list_objects_v2 of amgt/harvest/gold/research_dossier/security_key=ASML_NA_Equity/ this session -- 14 keys, lexicographically first as_of=2026-09-29; amgt/harvest/gold/research-dossier/security_key=ASML_NA_Equity/ -- 10 keys, first as_of=2026-09-24 (dates the canonical listing does not carry)",
+      "read-only list_objects_v2 of amgt/harvest/gold/research-dossier/ this session -- KeyCount 846 in full; the three other canonical underscore spellings (research_continuation, research_report, research_report_extract) hold 0 objects, as S4 measured",
+      "infra/aws/ec2/opal-gateway/app/harvest_identity.py _live_prefix() and KEYED in worktree wk-NFRA_OPLGTW-72 (Ruling A1 applied; the research-dossier pair folded to its canonical entry, 31 entries)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Ruling A1 (issuer, on the naming limb of cell OG-gt-1): the four hyphenated prefixes' canonical underscore spellings hold 0 objects, so the module reads the canonical spelling and the hyphen spelling only when the canonical holds no key.",
+  "world_is": "amgt/harvest/gold/research_dossier/ holds objects, and so does the hyphen spelling; for ASML NA the hyphen spelling carries as_of dates (2026-09-24 onward) that the canonical listing does not. Under the A1 rule the module reads the canonical spelling only, so the coverage row and the covered set omit the hyphen-only dates. The research-dossier pair is one canonical entry (31 entries, not the census's 32).",
+  "notes": "The three other prefixes match the ruling (canonical holds 0; S4 holds). The newest dossier stamp for ASML is in the canonical spelling, so the coverage newest and the covered-listing answer are not moved by this; the undercount of objects and of any hyphen-only key is not measured. The disarm (a fold, a read of both spellings, or the ruling's owner) is the issuer's. The row mints no tool registration and no pinned-count move; the 31-entry census is the worktree's, for the issuer to carry at the merge."
+}
+```
