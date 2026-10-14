@@ -9,7 +9,7 @@ Andrew's P2 Ticket Center deliverable, due **Oct 24** (`ANDREW_DIRECT_20261014_1
 These bounds hold:
 - one role, `opal-ticket-api-role`;
 - two actions, `s3:GetObject` and `s3:PutObject`;
-- one prefix per bucket, `portal/<firm>/state/ticket-attachments/trade-form/*`, on `opal-data-49financial`,
+- one prefix per bucket, `portal/<firm>/state/ticket_attachments/trade-form/*`, on `opal-data-49financial`,
   `opal-data-inflection` and `opal-data-cottonwood`;
 - no `s3:ListBucket`, no other prefix, and nothing under cottonwood's restricted prefix;
 - CORS with the portal's DEV and PROD origins exactly (no `*`), `PUT` and `GET`, `Content-Type`, exposing `ETag`, 300 s.
@@ -48,3 +48,11 @@ erases M02. So:
 ## Date
 
 The rows and the pair should land by **Oct 20**, which leaves TCKT_VNEXT's release and the synthetic run before Oct 24.
+
+## AMENDMENT 1 (~20:1xZ): the prefix is `ticket_attachments` (snake_case)
+
+`2.0.0_SA_COO~V2`'s correction (its msg 7843; request re-committed @8c10f053d1 on origin/box/dell2): the naming gate refuses the
+kebab-case table, because NAMING_SCHEMA `key.table_case` is snake_case. The prefix per firm is
+`portal/<firm>/state/ticket_attachments/trade-form/`. Every registry row and policy statement takes the address from
+`lib/opal_naming.py address()`, never typed; a kebab-case row would admit the wrong objects. Role, actions and buckets are
+unchanged.
