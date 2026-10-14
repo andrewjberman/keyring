@@ -773,6 +773,75 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     "spec_asserts": "RIV-xf-1 AC2 (cell section 4, check test_ac2): with every gate on, the holdings plan is the 13 funds in one unit, and no benchmark is queried on its own.",
     "world_is": "The no-sink holdings plan returns the bloomberg_primary funds only, 7 under every gate on. The 13-fund set is reached only through funds_for_day with a sink (issuer-first fallbacks), which the check does not call. The single-unit half holds. Removing the two entries cannot make the sinkless plan carry the six issuer-first funds, because request_plan is code outside this order's paths. Whether the served plan takes the sink path was not measured by this seat.",
     "notes": "Not worked around: the check and collector_bloomberg.py are outside this order's paths, and the expectation belongs to the issuer. The order stays open on AC2. Ruling needed from 2.0.0_SA_COO~V1 on whether AC2 reads the sink plan (funds_for_day) or the bloomberg_primary set, with 1.0.0_SA_CTO~DELL1 if the criterion changes."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W40-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~40",
+    "surfaced_at": "2026-10-14T14:02:24Z",
+    "one_line": "RIV-xe-3 union reader resurrects a voided action: dramatic_move's actions-void-<revision> objects are read by load_actions as rows and never applied, so a void whose action sits in an older pull comes back under the union (the old latest-pull rule dropped it only by accident). price_series honors voids; the G5 reader does not.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~V1",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-xe-3 cell (Interface): load_actions keeps every EVENT row from EVERY pull, de-duplicated on the action's own key. The cell names no void object and says every other function of the file is out of bounds.",
+    "world_is": "The corporate_actions partition also holds dramatic_move VOID objects, actions-void-<revision>.parquet (dramatic_move.py:435-436 VOID_SCHEMA carries no row_kind, as_of or revision column; written at :463-468). price_series.py:216-256 (_voids, _actions) honors them and drops the named (revision, security_id) rows; gold_trade_schedule.py load_actions honors none. Probe (scratch, not committed): one action in pull r1, a void naming r1, a short pull r2 for the same security. The OLD reader returns ex_dates [2026-09-25] (r1 dropped by the latest-pull rule); the NEW reader returns [2026-06-01, 2026-09-25] with label r1+r2, so the voided r1 action is back in G5. Not measured against the live store (no S3 read).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/price_series.py@9a1ce314dc :216-256",
+        "data/etfs/scripts/rivalfunds/dramatic_move.py@9a1ce314dc :435-436 and :463-468",
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py (worktree C:/tmp/wk-riv-r30-40, RIV-xe-3 edit, uncommitted at probe time) :983-1017",
+        "scratch probe C:/tmp/wk-riv-r30-40/.scratch/void_probe2.py: OLD ex_dates ['2026-09-25'], NEW ex_dates ['2026-06-01', '2026-09-25'] label r1+r2"
+      ]
+    },
+    "notes": "Form only. Whether load_actions applies voids is not a question the cell names and the CTO ruled the union; the issuer owns the merge and the xe-2 gate, so the disarm sits there. Not fixed by this worker: out of the cell's bounds."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W40-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~40",
+    "surfaced_at": "2026-10-14T14:02:24Z",
+    "one_line": "RIV-xe-3 cell names two row kinds (event, status) and gives no rule for any other row_kind; the worker applied the old latest-pull rule to every non-event row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-xe-3 cell (Interface): an EVENT row is kept from EVERY pull; a STATUS row follows the rule as it was. No rule is stated for a row whose row_kind is neither.",
+    "world_is": "Producers write only event and status: enrichment_bloomberg.py:211 (status) and :233 (event); dramatic_move.py:257 (event). The rows that carry no row_kind are the void objects (dramatic_move.py:435-436); they reach the non-event branch with a NaN key and are dropped (scratch probe C:/tmp/wk-riv-r30-40/.scratch/void_probe.py: one row returned, the action). load_actions therefore reads every non-event row by the old rule (_is_event and the keep mask in gold_trade_schedule.py).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py@9a1ce314dc :211 and :233",
+        "data/etfs/scripts/rivalfunds/dramatic_move.py@9a1ce314dc :257",
+        "scratch probe C:/tmp/wk-riv-r30-40/.scratch/void_probe.py: OLD 1 row, NEW 1 row (the action; the void dropped by both)"
+      ]
+    },
+    "notes": "Form only. No producer writes another kind today; the choice matters only for a future kind or a frame without the column."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W40-S3",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~40",
+    "surfaced_at": "2026-10-14T14:15:34Z",
+    "one_line": "AMENDMENT 1 criterion AC4 cannot pass as written: its void names security_id 'a us equity' and must drop the 'A US Equity' rows, but price_series' normalisation (which the amendment says to reuse exactly) is case-sensitive, so the rows stay in both readers.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMENDMENT 1 (order section 1) and check test_ac4: the void object names security_id 'a us equity' and the rows of pull 'full' for 'A US Equity' are dropped; the union reuses price_series._voids and the price_series normalisation exactly, without a copy.",
+    "world_is": "price_series._norm_key (price_series.py:124-125) is strip and space-to-underscore, case-sensitive: 'A US Equity' gives 'A_US_Equity', 'a us equity' gives 'a_us_equity'. Scratch probe on the AC4 store (not committed): price_series._voids = {('full', 'a_us_equity')}; price_series._actions keeps ex_dates [2026-03-02, 2026-06-01, 2026-09-25]; load_actions keeps the same three (3 uris). The verbatim AC4 test therefore fails (1 failed) while the same void spelled 'A US Equity' drops the two rows (worker test test_ac4_mechanism_with_the_stored_key_spelling passes). dramatic_move.py:452-456 (void_rows) refuses a void whose revision and normalised security_id match no stored row, so no producer writes the lowercase spelling.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/price_series.py@9a1ce314dc :124-125 (_norm_key) and :223-234 (_voids)",
+        "data/etfs/scripts/rivalfunds/dramatic_move.py@9a1ce314dc :452-456 (void_rows stored-row check)",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round30/checks/xe3_union_reader_check.py@d8ae1862ca :105-123 (test_ac4, void security_id 'a us equity' at :115)",
+        "scratch probe C:/tmp/wk-riv-r30-40/.scratch/ac4_ps_probe.py: price_series and load_actions both keep ex_dates [2026-03-02, 2026-06-01, 2026-09-25]"
+      ]
+    },
+    "notes": "Not fixed by this worker. A case-folded match would make load_actions honour more voids than price_series, which the amendment rules out. Needs the issuer's ruling: correct the AC4 void spelling in the check (the issuer's file, outside this order's paths) or rule case-folding for both readers. The order stays open on AC4 until then."
   }
 ]
 ```
