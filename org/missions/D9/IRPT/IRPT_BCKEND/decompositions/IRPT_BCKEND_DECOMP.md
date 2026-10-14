@@ -3877,3 +3877,17 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r194/p194_cells.py`, dry-run at the b
 
 fanout: 1 of 1 chains, cap 8, reason: one characterization with no sibling cell. One worker spawn (slot ~383).
 
+## 187. ROUND 195, WORKSTREAM ~P (2026-10-14 ~15:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round-195 analysis (@9a5f871655, msg 7686) and the CVO slug for round 194 (adjudication v95))
+
+Round 194 closed (IB-pr-538 @55d4929a90; packet @98209c1a0c). The CTO's round-195 list is one READ cell and then packet v3 (v2 plus the differential as the signed scope): **CUT now** as `IB-pr-539`. Per firm, run the LIVE bundle's bytes as downloaded and the PIN on the same custody pin and the same source receipts; compare the rows, the account set, the changed values (with a stated tolerance and the largest delta) and the gate; attribute every difference to the two signed changes, to a commit W383-S2 names (account_id, the keyed gate, the CUSIP fallback, multi_asset), or UNATTRIBUTED, which is a STOP; run it twice for one digest with a planted mutant; write packet v3. The apply follows only after both halves sign v3 (**NOT cut now: an unmet dependency; owner me**).
+
+The issuer took a direct read of the same builds before the cut (scratch outside the repository, one pass each, receipts seeded from the pin build): 49financial 32 changed SECURITY nodes (asset_class only, to cash), Inflection 841 (asset_class only, to cash), Cottonwood 485 (asset_class 253, asset_class_basis 236, sub_asset_class 51; the signed cash rule is 249 of the 253), no node added or removed, `clocks` differing only by its wall-clock timestamp. The order carries those figures as a cross-check, not an input. The cut is therefore not blind: Cottonwood has a measured scope beyond the signed rule, and the attribution to named commits is what decides whether it is a W383-S2 scope or a STOP.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r195/p195_cells.py`, dry-run at the base: IB195-1 AC1, AC2, AC3 all FAIL (no record, no packet v3); the positive control (a throwaway git repo with three commits and synthetic records in the flat shapes of the real artifacts; `control195.py`) passes all three, and twenty negatives each fail their own arm. This control was written from the real records' shapes after round 194's slip.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-539` | the live-against-pin differential per firm on the same custody pin and receipts (rows, account set, changed values and the largest delta, the gate), every difference attributed to a signed change or a W383-S2 commit (UNATTRIBUTED is a STOP), two runs one digest, a planted mutant, and packet v3 = v2 plus the differential as the signed scope; reads only | FWD-3 | SERVED (downloads the live bundles by version id, builds candidates from served sources; writes only the worker's records) | IB-pr-538 (merged) | P195-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one differential with no sibling cell (the per-member hybrid builds run inside it). One worker spawn (slot ~384).
+

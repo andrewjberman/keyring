@@ -1255,3 +1255,8 @@ which is item 5. The uncensused `taxsma_assets/` gold in `opal-data-49financial`
 each) is client data. `4.0.0_SA_CRO~Z` contracts it as a G2 part, as the Tax SMA adapter's served form.
 
 CONTRACTS-only; ENDPOINT unchanged. The census has landed 6 of 6 groups.
+
+**G2e (Tax SMA assets gold, `parts/G2e_taxsma_assets_gold.md` @2a78786dda, msg 34122):** the table is
+`mdpf/<firm>/gold/taxsma_assets/` in the per-firm buckets (49F 13 accounts, Cottonwood 2, 0 behind, 0 last-4 collisions).
+It is the Tax SMA adapter's served form behind `client_get_holdings` / `client_get_profile` (Ruling 1). There is no separate
+`client_get_taxsma_accounts` tool. The census totals 308 contracts.

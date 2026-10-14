@@ -1,5 +1,5 @@
 {
-  "contract_version": "0.4.2",
+  "contract_version": "0.4.3",
   "lineage": [
     {
       "contract_version": "0.1.0",
@@ -25,6 +25,11 @@
       "contract_version": "0.4.1",
       "sha256": "c43306eb8681648025fbdbe548afc9de3d175d132ab9db81afcc42f0630124e5",
       "reason": "the 0.4.1 bytes, before the absent-kind carrier: an absent form was {absent} only, and the case of an asset class the household holds none of was an absent form; 0.4.2 adds kind beside absent (three kinds, NO_SOURCE_YET, INSUFFICIENT_HISTORY, SOURCE_BREAK) and makes the none-held case the text UNHELD inside a by_row asset-class map"
+    },
+    {
+      "contract_version": "0.4.2",
+      "sha256": "e9c389b75c1981bfe8a2aee9ebb8b0b21f45c686071b75950bb5db2e806e151d",
+      "reason": "the 0.4.2 bytes, before the absent_rule says that a window the account did not span prints words and never the not-held dash: 0.4.3 changes that one clause of document.absent_rule and no member"
     }
   ],
   "project": "IRPT_DASHBD",
@@ -189,7 +194,7 @@
       "gain_loss_review_by_account",
       "disclosure"
     ],
-    "absent_rule": "ABSENT is never zero. A figure with no value holds the form {\"absent\": reason, \"kind\": KIND} in values: the reason is printed in words, and KIND is one of document.absent_kinds. NO_SOURCE_YET: Opal has no source for the figure yet. INSUFFICIENT_HISTORY: the source holds too little history for the period, and the remedy is time. SOURCE_BREAK: a source repair is the remedy, as for a missing row, a lagging row, a null return or a disagreeing guard. A member with source ABSENT carries NO_SOURCE_YET. A window with no measured figure prints its absent form; a window the account did not span (NOT_SPANNED) carries INSUFFICIENT_HISTORY and prints the not-held dash. The kind is read from the kind field, never inferred from the reason text.",
+    "absent_rule": "ABSENT is never zero. A figure with no value holds the form {\"absent\": reason, \"kind\": KIND} in values: the reason is printed in words, and KIND is one of document.absent_kinds. NO_SOURCE_YET: Opal has no source for the figure yet. INSUFFICIENT_HISTORY: the source holds too little history for the period, and the remedy is time. SOURCE_BREAK: a source repair is the remedy, as for a missing row, a lagging row, a null return or a disagreeing guard. A member with source ABSENT carries NO_SOURCE_YET. A window with no measured figure prints its absent form; a window the account did not span (NOT_SPANNED) carries INSUFFICIENT_HISTORY and prints words, never the dash: the dash means only that the household holds none of the asset class (UNHELD). The kind is read from the kind field, never inferred from the reason text.",
     "absent_kinds": [
       "NO_SOURCE_YET",
       "INSUFFICIENT_HISTORY",
