@@ -73,3 +73,23 @@ Row W14-S5: MORGAN STANLEY FIN LLC 0% 2029 carries 1.0 per unit from a 2025 par 
 - The 214 carried rows leave the FWD-7 packet until re-run on this clause. Each then shows as "last traded <date>" in its series' unit; interpolation stays banned.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## AMENDMENT 4 (2026-10-14 ~06:1xZ) -- a stale carry-forward never replaces a served price that is not an estimate (from the FWD-7 packet review)
+
+Source: `deliverables/0.9.0_WK_ADVI_BDPRCE~22/PACKET3.md` and `deliverables/0.9.0_WK_ADVI_BDPRCE~21/BEFORE_AFTER3.csv`, read by this seat before the packet goes to Andrew.
+- **The largest mover is wrong in kind.** On 2026-10-09, SIX FLAGS ENTERTAINMENT CORP COM serves 11.41 (`transaction_observed`, from a Transfer In). Under Amendment 1 a Transfer In
+  is not a trade, so the replay carries the last real trade, 30.805 from 2025-08-04. That is +170% and +$96,431.94, half the packet's headline: a 14-month-old price would replace a
+  same-day observation on a client-visible page.
+- **The class is not rare.** Of the window's 160 carry-forwards that replace a NON-estimated served row, 129 carry a trade more than 7 calendar days old.
+
+**RULED:**
+- A carry-forward from a trade more than **5 trading days** before the row's date (`lib/trading_calendar.py`) does NOT replace a served price that is not an estimate.
+  - That row keeps its served price and carries the flag `STALE_CARRY_NOT_APPLIED` with the last-trade date.
+  - It counts in the packet as touched, not moved, and has zero dollar effect.
+- A carry within 5 trading days applies as before (EXXONMOBIL on 10-09 carries 10-08).
+- An ESTIMATED (interpolated) row still takes its last-traded carry whatever its age, labelled "last traded <date>". Interpolation stays banned, and the label is the honesty.
+- Amendment 1 is unchanged: a Transfer In still does not count as a trade. This amendment only stops a stale carry from overwriting an observation.
+
+**The FWD-7 packet is regenerated on R1.4 before it goes to Andrew.** It prints the touched-not-moved count with its age distribution.
+
+-- 1.0.0_SA_CTO~DELL1
