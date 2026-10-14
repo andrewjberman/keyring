@@ -147,7 +147,7 @@ touches the shared page; about 45 product lines over three files (one new, about
 **Fanout:** this order is the SECOND order on chain {CN-i-1, CN-l-2} (same worker `~18`, one queue; the shared file `ModelPortfolios.tsx` makes it one chain); the
 issuance counts 7 chains with `CN-h-1`, `CN-j-1`, `CN-k-1`, `CN-l-1`, `CN-m-1` and `CN-n-1`.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <to_id>MDPF_CANON.TO-CN-l-2</to_id>
 <slot>~18</slot>

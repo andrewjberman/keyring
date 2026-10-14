@@ -1308,3 +1308,583 @@
   "notes": "Resolved in the cell at commit. Recorded because the title change is a step the order did not name; no number, key or exit code moves."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W21-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~21",
+  "surfaced_at": "2026-10-14T14:41:00Z",
+  "one_line": "The CN-n-1 QA drive ended RAISED, not with a Global refusal: a gold-plane ViewPlaneError on the inflection scope (the D1-W16-S1 raise family) aborted build_all before the manifest was written, so manifest errors read ['_drive'] and carry no 'global' entry.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1 (routes to 1.0.0_SA_CTO, the owner of the gold-plane read; the same hazard as MDPF_CANON-D1-W16-S1, which this row does not disarm)",
+  "spec_asserts": "CN-n-1 Step 2 and FWD-3 third arm: on a one-firm Global pool build_all completes with status non-green, errors ['global'], writes 0 and blocked-calls 0, and the three firm scopes build as before.",
+  "world_is": "Measured 2026-10-14T14:35Z-14:36Z by one dry-run drive (r7_cn_n_1.py drive, one run, not repeated). run/qa_run.json: status RAISED, manifest_errors keys ['_drive'] only, trigger null. run/qa_run.log: 'QA DRIVE: build_all raised ViewPlaneError: REFUSING EMIT for inflection' (gold-plane peers do not sum to total_aua beyond the one-cent rule; levels not copied here). That is the W16-S1 mechanism (a re-sum against a headline total, raised outside isolation), now reached on the inflection scope on the plant's as-of 2026-10-13 rather than on Global. Served prefixes before and after are byte-identical (cmp run/served_before.json run/served_after.json). No S3 write: run/s3_ops.json blocked [] and calls s3.GetObject 1369, s3.ListObjectsV2 1100.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~21/run/qa_run.json (status RAISED, manifest_errors ['_drive'])",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~21/run/qa_run.log ('QA DRIVE: build_all raised ViewPlaneError')",
+      "org/missions/D8/MDPF/MDPF_CANON/surprise-channel/investigations/INVESTIGATION_v1.md row MDPF_CANON-D1-W16-S1 (the ARMED hazard this run reached)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "AC1 and AC2 were not run: the order's Step 3 says stop on them when build_all raises, and it did. The order stays open. The refusal arm is not demonstrated by this run. Served objects were not changed."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W21-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~21",
+  "surfaced_at": "2026-10-14T14:41:00Z",
+  "one_line": "The QA plant sets model_value to None on the one-firm lines without moving account_count, so the global cross-axis presence gate (v) fails Global's isolated scope with a CROSS-AXIS error, not the min-firms refusal the order names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "r7_cn_n_1.py plant_single_firm_pool docstring: only model_value at the last-date index of the other firms' fold lines is set to None; nothing else moves. CN-n-1 Step 3: a refusal text other than the min-firms prefix is a finding about the guard or the plant.",
+  "world_is": "run/qa_run.log: 'SCOPE FAILED (isolated): global -- AssertionError: CROSS-AXIS COHERENCE GATE FAILED (global)' with presence disagreement (v) on 2026-10-13 for two by_model lines whose model_value is None while account_count is set. The prefix 'GLOBAL MIN-FIRMS FOLD REFUSED' does not appear in the log. Whether guard_global_min_firms_fold ran before the cross-axis gate is not established here; its call site is mdpf_gold_consolidator.py:2943, directly after guard_global_served_identity at :2942.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~21/run/qa_run.log (SCOPE FAILED (isolated) global line and the (v) block)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_n_1.py (plant_single_firm_pool, the in-place model_value edit)",
+      "data/mdpf/scripts/gold/mdpf_gold_consolidator.py:2942-2943 (build_all guard call order)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired here: the plant and the instrument are read-only for this order. The issuer decides whether the plant must also move the count for the presence gate to read a clean one-firm day."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W21-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~21",
+  "surfaced_at": "2026-10-14T14:41:00Z",
+  "one_line": "On a RAISED drive the instrument's fallback manifest carries writes ['?'], so the run record reads writes=1 and the grade arm N6 (no manifest writes) would count a write that the call guard never saw.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-n-1 Step 2: the run expects writes=0 and blocked-calls=0; the bounds say no AWS write of any kind, by the run or by the worker, and the instrument blocks and records every non-read call.",
+  "world_is": "run/qa_run.json manifest_writes is ['?']: r7_cn_n_1.py cmd_drive sets the fallback manifest 'writes': ['?'] when build_all raises (the placeholder is counted as one write in the printed line). run/s3_ops.json: blocked [] and only s3.GetObject 1369 and s3.ListObjectsV2 1100 are recorded, so no write-kind call reached the guard. The Tee logger also printed 'I/O operation on closed file' on interpreter exit (stderr only; the record files were written before it).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~21/run/s3_ops.json (blocked [] and the call counts)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~21/run/qa_run.json (manifest_writes ['?'])",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_n_1.py:306 (the fallback manifest literal)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired here: the instrument is read-only for this order. The served prefixes were byte-identical before and after the run, so the placeholder is a record-keeping defect, not a write."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W23-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~23",
+  "surfaced_at": "2026-10-14T14:40:10Z",
+  "one_line": "The worker face names this order's row ids MDPF_CANON-D1-W17-S<k>, but this worker's serial is 0.9.0_WK_MDPF_CANON~23; the row gate requires W{n} to equal the committing worker's suffix, so the rows are minted MDPF_CANON-D1-W23-S<k>.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face section 5 (proof and rows): a row id on this project carries the dell1 infix MDPF_CANON-D1-W17-S<k>; the spawn rule: the allocator coordinate W{n} is the ~<n> of the serial, and the gate requires W{n} to equal the committing worker's suffix.",
+  "world_is": "This worker's serial is 0.9.0_WK_MDPF_CANON~23 (worktree C:/dev/wk-canon-r7-23). The W17 in the face is a template value that does not match the serial. A W17 row would be refused by the gate from this worktree, so the rows minted by this worker are W23. Nothing else in the cell is affected.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "slot23_CN-j-1.md section 5: 'A row id on this project carries the dell1 infix: MDPF_CANON-D1-W17-S<k>'",
+      "org/surprise_channel/schemas/investigation_item.schema.json id description: W{n} must equal the committing worker's suffix"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker. The issuer (2.0.0_SA_COO~D1) owns the face template; no cell content depends on the id number."
+}
+```
+```json
+{
+  "id": "MDPF_CANON-D1-W23-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~23",
+  "surfaced_at": "2026-10-14T14:40:10Z",
+  "one_line": "The AC3 real-data arm reads 95 dated category-views gold objects (49financial 27, inflection 26, cottonwood 20, global 22), not the 91 the order measured on 2026-10-13 (26, 25, 19, 21); four dated objects were added between the cut and this run. The arm reads all of them and passes 6 of 6.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face section 1 and the preflight: the four scopes hold 26, 25, 19 and 21 dated category-views objects (91) as measured 2026-10-13; AC3 reads 91 dated gold objects.",
+  "world_is": "Read-only paginated listing of portal/gold/mdpf/{scope}/category-views/ in opal-data-assets on 2026-10-14 returns 27, 26, 20 and 22 dated objects (95 in total). The publisher and the issuer's arm both follow the live listing; no expectation in the code or the arm depends on the count.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_j_1.py real (R0 CONTROL: {'49financial': 27, 'inflection': 26, 'cottonwood': 20, 'global': 22}; R3 190 cells, 0 unequal)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker. Counts are read at the run date; the grown tree is expected for a daily fire, and the figures in the order are a 2026-10-13 measurement."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W23-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~23",
+  "surfaced_at": "2026-10-14T14:44:05Z",
+  "one_line": "The order's AC1-AC3 expect strings (ending '-- and exit=0') and the face's timeout 120 prefix cannot both be recorded verbatim: the check prints the summary line and the echoed exit line on separate lines, and the proof checker requires the recorded invocation to equal the criterion's text exactly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face section 4: each criterion's expectation reads 'ROUND 7 CN-J-1 <ARM>: n of n arms -- and exit=0', and each invocation runs under timeout 120. proof-of-spec-check.py: a PASS row's output_evidence must match expect, and the recorded invocation must equal the criterion's invocation modulo placeholders.",
+  "world_is": "r7_cn_j_1.py prints 'ROUND 7 CN-J-1 UNIT: 6 of 6 arms' as one line and the shell echo 'exit=0' as the next line; no output line contains '-- and exit=0'. The first instance draft failed the checker on this and on the timeout prefix. The record now carries the criterion's invocation text exactly, and expect as the summary line then exit=0 with a whitespace span. The timeout 120 bound was applied at run time and is stated in session_log.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3,AC4 at the first draft: 'does NOT match expect' x3 and 'invocation-alignment ... NOT the criterion's invocation' x3",
+      "r7_cn_j_1.py unit/seam/real stdout (worktree 8ae1cfdafb + wk-MDPF_CANON-23 commit): final lines 'ROUND 7 CN-J-1 <ARM>: n of n arms' then exit=0 from the shell echo"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker. The issuer owns the face's expect wording; the record keeps the criterion text and the checker's matching rule decides the verdict."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W23-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~23",
+  "surfaced_at": "2026-10-14T14:46:19Z",
+  "one_line": "The commit-time naming gate WARNs on the new provenance URI f\"s3://{GOLD_BUCKET}/{dated[0][1]}\" at lambda_function.py:558 ('segment 1 {x} is neither a source nor a tier'). The same f-string shape exists unchanged at line 414 (_publish_one) and is not graded there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face section 1 Step 1/2 and bounds: add no bucket, prefix or name; the publisher's serve keys are existing-pipeline f-strings, and the naming gate's non-application for an existing pipeline applies. CLAUDE.md section 4: every S3 address is lib/opal_naming.py output, R19 migration is per project.",
+  "world_is": "The provenance source_keys entries reuse GOLD_BUCKET and the listed gold key, the same way _publish_one does (line 414). Commit 4e954e2d8b passed with the naming gate WARN (NAMING-GATE: WARN 1 graded). The WARN grades only added lines, so the existing pattern is graded only where it is newly typed. No new bucket, prefix or name is typed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit 4e954e2d8b: '[naming-gate] NAMING RAISE infra/aws/lambda/opal-assets/opal-assets-mdpf-portal-publisher/lambda_function.py:558 s3://{x}/{x} -> (rule or registry defect)'",
+      "git show 8ae1cfdafb:infra/aws/lambda/opal-assets/opal-assets-mdpf-portal-publisher/lambda_function.py line 414: source_keys [f\"s3://{GOLD_BUCKET}/{src['key']}\"]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker. A naming-gate rule question for the LGIC owner; the existing publisher line is outside this cell and was not changed."
+}
+```
+```json
+{
+  "id": "MDPF_CANON-D1-W18-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~18",
+  "surfaced_at": "2026-10-14T14:45:34Z",
+  "one_line": "The AUA Trend tooltip renderer has no null filter on its rows, so a Client chip carrying null on a non-as-of date is printed as a $0 row (source read; not rendered).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-i-1 section 1c.7 and judgment AC4: a Client chip with a null value draws no bar or area segment and no tooltip row; if the tooltip prints $0 for a null, file a row.",
+  "world_is": "portal/src/pages/ModelPortfolios.tsx renderTrendTooltip (line 1165 buckets = payload minus interp_total, no value filter; line 1195 value fmtVal(Number(entry.value)), and Number(null) is 0). recharts 3.7.0 combineTooltipPayload (node_modules/recharts/es6/state/selectors/combiners/combineTooltipPayload.js) pushes one tooltip entry per graphical item with no null filter; tooltipSelectors.js filters only the dataPoints, not the entries. Not rendered in a browser by this worker, so the $0 row is the source-read expectation for the round-7 render to confirm.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-canon-r7-18/portal/src/pages/ModelPortfolios.tsx:1165 and :1195 (portal commit pending on wk-MDPF_CANON-18-portal)",
+      "C:/dev/wk-canon-r7-18/portal/node_modules/recharts/es6/state/selectors/combiners/combineTooltipPayload.js (recharts 3.7.0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W18-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~18",
+  "surfaced_at": "2026-10-14T14:45:34Z",
+  "one_line": "CN-i-1 declares no AWS egress and bounds the worker to no AWS call, but its AC3 proof command is a data arm that performs read-only S3 gets; the worker ran it once, read-only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-i-1 preflight EGRESS CLASS NONE (the worker reads no AWS and writes none); section 2 bound 3 'No AWS call of any kind'; section 4 AC3 'reads the SERVED inputs (read-only AWS gets)'.",
+  "world_is": "r7_cn_i_1.py data issues get_object reads against opal-data-assets and a keys listing; it is the issuer's proof command and is named by AC3. The worker ran it once under timeout 120 as the criterion names it; no write, deploy or store call was made. The declared egress class and the bound do not describe AC3.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-i-1.aua-trend-grouping.md (face section 2 bound 3, preflight EGRESS CLASS, AC3)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_i_1.py (data subcommand, served() and keys_under())"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W18-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~18",
+  "surfaced_at": "2026-10-14T14:45:34Z",
+  "one_line": "The AUA Trend stack is specified to sum to opal_aggregate_aua to the cent, but the data arm passes with exact equality on only 24 of 487 valued dates and classes the rest as a model_aua rounding gap, with a worst residual far beyond cents.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-i-1 section 1 item 6: the whole stack sums to opal_aggregate_aua to the cent (carve-outs drawn once), except on a fold-suppressed date.",
+  "world_is": "r7_cn_i_1.py data, arm D1 (AC3 output, read-only, run at 0a06280a plus this worker's portal commit): 'stack == opal_aggregate_aua on 487 valued dates of 496: exact 24, model_aua rounding gap 463, fold-suppressed 0, failing 0'; the same line prints a worst residual in the billions of dollars. The arm passes on its own classification; the cent identity holds on 24 dates. Recorded, not adjudicated: the CVO grades FWD-9 (6).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC3 output line D1 (r7_cn_i_1.py data, exit 0, 5 of 5 arms)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_i_1.py (arm D1 classification)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W18-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~18",
+  "surfaced_at": "2026-10-14T14:45:34Z",
+  "one_line": "The task order names the bar and area fills for the new colours but not the area gradient defs, which resolve their own colour from the series label; the worker routed the gradient through the same colour resolver.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-i-1 section 1c.6: the areas (:2239) prefer trendColorOf over getModelColor for the group series.",
+  "world_is": "ModelPortfolios.tsx gradient defs (about line 2239) set the stop colour from getModelColor(s.label); each area fill is url(#gradient-<key>). Left alone, the Custom Models, ETF, ALT and Client areas would fill with the default gradient colour while their strokes take the group colour. The worker changed the gradient colour line to the same resolver as the area stroke (trendSeriesColor, then getModelColor). No other line changed for this.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-canon-r7-18/portal/src/pages/ModelPortfolios.tsx:2239 (gradient colour) and :2324 (area stroke colour)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W18-S5",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~18",
+  "surfaced_at": "2026-10-14T14:45:34Z",
+  "one_line": "The bar and area show chains admit a series only when its label is a model in trendModelOrder, so the Client chips would mount hidden; the worker added a show gate for them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-i-1 section 1c.5: the Client chips are drawn on the as-of date and draw nothing on other dates; the chips mount in STACK_SERIES.",
+  "world_is": "The show expression (ModelPortfolios.tsx about lines 2078 and 2321) ends in trendModelOrder.includes(s.label), which is false for 'Client Supervised' and 'Client Unsupervised', so a mounted Client series would be hidden on every date. Added: show = Global and hasClientChips (the as-of object carries a Client value). Per-firm stays hidden.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-canon-r7-18/portal/src/pages/ModelPortfolios.tsx:2078 (bar show) and :2321 (area show)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W18-S6",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~18",
+  "surfaced_at": "2026-10-14T14:45:34Z",
+  "one_line": "Relabelling the non_model band to 'Other AUA' would move its colour off the Non-Model silver if the label were resolved by getModelColor; the worker maps the band key to the Non-Model colour explicitly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-i-1 section 1c.3 relabels non_model to 'Other AUA' and keeps every other label on getModelColor; section 1c.6 keeps every other label on getModelColor.",
+  "world_is": "getModelColor('Other AUA') is not a registered name (modelPortfolioColors.ts registers 'Non-Model' at line 128, primary #C3CADA). By the worker's read, an unknown name resolves to a deterministic palette entry, not null, so the relabel alone would repaint the band. trendSeriesColor maps key non_model to getModelColor('Non-Model').",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-canon-r7-18/portal/src/lib/modelPortfolioColors.ts:128-130 (Non-Model primary) and :161-166 (fallback palette entries)",
+      "C:/dev/wk-canon-r7-18/portal/src/pages/ModelPortfolios.tsx:155-157 (trendSeriesColor)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W18-S7",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~18",
+  "surfaced_at": "2026-10-14T14:45:34Z",
+  "one_line": "Colour collision: the Client Unsupervised chip resolves to the same hex as the Ultra-Short Term model series.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-i-1 closing note: if a series' resolved colour equals another series' colour, file an OBSERVATION row naming both hex values; do not edit the colour registry.",
+  "world_is": "Client Unsupervised resolves through l1ColorOf to PALETTE.orange500 = #f97316 (CategoryViewTree L1_COLOR). Ultra-Short Term resolves to MODEL_PORTFOLIO_COLORS primary #f97316 (modelPortfolioColors.ts:58). Same hex, two series. No other pair among the resolved trend colours is equal (Custom #d946ef, ETF #22d3ee, ALT #ff4f1f, Client Supervised #fbbf24, Other AUA #C3CADA).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-canon-r7-18/portal/src/components/CategoryViewTree.tsx:93 (Client - Opal Unsupervised = orange500)",
+      "C:/dev/wk-canon-r7-18/portal/src/lib/modelPortfolioColors.ts:58 (Ultra-Short Term primary #f97316)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W18-S8",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~18",
+  "surfaced_at": "2026-10-14T14:45:34Z",
+  "one_line": "The provenance guard forbids a direct model_value read outside the paired accessor, so the carve-out lines are read through readModelSeries rather than from by_model.model_value as the task order words it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-i-1 section 1c (carve-out memo): read the two carve-out lines from globalMdpfData.by_model.opal_div_sma / opal_growth_sma model_value, exposing them by period.",
+  "world_is": "scripts/provenance-read-guard.mjs admits model_value reads only through src/lib/pairedProvenanceRead.ts; a direct read in the page fails the guard. The worker reads the same served values through readModelSeries(globalMdpfData, key).value keyed by period, with no arithmetic in the memo. The guard prints OK after the change.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-canon-r7-18/portal/src/lib/pairedProvenanceRead.ts:162-170 and :548-571 (model_value read through the paired accessor)",
+      "C:/dev/wk-canon-r7-18/portal/src/pages/ModelPortfolios.tsx:499-508 (globalCarveOutByPeriod)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W18-S9",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~18",
+  "surfaced_at": "2026-10-14T14:45:34Z",
+  "one_line": "The area tooltip sort list named 'Non-Model', which the relabel to 'Other AUA' would have dropped from the sort; the worker replaced it with the stack-order band names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-i-1 section 1c.3 relabels the band; the task order is silent on the tooltip sort list.",
+  "world_is": "trendModelOrderWithNonModel (ModelPortfolios.tsx line 937) appended 'Non-Model' to the area tooltip's sortOrder; sort keys are display names, so 'Other AUA' would sort after every model by the unknown-name default instead of its place. The list now carries the Client chips, 'Other AUA', 'ETF Strategies' and 'ALT Strategies' in stack order. The renderer's Non-Model branch (entry.name === 'Non-Model') is now unreachable and was left in place.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-canon-r7-18/portal/src/pages/ModelPortfolios.tsx:937-939"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W20-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~20",
+  "surfaced_at": "2026-10-14T14:48:43Z",
+  "one_line": "The worker face handed to CN-m-1 carries the issuer's RECORD FACE section (pre-read values, expected record shape, the four ANCHORS readers) under a marker that says it does not travel to the worker.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-m-1.staged-global-aggregate-reader-census.md@0c1a6cac3c lines 143-183: the RECORD FACE section (ISSUER NOTES, THE ISSUER'S PRE-READ, expected shape of the record); the same text is in the worker face file handed to the worker",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_m_1.py@0c1a6cac3c lines 30-35: ANCHORS, the four readers V2 requires the record to list"
+    ]
+  },
+  "spec_asserts": "The census is written blind: the RECORD FACE does not travel to the worker (the order's own marker at its RECORD FACE section; the spine's L7 rule that the record face never travels).",
+  "world_is": "The RECORD FACE was readable by the worker before grounding. No value from it is cited; every count in the record derives from this worker's own reads. The anchors are known to the worker, so V2 can be met by listing them and cannot tell a blind census from a sighted one. Pre-read counts (universe 28 of 8,831; staged ETag and size) also differ from this worker's live reads (universe 28 of 8,812), which is why no pre-read value was used.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed so the CVO can grade AC3 and the round-7 close knowing the census was not blind. The worker has not altered the check, the order or the RECORD FACE."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W20-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~20",
+  "surfaced_at": "2026-10-14T14:48:43Z",
+  "one_line": "The pre-read says the publisher and egress-publisher roles both cover the staged key; Terraform and the live publisher Lambda config disagree on which role the portal publisher runs as, and only the portal-publisher role's Terraform grants the key.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function-configuration --function-name opal-assets-mdpf-portal-publisher: Role opal-assets-mdpf-egress-publisher-role, LastModified 2026-10-09T22:21:52Z",
+      "infra/aws/terraform/opal-assets/mdpf_portal_publisher.tf:45,89-90: role opal-assets-mdpf-portal-publisher-role with GetObject on gold/mdpf_revamp/*",
+      "infra/aws/terraform/opal-assets/mdpf_egress_publisher.tf:85,171-172: egress role GetObject on portal/gold/mdpf/* only; no gold/mdpf_revamp grant",
+      "comp-iam simulate opal-assets-mdpf-egress-publisher-role s3:GetObject on the staged key --no-control: STATE NOT-DECIDABLE (s3:prefix missing from the context)"
+    ]
+  },
+  "spec_asserts": "Pre-read: the publisher and egress-publisher roles both cover gold/mdpf_revamp/* (issuer notes, IAM bullet).",
+  "world_is": "The live publisher runs as the egress role, whose Terraform does not grant the staged key. The portal-publisher role's Terraform grants the key but is not the live Lambda role. The publisher code reads portal/gold/mdpf/ only, so the reach of the code is unchanged.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "CN-m-1 records the portal-publisher role in iam_static (grant present) and the egress role in iam_live (NOT-DECIDABLE, not a deny)."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W20-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~20",
+  "surfaced_at": "2026-10-14T14:48:43Z",
+  "one_line": "Two repo notes give the accrual bridge fire time as 14:10Z and 15:45Z; the live schedule mdpf-accrual-bridge-daily is cron(40 13 * * ? *), 13:40Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/EC2_MANIFEST.json:482 (accrual_bundle note: mdpf-accrual-trigger 14:10Z UTC scheduler)",
+      "infra/aws/terraform/mdpf-pipeline/CHANGELOG.json:23 (Scheduler cron(45 15)Z)",
+      "aws scheduler get-schedule --name mdpf-accrual-bridge-daily: ScheduleExpression cron(40 13 * * ? *), State ENABLED"
+    ]
+  },
+  "spec_asserts": "The accrual bridge leg fires at 14:10Z (EC2 manifest note at infra/aws/ec2/EC2_MANIFEST.json:482).",
+  "world_is": "The live schedule fires at 13:40Z. CN-m-1 uses the live time. The repo notes are stale.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W20-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~20",
+  "surfaced_at": "2026-10-14T14:48:43Z",
+  "one_line": "aws s3api get-bucket-logging returns empty stdout with rc 0 on every opal-data bucket sampled, so server access logging reads as absent, with no in-estate positive case of a LoggingEnabled block to control the call shape.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api get-bucket-logging --bucket opal-data-assets --output json: rc 0, 0 bytes of stdout",
+      "same call on opal-data-bd, opal-data-cot, opal-data-inf, opal-data-49financial, opal-data-portal-v2: rc 0, 0 bytes each",
+      "aws s3api get-bucket-location --bucket opal-data-assets --output json (same shim): rc 0, 38 bytes, LocationConstraint null"
+    ]
+  },
+  "spec_asserts": "server_access_logging is true only if the logging call returns a LoggingEnabled block; an empty object means none (CN-m-1 Step 1, trail).",
+  "world_is": "The empty result is recorded as false per the spec. No sampled bucket returned a LoggingEnabled block, so the call shape has no observed positive case here. The false value is an absence, not an exercised negative (ABSENT != EXERCISED-AGAINST).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W20-S5",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~20",
+  "surfaced_at": "2026-10-14T14:48:43Z",
+  "one_line": "The code universe scan (suffix and literal-key match) cannot see a reader whose key comes from a config row: .tools/comp-freshness GETs the staged key in content mode from served_freshness_config.yaml:115 and names no literal key.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/comp-freshness:1090-1097 (_fetch_object_doc runs s3 cp on the config's s3_key_prefix); :1119 is its call under as_of content mode",
+      "data/served_freshness_config.yaml:115 (s3_key_prefix of mdpf_leg_gold_revamp_staging_aggregate, as_of_field as_of_last)",
+      "check universe mode at HEAD 0c1a6cac3c: 28 files naming both strings; comp-freshness is absent (no .py suffix, no literal key)"
+    ]
+  },
+  "spec_asserts": "The code class is the repo's consumers found by the universe scan (CN-m-1 Step 1, code).",
+  "world_is": "A config-driven reader exists outside the scan and is listed by hand in CN-m-1. The scan method cannot show that no other config-driven reader exists.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+```json
+{
+  "id": "MDPF_CANON-D1-W17-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~17",
+  "surfaced_at": "2026-10-14T14:42:41Z",
+  "one_line": "The order's premise that the served frontier cell is the 2026-10-09 roster does not hold at filing: the live comparator reads served objects at as_of_last 2026-10-13.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-h-1 (face section 1) names the served 2026-10-09 frontier counts as the 2026-08-17 roster wearing a 2026-10-09 date, and AC3 reads those served objects.",
+  "world_is": "r6_cn_h_1.py comparator at 2026-10-14 on box/dell1, worktree HEAD 7df957722b: K0 reads served objects with as_of_last 2026-10-13; served frontier counts equal the staged roster on 17 of 17 mapped keys (the freeze holds on the 10-13 cell); K1 at axis 2026-10-13 returns as-of 2026-10-13 for global, 49financial and inflection. The served cell is dated 10-13, not 10-09. The freeze finding stands; only the date named in the order differs.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r6_cn_h_1.py comparator (K0 and K1 lines, exit 0)",
+      "data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py@7df957722b load_account_dist_frontier_counts (A4 selection, WARN on no qualifying key)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker at AC3 for the issuer (2.0.0_SA_COO~D1). The round-7 AC4 judgment is graded on the objects after the first scheduled run that carries the code."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W17-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~17",
+  "surfaced_at": "2026-10-14T14:42:41Z",
+  "one_line": "data/mdpf/scripts/gold/tests/test_global_fold_flag2.py replaces the module-level loader with a stub and never restores it, so every later test in the same pytest process reads the stub.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A test of the loader exercises the real function and reads the A4 objects through an injected fake S3 client (CN-h-1 step 4, idiom of test_global_served_identity.py).",
+  "world_is": "test_global_fold_flag2.py line 46 (_stub) assigns spine.load_account_dist_frontier_counts = lambda ... at module level with no monkeypatch. Run in one process with test_canplat_p1_1.py and data/mdpf/tests/canon/, six tests of the new file failed (KeyError and DID NOT RAISE) before the new file pinned the real function with an autouse fixture. After the pin the combined run shows only the three pre-existing flag2 reds (MDPF_CANON-D1-S1).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q data/mdpf/scripts/gold/tests/test_canplat_p1_1.py data/mdpf/scripts/gold/tests/test_global_fold_flag2.py data/mdpf/tests/canon/ (6 failed before the pin; 3 failed after, all pre-existing)",
+      "data/mdpf/scripts/gold/tests/test_global_fold_flag2.py@7df957722b:46 (_stub)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker. The stub is not in this order's paths; its owner is the global fold's test owner. The new file does not depend on the stub's absence."
+}
+```
+
+
+```json
+{
+  "id": "MDPF_CANON-D1-W17-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~17",
+  "surfaced_at": "2026-10-14T14:47:25Z",
+  "one_line": "The commit-time naming gate refuses the A4 account-distribution key the face prescribes (a new literal portal/gold/mdpf/{x}/account-distribution/ prefix, out of the canonical portal pattern); the order's code cannot land without a registry row or an R20 entry that is outside this order's paths.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-h-1 step 1 (face) names the key portal/gold/mdpf/{scope}/account-distribution/<date>.json as the loader's source; CLAUDE.md rule 30 requires every S3 address to be lib/opal_naming.py address() output and a builder refusal to be a missing registry row, never a hand-typed workaround.",
+  "world_is": "safe-commit at 0.9.0_WK_MDPF_CANON~17 on wk-MDPF_CANON-17 (HEAD 7df957722b) refused: NAMING REFUSE data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py:798 portal/gold/mdpf/{x}/account-distribution/ -> portal/{scope}/gold/mdpf/{x}/account-distribution/ (NEW and OUT-OF-PATTERN as S3Key; LGIC_ENFORCE ENFORCE mode). lib/opal_naming.py has no builder for the portal A4 home (its portal functions cover firm-access and display maps only). The pre-existing line 694 carries the same shape and is not refused because it is not new. The worker did not rewrite the key to evade the gate. The loader change, the two stub edits and the new test file are uncommitted in the worktree; AC1-AC3 PASS on that tree (reader 8 of 8, seams 4 of 4, comparator 5 of 5).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit -F .scratch/msg1.txt -- <four paths> at 0.9.0_WK_MDPF_CANON~17 (rc=1; NAMING-GATE: REFUSE 1 graded, line 798)",
+      "data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py@7df957722b:694 (pre-existing portal/gold/mdpf/{served_firm_id}/aggregate-aua-timeseries/ prefix, not new)",
+      "lib/opal_naming.py@7df957722b (no portal A4 address builder; grep of portal names returns firm-access and display-map entries only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker as a BLOCKING row. Resolution owner: 2.0.0_SA_COO~D1 with the CTO -- either a naming registry row under infra/logic/registry/ (outside this order's paths) or an R20 register entry Andrew acknowledges. The order's status stays pending until the code lands."
+}
+```
