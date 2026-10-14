@@ -13484,3 +13484,63 @@
 ```
 
 ---
+
+## IRPT_ANLREQ-D2-W131-S1 -- composition_admission.py is native to the package folder with no staged row and no pin in the irpt-ycharts-generate block, so the order's pin move cannot apply to it (TO-AR-y-323, worker 0.9.0_WK_IRPT_ANLREQ~131)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W131-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~131",
+  "surfaced_at": "2026-10-14T15:29:31Z",
+  "one_line": "composition_admission.py has no staged_from row and no pin in the irpt-ycharts-generate block; it is packaged from the build tree, so the release map moves two pins (uploads.py, interactive_access.py) and composition_admission.py reaches the package only through the trunk-HEAD tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-323 step 3: the three members (composition_admission.py, interactive_access.py, uploads.py) each carry a pin in the irpt-ycharts-generate block, and the map edit moves the three pins and sha256 to the trunk blobs.",
+  "world_is": "At origin/CLOUD 109f4671bb the block lists uploads.py (pin 15a387dd) and interactive_access.py (pin f09b802c) as staged_from rows, but composition_admission.py appears only as a files[] string, with no staged_from row (the block holds 94 staged rows; none names ycharts/generate/composition_admission.py). The member is native to source_dir, so the builder packages the build tree's file. The trunk-HEAD build with no edit reproduces live except composition_admission.py (MfxpvRhV... vs 5TRFZf6G...). The release map edit therefore moves two pins; the third member needed no row because the trunk-HEAD tree already holds its trunk blob cc5ca7d5 (packaged sha256 8d9b7aad, equal). Built and compared; delta exactly the three members.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json @109f4671bb (irpt-ycharts-generate block: staged_from rows for uploads.py and interactive_access.py; composition_admission.py only in files[])",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/composition_admission.py @109f4671bb (blob cc5ca7d5e2404627ed536efa5c359206eb186a7f)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~131/r40/IRPT_YCHARTS_GENERATE_BUILD.json (trunk_map_self_reproduction, members_moved, composition_admission.py entry)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+---
+
+## IRPT_ANLREQ-D2-W131-S2 -- on the trunk-HEAD tree only 4 of the 106 explained testcase ids fail, so the r39 explained set no longer describes the failing set of the package's own suite (TO-AR-y-323, worker 0.9.0_WK_IRPT_ANLREQ~131)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W131-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~131",
+  "surfaced_at": "2026-10-14T15:29:31Z",
+  "one_line": "The explained set measured at base 0c0ae5a8f5 (108 rows, 106 distinct ids) is not the failing set of the trunk-HEAD release tree: 101 of its ids pass there, 4 fail (all four inside the set) and 1 (test_dead_letter_record) is not collected; the subset check passes but most explanations are stale for this tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-323 step 6: the failing testcase ids of the release-faithful tests MUST be a subset of the 108 rows of r39/failures_explained.json, which were measured on the release-28 and release-29 base trees.",
+  "world_is": "Run on the trunk-HEAD release tree (109f4671bb with the two-pin map edit), the testcases total 1096 (1060 passed, 4 failed, 32 skipped); the 4 failing ids are ycharts test_custody_entry (2 ids) and test_custody_retained (2 ids), all inside the explained set; the intake explained rows (5, cross-package to ops/status.py) now pass; 101 explained ids pass and ycharts test_dead_letter_record is not collected on this tree. The subset check holds (0 outside the set), but the explanation column of r39 describes a tree that is not the trunk HEAD.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~124/r39/failures_explained.json (108 rows, 106 distinct testcase ids)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~131/r40/tests_failure_set_vs_explained.json (per-run denominators, failing_ids, failing_ids_outside_explained_set [])",
+      "trunk HEAD 109f4671bb (C:/dev/irpt-release-r30/w131/release, cd infra/aws/lambda/investor-reporting, python -m pytest -q -p no:cacheprovider)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+---
