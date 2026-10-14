@@ -1,0 +1,42 @@
+{
+ "cases": {
+  "KPEC": {
+   "known": null,
+   "swap": {
+    "detail": "TimeoutError after 240 s",
+    "failure": "HTTP_0",
+    "seconds": 246.8
+   },
+   "yahoo": {
+    "last": null,
+    "rows": 0
+   }
+  },
+  "SREIT": {
+   "known": null,
+   "swap": {
+    "content_head": "I'll search for suitable US REIT ETF alternatives to provide properly sourced candidates.",
+    "failure": "KIMI_BADJSON",
+    "searches": 1,
+    "seconds": 82.1
+   },
+   "yahoo": {
+    "last": null,
+    "rows": 0
+   }
+  }
+ },
+ "model": "kimi-k2.6",
+ "probed_at_utc": "2026-10-14T18:25:55Z",
+ "qa_receipt_sha256": "fc8f97db3c6d3ad00b1d5f263dbfc00b935d8e11a304b477e9f91e5971ade072",
+ "request_fields": {
+  "tools": [
+   {
+    "function": {
+     "name": "$web_search"
+    },
+    "type": "builtin_function"
+   }
+  ]
+ }
+}
