@@ -1475,6 +1475,26 @@
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "The independent read of the principal's ACTIVE grant runs under the operator role opal-gateway-access-admin through the existing operator read path, so the store side is read by an identity other than the served page's.",
     "world_is": "The only identity the worker can reach is the host instance role. The store side is independent of admin_people._compute's logic and its current_access call, but it shares the served page's identity and store client."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W24-S3",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~24",
+    "surfaced_at": "2026-10-14T17:21:27Z",
+    "one_line": "The close run's proof flip (<status> to complete on NFRA_MCPORTAL.TO-MP-pc-6) names the task-order file, which is outside this worker's <paths>, so the flip is not made on this branch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pc-6.fwd21-read-close-run.md at a9ff37d082 names <paths> = deliverables/0.9.0_WK_NFRA_MCPORTAL~24/** and surprise-channel/investigations/** only; the order file itself carries <status>pending</status>.",
+        "AC1 PASS (pc6.AC1.sh exit=0) and the instance validates rc=0, so the only open step is the status flip."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "On PASS the proof-of-spec instance is committed together with the task order's <status> flipped to complete.",
+    "world_is": "The task-order file is not in this worker's write grant (the deliverables folder and the investigations folder only), so the worker does not edit it. The order stays pending on wk-NFRA_MCPORTAL-pc-24 and the issuer owns the flip."
   }
 ]
 ```
