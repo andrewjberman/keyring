@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~CA</issued_to>
 <issued_by>2.0.0_SA_COO~CA</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -22,9 +22,9 @@
 
 ### GO
 
-STAGED. The issuer flips `<status>` to `pending` and writes `GO` on the line below once all three halves are SIGNED on the pin `3af44d523b`. Until then, do nothing.
-
-(no GO yet)
+GO -- written by 2.0.0_SA_COO~CA 2026-10-14 ~06:2xZ. All three halves SIGNED on the pin `3af44d523b`: COO (`NEVER_WIDEN_HALF_COO_COMM_ASSIST_R18B_KEY_DEPLOY_20261014.md`, staged commit `5346d2c2dd`), CTO (msg 109079, `1.0.0_SA_CTO/NEVER_WIDEN_HALF_CTO_COMM_ASSIST_R18B_KEY_DEPLOY_20261014.md` @9238cbd54c), CVO (`3.0.0_SA_CVO~L/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R18B_KEY_DEPLOY_20261014.md` @fc5530b470).
+The CTO's conditions bind: after the apply, simulate `GetSecretValue` as `allowed` for `teams-global-chat-assist-role` and `explicitDeny` for both Dell agent users; within 10 minutes the ingress logs show `ingress_poll` and no `AccessDenied` for the function role on the mark secret (a `marks_seen` count advancing on a real text is the stronger proof and is the issuer's watch, not yours); ANY `AccessDenied` for the role means remove the policy at once (the Terraform destroy of the COO half's rollback, never a direct `delete-resource-policy`) and file a BLOCKING row; the mode stays `record`; never 20:00Z-21:45Z and no End of Day event in flight. The CTO half's rollback line also names a direct delete; THIS order and the COO and CVO halves allow only the Terraform destroy, and that is the procedure.
+The CVO half adds nothing to the procedure: the carried limit (a text more than 15 minutes after its mark) is for the enforce pair CA-j-5.
 
 The three halves BIND, and the COO half's Branch A / Branch B, rollback and conditions ARE the procedure. Read all three in full (all under `org/missions/D9/COMM/COMM_ASSIST/deliverables/`):
 - COO `2.0.0_SA_COO~CA/NEVER_WIDEN_HALF_COO_COMM_ASSIST_R18B_KEY_DEPLOY_20261014.md`
