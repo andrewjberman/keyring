@@ -5,7 +5,7 @@
  "project": "TCKT_VNEXT",
  "directive": "D7",
  "fabric": "dell2",
- "prd_version": "v0.5",
+ "prd_version": "v0.6",
  "step": 4,
  "brief_ref": "docs/briefs/d7-ticket-center-request-types-analysis-request-first-brief-20261007.md@750ec86588",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
@@ -80,11 +80,11 @@ IRPT_YCDGEN's PRD. Each is cited in section 1.
   FWD-10 An Opal person files a Trade Request in the Ticket Center by uploading the trade request form, and the ticket carries the form
          DONE WHEN  EXERCISED -- on DEV, then PROD by 2026-10-24: a synthetic Opal staff user opens the Ticket Center, chooses Trade Request,
                     chooses the firm, uploads the trade request form, and submits; the OPEN ticket carries the uploaded form as an attachment opened
-                    from the ticket page. Until the real form arrives (Andrew: "in the next week or so"), a placeholder form is named as such;
+                    from the ticket page. Until the real form arrives, a placeholder form is named as such;
                     the real form is a swap of that one file
          ACCEPT     an Opal person opens the Trade Request ticket and opens the form from it; no trade is sent anywhere by the ticket
          SOURCE     Andrew-direct 2026-10-14 ~17:3xZ ("the trade request which will be very simple. We simply need to upload a trade request
-                    form"); ~18:3xZ ("DELL2 has the capacity to manage it")
+                    form"; the form arrives "in the next week or so"); ~18:3xZ ("DELL2 has the capacity to manage it")
 
   FWD-11 A Meeting Request filed in the Ticket Center goes to Opal's meeting coordinator, who confirms or reschedules it on the dashboard
          DONE WHEN  EXERCISED -- on DEV, then PROD by 2026-10-24: a synthetic Opal staff user files a Meeting Request (who, purpose, proposed
@@ -126,6 +126,10 @@ IRPT_YCDGEN's PRD. Each is cited in section 1.
 | C-PACKAGE: the package attaches to the ticket that requested it | this project | **What exists:** `POST /api/scoped/tickets/{ticketId}/report` (REPORT), for internal humans and the assignee only. **New:** `POST /api/scoped/tickets/{ticketId}/package`, for ONE service principal named in the type definition (C-TYPE). The route writes `package: {report_ref, pdf_ref, original_ref, commentary_ref, attached_at, attached_by}` on an `analysis_request` ticket that is open. **Pointers only:** each ref is the handle of an artifact IRPT already retains, so C-ONE-DOOR's no-bytes rule stands and no ticket bucket is created. **Refused:** any other type; a closed ticket; a ticket whose firm differs from the report's firm; a second write unless it carries the prior `attached_at` (no silent overwrite); every other principal. The ticket page lists the refs, and each file opens through IRPT's existing signed-link reader. |
 | C-DEPLOY | law | Service and Terraform changes go through `safe-apply`. A Dell writes no Lambda permission or bucket policy (NFRA_CTLPLN); those go to the laptop by role request. Portal page changes are product files and land by the portal's review route |
 | C-MORATORIUM | law | No new alert or notification is built. The existing SES email on create is unchanged |
+| C-FIRM-CHOICE: the staff filer's firm | IRPT_ANLREQ C-FIRM (consumed) | The Ticket Center is internal-only (Andrew-direct 2026-10-14 ~15:2xZ). An Opal staff filer CHOOSES the request's firm from the served partner tenants, and the choice must be in its explicit `allowedFirmIds` (the CREATE path's server check). Every hop and every attachment binds to that choice. ALL never substitutes for the choice. C-FENCE's internal-caller exemption covers reads, never the filing firm. |
+| C-TRADE-REQUEST: the second type (FWD-10) | this project | A C-TYPE definition, `trade_request`. **Questions:** firm (C-FIRM-CHOICE) and the trade request form as an upload. **Checks:** a file is present, with an allowed kind (PDF, XLSX, CSV) and a size cap. **Route:** the Open queue. **No engine submit:** the ticket never sends a trade anywhere. The engine path stays with NFRA_OPSWKF (HOLD). Until the real form arrives, a placeholder form is named as such. |
+| C-MEETING-REQUEST: the third type (FWD-11) | this project | A C-TYPE definition, `meeting_request`. **Questions:** firm, who, purpose, and up to three proposed times. **Route:** assigned to the meeting coordinator's queue (`jeanette@opalinvest.com`, confirmed in `opal-users-v2`). **The coordinator's act on the ticket:** CONFIRM one time, or PROPOSE another. The filer reads the outcome on the same ticket. In-house, no Calendly, and no new mail sender (C-MORATORIUM). |
+| C-ATTACH: where a non-analysis upload lives | this project | A ticket attachment that is not an Analysis holdings file is stored at a `lib/opal_naming.address()` address under the ticket's FIRM (client-confidential, so firm tenancy, R6). It is never put through the Analysis upload door, which keeps C-ONE-DOOR for holdings only. Upload and open are by short-lived presigned URLs that the ticket API issues after C-FENCE. A builder REFUSAL is a registry row to add. A bucket policy is a laptop role request (C-DEPLOY). |
 
 ## 2. THREAD -- FWD-1, round 1
 
@@ -310,5 +314,16 @@ DECLINED: dell2 keeps all three channels, "it's all so connected, and DELL2 has 
 4. **The filer is Opal staff for now.** The Ticket Center is internal-only (Andrew ~15:2xZ). Firm choice follows IRPT_ANLREQ C-FIRM.
 5. **Driver:** `2.0.0_SA_COO~V2`, re-seated on TCKT_VNEXT for FWD-10 and FWD-11 (LIVE_ARMS, this seat). Each channel is ONE live journey
    on DEV first, then PROD through merge-forward. Each is a client-facing candidate by class, so Andrew approves it.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## v0.6 (2026-10-14 ~19:0xZ, `1.0.0_SA_CTO~DELL2`) -- on `3.0.0_SA_CVO~DELL2`'s refusal of the v0.5 ratified-text half (review @6d7a6309e8), and `2.0.0_SA_COO~V2` msg 7813
+
+Four CONTRACTS rows carry what ADDENDUM 5 stated only in prose: C-FIRM-CHOICE, C-TRADE-REQUEST, C-MEETING-REQUEST and C-ATTACH. The
+form's timing moves from DONE WHEN to SOURCE.
+
+**`~V2`'s ask, ruled:** the trade form lives at a C-ATTACH address (its option (b)), not in the Analysis upload door (option (a)). The door's
+checks are for holdings files, and a trade form would fail them or would widen the door. `portal/.../TradeRequestParts.tsx` is RELEASED
+from NFRA_OPSWKF to this project for its upload-only form, and its engine-submit part is not wired.
 
 -- 1.0.0_SA_CTO~DELL2
