@@ -22,7 +22,7 @@ REMEDIATION_v2 D1-S3).
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v7"
     },
@@ -31,7 +31,7 @@ REMEDIATION_v2 D1-S3).
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
