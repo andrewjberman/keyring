@@ -13344,3 +13344,32 @@ name the one known failure instead of silently inheriting it.
   "notes": "Remedy is the issuer's (an amendment, no CTO ruling needed): target the policy at the internal reader role (its Terraform resource and builder name read from the module that declares it), simulate THAT role in step 5, and name its read as the widening in the ask. Alternative: change _client() to use the instance role for harvest only, which is a code change and a different widening. Signing the ask as cut would certify a grant that serves nothing."
 }
 ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S108",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T13:19:46Z",
+    "one_line": "OG-hv-2 step 3 says to run the targeted plan 'through safe-apply plan mode (never bare terraform)', but safe-apply.sh gates the apply subcommand ONLY and REFUSES any other, routing plan to the resolved terraform binary in its own header -- so the instrument the step names cannot run, and the step is completed by the path safe-apply itself prescribes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/safe-apply.sh:16-17 ('Gates `apply` ONLY. `plan` and other subcommands are non-destructive -- call terraform.exe directly for those.')",
+        ".tools/safe-apply.sh:63 (the refusal text: 'safe-apply: this wrapper gates terraform apply only')",
+        ".tools/safe-apply.sh:32-38 (terraform resolution is device-agnostic; site Z has NO .tools/terraform.exe and resolves terraform v1.15.8 on PATH -- so the plan ran via `command -v terraform`, which is also what safe-apply would exec)",
+        "CLAUDE.md section 5 NEVER: the ban is on BARE `terraform apply`, not on a plan; this seat ran no apply",
+        "the plan that did run: terraform plan -input=false -no-color -var market_update_s3_root=<address() output> -target=aws_iam_role_policy.int_reader_harvest_read -> 'Plan: 1 to add, 0 to change, 0 to destroy.' (137 lines, scratchpad hv2_plan.txt)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "Step 3: 'Run a targeted plan through safe-apply plan mode (never bare terraform) and record it: 1 to add, 0 to change, 0 to destroy.' The same phrasing sits in sibling applier orders.",
+    "world_is": "safe-apply has no plan mode. It fires the HALTGT checkpoint and then execs terraform with every argument unchanged, and it refuses outright when no `apply` subcommand is present, telling the operator to call the binary directly for a plan. Passing `plan` to it therefore produces a refusal, not a plan. Two further facts a successor needs: the directory has ONE required variable with no default (market_update_s3_root, OG-mu-1), so a plan that does not feed it from lib/opal_naming.py address() HANGS on an interactive prompt rather than failing (measured: the first run sat at 'Enter a value:' for 420s before it was stopped, and a 235-byte output file is the only tell); and the dir needed `terraform init` for a module OG-mu-1 added but never applied (init rc=0, .terraform.lock.hcl sha unchanged a060082d1861cebd before and after).",
+    "notes": "No act is owed by this seat: the plan line the step asks for was produced and recorded. The order's wording is the issuer's to amend if it should name the binary instead; a seat that takes 'safe-apply plan mode' literally will burn a refusal round-trip, and a seat that then reaches for `-input=false` without the -var gets a clean-looking rc=1 'Module not installed' that hides the missing variable until init succeeds.",
+    "dismissal_reason": "The step's outcome was reached by the path safe-apply's own header prescribes for a plan (the resolved terraform binary, targeted, with the builder-fed variable), and the recorded line is exactly the one the step asks for: 1 to add, 0 to change, 0 to destroy. The NEVER rule this phrasing protects covers `terraform apply`, which this seat did not run; the apply itself is Phase B and will go through safe-apply as the rule requires. Nothing is left open."
+  }
+  ```
