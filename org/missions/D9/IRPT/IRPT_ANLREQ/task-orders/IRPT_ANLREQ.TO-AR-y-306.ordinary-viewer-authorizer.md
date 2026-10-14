@@ -2,7 +2,7 @@
 
 <to_id>IRPT_ANLREQ.TO-AR-y-306</to_id>
 <project>IRPT_ANLREQ</project>
-<issued_to>0.9.0_WK_IRPT_ANLREQ~120</issued_to>
+<issued_to>0.9.0_WK_IRPT_ANLREQ~121</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-13</issued_date>
 <status>pending</status>
@@ -51,6 +51,8 @@ You are `0.9.0_WK_IRPT_ANLREQ~120`.
 
 <expected_criteria>AR306-y-AC1 AR306-y-AC2J</expected_criteria>
 
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-14 ~04:4xZ, after the first worker's BLOCKING rows `IRPT_ANLREQ-D2-W120-S1` and `-S2`; the stop was right).** (S1) The order said `test_without_the_ordinary_authorizer_a_partner_upload_is_refused_and_nothing_is_written` and its neighbours must pass UNEDITED. That was wrong: the wiring replaces the None they pin, so `reports/tests/test_generate_installed.py :83` (`absent_producers == {"ordinary_authorizer"}`) and `:212` (`factory.ordinary_authorizer is gi._ordinary_viewer_not_composed`) are red by design. The file is now in `<paths>`: edit ONLY those two pins to the new composed state (the `:83` set no longer contains `ordinary_authorizer` when the readers are composed; `:212` asserts the producer is composed and that, with a reader that returns nothing, the upload is still refused and nothing is written); keep the intent and every other assertion; list each edit with before and after text in the record (`test_edits`). The fail-closed absent-producer behaviour must stay TESTED: add a case that builds the access with `ordinary_authorizer` None and shows the refusal. (S2) The producer also serves the owned-input analysis route (`prospect_submission.py :55-56`); the CTO is asked to rule. Do not split anything until the issuer says; state the effect in `authorization_change`. (S3) The `_scope/tests` failure in `test_resolve.py` is pre-existing (your HEAD control): name it as the baseline in the record. `<issued_to>` is now `0.9.0_WK_IRPT_ANLREQ~121`: you CONTINUE in the same worktree `C:/dev/wk-irpt-anlreq-120` (branch `wk-IRPT_ANLREQ-120`), commit as `~121`, file rows `IRPT_ANLREQ-D2-W121-S<k>`, and write your record to `deliverables/0.9.0_WK_IRPT_ANLREQ~121/r36/ORDINARY_AUTHORIZER.json` (the check reads it first). Gate limb that graded this amendment: none stated (the issuer amends its own pending order's grant and assignee).
+
 ## BOUNDS
 
 - **Grant:** exactly the `<paths>` below, plus `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~120/` and this order's file (status flip only). If a test OUTSIDE the grant fails because of your change, STOP: file a BLOCKING row naming it; the issuer amends the grant.
@@ -60,6 +62,7 @@ You are `0.9.0_WK_IRPT_ANLREQ~120`.
 infra/aws/lambda/investor-reporting/_scope/ordinary_viewer.py
 infra/aws/lambda/investor-reporting/_scope/tests/test_ordinary_viewer.py
 infra/aws/lambda/investor-reporting/reports/generate_installed.py
+infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed.py
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
