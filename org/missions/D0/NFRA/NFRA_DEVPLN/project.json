@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": "per-box-portal-dev-approval",
   "status": "active",
-  "dep_stage": "EXECUTING",
+  "dep_stage": "ROUND_CLOSE",
   "created": "2026-10-13",
   "registered_under_tree": "2026-10-13",
   "placement": "LAPTOP",
@@ -41,8 +41,8 @@
     "cto": "1.0.0_SA_CTO",
     "coo": "2.0.0_SA_COO~DV (laptop, seated 2026-10-13 ~16:3xZ by 0.0.0_AB_MSTR; laptop COOs 3 of 3: ~C, ~CA, ~DV)"
   },
-  "blocking": "Round 7 issued by 2.0.0_SA_COO~DV on the CTO round-6 analysis: one worker-light repair (DP-i-1: the release check reads origin/<trunk> and prints the ref it read; a test stops making a real ref lookup). Event-gated: Andrew ruling the five dell2 approval rows (3635, 8500, 7b45, fde0, 7773), then A14 (the integrator merge-forward and the DT chosen-set promote, with the L8 packet); the DT committing its closed ledger file; the CLAUDE.md law-edit call (Andrew).",
+  "blocking": "Round 7 drained (1/1 order complete, proof VALID); drain-end read to 1.0.0_SA_CTO at org/tier1_exec/2.0.0_SA_COO~DV/deliverables/NFRA_DEVPLN_ROUND7_DRAIN_END_20261014.md. No cut-ready work remains: the project waits on Andrew ruling five dell2 approval rows (3635, 8500, 7b45, fde0, 7773) for act A14 (the integrator merge-forward and the DT chosen-set promote with the L8 packet), the DT committing its closed ledger file, the CLAUDE.md law-edit call (Andrew), and the CTO round-7 analysis.",
   "endpoint_approval_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_160xZ_NFRA_DEVPLN_ENDPOINT_CONFIRMED_ALL_AGREED_PROCEED.md",
-  "last_updated": "2026-10-14T01:51:00Z",
+  "last_updated": "2026-10-14T02:17:00Z",
   "coo_lane": "2.0.0_SA_COO~DV"
 }

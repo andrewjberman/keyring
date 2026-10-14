@@ -35,6 +35,8 @@ REL_CREATED=0
 PROD_SHA=""
 R_REL=""
 R_HEAD=""
+R_REF=""
+R_SHA=""
 REL_REF=""
 REL_TIP=""
 STAMP=""
@@ -80,7 +82,7 @@ refuse() {
     git -C "$REPO" update-ref -d "refs/heads/$REL" >/dev/null
     REL_CREATED=0
   fi
-  echo "RELEASE result=REFUSED reason=$1 branch=${R_REL:--} base=${PROD_SHA:--} head=${R_HEAD:--}"
+  echo "RELEASE result=REFUSED reason=$1 branch=${R_REL:--} base=${PROD_SHA:--} head=${R_HEAD:--} ref=${R_REF:--} sha=${R_SHA:--}"
   exit 1
 }
 
@@ -115,11 +117,15 @@ read_status() {
 
 # release_check REPO PROD_SHA REF -- walks PROD..REF on the first-parent line (the release's own merge
 # commits; a feature's commits sit under its second parent). Sets RC_F, RC_T, RC_U and prints the line.
+# The line ends with the ref that was read and its 12-char sha (R_REF, R_SHA carry the same to RELEASE result).
 release_check() {
-  local sha msg walk
+  local sha msg walk full
   RC_F=0
   RC_T=0
   RC_U=0
+  full=$(git -C "$1" rev-parse --verify -q "$3^{commit}") || return 1
+  R_REF="$3"
+  R_SHA="${full:0:12}"
   walk=$(git -C "$1" rev-list --first-parent "$2..$3") || return 1
   for sha in $walk; do
     RC_T=$((RC_T + 1))
@@ -127,7 +133,7 @@ release_check() {
     if printf '%s\n' "$msg" | grep -q '^Feature: '; then RC_F=$((RC_F + 1)); fi
     if ! printf '%s\n' "$msg" | grep -q '^Approved-By: '; then RC_U=$((RC_U + 1)); fi
   done
-  echo "RELEASE-CHECK features=$RC_F first_parent_commits=$RC_T unapproved=$RC_U"
+  echo "RELEASE-CHECK features=$RC_F first_parent_commits=$RC_T unapproved=$RC_U ref=$R_REF sha=$R_SHA"
 }
 
 # setup_repo -- the workspace root (derived, never typed), the portal repo, and the approval reader.
@@ -145,20 +151,35 @@ setup_repo() {
 
 main_check() {
   setup_repo
-  if git -C "$REPO" rev-parse --verify -q "refs/heads/$CHECK_REL^{commit}" >/dev/null; then
-    REL_REF="refs/heads/$CHECK_REL"
-  elif git -C "$REPO" rev-parse --verify -q "refs/remotes/origin/$CHECK_REL^{commit}" >/dev/null; then
-    REL_REF="refs/remotes/origin/$CHECK_REL"
-  else
-    refuse branch-not-found "$CHECK_REL"
-  fi
-  PROD_SHA=$(git -C "$REPO" rev-parse --verify -q "$PROD_REF^{commit}") || refuse prod-ref-missing
+  # A trunk name (DEV, PROD) reads the origin tip the trunk published; the local branch is the fallback only
+  # when origin has none. Any other name reads the local branch first (a release/<stamp> was built here).
+  case "$CHECK_REL" in
+    DEV|PROD)
+      if git -C "$REPO" rev-parse --verify -q "refs/remotes/origin/$CHECK_REL^{commit}" >/dev/null; then
+        REL_REF="refs/remotes/origin/$CHECK_REL"
+      elif git -C "$REPO" rev-parse --verify -q "refs/heads/$CHECK_REL^{commit}" >/dev/null; then
+        REL_REF="refs/heads/$CHECK_REL"
+      else
+        refuse branch-not-found "$CHECK_REL"
+      fi ;;
+    *)
+      if git -C "$REPO" rev-parse --verify -q "refs/heads/$CHECK_REL^{commit}" >/dev/null; then
+        REL_REF="refs/heads/$CHECK_REL"
+      elif git -C "$REPO" rev-parse --verify -q "refs/remotes/origin/$CHECK_REL^{commit}" >/dev/null; then
+        REL_REF="refs/remotes/origin/$CHECK_REL"
+      else
+        refuse branch-not-found "$CHECK_REL"
+      fi ;;
+  esac
   REL_TIP=$(git -C "$REPO" rev-parse "$REL_REF^{commit}") || refuse branch-not-found "$CHECK_REL"
+  R_REF="$REL_REF"
+  R_SHA="${REL_TIP:0:12}"
+  PROD_SHA=$(git -C "$REPO" rev-parse --verify -q "$PROD_REF^{commit}") || refuse prod-ref-missing
   R_REL="$CHECK_REL"
   R_HEAD="$REL_TIP"
   release_check "$REPO" "$PROD_SHA" "$REL_REF" || refuse status-unreadable
   if [ "$RC_U" -gt 0 ]; then refuse unapproved-commits; fi
-  echo "RELEASE result=READY reason=- branch=$CHECK_REL base=$PROD_SHA head=$REL_TIP"
+  echo "RELEASE result=READY reason=- branch=$CHECK_REL base=$PROD_SHA head=$REL_TIP ref=$R_REF sha=$R_SHA"
   exit 0
 }
 
@@ -265,7 +286,7 @@ main_build() {
   done
   echo "PROMOTE-CLIENT-FACING count=$CF"
   HEAD_SHA=$(git -C "$REPO" rev-parse "refs/heads/$REL")
-  echo "RELEASE result=READY reason=- branch=$REL base=$PROD_SHA head=$HEAD_SHA"
+  echo "RELEASE result=READY reason=- branch=$REL base=$PROD_SHA head=$HEAD_SHA ref=$R_REF sha=$R_SHA"
   exit 0
 }
 
@@ -359,7 +380,7 @@ FIXEOF
   rel1=$(printf '%s\n' "$out" | sed -n 's/^RELEASE result=READY .* branch=\([^ ]*\) .*/\1/p')
   c=0
   if [ "$rc" -eq 0 ] && [ -n "$rel1" ] \
-     && printf '%s\n' "$out" | grep -qx 'RELEASE-CHECK features=2 first_parent_commits=2 unapproved=0' \
+     && printf '%s\n' "$out" | grep -q "^RELEASE-CHECK features=2 first_parent_commits=2 unapproved=0 ref=refs/heads/$rel1 sha=" \
      && printf '%s\n' "$out" | grep -qx 'PROMOTE-CLIENT-FACING count=1' \
      && git -C "$PORTAL" cat-file -e "$rel1:feat-b.txt" \
      && [ "$(wtcount)" -eq 1 ]; then c=1; fi
@@ -441,7 +462,7 @@ FIXEOF
     plain=$(git -C "$PORTAL" commit-tree "$tree" -p "$rel9" -m "plain change without trailer")
     git -C "$PORTAL" update-ref refs/heads/plain-check "$plain"
     out=$(run --check plain-check); rc=$?
-    if [ "$rc" -ne 0 ] && printf '%s\n' "$out" | grep -qx 'RELEASE-CHECK features=2 first_parent_commits=3 unapproved=1' \
+    if [ "$rc" -ne 0 ] && printf '%s\n' "$out" | grep -q '^RELEASE-CHECK features=2 first_parent_commits=3 unapproved=1 ref=' \
        && printf '%s\n' "$out" | grep -q '^RELEASE result=REFUSED reason=unapproved-commits '; then c=1; fi
   fi
   record "check-plain-untrailered-commit-refuses" "$c"
@@ -452,6 +473,31 @@ FIXEOF
      && ! git -C "$PORTAL" cat-file -e "$rel1:dev-only.txt" \
      && ! git -C "$PORTAL" merge-base --is-ancestor "refs/remotes/origin/DEV" "$rel1"; then c=1; fi
   record "unapproved-DEV-change-not-on-release" "$c"
+
+  # 11. --check PROD with a stale local PROD and a newer origin/PROD reads origin/PROD and prints that ref and sha
+  reset_fix
+  addc "$T/seed" prod2.txt "prod second"
+  git -C "$T/seed" push -q "$T/origin.git" PROD
+  git -C "$PORTAL" fetch -q origin
+  p11=$(git -C "$PORTAL" rev-parse "refs/remotes/origin/PROD^{commit}")
+  l11=$(git -C "$PORTAL" rev-parse "refs/heads/PROD^{commit}")
+  out=$(run --check PROD); rc=$?
+  c=0
+  if [ "$p11" != "$l11" ] && [ "$rc" -eq 0 ] \
+     && printf '%s\n' "$out" | grep -qx "RELEASE-CHECK features=0 first_parent_commits=0 unapproved=0 ref=refs/remotes/origin/PROD sha=${p11:0:12}" \
+     && printf '%s\n' "$out" | grep -qx "RELEASE result=READY reason=- branch=PROD base=$p11 head=$p11 ref=refs/remotes/origin/PROD sha=${p11:0:12}"; then c=1; fi
+  record "check-PROD-reads-origin-PROD-not-stale-local" "$c"
+
+  # 12. a non-trunk name with different tips locally and on origin still reads the LOCAL branch and prints it
+  reset_fix
+  git -C "$PORTAL" update-ref refs/remotes/origin/chk-both "$(tipof feat-a)"
+  git -C "$PORTAL" update-ref refs/heads/chk-both "$(tipof feat-b)"
+  tb12=$(git -C "$PORTAL" rev-parse "refs/heads/chk-both^{commit}")
+  out=$(run --check chk-both)
+  c=0
+  if printf '%s\n' "$out" | grep -q "^RELEASE-CHECK .* ref=refs/heads/chk-both sha=${tb12:0:12}\$" \
+     && printf '%s\n' "$out" | grep -q "^RELEASE result=REFUSED reason=unapproved-commits .* ref=refs/heads/chk-both sha=${tb12:0:12}\$"; then c=1; fi
+  record "check-nontrunk-reads-local-branch" "$c"
 
   ok=False
   if [ "$ok_count" -eq "$n" ]; then ok=True; fi

@@ -7,7 +7,7 @@
 <owned_cells>MX-r-12</owned_cells>
 </decomp_ref>
 <to_id>NFRA_MCPINDEX.TO-MX-r-12</to_id>
-<issued_to>0.9.0_WK_NFRA_MCPINDEX~34</issued_to>
+<issued_to>0.7.0_AE_CloudOps~MI</issued_to>
 <issued_by>2.0.0_SA_COO~MI</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -58,6 +58,36 @@ These are the differences:
 - Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
   GATE (viii) does not grade it.
 
+**AMENDED A2 (2.0.0_SA_COO~MI, 2026-10-14 ~02:1xZ) -- MX-c-9 drained; the slot is OURS now on live b0c75d24f1; PHASE A
+and PHASE B both re-addressed to 0.7.0_AE_CloudOps~MI; close by 10:00Z.**
+- MX-c-9 drained @435958cd7c and is complete @9e0f8ae6ad (A2: six research rows HELD on the R20 call
+  `sitez-20261014T015958Z-a63a`; they ship in a LATER release on that call's YES, not in this one).
+- **The live ref is `b0c75d24f1`** (NFRA_MCPORTAL MP-n-4, 01:31Z; `EC2_MANIFEST.json` at HEAD), not `7eff14b2e6`.
+  - The issuer's census of `b0c75d24f1` with c-9's three files laid over it: N=67, partition a=11 b=44 c=12 valid,
+    definitions 67 of 67, identity 0. MP-n-4 changed only `app/admin_fabric_gitstate.py`.
+- **The slot** (`2.0.0_SA_COO~O` msg 33905): MX-r-12 goes NOW. The ledger must read CLOSED by 10:00Z; otherwise
+  NFRA_OPLGTW r30 (OG-ap-14) deploys at 11:00Z and MX-r-12 follows it. At the close, the issuer tells `2.0.0_SA_COO~O`
+  the deployed_commit; r30 re-cuts on it.
+- **`<issued_to>` is now `0.7.0_AE_CloudOps~MI` for both phases.** No worker is spawned, to meet the window. PHASE A:
+  1. read the live ref from the host by md5;
+  2. cut the deploy-only commit on it in a NEW deploy tree, carrying exactly the three drained blobs at @435958cd7c,
+     with `infra/logic/registry` in the cone;
+  3. write `ANNOUNCE_MX-r-12.md` in `deliverables/0.7.0_AE_CloudOps~MI/`, with the three censuses and A1's MC Portal
+     per-tool link counts (live vs cut);
+  4. report, and stop for the never-widen pair.
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
+  GATE (viii) does not grade it.
+
+**AMENDED A3 (2.0.0_SA_COO~MI, 2026-10-14 ~02:2xZ) -- PHASE A waits for MX-c-9 A3.**
+- Call a63a is ruled (@d5e0b1a0b6): the six held harvest rows land through `legacy_addresses.json` in MX-c-9 A3, so this
+  release carries all seven research tables.
+- PHASE A starts only when MX-c-9 A3 drains. The issuer then names the three blobs at the new drain commit. A cut made
+  before that would ship the six-row-short catalog and need a v2.
+- The 10:00Z close stands (`2.0.0_SA_COO~O` msg 33905).
+- The shipped set stays exactly the three gateway files. The registry rows are repo-side and do not ship to the host.
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
+  GATE (viii) does not grade it.
+
 ## 2. BOUNDS
 
 1. No change to any source file. This order ships what MX-c-9 committed, and nothing else.
@@ -104,6 +134,7 @@ PHASE A ends at the ANNOUNCE: report, and stop. After PHASE B, the applier write
 - r12.AC3 FAIL (= c9.AC3).
 
 <status>issued</status>
+<status>pending</status>
 <round>11</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
