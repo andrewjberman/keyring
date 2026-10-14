@@ -33218,3 +33218,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "cottonwood's served date is 2026-10-08 against 2026-10-12 for two firms; the counts in IB188-2 are as served on those dates. The reason (a refused fire, no fire, or a source frontier) is not read by this order."
 }
 ```
+
+## IRPT_BCKEND-D2-W373-S4 -- cottonwood carries a publish_refusal record beside its current manifest, written after its last accepted publication
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W373-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~373",
+  "surfaced_at": "2026-10-14T02:01:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "cottonwood's current/ prefix holds a publish_refusal.json object written 2026-10-13T14:17:45Z, after its last accepted publication (business date 2026-10-08, manifest written 2026-10-09); its reason is not read by this order, which holds a head-object read only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/publish_refusal.json (s3api list-objects-v2 keys and head-object metadata: LastModified 2026-10-13T14:17:45Z, ContentLength 649; body not read)",
+      "s3://opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/manifest.json (LastModified 2026-10-09T14:18:11Z; latest_date 2026-10-08)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@9f41eeeec9 lines 2895-2897 (PUBLISH_REFUSAL_OBJECT beside current/manifest.json, one record per firm) and the refusal writer near line 3068"
+    ]
+  },
+  "spec_asserts": "A refused publish leaves the firm's last good publication served, with one refusal record per firm beside current/manifest.json (holdings_snapshot.py 2895-2897 and 3068); the S3 row's question of why cottonwood has no 2026-10-09 or 2026-10-12 partition has that record as a candidate answer.",
+  "world_is": "cottonwood's key listing shows partition dates 2026-10-05 to 2026-10-08 (29 objects each) and no 2026-10-09 or 2026-10-12 partition, plus current/publish_refusal.json written 2026-10-13T14:17:45Z. 49financial and inflection carry no refusal object beside their current manifests. The refusal's content (its condition and business date) is not read: outside this order's read grant. Consistent with a refused fire; not established as the cause."
+}
