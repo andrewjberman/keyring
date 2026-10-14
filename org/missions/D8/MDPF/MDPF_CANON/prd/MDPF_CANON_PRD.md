@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v2.18",
+ "prd_version": "v2.19",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -187,6 +187,26 @@ CONTRACTS changed, so both halves are owed again.
 
   FWD-9  The AUA Trend shows custom models as ONE block and the strategy groups as
          chips, in the colors the Total Assets breakdown already uses
+         v2.19 OVERRIDES, for the GLOBAL Trend (Andrew-direct 2026-10-14
+         ~20:1xZ and ~20:4xZ; L10 ADDENDUM v2.19 below): (a) FULL
+         HISTORY, Variant 1 of `org/tier1_exec/4.0.0_SA_CRO/deliverables/
+         MDPF_CANON_GLOBAL_AUA_TREND_FULL_HISTORY_SPEC_20261014.md`
+         @8025c4d7f1: every group is drawn from 2024-11-01 by that
+         spec's per-group rule table, the five models before 2026-05-15
+         from the 49 Financial series (Global = 49F alone there, diff
+         0.00) and Custom = `model_aua` minus the five; FWD-3's fold
+         does not apply to the Global TREND history, because only Opal
+         staff can open Global (Andrew's stated fact); (b) Client
+         Supervised on EVERY date = `non_model_aua` - `opal_div_sma` -
+         `opal_growth_sma`; "Other AUA" is retired on the Global Trend;
+         (c) ROLL-FORWARD: on a date with no total, and for a group's
+         null on a date with one, the group carries its last known
+         value as point class `carried` (claim held), forward only and
+         never before a group's first value; (d) exception (ii) of
+         clause (2), and the "per-model detail begins" sentence, no
+         longer apply at Global: the groups sum to the Total to the
+         cent on every dated row. Firm scopes are unchanged by (a)-(d);
+         the Cottonwood Trend is a later addendum.
          DONE WHEN  EXERCISED -- on Model Portfolios > AUA TREND ANALYSIS > Trend (the
                     period-end bars, the daily area chart, the legend and the
                     tooltip), read on `bun run dev:live --port 5174` (portal
@@ -671,5 +691,15 @@ reaching dell1 at the next integrator pass. It was read here from `origin/box/de
 - On all 383 dates before `per_model_detail_begins` (2026-05-15) the stack misses the whole model AUA ($437M to $1.35B), because the FWD-3 fold suppresses every model line held by fewer than two firms.
 - **Ruled: exception (ii) covers those dates. The amount is NOT drawn as a band** (the issuer's REC (iii)). A band of suppressed model dollars would draw exactly what FWD-3 forbids. The page states the boundary in words, and the gap is printed by the readback.
 - ENDPOINT text moves (FWD-9 clause (2)), so the ratified-text half is re-owed to `3.0.0_SA_CVO`.
+
+-- 1.0.0_SA_CTO~DELL1
+
+**v2.19 (2026-10-14 ~20:4xZ), on Andrew's /portfolios smoke and his Variant 1 word:**
+- Records: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_201xZ_PORTFOLIOS_SMOKE_TREND_FULL_HISTORY_COTTONWOOD_SPEC.md` @caf5dc7d73 (+ addendum 1 @c0d1b030bf), and `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261014_204xZ_MDPF_GLOBAL_TREND_VARIANT_1_AND_SATELLITE_GLD_RETURNS.md` @ab28358b88.
+- VERBATIM: "If we're going to do it like this, breaking all this stuff out, then we have to figure out how to render it historically ... if we are missing totals on any given day, just roll forward last known values"; and "Call 3, only opal staff see global, that is correct. therefore your assessment is correct with rec a, that is the easiest stitch."
+- **The v2.18 exception (ii) for the dates before 2026-05-15 is RETIRED at Global.** FWD-9 carries the v2.19 OVERRIDES (a)-(d) at its head. The rule table, the identities and the period-end oracle are the CRO spec @8025c4d7f1 (Variant 1). They are cited, not restated.
+- **FWD-3 is unchanged for every served leaf except this one.** The Global Trend's history may show single-firm model lines: 49 Financial before 2026-05-15, and Inflection's Custom from 05-15 to 07-19. That rests on Andrew's stated fact that only Opal staff can open Global. If a partner login can ever open Global, this exception lapses.
+- **Where it lands:** the producer (`mdpf_gold_consolidator`) emits the pre-05-15 per-model values, Custom by difference, and the `carried` rows, under a never-widen pair, with every Global leaf read before and after and the headline sums byte-equal. Then the portal (`trendGrouping.ts`, `ModelPortfolios.tsx`), on a client-facing row for Andrew. Two composition steps stay and are footnoted: Inflection enters on 05-15, and Cottonwood enters on 05-28, interpolated to 07-20.
+- ENDPOINT text moves (FWD-9 head), so the ratified-text half is re-owed to `3.0.0_SA_CVO`.
 
 -- 1.0.0_SA_CTO~DELL1
