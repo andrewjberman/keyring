@@ -21,7 +21,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-14T14:05:00Z. Graduated at ADJUDICATION_v9
     "owner": "2.0.0_SA_COO~D1",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~D1",
       "round": "v7"
     },
@@ -30,7 +30,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-14T14:05:00Z. Graduated at ADJUDICATION_v9
       "owner": "2.0.0_SA_COO~D1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "MDPF_CANON-D1-W16-S2",
