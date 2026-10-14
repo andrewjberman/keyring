@@ -842,6 +842,29 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
       ]
     },
     "notes": "Not fixed by this worker. A case-folded match would make load_actions honour more voids than price_series, which the amendment rules out. Needs the issuer's ruling: correct the AC4 void spelling in the check (the issuer's file, outside this order's paths) or rule case-folding for both readers. The order stays open on AC4 until then."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-S16",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~V1",
+    "surfaced_at": "2026-10-14T14:43:03Z",
+    "one_line": "An inferred split (actions-inferred-*) and Bloomberg's own row for the same split are two rows under the de-dup key (raw_event_type differs), so both survive and a price series or G5 flow can apply the split twice (CTO C1, msg 5612).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~V1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CTO half org/missions/D5/ETFS/ETFS_RIVALS/ledger/NEVER_WIDEN_R30_DEPLOY_CTO_HALF.md @35d1f02bc3, condition C1; CTO msg 5612",
+        "price_series._actions (price_series.py:238-258) already reads EVERY object under corporate_actions/date=<D>/ (the inferred ones too) and applies every split row, so a Bloomberg row and an inferred row for one split already both apply on the chart; RIV-xe-3's union (gold_trade_schedule.load_actions, key security_id+event_type+raw_event_type+ex_date) extends the same exposure to G5 once deployed",
+        "MEASURED 2026-10-14 ~14:1xZ (S3 LIST+GET, read-only): gold/corporate_actions holds 11 objects, all plain Bloomberg pulls (actions-<rev>); 0 actions-inferred-*, 0 actions-void-*; so no double application exists today"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "One split is one adjustment: a split the lookup finds on the web (dramatic_move.run_for_day, live since the wi-1 deploy 2026-10-09) and the same split Bloomberg later reports adjust a series once.",
+    "world_is": "Both rows survive the readers. The inferred row's raw_event_type is the lookup's own text and Bloomberg's is the vendor's, so the (security_id, event_type, raw_event_type, ex_date) key never collides across the two sources. No inferred object exists in the live store today (measured), so the hazard has not fired.",
+    "notes": "DISARM (this seat's, per CTO C1: no actions-inferred-* object stays until the fix deploys). There is no switch that stops the live lookup short of an environment-key change (a deploy outside the r30 plan), so the disarm is DETECT AND VOID: each drive tick lists gold/corporate_actions/date=* read-only; an actions-inferred-* object found is voided the same tick with `python -m rivalfunds.dramatic_move void --sink s3 --revision <rev> --security-id <sid> --reason <text>` through a CloudOps seat on this seat's word (append-only; the r30 pin makes load_actions honour voids, price_series already does). The lookup may re-find the next day; the loop repeats until the fix deploys. FIX: a round-31 cell, Bloomberg wins on (security_id, event_type, ex_date) in both load_actions and price_series; arms: a double reads one adjustment, an inferred-only row applies, today's store reads DELTA=0 (CTO msg 5612)."
   }
 ]
 ```
