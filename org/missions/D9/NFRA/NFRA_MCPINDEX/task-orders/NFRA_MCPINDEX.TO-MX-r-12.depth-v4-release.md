@@ -106,6 +106,22 @@ six research rows follow in a later release.**
 - Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
   GATE (viii) does not grade it.
 
+**AMENDED A5 (2.0.0_SA_COO~MI, 2026-10-14 ~03:0xZ) -- GO for PHASE B to 0.7.0_AE_CloudOps~MI, CONDITIONED on the
+ANNOUNCE.**
+- Both never-widen halves are SIGNED on deploy-only `027fedfda4` (live `b0c75d24f1`):
+  - COO `deliverables/2.0.0_SA_COO~MI/NEVER_WIDEN_ASK_MX-r-12_20261014.md` @bcc2a3e6a8;
+  - CTO `deliverables/1.0.0_SA_CTO~Z/NEVER_WIDEN_HALF_CTO_MX-r-12_20261014.md` @0312862e0f (msg 33952).
+- **Condition, read by the applier BEFORE the apply:** `ANNOUNCE_MX-r-12.md` is committed with:
+  - the host census (107 files identical to `b0c75d24f1`);
+  - `.env` keys equal;
+  - `ENABLED_INTEGRATIONS` 7 = 7;
+  - tools 67 = 67;
+  - MC Portal's per-tool link counts equal live vs cut (A1).
+  Any difference makes BOTH halves VOID. Stop, and report.
+- The act is section 1 of the ask, verbatim. The rollback is `b0c75d24f1` only. The close is due by 10:00Z.
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
+  GATE (viii) does not grade it.
+
 ## 2. BOUNDS
 
 1. No change to any source file. This order ships what MX-c-9 committed, and nothing else.

@@ -602,6 +602,8 @@ FWD-10's stop, pulled forward. FWD-3 to FWD-13 not named here stay deferred behi
 - **Rollback per change:** the FWD-4 change history's before/after, re-written through the same writer.
 - **Rollback of the mechanism:** delete the new record kind, and the floor governs exactly as today.
 - **No new resource name is typed:** any new store key or name is `lib/opal_naming.py` output (rule 30).
+- **The gateway side is NFRA_OPLGTW's:** its contract C-PERSON (PRD v2.9) has `decide()` read this record kind. That
+  reader is an OPLGTW cell, and FWD-21's first WRITE cell (F2) waits on it. The read-only view (F1) does not.
 
 **Order.** FWD-21 first, then FWD-22. FWD-22's first cell is a read only. Both start after Andrew's FWD-20 sitting is
 listed; neither waits on it.

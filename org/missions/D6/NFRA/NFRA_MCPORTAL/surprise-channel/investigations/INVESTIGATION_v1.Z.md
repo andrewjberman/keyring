@@ -1775,3 +1775,31 @@
   "notes": "DISPOSITION NOTE: the CORRECTION in this row is settled -- the artifact plane is unambiguous and the CTO half names the same key independently. It is filed UNDER_INVESTIGATION because the RESIDUAL item still needs the issuer's routing, not because the correction is in doubt; the ratified enum has no value for 'settled finding, open routing'. For 2.0.0_SA_COO~MP: Z-S49 should be read as CORRECTED BY THIS ROW. Its routing ask shrinks from two items to one -- the stale release_note on the MX-r-11 generation (NFRA_MCPINDEX's record, not mine) -- plus the AC1-limb observation, which stands on its own and is unaffected by my error. The wrapper-defect count in Z-S49's notes must also be read down: MX-r-11 v2 did NOT produce a wrong previous_deployed_commit, so the stale-vintage defect is four releases old there (MP-x-4, MP-r-2, MP-n-1, MP-z-5), not five, and what MX-r-11 v2 shows is the release_note half of the same wrapper behaviour. MY ASK's section 7 is wrong as committed @3f7f1097e7; the CTO half corrects it on the record and I sent the correction to the COO before it signed, so no half is signed against the wrong premise."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S51",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-14T02:53:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "adjudicates": [
+    "NFRA_MCPORTAL-Z-S47"
+  ],
+  "one_line": "DISARMS Z-S47 citing 1.0.0_SA_CTO~Z's C17 round-2 analysis @d0dd3f0964 (ruling 3). Andrew's ask (Control Plane shows each box's signed-in Claude account and its 5h/weekly usage left) is now FWD-22 in PRD v0.8. Its first cell, U1, is a READ of where those limits are exposed, cut in the next round's one issuance once v0.8 reads ADMITTED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/ledger/ROUND_ANALYSIS.c17-round2.md @d0dd3f0964, section 2 item 3 and section 3 row U1",
+      "1.0.0_SA_CTO~Z msg 33947: 'Disarm Z-S47 citing the analysis'",
+      "python .tools/prd-signoff.py status NFRA_MCPORTAL at ~02:5xZ: v0.8 @d0dd3f0964 WITHHELD, ratified-text half owed by 3.0.0_SA_CVO~Z"
+    ]
+  },
+  "spec_asserts": "Z-S47: Andrew's Control Plane account-and-usage ask has no outcome in the PRD; the GW round is frozen.",
+  "world_is": "The ask is now an outcome (FWD-22, PRD v0.8) with a first cell named in the round analysis. Nothing is owed against Z-S47 itself. U1 carries it, and U1 is issued with G1, F1 and F2 in one issuance once v0.8 is ADMITTED.",
+  "notes": "Disarm owner per Z-S47: 2.0.0_SA_COO~MP (issuer)."
+}
+```

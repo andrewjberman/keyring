@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v2.8",
+  "prd_version": "v2.9",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -1041,3 +1041,26 @@ On two notes delivered with the v2.7 signatures:
   named as one in that pair.
 
 PROOF text changes, so both halves re-open at these bytes.
+
+### v2.9 addendum (2026-10-14 ~03:0xZ, 1.0.0_SA_CTO~Z) -- C-PERSON: the gateway honours MC Portal's per-person access records (NFRA_MCPORTAL C18)
+
+On `3.0.0_SA_CVO~Z`'s note with the NFRA_MCPORTAL v0.8 signature (msg 33950): MC Portal's C18 needs the gateway to honour
+a new per-person record kind, and this PRD still admits tools and tiers from the deploy-time files only.
+
+**C-PERSON -- the gateway reads per-person tool, channel and tier records from the grant store.**
+- `decide()` reads a person's per-person record from `gateway-access-state-table`. MC Portal C18 writes it, through the
+  ONE existing grant writer.
+- The deploy-time files (`identity_tool_allowlist.txt`, the `deploy-to-ec2.sh` rosters) stay the FLOOR. A record narrows
+  what the floor admits for that person. It widens only to a tool the floor already lists for some principal, and never
+  to a tool the deployed gateway does not serve.
+- A record is honoured on that person's next call.
+- With no record present, behaviour is exactly as today: the floor governs.
+- The Opal-users-only gate (v2.3 item 4), the C2 owner gate and tier admission (msg 33940) are unchanged and evaluated
+  first. A record can never admit a non-Opal principal.
+- **Rollback:** delete the record kind, and the floor governs.
+
+**Whose cell:** NFRA_OPLGTW cuts the gateway reader as its own cell, in the round after r30 and the tier-admission
+release. NFRA_MCPORTAL's first FWD-21 write cell (F2) waits on it. MC Portal's read-only cell (F1) does not.
+
+ENDPOINT unchanged; CONTRACTS change, so the ratified-text half re-reads under proportionate sign-off (no delivery
+withheld).
