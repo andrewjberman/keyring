@@ -9174,3 +9174,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W153-S5 -- TO-DB-b-188 carried status complete at HEAD from the 62-member pass when the amendment re-opened the denominator to 73
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W153-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~153",
+  "surfaced_at": "2026-10-14T03:49:37Z",
+  "one_line": "The order file reached this run with status complete, set by the earlier 62-member pass; the amendment that re-opened the denominator to 73 did not reset it to pending.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face says the order status is flipped to complete ONLY if DB101-2-AC1 passes at this run, which implies the order is open (pending) until then.",
+  "world_is": "The status line changed from pending to complete at 25b8ac8f95 (the 62-member pass). The amendment c9fe2cba31 changes no status line. This run's DB101-2-AC1 PASS at 73 members is consistent with the complete status, so no flip was made and the order file is not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 25b8ac8f95 -- the TO-DB-b-188 order file: the status line changes pending to complete",
+      "git show c9fe2cba31 -- the TO-DB-b-188 order file: no status line in the diff",
+      "DB101-2-AC1 run at this worktree HEAD c9fe2cba31: OK 73 absent members classified, PASS rc 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
