@@ -12686,6 +12686,114 @@
   "spec_asserts": "TO-AR-y-308 step 3: edit intake/tests/test_correction_words.py ONLY for the code count, and list the edit.",
   "world_is": "The code count is 33 before and after the change, so the lock needed no edit. No edit was made to test_correction_words.py. The new code is covered by the new file's own census test (test_every_not_composed_code_the_door_can_raise_has_words_or_is_refusal_only).",
   "notes": "No action taken on this row. Recorded so the L9 reader does not look for a count edit that the lock does not need."
+},
+{
+  "id": "IRPT_ANLREQ-D2-W124-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~124",
+  "surfaced_at": "2026-10-14T11:45:26Z",
+  "one_line": "Sibling release worktrees share C:/dev/irpt-release-r29/; my first worktree add landed at a literal C:\\c path and was moved to r39-control",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git worktree list --porcelain (C:/dev/ajb_workspace, read 2026-10-14): C:/dev/irpt-release-r29/wt-control at HEAD 9441d74dbb and wt-release at HEAD d39886e4aa are other seats' worktrees",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-310.release29-build-ycharts-generate.md@2ba904ab11 (face line 33: stage every artifact under C:/dev/irpt-release-r29/)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Face line 33: stage every artifact under C:/dev/irpt-release-r29/ (create it; it is outside the repository) and use throwaway worktrees outside the product tree.",
+  "world_is": "C:/dev/irpt-release-r29/ already holds sibling seats' registered worktrees (wt-control, wt-release) and staged zips. My first git worktree add ran with MSYS_NO_PATHCONV=1 in the shell, so the /c/ path reached git literally and created C:\\c\\dev\\irpt-release-r29\\wt-control. I moved that worktree to r39-control with git worktree move and used only r39-* names. In the sibling trees I only ran read-only operations (rev-parse, git apply --check).",
+  "notes": "No action on the sibling trees. Scratch for this run: .scratch/r39 inside the worker worktree."
+},
+{
+  "id": "IRPT_ANLREQ-D2-W124-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~124",
+  "surfaced_at": "2026-10-14T11:45:26Z",
+  "one_line": "The release base source tree lacks the staged members, so the cell tests cannot run in it as the order describes",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/tests/test_ordinary_viewer.py@ee7ba8cab9 (lines 19-22: imports ordinary_viewer from the _scope folder, which the base source does not carry)",
+      "infra/aws/lambda/ci/build-and-upload.sh@0c0ae5a8f5 (builder stages pinned blobs into source_dir and restores the source on EXIT)",
+      "infra/aws/lambda/ci/lambda-source-map.json@85d4185f1c (irpt-ycharts-generate staged_from pins)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Face step 6: run every test file the cells added or edited, from the build's source tree, plus the package folder's tests.",
+  "world_is": "At base 0c0ae5a8f5 the source tree holds the pre-release bytes of the staged members and has no _scope/ordinary_viewer.py, so AR-y-306's test fails at import (ModuleNotFoundError) there. The builder writes pinned bytes into source_dir only during its build and restores the source afterwards. I replayed the builder's staging into throwaway test trees: 94 rows, every blob sha256 equal to its row, 0 mismatches. The tests were run against that replay, which is the package's bytes.",
+  "notes": "The replay also writes each staged repo_path, which is wider than the builder's flat staging; the test results were compared with the live base under the same replay."
+},
+{
+  "id": "IRPT_ANLREQ-D2-W124-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~124",
+  "surfaced_at": "2026-10-14T11:45:26Z",
+  "one_line": "The map last_deployed_commit 94946b25 for irpt-ycharts-generate does not reproduce the live zip; the applier's build base is 0c0ae5a8f5",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json@85d4185f1c (commit note: the last commit touching source_dir; the build base was 0c0ae5a8f5)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~124/r39/lastdeploy_commit_control_member_manifest.json (a BUILD_ONLY build at 94946b25: CodeSha256 ofnytEBg, 104 members)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Face step 2: the map entry's last_deployed_commit, as the applier recorded it, must reproduce the live zip; test it.",
+  "world_is": "A BUILD_ONLY build at 94946b255340 (guard count 8) gives CodeSha256 ofnytEBg/rpM18Ej/CyedRwipUxVoFuga8P/a80xxSs= with 104 members. Five members differ from live (maintained_sources.py, portfolio.py, security_resolution.py, template_reader.py, uploads.py) and trading_calendar.py is only in live. At base 0c0ae5a8f5 with the release-28 input diff the build reproduces live (105 of 105 members equal). The field is therefore not the build base.",
+  "notes": "The control at 0c0ae5a8f5 is the one the release is built on; the map field is left unchanged in trunk."
+},
+{
+  "id": "IRPT_ANLREQ-D2-W124-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~124",
+  "surfaced_at": "2026-10-14T11:45:26Z",
+  "one_line": "Five AR-y-308 intake tests compare the uploads words with ops/status.py, which is not a member of irpt-ycharts-generate",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/tests/test_shares_not_composed_words.py@ee7ba8cab9 (lines 26-33 import ops/status.py; lines 46-48, 102 and 110 compare it with uploads)",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_correction_words.py@ee7ba8cab9 (lines 39-44 compare uploads.CORRECTION_WORDS with ops/status.py)",
+      "infra/aws/lambda/ci/lambda-source-map.json@85d4185f1c (irpt-ycharts-generate files[] carries no status module and no ops/ member)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AR-y-308 added intake/tests/test_shares_not_composed_words.py, and the package folder's intake tests are run for this package (face step 6).",
+  "world_is": "Five testcases (test_correction_words x2 and test_shares_not_composed_words x3) fail in the release-faithful tree and fail with the same IDs at the live base, where uploads.py has no shares words (10 failing at live, 5 at release, none new at release). They compare against ops/status.py, the irpt-status leg (AR-y-309), which this package does not carry. They cannot pass in this package's tree alone.",
+  "notes": "Not a defect of the uploads.py move. The cross-package check is the sibling leg's to satisfy."
+},
+{
+  "id": "IRPT_ANLREQ-D2-W124-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~124",
+  "surfaced_at": "2026-10-14T11:45:26Z",
+  "one_line": "The ycharts/generate suite fails 103 testcases against the package's pinned bytes, the same IDs as at the live base",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_dead_letter_record.py@ee7ba8cab9 (line 33 imports GENERATE_MAX_RECEIVES from resident_worker)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py@0c0ae5a8f5 (defines GENERATE_MAX_RECEIVES; sha256 755e40b4)",
+      "infra/aws/lambda/ci/lambda-source-map.json@85d4185f1c (resident_worker.py staged from pin 3f29017cfc, sha256 805bc24e; the pinned bytes lack the name)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC1 of the task order: the record carries passing tests for the package; the package folder's tests are run against the package.",
+  "world_is": "The ycharts/generate suite (573 testcases) run against the package's pinned bytes gives 439 passed, 97 failed, 6 collection errors and 31 skipped. The failing IDs are the same as at the live base (101 IDs, identical sets). The observed cause is that the suite imports names from resident_worker (GENERATE_MAX_RECEIVES, poll_package_once) that the pinned resident_worker.py does not define, while the source at base 0c0ae5a8f5 defines them: the suite matches the source, not the pinned bytes.",
+  "notes": "Recorded because the package folder's own suite is not green at the live base; AC1 is graded with the failures explained, not as a clean pass."
 }
 ]
 ```
@@ -12741,5 +12849,63 @@
     "world_is": "The folder is shared with other writers during this run (a resident tarball, build folders, and two worktrees under r39-control and C:/c/dev/ that this worker did not create). The builder writes its zip to one fixed temp name per function unless TMPDIR is set, so two concurrent builds of irpt-status with the default TMPDIR would overwrite each other's zip. This worker avoided that with a private TMPDIR per build; the other writers were left untouched.",
     "notes": "No action taken on other writers' entries. Recorded so the L9 reader can tell which folder entries are not this worker's, and so the release-29 issuer can allocate staging names and TMPDIR per writer."
   }
+]
+```
+
+## IRPT_ANLREQ-D2-W125-S1 -- the release-29 build ran the release-28 recipe builder from a copy, because the worktree HEAD builder is a later blob
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W125-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~125",
+  "surfaced_at": "2026-10-14T11:35:44Z",
+  "one_line": "The recipe builder at the worktree HEAD (blob 46e3bae9) is not the release-28 recipe builder (blob e1e58c2d, commit aaa458aa4f); the release-29 build ran the e1e58c2d blob copied to a builder root outside the repository, with GIT_DIR set to the common git directory.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py@2ba904ab11: git ls-tree HEAD blob 46e3bae9223ae367ac6f729722a2cdc23cd5fa96 (sha256 c674e2e8...), changed after aaa458aa4f by commits 3f5321ad36 and 049834ad31",
+      "git show aaa458aa4f:org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py | git hash-object --stdin = e1e58c2d94a8d0b6fc4c16320fa385bf39e5d8a8; sha256 afe7d574bb26b6ac3ebae5322e9da30725a2ea1cc5a12699c9c97b317167aa76, equal to the r28 scratch copy C:/dev/irpt-r28-build (the AR-y-300 scratch location)",
+      "C:/dev/irpt-release-r29/builder-root/org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py: the e1e58c2d copy, sha256 afe7d574 checked before the build; build_a and build_b rc=0 (out/build_a_stdout.json, out/build_b_stdout.json); the delta against the release-28 tarball is the four expected members"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AR-y-311 step 1 and AR-y-300 step 2: the release uses the same recipe as AR-y-227 (the recipe builder, the same arguments, the clock held to the recorded generated_at).",
+  "world_is": "The recipe builder is named by path only; the worktree copy at HEAD is a later version, so running it at its own path would change the recipe. The release-28 blob was run from a root outside the repository so that the builder's WORKTREE (its parents[5]) resolves there. The r29 package reproduces the release-28 member set except the expected four members.",
+  "notes": "owner: 2.0.0_SA_COO~Y2 (which builder blob is the recipe for release 29). Built only; nothing uploaded, installed, applied or invoked. The HEAD builder was not run."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W125-S2 -- the named ops status test runs on the extracted package only with trunk helper folders and ycharts/generate on the path
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W125-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~125",
+  "surfaced_at": "2026-10-14T11:35:44Z",
+  "one_line": "ops/tests/test_status.py imports fixtures from _authz/tests and the status path imports submission from ycharts/generate; neither test folder is in the tarball, so the named test runs on the extracted package only with those trunk folders and paths added.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/tests/test_status.py@f812980d12 lines 15-27 (sys.path to _authz/tests; import fixtures as fx) and ops/prospect_dates.py@f812980d12 line 18 (from submission import input_repository_owner)",
+      "C:/dev/irpt-release-r29/irpt-resident-0485393f3a-r29.tar.gz: ycharts/generate/submission.py present; the tests are excluded by the builder, so _authz/tests/fixtures.py is absent",
+      "C:/dev/irpt-release-r29/tests_out/test_status.txt: 23 passed with PYTHONPATH separated by semicolons and the trunk _authz/tests and _scope/tests folders added; the first run with colon separators (mangled on Windows) gave 19 failed, 4 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AR-y-311 step 5: the ops status tests that run on the extracted package are part of the named test set.",
+  "world_is": "The named set runs on the extracted package only when the trunk _authz/tests and _scope/tests folders and the ycharts/generate path are supplied. With them: correction_words 9 of 9, shares_not_composed 10 of 10, deferred_resolution 15 of 15, ops test_status 23 of 23.",
+  "notes": "owner: 2.0.0_SA_COO~Y2 (whether the step-5 named set carries its helper folders). No action taken on this row."
+}
 ]
 ```

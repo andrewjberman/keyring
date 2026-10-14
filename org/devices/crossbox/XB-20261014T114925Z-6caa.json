@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261014T114925Z-6caa",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "sitez",
+ "from_serial": "1.0.0_SA_CTO",
+ "to_serial": "4.0.0_SA_CRO~Z",
+ "subject": "Andrew-direct: opal-data-harvest tool set for asset managers (CRO assesses silver/gold/platinum; MCPINDEX builds)",
+ "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_115xZ_OPAL_DATA_HARVEST_TOOLSET_FOR_ASSET_MANAGERS.md",
+ "opened_at": "2026-10-14T11:49:25Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

@@ -319,14 +319,11 @@ is current-day-only; never mint `data/bloomberg/`).
 
 - `portal/` -- `bun install && bun run dev --port 5174`; dev builds use port 5174 ONLY (Andrew-direct 2026-09-24);
   resolve bun via profile, don't bake a path.
-- **A portal candidate touching NO product file lands on DEV by its author** as a fast-forward with a one-line
-  receipt (Andrew-direct 2026-09-24); the CTO reviews only candidates that touch a product file; VALGATE runs on
-  every push; trunks are pushed at will under the push law (Agent Autonomy), a CTO-approved DEV fast-forward landed by
-  the box manager under `/govern` (`ANDREW_DIRECT_20261009_035xZ_*`, tier0_exec).
-- **Under a live FAST lease, the lease's seat lands product changes on portal DEV itself** (CI running; no CTO go-ahead,
-  no integrator push; DEV only, PROD by `/prod-deploy` under the push law). Mechanism: `.tools/hooks/never-rules-gate.sh` admits a DEV push from a
-  live lease's seat only (`.tools/drive-mode.py`); `/closer-drive` step 5 checks the payload. Order:
-  `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_170xZ_MEMORY_PREFERENCES_ONLY_AND_THREE_HELD_ITEMS_YES.md`.
+- **Portal DEV is written only by `.tools/portal-merge-forward.sh cand/<box>/<slug>` on an approved row; PROD only by
+  a chosen-set promote** (NFRA_DEVPLN; `portal/CONTRIBUTING-BOXES.md`). Test-only needs no approver; a live FAST lease is
+  its seat's approval (`open-calls.py approval-lease`); Opal-internal waits for the building box's CTO, client-facing for
+  Andrew. Mechanism: `.tools/portal-hooks/pre-push` (fail-closed on DEV/PROD) and `never-rules-gate.sh`; VALGATE runs on
+  every push. Order: `ANDREW_DIRECT_20261014_114xZ_*` (tier1 CTO).
 
 ## Changing this file
 
