@@ -11091,3 +11091,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+## IRPT_DASHBD-D2-S31 -- disarm owner's ruling on W167-S3 and the issuer's ruling on W167-S8 (round 105 chain A)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S31",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T13:52:21Z",
+  "one_line": "Disarm owner's ruling on W167-S3 (three Absent sites with no rule in the kind table): the builder's assignments stand and no fourth kind is added; and the issuer's ruling on W167-S8 (an account's last four digits in a committed record): masked before the merge, the checker amended.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CLAUDE.md section 2: an ARMED hazard disarms same-turn through the row's disarm_owner; this seat is disarm_owner of W167-S3. DB-b-202 step 3(b) names a kind table; the CTO closed the set at three (round-105 analysis, section 1 row The absent kind).",
+  "world_is": "W167-S3: the three sites are a null opening prior value (SOURCE_BREAK), a zero household ending value (SOURCE_BREAK) and the ending and flow terms of a window the account did not span (the window's own kind, INSUFFICIENT_HISTORY). None fires on the round-105 sample (0 hits for each reason, 0 NOT_SPANNED forms; the checker counts 55 absent forms: 15 NO_SOURCE_YET, 37 INSUFFICIENT_HISTORY, 3 SOURCE_BREAK). Ruling: the assignments stand, because each names a source repair or a missing opening day and the remedy of each is not time alone; a zero household ending value fits the three kinds only loosely and is left as SOURCE_BREAK rather than invent a fourth kind, which is the CTO's to add by addendum with its first instance. The hazard is disarmed. W167-S8: the order asked for the exact printed sentence, and one kind-note example named an account by its last four digits, so a committed record would have carried a client identifier; the worker filed the row and the issuer masked the digits as #### in the record before the merge (the worker's own commit stays on its local branch and is never pushed), and amended the render checker to match #### as any four digits and to refuse an example that carries the digits (commit 07f8c57528).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~167/KIND_CARRIER_R105.json (kind_sites, absent_by_kind) and the issuer's checker p105_round105.py check_kind at the merge 6754faca95",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r105/p105_round105.py@07f8c57528 (example_printed and the digits refusal); the landed record holds 0 unmasked account digits (this seat's count at the merge)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_ROUND_105_20261014.md (the closed set of three kinds)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
