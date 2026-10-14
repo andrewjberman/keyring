@@ -7573,6 +7573,72 @@ carries none.
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "The gate's B2 rule for an opal-data-harvest bucket reads the colon-separated id as a scope; the owner of the naming gate decides whether the rule or the id form changes. No criterion is affected and no row is blocked by this entry."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W39-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~39",
+    "surfaced_at": "2026-10-14T18:29:56Z",
+    "one_line": "The clean table row keeps firm-bearing prose: the sanitiser drops only whitespace-free carrier strings, so a clean fork_keys.firm.values entry can still name the firm's alias list as one spaced string, and the naming gate does not read it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-c-15 Why: the rows ARE the firm fork, so the tokens move out of the rows and a row keeps the fork's SHAPE only; the clean row is fork_keys with each token key or value dropped; the naming gate refuses a firm or product token in a whitespace-free string of a catalog row.",
+    "world_is": "glib.sanitize() at 30819ee4e6 drops only whitespace-free carriers (carrier() returns False for any string containing whitespace). The BEFORE clean row of one in-scope contract (prefix null, table dim_account_xref, contract.id c-068b87add1de) still holds fork_keys.firm.values[0] as one spaced prose string that carries the firm's alias list and its scopes-registry reference. The loader accepts it as a clean row (AC1 174 of 174), so the shape check and the gate both pass it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round14/checks/glib.py@30819ee4e6: carrier() returns False for any string containing whitespace (line 148), and sanitize() drops only strings for which carrier() is True (lines 156-165)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-15.silver-table-loader-fork-registry-join.md@30819ee4e6: the Why paragraph and the clean-row definition (lines 28-37)",
+        "run in worktree 0.9.0_WK_NFRA_MCPINDEX~39: python .scratch/excerpt_c15.py prints the BEFORE view of contract c-068b87add1de (uncommitted scratch, the excerpt printed in the worker report)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Filed for the issuer's ruling, not graded by any criterion. Whether a spaced string that carries a firm alias is in the intent of 'no token in a row' is the owner's decision; the gate's whitespace-free reading is stated in the order and this row records only what the sanitiser writes."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W39-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~39",
+    "surfaced_at": "2026-10-14T18:58:54Z",
+    "one_line": "The gateway test test_schwab_engine.py::test_ogq1_ac04 fails in a full-suite run and passes alone: its pid_alive check on a just-killed child reads the child as still alive under load.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-15 Bounds 2: the gateway suite is graded by failing-ID delta against the base, and the known failures are the listed rows.",
+    "world_is": "Full gateway run at the base (48 failing IDs) and after this change (49 failing IDs): the one ID only in the after set is test_ogq1_ac04, which asserts the killed child is not alive (line 1434). It failed in 1 of 2 after-change full runs, passed in the base full run, and passed 2 of 2 when run alone. The change touches no code the test imports (the emitter is not referenced by the schwab engine tests).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/tests/test_schwab_engine.py@30819ee4e6: test_ogq1_ac04 asserts `not eng.pid_alive(killed.child_pid)` straight after the kill (line 1434 in the run output)",
+        "scratch: .scratch/ids_base.txt (48 IDs) and .scratch/ids_after.txt (49 IDs), diffed with comm: only test_ogq1_ac04 in the after set (worktree 0.9.0_WK_NFRA_MCPINDEX~39)",
+        "solo rerun in worktree 0.9.0_WK_NFRA_MCPINDEX~39: python -m pytest tests/test_schwab_engine.py::test_ogq1_ac04 -q gives PASSED, 1 passed, twice"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not graded by any criterion of MX-c-15. Filed so the issuer sees a load-sensitive ID in the failing-ID delta; the owner of the schwab engine tests decides whether the race is fixed. No row of this order is blocked by it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W39-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~39",
+    "surfaced_at": "2026-10-14T19:02:59Z",
+    "one_line": "The order asks for its own status flip in the task-order file, but that file is not among the order's <paths>, so the write grant does not name the one file the flip touches.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-15 section 3 <paths> lists five surfaces and section 2 bound 1 says change only those files; section 5 step 2 says APPEND <status>complete</status> to the order file when both criteria pass.",
+    "world_is": "The order file NFRA_MCPINDEX.TO-MX-c-15.silver-table-loader-fork-registry-join.md is not in <paths>. Its status line is the one write section 5 asks for outside <paths>, so the flip is attempted and left to the commit gate as step 2 directs.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-15.silver-table-loader-fork-registry-join.md@30819ee4e6: section 3 <paths> block, lines 65-71 (five surfaces, none the order file)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-15.silver-table-loader-fork-registry-join.md@30819ee4e6: section 5 step 2, line 91 (APPEND the complete status to the order file)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The issuer decides whether the status flip belongs to the grant. The outcome of the flip attempt is recorded in the worker report, not here."
   }
 ]
 ```
