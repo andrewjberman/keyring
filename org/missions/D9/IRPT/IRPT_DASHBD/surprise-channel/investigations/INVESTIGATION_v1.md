@@ -11118,3 +11118,127 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W169-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~169",
+  "surfaced_at": "2026-10-14T14:18:29Z",
+  "one_line": "The builder's NOT_SPANNED reason words still name the not-held dash, which contract 0.4.3 retires for a window the account did not span.",
+  "spec_asserts": "Contract 0.4.3 document.absent_rule: a window the account did not span (NOT_SPANNED) carries INSUFFICIENT_HISTORY and prints words, never the dash; the dash means only that the household holds none of the asset class (UNHELD).",
+  "world_is": "The NOT_SPANNED constant of the builder copy names the dash in its words ('... so it did not hold a value at the window's start (the not-held dash)'). The order's grant names no rule for that constant, so it is carried unchanged. This round's sample holds 0 NOT_SPANNED forms (worker count over every absent form), so no sample cell carries the words today.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@fc69a8f606",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/build_sample.py@fc69a8f606",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/BUILD_R106.json (absent_by_kind, and the sample's 0 NOT_SPANNED forms in the worker measurement)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A later build of a household with a not-spanned account writes these words into the sample; the render remedy (DB-b-207) reads the reason text of an absent form. The issuer decides whether the constant changes."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W169-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~169",
+  "surfaced_at": "2026-10-14T14:18:29Z",
+  "one_line": "On dell2 the trading calendar answers from its hardcoded NYSE fallback because pandas_market_calendars is absent on this box.",
+  "spec_asserts": "A builder run that asks lib/trading_calendar.py for trading days is answered by the calendar the module names, with no fallback warning, so the frontier is one calendar (CLAUDE.md, the trading calendar rule).",
+  "world_is": "Every run of build_sample.py on this box prints WARN: trading_calendar: pandas_market_calendars absent and answers from the hardcoded NYSE fallback (NYSE/hardcoded-fallback-2010-2027, covering 2010-2027, regenerate with lib/tests/gen_nyse_closures.py --write before 2028). The answers used in this round (2026-10 window) are inside the covered range.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/BUILD_R106.json (the build record of the run whose console printed the warning)",
+      "lib/trading_calendar.py@c7e62bc1e8 (the fallback named in the warning)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT today: the fallback answers through 2027. The regeneration is due before 2028; the worker holds no owner for the calendar and files it for the CVO to place."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W169-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~169",
+  "surfaced_at": "2026-10-14T14:18:29Z",
+  "one_line": "The reader module exposes no public accessor for a window's first day, so the builder calls its underscore function to classify an absent model window.",
+  "spec_asserts": "The order's grant treats the DB-b-204 reader as read-only and says that if it lacks something the cell needs, the worker files a row and stops on that point. The reader returns None for a window it does not hold, with no kind.",
+  "world_is": "To give a None window its kind (INSUFFICIENT_HISTORY when the series does not open on the window's first day, SOURCE_BREAK otherwise), build_sample.py calls mod._model_lo from the reader, the same opening rule windows_from_series applies. The worker used the underscore function as a read and did not edit the module. This round's build has 0 None windows (32 of 32 fill), so the kind branch ran on no served value.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/model_series_windows.py@c7e62bc1e8",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/build_sample.py@fc69a8f606"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A rename of _model_lo breaks the builder loudly (AttributeError at the first None window), never silently. The issuer may ask the module's owner for a public accessor; this worker has not changed the module."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W169-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~169",
+  "surfaced_at": "2026-10-14T14:39:44Z",
+  "one_line": "The contract's footnote for a window the account did not span still says that it prints a dash, which the render no longer prints after contract 0.4.3.",
+  "spec_asserts": "Contract document.footnotes.not_held_for_entire_period (the member convention.not_held_for_entire_period text): a window whose figure is absent because the account did not span it (NOT_SPANNED) prints a dash with the footnote 'Not held for the entire period' in place of the figure. Contract 0.4.3 absent_rule says such a window prints INSUFFICIENT_HISTORY words and never the dash.",
+  "world_is": "The tab and the export (portal commit ea6f71cf0e, DB-b-207) print INSUFFICIENT_HISTORY words in such a cell, never the dash, as the order requires; the footnote line still prints under the table in code (this round's sample holds no such window, so the render shows neither). The contract's footnote text names the dash, so a reader of the contract literally would print the dash the CTO retired.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@fc69a8f606",
+      "portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts@ea6f71cf0e",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/RENDER_R106.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The contract is not in this order's grant, so the worker did not edit it. The issuer decides whether the footnote text changes to words."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W169-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~169",
+  "surfaced_at": "2026-10-14T14:39:44Z",
+  "one_line": "The InvestorReporting whole-scope suite has five failing tests that predate this round and are outside the render scope.",
+  "spec_asserts": "The round's whole-scope suite (bun test src/pages/InvestorReporting) is expected to add no failing test (new_failing_ids empty), as the render remedy order states.",
+  "world_is": "Five tests fail both at the base (portal commit df295727) and after this round (portal commit ea6f71cf0e): IVE26-AC3, IVE48-AC1, IVE98, the producer fixtures test, and F14-AC3. The round adds none; the five are not in the report, the chart or the split-column scope.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/RENDER_R106.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/RENDER_R106.json (tests.suite_base and tests.suite_after)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT for this round's render. The five names are carried in the record's suite_base and suite_after blocks; the CVO may place their owner."
+}
+```
