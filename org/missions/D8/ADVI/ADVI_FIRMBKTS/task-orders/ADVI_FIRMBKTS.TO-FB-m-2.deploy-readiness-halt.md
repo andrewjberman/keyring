@@ -23,14 +23,12 @@ which names (1) the merged `FB-m-1` commit and its chosen signal key, (2) the CT
 
 ### 1a. Steps (once un-parked)
 
-1. **Preconditions (read, each recorded):** `FB-m-1` is merged and its AC1 to AC3 PASS at the merged HEAD; the CTO has read the guard; the pair is signed on both halves at the current bytes; the function's role CAN read the chosen signal key
-   (`aws iam simulate-principal-policy` for `s3:GetObject` on that key; a denied read is a STOP and a BLOCKING row, never a grant you add).
+1. **Preconditions (read, each recorded):** `FB-m-1` is merged and its AC1 to AC3 PASS at the merged HEAD; the CTO has read the guard; the pair is signed on both halves at the current bytes.
 2. **Before (recorded):** the function's `CodeSha256` and last-modified; the bucket listing count of `platinum/firm/snapshots/` and of `platinum/advisors/` (counts only); the prior VersionIds of the keys arm (a) will rewrite.
 3. **Ledger** (NEVER-2) with its `.open_deploys/` sentinel BEFORE the first write.
 4. **Deploy:** the new function code through Terraform only (`bash .tools/safe-apply.sh`, scoped to the publisher's function resource); the plan must change the function's code hash and nothing else. Read back the new `CodeSha256`.
-5. **Arm (b), incomplete:** invoke the publisher once with the event field `readiness_date` set to a date whose gold does not exist (the amendment names it); read the response (`halted` true), the one log line (it names the date and the signal key),
-   and the listing counts again: unchanged (zero keys written).
-6. **Arm (a), complete:** after that day's gold is read complete, invoke the publisher once with an empty event; read that it publishes (the three snapshots and the advisor artifacts get new VersionIds, inside the named set) and that the log shows no halt.
+5. **Arm (a), complete:** after that day's gold is read complete and the dated inputs read one date D newer than the served `data_as_of`, invoke the publisher once with an empty event; read that it publishes (the three snapshots and the advisor artifacts get new VersionIds, inside the named set) and that the log shows no halt.
+6. **Arm (b), the halt:** invoke the publisher a SECOND time at once (a same-day re-fire, D equal to the served date); read the response (`halted` true), the one log line (it names each dated input's date and the served date), and the listing counts again: unchanged (zero keys written). (The part-written case is proven by the unit tests; it cannot be staged live without part-writing gold.)
 7. **Roll back** (the saved code hash, the prior VersionIds of the keys written) if a halt writes anything, a complete day halts, or anything outside the named set changes.
 8. Close the ledger entry.
 
@@ -38,10 +36,12 @@ which names (1) the merged `FB-m-1` commit and its chosen signal key, (2) the CT
 
 The record `READYHALT_RECORD.json` has this shape (the grader checks it):
 ```json
-{"order": "FB-m-2", "read_at": "<ISO UTC>", "signal": {"key": "<chosen signal key>", "writer": "<script:line>"}, "deployed": {"code_sha256": "<the function CodeSha256>"},
+{"order": "FB-m-2", "read_at": "<ISO UTC>", "signal": {"key": "data frontier: client_perf, holdings, canonical_nna (content date)", "writer": "gold chain outputs read by lambda_function.py:<line>"}, "deployed": {"code_sha256": "<the function CodeSha256>"},
  "arms": {"complete": {"published": true}, "incomplete": {"halted": true, "listing_before": 0, "listing_after": 0}, "log": {"names_date": true, "names_signal": true}},
  "pair": {"coo_half": "<commit>", "cto_half": "<commit>"}, "rollback": {"recorded": true, "how": "<the exact step>"}, "ledger_closed": true, "claim": "measured"}
 ```
+The "incomplete" arm is the live same-day re-fire halt (the key name is the grader's).
+
 
 ## 2. BOUNDS
 
