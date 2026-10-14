@@ -15394,3 +15394,58 @@ name the one known failure instead of silently inheriting it.
     "notes": "INERT: no behaviour of the two portal modules changes; the warning is the trading_calendar module's own. Filed so the host's calendar source is measured before any release relies on it. Nothing was edited for this row."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S127",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZW",
+    "surfaced_at": "2026-10-14T21:38:13Z",
+    "one_line": "OG-sa-1 step 1 cannot be read as written: at the runner's pin the sa publisher is a browser-TAB publisher whose account id comes from the profile's own user_id cookie, the pin's sa profile did not exist and holds no Seeking Alpha login, so check() raised NotAuthorized before any account request -- there is NO http_status to record, and registering sa from this pin would start from that same empty profile.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-3d88eccbc3/lib/opal_data_harvest/publishers.py lines 372-382 (transport 'tab': TabSession on a persistent profile; for sa the account id is the profile's user_id cookie, 'None -> check raises') and lines 393-394 (the bundle seed comes AFTER that cookie read)",
+        "C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-3d88eccbc3/lib/opal_data_harvest/tab_transport.py lines 38-50 (default_profile_root follows the CHECKOUT the code runs from, i.e. the pin worktree, which is the live task's WorkingDirectory) and lines 89-103 (the persistent Chrome launch and the origin page load)",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZW/sa1_probe_result.json -- class unauthorized_account, exception NotAuthorized, http_status null, requests_made 0, sign_in_calls 0, refresh_calls 0, token_source secrets:seeking-alpha/session (secrets_session 2026-09-11T02:13:39Z), read_at 2026-10-14T21:32:40Z",
+        "PowerShell CreationTimeUtc of C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-3d88eccbc3/.runtime/opal-data-harvest/browser-profiles/*: barrons 12:30:02Z, bbg 00:11:45Z, wsj 12:20:24Z, sa 21:32:02Z -- the sa directory is the only one created by the probe, the others belong to runner cycles",
+        "the live task's registration as read at 2026-10-14T21:1xZ: STATE Running, --publishers bbg wsj barrons --refresh-once, WorkingDirectory C:\\Users\\Opal Bloomberg\\Desktop\\wk-harvest-runner-pin-3d88eccbc3"
+      ]
+    },
+    "spec_asserts": "NFRA_OPLGTW.TO-OG-sa-1 section 1 step 1: 'Read the access the way the harvester's own SA capture does it (the same account and entry point; read-only, one request, no capture)' and write SA1_ACCESS.json with an http_status N; 'A 2xx is ACCESS_HOLDS; anything else is ACCESS_REFUSED'. Step 2 then treats a refusal as 'the renewal is Andrew's act'. The order's picture is a vendor account that answers with a status.",
+    "world_is": "Measured on site Z 2026-10-14T21:32Z. (1) At the runner's pin 3d88eccbc3 the sa publisher is NOT a token-over-HTTP client: publishers.py routes it through a TabSession (a headed persistent Chrome profile) and takes the account id from that profile's own user_id cookie; with no such cookie the id is None and check() raises NotAuthorized. (2) The profile root follows the checkout, so for the live task (WorkingDirectory = the pin worktree) it is the pin's own .runtime/opal-data-harvest/browser-profiles. Its sa directory DID NOT EXIST until this seat's probe created it at 21:32:02Z; it holds a fresh Chrome profile (264 files) with no Seeking Alpha cookie. (3) So the one read this seat could make returned NotAuthorized with requests_made 0: Seeking Alpha was never asked, and no HTTP status exists. Writing ACCESS_REFUSED would state a refusal the vendor never gave and would route the order to 'the renewal is Andrew's'; writing ACCESS_HOLDS would be false. Neither SA1_ACCESS.json nor SA1_PROOF.json was written. (4) The same fact bears on step 3 itself: re-registering the runner with sa from this pin starts it on this empty sa profile, so its first sa job would reach check() with no account id. Whether a job seeds the profile from the stored bundle first was not established: the id is read at line 380-382 before the seed at 393-394, and this seat ran no job. (5) The runner is untouched (Running, publishers bbg wsj barrons), no ledger was opened, no sentinel exists, nothing was written to a bucket.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "THE ASK FOR THE ISSUER, one decision: how is step 1 to be read? (a) through the profile the runner will actually use -- which is empty, so the read needs a Seeking Alpha sign-in inside that profile first, and no sign-in is in this order; or (b) one request through a profile that already holds a login (the main tree has browser-profiles/sa, last modified 2026-10-12 08:00, NOT read by this seat; selecting it is the OPAL_HARVEST_PROFILE_ROOT environment variable, which this seat did not set) -- a second vendor read beyond the order's bound, so it needs the issuer's word. This seat takes neither without it. ALSO FOR THE ROUND: Z-W85-S2 recorded sa check() hard-coding an account id; at this pin the id is the cookie's, so the HVST-ac-2 probe that read 200 'authorized: true' (ADJUDICATION_v40, with a saved-session token) may have used a different path than the tab publisher the runner would run from this pin -- whether that 200 carries to this path was not established here. See row Z-S128 for what this seat's own probe did beyond the one request."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S128",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZW",
+    "surfaced_at": "2026-10-14T21:38:13Z",
+    "one_line": "This seat's access probe went past OG-sa-1's 'one request': building the sa publisher session launches headed Chrome and loads the Seeking Alpha origin, so the probe made THREE origin page loads (two --dry runs, one real) that its request counter could not see, read the stored sa session twice, and created the pin's sa browser profile.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-3d88eccbc3/lib/opal_data_harvest/tab_transport.py lines 89-103: TabSession.__init__ calls launch_persistent_context(... headless=False) and page.goto(origin) at construction",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZW/sa1_access_probe.py -- the probe; its CappedInner wraps the inner session's get() only, and its --dry flag returns AFTER the publisher session is built",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZW/sa1_dry_runner.json, sa1_dry_main.json, sa1_probe_result.json -- the three runs: two dry (runner runtime root, main-tree runtime root), one real (runner root); all report requests_made 0",
+        "PowerShell at 21:3xZ: 0 chrome processes left; the sa profile directory created 21:32:02Z, last written 21:32:42Z, 264 files"
+      ]
+    },
+    "spec_asserts": "NFRA_OPLGTW.TO-OG-sa-1 section 2 BOUNDS: 'a second vendor read beyond step 1's one request' is a Never; 'No object is written to or deleted from any bucket by you'; the preflight declares step 1 as 'read-only, one request, no capture'. This seat's probe was written to that bound and counted its requests in code (cap 1).",
+    "world_is": "The probe's counter read 0 requests in all three runs, which was true of the instrument and not of the world. For a tab publisher the session build itself launches headed Chrome on the persistent profile and navigates to the vendor origin; that happens inside the constructor, before the wrapped get() exists, and the --dry flag only skipped the account read after the build. So between 21:32:02Z and 21:32:42Z the seat caused three Chrome launches and three loads of the Seeking Alpha origin (a page load, not the account endpoint, no sign-in, no capture, no article fetch). It also resolved the stored sa session in memory three times (Secrets Manager seeking-alpha/session each time; the main tree's sa.dpapi once, in the second dry run), never printing or writing a value, and it created the pin worktree's browser-profiles/sa directory. No sign-in, no refresh, no bucket write, no change to the task or to any other profile; 0 Chrome processes remain. The runner is unaffected: it was on bbg and its bbg profile was last written 21:32:55Z by its own cycle.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Filed so the bound is not silently crossed. HOW IT HAPPENED: the two dry runs went out in ONE command, and the real run in the next, after reading the dry output -- which printed requests_made 0 and gave no sign a browser had been launched, because this seat had not read TabSession's constructor. The first sign was the real run's NotAuthorized, and this seat made no fourth contact after it. NOT DONE: the new sa profile directory was not deleted (it is the profile the runner would use from this pin, deleting it is not this order's change, and the 264 files are a stock Chrome profile). THE LESSON, for any later probe of a tab publisher: read the constructor before trusting a counter that wraps only get()."
+  }
+  ```
