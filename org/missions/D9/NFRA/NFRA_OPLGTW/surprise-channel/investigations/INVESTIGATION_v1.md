@@ -13207,3 +13207,31 @@ name the one known failure instead of silently inheriting it.
   "notes": "The hazard this avoided is the OG-ap-11 shape in reverse: there, a permission became load-bearing exactly at the deploy and a coarse check read clean. Here a coarse check reads DENIED on an action that cannot be granted, and the honest reading needed three instruments -- validate-policy for whether the name is real, the policy document for what is actually granted, and a context-supplied simulate for the conditioned statements. No widening was requested and none is needed. Suggested preflight correction for the issuer: replace the TransactWriteItems row with PutItem plus the LeadingKeys context entry, and either add Query/Scan to the role or state that the before-record reads run under the calling principal."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-14T02:35:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-S104",
+  "one_line": "OG-mg-1 step 3's two declared differences from the template are both no-ops: Alyssa's revision-4 scope ALREADY carries calendar_months 13 and ALREADY carries download_filtered, so R1 equals the template exactly and the order's ONE open choice for the halves (branch a vs branch b on operations) is vacuous.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN prepare(store, raw, load_contract(None)) in-process under the operator role for all three candidates (r1, r2, r1b). All three are ACCEPTED, base_profile_revision None and base_grant_revision None (both records are CREATES), one deny email each. template_changed_keys is [] for ALL THREE -- including r1b, the branch that adds download_filtered. Record: MG1_CANDIDATES.json.",
+      "READ Alyssa's revision-4 scope through the module's own round-trip (sea.current_state then sea._scope_to_raw, not a hand conversion of DynamoDB's typed shape): dates = {'mode': 'rolling_complete_window', 'calendar_months': 13}; operations = ['describe', 'download_filtered', 'list', 'query'].",
+      "READ load_contract(None): approved masters 2 ('08242234', '08335338'), datasets 4, operations 4 ('describe', 'download_filtered', 'list', 'query'). Alyssa's grant is therefore contract-MAXIMAL on masters, datasets and operations, so there is no narrower 'Alyssa's operations' for branch a to mean.",
+      "MEASURED counts of her scope: masters 2, datasets 4, accounts 2, columns 4, portal_channels 10 -- consistent with parse_scope's rule that accounts must name the accounts of every granted master and no other.",
+      "SEPARATELY, the first build of all three candidates was REFUSED by the parser: 'scope must carry exactly (masters, datasets, accounts, dates, columns, operations), optionally with portal_channels'. calendar_months is not a top-level scope key; it lives INSIDE dates beside mode (data_entitlement.py :306-319). Corrected before anything else was concluded."
+    ]
+  },
+  "spec_asserts": "TO NFRA_OPLGTW.TO-OG-mg-1 section 1 and step 3: 'Build R1's candidate as that scope with calendar_months: 13 and identity replaced. Print the diff of R1 against it.' and 'Its operations field is the ONE open choice: Alyssa's carries her no-download rule (v2.2 item 4), and Andrew's words do not reach his. Put the two branches in the ask (R1 with Alyssa's operations; R1 adding download_filtered), and let the halves name one. Never pick it yourself.' Step 3 also expects R1's diff against the template to change 'ONLY the window (calendar_months: 13) and identity, plus operations on branch b'.",
+  "world_is": "Neither declared difference exists. (a) The template ALREADY carries calendar_months 13, so setting it changes nothing and R1's scope is byte-identical to Alyssa's revision-4 scope apart from identity -- template_changed_keys is empty, not 'the window'. (b) The template ALREADY carries download_filtered among contract-maximal operations, so branch b produces exactly branch a: r1b's template_changed_keys is also empty, and the two candidate files differ in no scope key. The halves therefore cannot be asked to name one of two branches, because there is one branch. It also follows that Alyssa's 'no-download rule' is NOT expressed in her operations field; if it is in force it lives somewhere else (the contract's portal_only_schwab_tools, the hidden classes, or a profile-level field), and this order does not name that surface.",
+  "notes": "Nothing is at risk and no write was attempted: prepare() writes nothing and activate() was never called. What is blocked is step 4, which must 'put the two branches in the ask and let the halves name one'. Three routes for the issuer, none of them this seat's to pick: (i) rule that there is no choice, R1 and R2 simply mirror the template at contract-maximal width, and strike the branch from step 4; (ii) name the real surface of Alyssa's no-download rule, so a genuine branch can be constructed against it; (iii) rule that Andrew's grant should be NARROWER than the template on operations, which would be a different candidate than 'that scope with identity replaced'. The candidates, their prepare diffs and the identities are staged under X and need no rebuild once a route is chosen."
+}
+```
