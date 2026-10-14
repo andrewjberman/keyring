@@ -34234,3 +34234,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Cottonwood's newest source partition at the cutoff is dated 2026-10-12, so its candidate is one trading day behind T-1, while its served index (per the packet) is at 2026-10-08. The first-fire equality for cottonwood therefore reads not-yet-equal at this measurement. This reading does not say whether the 2026-10-13 cottonwood partition has not landed or has not been produced."
 }
 ```
+
+## IRPT_BCKEND-D2-S168 -- Dispositions on workers 380 and 381's rows after IB-pr-533 and IB-pr-534 merged (@866f3e94d6, @40201b2539); the release re-measure is deterministic, the 2026-10-09 fire was not killed on the SSM window
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S168",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T12:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on workers 380 and 381's rows (D2-W380-S1 to S3, D2-W381-S1 to S5) after IB-pr-533 (@866f3e94d6) and IB-pr-534 (@40201b2539) merged: the release re-measure is deterministic, Inflection needs its own pin, the 2026-10-09 fire died at about 310 s of a 3600 s window, and the 2026-10-08 replay is refused by source_frontier_older.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB192-1 AC1 to AC3 and IB192-2 AC1 to AC3 on the worker worktrees before the merges: all PASS rc 0; both proof instances VALID; round-close-check --workstream ~P MAY-CLOSE (orders=2)",
+      "I read both replay/timeout records and the rows' world_is text; the drain-end packet is deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUND_192_P_DRAIN_END_20261014.md"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27).",
+  "world_is": "DISPOSITIONS. W380-S1 (Inflection pinned at 2026-10-12 builds a 2026-10-09 candidate and the gate refuses on source_frontier_older where the packet reads PUBLISHED): INERT, the gate works as written; the release re-measure pins Inflection to the custody date the packet used, and I did not re-run it at that pin. W380-S2 (a build whose cutoff falls between a custody day's accounts and positions partitions refuses Inflection by the producer's own guard): INERT, the designed refusal; whether a scheduled fire inside that window misses the day was not measured. W380-S3 (Cottonwood's newest partition is 2026-10-12 at the cutoff, one trading day behind T-1): INERT, whether the 2026-10-13 partition has landed was not read. W381-S1 (the 2026-10-09 fire was killed about 310 s into a 3600 s window; no fire of the 11 reached it): INERT; it CORRECTS the round-191 packet and D2-S164's wording, which named the SSM timeout as the cause, and the sender of the exit-137 kill is unread. W381-S2 (the 2026-10-08 replay is refused by source_frontier_older): INERT, the route is the CTO's ruling. W381-S3 (publish() does not assert that the landed date equals as_of): INERT, any bypass route must carry the assertion. W381-S4 (the gap is a failed run, the source is intact): INERT, corrects the D2-S165 premise. W381-S5 (the index version size is flat on 2026-09-30): INERT, the index body was not read. The client-data check ABSENT on dell2 was logged by both workers: it stays ARMED under W374-S1 and W376-S1 with the box manager."
+}
+```
