@@ -123,6 +123,14 @@ the ONE `<status>` tag to `complete` only if both PASS. Report once per phase.
   and both halves re-sign. Never deploy from a worktree named for an earlier cut.
   Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
+- A2 (issuer, 2026-10-14 ~12:1xZ, Andrew-direct "accelerate this use case", FWD-21; record
+  `deliverables/2.0.0_SA_COO~O/ANDREW_DIRECT_20261014_121xZ_ACCELERATE_FWD21_HARVEST.md`): **this release follows
+  OG-hv-2.**
+  - PHASE A starts only after OG-hv-2's ledger `nfra-oplgtw-gateway-release-hv` reads CLOSED at HEAD.
+  - The re-cut is at that live ref, under the A1 guard. Discard any Phase A cut made on 90967e39ba.
+  - Steps, criteria and bounds are unchanged.
+  - Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>37</round>
 <workstream>R37-TIER-REL</workstream>

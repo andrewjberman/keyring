@@ -162,6 +162,16 @@ the ONE `<status>` tag to `complete` only if AC1 and AC2 PASS. Report once per p
     sign-in creates it; that is not a blocker.
   - Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
+- A4 (issuer, 2026-10-14 ~12:1xZ, Andrew-direct "we need to accelerate this use case and the associated task orders";
+  record `deliverables/2.0.0_SA_COO~O/ANDREW_DIRECT_20261014_121xZ_ACCELERATE_FWD21_HARVEST.md`): **FIRST in the gateway
+  queue.**
+  - PHASE A starts now. Its precondition is met: OG-ap-14's ledger is CLOSED, the live ref is 90967e39ba, and OG-hv-1
+    drained @e4096a971f.
+  - OG-ap-17 and MX-r-13 follow this release.
+  - The three halves were told in advance, so the ask is signed as it lands.
+  - Steps, criteria and bounds are unchanged.
+  - Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>37</round>
 <slot>~AE</slot>
