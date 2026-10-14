@@ -1951,3 +1951,27 @@
   "notes": "Not repaired. The worker reads a non-object as absent, which keeps the never-replace rule intact. The issuer may prefer treating it as unparseable (print nothing, change nothing)."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W29-S3",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~29",
+  "surfaced_at": "2026-10-14T20:05:30Z",
+  "one_line": "MP-pd-6's <paths> grant does not cover the task-order status flip the standing worker bar asks for, so the order's <status> stays pending on this worker's branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The standing worker bar: when the proof instance validates and every criterion passes, flip the task order's <status> to complete and commit the instance, the deliverables and the flip together. MP-pd-6 section 3 <paths> names only the deliverables folder and the surprise-channel investigations folder.",
+  "world_is": "The task order file org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pd-6.claude-usage-statusline-enable.md is outside this worker's write grant, so the worker did not edit it. The proof instance is VALID (proof-of-spec-check rc=0) and AC1 is PASS on this worker's branch.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pd-6.claude-usage-statusline-enable.md@85216c4ab9 section 3 <paths>: deliverables/0.9.0_WK_NFRA_MCPORTAL~29/** and surprise-channel/investigations/**",
+      "task-orders/NFRA_MCPORTAL.TO-MP-pd-6...md <status> reads pending at the vintage above; the instance records assignee 0.9.0_WK_NFRA_MCPORTAL~29 and the validator run in this worktree (rc=0, VALID)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired: the status line is the issuer's to flip (or to widen the grant). The order's <status> is left as pending; the instance and deliverables are committed on wk-NFRA_MCPORTAL-pd-29."
+}
+```
