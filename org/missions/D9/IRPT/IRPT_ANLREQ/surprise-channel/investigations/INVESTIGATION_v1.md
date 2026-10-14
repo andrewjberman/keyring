@@ -11903,3 +11903,86 @@
   }
 }
 ```
+
+## IRPT_ANLREQ-D2-W115-S1 -- a trunk worktree does not check out on this Windows checkout without core.longpaths
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W115-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~115",
+  "surfaced_at": "2026-10-14T00:48:07Z",
+  "one_line": "a throwaway worktree of the trunk HEAD fails to check out on this Windows checkout unless core.longpaths is set",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The AR-y-297 face, steps 3 and 4: check out the trunk HEAD in a throwaway worktree outside the repository and build the release there. The face names no checkout flags.",
+  "world_is": "git worktree add --detach C:/dev/irpt-release-r28/wt-release-4279513f 4279513f95f67fae07d12889df70dc63954a2d5a fails with 'error: unable to create file org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~RA1/AMGT_RESAPP.TO-AMGT-bj-2.redeploy-the-scoped-api-carrying-the-key-scoped-feed-read-from-a-merged-pin-and-drive-its-first-cold-request.proof_of_spec.json: Filename too long' followed by 'fatal: Could not reset index file to revision HEAD' (default core.longpaths off). The same add with git -c core.longpaths=true returns rc 0 and a clean status (0 lines). The base 97d2d4bede (the control worktree) checked out without the flag. The build itself needs no long path: the ticket_center folder is short.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git worktree add --detach C:/dev/irpt-release-r28/wt-release-4279513f 4279513f95f67fae07d12889df70dc63954a2d5a (first attempt: 'Filename too long', rc 128; retry with -c core.longpaths=true: rc 0)",
+      "git -C C:/dev/irpt-release-r28/wt-release-4279513f status --porcelain (0 lines after the longpaths add)",
+      "infra/aws/lambda/ci/build-and-upload.sh@4279513f95 (guard count 8; the build ran BUILD_ONLY and wrote the zip)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded because the order's checkout step does not carry the flag. The release record names the flag and the worktree path. No repository config was changed; the flag is per command."
+}
+```
+
+## IRPT_ANLREQ-D2-W115-S2 -- the opal-ticket-api map note names a deployed artifact that is not the live bytes
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W115-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~115",
+  "surfaced_at": "2026-10-14T00:48:07Z",
+  "one_line": "the opal-ticket-api entry _note in the source map says the deployed bytes are 59874 B with sha256 96bd2df5...f6a7; the live package is 31405 B",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "infra/aws/lambda/ci/lambda-source-map.json at origin/CLOUD 4279513f95, functions.opal-ticket-api._note: 'Deployed bytes VERIFIED byte-identical to HEAD (59874 B, sha256 96bd2df5...f6a7) by downloading the package and hashing the member'.",
+  "world_is": "The live package (get-function Code, read 2026-10-14T00:15:44Z) is 31405 B with CodeSha256 4sDK8P5mtgodi1IkSfaFQZi1YgmJq6URLeypEcaULu8= and one member lambda_function.py at sha256 4136587a...ef7cf9. The same map entry's artifact_sha256 field is 4sDK8P5mtgodi1IkSfaFQZi1YgmJq6URLeypEcaULu8= and last_deployed_commit is 97d2d4bede, both equal to live. So the _note's byte count and digest describe an earlier artifact from an earlier apply; the note is stale, the structured fields are current.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show origin/CLOUD:infra/aws/lambda/ci/lambda-source-map.json (functions.opal-ticket-api: _note, artifact_sha256, last_deployed_commit)",
+      "aws lambda get-function-configuration --function-name opal-ticket-api (CodeSha256, CodeSize 31405)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~115/r30/OPAL_TICKET_API_BUILD.json (live_read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not acted on. The note names the apply ledger org/critical_paths/change_management/d7-ticketing-wa-we-toe-ticket-center-apply-20260821.md, which this worker did not read. The applier of the next release is not named by this row."
+}
+```
+
+## IRPT_ANLREQ-D2-W116-S1 -- the base the map record names for the live irpt-status package (e93258c650) does not rebuild the live bytes; the trunk head a4b7c48fad does
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W116-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~116",
+  "surfaced_at": "2026-10-14T00:36:26Z",
+  "one_line": "the commit the map record names as last_deployed_commit for irpt-status (e93258c650) does not rebuild the live zip; the trunk head a4b7c48fad rebuilds it byte for byte",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-298 step 2 (lambda-leg method, TO-AR-y-228 step 2) names the base the live package was built from as the map entry's staged_from pins and last_deployed_commit, and requires a BUILD_ONLY rebuild at that base to reproduce the live CodeSha256 with differs_from_live empty.",
+  "world_is": "At e93258c650 (guard count 8) with the map at that commit: CodeSha256 6idtFvAmYk73wJdr5DPRIyEPrLeWgzjlqbdNr5f1wxc= not equal to the live vlGh380QUKvBMOhJn0GJGgDi1/WLI9qTaSP2uETmdP4=; differs_from_live = loaders.py, served.py, status.py, because that map pins those three rows at 361c44fa9d while the live bytes are at 69679b90e3, 564e604838 and e93258c650. At a4b7c48fad (trunk head, guard count 8) with the map at that commit: CodeSha256 vlGh380QUKvBMOhJn0GJGgDi1/WLI9qTaSP2uETmdP4= equal to live, zip sha256 hex be51a1dfcd1050abc130e8499f41891a00e2d7f58b23da936923f6b844e674fe equal to the live download, differs_from_live = []. The trunk map carries the live pin for all 44 staged rows of irpt-status.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show e93258c650b369df46e22210d94add7cbb0d1749:infra/aws/lambda/ci/lambda-source-map.json (irpt-status staged_from rows at 361c44fa9d)",
+      "git show a4b7c48fad0559ff06155e505b51e97b3c5f6437:infra/aws/lambda/ci/lambda-source-map.json (irpt-status staged_from rows at the live pins)",
+      "C:/dev/irpt-release-r28/tmp-control-base/build.log (BUILD_ONLY at e93258c650, SHA256 6idtFvAm...)",
+      "C:/dev/irpt-release-r28/tmp-control-trunk/build.log (BUILD_ONLY at a4b7c48fad, SHA256 vlGh380Q...)",
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~113/r28/FWD1_RELEASE_CENSUS.json (irpt-status live block, CodeSha256 and artifact versions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not raised as BLOCKING: the live package reproduces at a4b7c48fad, so the no-move control and the release are both cut on that base, and the release moves only ops/status.py. The record's last_deployed_commit does not name a rebuildable base; the issuer should correct the premise before the record is used as a base again. Nothing was uploaded, applied or deployed."
+}
+```

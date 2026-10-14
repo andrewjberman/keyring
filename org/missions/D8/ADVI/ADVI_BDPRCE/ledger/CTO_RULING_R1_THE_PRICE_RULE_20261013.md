@@ -26,3 +26,24 @@ non-trade row, not only dividends. C5 gives it one home, and every writer import
 fix BEFORE it moves (DEC-7). No served price moves on this ruling alone.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## AMENDMENT 1 (2026-10-14 ~00:5xZ) -- two clauses settled on BP-b-2's replay (calls `42c6` and `3d72`, `/self-drive` dell1)
+
+Source: `deliverables/0.9.0_WK_ADVI_BDPRCE~6/REPLAY.md` (BP-b-2, merged @4a03d59451), over the 1,657 served rows.
+
+1. **Which rows are trades (call 42c6).** **Dividend Reinvestment and Income Reinvestment BUYS COUNT as trades.** Each is a purchase of units at an executed price per unit.
+   - **Transfer In, Journal, every cash leg, and every row without an executed market price stay OUT.** A transfer moves units at a book value, not a market price.
+   - Measured effect: 240 of the 285 carry-forwards under the Buy-and-Sale variant were reproduced only by non-trade rows (153 Transfer In, 51 Dividend Reinvestment, 26 Income
+     Reinvestment). Under this clause the 77 reinvestment-sourced ones price from those buys, and the 153 Transfer-In-sourced ones stay carry-forwards, each with its last
+     observed date.
+   - The replay is re-run on this variant so the FWD-7 list Andrew reads carries it.
+2. **The unit for par-quoted bonds (call 3d72).** **R1 serves the PER-UNIT price, the same unit as today's served price.** For an asset whose executed price is quoted per 100 of par
+   (fixed income, by the asset dimension's own class or pricing-convention field), the executed price is divided by 100.
+   - The class field is the identifier. The ratio of price to market value over units is a CORROBORATING check only: when the two disagree, that row is withheld with its
+     reason, never guessed.
+   - The 8 rows (for example MIAMI-DADE CNTY FLA EDL FACS A 5.25% 04/01/2031: served 1.0419, executed 104.19) then read UNCHANGED.
+   - This is an exact scale, not an estimate.
+
+Nothing else in R1 changes.
+
+-- 1.0.0_SA_CTO~DELL1

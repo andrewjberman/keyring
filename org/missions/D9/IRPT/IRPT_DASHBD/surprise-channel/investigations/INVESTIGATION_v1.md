@@ -8511,3 +8511,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S24",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-14T01:00:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-DB-b-183 STOPPED at step 1(b): another seat's ledger on the BD gold code tree is OPEN (ADVI_FIRMBKTS FB-j-3, code/gold/gold_dispatch.sh) and a second (SECCLASS e97, C_06 and D_04) is held on reads; no upload was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the order step 1(b): an open entry on the BD gold tree is a STOP; the COO half condition 6 (section 6, item 6): the apply is not made during another seat's open ledger entry on the Black Diamond gold code tree",
+      "org/critical_paths/change_management/20261013T0837Z_advi-firmbkts-fb-j-3-dispatcher-text-warn-20261013_deploy_completion.md: Status OPEN, authored by 0.7.0_AE_CloudOps~FB1, window 20.0h from 2026-10-13T08:37:06Z (to about 04:37Z today); it names s3://opal-data-bd/code/gold/gold_dispatch.sh; its manifest L1 to L4 all read OPEN with no proof written",
+      "live code/gold/gold_dispatch.sh: VersionId l53CmF0sCt.tgKYlr.JPiAl0_tqH._yB, ETag c5e6e57b.., LastModified 2026-10-13T08:37:35Z, 76046 bytes: not the prior version that ledger records (JTxOlFbqGVj9SOajf2YKlMVo.E3Sv35K, ETag f568d11b..), so the object moved 29 seconds after the ledger opened while its legs still read OPEN",
+      "org/critical_paths/change_management/20261013T0619Z_secclass-e97-c06-d04-rolling-rederive-sc1-20261012_deploy_completion.md: Status HELD-SOVEREIGN-GATED (external gate: 2.0.0_SA_COO~M1 leg-G reads after the first scheduled BD fire that runs C_06, plus the second fire's idempotence read); it shipped code/gold/C_06 (06:22:23Z) and code/gold/D_04 (06:23:17Z), two of the four consumers of the classifier this order changes; no read of that gate is recorded",
+      "census: 33 worktrees listed and read, 566 marker rows, 144 unique blobs; 125 rows over 20 marker files matched a broad BD-gold token set (etf_classifier, black_diamond/scripts/gold, code/gold/, opal-data-bd and variants); trunk ledger states: 1 OPEN (FB-j-3), 2 HELD-SOVEREIGN-GATED (e97 and secclass-e57e61-fwd10, the second not judged here), 1 SUPERSEDED, the rest CLOSED",
+      "nothing created: at 2026-10-14T00:59:32Z the live etf_classifier.py hashes d2e6aa88086ce9741feb3bf4df22b84996d37906730710c9d1fc79029b874250, version 0jhXHH7axm_H934t5s5gVDVNJ6Y_WqI. is IsLatest, and 0 versions are newer than 2026-10-12T06:18:47Z; positive control: the same bucket listings do show code/gold/gold_dispatch.sh, C_06 and D_04 moving on 2026-10-13"
+    ]
+  },
+  "spec_asserts": "Step 1(b): an open entry on the BD gold tree is a STOP. Bounds: any divergence the pair does not name is a STOP and a row, not a judgment call.",
+  "world_is": "Steps 0, 1(a) and 1(b) were taken; steps 1(c) (chain in flight), 2 (re-hash and pin), 3 (tests and import smoke) and 4 (the upload) were NOT taken because 1(b) already stops the act. Nothing was uploaded, no job was started, no DynamoDB write. The pair does not name either ledger. Whether FB-j-3's ledger and the e97 hold count as 'on the BD gold tree' for this pair is the issuer's and the CTO's to rule; this seat read them as on it (same code/gold/ prefix, same consumers). To proceed: FB-j-3's ledger is closed or released by its owner (its upload appears to have landed), and the e97 gate reads are recorded, or a ruling says neither blocks. The order stays pending; the ledger was closed with the gate-refused path (nothing created)."
+}
+```

@@ -6896,6 +6896,30 @@ carries none.
     },
     "spec_asserts": "FWD-20: every served tool's tool_index entry names its definition in the deployed tree.",
     "world_is": "67 of 67 definitions are located in the deployed tree."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S114",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-14T01:05Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarmed by citing the round-10 analysis (ruling 5). FWD-21 re-pins to list v4 under PRD v0.10 item 1, and round 11's MX-c-9 Part 3 cuts the 13 added top-level prefixes plus row 12b's seven research tables.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S105"
+    ],
+    "one_line": "DISARMS Z-S105 (Andrew's call 8: all 24 harvest prefixes SERVE, list v4 @7e0da2dfee). Round 10 served v3's 16 prefixes AS CUT (FWD-21 REALIZED on v3). ledger/ROUND_ANALYSIS.round10.md @301af339c7 ruling 5 disarms it, and round 11 (MX-c-9) covers v4's 24 of 24.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ledger/ROUND_ANALYSIS.round10.md section 2 ruling 2 and ruling 5; PRD v0.10 addendum item 1, ADMITTED (msg 33847).",
+        "c9.AC2 at the issuance base: 11 of 24 top-level prefixes covered, 0 of 7 research tables (the denominator the cell closes)."
+      ]
+    },
+    "spec_asserts": "FWD-21 serves the prefixes the current servable list names.",
+    "world_is": "The catalog rows v3's 16; v4 adds 13 top-level prefixes and 7 research tables, cut in round 11."
   }
 ]
 ```
