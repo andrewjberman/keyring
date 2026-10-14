@@ -733,6 +733,29 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
       ]
     },
     "notes": "Form only. No producer writes another kind today; the choice matters only for a future kind or a frame without the column."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W40-S3",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~40",
+    "surfaced_at": "2026-10-14T14:15:34Z",
+    "one_line": "AMENDMENT 1 criterion AC4 cannot pass as written: its void names security_id 'a us equity' and must drop the 'A US Equity' rows, but price_series' normalisation (which the amendment says to reuse exactly) is case-sensitive, so the rows stay in both readers.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMENDMENT 1 (order section 1) and check test_ac4: the void object names security_id 'a us equity' and the rows of pull 'full' for 'A US Equity' are dropped; the union reuses price_series._voids and the price_series normalisation exactly, without a copy.",
+    "world_is": "price_series._norm_key (price_series.py:124-125) is strip and space-to-underscore, case-sensitive: 'A US Equity' gives 'A_US_Equity', 'a us equity' gives 'a_us_equity'. Scratch probe on the AC4 store (not committed): price_series._voids = {('full', 'a_us_equity')}; price_series._actions keeps ex_dates [2026-03-02, 2026-06-01, 2026-09-25]; load_actions keeps the same three (3 uris). The verbatim AC4 test therefore fails (1 failed) while the same void spelled 'A US Equity' drops the two rows (worker test test_ac4_mechanism_with_the_stored_key_spelling passes). dramatic_move.py:452-456 (void_rows) refuses a void whose revision and normalised security_id match no stored row, so no producer writes the lowercase spelling.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/price_series.py@9a1ce314dc :124-125 (_norm_key) and :223-234 (_voids)",
+        "data/etfs/scripts/rivalfunds/dramatic_move.py@9a1ce314dc :452-456 (void_rows stored-row check)",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round30/checks/xe3_union_reader_check.py@d8ae1862ca :105-123 (test_ac4, void security_id 'a us equity' at :115)",
+        "scratch probe C:/tmp/wk-riv-r30-40/.scratch/ac4_ps_probe.py: price_series and load_actions both keep ex_dates [2026-03-02, 2026-06-01, 2026-09-25]"
+      ]
+    },
+    "notes": "Not fixed by this worker. A case-folded match would make load_actions honour more voids than price_series, which the amendment rules out. Needs the issuer's ruling: correct the AC4 void spelling in the check (the issuer's file, outside this order's paths) or rule case-folding for both readers. The order stays open on AC4 until then."
   }
 ]
 ```
