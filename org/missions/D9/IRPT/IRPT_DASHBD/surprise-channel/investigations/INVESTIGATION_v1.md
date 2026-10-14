@@ -11350,3 +11350,95 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+```json
+{
+  "id": "IRPT_DASHBD-D2-W171-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~171",
+  "surfaced_at": "2026-10-14T16:05:06Z",
+  "one_line": "Inflection's silver has no account roster separate from its holdings: the Orion fact_assets surface carries the same accounts as fact_positions with identical identity values, and the Eclipse account tables carry no custodian, account type or registration",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "C-COVERAGE and the account_dim contract give coverage three states that depend on two surfaces: FULL where the roster and the custody holdings both carry the account, UNCLASSIFIED_HOLDINGS where only the holdings carry it, PARTIAL_HISTORY where only the roster does. The Cottonwood precedent reads the roster from a separate silver surface.",
+  "world_is": "Read at silver partition date=2026-10-14 (Orion) and date=2026-10-09 (Eclipse portfolios_simple): fact_positions and fact_assets each carry 980 distinct accounts, the same 980 accounts, and their custodian, accountType and registrationType agree on all 980 accounts. Eclipse fact_portfolios_simple carries 753 accounts matched by account number and none of custodian, account type or registration. So the roster axis used by the adapter is the Orion fact_assets surface, every account is FULL, and the three-state split cannot discriminate between accounts in this silver.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/orion/inflection/silver/fact_positions/date=2026-10-14/data.parquet (read by GET in the worker session, 2026-10-14)",
+      "s3://opal-data-assets/orion/inflection/silver/fact_assets/date=2026-10-14/data.parquet (read by GET in the worker session, 2026-10-14)",
+      "s3://opal-data-assets/eclipse/inflection/silver/fact_portfolios_simple/date=2026-10-09/data.parquet (read by GET in the worker session, 2026-10-14)",
+      "org/standards/IRPT_DASHBD_ACCOUNT_DIM_CONTRACT.json (coverage and column meanings)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W171-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~171",
+  "surfaced_at": "2026-10-14T16:05:06Z",
+  "one_line": "Inflection's client key and household key are one value: the Orion positions clientId equals the transactions householdId on every account that carries both, so the contract's client_id and household_id take the same value for Inflection",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The account_dim contract carries client_id (the client key, not carried by Cottonwood) and household_id (the relationship id) as separate fields, and a firm-specific name is never a key.",
+  "world_is": "In the silver of 2026-10-14: 871 accounts carry both a transactions householdId and a positions clientId, and the two are equal on all 871; the 109 accounts with no transaction rows carry a positions clientId, never null and never zero. The positions householdName is a name (319 distinct values) and is not used as a key. The clientId distinct count is 320 across 980 accounts, so 881 accounts share a value with another account. The adapter takes clientId as the household key and as client_id, and records the sharing in household_key_source.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/orion/inflection/silver/fact_transactions/date=2026-10-14/data.parquet (read by GET in the worker session, 2026-10-14)",
+      "s3://opal-data-assets/orion/inflection/silver/fact_positions/date=2026-10-14/data.parquet (read by GET in the worker session, 2026-10-14)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W171-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~171",
+  "surfaced_at": "2026-10-14T16:05:06Z",
+  "one_line": "Eclipse fact_portfolios_simple has its newest silver partition at 2026-10-09 while the other Eclipse silver tables are at 2026-10-14",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The Eclipse silver tables of the Inflection monolith scope are refreshed on the same daily partition, so the newest partition of each is the same day.",
+  "world_is": "Listing of eclipse/inflection/silver/: fact_portfolios_full, fact_models and fact_model_composition each have a newest partition date=2026-10-14; fact_portfolios_simple has its newest partition date=2026-10-09, five days behind. The account_dim adapter does not read this table for any column, so this round's dry run is unaffected.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LIST of s3://opal-data-assets/eclipse/inflection/silver/fact_portfolios_simple/ and of the three sibling tables (worker session, 2026-10-14)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W171-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~171",
+  "surfaced_at": "2026-10-14T16:05:06Z",
+  "one_line": "The Orion channel's backfill status reads a silver guard verdict of FAIL with four alien objects, and backfill_complete is false",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The Orion silver channel's backfill status reports a PASS guard with no alien objects before a downstream reader treats its partitions as complete.",
+  "world_is": "orion/inflection/meta/backfill-status.json (updated 2026-10-13T16:00:46Z): silver layer backfill_complete false, guard verdict FAIL, detail expected 4993 landed 4997 matched 4993 missing 0 alien 4, frontier date 2026-10-13. This round's dry run reads the newest partition of each Orion silver table and does not enumerate the four alien objects, so the account_dim input is not certified complete against that guard.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/orion/inflection/meta/backfill-status.json (GET in the worker session, 2026-10-14)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
