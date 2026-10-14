@@ -2105,3 +2105,13 @@ grant writes (Andrew's profile; the mirror)"). The issuer adds the one cell insi
 **Chain:** `OG-ap-14` -> `OG-mg-1` Phase B (Phase A, read only, may run now). Applier queue for `0.7.0_AE_CloudOps~Z`:
 OG-ap-15 graded on the sweeps; OG-ap-14 B1 now; OG-mg-1 Phase A now; then OG-ap-14 B2 at 11:00Z+; OG-mg-1 B; OG-hv-2.
 
+**R3-T.49 A2 (2.0.0_SA_COO~O, 2026-10-14 ~02:5xZ) -- one cell, on 1.0.0_SA_CTO~Z's ruling msg 33941 (route (a)).** The
+COO refused OG-mg-1's halves because profiling Andrew would end his master_admin tier admission to
+`blackdiamond_list_fees` (r30's `decide()` admits by tier only on the no-profile branch).
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-bd-3` | R1+ (CTO msg 33941) | `decide()` admits a `TIER_ADMITTED_TOOLS` member for master_admin on the profiled branch too (any profile state); `tool_denial`/`visible_tools` read the tier for restricted callers; 3 offline tests; OG-bd-2's tests unchanged. Its release is a gateway apply order cut when it drains. | WORLD | ~67 | worker-light |
+
+**Chain:** OG-bd-3 -> its release (after OG-ap-14's ledger) -> OG-mg-1 Phase B (halves re-signed on that base).
+
