@@ -2,8 +2,8 @@
   "policy_id": "MP-20261010",
   "record": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261010_23xxZ_MODEL_POLICY_BY_ROLE_AND_TEST_PLAN.md",
   "why": "Workers execute a fully specified order and prove it, so they need little reasoning (Haiku). MSTR, COO and Tier-2/3 seats coordinate and handle issues (Sonnet). CTO, CVO and CRO do architecture, governance and validation (Opus).",
-  "treatment_devices": ["laptop", "dell1", "dell2"],
-  "control_devices": ["sitez"],
+  "treatment_devices": ["laptop", "dell1", "dell2", "sitez"],
+  "control_devices": [],
   "amendment_20261012": "dell2 moved to treatment on Andrew-direct 2026-10-12 ~13:0xZ (\"bring them back in our designated model format\", record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261012_130xZ_DELL2_RELAUNCHES_IN_THE_MODEL_POLICY_FORMAT.md); site Z is the only control device from this point",
   "control_behaviour": "unchanged pre-policy launcher defaults (ajb.ps1 per-serial table + tier rule, spawn-agent.ps1 tier default, worker frontmatter)",
   "roles": [
@@ -12,11 +12,7 @@
     {"role": "TIER23_SONNET", "serial_regex": "^0\\.[1-9][0-9]*\\.[0-9]+_", "model": "claude-sonnet-5-5", "effort": "high"}
   ],
   "unmatched": "a serial matching no role (0.0.N utilities such as 0.0.3_BG_BBGTerminal, Codex seats) keeps its pre-policy launch defaults",
-  "worker": {
-    "agent_types": ["worker", "worker-light"],
-    "spawn_model_param": "haiku",
-    "spawn_effort_param": "high",
-    "expected_model": "claude-haiku-5-5"
-  },
-  "explicit_override": "an explicit -Model / -Effort on ajb or spawn-agent always wins; the census reports it as an override, not a mismatch"
+  "worker": {"agent_types": ["worker", "worker-light"], "spawn_model_param": "haiku", "spawn_effort_param": "high", "expected_model": "claude-haiku-5-5"},
+  "explicit_override": "an explicit -Model / -Effort on ajb or spawn-agent always wins; the census reports it as an override, not a mismatch",
+  "amendment_20261014": "sitez moved to treatment on Andrew-direct 2026-10-14 ~12:xxZ (\"Yes let's get that switched now.\", record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_12xxZ_SITEZ_JOINS_THE_MODEL_POLICY.md); no control device remains"
 }
