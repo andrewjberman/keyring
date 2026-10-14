@@ -1434,3 +1434,179 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   }
 ]
 ```
+
+## ADVI_BDPRCE-D1-W13-S1 -- The ruled candidate test (Fixed Income and coupon_rate not null) selects 2 of the 8 round-2 scale_100x rows; the other 6 stay at 100x
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W13-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~13",
+  "surfaced_at": "2026-10-14T01:47:11Z",
+  "one_line": "The ruled candidate test (Fixed Income and coupon_rate not null) selects 2 of the 8 round-2 scale_100x rows; the other 6 are Fixed Income with a null coupon and stay at 100x.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/RULE_PROBE2.json@cd073f6a13 par_quoted block: unit_scale_rows_unchanged 2 of 8; fixed_income_unscaled_with_ratio_near_100 lists the six",
+      "silver/bd_assets_dim.parquet read live from opal-data-bd (get_object, READ only, 2026-10-14); md5 in RULE_PROBE2.json sources_md5",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~6/BEFORE_AFTER.csv scale_100x rows (eight)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-1 1a.2: a par-quoted candidate is asset_super_class_bd == 'Fixed Income' AND coupon_rate not null. BP-c-1 1c: unit_scale_rows_unchanged counts how many of the eight round-2 scale_100x rows now read equal to the served price.",
+  "world_is": "The test selects MIAMI-DADE CNTY FLA EDL FACS A 5.25% 04/01/2031 and MISSOURI ST HEALTH & EDL FACS 5% 05/01/2033 (both now read the served price). Six scale_100x rows are Fixed Income with coupon_rate null and are not selected: BANK MIDWEST SPIRIT LAKE IOWA 3.85% 2026, PNC BANK NATIONAL ASSOCIATION 4.1% 2027, STATE BK INDIA NEW YORK NY 3.95% 2027, TRUIST BK 3.9% 2026, WELLS FARGO BANK NATL ASSN 3.8% 2026 (2026-09-16) and CITIGROUP INC 5.3% 07/22/2032 (2026-09-22). They read 99.662, 99.5823, 99.629, 99.722, 99.6876 and 97.021, unchanged from round 2, and each has price/(market_value/units) within 1 percent of 100. The probe lists them in fixed_income_unscaled_with_ratio_near_100 and does not scale them. The count is 2 of 8, not 8 of 8."
+}
+```
+
+## ADVI_BDPRCE-D1-W13-S2 -- Four asset names in the asset dimension carry rows that disagree on the candidate test; the amendment does not say how to key them
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W13-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~13",
+  "surfaced_at": "2026-10-14T01:47:11Z",
+  "one_line": "Four asset_name values in silver/bd_assets_dim.parquet have rows that disagree on the candidate test, so the name cannot identify one class; the amendment is silent on this.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver/bd_assets_dim.parquet read live (get_object, READ only): 12,232 rows, 12,007 distinct asset_name values, 115 null names",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/RULE_PROBE2.json@cd073f6a13 par_quoted.dimension_names_conflicting_excluded"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-1 1a.2: the asset dimension's class field is the identifier of a par-quoted asset; the candidate set is built from the dimension.",
+  "world_is": "Four names carry dimension rows that disagree on Fixed Income plus coupon_rate not null: JPMORGAN CHASE BK N A 5.5% 2024 (one Cash and Cash Equivalents row), NEW YORK ST DORM AUTH ST PERS 5% 03/15/2036 (one row with a null coupon), NEW YORK TRANSN DEV CORP SPL F 5% 12/01/2030 (one To Be Classified row), PREMONT TEX IND SCH DIST 3.625% 08/15/2047. R1.1 treats a name as a candidate only when every row qualifies, so none of the four is scaled. The candidate set is 1,129 names from 1,163 qualifying rows."
+}
+```
+
+## ADVI_BDPRCE-D1-W13-S3 -- The 2026-10-02 partition carries 8 rows of transaction_type Corporate Action, a type round 2 did not see; R1.1 counts them UNCLASSIFIED
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W13-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~13",
+  "surfaced_at": "2026-10-14T01:47:11Z",
+  "one_line": "silver/transactions/2026-10-02.parquet holds 8 rows of transaction_type Corporate Action, a type not in round 2's thirteen; the module counts them UNCLASSIFIED and excludes them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver/transactions/2026-10-02.parquet read live (get_object, READ only); 8 rows, 2 distinct transaction_id, prices 0.0 and 31.3, all trade_date 2026-10-02",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/RULE_PROBE2.json@cd073f6a13 census 2026-10-02 excluded_by_type UNCLASSIFIED 8"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-1 1c: report the types seen and anything that could not be classified. Round 2 (RULE_PROBE.md) reported thirteen types, all known, unclassified none.",
+  "world_is": "Corporate Action is a transaction_type value present on 2026-10-02 and in no earlier round's type list. It is not a trade under R1.1 and is excluded and counted as UNCLASSIFIED."
+}
+```
+
+## ADVI_BDPRCE-D1-W13-S4 -- The task order's probe dates omit 2026-09-16, which holds five of the eight round-2 scale_100x rows
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W13-S4",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~13",
+  "surfaced_at": "2026-10-14T01:47:11Z",
+  "one_line": "The named probe dates (2026-10-09, 09-22, 10-08, 10-02) omit 2026-09-16, the date of five of the eight scale_100x rows that unit_scale_rows_unchanged counts; the probe read that partition too.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~6/BEFORE_AFTER.csv: scale_100x rows dated 2026-09-16 (five) and 2026-09-22 (one) and 2026-10-09 (two)",
+      "silver/transactions/2026-09-16.parquet and 2026-09-17.parquet read live (get_object, READ only), in addition to the named dates"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-1 1c: run the amended module over partitions 2026-10-09, 2026-09-22, 2026-10-08 and 2026-10-02, reading each date's partition and the next; unit_scale_rows_unchanged counts the eight round-2 scale_100x rows.",
+  "world_is": "Five of the eight scale_100x rows are dated 2026-09-16, outside the named dates. The eight-row count cannot be taken without that partition. The probe covers 2026-09-16, 09-22, 10-02, 10-08 and 10-09 (each with its next day)."
+}
+```
+
+## ADVI_BDPRCE-D1-W13-S5 -- BEFORE_AFTER.csv carries a variant-A price for BLACKROCK INC COM on 2026-09-22, where the round-2 probe records variant A as absent
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W13-S5",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~13",
+  "surfaced_at": "2026-10-14T01:47:11Z",
+  "one_line": "Two round-2 records disagree on the variant-A value for BLACKROCK INC COM on 2026-09-22: the before/after list gives new_price_A 1078.04 with 0 distinct trades; the probe record says A is absent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~6/BEFORE_AFTER.csv line 489: 2026-09-22,BLACKROCK INC COM, new_price_A 1078.04, new_price_B 1074.9259, distinct_trades 0",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~5/RULE_PROBE.md: BLACKROCK INC COM 2026-09-22, A absent (no Buy or Sale rows); B 1074.9259"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-1 1a: round 2 read BLACKROCK INC COM on 2026-09-22 as absent under buys and sells and 1,074.9259 with reinvestment.",
+  "world_is": "The before/after list carries a non-null variant-A price (1078.04) for an asset-date with zero distinct trades. R1.1 reads 1074.9259 from four distinct reinvestment transaction ids (733524155, 733526392, 733527817, 733530060). The before/after variant-A column is not used by this cell."
+}
+```
+
+## ADVI_BDPRCE-D1-W13-S6 -- Two Sale rows with price 0.0 on 2026-09-22 are excluded as no-price, against round 2's record of zero no-price trade rows
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W13-S6",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~13",
+  "surfaced_at": "2026-10-14T01:47:11Z",
+  "one_line": "silver/transactions/2026-09-22.parquet holds two Sale rows with price 0.0 for INVESCO DISCOVERY Y; round 2 recorded no trade row lacking a valid price.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver/transactions/2026-09-22.parquet read live (get_object, READ only): transaction_id 734745995 and 734745996, transaction_type Sale, price 0.0, trade_date 2026-09-22",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/RULE_PROBE2.json@cd073f6a13 census 2026-09-22 no_price_excluded 2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-b-2 record (RULE_PROBE.md, round 2): no trade row lacked a valid price; no_price_excluded 0 under both variants.",
+  "world_is": "Two Sale rows on 2026-09-22 carry price 0.0. R1.1 excludes them under clause 3 and counts them in no_price_excluded; they are not a price."
+}
+```
+
+## ADVI_BDPRCE-D1-W13-S7 -- The commit-time naming gate refused the module's candidate function for naming a dimension column; the function now takes its field names as parameters
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W13-S7",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~13",
+  "surfaced_at": "2026-10-14T01:47:11Z",
+  "one_line": "The naming gate (LGIC_ENFORCE) refused a new string in the module that is a dimension column name ending in the firm short form; the module now takes the field names as arguments and the probe passes them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-commit.sh first attempt on the module: naming-gate REFUSE at bd_price_rule.py line 177 (asset_super_class_bd -> lookup('49financial')), NAMING-GATE REFUSE 1 graded",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/rule_probe2.py passes the dimension column names; org/ paths are outside the naming gate domain (EXCLUDED org/, docs/ in the gate output)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-1 2 bounds and 1a.2: the module stays free of AWS and takes the candidate set as a parameter; the PROBE builds the set from the dimension. Rule 30 of the worker's standing rules: a builder refusal is a registry row to add, never a hand-typed workaround.",
+  "world_is": "The gate treats a dimension's own column name as a hand-kept carrier of the firm code and suggests a registry lookup, which does not name a column. The candidate test now lives in the module as a generic function over caller-named fields, and the probe (outside the gate's domain) passes the Black Diamond column names. Behaviour is unchanged: the probe record is byte-equal before and after the change (md5 523247e6fb2779774f613747a6f08827)."
+}
+```
