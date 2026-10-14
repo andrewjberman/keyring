@@ -2429,3 +2429,30 @@ used as fixtures is a different read with a different denominator.
   "notes": "Behaviour preserved, text changed. The P2 merge is the place it can bite."
 }
 ```
+
+### TCKT_VNEXT-D2-W42-S5 -- the trade members went on a sibling type, not on TicketAttachment
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W42-S5",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~42",
+  "surfaced_at": "2026-10-14T20:04:07Z",
+  "one_line": "The order says TicketAttachment gains the trade form's member set, but the analysis code reads its upload_id and input_id as required strings, so the trade members went on a sibling type joined by a union.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "WORKER FACE step 2: src/api/endpoints/tickets.ts, TicketAttachment gains the trade form's member set (key, filename, content_type, size).",
+  "world_is": "TicketAttachment at portal commit 9e07fa320c has upload_id: string and input_id: string as required members, and analysisRequest.ts reads ticket.attachment?.input_id as a string (lines 305, 431, 479, 527). Adding the trade members to that interface makes the analysis shape claim members it never has. The candidate (b032bcf793) adds TradeFormAttachment, with key, filename, content_type and size, and declares upload_id and input_id as absent (undefined) on it. Ticket.attachment and CreateTicketInput.attachment take the union, and the analysis reads still type-check.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/api/endpoints/tickets.ts@9e07fa320cf55945e3ab1d391ce7716e7daac9d4 (TicketAttachment: upload_id and input_id required)",
+      "portal/src/pages/TicketCenter/analysisRequest.ts@9e07fa320cf55945e3ab1d391ce7716e7daac9d4 lines 305, 431, 479, 527 (ticket.attachment?.input_id read as a string)",
+      "portal commit b032bcf79311528ecf7999d5d55f4b84e9059c00 (TradeFormAttachment sibling; typecheck rc=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The order's sentence is read as the member set, not as a widening of the analysis interface. The CVO may rule the shape differently."
+}
+```
