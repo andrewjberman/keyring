@@ -2043,3 +2043,71 @@
   "notes": "Not repaired. The worker reads a non-object as absent, which keeps the never-replace rule intact. The issuer may prefer treating it as unparseable (print nothing, change nothing)."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W27-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~27",
+  "surfaced_at": "2026-10-14T18:51:05Z",
+  "one_line": "AC2 cannot pass as written: the mandated principal key on every People row breaks the unchanged assertion at tests/test_admin_people.py:202 that pins each row's key set, so test_people_lists_every_candidate_even_holding_nothing FAILS (1 failed, 9 passed).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PD.3 step 2 adds a principal key to every People row; AC2 names test_people_lists_every_candidate_even_holding_nothing as PASSED, and the order says the rest of tests/test_admin_people.py stays unchanged.",
+  "world_is": "tests/test_admin_people.py:202 asserts set(p) == {\"who\",\"kind\",\"how\",\"tier\",\"channels\"} for every row; with principal present that assertion fails. Left unedited per the order. AC2 invocation: RESULT: FAIL, named tests PASSED 3 of 4, rc=1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/test_admin_people.py@ef2a5b14e1:202 (the unchanged assertion)",
+      "pd3.AC2.sh run in worktree C:/tmp/mp-pd-27: 'people rows tests: 1 failed, 9 passed; named tests PASSED 3 of 4', RESULT: FAIL, exit=1"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W27-S2",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~27",
+  "surfaced_at": "2026-10-14T18:51:05Z",
+  "one_line": "The round-1 People body that test_people_principal_never_leaks_into_other_fields names as its reference is not an artifact in the tree; the reference was dumped from the pre-PD.3 admin_people before the edit and pinned as the literal ROUND1_PEOPLE in tests/test_admin_people.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "With the principal key removed from every row, the People body equals the round-1 body for the same planted world.",
+  "world_is": "No stored round-1 body exists. The pre-edit body for _world_with_people(names=[whoami, list_calendar]) was captured by a scratch run (gitignored .scratch/) before the admin_people.py edit and is pinned as ROUND1_PEOPLE (7 rows, population last).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/admin_people.py@ef2a5b14e1 (pre-edit _compute, the source of the dump)",
+      "infra/aws/ec2/opal-gateway/tests/test_admin_people.py (ROUND1_PEOPLE, appended in this commit)"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W27-S3",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~27",
+  "surfaced_at": "2026-10-14T18:51:05Z",
+  "one_line": "The grant-writer Lambda in this base does not name the set_person_access action or a person_access record, so the access POST relays whatever the writer answers until the parallel writer cell lands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A parallel cell extends the grant-writer Lambda with the action set_person_access (PD.2 record and event).",
+  "world_is": "A Grep of infra/aws/lambda/mcportal for set_person_access|person_access returned no files at ef2a5b14e1; the writer half is not in this base. Nothing in this cell depends on it for the handler tests, which use a fake client.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/lambda_function.py@ef2a5b14e1 (no match for set_person_access)"
+    ]
+  }
+}
+```
