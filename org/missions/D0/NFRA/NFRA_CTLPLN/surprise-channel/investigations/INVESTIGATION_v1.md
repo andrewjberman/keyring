@@ -9395,3 +9395,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Z-S8 stands as written (rows are append-only); this row carries the re-point and the cause read."
 }
 ```
+
+## NFRA_CTLPLN-D2-S4 -- crossbox-call.py has no way to retire a CALL that was never sent once an ORDER carries the same body
+
+```json
+{
+  "id": "NFRA_CTLPLN-D2-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-14T14:31:00Z",
+  "one_line": "An unsent CALL (sent null) superseded by an ORDER carrying the same act cannot be retired: withdraw refuses a CALL, close refuses before an ack, and close --superseded-by refuses a successor of another kind, so the only path is to send a moot CALL to be acked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "crossbox-call.py header: a cross-box call or order travels as a file with an acknowledgement and is closed on both boxes or on neither; withdraw retires an ORDER its named seat never read; close --superseded-by closes an unread CALL as SUPERSEDED.",
+  "world_is": "XB-20261014T121356Z-f7b9 (CALL, dell2 to laptop, sent null) was superseded by ORDER XB-20261014T121648Z-d847 (ACKED 14:25:06Z by 0.7.0_AE_CloudOps~U7). The three retire paths refused, each run by this seat 2026-10-14: 'withdraw retires an ORDER; ... is a CALL (a CALL is answered or closed, never withdrawn)'; 'is not acknowledged yet ... a call closes after the other side has read it'; 'successor XB-20261014T121648Z-d847 is an ORDER, XB-20261014T121356Z-f7b9 is a CALL'. The workaround sends a moot CALL for the laptop CTO to ack, which costs two seats a round-trip.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/crossbox/XB-20261014T121356Z-f7b9.json@f0edde1aa5",
+      "org/devices/crossbox/XB-20261014T121648Z-d847.json@d5a5cd8ef5 (ACKED)",
+      "this seat's three crossbox-call.py invocations and their REFUSED lines, 2026-10-14 ~13:2xZ and ~14:3xZ"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

@@ -10,12 +10,16 @@
  "subject": "Order: delete the one approved synthetic stored input (c449); run the policy simulator first, STOP if denied",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps~U7/task_orders/IRPT_ANLREQ.TO-DELETE-C449-U7.synthetic-door-input-d2-laptop.md",
  "opened_at": "2026-10-14T12:16:48Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-14T12:19:28Z",
   "bus_message_id": "8dfc9df6-0ff5-4385-97a1-62f78a080efe"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-14T14:25:06Z",
+  "by": "0.7.0_AE_CloudOps~U7",
+  "bus_message_id": "b61cbac9-3a80-44e8-97d9-ec39aab7dd4a"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
