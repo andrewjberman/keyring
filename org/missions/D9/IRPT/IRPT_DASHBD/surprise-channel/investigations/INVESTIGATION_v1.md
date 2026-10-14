@@ -9942,3 +9942,465 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W161-S1 -- The closed coverage vocabulary has no member that says a dimension field is absent from the firm silver, so four PRD-named account_dim fields are null on every FULL row
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W161-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~161",
+  "surfaced_at": "2026-10-14T05:02:00Z",
+  "one_line": "The closed coverage vocabulary has no member that says a dimension field is absent from the firm silver, so four PRD-named account_dim fields are null on every FULL row",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-196 step 2 and PRD C-SHAPE: a column the PRD names that Cottonwood silver does not carry is null plus a coverage value that says why (C-COVERAGE is the closed vocabulary).",
+  "world_is": "The Cottonwood silver carries no client_id, tax_status, opened_date or first_data_date. The adapter writes them null on all 999 rows, and 869 of those rows are coverage FULL, because no member of the closed vocabulary (FULL, PARTIAL_HISTORY, NO_LOTS, FLOW_UNRECONCILED, UNCLASSIFIED_HOLDINGS, SOURCE_LAG, FEE_RAIL_UNUSED) names an absent field. The why sits in absent_fields, a free ';'-joined list, not in coverage. Form only: the CTO adjudicates whether a member or a reason column is admitted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_DIM_CONTRACT.json@e03a4991a4 (contract: columns client_id, tax_status, opened_date, first_data_date; absent_fields)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~161/COTTONWOOD_ACCOUNT_DIM.json@e03a4991a4 (dry_run.null_counts: client_id 999, tax_status 999, opened_date 999, first_data_date 999)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md@e03a4991a4 (C-COVERAGE, the closed vocabulary)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W161-S2 -- 47 accounts whose only membership is the no-relationship sentinel carry no household key, and the closed vocabulary has no member that explains it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W161-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~161",
+  "surfaced_at": "2026-10-14T05:02:00Z",
+  "one_line": "47 accounts whose only membership is the no-relationship sentinel carry no household key, and the closed vocabulary has no member that explains it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-196 step 2: null plus a coverage value that says why; step 3: the household key comes from the relationship id.",
+  "world_is": "The Relationship ID sentinel '0' (the no-relationship value a01_dim_relationship.py names NO_REL_SENTINEL) is the only membership of 47 accounts, so household_id is null for them and household_id_reason carries NO_RELATIONSHIP_SENTINEL. That enum member is new in this round: it needs its four-postulate record (in the contract, rule24_record) and a token census, which measured 6 hits, all of them this round's own files. The CTO adjudicates whether it is admitted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_DIM_CONTRACT.json@e03a4991a4 (household_id_reason enum, rule24_record)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~161/COTTONWOOD_ACCOUNT_DIM.json@e03a4991a4 (dry_run.null_counts: household_id 47)",
+      "data/cot/scripts/gold/runners_cot/a01_dim_relationship.py@e03a4991a4 (sentinel definition)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W161-S3 -- 3 accounts sit under two or more real relationships, and the PRD names no rule for which relationship key account_dim carries
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W161-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~161",
+  "surfaced_at": "2026-10-14T05:02:00Z",
+  "one_line": "3 accounts sit under two or more real relationships, and the PRD names no rule for which relationship key account_dim carries",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-196 step 3: a relationship with several accounts yields one key shared by those rows. The case of one account under several relationships is not stated.",
+  "world_is": "The adapter carries the smallest non-sentinel relationship id as household_id and the count in household_relationship_count (contract column). The count is 3 in the dry run. A01's per-membership map keeps every membership. The smallest-id rule is the adapter's declared choice, not a ratified rule.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_DIM_CONTRACT.json@e03a4991a4 (household_relationship_count meaning)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~161/COTTONWOOD_ACCOUNT_DIM.json@e03a4991a4 (dry_run multi_relationship_accounts 3, counts only)",
+      "data/cot/scripts/gold/runners_cot/a01_dim_relationship.py@e03a4991a4 (per-membership map)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W161-S4 -- The order's reuse instruction cannot be met as written: the a00 and a01 derivations are coupled to their S3 reads and gold writes, so the adapter restates two rules
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W161-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~161",
+  "surfaced_at": "2026-10-14T05:02:00Z",
+  "one_line": "The order's reuse instruction cannot be met as written: the a00 and a01 derivations are coupled to their S3 reads and gold writes, so the adapter restates two rules",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-196 step 3: an account and a relationship dimension already exist in code; reuse their derivation, do not re-derive a second way.",
+  "world_is": "a00_dim_account.py and a01_dim_relationship.py derive the universe and the membership inside build(), together with runner_common reads and write_gold_table(). No pure function exists to import. The adapter restates the two rules it needs (holdings UNION roster; '0' is the no-relationship sentinel), so there are now two derivations of the same keys. The CTO decides whether a00 and a01 are factored into a pure function.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/runners_cot/a00_dim_account.py@e03a4991a4 (build(): inline derivation and gold write)",
+      "data/cot/scripts/gold/runners_cot/a01_dim_relationship.py@e03a4991a4 (build(): inline membership derivation)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_account_dim.py@e03a4991a4 (adapter: restated rules)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W161-S5 -- The txn-only historical accounts that a00 carries are outside account_dim, because the dry run reads the holdings and roster surfaces only
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W161-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~161",
+  "surfaced_at": "2026-10-14T05:02:00Z",
+  "one_line": "The txn-only historical accounts that a00 carries are outside account_dim, because the dry run reads the holdings and roster surfaces only",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-196 step 5: read the silver prefixes the adapter needs; if the silver needed is not in the prefix, record what is missing and stop. a00's universe is the holdings axis UNION roster UNION the transaction series.",
+  "world_is": "The adapter's universe is holdings UNION roster (999 accounts). It does not read fact_transactions, the surface a00 uses for TXN-ONLY-HISTORICAL accounts. The count of such accounts is not measured in this round, so account_dim's 999 accounts can differ from a00's universe by that class. Not repaired: the order names two surfaces for this table's read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/runners_cot/a00_dim_account.py@e03a4991a4 (universe: holdings, roster and txn-series union)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~161/COTTONWOOD_ACCOUNT_DIM.json@e03a4991a4 (dry_run.prefixes_read: fact_holdings and fact_allocations only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W161-S6 -- C-SHAPE says method_version names a dim_return_method row, but a dimension has no return method row, so the adapter writes a declared constant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W161-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~161",
+  "surfaced_at": "2026-10-14T05:02:00Z",
+  "one_line": "C-SHAPE says method_version names a dim_return_method row, but a dimension has no return method row, so the adapter writes a declared constant",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD C-SHAPE: every table carries method_version; C-METHOD: method_version is the dim_return_method row a figure was produced under.",
+  "world_is": "account_dim holds no return figure and no dim_return_method row exists for it. The adapter writes method_version 1 as a declared constant (METHOD_VERSION) and the contract says so in its meaning. The value is not measured from any method row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_DIM_CONTRACT.json@e03a4991a4 (method_version meaning)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_account_dim.py@e03a4991a4 (METHOD_VERSION constant)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md@e03a4991a4 (C-SHAPE, C-METHOD)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W160-S1 -- the contract names the gold file as Cottonwood's producer, but the adapter that mints those partitions is the silver one
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W160-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~160",
+  "surfaced_at": "2026-10-14T05:12:13Z",
+  "one_line": "The contract names the gold file as Cottonwood's producer, but the adapter that mints those partitions is the silver one",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json line 10 names data/assets/scripts/gold/irpt_reporting/account_return_daily.py as the producer of account_return_daily, and TO-DB-b-195 step 1 asks for the writer of Cottonwood's partitions.",
+  "world_is": "The Cottonwood partitions are minted by the ADVI_COTBKF adapter data/assets/scripts/silver/commonwealth_account_return_daily.py (header lines 1-10): it imports the gold file unedited and calls its emit_day. The gold file's own main() takes its source from sources.json, which declares one custody source, the 49 Financial key, so the producer the contract names does not write Cottonwood by itself. The manifests carry source_pipeline irpt-reporting-adapter, which is the gold file's constant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py@HEAD lines 1-10 and 135 (PERF_DATE), read in the worktree at 2026-10-14",
+      "data/assets/scripts/gold/irpt_reporting/sources.json@HEAD: one custody source key (the 49 Financial key) and one underscore-prefixed delivery entry",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py@HEAD line 2081 (--source default: the only one) and lines 2008-2011 (method version from the declared source)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~79/ard_cottonwood_manifest.json (adapter, producer and run_commit fields)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W160-S2 -- the one enabled reporting-gold schedule writes the 49 Financial scope, so it does not keep Cottonwood's account_return_daily current
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W160-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~160",
+  "surfaced_at": "2026-10-14T05:12:13Z",
+  "one_line": "The one enabled reporting-gold schedule writes the 49 Financial scope, so it does not keep Cottonwood's account_return_daily current",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "infra/aws/terraform/investor-reporting/reporting-gold/schedule.tf describes itself as the daily production trigger for the reporting gold (account_return_daily), so a reader can take it as the trigger for every firm's account_return_daily.",
+  "world_is": "irpt-49f-reporting-gold-daily exists and is ENABLED at cron(41 7 ? * MON-FRI *) in America/New_York; its target irpt-49f-reporting-gold-lambda is Active with LastUpdateStatus Successful. The root builds its names from irpt_rg_firm, the registry scope of the one declared source (locals.tf line 50), so no schedule for the Cottonwood scope is built by that root.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-gold/schedule.tf@HEAD lines 74-103 and locals.tf@HEAD line 50",
+      "live aws scheduler get-schedule on irpt-49f-reporting-gold-daily (rc 0, read 2026-10-14)",
+      "live aws lambda get-function-configuration on irpt-49f-reporting-gold-lambda (rc 0, read 2026-10-14)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W160-S3 -- Cottonwood's Commonwealth silver input is one snapshot dated 2026-06-23 with no newer partition, and the adapter pins that date in code
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W160-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~160",
+  "surfaced_at": "2026-10-14T05:12:13Z",
+  "one_line": "Cottonwood's Commonwealth silver input is one snapshot dated 2026-06-23 with no newer partition, and the adapter pins that date in code",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-195 step 4 asks whether the inputs a resume reads are current.",
+  "world_is": "The Commonwealth Cottonwood silver daily_returns prefix holds one partition, date=2026-06-23, and the adapter's PERF_DATE constant (line 135) pins that same date. At the read, the newest gold day is 80 trading days behind 2026-10-14, so a resume reads a stale input unless a newer Commonwealth delivery lands and the constant is changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3 ls of the Commonwealth Cottonwood silver daily_returns prefix (named prefix, rc 0, one entry, read 2026-10-14)",
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py@HEAD line 135 (PERF_DATE)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W160-S4 -- the trading-calendar frontier answered from its hardcoded NYSE fallback, because pandas_market_calendars is absent on this box
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W160-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~160",
+  "surfaced_at": "2026-10-14T05:12:13Z",
+  "one_line": "The trading-calendar frontier answered from its hardcoded NYSE fallback, because pandas_market_calendars is absent on this box",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CLAUDE.md section 5 names lib/trading_calendar.py as the one frontier for trading-day counts, and the criterion DB103-3-AC1 recomputes the count with it.",
+  "world_is": "Every run of lib/trading_calendar.py on this box prints WARN: pandas_market_calendars absent and answers from the hardcoded fallback NYSE/hardcoded-fallback-2010-2027, which covers 2010 to 2027 and asks for regeneration before 2028. The 80-trading-day count in the record is therefore a fallback count. Both manifests carry the same calendar_source string. The count agrees with a hand count of weekdays after 2026-06-22 through 2026-10-14 less the 2026 July 3 and September 7 closures.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "output of python lib/trading_calendar.py (trading_days_between 2026-06-22 to 2026-10-14) run in the worktree at 2026-10-14: WARN line and 81 entries",
+      "manifest calendar_source fields of the newest and the 2013 manifest.json (keys read by S3 GET, no values recorded)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W160-S5 -- the newest and the 2013 manifests were both rewritten on 2026-10-11 and the series still ends at 2026-06-22; who ran that write is not established
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W160-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~160",
+  "surfaced_at": "2026-10-14T05:12:13Z",
+  "one_line": "The newest and the 2013 manifests were both rewritten on 2026-10-11 and the series still ends at 2026-06-22; who ran that write is not established",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-195 step 3 asks why the newest partition stops at 2026-06-22, and names a manual producer last run then as one possible answer.",
+  "world_is": "The manifest.json objects of the 2026-06-22 partition and of the 2013-04-03 partition both carry LastModified 2026-10-11 (07:17 and 07:03 UTC), and their data.parquet objects carry the same write day. So a write over existing history ran on 2026-10-11 and did not extend the series past 2026-06-22. Two partitions were read, not all 3325, so whether it was a whole-history re-mint is NOT_ESTABLISHED, and so is who ran it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3 ls of the newest and the 2013 partition prefixes (named prefixes, rc 0, read 2026-10-14)",
+      "aws s3api get-object of the two manifest.json objects (headers and keys read; written only to the worktree scratch folder)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W158-S1 -- the contract's percent wording says decimal fraction, while the filled sample stores percent numbers
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W158-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~158",
+  "surfaced_at": "2026-10-14T05:18:11Z",
+  "one_line": "contract percent wording (decimal fraction) disagrees with the sample's stored percent numbers",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "Contract document.shape says percent is 'from the decimal fraction to one decimal place'. The round-103 order says the filled sample stores percents already as percent numbers, so the component must not multiply again.",
+  "world_is": "The sample's percent members hold percent numbers (a stored one-and-a-half means one and a half percent); the builder header says 'the decimal fraction times 100'. The component multiplied by 100 (the percent defect); the fix prints the stored scale. The contract text still states the decimal-fraction convention, so a component built from that text reproduces the defect.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json: document.shape, the percent unit sentence",
+      "portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts: formatPercent prints the stored value (portal commit 7c9a94d0 (branch wk-IRPT_DASHBD-158-portal))",
+      "portal test report-render-r103.test.tsx, percent pin: the temporary mutant restoring the multiplication fails it (run recorded in the worker folder)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2"
+}
+```
+
+## IRPT_DASHBD-D2-W158-S2 -- the generated member label of the fee-basis convention carries build words; the view model overrides the label, the generated file is not edited
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W158-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~158",
+  "surfaced_at": "2026-10-14T05:18:11Z",
+  "one_line": "generated fee-basis label carries build words; overridden in the view model, generated file untouched",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order: every client-facing line names no build word, and contractMembers.ts is GENERATED: read, never edited.",
+  "world_is": "The generated label of convention.fee_basis_label names the baseline and the net-gain convention in build words. The view model prints a client label for that member (CLIENT_LABEL) and a client convention sentence when the member holds text. The synthetic fixture's text for the same member carries the same build word and is never printed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/dashboard/report/contractMembers.ts: the convention.fee_basis_label entry (generated)",
+      "portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts: CLIENT_LABEL and FEE_BASIS_CONVENTION (portal commit 7c9a94d0 (branch wk-IRPT_DASHBD-158-portal))"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W158-S3 -- the sample's holdings class-hierarchy text is a build note with snake_case class keys; the contract says a text member prints as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W158-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~158",
+  "surfaced_at": "2026-10-14T05:18:11Z",
+  "one_line": "sample holdings class-hierarchy text is a build note; printed as a fixed sentence, not as written",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Contract document.shape: text 'as written'. Order: no build word and no snake_case identifier on a client-facing line.",
+  "world_is": "The sample's holdings.rows.class_hierarchy value is a build note that names the baseline and lists the asset-class keys in snake_case. The view model prints a fixed sentence in its place ('Sub-class rows: not available yet.'), so the value is never printed. The sentence is a presentation choice; no member carries it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json: document.shape, text members printed as written",
+      "portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts: SUB_CLASS_WORDS and fieldCell (portal commit 7c9a94d0 (branch wk-IRPT_DASHBD-158-portal))"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W158-S4 -- the absence kind is not a field of the absent form; the view model reads the kind from the reason text by keyword rules
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W158-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~158",
+  "surfaced_at": "2026-10-14T05:18:11Z",
+  "one_line": "absence kind is not a field of the absent form; kinds are inferred from reason text by keyword rules",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "Order: a section note prints one plain sentence chosen from a small fixed table keyed on the kind of absence; a reason whose kind cannot be told prints only the cell words.",
+  "world_is": "The absent form carries a reason in words and no kind field. The sample holds sixteen distinct reasons; the view model maps them to three kinds with keyword rules (absentKindOf). A reword of a reason in a later sample changes which sentence a client reads, or drops the sentence to the cell words, and no gate catches it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json: document.shape, the absent form {absent: reason in words}",
+      "portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts: KIND_RULES and absentKindOf (portal commit 7c9a94d0 (branch wk-IRPT_DASHBD-158-portal))"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2"
+}
+```
+
+## IRPT_DASHBD-D2-W158-S5 -- the baseline's holdings class hierarchy has no contract member; the table draws the seven asset classes and says the sub-class rows are not available
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W158-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~158",
+  "surfaced_at": "2026-10-14T05:18:11Z",
+  "one_line": "baseline holdings class hierarchy has no contract member; Opal's seven asset classes drawn instead",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order step 5: the holdings table in the baseline's orientation, with its class hierarchy as the baseline draws it (the CVO's judgment, DB103-1-J1).",
+  "world_is": "The contract has seven asset-class members (allocation only, per class) and one text member for the hierarchy; no member carries the baseline's class groups or the sub-class rows. The table draws Opal's seven asset-class rows in the baseline's column orientation and prints the sub-class omission in words. The judgment on the class hierarchy is the CVO's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json: members hold.allocation and holdings.rows.class_hierarchy",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/1.0.0_SA_CTO~DELL2/BD_FINANCIAL_PERFORMANCE_REPORT_BASELINE_SCHEMA_20261013.md: the Holdings Overview section"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W158-S6 -- the fee-basis line is a presentation constant that asserts the before-fee convention while the convention member is absent in the sample
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W158-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~158",
+  "surfaced_at": "2026-10-14T05:18:11Z",
+  "one_line": "fee-basis line is a fixed before-fee sentence while the convention member is absent in the sample",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "Order item 3: the fee basis stays labelled, and an absent figure never prints as zero.",
+  "world_is": "In the sample the convention member is absent, so the fee-basis line under each return section cannot quote it. The view model prints a fixed sentence asserting that returns and gains are before advisory fees; the previous render printed the absent cell's words under each return section instead. The constant matches the served return (before fees) but no member carries it, so a served change of basis would leave it wrong.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts: FEE_BASIS_WORDS (portal commit 7c9a94d0 (branch wk-IRPT_DASHBD-158-portal))",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/1.0.0_SA_CTO~DELL2/BD_FINANCIAL_PERFORMANCE_REPORT_BASELINE_SCHEMA_20261013.md: conventions, the before-fee return"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2"
+}
+```
+
+## IRPT_DASHBD-D2-W158-S7 -- a chart legend printed a series name as an identifier; the legend now prints words
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W158-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~158",
+  "surfaced_at": "2026-10-14T05:18:11Z",
+  "one_line": "chart legend printed snake_case series names; now printed as words",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order: no snake_case identifier in the visible text of either HTML.",
+  "world_is": "The synthetic fixture's chart series carry class-key names; the legend printed them raw, and the round-103 test refuses such an identifier in visible text. The legend now prints each name as words (legendWords in ReportChart). The data-series attribute keeps the raw name. The sample holds no chart series, so the live render is not affected.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/dashboard/report/ReportChart.tsx: legendWords (portal commit 7c9a94d0 (branch wk-IRPT_DASHBD-158-portal))",
+      "portal/src/pages/InvestorReporting/dashboard/report/fixtures/syntheticReport.ts: the synthetic chart series names"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
