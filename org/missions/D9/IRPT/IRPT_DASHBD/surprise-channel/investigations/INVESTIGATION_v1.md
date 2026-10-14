@@ -11323,3 +11323,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 ```
 
 ---
+
+
+## IRPT_DASHBD-D2-S33 -- the issuer's finding on its own note-level rule (a short-form note that names no member escapes the phrase list) and the ruling on W170-S1 (round 107)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S33",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T15:33:57Z",
+  "one_line": "Issuer's finding on its own note-level rule, and the ruling on W170-S1: the three per-account omission sentences (a chart or a row not drawn for one account) name no contract member, so they carry no data-note key, and the rule's phrase list does not catch their shorter form; accepted for this round, named so the next render round closes it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The round-107 analysis: every note carries the member keys it names, and the note-level rule fails a note phrase that sits outside every keyed element (checks/r107 note_rule: NOTE_PHRASES).",
+  "world_is": "note_rule's NOTE_PHRASES hold 'is not available yet' and four other phrases; the per-account omission sentences read 'Account allocation chart: not available yet.' and 'Account performance chart, last 12 months: not available yet.' (no 'is'), and no contract member exists for an account-level chart, so they cannot be keyed with a real member. They pass the criterion for that reason, and so the rule has a blind spot over a sentence shape: a note that says a figure is unavailable in the shorter form and names no member. Nothing prints that contradicts a table: the CVO read these sentences in round 106 ('claim no reason and contradict nothing, accepted'), and no account-level chart value prints anywhere in the report. Ruling on W170-S1: accepted for this round. To close the gap in the next render round (or any round that touches p107): add the lowercase phrase 'not available yet' to NOTE_PHRASES (table cells print a capital N and are unaffected) and add two virtual members for the account-level charts (as the three hold.class_rows members already serve the foot note), so that a note of this shape is keyed or the check fails. W170-S2 (no committer identity in the portal worktree; commits set it per command): inert, an environment note.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r107/p107_round107.py (NOTE_PHRASES, VIRTUAL, note_rule) at the merge 19370b057a",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~170/RENDER_R107.json and the row W170-S1 (the three omission sentences)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_DASHBD_ROUND_106_L9_GRADE_20261014.md (the Readings section: the account chart notes are accepted)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
