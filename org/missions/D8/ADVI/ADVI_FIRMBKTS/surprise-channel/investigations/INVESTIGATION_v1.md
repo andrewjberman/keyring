@@ -7549,3 +7549,126 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Issuer's call: amend the criterion to the instruments that can see the put (emitted line + AWS/Events TriggeredRules >= 1), or accept the record as is. This seat did not edit the record to 1 and did not flip <status>. D1-W65-S1 disarm read: the chain emitted, the rule fired and the generator ran, so the disarm condition is met on that evidence."
 }
 ```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W83-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~83",
+  "surfaced_at": "2026-10-14T12:19:47Z",
+  "one_line": "PLANINV row 6 says the Door 6 deny (router_iam.tf statement 3) has no live object and retires with the key; the deny is deployed, in a managed policy on a live role.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/opal-assets/router_iam.tf:171 (Sid DenyInfGoldSentinelAbsolutely) at C:/dev/wk-firmbkts-83 HEAD 7ee8e70830, read by the Read tool",
+      "live: aws iam list-attached-role-policies on opal-assets-ingest-router-role shows managed policy opal-assets-one-way-fan-in-fence; aws iam get-policy-version on its default version v1 shows 3 statements, the third Sid DenyInfGoldSentinelAbsolutely, Effect Deny, naming the gold/meta/pipeline-complete.json key",
+      "live: aws lambda get-function-configuration opal-assets-ingest-mirror returns Active with Role opal-assets-ingest-router-role; aws events describe-rule mdpf-daily-refresh-trigger returns ResourceNotFound (the statement's named principal is absent)",
+      "PLANINV_LEGACY_OPERATIONS.json candidates[5] (row 6, router-iam-door6-deny), read at 0.9.0_WK_ADVI_FIRMBKTS~80 record"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PLANINV row 6 (router-iam-door6-deny): the deployed router policy statement was not read; the deny guards a key whose protected principal is absent, so it has no object once the key retires and is retired with the key.",
+  "world_is": "The deny is deployed live in a customer-managed policy attached to opal-assets-ingest-router-role, the execution role of the live opal-assets-ingest-mirror Lambda. Its named principal mdpf-daily-refresh-trigger is absent, but the role and the deny are both live. The consumer census counts the role as 1 live consumer.",
+  "notes": "Not a defect in the census. Found by the FB-l-3 consumer census. Retiring the key does not edit this policy; any edit to the deny is an IAM change under CTO or Andrew. Disarm: none (INERT)."
+}
+```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W83-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~83",
+  "surfaced_at": "2026-10-14T12:19:47Z",
+  "one_line": "PLANINV row 11 says the portal distribution's behaviours must repoint off all three legacy origins; live, only the opal-data-bd origin has behaviours, and the cot and inf origins have none.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live: aws cloudfront get-distribution-config on the portal distribution (found by Comment, ID not printed), read to C:/dev/wk-firmbkts-83-data/cfcfg.json; python count of TargetOriginId: 30 behaviours including the default, 5 to S3-opal-data-bd, 0 to S3-opal-data-cot, 0 to S3-opal-data-inf, 20 to APIGateway-portal, 3 to S3-opal-data-portal-v2-json, 1 to S3-opalinvest-portal, 1 to APIGateway-portfolio",
+      "live: the same read lists 7 origins, including S3-opal-data-cot and S3-opal-data-inf",
+      "PLANINV_LEGACY_OPERATIONS.json candidates[10] (row 11, portal-cloudfront-distribution), read at 0.9.0_WK_ADVI_FIRMBKTS~80 record"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PLANINV row 11: the distribution has 7 origins, three of them legacy; the behaviours must repoint when the origins retire.",
+  "world_is": "Behaviours route only to the opal-data-bd origin (5 of 30). The opal-data-cot and opal-data-inf origins are configured with zero cache behaviours, so no request path reaches either legacy bucket through the distribution. Repointing those two origins has no behaviour to move.",
+  "notes": "Read-only finding. The bd origin carries the four advisor-intelligence artifact and entity paths, the *.json path and the satellites path. The cot bucket policy's OAC statement still names the portal distribution (consumer census row C10)."
+}
+```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W83-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~83",
+  "surfaced_at": "2026-10-14T12:19:47Z",
+  "one_line": "PLANINV row 10 says the legacy bucket policies are declared in no Terraform (DEC-8); the opal-data-bd policy statements are declared in Terraform and drift-guarded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/bd-pipeline/opal-data-bd.tf:94 (Sid AllowCloudFrontOACReadGold) and :102 (Sid AllowScopedAdvisorOAI), read by the Read tool at HEAD 7ee8e70830",
+      "infra/aws/terraform/portal-auth/firm-bucket-cross-ref.tf:96 carries a DRIFT check that names the AllowCloudFrontOACReadGold statement on opal-data-bd",
+      "Grep over infra/aws (code types, excluding md, json, txt, yaml) for AllowScopedAdvisorOAI and AllowCloudFrontOACReadGold returns only bd-pipeline/opal-data-bd.tf and shared-infra/s3.tf:286; the s3.tf statements are on opal-data-demo, not a legacy bucket",
+      "live: aws s3api get-bucket-policy on opal-data-cot returns the two statements named in PLANINV row 10 (read in this census)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PLANINV row 10: the three legacy bucket policies are declared in no Terraform (PRD DEC-8) and retire with their buckets, not by a Terraform change.",
+  "world_is": "The opal-data-bd statements are declared in Terraform and drift-guarded in portal-auth. The opal-data-cot statements have no Terraform declaration by name. Retiring the bd policy therefore needs a Terraform change, and retiring the cot policy does not.",
+  "notes": "Affects the retirement route for opal-data-bd only. Read-only; no policy was edited. Disarm: none (INERT)."
+}
+```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W83-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~83",
+  "surfaced_at": "2026-10-14T12:19:47Z",
+  "one_line": "The FB-l-3 order names the portal's user rows as a mockadv consumer; the repository holds none, and the live rows are user data this census does not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep (native) with path C:/dev/wk-firmbkts-83/portal, token mockadv, excluding node_modules: 1 occurrence across 1 file, portal/src/pages/InvestorReporting/header/firmDisplayNames.generated.ts:6",
+      "comp-find --corpus aws 'mockadv': 0 hits (denominator 2929 aws nodes scanned, vintage 2026-10-14 12:11:36 UTC)",
+      "FB-l-3 section 1a.3 scopes the read to the files and forbids reading any user's data, so no user row was opened"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FB-l-3 section 1a.3: for mockadv, read the portal's user rows, the dropdown entry, the two router map entries and the registry rows.",
+  "world_is": "The repository has no user-row file carrying the token. The only portal consumer is the generated dropdown row. Any user rows live in a store outside the repository and the graph, and were not read. The dropdown row and the router rows were read.",
+  "notes": "The census records the user-row consumer as not_read, not as zero. Disarm: none (INERT)."
+}
+```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W83-S5",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~83",
+  "surfaced_at": "2026-10-14T12:19:47Z",
+  "one_line": "FB-l-3 defines the first zero-consumer candidate as having no LIVE consumer without fixing consumer direction or delivery liveness; the FIRMSEP alarm turns the answer on that choice.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live: aws events describe-rule FIRMSEP-s3-direct-access-bypass returns ENABLED; list-targets-by-rule returns one target, the SNS topic opal-infrastructure-alerts",
+      "live: aws sns list-subscriptions-by-topic returns 1 subscription, protocol sms, not pending confirmation",
+      "live: aws cloudwatch get-metric-statistics, AWS/SNS, NumberOfMessagesPublished and NumberOfNotificationsFailed, topic opal-infrastructure-alerts, window 2026-09-14 to 2026-10-14, Sum: published 56, failed 56",
+      "live: aws events describe-rule inf-canonical-prices-daily returns DISABLED, with its only target inf-gold-trigger"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FB-l-3 section 1a: a candidate's consumers is the count of LIVE consumers; a candidate with consumers 0 and scanned above 0 is the zero case; the first such candidate in file order is first_zero_consumer.",
+  "world_is": "Under a configuration reading (enabled and configured), FIRMSEP has 1 live consumer, the SNS topic, so the first zero is inf-canonical-prices-daily (C2). Under a delivery reading, FIRMSEP has 0 deliveries in the window (56 of 56 failed), so the first zero is FIRMSEP (C1). The record uses the configuration reading and states the delivery count beside it.",
+  "notes": "The COO adjudicates which reading governs the first zero. The census does not choose for it. Disarm: none (INERT)."
+}
+```
