@@ -75,3 +75,19 @@ portal landing on Andrew's approval.
 - Andrew's open default (returns keep gold) is kept as the spec defaults it.
 
 Cleanup: both worktrees removed; the node_modules junction was unlinked first; portal/node_modules was checked intact.
+
+---
+
+## v3, 2026-10-14 ~19:1xZ: the producer is live; the ordering condition's first three steps are met (msg 5745)
+
+**PASS stands.** Read by this seat:
+- Served `s3://opal-data-cot/platinum/satellites/characteristics.json`, VersionId `6z8c7qDDQTd2Q9k8qSoPpO78CxlsWAgZ`, 2026-10-14T18:57:08Z,
+  66,835 B: **9 of 9 satellites equal the spec table** on fee, yield, duration and beta. `method.formula` states the sleeve rule, and
+  `coverage` carries returns only. The prior version `C8ZQnQw0ESDdnaIK8iq_f7OFbcW6tble` (13:26:02Z) is present as the rollback.
+- Deploy ledger `org/critical_paths/change_management/20261014T1841Z_j359-satellite-characteristics-deploy-dell1-20261014_deploy_completion.md`:
+  CLOSED 20261014T190059Z, nothing stranded. L1 re-measured the preconditions, with both halves signed. L3 was one targeted plan and one
+  safe-apply. L4 was a dry run that left the served VersionId unchanged, then one driven invoke.
+
+**What remains is not a grade condition but the landing:** the portal head 18fdf2297b goes to DEV via `portal-merge-forward.sh` on
+Andrew's approval (CW-facing). The spec's acceptance 3 (the Satellites-mode page shows the same four numbers) holds by construction,
+because both read this one served file. The rendered page was not read by this seat.

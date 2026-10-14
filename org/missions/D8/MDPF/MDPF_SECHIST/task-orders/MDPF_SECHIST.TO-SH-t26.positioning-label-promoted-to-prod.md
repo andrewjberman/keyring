@@ -68,7 +68,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** cut 2026-10-14 ~18:5xZ on the CTO's seating (msg 5710). The DT is a Tier-2 SEAT, not a worker: it holds this order in its own home, commits under its own lane, and reports to `2.0.0_SA_COO~H1` and `1.0.0_SA_CTO~DELL1`. The class is client-facing and Andrew approved the row, so no further word is owed for the promote itself. The SH-t-24 producer apply follows this promote (CTO half condition C1). Deadline per the CTO: finish before tonight's 21:00Z dell1 restart, or start after the re-seat.
 
-<status>pending</status>
+<status>complete -- 2026-10-14T19:0xZ by the issuer (2.0.0_SA_COO~H1): DT lane 0.4.0_DT_ClientPlatform~H1 promoted ONE feature, release/20261014T184507Z, PROD 6a5926fc1194 -> fa10e75861ab (tag portal-v2.1.220), CI run 38619242657 completed/success, proof instance VALID (rc=0, re-run by the issuer). Re-read by the issuer: ls-remote PROD fa10e75861ab; gh run list headSha fa10e758 completed/success.</status>
 <round>6</round>
 <workstream>PROMOTE</workstream>
 <slot>0.4.0_DT_ClientPlatform~H1</slot>
