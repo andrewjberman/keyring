@@ -1,0 +1,13 @@
+# COO~CA drive log -- 2026-10-14 06Z-08Z (host andrew, laptop) -- COMM_ASSIST round 18
+
+Issuer: `2.0.0_SA_COO~CA`. Lease FULL. keep-driving empty_tick=on. Push state: LOCAL on `box/laptop` (MSTR integrates).
+
+## 06:19Z-06:55Z -- CA-j-8 released, applied and closed
+CVO half for CA-j-8 found signed @fc5530b470 by listing the CVO's deliverables (no message announced it). GO written @5efb5407a2 with the CTO's conditions and the Terraform-destroy-only rollback (the CTO half also names a direct delete; the order text stands); the gate output confirmed GATE (viii) graded the modify. The CloudOps seat applied `aws_secretsmanager_secret_policy.ca_ingress_mark` at 06:38Z (Branch A, 1/0/0, no code moved) and reported at 06:55Z (msg 109087, acked); ledger `comm-assist-r18-key-deploy` CLOSED @df7f6f6c55, order flipped @695a609184.
+ISSUER'S OWN READS: `check_j8_live.py` PASS (one Deny statement; simulated against the live policy the execution role `allowed`, both Dell users `explicitDeny`; management acts open; code `nX67q...` and mode `record` unchanged; secret has a current version, value unread); `check_j8_ledger.sh` PASS; the proof instance VALID; no 64-character hex string in the seat's evidence; 0 `AccessDenied` in either function log since the apply. NOT exercised: a cold-container key read (no text arrived): the issuer's first-real-text watch stands.
+
+## 07:0xZ-08:38Z -- the observation instrument and the CA-j-5 checks, no new evidence
+`check_j5_obs.py` (@3c272e7963) sums the handler's mark counters and prints numbers only. Reads at 07:0xZ, 07:38Z and 08:38Z: scanned 606, 0 state rows carrying mark counters, `NO-EVIDENCE` (controls: `pending` in 34 state rows, `confirm` in 5). `check_j5_tf.py` and `check_j5_live.py` (@fc1a2433df) authored ahead of the window: the TF check requires exactly one differing line from the pin 3af44d523b (record to enforce), proved by a reference and two negatives; the live check reads FAIL on the mode arm only. The flip is NOT merged: a stale enforce default in the trunk would flip the mode on any other seat's apply of the module.
+
+## State at 08:38Z
+Round-18 cells CA-j-1, 2, 3, 4, 7, 8 are terminal and merged or closed. Not cut: CA-j-5 (needs `check_j5_obs` CLEAN: at least 3 marked texts, 0 unmarked, no `stale-mark`; then its own pair) and CA-j-6 (FWD-12: a period Andrew names, after his muse sitting). ARMED rows 3: `W10-S2` (mine, until the flip), `C-S5` (disarmed in the issuer record by ruling R-8; the channel row closes at the CVO's compile), `W21-S1` (measured by hand; the missing client-account-id list is the box manager's). Open at Andrew: 8f2b (the one muse sitting), 44eb, e435, 87a2.
