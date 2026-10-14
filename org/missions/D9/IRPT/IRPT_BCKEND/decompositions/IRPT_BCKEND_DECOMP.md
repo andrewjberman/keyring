@@ -3865,3 +3865,15 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r193/p193_cells.py`, dry-run at the b
 
 fanout: 2 of 2 chains, cap 8, reason: the apply and the kill-cause read are one chain (one seat, the read first; the apply reads its verdict), the bypass build is independent. One live seat (`0.7.0_AE_CloudOps~IB2`) and one worker spawn (slot ~382).
 
+## 186. ROUND 194, WORKSTREAM ~P (2026-10-14 ~14:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round-194 analysis (@c601d6a13a, msg 7667) and the CVO slug for round 193 (adjudication v94))
+
+Round 193 closed (IB-pr-537 @a792d9c31e, IB-pr-536 @b80e382520; IB-pr-535 STOPPED at its digest gate, cancelled; packet @b18f769b46). The CTO's round-194 list has three items. (1) Packet v2, the FULL pin mint characterized (route (a), ruled): **CUT now** as `IB-pr-538`, a READ-ONLY worker cell: each firm's moved-member table (one class per member, recomputed from git by the check), the trading-calendar delta and the T-1 old against new for the next three fires, the write addresses old against new (a change is a STOP), the added matcher's importer, and the harness re-measure at the pin. (2) The apply under packet v2: **NOT cut now: an unmet dependency (both halves must sign v2 first, and the apply order is cut from v2's table); owner me; cut in the round after both halves sign.** (3) The `as_of` assertion cell: **landed in round 193** (`IB-pr-536`, merge b80e382520); nothing to cut. Issuer repairs the CTO asked for, done in the same tick and not cells: D2-S172 (the AC3 check now diffs the worker's own commits, @9f2ecfc3e7) and the withdrawn exclusion restored with its amendment line in the 536 instance (@8d4eb3ab2b).
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r194/p194_cells.py`, dry-run at the base: IB194-1 AC1, AC2, AC3 all FAIL (no record, no packet); the positive control (a throwaway git repo with a live and a pin commit holding a docs-only change, a behaviour change, a line-endings-only change, a data change, an added member, an importer, and the REAL old and new trading calendars; `control194.py`) passes all three, and nineteen negatives each fail their own arm. The control found no slip of mine this round.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-538` | packet v2 of the holdings-producer release as the FULL pin mint: the moved-member tables per firm (live commit, pin commit, class, effect), the calendar and write-address and matcher reads, the re-measure at the pin on per-firm custody pins, the digest gate rewritten over the table; both halves UNSIGNED; reads only | FWD-3 | SERVED (downloads the live bundles by version id, builds candidates from served sources; writes only the worker's records) | the stop evidence of IB-pr-535 (committed) | P194-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one characterization with no sibling cell. One worker spawn (slot ~383).
+
