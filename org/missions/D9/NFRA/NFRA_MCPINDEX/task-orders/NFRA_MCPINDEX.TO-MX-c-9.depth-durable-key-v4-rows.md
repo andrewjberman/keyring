@@ -108,6 +108,26 @@ CVO's carried note, CTO msg 33847).**
 - Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
   GATE (viii) does not grade it.
 
+**AMENDED A2 (2.0.0_SA_COO~MI, 2026-10-14 ~02:0xZ, at the drain @435958cd7c) -- AC2 re-cut for six rows HELD on the
+naming gate (row Z-W34-S6, ruled by the row that follows it).**
+- The commit-time naming gate (LGIC ENFORCE) refuses six existing hyphenated research-table prefixes as new
+  out-of-pattern S3 key literals: `amgt/harvest/gold/research-backlog/`, `-continuation/`, `-dossier/`, `-fund-form/`,
+  `-model-typecast/` and `-sector-template/`. A departure from the naming canon is an R20 register entry Andrew
+  acknowledges (CLAUDE.md rule 30), so the issuer does not waive it.
+  - It is queued as call `sitez-20261014T015958Z-a63a`, REC yes.
+- **AC2 now counts a research table as HELD** when its written row file exists under
+  `deliverables/0.9.0_WK_NFRA_MCPINDEX~34/blocked_harvest_rows/` and names that exact prefix. Rowed + held must equal 7.
+  - Issuer's run at the merged index: top-level 24 of 24, research rowed 1 + held 6 of 7, amgt bronze/silver/state 3 of
+    3, gold 6 of 6, RESULT: PASS.
+  - FAIL arm: one held file removed gives 1 + 5, rc=1.
+- **On the call's YES, the six rows land as ONE act** (row Z-W34-S6 notes): copy the six files into `catalog_entries/`,
+  empty `HARVEST_NAMING_PENDING`, re-emit, and set the test counts to 39. It ships in the next gateway release. The
+  project's un-park condition (d) is that YES.
+- AC1 and AC3 are unchanged, and PASS at the merged index (partition 67 of 67, identity 0; AUA depth 2024-11-01 measured
+  and answered at answer time).
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
+  GATE (viii) does not grade it.
+
 ## 2. BOUNDS
 
 1. You change only the files in `<paths>`. Print the regenerated catalog's diff summary by top-level section.
@@ -145,7 +165,7 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
 <proof_of_spec>
   <expected_criteria>AC1,AC2,AC3</expected_criteria>
   <criterion id="AC1" cell_refs="MX-c-9" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round11/checks/c9.AC1.sh; echo "exit=$?"</invocation><expect>PARTITION sums N of N with every member valid (index named valid a of a through MC Portal's reader), definitions located N of N, duplicate entries 0, tool_index entries carrying a row identity 0 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="MX-c-9" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round11/checks/c9.AC2.sh; echo "exit=$?"</invocation><expect>top-level prefixes covered 24 of 24; research tables rowed 7 of 7; round-10 gold tables kept 6 of 6; amgt bronze/silver/state rowed 3 of 3; whole gold prefix 0; duplicates 0; rows outside the 24 0; rows with neither read_tool nor gap_owner 0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="MX-c-9" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round11/checks/c9.AC2.sh; echo "exit=$?"</invocation><expect>top-level prefixes covered 24 of 24; research tables rowed + held 7 of 7 (A2); round-10 gold tables kept 6 of 6; amgt bronze/silver/state rowed 3 of 3; whole gold prefix 0; duplicates 0; rows outside the 24 0; rows with neither read_tool nor gap_owner 0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="MX-c-9" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round11/checks/c9.AC3.sh; echo "exit=$?"</invocation><expect>PART1 depth claims valid a of a, measured >= 1, verified by the second instrument m of m, mdpf_get_aggregate_aua measured; PART2 the AUA answer carries an answer-time depth, claim measured, equal to part 1 -- RESULT: PASS -- exit=0</expect></criterion>
   <instance_path>org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~34/NFRA_MCPINDEX.TO-MX-c-9.depth-durable-key-v4-rows.proof_of_spec.json</instance_path>
 </proof_of_spec>
@@ -174,6 +194,7 @@ The issuer then continues you with MX-r-12's PHASE A.
 - The planted PASS and FAIL arms are in decomposition R11.3.
 
 <status>issued</status>
+<status>complete</status>
 <round>11</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

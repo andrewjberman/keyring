@@ -7053,6 +7053,31 @@ carries none.
     "spec_asserts": "MX-c-9 Part 3 / A1: row 12b's seven research tables each get a harvest_datasets row whose prefix is the table's own prefix.",
     "world_is": "The bucket's real prefixes are hyphenated; the naming canon spells them with underscores and refuses a new literal of the real spelling. Six of the seven rows cannot be committed by a worker.",
     "notes": "Route: an R20 declared exception (Andrew-acknowledged) or registry rows admitting the six literals, landed by a seat with that write surface; then copy the six .yaml.txt files into workflows/atom_decomposition/catalog_entries/ as harvest_<table>.yaml, empty HARVEST_NAMING_PENDING in emit_catalog_v02.py, re-emit with the same --overlay-ref, set the two test counts back to 39, and c9.AC2 reads PASS. MX-r-12 inherits the same 1-of-7 until then."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S115",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-14T02:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W34-S6"
+    ],
+    "one_line": "RULES Z-W34-S6 (BLOCKING: the naming gate refuses six hyphenated research-table literals): NOT waived by the issuer. It is an R20 departure, so Andrew's acknowledgement is needed (CLAUDE.md rule 30), queued as call sitez-20261014T015958Z-a63a, REC yes. MX-c-9 A2 re-cuts AC2 so that rowed + held = 7, a held row being a written row file under deliverables/0.9.0_WK_NFRA_MCPINDEX~34/blocked_harvest_rows/. The six rows land as ONE act on the call's YES; that is the project's un-park condition (d).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer's c9.AC2 at the merged index 435958cd7c: research rowed 1 + held 6 of 7, RESULT: PASS. FAIL arm: one held file removed gives 1 + 5, rc=1.",
+        "org/standards/NAMING_LEGACY_READS.json _r20_exception_kind: the ONLY kind that reaches a NEW literal; it needs a 06_CONFORMANCE_LEDGER.md section 6 register row and Andrew's acknowledgement record. Precedent: call sitez-20261011T003538Z-5bdf (two legacy BD role names)."
+      ]
+    },
+    "spec_asserts": "Row 12b's seven research tables each get a harvest_datasets row (CVO note, CTO msg 33847).",
+    "world_is": "One row is committed, and six are written and held on an Andrew-class naming exception.",
+    "notes": "Disarm when the six rows are committed after the call's YES (c9.AC2 with no held dir reads 7 of 7). If the call is NO, the issuer re-cuts H1 to name the six as WITHHOLD-by-naming in the catalog's never_serve section."
   }
 ]
 ```
