@@ -1478,3 +1478,215 @@
   "notes": "Filed by the worker. A naming-gate rule question for the LGIC owner; the existing publisher line is outside this cell and was not changed."
 }
 ```
+```json
+{
+  "id": "MDPF_CANON-D1-W18-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~18",
+  "surfaced_at": "2026-10-14T14:45:34Z",
+  "one_line": "The AUA Trend tooltip renderer has no null filter on its rows, so a Client chip carrying null on a non-as-of date is printed as a $0 row (source read; not rendered).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-i-1 section 1c.7 and judgment AC4: a Client chip with a null value draws no bar or area segment and no tooltip row; if the tooltip prints $0 for a null, file a row.",
+  "world_is": "portal/src/pages/ModelPortfolios.tsx renderTrendTooltip (line 1165 buckets = payload minus interp_total, no value filter; line 1195 value fmtVal(Number(entry.value)), and Number(null) is 0). recharts 3.7.0 combineTooltipPayload (node_modules/recharts/es6/state/selectors/combiners/combineTooltipPayload.js) pushes one tooltip entry per graphical item with no null filter; tooltipSelectors.js filters only the dataPoints, not the entries. Not rendered in a browser by this worker, so the $0 row is the source-read expectation for the round-7 render to confirm.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-canon-r7-18/portal/src/pages/ModelPortfolios.tsx:1165 and :1195 (portal commit pending on wk-MDPF_CANON-18-portal)",
+      "C:/dev/wk-canon-r7-18/portal/node_modules/recharts/es6/state/selectors/combiners/combineTooltipPayload.js (recharts 3.7.0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W18-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~18",
+  "surfaced_at": "2026-10-14T14:45:34Z",
+  "one_line": "CN-i-1 declares no AWS egress and bounds the worker to no AWS call, but its AC3 proof command is a data arm that performs read-only S3 gets; the worker ran it once, read-only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-i-1 preflight EGRESS CLASS NONE (the worker reads no AWS and writes none); section 2 bound 3 'No AWS call of any kind'; section 4 AC3 'reads the SERVED inputs (read-only AWS gets)'.",
+  "world_is": "r7_cn_i_1.py data issues get_object reads against opal-data-assets and a keys listing; it is the issuer's proof command and is named by AC3. The worker ran it once under timeout 120 as the criterion names it; no write, deploy or store call was made. The declared egress class and the bound do not describe AC3.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-i-1.aua-trend-grouping.md (face section 2 bound 3, preflight EGRESS CLASS, AC3)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_i_1.py (data subcommand, served() and keys_under())"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W18-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~18",
+  "surfaced_at": "2026-10-14T14:45:34Z",
+  "one_line": "The AUA Trend stack is specified to sum to opal_aggregate_aua to the cent, but the data arm passes with exact equality on only 24 of 487 valued dates and classes the rest as a model_aua rounding gap, with a worst residual far beyond cents.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-i-1 section 1 item 6: the whole stack sums to opal_aggregate_aua to the cent (carve-outs drawn once), except on a fold-suppressed date.",
+  "world_is": "r7_cn_i_1.py data, arm D1 (AC3 output, read-only, run at 0a06280a plus this worker's portal commit): 'stack == opal_aggregate_aua on 487 valued dates of 496: exact 24, model_aua rounding gap 463, fold-suppressed 0, failing 0'; the same line prints a worst residual in the billions of dollars. The arm passes on its own classification; the cent identity holds on 24 dates. Recorded, not adjudicated: the CVO grades FWD-9 (6).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC3 output line D1 (r7_cn_i_1.py data, exit 0, 5 of 5 arms)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_i_1.py (arm D1 classification)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W18-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~18",
+  "surfaced_at": "2026-10-14T14:45:34Z",
+  "one_line": "The task order names the bar and area fills for the new colours but not the area gradient defs, which resolve their own colour from the series label; the worker routed the gradient through the same colour resolver.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-i-1 section 1c.6: the areas (:2239) prefer trendColorOf over getModelColor for the group series.",
+  "world_is": "ModelPortfolios.tsx gradient defs (about line 2239) set the stop colour from getModelColor(s.label); each area fill is url(#gradient-<key>). Left alone, the Custom Models, ETF, ALT and Client areas would fill with the default gradient colour while their strokes take the group colour. The worker changed the gradient colour line to the same resolver as the area stroke (trendSeriesColor, then getModelColor). No other line changed for this.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-canon-r7-18/portal/src/pages/ModelPortfolios.tsx:2239 (gradient colour) and :2324 (area stroke colour)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W18-S5",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~18",
+  "surfaced_at": "2026-10-14T14:45:34Z",
+  "one_line": "The bar and area show chains admit a series only when its label is a model in trendModelOrder, so the Client chips would mount hidden; the worker added a show gate for them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-i-1 section 1c.5: the Client chips are drawn on the as-of date and draw nothing on other dates; the chips mount in STACK_SERIES.",
+  "world_is": "The show expression (ModelPortfolios.tsx about lines 2078 and 2321) ends in trendModelOrder.includes(s.label), which is false for 'Client Supervised' and 'Client Unsupervised', so a mounted Client series would be hidden on every date. Added: show = Global and hasClientChips (the as-of object carries a Client value). Per-firm stays hidden.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-canon-r7-18/portal/src/pages/ModelPortfolios.tsx:2078 (bar show) and :2321 (area show)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W18-S6",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~18",
+  "surfaced_at": "2026-10-14T14:45:34Z",
+  "one_line": "Relabelling the non_model band to 'Other AUA' would move its colour off the Non-Model silver if the label were resolved by getModelColor; the worker maps the band key to the Non-Model colour explicitly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-i-1 section 1c.3 relabels non_model to 'Other AUA' and keeps every other label on getModelColor; section 1c.6 keeps every other label on getModelColor.",
+  "world_is": "getModelColor('Other AUA') is not a registered name (modelPortfolioColors.ts registers 'Non-Model' at line 128, primary #C3CADA). By the worker's read, an unknown name resolves to a deterministic palette entry, not null, so the relabel alone would repaint the band. trendSeriesColor maps key non_model to getModelColor('Non-Model').",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-canon-r7-18/portal/src/lib/modelPortfolioColors.ts:128-130 (Non-Model primary) and :161-166 (fallback palette entries)",
+      "C:/dev/wk-canon-r7-18/portal/src/pages/ModelPortfolios.tsx:155-157 (trendSeriesColor)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W18-S7",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~18",
+  "surfaced_at": "2026-10-14T14:45:34Z",
+  "one_line": "Colour collision: the Client Unsupervised chip resolves to the same hex as the Ultra-Short Term model series.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-i-1 closing note: if a series' resolved colour equals another series' colour, file an OBSERVATION row naming both hex values; do not edit the colour registry.",
+  "world_is": "Client Unsupervised resolves through l1ColorOf to PALETTE.orange500 = #f97316 (CategoryViewTree L1_COLOR). Ultra-Short Term resolves to MODEL_PORTFOLIO_COLORS primary #f97316 (modelPortfolioColors.ts:58). Same hex, two series. No other pair among the resolved trend colours is equal (Custom #d946ef, ETF #22d3ee, ALT #ff4f1f, Client Supervised #fbbf24, Other AUA #C3CADA).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-canon-r7-18/portal/src/components/CategoryViewTree.tsx:93 (Client - Opal Unsupervised = orange500)",
+      "C:/dev/wk-canon-r7-18/portal/src/lib/modelPortfolioColors.ts:58 (Ultra-Short Term primary #f97316)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W18-S8",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~18",
+  "surfaced_at": "2026-10-14T14:45:34Z",
+  "one_line": "The provenance guard forbids a direct model_value read outside the paired accessor, so the carve-out lines are read through readModelSeries rather than from by_model.model_value as the task order words it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-i-1 section 1c (carve-out memo): read the two carve-out lines from globalMdpfData.by_model.opal_div_sma / opal_growth_sma model_value, exposing them by period.",
+  "world_is": "scripts/provenance-read-guard.mjs admits model_value reads only through src/lib/pairedProvenanceRead.ts; a direct read in the page fails the guard. The worker reads the same served values through readModelSeries(globalMdpfData, key).value keyed by period, with no arithmetic in the memo. The guard prints OK after the change.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-canon-r7-18/portal/src/lib/pairedProvenanceRead.ts:162-170 and :548-571 (model_value read through the paired accessor)",
+      "C:/dev/wk-canon-r7-18/portal/src/pages/ModelPortfolios.tsx:499-508 (globalCarveOutByPeriod)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W18-S9",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~18",
+  "surfaced_at": "2026-10-14T14:45:34Z",
+  "one_line": "The area tooltip sort list named 'Non-Model', which the relabel to 'Other AUA' would have dropped from the sort; the worker replaced it with the stack-order band names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-i-1 section 1c.3 relabels the band; the task order is silent on the tooltip sort list.",
+  "world_is": "trendModelOrderWithNonModel (ModelPortfolios.tsx line 937) appended 'Non-Model' to the area tooltip's sortOrder; sort keys are display names, so 'Other AUA' would sort after every model by the unknown-name default instead of its place. The list now carries the Client chips, 'Other AUA', 'ETF Strategies' and 'ALT Strategies' in stack order. The renderer's Non-Model branch (entry.name === 'Non-Model') is now unreachable and was left in place.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-canon-r7-18/portal/src/pages/ModelPortfolios.tsx:937-939"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1"
+}
+```
