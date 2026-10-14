@@ -11765,3 +11765,110 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Recorded for the issuer's disposition; no value was changed. The checker's household rule is fixed to the dry-run membership, so the build kept that membership and read values at as_of."
 }
 ```
+
+## IRPT_DASHBD-D2-W173-S8 -- two checker preconditions of DB109-2-AC1 cannot hold for a sample that carries no allocation and no net gain: the criterion fails as written, and the render is not at fault
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T18:19:32Z",
+  "one_line": "Two clauses of the render checker assume a sample with an asset-class allocation and a household net gain; the Inflection sample, built as the amended order requires, has neither, so DB109-2-AC1 fails at check_render's unheld-class precondition and would fail at its note-level control even if that were met.",
+  "spec_asserts": "DB109-2-AC1 (the criterion checker, check_render, and its note_level control): the sample holds at least one unheld class entry so the dash is checked; and the two planted mutants of the whole-document and note-level rules are each reported.",
+  "world_is": "(1) check_render requires uc >= 1 (the sample holds an UNHELD class entry). The Inflection sample's hold.allocation is absent in every class, per the amended DB-b-214 step 4(c) fallback (no seven-class placement from the granted sources), so unheld_count is 0 and the clause fails with 'the sample holds no unheld class entry to check'. The dash clause itself measures 0 dashes in the export, equal to 0 unheld entries. (2) note_level's control plants a note naming hold.net_gain_ytd|household and requires the note-level rule to report it; the rule reports a note only when a printed cell carries the same key, and the sample prints no household year-to-date net gain (no source), so the planted mutant is not reported and CONTROL fails. Measured by a collecting replication of check_render (the checker itself stops at its first failing clause): every other render clause passes, 20 pages read, 0 clipped, 259 whole-document cells, 34 notes (33 absent, 1 pointer), 0 note-rule failures in either view.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r109/p109_round109.py@f093ea2189 (check_render: need(uc >= 1); the render's dash clause)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r105/p105_round105.py@f093ea2189 (unheld_count counts UNHELD entries of by_row maps)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r107/p107_round107.py@f093ea2189 (note_level: the mutant_absent_note control is reported only when a printed cell carries its key)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~173/RENDER_R109.json@d350162d (the measured record: note_level, kind_notes, chart_slots, pdf_clipping)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Stop on these two clauses, not on the render: the criterion is FAIL as written and the order stays pending. The issuer decides whether the precondition is the checker's to change (for example, a sample with no class placement exercises the dash by no entry, and the control by a figure the sample carries) or the sample's. No checker file was edited; the render was not changed to satisfy either clause."
+}
+```
+
+## IRPT_DASHBD-D2-W173-S9 -- the account labels print the last four characters of the custodian account number, and for four of the five accounts those are not all digits
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S9",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T18:19:32Z",
+  "one_line": "The sample's last-four field takes the last four characters of the custodian account number, so four of the five account labels in the render end in non-digit characters; the labels read as fragments and do not identify an account.",
+  "spec_asserts": "TO DB-b-214 (amended) step 3: each account entry carries last4, and an account's last four digits are shown as #### in anything recorded; the render prints each account by its last4 in the account header, the footer and the note keys.",
+  "world_is": "The builder's last4 is the last four characters of the account's custodian number (fact_positions accountNumber). For four of the five household accounts those four characters include non-digit characters, so the render's labels, footers and table rows show non-digit fragments. The count of accounts whose last four characters are all digits is 1 of 5 (measured by counting only). The render prints these labels in every account page and in the Activity, Taxable and Gain and Loss tables. Nothing was typed into the repo: the fragments are in the private render only, and this row quotes none of them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~173/build_sample_inflection.py@4ee0fead99 (last4 = custodian number [-4:], step 2 of the build)",
+      "measured: the final private render, pages 5 to 19 (labels only; counts in this row, no value)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: any later render of this sample prints the same fragments to a reader. The fix is the sample's last-four rule (the builder, under DB-b-214, which is complete); this order's grant does not include the builder or the sample, so the fix is not made here. The issuer decides the rule (digits only, or a masked form) and re-issues the sample."
+}
+```
+
+## IRPT_DASHBD-D2-W173-S10 -- a window the account did not span blanked its ending value, which the render's own note rule found printed and claimed absent; the ending value now prints
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S10",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T18:19:32Z",
+  "one_line": "The round-106 not-held rule blanked every cell of a window the account did not span, the ending value included; the ending value is the figure at as_of, so the note rule found twelve notes naming it absent beside printed figures, and the render now prints it (a change to round-107 behaviour).",
+  "spec_asserts": "TO DB-b-215 step 4: everything else is the round-107 behaviour, unchanged; step 2: fix what the checker or the reading finds.",
+  "world_is": "valueSummaryGrid and activityGrid passed the NOT_SPANNED flag to every cell of a window column, so an account whose window was not spanned printed the words for its ending value in that window, while the sample carries the ending value at as_of for every account, and the whole-document keys (ending_value, account, as_of) are printed elsewhere. The note-level rule reported twelve contradictions in both views. The fix (commit d350162d) skips the ending-value row (pvs and avs) and the ending-value column (activity summary) in the not-held flag; every other cell, the footnote and the not-held wording are unchanged. The round-106 test that pinned the blanked ending value was edited minimally and named in that commit. The 49 Financial sample carried no NOT_SPANNED window, so this path had not been exercised before.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal commit d350162db95501c208bb805d529b5fc17b5b9480 (reportModel.ts; report-render-r106.test.tsx; report-render-r109.test.tsx test (d))",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r107/p107_round107.py@f093ea2189 (note_rule: an absent note naming a key a printed cell carries FAILS)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded for the CVO's judgment at L9 on DB109-2-J1 and for the issuer's disposition: the change is generic (not firm-keyed), and it changes the round-107 display of a not-held window's ending value from words to the figure."
+}
+```
+
+## IRPT_DASHBD-D2-W173-S11 -- a grid row is now charged the lines its absent words wrap to, so the holdings table splits across two sheets instead of running into the footer
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S11",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T18:19:32Z",
+  "one_line": "The export's page estimate charged every grid row one line, but 'Not available yet' wraps to two or three lines in the thirteen-column holdings table, so the table ran into the footer; the estimate now counts the wrapped lines (commits e97cb4eb and 3fd628d0).",
+  "spec_asserts": "TO DB-b-215 step 6: each sheet fits one PDF page; fix what the reading finds.",
+  "world_is": "The Inflection holdings table prints the absent words in every class row, and the narrow allocation column wraps them to three lines. documentSheets.ts charged GRID_ROW_PX (21 px) per row, so the 49 Financial-shaped estimate placed too many rows on the sheet. gridRowCost() now adds GRID_LINE_PX (26 px, calibrated on the rendered page) for each further wrapped line of the widest cell, with about 110 characters across a grid. The table now splits across two sheets with its head repeated. Grids of short figures cost what they cost before; the tab has no pagination.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal commits e97cb4eb and 3fd628d0 (render/performance/report/documentSheets.ts)",
+      "measured: the final render, pages 7 and 8 (read as images)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The constant is calibrated on one table; a firm whose grid cells carry long figures would see the same estimate used. The change applies to every firm's grids, not only Inflection's."
+}
+```
