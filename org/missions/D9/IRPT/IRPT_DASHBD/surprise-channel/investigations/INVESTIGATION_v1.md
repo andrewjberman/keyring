@@ -11577,3 +11577,117 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+```json
+{
+  "id": "IRPT_DASHBD-D2-W174-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~174",
+  "surfaced_at": "2026-10-14T17:29:17Z",
+  "one_line": "The account_return_daily contract describes account_id as a 10-character zero-padded custodian id; Orion accountId is not zero-padded, so the derived table keeps the account_dim form.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The account_return_daily contract states that account_id is the custodian account id in the declaration's 10-character zero-padded form, and DB-b-216 asks for the derived table in that schema.",
+  "world_is": "The Orion accountId, carried by the account_dim table as a plain string, has no zero padding. The schema type (string) holds it, so the schema can hold Inflection's accounts; only the form of the meaning differs. The derived table keeps the unpadded account_dim key so that its accounts are the dry-run accounts. The contract is outside this cell's grant and was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json (account_id meaning)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_return_daily.py (account key form, _account_key)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~171/ACCOUNT_DIM_R108.json (account_id as the dry-run key)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "IRPT_DASHBD-D2-W174-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~174",
+  "surfaced_at": "2026-10-14T17:29:17Z",
+  "one_line": "Orion fact_positions has no partition for two NYSE trading days (2026-07-01 and 2026-09-28): the YTD, last-12-month and since-inception tie-out windows read not comparable for every household.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-216 step 5 asks for the gap distribution per window for EVERY household, and step 2 breaks a daily return only where a value is missing and never fills it: each window needs a value on every trading day of its span.",
+  "world_is": "The positions silver lists 2328 partitions from 2020-05-26 to 2026-10-14 and has none for 2026-07-01 or 2026-09-28. Every account value is absent on those days, so the daily returns of those days and of the next trading day are absent. The quarter-to-date window (base 2026-09-30) is unaffected and compares 287 of 320 households. The year-to-date, last-12-month and since-inception windows contain one of the two days and read 320 of 320 not comparable. The gap is in the silver, not in the read; nothing was filled. The CTO rules how these windows are to be read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_dim.py (list_partitions over the granted positions prefix)",
+      "C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~174/work/positions_read_log.json (2328 partitions read, 0 errors)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~174/TWR_TIEOUT_R109.json (tie_out.windows)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "IRPT_DASHBD-D2-W174-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~174",
+  "surfaced_at": "2026-10-14T17:29:17Z",
+  "one_line": "Orion partitions are calendar-daily, so carried_days is 3 on every Monday in the derived table, not 1 on ordinary days, and the engine's link through intervening valuations is not applied.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The contract says carried_days is 1 on an ordinary day and more only where a market closure was skipped, and the engine links through every custodian valuation inside the window.",
+  "world_is": "Orion fact_positions and fact_transactions carry partitions on weekend days, so the skipped-day fold covers Saturday and Sunday on every Monday. The module follows the endpoint form that DB-b-216 states, which does not link through weekend valuations; the engine's refinement would place a weekend flow at its own valuation. The method departs from the engine on weekend-valued books. The derived table is private and nothing is served.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json (carried_days meaning)",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py (compute_range valuation chain, lines near 1366-1406)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_return_daily.py (derived_rows carried_days)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "IRPT_DASHBD-D2-W174-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~174",
+  "surfaced_at": "2026-10-14T17:29:17Z",
+  "one_line": "A computed Inflection account-day has no value of day_quality and guard_state that says computed-but-unguarded: the table reads MEASURED with GUARD_NOT_REACHED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The contract's rule 24 record states that day_quality MEASURED means the form was computed and the guard agreed; guard_state carries what the guard did with the account-day.",
+  "world_is": "No holdings-price guard ran for Inflection in this cell, so every computed derived day carries day_quality MEASURED with guard_state GUARD_NOT_REACHED. The enum has no member for a computed day the guard did not reach, so the MEASURED label says more than the guard showed. The rows stay private and no consumer reads them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json (enums day_quality and guard_state, rule24_record)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_return_daily.py (derived_rows day_quality, guard_state)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "IRPT_DASHBD-D2-W174-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~174",
+  "surfaced_at": "2026-10-14T17:29:17Z",
+  "one_line": "Orion positions rows with isActive false carry non-zero currentValue on some account-days, and the silver does not define isActive: the value basis includes them until the CTO rules.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The value series is the account's market value as the positions table carries it: the sum of currentValue over the account's rows, cash lines included.",
+  "world_is": "Of 2,057,322 dry-run account-day rows read from the 2328 positions partitions, 19,390 are rows with isActive false and a non-zero currentValue. The silver carries no definition of isActive. The module includes them. If they are not market value, V and every return on those account-days shift. The basis is stated in TWR_TIEOUT_R109.json basis_words.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~174/work/positions_daily_cache.parquet (n_inactive_nonzero, counts only)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_return_daily.py (account_values)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~174/TWR_TIEOUT_R109.json (tie_out.basis_words)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
