@@ -395,3 +395,9 @@ Correction: C-S370's grounding cites msg 7389; the packet message is 7387. The r
 | item | result | commit |
 |---|---|---|
 | IRPT_BCKEND round 191 (~P) | ADJUDICATION_v92 (C-S375), no remediation file: the one release's movers counted per firm; COO half signed, CTO half unsigned, apply in round 192. 5 dismissed; S165 (49F gap at 10-08) stays open; S158 and W374-S1 held. Release condition named: each firm's published business date (select_business_date returned 10-14 pre-session; I saw the same forward date from trading_calendar at 02:27Z). Slug sent | 70b7a00254 |
+
+## Addendum, 2026-10-14 05:34Z to 05:39Z (msg 7552)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_DASHBD round 103 | L9: DB103-1-J1 FAIL on the wording clause (orientation met in tab and export): unheld classes print Not available yet where the baseline prints a dash; the kind notes name no figure. I read pages 1, 3, 5, 6, 14 of the final render and parsed the tab HTML. ADJUDICATION_v63 (C-S74) dismisses 21; W155-S10, W158-S1, -S4, -S6 (ARMED) held; W160-S5 open; round 98 rows wait. Slug sent | b0e31ef345 |

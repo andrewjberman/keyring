@@ -34006,3 +34006,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. W379-S1 (the node carries no per-node layer; the worker split the movers by re-running classify_security): INERT, a method fact recorded in the packet and the COO half (the release re-measures by the same method). W379-S2 (Cottonwood's fallback reads 211 on the 2026-10-12 candidate against 215 on the 2026-10-08 snapshot): INERT, a different candidate, canonical equal at 38; the release compares with the packet, not with 215. W379-S3 (the date cutoff read 2026-10-14 before the 10:15 ET fire while the candidates carry the source date 2026-10-12; the calendar used its hardcoded NYSE fallback): INERT, the producer publishes the source's completion date; whether the 2026-10-13 source partitions have landed was not read and does not change the counts. MEASURED: movers 32+0 (49financial), 38+211 (Cottonwood), 774+67 (Inflection); the repaired exemption turns Cottonwood's REFUSED candidate (account_lost alone) into PUBLISHED with one lost account listed and changes no other firm's outcome. THE HARNESS WAS SCRATCH AND IS DELETED: the release must re-run the method (COO half, condition 2); the round-192 order carries it as a step. D2-S158 (Cottonwood stale) stays ARMED with the CTO until the release's after-read."
 }
 ```
+
+## IRPT_BCKEND-D2-S167 -- Why select_business_date() answers the current day before the session (D2-W379-S3, CTO round-192 item 2): it r
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S167",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T06:10:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Why select_business_date() answers the current day before the session (D2-W379-S3, CTO round-192 item 2): it returns the CUTOFF (today if a trading day), not the published date; the published business date is the newest source partition at or before the cutoff.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "holdings_snapshot.py lines 3109-3111 at HEAD: select_business_date(now) = lib/trading_calendar.expected_last_trading_day(now); expected_last_trading_day returns today when today is a trading day, else the prior trading day (its docstring and source read)",
+      "positive control, run 2026-10-14 ~05:5xZ with the library's hardcoded NYSE fallback: 2026-10-13T14:15Z -> 2026-10-13; 10-13T22:30Z -> 10-13; 10-14T01:00Z, 05:00Z, 10:00Z, 14:15Z, 20:00Z -> 10-14; Friday 10-16T14:15Z -> 10-16; Saturday 10-17T14:15Z -> 10-16; Monday 10-19T14:15Z -> 10-19",
+      "holdings_snapshot.py line 2741: the snapshot's clocks.business_date is extra['source_completion_date']; the builders select source partitions with _latest_date_partition(..., as_of=cutoff), which takes the newest partition dated at or before the cutoff (lines 1260-1274, and build_cot lines 2314-2316); run_firm's comment (line 3144): 'A source-selection cutoff is not the source's economic business date'"
+    ]
+  },
+  "spec_asserts": "Everything is T-1 unless declared (CLAUDE.md trading-calendar rule); the CTO's condition 8: each firm's first scheduled fire publishes the previous trading day.",
+  "world_is": "The cutoff is the current day by design, so a pre-session read of select_business_date() answers the current day at any hour of a trading day (the CVO's observation, W379-S3, is the function working as written, not a clock error). The PUBLISHED date is the newest source partition dated at or before the cutoff: T-1 only because silver partitions are dated by business day and land after the close, so at the 10:15 ET fire the newest partition is yesterday's. A source partition dated TODAY existing at fire time (an intraday or partial landing) would be selected and stamped as the current day: that is the failure mode condition 8 guards, and nothing in the producer refuses it. The check for the release is therefore on the CANDIDATE's clocks.business_date at the release (the newest landed partition per firm), compared with the calendar's previous trading day of the fire date, and again at the after-read. Today's candidates are dated 2026-10-12 (the 2026-10-13 partitions had not landed at ~05:00Z), so the check reads NOT-YET-EQUAL until they land. A fix (a refusal of a current-day source partition, or a T-1 cutoff) is a later cell under its own pair; not built here."
+}
+```
