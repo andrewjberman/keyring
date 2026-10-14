@@ -1308,3 +1308,79 @@
   "notes": "Resolved in the cell at commit. Recorded because the title change is a step the order did not name; no number, key or exit code moves."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W21-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~21",
+  "surfaced_at": "2026-10-14T14:41:00Z",
+  "one_line": "The CN-n-1 QA drive ended RAISED, not with a Global refusal: a gold-plane ViewPlaneError on the inflection scope (the D1-W16-S1 raise family) aborted build_all before the manifest was written, so manifest errors read ['_drive'] and carry no 'global' entry.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1 (routes to 1.0.0_SA_CTO, the owner of the gold-plane read; the same hazard as MDPF_CANON-D1-W16-S1, which this row does not disarm)",
+  "spec_asserts": "CN-n-1 Step 2 and FWD-3 third arm: on a one-firm Global pool build_all completes with status non-green, errors ['global'], writes 0 and blocked-calls 0, and the three firm scopes build as before.",
+  "world_is": "Measured 2026-10-14T14:35Z-14:36Z by one dry-run drive (r7_cn_n_1.py drive, one run, not repeated). run/qa_run.json: status RAISED, manifest_errors keys ['_drive'] only, trigger null. run/qa_run.log: 'QA DRIVE: build_all raised ViewPlaneError: REFUSING EMIT for inflection' (gold-plane peers do not sum to total_aua beyond the one-cent rule; levels not copied here). That is the W16-S1 mechanism (a re-sum against a headline total, raised outside isolation), now reached on the inflection scope on the plant's as-of 2026-10-13 rather than on Global. Served prefixes before and after are byte-identical (cmp run/served_before.json run/served_after.json). No S3 write: run/s3_ops.json blocked [] and calls s3.GetObject 1369, s3.ListObjectsV2 1100.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~21/run/qa_run.json (status RAISED, manifest_errors ['_drive'])",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~21/run/qa_run.log ('QA DRIVE: build_all raised ViewPlaneError')",
+      "org/missions/D8/MDPF/MDPF_CANON/surprise-channel/investigations/INVESTIGATION_v1.md row MDPF_CANON-D1-W16-S1 (the ARMED hazard this run reached)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "AC1 and AC2 were not run: the order's Step 3 says stop on them when build_all raises, and it did. The order stays open. The refusal arm is not demonstrated by this run. Served objects were not changed."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W21-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~21",
+  "surfaced_at": "2026-10-14T14:41:00Z",
+  "one_line": "The QA plant sets model_value to None on the one-firm lines without moving account_count, so the global cross-axis presence gate (v) fails Global's isolated scope with a CROSS-AXIS error, not the min-firms refusal the order names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "r7_cn_n_1.py plant_single_firm_pool docstring: only model_value at the last-date index of the other firms' fold lines is set to None; nothing else moves. CN-n-1 Step 3: a refusal text other than the min-firms prefix is a finding about the guard or the plant.",
+  "world_is": "run/qa_run.log: 'SCOPE FAILED (isolated): global -- AssertionError: CROSS-AXIS COHERENCE GATE FAILED (global)' with presence disagreement (v) on 2026-10-13 for two by_model lines whose model_value is None while account_count is set. The prefix 'GLOBAL MIN-FIRMS FOLD REFUSED' does not appear in the log. Whether guard_global_min_firms_fold ran before the cross-axis gate is not established here; its call site is mdpf_gold_consolidator.py:2943, directly after guard_global_served_identity at :2942.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~21/run/qa_run.log (SCOPE FAILED (isolated) global line and the (v) block)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_n_1.py (plant_single_firm_pool, the in-place model_value edit)",
+      "data/mdpf/scripts/gold/mdpf_gold_consolidator.py:2942-2943 (build_all guard call order)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired here: the plant and the instrument are read-only for this order. The issuer decides whether the plant must also move the count for the presence gate to read a clean one-firm day."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W21-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~21",
+  "surfaced_at": "2026-10-14T14:41:00Z",
+  "one_line": "On a RAISED drive the instrument's fallback manifest carries writes ['?'], so the run record reads writes=1 and the grade arm N6 (no manifest writes) would count a write that the call guard never saw.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-n-1 Step 2: the run expects writes=0 and blocked-calls=0; the bounds say no AWS write of any kind, by the run or by the worker, and the instrument blocks and records every non-read call.",
+  "world_is": "run/qa_run.json manifest_writes is ['?']: r7_cn_n_1.py cmd_drive sets the fallback manifest 'writes': ['?'] when build_all raises (the placeholder is counted as one write in the printed line). run/s3_ops.json: blocked [] and only s3.GetObject 1369 and s3.ListObjectsV2 1100 are recorded, so no write-kind call reached the guard. The Tee logger also printed 'I/O operation on closed file' on interpreter exit (stderr only; the record files were written before it).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~21/run/s3_ops.json (blocked [] and the call counts)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~21/run/qa_run.json (manifest_writes ['?'])",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_n_1.py:306 (the fallback manifest literal)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired here: the instrument is read-only for this order. The served prefixes were byte-identical before and after the run, so the placeholder is a record-keeping defect, not a write."
+}
+```
