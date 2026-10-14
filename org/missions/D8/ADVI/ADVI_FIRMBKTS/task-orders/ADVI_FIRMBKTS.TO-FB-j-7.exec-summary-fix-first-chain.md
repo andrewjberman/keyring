@@ -120,7 +120,7 @@ could never succeed (`betas` kwarg, row `D1-S48`/`D1-S49`); `FB-j-9` fixes it an
 
 **AMENDMENT 9 (2.0.0_SA_COO~B1, 2026-10-14 ~11:3xZ) -- AC1's PutEvents clause re-pointed to what the instrument can see:** FB1's record `605714a441` read AC1 FAIL on exactly one clause (`cloudtrail_putevents` 0 against a floor of 1). FB1's own positive control (271 events.amazonaws.com events, none PutEvents) and the FB-i-2 90-day 17-region sweep show CloudTrail lookup never returns PutEvents, so the clause could not be met by any chain. The put is now evidenced by `chain.cloudtrail_putevents` >= 1 OR a new integer `chain.triggered_rules_sum` >= 1 (AWS/Events `TriggeredRules` of rule `exec-summary-trigger` in the chain's emit window; FB1's record already holds the value 1 in `putevents_evidence_other`). Add that one field to the record (no other change; keep `cloudtrail_putevents` 0 and its note) and re-run AC1. The emitted line and the generator invocation clauses are unchanged. Grader edit: `deliverables/2.0.0_SA_COO~B1/round7/checks/r7_checks.py` `firstchain`. Gate limb: none graded (no task-order criterion text changed; the invocation and `<expect>` line are byte-identical); the CTO reads this at the round-7 analysis.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <workstream>EXECSUMFIX</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-j-7</to_id>
