@@ -34780,3 +34780,85 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Over the 46 closure members, the old and new bundles differ by exactly the added member (members_changed over closure members is empty, all 45 other members have identical bytes). The generated index differs by its one added line. The definition in the order counts the index. The record states the closure-member comparison and the index separately and does not alter the check. The issuer decides whether the definition excludes generated manifests."
 }
 ```
+
+## IRPT_BCKEND-D2-W386-S1 -- The live investor-reporting bundles carry 44 closure members; the new pin's closure carries 46: two modules (strategy matcher, unidentified) are on the built side only
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W386-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~386",
+  "surfaced_at": "2026-10-14T18:21:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The three live investor-reporting bundles (version ids as the order names them) hold 44 code members plus SHA256SUMS; the new pin's bundle holds 46 plus SHA256SUMS. The live bundles lack silver/opal_strategy_matcher.py, which the OLD pin's closure also carries, and silver/opal_unidentified.py, which the new pin adds. The built side therefore has two modules the live side does not.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api get-object --version-id on the three live bundle keys (49financial UHOCIkWj3QiIzNucG1VjNnk_AufIg6oD, cottonwood oyIYMVdh_l2zCg5ZWvn3ISPPS6_9Q82_, inflection PzhCs97qVBXkZcIjaOklHmzWiFsOFafM): each tar lists 45 entries (44 code members plus SHA256SUMS), identical member names across the three firms; object metadata member-count reads 44",
+      "set difference of the new pin closure (safe_deploy_core._IRPT_HOLDINGS_CLOSURE at b1d354cfc9, 46 entries) against the live member names: exactly data/assets/scripts/silver/opal_strategy_matcher.py and data/assets/scripts/silver/opal_unidentified.py; live names not in the closure: SHA256SUMS only",
+      "the old pin 49467335d2 closure declares data/assets/scripts/silver/opal_strategy_matcher.py (git show 49467335d2:.tools/safe_deploy_core.py, line 501), so the live bundle predates the old pin's closure as well as the new one"
+    ]
+  },
+  "spec_asserts": "IB-pr-541 steps 1 and 2: the live side is the live bundle bytes as downloaded, the built side is core.build_bundle_payload at the new pin, and both are extracted and imported as bundles (built side 47 files: closure plus SHA256SUMS).",
+  "world_is": "The built side is 47 files as asserted. The live side is 45 files: its code members are the new closure minus the two named modules. Every live tree's SHA256SUMS verifies against its own members (sha256sum -c, exit 0 on each of the three). The differential therefore compares a live tree that lacks two modules with a built tree that carries them; the module-level import behaviour of each side is recorded by the run, not assumed here.",
+  "notes": "Measured by the worker, not remediated: the order is READ ONLY and the live bundles are not to be re-minted. Recorded so the attribution in IB-pr-542 and the packet can name the membership difference as a fact."
+}
+```
+
+## IRPT_BCKEND-D2-W386-S2 -- The served publication is read by two code versions with two different shapes: one served state cannot be handed to both gates, so the index is captured once and each code reads its own served state from that capture
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W386-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~386",
+  "surfaced_at": "2026-10-14T18:52:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-541 step 3 asks for one served read fed to each code's evaluate_publish_gate. The served_publication of the new pin returns a keyed summary (placed and unplaced keys, account ids, node count); the live Cottonwood served_publication returns the node list that its evaluate_publish_gate reads as served['nodes']. The first attempt fed the built summary to the live gate and the Cottonwood live build raised KeyError 'nodes'. The harness now captures the publication index once (begin) and gives each code its own served read of that one capture; the two reads must name the same revision, index date, index version, account count and node count, and a disagreement is a STOP.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first attempt, scratch run log of the Cottonwood pair: REFUSED: build live_r1 failed at evaluate_publish_gate, live holdings_snapshot.py line 2973 reads served['nodes'] (scratch, live tree of the Cottonwood bundle)",
+      "built (new pin) served_publication, holdings_snapshot.py at b1d354cfc9 lines 2955-2982: returns business_date, index_date, revision, node_count, account_ids, placed_keys, unplaced_keys, index_version",
+      "live Cottonwood served_publication, scratch copy of the live bundle lines 2889-2908: returns business_date, index_date, revision, nodes, account_ids, index_version; its evaluate_publish_gate at line 2944 reads served['nodes'] at line 2973",
+      "the 49financial pair of the first attempt completed with both gates PUBLISHED, because its live reader also returned the keyed shape; that result is superseded by the re-run on the corrected harness and is not reported as the record"
+    ]
+  },
+  "spec_asserts": "IB-pr-541 step 3: read the firm's served publication ONCE and evaluate each code's evaluate_publish_gate against THAT one served state, with gate.served_state recorded once.",
+  "world_is": "The two code versions do not share a served shape, so a single served object cannot be passed to both gates as written. Both readers take the same begin() capture and read the exact versions it names; the harness records a same-state fingerprint for each code (revision, index date, index version, account count, node count) and stops on any disagreement. gate.served_state is recorded once from the single capture (latest date and index version id).",
+  "notes": "Harness-level adaptation inside the order's bounds (read only, no new reads beyond the one capture and each reader's own versioned reads). The first attempt's scratch output is superseded and is not reported."
+}
+```
+
+## IRPT_BCKEND-D2-W386-S3 -- python -I ignores PYTHONDONTWRITEBYTECODE: the extracted live and built bundle trees received bytecode caches on the first build, so a tree listing is not the bundle's member list
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W386-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~386",
+  "surfaced_at": "2026-10-14T19:52:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The harness runs each build as python -I and sets PYTHONDONTWRITEBYTECODE in the child environment, but -I ignores every PYTHON* variable, so each build wrote __pycache__ .pyc files into the scratch extractions of the built and live trees. The first listing of a built tree counted 64, 77 and 66 files against the 47 bundle members. The record counts the bundle's own files (the .pyc caches excluded), and the member names are the bundle's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the built tree of one firm, listed after the runs: 47 bundle files plus 17 cpython-314 .pyc files under __pycache__ directories of the producer, lib and infrastructure modules (scratch, not the repository)",
+      "the same caches appear in the live extraction of each firm: the harness wrote no file into any repository tree; the caches are in the scratch extractions only",
+      "the record's built_bundle_members counts the extraction excluding __pycache__ and .pyc files and reads 47 on each firm, equal to the 47 entries the payload builder names (46 closure members plus SHA256SUMS)"
+    ]
+  },
+  "spec_asserts": "IB-pr-541 step 2: the built_bundle_members count is the files in the built tree (the closure plus SHA256SUMS, 47), and the harness is read only.",
+  "world_is": "The raw file count of an extracted tree after a python -I run is the bundle plus bytecode caches; the bundle's own count is 47 as asserted once the caches are excluded. No repository file was written by the harness, and no bundle content changed.",
+  "notes": "Corrected in the harness's count (not in the build): the count excludes __pycache__ and .pyc. Scratch is removed at the end of the order."
+}
+```
