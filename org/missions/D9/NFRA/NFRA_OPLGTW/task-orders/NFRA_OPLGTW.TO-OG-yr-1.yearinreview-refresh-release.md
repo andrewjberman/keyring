@@ -39,7 +39,7 @@ The CRO rebuilt the page through 2026-10-14; the FINAL pin is `org/tier1_exec/4.
 4. Ledger `nfra-oplgtw-gateway-release-yr`, entry AND sentinel first. Deploy from `C:/tmp/og-rel-yr` through `infra/aws/ec2/safe-ec2-deploy.sh` with `DEPLOY_BASE_REF=<base_sha>`; the deploy tree's `git rev-parse HEAD` must equal the signed `release_sha` in full and its parent must equal live `deployed_commit` at the act
    (a mismatch is a STOP; print both). No `HALT_OVERRIDE`. Read back against the triggers; on any trigger redeploy the base and file an ARMED row naming `2.0.0_SA_COO~O`.
 5. **The served read.** On the host through the INSTALLED code (one SSM call): the md5 of the served `/yearinreview` body equals the source md5, and the body carries `"until": "2026-10-11"`. Then one unauthenticated GET of `https://mcp.opalinvest.dev/yearinreview`
-   and record its md5 (or its status and why it is gated). Write `W/YR_SERVED.json` = `{"body": {"md5_source": "3bbd5ab2d325657020357003c3ea387d", "md5_served_host": "<32 hex>", "contains_until_2026_10_11": true, "opal_user_admitted": true, "guest_refused": true, "public_md5_equal": true|false, "public_note": "<why, when false>"}}`; the two arms are read on the host through the INSTALLED code (an Opal stand-in identity is served 200, an `#EXT#` guest 403).
+   and record its md5 (or its status and why it is gated). Write `W/YR_SERVED.json` = `{"body": {"md5_source": "0d828b51d433a24f7e2ef2e6ea7967ee", "md5_served_host": "<32 hex>", "contains_until_2026_10_11": true, "opal_user_admitted": true, "guest_refused": true, "public_md5_equal": true|false, "public_note": "<why, when false>"}}`; the two arms are read on the host through the INSTALLED code (an Opal stand-in identity is served 200, an `#EXT#` guest 403).
 6. **Standing release clauses:** runbook 7.2 names the new live release; EC2_MANIFEST `deployed_commit` and `file_checksums` come from the release blobs. Close the ledger, commit, run AC2, send `4.0.0_SA_CRO~Z` the release id (one message, so the CRO can confirm the served page), and report once to `2.0.0_SA_COO~O`.
 
 ## 2. BOUNDS
@@ -87,6 +87,9 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-yr-1.yearinreview-refresh-relea
 
 
 - A2 (issuer, 2026-10-14 ~22:3xZ, Andrew-direct "I need it viewable by all opal employees", CTO msg 34266): the SAME release also widens the viewer gate (`_allowed()`, spec @c8f3a38f43) and its three tests; the ask names the WIDENING (roster -> every non-guest Opal identity) and the CTO signs on that. The page is graded in its LF form (`3bbd5ab2d325657020357003c3ea387d`; the pin blob is CRLF and its md5 is `0d828b51`). yr1.AC1 reads three files, the LF md5, the gate line and the three tests; yr1.AC2 adds the admitted and refused arms. Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
+
+- A3 (issuer, 2026-10-14 ~22:5xZ, msg 34270): the oracle for the SERVED page is the checked-out form `0d828b51d433a24f7e2ef2e6ea7967ee` (the path's `eol=lf` makes the blob LF, `3bbd5ab2`, but the deploy tars the checkout, which re-materialises the 344 CRLFs; measured by `~Z`). `YR_SERVED.json` `md5_source` and `md5_served_host` are `0d828b51`; yr1.AC1 still grades the BLOB in LF form. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>
