@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-14T12:06:57.424256+00:00
-**Status:** OPEN
+**Status:** CLOSED -- REFUSED BY GATE, nothing created -- closed 20261014T123111Z
 **Deploy:** IRPT_ANLREQ TO-DELETE-C449: delete every version of ONE synthetic stored input (case D2, tenant 49financial) in the intake store under Andrew's approval of open call dell2-20261014T044915Z-c449; the key is selected by the full 64-hex input id, exactly one key required, each version deleted by VersionId, NoSuchKey read back; the D3 input and every other object stay
 **Authored by:** 0.7.0_AE_CloudOps~AQ2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -20,3 +20,4 @@
 
 - 20261014T120657Z OPENED by 0.7.0_AE_CloudOps~AQ2 with 3 leg(s)
 - 20261014T120748Z LEG L closed: list-object-versions opal-data-irpt prefix irpt/49financial/state/normalized_portfolios/ read whole (not truncated): 11 
+- 20261014T123111Z CLOSED -- REFUSED BY GATE before apply, world untouched: REFUSAL (s3api delete-object by VersionId on the one selected key in opal-data-irpt, 2026-10-14 ~12:08Z): AccessDenied, user cloudops-dell2-agent-user is not authorized to perform s3:DeleteObjectVersion with an explicit deny in an identity-based policy cloudops-dell-agent-deploy-policy (statement DenyS3DeletesOnProductionData, s3:DeleteObject* on opal-data-*, no Condition; policy v7 read live). NO
