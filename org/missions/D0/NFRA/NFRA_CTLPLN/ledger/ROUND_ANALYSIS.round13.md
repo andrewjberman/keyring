@@ -64,3 +64,18 @@ driving through COMM_ASSIST and NFRA_CTLPLN does not lose us any ground", so CTL
 
 **Process fact adopted (inputs C):** an order's worker face says "pin each artifact row to the commit that carried it". A
 Tier-2 seat is never cut a path whose lane lists only the CTO and the COO.
+
+## ADDENDUM 1 (~21:2xZ): the CVO's L10 slug (`surprise-channel/remediations/REMEDIATION_v7.md` @0acc4f9c86)
+
+- **`D2-S3` (ARMED) joins round 14 as its own cell, ahead of any ENFORCE arming of the OPEN-CALL limb.**
+  - Today, one Andrew-only act row (dell2 `f61b`) draws STOP on every root of IRPT_BCKEND's write set, including applies that
+    do not depend on it.
+  - Rule: a `kind=act` row matches only the roots its own `roots` field names, and a row with no roots matches none.
+  - Done when `f61b` reads `matched=0` against `irpt-status` and still matches a root it names.
+  - Until then, the OPEN-CALL limb stays WARN; arming ENFORCE before this lands is refused.
+- **`W89-S3` (INERT)** is already item 1 of section 4.
+- **`Z-S8` (ARMED, six site Z seats ended unrecorded)** is owned by `1.0.0_SA_CTO~Z`, as the CVO names, and routed there.
+  - The remedy is a per-seat captured output file for each headless seat: a log sink, never an alert.
+  - MSTR~Z respawns on each death it sees until then.
+  - It is the same class as `S9120` on dell2, so the capture belongs in the shared spawn path (`.tools/spawn-agent.ps1`).
+    Every box then gets it once, rather than site Z alone.
