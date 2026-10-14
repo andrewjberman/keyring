@@ -26427,3 +26427,99 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Filed by the worker; the issuer owns the disposition. The builder keeps both choices; a different order is a one-line move in each function if the issuer rules otherwise."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W425-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~425",
+  "surfaced_at": "2026-10-14T00:09:29Z",
+  "one_line": "The fa-4 face preflight says the check exits 1 at base on ModuleNotFoundError for lib.research.aifill; at the reopened base the package and the first-pass builder exist and the check runs to 13 of 17 arms.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/block_mgmt_recent.py@31be9c28ac carries the first-pass builder; the check run at that head printed 13 of 17 with four FAIL arms and exit 1 (a worker-side run, output not committed).",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa4_mgmt_recent.py@31be9c28ac"
+    ]
+  },
+  "spec_asserts": "Face preflight, comp-adversary line: at the base the check exits 1 on ModuleNotFoundError: No module named 'lib.research.aifill', the build check failing as expected.",
+  "world_is": "At the reopened base the module imports; the four amendment arms fail on behaviour (opal fall-through, cut, figure fall-through, prompt limit), not on import.",
+  "notes": "Form only. The baseline matches section 1b of the order. The preflight line is stale; no check and no module was edited to fit it."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W425-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~425",
+  "surfaced_at": "2026-10-14T00:09:29Z",
+  "one_line": "The face says earlier rows exist under this slot (W425-S*) in this channel; at the reopened base this file holds no W425 row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md@31be9c28ac: a grep for the token W425-S returns no line.",
+      "The next unused k for this coordinate in this file is therefore 1, and this row is S1 of the coordinate's first filing in this file."
+    ]
+  },
+  "spec_asserts": "Face INHERITED STATE: earlier rows exist under this slot (W425-S*); file new rows with the next unused k.",
+  "world_is": "No W425-S row exists in this file on the reopened base; the first-pass proof instance was not checked for surprise rows.",
+  "notes": "Form only. Recorded so the issuer can see where the first pass filed its rows, if anywhere. No row was edited."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W425-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~425",
+  "surfaced_at": "2026-10-14T00:09:29Z",
+  "one_line": "The channel header says this file must stay one fenced JSON block, but the file holds 149 separate fenced blocks, one object each; the new row was appended as a further block in that layout.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md@31be9c28ac lines 1 to 25: the header rule reads THIS FILE MUST STAY ONE FENCED JSON BLOCK.",
+      "The same file@31be9c28ac: a grep for fence lines returns 298 (149 open and close pairs), each block holding one row object, e.g. lines 25 to 54 and 56 to 86."
+    ]
+  },
+  "spec_asserts": "Channel header: THIS FILE MUST STAY ONE FENCED JSON BLOCK; the order: append the row inside the fenced json array.",
+  "world_is": "The file is an array of individually fenced row objects, not one fenced block; the appender followed the layout the existing rows use.",
+  "notes": "Form only. The header rule and the file layout disagree; the disposition belongs to the channel owner. The file's content was not restructured."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W425-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~425",
+  "surfaced_at": "2026-10-14T00:09:29Z",
+  "one_line": "Amendment 2 does not state whether the numeric guard runs before or after the sentence cut; the builder runs the guard on the whole folded Opal reply, so a figure that sits only in the cut-off tail withholds the block.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa4_mgmt_recent.py@31be9c28ac does not arm this ordering; the order section 1b rule 1 and rule 2 name the two reasons without a sequence.",
+      "lib/research/aifill/block_mgmt_recent.py _opal in the commit carrying this row runs the guard on the folded reply, then the cut; _web has no guard."
+    ]
+  },
+  "spec_asserts": "Order section 1b rule 1: a reply longer than the cap is cut at the last sentence end that fits; rule 2: the numeric guard voiding the text and the text too long to cut are separate Opal reasons. No sequence of the guard and the cut is stated.",
+  "world_is": "The builder applies the guard before the cut, so a figure present only after the cut point withholds the block to NONE rather than storing the cut text.",
+  "notes": "Form only. The builder keeps the stricter order (guard first). Filed so the issuer can confirm the sequence; no spec text was changed."
+}
+```
