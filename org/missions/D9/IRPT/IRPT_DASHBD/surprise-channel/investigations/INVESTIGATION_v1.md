@@ -11442,3 +11442,27 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+```json
+{
+  "id": "IRPT_DASHBD-D2-W171-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~171",
+  "surfaced_at": "2026-10-14T16:15:15Z",
+  "one_line": "The naming gate refuses a typed s3 prefix that carries the firm key, so the order's literal granted-prefix instruction cannot be met as written; the adapter now derives its grant from the registry row",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-211 step 3 asks for every s3:// literal of the adapter to sit under the granted prefixes orion/inflection and eclipse/inflection, typed in the module, and the checker reads those literals.",
+  "world_is": "The first commit attempt of the adapter was refused by the naming gate (LGIC_ENFORCE) on two typed literals that carry the firm key outside a permitted context (REFUSE as S3Key, hand-kept carrier of inflection). The adapter now derives GRANTED_PREFIXES from opal_naming.lookup(inflection) monolith_scopes under the bucket opal-data-assets (bucket naming CONFORMANT); the derived template line draws a WARN (rule or registry defect: a segment of the template is neither a source nor a tier). The module now holds zero typed s3 literals, so the checker's literal rule passes over an empty set; the grant is still asserted by a test that compares GRANTED_PREFIXES to the two Inflection scopes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "naming-gate output of the first commit attempt of 0.9.0_WK_IRPT_DASHBD~171 (2026-10-14, refusal at adapter lines 36 and 37, now replaced)",
+      "naming-gate output of the second attempt: WARN on the template line of the derived prefixes (commit_out3 of the worker session)",
+      "lib/opal_naming.py lookup('inflection') row: monolith_scopes orion and eclipse, each inflection"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
