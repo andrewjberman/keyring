@@ -1741,3 +1741,79 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "The runner file sets no window and delegates to the shared module. The deployed environment sets the chunk size. The hint's history search on the runner file is empty, so the window is measured from cot_bronze_ingest.py and the environment, not from the runner."
 }
 ```
+## ADVI_BDPRCE-D1-W17-S1 -- The ruled lot key folds 192 rows on the recorded export, and 191 colliding groups still differ on Market Value; the zero target is not met.
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W17-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~17",
+  "surfaced_at": "2026-10-14T02:21:23Z",
+  "one_line": "The ruled lot key folds 192 rows on the recorded export, and 191 colliding groups still differ on Market Value; the zero target is not met.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "UNREALIZED_DAILY_2026-10-09.xlsx (opal-data-bd forwardfill_v2/unrealized/, VersionId Wf2Pct313A.w7y1GpuSf2f7FfiKUVats, sha256 5700843f9e661364910a5bbb9d9d4b60521775922539f47b066a10d80039ef5b) read by get-object 2026-10-13; 500,000 rows, 0 exact duplicates; test_lot_split2.py --emit-proof at fa9d37edb5: lot rows 499,808 under (relationship_id, account_id, asset_id, open_date, unit_cost), rows folded 192, colliding groups 191 (383 rows)",
+      "same run, LOT_PROOF2.json differing_columns at fa9d37edb5: Market Value differs in 191 of 191 colliding groups, Inherited Date in 1; the 192 folded rows have no null Open Date"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v1.1 ADDENDUM and BP-c-5 section 1: under the ruled key (relationship_id, account_id, asset_id, open_date, unit_cost), the fixture proof reaches zero rows folded and zero colliding groups still differing on any column before the template apply may proceed.",
+  "world_is": "Under the ruled key 192 rows of the recorded export fold into 191 colliding groups, and all 191 differ on Market Value (one also on Inherited Date). The export has no lot identifier column, so no recorded column separates them. Within one snapshot one asset has one price, so the differing Market Value most likely reflects distinct quantities, which would mean distinct lots; this is INFERRED, not measured, because the export carries no Units. Applied under this key, the lot table would drop those 192 rows. Armed for the apply: the apply's author decides a key that separates them (a units-bearing key is untested on this fixture) before any template switch."
+}
+```
+
+## ADVI_BDPRCE-D1-W17-S2 -- Round 2's colliding-group counts (14,696 and 14,514) are pandas dropna=True counts; with null Open Date kept as a value they are 14,865 and 14,683.
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W17-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~17",
+  "surfaced_at": "2026-10-14T02:21:23Z",
+  "one_line": "Round 2's colliding-group counts (14,696 and 14,514) are pandas dropna=True counts; with null Open Date kept as a value they are 14,865 and 14,683.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_lot_split2.py --emit-proof at fa9d37edb5 prints KEY round-2 (reference): colliding_groups=14865, rows_in_colliding_groups=30418, null_open_date_rows=7384 on the same export (sha256 5700843f...)",
+      "LOT_PROOF2.md section 'Counts against round 2' at fa9d37edb5; the 15,553 folded-row count reproduces in both rounds"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round-2 row ADVI_BDPRCE-D1-W10-S2: the mandated key folds 15,553 export rows into 14,696 colliding groups, 14,514 of them differing on Relationship ID.",
+  "world_is": "The 15,553 folded-row count reproduces. The group counts reproduce only with groupby dropna=True, which drops the 7,384 null-Open-Date rows (7,208 key groups) from the grouping. Keeping null Open Date as one value, the same key has 14,865 colliding groups (30,418 rows), of which 14,683 differ on Relationship ID. Round 2 mixed the two conventions in one row. No lot count changes."
+}
+```
+
+## ADVI_BDPRCE-D1-W17-S3 -- The CAP record's paging plan cannot be run from readable S3 data: no slice exports exist, so the capped 2026-10-09 export cannot be completed for the zero.
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W17-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~17",
+  "surfaced_at": "2026-10-14T02:21:23Z",
+  "one_line": "The CAP record's paging plan cannot be run from readable S3 data: no slice exports exist, so the capped 2026-10-09 export cannot be completed for the zero.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CAP.json at 0.9.0_WK_ADVI_BDPRCE~16 (verdict CAP; paging_plan 'Not run'); aws s3api list-objects-v2 --prefix forwardfill_v2/unrealized/ read in this run on 2026-10-14 UTC (one UNREALIZED_DAILY object per date, no slice keys)",
+      "get-object of forwardfill_v2/unrealized/_complete/2026-10-09.json: {has_data_rows, landed_at, bytes, producer, basis}; no row count, no page field"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-5 section 1a: if the CAP record names a paging plan, say whether the fixture can be paged from S3 data you can read, and use it only if the data exists.",
+  "world_is": "The CAP record names a slice-on-Relationship-ID paging plan and marks it not run. The readable S3 data hold the capped 500,000-row export only. Completeness of the 2026-10-09 snapshot is not determinable from readable data, so a zero on this export holds for the rows exported, not for the snapshot. A paged export is a Black Diamond producer run, which this cell may not perform."
+}
+```
+
