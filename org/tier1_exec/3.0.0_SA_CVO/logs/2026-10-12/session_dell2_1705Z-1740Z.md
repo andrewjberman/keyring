@@ -377,3 +377,9 @@ Correction: C-S370's grounding cites msg 7389; the packet message is 7387. The r
 | item | result | commit |
 |---|---|---|
 | IRPT_BCKEND round 189 (~P) | ADJUDICATION_v90 (C-S373), no remediation file: the IR cash rule built canonical-only; I re-ran IB189-1-AC1 to AC3: all PASS. Blast radius 844 nodes; fallback-served cash stays Fixed Income (cross-page call for the CTO). 7 dismissed; S158 (CTO) and W374-S1 (box manager: client-data check absent on dell2; my commits show the same WARN) held with their owners. Slug sent | 488fe2c4d2 |
+
+## Addendum, 2026-10-14 04:22Z to 04:28Z (msg 7518)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_DASHBD rounds 101 and 102 | L9: DB101-5-J1 PASS; I read 8 of 14 private page images (1, 2, 4, 5, 7, 8, 11, 14) against SECTION_CHECK.json and the baseline; note: every page header prints the placeholder Sample Firm, omitted from the ranked defects. ADJUDICATION_v62 (C-S73) dismisses 39; W152-S3, W155-S9, W155-S10 (ARMED) held with owners; round 98 rows wait. Slug sent | 55d585884e |
