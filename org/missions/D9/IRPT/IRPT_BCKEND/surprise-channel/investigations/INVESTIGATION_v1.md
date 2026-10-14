@@ -32992,3 +32992,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "QUEUED, not cut: round 187 is already issued (one issuance per round) and IB-pr-456 stays first when its ID arrives. Plan for the round-188 cells (the CTO said one cell; the work has two measurable halves and I cut them as two so each carries a check): (1) a READ-ONLY count: per firm, how many holdings in the served snapshots have a canonical etf-classifications row whose sub_asset_class (trimmed, lower-cased) is cash but whose asset_class is not cash (the holdings that would MOVE), counts only, plus the canonical rows' own count of such rows, and what the code path serves for a money-market ticker with NO canonical row (the bd-securities fallback answer, unchanged by the proposed rule); (2) the BUILD: one shared definition of the rule imported by both classifiers (D2's proposal mirrors without importing: the CTO ruled one shared definition, so the build either extracts the rule to one module both import or points holdings_snapshot at the existing one, whichever the per-firm host packages (the packaged holdings tarballs) can carry without a second copy), the tests, and the packaging consequence; its never-widen pair and apply follow in later rounds. NOT read by me: the served snapshots, the canonical table, the host packaging of the shared module."
 }
 ```
+
+
+## IRPT_BCKEND-D2-W370-S1 -- the module docstring hunk is not module level to the IB187-1-AC1 check (IB-pr-523)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W370-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~370",
+  "surfaced_at": "2026-10-14T01:14:01Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Step 4 of IB-pr-523 (a module docstring paragraph naming stages) is not module level to the IB187-1-AC1 check: git labels a hunk inside the module docstring with the nearest preceding prose line, and the check accepts only the labels '', backfill_days, run and run_backfill. The paragraph was moved into the run_backfill docstring; the module docstring is unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "handler.py@149d7d8384 line 1 opens the module docstring with a quote and line 3 is the first line beginning with a letter; line 38 begins 'written, so a day is never half-rewritten)', the prose line the first build's hunk was labelled with",
+      "p187_cells.py IB187-1-AC1 on my first build (module docstring paragraph after line 38): FAIL: handler.py hunks may sit only in ['', 'backfill_days', 'run', 'run_backfill']; found ['backfill_days', 'run', 'run_backfill', \"written, so a day is never half-rewritten). The scheduled fire's path is untouch\"]",
+      "p187_cells.py IB187-1-AC1 on the rebuilt handler (paragraph inside run_backfill docstring): PASS, 'OK: 96 tests pass; the change is confined' (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~370/IB187-1_criteria_output.txt)"
+    ]
+  },
+  "spec_asserts": "Step 4 of the order: update the module docstring paragraph that documents the backfill event; this hunk sits before the first function and is allowed as module level (the check's hunk label '').",
+  "world_is": "git's default function-name regex labels a hunk with the last line beginning with a letter, underscore or dollar sign before it. Every module-docstring line after line 3 begins with a letter or a prose word, so a module-docstring hunk carries a prose label and the check refuses it; only a hunk before line 3 would carry the empty label. The stages paragraph now sits in run_backfill's docstring, whose label is run_backfill, an allowed label."
+}
+```
