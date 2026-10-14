@@ -14387,3 +14387,28 @@ name the one known failure instead of silently inheriting it.
     "notes": "INERT: nothing serves from an alien object by name, and no act is owed by this seat -- the four were not created, moved or deleted here. The next step, for whoever owns the assets pipeline's conformance, is to print the four keys (set_identity's alien list) rather than the count, since the remedy differs per cause. Found while closing OG-ap-15's L3 for this family; that leg is satisfied by the drain record and is not blocked by this."
   }
   ```
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W78-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~78",
+  "surfaced_at": "2026-10-14T16:50:14Z",
+  "one_line": "hookup_g1.py has no --check mode: its docstring advertises [--check], but the script reads only argv[1] and applies all five file edits on every run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/hookup_g1.py@a05cbc4c55 line 2: docstring 'Usage: python hookup_g1.py <gateway-root> [--check]'",
+      "same file line 5: GW = sys.argv[1].rstrip('/'); a grep for argv returns that line only, so no code path reads a second argument or skips the edit() calls",
+      "0.9.0_WK_NFRA_OPLGTW~78 ran it from the worktree with the gateway root only: printed 'hookup applied: 10 tools', rc 0; committed as 0cda8e2505"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The hookup script's docstring documents an optional [--check] argument for a dry run, and the issuer's note says the edit was dry-run before the cut. TO-OG-gt-7 section 1 describes the script as the single apply step and names no dry-run.",
+  "world_is": "The script has no --check path; every invocation writes all five files. Re-running it on the already-applied tree is not a no-op by inspection: the import and registration anchors and the two list anchors still match, so edit() would insert a second copy of each before the pinned-count asserts fail.",
+  "notes": "The re-run effect is INFERRED from reading edit() and the anchor strings; it was not run. The hookup is committed on wk-NFRA_OPLGTW-78 as 0cda8e2505. Disarm: the merge at OG-ap-18 should take the committed content of 0cda8e2505 and must not apply hookup_g1.py a second time."
+}
+```
