@@ -9737,3 +9737,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Z-S8 stands as written (append-only). Done when a cause is read from a captured log, or a week passes with no unexplained ending on site Z."
 }
 ```
+
+## NFRA_CTLPLN-W99-S1 -- the placement refusal branch of the naming stage unstages only the graded files, as W93-S1 did in ENFORCE
+
+```json
+{
+  "id": "NFRA_CTLPLN-W99-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~99",
+  "surfaced_at": "2026-10-14T23:05:32Z",
+  "one_line": "The PLACEMENT refusal branch of the naming stage in safe-commit.sh (naming-place.enforce present) unstages only NGATE_FILES, the same shape as W93-S1 that CT-ae-3 repaired in the ENFORCE branch; the placement branch is left as it was.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CT-ae-3 names only the ENFORCE refusal for the unstage (W93-S1). The placement refusal at about line 1185 of .tools/safe-commit.sh says 'files unstaged' and runs git reset over NGATE_FILES only.",
+  "world_is": "The placement branch's refusal loop is 'for _nf in \"${NGATE_FILES[@]}\"; do git reset -q HEAD -- \"$_nf\"', so a non-graded path staged beside the graded ones (a .md deliverable) stays in the index after a placement refusal. Read from the source at HEAD cd1e04765b and the CT-ae-3 worktree; NOT exercised: the branch needs org/mcp/naming-place.enforce, which the batch test does not create.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-commit.sh@cd1e04765b lines 1183-1188 (placement refusal: git reset over NGATE_FILES only, then exit 1)",
+      "NFRA_CTLPLN-W93-S1 (same shape, ENFORCE branch), repaired in worktree wk-NFRA_CTLPLN-99 by CT-ae-3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by CT-ae-3 as a neighbouring instance of W93-S1. Not changed here: the order names the ENFORCE refusal only. Whether the placement branch should unstage the same set is for the CTO or the COO."
+}
+```
