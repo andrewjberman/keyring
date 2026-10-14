@@ -33853,3 +33853,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. W378-S1 (the S71 re-arm trigger reads FAIL: the schedule is ENABLED and each bundle lacks the same four registry files): DISARMED by me (disarm owner): the four files are optional in the naming library the runner loads, and every firm's 2026-10-13 scheduled fire reads Success and wrote a record after its bundle, so the trigger's premise (the bundled runner cannot load its contract) is false for these four files; the trigger test still prints FAIL because it counts optional files as required: a stale guard, a one-line repair for a later cell, never a reason to disable the schedule. W378-S4 (the mint tool opens no change-management ledger): the release order must open the NEVER-2 ledger explicitly; named as a condition of the pair. W378-S5 (49financial's 2026-10-09 scheduled fire reads Failed; every later fire Success; cause unread): the round-191 packet reads it before blast radius is signed. W378-S2, S3 and W377-S1 (a stale header path in a tf comment; a baseline the worker could not see; the NYSE fallback calendar): INERT. W376-S1 (the client-data check is ABSENT on dell2): STAYS ARMED with the box manager, as W374-S1. W376-S2 (the one-writer gate warns that workers append to the laptop's unsuffixed channel file): INERT, the channel is append-only and shared here by the standing practice of this project. MEASURED: the producer is the Lambda irpt-holdings-refresh-lambda dispatching one SSM command per firm that fetches the firm's standalone bundle (deployed by safe-deploy.sh --mint-bundle, no ledger of its own); rollback by the prior bundle object version and the prior manifest version per firm; cottonwood is the only firm with a publish_refusal record. NOT measured: the cause of the 2026-10-09 failure, any command output."
 }
 ```
+
+## IRPT_BCKEND-D2-S164 -- The cause of 49financial's failed 2026-10-09 scheduled holdings fire (D2-W378-S5): the SSM command TIMED OUT a
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S164",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T04:45:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cause of 49financial's failed 2026-10-09 scheduled holdings fire (D2-W378-S5): the SSM command TIMED OUT and its process was killed (status ExecutionTimedOut, shell exit 137, python holdings_snapshot.py --firms 49financial Killed).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ssm list-commands (comment prefix 'irpt holdings refresh', 2026-10-09 onward): the 49financial command of 2026-10-09 10:15 ET reads Failed; 49financial's fires of 2026-10-12 and 2026-10-13 and both other firms' fires of every listed day read Success",
+      "ssm list-command-invocations --details for that one command id: StatusDetails ExecutionTimedOut, plugin aws:runShellScript TimedOut, ResponseCode 137, the last output line the shell reporting the python process Killed; the rest of the 2,500-byte output is public-ticker classification warnings (read in memory, error lines only out)"
+    ]
+  },
+  "spec_asserts": "A scheduled holdings fire completes within the SSM command's execution window; the packet's blast radius assumes the run finishes.",
+  "world_is": "One of five listed 49financial fires ran past the command's execution window and was killed; the next two fires finished. 49financial is the largest book (124,441 SECURITY nodes at 2026-10-12). Whether the fire was slow that day (a larger or slower source) or the window is marginal was NOT read (no run durations, no window setting read). A rule-bearing build adds one dict wrap per node: no measured cost, not expected to matter. The round-191 packet should state the window and the observed durations for 49financial before any release timing is signed."
+}
+```
