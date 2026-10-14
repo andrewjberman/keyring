@@ -9,7 +9,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-13T18:50:00Z. Graduated at ADJUDICATION_v6
   {
     "id": "MDPF_SECHIST-Z-S2",
     "project": "MDPF_SECHIST",
-    "fabric": "sitez",
+    "fabric": "site-z",
     "class": "OBSERVATION",
     "hazard_standing": "ARMED",
     "mechanism": "The SH-t-8 take of etf_daily_pull.py (blob 75342a6958) reached site Z's shared tree through box-sync 574fe5ce6b before its NEVER-2 ledger existed: box-sync is not gated on a producer/ledger pair. This instance is closed (ledger CLOSED, scheduled runs accepted).",
