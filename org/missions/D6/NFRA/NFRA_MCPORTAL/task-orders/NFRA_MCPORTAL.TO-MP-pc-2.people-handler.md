@@ -152,7 +152,7 @@ round-2 analysis @d0dd3f0964 (F1). Checks dry-run at base 9be88c9134: AC1 FAIL (
 absent). The research read for the cut (per-call chain, depth fields, breakdown internals) is in decomposition PC.0. NFRA_MCPINDEX MX-c-9 edits
 `admin_gateway_breakdown.py:108` (msg 33864); this cell only imports from that file. Lives through MP-pc-5.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <workstream>PC</workstream>
 <slot>~21</slot>
