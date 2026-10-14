@@ -145,6 +145,12 @@ the ONE `<status>` tag to `complete` only if AC1 and AC2 PASS. Report once per p
   is owed by Andrew; the named asset manager stays open on call 232a. No mechanical criterion moves.
   Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
+- A2 (issuer, 2026-10-14 ~05:0xZ, from row Z-S105 on OG-ap-14): **deploy-source guard.** Before the first deploy
+  command, the deploy tree's `git rev-parse HEAD` must equal the signed `release_sha` in full, and its parent must equal
+  live `deployed_commit` at the act. Any mismatch is a STOP; print both. If the live base moved since the cut, re-cut,
+  and both halves re-sign. Never deploy from a worktree named for an earlier cut.
+  Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>37</round>
 <slot>~AE</slot>
