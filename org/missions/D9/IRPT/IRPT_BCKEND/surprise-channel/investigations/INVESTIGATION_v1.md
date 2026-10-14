@@ -32967,3 +32967,98 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS: W369-S1 (the function name) and S2 (one custody source, so no producer for cottonwood and inflection): MY DEFECTS, ruled by amendment 1 (@8d14148d96): I named the function from the repo directory and assumed a producer for all three firms without reading the producer's source count. W369-S3 (the 2026-10-03 passes logged no activity line; 23 invocations, 562 days, 21 to 63 s each): the earlier returns-only backfill predates the lots stage; INERT. W369-S4 (a backfill rewrites the returns days of its range, 565 landed partitions): carried into the packet as Design (A)'s cost; INERT until the CTO chooses. W369-S5 (LOTS_SKIPPED on 2026-10-07 and 10-08, later landed): an unstable refusal on the realized-lot key check, cause NOT read; INERT, a condition of any run. W369-S6 (a 25-day chunk at 216.7 s/day is past the 900 s timeout): the 23 invocations are a floor; about 4 days a chunk, about 142 invocations (derived). W369-S7 (activity rows 6901 vs 6904 for one day): the stage is NOT idempotent; a re-run changes content. W369-S8 (the trading calendar answered from its hardcoded NYSE fallback): the 565-day count rests on it; INERT, re-measured at the run. W369-S9 (the schedule is an EventBridge Scheduler schedule outside the read): INERT. TWO DECISIONS for the CTO (asked in the L10 slug): (1) Design (A), the existing event in timeout-sized chunks, which rewrites 565 landed returns partitions and whose activity stage is not idempotent, or Design (B), a small code change so a backfill event selects its stages (activity and lots only), which never touches the served returns but needs its own release and pair; I recommend (B) on what was measured (it keeps served returns untouched), with its chunk time unmeasured. (2) cottonwood and inflection have NO activity producer: the default report's activity figures stay ABSENT for them until a producer exists; that is a scope question (the CTO's, and Andrew's if it adds a source), not this census's. NOT shown: that any backfilled table fills the default report (a person's read on DEV after a run)."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W371-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~371",
+  "surfaced_at": "2026-10-14T01:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Inflection's Orion transactions sit in two landed places with different spans: the canonical silver fact_transactions (145 partitions from 2026-05-12) and the legacy flat silver/transactions history (1656 files from 2020-05-26). Cottonwood's two locations agree (123 and 123).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api list-objects-v2 --delimiter read, canonical silver prefix orion/inflection/silver/fact_transactions/ under the shared home (145 date= partitions, 2026-05-12 to 2026-10-13); read 2026-10-14 at base 3296b89477",
+      "s3api list-objects-v2 --delimiter read, registry alias opal-data-inf prefix silver/transactions/ (1656 dated files; 145 on or after 2026-05-12)",
+      "data/inf/scripts/silver/convert_transactions_to_silver.py lines 93-94 (_TXN_S3_PREFIX silver/transactions/, the flat legacy writer)"
+    ]
+  },
+  "spec_asserts": "Each firm's landed transaction source is one table with one span, from which the account_activity_daily shape is mapped (the order's step 4).",
+  "world_is": "Orion transactions exist in two landed places. The canonical silver span is 145 partitions; the legacy flat span is 1656 files and reaches back to 2020. The mapping uses the canonical 145-partition span; which span a producer build reads is not decided here."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W371-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~371",
+  "surfaced_at": "2026-10-14T01:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The account key spaces of the three firms differ: the 49F account_id is zero-padded to 10 digits, the Black Diamond AccountID carries a firm-instance prefix, and the Orion accountId is int64. None of the three was compared to the others.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/sources.json account_id_zero_pad 10 (the custody entry)",
+      "infra/logic/registry/scopes.json z09 master note (the Black Diamond firm-instance prefix on every AccountID, as measured by its author on 2026-09-24)",
+      "data/assets/scripts/silver/mirror_schemas.py DECLARED orion transactions accountId int64 and blackdiamond transactions AccountID string"
+    ]
+  },
+  "spec_asserts": "The activity table's account_id is one key space for every firm, as sources.json states for the 49F custody source.",
+  "world_is": "Each firm's account key carries its own shape (a 10-digit pad, a prefix, an int64), so the shape's account_id is not yet one key space. Measured by reading declarations and the registry note; no key value was read or compared."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W371-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~371",
+  "surfaced_at": "2026-10-14T01:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The round-187 premise of the same shape from each firm's own landed transactions does not hold for Inflection's realized and in-kind columns: the Orion landed feeds carry no lot-level table, so realized and inkind_departure_gain are ABSENT (PARTIAL).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/mirror_schemas.py DECLARED: the orion feeds are assets, performance, positions and transactions (4 of the 13 feeds); no orion realized or unrealized feed",
+      "data/inf/scripts/silver/convert_transactions_to_silver.py lines 221-272 (transTypeId dictionary: no in-kind transfer type)",
+      "IB187-2_transaction_source_mapping.json inflection mapping rows realized and inkind_departure_gain (ABSENT with reasons)"
+    ]
+  },
+  "spec_asserts": "The CTO's round-187 ruling 2 (FWD-21): the same account_activity_daily layout for every firm, from its own landed transactions.",
+  "world_is": "For Inflection the landed sources cannot give the realized gain or the in-kind departure gain, because no lot-level table is landed for Orion. The shape is reachable for the other 17 columns."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W371-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~371",
+  "surfaced_at": "2026-10-14T01:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Two writers produce the Orion transactions table with two column sets: the canonical mirror writer (31 vendor names plus provenance riders) and the legacy flat converter (31 bronze names, 11 carried Custom Report columns and trans_type_desc).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/mirror_schemas.py DECLARED orion transactions (31 names) and PROVENANCE_COLS",
+      "data/inf/scripts/silver/convert_transactions_to_silver.py lines 1-50 (the 31 bronze columns, the 11 CR columns and the trans_type_desc addition)"
+    ]
+  },
+  "spec_asserts": "One table name carries one column set, so the activity mapping reads a single declared schema per firm.",
+  "world_is": "The two writers disagree on the extra columns. The mapping used only the names both carry (accountId, transAmount, transTypeId). Which writer the activity build reads is not decided here."
+}
+```
