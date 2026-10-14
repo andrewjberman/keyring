@@ -27479,3 +27479,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Not registered by this worker (check-only). Before any registration the issuer must either have the candidate pushed by its owner (never this worker's act) or point the check at the local head; which of the two is the issuer's to set."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S30",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-14T11:19:00Z",
+  "one_line": "Worker ~441's third-pass rows W441-S4, S5 and S6 are ruled by the issuer: S4 accepted as a guard arm, S6 DISARMED (candidate pushed at 84fd6461bb, approval faa4 bound to it), S5 DISARMED by the order's own AC2 typecheck and lint.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Rows AMGT_RESAPP-D1-W441-S4 (BLOCKING), -S5 (ARMED) and -S6 (BLOCKING, ARMED), disarm_owner 2.0.0_SA_COO~R1: S6 'a row registered now would bind the pushed head 4eb56d57d2'; S5 'no mechanical pre-commit check examined the frontend files'; S4 'no fixture reaches a non-team no-reason dash'.",
+  "world_is": "Measured 2026-10-14 ~11:18Z. S6: git ls-remote origin refs/heads/cand/dell1/amgt-sa-pe-basis-and-reasons reads 84fd6461bb (the CTO's ruled head); open-calls.py approval-status reads APPROVED valid=yes row=dell1-20261014T111220Z-faa4 head_sha=84fd6461bb, closed by 1.0.0_SA_CTO~DELL1 (msg 5456), so the old row f376 at 4eb56d57d2 no longer decides. S5: the third-pass diff is read by AC2 (typecheck rc 0, lint rc 0, harness 22 of 25 with 0 regressions) and AC1 10 of 10; the worker's instance is VALID rc=0 and merged at d1f7937d28. S4: the CTO's message 5450 reads 'the fix is from the code reading, and the arm is a guard'; the arm B4c stays as a guard against a future builder that reaches the fallback.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal ls-remote origin refs/heads/cand/dell1/amgt-sa-pe-basis-and-reasons = 84fd6461bbf890508ded3a82f0fba344f382125c, 2026-10-14T11:18Z",
+      "python .tools/open-calls.py approval-status --branch cand/dell1/amgt-sa-pe-basis-and-reasons: APPROVED valid=yes row=dell1-20261014T111220Z-faa4 head_sha=84fd6461bb",
+      "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_APPROVAL_PORTAL_CAND_PE_BASIS_AND_REASONS_20261014.md (approved at 84fd6461bb)",
+      "drain commit d1f7937d28 (instance VALID rc=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A citing row; the worker's three rows keep their text. A frontend change has no mechanical pre-commit check on this box (commit-gate reads .py, .sh, .tf and org/projects JSON only): the order's AC2 is the instrument and stays on every portal order; whether a pre-commit check for .tsx is built belongs to the CTO and no gate is proposed here."
+}
+```
