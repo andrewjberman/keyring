@@ -26749,3 +26749,77 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "The seat started the capture 85 s before the UTC date change and did not guard for it; the control above is the repair, not a re-baseline (the old code is gone from the function). A GO for a capture near 00:00Z should name a start after the change."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W419-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~419",
+  "surfaced_at": "2026-10-14T02:34:54Z",
+  "one_line": "AMGT-bl-1 item 2 does not reproduce on the BATS LN slice it names: no page file writes Period text, the BATS team sheet is class master (its period and case blocks render as list rows, not tables), and no column with an empty header exists to drop.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Item 2: BATS LN shows a column headed Period 4 with nothing under it on the Model tab (team_sheet.periods is []; the case blocks years row carries 2026..2030 over columns whose cells are empty). Find where the page builds that header; show the values or drop the empty column and say so in one sentence. AC1 C4: BATS LN renders no column with an empty header and the sentence appears once.",
+  "world_is": "A native search of portal/src/pages/SecurityAnalysis for Period finds no header text (SegmentTable types only). The BATS slice (currencyFixture.BATS_LN_Equity.json, live /thesis 2026-10-14 ~02Z) carries no Period string; team_sheet.class is master, so the page renders its four sheet blocks as list rows (Row N: the template line), with zero block tables. The rendered BATS Model tab has no empty header (C4a PASS) and every visible full-grid column carries values under 2026E-2028E. The sentence cannot appear on this slice (C4b reads 0 times). The drop rule is implemented and proven on a synthetic empty 2031 column in the PBR period block (C4c PASS). The one served path that writes a header from served text is the sheet years list, built from top-level fiscal_years, which this slice does not carry; a live payload serving a non-year label there would print it as a header.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round105_prep/fixtures/bats_model_slice.json@34bc28182d: model.team_sheet.class master, team_sheet.periods [], no Period string in the file",
+      "portal/src/pages/SecurityAnalysis/__harness__/currencyAndReasons.harness.cjs@901f27fb: run output CHECK C4b_bats_sentence_once FAIL (sentence appears 0 time(s)); C4a PASS; C4c PASS",
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx@901f27fb: SheetBlockTable renders only the columns blockShownColumns (modelSheet.ts) keeps"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The order names a premise the served slice does not show. The strict C4b is kept as the order words it and reads NO; the issuer rules whether BATS is meant to render a table, or whether the Period 4 header came from a payload field this slice does not carry."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W419-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~419",
+  "surfaced_at": "2026-10-14T02:34:54Z",
+  "one_line": "AMGT-bl-1 item 1 names fiscal_year_figures as a currency source; the PBR slice carries no fiscal_year_figures, so the research team's historic money lines take their currency from the payload's top-level fiscal_currency_by_mnemonic, which the page did not read before this cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Item 1: take the figure's currency from the served model block the same way the page does for the rows beside it (figureCurrency, rowCurrency, FORECAST_MNEMONICS; the model's money figures in fiscal_year_figures and forecast_figures carry currency). The trading currency is never the figure's currency.",
+  "world_is": "The PBR US slice (live /thesis, 2026-10-14 ~02Z) has no model.fiscal_year_figures key. Its money currencies sit on model.forecast_figures (BEST_EPS, BEST_DPS, BEST_EBITDA: BRL) and on the payload top level in fiscal_currency_by_mnemonic (SALES_REV_TURN, IS_OPER_INC, CAPITAL_EXPEND and others: BRL). The fix reads the forecast figures first, then the fiscal figures, then the top-level list as the last fallback (teamRowCurrency in modelSheet.ts; an optional ThesisBundle.fiscal_currency_by_mnemonic in types.ts). A team row whose label names no served line (Cap Ex, FCF, BVPS and the price rows on PBR) prints its number with no symbol. Whether the top-level list is the right source for team figures is the issuer's ruling.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round105_prep/fixtures/pbr_model_slice.json@34bc28182d: top-level keys include fiscal_currency_by_mnemonic; model keys have no fiscal_year_figures; model.forecast_figures carry currency BRL",
+      "portal/src/pages/SecurityAnalysis/modelSheet.ts@901f27fb: teamRowCurrency, the fallback order and the Never the trading currency rule"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The page reads one more served field than the order names; the reading is recorded so the issuer can rule on it."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W419-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~419",
+  "surfaced_at": "2026-10-14T02:34:54Z",
+  "one_line": "On the Model tab full grid, a dash in a research-team row still prints with no reason: a team row carries cellReasons null for every year, so only the Key Figures dashes (item 3) gained a reason.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Item 3: a -- cell on the Model tab Key Figures table shows no reason; print the reason the payload served, else the fixed words. The order names the Key Figures table as the scope.",
+  "world_is": "The All figures grid draws the same team-row cells. buildModelSheet gives a team row cellReasons of null in every year (teamRowCurrency and the row literal beside it), and ModelBody prints a null cell of a team row as a bare dash. Not changed: the full grid is outside the table item 3 names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/modelSheet.ts@7d5cb34d: the classed team-row literal sets cellReasons to years.map(() => null)",
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx@901f27fb: the All figures gap cell prints -- with data-model-gap-reason only when cellReasons[index] is set"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. Recorded so the issuer can decide whether the full grid is in scope for the reason rule."
+}
+```
