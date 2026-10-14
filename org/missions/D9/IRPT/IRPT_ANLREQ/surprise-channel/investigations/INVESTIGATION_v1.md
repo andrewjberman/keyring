@@ -14959,3 +14959,488 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W140-S1 -- The commentary reader's response is parsed through IR_DATA_ADAPTER, which has no entry for analysis-request-commentary-pdf; the adapter map sits in envelope.ts, outside this order's grant
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T18:09:09Z",
+  "one_line": "LiveClient.getAnalysisRequestCommentaryPdf sends the new operation through send(), and parseIrEnvelope takes the adapter from IR_DATA_ADAPTER, which has no entry for it, so a well-formed envelope is refused as EnvelopeMismatch('operation') (envelope.ts:384-385). The entry belongs in portal/src/pages/InvestorReporting/contracts/envelope.ts, which is not in this order's grant; the live half of the cell cannot work without it.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-332 (PRD ADDENDUM v0.10 item 2): a LiveClient method beside getAnalysisRequestPdf, the same shape and refusals. The order's change list (investor-reporting.ts, AnalysisRequestParts.tsx and tests only; record r41/COMMENTARY_PDF_ROUTE_READ.json q4) names no envelope.ts change.",
+  "world_is": "Stub-transport probe, no network (.scratch/envelope_probe.ts run under bun in the portal tree): for analysis-request-commentary-pdf the LiveClient method threw EnvelopeMismatch with 'response envelope field operation does not satisfy the v1 contract' on a well-formed envelope; the URL built was /api/scoped/investor-reporting/analysis/requests/{id}/commentary-pdf?selected_tenant=fir_test. The control (getAnalysisRequestPdf on the same stub) returned the signed URL, because analysis-request-pdf has an entry at envelope.ts:197. The page reader and the method are in the candidate; the live path is not usable until the adapter entry lands. Not called live.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/contracts/envelope.ts:384-385 @6a5926fc11",
+      "portal/src/pages/InvestorReporting/contracts/envelope.ts:197 @6a5926fc11",
+      "portal/src/api/endpoints/investor-reporting.ts:1053-1066 @6a5926fc11"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed on the STOP of 0.9.0_WK_IRPT_ANLREQ~140 (see IRPT_ANLREQ-D2-W140-S2). The candidate is not committed. The grant amendment and the disposition are the issuer's (2.0.0_SA_COO~Y2)."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S2 -- The new IR_ROUTE_TABLE row fails seven InvestorReporting tests outside this order's grant that pass on origin/PROD
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T18:09:09Z",
+  "one_line": "Declaring analysis-request-commentary-pdf as a DECLARED row of IR_ROUTE_TABLE moves the route set and its count, which seven route, header, corpus and generator tests pin against the contract's routes.json and a hard-coded total. Those tests are outside the grant, so the worker stopped under the BOUNDS rule.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-332 step 3: declare the operation in IR_ROUTE_TABLE and IrDeclaredOperation. BOUNDS: if a test OUTSIDE the grant fails because of the change, STOP and file a BLOCKING row naming it; the issuer amends the grant.",
+  "world_is": "bun test on src/pages/InvestorReporting (1273 tests, 401 files): origin/PROD 14 fail; the candidate working tree 21 fail; the 7 added failures are the ones below and the other 14 are the same on both. Added: fe-s-14/header.test.ts (F14-AC15 HEADER SENT, TOTAL_ROUTES at :81); fe-s-13/routes.test.ts (three 'the operation table is routes.json' cases, count at :163); fe-s-13/request-corpus.test.ts ('one record per DECLARED route'); mvp-selection/selection.test.ts ('canonical producer route table and all browser routes match'); dsgn-irptv1/iv-e-98.generators-drift.test.ts (IVE98). The TicketCenter folder is 121 pass, 0 fail with the change (115 before, plus the 6 new). Not committed; the working tree was restored to the candidate after the PROD baseline run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-14/header.test.ts:81 @6a5926fc11",
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-13/routes.test.ts:163 @6a5926fc11",
+      "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-98.generators-drift.test.ts:38 @6a5926fc11"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The test outputs are in the worker's scratch (.scratch/base_ir_fails.txt, .scratch/after_ir_fails.txt), not committed. The counts move with the contract, which is not in this grant: the issuer decides whether the route row lands with the contract change and an amended grant."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S3 -- the amended grant names portal/src/api/endpoints/envelope.ts, which does not exist; the adapter table is at portal/src/pages/InvestorReporting/contracts/envelope.ts, the file the worker edited
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T18:35:30Z",
+  "one_line": "AMENDMENT 1 names the portal path src/api/endpoints/envelope.ts for the one adapter entry. That path does not exist at origin/PROD or in the candidate. The IR_DATA_ADAPTER table that parseIrEnvelope reads is in portal/src/pages/InvestorReporting/contracts/envelope.ts, and the worker added the one entry there (line 201 of the candidate, beside analysis-request-pdf at line 197 of origin/PROD). The literal granted path is absent, so the edit is outside the grant as written until the issuer confirms the mapping or amends the path.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 1 (AR332-y-AC3 scope): the grant ALSO names, inside the portal worktree, src/api/endpoints/envelope.ts (add the one adapter entry for analysis-request-commentary-pdf). AC3 SCOPE-OK lists the same literal path.",
+  "world_is": "git ls-tree origin/PROD (portal @6a5926fc11) holds envelope files only under src/pages/InvestorReporting/contracts/ and __tests__/; no src/api/endpoints/envelope.ts. The entry added by the worker is the same adapter as analysis-request-pdf (adaptAnalysisRequestPdf), chosen by content. No new file was created.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/contracts/envelope.ts:197 @6a5926fc11 (analysis-request-pdf adapter entry on origin/PROD)",
+      "portal/src/pages/InvestorReporting/contracts/envelope.ts:201 (candidate working tree, uncommitted: the analysis-request-commentary-pdf entry)",
+      "git ls-tree origin/PROD in portal @6a5926fc11: no src/api/endpoints/envelope.ts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_IRPT_ANLREQ~140 on the re-seated run. The issuer confirms the mapping (or amends the grant path) before scope_check can pass. The worker did not commit the candidate."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S4 -- the producer contract routes.json has no analysis-request-commentary-pdf route (AR-y-331 not landed here), so the regenerated consumed list breaks content-pins and the two suites that run it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T18:35:30Z",
+  "one_line": "The repo's own generator gen-consumed.ts, run as AMENDMENT 1 requires, now lists the new operation (25 operations, 25 route keys). The producer contract the same generator set reads, docs/contracts/investor-reporting/v1/routes.json, has 24 routes and no commentary route. content-pins.test.ts then fails three cases, and iv-e-17.bridge-dropped and iv-e-26.wire-regen fail because they run it. Those tests are outside the grant. Without regeneration, the in-grant IVE98 test fails instead. The root is the missing producer route, which AR-y-331 owns.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 1: regenerate the wire folder with the repo's generators (IVE98 must hold). BOUNDS: if a test OUTSIDE the grant fails because of the change, STOP and file a BLOCKING row naming it. CELL: the contract is fixed by AR-y-331 and useful only after its release.",
+  "world_is": "docs/contracts/investor-reporting/v1/routes.json at workspace HEAD 83a64778b6 carries no commentary-pdf entry (git grep over docs, infra and lib: none); its _denominator.total is 24. Candidate run of bun test src/pages/InvestorReporting: content-pins.test.ts:325 expected 3 got 0; 'operation analysis-request-commentary-pdf is no longer declared' and 'route key ... commentary-pdf is no longer declared'; iv-e-26.wire-regen 'consumed operations offered 24 of 25, expected 25 of 25'. The worker did not edit routes.json (outside the grant) and did not revert consumed.ts (IVE98 in grant).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/routes.json @83a64778b6 (24 routes, no commentary-pdf entry, _denominator.total 24)",
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-13/content-pins.test.ts:325 @6a5926fc11 (the ADDITIVE battery case; candidate working tree fails it)",
+      "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-26.wire-regen.test.ts (outside grant; candidate run fails it through content-pins rc=1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Measured on the candidate working tree: bun test src/pages/InvestorReporting 1248 pass of 1273, 25 fail = 13 baseline failures still failing + 12 new. Of the 12 new: 5 here (content-pins x3, iv-e-17.bridge-dropped, iv-e-26.wire-regen), 1 in S5 (iv-e-17.regenerated), 6 in S6 (in-grant pins). The issuer decides: land the AR-y-331 routes.json entry first, or amend the grant."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S5 -- a required commentary member on InvestorReportingApi breaks six fake clients outside the grant, so bun run typecheck exits 2
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T18:35:30Z",
+  "one_line": "Declaring getAnalysisRequestCommentaryPdf as a required member of InvestorReportingApi makes six fake clients in test files outside the grant fail tsc (TS2741). iv-e-17.regenerated runs bun run typecheck and expects rc 0, so it fails too.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CELL step 3: declare the operation on InvestorReportingApi. BOUNDS: a test outside the grant that fails because of the change is a BLOCKING row; the issuer amends the grant.",
+  "world_is": "bun run typecheck on the candidate (after the worker fixed its own test file): rc 2, six errors, all TS2741 (property getAnalysisRequestCommentaryPdf missing): iv-e-26.print-url.test.ts(66,9), iv-e-36.preview-account-scope.test.ts(67,9), iv-e-53.preview-tenant.test.ts(71,9), iv-e-53.tenant-thread.test.tsx(127,9), iv-e-64.submit-tenant.test.tsx(79,9), fe-s-9/resolve.test.ts(68,11). The worker's new test file has no tsc error. The choice between amending the six fakes into the grant and making the interface member optional is the issuer's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/api/endpoints/investor-reporting.ts:874 @6a5926fc11 (candidate working tree: the required interface member)",
+      "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-26.print-url.test.ts:66 (outside grant, typed fake)",
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-9/resolve.test.ts:68 (outside grant, typed fake)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The tsc output is in the worker's scratch (.scratch/typecheck_after2.txt), not committed. iv-e-17.regenerated fails on this in the candidate run."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S6 -- the in-grant route pins read routes.json as their oracle, so the amended re-pin of the one added operation is blocked until the producer route exists
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T18:35:30Z",
+  "one_line": "The five named InvestorReporting pins (header.test.ts, routes.test.ts, request-corpus.test.ts, selection.test.ts) take their counts and route sets from routes.json, which lacks the new route. A re-pin to the candidate's 25 would pin a producer contract that does not declare the route, so the worker did not re-pin them.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 1: re-pin ONLY route-table, operation-count and declared-operation assertions for the ONE added operation; do not weaken an assertion about any other operation; record each case before and after.",
+  "world_is": "header.test.ts:41 reads _denominator.total (24) of routes.json into TOTAL_ROUTES; :81 asserts IR_ROUTE_TABLE length equals it (candidate 25). routes.test.ts:163 (NO-HANDLER population 24 vs 25), :243 (22 vs 23), and 'every DECLARED route key is in the table with the same method and path' (the candidate row is not in routes.json). request-corpus.test.ts:114 'no record for GET .../analysis/requests/{requestId}/commentary-pdf'. selection.test.ts:70 'canonical producer route table' expects the 24 producer routes and reports the one extra browser route. The re-pin is mechanical (plus one) once routes.json carries the route.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-14/header.test.ts:41 @6a5926fc11 (TOTAL_ROUTES read from routes.json)",
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-13/routes.test.ts:163 @6a5926fc11",
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-13/request-corpus.test.ts:114 @6a5926fc11"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "origin/PROD baseline: none of these five files has a failing case. The candidate adds 6 failing cases here (header 1, request-corpus 1, routes 3, selection 1). Resolution belongs with S4 (the producer route)."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S7 -- a portal baseline cut at a shallower depth reports 76 failures and 27 errors, not 14; generator-written files show M with an empty diff
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T18:35:30Z",
+  "one_line": "The generators and several tests resolve the workspace docs/ and org/ six directory levels above the portal file, so a clean origin/PROD worktree must sit at workspace depth. Cut under .scratch/prod-baseline it reported 76 fail and 27 errors (ENOENT on the workspace briefs and standards); cut at .scratch/base-root/portal with junctions for the workspace folders it reported 14 fail of 1273, matching the figure in the amendment. gen-all also rewrites all 27 wire files with identical bytes that git status lists as M while git diff is empty.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR332-y-AC1: the baseline failing names are taken from a clean origin/PROD worktree.",
+  "world_is": "Measured: bun test src/pages/InvestorReporting from a worktree at .scratch/prod-baseline: 1102 tests run, 76 fail, 27 errors. From .scratch/base-root/portal (workspace folders junctioned): 1273 tests, 14 fail, 1259 pass; names in r41/baseline_ir_failures.json. calendar-source.test.ts (the COMMITTED module is what the generator writes) fails on origin/PROD and passes on the candidate, which is a time or environment dependence the worker did not investigate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts:113 @6a5926fc11 (CONTRACTS_DIR_URL resolves six levels up from the file)",
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts:130 @6a5926fc11 (WORKSPACE_ROOT_URL resolves six levels up)",
+      "git ls-files --eol and git diff --summary on the wire folder after gen-all: content identical, status M"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The baseline failing names are r41/baseline_ir_failures.json in the deliverables folder. Worker's scratch only; the junction folders are not committed (.scratch is ignored)."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S8 -- fe-s-1/fixtures.test.ts fails on the candidate: the smoke map has no entry for analysis-request-commentary-pdf, and the test is outside the grant
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S8",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T19:31:16Z",
+  "one_line": "On the candidate (IR_ROUTE_TABLE gains analysis-request-commentary-pdf, routes.json carries it) the fixture smoke-map test 'the smoke map covers every scoped route, one entry each' fails: the new operation has 0 smoke-map keys. The test is in fe-s-1, outside the TO-AR-y-332 grant, so BOUNDS says STOP and file a BLOCKING row.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 2 and INHERITED STATE: the grant names the five InvestorReporting test files (header, IVE98, selection, routes, request-corpus) plus the portal source and test files of step 3. BOUNDS: if a test OUTSIDE the grant fails because of the change, STOP and file a BLOCKING row naming it; the issuer amends the grant.",
+  "world_is": "origin/PROD fa10e758 in a full clean worktree (.scratch/base-clean/portal at workspace depth): the test passes, and it is not among the 14 baseline names in r41/baseline_ir_failures.json. Candidate (portal working tree after the generator run, with the route in the table and in routes.json): bun test src/pages/InvestorReporting fails it at fixtures.test.ts:219, expect(unmatchedRoutes).toEqual([]), received ['analysis-request-commentary-pdf: 0 key(s)'].",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-1/fixtures.test.ts:166 @fa10e758 (the test title)",
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-1/fixtures.test.ts:219 @fa10e758 (the assertion the candidate fails)",
+      "r41/baseline_ir_failures.json (the clean-PROD baseline, 14 names, this test absent)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_IRPT_ANLREQ~140 on the third pass. The issuer decides: amend the grant to include this test and the fixture it reads, or ratify the commentary operation as a non-smoke route. The worker did not edit the test."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S9 -- fe-s-14/published-map.test.ts fails on the candidate: the commentary route is a declared route with no key and is not in the excused list, and the test is outside the grant
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S9",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T19:31:16Z",
+  "one_line": "The published-map test 'PUBLISHED MAP -- declared paths, v1 envelopes, contract-required data' fails on the candidate: analysis-request-commentary-pdf is a declared route with no key, and the test's EXCUSED_FROM_MAP list does not name it. The test is outside the TO-AR-y-332 grant, so BOUNDS says STOP and file a BLOCKING row.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "BOUNDS: if a test OUTSIDE the grant fails because of the change, STOP and file a BLOCKING row naming it; the issuer amends the grant.",
+  "world_is": "origin/PROD fa10e758 (clean worktree): the test passes and is not a baseline name. Candidate: published-map.test.ts:161 logs 'DECLARED ROUTES WITH NO KEY' and :162 expect(withoutKey).toEqual([...EXCUSED_FROM_MAP].sort()) receives an extra member, 'analysis-request-commentary-pdf'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-14/published-map.test.ts:98 @fa10e758 (the test title)",
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-14/published-map.test.ts:162 @fa10e758 (the assertion the candidate fails)",
+      "r41/baseline_ir_failures.json (this test absent from the baseline)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_IRPT_ANLREQ~140 on the third pass. Resolution is the issuer's: amend the grant to include the test, or ratify the excused key for the commentary route. The worker did not edit the test."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S10 -- fe-s-47/no-status-reason.test.ts throws on the candidate: no envelope is found for analysis-request-commentary-pdf, and the test is outside the grant
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S10",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T19:31:16Z",
+  "one_line": "The no-status-reason test 'F47-AC7 -- no status-optional operation is refused for a reasonless UNCERTAIN' throws on the candidate with 'fe-s-47: responses.ts declares no envelope for analysis-request-commentary-pdf'. The regenerated responses.ts carries the new response type and the RESPONSE_OPERATIONS entry; the lookup the test makes finds no envelope for the operation. The test is outside the grant, so BOUNDS says STOP and file a BLOCKING row.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "BOUNDS: if a test OUTSIDE the grant fails because of the change, STOP and file a BLOCKING row naming it; the issuer amends the grant. AMENDMENT 1: the generators are run and their output is listed as regenerated.",
+  "world_is": "origin/PROD fa10e758 (clean worktree): the test passes and is not a baseline name. Candidate: no-status-reason.test.ts:556 throws at WIRE_FOR.get(op) undefined for analysis-request-commentary-pdf (the test title is at :548). The cause was not read further; the test is outside the grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-47/no-status-reason.test.ts:548 @fa10e758 (the test title)",
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-47/no-status-reason.test.ts:556 @fa10e758 (the throw the candidate reaches)",
+      "r41/baseline_ir_failures.json (this test absent from the baseline)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_IRPT_ANLREQ~140 on the third pass. The issuer decides the grant amendment. The worker did not edit the test or the generated responses file beyond the generator run."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S11 -- fe-s-57/carry.test.ts fails on the candidate: the commentary operation does not carry the unprojected grant, and the test is outside the grant
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S11",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T19:31:16Z",
+  "one_line": "The carry test 'UNPROJECTED_GRANT PRESENT-AT-ZERO CARRIED ON 17 of 17 OPERATIONS' fails on the candidate: analysis-request-commentary-pdf is reported with 0 unprojected-grant members and slice=false. The test is outside the TO-AR-y-332 grant, so BOUNDS says STOP and file a BLOCKING row.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "BOUNDS: if a test OUTSIDE the grant fails because of the change, STOP and file a BLOCKING row naming it; the issuer amends the grant.",
+  "world_is": "origin/PROD fa10e758 (clean worktree): the test passes and is not a baseline name. Candidate: carry.test.ts:231 pushes 'analysis-request-commentary-pdf: unprojectedGrant not carried as expected (0 members, slice=false)' and :239 expect(problems).toEqual([]) fails. The cause was not read further.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-57/carry.test.ts:154 @fa10e758 (the test title)",
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-57/carry.test.ts:239 @fa10e758 (the assertion the candidate fails)",
+      "r41/baseline_ir_failures.json (this test absent from the baseline)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_IRPT_ANLREQ~140 on the third pass. The issuer decides the grant amendment. The worker did not edit the test."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S12 -- OBSERVATION: two request-corpus cases and the header case fail on the candidate, one more than AMENDMENT 1 named; they are in-grant route-count pins not yet re-pinned because the order stops
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S12",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T19:31:16Z",
+  "one_line": "On the candidate with the merged route table, three in-grant pins fail for the one added operation: header.test.ts CORPUS RECORDS (expected 23, received 22) and request-corpus.test.ts two cases ('one record per DECLARED route, method and path bound from the route key' and 'no request record and no adapter output carries a server-only key', expected 33 received 32). AMENDMENT 1 named one request-corpus case; the second is the same count assertion. Not re-pinned, because the order stops on the outside-grant rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 1: re-pin ONLY route-table, operation-count and declared-operation assertions for the ONE added operation; record each case before and after.",
+  "world_is": "Candidate bun test src/pages/InvestorReporting: 1273 tests, 1226 pass, 27 skip, 20 fail. Against the clean baseline (14 fail entries) the candidate has seven new failing names: the three in-grant cases above and the four outside-grant rows S8 to S11. One baseline name now passes (IV-e-97 calendar-source, the committed-module compare), which AC1 allows. routes.test.ts, selection.test.ts and iv-e-98.generators-drift.test.ts pass on the candidate with the merged routes.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-14/header.test.ts:86 @fa10e758 (CORPUS RECORDS title; the count assertion is the failing one)",
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-13/request-corpus.test.ts:83 and :146 @fa10e758 (the two titles)",
+      "docs/contracts/investor-reporting/v1/routes.json at workspace HEAD 97ee9dfe08 (25 routes after the AR-y-331 merge)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_IRPT_ANLREQ~140 on the third pass. The re-pin of these three cases is the one in-grant act still owed, after the grant amendment."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S13 -- OBSERVATION: origin/PROD moved from 6a5926fc to fa10e758 during this pass; the stop record's prod_tip is stale and the portal branch sits behind origin/PROD
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S13",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T19:31:16Z",
+  "one_line": "A permitted git fetch on the portal showed origin/PROD at fa10e75861 (merge of cand/dell1/sechist-frontier-label into release/20261014T184507Z), not 6a5926fc11 as the stop record measured. The worker's portal branch wk-IRPT_ANLREQ-140-portal still sits at 6a5926fc. The diff 6a5926fc..fa10e758 touches none of the paths this cell edits.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CELL step 1: the portal worktree is at origin/PROD (record prod_tip, the full sha, after a permitted git fetch origin); the candidate branch is cut from the last PROD release.",
+  "world_is": "git -C portal rev-parse origin/PROD = fa10e75861abd352ab033f5c7ab4b9e1f0f297e9 (fetched 2026-10-14). git -C portal diff --stat 6a5926fc fa10e758 over src/api/endpoints/investor-reporting.ts, src/pages/TicketCenter and src/pages/InvestorReporting printed nothing. The clean baseline (r41/baseline_ir_failures.json, r41/baseline_typecheck.json) is taken at fa10e758.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal rev-parse origin/PROD @fa10e758 (fetch output: 6a5926fc..fa10e758)",
+      "git -C portal diff --stat 6a5926fc fa10e758 -- src/api/endpoints/investor-reporting.ts src/pages/TicketCenter src/pages/InvestorReporting (empty)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_IRPT_ANLREQ~140 on the third pass. The candidate, when the order proceeds, is cut from fa10e758 (a switch of the uncommitted change, not a rebase)."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S14 -- OBSERVATION: origin/PROD moved again (fa10e758 to 5ab67a65) during the fourth pass; the candidate and the clean baseline were cut at 5ab67a65
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S14",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T20:01:32Z",
+  "one_line": "A permitted git fetch on the portal showed origin/PROD at 5ab67a65 (merge of cand/dell1/satellite-factsheet-prod), one step past fa10e758 which the third pass measured. The paths this cell edits did not change between the two tips.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CELL step 1 and the amended CANDIDATE BASE: the candidate is a cherry-pick onto the CURRENT origin/PROD, and the failing-name baseline is re-taken if origin/PROD has moved again.",
+  "world_is": "git -C portal fetch origin printed fa10e758..5ab67a65 PROD -> origin/PROD. git -C portal diff --stat 6a5926fc origin/PROD over src/api/endpoints/investor-reporting.ts, src/pages/TicketCenter and src/pages/InvestorReporting printed nothing. The candidate was cut from 5ab67a65 (cherry-pick of 9a3d40f5 as 284e54d2); the baseline was re-taken at 5ab67a65 and its names equal the set recorded at fa10e758.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal rev-parse origin/PROD = 5ab67a651a626e7224de0a2cf03a2223f99dc15e (fetched 2026-10-14)",
+      "git -C portal diff --stat 6a5926fc origin/PROD -- src/api/endpoints/investor-reporting.ts src/pages/TicketCenter src/pages/InvestorReporting (empty)",
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~140/r41/baseline_ir_failures.json (prod_tip 5ab67a65, 13 unique names)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_IRPT_ANLREQ~140 on the fourth pass. No decision is asked: the candidate uses the current tip, as the order directs."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S15 -- OBSERVATION: the clean origin/PROD baseline reads the pre-route docs (22 DECLARED routes) while the candidate reads the workspace HEAD docs (23); the order names no docs depth for the clean worktree
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S15",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T20:01:32Z",
+  "one_line": "The clean baseline worktree sits at workspace depth with its docs copied from workspace commit 15e74a2029, the state before the AR-y-331 route merge. The candidate reads the workspace HEAD docs (97ee9dfe08), where routes.json holds the commentary route. The order names no docs depth for the clean worktree, so the baseline and the candidate see different route tables by design.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AC1 (amended): every failing InvestorReporting name is compared with the failing names recorded from a run on a clean origin/PROD worktree (r41/baseline_ir_failures.json).",
+  "world_is": "Baseline at origin/PROD 5ab67a65 with docs from 15e74a2029: 1273 tests, 1232 pass, 27 skip, 14 fail entries (13 names). Candidate with docs from 97ee9dfe08: 1273 tests, 1233 pass, 27 skip, 13 fail entries (12 names). Every candidate failing name is in the baseline; one baseline name, the IV-e-97 committed-module compare, now passes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 15e74a2029:docs/contracts/investor-reporting/v1/routes.json: 24 routes, 22 DECLARED",
+      "git show 97ee9dfe08:docs/contracts/investor-reporting/v1/routes.json: 25 routes, 23 DECLARED",
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~140/r41/baseline_ir_failures.json (source line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_IRPT_ANLREQ~140 on the fourth pass. The issuer rules which docs depth the clean baseline must use. The worker kept the inherited method (pre-route docs) so the baseline is comparable with the third pass."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S16 -- OBSERVATION: the before-arm on origin/PROD fails four cases, (a), (b), (d) and (f), where the order names three, (a), (b) and (f)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S16",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T20:01:32Z",
+  "one_line": "The new test file run on a clean origin/PROD without the change fails (a), (b), (d) and (f) and passes (c) and (e). Case (d) expects the reader's no-link refusal; without the commentary method openPackageFile returns false and throws nothing, so (d) fails too. The order lists (a), (b) and (f).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CELL step 4 before_arm: run the new tests on origin/PROD WITHOUT your change: (a), (b), (f) FAIL.",
+  "world_is": "origin/PROD 5ab67a65 in .scratch/base-clean/portal with commentary-pdf-reader.test.tsx copied in and no product change: 6 cases, FAIL (a), (b), (d), (f); PASS (c), (e). The same four failed on the third pass at fa10e758.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commentary-pdf-reader.test.tsx:90-97 at 284e54d2 (case d asserts the no-link message and that nothing opens)",
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~140/r41/PORTAL_COMMENTARY_READER_CANDIDATE.json before_arm"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_IRPT_ANLREQ~140 on the fourth pass. The failure of (d) on the base is the expected arm for a no-link case: the base has no commentary reader at all, so the item opens nothing and says nothing."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S17 -- OBSERVATION: the repo's generator writes LF bytes into a worktree checked out with core.autocrlf=true, so git status lists tracked files as modified with an empty content diff
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S17",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T20:01:32Z",
+  "one_line": "Running the repo's generators (gen-all.ts, gen-corpus.ts) rewrites every generated file with LF bytes. In this worktree core.autocrlf is true, so git status lists the regenerated files as modified although git diff shows no content change for all but the files a commit intends. The commits name their paths explicitly, so these stat-only entries are not committed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CELL step 3 and the generator rule: a generated file is regenerated by the repo's own generator, never hand-edited; the commit carries the files the change touches.",
+  "world_is": "git -C portal config core.autocrlf = true. After gen-corpus.ts, git status lists 23 request records and 2 smoke maps as M; git diff over src/pages/InvestorReporting/fixtures lists one file with content (default.json, +18). The 25 wire files of the earlier passes behave the same way (index stat only; cmp of HEAD blob and worktree bytes equal).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal config --get core.autocrlf = true",
+      "git -C portal diff --stat after gen-corpus.ts: fixtures/smoke/default.json | 18 insertions (the only content change under fixtures)",
+      "md5 of git show HEAD:src/pages/InvestorReporting/contracts/wire/AnalysisReport.ts equals the worktree file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_IRPT_ANLREQ~140 on the fourth pass. No action asked; the byte equality was measured before the commit."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S18 -- OBSERVATION: the fe-s-47 'declares no envelope' failure of the third pass was a read of the COMMITTED responses.ts, so it clears at the commit, not by a grant
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S18",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T20:01:32Z",
+  "one_line": "The no-status-reason test F47-AC7 (S10) reads the wire folder from git HEAD (committedBlob), not from the working tree. The regenerated responses.ts was therefore invisible to it until the candidate commit existed. After the cherry-pick (284e54d2) F47-AC7 is no longer among the failing names; no edit to that test was needed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "S10 (BLOCKING, outside the grant): fe-s-47/no-status-reason.test.ts throws 'responses.ts declares no envelope' on the candidate.",
+  "world_is": "no-status-reason.test.ts:96-98 committedBlob = blobAt('HEAD'), and operationWires() reads that blob. On the third pass HEAD held no commentary envelope. On the fourth pass the candidate run after the cherry-pick (cand1_ir, 1273 tests) showed no F47-AC7 failure.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fe-s-47/no-status-reason.test.ts:96-98 (committedBlob reads HEAD)",
+      "fe-s-47/no-status-reason.test.ts:141-160 (operationWires over the committed responses.ts; WIRE_FOR)",
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~140/r41/PORTAL_COMMENTARY_READER_CANDIDATE.json repinned (case F47-AC7)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_IRPT_ANLREQ~140 on the fourth pass. The issuer may close S10 as resolved by the commit. The same HEAD read governs the other committed-blob tests, so their failures can differ between a working tree and a commit."
+}
+```
+
