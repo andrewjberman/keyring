@@ -35052,3 +35052,56 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. DISARM D2-W384-S1 (the pin's bundle closure lacked opal_unidentified.py): the closure now holds it on the new pin b1d354cfc9, every .py closure member imports under python -I from each firm's built bundle, and the differential was re-run on the built bundles (IB-pr-540 and IB-pr-541). D2-W385-S1 (the pin commit refused by the TO issuance gate): RESOLVED, my order's design: the issuer made the pin commit with an audited suite-gate bypass (three unrelated tests red on trunk too). D2-W385-S2 (SHA256SUMS counted in bundle_delta): INERT, the generated index changes by one line with the added member. D2-W386-S1 (the live bundles lack the matcher and unidentified modules): INERT, expected from the evidence. D2-W386-S2 (the live and built served readers differ in shape, each gate runs on its own code's reader against one captured index): INERT, recorded. D2-W386-S3 (python -I writes __pycache__ despite PYTHONDONTWRITEBYTECODE): INERT, scratch only. D2-W387-S1, S2, S3 (the four reverts conflict at the new pin: later commits touch the same hunks; at the new pin the multi_asset line is already replaced by the CUSIP port): RESOLVED by IB-pr-542 AMENDMENT 1 (my order's design). D2-W387-S4 and S5 (the amendment applied; a CRLF write slip caught by the byte-level diff and redone): INERT. D2-W387-S6 (232 of 236 beyond-rule nodes removed by the CUSIP fallback toggle alone, 0 by the others, 4 unattributed because the signed cash rule overdetermines their asset_class change): the STOP, carried to the CTO with the recommendation of one combined toggle; hazard INERT (nothing minted), LOAD-BEARING for the release."
 }
 ```
+
+## IRPT_BCKEND-D2-W390-S1 -- BLOCKING: the 49financial built differential at pin 2 is 119 changed nodes, not 32; the CUSIP port revert moves 49financial's classification
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W390-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~390",
+  "surfaced_at": "2026-10-14T23:08:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "At pin 2 (CUSIP port reverted) the built differential for 49financial moves 119 nodes against live, not the 32 the round-197 cell expects: 34 carry the signed cash rule, 87 carry a change the rule does not explain (32 equity-to-unclassified, 32 TABLE-to-NONE basis, among 24 non-rule groups). It is a STOP for the CTO; nothing was minted, applied or signed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~390/IB197-2_built_differential.json (this commit): firms.49financial total_changed_nodes 119, differences 25 groups (one identity-patch cash-rule group, 24 UNATTRIBUTED), beyond-rule nodes 87 with signed 34 (2 nodes in both)",
+      "the 49financial run in scratch outside the repository (result.json): run1 and run2 digests equal, the receipts and the gate equal across runs, the planted mutant flagged at 120 (119 plus one)",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~386/IB196-2_built_differential.json (round 196, pin 1 with the port in): 49financial total 32, all signed cash rule, no other group; the round-196 toggle record deliverables/0.9.0_WK_IRPT_BCKEND~387/IB196-3_toggle_attribution.json covers Cottonwood only, so the 49financial effect of the revert was never measured"
+    ]
+  },
+  "spec_asserts": "IB-pr-545 (the CTO's round-197 ruling and the cell's expected outcome): the built-bundle differential at pin 2 totals EXACTLY 32 changed nodes for 49financial, all the signed cash rule, with no other group; any other number is a STOP.",
+  "world_is": "Measured at pin 2 (5fad7eaaa8, the revert of the CUSIP port in holdings_snapshot.py): 49financial moves 119 nodes against live. 34 carry the signed cash rule (identity-patch); 87 carry a change the rule does not explain, and the non-rule groups include asset_class equity to unclassified on 32 nodes and asset_class_basis TABLE to NONE on 32 nodes. At pin 1 with the port in, the 49financial built side differed from live on the 32 cash-rule nodes only. So the revert changes 49financial's classification, which the expectation of exactly 32 did not foresee. The mechanism inside the port is not isolated here.",
+  "notes": "STOP per the order's refusal clause. Recorded, not reclassified and not worked around; the record IB197-2_built_differential.json carries the measured numbers and the criteria output shows IB197-2-AC1 FAIL. The CTO decides whether the port's effect on 49financial belongs to the release (the classification of those securities), needs a documented correction, or needs its own toggle. No mint, upload, apply, sign or send was made."
+}
+```
+
+## IRPT_BCKEND-D2-W390-S2 -- BLOCKING: at pin 2 the 49financial built gate refuses on classified_security_lost while the live gate publishes on the same served state
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W390-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~390",
+  "surfaced_at": "2026-10-14T23:08:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The same-state publish gate for 49financial differs between the live and the pin-2 built code: live PUBLISHED with no condition, built REFUSED on classified_security_lost. The difference is not the signed exemption repair (Cottonwood only), so the order stops here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~390/IB197-2_built_differential.json (this commit): firms.49financial.gate served_state latest_date 2026-10-12, live PUBLISHED with no condition, built REFUSED on classified_security_lost, attribution UNATTRIBUTED",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~390/IB197-2_criteria_output.txt (this commit): IB197-2-AC1 FAIL, the line naming the 49financial gate difference as a STOP"
+    ]
+  },
+  "spec_asserts": "IB-pr-545 step 3: the gate on both sides is read against ONE served state, and a difference between the sides is only the signed exemption repair on Cottonwood; anything else is a STOP.",
+  "world_is": "The 49financial served state was read once (one index capture, zero refused calls). Each code's own evaluate_publish_gate ran on that state: the live code publishes, the pin-2 built code refuses on classified_security_lost. The mechanism is not traced here; it is plausibly the same classification loss recorded in D2-W390-S1, which is not verified. No publication was made or attempted.",
+  "notes": "Read only. Recorded for the CTO with S1; the gate's condition was not reclassified."
+}
+```
