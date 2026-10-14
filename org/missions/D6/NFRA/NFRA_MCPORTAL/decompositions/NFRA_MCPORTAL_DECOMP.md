@@ -1282,3 +1282,202 @@ C18 makes MC Portal the writer and NFRA_OPLGTW C-PERSON the reader, so both are 
    NFRA_OPLGTW C-PERSON. This round serves the read half.
 3. **FWD-22 is not built.** U1 is a read that names where the limits are exposed; the build is cut from its findings.
 4. Cadence reads "absent" everywhere until NFRA_OPLGTW FWD-20 is served.
+
+---
+
+# WORKSTREAM PC, ROUND 2 -- THE OPERATOR-ROLE READ (R1), THE PER-PERSON WRITE (F2), THE USAGE SOURCE ON SITE Z (U2) (L5, v10)
+
+```json
+{
+ "project": "NFRA_MCPORTAL",
+ "decomp_version": "v10",
+ "step": 5,
+ "workstream": "PC",
+ "round": 2,
+ "input": "ledger/ROUND_ANALYSIS.pc-round1.md @771fadb53b (1.0.0_SA_CTO~Z, msg 34162), NEXT ROUND R1 + F2 + U2; L8 adjudications/ADJUDICATION_v5.Z.md; PRD v0.8 unchanged",
+ "prd_ref": "org/missions/D6/NFRA/NFRA_MCPORTAL/prd/NFRA_MCPORTAL_PRD.md@7da54894cf (v0.8: FWD-21, FWD-22, C18; C2, C4, C15 apply unchanged)",
+ "author": "2.0.0_SA_COO~MP",
+ "cells": 8,
+ "chains": 5,
+ "join_cells": 2,
+ "frozen": true
+}
+```
+
+**The recut, from the analysis's NEXT ROUND table, by write set.**
+- **R1** is one read (`MP-pd-1`): Z-W24-S2's limit, closed by a seat.
+- **F2** crosses three write sets, so it is three build cells plus a release and a close run. The grant writer (`MP-pd-2`, the
+  Lambda source), the gateway handler (`MP-pd-3`) and the People page (`MP-pd-4`) are built in parallel against PD.2 and PD.3.
+  Two cells may not own one file, so `MP-pd-3` is the only cell that edits `app/admin_people.py` this round.
+- **U2** is a script (`MP-pd-5`, LOCAL, changes no setting) and then its enablement (`MP-pd-6`, WORLD, STAGED): the analysis
+  asks that the first act be to SEE one live `rate_limits` payload on this box, and only then that anything be written.
+  Enabling changes every site Z seat's Claude Code settings, so it is its own order with the blast radius and rollback named.
+- **The release (`MP-pd-7`) and the close run (`MP-pd-8`) are issued STAGED** (gates in PD.6).
+- Every order carries `<workstream>PC</workstream>` beside `<round>2</round>`.
+
+## PD.0 WHAT IS MEASURED BEFORE THE CUT (issuer, 2026-10-14 ~18:0xZ)
+
+1. **Live:** gateway `bacec95ccd` (MP-pc-5), mcportal `17dcbb2` (origin DEV `ls-remote`). The grant writer Lambda
+   (`infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/lambda_function.py`) takes the actions `narrow`, `widen`, `revoke`
+   and `register_tenant`. `register_tenant` is the precedent for a record kind added by a branch in `_decide`.
+2. **A new record kind needs the module's own tuple.** `app/access_state.py` `POLICY_RECORD_TYPES` is the closed set
+   `("principal_profile", "data_entitlement", "operator_audit", "email_deny", "tenant_firm")`, and `_as_key`/`_expected_type`
+   refuse a key whose record type is not in it. `person_access` is not in it. NFRA_OPLGTW's draft OG-cp-1 (not yet issued,
+   `2.0.0_SA_COO~O`'s `DRAFT_NOT_ISSUED_TO-OG-cp-1_person_record_reader.md`) adds it, with the contract copies.
+3. **The writer's tests use the RELEASED gateway code.** `tests/conftest.py` stages the Lambda's import closure from
+   `EC2_MANIFEST.json` `services.opal-gateway.deployed_commit` with `build_package.py` and puts that directory first on
+   `sys.path`. So the writer sees the `access_state` of the live gateway release, never the working tree. Two consequences:
+   (a) the writer's tests must plant the record type into the staged module's tuple to test a write; (b) the Lambda that
+   accepts `person_access` for real can only be built AFTER OG-cp-1 is RELEASED (live). That is the gate on `MP-pd-7`.
+4. **Base: the lambda suite reads 24 passed, 0 failed** (measured 18:0xZ in `infra/aws/lambda/mcportal/mcportal-grant-writer-lambda`).
+5. **The operator role can be assumed by this box's identity** (`sts assume-role` on `opal-gateway-access-admin` returned an
+   assumed-role ARN; its trust policy admits any principal of the account except `opal-gateway-role`). So R1 can read the
+   grant store under the operator role, which Z-W24-S2 said the close run did not.
+6. **`ops/schwab_entitlement_admin.py` has no read/show subcommand** (its subparsers are activate, revoke, deny-backfill;
+   row Z-W24-S1). A read under the operator role is a raw `GetItem`/`Scan` on `gateway-access-state-table` with the assumed
+   credentials, the way `MP-pc-6` read it under the instance role.
+7. **U1 (the finding):** the account is readable without a credential (`~/.claude.json` `.oauthAccount`); the 5-hour and
+   weekly remaining are not, except through the status-line command's stdin member `rate_limits` (INFERRED from the binary,
+   never seen). No `statusLine` is configured on site Z's `~/.claude/settings.json`.
+8. **The People rows have no principal id today.** `GET /api/admin/people` rows carry `who` (an email or display), not
+   `tid`/`oid`. The grant store and the new record are keyed by `tid`/`oid`. A person known only by email cannot be written
+   until a row carries a principal key (PD.3).
+
+## PD.1 THE CELLS -- 8
+
+| Cell | Serves | Builds / runs | Assignee | Write surface | Risk |
+|---|---|---|---|---|---|
+| `MP-pd-1` | R1 (Z-W24-S2) | the operator-role read: the grant store read under `opal-gateway-access-admin`, each profiled principal's data-grant tools, compared with the served `/people` view per person per tool, denominators printed | worker `~25` | its deliverables only | SERVED |
+| `MP-pd-2` | F2, the writer | the action `set_person_access` in the grant writer Lambda per PD.2: refusals before any store call, optimistic revision, `operator_audit` in the same transaction, the change record with before and after; tests | worker `~26` | `infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/lambda_function.py`, `.../tests/test_person_access.py` (new) | WORLD (live only through MP-pd-7) |
+| `MP-pd-3` | F2, the gateway handler | `POST` and `GET /api/admin/people/{tid}/{oid}/access` per PD.3, owner-gated, the POST through `admin_grants.invoke_grant_writer`; the People rows gain `principal`; tests | worker `~27` | `app/admin_people_access.py` (new), `app/admin_people.py`, `tests/test_admin_people_access.py` (new), `tests/test_admin_people.py` | WORLD (via MP-pd-7) |
+| `MP-pd-4` | F2, the page | mcportal: on the People page, per row with a principal: channel and tool switches, stop and restore, the person's change history; the client functions; tests | worker `~28` | mcportal `src/pages/people/**`, `src/api/admin.ts`, `src/api/admin.test.ts` | WORLD (via MP-pd-7) |
+| `MP-pd-5` | U2, the script | `.tools/claude-usage-statusline.py`: the status-line command that writes the PD.4 snapshot; synthetic-payload tests; it changes NO setting | worker-light `~29` | `.tools/claude-usage-statusline.py` (new), `.tools/tests/test_claude_usage_statusline.py` (new) | LOCAL |
+| `MP-pd-6` | U2, enable and SEE a live payload | writes the one `statusLine` key into this box's Claude Code user settings, sees one live `rate_limits` payload (or records that the member is absent), names the blast radius, proves the rollback on a copy | worker `~29` (same queue as pd-5) | its deliverables, plus the one settings key | WORLD |
+| `MP-pd-7` | F2 live | the F2 release: the Lambda code apply through `safe-apply` (rebuilt from the then-live gateway release that knows `person_access`) and the gateway release of MP-pd-3, the route lines (step 0), the MP-pd-4 bundle; never-widen pair; NEVER-2 | `0.7.0_AE_CloudOps~MQ` | `infra/aws/ec2/opal-gateway/app/admin_api.py`, `infra/aws/ec2/EC2_MANIFEST.json`, ledger paths, `infra/aws/lambda/mcportal/**` for the build record only | WORLD |
+| `MP-pd-8` | FWD-21 DONE WHEN, the write half | the close run after Andrew's sitting: on the test principal, a channel and a tool switched off and back on, and the person stopped and restored, each read back from the grant store and from the change history; the effect on that person's next gateway call | worker `~30` | its deliverables only | WORLD |
+
+**The hookup belongs to no cell** (report 2 C10). The two `Route(...)` lines for `admin_people_access` and their import in
+`app/admin_api.py` are MP-pd-7's step 0, as CP2.10 and PC.1 ruled.
+
+## PD.2 THE PER-PERSON RECORD -- the aligned object (supersedes PC.7's field names)
+
+PC.7 fixed `channels_off`, `tools_off` and `tools_on`. NFRA_OPLGTW's OG-cp-1 draft, aligned with this seat in the
+2026-10-14 exchange, fixes the names below, and they are the ones used from here. Mapping: `tools_off` is `tools_deny`,
+`channels_off` is `channels_deny`, `tools_on` is `tools_allow`, and `channels_allow` is new.
+
+- **Key:** pk `POLICY#<tid>#<oid>`, sk `person_access`, record type `person_access` (`access_state.policy_key(tid, oid,
+  "person_access")`): one record per person, no revision part.
+- **Body:** `status` (`active` | `revoked`), `revision` (int >= 1), `stopped` (bool), `tools_allow`, `tools_deny` (sorted
+  unique lists of tool names), `channels_allow`, `channels_deny` (sorted unique lists of channel ids), `updated_at` (ISO
+  Z), `updated_by` (the first 16 hex characters of the sha256 of the approver string the writer already uses, which is
+  the verified email or the claim name, never the owner key).
+- **The writer's event:** `{"action": "set_person_access", "tid", "oid", "change": {...}, "expect_revision": <int> | null,
+  "owner_header"}`, where `change` holds any of `stopped` (bool), `status`, and the four lists. A key absent from `change`
+  keeps its prior value; a key present REPLACES it. `expect_revision` is `null` for a first write (the put must find the
+  item absent) and the prior `revision` otherwise (the put must find exactly that revision).
+- **The writer's answers:** `{"verdict": "WRITTEN", "reason": null, "detail": "", "result": {"tid", "oid", "revision": n,
+  "record": {the body}}}` or `{"verdict": "REFUSED", "reason": R, "detail": ...}` where R is one of the four header reasons,
+  `OWNER-CONFIG-MISSING`, `BAD-TID`, `BAD-PERSON-ACCESS` (shape), `RECORD-KIND-NOT-LIVE` (the staged `access_state` does
+  not know `person_access` yet), or `STALE-REVISION`.
+- **Revoking the record** is `change: {"status": "revoked"}`: it writes revision + 1 with status `revoked` (a tombstone,
+  never a delete), which returns the floor to the person (OG-cp-1's reader treats a non-active record as no record).
+- **Rollback per change:** re-write the before, from the change history's `before`, through the same writer.
+- **Rollback of the mechanism:** revoke the record, or delete the record kind; the floor governs exactly as today.
+- **Writes are Andrew-only** (C2, laptop CTO ruling @f469cb665f): the writer's header check is unchanged and runs first.
+
+## PD.3 THE CONTRACTS (fixed here so MP-pd-3 and MP-pd-4 run in parallel)
+
+All behind `owner_gate.owner_only`, same origin.
+
+**`GET /api/admin/people`** (existing, edited by MP-pd-3 only): each row gains `"principal": {"tid": "<guid>", "oid":
+"<guid>"} | null`. The value is non-null exactly for a row built from a principal with a `principal_profile` in the grant
+store (those rows already come from the store's Scan, which carries `tid` and `oid`); every other row is `null`. Nothing
+else in the body moves.
+
+**`GET /api/admin/people/{tid}/{oid}/access`** answers 200 with
+`{"tid", "oid", "record_kind": "live" | "not live", "record": {the PD.2 body} | null, "read_at": "<ISO Z>"}`. It reads the
+record with one strong `access_state` get. If the module refuses the key because it does not know `person_access`, the
+answer is `record_kind: "not live"` and `record: null`, never a 500. A read failure other than that is the module's 503
+arm. A `tid` or `oid` that is not a GUID is 400.
+
+**`POST /api/admin/people/{tid}/{oid}/access`** takes `{"change": {...}, "expect_revision": <int> | null}`, validates the
+shape (`change` keys limited to `stopped`, `status`, `tools_allow`, `tools_deny`, `channels_allow`, `channels_deny`; lists
+of at most 64 non-empty strings of at most 128 characters; `stopped` a bool; `status` `active` or `revoked`; at least one
+key), reads the verified `x-amzn-oidc-data` header as `admin_grants` does, and calls `admin_grants.invoke_grant_writer(
+"set_person_access", tid, oid, change_with_expect_revision, owner_header)`, relaying the verdict. A bad shape is 400 before
+any invoke.
+
+**The page** (MP-pd-4): controls render only for a People row whose `principal` is non-null; a row with `principal: null`
+reads "no principal id: cannot be changed from here yet" and shows no control. The page loads a person's `access` on
+selection, shows `record_kind: "not live"` as "per-person control is not live yet", and after a change re-reads the record
+and the person's history. The history is the existing `GET /api/admin/changes?tid=&oid=` list (FWD-4), filtered by the
+page to `action` `set_person_access`.
+
+## PD.4 THE USAGE SNAPSHOT -- U2's object (fixed here so MP-pd-5 and MP-pd-6 agree)
+
+The status-line command writes ONE file, `usage_snapshot.json`, in the directory named by `CLAUDE_CONFIG_DIR` when that is
+set and `~/.claude` otherwise (so one file per login on a box):
+`{"schema": 1, "written_at": "<ISO Z>", "rate_limits_claim": "measured" | "absent", "reason": "<text>" | null, "five_hour":
+{"used_percentage": <num>, "remaining_percentage": <num>, "resets_at": <as the payload gives it>} | null, "seven_day": {same} |
+null, "account": {"email", "plan", "organization"} | null, "account_claim": "measured" | "absent"}`.
+- `remaining_percentage` = 100 - `used_percentage`. The command computes it from the payload and invents nothing.
+- The account comes from `~/.claude.json` `.oauthAccount` (`emailAddress`, `organizationType`, `organizationName`) and
+  nothing else. It never opens `~/.claude/.credentials.json` and never prints or writes a token.
+- A payload with no `rate_limits` member writes `rate_limits_claim: "absent"` with the reason, UNLESS a snapshot already
+  holds `rate_limits_claim: "measured"`, which is then left as it is: its own `written_at` is its age. An absent payload
+  never replaces a measured snapshot.
+- The command prints one short line (`5h <used>% wk <used>%`, or `usage n/a`), always exits 0, writes atomically (temp file
+  then replace), and on any error prints nothing and leaves the previous file.
+
+## PD.5 DEPENDENCY EDGES AND CHAINS
+
+```
+chain R   MP-pd-1
+chain W   MP-pd-2 --\
+chain H   MP-pd-3 ---+--> MP-pd-7 --> MP-pd-8       the release ships F2; the close run follows Andrew's sitting
+chain P   MP-pd-4 --/
+chain U   MP-pd-5 --> MP-pd-6                        one queue, one worker
+joins     MP-pd-7 (pd-2, pd-3, pd-4 drained + G-REL7)    MP-pd-8 (pd-7 drained + G-WRITE)
+```
+
+**Fan-out:** `N = 5 of M = 5 chains, cap 8`: workers `~25` (MP-pd-1), `~26` (MP-pd-2), `~27` (MP-pd-3), `~28` (MP-pd-4), `~29`
+(MP-pd-5, then MP-pd-6 on the same queue). MP-pd-7 goes to the applier seat `0.7.0_AE_CloudOps~MQ`. MP-pd-6, MP-pd-7 and MP-pd-8
+are issued STAGED (MP-pd-8's slot is `~30`).
+
+## PD.6 GATES
+
+- **MP-pd-1 to MP-pd-5:** none. They start at the issuance.
+- **G-ENABLE (MP-pd-6):** MP-pd-5 drained, and the issuer has read the script and its tests at HEAD. Holder: the issuer. The
+  blast radius is every site Z Claude Code session on this Windows profile (the status line runs in each and shows one
+  line); the rollback is removing the one `statusLine` key. Both are named in the order and in the pre-act record, and the
+  rollback is proven on a copy of the settings file before the live write.
+- **G-REL7 (MP-pd-7):** MP-pd-2, MP-pd-3 and MP-pd-4 drained; NFRA_OPLGTW's OG-cp-1 RELEASED (the live gateway's
+  `access_state` knows `person_access`, which is what `build_package.py` stages from); the gateway queue free; the
+  never-widen pair signed against the release ASK. Holder: the issuer.
+- **G-WRITE (MP-pd-8):** MP-pd-7 drained and OG-cp-1 live; a test principal named by the issuer; Andrew's sitting on the
+  People page (the writer verifies an ALB-signed owner header, which no seat can produce), with the window and his words on
+  the issuer line. The sitting is queued as a call when G-REL7 holds, not before.
+
+## PD.7 RULE 24 RECORD (the new value sets)
+
+- **`person_access.status`** {active, revoked}: a record is in force or it is a tombstone. MECE on one axis (the record's
+  standing); the tokens are NFRA_OPLGTW's.
+- **`record_kind`** {live, not live}: the deployed `access_state` knows the type, or it does not.
+- **`rate_limits_claim` and `account_claim`** {measured, absent}: the estate's own reserved words (CLAUDE.md A VALUE MUST
+  CARRY ITS CLAIM). "inferred" is not used in the snapshot: a figure either came from the payload or it is absent.
+- **Token census:** "not live", "absent", "measured", "stopped", "revoked" and "no principal id" are the code's or this
+  document's own words, plus the page phrase "per-person control is not live yet".
+
+## PD.8 WHAT THIS CUT DOES NOT CLAIM
+
+1. No cell has run. The writer's behaviour is proven against a fake store with the record type planted; the real store
+   accepts `person_access` only after OG-cp-1 is released and the Lambda is rebuilt from it (PD.0 item 3).
+2. **FWD-21 is not REALIZED by this round.** Its DONE WHEN needs the test-principal writes read back and honoured on a real
+   call (MP-pd-8), which wait on MP-pd-7, OG-cp-1 live, and Andrew's sitting.
+3. **FWD-22 is not REALIZED by this round, and the panel is not built.** The status-line snapshot is a file on ONE box. The
+   control-plane page is served from AWS and cannot read it. The transport (the per-box producer carrying the snapshot, the
+   gateway handler passing it through, the panel printing it) is the NEXT round's enrichment, and the analysis's "the panel
+   reads it" is read here as that later hop. The issuer rules this scope inside this decomposition and states it to the CTO.
+4. The other three boxes are other fabrics. U2 carries to them only as a cross-box direction after site Z is proven.
+5. A person known only by email has no principal key, so no control (PD.0 item 8). Closing that is a later cell.
+6. The refusal branch (rc != 0) of the three-state git read stays unexercised, as the analysis ruled.
