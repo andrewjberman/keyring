@@ -12039,3 +12039,80 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disarm_owner": "2.0.0_SA_COO~D2"
 }
 ```
+
+## IRPT_DASHBD-D2-W177-S1 -- no independent close series is reachable for the holdings offset, so DB-b-220 stops (BLOCKING)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W177-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~177",
+  "surfaced_at": "2026-10-14T19:24:16Z",
+  "one_line": "DB-b-220 cannot measure the holdings offset: no independent close series for Black Diamond's securities over the 120-day window is reachable inside the grant or held in the repo, so the cell stops at its BLOCKING refusal.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-220 step 3: the offset is measured against an INDEPENDENT close series (a repo or served series that does not come from the Black Diamond file, for example the model benchmark's served series or a published price file already in the repo); if no independent close series exists, say so in a BLOCKING row and stop.",
+  "world_is": "The one granted prefix holds only Black Diamond positions: 93 partitions, one object each, dated 2026-06-09 through 2026-10-13. The independent comparator the 2026-10-01 read used (the Schwab own-date anchor) sits under a different prefix, outside the grant, so it was not read. Repo search found no tracked file with daily closes for 2026-06-16 through 2026-10-13: histdata_daily_px_BABA_US_Equity.json ends 2025-12-31; data/smartx/benchmarks/benchmark_returns.json is returns with data_as_of 2025-11-28; infra/aws/lambda/investor-reporting/performance/fixtures/bd_series.json is a scrubbed account-level series, not security closes. No vendor call was made. The record reads the holdings date UNDETERMINED with claim absent and files_compared 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_holdings_performance/sources.json blackdiamond_z09 positions_prefix, resolved read-only by holdings_performance.resolved_prefix to blackdiamond/cottonwood/silver/fact_holdings/",
+      "aws s3api list-objects-v2 --bucket opal-data-assets --prefix blackdiamond/cottonwood/silver/fact_holdings/ at 2026-10-14T19:13Z (93 objects, 93 partitions)",
+      "integrations/bloomberg/research/tests/fixtures/fye_join/histdata_daily_px_BABA_US_Equity.json (last date 2025-12-31)",
+      "data/smartx/benchmarks/benchmark_returns.json (data_as_of 2025-11-28)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Issuer decision needed: name an independent close series that covers 2026-06-16 through 2026-10-13 (served or repo, not from the Black Diamond file) for DB-b-220 to re-run, or rule that the holdings offset is not measurable and the citation is decided on the date carriers alone."
+}
+```
+
+## IRPT_DASHBD-D2-W177-S2 -- Black Diamond object write days are rewrite days for early partitions, not pull days
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W177-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~177",
+  "surfaced_at": "2026-10-14T19:24:16Z",
+  "one_line": "Black Diamond holdings object write days are not pull days: 44 of 93 partitions were written the day after their date and 49 later, 27 of those in one batch on 2026-07-14.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-220 step 2: the object LastModified is the day the file was written to S3, a carrier whose meaning must be named (a pull day or a rewrite day).",
+  "world_is": "LIST of the prefix at 2026-10-14T19:13Z: 93 partitions, one object each. Written the next day after the partition date: 44 (partitions dated 2026-07-22 through 2026-10-13). Written later than that: 49, all dated 2026-06-09 through 2026-09-25; 27 carry a write day of 2026-07-14, 3 of 2026-09-28, 2 of 2026-08-25, 1 of 2026-07-15, and 16 further partitions carry other days. So the LastModified of an early partition is a rewrite day, not its pull day. The cause of the rewrites was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-objects-v2 --bucket opal-data-assets --prefix blackdiamond/cottonwood/silver/fact_holdings/ at 2026-10-14T19:13Z (LastModified per object, counted by .scratch/window.py in the worker worktree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W177-S3 -- the worktree portal differs from the workspace portal at the cited adapt.ts lines
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W177-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~177",
+  "surfaced_at": "2026-10-14T19:24:16Z",
+  "one_line": "The worktree's portal carries different content from the workspace portal the cell cites: the holdings date read at adapt.ts lines 1229-1233 is not at those lines in the worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-220 step 1: the portal date citation is read at portal/src/pages/InvestorReporting/contracts/adapt.ts lines 158-167, 804-818 and 1229-1233, from C:/dev/ajb_workspace/portal (the worktree's portal may be empty).",
+  "world_is": "The worktree's portal is populated but carries different content. Its adapt.ts has business_date only at lines 121, 134, 374 and 585, and no holdings adapter at lines 1229-1233. The workspace portal (read-only) has adaptHoldingsSnapshot at adapt.ts line 1164, reading wire.clocks.business_date at lines 1229 and 1233. The citation record uses SecurityList.tsx line 623, which is the same line in both trees. The read used the workspace portal, as directed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ajb_workspace/portal/src/pages/InvestorReporting/contracts/adapt.ts lines 1164, 1229 and 1233 (read at 2026-10-14T19:23Z)",
+      "portal/src/pages/InvestorReporting/contracts/adapt.ts in the worktree (grep business_date: lines 121, 134, 374, 585)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
