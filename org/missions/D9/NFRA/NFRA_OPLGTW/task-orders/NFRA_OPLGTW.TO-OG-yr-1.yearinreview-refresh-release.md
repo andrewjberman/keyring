@@ -23,15 +23,15 @@ The gateway serves `/yearinreview` from one self-contained file shipped INSIDE t
 The CRO rebuilt the page through 2026-10-14; the FINAL pin is `org/tier1_exec/4.0.0_SA_CRO/deliverables/BRIEF1_YEAR_ONE_20261004/YEAR_ONE_ONE_PAGER.html` at commit `947fc522a8`
 (48,235 bytes, md5 `0d828b51d433a24f7e2ef2e6ea7967ee`, carries the data date `"until": "2026-10-11"`). Earlier pins `1db3d8d0aa` and `a0e00489b0` are SUPERSEDED: never copy them.
 
-### PHASE A (only when `NFRA_OPLGTW.TO-OG-ap-18`'s ledger `nfra-oplgtw-gateway-release-gt` is CLOSED, so the live ref is ap-18's release): cut, ask. NO deploy
+### PHASE A (A1: NOW, on the host's running commit; it no longer waits for `OG-ap-18`): cut, ask. NO deploy
 
-1. **Live ref.** Read `services.opal-gateway.deployed_commit` in `infra/aws/ec2/EC2_MANIFEST.json` at HEAD, then one SSM md5 read of the host against it, walking `app/`, `deploy/` and `dashboard/`. A mismatch is a STOP and a BLOCKING row.
+1. **Live ref** (the host's running commit, read at the act). Read `services.opal-gateway.deployed_commit` in `infra/aws/ec2/EC2_MANIFEST.json` at HEAD, then one SSM md5 read of the host against it, walking `app/`, `deploy/` and `dashboard/`. A mismatch is a STOP and a BLOCKING row.
 2. **Cut** a worktree `C:/tmp/og-rel-yr`, new branch `rel-nfra-oplgtw-yr`, at that live ref. Write `app/static/yearinreview/index.html` BYTE FOR BYTE from the pin:
    `MSYS_NO_PATHCONV=1 git show 947fc522a8:org/tier1_exec/4.0.0_SA_CRO/deliverables/BRIEF1_YEAR_ONE_20261004/YEAR_ONE_ONE_PAGER.html > <the file>` and print the md5 (want `0d828b51d433a24f7e2ef2e6ea7967ee`). Touch NO other file.
    Commit with the audited `GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL` on the release commit only. Write `W/yr_release.json` = `{"base_sha", "release_sha"}` (FULL 40-character shas). Run the gateway tests whose names mention yearinreview.
 3. **The ask**, `W/NEVER_WIDEN_ASK_OG-yr-1.md`, for TWO halves (`1.0.0_SA_CTO~Z` and `2.0.0_SA_COO~O`). It carries, each under a heading containing its word: (1) the `diff` (one file, bytes before and after, md5s); (2) the `widening`, stated plainly:
    no tool, no IAM, no route, no `.env`; the SAME page route now serves newer content; read `app/yearinreview_view.py` and the route's gate and state WHO can read `/yearinreview` today (it does not change); (3) the `order` of acts (one deploy under a ledger);
-   (4) the `rollback` (redeploy the base, parity with the host measured); (5) the `triggers` (`/health`, the registry count unchanged, `.env` key names unchanged, the host md5 of the file equals the source). Commit, run AC1, REPORT, STOP.
+   (4) the `rollback` (redeploy the base, parity with the host measured); the ask CITES `1.0.0_SA_CTO~Z` msg 34244 (his half is pre-stated there: blast radius one file, no tool, IAM or route change, rollback the redeploy of the running base) and is sent to him; (5) the `triggers` (`/health`, the registry count unchanged, `.env` key names unchanged, the host md5 of the file equals the source). Commit, run AC1, REPORT, STOP.
 
 ### PHASE B (only on the issuer's GO, which names both halves signed at `release_sha`)
 
@@ -79,6 +79,10 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-yr-1.yearinreview-refresh-relea
 - Round 37, workstream YEARINREVIEW (decomposition addendum R3-T.56). Never-widen halves: CTO and COO (one static file, no reach change). The CTO: "I sign my half the moment it lands" (msg 34233). The GO is the issuer's message citing this order.
 - Queue: staged until OG-ap-18 closes; then this release, then OG-ap-17's re-cut and OG-ap-19.
 - Pre-cut: yr1.AC1 and yr1.AC2 base FAIL as expected (the two records are absent). The pin 947fc522a8 resolves here: 48,235 bytes, md5 0d828b51d433a24f7e2ef2e6ea7967ee, `"until": "2026-10-11"` present once.
+
+
+- A1 (issuer, 2026-10-14 ~22:1xZ, Andrew-direct "i need it live now" via CRO msg 34242 and CTO msg 34244): this release goes NOW, ahead of the `OG-ap-18` re-cut, on the host's running commit (live `bacec95ccd` today). The queue is yr-1 -> ap-18 (re-cut on yr-1's release) -> ap-19. The CTO pre-stated his half in msg 34244; the issuer signs the COO half on the ask's arrival.
+  Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>
