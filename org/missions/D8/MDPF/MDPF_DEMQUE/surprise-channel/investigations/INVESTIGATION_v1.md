@@ -2654,6 +2654,68 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "AMENDED 2026-10-13 ~23:5xZ (ruling on S6), MDPF_DEMQUE.TO-DQ-t58 item (1): 'lock.check over the appended rows with the trades that fall inside the appended window'. No valid_from is named for that check.",
     "world_is": "lock.check's early-third rule makes the check's valid_from decide whether an agreeing late-window trade can pass. The wired check anchors valid_from at the window's first in-window trade, so the early-third rule applies to the window's own trades; the 90 pct floor and the three-trade minimum are unchanged. The issuer is asked to confirm this reading or name another valid_from. Nothing is written by this row."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W50-S8",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~50",
+    "surfaced_at": "2026-10-14T04:05:05Z",
+    "one_line": "AC2 (dq_t58_equal.py) was NOT re-run after the second applicability rule: its live --spot 5 --tr needs 5 Yahoo requests, the budget is spent (125 of 120) and no new spot is pre-approved. The 50-name report and its live spot are carried from commit 80a8479c2f; the issuer grades AC2 on the existing report.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t58.wire-yahoo-incremental.md at c11bc60ca9: AMENDED 2026-10-14 ~00:2xZ, 'AC2's live --spot 5 --tr is NOT pre-approved again'",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/0.9.0_WK_MDPF_DEMQUE~50/INCREMENTAL_WIRED_EQUALITY_REPORT.json at 80a8479c2f (the 50-name report, unchanged by this pass)",
+        "whole-store census of this pass (read only, no Yahoo): held names LCEYX and FTHSX are still REJECTED:LOW_TRADE_AGREEMENT with trades_before_window 0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMENDED 2026-10-14 ~00:2xZ, MDPF_DEMQUE.TO-DQ-t58: 'The 50-name equality report and the Yahoo budget are unchanged ... run AC2 only if its report file and a spot result already on your branch satisfy it; if the check cannot pass without a new Yahoo request, say so in the report and file a row'.",
+    "world_is": "AC2 was not run this pass. The second rule changes the relock step only for names with a trade before their stored window; the held list of the whole-store census is unchanged for the two sample names it holds (LCEYX, FTHSX). The report's relock_measured key was produced under the previous rule and may list names the new rule does not relock. Nothing is written by this row."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W50-S9",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~50",
+    "surfaced_at": "2026-10-14T04:05:05Z",
+    "one_line": "The ninth named test builds its stored window from the helper's DAYS range (the first trading day 90 calendar days before the frontier), not from 2026-04-14 as the order's synthetic description reads. The rule tested depends on the order of the dates, not on the start date.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/test_demque_incremental_wiring.py at c11bc60ca9: DAYS = tc.trading_days_between(F - timedelta(days=90), F); _store_name writes the stored window from DAYS[0]",
+        "the ninth test, added this pass: test_a_name_with_some_trades_before_the_stored_window_is_not_held_by_the_combined_check_and_is_listed_without_relock, one trade on 2019-11-22 and two trades on DAYS[1] and DAYS[2]; WIRE-OK 9 of 9"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMENDED 2026-10-14 ~00:2xZ, item (3) of MDPF_DEMQUE.TO-DQ-t58: 'synthetic: one trade in 2019 and two inside the stored window from 2026-04-14, stored lock LOCKED with 3 observations'.",
+    "world_is": "The synthetic helpers start the stored window at DAYS[0], so the stored window does not begin on 2026-04-14. The 2026-04-14 date appears in the order as the real-store probe's start and is not a helper input. The stored lock carries observations_checked 3 and observations_passed 3 as the order requires. Nothing is written by this row."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W50-S10",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~50",
+    "surfaced_at": "2026-10-14T04:05:05Z",
+    "one_line": "Under the second rule, 238 of the 483 stored names carry a trade before their stored window and are appended without the combined relock. Where their appended window also holds no trade, no identity check runs on their appended days at all; the receipt lists them under appended_without_relock.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "whole-store census of this pass (read only): not_applicable 238 of 483 names (before the change: 188); applicable 165; locked 151; held 14",
+        "data/mdpf/scripts/demque/daily_draw.py window_relock at c11bc60ca9: returns None when no trade falls in (stored max, frontier], and combined_relock returns None under the second rule for a not_applicable name, so neither check runs on those appended days"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MDPF_DEMQUE.TO-DQ-t58 item 4 (pair A condition 2): 'After building the appended window, run lock.check on the appended days.' The amended order's rule (AMENDED 2026-10-14 ~00:2xZ) lists such a name as appended_without_relock and proceeds after the appended-window check.",
+    "world_is": "The census counts 238 names with a trade before the stored window. How many of them also have no trade in the appended window was not measured this pass; for each of those the appended days are written with no identity check. The first nightly run after the merge would write them unless the issuer decides otherwise. Nothing is written by this row."
   }
 ]
 ```
