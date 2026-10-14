@@ -14910,3 +14910,30 @@ name the one known failure instead of silently inheriting it.
     "notes": "INERT inside its coverage window; the regeneration deadline is before 2028."
   }
   ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W81-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~81",
+  "surfaced_at": "2026-10-14T16:54:39Z",
+  "one_line": "The naming commit limb refuses both served portal key literals OG-pt-3 must hold, platinum/mdpf/ and platinum/mdpf/{scope}/category-views.json, as NEW OUT-OF-PATTERN S3Key, with canonical mdpf/{scope}/platinum/ forms. The bucket literal opal-data-portal-v2 is CONFORMANT. Per the FIRST ACT the order stops before any build.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_OPLGTW.TO-OG-pt-3 FIRST ACT: run the naming gate on the staged S3 key and prefix literals; if ANY literal is refused, do not type it, STOP at once, file ONE BLOCKING row naming the refused literals and the gate's canonical suggestion, and report (the issuer rules the resolution). Bounds: never split a string, never build a key from pieces, never override a gate.",
+  "world_is": "The gate refuses both literals in the served layout. Its canonical suggestions are mdpf/{scope}/platinum/ and mdpf/{scope}/platinum/{scope}/category-views.json. The served layout on opal-data-portal-v2 at HEAD is platinum/mdpf/{scope}/<object>.json, the form DATA_CATALOG.yaml and exercise_catalog_gate.py use. So the order's literal layout cannot be typed as written. Nothing was built, served or changed; the row is INERT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "naming-gate probe at base 835f9452c3, staged diff W/naming_probe/probe.diff (3 added lines, one literal each): 'NAMING REFUSE infra/aws/ec2/opal-gateway/app/portal_mdpf.py:2 platinum/mdpf/ -> mdpf/{scope}/platinum/' and 'NAMING REFUSE infra/aws/ec2/opal-gateway/app/portal_mdpf.py:3 platinum/mdpf/{scope}/category-views.json -> mdpf/{scope}/platinum/{scope}/category-views.json', then 'NAMING-GATE: REFUSE 3 graded', rc=1; verbatim at org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~81/naming_probe/probe_output.txt",
+      "the same run grades the bucket literal opal-data-portal-v2 as CONFORMANT as S3_BUCKET (probe line 1)",
+      "served layout at HEAD 835f9452c3: infra/aws/ec2/opal-gateway/app/graphql_plumbing/exercise_catalog_gate.py lines 42-45 hold platinum/mdpf/{scope}/aum-metrics.json; infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml line 677 names primary platinum/mdpf/{49financial|inflection|cottonwood|global}/...",
+      "infra/logic/registry grep for platinum (first 15 hits, not a census) returns prefixes under advi/, e.g. exemptions.json line 132 advi/49financial/platinum/49financial/ownership_map.json; no registry row was found for the platinum/mdpf/ layout in that read"
+    ]
+  },
+  "notes": "Filed by the worker on the FIRST ACT. No module, test, probe or catalog row was written. Resolution is the issuer's: a registry row or builder output for the portal-v2 layout, or a ruling on the gate's canonical form. The naming gate was not overridden and no key was typed by splitting."
+}
+```

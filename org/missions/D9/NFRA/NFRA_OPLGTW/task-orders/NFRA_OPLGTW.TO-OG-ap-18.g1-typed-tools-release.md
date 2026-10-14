@@ -117,7 +117,15 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-18.g1-typed-tools-release.pr
   before a later release displaced it; runbook 7.2 (rb.AC2) is graded only while this release is the live one. "deployed_commit equals release_sha" flips to FAIL on work graded PASS the
   moment the next release lands, so it is no longer a criterion. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>staged</status>
+- A2 (issuer, 2026-10-14 ~18:3xZ): **PHASE A MAY START.** Preconditions met: OG-hv-2 CLOSED (live was 7c558b4e21, now bacec95ccd after MP-pc-5); the five G1 build cells and the hookup cell are merged on box/sitez: OG-gt-0 `077a46f5e1`
+  (worker commit `4a707ab5f9`), OG-gt-1 `c053092447` (`ca2db2d5c9`), OG-gt-2 `7c0197d9c2` (`b47578c367`), OG-gt-3 `f4a65ac665` (`d79e6dda9a` + `a08c86df77`), OG-gt-4 `ca23de384a` (`dc1139265a`), the hookup OG-gt-7 `705e6f7406`
+  (`0cda8e2505`). Take the five module files and the five test files WHOLE from `box/sitez` HEAD (`app/harvest_typed.py`, `harvest_identity.py`, `harvest_press.py`, `harvest_figures.py`, `harvest_research.py`; `tests/test_og_gt0.py` to
+  `test_og_gt4.py`); take the five hookup files BY HUNK from `0cda8e2505` (only the hunks that name the ten G1 tools and the two pins 65 -> 75 and 56 -> 66) on the live base `bacec95ccd`. `app/typed_scope.py`, `app/harvest_published.py` and
+  `tests/test_og_gt5.py`/`gt6.py` are NOT in this release (ap18.AC1 refuses them). Known reads before you ask: the commit-time naming gate passed every module; `lib/trading_calendar.py` is imported by the tools: confirm in the served
+  read that it reaches the installed code (rows Z-W72-S2, Z-W79-S3 say the deploy ships app code and the calendar may fall back); `harvest_search_articles` reads one silver partition of about 110 MB for its sentiment join and took 65-97 s
+  in its live probe: record the served latency in the ask. The order may be cut beside OG-ap-17's Phase A; the first fully signed one deploys and the other re-cuts on the new live ref. Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
+<status>pending</status>
 <round>37</round>
 <workstream>G1-TYPED</workstream>
 <slot>~AE</slot>
