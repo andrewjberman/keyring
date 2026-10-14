@@ -14672,3 +14672,33 @@ name the one known failure instead of silently inheriting it.
   "notes": "A naming difference, not a data difference: no table is missing and no grant changes. The census may wish to name its headings by served key; that is the census owner's call."
 }
 ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S121",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T17:41:13Z",
+    "one_line": "A1 condition (iii) wanted exactly ONE UpdateWebACL; the measured count is ZERO, because terraform logged 'Modifications complete after 19s' for the WebACL and never sent the write. Four instruments agree it was not written. Zero is strictly SAFER than one -- there was no interval without the managed rules -- but zs1.AC2's n==0 branch also requires the before/after snapshots to be ABSENT, so the honest 0 beside the snapshots the same ruling told me to take reads FAIL. The deploy itself is landed, proven and CLOSED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "apply window 2026-10-14T17:21:40Z..17:24:39Z: 'Apply complete! Resources: 0 added, 2 changed, 0 destroyed', with 'aws_wafv2_web_acl.opal_cloudfront_protection: Modifications complete after 19s'",
+        "CloudTrail lookup-events 17:10Z..17:33Z, EventSource wafv2.amazonaws.com: 21 events, names GetWebACL 5, ListTagsForResource 7, GetIPSet 8, GetLoggingConfiguration 1 -- NO UpdateWebACL",
+        "the window is SETTLED, not lagging: five of those GetWebACL events are my own calls on this ACL at 17:14:34, 17:19:22, 17:19:34, 17:23:51 and 17:25:54, two of them bracketing the apply",
+        "the event CLASS is recorded: UpdateIPSet returns 2 events in 30 days with eventSource wafv2.amazonaws.com, so this trail does record wafv2 WRITES and a zero for UpdateWebACL is a real absence",
+        "the ACL's LockToken is byte-identical before and after (848a6d0b-d69f-40e0-876a-cfc0ce40b6b2, read 17:14:33Z and 17:25:54Z); wafv2 re-issues it on every successful update",
+        "capacity unchanged at 947; rules_sha256 identical over the whole ordered rule list (e18311e9c8315107da5f8719748bb9aea1ae7cf0bb5eb5e19cd829e420c0bbf4); 6 rules either side; 0 statement digests outside the before set",
+        "zs1.AC2's ACL limb: the n==0 branch fires only when `not os.path.exists(BEFORE) and not os.path.exists(AFTER)`; with both files present and n==0 the check falls to its else branch and prints 'WebACL conditions not met (updatewebacl_calls 0)'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A1 condition (iii): read CloudTrail for the apply window and record updatewebacl_calls; 'it must be exactly 1, because one atomic update leaves no interval in which the ACL evaluates without its managed rules'. The 0 case is reserved for 'if the plan reads 1 change, none of (i)-(iii) applies and updatewebacl_calls is 0'.",
+    "world_is": "There is a third case the ruling did not anticipate: the plan reads 2 changes, the snapshots are duly taken, AND the count is 0 -- because the provider renders an identical-block diff at PLAN time and then sends nothing at apply time. The condition's purpose is satisfied more completely than by one atomic update: the ACL was never written at all, so no interval of any length existed. But the check cannot express that, and the honest record therefore grades FAIL. Neither the value nor the snapshot files were adjusted to make the branch fire -- deleting the evidence the ruling asked for, to satisfy the clause that asked for it, would be the worst available move.",
+    "notes": "A correction I owe on my own instrument work: BEFORE the apply I controlled CloudTrail's readability by looking for wafv2 events and found 40 (GetIPSet, GetWebACL), and I recorded that as establishing the instrument. It did not -- those are all READS, and reads being recorded does not establish that WRITES are. The control that actually settles it is UpdateIPSet, which I only ran afterwards. Had the trail genuinely not recorded writes, my pre-apply check would have passed anyway and the post-apply 0 would have been uninterpretable. Same service, different event class, and the pre-apply gate the ruling asked for would have been vacuous. The remedy for the criterion is the issuer's: either let the n==0 branch accept a 0 WITH identical snapshots (the strongest state), or have the condition read 'at most one, and the rule set identical'. Nothing in the world is wrong: bare path 401 unauthenticated, both paths 200 authenticated, ACL untouched, ledger nfra-oplgtw-edge-auth-json-tiered CLOSED with four legs proven."
+  }
+  ```
