@@ -11350,3 +11350,87 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W172-S1 -- the Orion silver fact_transactions and fact_performance partitions are cumulative, so a per-date read double-counts history
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W172-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~172",
+  "surfaced_at": "2026-10-14T16:32:19Z",
+  "one_line": "The Orion silver fact_transactions and fact_performance partitions are cumulative: the newest dated partition carries the full history, not one day, so reading a partition per date would count the same history again.",
+  "spec_asserts": "TO-DB-b-212 step 2 and 3 read the granted Orion silver tables by date partition (LIST, then GET the newest partition or the partitions you need), which reads each dated partition as that day's content.",
+  "world_is": "fact_transactions/date=2026-10-14 holds about 1.5 million rows back to 2020; fact_performance/date=2026-10-14 holds client factors for dates back to 2020. Only the positions partitions are one as-of date each. This read used the newest partition of the two cumulative tables only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/orion/inflection/silver/fact_transactions/date=2026-10-14/data.parquet (LIST and GET, this order; counts and schema only)",
+      "s3://opal-data-assets/orion/inflection/silver/fact_performance/date=2026-10-14/data.parquet (LIST and GET, this order; counts and schema only)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~172/read_coverage.py@48f9bc8064 (the window and the single performance read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A consumer that sums the dated partitions of these two tables counts the history once per partition. The issuer decides the read convention for the Inflection adapter; this worker changed no file outside its grant."
+}
+```
+
+
+## IRPT_DASHBD-D2-W172-S2 -- the ratified taxonomy classes reinvested income as Internal, so the WITHOUT-income figure keeps reinvested income
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W172-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~172",
+  "surfaced_at": "2026-10-14T16:32:19Z",
+  "one_line": "The ratified Orion cashflow taxonomy classes the reinvested income types as Internal, so the WITHOUT-income figure removes only the Return-bucket income receipts and leaves reinvested income in the value.",
+  "spec_asserts": "TO-DB-b-212 step 2 measures the return computed WITHOUT its dividend and income transactions, read as every dividend and income transaction.",
+  "world_is": "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml (at 48f9bc8064) classes Dividend Reinvested, Income Reinvested and Interest Reinvested as bucket Internal (value-neutral DRIP swaps), and the Return-bucket income types as Dividend to Cash, Interest Paid in Cash and Interest Paid. The read removed those three Return types from the WITHOUT figure; the reinvested types stayed in both figures.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml@48f9bc8064 (types: Dividend Reinvested, Income Reinvested, Interest Reinvested, Dividend to Cash, Interest Paid in Cash, Interest Paid)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~172/read_coverage.py@48f9bc8064 (the income removal set, derived from the taxonomy at run time)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The answer for the account is YES with the reinvested types left in the WITHOUT figure; removing them would move the WITHOUT figure further from the reported figure, so the YES reading is not weakened by this choice. Measurement only; no served value changed."
+}
+```
+
+
+## IRPT_DASHBD-D2-W172-S3 -- the performance table is client-level and the client holds two accounts, so the reported figure is not account-level
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W172-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~172",
+  "surfaced_at": "2026-10-14T16:32:19Z",
+  "one_line": "Orion's performance table is keyed by client, and the chosen account's client holds two accounts, so the reported figure is client-level while the cell asks for an account-level comparison.",
+  "spec_asserts": "TO-DB-b-212 step 2 asks for the return Orion's performance table reports for a window of that account.",
+  "world_is": "fact_performance rows carry client_id, date and factor only, with no account key. The chosen account's client has two accounts in the newest transaction partition. The read ran the test at account level and at client level (all of the client's accounts together) over the same window and got the same answer; the reported figure is read as an index level, not as daily factors.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/orion/inflection/silver/fact_performance/date=2026-10-14/data.parquet (schema: client_id, date, factor, pull_date, source columns)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~172/READ_COVERAGE_RUN_R108.json (client_accounts_in_transactions, client_level_answer, performance_form)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Any Inflection return read that treats the performance factor as account-level would mix two accounts' figures for this client. The issuer decides the basis for the coverage words."
+}
+```
+
