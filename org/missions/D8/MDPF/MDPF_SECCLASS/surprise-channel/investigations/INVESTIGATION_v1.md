@@ -7775,3 +7775,28 @@ by dell1 or by this seat.
   "world_is": "All three conditions read met on the a304 reading. What is NOT shown: that the production nightly fire writes the same content on unchanged inputs (leg Q is an ad-hoc QA property and never production evidence); that no consumer keys on mix_daily_summary.json's ETag; the sorted-keys change is not built. The client-facing BD Mix restated-history push still waits on Andrew."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S39",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-14T12:20:00Z",
+  "one_line": "The shared BD classifier at HEAD differs from the served one: IRPT_DASHBD DB-b-181 (e340e07f4e, 10-13) makes a canonical row typed Cash serve class 'cash' in every BD gold classify site; it is committed, not deployed, and the next BD gold code sync will move served Black Diamond classes without naming them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "3.0.0_SA_CVO head-object opal-data-bd code/gold/lib/etf_classifier.py: ETag e714dc504e0e8d5f105a79d05b27901e (VersionId 0jhXHH7axm_H934t5s5gVDVNJ6Y_WqI., 2026-10-12T06:18:47Z); repo HEAD md5 eac6a32e7063ee783d97d2b2381eedcf",
+      "3.0.0_SA_CVO: served bytes equal git show 20150348a5:data/black_diamond/scripts/gold/lib/etf_classifier.py (md5 e714dc50...); the diff to HEAD is exactly e340e07f4e's _row_class (CASH_ASSET_CLASS on sub_asset_class Cash) in classify() and classify_with_identity()",
+      "git log -- data/black_diamond/scripts/gold/lib/etf_classifier.py: e340e07f4e 0.9.0_WK_IRPT_DASHBD~147 'IRPT_DASHBD DB-b-181 (round 96)'"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md section 5: never move served output without never-widen sign-off naming the blast radius; MDPF_SECCLASS FWD-1: the BD page shows the class the one shared list holds.",
+  "world_is": "Served BD classes today come from the 20150348a5 classifier (no cash override). HEAD carries DB-b-181, written for IRPT_DASHBD, in the BD gold lib that D_03, D_04 and C_06 import. Any later deploy of code/gold/lib/ (SECCLASS's own next ship included) carries it and re-classes every BD holding whose canonical row has sub_asset_class Cash, on client-facing BD pages, with no pair naming that radius. Nothing is served wrong today (INERT).",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~M1"
+}
+```
