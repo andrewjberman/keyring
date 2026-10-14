@@ -8692,3 +8692,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-S25 -- Resolves and disarms IRPT_DASHBD-D2-W147-S3: the synthetic cash ticker is absent from every served store read, so the CASH_USD change is reverted
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S25",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T01:41:05Z",
+  "one_line": "Resolves and disarms IRPT_DASHBD-D2-W147-S3: the synthetic cash ticker the special case answers appears 0 times in the served stores and the newest lot snapshot, so the two cash paths do not disagree on any served position; the CASH_USD change (DB-b-185) is reverted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row W147-S3: a synthetic cash position still serves fixed_income while a canonical row typed Cash serves cash, so the two cash paths disagree on what a cash position serves.",
+  "world_is": "DB-b-185 counted the served positions: 0 of 4,315 carry the synthetic ticker, and this seat re-read the newest holdings_lots snapshot itself: 0 of 1,314,777 lots carry it (11 lots carry a different cash-stem ticker). The disagreement exists in code and in no served position. The CTO ruled (msg 7422) the change is cost with no gain, since E_25 and two infra lists assume fixed_income for the ticker, and ordered it reverted: the classifier and the four test files are restored to the round-96 pin (sha256 e7385264...), so the repo equals what the FDRXX apply will deploy. Next read: how the 11 cash-stem lots classify, per lot and per page.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~150/CASH_USD_CASH_CHANGE.json (served_holdings: 0 of 4,315)",
+      "opal-data-bd gold/timeseries/holdings_lots/2026-10-09.parquet read by S3 GET by this seat on 2026-10-14: exact ticker count 0 in 1,314,777 rows (counts only)",
+      "1.0.0_SA_CTO~DELL2 msg 7422"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
