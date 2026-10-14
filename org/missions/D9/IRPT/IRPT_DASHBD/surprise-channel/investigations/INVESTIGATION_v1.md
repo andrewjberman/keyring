@@ -12227,3 +12227,57 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not decided here. Two readings are open: the amended rule (absent for this sample, kind INSUFFICIENT_HISTORY) against the checker's clause (every sourced window a number). The build is not started, so no value was filled or substituted."
 }
 ```
+
+## IRPT_DASHBD-D2-W175-S8 -- the kind carrier refuses the since-inception household return's INSUFFICIENT_HISTORY absent form, which DB-b-222 step 2(f) requires (BLOCKING)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T20:16:01Z",
+  "one_line": "DB110-2-AC1 fails its kind carrier: kind_problems in p105_round105.py requires every member the contract sources to ABSENT to carry NO_SOURCE_YET, but DB-b-222 step 2(f) requires pvs.since_inception.return_cumulative to carry INSUFFICIENT_HISTORY; the contract keeps source ABSENT for that member by its own 0.5.0 text.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-222 step 2(f) (amended): a window the contract sources but whose opening day or as_of has no factor row is the absent form {absent, kind: INSUFFICIENT_HISTORY} with the order's words. DB110-2-AC1 kind carrier: p105_round105.py kind_problems requires a member the contract sources to ABSENT to be NO_SOURCE_YET.",
+  "world_is": "Built sample (private, not written here): the household return windows qtd, ytd and last_12_months are numbers; since_inception is absent with INSUFFICIENT_HISTORY (the household's first data date has no factor row). DB110-2-AC1 FAIL, first clause: 'kind carrier: pvs.since_inception.return_cumulative: a member the contract sources to ABSENT must be NO_SOURCE_YET, got INSUFFICIENT_HISTORY'. The kind_problems rule was not amended with the 0.5.0 firm_sources, which keep source ABSENT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p105_round105.py kind_problems, line 145 (read at HEAD of wk-IRPT_DASHBD-175): the source-ABSENT NO_SOURCE_YET clause has no firm_sources exemption",
+      "python -I .../checks/r110/p110_inflection.py . DB110-2-AC1 on the built sample, rc 1, 2026-10-14T20:14Z: the kind carrier clause (output above)",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at 0.5.0 (sha256 72ab629a45af32f07cc5948bd4240fe80e2690ed7926dce4e61c24c3ec647363): the since_inception member keeps source ABSENT"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. The issuer must either amend kind_problems to exempt a member with firm_sources (as the round-105 shape check was amended for the sourced member), or rule that the window kind is NO_SOURCE_YET. The sample is not changed to satisfy the clause, since step 2(f) names INSUFFICIENT_HISTORY."
+}
+```
+
+## IRPT_DASHBD-D2-W175-S9 -- the whole-document rule finds three household-return cells that disagree: filled in pvs.<window>.return_cumulative, absent in hold.return_<window> (BLOCKING)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S9",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T20:16:01Z",
+  "one_line": "The whole-document rule reads 3 conflicts on the household return: pvs.qtd, ytd and last_12_months return_cumulative are filled from Orion's client factor, while hold.return_qtd, ytd and last_12_months (the same household return, contract source ABSENT) stay absent; neither DB-b-217 nor DB-b-222 names hold.return_*, so no value may be plugged into them.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB110-2-AC1: the sample v3 passes the whole-document rule with 0 conflicts. Refusal clause (DB-b-222): a pair of cells that genuinely disagree is a finding; file a row naming the key and stop on that point; never plug a value.",
+  "world_is": "The whole-document scan of the built sample: 323 cells scanned, 226 absent, 278 keys, 0 unmapped, 3 conflicts, all on the key return_cumulative at household grain for the windows qtd, ytd and last_12_months. The contract's hold.return_<window> members have source ABSENT with no firm_sources, so the holdings cell for the same household return reads absent while the overview cell reads a number.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "P6.whole_document_scan (p110_inflection.py imports it from p106/p109 chain), run on the built sample: conflicts 3, disagreements 0; the messages name hold.return_qtd, hold.return_ytd, hold.return_last_12_months against the pvs cells",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at 0.5.0: hold.return_qtd, hold.return_ytd, hold.return_last_12_months source ABSENT, no firm_sources, not in an equivalence class",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~175/BUILD_R110.json (the measured whole_document block)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. Either the 0.5.0 contract sources hold.return_<window> for Inflection from the same figure (a contract change the issuer or CTO rules), or the whole-document rule is amended to treat a household return printed once as one cell. The record reports conflicts 3, not 0."
+}
+```
