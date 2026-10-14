@@ -1514,3 +1514,82 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Not changed here: the order fixes the CLI. The issuer may amend the help text in a later cell."
 }
 ```
+
+## COMM_ASSIST-W24-S1 -- test_inbound_mail_draft.py arm client_no_request fails at the base, on a stale end-of-text assertion
+
+```json
+{
+  "id": "COMM_ASSIST-W24-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~24",
+  "surfaced_at": "2026-10-14T14:11:54Z",
+  "one_line": "Arm client_no_request of data/transcripts/scripts/tests/test_inbound_mail_draft.py fails at the base 4b23bc3cce, before any edit by this order: its assertion expects the text to end with 'Reply #dev [notes] to open a job / 0 drop', and the handler texts 'Reply 1 to approve ... / notes to redraft / 0 drop / #dev [notes] to open a job'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/tests/test_inbound_mail_draft.py@4b23bc3cce: line 127, body.rstrip().endswith(...) assertion in client_no_request",
+      "data/transcripts/scripts/teams_chat/mail_requests.py@4b23bc3cce: _mail_text, the final reply line (lines 233-234)",
+      "measured at 4b23bc3cce: body.rstrip().endswith('Reply #dev [notes] to open a job / 0 drop') is False; the draft line and the CLIENT line are True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order says to add mail-log arms to this file and keep every test file under data/transcripts/scripts/tests that touches mail passing; this file is in the order's <paths>.",
+  "world_is": "Before this order's edits the file already printed MAIL-DRAFT ok=False arms=6/7, with client_no_request the failing arm, so the file is not green at the base. The text is not changed by this order (the order forbids changing what is texted), and the stale assertion was left unedited rather than rewritten to fit the text. After the order's edits: arms=11/12, the same arm failing, the five new mail-log arms pass. base_texts_client_no_request=-1 because that arm aborts before it sets the base count.",
+  "notes": "Which side is stale (the assertion or the text) is for the owner to rule. The order's keep-passing rule is not met for this file at the base; this row records it rather than editing an existing assertion."
+}
+```
+
+## COMM_ASSIST-W24-S2 -- test_inbound_mail.py is 11 of 15 at the base, outside this order's paths
+
+```json
+{
+  "id": "COMM_ASSIST-W24-S2",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~24",
+  "surfaced_at": "2026-10-14T14:11:54Z",
+  "one_line": "data/transcripts/scripts/tests/test_inbound_mail.py prints INBOUND-MAIL-TEST ok=False cases=11/15 at the base 4b23bc3cce (4 cases fail: three named by the run, one above the captured tail), before any edit by this order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured at 4b23bc3cce by python data/transcripts/scripts/tests/test_inbound_mail.py: INBOUND-MAIL-TEST ok=False cases=11/15 model_calls_on_failed=0; FAIL a_party_not_marked_considered_is_not_admitted; FAIL a_domain_whose_claim_is_not_measured_is_not_admitted; FAIL a_missing_mail_parties_file_leaves_the_firms_working",
+      "measured after this order's edits: the same 11/15, so the count is unchanged by this order"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order says every test file under data/transcripts/scripts/tests that touches mail or mentions keeps passing, and a test outside the order's paths passes unmodified.",
+  "world_is": "This file is outside <paths> and was not edited. It already fails four of fifteen cases at the base, so the keep-passing rule cannot hold for it at the base. The count is the same before and after this order.",
+  "notes": "Not edited by this worker. The three failing cases named are the ones the run printed in its tail; the fourth is not named here."
+}
+```
+
+## COMM_ASSIST-W24-S3 -- the pytest set run does not collect the plain-script mail and mention files
+
+```json
+{
+  "id": "COMM_ASSIST-W24-S3",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~24",
+  "surfaced_at": "2026-10-14T14:11:54Z",
+  "one_line": "python -m pytest data/transcripts/scripts/tests -q reports 562 passed and 0 failed, while the plain-script files test_inbound_mail.py and test_inbound_mail_draft.py fail when run as python files; pytest does not collect them, so the pytest total does not cover their failures.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured after the code commit 5041e19001: python -m pytest data/transcripts/scripts/tests -q -p no:cacheprovider, output 562 passed in 233.47s, rc 0",
+      "data/transcripts/scripts/tests/test_inbound_mail_draft.py and test_inbound_mail.py each define main() and carry no def test_ function: the header probe of this worker's run printed pytest=0 for both files (worktree at 5041e19001)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order asks for the whole set under pytest and for every mail or mention test file to pass.",
+  "world_is": "The pytest total and the script results measure different sets. A green pytest total does not show that the two script files are green.",
+  "notes": "Recorded so the 562 figure is not read as covering the plain-script files. The order's pytest figure is reported as measured."
+}
+```
