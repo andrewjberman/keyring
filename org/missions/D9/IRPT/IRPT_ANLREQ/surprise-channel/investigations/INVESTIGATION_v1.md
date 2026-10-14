@@ -14579,3 +14579,137 @@
 }
 ```
 
+## IRPT_ANLREQ-D2-W140-S14 -- OBSERVATION: origin/PROD moved again (fa10e758 to 5ab67a65) during the fourth pass; the candidate and the clean baseline were cut at 5ab67a65
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S14",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T20:01:32Z",
+  "one_line": "A permitted git fetch on the portal showed origin/PROD at 5ab67a65 (merge of cand/dell1/satellite-factsheet-prod), one step past fa10e758 which the third pass measured. The paths this cell edits did not change between the two tips.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CELL step 1 and the amended CANDIDATE BASE: the candidate is a cherry-pick onto the CURRENT origin/PROD, and the failing-name baseline is re-taken if origin/PROD has moved again.",
+  "world_is": "git -C portal fetch origin printed fa10e758..5ab67a65 PROD -> origin/PROD. git -C portal diff --stat 6a5926fc origin/PROD over src/api/endpoints/investor-reporting.ts, src/pages/TicketCenter and src/pages/InvestorReporting printed nothing. The candidate was cut from 5ab67a65 (cherry-pick of 9a3d40f5 as 284e54d2); the baseline was re-taken at 5ab67a65 and its names equal the set recorded at fa10e758.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal rev-parse origin/PROD = 5ab67a651a626e7224de0a2cf03a2223f99dc15e (fetched 2026-10-14)",
+      "git -C portal diff --stat 6a5926fc origin/PROD -- src/api/endpoints/investor-reporting.ts src/pages/TicketCenter src/pages/InvestorReporting (empty)",
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~140/r41/baseline_ir_failures.json (prod_tip 5ab67a65, 13 unique names)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_IRPT_ANLREQ~140 on the fourth pass. No decision is asked: the candidate uses the current tip, as the order directs."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S15 -- OBSERVATION: the clean origin/PROD baseline reads the pre-route docs (22 DECLARED routes) while the candidate reads the workspace HEAD docs (23); the order names no docs depth for the clean worktree
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S15",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T20:01:32Z",
+  "one_line": "The clean baseline worktree sits at workspace depth with its docs copied from workspace commit 15e74a2029, the state before the AR-y-331 route merge. The candidate reads the workspace HEAD docs (97ee9dfe08), where routes.json holds the commentary route. The order names no docs depth for the clean worktree, so the baseline and the candidate see different route tables by design.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AC1 (amended): every failing InvestorReporting name is compared with the failing names recorded from a run on a clean origin/PROD worktree (r41/baseline_ir_failures.json).",
+  "world_is": "Baseline at origin/PROD 5ab67a65 with docs from 15e74a2029: 1273 tests, 1232 pass, 27 skip, 14 fail entries (13 names). Candidate with docs from 97ee9dfe08: 1273 tests, 1233 pass, 27 skip, 13 fail entries (12 names). Every candidate failing name is in the baseline; one baseline name, the IV-e-97 committed-module compare, now passes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 15e74a2029:docs/contracts/investor-reporting/v1/routes.json: 24 routes, 22 DECLARED",
+      "git show 97ee9dfe08:docs/contracts/investor-reporting/v1/routes.json: 25 routes, 23 DECLARED",
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~140/r41/baseline_ir_failures.json (source line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_IRPT_ANLREQ~140 on the fourth pass. The issuer rules which docs depth the clean baseline must use. The worker kept the inherited method (pre-route docs) so the baseline is comparable with the third pass."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S16 -- OBSERVATION: the before-arm on origin/PROD fails four cases, (a), (b), (d) and (f), where the order names three, (a), (b) and (f)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S16",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T20:01:32Z",
+  "one_line": "The new test file run on a clean origin/PROD without the change fails (a), (b), (d) and (f) and passes (c) and (e). Case (d) expects the reader's no-link refusal; without the commentary method openPackageFile returns false and throws nothing, so (d) fails too. The order lists (a), (b) and (f).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CELL step 4 before_arm: run the new tests on origin/PROD WITHOUT your change: (a), (b), (f) FAIL.",
+  "world_is": "origin/PROD 5ab67a65 in .scratch/base-clean/portal with commentary-pdf-reader.test.tsx copied in and no product change: 6 cases, FAIL (a), (b), (d), (f); PASS (c), (e). The same four failed on the third pass at fa10e758.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commentary-pdf-reader.test.tsx:90-97 at 284e54d2 (case d asserts the no-link message and that nothing opens)",
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~140/r41/PORTAL_COMMENTARY_READER_CANDIDATE.json before_arm"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_IRPT_ANLREQ~140 on the fourth pass. The failure of (d) on the base is the expected arm for a no-link case: the base has no commentary reader at all, so the item opens nothing and says nothing."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S17 -- OBSERVATION: the repo's generator writes LF bytes into a worktree checked out with core.autocrlf=true, so git status lists tracked files as modified with an empty content diff
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S17",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T20:01:32Z",
+  "one_line": "Running the repo's generators (gen-all.ts, gen-corpus.ts) rewrites every generated file with LF bytes. In this worktree core.autocrlf is true, so git status lists the regenerated files as modified although git diff shows no content change for all but the files a commit intends. The commits name their paths explicitly, so these stat-only entries are not committed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CELL step 3 and the generator rule: a generated file is regenerated by the repo's own generator, never hand-edited; the commit carries the files the change touches.",
+  "world_is": "git -C portal config core.autocrlf = true. After gen-corpus.ts, git status lists 23 request records and 2 smoke maps as M; git diff over src/pages/InvestorReporting/fixtures lists one file with content (default.json, +18). The 25 wire files of the earlier passes behave the same way (index stat only; cmp of HEAD blob and worktree bytes equal).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal config --get core.autocrlf = true",
+      "git -C portal diff --stat after gen-corpus.ts: fixtures/smoke/default.json | 18 insertions (the only content change under fixtures)",
+      "md5 of git show HEAD:src/pages/InvestorReporting/contracts/wire/AnalysisReport.ts equals the worktree file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_IRPT_ANLREQ~140 on the fourth pass. No action asked; the byte equality was measured before the commit."
+}
+```
+
+## IRPT_ANLREQ-D2-W140-S18 -- OBSERVATION: the fe-s-47 'declares no envelope' failure of the third pass was a read of the COMMITTED responses.ts, so it clears at the commit, not by a grant
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W140-S18",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~140",
+  "surfaced_at": "2026-10-14T20:01:32Z",
+  "one_line": "The no-status-reason test F47-AC7 (S10) reads the wire folder from git HEAD (committedBlob), not from the working tree. The regenerated responses.ts was therefore invisible to it until the candidate commit existed. After the cherry-pick (284e54d2) F47-AC7 is no longer among the failing names; no edit to that test was needed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "S10 (BLOCKING, outside the grant): fe-s-47/no-status-reason.test.ts throws 'responses.ts declares no envelope' on the candidate.",
+  "world_is": "no-status-reason.test.ts:96-98 committedBlob = blobAt('HEAD'), and operationWires() reads that blob. On the third pass HEAD held no commentary envelope. On the fourth pass the candidate run after the cherry-pick (cand1_ir, 1273 tests) showed no F47-AC7 failure.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fe-s-47/no-status-reason.test.ts:96-98 (committedBlob reads HEAD)",
+      "fe-s-47/no-status-reason.test.ts:141-160 (operationWires over the committed responses.ts; WIRE_FOR)",
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~140/r41/PORTAL_COMMENTARY_READER_CANDIDATE.json repinned (case F47-AC7)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_IRPT_ANLREQ~140 on the fourth pass. The issuer may close S10 as resolved by the commit. The same HEAD read governs the other committed-blob tests, so their failures can differ between a working tree and a commit."
+}
+```
+
