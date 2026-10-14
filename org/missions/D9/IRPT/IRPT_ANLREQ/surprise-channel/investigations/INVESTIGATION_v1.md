@@ -15124,3 +15124,125 @@
   }
 ]
 ```
+
+```json
+[
+  {
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~144",
+    "surfaced_at": "2026-10-14T22:50:12Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_ANLREQ-D2-W144-S8",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The AR-y-331 route test runs on the extracted release-31 tree only with the pin's test folders beside it: the tarball carries no test folder, and the route file imports test_owned_report, test_owned_requests and test_retained_uploads from intake/tests and ops/tests.",
+    "spec_asserts": "TO-AR-y-338 AR338-y-AC1 condition (7), amended: the AR-y-331 route tests pass 6 of 6 against the EXTRACTED package tree.",
+    "world_is": "Extracted release-31 tree alone: the route file errors at collection (No module named test_retained_uploads). The same tree with the eight test folders of the pin copied in beside the tarball bytes (C:/dev/irpt-release-r31/route-p2, and the checker's route-check-p2): 6 passed in 2.36 s, rc 0. The release-29 base is not the subject of this row.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ops/tests/test_commentary_pdf_route.py@c4c2afe896:7-37 (the imports and _OPS/_REPORTS paths)",
+        "infra/aws/lambda/investor-reporting/intake/tests/test_retained_uploads.py@c4c2afe896 (the module the route file's support imports)",
+        "C:/dev/irpt-release-r31/route-p2/infra/aws/lambda/investor-reporting (copy of the extracted tarball plus the pin's test folders)"
+      ]
+    },
+    "notes": "The route is verified on the release bytes with the pin's tests beside them. The test folders are not shipped and are not part of the release. AMENDMENT 1 puts ycharts/generate/acceptance.py into this build at the pin bytes, which disarms the route-refusal hazard of IRPT_ANLREQ-D2-W144-S1 on these bytes; S1 is not edited."
+  },
+  {
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~144",
+    "surfaced_at": "2026-10-14T22:50:12Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_ANLREQ-D2-W144-S9",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Three named test files cannot be collected on the extracted package tree: _scope/ordinary_viewer.py and the repository-root data/transcripts NAMES.json are not members of the tarball, and the release-29 control errors identically.",
+    "spec_asserts": "TO-AR-y-338 step 5: run the named test files ONE PROCESS PER FILE from the release worktree; any failure is explained against a control run on the r29 tree.",
+    "world_is": "From the release worktree at the pin, all 14 named files pass (43 + 6 + 8 + 6 + 3 + 9 + 10 + 15 + 23 + 7 + 6 + 7 + 4 + 6 passed, every rc 0). On the extracted tree: _scope/tests/test_ordinary_viewer.py collection error (No module named ordinary_viewer); reports/tests/test_resident_r31_source.py and test_resident_r31_packager_bindings.py FileNotFoundError on data/transcripts/scripts/commentary/NAMES.json. The control on the release-29 tree (C:/dev/irpt-release-r31/control-r29-p2) gives the same three errors (rc 2). The first pass's 1-failed result for test_ordinary_viewer (with a trunk copy of the module added) is not reproduced in this pass and its cause is not re-derived here.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/dev/irpt-release-r31/control-r29-p2/_scope_tests_test_ordinary_viewer.py.txt (ModuleNotFoundError)",
+        "C:/dev/irpt-release-r31/control-r29-p2/reports_tests_test_resident_r31_source.py.txt (FileNotFoundError NAMES.json)",
+        "tar -tzf of the release-29 tarball: no _scope/ordinary_viewer.py member"
+      ]
+    },
+    "notes": "A package-layout effect of running these files on an extracted tree, not a release-31 change. The release worktree run is the order's run."
+  },
+  {
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~144",
+    "surfaced_at": "2026-10-14T22:50:12Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_ANLREQ-D2-W144-S10",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The record and the proof instance on this branch were written before the 16:40 rebuild and pinned the superseded tarball sha256 cc6581ed...; the acceptance.py member had been added to the files-from list at 16:36 only.",
+    "spec_asserts": "TO-AR-y-338 step 6 and AC1(1): the record's artifact sha256 is the sha256 of the tarball on disk; the record and the proof instance describe the bytes that were built.",
+    "world_is": "Tarball C:/dev/irpt-release-r31/irpt-resident-0485393f3a-r31.tar.gz is 1040729 bytes, sha256 22193944345ce2dd52d2b732ce0ac8d569aa2359958601686239b7e1da8e6021 (16:40), with 299 members and acceptance.py at the pin blob 0c4acec625. The record at 16:07 pinned cc6581ed... (1040412 bytes, 14 differing); files_from_r31.txt (sha fbe1fb2b..., 17 entries) is dated 16:36. The record and the scripts of pass 1 were regenerated in this pass; the stale values are replaced, not kept.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sha256sum C:/dev/irpt-release-r31/irpt-resident-0485393f3a-r31.tar.gz (22193944...)",
+        "C:/dev/irpt-release-r31/build_a_stdout.json (files_from_count 17, package manifest 4710d4ea...)",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~144/r41/RESIDENT_R31_BUILD.json at 5713985e2e (cc6581ed...)"
+      ]
+    },
+    "notes": "Inherited state, verified and reused where it verified: the two builds (299 of 299 identical), the tarball packing and the pin blob of acceptance.py. The record is rewritten to the verified bytes."
+  },
+  {
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~144",
+    "surfaced_at": "2026-10-14T22:50:12Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_ANLREQ-D2-W144-S11",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The previous instance of this slot went silent after a package test run with no timeout (last scratch write tests_pkg29_control at 16:44 local); its extracted package copies remain under this worktree's gitignored .scratch.",
+    "spec_asserts": "TO-AR-y-338 preamble: every test or control process runs under timeout 300, one process per file; release artifacts are staged only under C:/dev/irpt-release-r31/; delete only paths the pass created.",
+    "world_is": "The cause of the silence is not measured. The worktree .scratch (gitignored, .gitignore:450) holds extracted package copies from the first pass (pkg31, pkg29, tests folders) and a gate folder; this pass leaves them in place, uses its own folders (route-p2, route-check-p2, control-r29-p2, x31-p2, x29-p2, gate_r31_p2, tests_p2_*) and deletes nothing it did not create. The release worktree wt-release-c4c2afe896 was created by the previous instance at the pin and is left registered.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/dev/wk-irpt-anlreq-144/.scratch/tests_pkg29_control (last entries 16:43-16:44 local)",
+        "git check-ignore: .gitignore:450 .scratch/",
+        "git worktree list (C:/dev/irpt-release-r31/wt-release-c4c2afe896 detached at c4c2afe896)"
+      ]
+    },
+    "notes": "A cleanup question for the issuer: the release worktree is one the order says to remove when done; this pass did not remove it, since it was created by the previous instance."
+  }
+]
+```
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W144-S12",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~144",
+  "surfaced_at": "2026-10-14T22:53:04Z",
+  "one_line": "Two live writers under serial 0.9.0_WK_IRPT_ANLREQ~144 are working this worktree at once: the older instance (this one) and a newer instance that appended S8-S11 and rewrote the record, scripts and channel between 18:45 and 18:51 EDT.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (name the one worker of record for slot 144 and stop the other instance before any further write, record or commit)",
+  "spec_asserts": "One worker per slot: TO-AR-y-338 is executed by one worker in its own worktree, and the record, scripts, checkers and proof are that worker's single set of writes (CLAUDE.md section 6, rule 14b; the order's BOUNDS).",
+  "world_is": "HEAD of wk-IRPT_ANLREQ-144 is still 2895ae4be5 (no commit by either instance). Files written 18:45-18:51 EDT by the other instance: deliverables make_scripts_r31.py, install_r31.sh, pre_read_r31.sh, rollback_r31.sh, resident_host_install_0485393f3a-r31.sh, build_check.py, gate_dryrun_r31.sh, r41/RESIDENT_R31_BUILD.json (schema pass-2) and surprise-channel INVESTIGATION_v1.md (rows S8-S11 at 22:50:12Z); .scratch copies make_scripts_r31_pass1.py, acc_pin_p2.py, gate_r31_p2/. This instance wrote none of them after 16:44 EDT. Both instances report the same tarball sha256 22193944345ce2dd52d2b732ce0ac8d569aa2359958601686239b7e1da8e6021 (1040729 bytes, 299 members). This instance did NOT overwrite the other writer's files and does NOT append its own rows S8+ (S8 is taken).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse --abbrev-ref HEAD = wk-IRPT_ANLREQ-144; git log -1 = 2895ae4be5 (no new commit)",
+      "ls -la --time-style=full-iso .../0.9.0_WK_IRPT_ANLREQ~144/r41/ (RESIDENT_R31_BUILD.json 18:51:36 -0400)",
+      "INVESTIGATION_v1.md git diff HEAD: +93 lines, rows IRPT_ANLREQ-D2-W144-S8..S11 surfaced_at 2026-10-14T22:50:12Z",
+      "C:/dev/wk-irpt-anlreq-144/.scratch listing: make_scripts_r31_pass1.py 18:45:29, gate_r31_p2/ 18:46:26, acc_pin_p2.py 18:40:31"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This instance has stopped writing to the shared worktree and channel and has not flipped the order status, committed or validated a proof. Its own measured results sit in .scratch (tests_pkg, tests_wt, tests_pkg29_control) and in the stage folder C:/dev/irpt-release-r31 (build_a, build_b, delta/, the tarball and its sums). The release worktree C:/dev/irpt-release-r31/wt-release-c4c2afe896 is registered and clean; it is to be removed by the worker of record."
+}
+]
+```
