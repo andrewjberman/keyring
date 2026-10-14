@@ -27404,3 +27404,78 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not changed: the order's status rule is followed literally. The issuer decides whether a record should re-record such a source as EMPTY in a later round."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W441-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~441",
+  "surfaced_at": "2026-10-14T06:10:18Z",
+  "one_line": "The CTO's round-106 remediation premise does not reproduce: no non-team All-figures dash on the GOOGL US, PBR US or GOOGL-without-P/E fixture prints the research team's sentence on the unchanged candidate 4eb56d57d2, so harness arm B4c cannot fail on it.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bm-1 REMEDIATION NOTE (third pass, order section 1): the new data-model-grid-reason span prints GRID_NO_VALUE_WORDS on every row's dash that has no served reason, including the Bloomberg and model rows; the fix is teamRow ? GRID_NO_VALUE_WORDS : NOT_SERVED_WORDS, and arm B4c is 'a Bloomberg or model row with no served reason shows Not served for this name and NOT the team sentence'.",
+  "world_is": "On 4eb56d57d2 the dash on a non-team row is row.cellReasons[index] ?? GRID_NO_VALUE_WORDS (ModelTab.tsx line 868 before the fix). The fallback is reached only where cellReasons is null, and no visible non-team row carries one. The probe on the unchanged candidate: GOOGL US has 7 non-team rows with dashes, all carrying 'Bloomberg returned no figure for this year' (16) or 'Bloomberg reports no history for this line' (50); PBR US has none; GOOGL US with PE_RATIO removed has 7 rows with the same two texts (8 and 60); zero carry the team sentence. The page hides a row with no figure (ModelTab.tsx line 803 filters absentReason rows), and rowFor gives every empty cell of a shown row a served or generated reason (modelSheet.ts lines 816 to 823). Only the team path (modelSheet.ts line 953) and the unclassed path (modelSheet.ts line 1024) leave cellReasons null. So no fixture reaches NOT_SERVED_WORDS on a non-team row, and B4c passes on both 4eb56d57d2 and 84fd6461 (10 of 10 on each). The fix is applied as ruled (84fd6461, defensive); B4c is a negative check, not a discriminator.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx @4eb56d57d2683a55f5009d9f777015f975e7d414 (line 803 visibleRows filter; line 868 the dash before the fix)",
+      "portal/src/pages/SecurityAnalysis/modelSheet.ts @4eb56d57d2683a55f5009d9f777015f975e7d414 (lines 816-823 cellReasons; line 953 team rows; line 1024 unclassed team rows)",
+      "portal/src/pages/SecurityAnalysis/__harness__/basisAndReasons.harness.cjs @84fd6461bbf890508ded3a82f0fba344f382125c (arm B4c)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. Not patched around: the ruled fix is applied. The issuer or CTO rules whether a negative arm is acceptable, or whether a non-team no-reason dash should be reachable on a fixture; the current builders do not reach it."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W441-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~441",
+  "surfaced_at": "2026-10-14T06:10:18Z",
+  "one_line": "The frontend files of the third-pass commit were examined by no mechanical pre-commit check: commit-gate reported 'checked 0 of 2 file(s)' (it reads .py, .sh, .tf and org/projects JSON only), and the pre-commit risk reflex answered PARTIAL_OR_BLIND because its danger map is STALE (199.6h old).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Order section 5 and CLAUDE.md rule 14a: the portal change is committed through .tools/safe-commit.sh. The order names no pre-commit check for a .tsx or .cjs change, and CLAUDE.md states that the commit-gate covers .py edits.",
+  "world_is": "safe-commit.sh run from the portal worktree (commit 84fd6461bb) printed '[commit-gate] WARN: commit-gate checked 0 of 2 file(s) -- NOTHING WAS CHECKED' and '[risk-reflex] ANSWER STATE: PARTIAL_OR_BLIND', with the danger map 199.6h old and STALE and 0 of 2 files scanned. The caller toplevel carries no .tools/comp-pulse, so the baked path C:/dev/ajb_workspace/.tools/comp-pulse ran. The frontend change was verified instead by the AC2 typecheck and lint (rc 0 and rc 0), the instrument that covers .tsx.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-commit.sh @84825015cba2f2544c2345f5429c783abdbb73f3 (outer worktree; the gate lines it prints on the portal commit)",
+      "portal commit 84fd6461bbf890508ded3a82f0fba344f382125c (the commit whose output carried the WARN lines)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. Recorded so the owner sees that a frontend commit on a worker box has no mechanical pre-commit check here."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W441-S6",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~441",
+  "surfaced_at": "2026-10-14T06:10:18Z",
+  "one_line": "The approval check reads the branch from origin/<branch> before the local branch, so its head_sha is the pushed 4eb56d57d2 and not the local third-pass commit 84fd6461bb; a row registered now would bind the head without the third-pass fix.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Order section 1 step 8 and section 5: run the --check-only approval check again after the remediation commit and report its output. Registration is not done by this worker, and the row binds the candidate branch's head, which is the local head after the new commit.",
+  "world_is": "open-calls.py add --check-only --kind approval ... --portal portal printed 'APPROVAL-REGISTER result=OK row=- head_sha=4eb56d57d2683a55f5009d9f777015f975e7d414 commits=2 check-only=yes waived=0'. register_facts (open-calls.py line 947) names refs/remotes/origin/<branch> first. refs/remotes/origin/cand/dell1/amgt-sa-pe-basis-and-reasons is 4eb56d57d2 and refs/heads/cand/dell1/amgt-sa-pe-basis-and-reasons is 84fd6461bb, which is LOCAL and not pushed. A row registered on this branch now would bind the pushed head.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/open-calls.py @84825015cba2f2544c2345f5429c783abdbb73f3 (register_facts, lines 946 to 951: origin/<branch> is the first name tried)",
+      "portal ref reads at 2026-10-14T06:10:18Z: refs/remotes/origin/cand/dell1/amgt-sa-pe-basis-and-reasons = 4eb56d57d2, refs/heads/cand/dell1/amgt-sa-pe-basis-and-reasons = 84fd6461bb"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. Not registered by this worker (check-only). Before any registration the issuer must either have the candidate pushed by its owner (never this worker's act) or point the check at the local head; which of the two is the issuer's to set."
+}
+```
