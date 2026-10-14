@@ -2709,3 +2709,79 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "The priority rule gives this Equities asset a one-pair median of 0.370 from its nearest earlier trade, between the bands, so its unit reads unreadable where the pooled median read per_unit. No list row for the asset changes, since an Equities row is not withheld by unit. The served map totals are 1 per100, 827 per_unit and 60 unreadable, against the probe's 1, 824 and 63."
 }
 ```
+
+## ADVI_BDPRCE-D1-W23-S1 -- The v1.3 zero cannot be measured on the recorded export (no Units column); the synthetic units fold nothing by construction, and the grader's lots=500000 is a synthetic count.
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W23-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~23",
+  "surfaced_at": "2026-10-14T05:38:51Z",
+  "one_line": "The v1.3 zero cannot be measured on the recorded export (no Units column); the synthetic units fold nothing by construction, and the grader's lots=500000 is a synthetic count.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_lot_split3.py at 1d8ac40119: 'EXPORT has NO Units column and NO Cost Basis column'; the v1.3 lot table on synthetic units has 500,000 rows of 500,000 distinct export rows (run of the test, 2026-10-14, rc=0, OK 10 arms)",
+      "LOT_PROOF3.json at 1d8ac40119: lot_rows 500000, lot_rows_basis 'v1.3 key on SYNTHETIC units', synthetic_units_folded 0, zero_fold deferred_to_first_real_export; r3_checks.py lotproof3 prints 'lots=500000' with rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 4 AC2 and section 1.00 item 3: the record's lot_rows is the lot count the proof measures on the recorded export, and the grader prints it as lots=N. Section 1.00 item 2 keeps the first seat's synthetic-column arms, loudly labelled synthetic.",
+  "world_is": "The recorded export has no Units column, so the v1.3 key cannot be evaluated on it. The only v1.3 lot table this fixture writes is built on synthetic units, a hash of all 15 recorded columns, which separates every differing row by construction: lot_rows 500000 and 0 folded are true of the hash, not of the export. The grader's lots=500000 carries no basis field and reads as a measured count. The record labels the figure and reads no result from it; the zero is read on the first real export under the apply's pair (PRD v1.3, call 67ac). Armed: the apply's author must not take the printed lots figure or the synthetic zero as evidence."
+}
+```
+
+## ADVI_BDPRCE-D1-W23-S2 -- The copied test derives its data directory from the worktree name, but the recorded export sits in the first seat's data directory; the copy reads it from the sibling and writes its own outputs.
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W23-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~23",
+  "surfaced_at": "2026-10-14T05:38:51Z",
+  "one_line": "The copied test derives its data directory from the worktree name, but the recorded export sits in the first seat's data directory; the copy reads it from the sibling and writes its own outputs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_lot_split2.py at 0.9.0_WK_ADVI_BDPRCE~17 (fa9d37edb5): DATA = ROOT.parent / (ROOT.name + '-data'), which for worktree wk-bdprce-r3-23 is wk-bdprce-r3-23-data; the directory does not exist",
+      "C:/dev/wk-bdprce-r3-17b-data/UNREALIZED_DAILY_2026-10-09.xlsx present; sha256 5700843f9e661364910a5bbb9d9d4b60521775922539f47b066a10d80039ef5b verified by sha256sum on 2026-10-14"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1.00 item 2 and section 5 of the order: the recorded export is read from C:/dev/wk-bdprce-r3-17b-data/, and new downloads go to C:/dev/wk-bdprce-r3-23-data/; the copied test takes the data directory from its worktree name.",
+  "world_is": "The derived directory wk-bdprce-r3-23-data does not exist; the export is only in wk-bdprce-r3-17b-data. test_lot_split3.py at 1d8ac40119 reads the export from the sibling wk-bdprce-r3-17b-data (read only; sha256 verified) and writes its outputs and any parse cache to wk-bdprce-r3-23-data. Nothing was downloaded, and no file under data/, infra/ or lib/ was touched."
+}
+```
+
+## ADVI_BDPRCE-D1-W23-S3 -- The legacy parquet bytes depend on the clock (they carry _ingested_at); the recorded legacy sha256 reproduces only under seat ~17's pinned clock.
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W23-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~23",
+  "surfaced_at": "2026-10-14T05:38:51Z",
+  "one_line": "The legacy parquet bytes depend on the clock (they carry _ingested_at); the recorded legacy sha256 reproduces only under seat ~17's pinned clock.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_lot_split3.py at 1d8ac40119: with FIXED_NOW 2026-10-14T12:00Z the repo and patched legacy bytes (arms 1 and 2 PASS) hash to 8dfa79262b66ee248aae70020343faa18de2a47595aa9d93b3e7a91cf6ec4014; with FIXED_NOW 2026-10-13T12:00Z they hash to d65ce03d4efb0ddd182f54ba0430a327c368eabf3fe3f5f00f896bbd689405ad",
+      "round 2 LOT_PROOF.json (0.9.0_WK_ADVI_BDPRCE~10) legacy_sha256 d65ce03d4efb0ddd182f54ba0430a327c368eabf3fe3f5f00f896bbd689405ad, the same value this seat reproduces with the pin"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1.00 item 2 (arms 1 and 2: the legacy output stays byte-unchanged) and section 1b (the record's legacy_sha256): the sha256 recorded for the legacy output is the round-2 value.",
+  "world_is": "Arms 1 and 2 compare the repo and patched output within one run, so they pass at any clock. The recorded value d65ce03d... is reproduced only with the clock pinned to 2026-10-13T12:00Z, the value seat ~17 used. The pin is kept in test_lot_split3.py at 1d8ac40119 and stated in its comment; a later re-run of the record must use the same pin or its legacy_sha256 will differ, although the byte-equality arms still pass."
+}
+```
