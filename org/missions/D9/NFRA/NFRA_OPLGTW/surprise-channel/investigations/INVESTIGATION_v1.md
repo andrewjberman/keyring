@@ -14833,3 +14833,80 @@ name the one known failure instead of silently inheriting it.
     "notes": "A correction I owe on my own instrument work: BEFORE the apply I controlled CloudTrail's readability by looking for wafv2 events and found 40 (GetIPSet, GetWebACL), and I recorded that as establishing the instrument. It did not -- those are all READS, and reads being recorded does not establish that WRITES are. The control that actually settles it is UpdateIPSet, which I only ran afterwards. Had the trail genuinely not recorded writes, my pre-apply check would have passed anyway and the post-apply 0 would have been uninterpretable. Same service, different event class, and the pre-apply gate the ruling asked for would have been vacuous. The remedy for the criterion is the issuer's: either let the n==0 branch accept a 0 WITH identical snapshots (the strongest state), or have the condition read 'at most one, and the rule set identical'. Nothing in the world is wrong: bare path 401 unauthenticated, both paths 200 authenticated, ACL untouched, ledger nfra-oplgtw-edge-auth-json-tiered CLOSED with four legs proven."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W80-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~80",
+    "surfaced_at": "2026-10-14T17:21:16Z",
+    "one_line": "The commit-time naming gate grades the bucket literal of an S3 key but no bare S3 key literal, so a new out-of-pattern key with no s3:// prefix produces no verdict line.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/naming-gate.py@835f9452c3 usage header: 'Inputs: S3 key and bucket literals' (the gate's stated grading set)",
+        "PROBE deliverables/0.9.0_WK_NFRA_OPLGTW~80/naming_probe_as_module.diff: 15 bare key literals (json/macro/..., json/latest/manifest.json) staged as infra/aws/ec2/opal-gateway/app/portal_macro.py -> 'NAMING-GATE: PASS 1 graded' (only opal-data-portal-v2 graded, CONFORMANT)",
+        "CONTROL deliverables/0.9.0_WK_NFRA_OPLGTW~80/naming_probe_control.diff: the same keys as s3:// URIs -> 'NAMING-GATE: WARN 2 graded', RAISE-EXISTING (K1: segment json is neither a source nor a tier), exit 0; nothing REFUSED",
+        "REAL DIFF deliverables/0.9.0_WK_NFRA_OPLGTW~80/portal_macro_gate.diff (app/portal_macro.py, 369 lines): 'NAMING-GATE: PASS 1 graded', exit 0"
+      ]
+    },
+    "spec_asserts": "TO-OG-pt-2 FIRST ACT (face section 1): the commit-time naming gate REFUSES a NEW out-of-pattern S3 key literal and has no override, so a probe of every key literal reads the gate's verdict on each one.",
+    "world_is": "The gate's verdict covers the bucket literal only. Bare key literals receive no verdict at all: the 15-key probe returned PASS and certifies none of them. Keys written as s3:// URIs are graded, and the json/ segment draws RAISE-EXISTING (WARN), not REFUSE, because the same literal is carried at HEAD elsewhere. The worker built with the bare keys the served objects carry (none split, none built from pieces); the commit-time gate stays the verdict of record.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ARMED because a bare out-of-pattern S3 key can be committed and read PASS. Not changed here: the naming gate is outside this cell's <paths>. The issuer rules whether the gate's key grammar must grade bare literals."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W80-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~80",
+    "surfaced_at": "2026-10-14T17:21:16Z",
+    "one_line": "The typed seam picks the gzip decoder by key suffix, but the served macro timeseries objects are gzip under a plain .json key, so read_json raises UnicodeDecodeError on json/macro/timeseries/<slug>.json.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "HEAD-OBJECT with the box credentials, read only: json/macro/timeseries/10y.json ContentEncoding gzip, 2622 bytes, application/json; the eight other served objects this cell reads report ContentEncoding None",
+        "infra/aws/ec2/opal-gateway/app/typed_scope.py@835f9452c3 read_json: a key ending .json goes straight to json.loads; only .json.gz is decompressed",
+        "pt2.AC2.sh first live run: 'probe error: UnicodeDecodeError: utf-8 codec can't decode byte 0x8b in position 1' on the series read; after app/portal_macro.py _read sniffed the gzip magic over typed_scope._load_capped the same probe read PASS 5 of 5"
+      ]
+    },
+    "spec_asserts": "The OG-gt-6 seam (TO-OG-pt-2 face section 1): read_json reads .json and .json.gz objects under the scope cap, and the served JSON family is read through it.",
+    "world_is": "A served key ending .json can carry gzip bytes (ContentEncoding gzip, not visible in the key name), and read_json hands those bytes to json.loads. portal_macro works around it locally over the seam's own capped loader; the seam is not edited (it is not this cell's to fix). Any other reader of json/macro/timeseries/ through read_json fails the same way.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ARMED: a future typed tool that reads the timeseries family through read_json fails on every slug. The seam's issuer rules whether read_json must sniff the gzip magic."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W80-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~80",
+    "surfaced_at": "2026-10-14T17:21:16Z",
+    "one_line": "On this box lib/trading_calendar.py answers from its hardcoded NYSE fallback because pandas_market_calendars is absent, and it prints a WARN on each call.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pt2.AC2.sh run 2026-10-14 on site Z, stderr: 'WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027; regenerate with lib/tests/gen_nyse_closures.py --write before 2028)'",
+        "lib/trading_calendar.py@835f9452c3 prev_trading_day and trading_days_behind: the T-1 frontier every trading_days_behind_t1 in OG-pt-2 is measured against"
+      ]
+    },
+    "spec_asserts": "TO-OG-pt-2 binding correction 1: a tool measures staleness against T-1 through lib/trading_calendar.py.",
+    "world_is": "The calendar answers from its fallback table on this box, not from the exchange library. The table covers 2010-2027, so every trading-day lag in this cell's probe is measured against that fallback.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT inside its coverage window; the regeneration deadline is before 2028."
+  }
+  ```
