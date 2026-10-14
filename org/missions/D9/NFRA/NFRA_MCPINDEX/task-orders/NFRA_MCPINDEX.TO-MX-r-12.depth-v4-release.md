@@ -48,6 +48,16 @@ These are the differences:
    - PHASE A is yours: the deploy-only commit and `ANNOUNCE_MX-r-12.md`. Report, and stop.
    - PHASE B is re-addressed by amendment to `0.7.0_AE_CloudOps~MI` on both never-widen halves.
 
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-14 ~01:1xZ) -- the MC Portal FWD-20 sitting (`2.0.0_SA_COO~MP`, msg 33866).**
+- This release must not land between Andrew's FWD-20 read of the MC Portal breakdown page and NFRA_MCPORTAL.TO-MP-z-6's
+  run, unless the page's per-tool index link counts stay EQUAL.
+- PHASE A's ANNOUNCE therefore prints `admin_gateway_breakdown._catalog_read_tool_rows()` per-tool link counts on the
+  live tree and on the cut. A difference makes the slot conditional on MP-z-6 being closed or not yet started, and the
+  issuer reads that before the GO.
+- The reader's line is `:108` at HEAD.
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
+  GATE (viii) does not grade it.
+
 ## 2. BOUNDS
 
 1. No change to any source file. This order ships what MX-c-9 committed, and nothing else.
