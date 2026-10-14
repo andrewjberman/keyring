@@ -87,7 +87,7 @@ A refused-access outcome is a complete order with branch "refused": say so in th
   Ruled: the one allowed request goes through the main tree's SA profile and reads the account state; the outcome needs the runner profile's login as well (a sign-in is Andrew's act, routed by the issuer to the CTO). `SA1_ACCESS.json` gains `runner_profile_login`
   and `reason`; `http_status` may be null. sa1.AC1 reads the new consistency rule. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G1-FIX2</workstream>
 <slot>~AE</slot>
