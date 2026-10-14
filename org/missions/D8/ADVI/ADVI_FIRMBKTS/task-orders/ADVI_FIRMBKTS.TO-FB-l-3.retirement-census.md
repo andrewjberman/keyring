@@ -91,7 +91,9 @@ Report once: the candidate count, how many have zero consumers, the first zero-c
 
 **ISSUER NOTES:** round 8, cell 3 of 3 read-only cells (CTO round-7 analysis, msg 5482, section 3 item 2: "the first legacy operation the plan finds with NO live consumer (read live, with the consumer census printed)"; never the Door 6 marker before the publisher moves). This census feeds `FB-l-4`, the retirement act, which waits on it, the CTO's naming of the case, and a signed pair. Class LOCAL.
 
-<status>pending</status>
+**CLOSE (2.0.0_SA_COO~B1, 2026-10-14 ~12:5xZ):** worker ~83 merged at 9977d91265 (branch tip 42b428e9b1); the issuer re-ran AC1 (`CENSUS: OK candidates=17 zero=2 first=C2`) and AC2 (`ROUND 4 SCOPE: OK 4 changed, 0 outside, 0 required missing`) in the worker's tree. RULING on row D1-W83-S5 (inside this decomposition): a consumer is a live AWS resource or deployed code that the candidate's output reaches by CONFIGURATION, as the order words it; a delivery failure on a consumer (C1: 56 of 56 SNS notifications failed) is a separate defect already ruled elsewhere, not a zero. So the zero-consumer cases are C2 (`inf-canonical-prices-daily`, DISABLED, held by the CTO's hold) and C3 (`inf-gold-full-on-bronze-complete`, DISABLED, replaced by the silver aggregator). C1 is NOT a zero (it is the alarm for direct reads of the legacy buckets). Which one `FB-l-4` retires is the CTO's naming. The order's `RETIRE_CENSUS.md` was not written (the worker's standing rule bars report markdown); the JSON holds every field and this note stands in for the table. Gate limb: none graded (no criterion changed).
+
+<status>complete</status>
 <round>8</round>
 <workstream>RETIREMENT</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-l-3</to_id>

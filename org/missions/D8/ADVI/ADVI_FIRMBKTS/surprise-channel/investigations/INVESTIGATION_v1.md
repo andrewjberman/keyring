@@ -7549,3 +7549,393 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Issuer's call: amend the criterion to the instruments that can see the put (emitted line + AWS/Events TriggeredRules >= 1), or accept the record as is. This seat did not edit the record to 1 and did not flip <status>. D1-W65-S1 disarm read: the chain emitted, the rule fired and the generator ran, so the disarm condition is met on that evidence."
 }
 ```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W83-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~83",
+  "surfaced_at": "2026-10-14T12:19:47Z",
+  "one_line": "PLANINV row 6 says the Door 6 deny (router_iam.tf statement 3) has no live object and retires with the key; the deny is deployed, in a managed policy on a live role.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/opal-assets/router_iam.tf:171 (Sid DenyInfGoldSentinelAbsolutely) at C:/dev/wk-firmbkts-83 HEAD 7ee8e70830, read by the Read tool",
+      "live: aws iam list-attached-role-policies on opal-assets-ingest-router-role shows managed policy opal-assets-one-way-fan-in-fence; aws iam get-policy-version on its default version v1 shows 3 statements, the third Sid DenyInfGoldSentinelAbsolutely, Effect Deny, naming the gold/meta/pipeline-complete.json key",
+      "live: aws lambda get-function-configuration opal-assets-ingest-mirror returns Active with Role opal-assets-ingest-router-role; aws events describe-rule mdpf-daily-refresh-trigger returns ResourceNotFound (the statement's named principal is absent)",
+      "PLANINV_LEGACY_OPERATIONS.json candidates[5] (row 6, router-iam-door6-deny), read at 0.9.0_WK_ADVI_FIRMBKTS~80 record"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PLANINV row 6 (router-iam-door6-deny): the deployed router policy statement was not read; the deny guards a key whose protected principal is absent, so it has no object once the key retires and is retired with the key.",
+  "world_is": "The deny is deployed live in a customer-managed policy attached to opal-assets-ingest-router-role, the execution role of the live opal-assets-ingest-mirror Lambda. Its named principal mdpf-daily-refresh-trigger is absent, but the role and the deny are both live. The consumer census counts the role as 1 live consumer.",
+  "notes": "Not a defect in the census. Found by the FB-l-3 consumer census. Retiring the key does not edit this policy; any edit to the deny is an IAM change under CTO or Andrew. Disarm: none (INERT)."
+}
+```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W83-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~83",
+  "surfaced_at": "2026-10-14T12:19:47Z",
+  "one_line": "PLANINV row 11 says the portal distribution's behaviours must repoint off all three legacy origins; live, only the opal-data-bd origin has behaviours, and the cot and inf origins have none.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live: aws cloudfront get-distribution-config on the portal distribution (found by Comment, ID not printed), read to C:/dev/wk-firmbkts-83-data/cfcfg.json; python count of TargetOriginId: 30 behaviours including the default, 5 to S3-opal-data-bd, 0 to S3-opal-data-cot, 0 to S3-opal-data-inf, 20 to APIGateway-portal, 3 to S3-opal-data-portal-v2-json, 1 to S3-opalinvest-portal, 1 to APIGateway-portfolio",
+      "live: the same read lists 7 origins, including S3-opal-data-cot and S3-opal-data-inf",
+      "PLANINV_LEGACY_OPERATIONS.json candidates[10] (row 11, portal-cloudfront-distribution), read at 0.9.0_WK_ADVI_FIRMBKTS~80 record"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PLANINV row 11: the distribution has 7 origins, three of them legacy; the behaviours must repoint when the origins retire.",
+  "world_is": "Behaviours route only to the opal-data-bd origin (5 of 30). The opal-data-cot and opal-data-inf origins are configured with zero cache behaviours, so no request path reaches either legacy bucket through the distribution. Repointing those two origins has no behaviour to move.",
+  "notes": "Read-only finding. The bd origin carries the four advisor-intelligence artifact and entity paths, the *.json path and the satellites path. The cot bucket policy's OAC statement still names the portal distribution (consumer census row C10)."
+}
+```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W83-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~83",
+  "surfaced_at": "2026-10-14T12:19:47Z",
+  "one_line": "PLANINV row 10 says the legacy bucket policies are declared in no Terraform (DEC-8); the opal-data-bd policy statements are declared in Terraform and drift-guarded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/bd-pipeline/opal-data-bd.tf:94 (Sid AllowCloudFrontOACReadGold) and :102 (Sid AllowScopedAdvisorOAI), read by the Read tool at HEAD 7ee8e70830",
+      "infra/aws/terraform/portal-auth/firm-bucket-cross-ref.tf:96 carries a DRIFT check that names the AllowCloudFrontOACReadGold statement on opal-data-bd",
+      "Grep over infra/aws (code types, excluding md, json, txt, yaml) for AllowScopedAdvisorOAI and AllowCloudFrontOACReadGold returns only bd-pipeline/opal-data-bd.tf and shared-infra/s3.tf:286; the s3.tf statements are on opal-data-demo, not a legacy bucket",
+      "live: aws s3api get-bucket-policy on opal-data-cot returns the two statements named in PLANINV row 10 (read in this census)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PLANINV row 10: the three legacy bucket policies are declared in no Terraform (PRD DEC-8) and retire with their buckets, not by a Terraform change.",
+  "world_is": "The opal-data-bd statements are declared in Terraform and drift-guarded in portal-auth. The opal-data-cot statements have no Terraform declaration by name. Retiring the bd policy therefore needs a Terraform change, and retiring the cot policy does not.",
+  "notes": "Affects the retirement route for opal-data-bd only. Read-only; no policy was edited. Disarm: none (INERT)."
+}
+```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W83-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~83",
+  "surfaced_at": "2026-10-14T12:19:47Z",
+  "one_line": "The FB-l-3 order names the portal's user rows as a mockadv consumer; the repository holds none, and the live rows are user data this census does not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep (native) with path C:/dev/wk-firmbkts-83/portal, token mockadv, excluding node_modules: 1 occurrence across 1 file, portal/src/pages/InvestorReporting/header/firmDisplayNames.generated.ts:6",
+      "comp-find --corpus aws 'mockadv': 0 hits (denominator 2929 aws nodes scanned, vintage 2026-10-14 12:11:36 UTC)",
+      "FB-l-3 section 1a.3 scopes the read to the files and forbids reading any user's data, so no user row was opened"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FB-l-3 section 1a.3: for mockadv, read the portal's user rows, the dropdown entry, the two router map entries and the registry rows.",
+  "world_is": "The repository has no user-row file carrying the token. The only portal consumer is the generated dropdown row. Any user rows live in a store outside the repository and the graph, and were not read. The dropdown row and the router rows were read.",
+  "notes": "The census records the user-row consumer as not_read, not as zero. Disarm: none (INERT)."
+}
+```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W83-S5",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~83",
+  "surfaced_at": "2026-10-14T12:19:47Z",
+  "one_line": "FB-l-3 defines the first zero-consumer candidate as having no LIVE consumer without fixing consumer direction or delivery liveness; the FIRMSEP alarm turns the answer on that choice.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live: aws events describe-rule FIRMSEP-s3-direct-access-bypass returns ENABLED; list-targets-by-rule returns one target, the SNS topic opal-infrastructure-alerts",
+      "live: aws sns list-subscriptions-by-topic returns 1 subscription, protocol sms, not pending confirmation",
+      "live: aws cloudwatch get-metric-statistics, AWS/SNS, NumberOfMessagesPublished and NumberOfNotificationsFailed, topic opal-infrastructure-alerts, window 2026-09-14 to 2026-10-14, Sum: published 56, failed 56",
+      "live: aws events describe-rule inf-canonical-prices-daily returns DISABLED, with its only target inf-gold-trigger"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FB-l-3 section 1a: a candidate's consumers is the count of LIVE consumers; a candidate with consumers 0 and scanned above 0 is the zero case; the first such candidate in file order is first_zero_consumer.",
+  "world_is": "Under a configuration reading (enabled and configured), FIRMSEP has 1 live consumer, the SNS topic, so the first zero is inf-canonical-prices-daily (C2). Under a delivery reading, FIRMSEP has 0 deliveries in the window (56 of 56 failed), so the first zero is FIRMSEP (C1). The record uses the configuration reading and states the delivery count beside it.",
+  "notes": "The COO adjudicates which reading governs the first zero. The census does not choose for it. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W81-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~81",
+  "surfaced_at": "2026-10-14T12:26:38Z",
+  "one_line": "The Inflection fence admits 5 of the 40 roles that hold Allow on opal-data-inf, so most repoints to opal-data-inflection would be denied.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~81/PLAN_INFLECTION.json (M02, Q4)",
+      "live: s3api get-bucket-policy --bucket opal-data-inflection (read 2026-10-14)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD CONTRACTS DEC-8 and F4 (row 411): the serving grants are APPLIED on opal-data-inflection from an identity the repaired fence admits.",
+  "world_is": "Live get-bucket-policy on opal-data-inflection: DenyForeignFirmPrincipals (Deny s3:*) excepts role/*-inf-* (pattern), two named roles and five user principals. Of the 40 Allow roles on opal-data-inf, 5 match (opal-inf-served-guard, opal-inf-value-parity, irpt-inf-holdings-role, irpt-holdings-role, irpt-performance-adapter-role); 35 do not, because the inf-* names carry no leading hyphen. The bucket has no notification configuration, so EventBridge rules cannot match it.",
+  "notes": "Plan move M02 (admit by explicit ARN; no widening to a wildcard) and open question Q4 (identity-plane change, CTO decides)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W81-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~81",
+  "surfaced_at": "2026-10-14T12:26:38Z",
+  "one_line": "opal-data-inf holds 339 objects under a leading-slash prefix that no inventory row names, and the decommission cannot be measured until they are disposed of.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~81/PLAN_INFLECTION.json (M40, Q5)",
+      "live: s3api list-objects-v2 --bucket opal-data-inf --prefix /"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FB-k-1 and FB-k-2 cover every legacy key family, and TO item 6 names only B2 as the exception to the decommission.",
+  "world_is": "list-objects-v2 --prefix / (max-items 2000, not truncated): 339 keys, advisor-folder and client-id paths, one LastModified date (2026-05-06), none modified since 2026-10-01, STANDARD. No inventory row names a writer; the advisor publisher writes platinum/advisors/ without a leading slash (source lines 6-12).",
+  "notes": "Plan move M40 and open question Q5 (migrate or retire, Andrew's word for any delete). Names and ids were not printed."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W81-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~81",
+  "surfaced_at": "2026-10-14T12:26:38Z",
+  "one_line": "The 49 Financial publish trigger the TO asks the plan to mirror is a clock floor whose publisher stage is DISABLED; no live event trigger exists to copy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~81/PLAN_INFLECTION.json (M03)",
+      "infra/aws/terraform/opal-assets/advi_49f_publisher.tf:1-60, 75-110",
+      "live: scheduler get-schedule advi-49f-publisher, advi-49f-gold-floor"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO item 1: read how the comparable 49 Financial portal publish is triggered today (live rule, schedule or S3 notification) and give Inflection the same shape.",
+  "world_is": "opal-data-49financial has 0 S3 notification entries (live). The publisher stage advi-49f-publisher is DISABLED (cron 13:15Z; its document advi-49f-publisher-dispatch is not minted, per the Terraform header). The live path is advi-49f-gold-floor (ENABLED 12:45Z) into advi-49f-gold-dispatch. The shape is a designed clock floor, not a proven live path.",
+  "notes": "Plan move M03 copies the design (clock floor, DLQ, retry) and proves it on Inflection with a one-time exercise before any recurring enable; the 49 Financial path is not claimed as proven."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W81-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~81",
+  "surfaced_at": "2026-10-14T12:26:38Z",
+  "one_line": "The exec-summary Terraform placeholder carries a different name from the live rule, so no Terraform declares exec-summary-trigger.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~81/PLAN_INFLECTION.json (M01)",
+      "infra/aws/terraform/exec-summary/main.tf:214-236",
+      "live: events describe-rule exec-summary-trigger-placeholder (ResourceNotFound)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FB-k-2 INF-RULE-02 and TO item 3: Terraform declares only a DISABLED placeholder for the live rule.",
+  "world_is": "The placeholder resource is named exec-summary-trigger-placeholder (infra/aws/terraform/exec-summary/main.tf:224-227, DISABLED, cron 04:30Z). The live rule is exec-summary-trigger (ENABLED); describe-rule on the placeholder name returns ResourceNotFound. No Terraform file read declares the live name.",
+  "notes": "Plan move M01 replaces the placeholder with a declaration of the live rule and imports it; no AWS change."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W81-S5",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~81",
+  "surfaced_at": "2026-10-14T12:26:38Z",
+  "one_line": "Two repo readers of the Door 6 marker (inf-gold-freshness-guard and mdpf-daily-trigger) are absent live, which contradicts the measured claim for L27.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~81/PLAN_INFLECTION.json (M04, R11, R12, Q7, Q8)",
+      "live: lambda get-function-configuration inf-gold-freshness-guard and mdpf-daily-trigger (ResourceNotFound)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FB-k-1 row L27 (claim measured): inf-gold-freshness-guard reads gold/meta/pipeline-complete.json as its SENTINEL_KEY; its invoker was not identified.",
+  "world_is": "lambda get-function-configuration returns ResourceNotFound for inf-gold-freshness-guard and mdpf-daily-trigger; no rule targets either; neither has a resource policy. Both sources exist in the repo (infra/aws/lambda/inf-pipeline/inf-gold-freshness-guard/lambda_function.py:13, 42; infra/aws/lambda/mdpf-pipeline/mdpf-daily-trigger/lambda_function.py:53). The marker's live consumers are therefore the publisher, the accelerator rule and the fence, pending Q7 and Q8. D1-W80-S1 disarm read: the plan names the successor (move M03) and its proof (a one-time exercise). Its disarm_owner (1.0.0_SA_CTO~DELL1) confirms; this row does not disarm it.",
+  "notes": "Plan moves M04 (retirement, step 4 requires Q7 and Q8) and retire rows R11 and R12."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W81-S6",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~81",
+  "surfaced_at": "2026-10-14T12:26:38Z",
+  "one_line": "The Door 6 resource-plane belt named in the router IAM file is absent from the tree, and the live bucket has no Deny on the marker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~81/PLAN_INFLECTION.json (R6)",
+      "infra/aws/terraform/opal-assets/router_iam.tf:170-176",
+      "live: get-account-authorization-details --filter Role LocalManagedPolicy (fence attachment count 13)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "infra/aws/terraform/opal-assets/router_iam.tf:35-37 names a resource-plane twin, an s3:PutObject Deny in infra/aws/terraform/inf-sentinel-deny/.",
+  "world_is": "infra/aws/terraform/inf-sentinel-deny/ contains no .tf file (its only tracked content is an org/ telemetry log, git ls-files). The live opal-data-inf policy has 2 statements (AllowScopedAdvisorOAI, AllowCFDistributionGold), neither a Deny. The identity-plane Deny DenyInfGoldSentinelAbsolutely is live, attached to 13 roles through the fan-in fence policy.",
+  "notes": "Plan retire row R6 (identity Deny removed only after the marker is gone, CTO decides)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W81-S7",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~81",
+  "surfaced_at": "2026-10-14T12:26:38Z",
+  "one_line": "A portal Lambda role holds a wildcard Allow on the legacy Inflection bucket, shared with 12 functions outside both inventories.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~81/PLAN_INFLECTION.json (M42, R8, Q15)",
+      "live: get-account-authorization-details (role statements); lambda list-functions (Role field)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FB-k-2 INF-ROLE-40 lists opal-portal-lambda-role among the Inflection estate roles with Allow on opal-data-inf, and the inventories treat the consumer set as Inflection-only.",
+  "world_is": "The role holds Allow s3 on opal-data-inf:* and is assumed by 12 non-Inflection functions (opal-trending-topics-portal-publisher, opal-portal-rest-authorizer, opal-portal-fear-greed-fetcher, opal-news-ai-sentiment, opal-portal-volatility-fetcher, opal-portal-authorizer, opal-infrastructure-monitor, opal-session-analytics, opal-market-regime-classifier, finbert-batch-processor, opal-portal-data-proxy, opal-market-overview-tiered-generator). Read live (role statements and list-functions Role field).",
+  "notes": "Plan move M42 and retire row R8 (the statement is removed after a zero-read record; the portal lane owner and the CTO decide)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W81-S8",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~81",
+  "surfaced_at": "2026-10-14T12:26:38Z",
+  "one_line": "The org trail already selects write data events on the whole of opal-data-inf, which bears on PRD DEC-12's open call.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~81/PLAN_INFLECTION.json (decommission, Q2)",
+      "live: cloudtrail get-event-selectors --trail-name opal-organization-trail; get-trail-status"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD CONTRACTS DEC-12: writes are recorded only under platinum/firm/ (served-key trail); recording writes on the three legacy buckets is an open call at Andrew.",
+  "world_is": "get-event-selectors on opal-organization-trail (logging true per get-trail-status): classic WriteOnly data selector on the arn of opal-data-inf/ (and bd, cot) and ReadOnly on opal-data-inf/ (and 49financial, bd, cot). The served-key trail carries only the platinum/firm/ advanced selector. Whether this answers DEC-12 is for the CTO; the trail query surface and retention were not read.",
+  "notes": "Plan decommission basis (instrument) and open question Q2."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W81-S9",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~81",
+  "surfaced_at": "2026-10-14T12:26:38Z",
+  "one_line": "The default-group Scheduler count has fallen from the 34 the inventory recorded to 33 live, and the schedule that left was not identified.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~81/PLAN_INFLECTION.json (denominators)",
+      "live: scheduler list-schedules --group-name default"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FB-k-1 denominators: 34 EventBridge Scheduler schedules in the default group.",
+  "world_is": "list-schedules --group-name default returns 33 schedules at 2026-10-14 (read in this plan). The difference from the 2026-10-13 read was not identified; the six schedules named in the plan are present (advi-49f-publisher, advi-49f-gold-floor, irpt-49f-reporting-publish-daily, opal-assets-mdpf-portal-publisher-daily, mdpf-feeder-backstop-daily, mdpf-scheduled-floor).",
+  "notes": "The plan's denominator records 33 live and 34 recorded."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W81-S10",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~81",
+  "surfaced_at": "2026-10-14T12:26:38Z",
+  "one_line": "The 49 Financial advisor prefix has gold and platinum only; the TO's model layout names a state/ prefix that is not there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~81/PLAN_INFLECTION.json (M05, Q5)",
+      "live: s3api list-objects-v2 --bucket opal-data-49financial --prefix advi/49financial/ --delimiter /"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO section 1: 49 Financial keys are advi/49financial/{gold|platinum|state}/ and are the model for Inflection.",
+  "world_is": "list-objects-v2 on opal-data-49financial with prefix advi/49financial/ and delimiter /: CommonPrefixes are advi/49financial/gold/ and advi/49financial/platinum/ only. The Inflection state/ layout in the plan is therefore inferred from the model, not copied from a live state/ prefix.",
+  "notes": "Plan move M05 layout note; the CTO decides the state/ layout (Q5)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W81-S11",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~81",
+  "surfaced_at": "2026-10-14T12:26:38Z",
+  "one_line": "Three inventory rows claim legacy_touch False although their live environment or rule pattern names opal-data-inf.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~81/PLAN_INFLECTION.json (M28, M29, M20)",
+      "live: lambda get-function-configuration inf-client-detail, inf-etf-ownership-daily; events describe-rule inf-assets-trigger-bronze-complete"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FB-k-1 L24 and FB-k-2 INF-FN-08 (client-detail) and INF-FN-21 (assets-trigger) carry legacy_touch False.",
+  "world_is": "inf-client-detail has INPUT_BUCKET=opal-data-inf (env read live); inf-assets-trigger's rule R02 matches opal-data-inf bronze-complete markers (rule read live); inf-etf-ownership-daily has INF_BUCKET=opal-data-inf (env read live; FB-k-1 L24 is False, FB-k-2 INF-FN-20 is True).",
+  "notes": "The plan treats all three as legacy: moves M29, M20 and M28."
+}
+```

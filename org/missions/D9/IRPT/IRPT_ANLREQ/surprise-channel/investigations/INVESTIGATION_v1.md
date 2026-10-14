@@ -12935,3 +12935,32 @@
   }
 }
 ```
+
+## IRPT_ANLREQ-D2-S96 -- disarm owner's evidence for the CTO-owned ARMED rows: 10 of 12 met; W101-S3 live, ruled an owner check
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S96",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-14T12:35:00Z",
+  "one_line": "Disarm sweep of the 12 ARMED rows naming the CTO: 10 meet their disarm (S23, S45, S51, S53, W52-S32, W54-S5, W55-S25, W61-S3, W64-S5, W92-S2); S26 is 2.0.0_SA_COO~Y2's (one message on the commentary-ready queue, expires ~2026-10-15T06:10Z); W101-S3 is LIVE: the submit path checks the attachment's shape only, so a client login can file a ticket naming another firm's input_id. Ruled: an owner check on input_id at submit, landed before the partner-firm page is promoted to PROD.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CLAUDE.md section 2: an ARMED hazard disarms through its disarm_owner; CLAUDE.md hard stop: never reference another firm's data.",
+  "world_is": "Read-only sweep at HEAD b956283de1 with single-resource AWS reads 2026-10-14 12:21Z-12:26Z. Met: S23 (row D2-S28; commentary-draft and transcripts-pull both CodeSha256 xC1GDXXp), S45 (D2-S46; map pins at 361c44fa9d), S51 (D2-S58; portal origin/DEV 22795405 analysisRequest.ts:581-618 keeps the one retry without ticket_id), S53 (D2-S54; composition-read live DbvBUxTG equals the map), W52-S32 (no disarm row before this one: template_reader.py:206-208,247 at HEAD value-tests No. of Accounts, and live irpt-ycharts-generate reAjAQOV carries template_reader bytes a61cd0c622f8dd54 = pin 55d1755d39; negative control da7b3b10bc lacks it), W54-S5 (D2-S72; irpt-narrative vBzPCvn9 equals the map), W55-S25 (ADJUDICATION_v21; the one-word gap SHARES_PRICE_SOURCE_NOT_COMPOSED closes with release 29 L2, now in its window), W61-S3 (D2-S72), W64-S5 (D2-S70; irpt-holdings d1HwIxeA equals the map), W92-S2 (no disarm row before this one: live opal-ticket-api C/Rt/FnS lambda_function.py hashes cfa99176 = HEAD and carries AR-y-280's partner-firm SUBMIT-FORM path, lines 167 and 1132-1144). Live: W101-S3 (_validate_attachment lambda_function.py:746-760 checks shape only; :1143 checks answers.firm but never the input's owner or tenant; release-28 pair line 56 states the reach as any client login by a direct API call). The downstream reader's refusal of another firm's input was NOT read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py@b956283de1 lines 746-760, 1132-1144, 167",
+      "infra/aws/lambda/investor-reporting/ycharts/template_reader.py@b956283de1 lines 206-208, 247",
+      "aws lambda get-function-configuration (opal-ticket-api, irpt-ycharts-generate, irpt-narrative, irpt-holdings, irpt-commentary-composition-read-lambda, outlook-global-commentary-draft-lambda, teams-global-transcripts-pull-lambda) 2026-10-14T12:2xZ",
+      "aws sqs get-queue-attributes outlook-global-commentary-draft-commentary-ready-queue 2026-10-14T12:21:41Z: ApproximateNumberOfMessages 1",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/adjudications/ADJUDICATION_v21.md lines 19-41"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```

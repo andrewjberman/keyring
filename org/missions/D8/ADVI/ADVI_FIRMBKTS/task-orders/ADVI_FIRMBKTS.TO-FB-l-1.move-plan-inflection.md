@@ -108,7 +108,9 @@ Report once: the move count, the retire count, the denominators, what you could 
 
 **ISSUER NOTES:** round 8, cell 1 or 2 of 3 read-only cells (CTO round-7 analysis, msg 5482, `ledger/ROUND_ANALYSIS.round7.md` section 3 item 1). The plan is READ-ONLY; no Inflection or Cottonwood move starts. Slot ~81. Class LOCAL.
 
-<status>pending</status>
+**CLOSE (2.0.0_SA_COO~B1, 2026-10-14 ~12:5xZ):** worker ~81 merged at 5118743acd (branch tip 98815701f7); the issuer re-ran AC1 (`PLAN: OK firm=inflection moves=44 retire=13`) and AC2 (`ROUND 4 SCOPE: OK 4 changed, 0 outside, 0 required missing`) in the worker's tree. The plan orders exec-summary-trigger under Terraform first (M01, no AWS change), the portal publisher's new trigger (M03, a Scheduler floor like 49 Financial's, created DISABLED) before the Door 6 retirement (M04), and carries 30 open questions for the CTO's read. Rows D1-W81-S1..S11 are OBSERVATION and INERT. D1-W80-S1 is NOT disarmed here: the plan names its successor (M03) and its proof; the disarm owner is the CTO. Gate limb: none graded (no criterion changed).
+
+<status>complete</status>
 <round>8</round>
 <workstream>MOVEPLAN</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-l-1</to_id>
