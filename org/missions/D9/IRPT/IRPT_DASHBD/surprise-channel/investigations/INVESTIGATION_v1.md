@@ -8616,3 +8616,79 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "surfaced_at": "2026-10-14T01:06:00Z"
 }
 ```
+
+## IRPT_DASHBD-D2-W150-S1 -- the count premise fails: no served position and no open lot in the stores round 96 read carries the synthetic cash ticker, so positions_that_move is 0
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W150-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~150",
+  "surfaced_at": "2026-10-14T01:28:31Z",
+  "one_line": "The count of synthetic sweep-cash positions that move is zero in the stores round 96 read: no served advisor position and no lot in the newest holdings_lots snapshot carries the synthetic cash ticker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-185 step 5 and the CVO row W147-S3: the served positions and the holdings snapshot hold synthetic sweep-cash positions (CASH_USD) that move under the special-case change, and the count of them is the number the pair rests on.",
+  "world_is": "In 189 platinum advisor positions files (4,315 positions, the top 25 per advisor, one firm scope 49financial) no position has the synthetic cash ticker. In the newest holdings_lots snapshot (2026-10-09, 1,314,777 lot rows) no lot has it. The served effect of the special-case change in these stores is therefore zero; where the synthetic cash line sits in the feed is not established by this read. The count record is deliverables/0.9.0_WK_IRPT_DASHBD~150/CASH_USD_CASH_CHANGE.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "opal-data-49financial advi/49financial/platinum/advisors/ positions.json objects, read by S3 LIST and GET on 2026-10-14: 189 objects, 4,315 positions, 0 with the synthetic cash ticker, all with class_source etf-classifications",
+      "opal-data-bd gold/timeseries/holdings_lots/2026-10-09.parquet, read by S3 GET on 2026-10-14: 1,314,777 lot rows, 0 with the synthetic cash ticker",
+      "data/black_diamond/scripts/gold/lib/etf_classifier.py@0c1211602f: the special case is the only synthetic-cash literal under data/black_diamond/scripts/gold/ outside the tests"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W150-S2 -- a raw S3 LIST and GET of the named served stores was denied by the comp-rail AWS-FRESH hook until the call carried an audited rail-checked annotation
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W150-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~150",
+  "surfaced_at": "2026-10-14T01:28:31Z",
+  "one_line": "The comp-rail AWS-FRESH hook denied the first raw S3 LIST of the served advisor positions prefix; the order's named read ran only after an audited rail-checked annotation.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-185 step 5 reads the served stores by S3 GET and LIST, after enumerating the graph with comp-pipescript io.",
+  "world_is": "The first LIST of the served prefix was refused by the rail with a freshness-tool reason; the refusal ran nothing. comp-freshness answers artifact freshness, not enumeration, so it could not supply the count. The LIST, the 189 GETs and the lot snapshot GET then ran with an inline rail-checked annotation naming the order and the count; no other route was used. The deny id is in the worker's scratch log.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the Bash call that listed the 49financial platinum advisors prefix: the PreToolUse hook refused it with comp-rail AWS-FRESH, nothing ran, the remainder line was the rest of the call",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~150/CASH_USD_CASH_CHANGE.json: the stores read, by name and access"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W150-S3 -- the newest holdings_lots snapshot carries lot rows under a cash-like ticker that is not the synthetic cash ticker, and the special case does not match them
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W150-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~150",
+  "surfaced_at": "2026-10-14T01:28:31Z",
+  "one_line": "11 lot rows in the newest holdings_lots snapshot carry a four-character ticker containing the cash stem; it is not the synthetic cash ticker, so the special case does not serve it and the count does not include it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The synthetic sweep-cash ticker is the one cash ticker the classifier special case answers; the count of cash positions is taken over that ticker.",
+  "world_is": "Of 1,314,777 lot rows in the 2026-10-09 snapshot, 11 carry a four-character ticker containing the cash stem, one spelling in all 11, and none equals the synthetic cash ticker. Those rows reach the classifier through the table path, not the special case. Their open state and their served class were not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "opal-data-bd gold/timeseries/holdings_lots/2026-10-09.parquet, read by S3 GET on 2026-10-14: counts only, the ticker value is not recorded here",
+      "data/black_diamond/scripts/gold/lib/etf_classifier.py@0c1211602f: the special case compares the upper-cased ticker to the synthetic cash ticker only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
