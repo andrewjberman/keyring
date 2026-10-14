@@ -35026,3 +35026,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Reported as a STOP per the rule; the attribution is not reclassified. The CTO decides whether these four belong to the signed cash rule (a definition change for the identity-patch set) or to a fifth named commit (IB-pr-529, the cash rule itself, which is not a named commit of this order)."
 }
 ```
+
+## IRPT_BCKEND-D2-S176 -- Dispositions on the round-196 workers' rows; DISARM of D2-W384-S1; the CUSIP fallback explains 232 of Cottonwood's 236 beyond-rule nodes and 4 are overdetermined (a STOP)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S176",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T21:55:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on the round-196 workers' rows (D2-W385-S1 and S2, D2-W386-S1 to S3, D2-W387-S1 to S6) and the DISARM of D2-W384-S1: the closure is fixed into a new pin and proven on the built bundles; 232 of Cottonwood's 236 beyond-rule nodes are the CUSIP fallback, 4 are overdetermined by it and the signed cash rule and are a STOP for the CTO.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB196-1 and IB196-2 AC1 to AC3 and IB196-3 AC1 to AC3 on the landed trees, and the three proof instances: IB196-1 and -2 PASS and VALID; IB196-3 AC1 FAIL (4 unattributed), AC2 and AC3 PASS, VALID; round-close-check --workstream ~P MAY-CLOSE (orders=4, 2 complete, 2 cancelled with reasons); merges cbc7701656 (pin branch), 457ecc1bf4, cf000707b0, 15ead085bb",
+      "I read the toggle record IB196-3_toggle_attribution.json (per-commit removed nodes 0 / 0 / 232 / 0; overlap 0, joint 0, unattributed 4) and the worker's analysis of the 4 nodes (live fixed_income, NAME_ALIAS, Cash; pin cash, TABLE, Money Market; the CUSIP toggle restores basis and sub-class but the signed cash rule still moves asset_class to cash)",
+      "drain-end packet deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUND_196_P_DRAIN_END_20261014.md"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27); an ARMED row is disarmed with its evidence when its disarm condition is met.",
+  "world_is": "DISPOSITIONS. DISARM D2-W384-S1 (the pin's bundle closure lacked opal_unidentified.py): the closure now holds it on the new pin b1d354cfc9, every .py closure member imports under python -I from each firm's built bundle, and the differential was re-run on the built bundles (IB-pr-540 and IB-pr-541). D2-W385-S1 (the pin commit refused by the TO issuance gate): RESOLVED, my order's design: the issuer made the pin commit with an audited suite-gate bypass (three unrelated tests red on trunk too). D2-W385-S2 (SHA256SUMS counted in bundle_delta): INERT, the generated index changes by one line with the added member. D2-W386-S1 (the live bundles lack the matcher and unidentified modules): INERT, expected from the evidence. D2-W386-S2 (the live and built served readers differ in shape, each gate runs on its own code's reader against one captured index): INERT, recorded. D2-W386-S3 (python -I writes __pycache__ despite PYTHONDONTWRITEBYTECODE): INERT, scratch only. D2-W387-S1, S2, S3 (the four reverts conflict at the new pin: later commits touch the same hunks; at the new pin the multi_asset line is already replaced by the CUSIP port): RESOLVED by IB-pr-542 AMENDMENT 1 (my order's design). D2-W387-S4 and S5 (the amendment applied; a CRLF write slip caught by the byte-level diff and redone): INERT. D2-W387-S6 (232 of 236 beyond-rule nodes removed by the CUSIP fallback toggle alone, 0 by the others, 4 unattributed because the signed cash rule overdetermines their asset_class change): the STOP, carried to the CTO with the recommendation of one combined toggle; hazard INERT (nothing minted), LOAD-BEARING for the release."
+}
+```
