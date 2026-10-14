@@ -32967,3 +32967,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS: W369-S1 (the function name) and S2 (one custody source, so no producer for cottonwood and inflection): MY DEFECTS, ruled by amendment 1 (@8d14148d96): I named the function from the repo directory and assumed a producer for all three firms without reading the producer's source count. W369-S3 (the 2026-10-03 passes logged no activity line; 23 invocations, 562 days, 21 to 63 s each): the earlier returns-only backfill predates the lots stage; INERT. W369-S4 (a backfill rewrites the returns days of its range, 565 landed partitions): carried into the packet as Design (A)'s cost; INERT until the CTO chooses. W369-S5 (LOTS_SKIPPED on 2026-10-07 and 10-08, later landed): an unstable refusal on the realized-lot key check, cause NOT read; INERT, a condition of any run. W369-S6 (a 25-day chunk at 216.7 s/day is past the 900 s timeout): the 23 invocations are a floor; about 4 days a chunk, about 142 invocations (derived). W369-S7 (activity rows 6901 vs 6904 for one day): the stage is NOT idempotent; a re-run changes content. W369-S8 (the trading calendar answered from its hardcoded NYSE fallback): the 565-day count rests on it; INERT, re-measured at the run. W369-S9 (the schedule is an EventBridge Scheduler schedule outside the read): INERT. TWO DECISIONS for the CTO (asked in the L10 slug): (1) Design (A), the existing event in timeout-sized chunks, which rewrites 565 landed returns partitions and whose activity stage is not idempotent, or Design (B), a small code change so a backfill event selects its stages (activity and lots only), which never touches the served returns but needs its own release and pair; I recommend (B) on what was measured (it keeps served returns untouched), with its chunk time unmeasured. (2) cottonwood and inflection have NO activity producer: the default report's activity figures stay ABSENT for them until a producer exists; that is a scope question (the CTO's, and Andrew's if it adds a source), not this census's. NOT shown: that any backfilled table fills the default report (a person's read on DEV after a run)."
 }
 ```
+
+## IRPT_BCKEND-D2-S156 -- queued for round 188: the IR holdings class rule (FDRXX to Cash) from one shared definition
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S156",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T01:14:46Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Queued by the CTO (round-187 addition): the IR Holdings class rule (Andrew's FDRXX to Cash): holdings_snapshot.py classify_security needs the SAME cash rule as the BD gold classifier, from ONE shared definition, with the count of holdings that move per firm and a never-widen pair; round 188 (round 187 is already issued).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2's round-187 addition message, 2026-10-14T01:13Z, citing D2's read org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~149/IR_HOLDINGS_CLASS_SOURCE.json (read by me): classify_security at data/assets/scripts/gold/investor_reporting/holdings_snapshot.py:977-984 serves a canonical etf-classifications row's asset_class verbatim and never reads sub_asset_class; the BD gold classifier data/black_diamond/scripts/gold/lib/etf_classifier.py (_row_class, lines 104-116) carries the cash rule; the two share no code; bd_securities_fallback.py is a drifted verbatim copy of the pre-SC-t-1 gold classifier with no cash rule (it serves money-market names as fixed_income)",
+      "D2's read states the served class of a money-market fund today as NOT_ESTABLISHED: no served object or canonical row was read (relayed; not re-read by me)"
+    ]
+  },
+  "spec_asserts": "One cash rule, one shared definition: the IR holdings class and the BD gold class cannot drift (Andrew's Opal Shape word, relayed by the CTO).",
+  "world_is": "QUEUED, not cut: round 187 is already issued (one issuance per round) and IB-pr-456 stays first when its ID arrives. Plan for the round-188 cells (the CTO said one cell; the work has two measurable halves and I cut them as two so each carries a check): (1) a READ-ONLY count: per firm, how many holdings in the served snapshots have a canonical etf-classifications row whose sub_asset_class (trimmed, lower-cased) is cash but whose asset_class is not cash (the holdings that would MOVE), counts only, plus the canonical rows' own count of such rows, and what the code path serves for a money-market ticker with NO canonical row (the bd-securities fallback answer, unchanged by the proposed rule); (2) the BUILD: one shared definition of the rule imported by both classifiers (D2's proposal mirrors without importing: the CTO ruled one shared definition, so the build either extracts the rule to one module both import or points holdings_snapshot at the existing one, whichever the per-firm host packages (the packaged holdings tarballs) can carry without a second copy), the tests, and the packaging consequence; its never-widen pair and apply follow in later rounds. NOT read by me: the served snapshots, the canonical table, the host packaging of the shared module."
+}
+```

@@ -11986,3 +11986,148 @@
   "notes": "Not raised as BLOCKING: the live package reproduces at a4b7c48fad, so the no-move control and the release are both cut on that base, and the release moves only ops/status.py. The record's last_deployed_commit does not name a rebuildable base; the issuer should correct the premise before the record is used as a base again. Nothing was uploaded, applied or deployed."
 }
 ```
+
+## IRPT_ANLREQ-D2-W118-S1 -- the scratch commit of the AR-y-300 build input is refused by the owned-paths lane gate on all eight paths
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W118-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~118",
+  "surfaced_at": "2026-10-14T01:02:46Z",
+  "one_line": "the scratch commit of the AR-y-300 build input is refused by the owned-paths lane gate on all eight paths, so the build used the builder's own --base-pin and --files-from route",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-300 steps 1 and 2: make ONE local scratch commit (never pushed) at the release pin with the replaced members, and build with that commit as the pin source.",
+  "world_is": "bash .tools/safe-commit.sh in the throwaway worktree C:/dev/irpt-r28-build (branch scratch-wk118-r28-build, detached at 0485393f3a) refused all eight paths (template_reader, portfolio, uploads, security_resolution, ops/status, resident_worker, opal_packager, lib/trading_calendar) with owned-paths lane violations: IRPT_Y_ACCESS_INTEGRATION_P, IRPT_RESIDENT_ONE_WRITER_G2, IRPT_COMPLETION_Y and BASE_EXEC, agent not in permitted_agents; rc 1; no commit made. The build instead used --pin a4b7c48fad (trunk) --base-pin 0485393f3a --files-from (seven repo paths) and --member lib/trading_calendar.py=lib/trading_calendar.py, which the builder supports (IRPT_YCDGEN R13 and R15). The bindings therefore name package_pin a4b7c48fad and base_pin 0485393f3a, not a scratch commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output in C:/dev/irpt-r28-build on 2026-10-14 (eight VIOLATION lines, rc 1); the release-21 precedent IRPT_ANLREQ-D2-W71-S1 (the same refusal class)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py (blob e1e58c2d94) lines 178-180 and 203-223: --base-pin, --files-from, --member",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~118/r30/evidence/builder_diff.txt and build_args.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A worker cannot make a build-input commit for a cell whose members lie outside its grant; the builder-native route gives the same bytes without a commit. Recorded so the CTO reads package_pin as a trunk commit, not a scratch one."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W118-S2 -- ycharts/research/opal_packager.py is already a member of the release-19 tarball, so AR-y-300 replaces it rather than adds it, and the checker's expected lists say ADD
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W118-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~118",
+  "surfaced_at": "2026-10-14T01:02:46Z",
+  "one_line": "ycharts/research/opal_packager.py is already a member of the release-19 tarball, so AR-y-300 replaces it rather than adds it; the checker and the order's expected delta say ADD",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-300 and the census (FWD1_RELEASE_CENSUS.json, packages resident): ycharts/research/opal_packager.py is an ADD (only_in_new) to the resident; the expected delta is six replaced members, bindings, SHA256SUMS and two additions; ar21_checks.py y300-build allows opal_packager.py only in only_in_release.",
+  "world_is": "The release-19 tarball (sha256 84df6479...) already carries ycharts/research/opal_packager.py at sha256 5605e640 (the release pin blob, the same bytes as the pin's). The trunk blob (sha256 e874f26e) replaces it in the r28 build. The measured delta against the r19 tarball is nine differing members (SHA256SUMS, reports/resident_bindings.json, intake/template_reader.py, intake/portfolio.py, intake/uploads.py, intake/security_resolution.py, ops/status.py, ycharts/generate/resident_worker.py, ycharts/research/opal_packager.py), one only_in_new (lib/trading_calendar.py), zero removed. The change to opal_packager.py is the intended AR-y-285 change; the verb in the expected list is wrong. The checker FAILs on it (delta_vs_live names a member outside the release; only_in_release lacks opal_packager.py).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/irpt-release-r28/out/pack_delta_r28.json (differing and only_in_new, computed from the staged tarball against the r19 tarball)",
+      "tar member list of C:/dev/irpt-release-r19/irpt-resident-0485393f3a-r19.tar.gz: ./ycharts/research/opal_packager.py sha256 5605e6408933 (read at this run)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~118/r30/RESIDENT_BUILD.json (delta_vs_live, only_in_release)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "BLOCKING for AR300-y-AC1 only. The release content is the intended one (the packager must carry the request_id change, AR-y-285); the question for the issuer and the CTO is whether the expected delta should name a replace. Nothing was altered to make the checker pass."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W118-S3 -- the recipe builder already packages ycharts/research and a file at a flat or lib path, so no builder edit was needed; the pin's own reports builder is a different file
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W118-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~118",
+  "surfaced_at": "2026-10-14T01:02:46Z",
+  "one_line": "the recipe builder (blob e1e58c2d94) packages ycharts/research and any --member file, so no builder edit was needed; the pin's reports/build_resident_package.py, which the census read, is a different builder",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-300 step 1 and the census: the scratch copy of the builder needs a minimal edit to package ycharts/research and lib/trading_calendar.py; the pin's builder reports/build_resident_package.py does not package ycharts/research and adds only lib/opal_naming.py (line 75).",
+  "world_is": "The recipe builder named by the release-19 and release-21 records (org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py, blob e1e58c2d94, sha256 afe7d574) already has --research (packages the tracked research files at the base pin) and --member PACKAGED=REPO (packages any file at the pin, here the trunk pin). Its diff against the copy used is empty. The pin's own reports/build_resident_package.py (blob c8158cfc, 4723 bytes) is not named by any release recipe in the records and was not used. The AR-y-300 build therefore ran the recipe builder UNEDITED; the builder diff is empty.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git hash-object of the copy used = e1e58c2d94a8d0b6fc4c16320fa385bf39e5d8a8 (org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~118/r30/evidence/builder_diff.txt)",
+      "the recipe builder argparse, --research and --member (lines 171-177 of blob e1e58c2d94)",
+      "git show 0485393f3a:infra/aws/lambda/investor-reporting/reports/build_resident_package.py (blob c8158cfc, 4723 bytes)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The census finding is true of the pin's own builder only. Whichever builder the next resident release uses should be named in its recipe, so the edit question does not come back."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W118-S4 -- the default-calendar test asserts the calendar loads from the repository's lib/, which no extracted package can satisfy
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W118-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~118",
+  "surfaced_at": "2026-10-14T01:02:46Z",
+  "one_line": "intake/tests/test_price_date_default.py line 124 asserts the default calendar loads from the repository's lib/trading_calendar.py, so the test fails on any extracted package",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-245 (test_price_date_default.py): the default price date is the previous trading day under the estate's one calendar, and the calendar module is the repository's lib/trading_calendar.py (line 124).",
+  "world_is": "On the extracted resident package the calendar is loaded from <package>/lib/trading_calendar.py, the first import route of intake/portfolio.py (the resident's lib path). Line 124 compares that loaded path with <repo root>/lib/trading_calendar.py and fails; the two date assertions before it pass, and the other four tests of the file pass. The loaded bytes are the packaged member (sha256 9bc467c6, verified in SHA256SUMS). A diagnostic copy at the repo-depth lib did not change the loaded path, so the failure is the path identity, not the content.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~118/r30/evidence/tests_graded_GIT_DIR_set.txt (1 failed, the line 124 AssertionError)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~118/r30/evidence/diag_price_date_with_calendar_at_repo_lib.txt (still 1 failed)",
+      "intake/tests/test_price_date_default.py (trunk a4b7c48fad, blob 27ce8cc792) line 124"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A test that presumes a source checkout cannot be a release gate for the package. Not a defect of the calendar content."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W118-S5 -- the named test file test_kept_holding.py imports yfinance_check, which the release omits by design, so the file is not collected
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W118-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~118",
+  "surfaced_at": "2026-10-14T01:02:46Z",
+  "one_line": "the named test file intake/tests/test_kept_holding.py imports yfinance_check, which this release omits by design, so the file is not collected on the package",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-300 names intake/tests/test_kept_holding.py among the tests to run on the build (the KEPT words, AR-y-293); the same order says intake/yfinance_check.py is NOT in this release (census S6).",
+  "world_is": "test_kept_holding.py imports yfinance_check at line 15. The module is not in the package, so collection raises ModuleNotFoundError and none of the file's 19 tests run in the graded run. With the trunk module copied into a scratch copy of the package (diagnostic only), the file collects and 19 of 19 pass. The release therefore cannot prove the KEPT-word tests with yfinance_check absent.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~118/r30/evidence/tests_graded_GIT_DIR_set.txt (collection error at intake/tests/test_kept_holding.py:15)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~118/r30/evidence/diag_kept_holding_with_yfinance_check.txt (19 passed, diagnostic)",
+      "IRPT_ANLREQ-D2-W113-S6 (no production module imports yfinance_check)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not widened: the module stays out of the release, as the order says. The owner of the wiring is the open question of W113-S6."
+}
+]
+```
