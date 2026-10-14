@@ -12977,3 +12977,28 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker; the window rule was not adjusted and the record follows the checker's rule. The issuer rules the zero-day window: a figure over no days (the checker) or not comparable (round 111). Counts only: no household or account id and no client value is recorded."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W183-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~183",
+  "surfaced_at": "2026-10-14T22:37:29Z",
+  "one_line": "The commit-time client-data check did not run on dell2 for commit 85cb94a3a2: the hashed account-id list is absent at its default path, so safe-commit printed WARN and passed the commit unchecked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "DB-b-228 step 7 and the Bounds (no account or household id in the repo, a row or the report), with the commit gate of safe-commit.sh as the mechanism that checks a commit for client account ids before it lands; the worker's own scan of its content is not the gate.",
+  "world_is": "On this device the hashed account-id list is absent at its default path (the gate prints ABSENT at the user profile path and says absent is not empty; OPAL_ACCOUNT_ID_HASHES is not set for this run), so the client-data check printed WARN and the commit 85cb94a3a2 landed with the check not run. The commit holds counts, dates, words and one tracked script with no id literal; that is a worker reading, not the gate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output of commit 85cb94a3a2 (worker log under the worktree scratch folder): WARN client-data-check: hashed account-id list ABSENT at the user profile path; this commit was NOT checked for client account ids",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~183/household_none_cause_r112.py and RD_HOUSEHOLD_NONE_CAUSE_R112.json at 85cb94a3a2: counts, dates, words and a sha256 only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker; the commit was not re-run and no list was placed on the device. Counts only: no household or account id and no client value is recorded. The issuer routes the hashed list to the device owner."
+}
+```
