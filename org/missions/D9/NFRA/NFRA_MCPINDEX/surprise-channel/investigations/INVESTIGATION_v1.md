@@ -6871,6 +6871,31 @@ carries none.
     "spec_asserts": "FWD-20 / MX-c-8 Part 1: every tool_index entry names its definition `<path>:<line>` in the deployed gateway tree.",
     "world_is": "Two entries cite the pre-change lines of the one definition file the release itself changed. The partition, the links, the claims and discover are all correct live.",
     "notes": "Disarm when v2's r11.AC2 reads definitions located 67 of 67 on the host and the ledger closes. Instrument lesson for the round-10 analysis: a census of definitions must read the tree AS SHIPPED (the base plus the cell's own changes), never the base alone. NFRA_OPLGTW OG-ap-14 is told its base moves again (to v2)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S113",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-14T00:10Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarmed by the fix forward Z-S112 ruled. v2 (7eff14b2e6) is live, and r11.AC2 reads definitions located 67 of 67 on the host. The ledger is CLOSED on 5 legs.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S110",
+      "NFRA_MCPINDEX-Z-S112"
+    ],
+    "one_line": "DISARMS Z-S110 and Z-S112 to INERT: MX-r-11 v2 deployed_commit 7eff14b2e6 (0.7.0_AE_CloudOps~MI msg 33836, @598047ef2f); ledger nfra-mcpindex-r10-catalog-release CLOSED. The issuer's independent re-run at box/sitez HEAD reads r11.AC1 PASS (14 of 14 sentinels), r11.AC2 PASS live (ssm b7d0e9cb: partition 67 of 67, a=11 b=44 c=12, definitions located 67 of 67, discover 3 of 3) and r11.AC3 PASS (etfs_get_positioning AGREE, depth absent CONFIRMED).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The real run through the deployed gateway's own opal_discover (this seat's session, 2026-10-14 ~00:0xZ): 'harvested news articles and chatter' catalogued, 5 harvest_datasets matches; 'security analysis research pack' catalogued, 1 match (harvest_packs); 'Schwab account positions' catalogued, 8 matches, 3 servable silver datasets. Before the round both harvest subjects read catalogued: false.",
+        "2.0.0_SA_COO~O was told the deployed_commit for NFRA_OPLGTW OG-ap-14 (msg sent 00:04Z)."
+      ]
+    },
+    "spec_asserts": "FWD-20: every served tool's tool_index entry names its definition in the deployed tree.",
+    "world_is": "67 of 67 definitions are located in the deployed tree."
   }
 ]
 ```

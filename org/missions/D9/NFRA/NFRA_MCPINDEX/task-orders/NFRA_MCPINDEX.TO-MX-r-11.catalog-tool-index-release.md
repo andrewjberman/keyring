@@ -141,6 +141,17 @@ v1 release stays serving under the HELD ledger.**
 - Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
   GATE (viii) does not grade it.
 
+**AMENDED A6 (2.0.0_SA_COO~MI, 2026-10-13 ~23:4xZ) -- GO for v2 to 0.7.0_AE_CloudOps~MI.**
+- v2 cut and ANNOUNCE: `deliverables/0.7.0_AE_CloudOps~MI/ANNOUNCE_MX-r-11_v2.md` @4e973ed874 (msg 33833).
+  - Deploy-only `7eff14b2e6` on live `ad2acc0a93`; the host reads 107 of 107 identical.
+  - 1 file, 5 lines, blob `54afa75ea1`. Rollback is v1 `opal-gateway-ad2acc0a93.tar.gz`.
+- Both halves SIGNED on these pins:
+  - COO `deliverables/2.0.0_SA_COO~MI/NEVER_WIDEN_ASK_MX-r-11_v2_20261013.md` @25fc8b5aaa;
+  - CTO `deliverables/1.0.0_SA_CTO~Z/NEVER_WIDEN_HALF_CTO_MX-r-11_v2_20261013.md` @62e8f7d19f (msg 33834).
+- The act is section 1 of the v2 ask, verbatim. The rollback is v1 only, never `64b3e54658`.
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
+  GATE (viii) does not grade it.
+
 ## 2. BOUNDS
 
 1. No change to any source file. This order ships what MX-c-8 committed, and nothing else.
@@ -189,6 +200,7 @@ PHASE A ends at the ANNOUNCE: report, and stop. After PHASE B, the applier write
   AGREE (PASS), and depth one day early: DISAGREE (FAIL).
 
 <status>issued</status>
+<status>complete</status>
 <round>10</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
