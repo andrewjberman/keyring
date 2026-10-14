@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-14T09:54:03Z",
+ "written_at": "2026-10-14T11:57:57Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1948,7 +1948,7 @@
     "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-hv-2.harvest-read-grant-and-release.md"
    ],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-13T21:57:53Z",
    "kind": "act",
    "context": "Row NFRA_OPLGTW-Z-W64-S1: no Opal roster names the asset-management team, and the census (OG-hv-1) found 8 Opal principals with none identifiable as an asset manager. FWD-21's proof needs one real asset manager's driven call; it gates OG-hv-2 AC3 only (the tools and grant can ship without it).",
@@ -1980,7 +1980,14 @@
      ]
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-14T11:57:57Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_114xZ_EIGHT_OPEN_CALLS_ANSWERED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   },
   {
    "id": "sitez-20261013T233645Z-3b41",
