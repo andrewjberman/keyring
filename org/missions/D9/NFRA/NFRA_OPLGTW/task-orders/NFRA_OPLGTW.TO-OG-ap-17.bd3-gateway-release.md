@@ -95,7 +95,7 @@ Rows: id `NFRA_OPLGTW-Z-S<k>` (the next free), fabric `site-z`, disarm_owner `2.
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OG-ap-17"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ap17.AC1.sh; echo "exit=$?"</invocation><expect>(?s)is the live ref: yes.*outside OG-bd-3's files 0 \(want 0\).*diff lines outside OG-bd-3's hunks 0 \(want 0\); cell markers present 2 of 2.*RESULT: PASS.*exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OG-ap-17"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ap17.AC2.sh; echo "exit=$?"</invocation><expect>(?s)entries at HEAD [1-9]\d*; status CLOSED=yes; sentinel at HEAD=no.*equal=yes; rb\.AC2 PASS; served bd-3 fields: yes.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-ap-17"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ap17.AC2.sh; echo "exit=$?"</invocation><expect>(?s)entries at HEAD [1-9]\d*; status CLOSED=yes; sentinel at HEAD=no.*landed=(?:current; rb\.AC2 PASS|superseded; rb\.AC2 skipped \(superseded\)); served bd-3 fields: yes.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 - `AC1`: the re-cut carries exactly OG-bd-3 on the live ref. `AC2`: landed, closed, recorded, and the rule is served on
@@ -130,6 +130,10 @@ the ONE `<status>` tag to `complete` only if both PASS. Report once per phase.
   - The re-cut is at that live ref, under the A1 guard. Discard any Phase A cut made on 90967e39ba.
   - Steps, criteria and bounds are unchanged.
   - Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
+- A3 (issuer, 2026-10-14 ~17:1xZ, row Z-S119): the release AC2 now grades the LANDING with a time anchor (`r37/checks/_landed.sh`): the manifest's deployed_commit is the release, or recorded it
+  before a later release displaced it; runbook 7.2 (rb.AC2) is graded only while this release is the live one. "deployed_commit equals release_sha" flips to FAIL on work graded PASS the
+  moment the next release lands, so it is no longer a criterion. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>

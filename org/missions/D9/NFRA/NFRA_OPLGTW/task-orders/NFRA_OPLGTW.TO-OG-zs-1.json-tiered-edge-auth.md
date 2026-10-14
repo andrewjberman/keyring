@@ -37,16 +37,23 @@ written under `json-tiered/` later would be public the moment it lands.
    serve the path. Read the code of `public-data-router` and `cache-control-injector` and add their associations ONLY if
    they are no-ops or harmless on the bare path; otherwise leave them off and say why in a row. The validator alone closes the hole.
 3. **Plan, then stop on any surprise.** Run `terraform plan` for the portal-auth root directly (`safe-apply` gates `apply`
-   only). The plan must read `0 to add, 1 to change, 0 to destroy`, and the one change is the distribution's behavior-7
-   association list. Save it as `W/ZS1_PLAN.txt`. Any other change in the plan (drift from another applier) is a STOP and a
-   BLOCKING row: never apply a plan that is wider than this cell.
+   only). The plan must read `0 to add, 1 to change, 0 to destroy` (the distribution's behavior-7 association list), OR -- ruling A1 below -- `0 to add, 2 to change,
+   0 to destroy` where the second change is `aws_wafv2_web_acl.opal_cloudfront_protection` and nothing else. Save it as `W/ZS1_PLAN.txt` (the ROOT plan). Any other
+   change in the plan is a STOP and a BLOCKING row: never apply a plan wider than this cell plus the one named ACL churn.
+   **Ruling A1 (issuer, on row Z-S115; route (c)):** the ACL change is the provider re-hashing three IDENTICAL managed-rule-group blocks (your measurement: 39 minus lines
+   and 39 plus lines, sets and order identical), and `-target` on the distribution cannot exclude it (`web_acl_id` makes the ACL a dependency). It is accepted ON THESE CONDITIONS, each
+   recorded under `W/`: (i) BEFORE the apply, read the live ACL (`get-web-acl`) and write `W/ZS1_ACL_BEFORE.json` = `{"rules": [{"name", "priority", "statement_sha256"}, ...], "rules_sha256"}`
+   (the six live rules, statement bodies hashed, never printed); (ii) AFTER the apply, read it again into `W/ZS1_ACL_AFTER.json` in the same shape; the two `rules_sha256` must be EQUAL, else
+   restore the before state at once and file an ARMED row naming this seat; (iii) read CloudTrail for the apply window and record `updatewebacl_calls` (the count of `UpdateWebACL`
+   events on this ACL) in `W/ZS1_PROOF.json`: it must be exactly 1, because one atomic update leaves no interval in which the ACL evaluates without its managed rules; a count above 1, or a count you
+   cannot read, is a STOP before the apply (name which). If the plan reads 1 change, none of (i)-(iii) applies and `updatewebacl_calls` is `0`.
 4. **Apply as a deploy with a ledger.** Ledger `nfra-oplgtw-edge-auth-json-tiered`, entry AND sentinel first; `safe-apply`
    targeted at the distribution resource; wait for the distribution status `Deployed`. Rollback: remove the one association
    block and apply again.
 5. **Prove it.** An unauthenticated GET of the bare path returns 401 (or 403 if the validator answers so; name it). The
    authenticated twin `/api/general/json-tiered/market-overview/rsi-summary.json` still returns 200 with a valid portal
    credential (name the source of the credential: a service account or the walker account; print no token). Write
-   `W/ZS1_PROOF.json` = `{"bare_unauth_status": 401, "twin_authed_status": 200, "twin_auth_source": "<named>", "scanner_authorizer": "<what you read>"}`.
+   `W/ZS1_PROOF.json` = `{"bare_unauth_status": 401, "twin_authed_status": 200, "twin_auth_source": "<named>", "scanner_authorizer": "<what you read>", "updatewebacl_calls": 0|1}`.
 6. **Read the `/api/scoped/security-scanner/*` authorizer once** (API Gateway `7k3ed8px20`, behavior with no Lambda@Edge association): does the
    API route carry its own authorizer? Record the answer in `scanner_authorizer` in one sentence. Do not change it.
    If it carries none, file an OBSERVATION row; this order does not fix it.
@@ -54,7 +61,7 @@ written under `json-tiered/` later would be public the moment it lands.
 
 ## 2. BOUNDS
 
-- ONE change: the one association on behavior 7. No other behavior, origin, cache policy or Lambda is touched; no object is
+- ONE change of yours: the one association on behavior 7 (plus, under A1, the provider's identical-block churn on the WebACL, with its conditions). No other behavior, origin, cache policy, rule or Lambda is touched; no object is
   written to any bucket; no key under `json-tiered/` is moved or deleted.
 - Never: push, `git stash`, rebase, `checkout --` or `clean`; bare `terraform apply`; apply a plan wider than the cell; print a
   credential.
@@ -75,8 +82,8 @@ disarm_owner `2.0.0_SA_COO~O`; `surfaced_at` = `date -u +%FT%TZ`.
 ## 4. PROOF OF SPEC (literal; run from the repo root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-zs-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/zs1.AC1.sh; echo "exit=$?"</invocation><expect>(?s)log read: window \d+ days, source named, non-portal consumers 0.*behavior /json-tiered/\* carries auth-validator-edge viewer-request: yes; twin associations 3 of 3.*plan 0 to add, 1 to change, 0 to destroy: yes.*RESULT: PASS.*exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OG-zs-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/zs1.AC2.sh; echo "exit=$?"</invocation><expect>(?s)ledger CLOSED 1 of 1; sentinel at HEAD 0.*live bare path unauthenticated: 40[13]; twin unauthenticated: 40[13].*proof file: bare 40[13], twin authenticated 200, scanner authorizer read yes.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-zs-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/zs1.AC1.sh; echo "exit=$?"</invocation><expect>(?s)log read: window \d+ days, source named, non-portal consumers 0.*behavior /json-tiered/\* carries auth-validator-edge viewer-request: yes; twin associations 3 of 3.*plan 0 to add, [12] to change, 0 to destroy: yes.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-zs-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/zs1.AC2.sh; echo "exit=$?"</invocation><expect>(?s)ledger CLOSED 1 of 1; sentinel at HEAD 0.*WebACL (rules identical before and after, updatewebacl_calls 1|not changed by this apply, updatewebacl_calls 0).*live bare path unauthenticated: 40[13]; twin unauthenticated: 40[13].*proof file: bare 40[13], twin authenticated 200, scanner authorizer read yes.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 - `AC1`: the 7-day read shows no non-portal consumer, the Terraform carries the validator on behavior 7 beside an untouched twin, and the saved plan was exactly one change.
@@ -95,6 +102,9 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-zs-1.json-tiered-edge-auth.proo
   A narrowing act inside the issuer's own decomposition on the CTO's ruling (msg 34093); no never-widen halves.
 - Queue: staged until OG-hv-2 closes (CTO: "seat it with CloudOps after OG-hv-2"); the GO is the issuer's message citing this order.
 - Pre-cut: zs1.AC1 and zs1.AC2 base FAIL as expected (the records are absent and the bare path returns 200).
+
+- A1 (issuer, 2026-10-14 ~17:0xZ, row Z-S115 BLOCKING, route (c)): the WebACL's identical-block churn is accepted on three recorded conditions (live ACL before and after with equal rule-set hashes; exactly one
+  UpdateWebACL call; any other plan change a STOP). Steps 3 and the proof file changed; AC1 reads 1 or 2 changes and AC2 reads the ACL conditions. The CTO's exercised read covers the apply (WORLD). Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>staged</status>
 <round>37</round>
