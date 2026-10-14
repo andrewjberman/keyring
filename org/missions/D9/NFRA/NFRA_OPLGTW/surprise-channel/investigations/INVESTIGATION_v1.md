@@ -13531,3 +13531,107 @@ name the one known failure instead of silently inheriting it.
   "notes": "Whether a public market-overview path is intended (a landing page) or a leftover is the CTO's call, not this seat's; no CloudFront change is proposed here. If unintended, the remedy is a CloudFront behavior change (a deploy, with its ledger). Either way, a G3 tool must never treat json-tiered/ as an authenticated store. The security-scanner behavior needs one authorizer read before it is classed."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W72-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~72",
+  "surfaced_at": "2026-10-14T14:50:00Z",
+  "one_line": "lib/research/api/name_search.resolve_query cannot be wrapped by harvest_resolve_security without a second S3 reader; the match is implemented over the crosswalk, universe and identity datasets instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/name_search.py:108 and :114 @de8bd420d2 -- resolve_query calls crosswalk.resolve and crosswalk.load_crosswalk",
+      "lib/research/identity/crosswalk.py:1330-1335 @de8bd420d2 -- _read_pool_latest does import boto3 and opens boto3.client for the crosswalk/v1/ prefix",
+      "lib/research/coverage/covered_universe.py:36-40 @de8bd420d2 -- covered_security_keys opens its own boto3 client when none is passed",
+      "infra/aws/ec2/opal-gateway/app/harvest_identity.py (OG-gt-1, this worktree) -- the match over crosswalk/v1, universe/v1, the bloomberg identity prefix and research_dossier, each read through harvest_typed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Wrap lib/research/api/name_search.resolve_query through harvest_typed if it can run over the parts without a second S3 reader; otherwise implement the match over the three datasets and file an OBSERVATION row naming why the library could not be wrapped (cell OG-gt-1, section 1).",
+  "world_is": "It cannot run without a second S3 reader: it loads the crosswalk and the covered set through two modules that each open their own boto3 client, so a wrap would bypass the one admitted reader. The match is implemented in app/harvest_identity.py with the library's word-start name rule and its one-issuer, one-covered-listing rule.",
+  "notes": "The covered set is the research_dossier partition set that covered_universe.py reads. Whether a shared typed reader should replace the two loaders is the CTO's call; no library file is edited here."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W72-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~72",
+  "surfaced_at": "2026-10-14T14:50:00Z",
+  "one_line": "The gateway's deployed runtime is not shown to carry lib/: harvest_identity imports lib/trading_calendar.py from the repo checkout, and a runtime without lib/ reports the trading-day lag as None with its reason.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:6 @de8bd420d2 -- the instance pulls its own code from S3 via the SSM-run aws s3 cp",
+      "infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:44 @de8bd420d2 -- the one lib/ file the deploy pre-flight names is lib/opal_naming.py, a build-time input",
+      "infra/aws/ec2/opal-gateway/app/gen_rivalfunds_location.py:22 @de8bd420d2 -- the only app/ module that imports lib/ is a generator script, not the served path",
+      "infra/aws/ec2/opal-gateway/app/harvest_identity.py _calendar() (OG-gt-1, this worktree) -- lib is appended to sys.path from the repo root, and a missing lib yields None with an absent_reason"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The T-1 frontier for trading_days_behind_t1 comes from lib/trading_calendar.py, the estate's one frontier definition (cell OG-gt-1, section 1; G1 section 3).",
+  "world_is": "Nothing in the code the deploy pulls is shown to carry lib/: the deploy ships app code, and the only app-level lib import is a generator script. The tool imports lib/trading_calendar.py from the checkout, so on a runtime without lib/ coverage reports trading_days_behind_t1 as None with its reason rather than a number.",
+  "notes": "The deployed box's packaging was not read (read-only task). Whether lib/ ships with the gateway, or the frontier should arrive as an argument, belongs to the release order that rides this cell (ap-18)."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W72-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~72",
+  "surfaced_at": "2026-10-14T14:50:00Z",
+  "one_line": "The 32 keyed harvest prefixes do not share one key form: one keys by a name without its _Equity suffix, one by a bare root ticker, and 11 name no sample object, so their key segment was placed by a listing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G1_harvest.md sections 1 and 5 -- 32 keyed datasets; column_notes.sampled_object is null for 11 plumbing and raw-store contracts",
+      "read-only list_objects_v2 of raw/seekingalpha/ at 2026-10-14T14:4xZ -- 18 objects, the first key BABA_US/20260911T040211Z/symbol.json, so the segment drops the _Equity suffix",
+      "read-only list_objects_v2 of publication-links/v1/ at 2026-10-14T14:4xZ -- 7 objects under BA/, COST/ and HD/ root-ticker segments",
+      "infra/aws/ec2/opal-gateway/app/harvest_identity.py KEYED table and _segment() (OG-gt-1, this worktree) -- five key templates, one listing per keyed prefix"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The keyed datasets are those whose contract names a security_key path segment or a <key>/ first segment, one ListObjectsV2 per keyed prefix (cell OG-gt-1, section 1).",
+  "world_is": "The 32 keyed prefixes carry five key forms: security_key=<key>/ (20 prefixes), <key>/ (7), <key>.json (2), a bare root ticker (publication-links, 1) and a key without its _Equity suffix (raw/seekingalpha, 1). Eleven contracts name no sample object, so their form was placed by a read-only listing.",
+  "notes": "Coverage reports a prefix with no object under the searched base as absent, so a future layout change in one of these prefixes would read as absence. Nothing in the normal serving path changes a layout."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W72-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~72",
+  "surfaced_at": "2026-10-14T14:58:00Z",
+  "one_line": "The commit-time naming gate (LGIC_ENFORCE) refuses four hyphenated harvest prefixes that app/harvest_identity.py reads, so the OG-gt-1 module cannot land on this branch as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit of app/harvest_identity.py at HEAD de8bd420d2: NAMING REFUSE lines 50, 51, 60 and 61 -- amgt/harvest/gold/research-continuation/, research-dossier/, bronze/research-report-extract/ and bronze/research-report/ are NEW and OUT-OF-PATTERN as S3Key; the commit was aborted and nothing staged",
+      "infra/logic/registry/legacy_addresses.json:146-165 @de8bd420d2 -- the research-continuation and research-dossier rows name reader NFRA_MCPINDEX; no row names NFRA_OPLGTW; no row exists for the two research-report prefixes",
+      "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:3587-3604 @de8bd420d2 -- the research-continuation row names gap_owner NFRA_OPLGTW and the same hyphenated prefix",
+      "read-only list_objects_v2 at 2026-10-14T14:5xZ -- the hyphenated prefixes hold 320, 846, 710 and 368 objects; the underscore spellings the gate suggests hold 0 objects"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The OG-gt-1 module reads the keyed datasets of the census under their census prefixes, and its commit lands on the worker branch for the drain (cell OG-gt-1, sections 1 and 3; the commit mechanics of the worker face).",
+  "world_is": "The naming gate grades the four hyphenated prefixes as NEW and out of pattern. The registry rows that name two of them belong to another reader, and the other two have no row. The gate's suggested spelling is not the spelling the bucket holds. The module is uncommitted in the worktree; no naming override or literal rewrite has been made.",
+  "notes": "Needed from the registry owner before landing: a reader row for NFRA_OPLGTW on the four prefixes in infra/logic/registry/ (outside this order's write grant), or a deliberate-departure entry Andrew acknowledges (R20). AC1 and AC2 pass on the worktree; the order stays open until the module lands."
+}
+```
