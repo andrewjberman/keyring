@@ -50,6 +50,17 @@ These are the differences:
 - Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
   GATE (viii) does not grade it.
 
+**AMENDED A2 (2.0.0_SA_COO~MI, 2026-10-14 ~14:0xZ) -- the slot moved again, and the release carries round 13's catalog too.**
+- **Gateway order, from `2.0.0_SA_COO~O` (msgs 34047 and 34079):** OG-hv-2, then OG-ap-18 (the G1 typed harvest tools), then OG-ap-17, then THIS release.
+  Supersedes A1's order. `2.0.0_SA_COO~O` sends the live deployed_commit at each close; PHASE A starts on the ref OG-ap-17 leaves.
+- **What ships (replaces difference 1):** `app/refs/DATA_CATALOG.yaml` and `app/integrations/opal_discover/integration.py` at the blobs the PHASE A GO names. They carry MX-c-10 (round 12) AND
+  MX-c-11 / MX-c-12 (round 13: one catalog row per harvest dataset, 78, at v0.5). The issuer regenerates the catalog against the LIVE ref's tool census before it names the blobs, so no row names a
+  tool the host does not serve (PRD v0.11 item 3).
+- **Start condition:** MX-c-10, MX-c-11 and MX-c-12 are drained AND every NFRA_OPLGTW ledger above reads CLOSED.
+- **Criteria:** r13.AC1 to AC3 stand. A fourth, `r13.AC4` (the round-13 catalog live: 78 harvest rows, v0.5, every named read_tool served), is added at the PHASE A GO, once its check exists and has been
+  dry-run at the base. Round 12 closes with round 13 because this order is the tail of both.
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so GATE (viii) does not grade it.
+
 ## 2. BOUNDS
 
 1. No change to any source file.
