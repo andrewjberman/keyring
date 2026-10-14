@@ -109,7 +109,7 @@ the issuer to make at the merge.
 - READ ONLY: no write outside `W/` and the investigation file.
 - Pre-cut: g20.AC1 and g20.AC2 base FAIL as expected (the records are absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>FWD22-W3</workstream>
 <slot>~83</slot>
