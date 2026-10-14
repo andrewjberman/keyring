@@ -46,3 +46,8 @@ Continues `drive_log_20261011T14Z_desktop-hk1uu7n.md` (ticks to 01:35Z). Substan
 - Rows: 444 read by comp-surprise (368 OBSERVATION, 76 BLOCKING; the BLOCKING count includes closed rows: the status field was not parsed, so no open-count is claimed).
 - FB1 LIVE and idle; its note puts the exec-summary read at 04:30Z tomorrow, so FB-j-3's chain read is a clock, not a stall: no nudge. Nothing moving is not proof of stalled.
 - Next ticks: validate and drain FB-k-1..5 as workers report; un-park FB-j-4 then FB-j-7 on FB-j-3's measured text; round-close-check, R7_CLOSE.md, slug to the CVO.
+
+## 2026-10-14 03:2xZ ticks (B1): round 7 -- FB-j-3/-4 complete, FB-j-7 acts landed, waiting on the first chain after the deploy
+- Since the 21:3xZ log: PLANINV FB-k-1..5 merged and complete (inventories in ledger/ROUND8_PLAN_INPUTS_20261013.md; Door 6 has a second consumer, CTO ruling msg 5260); FWD-1 reader 2 re-run 150 of 150; the BD gold chain started 23:00:43Z closed 01:20:24Z and printed "rc=255 You must specify a region" (NO_REGION; FB-j-3 complete, FB1's record and the issuer's read agree); FB-j-4 merged f0d923e9a3; FB-j-7 un-parked and landed 01:48Z (act 1 six slots off, plan 0/1/0; act 2 dispatcher sha256 bddbcaf7a1cc755f, issuer-verified live).
+- ADVI_FIRMBKTS | EXECUTING | round 7 | TOs 19/20 terminal (FB-j-7 pending, FB1) | thread y | lease FULL. Stage: DRIVE FORWARD already fired; the open limb is FB1's read of the first chain after 01:48:58Z (about 04:01Z).
+- round-close-check dry run reads MAY-CLOSE only because it scopes FB-j-7 outside its verdict; the issuer does not close on it. Packet DRAFT at round7/R7_CLOSE_DRAFT.md.
