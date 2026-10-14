@@ -13665,3 +13665,31 @@
 ```
 
 ---
+
+## IRPT_ANLREQ-D2-S101 -- DISARMS S100: the KMS decrypt statement is applied and the owner check refuses with 400, never 503
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S101",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T16:25:05Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-S100 (release 29b live with an incomplete grant, every CLIENT-class filing answering 503): the one kms:Decrypt statement is applied and the refusal arms now answer 400.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Pair 29b section 4a/4c and the CTO half: with the grant applied the owner check answers 400 for a non-owner and never 503.",
+  "world_is": "MEASURED by this seat 2026-10-14: TICKET_ARMS_R30.txt (run 2, commit 260141f23b) matches 6 of 6 expected lines: R0I owner row present and not B; K1, K2, K3 each REFUSED 400 INPUT_NOT_AVAILABLE; one body hash; TICKETS_COUNT_EQUAL 31; the issuer's own count of the tickets table reads 31. The role carries IrptRequestsDecryptViaDynamoOnly (TO-APPLY-R30b, merge 51da2ad8a4). REPORTED by the CTO (msg 7755, live read ~16:2xZ): both statements present and opal-ticket-api at Fg8MdfvC.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r30/TICKET_ARMS_R30.txt @260141f23b",
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r30/A_AFTER_R30b.txt",
+      "aws dynamodb scan opal-tickets --select COUNT by this seat (31)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The remedy the CTO ruled (no code rollback, one kms:Decrypt statement) has landed and was read back: K1 to K3 answer 400, none 503.",
+  "notes": "Resolves IRPT_ANLREQ-D2-S100. The lesson stands: a pair that grants a read on an encrypted table reads the table's encryption as well as the role's policy."
+}
+```
