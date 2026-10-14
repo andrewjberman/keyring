@@ -199,6 +199,7 @@ PHASE A ends at the ANNOUNCE: report, and stop. After PHASE B, the applier write
 <status>pending</status>
 <status>complete</status>
 <status>issued</status>
+<status>complete</status>
 <round>11</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
