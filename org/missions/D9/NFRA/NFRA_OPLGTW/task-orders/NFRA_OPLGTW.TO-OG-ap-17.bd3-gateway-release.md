@@ -117,6 +117,12 @@ the ONE `<status>` tag to `complete` only if both PASS. Report once per phase.
     outside OG-bd-3's hunks and markers 2 of 2. Only non-gateway files sat outside, as a dev commit range carries.
   - ap17.AC2 base FAIL as expected (records absent).
 
+- A1 (issuer, 2026-10-14 ~05:0xZ, from row Z-S105 on OG-ap-14): **deploy-source guard.** Before the first deploy
+  command, the deploy tree's `git rev-parse HEAD` must equal the signed `release_sha` in full, and its parent must equal
+  live `deployed_commit` at the act. Any mismatch is a STOP; print both. If the live base moved since the cut, re-cut,
+  and both halves re-sign. Never deploy from a worktree named for an earlier cut.
+  Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>37</round>
 <workstream>R37-TIER-REL</workstream>
