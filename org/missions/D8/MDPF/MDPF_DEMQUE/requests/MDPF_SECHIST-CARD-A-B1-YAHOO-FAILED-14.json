@@ -6906,5 +6906,5 @@
   ],
   "skipped": [],
   "held_back": [],
-  "draw_hold": "Priced and quoted only (CTO msg 5411): no draw until the CTO or Andrew approves this quote; release is the issuer removing this key in a commit."
+  "approval": "CTO msg 5418/5419 (2026-10-14 ~04:32Z): quote @2de831ee1b APPROVED; draws only through the queue on non-trading days, behind the approved B1 cells (B1 first; this request carries over if the fires cannot fit both)."
 }
