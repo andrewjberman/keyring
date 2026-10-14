@@ -15078,3 +15078,27 @@ name the one known failure instead of silently inheriting it.
     "notes": "INERT for this cell: no proof criterion runs the base-guard suite. The rig's tree check should be read by its owner; this worker did not edit it."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W82-S8",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~82",
+    "surfaced_at": "2026-10-14T19:06:27Z",
+    "one_line": "The order's last step flips the task order's status tag to complete, but the task-order file is not in this worker's write grant, so the flip cannot be made by this worker.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-nw-1.news-tools.md@f625acd50e section 5: 'flip the ONE <status> tag to complete only if AC1, AC2 and AC3 PASS'",
+        "the same order's <paths> block (section 3) lists no task-order path; the write grant is the <paths> block (lane gate)"
+      ]
+    },
+    "spec_asserts": "TO-OG-nw-1 section 5: 'flip the ONE <status> tag to complete only if AC1, AC2 and AC3 PASS, and report once'.",
+    "world_is": "AC1, AC2 and AC3 all PASS at 45dd184bbb (the proof instance records them). The flip edits the task-order file, which is outside <paths>. This worker leaves <status> as it stands and reports the flip as held for the issuer; the proof commit for the sibling order OG-zs-1 (66e04acbc9 and 9789a95f77 on this branch) left its status staged in the same way.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "BLOCKING for the order's final step only; the proof instance and the code are complete and valid. The issuer flips the tag, or the CTO grants the path."
+  }
+  ```
