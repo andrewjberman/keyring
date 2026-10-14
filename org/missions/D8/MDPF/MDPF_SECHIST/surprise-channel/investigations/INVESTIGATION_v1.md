@@ -506,3 +506,103 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   "world_is": "The sector-carriers file is a script-style check that exits at import, so under pytest the whole folder collects as an INTERNALERROR and the regression run reads as a crash rather than as a result. It is outside this cell's paths and was not edited. The gold suites themselves are unaffected: 32 pass with that file excluded. Owner of the file is the seat that wrote it; the fix (a main() guard or a test_ function) is not this cell's to make."
 }
 ```
+
+## MDPF_SECHIST-D1-W24-S1 -- The AC3 surface checker (r103_feature_surface_check.py) cannot pass a Positioning feature: it is built for Security Analysis only, so every Positioning path is FORBIDDEN, and its receipt grammar (a Pages-changed section naming Security Analysis as Opal-internal; a backticked path on a line that says other readers under Shared files) is not the grammar this order's receipt was written to
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-W24-S1",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECHIST~24",
+  "surfaced_at": "2026-10-14T14:03:52Z",
+  "one_line": "The AC3 surface checker (r103_feature_surface_check.py) cannot pass a Positioning feature: it is built for Security Analysis only, so every Positioning path is FORBIDDEN, and its receipt grammar (a Pages-changed section naming Security Analysis as Opal-internal; a backticked path on a line that says other readers under Shared files) is not the grammar this order's receipt was written to.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN timeout 120 python r103_feature_surface_check.py --portal . --base 6a5926fc11 --head HEAD --receipt .../0.9.0_WK_MDPF_SECHIST~24/FEATURE_RECEIPT.md in portal branch cand/dell1/sechist-frontier-label at c77f2362: 'R103 FEATURE SURFACE: NO (7 files: 0 page, 0 shared named, 6 forbidden, 1 unnamed)' rc=1; forbidden = the six src/pages/Positioning/ paths (FORBIDDEN rule ^src/pages/(?!SecurityAnalysis/)[^/]+/); unnamed = src/api/portal-proxy.ts; receipt line 'no ## Pages changed section naming Security Analysis as Opal-internal'",
+      "CHECKER read at org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round103_prep/checks/r103_feature_surface_check.py (outer worktree HEAD c78a4c9722): PAGE = src/pages/SecurityAnalysis/; named_shared() takes only backticked paths on lines containing 'other readers'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SH6-t25-AC3 of MDPF_SECHIST.TO-SH-t25: the surface check prints 'R103 FEATURE SURFACE: YES' for this Positioning feature, whose receipt names Positioning | /positioning | client-facing and the shared file portal/src/api/portal-proxy.ts as '- portal/src/api/portal-proxy.ts (types only: four optional fields)'.",
+  "world_is": "The checker returns NO for every Positioning branch by construction: its FORBIDDEN rule and its receipt grammar both assume a Security Analysis feature. The receipt was written to the order's grammar and NOT altered to satisfy the checker; the branch was not widened or re-scoped. AC3 is recorded FAIL in this order's proof; the order stays open until the CVO or the issuer rules on the checker's scope. Owner of the checker: 2.0.0_SA_COO~R1 (AMGT_RESAPP round 103 prep)."
+}
+```
+
+## MDPF_SECHIST-D1-W24-S2 -- The order's step 5 F6 says ReturnsFrontierMark and ReturnsFrontierNote appear in HoldingsTab 'once each as JSX', while step 4 requires the mark in both the value branch and the dash branch of the Performance cells
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-W24-S2",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECHIST~24",
+  "surfaced_at": "2026-10-14T14:03:52Z",
+  "one_line": "The order's step 5 F6 says ReturnsFrontierMark and ReturnsFrontierNote appear in HoldingsTab 'once each as JSX', while step 4 requires the mark in both the value branch and the dash branch of the Performance cells.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ORDER org/missions/D8/MDPF/MDPF_SECHIST/task-orders/MDPF_SECHIST.TO-SH-t25.positioning-frontier-label.md (worktree HEAD c78a4c9722): step 4 'render <ReturnsFrontierMark frontier={...}/> ... for BOTH the value branch and the dash branch'; step 5 F6 'contains ReturnsFrontierMark and ReturnsFrontierNote once each as JSX'",
+      "MEASURED at portal c77f2362: src/pages/Positioning/tabs/HoldingsTab.tsx carries 2 ReturnsFrontierMark JSX uses and 1 ReturnsFrontierNote JSX use; harness F6 PASS with the count encoded as Mark 2, Note 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 5 F6: ReturnsFrontierMark and ReturnsFrontierNote each contained once as JSX in HoldingsTab.tsx.",
+  "world_is": "The two statements conflict for the Mark. The harness encodes what step 4 requires (Mark twice, one per branch; Note once). No product change was made on this point. The CVO reads the encoding in frontierLabel.harness.cjs F6."
+}
+```
+
+## MDPF_SECHIST-D1-W24-S3 -- The order's adapter line returns_frontier: h.returns_frontier ?? undefined puts an undefined-valued own key on every adapted holding, so a literal own-property test of 'neither key anywhere' fails for the no-carry book even though nothing reaches the wire
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-W24-S3",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECHIST~24",
+  "surfaced_at": "2026-10-14T14:03:52Z",
+  "one_line": "The order's adapter line returns_frontier: h.returns_frontier ?? undefined puts an undefined-valued own key on every adapted holding, so a literal own-property test of 'neither key anywhere' fails for the no-carry book even though nothing reaches the wire.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ORDER step 2: 'toCurrentHolding adds returns_frontier: h.returns_frontier ?? undefined'; step 5 F3 'has neither key anywhere'",
+      "MEASURED at portal c77f2362: the adapted PFDE holdings carry an own key returns_frontier with value undefined; JSON.stringify of the adapted book drops it, and the no-carry book equals frontierNoCarry.golden.json under the JSON comparison (F3 PASS)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 5 F3: the adapted no-carry PFDE book has neither key anywhere, and the page renders byte-equal to today when neither key is present.",
+  "world_is": "F3 was graded on the serialized shape a client receives (JSON), where an undefined key is absent. Under an in-memory own-property test the key is present with value undefined. Rendered output is unaffected (the mark and note return null). The adapter line was kept exactly as the order states it."
+}
+```
+
+## MDPF_SECHIST-D1-W24-S4 -- portal/CONTRIBUTING-BOXES.md step 3 says to push the candidate branch to origin under its name before registering; this order's bounds say never push
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-W24-S4",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECHIST~24",
+  "surfaced_at": "2026-10-14T14:03:52Z",
+  "one_line": "portal/CONTRIBUTING-BOXES.md step 3 says to push the candidate branch to origin under its name before registering; this order's bounds say never push. The approval register's check-only read accepted the LOCAL head, so the branch was not pushed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/CONTRIBUTING-BOXES.md (portal branch cand/dell1/sechist-frontier-label at c77f2362) step 3: 'Push the branch to origin under that name'",
+      "RUN timeout 150 python .tools/open-calls.py add --check-only --kind approval --project NFRA_DEVPLN --box dell1 --branch cand/dell1/sechist-frontier-label ... --portal portal -> 'APPROVAL-REGISTER result=OK row=- head_sha=c77f23624df0a400273da28063813930d7e63afb commits=1 check-only=yes waived=0' rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's step 8 and bounds: never push; the approval row is checked with --check-only only.",
+  "world_is": "The branch exists LOCALLY only; origin does not carry it. The CVO or the issuer decides whether the registration needs the branch on origin before approval. No push was made."
+}
+```
