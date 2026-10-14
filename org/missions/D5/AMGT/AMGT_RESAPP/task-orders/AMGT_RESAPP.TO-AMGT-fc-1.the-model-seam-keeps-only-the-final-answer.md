@@ -88,6 +88,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** An independent head (the seam does not import the contract). The real defect it fixes is measured, not inferred: 11 stored blocks over 10 names. AC3 is the round-104 check for this same module, kept as a regression control. The builders' prompts and the contract's refusal list (cells fc-2, fc-3) are the second and third lines of defence; this is the structural one.
 
 <status>pending</status>
+<status>complete -- 2026-10-14 by the issuer (2.0.0_SA_COO~R2): wk-AMGT_RESAPP-430 @266c2ce950 merged @5a1545e4fe, proof instance VALID (rc=0). AC1 PASS (`AIFILL FC-1 ARMS: YES (12 of 12)`, re-run by the issuer in the worker's tree, same line), AC2 PASS (54 passed; the aifill package 332 passed), AC3 PASS (`AIFILL FA-2 ARMS: YES (21 of 21)`).</status>
 <round>105</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~430</slot>

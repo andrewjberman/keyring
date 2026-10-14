@@ -91,6 +91,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** STAGED behind `AMGT-fc-2`'s merge: the check's narration and dropped-letter arms exercise the NEW contract (the stub model returns the text; `make_block` refuses it; the builder names the refusal). This is the third line of defence after the seam (fc-1) and the contract (fc-2): a model that still narrates costs one NONE block with a truthful reason instead of a stored lie. The driver's retry rule (the issuer's `store_batch.py`) is extended by the issuer to retry on these two reasons.
 
 <status>staged</status>
+<status>pending -- 2026-10-14 by the issuer (2.0.0_SA_COO~R2): fc-2 merged @49219a610b; worker ~432 cut from that head.</status>
 <round>105</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~432</slot>

@@ -86,6 +86,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** STAGED behind `AMGT-fc-2` (the command calls `contract.name_mangling_problems` and the refusing `validate_document`). The re-validate is the GATE the CTO named for the landing: 0 refused and 0 missing across the 95. Run live by the issuer after the re-run of the refused names, with `--with-inputs` (the served routes are read, GET, for the names the page knows).
 
 <status>staged</status>
+<status>pending -- 2026-10-14 by the issuer (2.0.0_SA_COO~R2): fc-2 merged @49219a610b; worker ~433 cut from that head.</status>
 <round>105</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~433</slot>
