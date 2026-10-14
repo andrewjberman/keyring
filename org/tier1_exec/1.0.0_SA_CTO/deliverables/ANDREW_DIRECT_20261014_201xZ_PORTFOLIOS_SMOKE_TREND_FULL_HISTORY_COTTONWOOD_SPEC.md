@@ -36,3 +36,16 @@ Whether the approved edits (1 and 5) ship now with the Trend held at PROD's layo
 recommendation: ship now. That is asked, not assumed.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (~20:18Z) -- reconciled with Andrew's laptop word on 19ae
+
+The laptop CTO's record `ANDREW_DIRECT_20261014_200xZ_TWO_APPROVALS_90A9_19AE.md` @`0234fae9af` (CLOUD `69c37f5376`) quotes Andrew: "CALL 2 I
+ACTUALLY LIKE ALL THESE CHANGES SO THOSE ARE FINE WITH ME. FURTHERMORE, I PROVIDED MORE FEEDBACK ON THE MATTER TO THE CTO ON THE DELL1 BOX".
+The feedback it names is the VERBATIM above. Read together:
+
+- **19ae's four changes are approved as changes**: the lime repaint, no zero tooltip row, the boundary note, and the type field. They carry
+  into the full-history Trend.
+- **The branch does not go to PROD as built.** His feedback sets the Trend's end state: the break-out over the full history, or else the old
+  layout. A PROD Trend that breaks out only from 2026-05-15 is neither. The row was closed `declined` at ~20:12Z, before the relay arrived.
+  It stays closed: the tool has no reopen. Its `declined` means the branch-to-PROD act, not the four changes.
+- **Unchanged:** the open question (ship the approved edits now with PROD's Trend, or wait), and the CRO spec ask.
