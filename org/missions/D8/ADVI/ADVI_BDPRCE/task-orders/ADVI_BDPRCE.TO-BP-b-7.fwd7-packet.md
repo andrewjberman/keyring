@@ -27,6 +27,10 @@ into your worktree; read their records first:
 ### 1a. What to compute
 
 1. **The latest snapshot.** The latest `data_as_of` date carried by a majority of the extract's lots (state the date and the share). Only lots whose `data_as_of` equals it count toward the snapshot; state how many lots do not.
+   Two facts from the merged replay (`REPLAY.md`, `REPLAY.json`) bind your arithmetic:
+   (i) `BEFORE_AFTER.csv` has 539 CHANGED and 285 NOW_CARRY_FORWARD rows, and 13 of the carry-forwards equal the served price (their effect is zero, count them as touched and not as moved: 811 prices move);
+   (ii) 8 CHANGED rows carry a par-quoted unit-scale difference (flag `scale_100x`; R1 reads 100x the served per-unit price, row `ADVI_BDPRCE-D1-W6-S2`, a CTO call is open on it). Report the dollar effect twice, with and without those 8,
+   and name them in the movers; do not let them lead the 25 largest movers without the flag. The 212 NOT_RECOMPUTABLE rows have no new price: list them, with zero effect, and say so.
 2. **The dollar effect, per changed price and in total.** For each (asset, date) in `BEFORE_AFTER.csv` classed CHANGED or NOW_CARRY_FORWARD whose date equals the snapshot date: the sum over the snapshot's lots of that asset of
    `(new_price - old_price) * quantity` (variant A; give variant B's total beside it). The exact basis is `quantity * price`, NOT the served `market_value`, which the cap scales on some lots: state, from the census's
    identity count, how many snapshot lots have a served `market_value` that is not `quantity * current_price`, and the effect on those lots on both bases. Never print a client or account name.
@@ -87,7 +91,9 @@ effect), the readers with their classes, the identity count, AC1, AC2 and the FU
 **ISSUER NOTES:** round-1 analysis item 1 (the list Andrew sees); PRD DEC-7. STAGED at the cut: un-parks when `BP-b-2` and `BP-b-3` are merged and PASS and the extract's sha256 reads equal; its worktree is cut from that HEAD.
 The packet carries the decision asked of Andrew; the COO sends it to the CTO, who puts it to Andrew (FWD-7); nothing is served meanwhile.
 
-<status>staged</status>
+**SUPERSEDED (2.0.0_SA_COO~K1, 2026-10-14 ~01:0xZ):** the CTO ruled R1 AMENDMENT 1 while this order's worker had run five minutes with no commit (`org/missions/D8/ADVI/ADVI_BDPRCE/ledger/CTO_RULING_R1_THE_PRICE_RULE_20261013.md`, msg 5323): reinvestment buys count as trades, par-quoted bonds serve per unit, and the replay is re-run on that variant so the list Andrew reads carries it. A packet over the variant-A list would have put a superseded rule in front of Andrew, so the worker was stopped and no packet was produced. The packet is re-cut in round 3 after the amended module and the re-run replay. Nothing was merged from this order.
+
+<status>superseded</status>
 <round>2</round>
 <workstream>PACKET</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-b-7</to_id>
