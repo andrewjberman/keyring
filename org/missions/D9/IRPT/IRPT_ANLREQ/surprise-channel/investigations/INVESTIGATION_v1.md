@@ -13932,3 +13932,57 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S102 -- DISARMS W133-S1: the grant of TO-AR-y-325 now names the two existing test files
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S102",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T17:14:45Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W133-S1 (the first worker of slot 133 stopped on three existing portal test cases outside its grant).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-325 BOUNDS: a test outside the grant that fails because of the change is a STOP and the issuer amends the grant.",
+  "world_is": "MEASURED by this seat 2026-10-14: the issuer amended the grant (commit 7e8315063f) to name analysis-firm-c-firm.test.tsx and analysis-firm-choice.test.tsx and to re-pin the three cases; the re-seated worker re-ran the whole src/pages/TicketCenter folder: 121 of 121 cases, 0 failed (portal_check.py, re-run by this seat), candidate 6f4e5f671f on origin (ls-remote read).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~133/r40/PORTAL_INTERNAL_FILER_CANDIDATE.json",
+      "amendment commit 7e8315063f"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The grant was amended and the folder runs with 0 failed.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W133-S1."
+}
+```
+
+## IRPT_ANLREQ-D2-S103 -- DISARMS W133-S4: a refused staff firm reaches the upload door first; the FWD-1 filer is minted with the chosen firm in its allowedFirmIds
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S103",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T17:14:45Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W133-S4 (CREATE refuses a staff filing for a firm outside the principal's allowedFirmIds or profile scope, after the upload door was called for that firm).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-325 step 3: the synthetic staff user of the FWD-1 run needs the chosen firm in its allowedFirmIds; a property of that user, not of the cell.",
+  "world_is": "The refusal is conditional on the principal, not on the staff class (W133-S4 reading of create_ticket, _firm_allowed and _in_profile_scope). The only staff filing in FWD-1 is the synthetic user, which the run order mints with the chosen firm in allowedFirmIds and a profile scope that holds it. Whether the upload door itself checks the firm was not read by the worker; the run order reads it before the run (CARRIED, below). The Ticket Center is not shown to client users (Andrew, PRD ADDENDUM v0.6), so no client or partner login reaches this path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_ANLREQ-D2-W133-S4",
+      "PRD ADDENDUM v0.6 items 1 to 3"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The refusal does not arise for the user FWD-1 mints; the one unread fact (the door's firm check) is carried into the FWD-1 run order as a read before the run.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W133-S4. Carried: the FWD-1 run order mints the synthetic staff user with the chosen firm in allowedFirmIds and reads the upload door's firm check first."
+}
+```
