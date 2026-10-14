@@ -33,3 +33,7 @@ Reads, direct from git on `origin/PROD` (the project's release-check tool resolv
 - The class is `opal-internal` (Security Analysis), so the push law needed no word from Andrew.
 
 What it adds: the PROD side of the route ran organically too, on a second box, shipping only the approved feature and leaving the unapproved DEV commits behind, the property FWD-5 asks for. What it does not: the client-facing case (FWD-1's close) still waits on Andrew's rulings on the dell2 rows.
+
+## Addendum ~03:3xZ -- a third approved feature reached DEV through the installed pre-push hook (issuer read)
+
+`origin/DEV` moved `5e40e541` -> `514df1bb`: merge of `cand/dell1/amgt-sa-currency-symbol-and-reasons`, first parent `5e40e541`, second parent `051ad362d4dd` (equals the row's bound head), made by `0.9.0_WK_AMGT_RESAPP~423`; trailers `Feature:` and `Approved-By: 1.0.0_SA_CTO~DELL1 @dell1-20261014T031653Z-f1a4`. Reads from the laptop: `approval-status` = `APPROVED valid=yes ... head_sha=051ad362d4dd commits=2 class=opal-internal` (cluster copy written 03:18:42Z); `dev_push_payload_gate.py --remote-sha 5e40e541 --local-sha 514df1bb` = `PASS route=A`, `ADMITTED commits=1`; `portal-dev-approval-read.py` = `first_parent_commits=6 approved=3 unapproved=3` (the three unapproved are the dell2 ANLREQ merges). MSTR~DELL1 (msg 109061) reports the push went through the installed hook on a gitlink box: the open read in act A15. Still not shown: the client-facing case (five dell2 rows OPEN).
