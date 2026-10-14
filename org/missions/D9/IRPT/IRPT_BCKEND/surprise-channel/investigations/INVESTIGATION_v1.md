@@ -34259,3 +34259,77 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. W380-S1 (Inflection pinned at 2026-10-12 builds a 2026-10-09 candidate and the gate refuses on source_frontier_older where the packet reads PUBLISHED): INERT, the gate works as written; the release re-measure pins Inflection to the custody date the packet used, and I did not re-run it at that pin. W380-S2 (a build whose cutoff falls between a custody day's accounts and positions partitions refuses Inflection by the producer's own guard): INERT, the designed refusal; whether a scheduled fire inside that window misses the day was not measured. W380-S3 (Cottonwood's newest partition is 2026-10-12 at the cutoff, one trading day behind T-1): INERT, whether the 2026-10-13 partition has landed was not read. W381-S1 (the 2026-10-09 fire was killed about 310 s into a 3600 s window; no fire of the 11 reached it): INERT; it CORRECTS the round-191 packet and D2-S164's wording, which named the SSM timeout as the cause, and the sender of the exit-137 kill is unread. W381-S2 (the 2026-10-08 replay is refused by source_frontier_older): INERT, the route is the CTO's ruling. W381-S3 (publish() does not assert that the landed date equals as_of): INERT, any bypass route must carry the assertion. W381-S4 (the gap is a failed run, the source is intact): INERT, corrects the D2-S165 premise. W381-S5 (the index version size is flat on 2026-09-30): INERT, the index body was not read. The client-data check ABSENT on dell2 was logged by both workers: it stays ARMED under W374-S1 and W376-S1 with the box manager."
 }
 ```
+
+## IRPT_BCKEND-D2-W382-S1 -- The AC2 mutant check cannot import the producer from its temp copy, so the mutant run errors at collection and no test fails
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W382-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~382",
+  "surfaced_at": "2026-10-14T12:51:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The AC2 mutant check copies only the investor_reporting package into a temp directory; the producer resolves its repo root as parents[4] and imports lib, infra and docs at load, so the copy cannot import and the mutant run errors at collection with no test failing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB193-2-AC2 run from the worktree root at the code commit 15e0361375: output and exit 1 in org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~382/IB193-2_criteria_output.txt; the deciding lines are ModuleNotFoundError no module named trading_calendar and 1 error in 1.09s, with no failed test",
+      "a temp copy of the package has parents[4] equal to C:/Users/Test (measured with tempfile.mkdtemp); holdings_snapshot.py@411bde74797f46451631eab9442a2f3494d95c4e lines 84-109 and 205 derive _REPO = parents[4] and the lib, infra and docs paths from it"
+    ]
+  },
+  "spec_asserts": "AC2 (order IB193-2 and check p193_cells.py build_ac2): the new tests FAIL on a copy of the package with the BEGIN/END ONE-DATE-ASSERT block removed, and the mutant run must print a failed count.",
+  "world_is": "On the check's own layout the copy cannot import holdings_snapshot, so pytest reports one collection error and the check exits 1 at 'the mutant run did not fail on a test' for ANY implementation of the block. The check is not weakened, and it is not a finding against the assertion: at repo depth (a scratch layout with lib, infra, org and .tools as junctions) the mutant fails 3 of 17 new tests and the real producer passes 17 of 17. The order's criterion IB193-2-AC2 is therefore not met as written; the copy design needs the repo root (or the lib and infra paths) to reach the copy, which is a check-side edit this worker may not make."
+}
+```
+
+## IRPT_BCKEND-D2-W382-S2 -- Step 3 of the order cannot run as a plain copy; the mutant was run at a repo-depth scratch layout built with directory junctions
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W382-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~382",
+  "surfaced_at": "2026-10-14T12:51:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Step 3 (copy the package to C:/dev/_scratch382 and run the new tests with the block removed) fails at import for the same root cause, so the mutant was run at a repo-depth scratch layout whose lib, infra, org and .tools entries are directory junctions to the worktree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "a plain copy at C:/dev/_scratch382/investor_reporting raised IndexError on parents[4] when the producer was imported (measured in this worker's shell)",
+      "at the repo-depth layout C:/dev/_scratch382/R: the block removed from the copy gives 3 failed and 14 passed; the same layout with the real producer restored gives 17 passed; the junctions were removed with non-recursive rmdir and the worktree was verified intact (zero tracked deletions) afterwards"
+    ]
+  },
+  "spec_asserts": "Build step 3: copy the investor_reporting package to scratch OUTSIDE the worktree, delete the BEGIN/END block from the copy, and run the new tests there; at least one MUST fail.",
+  "world_is": "A plain copy outside the repo cannot import the producer (its repo root is not reachable from the copy), so the literal step produces an import error, not a test failure. The mutant evidence in the record (mutant_tests_failed 3) rests on the junction layout, which is disclosed in the record's notes; the discrimination is real and was not weakened."
+}
+```
+
+## IRPT_BCKEND-D2-W382-S3 -- The commit-time naming gate grades the firm literal in main's --firms check as a hand-kept carrier (WARN only)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W382-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~382",
+  "surfaced_at": "2026-10-14T12:51:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The commit gate's naming check reads one WARN, NAMING OUT-OF-PATTERN, on the literal 49financial in main's new --firms equality check at holdings_snapshot.py line 3269; the commit landed with the literal as written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 15e0361375: '[naming-gate] NAMING OUT-OF-PATTERN data/assets/scripts/gold/investor_reporting/holdings_snapshot.py:3269 49financial -> lookup(49financial)' and 'NAMING-GATE: WARN 1 graded'"
+    ]
+  },
+  "spec_asserts": "Build step 1: --allow-older-date is admitted only when --firms is exactly 49financial.",
+  "world_is": "The check is a WARN, not a refusal, and the literal is the order's exact firm value; replacing it with lookup() was not done because the order names the firm literal and the gate's own text says the carrier is WARN-only. A later owner decides whether the literal should read through lookup()."
+}
+```
