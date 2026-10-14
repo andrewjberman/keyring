@@ -13531,3 +13531,153 @@ name the one known failure instead of silently inheriting it.
   "notes": "Whether a public market-overview path is intended (a landing page) or a leftover is the CTO's call, not this seat's; no CloudFront change is proposed here. If unintended, the remedy is a CloudFront behavior change (a deploy, with its ledger). Either way, a G3 tool must never treat json-tiered/ as an authenticated store. The security-scanner behavior needs one authorizer read before it is classed."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W75-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~75",
+  "surfaced_at": "2026-10-14T15:01:45Z",
+  "one_line": "The 50 KB envelope projection nulls a dict-carried body and empties the list fields before it: a research dossier carried as one dict came back with its dossier and continuation gone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/harvest_typed.py@de8bd420d2 project() lines 65-84: pops items only from top-level LIST fields; a non-envelope field it cannot trim is set to None",
+      "live read 2026-10-14, ASML, pre-projection body (.scratch/debug_proj.py, read only): 163,612 bytes; the 24 dossier fields as one dict 111,210 bytes; continuation 43,602 bytes; first dict-shaped run returned dossier None, continuation None, research_reports emptied"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order OG-gt-4 section 1 and the base surface: envelope(...) projects the body to 50 KB, and project(out) pops items off the end of the largest LIST field until the body fits.",
+  "world_is": "The projection has no rule for a bulky non-list field: it empties the list fields first, then nulls the dict field whole, while the envelope still reports truncated. The tools worked around it by carrying each part as a list of items, smallest first, under a per-part budget (app/harvest_research.py RESEARCH_BUDGET), which is local to OG-gt-4.",
+  "notes": "Any future typed tool whose body has a dict bulk meets the same case. The fix belongs in harvest_typed.project (OG-gt-0's module); it is not edited by this cell."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W75-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~75",
+  "surfaced_at": "2026-10-14T15:01:45Z",
+  "one_line": "A typed read over TYPED_MAX_BYTES returns harvest_over_cap with no audit row: harvest_typed has no deny-audit helper, and a tool module may not reach the principal except through it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/harvest_typed.py@de8bd420d2 _load_capped() lines 147-152 raises TypedOverCap and writes no audit row; admit_typed and audit_ok write only the denied refusal and the SERVE row",
+      "app/harvest_read.py@de8bd420d2 harvest_read() lines 176-179 writes DENY-harvest_over_cap on the same condition: the raw path and the typed path disagree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order OG-gt-4 section 1 (AC4): one audit record per call. The harvest_typed surface: audit_ok is the one audit row of a served call, and admit_typed writes the one audited refusal.",
+  "world_is": "On the typed path an over-cap object is refused with zero audit rows, because the OG-gt-4 tools return refusal(..., harvest_over_cap) after TypedOverCap and no base helper writes the deny row. The raw path writes that row for the same condition.",
+  "notes": "Not exercised live: no object near the 64 MiB cap was read. A deny helper in harvest_typed would close it for every typed tool."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W75-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~75",
+  "surfaced_at": "2026-10-14T15:01:45Z",
+  "one_line": "research_dossier holds several objects per (security_key, as_of) with distinct content hashes, against the contract grain of one object per (security_key, as_of).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G1_harvest.md lines 1949-2101: grain 'one object per (security_key, as_of)'",
+      "live listing 2026-10-14, read only: amgt/harvest/gold/research_dossier/security_key=ASML_NA_Equity/ holds 14 objects, as_of 2026-09-29 through 2026-10-12; as_of 2026-10-09 and 2026-10-11 hold 3 each with distinct content hashes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G1 contract for research_dossier: one object per (security_key, as_of). The order's harvest_get_research reads the newest as_of and names its source key.",
+  "world_is": "ASML has 14 research_dossier objects, and one as_of carries 2 or 3 objects with different content hashes. The tool serves the greatest LastModified within the greatest as_of; no content rule for choosing among duplicates is stated anywhere the tool can read.",
+  "notes": "Which duplicate is authoritative is the AMGT_HARVST owner's call. Until a rule exists the tool serves the latest write, and the envelope names the key it read."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W75-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~75",
+  "surfaced_at": "2026-10-14T15:01:45Z",
+  "one_line": "OBSERVATION (order-required): the retired hyphen research-dossier table is older than the underscore research_dossier table, and for ASML its field names are contained in the underscore table's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live read 2026-10-14, read only, one newest object per table, names and stamps only (.scratch/hyphen_measure.py): hyphen newest as_of 2026-09-29 (10 objects, LastModified 2026-09-29T09:18:18Z); underscore newest as_of 2026-10-12 (14 objects, LastModified 2026-10-12T00:20:59Z)",
+      "field names: hyphen 22, underscore 24; hyphen names absent from underscore: none; underscore names absent from hyphen: 2",
+      "app/harvest_read.py@de8bd420d2 _served() lines 63-64: every amgt/ key is a served prefix, so the raw read path admits hyphen keys (not exercised)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order OG-gt-4 section 1: file one OBSERVATION row stating what was measured on the hyphen table (the newest stamp of each, and whether the underscore table carries every field the hyphen one does). The tool serves the underscore table.",
+  "world_is": "Newest stamps: hyphen 2026-09-29, underscore 2026-10-12. The underscore table carries all 22 hyphen field names for ASML and 2 more; supersession holds on field names for one security only, and the values were not compared. The hyphen objects remain under the served amgt/ prefix.",
+  "notes": "G1 infers the supersession; this row confirms it on field names for ASML only. The contract's open item (confirm with AMGT_HARVST) remains open."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W75-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~75",
+  "surfaced_at": "2026-10-14T15:01:45Z",
+  "one_line": "sec/harvest/silver/filing_source repeats one (security_key, accession) across date partitions: ASML's one accession sits in 4 rows, against the contract grain of one row per (security_key, accession).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "G1_harvest.md lines 6737-6974: grain 'one row per (security_key, accession) resolved filing source'; contract rows_all_parts 22",
+      "live read 2026-10-14, read only, counts (.scratch/silver_measure.py): 10 parts, ASML raw rows 4, distinct accession 1; the silver research-report for ASML: 5 parts, 3 rows, no repeats"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order OG-gt-4 section 1: harvest_get_filing_analysis reads sec/harvest/silver/filing_source. The order states no rule for rows repeated across the date partitions.",
+  "world_is": "The silver table holds snapshot repeats of one (security_key, accession) row across partitions. The tool keeps the row from the latest partition holding the accession; a raw reader of the parquet counts the repeats.",
+  "notes": "Measured for ASML only. The repeat count for the other securities was not measured."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W75-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~75",
+  "surfaced_at": "2026-10-14T15:20:00Z",
+  "one_line": "BLOCKING: the commit gate's naming limb refuses the two existing hyphenated harvest prefixes the research tools read (research-continuation and research-report), so the OG-gt-4 module cannot be committed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit of infra/aws/ec2/opal-gateway/app/harvest_research.py and tests/test_og_gt4.py, 0.9.0_WK_NFRA_OPLGTW~75, 2026-10-14: ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode); NAMING REFUSE harvest_research.py:39 amgt/harvest/gold/research-continuation/security_key=%s/ and :41 amgt/harvest/silver/research-report/ (NEW and OUT-OF-PATTERN as S3Key); the underscore research_dossier, ai_fill, bloomberg exec_officers and sec filing_source literals are CONFORMANT",
+      "infra/logic/registry/legacy_addresses.json@de8bd420d2 lines 147-157: a legacy row for template amgt/harvest/gold/research-continuation/ (exact prefix, reader NFRA_MCPINDEX); no row in infra/logic/registry/ for the silver research-report prefix"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md rule 30: every S3 address is lib/opal_naming.py address() output; a builder refusal is a missing registry row to add (infra/logic/registry/), never a hand-typed workaround; a deliberate departure is an R20 register entry Andrew acknowledges. Task order OG-gt-4 section 3 names the module's write surface, which excludes infra/logic/registry/.",
+  "world_is": "The two prefixes exist in the bucket with hyphens, and the order's tools read them. The naming gate treats their literals as new out-of-pattern addresses, so the commit is refused. The registry row that would clear it lies outside this cell's write surface. Nothing was renamed or worked around: the module is staged in the worktree and uncommitted.",
+  "notes": "Clearing it needs a registry row (or an R20 register entry Andrew acknowledges) for each hyphen prefix at the literal shape the module uses, or the literals follow the builder after the producer migrates (R19). The issuer or the CTO decides which; the cell does not widen its own surface."
+}
+```
