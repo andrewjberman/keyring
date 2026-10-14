@@ -156,16 +156,93 @@ export lands in `opal-data-cot` and serves the portal. The rebalancer runner lan
 between them only through `external_id` = `AccountID` (defect 2). P3 work that needs "advisor book x model" has to join
 the two.
 
-## Open questions for the CTO
+## Open questions for the CTO (measured in the addendum below)
 
 - Q-A: who owns the `silver/account_attributes` daily merge (defect 1)?
 - Q-B: what is the expected cadence of `commonwealth/cottonwood` and `irpt/cottonwood/gold`, so their gaps can be graded?
 - Q-C: is `opal/bd/cottonwood/credentials` (live, undeclared) a second credential path for the same BD tenant, or a
   different one?
 
+## Addendum, 2026-10-14 ~18:3xZ: Q-A to Q-C measured (CTO msg 5679)
+
+All gaps below are graded against an expected data date of 2026-10-13. `lib/trading_calendar.py` `is_trading_day` was
+counted over (last date, 2026-10-13].
+
+### Q-A: the writer of `silver/account_attributes`, and why it stopped
+
+- **Code:** `data/cot/scripts/silver/cot_silver_merge.py`. Its `TABLE_CONFIG['account_attributes']` (`:129-143`)
+  declares the table: forwardfill prefix, silver prefix, dedup on `account_id` + `portfolio_group`. The merge can write
+  it, and nothing calls it to.
+- **The invocation that omits it:**
+  - SSM document `opal-cot-silver-run` (`infra/aws/terraform/cot-pipeline/ssm.tf:236-251`) runs `--table` for
+    transactions, allocations, realized, unrealized and holdings only.
+  - The **live** document (get-document, read now) carries the same 5 `--table` calls and 0 mentions of
+    `account_attributes`.
+  - The finalize stage's `_SILVER_STAGE_TABLES` (`cot_silver_merge.py:703`) lists 4 tables and omits it too.
+  - The raw pull lands daily through `cot_bronze_ingest.py` (`SNAPSHOT_TABLES` `:147` includes `account_attributes`);
+    the silver step was never added.
+- **Gap:** last partition `2026-08-19.parquet`, landed 2026-08-20. That is **38 trading days** behind.
+- **Root and project:**
+  - `infra/logic/registry/root_map.json` root `cot-pipeline` reads system `advi`, scope `cottonwood`, source
+    `blackdiamond`. root_map carries no project field (its `row_fields` has none).
+  - The daily wiring was owed by the COT_SUPERVISED workstream, step G4b (`templates/account_attributes.json` comment
+    "G1 bootstrap -> G4b daily").
+  - COT_SUPERVISED is not a tree project. It is cited in `org/projects/ADVI_COTKEY.json`, `MDPF_COTREMEDIATION.json`
+    and `DATA_BDINSURANCE.json`.
+  - `ADVI_COTETL` (Cottonwood's Black Diamond onboarding) reads `closed`.
+  - Last authors of `ssm.tf`: `0.6.2_AE_PartnerETL~S` (IRPT_BCKEND, 2026-09-27) and `0.7.0_AE_CloudOps~A` (2026-07-29).
+- **The fix shape** (for the owner, not done here): one `--table account_attributes` line in the SSM document,
+  non-gating like holdings, plus its manifest. It needs an applied-and-exercised proof: the next silver partition
+  carrying the 2026-10-13 pull's 1,119 rows.
+
+### Q-B: schedules and graded gaps
+
+**`opal-data-assets/commonwealth/cottonwood/` is not a feed.**
+- All 15 tables (bronze manifest, imaging and portfolio_accounting; silver documents (11,120), transactions,
+  positions, performance, crosswalk, account_links, coverage, document_index, daily_returns, account_day_value,
+  month_grades, price_evidence) carry a **single data date, 2026-06-23**. `price_evidence` reads 2022-10-12.
+- They landed 2026-10-06 to 2026-10-09.
+- No EventBridge rule names commonwealth, crosswalk or cwlth (rules matched for irpt, commonwealth, crosswalk: 1,
+  `irpt-directory-keepwarm-5min`). No Scheduler schedule names commonwealth.
+- The writers are the `data/assets/scripts/{bronze,silver}/commonwealth_*` scripts, run by hand.
+- **Grade: a one-time as-of-2026-06-23 load. The gap is not staleness.** If a recurring feed is wanted, that is a new
+  scheduled pipeline (Andrew's NEVER-rule: production pipelines are scheduled), not a stale one.
+
+**`opal-data-cottonwood/irpt/cottonwood/gold/` has 7 tables:**
+
+| Table | Data dates | Landed | Writer and schedule | Grade |
+|---|---|---|---|---|
+| holdings | 2026-09-22 .. **2026-10-08** (10 dates) | 2026-10-09 14:18 | Not resolved to a schedule. No Lambda carries `irpt-cot` in its name or role. The candidate is `irpt-holdings-snapshot`, cron(15 10 ? * MON-FRI) America/New_York -> `irpt-holdings-refresh-lambda`; whether it writes this table was not read. | **3 trading days** behind (10-09, 10-12, 10-13) |
+| holdings_performance_daily (+ manifest) | 2026-06-10 .. **2026-09-25** (75) | 2026-09-29 10:54 | Channel `blackdiamond_z09` (= Cottonwood; `data/assets/scripts/gold/irpt_holdings_performance/sources.json:159`, registry master z09 -> cottonwood). The **only** schedule, `irpt-holdings-performance-daily` cron(30 7 ? * MON-FRI) America/New_York, passes `"source":"schwab_08335338"`; Inflection has its own (`irpt-inf-holdings-performance-daily`). **No schedule fires the z09 channel.** | **12 trading days** behind; unscheduled |
+| account_return_daily (+ blank_reasons) | 2013-04-03 .. 2026-06-22 (3,325) | 2026-10-11 07:17 | `data/assets/scripts/gold/irpt_reporting/account_return_daily.py`, from the commonwealth load | A historical build ending at that load's as-of; not a daily feed |
+| dim_return_method, holdings_qa | reference / QA | 2026-10-11, 2026-10-01 | -- | not feeds |
+
+### Q-C: the two Cottonwood Black Diamond credentials (metadata only; no value read)
+
+| | `opal/bd/cottonwood/credentials` | `blackdiamond/cot/credentials` |
+|---|---|---|
+| Graph | LIVE-no-DECLARED (no Terraform) | DECLARED (Terraform, owner_pipeline cot-pipeline) |
+| Description | "Black Diamond portal login credentials for Cottonwood tenant (EC2 download scripts)" | "Cottonwood Capital Advisors BD platform login credentials for cot-exporter OIDC session refresh" |
+| Tags | none | Project OpalPortal, Environment Production, ManagedBy Terraform, System CottonwoodPipeline |
+| Created / last changed | 2026-05-27 / 2026-05-27 | 2026-06-08 / 2026-06-08 |
+| Last accessed (day grain) | **2026-05-26 ET**, the day it was made; never since | 2026-10-06 ET |
+| Versions / rotation | 1 / none | 2 / none |
+| IAM roles that can read it | **0 of 304 roles** | 3: `cot-bd-session-trigger-lambda-role` (inline `cot-bd-session-trigger-policy`), `cot-exporter-ec2-role` (inline `cot-exporter-policy`), `cot-gold-layer-ec2-role` (inline `s3-scoped-cot`), each on `.../blackdiamond/cot/credentials-*` |
+
+- Method: every role's inline policies and attached managed policies (50 distinct, default versions). Allow statements
+  only, Action matching `secretsmanager:GetSecretValue` (wildcards honoured), Resource glob-matched to the ARN.
+- **Not covered:** IAM users and groups, resource policies on the secret, and permission boundaries.
+- **Reading:** the same tenant (both descriptions name Cottonwood's Black Diamond login). The undeclared one is the
+  pre-pipeline "EC2 download scripts" credential: no role can read it, and it has not been accessed since its creation
+  day.
+- **It is an undeclared second credential path, so it is a FIRMBKTS row by your rule.** Retiring it is a delete and
+  waits on Andrew's word. Whether it holds the same login as the declared secret was not read; that would need the
+  value.
+
 ## Not read
 
-- Object contents beyond the four reads named above.
-- The exporter's SSM documents.
-- The cadence of the commonwealth and IRPT gold writers.
+- Object contents beyond the reads named above.
+- The cot-exporter's own scripts.
+- Whether `irpt-holdings-refresh-lambda` writes `irpt/cottonwood/gold/holdings`.
+- IAM users and groups.
 - The other 34 buckets below the graph's bucket-level hits.
