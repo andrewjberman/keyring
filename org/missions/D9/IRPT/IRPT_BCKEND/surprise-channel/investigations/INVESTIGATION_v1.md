@@ -33620,3 +33620,79 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. W374-S1 (the safe-commit client-data check is ABSENT on dell2, a WARN): STAYS ARMED, owner me for the record, the repair is the box manager's (placing the hashed account-id list); until it is placed no commit on this box is scanned for account ids, and my own files carry counts, dates, public symbols and hash prefixes only. W375-S1 (the producer carries no apply_cash_rule at base): resolved by the merge, the function exists at dff35d95da; the packet's Branch A is still the release of a rule-bearing build whose mechanics are NOT read. W375-S2 (the ticker shape admits Black Diamond-prefixed and CUSIP-shaped identifiers): ruled inside my decomposition, they are counted and never listed, fallback_tickers stays empty. W375-S3 (101 nodes of 49financial carry no display symbol; none a mover): INERT, the reason is unread. W375-S4 (the runner's schedule and deploy target not located): the next round's CENSUS cell must read them before any pair is signed. MEASURED: FDRXX on Inflection resolves on the canonical branch (row found fixed_income with sub Cash; 757 FDRXX nodes in the 2026-10-12 snapshot), so the rule is canonical-only as ruled; the blast radius is 844 nodes (49financial 32, cottonwood 38, inflection 774); the 215 and 67 fallback-branch cash-sub holdings on cottonwood and inflection stay fixed_income as served (a cross-page consistency fact for the CTO). The Cottonwood count is at the 2026-10-08 snapshot, since the page cannot publish until the directory exemption is repaired (CTO 7489)."
 }
 ```
+
+## IRPT_BCKEND-D2-W377-S1 -- the trading calendar answers from its hardcoded NYSE fallback on dell2
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W377-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~377",
+  "surfaced_at": "2026-10-14T04:13:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "On dell2 neither pandas_market_calendars nor exchange_calendars is installed, so lib/trading_calendar answers from its hardcoded NYSE fallback (2010-2027) during the IB-pr-530 replay; the criterion passed and the fallback is not the vendor calendar.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB190-2-AC3 output, deliverables/0.9.0_WK_IRPT_BCKEND~377/IB190-2_criteria_output.txt @f3a42b2ab8: WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027; regenerate with lib/tests/gen_nyse_closures.py --write before 2028)",
+      "python -c 'import pandas_market_calendars' in the worktree on dell2 (2026-10-14T04:1xZ): ModuleNotFoundError; exchange_calendars: ModuleNotFoundError"
+    ]
+  },
+  "spec_asserts": "The publish gate's source-frontier arm counts trading days through lib/trading_calendar (IB-pr-530 criterion AC3: the same directory with an older source frontier is still refused).",
+  "world_is": "On dell2 the calendar's vendor libraries are absent, so trading_calendar answers from the hardcoded NYSE closures table, which the checker says must be regenerated before 2028. The AC3 result stands for 2026; the calendar source on this box is not the vendor calendar. The reason the libraries are absent on dell2 was not read."
+}
+```
+
+## Round 190, IB-pr-529 -- worker 0.9.0_WK_IRPT_BCKEND~376's row
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W376-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~376",
+  "surfaced_at": "2026-10-14T04:13:55Z",
+  "one_line": "The safe-commit client-data check did not run on the IB-pr-529 commit 9e41657727: the hashed account-id list is absent on dell2, so this box still commits unscanned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "dell2 box manager (placing the hashed account-id list), per IRPT_BCKEND-W374-S1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 9e41657727 in worktree C:/dev/wk-IRPT_BCKEND-376: 'WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids'",
+      "the same condition is recorded by IRPT_BCKEND-W374-S1 in this file (dell2, STAYS ARMED); the IB-pr-529 commit touches holdings_snapshot.py and test_holdings_cash_rule.py only and writes no account identifier"
+    ]
+  },
+  "spec_asserts": "A commit made through .tools/safe-commit.sh passes the commit gates, the client-data check among them, before it lands.",
+  "world_is": "On dell2 the client-data check is ABSENT (the hashed account-id list is not placed), so the gate prints a WARN and reports the commit as NOT checked for client account ids. The commit itself carries code and tests with no account identifier; no other commit on this box is scanned until the list is placed.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## Round 190, IB-pr-529 -- worker 0.9.0_WK_IRPT_BCKEND~376's second row
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W376-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~376",
+  "surfaced_at": "2026-10-14T04:20:00Z",
+  "one_line": "The one-writer gate warns that the order's investigation path is the laptop's unsuffixed file; a dell2 worker appended a row to it at commit 770a469992.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 770a469992 in worktree C:/dev/wk-IRPT_BCKEND-376: '[one-writer] WARN: org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md is the laptop's (unsuffixed) file, written from dell2; per-box file <stem>.dell2.<ext> (WARN until C-QUEUE)'",
+      "the order IRPT_BCKEND.TO-IB-pr-529 names this unsuffixed path as the row file (its paths block and step 6), so the worker wrote where the order pointed"
+    ]
+  },
+  "spec_asserts": "Rows go to the investigation file the task order names (INVESTIGATION_v1.md), and a worker's row is appended there.",
+  "world_is": "The one-writer gate reads that file as the laptop's and says a dell2 writer should use the per-box file INVESTIGATION_v1.dell2.md until the C-QUEUE repair lands. The gate passed the commit (WARN only), and this row is the only write to the file from this worktree.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
