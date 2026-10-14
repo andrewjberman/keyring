@@ -24,3 +24,11 @@ The escape on a trunk is the audited `# never-override: <reason>` path the gates
 - a trunk push with the payload gate script renamed away exits 1;
 - a `cand/` branch push in the same state exits 0 with the WARN;
 - run on one gitlink box (dell2) and on the laptop.
+
+**ADDENDUM ~01:4xZ (on MSTR's flag, after landing LD-0647 @c34826c3eb):** the "audited never-override path" above does not apply. A
+git hook reads only ref lines on stdin and never sees a typed comment. **No escape is added:** the remedy for a missing gate is to
+re-run `bash .tools/portal-hooks/install.sh`, which is deterministic and takes seconds. An environment-variable bypass would be a
+silent-absence door of exactly the kind this ruling closes. Read back by MSTR on the laptop:
+- the new hook: DEV and PROD exit 1, `cand/` exits 0 with the WARN;
+- the old hook: 0 and 0;
+- with real gates: unapproved REFUSED, back-merge ADMITTED.
