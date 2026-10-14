@@ -9816,3 +9816,182 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W158-S1 -- the contract's percent wording says decimal fraction, while the filled sample stores percent numbers
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W158-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~158",
+  "surfaced_at": "2026-10-14T05:18:11Z",
+  "one_line": "contract percent wording (decimal fraction) disagrees with the sample's stored percent numbers",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "Contract document.shape says percent is 'from the decimal fraction to one decimal place'. The round-103 order says the filled sample stores percents already as percent numbers, so the component must not multiply again.",
+  "world_is": "The sample's percent members hold percent numbers (a stored one-and-a-half means one and a half percent); the builder header says 'the decimal fraction times 100'. The component multiplied by 100 (the percent defect); the fix prints the stored scale. The contract text still states the decimal-fraction convention, so a component built from that text reproduces the defect.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json: document.shape, the percent unit sentence",
+      "portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts: formatPercent prints the stored value (portal commit 7c9a94d0 (branch wk-IRPT_DASHBD-158-portal))",
+      "portal test report-render-r103.test.tsx, percent pin: the temporary mutant restoring the multiplication fails it (run recorded in the worker folder)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2"
+}
+```
+
+## IRPT_DASHBD-D2-W158-S2 -- the generated member label of the fee-basis convention carries build words; the view model overrides the label, the generated file is not edited
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W158-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~158",
+  "surfaced_at": "2026-10-14T05:18:11Z",
+  "one_line": "generated fee-basis label carries build words; overridden in the view model, generated file untouched",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order: every client-facing line names no build word, and contractMembers.ts is GENERATED: read, never edited.",
+  "world_is": "The generated label of convention.fee_basis_label names the baseline and the net-gain convention in build words. The view model prints a client label for that member (CLIENT_LABEL) and a client convention sentence when the member holds text. The synthetic fixture's text for the same member carries the same build word and is never printed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/dashboard/report/contractMembers.ts: the convention.fee_basis_label entry (generated)",
+      "portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts: CLIENT_LABEL and FEE_BASIS_CONVENTION (portal commit 7c9a94d0 (branch wk-IRPT_DASHBD-158-portal))"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W158-S3 -- the sample's holdings class-hierarchy text is a build note with snake_case class keys; the contract says a text member prints as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W158-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~158",
+  "surfaced_at": "2026-10-14T05:18:11Z",
+  "one_line": "sample holdings class-hierarchy text is a build note; printed as a fixed sentence, not as written",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Contract document.shape: text 'as written'. Order: no build word and no snake_case identifier on a client-facing line.",
+  "world_is": "The sample's holdings.rows.class_hierarchy value is a build note that names the baseline and lists the asset-class keys in snake_case. The view model prints a fixed sentence in its place ('Sub-class rows: not available yet.'), so the value is never printed. The sentence is a presentation choice; no member carries it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json: document.shape, text members printed as written",
+      "portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts: SUB_CLASS_WORDS and fieldCell (portal commit 7c9a94d0 (branch wk-IRPT_DASHBD-158-portal))"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W158-S4 -- the absence kind is not a field of the absent form; the view model reads the kind from the reason text by keyword rules
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W158-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~158",
+  "surfaced_at": "2026-10-14T05:18:11Z",
+  "one_line": "absence kind is not a field of the absent form; kinds are inferred from reason text by keyword rules",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "Order: a section note prints one plain sentence chosen from a small fixed table keyed on the kind of absence; a reason whose kind cannot be told prints only the cell words.",
+  "world_is": "The absent form carries a reason in words and no kind field. The sample holds sixteen distinct reasons; the view model maps them to three kinds with keyword rules (absentKindOf). A reword of a reason in a later sample changes which sentence a client reads, or drops the sentence to the cell words, and no gate catches it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json: document.shape, the absent form {absent: reason in words}",
+      "portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts: KIND_RULES and absentKindOf (portal commit 7c9a94d0 (branch wk-IRPT_DASHBD-158-portal))"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2"
+}
+```
+
+## IRPT_DASHBD-D2-W158-S5 -- the baseline's holdings class hierarchy has no contract member; the table draws the seven asset classes and says the sub-class rows are not available
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W158-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~158",
+  "surfaced_at": "2026-10-14T05:18:11Z",
+  "one_line": "baseline holdings class hierarchy has no contract member; Opal's seven asset classes drawn instead",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order step 5: the holdings table in the baseline's orientation, with its class hierarchy as the baseline draws it (the CVO's judgment, DB103-1-J1).",
+  "world_is": "The contract has seven asset-class members (allocation only, per class) and one text member for the hierarchy; no member carries the baseline's class groups or the sub-class rows. The table draws Opal's seven asset-class rows in the baseline's column orientation and prints the sub-class omission in words. The judgment on the class hierarchy is the CVO's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json: members hold.allocation and holdings.rows.class_hierarchy",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/1.0.0_SA_CTO~DELL2/BD_FINANCIAL_PERFORMANCE_REPORT_BASELINE_SCHEMA_20261013.md: the Holdings Overview section"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W158-S6 -- the fee-basis line is a presentation constant that asserts the before-fee convention while the convention member is absent in the sample
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W158-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~158",
+  "surfaced_at": "2026-10-14T05:18:11Z",
+  "one_line": "fee-basis line is a fixed before-fee sentence while the convention member is absent in the sample",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "Order item 3: the fee basis stays labelled, and an absent figure never prints as zero.",
+  "world_is": "In the sample the convention member is absent, so the fee-basis line under each return section cannot quote it. The view model prints a fixed sentence asserting that returns and gains are before advisory fees; the previous render printed the absent cell's words under each return section instead. The constant matches the served return (before fees) but no member carries it, so a served change of basis would leave it wrong.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts: FEE_BASIS_WORDS (portal commit 7c9a94d0 (branch wk-IRPT_DASHBD-158-portal))",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/1.0.0_SA_CTO~DELL2/BD_FINANCIAL_PERFORMANCE_REPORT_BASELINE_SCHEMA_20261013.md: conventions, the before-fee return"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2"
+}
+```
+
+## IRPT_DASHBD-D2-W158-S7 -- a chart legend printed a series name as an identifier; the legend now prints words
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W158-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~158",
+  "surfaced_at": "2026-10-14T05:18:11Z",
+  "one_line": "chart legend printed snake_case series names; now printed as words",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order: no snake_case identifier in the visible text of either HTML.",
+  "world_is": "The synthetic fixture's chart series carry class-key names; the legend printed them raw, and the round-103 test refuses such an identifier in visible text. The legend now prints each name as words (legendWords in ReportChart). The data-series attribute keeps the raw name. The sample holds no chart series, so the live render is not affected.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/dashboard/report/ReportChart.tsx: legendWords (portal commit 7c9a94d0 (branch wk-IRPT_DASHBD-158-portal))",
+      "portal/src/pages/InvestorReporting/dashboard/report/fixtures/syntheticReport.ts: the synthetic chart series names"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
