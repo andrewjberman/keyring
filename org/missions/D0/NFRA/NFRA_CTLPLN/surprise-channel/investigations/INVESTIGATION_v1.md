@@ -9254,3 +9254,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Suggested cell (yours to cut; the issuer of NFRA_DEVPLN does not own .tools/unblock.py): open_call_row reads a FOREIGN box's row through the freshest-source reader (import or reuse approval_read's three-source rule for any row id, not only approval rows); this box's own id keeps the working tree; no readable source for a foreign box returns None as today (EMPTY, with the reason named); tests use OPAL_STATE_ROOT with OPAL_CLOUD_READ_LOCAL. Criteria worth cutting: the CTO's 'tick --owed-call dell2-20261013T221411Z-3635 reads WAITING CALL ... OPEN from the laptop' while that row is OPEN; the same id reads EMPTY once the row is CLOSED. NFRA_DEVPLN records its own wait meanwhile with --wait-until and --owner."
 }
 ```
+
+## NFRA_CTLPLN-W90-S1 -- CT-ac-6 premise: HELD is not a row state in open-calls/1 (a held-for-Andrew call is OPEN with escalation.to=andrew)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W90-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~90",
+  "surfaced_at": "2026-10-14T02:41:27Z",
+  "one_line": "CT-ac-6 premise fails: the order asks for a foreign row in state HELD to read WAITING, but open-calls/1 admits only the row states OPEN and CLOSED (validate_doc refuses any other). A call held for Andrew is an OPEN row with escalation.to=andrew. Case (b) was realised in that schema form; a literal HELD row would be refused by the reader and fall through to a stale copy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/open-calls.py@d5871bc04b line 146: STATES = (\"OPEN\", \"CLOSED\"); validate_doc raises BadFile on any other row state, so approval_read skips a copy that carries state HELD",
+      ".tools/open-calls.py@d5871bc04b: the only 'held' is the hold escalation (usage line 32; escalation.to=andrew on an OPEN row, lines 1440-1458)",
+      ".tools/unblock.py@69759661d3 line 324: CALL_WAITING_STATES = (\"OPEN\", \"HELD\"), a state no writer of open_calls.json produces",
+      "measured 2026-10-14 02:40Z in worktree ctlpln-90 (branch wk-NFRA_CTLPLN-90): tests/test_unblock_owed_call_foreign.py case b with a HELD row in the cluster copy read 'OWED-CALL: id=dell2-20261013T221411Z-3635 counts=EMPTY reason=call-absent source=git'; the cluster copy was refused as unreadable"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ac-6 case (b): 'the same call HELD reads WAITING' (unblock.py tick --owed-call: WAITING while the row reads OPEN or HELD)",
+  "world_is": "open-calls/1 has no HELD row state; the held-for-Andrew form is an OPEN row carrying escalation.to=andrew, which reads WAITING state=OPEN. A literal HELD row is refused by validate_doc, so the three-source reader skips the freshest copy and a stale copy answers call-absent (EMPTY). Hazard INERT: no producer writes a HELD row state."
+}
+```

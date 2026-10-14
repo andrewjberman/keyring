@@ -23,6 +23,9 @@ to synthesize that into the workflow, and it needs a sign off by the CVO." Owner
         --owed-call: the tick's only block is ONE open call (e.g. a card held for Andrew). It reads `WAITING CALL <id> <state>`
         only while that call's row on org/devices/state/<box>/open_calls.json reads OPEN or HELD; a CLOSED or absent call
         counts as before (CVO @f59dbc4f71 via 1.0.0_SA_CTO~Z msg 32856 -- never tick --result work to dodge the counter).
+        A call on ANOTHER box reads through open-calls.py approval_read (the freshest of the cluster copy, origin/box/<box> and
+        the working-tree copy); a foreign list with no readable source reads `counts=EMPTY reason=call-unreadable`. Each line
+        names `source=<cluster|git|working-tree|own>`, the copy that answered.
         --wait-until <UTC ISO> --owner <serial | schedule:<name>>: the tick's only block is a DATED event, before any case is
         opened (e.g. the 11:00Z scheduled pull). It reads `WAITING DATED <owner> UNTIL <time>` with the count at 0 while the
         time is ahead (at most 7 days) and the owner is a LIVE seat or a schedule; an owner not live counts as before, and the
@@ -343,6 +346,70 @@ def open_call_row(call_id: str):
     return next((r for r in (rows or []) if isinstance(r, dict) and r.get("id") == call_id), None)
 
 
+class CallUnreadable(Exception):
+    """A FOREIGN box's approval list has no readable source: the owed call reads EMPTY, never absent."""
+
+
+def _call_reader(box: str) -> tuple:
+    """(mode, module, why). 'own': this box's own call, the working-tree read as before. 'foreign': open-calls.py approval_read
+    (the freshest source, NFRA_DEVPLN DP-e-2), loaded by file path because its name has a hyphen. 'fallback': this box or the
+    reader cannot be established, so the working-tree read as before, and `why` says so."""
+    try:
+        mine = this_box()
+    except Exception as exc:  # noqa: BLE001 -- an unresolved identity fails closed to the old read, and says so
+        return "fallback", None, "this box unresolved: %s" % str(exc)[:200]
+    if mine == box:
+        return "own", None, ""
+    try:
+        return "foreign", load_mod("opal_open_calls_for_unblock", ".tools/open-calls.py"), ""
+    except Exception as exc:  # noqa: BLE001 -- an unloadable reader fails closed to the old read, and says so
+        return "fallback", None, "open-calls.py not loadable (%s)" % type(exc).__name__
+
+
+def _source_label(where: str, box: str) -> str:
+    """cluster | git | working-tree: which copy approval_read answered from, read off its `where`. open-calls.py names the cluster
+    object s3://..., origin/box/<box>:... for git, and its test stand-ins are <dir>/box=<box>/ and <dir>/git=<box>/."""
+    if where.startswith("s3://"):
+        return "cluster"
+    if where.startswith("origin/box/"):
+        return "git"
+    parent = os.path.basename(os.path.dirname(where))
+    if parent == "box=%s" % box:
+        return "cluster"
+    if parent == "git=%s" % box:
+        return "git"
+    return "working-tree"
+
+
+def open_call_read(call_id: str) -> tuple:
+    """(row or None, source). A FOREIGN box's call reads through approval_read: the greatest written_at of the cluster copy,
+    origin/box/<box> and the working-tree copy. Raises CallUnreadable when no source of a foreign box is readable. This box's
+    own calls keep the working-tree read as before (source=own); a fallback reads that same copy (source=working-tree)."""
+    box = call_id.split("-", 1)[0]
+    mode, mod, why = _call_reader(box)
+    if mode == "foreign":
+        try:
+            doc, where = mod.approval_read(box, None)
+        except Exception as exc:  # noqa: BLE001 -- the reader's BadFile is the refusal; any other failure is equally unreadable
+            raise CallUnreadable("%s: %s" % (box, str(exc)[:200]))
+        rows = doc.get("rows") if isinstance(doc, dict) else None
+        row = next((r for r in (rows or []) if isinstance(r, dict) and r.get("id") == call_id), None)
+        return row, _source_label(where, box)
+    if mode == "fallback":
+        print("NOTE: owed-call %s reads the working-tree copy, not the freshest source (%s)" % (call_id, why))
+    return open_call_row(call_id), ("own" if mode == "own" else "working-tree")
+
+
+def owed_call_verdict(call_id: str) -> tuple:
+    """(ok, why, source) for --owed-call. source is None only when a foreign list has no readable source (why=call-unreadable)."""
+    try:
+        row, source = open_call_read(call_id)
+    except CallUnreadable:
+        return False, "call-unreadable", None
+    ok, why = call_waiting(row)
+    return ok, why, source
+
+
 def dated_wait(owner: str, owner_live: bool, until: str) -> tuple:
     """PURE. (True, until) when a dated wait counts the tick as WAITING; (False, reason) otherwise. The owner is a seat that
     must be LIVE, or `schedule:<name>` for a scheduled fire, which a clock owns (brief gpt-feedback-autonomy-solutions item 4,
@@ -405,9 +472,12 @@ def cmd_tick(args) -> int:
             owed = (args.owed_ledger, args.owed_owner, why)
     call = None
     if args.owed_call and args.result == "nothing" and active is None and waiting is None and owed is None:
-        ok, why = call_waiting(open_call_row(args.owed_call))
-        print("OWED-CALL: id=%s counts=%s %s" % (args.owed_call, "WAITING" if ok else "EMPTY",
-                                                 ("state=" + why) if ok else ("reason=" + why)))
+        ok, why, source = owed_call_verdict(args.owed_call)
+        if source is None:   # a foreign list with no readable source: EMPTY, and never reads as absent
+            print("OWED-CALL: id=%s counts=EMPTY reason=call-unreadable" % args.owed_call)
+        else:
+            print("OWED-CALL: id=%s counts=%s %s source=%s" % (args.owed_call, "WAITING" if ok else "EMPTY",
+                                                              ("state=" + why) if ok else ("reason=" + why), source))
         if ok:
             call = (args.owed_call, why)
     dated = None
