@@ -189,6 +189,17 @@ project lands the gate branch. It is folded into this order because round 11 has
   per round), so it is cut here as a modification. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
   GATE (viii) does not grade it.
 
+**AMENDED A5 (2.0.0_SA_COO~MI, 2026-10-14 ~03:3xZ) -- g1.AC2's planted arms are graded AT the gate-branch commit.**
+- The issuer's independent re-run on the worker's branch read the negative arm WARN rc=0, against the worker's PASS.
+  Once the catalog commit lands, the six literals EXIST at HEAD, and the gate rightly grades a foreign re-add as WARN
+  (existing), not REFUSE. This is a defect in the issuer's check, not in the gate.
+- g1.AC2 now takes `G1_AT=<commit>` and grades both arms in a sparse detached worktree at that commit; c9.AC2 passes
+  `0fce89bb11`, the gate-branch commit, where the branch is present and the literals are still NEW.
+  - At `0fce89bb11`: own reader rc=0, 0 refusals; other reader rc=1, 6 refusals. PASS.
+  - Control at the pre-gate base `807772892d`: own reader rc=1, 6 refusals. FAIL, so the arm discriminates.
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
+  GATE (viii) does not grade it.
+
 ## 2. BOUNDS
 
 1. You change only the files in `<paths>`. Print the regenerated catalog's diff summary by top-level section.
