@@ -4,10 +4,10 @@
  "directive": "D8",
  "macro_code": "ADVI",
  "fabric": "dell1",
- "dep_stage": "ROUND_CLOSE",
+ "dep_stage": "EXECUTING",
  "status": "active",
  "name": "Black Diamond pricing rules: every served 49 Financial price comes from a written rule, traceable to its inputs, and every lot's units and cost from an exact source",
  "generated_from": "org/missions/D8/ADVI/ADVI_BDPRCE/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-14T06:02:56Z"
+ "generated_at": "2026-10-14T06:10:43Z"
 }
