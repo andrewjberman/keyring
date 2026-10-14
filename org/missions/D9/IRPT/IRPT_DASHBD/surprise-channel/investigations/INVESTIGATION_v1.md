@@ -10404,3 +10404,81 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W164-S1 -- market_topic_daily is a general topic table with no firm location; the model return series lands under a firm gold address anyway
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W164-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~164",
+  "surfaced_at": "2026-10-14T11:25:00Z",
+  "one_line": "market_topic_daily is a general topic table with no firm location; the model return series lands under a firm gold address anyway",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-199 step 1: market_topic_daily is the C-SHAPE table that fits a firm-neutral market series, and the series is written under a firm gold home derived from lib/opal_naming.address().",
+  "world_is": "The PRD C-SOURCES row and Q4 (IRPT_DASHBD_PRD.md, lines 234-248 and 455-457) and the backend brief Part V.1 row (docs/briefs/reporting-dashboard-backend-brief-20260930.md line 82) define market_topic_daily as a GENERAL, non-client topic table (day x rank: phrase, score, sentiment, source_kind) with a general platinum home and no firm location; FIRM_READINESS.json (deliverables 0.9.0_WK_IRPT_DASHBD~155) states the same. The producer therefore carries return columns and a null account_id in a table whose brief definition is topics, and it lands under the 49financial firm gold address because the task order names a firm home. The apply is NOT authorised by this row: the CTO's question 1 in the packet decides the table and the home first.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md@dd23753559 (C-SOURCES, Q4 at line 455)",
+      "docs/briefs/reporting-dashboard-backend-brief-20260930.md@dd23753559 (Part V.1 table row, line 82)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~155/FIRM_READINESS.json@dd23753559 (candidate_source for market_topic_daily)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/model_series_market_topic_daily.py@dd23753559 (this cell's producer, uncommitted at this row)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W164-S2 -- the live served model series has a later data_as_of and one more trading day than the source read the task order cites
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W164-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~164",
+  "surfaced_at": "2026-10-14T11:25:00Z",
+  "one_line": "the live served model series has a later data_as_of and one more trading day than the source read the task order cites",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-199 source claim (BENCHMARK_FILL.json, deliverables 0.9.0_WK_IRPT_DASHBD~159): the served object has data_as_of 2026-10-12 and 615 trading days per stem; since_inception window start 2024-07-08.",
+  "world_is": "A single-object GET of json/benchmarks/model_portfolio_timeseries.json on 2026-10-14 (VersionId 9wcMYjBbgI9jMxGANcPBhPIAKBRQMcZt, LastModified 2026-10-14T11:06:01Z) returns data_as_of 2026-10-13, inception_date 2024-04-30, and 616 trading days per stem from 2024-04-30 to 2026-10-13 after the 25 weekday exchange holidays are dropped. The four stems keep their form (daily decimals, below 0.1 in magnitude; max absolute 0.0482). The served object was regenerated after the round-103 read. The packet records the live vintage, and the producer reads the live object at the apply, not the cited figures.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~159/BENCHMARK_FILL.json@dd23753559 (data_as_of 2026-10-12, 615 per stem)",
+      "s3 GET opal-data-portal-v2 json/benchmarks/model_portfolio_timeseries.json on 2026-10-14 (ETag 66b8a414c00a2aab4963c1d5b443dfa3), read by this cell, not written"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W164-S3 -- the served model series object has no address() or legacy_addresses row; the producer names its read path as a constant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W164-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~164",
+  "surfaced_at": "2026-10-14T11:25:00Z",
+  "one_line": "the served model series object has no address() or legacy_addresses row; the producer names its read path as a constant",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CLAUDE.md rule 30 and the task order: every S3 address is lib/opal_naming.address() output (or a legacy_addresses row for a store that predates the canon).",
+  "world_is": "The served object s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json is written by the Yang producer (BENCHMARK_SOURCE_READ.json, deliverables 0.9.0_WK_IRPT_DASHBD~157) and read by build_sample.py as a literal (MODEL_OBJECT). infra/logic/registry/legacy_addresses.json carries no row for it (its 18 keys are cottonwood, etfs, portal-canon and harvest keys), and address() cannot name a served JSON object of the portal bucket. The producer carries SOURCE_BUCKET and SOURCE_OBJECT as named read constants for its one GET; no write path exists in it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/legacy_addresses.json@dd23753559 (no benchmark or model_portfolio key)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/model_series_market_topic_daily.py@dd23753559 (SOURCE_BUCKET and SOURCE_OBJECT, uncommitted at this row)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~157/BENCHMARK_SOURCE_READ.json@dd23753559 (served object and writer)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
