@@ -2703,3 +2703,31 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
   }
 }
 ```
+
+## Row filed by 0.9.0_WK_MDPF_DEMQUE~53 (DQ-t-61 names mode, TO MDPF_DEMQUE.TO-DQ-t61)
+
+```json
+[
+  {
+    "id": "MDPF_DEMQUE-D1-W53-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~53",
+    "surfaced_at": "2026-10-14T04:17:40Z",
+    "one_line": "The order's message-file instruction ends each commit with a Co-Authored-By line naming Claude Sonnet 5.5, but the agent executing this order is Claude Haiku 5.5; the commits of this order carry the Haiku 5.5 trailer.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t61 (dispatch instruction): the commit message file ends with 'Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>'.",
+    "world_is": "The executing model is Claude Haiku 5.5 (claude-haiku-5-5). The session attribution instruction for commits this agent creates names Claude Haiku 5.5. The commits of this order end with 'Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>'; the --author identity is the one ordered (0.9.0_WK_MDPF_DEMQUE~53). The same mismatch is recorded as MDPF_DEMQUE-D1-W52-S1. No check or verdict depends on the trailer's model name.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t61.yahoo-failed-14-bloomberg-request.md (Bounds and REPORT wording) @838bd5190c",
+        "session attribution instruction for commits created by this agent (Claude Haiku 5.5) @838bd5190c",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/surprise-channel/investigations/INVESTIGATION_v1.md (row MDPF_DEMQUE-D1-W52-S1, the same mismatch) @838bd5190c"
+      ]
+    }
+  }
+]
+```
