@@ -51,6 +51,12 @@ proved by a two-firm negative arm.
    account, never summed; snapshot-in-every-partition tables read from the newest partition only; live 49F Black Diamond silver is
    `opal-data-bd/silver/`; unregistered SmartX firms Titleist, Canopy and Parable are never returned; the `49-schwab-conv` tables that stopped on
    2026-07-23 are not served).
+   **Two rulings for the Black Diamond adapter (CTO msg 34130, from the CRO's G2f census `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/parts/G2f_bd_live_prefixes.md` @5e5d312ada; read it):**
+   (1) per table, the adapter reads whichever store has the newest MEASURED partition: `opal-data-bd/silver/<table>/YYYY-MM-DD.parquet` or
+   `opal-data-assets/blackdiamond/49financial/` (49F is behind on row Z-S110). Every answer states its store and its trading-day lag;
+   `assets` is 80 trading days behind and `transactions_enriched` 122, so neither may answer as current. (2) Increment versus snapshot is
+   UNMEASURED: the adapter cell measures it per table before any tool sums or spans dates. Carry both rulings into the Black Diamond clauses
+   of `client_get_holdings`, `client_get_transactions`, `client_get_allocation` and `client_get_fees`, and name the unmeasured grain as an open item.
 3. **The registry additions, as a proposal only.** Write `W/G2_SCOPES_PROPOSAL.md`: the exact additions that put master `08403355` into
    `NFRA_OPLGTW_CONTRACT.json` and `infra/logic/registry/scopes.json` (read both files; show the current rows and the added rows). Apply NOTHING.
 4. **The ask inputs.** In `W/G2_ROLES.json` under `"ask_inputs"`, list for the G2 never-widen ask: every prefix the core tools read, the role that
@@ -77,6 +83,7 @@ lib/trading_calendar.py
 lib/opal_naming.py
 org/standards/NFRA_OPLGTW_CONTRACT.json
 infra/logic/registry/scopes.json
+org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/parts/G2f_bd_live_prefixes.md
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -108,6 +115,9 @@ the issuer to make at the merge.
 - Decomposition addendum R3-T.52: the design the G2 adapter cells (g2-1..n) and the G2 ask are cut against.
 - READ ONLY: no write outside `W/` and the investigation file.
 - Pre-cut: g20.AC1 and g20.AC2 base FAIL as expected (the records are absent).
+
+- A1 (issuer, 2026-10-14 ~15:1xZ, CTO msg 34130): two Black Diamond rulings added to step 2 and the G2f census added to `<paths>`. The worker was
+  already running; it is continued with this amendment when it reports. No criterion moves. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>
