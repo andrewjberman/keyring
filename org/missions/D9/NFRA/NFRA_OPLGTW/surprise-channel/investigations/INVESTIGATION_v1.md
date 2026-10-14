@@ -13179,3 +13179,31 @@ name the one known failure instead of silently inheriting it.
   "notes": "The off-host record W/CD1_LIVE_READ.json is committed and the script's own verdict is PASS; only the order's expectation is unmeetable as written. A re-grade needs no re-run of the code."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-14T01:40:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-S103",
+  "one_line": "OG-mg-1's preflight tells this seat to simulate dynamodb:TransactWriteItems, which is NOT a real IAM action, so the simulation reads implicitDeny on any non-admin principal and would have manufactured a STOP; the write path is in fact authorized, via PutItem conditioned on LeadingKeys POLICY#*.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN aws accessanalyzer validate-policy per action against the table ARN: dynamodb:TransactWriteItems returns findingType ERROR, issueCode INVALID_ACTION, while Query, Scan, PutItem, UpdateItem, DeleteItem and ConditionCheckItem all return 0 ERROR findings. The TransactWriteItems API authorizes on the underlying item actions, so no such IAM action exists to grant or simulate.",
+      "RAN simulate-principal-policy on role opal-gateway-access-admin, ONE --resource-arns per call: GetItem allowed; Query implicitDeny; Scan implicitDeny; TransactWriteItems implicitDeny. The positive control against user/Andrew_Berman read allowed for all three denied actions INCLUDING the non-existent one -- the documented false-ALLOW mode, since an admin wildcard matches any string. So the two controls misled in opposite directions and only the policy read settled it.",
+      "READ the role's inline policy opal-gateway-access-admin-policy: statement 0 allows dynamodb:GetItem unconditioned; statement 1 allows dynamodb:PutItem and dynamodb:UpdateItem on the same table CONDITIONED on ForAllValues:StringLike dynamodb:LeadingKeys POLICY#* plus Null LeadingKeys false. Query, Scan, DeleteItem and ConditionCheckItem appear nowhere.",
+      "RAN the same simulate WITH --context-entries dynamodb:LeadingKeys=POLICY#test: PutItem allowed, UpdateItem allowed (both implicitDeny WITHOUT the context -- the documented condition-evaluation mode), DeleteItem implicitDeny, ConditionCheckItem implicitDeny.",
+      "READ ops/schwab_entitlement_admin.py activate() at :377-394: ops = [profile_put_op(profile_item, base_profile_revision), grant_put_op(grant_item), audit_op] plus one deny put per alias. Every member is a Put; the optimistic staleness check rides the Put's own ConditionExpression, not a separate ConditionCheck transaction item. The module's revoke path states 'Never a DeleteItem' (:404). access_state.py :499-521 shows Put, Delete and ConditionCheck builders exist, but activate uses only the Put builder."
+    ]
+  },
+  "spec_asserts": "TO NFRA_OPLGTW.TO-OG-mg-1 preflight: 'under it dynamodb:GetItem/Query/Scan (strong reads) and dynamodb:TransactWriteItems (access_state.operator_transact, the one transaction that writes the profile, the grant revision and the operator_audit row). Phase A RUNS each of these as a dry call (simulate-principal-policy on the role) and records allowed/implicitDeny per action before any write; an implicitDeny is a STOP and a BLOCKING row.'",
+  "world_is": "Three of the four named actions do not behave as the preflight assumes. (a) dynamodb:TransactWriteItems is not an IAM action at all, so simulating it is uninformative and its implicitDeny is an instrument artifact, not a missing grant. The authorization that actually matters is PutItem, which the role holds conditioned to POLICY#* -- exactly the partitions these records live in -- so the write path IS authorized and there is NO STOP. (b) Query and Scan are genuinely absent from the role: a real implicitDeny. They are not needed by activate(), but a successor who assumes the role to re-run the before-record scan will get AccessDenied, because this session's POLICY# scan ran as user/Andrew_Berman rather than under the role. (c) DeleteItem and ConditionCheckItem are absent and stay absent, which is consistent with the module's own design (revoke is a tombstone, never a delete).",
+  "notes": "The hazard this avoided is the OG-ap-11 shape in reverse: there, a permission became load-bearing exactly at the deploy and a coarse check read clean. Here a coarse check reads DENIED on an action that cannot be granted, and the honest reading needed three instruments -- validate-policy for whether the name is real, the policy document for what is actually granted, and a context-supplied simulate for the conditioned statements. No widening was requested and none is needed. Suggested preflight correction for the issuer: replace the TransactWriteItems row with PutItem plus the LeadingKeys context entry, and either add Query/Scan to the role or state that the before-record reads run under the calling principal."
+}
+```

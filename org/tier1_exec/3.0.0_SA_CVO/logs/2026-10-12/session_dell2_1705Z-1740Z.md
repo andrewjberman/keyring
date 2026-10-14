@@ -353,3 +353,9 @@ Correction: C-S370's grounding cites msg 7389; the packet message is 7387. The r
 | item | result | commit |
 |---|---|---|
 | IRPT_DASHBD round 96 | ADJUDICATION_v60 (C-S71): the real sample rendered privately; I re-ran DB96-1-AC1: PASS. 5 dismissed (W146-S1 ARMED: hazard gone on my re-run). HELD: W147-S3 ARMED (synthetic CASH_USD serves fixed_income while Cash-typed rows will serve cash), to clear before round 98's FDRXX apply DB-b-183; flagged in the slug. W146-S4, -S5 stay open. No remediation row while round 98 runs. Slug sent | 1e9bb59614 |
+
+## Addendum, 2026-10-14 01:34Z to 01:38Z (msg 7416)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 187 (~P) | ADJUDICATION_v88 (C-S371), no remediation file: Design-B backfill code built offline; I re-ran IB187-1-AC1 to AC3: all PASS. COT can produce 19/19 activity columns, INF 17/19. 6 dismissed; S152, S155, S156 and the queued rows stay with the issuer. Slug sent | 79b7944ef7 |

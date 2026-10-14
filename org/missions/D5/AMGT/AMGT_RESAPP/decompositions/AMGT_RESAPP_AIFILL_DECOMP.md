@@ -198,3 +198,29 @@ fanout:
 ```
 
 **Uncovered, with owners (not holes):** step 2 (the issuer, above); the page landing (the CTO's approval, then the release seat); the 95-name census and the CVO's five-name read (round 105).
+
+## 11. ADDENDUM 2 -- THE LANDING SCOPE `AIFILLLAND` (round 104), 2026-10-14 ~01:5xZ
+
+Steps 1 to 4 of the never-widen pair are done and read back (the grant live, 95 documents stored, `opal-amgt-scoped-api` redeployed from pin `0447f2df38` and serving `ai_fill` for all 95 names, equal to the stored documents). The CTO ruled that the approved
+page candidate lands "live together with fa-7" as a feature cut from PROD through the portal's flow (call cf85, msg 5333). The gate refuses a new order into an issued key, so the landing is its own scope of round 104: `<workstream>AIFILLLAND</workstream>`
+(`2.0.0_SA_COO~R1` used `LAND` for the same flow).
+
+| id | cell | slot | class | risk | write surface | serves |
+|---|---|---|---|---|---|---|
+| `AMGT-ar-5` | the feature cut: the eleven files of the approved candidate `85d5749f`, re-cut onto PROD `7d5cb34d` (the candidate was cut from `63c4f9e3`), the receipt, the approval row | worker `~429` | worker | LOCAL | `portal/src/pages/SecurityAnalysis/` (a branch, never pushed by the worker), the receipt | FWD-41 page |
+| `AMGT-ar-6` | the promote: `portal-release-build.sh --features <the list>` then `/prod-deploy`, the CI conclusion read, the receipt | `0.4.0_DT_ClientPlatform` | seat order, STAGED | SERVED | the release flow, the receipt | FWD-41 page |
+
+**Edges.** `ar-5` has no unmet dependency. `ar-6` waits on: `ar-5` complete; the issuer's push of `cand/dell1/aifill-blocks-prod` and the CTO's `approved` on its row; the box manager's merge-forward onto DEV (`.tools/portal-merge-forward.sh`). One chain, two seats: N = 2 of M = 1, cap 8.
+
+```
+ar-5 -> ar-6   (push + approved row + merge-forward between them)
+fanout:
+  cap: 8
+  orders_total: 2 (ar-5, ar-6)
+  chains_total: 1
+  wave_pending: [ar-5 ~429]
+  wave_staged: [ar-6 (after ar-5, the push, the approved row and the merge-forward)]
+  portal_ref: 7d5cb34d (portal PROD, read at the cut)
+  no_s3_deletes: true
+  egress: none by either order
+```

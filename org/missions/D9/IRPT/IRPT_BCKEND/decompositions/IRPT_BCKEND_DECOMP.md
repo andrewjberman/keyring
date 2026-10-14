@@ -3768,3 +3768,19 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r187/p187_cells.py`, dry-run at the b
 | `IB-pr-524` | the landed transaction sources of Cottonwood and Inflection read, each shape column mapped, derived or marked absent, per firm; reads only | FWD-3 | SERVED (reads listings and the repository; writes only the worker's records) | none | P187-b |
 
 fanout: 2 of 2 chains, cap 8, reason: two independent chains. Two worker spawns (slots ~370 and ~371).
+
+
+## 180. ROUND 188, WORKSTREAM ~P (2026-10-14 ~02:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round-188 analysis (@f82cf22b5c, msg 7418): Inflection serves with the two gain columns ABSENT; "your list accepted, in order")
+
+Round 187 closed (IB-pr-523 the Design-B code change @0009c27ae2; IB-pr-524 the COT/INF read @8dfd755758; packet @754b9f4570). The CTO's round-188 list has three items. (1) The Design-B census and packet for the 49F function, "the pair proves 0 returns partitions changed": **CUT now** as `IB-pr-525` (a BUILD-only census of `irpt-49f-reporting-gold-lambda` with a returns baseline, the four offline arms on the BUILT zip's bytes, and ONE packet for the two acts the pair signs: the code release and the chunked runs). (2) The IR holdings class rule (row D2-S156): the CTO's order is "the count of holdings that move per firm, then the build from ONE shared definition, then its pair": **CUT now the COUNT** as `IB-pr-526` (read only, per firm, from each firm's served snapshot); the BUILD depends on the count (its premise: what moves and where the shared definition must reach), so it is **NOT cut now: an unmet dependency inside the round; owner me; cut next round.** (3) IB-pr-456 on Andrew's execution ID: **NOT cut now: an unmet dependency (open call `f61b`); it re-censuses against the then-live `irpt-ycharts-generate`; owner me.** NOT cut and not owed here: the Cottonwood and Inflection activity producers (the CTO queued them next).
+
+Two cuts, independent chains: the census reads the live function and S3 listings of one firm; the count reads three firms' served snapshots and code. Neither writes or invokes anything.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r188/p188_cells.py`, dry-run at the base: IB188-1 and IB188-2 AC1, AC2, AC3 all FAIL (no records); positive controls in temp roots the runs created themselves pass all three of each cell, and seventeen negatives each fail their own arm; roots removed. The control's first packet was too short for the check's 4,000-character floor (a control slip, repaired).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-525` | `irpt-49f-reporting-gold-lambda` censused and rebuilt against its CURRENT live with the stage-selection change (one changed member), the four arms on the built bytes, the returns baseline (a digest over the returns prefix's keys and ETags), and the never-widen packet for the release and the chunked runs; builds only | FWD-3 | SERVED (reads the live function and S3 listings; builds only; org/ paths) | IB-pr-523 (merged) | P188-a |
+| `IB-pr-526` | the IR holdings class rule's count: per firm, the served holdings that carry a cash-type sub_asset_class but a class other than cash (the ones the shared rule would move), with their public tickers; reads only | FWD-3 | SERVED (reads served snapshots into memory, counts only out) | none | P188-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two independent chains. Two worker spawns (slots ~372 and ~373).
