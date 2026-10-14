@@ -2161,6 +2161,247 @@
   "disarm_owner": "1.0.0_SA_CTO~DELL1"
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W28-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~28",
+  "surfaced_at": "2026-10-14T21:42:39Z",
+  "one_line": "CN-q-1 commit refused by the LGIC naming limb: the new edge module infra/aws/lambda-edge/auth-validator-edge/mdpf_gate.mjs carries the firm names 49financial, inflection and cottonwood as literals (lines 40-42), refused as hand-kept carriers outside every permitted context; nothing committed on wk-MDPF_CANON-28; the three criteria pass on the uncommitted worktree.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh rc=1 at HEAD 0e60da2afb for infra/aws/lambda-edge/auth-validator-edge/{mdpf_gate.mjs,index.mjs,tests/mdpf_gate.spec.mjs}: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.'",
+      "[naming-gate] NAMING REFUSE mdpf_gate.mjs:40 49financial -> lookup('49financial'); :41 inflection -> lookup('inflection'); :42 cottonwood -> lookup('cottonwood'); NAMING-GATE: REFUSE 3 graded (DENOMINATOR 3 path(s))",
+      "git status after the refusal: index.mjs M (unstaged, 18 insertions), mdpf_gate.mjs and tests/mdpf_gate.spec.mjs untracked, git diff --cached empty",
+      "harness r9_cn_q_1.py on the worktree (uncommitted): handler 14 of 14 arms exit=0; seam 5 of 5 arms exit=0; control 5 of 5 arms exit=0"
+    ]
+  },
+  "spec_asserts": "Order CN-q-1 worker face: step 1 says mdpf_gate.mjs may copy the issuer reference verbatim and imports nothing; the firm map (49financial, inflection, cottonwood, demo to global) is the page's own map and is written as literal strings; section 3 grants write on exactly the three product files. No clause names a naming-gate lookup or a registry row.",
+  "world_is": "The LGIC naming limb (ENFORCE) refuses the three firm-name literals in the new edge module and refuses the commit. The route its message names, lookup(), is the Python naming library, which the import-nothing .mjs edge module cannot call; a registry row or an R20 register entry lies outside the order's paths. The worker did not edit the gate, bypass it, or rename the literals.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Left ARMED by this row: the leak S27 (MDPF_CANON-D1-S27, disarm 1.0.0_SA_CTO~DELL1), which this cell closes once it lands. This row does not change S27's standing."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "CN-i-3 site 2 (trendModelOrderWithNonModel) cannot take the recipe: PROD's line is a call argument with a trailing comma, so the Global Trend is left at the feature text there.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@19494a76 src/pages/ModelPortfolios.tsx trendModelOrderWithNonModel (feature text, unchanged)",
+      "git -C portal show 5ab67a65:src/pages/ModelPortfolios.tsx: line '() => [...trendModelOrder, 'Non-Model'],' (PROD)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_3.py sites -> P1 FAIL: 24 PROD line(s) removed; 16 missing at HEAD (this line among them)"
+    ]
+  },
+  "spec_asserts": "Face recipe: Global takes PROD text, other scopes the feature text; each text on its own lines; ? and : on lines of their own (face section 1). Site 2: Global gets [...trendModelOrder, 'Non-Model'] (PROD line '() => [...trendModelOrder, 'Non-Model'],'), other scopes the feature's list.",
+  "world_is": "The PROD line ends with a comma inside useMemo(...). A conditional whose ? and : sit on their own lines cannot carry that comma without a syntax error, so the site was NOT edited and keeps the feature list at every scope (portal@19494a76 ModelPortfolios.tsx, the useMemo beside 'const trendModelOrderWithNonModel'). Check P1 lists this line missing at HEAD.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-cut the site, or refuse portal 19494a76 as the CN-i-3 candidate until it is re-cut)"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "CN-i-3 site 3 (timeSeriesData memo) cannot take the recipe: PROD's line is a return statement, so Global still gets the custom-model grouping.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@19494a76 src/pages/ModelPortfolios.tsx timeSeriesData useMemo (feature text, unchanged)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_3.py sites -> P1 missing list includes the PROD return line"
+    ]
+  },
+  "spec_asserts": "Face recipe: Global takes PROD text, other scopes the feature text; each text on its own lines; ? and : on lines of their own (face section 1). Site 3: Global gets rollBlendsIntoArchetypeSeries(timeSeriesDataRaw.by_model) alone; other scopes keep groupCustomModelsSeries(rolled, new Set(MODEL_ORDER)).",
+  "world_is": "The PROD line 'return { ...timeSeriesDataRaw, by_model: rollBlendsIntoArchetypeSeries(timeSeriesDataRaw.by_model) }' starts with the return keyword, which cannot sit inside a ? : expression on its own line. The site was NOT edited (portal@19494a76, the timeSeriesData useMemo); Global still runs groupCustomModelsSeries there. Check P1 lists the line missing.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-cut the site, or refuse portal 19494a76 as the CN-i-3 candidate until it is re-cut)"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "CN-i-3 site 4 (tooltip buckets) cannot take the recipe: PROD's line is a const declaration, so Global still runs presentTrendEntries in the tooltip.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@19494a76 src/pages/ModelPortfolios.tsx renderTrendTooltip 'const buckets = presentTrendEntries(...)' (feature text, unchanged)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_3.py sites -> P1 missing list includes 'const buckets = payload.filter(...)'"
+    ]
+  },
+  "spec_asserts": "Face recipe: Global takes PROD text, other scopes the feature text; each text on its own lines; ? and : on lines of their own (face section 1). Site 4: Global gets payload.filter((entry) => entry.dataKey !== 'interp_total'); other scopes keep presentTrendEntries(...).",
+  "world_is": "The PROD line is 'const buckets = payload.filter(...)'. The declaration keyword and name cannot be placed inside a ? : branch on their own lines, and a block form is not the recipe. The site was NOT edited (portal@19494a76, renderTrendTooltip). Check P1 lists the line missing.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-cut the site, or refuse portal 19494a76 as the CN-i-3 candidate until it is re-cut)"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "CN-i-3 site 8 (quarterly bars and daily area data points) cannot take the recipe: PROD and feature lines are assignment statements, so Global keeps the feature's data points.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@19494a76 src/pages/ModelPortfolios.tsx bar and area data-point blocks (feature text, unchanged)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_3.py sites -> P1 missing list includes the PROD assignment lines and their comments"
+    ]
+  },
+  "spec_asserts": "Face recipe: Global takes PROD text, other scopes the feature text; each text on its own lines; ? and : on lines of their own (face section 1). Site 8: Global gets PROD's nmKey, sma_additive and Client data-point assignments (the 'dataPoint[nmKey] =' and 'dataPoint['sma_additive'] = addPt?.smaAdditiveAua ?? null' lines, plus their PROD comments); other scopes keep the feature's.",
+  "world_is": "Each PROD and feature line is a full assignment statement ('dataPoint[...] = ...'), and the feature's line is also a whole statement. No ? : expression on its own lines carries both, so both data-point sites (bars and area) were NOT edited. Global keeps the feature's Other AUA, ETF and Client values there. Check P1 lists 6 such lines missing (the two comment pairs and the four assignment lines).",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-cut the site, or refuse portal 19494a76 as the CN-i-3 candidate until it is re-cut)"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S5",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "CN-i-3 site 10 (bar fill) cannot take the recipe: PROD's line is a JSX attribute, so Global keeps the feature colour on the bars.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@19494a76 src/pages/ModelPortfolios.tsx Bar fill (feature text, unchanged)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_3.py sites -> P1 missing list includes 'fill={modelColor?.primary || PALETTE.gray300}'"
+    ]
+  },
+  "spec_asserts": "Face recipe: Global takes PROD text, other scopes the feature text; each text on its own lines; ? and : on lines of their own (face section 1). Site 10: Global gets fill={modelColor?.primary || PALETTE.gray300}; other scopes keep the feature's fill.",
+  "world_is": "The PROD line 'fill={modelColor?.primary || PALETTE.gray300}' is a whole JSX attribute. Placing it inside a ? : branch would drop the fill= prefix; keeping the prefix would duplicate the whole Bar element, which is not the recipe. The site was NOT edited (portal@19494a76, the bar mount inside trendStackSeries.map). Check P1 lists the line missing.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-cut the site, or refuse portal 19494a76 as the CN-i-3 candidate until it is re-cut)"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S6",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "The feature changed two Area colour statements the face's site list does not name; the recipe cannot carry them, so Global keeps the feature colour on the area chart.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal show 5ab67a65:src/pages/ModelPortfolios.tsx: 'const color = getModelColor(s.label)?.primary || PALETTE.blue400' and '... || PALETTE.gray300'",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_3.py sites -> P1 missing list includes both const color lines"
+    ]
+  },
+  "spec_asserts": "Face recipe: Global takes PROD text, other scopes the feature text; each text on its own lines; ? and : on lines of their own (face section 1). The face names ten sites; the area chart's two 'const color = ...' statements (the gradient colour and the Area colour, PROD 'getModelColor(s.label)?.primary || PALETTE.blue400' and '... || PALETTE.gray300') are the same colour change as site 10 but are not in the list.",
+  "world_is": "Both PROD colour statements are whole 'const color = ...' lines, the same shape as site 2 and 4, so the recipe cannot place them. They were NOT edited; check P1 lists both missing. Flagged here because the face's site list omits them.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-cut the site, or refuse portal 19494a76 as the CN-i-3 candidate until it is re-cut)"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S7",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "The issuer's check P1 requires two PROD lines that the face's keep-list says to leave as the feature wrote them (the [scopeAumMetrics] dependency and the CategoryViewTree import), so AC1 cannot pass while the keep-list holds.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@19494a76 src/pages/ModelPortfolios.tsx: '}, [scopeAumMetrics, dataAsOf])' and 'import { CategoryViewTree, l1ColorOf }'",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_3.py sites -> P1 missing list includes '}, [scopeAumMetrics])' and the PROD CategoryViewTree import"
+    ]
+  },
+  "spec_asserts": "Face section 1: 'Leave every OTHER hunk of the diff alone: the imports for carriedAsOf/asOfLabel, ... the [scopeAumMetrics, dataAsOf] dependency'. Check P1: every PROD line the feature removed is present at HEAD.",
+  "world_is": "PROD's '}, [scopeAumMetrics])' and 'import { CategoryViewTree } from '@/components/CategoryViewTree'' are removed hunks that the keep-list leaves in the feature's form (the dependency gains dataAsOf; the import gains l1ColorOf, which the feature's trendColorOf needs). P1 therefore reads these two lines missing with no Trend text left to restore. Both were kept, as the face says.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S8",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "The worker's worktree carries the pre-amendment CN-i-2 order (issued_to ~24, status complete); the re-cut order (issued_to ~25, status pending) is commit dafba4dbf3 and is not in this branch.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 1f6fa7e8b6:org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-i-2.aua-trend-repair-colour-tooltip-note.md (issued_to ~24, status complete)",
+      "git show dafba4dbf3:org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-i-2.aua-trend-repair-colour-tooltip-note.md (issued_to ~25, status pending)"
+    ]
+  },
+  "spec_asserts": "The face is the re-cut order for ~25 at the path MDPF_CANON.TO-CN-i-2.aua-trend-repair-colour-tooltip-note.md, status pending until AC1 and AC2 pass.",
+  "world_is": "At the worker's outer HEAD 1f6fa7e8b6 the order file reads '<issued_to>0.9.0_WK_MDPF_CANON~24' and '<status>complete</status>'. 'git merge-base --is-ancestor dafba4dbf3 HEAD' is not an ancestor, and dafba4dbf3:<same path> reads issued_to ~25, owned cells CN-i-2 and CN-i-3, status pending. The worker used the face, and did not edit or flip the file (AC1 fails, so no flip). A 'complete' status on an open order would read as terminal to the L10 gate.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-issue the order from the amended path or merge dafba4dbf3 into the worker branch)"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S9",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "Two portal-route conflicts: the face's commit route (bare git -C commit) and branch name (wk-MDPF_CANON-25-portal) differ from the standing worker rule (safe-commit) and portal/CONTRIBUTING-BOXES.md (cand/<box>/<slug>).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@19494a76 (LOCAL on wk-MDPF_CANON-25-portal; author 0.9.0_WK_MDPF_CANON~25)",
+      "portal/CONTRIBUTING-BOXES.md rules 1 and 4 (cand/<box>/<slug>, open-calls.py add)"
+    ]
+  },
+  "spec_asserts": "Standing worker rule: every commit via .tools/safe-commit.sh. portal/CONTRIBUTING-BOXES.md: a portal feature is on cand/<box>/<slug>, cut from the last PROD release, registered with open-calls.py.",
+  "world_is": "Face section 5.1 names 'git -C <portal> commit'; the portal commit 19494a76 was made that way (bare git, not safe-commit), and the branch is wk-MDPF_CANON-25-portal (a worker branch, cut from PROD plus the three feature commits). Nothing was pushed and nothing was registered. The issuer owns the approval register and the cand/ name.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
 ```json
 {
   "id": "MDPF_CANON-D1-W27-S1",
@@ -2228,5 +2469,103 @@
   },
   "disposition": "UNDER_INVESTIGATION",
   "notes": "The V2 arm passes on the built page, so the reading matches the issuer's check."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W26-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~26",
+  "surfaced_at": "2026-10-14T21:43:21Z",
+  "one_line": "CN-p-1 step 4 names a seven-line comment above the Muni tuple in SMA_MEMBERS; the comment at HEAD is eight lines. All eight were removed with the tuple and the one specified comment line was put in their place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-p-1 step 4: delete the muni tuple and its seven-line comment above it; put ONE comment line in their place.",
+  "world_is": "data/mdpf/scripts/gold/mdpf_category_registry.py@a9ebbe661e carries the muni comment on lines 349-356 (eight lines) above the tuple on line 357. The edit removed lines 349-357 and inserted the single specified line: 1446 to 1438 lines, CRLF kept, no other line touched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/mdpf/scripts/gold/mdpf_category_registry.py@a9ebbe661e lines 349-357 read before the edit",
+      "post-edit read: 1438 of 1438 lines CRLF; grep shows the single new muni comment line at 349"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A count mismatch only; the action matches the order's stated intent."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W26-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~26",
+  "surfaced_at": "2026-10-14T21:43:21Z",
+  "one_line": "A failed SMArtX read does not stop at the loader: build_all wraps the loader in _isolated, which turns the C2-SIBLING raise into None, and the or-fallback then builds Global with empty legs. The run goes non-green, but the order's never-an-absence rule is not enforced at the call site.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1",
+  "spec_asserts": "TO CN-p-1 step 2: load_smartx_sma_legs: a denied or failed read is never an absence -- RuntimeError whose message STARTS C2-SIBLING FAIL-LOUD:. TO step 3: the loader is called through _isolated('global', ...) or ({}, None).",
+  "world_is": "data/mdpf/scripts/gold/mdpf_gold_consolidator.py@a9ebbe661e (worktree edit, uncommitted): _isolated (about lines 2897-2909) catches the RuntimeError, records manifest errors['global'], logs SCOPE FAILED and returns None. The or-fallback then applies empty legs, so every pre-2026-05-18 trend group is None for that run. The manifest is non-green (ok = not manifest errors, about line 3366). NOT READ: whether the Global object is still published on a non-green run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/mdpf/scripts/gold/mdpf_gold_consolidator.py _isolated definition, read in the worktree (about lines 2897-2909)",
+      "data/mdpf/scripts/gold/mdpf_gold_consolidator.py build_all wiring, read in the worktree (lines 3059-3061)",
+      "data/mdpf/scripts/gold/mdpf_gold_consolidator.py manifest ok line, read in the worktree (about line 3366)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Armed on the code's own scheduled path once deployed (CloudOps's deploy, not this order). Routed to the issuer, which owns the cell and the wiring decision."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W26-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~26",
+  "surfaced_at": "2026-10-14T21:43:21Z",
+  "one_line": "Two comment lines in mdpf_category_registry.py still name muni after the Muni tuple is removed, including a denominator comment (3 of 6 determined). The order says not to touch any other line, so both are left as they are.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-p-1 step 4: do not touch SMA_BASIS_VERIFIED, the crosswalk or any other line of the registry.",
+  "world_is": "data/mdpf/scripts/gold/mdpf_category_registry.py@a9ebbe661e after the edit: line 356 ('ground as muni ...') and line 364 ('# 3 of 6 determined, 3 UNVERIFIED (muni/idvz/pfde) ...') still name muni; the SMA_MEMBERS count is now 5.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "grep of the registry for muni in the worktree, after the edit: lines 349, 356, 364",
+      "SMA_MEMBERS members after the edit read by the issuer's P5 arm: divz, idvz, pfde, pfoe, tax"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Stale comments only; no code path reads them. Left for the owner of the registry comments."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W26-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~26",
+  "surfaced_at": "2026-10-14T22:05:41Z",
+  "one_line": "TO CN-p-1 says the touched files are CRLF; at HEAD three of the four are LF (0 CRLF lines). Each file was edited with the endings it has, so the diff is not a line-ending rewrite.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-p-1 section 1 (code, preamble) and steps 4 and 5: the files mdpf_gold_consolidator.py, mdpf_category_registry.py and test_stratid_round2_inside_model.py are CRLF; keep their line endings.",
+  "world_is": "At 92ecb84add: data/mdpf/scripts/gold/mdpf_gold_consolidator.py 0 of 3476 lines CRLF; data/mdpf/scripts/gold/mdpf_category_registry.py 0 of 1438 CRLF; data/mdpf/tests/stratid/test_stratid_round2_inside_model.py 0 of 136 CRLF; data/mdpf/tests/canon/test_global_trend_groups.py 153 of 153 CRLF (the file this order creates, from the first pass).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "byte count of CRLF pairs and newlines per file, read in the worktree at 92ecb84add before the edit (python, open(...,'rb'))",
+      "post-edit byte count: consolidator wiring block edited with the Edit tool, no line-ending change; test (f) appended to the CRLF test file with CRLF endings (218 of 218 lines CRLF)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A premise mismatch only; no code path reads line endings. Kept as found."
 }
 ```

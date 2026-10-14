@@ -15346,3 +15346,274 @@ name the one known failure instead of silently inheriting it.
     "notes": "INERT: a read-back print with no removal or gate effect. The calendar's absence on the host degrades to the reported absent reason, as the modules already do."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W90-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~90",
+    "surfaced_at": "2026-10-14T21:19:14Z",
+    "one_line": "The OG-gt-10 cell cites row NFRA_OPLGTW-Z-W90-S1 as the finding of the portal parents[5] defect; no such row exists in this channel, and the defect's finding row is NFRA_OPLGTW-Z-W87-S1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CHANNEL: org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md @5ded7131ea -- a Grep for 'Z-W90-S' and 'W90' returns no match before this row; the parents[5] finding is row NFRA_OPLGTW-Z-W87-S1 (the ISSUER NOTES of the cell also say 'Found by the worker of OG-gt-8 (row Z-W87-S1)')",
+        "CODE: infra/aws/ec2/opal-gateway/app/portal_models.py:39 and app/portal_macro.py:55 @5ded7131ea -- both lines parents[5], IndexError on the host path; re-measured by the AC2 base run of this worker at 5ded7131ea: 2 of 69 file(s) scanned"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The OG-gt-10 cell says the defect was found by the worker of OG-gt-10 and cites row NFRA_OPLGTW-Z-W90-S1 for it.",
+    "world_is": "No row NFRA_OPLGTW-Z-W90-S1 exists before this one, so the citation resolves to nothing. The defect is the same one that row NFRA_OPLGTW-Z-W87-S1 (ARMED, disarm_owner 2.0.0_SA_COO~O) records. Commit 4cbbf2f64a removes both parents[5] lines in the two modules, so that ARMED hazard is disarmed in this worktree. The W87 row is not edited here; the disarm record stays with its disarm_owner.",
+    "notes": "INERT: the defect is removed by 4cbbf2f64a in this worktree. The citation mismatch is a cite-only premise difference; the cell's criteria do not depend on it."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W90-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~90",
+    "surfaced_at": "2026-10-14T21:19:14Z",
+    "one_line": "On this worker's interpreter the staged lib/trading_calendar.py answers from its hardcoded NYSE fallback, because pandas_market_calendars is absent, and the fallback table is flagged for regeneration before 2028.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: timeout 120 bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/gt10.AC1.sh at 4cbbf2f64a (C:/tmp/wk-oplgtw-90, Python 3.14.7) -- output line 1: 'WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027; regenerate with lib/tests/gen_nyse_closures.py --write before 2028)'; the same run printed 'calendar importable yes; T-1 computable yes' and RESULT: PASS",
+        "NOT MEASURED: the host's interpreter and whether it carries pandas_market_calendars; this row records the worker's interpreter only"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The OG-gt-10 cell asserts the modules find the staged calendar and compute T-1 from lib/trading_calendar.py, with no note on which calendar source answers.",
+    "world_is": "The staged calendar on this interpreter answers from the hardcoded fallback table, not from the market-calendar package, and the module's own warning says that table must be regenerated before 2028. The module's answers are still a date, so the AC passes.",
+    "notes": "INERT: no behaviour of the two portal modules changes; the warning is the trading_calendar module's own. Filed so the host's calendar source is measured before any release relies on it. Nothing was edited for this row."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S127",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZW",
+    "surfaced_at": "2026-10-14T21:38:13Z",
+    "one_line": "OG-sa-1 step 1 cannot be read as written: at the runner's pin the sa publisher is a browser-TAB publisher whose account id comes from the profile's own user_id cookie, the pin's sa profile did not exist and holds no Seeking Alpha login, so check() raised NotAuthorized before any account request -- there is NO http_status to record, and registering sa from this pin would start from that same empty profile.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-3d88eccbc3/lib/opal_data_harvest/publishers.py lines 372-382 (transport 'tab': TabSession on a persistent profile; for sa the account id is the profile's user_id cookie, 'None -> check raises') and lines 393-394 (the bundle seed comes AFTER that cookie read)",
+        "C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-3d88eccbc3/lib/opal_data_harvest/tab_transport.py lines 38-50 (default_profile_root follows the CHECKOUT the code runs from, i.e. the pin worktree, which is the live task's WorkingDirectory) and lines 89-103 (the persistent Chrome launch and the origin page load)",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZW/sa1_probe_result.json -- class unauthorized_account, exception NotAuthorized, http_status null, requests_made 0, sign_in_calls 0, refresh_calls 0, token_source secrets:seeking-alpha/session (secrets_session 2026-09-11T02:13:39Z), read_at 2026-10-14T21:32:40Z",
+        "PowerShell CreationTimeUtc of C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-3d88eccbc3/.runtime/opal-data-harvest/browser-profiles/*: barrons 12:30:02Z, bbg 00:11:45Z, wsj 12:20:24Z, sa 21:32:02Z -- the sa directory is the only one created by the probe, the others belong to runner cycles",
+        "the live task's registration as read at 2026-10-14T21:1xZ: STATE Running, --publishers bbg wsj barrons --refresh-once, WorkingDirectory C:\\Users\\Opal Bloomberg\\Desktop\\wk-harvest-runner-pin-3d88eccbc3"
+      ]
+    },
+    "spec_asserts": "NFRA_OPLGTW.TO-OG-sa-1 section 1 step 1: 'Read the access the way the harvester's own SA capture does it (the same account and entry point; read-only, one request, no capture)' and write SA1_ACCESS.json with an http_status N; 'A 2xx is ACCESS_HOLDS; anything else is ACCESS_REFUSED'. Step 2 then treats a refusal as 'the renewal is Andrew's act'. The order's picture is a vendor account that answers with a status.",
+    "world_is": "Measured on site Z 2026-10-14T21:32Z. (1) At the runner's pin 3d88eccbc3 the sa publisher is NOT a token-over-HTTP client: publishers.py routes it through a TabSession (a headed persistent Chrome profile) and takes the account id from that profile's own user_id cookie; with no such cookie the id is None and check() raises NotAuthorized. (2) The profile root follows the checkout, so for the live task (WorkingDirectory = the pin worktree) it is the pin's own .runtime/opal-data-harvest/browser-profiles. Its sa directory DID NOT EXIST until this seat's probe created it at 21:32:02Z; it holds a fresh Chrome profile (264 files) with no Seeking Alpha cookie. (3) So the one read this seat could make returned NotAuthorized with requests_made 0: Seeking Alpha was never asked, and no HTTP status exists. Writing ACCESS_REFUSED would state a refusal the vendor never gave and would route the order to 'the renewal is Andrew's'; writing ACCESS_HOLDS would be false. Neither SA1_ACCESS.json nor SA1_PROOF.json was written. (4) The same fact bears on step 3 itself: re-registering the runner with sa from this pin starts it on this empty sa profile, so its first sa job would reach check() with no account id. Whether a job seeds the profile from the stored bundle first was not established: the id is read at line 380-382 before the seed at 393-394, and this seat ran no job. (5) The runner is untouched (Running, publishers bbg wsj barrons), no ledger was opened, no sentinel exists, nothing was written to a bucket.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "THE ASK FOR THE ISSUER, one decision: how is step 1 to be read? (a) through the profile the runner will actually use -- which is empty, so the read needs a Seeking Alpha sign-in inside that profile first, and no sign-in is in this order; or (b) one request through a profile that already holds a login (the main tree has browser-profiles/sa, last modified 2026-10-12 08:00, NOT read by this seat; selecting it is the OPAL_HARVEST_PROFILE_ROOT environment variable, which this seat did not set) -- a second vendor read beyond the order's bound, so it needs the issuer's word. This seat takes neither without it. ALSO FOR THE ROUND: Z-W85-S2 recorded sa check() hard-coding an account id; at this pin the id is the cookie's, so the HVST-ac-2 probe that read 200 'authorized: true' (ADJUDICATION_v40, with a saved-session token) may have used a different path than the tab publisher the runner would run from this pin -- whether that 200 carries to this path was not established here. See row Z-S128 for what this seat's own probe did beyond the one request."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S128",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZW",
+    "surfaced_at": "2026-10-14T21:38:13Z",
+    "one_line": "This seat's access probe went past OG-sa-1's 'one request': building the sa publisher session launches headed Chrome and loads the Seeking Alpha origin, so the probe made THREE origin page loads (two --dry runs, one real) that its request counter could not see, read the stored sa session twice, and created the pin's sa browser profile.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-3d88eccbc3/lib/opal_data_harvest/tab_transport.py lines 89-103: TabSession.__init__ calls launch_persistent_context(... headless=False) and page.goto(origin) at construction",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZW/sa1_access_probe.py -- the probe; its CappedInner wraps the inner session's get() only, and its --dry flag returns AFTER the publisher session is built",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZW/sa1_dry_runner.json, sa1_dry_main.json, sa1_probe_result.json -- the three runs: two dry (runner runtime root, main-tree runtime root), one real (runner root); all report requests_made 0",
+        "PowerShell at 21:3xZ: 0 chrome processes left; the sa profile directory created 21:32:02Z, last written 21:32:42Z, 264 files"
+      ]
+    },
+    "spec_asserts": "NFRA_OPLGTW.TO-OG-sa-1 section 2 BOUNDS: 'a second vendor read beyond step 1's one request' is a Never; 'No object is written to or deleted from any bucket by you'; the preflight declares step 1 as 'read-only, one request, no capture'. This seat's probe was written to that bound and counted its requests in code (cap 1).",
+    "world_is": "The probe's counter read 0 requests in all three runs, which was true of the instrument and not of the world. For a tab publisher the session build itself launches headed Chrome on the persistent profile and navigates to the vendor origin; that happens inside the constructor, before the wrapped get() exists, and the --dry flag only skipped the account read after the build. So between 21:32:02Z and 21:32:42Z the seat caused three Chrome launches and three loads of the Seeking Alpha origin (a page load, not the account endpoint, no sign-in, no capture, no article fetch). It also resolved the stored sa session in memory three times (Secrets Manager seeking-alpha/session each time; the main tree's sa.dpapi once, in the second dry run), never printing or writing a value, and it created the pin worktree's browser-profiles/sa directory. No sign-in, no refresh, no bucket write, no change to the task or to any other profile; 0 Chrome processes remain. The runner is unaffected: it was on bbg and its bbg profile was last written 21:32:55Z by its own cycle.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Filed so the bound is not silently crossed. HOW IT HAPPENED: the two dry runs went out in ONE command, and the real run in the next, after reading the dry output -- which printed requests_made 0 and gave no sign a browser had been launched, because this seat had not read TabSession's constructor. The first sign was the real run's NotAuthorized, and this seat made no fourth contact after it. NOT DONE: the new sa profile directory was not deleted (it is the profile the runner would use from this pin, deleting it is not this order's change, and the 264 files are a stock Chrome profile). THE LESSON, for any later probe of a tab publisher: read the constructor before trusting a counter that wraps only get()."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W88-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~88",
+    "surfaced_at": "2026-10-14T21:02:46Z",
+    "one_line": "The task order's premise that the gold article_sentiment read is the cost is refuted: the sentiment dataset is 5 parts in one date partition, 2.1 MB; the silver join is 38.2 of the 42.3 s of the no-window call.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-OG-gt-9 section 1, 'The defect': 'The earlier CTO reading was that the gold article_sentiment join scans one ~110 MB partition; the numbers above say the silver join may cost as much. Profile first, then fix what dominates.' Step 3: 'read only the silver partitions of the page's own articles'.",
+    "world_is": "Measured read only on opal-data-harvest with box credentials: article_sentiment holds 5 parts, 2,096,262 bytes, all in date=2026-10-03 (13,235 rows), 0.7 s wall on the no-window call. The silver join reads 849 parts, 172,503,185 bytes, 38.2 s wall. The base already reads only the page's silver partitions; the cost is the part count inside them (no manifest or index exists; one sa partition holds 1,086 parts).",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: profile of harvest_search_articles(ASML, limit=5) and a 7-day window on opal-data-harvest, read only, from C:/tmp/wk-oplgtw-88 at base ae365fc589; per-stage seconds and bytes by prefix (scratch profile, not committed)",
+        "CODE: infra/aws/ec2/opal-gateway/app/harvest_press.py@ae365fc589 -- _silver_join groups the page's (publisher, fetched day) partitions only and reads every part of each"
+      ]
+    },
+    "notes": "The sentiment pruning is still implemented (its premise measured clean, see S4). The no-window silver cost is what the one-hour cut removes part of (S2, S3)."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W88-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~88",
+    "surfaced_at": "2026-10-14T21:02:46Z",
+    "one_line": "Silver parts are pruned by their name stamp against a measured lateness bound: the bound holds on every sampled row (under one second), but it is a measurement of this bucket, not a guarantee, and a part whose records lag its stamp by more than the one-hour margin would drop a record from the answer without an error.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "spec_asserts": "TO-OG-gt-9 step 2: 'Measure that premise on the real bucket before relying on it ... widen the cut by the measured slack and say so'. Step 3: 'Keep the answer's content identical for the same inputs.'",
+    "world_is": "The silver part stamp (part-YYYYMMDDTHHMMSSZ) is not a bound on fetched_at as stated, but every violation is small: 1,050 of 9,356 rows on the no-window partitions (844 of 849 parts) and 351 of 6,897 rows on the 7-day partitions (145 of 145 parts) carry a fetched_at after their stamp, and the latest lag was 0.999789 s and 0.993040 s. The module skips a part when its stamp plus a one-hour margin is before its partition's earliest page fetch: 156 of 849 parts on the no-window call and 79 of 145 on the 7-day call. The three sampled calls returned answers identical to the unpruned read (articles compared field by field).",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: per-part stamp against the max fetched_at of its rows over every part of the no-window and 7-day page partitions, read only, box credentials, from C:/tmp/wk-oplgtw-88 at base ae365fc589 (scratch measurement, not committed)",
+        "CODE: infra/aws/ec2/opal-gateway/app/harvest_press.py -- SILVER_LATENESS, _stamp, _prunable and the fallback in _silver_join (this commit)"
+      ]
+    },
+    "notes": "HAZARD, not measured to fire: if a future writer stamps a part earlier than its records' fetch by more than SILVER_LATENESS, the pruned read misses those records with no error. Disarm options for the issuer: (a) measure the lateness over every silver partition and widen SILVER_LATENESS to the observed maximum with margin; (b) drop the silver prune (PRUNE = False) and accept the 42-47 s no-window call. The sentiment prune is a separate premise (0 violations) and is not ARMED."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W88-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~88",
+    "surfaced_at": "2026-10-14T21:02:46Z",
+    "one_line": "The no-window call answers in 38.1 s against the 40 s bar after the silver prune, on a 1.9 s margin; the stated method (reading less, identical answers) has no further lever in the module.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-OG-gt-9 section 4 AC2: 'on the real bucket both calls answer under 40 s'. Section 1 step 3: 'Reduce whatever else dominates the profile by reading less, not by caching across calls'.",
+    "world_is": "No-window seconds: 42.3 before (profile run), 47.5 before (dump run); 38.1 after (AC2 run) and 39.5 after (dump run). Silver parts read 693 of 849. The residual is 693 single-object GETs of about 0.2 MB at about 0.44 s each through a 10-thread pool (PART_THREADS, which the module comment ties to the boto3 connection-pool default). A further cut needs a partition index or more concurrency; neither is reading less with identical answers.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: AC2 check gt9.AC2.sh and the dump runs, read only, from C:/tmp/wk-oplgtw-88 at base ae365fc589 and the working tree of this commit"
+      ]
+    },
+    "notes": "Margin measured over two after-runs and one AC2 run only; a further run may land nearer 40 s. PART_THREADS was not changed: that is outside the stated method."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W88-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~88",
+    "surfaced_at": "2026-10-14T21:02:46Z",
+    "one_line": "The article_sentiment partition pruning removes nothing on this bucket: the dataset is one date partition (2026-10-03), so both calls read 1 of 1 sentiment partitions.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-OG-gt-9 step 2: 'read only article_sentiment partitions dated on or after the earliest fetched_at UTC day among the page's rows'. AC3: the denominator carries sentiment_partitions_read of sentiment_partitions_total.",
+    "world_is": "article_sentiment holds 5 parts, all in date=2026-10-03. The page's earliest fetch day is on or before 2026-10-03 on both sampled calls, so the cut keeps that one partition. The premise measured clean: 0 sentiment rows dated before their article's fetch day in 13,195 rows, so the slack is 0 days.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: every article_sentiment part read whole and each row compared to its article's fetched day from the newest article_security_mention part, read only, from C:/tmp/wk-oplgtw-88 at base ae365fc589 (scratch measurement)"
+      ]
+    },
+    "notes": "The pruning is implemented and tested offline (test_oggt9_ac01..ac03); on this bucket it has nothing to cut yet, and it will when the dataset gains dated partitions."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W88-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~88",
+    "surfaced_at": "2026-10-14T21:02:46Z",
+    "one_line": "BLOCKING for the final step only: the task order's <status> flip to complete is in the task-order file, which is outside this order's <paths>, so this worker did not make it.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-OG-gt-9 section 5: 'flip the ONE <status> tag to complete only if both PASS, and report once'. Section 3 <paths> lists three files: harvest_press.py, tests/test_og_gt9.py and the investigation file.",
+    "world_is": "Both criteria PASS at the commit of this instance (AC1 3 of 3 named tests; AC2 38.1 s and 10.9 s). The flip edits org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-gt-9.search-window-pruning.md, which is not in my write grant, so it is not made.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-gt-9.search-window-pruning.md section 3 <paths> (three entries, the task-order file not among them)"
+      ]
+    },
+    "notes": "BLOCKING for the final flip only. The code, the tests and the proof instance are complete and valid. The issuer flips the tag, or the CTO grants the path."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W88-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~88",
+    "surfaced_at": "2026-10-14T21:38:34Z",
+    "one_line": "The no-window call measured 48.4 s in this pass, outside the 38-42.5 s range the A1 amendment gives for the pruned call; it still answers under the amended 50 s bound, on a 1.6 s margin.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-OG-gt-9 A1 amendment, commit 43f3b5309f (issuer record face): 'the no-window bound is 50 s -- the silver join is the cost and the pruned call measures 38-42.5 s on this box's link'. Worker face section 4, AC2: the no-window call answers under 50 s.",
+    "world_is": "AC2 re-run at HEAD 8bff3d7c9f, whose code bytes equal 661838f224: 'search ASML: no window 5 article(s) in 48.4 s (want < 50); 7d ending at the newest (2026-10-05) 2 article(s), 1 with a sentiment label, in 16.5 s (want < 40); denominator names partitions read True; envelope whole True'. Earlier after-runs of the same code measured 38.1 s, 39.5 s and 39.4 s (see S3). The spread across runs on this box's link is about 10 s.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: gt9.AC2.sh invoked from the worktree root C:/tmp/wk-oplgtw-88 at HEAD 8bff3d7c9f, read only, box credentials; the output line is quoted in world_is"
+      ]
+    },
+    "notes": "AC2 passes under the amended 50 s bound, so no code change was made. The 38-42.5 s premise in the amendment does not hold for every run on this link; keeping or revisiting the bound is the issuer's call. Relates to S3 (INERT)."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S129",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZW",
+    "surfaced_at": "2026-10-14T21:56:31Z",
+    "one_line": "OG-sa-1 step 1 (as amended A1) reads ACCESS_REFUSED on the RUNNER-PROFILE half only: the Seeking Alpha account answers HTTP 200 authorizedUser with 1 subscription (it is active, not at 402), but the runner's own sa profile holds no login, so a sign-in -- a person act -- stands between the account and the capture.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZW/sa1_access_read.json -- account_requests 1, http_status 200, data_type authorizedUser, subscription_items 1, profile_has_user_id true (main tree), read_at 2026-10-14T21:54:01Z; chrome_launches 1 and origin_page_loads 1 are the session's own construction and are counted",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZW/SA1_ACCESS.json and SA1_PROOF.json -- outcome ACCESS_REFUSED, runner_profile_login false, branch refused, runner_changed false",
+        "runner profile read by sqlite cookie NAMES only, mode=ro immutable=1, on C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-3d88eccbc3/.runtime/opal-data-harvest/browser-profiles/sa/Default/Network/Cookies: 0 user_id cookies of 3 seekingalpha.com cookies (no value read)",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZW/sa1_AC1.out and sa1_AC2.out -- both RESULT: PASS at 2026-10-14T21:55Z"
+      ]
+    },
+    "spec_asserts": "NFRA_OPLGTW.TO-OG-sa-1 as amended A1 (msg 34234, @13f6bb6c7f): ACCESS_HOLDS needs BOTH a 2xx from the account read AND the runner's own SA profile carrying a login; anything else is ACCESS_REFUSED with the reason naming the failed half; the sign-in is 'a person act, not yours'. Row AMGT_HARVST-Z-W37-S4 had recorded an HTTP 402 (renewal pending at the account holder).",
+    "world_is": "Measured on site Z 2026-10-14T21:54Z. (1) The account half HOLDS: one request through the main tree's browser-profiles/sa returned HTTP 200, data.type authorizedUser, 1 subscription item. There is no 402 now, so the account is active and a renewal is not what stands in the way; the 402 of Z-W37-S4 is superseded by this read (it was already GRADUATED at ADJUDICATION_v40). (2) The runner half FAILS: the runner's own sa profile, <pin>/.runtime/opal-data-harvest/browser-profiles/sa, holds 3 anonymous seekingalpha.com cookies and no user_id cookie, so its tab has no account to authenticate as. (3) Outcome ACCESS_REFUSED, branch refused: the runner was left Running with publishers bbg wsj barrons, no ledger, no sentinel, nothing written to a bucket, nothing copied from the main tree's profile into the runner's. (4) The remedy the order names is a person act, a Seeking Alpha sign-in inside the runner's profile, routed by the issuer to the CTO. Whether a first sa job would instead seed that profile from the stored session bundle was not established (row Z-S127 item 4) and this seat ran no job to find out.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "FOR THE ISSUER: the order is complete on branch 'refused' (AC1 and AC2 PASS). The open act is the sign-in in the runner's sa profile; once someone has done it, step 1 is re-read (profile half only, no vendor request needed: cookie names suffice) and, if it then reads HOLDS, steps 3-5 follow under the same order or a re-cut. Not done by this seat: no sign-in, no seeding, no copy between profiles, no change to the task."
+  }
+  ```

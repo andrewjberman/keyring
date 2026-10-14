@@ -20,6 +20,10 @@ EGRESS CLASS, declared: none.
 **Your worktree:** the spawn names it (outer branch `wk-MDPF_CANON-27`, cut from the issuance commit). The portal is a NESTED repository at `<worktree>/portal`, provisioned on its own branch `wk-MDPF_CANON-27-portal` cut from `scratch/canon-i3-base` (`f8c7d310`: current portal PROD `5ab67a65` plus the three feature commits CN-i-1, CN-l-2, CN-i-2: the lime Client Unsupervised, the Other Models "as of", the 49 Financial view, and the grouped Trend this order replaces at Global). `node_modules` is linked. Start every shell call with `cd` into the outer worktree path.
 **Line endings: `src/pages/ModelPortfolios.tsx`, `src/lib/trendGrouping.ts` and `src/api/portal-proxy.ts` are CRLF in EVERY line. Keep it.** A multi-line text you insert must end each line with CRLF (after your edits run `git -C "<worktree>/portal" diff --stat` and check that no line is LF-only; the check W8 refuses a mixed file).
 
+## 0. AMENDMENT 1 -- READ THIS FIRST (you inherit built work)
+
+Your first pass is committed on the branches you were seated on: portal `wk-MDPF_CANON-27-portal` @0d83ee04 and outer `wk-MDPF_CANON-27` (the merged trunk is in it). Items 1 to 12 below are BUILT and stay as they are: do not redo them, do not re-run an edit that already stands. ONE thing changes, from your own row MDPF_CANON-D1-W27-S2: the composition footnote of item 11 is unscoped, so it also renders on an internal session's per-firm views (49 Financial, Inflection, Cottonwood), where its text about Inflection and Cottonwood is wrong. Item 13 is the repair. Then re-run AC1 to AC3 (they must still read 7, 10 and 9 of their arms), commit inside the nested portal repo (a second portal commit on top of 0d83ee04), rewrite the proof instance over the first one and flip this order's `<status>` to `complete` in the SAME outer commit.
+
 ## 1. THE ACT -- `CN-p-2`
 
 THE REQUIREMENT (Andrew-direct, ~20:4xZ and ~20:5xZ today; PRD v2.19 to v2.21; the CRO's spec amendment 1). The Global AUA Trend draws the WHOLE history, 2024-11-01 to the as-of, with every group a served field or ONE served difference. Read these, in this order, before you edit: the pure reference module `org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round9/checks/ref/cn_p_2_helpers.ts` (the whole of the module logic; read-only), then the issuer's check `.../round9/checks/r9_cn_p_2.py` (read-only; what each arm asserts), then the spec table at `org/tier1_exec/4.0.0_SA_CRO/deliverables/MDPF_CANON_GLOBAL_AUA_TREND_FULL_HISTORY_SPEC_20261014.md` (the rule table with the amendment 1 rows, and the amended period-end oracle).
@@ -43,6 +47,7 @@ C. THE PAGE (`src/pages/ModelPortfolios.tsx`). Every edit below is UNCONDITIONAL
 10. Colour: add `'Models': 'Primary'` to `TREND_GROUP_L1` so the Variant 2 band draws in the Total Assets Primary colour. No other colour changes.
 11. Notes: the call that builds `detailNote` becomes `trendDetailNoteFor(trendMode, <same arguments>)`; directly under the existing note paragraph add `<p data-trend-footnote="true" ...>{globalTrendFootnote(rows, trendMode)}</p>` and `<p data-trend-composition="true" ...>{compositionFootnote(trendMode)}</p>`, each rendered only when its text is non-null, in the same small white/60 style as the note.
 12. Carried marking: in the tooltip, the row label passes through `carriedTooltipLabel(label, <the hovered row's carried_keys>)`; a period-end bar whose `carried_keys` contains the series label draws at `fillOpacity` 0.55 (the interpolated outline stays as it is).
+13. Scope the composition footnote (AMENDMENT 1). Where the page computes `compositionNote` from `compositionFootnote(trendMode)`, make it `null` unless `effectiveFirmId === 'global'`: change that one statement to select by the flag (`effectiveFirmId === 'global' ? compositionFootnote(trendMode) : null`). The `data-trend-composition` paragraph and everything else about it stay as built. No other line of the page changes.
 
 ## 2. BOUNDS
 
@@ -89,12 +94,14 @@ Report once: the portal branch and commit hash, the diff stat (one line), the ou
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
+**AMENDMENT 1 (issuer, 2.0.0_SA_COO~D1, after the worker's row MDPF_CANON-D1-W27-S2; the order is reopened):** item 13 scopes the composition footnote to the Global view. No mechanical arm is added (the footnote's scope is a rendering fact; the issuer's real run at AC4 reads it on a per-firm view and on Global). The modification is not graded by any gate limb (to-pipeline-gate grades newly-added orders; placeholders NONE); the CTO reads it at the round-N analysis. Base for the re-run: AC1 to AC3 stay green at the built head.
+
 **ISSUER NOTES:** Cut of the Variant 1 round (CTO msgs 5868, 5873, 5877, 5886). PRD v2.19 (@02852d9d16) chose Variant 1; v2.20 (@038b2173f3) made the pre-05-15 lines and the 05-15 .. 07-19 Custom a READ-SIDE stitch for an internal session only, because the external demo tenant opens Global (CVO, `ModelPortfolios.tsx:271`, `:375-379`); v2.21 (@3826492d9c) put the SMA strategies in for every session. This cell is the portal half; `CN-p-1` is the producer half and owes the arrays. The CN-i-3 revert-by-scope order is WITHDRAWN; the CN-i-2 order file stays as delivered. The base `scratch/canon-i3-base` is PROD 5ab67a65 plus the three feature commits (patch-ids equal to `fd5433a3`); re-derive from the then-current PROD at the cut if PROD moved. LANDING (CLAUDE.md Portal): client-facing row for Andrew (approval row cut FROM PROD with cherry-picks; the tool refuses a branch that overlaps DEV), DEV only by `portal-merge-forward.sh`, PROD only by a chosen-set promote. The CRO asked for one line (branch and head hash) when the full-history Trend is ready to smoke on 5174 (msgs 5872, 5878). **RISK CLASS:** `LOCAL`, `worker` (three files, a copyable pure module, twelve named page steps). The issuer's real run: `/ui-walk` at the stated commit, Global, Trend, as an internal session and as a demo-tenant claim set (stitch OFF, Variant 2), compared to the spec's amended oracle.
 **OPEN for the issuer (see the fork report):** (1) whether `CN-p-1` carries the Total and the five model arrays on the `carried_dates` as well (the module tolerates both: it rolls a null forward on a listed date); (2) the Custom pre-05-15 sliver; (3) v2.18 said "NO band" while v2.20 and the spec's Variant 2 say one `Models` band -- this order follows the spec and the cut brief; (4) the composition footnote names two partner firms and so shows to internal sessions only.
 
 **Fanout:** 2 of 2 chains with `CN-p-1`; no shared file with another open cell. `portal_ref:` `scratch/canon-i3-base` (f8c7d310).
 
-<status>complete</status>
+<status>pending</status>
 <round>9</round>
 <to_id>MDPF_CANON.TO-CN-p-2</to_id>
 <slot>~27</slot>

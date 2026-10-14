@@ -24,6 +24,7 @@ import datetime as dt
 import html
 import json
 import os
+import re
 import subprocess
 import sys
 
@@ -33,16 +34,33 @@ ROOT = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=Tr
 sys.path.insert(0, os.path.join(ROOT, "daily_reports", "scripts"))
 from commit_census import classify  # noqa: E402  (reuse the estate's kind-of-work rules)
 
+# Andrew-direct 2026-10-14 ~21:3xZ: coordination over product IS product ("an essential part of product creation");
+# split only what is directly product-focused from audit, and audit is "just logs and doc creation". So two bands
+# plus the named residual. The kinds still come from commit_census.classify (shared with /sprint, unchanged); only
+# GOVERNANCE is split here, by path: a GOVERNANCE commit is AUDIT only when every governance-family file it touches is
+# a RECORD (a ledger, a surprise-channel investigation row, the tier-0 ledger); project deliverables, task orders,
+# decompositions, PRDs, registers and rules files under the same family are product work and stay product.
 GROUPS = [
-    ("product", "Product build", "Portal screens, back-end services, data pipelines",
-     {"FRONTEND", "BACKEND", "DATA"}),
-    ("delivery", "Planning, testing and delivery", "Designs, specifications, tests, finished deliverables",
-     {"PLANNING", "VERIFICATION", "DELIVERABLES"}),
-    ("controls", "Coordination and controls", "Task orders, governance records, audit logs, tooling",
-     {"COORDINATION", "GOVERNANCE", "AUDIT", "TOOLING"}),
+    ("product", "Product", "Code, data, design, testing, deliverables, and the task orders and decompositions that coordinate them",
+     {"FRONTEND", "BACKEND", "DATA", "PLANNING", "VERIFICATION", "DELIVERABLES", "COORDINATION", "TOOLING", "GOVERNANCE"}),
+    ("audit", "Audit", "Session logs, deploy and project ledgers, investigation records",
+     {"AUDIT"}),
     ("other", "Unclassified", "Paths no rule claims (named residual)", {"UNATTRIBUTED"}),
 ]
 KIND2GROUP = {k: g[0] for g in GROUPS for k in g[3]}
+GOVERNANCE_FAMILY = re.compile(r"^org/(tier0|missions|standards|ref|projects|surprise_channel|critical_paths)/"
+                               r"|^CLAUDE\.md|^org/XXX\.md")
+RECORD_PATHS = re.compile(r"^org/missions/[^/]+/[^/]+/[^/]+/(surprise-channel|ledger)/"
+                          r"|^org/(critical_paths|surprise_channel|tier0)/")
+
+
+def group_of(kind, files):
+    """The page band of one commit: its commit_census kind, with GOVERNANCE split into record-keeping vs product."""
+    if kind == "GOVERNANCE":
+        gov = [f for f in files if GOVERNANCE_FAMILY.search(f)]
+        if gov and all(RECORD_PATHS.search(f) for f in gov):
+            return "audit"
+    return KIND2GROUP[kind]
 AGENT_DOMAINS = ("opal.agent", "runtime.agent")
 
 
@@ -82,7 +100,7 @@ def census(until):
             r["date"] = dt.datetime.fromisoformat(r["ad"]).date()
             if r["date"] > until:
                 continue
-            r["group"] = KIND2GROUP[classify(r["an"], r["files"])]
+            r["group"] = group_of(classify(r["an"], r["files"]), r["files"])
             r["agent"] = r["ae"].split("@")[-1] in AGENT_DOMAINS
             commits.append(r)
     start = min(c["date"] for c in commits)
@@ -130,7 +148,7 @@ def census(until):
                                "commit": first_agent["h"][:10]},
         "until": until.isoformat(),
         "method": "both repos, all refs, merges excluded; kind of work from the files each commit touched "
-                  "(daily_reports/scripts/commit_census.py rules), grouped into three bands plus a named residual",
+                  "(daily_reports/scripts/commit_census.py rules), grouped into product and audit plus a named residual",
         "claim": {"counts": "measured", "kind": "inferred"},
     }
 
@@ -157,7 +175,7 @@ def page_numbers(data):
         "p4": "{:,}".format(span("2026-08", "2026-09", "2026-10")),
         "apr_seats": str(m["2026-04"]["seats"]),
         "sep_identities": "{:,}".format(sep["identities"]),
-        "controls_share": str(round(100 * data["by_group"]["controls"] / data["total"])),
+        "audit_share": str(round(100 * data["by_group"]["audit"] / data["total"])),
     }
 
 
@@ -186,7 +204,8 @@ def main():
     data = census(dt.date.fromisoformat(a.until))
     with open(os.path.join(HERE, "events.json"), encoding="utf-8") as f:
         ev = json.load(f)
-    data["events"] = ev["events"]
+    # An event past --until would sit beyond the chart's last week: the page stops at one date everywhere.
+    data["events"] = [e for e in ev["events"] if e["date"] <= data["until"]]
     # Every number the page's prose states is computed HERE from the same census the chart draws,
     # never typed into events.json: a re-run on a later day moves the chart and the words together.
     data["page"] = fill_tokens(ev["page"], page_numbers(data))
