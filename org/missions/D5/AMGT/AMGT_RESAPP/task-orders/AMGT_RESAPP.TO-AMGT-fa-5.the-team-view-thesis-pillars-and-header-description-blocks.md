@@ -134,6 +134,7 @@ The `<status>` flip is the issuer's.
 
 <status>staged</status>
 <status>pending -- GO 2026-10-13T23:0xZ by the issuer (2.0.0_SA_COO~R2): fa-1 merged @ebe4c8d287, so `contract.py` and `orchestrate.py` exist at the base this worktree is cut from.</status>
+<status>complete -- 2026-10-13T23:4xZ by the issuer (2.0.0_SA_COO~R2): wk-AMGT_RESAPP-426 @1a84224a65 merged @fe344586ce, proof instance VALID (rc=0). The first run stopped on BLOCKING row W426-S1, the issuer's miscount (the check has 20 arms, the order said 21); the expectation was corrected and the slot re-seated for the proof only. AC1 PASS (`AIFILL FA-5 ARMS: YES (20 of 20)`, re-run by the issuer), AC2 PASS (42 passed).</status>
 <round>104</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~426</slot>

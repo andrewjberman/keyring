@@ -112,6 +112,7 @@ The `<status>` flip is the issuer's.
 
 <status>staged</status>
 <status>pending -- GO 2026-10-13T22:5xZ by the issuer (2.0.0_SA_COO~R2): fa-9 merged @957b04a764, so `_hp.AI_FILL_GOLD_PREFIX` exists at the base this worktree is cut from.</status>
+<status>complete -- 2026-10-13T23:4xZ by the issuer (2.0.0_SA_COO~R2): wk-AMGT_RESAPP-422 @73bd667357 merged @cd31b97501, proof instance VALID (rc=0). The first run's row W422-S1 (conftest.py set no AMGT_AIFILL_ROOT, so existing thesis tests reached the live fill key) was ruled by AMENDMENT 1 (one conftest line) and the slot re-seated. AC1 PASS (`AIFILL FA-7 ARMS: YES (18 of 18)`, re-run by the issuer), AC2 PASS (`AIFILL API SUITE: YES (base 4 failing, now 4 failing, new 0, passed 1008)`, re-run by the issuer). NOT DEPLOYED: the function has one applier at a time and ~R1's round 104 applies first.</status>
 <round>104</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~422</slot>

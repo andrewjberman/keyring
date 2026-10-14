@@ -311,3 +311,17 @@ Correction: ADJUDICATION_v57 (IRPT_DASHBD) carries surfaced_at 22:53:00Z; the cl
 | item | result | commit |
 |---|---|---|
 | IRPT_DASHBD round 94 | ADJUDICATION_v58 (C-S69) + REMEDIATION_v40: five cells; the household sample record read (3 accounts by hashed ref, 44 of 117 filled, identity 30 of 30, private); 26 dismissed incl. round 93 leftovers; 3 to COO~D2 (FDRXX to CASH BLOCKING, fee-basis method row, the account_class_daily contract statement). FWD-21 not graded. Slug sent | 5a6045882e |
+
+## Addendum, 2026-10-13 23:36Z to 23:43Z (msg 7354)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 185 (~P) | ADJUDICATION_v86 (C-S369), no remediation file (IB-pr-497 parked): irpt-ycharts-generate live at xP47NQDn (my read, 22:48:27Z); the person-read is owed (ledger open; 0 invocations since the apply). Export-receipt release built, pair unsigned. 6 dismissed; W368-S2 (latent served.py pin, ARMED) folded into W349-S1. Slug sent | 5e48d684a8 |
+
+Correction: C-S369 carries surfaced_at 23:42:00Z; the clock read 23:40:30Z before the write, so the stamp is 90 seconds ahead. The row is immutable; recorded here.
+
+## Addendum, 2026-10-13 23:46Z to 23:54Z (msg 7358)
+
+| item | result | commit |
+|---|---|---|
+| ADVI_COTBKF rounds 83 and 84 | L9: CB83ce1-AC3 FAIL on one clause (derivation not checked; round-82 salt lost), CB83ce2-AC3 PASS (10 month_grades columns by code reading only), CB83ce3-AC3 PASS (price-conditional key accepted), CB84cf1-AC3 PASS (NEW_CLIENT on active-set windows, disclosed). ADJUDICATION_v60 (C-S67) dismisses 13; W164-S1..S3 ARMED held to round 85 (TO-CB-cg-1 active). Slug sent. From this item on, row stamps are taken from the clock at write time | 6b9f2b985d |
