@@ -15048,3 +15048,221 @@ name the one known failure instead of silently inheriting it.
     "notes": "INERT: no act is owed inside OG-ap-18, the tools are safe to ship, and the ask states the limitation plainly in its own section rather than burying it. The remedy is a deploy-cone change -- ship lib/ (or at least lib/trading_calendar.py) with the gateway artifact -- which belongs to whoever owns deploy-to-ec2.sh's upload set, not to this applier order. Worth noting for whoever takes it: the guard makes the gap SILENT in the sense that no error is raised, so nobody would have found it from logs; it was found by asking the host whether the file exists."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W82-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~82",
+    "surfaced_at": "2026-10-14T18:32:48Z",
+    "one_line": "The OG-nw-1 preflight says the cell changes no IAM and adds no AWS call beyond S3 reads, but its body requires a DynamoDB read grant and DynamoDB Query and GetItem calls.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-nw-1.news-tools.md@f625acd50e lines 14-15: preflight comp-iam says this cell changes no IAM and adds no AWS call beyond s3:GetObject and s3:ListBucket on opal-data-harvest",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-nw-1.news-tools.md@f625acd50e lines 35, 67-71: DynamoDB Query and GetItem through _ddb() and the one aws_iam_role_policy on aws_iam_role.gw"
+      ]
+    },
+    "spec_asserts": "TO-OG-nw-1 preflight (lines 14-15): 'this cell changes no IAM and adds no AWS call beyond those two' (s3:GetObject and s3:ListBucket on opal-data-harvest).",
+    "world_is": "The body of the same order requires a DynamoDB read grant (ONE aws_iam_role_policy with dynamodb:Query and dynamodb:GetItem on three tables and two indexes) and DynamoDB reads through _ddb(). Built to the body: news_typed.py, the grant file news_read_iam.tf and the ask. A release that takes the preflight at its word ships the tools without the grant and they fail at runtime.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ARMED until the issuer corrects the preflight or confirms the body. The grant is planned (1 to add, 0 to change, 0 to destroy) and not applied (Phase A)."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W82-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~82",
+    "surfaced_at": "2026-10-14T18:32:48Z",
+    "one_line": "The source_date_index GSI that the order says to use for a source filter is sparse: it holds a small fraction of the articles table, so a source filter through it would undercount.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G6_news.md@f625acd50e line 42: source_date_index is ALL-projected with 9,905 items (sparse) against ItemCount 381,261",
+        "live read-only check 2026-10-14 with box credentials: the GSI returned 1 item for one publisher across all time, while the base table held 29 items of that publisher on 2026-10-13 alone"
+      ]
+    },
+    "spec_asserts": "TO-OG-nw-1 tool 1 (news_search_articles): 'source filters on the source (use the GSI when source is given)' over source_date_index (source plus published_at).",
+    "world_is": "The index carries only items with a published_at attribute, and most items do not carry one. news_typed.py therefore reads the base table per day and filters the source in Python, which keeps the count correct. The grant still names source_date_index because the order's list names it; the tool does not read it.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ARMED: the order's instruction to use the index would silently undercount any source-filtered answer. The issuer amends tool 1 or confirms the base-table read; the grant may narrow to the date-index alone if the index stays unread."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W82-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~82",
+    "surfaced_at": "2026-10-14T18:32:48Z",
+    "one_line": "The security_key in the mention index is a Bloomberg-style TICKER_EXCHANGE_Equity key, so a ticker has to match as a prefix, and one ticker can match several listings.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "live read-only shape count 2026-10-14 of security_key in the newest part amgt/harvest/gold/article_security_mention/date=2026-10-08: 52,424 rows, 234 distinct keys, one shape TICKER_EXCHANGE_Equity (e.g. ASML_US_Equity and ASML_NA_Equity)",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-nw-1.news-tools.md@f625acd50e line 63: 'filtered to the security'; the order names no ticker-to-key mapping"
+      ]
+    },
+    "spec_asserts": "TO-OG-nw-1 tool 5 (news_for_security): mentions filtered to the security and the ticker or security_key given.",
+    "world_is": "The index keys are exchange-qualified. news_typed.py matches a ticker as the prefix of the key before the exchange, so a ticker can select more than one listing, and it reports the matched key in each mention row.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT inside the newest part's coverage. The precision line of the answer says a ticker match is a prefix match."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W82-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~82",
+    "surfaced_at": "2026-10-14T18:32:48Z",
+    "one_line": "The order requires admit_scope before every DynamoDB call, but the typed scope seam has no scope for DynamoDB reads, so the tools need one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/typed_scope.py@f625acd50e lines 56-76: admit_scope takes a Scope; its non-HARVEST branch serves S3 prefixes and needs a bucket",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-nw-1.news-tools.md@f625acd50e lines 29-32: admit_scope is called FIRST before any S3 or DynamoDB call; no DynamoDB scope is named"
+      ]
+    },
+    "spec_asserts": "TO-OG-nw-1 seam (lines 29-32): admit_scope(scope, tool, ref) is called first, before any S3 or DynamoDB call; the order names no scope for the DynamoDB reads.",
+    "world_is": "news_typed.py builds one admission scope for DynamoDB reads with no bucket and the served prefix news/, and the references are news/articles, news/trending and news/keyword. The principal and Opal checks and their refusal codes run unchanged; the seam is not edited.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT: the admission is the seam's own principal and Opal check. The issuer may name a DynamoDB scope in the seam at the merge."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W82-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~82",
+    "surfaced_at": "2026-10-14T18:32:48Z",
+    "one_line": "The order says news_for_security runs the text fallback as a stated fallback without saying when, so the trigger is a build choice.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-nw-1.news-tools.md@f625acd50e lines 61-63: 'THEN, as a stated fallback, news_search_articles with text=<ticker>'; no trigger condition is named"
+      ]
+    },
+    "spec_asserts": "TO-OG-nw-1 tool 5 (lines 61-63): the harvest index first, then, as a stated fallback, news_search_articles with text=<ticker>; the answer carries mentions and fallback.",
+    "world_is": "No trigger is named. news_typed.py always runs the text fallback when a ticker is given, and each fallback row carries match text, so the answer always has both sections. With only security_key given, the fallback is absent with its reason stated.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT: the choice is labelled in the answer. The issuer confirms always-run or run-when-empty; the probe's fallback check is non-vacuous only when the fallback runs."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W82-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~82",
+    "surfaced_at": "2026-10-14T18:32:48Z",
+    "one_line": "The order caps the window at 14 days but does not say whether that is a day difference or an inclusive count, and its own test calls a 15-day window refused.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-nw-1.news-tools.md@f625acd50e line 50: 'CAPPED AT 14 DAYS (a longer window is refused)'; line 78: 'a 15-day window is refused with ZERO calls'"
+      ]
+    },
+    "spec_asserts": "TO-OG-nw-1 tool 1 (line 50): the window date_from..date_to is capped at 14 days, and a longer window is refused harvest_bad_argument with zero reads.",
+    "world_is": "The order does not fix the counting. news_typed.py counts the calendar days from date_from through date_to inclusive: 2026-10-01..2026-10-14 is accepted and 2026-10-01..2026-10-15 (15 days) is refused with zero reads. The per-day cap of 2,000 is applied to items read.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT: the reading is stated in the answer's window block and in the ask. The issuer confirms the inclusive reading or amends the cap."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W82-S7",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~82",
+    "surfaced_at": "2026-10-14T18:48:28Z",
+    "one_line": "Eight of nineteen tests in test_deploy_base_guard.py refuse with a missing comp_constants_cli.py although that file is present and tracked at HEAD, so the refusal does not come from the .env edit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pytest infra/aws/ec2/opal-gateway/tests/test_deploy_base_guard.py::test_ogbi4_ac01 on this worktree: 'REFUSED (no upload): the deploy tree lacks the manifest-commit import closure -- missing org/modules/graph/comp_constants_cli.py'",
+        "git ls-files at the worktree HEAD lists org/modules/graph/comp_constants_cli.py (tracked; last touched by 2bc837ee41); the file exists in the worktree"
+      ]
+    },
+    "spec_asserts": "TO-OG-nw-1 scope: the cell edits only the .env printf line of deploy-to-ec2.sh and the gateway app and tests; no deploy-guard test is in the proof of spec.",
+    "world_is": "The three other deploy suites pass (11 of 11) with the edited script. The eight failures are in the base-guard rig, which reports a file the worktree holds. This worker did not run the base-guard suite on the base commit, so the failure is not proven pre-existing.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT for this cell: no proof criterion runs the base-guard suite. The rig's tree check should be read by its owner; this worker did not edit it."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W82-S8",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~82",
+    "surfaced_at": "2026-10-14T19:06:27Z",
+    "one_line": "The order's last step flips the task order's status tag to complete, but the task-order file is not in this worker's write grant, so the flip cannot be made by this worker.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-nw-1.news-tools.md@f625acd50e section 5: 'flip the ONE <status> tag to complete only if AC1, AC2 and AC3 PASS'",
+        "the same order's <paths> block (section 3) lists no task-order path; the write grant is the <paths> block (lane gate)"
+      ]
+    },
+    "spec_asserts": "TO-OG-nw-1 section 5: 'flip the ONE <status> tag to complete only if AC1, AC2 and AC3 PASS, and report once'.",
+    "world_is": "AC1, AC2 and AC3 all PASS at 45dd184bbb (the proof instance records them). The flip edits the task-order file, which is outside <paths>. This worker leaves <status> as it stands and reports the flip as held for the issuer; the proof commit for the sibling order OG-zs-1 (66e04acbc9 and 9789a95f77 on this branch) left its status staged in the same way.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "BLOCKING for the order's final step only; the proof instance and the code are complete and valid. The issuer flips the tag, or the CTO grants the path."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W86-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~86",
+    "surfaced_at": "2026-10-14T19:29:33Z",
+    "one_line": "The order's type rule for defaultTradingEngineId (int64 if every non-null value is an integer, string if mixed) has no non-null value to apply: every row of every bronze date 2026-10-10..14 carries the column null, so the type was chosen as string, with the reason in the source comment.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: read-only boto3 get_object of eclipse/inflection/bronze/<date>/portfolios_simple.json in opal-data-assets, this session, from C:/tmp/wk-oplgtw-86: 846 rows and 23 columns per date for 2026-10-10..14; the column is present on 846 of 846 rows and null on 846 of 846 rows on each date (0 non-null values); 2026-10-08 and 10-09 carry 22 columns.",
+        "SOURCE: data/assets/scripts/silver/mirror_schemas.py:317 @d835fcdabf -- the type rule of OG-ec-1 step 1 reads the non-null values; 'every non-null value is an integer' over zero values is vacuously true and is not evidence for int64.",
+        "CONVERTER: pyarrow 24.0.0 on this device, pa.Table.from_pandas with an int64 schema raises ArrowInvalid on the strings '12' and 'ABC' and accepts None; a string schema accepts all four inputs, so the string type cannot fail a whole folder on a later non-null value."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-ec-1 step 1: choose the declared type from the REAL non-null values of defaultTradingEngineId in the 2026-10-14 bronze object -- int64 if every non-null value is an integer, string if mixed -- and say which in a comment.",
+    "world_is": "The 2026-10-14 bronze object carries the column on every row and every value is null; 2026-10-10..13 are the same. The type rule therefore has no evidence. The worker chose string, the type that cannot raise on a later non-null value. AC1 and AC2 do not grade the type. The type is the one input the data did not decide: confirm it or change it at the applier order, when the first non-null value is measured.",
+    "notes": "INERT: the type sets the arrow type of a column that is null in every landed row; nothing deploys in this cell (the release is NFRA_OPLGTW.TO-OG-ap-18). OBSERVATION: no criterion is blocked. The row closes when a non-null value is measured or the issuer rules the type."
+  }
+  ```

@@ -148,7 +148,7 @@ the issuer to make at the merge.
   `news_read_iam.tf` and from the ask's grant and widening sections). S6 -- the 14-day cap counts dates inclusively (15 refused): ACCEPTED as built. S8 -- the status flip is the issuer's, at the merge. The worker is re-seated for the S2 narrowing only.
   No criterion moves. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>FWD22-W6</workstream>
 <slot>~82</slot>

@@ -12192,3 +12192,159 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The same calendar module answers from two sources on two boxes: the fallback on dell2 and pandas_market_calendars where the writer ran. The count of 12 trading days behind for the Cottonwood performance table holds on the fallback and was not re-run on pandas."
 }
 ```
+
+## IRPT_DASHBD-D2-W177-S1 -- no independent close series is reachable for the holdings offset, so DB-b-220 stops (BLOCKING)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W177-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~177",
+  "surfaced_at": "2026-10-14T19:24:16Z",
+  "one_line": "DB-b-220 cannot measure the holdings offset: no independent close series for Black Diamond's securities over the 120-day window is reachable inside the grant or held in the repo, so the cell stops at its BLOCKING refusal.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-220 step 3: the offset is measured against an INDEPENDENT close series (a repo or served series that does not come from the Black Diamond file, for example the model benchmark's served series or a published price file already in the repo); if no independent close series exists, say so in a BLOCKING row and stop.",
+  "world_is": "The one granted prefix holds only Black Diamond positions: 93 partitions, one object each, dated 2026-06-09 through 2026-10-13. The independent comparator the 2026-10-01 read used (the Schwab own-date anchor) sits under a different prefix, outside the grant, so it was not read. Repo search found no tracked file with daily closes for 2026-06-16 through 2026-10-13: histdata_daily_px_BABA_US_Equity.json ends 2025-12-31; data/smartx/benchmarks/benchmark_returns.json is returns with data_as_of 2025-11-28; infra/aws/lambda/investor-reporting/performance/fixtures/bd_series.json is a scrubbed account-level series, not security closes. No vendor call was made. The record reads the holdings date UNDETERMINED with claim absent and files_compared 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_holdings_performance/sources.json blackdiamond_z09 positions_prefix, resolved read-only by holdings_performance.resolved_prefix to blackdiamond/cottonwood/silver/fact_holdings/",
+      "aws s3api list-objects-v2 --bucket opal-data-assets --prefix blackdiamond/cottonwood/silver/fact_holdings/ at 2026-10-14T19:13Z (93 objects, 93 partitions)",
+      "integrations/bloomberg/research/tests/fixtures/fye_join/histdata_daily_px_BABA_US_Equity.json (last date 2025-12-31)",
+      "data/smartx/benchmarks/benchmark_returns.json (data_as_of 2025-11-28)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Issuer decision needed: name an independent close series that covers 2026-06-16 through 2026-10-13 (served or repo, not from the Black Diamond file) for DB-b-220 to re-run, or rule that the holdings offset is not measurable and the citation is decided on the date carriers alone."
+}
+```
+
+## IRPT_DASHBD-D2-W177-S2 -- Black Diamond object write days are rewrite days for early partitions, not pull days
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W177-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~177",
+  "surfaced_at": "2026-10-14T19:24:16Z",
+  "one_line": "Black Diamond holdings object write days are not pull days: 44 of 93 partitions were written the day after their date and 49 later, 27 of those in one batch on 2026-07-14.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-220 step 2: the object LastModified is the day the file was written to S3, a carrier whose meaning must be named (a pull day or a rewrite day).",
+  "world_is": "LIST of the prefix at 2026-10-14T19:13Z: 93 partitions, one object each. Written the next day after the partition date: 44 (partitions dated 2026-07-22 through 2026-10-13). Written later than that: 49, all dated 2026-06-09 through 2026-09-25; 27 carry a write day of 2026-07-14, 3 of 2026-09-28, 2 of 2026-08-25, 1 of 2026-07-15, and 16 further partitions carry other days. So the LastModified of an early partition is a rewrite day, not its pull day. The cause of the rewrites was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-objects-v2 --bucket opal-data-assets --prefix blackdiamond/cottonwood/silver/fact_holdings/ at 2026-10-14T19:13Z (LastModified per object, counted by .scratch/window.py in the worker worktree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W177-S3 -- the worktree portal differs from the workspace portal at the cited adapt.ts lines
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W177-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~177",
+  "surfaced_at": "2026-10-14T19:24:16Z",
+  "one_line": "The worktree's portal carries different content from the workspace portal the cell cites: the holdings date read at adapt.ts lines 1229-1233 is not at those lines in the worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-220 step 1: the portal date citation is read at portal/src/pages/InvestorReporting/contracts/adapt.ts lines 158-167, 804-818 and 1229-1233, from C:/dev/ajb_workspace/portal (the worktree's portal may be empty).",
+  "world_is": "The worktree's portal is populated but carries different content. Its adapt.ts has business_date only at lines 121, 134, 374 and 585, and no holdings adapter at lines 1229-1233. The workspace portal (read-only) has adaptHoldingsSnapshot at adapt.ts line 1164, reading wire.clocks.business_date at lines 1229 and 1233. The citation record uses SecurityList.tsx line 623, which is the same line in both trees. The read used the workspace portal, as directed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ajb_workspace/portal/src/pages/InvestorReporting/contracts/adapt.ts lines 1164, 1229 and 1233 (read at 2026-10-14T19:23Z)",
+      "portal/src/pages/InvestorReporting/contracts/adapt.ts in the worktree (grep business_date: lines 121, 134, 374, 585)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W177-S4 -- the 2026-06-12 to 2026-06-22 partitions do not follow one date basis, and a partition exists for the 2026-06-19 holiday
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W177-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~177",
+  "surfaced_at": "2026-10-14T19:42:41Z",
+  "one_line": "Black Diamond's holdings partitions for the 2026-06-12 to 2026-06-22 week do not follow one date basis: a partition exists for the 2026-06-19 market holiday, and the weekend and holiday partitions change in a mixed pattern.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-220 step 3 (calendar signature): the share of the nine named securities whose price is unchanged between consecutive partitions of 2026-06-12 to 2026-06-15 and 2026-06-18 to 2026-06-22 is printed as a count, not checked.",
+  "world_is": "Consecutive partitions, unchanged prices of the seven named securities present in both: 06-12 to 06-13 0 of 7; 06-13 to 06-14 7 of 7; 06-14 to 06-15 0 of 7; 06-18 to 06-19 0 of 7; 06-19 to 06-20 7 of 7; 06-20 to 06-21 7 of 7; 06-21 to 06-22 0 of 7. The 2026-06-19 partition exists, although the market was closed that day and the step names no such partition. Its prices equal 06-20's and differ from 06-18's. A Saturday partition (06-13) differs from the Friday partition, while another Saturday (06-20) equals the Friday holiday partition. The pattern fits no single basis of the four in the declaration. Counts only; the cause was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-objects-v2 --bucket opal-data-assets --prefix blackdiamond/cottonwood/silver/fact_holdings/ at 2026-10-14T19:40Z (partitions 2026-06-12 to 2026-06-22 present in the listing)",
+      "worker worktree .scratch/offset.py calendar signature block (Ticker, Units and Market Value columns, read-only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Relevant to any date-basis ruling for weekend and holiday partitions; the file's own labels do not settle it."
+}
+```
+
+## IRPT_DASHBD-D2-W176-S1 -- the shared as-of fix changes a date-only footer whose byte-for-byte golden sits outside the grant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W176-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~176",
+  "surfaced_at": "2026-10-14T19:29:51Z",
+  "one_line": "The shared as-of fix (DB-b-219) changes the ModelPortfolios date-only footer, and the byte-for-byte golden of iv-e-120 test (b) still pins its old 5:00p ET clock. That file is outside this cell's grant, so the whole-suite run has one new failing id and criterion DB110-4-AC3 cannot pass as written.",
+  "spec_asserts": "TO DB-b-219 criterion DB110-4-AC3 requires suite_after new_failing_ids [] (whole-scope bun test, base versus after). Its BOUNDS say an edit outside the <paths> grant is a defect: stop and file a row. The grant names footer-date-format, PageEnd and iv-e-45 as the only neighbour tests that may be re-pinned.",
+  "world_is": "At portal tip 3db44fe0 the iv-e-120 test (b) renders ModelPortfolios without the prop and compares it byte for byte with iv-e-120.golden/model_portfolios_mount.before.html. The golden holds 'September 29th, 2026, 5:00p ET' and the render now writes 'September 29th, 2026'. Base suite: 1529 tests, 15 fail. After suite: 1530 tests, 16 fail. The only new failing id is 'IVE120 ... (b) ModelPortfolios mount without the prop renders byte-for-byte as before'. The iv-e-120 test file and its golden are outside the <paths> grant and were not edited.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@3db44fe0 src/lib/dateUtils.ts formatPanelTimestamp date-only branch (the change that removes the clock from a date-only value)",
+      "portal@3db44fe0 src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-120.total-base-in-the-card.test.tsx lines 163-168 (test (b), byte-for-byte golden compare; this file is not changed by the worker)",
+      "portal@3db44fe0 src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-120.golden/model_portfolios_mount.before.html (one line carries 'September 29th, 2026, 5:00p ET')",
+      "measured 2026-10-14T19:27Z: full suite base 1529 tests 15 fail, after 1530 tests 16 fail (worker deliverables ASOF_R110.json, suite_after.new_failing_ids); measured 2026-10-14T19:28Z: bun test on the iv-e-120 file alone, 4 pass 1 fail",
+      "measured: DB110-4-AC3 checker output 'FAIL: tests: mutant_failed true, lint 0, typecheck 0, no new failing test'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided by this worker, and not edited. Options for the CTO or COO: (a) re-golden the one line of iv-e-120.golden/model_portfolios_mount.before.html to 'September 29th, 2026', the same kind of re-pin this cell made for create5pm-et.test.ts, in a grant that names that file; or (b) widen this cell's grant to name it. The worker did not choose between them."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S40",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T19:50:49Z",
+  "one_line": "Issuer's rulings on worker 175's rows W175-S2 and W175-S3 (two earlier checks pinned the contract members byte for byte), W175-S4 (non-positive factor rows) and its wording note: the two checks are amended to ignore the per-firm source keys, S4 is disarmed, the claim words are corrected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-217 step 5: the 14 earlier live criteria still pass after the contract edit; step 3 (amended): the factor is a positive index level; step 4 (d): the claim says the figure is reported by the platform at client grain and not computed by Opal.",
+  "world_is": "W175-S2 and W175-S3 (BLOCKING): DB105-1-AC1 requires the members byte for byte equal to the 0.4.1 members and DB106-1-AC1 requires version 0.4.3 and the same; contract 0.5.0 adds firm_sources and firm_absent to the four household return members, which the order itself requires, so the two conventions could not both hold: an issuer error in the checks, not a regression. Ruled: both checks compare the members with the per-firm source keys stripped (a later per-firm source does not change what 0.4.1 to 0.4.3 said), DB106-1-AC1 accepts version 0.4.3 or later and the 0.4.3 bytes in the sample record; with those edits all 14 earlier criteria read PASS on worker 175's contract 0.5.0 tree (this seat's own run). W175-S4 (ARMED, mine): the newest Orion fact_performance partition holds 409 rows (276 zero, 133 negative) of 482,971, in 2 of 315 clients; the sample household's 807 rows are all positive and the fold reads a window absent when either factor is not positive, so no figure is computed from a non-positive factor; disarmed, with the 2 clients named as a count for the next consumer. Wording note: the claim 'not computed by Opal' sits beside a fold that divides two platform factor values; the claim is corrected to say the figure is derived from the platform's reported client performance factor, as the ratio of two dated factor values, and that the factor itself is reported by the platform, not computed by Opal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 175's report and contract 0.5.0 at wk-IRPT_DASHBD-175 @0f44011dd8 (equivalence classes, firm_sources); this seat's run of the 14 earlier criteria on that tree after the check edits: 14 of 14 PASS",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r105/p105_round105.py (strip_firm) and r106/p106_round106.py",
+      "worker row IRPT_DASHBD-D2-W175-S4 (counts)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
