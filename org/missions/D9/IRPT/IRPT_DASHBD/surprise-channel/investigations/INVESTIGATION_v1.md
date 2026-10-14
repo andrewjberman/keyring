@@ -11550,3 +11550,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
+
+## IRPT_DASHBD-D2-S34 -- disarm owner's rulings on W172-S1 and W172-S3 (round 108): two Orion method facts, and the account-grain return fork surfaced to the CTO
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S34",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T16:45:33Z",
+  "one_line": "Disarm owner's rulings on W172-S1 and W172-S3 (round 108): the two Orion facts are method notes the read already handled; both are carried into the next Inflection order faces, and the second is surfaced to the CTO as a design fact for account-grain returns.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CLAUDE.md section 2: an ARMED hazard disarms same-turn through the row's disarm_owner; this seat is disarm_owner of W172-S1 and W172-S3. DB-b-212 asks whether Orion's returns include dividends, measured against one account's transactions, and whether Eclipse tax lots are populated.",
+  "world_is": "W172-S1: Orion fact_transactions and fact_performance hold the full history in the newest dated partition; the read used that partition only, so no history was counted twice; the hazard is to a FUTURE reader that walks every date partition of those two tables, and is carried as one sentence into every later Inflection order face: read the newest partition of fact_transactions and fact_performance only; fact_positions and fact_assets are one as-of date each. W172-S3: fact_performance is keyed by client with no account key, and the chosen account's client holds two accounts; the read ran the dividend test at account level and at client level over the same window and got the same answer (YES: the reported return includes dividends, 762 transactions checked, 133 dividend flows), so the answer stands for both grains. Surfaced to the CTO, not decided here: Orion reports a CLIENT-level return, so an Inflection ACCOUNT-grain return in the gold (the contract's account_return_daily grain) cannot be read from Orion's performance table; it must be derived from positions and transactions, or the report's account pages must say in words that an account return is not available for Inflection. That choice is a design fork for the round-109 analysis (an endpoint change goes to the CTO). Eclipse lots: 0 rows carry lot fields across the 4 silver tables (547 dated partitions); the reconstructed (7) and meta (1,449) objects were checked by name and key only, not opened, so NO_LOTS stands for the silver tables and the unopened objects are named as a limit. Both hazards are disarmed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~172/COVERAGE_READS_R108.json and READ_COVERAGE_RUN_R108.json at the merge daf628fb72 (answer, counts, tables, caveats)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r108/p108_round108.py check_reads: DB108-2-AC1 PASS on the landed tree",
+      "this seat's own read of rows W172-S1 and W172-S3 (the worker's text) and of the record's basis_words"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
