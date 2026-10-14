@@ -135,3 +135,5 @@ residual, `COMM_ASSIST-C-S6` (INERT): drafts with no `seq` repeat their tags (En
 `fanout (amendment 5): 1 of 1 chain, cap 8, reason: one file (tenant.py) and its tests.`
 
 The issuer's receiver checks now sign `signed_at` one minute before the receiver's clock (`check_i2_receiver`, `check_i10_replay`: re-run, 7 of 7 and 6 of 6), so they hold before and after CA-i-13.
+
+**CA-i-5 cut (2.0.0_SA_COO~CA, ~02:0xZ), under Amendment 5:** its dependencies are met (CA-i-12 live, issuer-read PASS; `seq` live on dell2 7 of 7 rows). It goes out as a crossbox ORDER to `0.7.0_AE_CloudOps~CA2` under workstream `FWDINSTALL` (the gate admits a new order in an issued round only as its own workstream). muse is not asked to sign a real answer until CA-i-14 (the time bound) is live.
