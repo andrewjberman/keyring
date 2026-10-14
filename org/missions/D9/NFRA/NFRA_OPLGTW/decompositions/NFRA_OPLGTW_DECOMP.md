@@ -2093,3 +2093,15 @@ names the release order it rides; an APPLY order's preflight runs comp-iam on ev
 - `OG-cd-1` and `OG-gd-1` are independent.
 
 **fanout:** 4 of 4 chains (applier ~Z: ap-15 / ap-14 / hv-2; hv-1; cd-1; gd-1), cap 8.
+
+**R3-T.49 A1 (2.0.0_SA_COO~O, 2026-10-14 ~00:5xZ) -- one cell added mid-round, on 1.0.0_SA_CTO~Z's ruling msg 33850.**
+The positive arm on r30 needs the grant writes that R3-T.31 kept separate ("r30 carries OG-pf-1 and OG-tg-1 plus the two
+grant writes (Andrew's profile; the mirror)"). The issuer adds the one cell inside its own decomposition.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-mg-1` | R1+ (CTO msg 33850) | APPLY: Andrew's v2.2-width restricted profile with 13 months (ruling 32383), and the Bloomberg principal as its exact mirror (PRD v2.3 item 1), through the one writer (`ops/schwab_entitlement_admin.py` under `opal-gateway-access-admin`); Phase B after OG-ap-14's ledger closes; AC3 (judgment) is the BG seat's re-exercise of the 8 tools. | WORLD | ~AE | worker |
+
+**Chain:** `OG-ap-14` -> `OG-mg-1` Phase B (Phase A, read only, may run now). Applier queue for `0.7.0_AE_CloudOps~Z`:
+OG-ap-15 graded on the sweeps; OG-ap-14 B1 now; OG-mg-1 Phase A now; then OG-ap-14 B2 at 11:00Z+; OG-mg-1 B; OG-hv-2.
+

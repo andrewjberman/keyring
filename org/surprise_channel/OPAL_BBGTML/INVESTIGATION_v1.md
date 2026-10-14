@@ -564,3 +564,34 @@ Filed by 0.7.0_AE_CloudOps~ZT while executing OPAL_BBGTML.TO-Z6-R5 step 2c (the 
   "notes": "Surfaced, not chased -- and NOT edited: TO-Z6-R5's bounds are exactly two files and its step 2c says to file a row for a consumer needing a change this order does not carry. This is a READER of the file, not a launcher, so the stdout contract is untouched: it never runs main() and never reads stdout. The launcher question itself came back clean -- the census found NO script, task or cron that execs the module (see the R5 deliverable). Disarm candidates for the owner to route to NFRA_OPALAI's issuer: re-cut e7.AC1's base to the post-R5 commit, or narrow the criterion from whole-module AST equality to the properties it actually means to protect (the header's 3 named consumers, py_compile, and the runner's empty stdout -- all three still hold at the worktree bytes)."
 }
 ```
+
+### OPAL_BBGTML-Z-S19 -- R6's twin, PORTAL_RETRIEVAL.md, still states `as_of_date` flat as the mdpf-platinum vintage field, and the tool it is twinned to says "keep in sync"
+
+Filed by 0.7.0_AE_CloudOps~ZS executing TO-Z6-R6 step 3, which directs this row instead of an edit. The twin's RULE is not in conflict; its CHANNEL TABLE is now out of date.
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S19",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~ZS",
+  "surfaced_at": "2026-10-14T00:55Z",
+  "one_line": "R6 replaced the flat `vintage_field: as_of_date` for platinum/mdpf/ with a three-step order in BUCKET_ALLOWLIST.yaml and in portal_lookup.py, but refs/PORTAL_RETRIEVAL.md:43 still prints `as_of_date` as THE vintage field for mdpf-platinum -- and the object it describes carries no as_of_date at all, so the twin now names a field that is absent from every aum-metrics.json measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZB",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ at HEAD, refs/PORTAL_RETRIEVAL.md line 43, bytes printed: '| mdpf-platinum | `platinum/mdpf/` | `as_of_date` | 461 objects; per-firm mirrors + `aggregate_aua/YYYY-MM-DD.json` daily snapshots since 2024-11-01 with reconciliation PASS/FAIL + provenance blocks -- richest MDPF surface |'. Line 42 is the separate `mdpf` row (`period`) and is NOT this finding.",
+      "READ portal_lookup.py line 46 at HEAD: '# name -> {prefix, date_field, note}. Twin of refs/PORTAL_RETRIEVAL.md -- keep in sync.' The sync obligation is stated in the code this cell edited, so the two are now knowingly divergent.",
+      "MEASURED 2026-10-14 ~00:4xZ, read-only S3 GET of four objects (the denominator is those four, not the 461-object prefix): platinum/mdpf/{49financial,global,cottonwood,inflection}/aum-metrics.json each returned as_of_date=None, exactly 1 source in _provenance.source_vintages, and 1 distinct date, 2026-10-12 in all four.",
+      "NOT CONTRADICTED, and this is the half that matters: PORTAL_RETRIEVAL.md:13 rule 2 reads 'ANSWER FROM `data_as_of` (MDPF uses `period` / `as_of_date` -- same meaning: the data's as-of, never the run date)'. R6 follows that rule rather than breaking it -- the rule is silent on what to do when the named field is ABSENT, which is the whole gap R6 fills."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-Z6-R6 the_act item 3: 'Read refs/PORTAL_RETRIEVAL.md (portal_lookup.py:46 calls it the twin). If it states a vintage rule this edit contradicts, do NOT edit it: file a row naming the line.' The order's bounds also cap the cell at exactly two files, so the twin was out of the write surface either way.",
+  "world_is": "The twin's RULE agrees with R6; the twin's TABLE ROW is stale. A BG-seat agent reading the table for mdpf-platinum is told to look for as_of_date, finds nothing, and is then on its own -- which is the exact path that produced the one-trading-day-too-fresh answers R6 was cut to stop. The tool now prints the right vintage regardless, so the stale line misleads a human reader of the doc rather than the tool's output.",
+  "notes": "Remedy is one table cell, owned by whoever may write org/tier0_utility/0.0.3_BG_BBGTerminal/refs/ (this seat held a one-commit GIT_COMMIT_AUTHOR_OVERRIDE=TIER0_UTILITY grant for R6's two named files only, and did not stretch it to a third file). Suggested text, matching the landed allowlist: 'as_of_date, then _provenance.source_vintages (oldest when several), then none -- LastModified is WRITE TIME only'. Low urgency: nothing serves off this line mechanically. NOT a blocker on R6, whose AC1 and AC2 both PASS."
+}
+```

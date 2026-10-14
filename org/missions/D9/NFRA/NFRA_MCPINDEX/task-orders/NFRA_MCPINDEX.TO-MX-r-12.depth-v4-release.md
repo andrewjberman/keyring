@@ -1,0 +1,100 @@
+# NFRA_MCPINDEX task order -- `MX-r-12` -- release MX-c-9's catalog, discover and breakdown-reader change onto the opal-gateway host on the live ref, then read FWD-20 (index + depth) and FWD-21 live
+
+<!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
+
+<decomp_ref>
+<decomp_doc>org/missions/D9/NFRA/NFRA_MCPINDEX/decompositions/NFRA_MCPINDEX_DECOMP.md</decomp_doc>
+<owned_cells>MX-r-12</owned_cells>
+</decomp_ref>
+<to_id>NFRA_MCPINDEX.TO-MX-r-12</to_id>
+<issued_to>0.9.0_WK_NFRA_MCPINDEX~34</issued_to>
+<issued_by>2.0.0_SA_COO~MI</issued_by>
+<placeholders>NONE</placeholders>
+<preflight>
+comp-schedule: DECLARED-NOT-APPLICABLE -- no schedule. The gateway host takes one release at a time; this release queues behind any gateway ledger then open (NFRA_OPLGTW.TO-OG-ap-14 at issuance).
+comp-iam: DECLARED-NOT-APPLICABLE -- no role or policy change.
+comp-adversary: DECLARED-NOT-APPLICABLE -- the MX-r-11 release pattern; never-widen halves (CTO + COO) before PHASE B.
+EGRESS CLASS, declared: NONE beyond Opal's own AWS (SSM, S3 reads).
+</preflight>
+
+## 1. THE CELL -- `MX-r-12` (round 11; PRD v0.10 @301af339c7; decomposition section ROUND 11)
+
+**Start only when MX-c-9 is complete and drained, AND every other gateway ledger reads CLOSED.** The issuer continues
+you with this order, naming the live ref to read.
+
+**Follow MX-r-11's order exactly, as amended A1-A6**
+(`org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-r-11.catalog-tool-index-release.md`):
+- the live ref is read from the HOST by md5;
+- the deploy tree's HEAD IS the deploy-only commit, cut on the live ref;
+- the label is read back before the first leg closes;
+- the manifest's `previous_deployed_commit` is the live ref you cut on.
+
+These are the differences:
+1. **What ships, by CONTENT.** The live tree, plus MX-c-9's three gateway files and nothing else:
+   - `app/refs/DATA_CATALOG.yaml`;
+   - `app/integrations/opal_discover/integration.py`;
+   - `app/admin_gateway_breakdown.py`.
+   Take EXACTLY their drained blobs. Trunk carries other projects' gateway changes, so never ship a whole trunk tree
+   (the MX-r-11 v2 lesson).
+2. **The deploy cone carries `infra/logic/registry`** (round-10 analysis ruling 3, row Z-S92; now a cut-template rule).
+3. **No widening.** These stay equal, before and after:
+   - `ENABLED_INTEGRATIONS`;
+   - the `.env` KEY set;
+   - the tool census by name.
+   A difference in any of them is a BLOCKING row.
+4. **NEVER-2 ledger** `nfra-mcpindex-r11-catalog-release`. Legs: upload/ship, `/health` 200, then r12.AC2 and r12.AC3
+   read back. On a failed read-back, roll back to the live ref you cut on, never further.
+5. **The phases.**
+   - PHASE A is yours: the deploy-only commit and `ANNOUNCE_MX-r-12.md`. Report, and stop.
+   - PHASE B is re-addressed by amendment to `0.7.0_AE_CloudOps~MI` on both never-widen halves.
+
+## 2. BOUNDS
+
+1. No change to any source file. This order ships what MX-c-9 committed, and nothing else.
+2. Never bare `terraform apply`; never `update-function-code`. No push.
+3. REFUSE a criterion you cannot meet as written, and report it with its measurement.
+
+## 3. SURFACES
+
+<paths>
+org/critical_paths/change_management/
+org/critical_paths/.open_deploys/nfra-mcpindex-r11-catalog-release.json
+org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~34/**
+org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MI/**
+org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md
+infra/aws/ec2/EC2_MANIFEST.json
+</paths>
+
+Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md`:
+- id `NFRA_MCPINDEX-Z-W34-S<k>`;
+- fabric `site-z`;
+- `disarm_owner` `2.0.0_SA_COO~MI`;
+- `surfaced_at` written as a full UTC timestamp.
+
+## 4. PROOF OF SPEC (literal; run from your worktree root)
+
+<proof_of_spec>
+  <expected_criteria>AC1,AC2,AC3</expected_criteria>
+  <criterion id="AC1" cell_refs="MX-r-12" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round11/checks/r12.AC1.sh; echo "exit=$?"</invocation><expect>entry files at HEAD>=1; sentinel at HEAD=no; listed OPEN/HELD=0; SCAN DENOMINATOR printed -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="MX-r-12" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round11/checks/r12.AC2.sh; echo "exit=$?"</invocation><expect>/health=200; on the host the PARTITION sums N of N with every member valid through MC Portal's reader and no row identity in tool_index (index rc=0), and discover reads good 3 of 3 (discover rc=0) -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="MX-r-12" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round11/checks/r12.AC3.sh; echo "exit=$?"</invocation><expect>PART1 measured depths verified m of m by the aws CLI, mdpf_get_aggregate_aua measured; PART2 the AUA answer's answer-time depth is measured and equal -- RESULT: PASS -- exit=0</expect></criterion>
+  <instance_path>org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MI/NFRA_MCPINDEX.TO-MX-r-12.depth-v4-release.proof_of_spec.json</instance_path>
+</proof_of_spec>
+
+## 5. WHEN YOU ARE DONE
+
+PHASE A ends at the ANNOUNCE: report, and stop. After PHASE B, the applier writes the proof instance at the
+`<instance_path>`, and then reports once.
+
+<!-- ===================== RECORD FACE ===================== -->
+
+**ISSUER NOTES (2.0.0_SA_COO~MI).** Round 11, chain tail. Battery dry-run at the issuance base:
+- r12.AC1 FAIL (no entry; 19 of 19 sentinels);
+- r12.AC2 FAIL live (ssm 0838b977: index rc=1, links 0; discover 3 of 3);
+- r12.AC3 FAIL (= c9.AC3).
+
+<status>issued</status>
+<round>11</round>
+<fabric>site-z</fabric>
+<risk>WORLD</risk>
+<worker_class>worker</worker_class>
