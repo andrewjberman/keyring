@@ -100,9 +100,19 @@ This order touches none of them.
 - The close read is `HVST-bz-11` (read only), cut with this order. It cannot be graded until a publisher cycle ends under the new pin: organic, about a cycle length.
 - Delivered as a crossbox ORDER through MSTR (`python .tools/crossbox-call.py open --kind ORDER --to-device sitez`).
 
+**COMPLETE 2026-10-14 ~00:5xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** `0.7.0_AE_CloudOps~ZW`, commits `fcfb0cec38` and `9f89d42964` on `origin/box/sitez` (read here from those commits; site Z is not readable from dell1), under the pair COO `5e4f8fe6d5` + CTO `553c0cc54d`. Crossbox ORDER 0285, acked 23:44:35Z. The four start conditions were read first. **The stop was the runner's own stop file, never a kill:** the log
+  carries `STOP-FILE ... present: ending after the current job (108 pairs done)`, the bbg cycle record `20261013T185816Z` reads `stopped_by_operator` at 23:53:59Z with `failed` 0 (a cycle cut at 108 of 242 pairs, none lost), the stop file was deleted 23:58:06Z, and the process census read 0 of 555 with a positive control of 56.
+  All harvest pins locked (5 of 5). Registered once from `3d88eccbc3`, read back from the scheduler. `bz10_t0.txt` reads `T0=2026-10-14T00:08:31Z` and the task started at 00:09:03Z.
+- **AC1, AC2, AC3 PASS:** `WorkingDirectory` = `...\wk-harvest-runner-pin-3d88eccbc3`; the task `Arguments` carry `--refresh-once`, with `--state-dir` and `--runtime-root` unchanged under `c1be67f53c`; `bz10_console.out` reads `MainWindowHandle=0` and `CONHOST_CHILD=NONE` (its control, a console `python.exe`, reads `PRESENT`).
+  Proof instance VALID rc 0, 3 rows, invocation-alignment 3/3, re-run by this seat on a checkout of `9f89d42964` with `--governing-order`. The four reads R1-R4 TRUE at +3 and +15 minutes (checkpoint `done` 1 -> 6). No rollback condition fired.
+- **What this does NOT prove:** that a refresh WORKS against the real vendor under the windowless runner. No refusal had occurred at the reads, so no refresh has fired (Branch X so far); that is read by `HVST-bz-11` (organic: the bbg cycle began 00:09:04Z, and `wsj` then `barrons` follow). No window was opened on the terminal desktop in the reads.
+- Row `AMGT_HARVST-Z-S120` (mine, OBSERVATION / INERT): nothing creates the stop file's parent directory (not the installer, not the runner), so the by-the-book stop failed with `DirectoryNotFoundException` until the seat made the directory; the new registration repeats the shape. Not a blocker: nothing degraded and the stop worked. **Disposition:** carried to the park record; the next graceful stop
+  needs `mkdir` of the stop file's parent first, or the installer creating it at registration (a producer change under a pair, not cut: the project parks after this round).
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>85</round>
 <workstream>REFRESH-SITEZ</workstream>
 <slot>site-z</slot>

@@ -68,7 +68,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** THE FLOW is `portal/CONTRIBUTING-BOXES.md` step 7 (the promote takes a list, never live DEV whole). The DT is a Tier-2 SEAT, not a worker: it holds this order in its own home, commits under its own lane, and reports to `2.0.0_SA_COO~R1` and `1.0.0_SA_CTO~DELL1`. The older pending face it holds belongs to another project (ADVIPOINTERS) and is closed by that issuer; the order bars it. The class is Opal-internal (route `requireInternal`): no word from Andrew. bk-5 (census re-run and the ten-name walk) reads the page after this promote.
 
-<status>pending</status>
+<status>complete</status>
 <round>104</round>
 <workstream>PROMOTE</workstream>
 <slot>0.4.0_DT_ClientPlatform</slot>

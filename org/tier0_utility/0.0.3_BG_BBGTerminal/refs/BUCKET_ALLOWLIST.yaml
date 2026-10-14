@@ -38,7 +38,8 @@ allow:
           - "model portfolio / MDPF / AUA question naming a firm -> platinum/mdpf/{49financial|inflection|cottonwood}/{aggregate-aua-timeseries|aum-metrics|account-distribution}.json"
           - "global / firm-wide aggregate question -> platinum/mdpf/global/ (same three types)"
           - "historical daily MDPF snapshot -> platinum/mdpf/aggregate_aua/YYYY-MM-DD.json (dated partitions)"
-        vintage_field: as_of_date
+        vintage_field: "as_of_date, then _provenance.source_vintages (oldest when it carries
+          several), then none -- LastModified is the WRITE TIME only, never a vintage"
         excluded:
           - "platinum/mdpf/archive/** -- archived by Andrew's order 2026-08-06; NOT servable; a question only the archive answers escalates, never serves"
           - "underscore twins ({scope}/aggregate_aua_timeseries.json) -- retired surface; serve the hyphen files only"
