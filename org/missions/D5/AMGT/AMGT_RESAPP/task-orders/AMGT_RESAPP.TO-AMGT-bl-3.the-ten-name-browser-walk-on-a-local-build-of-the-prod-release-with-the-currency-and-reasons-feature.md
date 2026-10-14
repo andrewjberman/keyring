@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md</decomp_doc>
 <owned_cells>AMGT-bl-3</owned_cells>
 </decomp_ref>
-<issued_to>0.9.0_WK_AMGT_RESAPP~420</issued_to>
+<issued_to>0.9.0_WK_AMGT_RESAPP~440</issued_to>
 <issued_by>2.0.0_SA_COO~R1</issued_by>
 <to_id>AMGT_RESAPP.TO-AMGT-bl-3.the-ten-name-browser-walk-on-a-local-build-of-the-prod-release-with-the-currency-and-reasons-feature</to_id>
 <placeholders>NONE</placeholders>
@@ -17,7 +17,7 @@ comp-adversary: RUN at the cut -- `r103_walk_draw.py --selftest` reads `R103 WAL
 EGRESS CLASS, declared: the dev server's reads of the live services through the deployed front door (GET/HEAD/OPTIONS only: the walker's own network guard aborts any other request).
 </preflight>
 
-**Your worktree:** `C:/dev/wk-resapp-420` (branch `wk-AMGT_RESAPP-420`, cut from the issuance commit). Work and commit only there. The shell's working directory resets between calls: start EVERY shell call with `cd C:/dev/wk-resapp-420`; a call that starts elsewhere resolves `git rev-parse --show-toplevel` to the base checkout and answers for the wrong tree.
+**Your worktree:** `C:/dev/wk-resapp-440` (branch `wk-AMGT_RESAPP-440`, cut from the issuance commit). Work and commit only there. The shell's working directory resets between calls: start EVERY shell call with `cd C:/dev/wk-resapp-440`; a call that starts elsewhere resolves `git rev-parse --show-toplevel` to the base checkout and answers for the wrong tree.
 
 ## 1. THE CELL -- `AMGT-bl-3` (round 105, decomposition s.114)
 
@@ -35,7 +35,7 @@ FWD-40 (a) and (d) of PRD v0.44 (ratified text, inlined for (d)):
 
 Round 105 changed three things the page shows (all Security Analysis, Opal-internal): a money symbol prints ONLY for the figure's own currency (PBR US's research-team model figures print `BRL ` and no `$`; a USD figure keeps `$`; a figure with no known currency prints no symbol); BATS LN's Thesis-tab segment tables no longer show an empty `Period 4` column (one sentence says why instead); and a `--` cell in the Model tab's Key Figures table shows its reason in words (the served reason, or `Not served for this name`). Round 104's header changes (USD as `$`, header dash reasons, the derived forward P/E) are already on PROD. This walk is the read of those on PROD: PBR US and BATS LN are both in the draw.
 
-The local build of the PROD release commit is ALREADY RUNNING: portal PROD `0910f4ad` (the release that carries the currency-symbol and reasons feature), your nested portal worktree `C:/dev/wk-resapp-420/portal`, `bun run dev:live --port 5174`, started by the issuer. DO NOT start, stop or restart it; check `curl -s -o /dev/null -w "%{http_code}" http://localhost:5174/` reads 200 before each walk and if it does not, STOP and file a BLOCKING row (never use another port: portal dev builds use 5174 ONLY).
+The local build of the PROD release commit is ALREADY RUNNING: portal PROD `0910f4ad` (the release that carries the currency-symbol and reasons feature), your nested portal worktree `C:/dev/wk-resapp-440/portal`, `bun run dev:live --port 5174`, started by the issuer. DO NOT start, stop or restart it; check `curl -s -o /dev/null -w "%{http_code}" http://localhost:5174/` reads 200 before each walk and if it does not, STOP and file a BLOCKING row (never use another port: portal dev builds use 5174 ONLY).
 
 THE DRAW is deterministic and PREPARED: the 93 resolved names with an exact-key pack, sorted by sha256(walk date + ' ' + key), the first ten (AC1 prints it; the same ten are committed in `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round104/walk_draw_20261014.json`). The walker types each name's search text (`8316 JP`, `NKE US`, ...) into the page and, for each name, walks the overlay, the timeline day, Thesis, Exec Management, Peers, Model (with its version selects) and Posture, screenshots every step and prints in-page checks. THE CHECKS ARE POINTERS, NOT THE VERDICT: the walk grades nothing.
 
@@ -56,23 +56,23 @@ Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: i
 ## 3. SURFACES
 
 <paths>
-org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~420/
+org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~440/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
 ## 4. PROOF OF SPEC (literal; timeout 1500)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-bl-3"><invocation>cd C:/dev/wk-resapp-420 &amp;&amp; python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round103_prep/checks/r103_walk_draw.py" --census "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round104/census_v3.json" --date 2026-10-14 --out "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~420/walk_draw.json"; echo "exit=$?"</invocation><expect>ten rows from `1  8316_JP_Equity` to `10  ENEL_IM_Equity`, the line `R103 WALK DRAW: 10 of 93 drawn (date 2026-10-14)`; and exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="AMGT-bl-3"><invocation>cd C:/dev/wk-resapp-420 &amp;&amp; timeout 590 node ".claude/skills/ui-walk/walk.mjs" --route /security-analysis --security "8316 JP" --security "NKE US" --security "BATS LN" --security "GOOGL US" --max-minutes 9 > "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~420/walk_A.txt" 2>&amp;1; echo "exit=$?"; tail -6 "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~420/walk_A.txt"</invocation><expect>`exit=0`, then in the last lines `OK: DISARMED`, a `LOGIN WITH THE WALK PASSWORD AFTER DISARM: HTTP 401 ... -> REFUSED` line and `SUMMARY: ... walk void: no`; and the walk file holds one `STEP <name>-Model` and one `STEP <name>-Exec Management` line for each of the names asked</expect></criterion>
-  <criterion id="AC3" cell_refs="AMGT-bl-3"><invocation>cd C:/dev/wk-resapp-420 &amp;&amp; timeout 590 node ".claude/skills/ui-walk/walk.mjs" --route /security-analysis --security "PBR US" --security "QXO US" --security "COST US" --security "8035 JP" --max-minutes 9 > "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~420/walk_B.txt" 2>&amp;1; echo "exit=$?"; tail -6 "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~420/walk_B.txt"</invocation><expect>`exit=0`, then in the last lines `OK: DISARMED`, a `LOGIN WITH THE WALK PASSWORD AFTER DISARM: HTTP 401 ... -> REFUSED` line and `SUMMARY: ... walk void: no`; and the walk file holds one `STEP <name>-Model` and one `STEP <name>-Exec Management` line for each of the names asked</expect></criterion>
-  <criterion id="AC4" cell_refs="AMGT-bl-3"><invocation>cd C:/dev/wk-resapp-420 &amp;&amp; timeout 590 node ".claude/skills/ui-walk/walk.mjs" --route /security-analysis --security "ISP IM" --security "ENEL IM" --max-minutes 9 > "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~420/walk_C.txt" 2>&amp;1; echo "exit=$?"; tail -6 "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~420/walk_C.txt"</invocation><expect>`exit=0`, then in the last lines `OK: DISARMED`, a `LOGIN WITH THE WALK PASSWORD AFTER DISARM: HTTP 401 ... -> REFUSED` line and `SUMMARY: ... walk void: no`; and the walk file holds one `STEP <name>-Model` and one `STEP <name>-Exec Management` line for each of the names asked</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-bl-3"><invocation>cd C:/dev/wk-resapp-440 &amp;&amp; python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round103_prep/checks/r103_walk_draw.py" --census "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round104/census_v3.json" --date 2026-10-14 --out "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~440/walk_draw.json"; echo "exit=$?"</invocation><expect>ten rows from `1  8316_JP_Equity` to `10  ENEL_IM_Equity`, the line `R103 WALK DRAW: 10 of 93 drawn (date 2026-10-14)`; and exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-bl-3"><invocation>cd C:/dev/wk-resapp-440 &amp;&amp; timeout 590 node ".claude/skills/ui-walk/walk.mjs" --route /security-analysis --security "8316 JP" --security "NKE US" --security "BATS LN" --security "GOOGL US" --max-minutes 9 > "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~440/walk_A.txt" 2>&amp;1; echo "exit=$?"; tail -6 "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~440/walk_A.txt"</invocation><expect>`exit=0`, then in the last lines `OK: DISARMED`, a `LOGIN WITH THE WALK PASSWORD AFTER DISARM: HTTP 401 ... -> REFUSED` line and `SUMMARY: ... walk void: no`; and the walk file holds one `STEP <name>-Model` and one `STEP <name>-Exec Management` line for each of the names asked</expect></criterion>
+  <criterion id="AC3" cell_refs="AMGT-bl-3"><invocation>cd C:/dev/wk-resapp-440 &amp;&amp; timeout 590 node ".claude/skills/ui-walk/walk.mjs" --route /security-analysis --security "PBR US" --security "QXO US" --security "COST US" --security "8035 JP" --max-minutes 9 > "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~440/walk_B.txt" 2>&amp;1; echo "exit=$?"; tail -6 "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~440/walk_B.txt"</invocation><expect>`exit=0`, then in the last lines `OK: DISARMED`, a `LOGIN WITH THE WALK PASSWORD AFTER DISARM: HTTP 401 ... -> REFUSED` line and `SUMMARY: ... walk void: no`; and the walk file holds one `STEP <name>-Model` and one `STEP <name>-Exec Management` line for each of the names asked</expect></criterion>
+  <criterion id="AC4" cell_refs="AMGT-bl-3"><invocation>cd C:/dev/wk-resapp-440 &amp;&amp; timeout 590 node ".claude/skills/ui-walk/walk.mjs" --route /security-analysis --security "ISP IM" --security "ENEL IM" --max-minutes 9 > "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~440/walk_C.txt" 2>&amp;1; echo "exit=$?"; tail -6 "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~440/walk_C.txt"</invocation><expect>`exit=0`, then in the last lines `OK: DISARMED`, a `LOGIN WITH THE WALK PASSWORD AFTER DISARM: HTTP 401 ... -> REFUSED` line and `SUMMARY: ... walk void: no`; and the walk file holds one `STEP <name>-Model` and one `STEP <name>-Exec Management` line for each of the names asked</expect></criterion>
   <criterion id="AC5" cell_refs="AMGT-bl-3" judgment="true"/>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
 
-Commit in your worktree via `.tools/safe-commit.sh --author "0.9.0_WK_AMGT_RESAPP~420 <0.9.0_WK_AMGT_RESAPP~420@opal.agent>" -F <msgfile> -- <paths>` (message file written with the Write tool, never a shell heredoc; confirm with `git log -1`). Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~420/AMGT_RESAPP.TO-AMGT-bl-3.the-ten-name-browser-walk-on-a-local-build-of-the-prod-release-with-the-currency-and-reasons-feature.proof_of_spec.json` with `to_id` equal to the `<to_id>` line above, character for character; record each criterion's `expect` as an ordered regex of the printed lines when the prose has regex-active characters; if the checker refuses the instance for a missing `decomp_ref`, add it from the order's own `<decomp_ref>` block. Run `python .tools/proof-of-spec-check.py <instance>` on the committed bytes and report its verdict line.
+Commit in your worktree via `.tools/safe-commit.sh --author "0.9.0_WK_AMGT_RESAPP~440 <0.9.0_WK_AMGT_RESAPP~440@opal.agent>" -F <msgfile> -- <paths>` (message file written with the Write tool, never a shell heredoc; confirm with `git log -1`). Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~440/AMGT_RESAPP.TO-AMGT-bl-3.the-ten-name-browser-walk-on-a-local-build-of-the-prod-release-with-the-currency-and-reasons-feature.proof_of_spec.json` with `to_id` equal to the `<to_id>` line above, character for character; record each criterion's `expect` as an ordered regex of the printed lines when the prose has regex-active characters; if the checker refuses the instance for a missing `decomp_ref`, add it from the order's own `<decomp_ref>` block. Run `python .tools/proof-of-spec-check.py <instance>` on the committed bytes and report its verdict line.
 
 Report once:
 - the commit hash;
@@ -90,7 +90,7 @@ The `<status>` flip is the issuer's.
 <status>pending</status>
 <round>105</round>
 <workstream>WALK</workstream>
-<slot>0.9.0_WK_AMGT_RESAPP~420</slot>
+<slot>0.9.0_WK_AMGT_RESAPP~440</slot>
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
