@@ -13531,3 +13531,133 @@ name the one known failure instead of silently inheriting it.
   "notes": "Whether a public market-overview path is intended (a landing page) or a leftover is the CTO's call, not this seat's; no CloudFront change is proposed here. If unintended, the remedy is a CloudFront behavior change (a deploy, with its ledger). Either way, a G3 tool must never treat json-tiered/ as an authenticated store. The security-scanner behavior needs one authorizer read before it is classed."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W76-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~76",
+  "surfaced_at": "2026-10-14T14:53:33Z",
+  "one_line": "admit_typed's served-prefix test refuses every security key: harvest_read.admit admits only a ref that starts with a served S3 prefix, so the tool admits the address amgt/security/<key> instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: infra/aws/ec2/opal-gateway/app/harvest_read.py:63-64 @de8bd420d2 -- _served(ref) requires '..' absent and ref to start with a SERVED_PREFIXES member",
+      "CODE: infra/aws/ec2/opal-gateway/app/harvest_read.py:78-80 @de8bd420d2 -- admit refuses with harvest_prefix_not_served when the ref is not served",
+      "CODE: infra/aws/ec2/opal-gateway/app/harvest_published.py @ worktree -- _admission_ref returns ADMISSION_PREFIX + security_key, the admitted address",
+      "TEST: infra/aws/ec2/opal-gateway/tests/test_og_gt5.py test_oggt5_ac02 -- the off-served refusal arm; test_oggt5_ac01 admits amgt/security/ASML_NA_Equity"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "admit_typed (OG-gt-0 base) wraps harvest_read.admit: principal present, Opal user, served prefix; call it FIRST before any S3 call. The tool takes a resolved security_key.",
+  "world_is": "A security key is not an S3 key and no served prefix precedes it, so the served-prefix test refuses every key and the cell cannot be met as written. The worker admits amgt/security/<key>, a served prefix that is the published record's own amgt address; the CTO or the issuer rules whether that address is the right one.",
+  "notes": "No edit to harvest_typed.py or harvest_read.py. The admission address is a judgment and is named in section 2 of the never-widen ask for the three halves."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W76-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~76",
+  "surfaced_at": "2026-10-14T14:53:33Z",
+  "one_line": "The naming builder does not produce the published Lambda's deployed name: name('amgt', None, 'scoped-api', 'lambda') gives amgt-scoped-api-lambda, while the live function is opal-amgt-scoped-api.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: infra/aws/terraform/harvest/scoped-amgt-api.tf:461 @de8bd420d2 -- function_name = \"opal-amgt-scoped-api\"",
+      "CODE: infra/logic/registry/root_map.json:2263-2266 @de8bd420d2 -- opal-amgt-scoped-api, whose evidence grades the canonical form amgt-scoped-api-lambda",
+      "CALL: lib/opal_naming.py name() probed at worktree HEAD de8bd420d2 -- name('amgt', None, 'scoped-api', 'lambda') returns amgt-scoped-api-lambda; name('opal', None, 'amgt-scoped-api', 'lambda') is refused, opal reads as a null prefix",
+      "LIVE: aws lambda get-function-configuration --function-name opal-amgt-scoped-api, read only, rc=0 -- FunctionName opal-amgt-scoped-api, python3.11, LastModified 2026-10-14T13:01:34Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The function name comes from the naming builder output, never typed from memory; name the call used in a comment.",
+  "world_is": "The builder's output for this function is amgt-scoped-api-lambda, not the deployed name. The tool and the grant carry the live literal opal-amgt-scoped-api, with the builder call recorded in a comment; the grant's policy name is the builder's own output.",
+  "notes": "A registry row for the live name is the naming owner's question; the registry is not in this cell's write set, so no row was added."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W76-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~76",
+  "surfaced_at": "2026-10-14T14:53:33Z",
+  "one_line": "harvest_typed.audit_ok writes verdict SERVE only, so the tool's error arm writes its one error audit row through the harvest_read audit writer, reaching the principal through the harvest_typed module's harvest_read attribute.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: infra/aws/ec2/opal-gateway/app/harvest_typed.py:45-47 @de8bd420d2 -- audit_ok writes verdict SERVE only",
+      "CODE: infra/aws/ec2/opal-gateway/app/harvest_read.py:54-60 @de8bd420d2 -- _audit maps any verdict other than SERVE to outcome denied",
+      "CODE: infra/aws/ec2/opal-gateway/app/harvest_published.py @ worktree -- _audit_error reads the principal as ht.harvest_read.get_current_principal() and calls the private harvest_read._audit",
+      "TEST: infra/aws/ec2/opal-gateway/tests/test_og_gt5.py test_oggt5_ac03 -- 4 of 4 Lambda error arms write one ERROR-harvest_published_unavailable row; test_oggt5_ac04 holds: no module-scope boto3, no import of get_current_principal"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "audit_ok(tool, ref, nbytes) is the one audit row of a served call; a Lambda error returns an error dict and writes one audit record.",
+  "world_is": "No harvest_typed helper writes an error verdict. The error row is written by the tool through the private harvest_read writer, with the principal read from the harvest_read attribute of the harvest_typed module rather than through an import.",
+  "notes": "A base-level error-verdict writer would be the clean seam. harvest_typed.py is OG-gt-0's surface and is not edited by this cell."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W76-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~76",
+  "surfaced_at": "2026-10-14T14:53:33Z",
+  "one_line": "safe-apply has no plan mode: it exits 2 on any call without the apply word and tells the caller to run terraform directly; the targeted plan ran through the terraform binary, read only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: .tools/safe-apply.sh has_apply gate @de8bd420d2 -- a call without the apply word exits 2 with 'this wrapper gates terraform apply only; for plan call the terraform binary directly'",
+      "RUN: .tools/safe-apply.sh -chdir=infra/aws/terraform/opal-gateway plan -target=aws_iam_role_policy.gw_harvest_published_invoke, rc=2, read in the worktree at HEAD de8bd420d2",
+      "RUN: terraform -chdir=infra/aws/terraform/opal-gateway plan -target=aws_iam_role_policy.gw_harvest_published_invoke -var market_update_s3_root=<the bronze market_update builder address> -out=<worktree>/.scratch/gt5.tfplan, rc=0, Plan: 1 to add, 0 to change, 0 to destroy",
+      "CODE: infra/aws/terraform/opal-gateway/variables.tf -- market_update_s3_root has no default, so a plan without the -var fails closed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Run a targeted plan through safe-apply plan mode (never bare terraform) and record it: 1 to add, 0 to change, 0 to destroy.",
+  "world_is": "safe-apply has no plan mode. The plan ran through the terraform binary directly, which the wrapper's own message prescribes for non-apply subcommands. No apply was run; the apply stays behind safe-apply apply in a later order.",
+  "notes": "The plan result is 1 to add, 0 to change, 0 to destroy, recorded in section 4 of the never-widen ask."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W76-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~76",
+  "surfaced_at": "2026-10-14T15:09:01Z",
+  "one_line": "The naming limb refuses the literal opal-amgt-scoped-api in harvest_published.py as a NEW out-of-pattern name, so the module and its test cannot land; the live function has no registry row. Held, not worked around.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GATE: .tools/safe-commit.sh naming limb (LGIC_ENFORCE, ENFORCE mode) at worktree HEAD de8bd420d2 -- NAMING REFUSE infra/aws/ec2/opal-gateway/app/harvest_published.py:34 opal-amgt-scoped-api -> amgt-scoped-api: NEW and OUT-OF-PATTERN as API_GW; the whole commit aborted and the files were unstaged",
+      "GATE: same run -- NAMING CONFORMANT for infra/aws/terraform/opal-gateway/harvest_published_invoke_iam.tf:19 gateway-global-harvest-published-invoke-policy, built by name()",
+      "CODE: infra/aws/terraform/harvest/scoped-amgt-api.tf:461 @de8bd420d2 -- function_name = opal-amgt-scoped-api, the live literal",
+      "RULE: CLAUDE.md rule 30 -- a builder refusal is a missing registry row to add under infra/logic/registry/, never a hand-typed workaround; a deliberate departure is an R20 register entry that Andrew acknowledges"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The function name comes from the naming builder output, never typed from memory (OG-gt-5 worker face, section 1, item 1); the module and its test are committed on the worker branch.",
+  "world_is": "The gate grades the literal, and the literal is the live function's name, which the builder cannot produce (row NFRA_OPLGTW-Z-W76-S2). The module and test are held uncommitted in the worktree. The worker did not split the string and did not override the gate. The fix is a registry row or an R20 entry, both outside this cell's write set and both the naming owner's or Andrew's call.",
+  "notes": "The commit-gate also printed UNRESOLVED-LANE for FIRM_ID = 'opal' at harvest_published.py:36 (no file_lanes declaration); advisory in that run. The ruff and py_compile limbs were clean after two fixes in the worker's own files."
+}
+```
