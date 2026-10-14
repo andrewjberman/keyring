@@ -1697,3 +1697,19 @@ Rounds 94 and 95 are terminal (MAY-CLOSE; packets with the CVO). Round 94 built 
 Then `DB-b-180` (round 96, worker `~146`) is re-seated to render the rebuilt sample; its order needs no change (the checker's digit rule was fixed in `5d0a8c2f95`, row W146-S3). **Decisions inside this decomposition (the issuer's, stated):** (a) the components are the reference because they are built, tested and in a branch the CTO's review will read; changing them would re-open three drained cells, while the builder is one file; (b) the household stays the same (the order asserts the household reference hash), so Andrew's sample does not change under him; (c) the records bound to the contract's bytes stay valid through the lineage (0.1.0, 0.2.0, 0.3.0).
 
 **fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~148` (`DB-b-182`).
+
+## 100. ROUND 98, WORKSTREAM B (2026-10-14 ~00:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 msg 7383; the FDRXX pair is SIGNED on both halves at packet sha256 cfc1dd8d, CTO half @d3b576bb67)
+
+The CTO signed the pair and ruled its four questions: (1) the C_06 history discontinuity is ACCEPTED; (2) CASH_USD is a later counted pair, not this release; (3) the pair alone is NOT enough, because Andrew's smoke was on an Inflection client's Investor Reporting holdings page and the COO half says that page's snapshot path is not covered: read where that page gets a position's class, and if it is a separate copy, one rule there under its own pair; (4) the silver label is accepted. Andrew's smoke item closes only on that page reading CASH.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. the apply: ONE S3 object (`etf_classifier.py`) from the live bytes to `e340e07f4e`'s, by the AE applier under the signed pair, ledger first, tests and import smoke before, no chain run in flight, L3 (the first D_04 run read) open for the issuer | `DB-b-183` | FWD-8 class label, FWD-21 | WORLD | the pair (both halves SIGNED) | R98-1 |
+| 2. a READ of where the IR holdings page gets a position's class, whether it shares the gold classifier or its table, and whether it needs its own rule | `DB-b-184` | FWD-8 class label | LOCAL | none | R98-2 |
+| 3. CASH_USD as its own counted pair | the issuer's own act, no cell yet | the same | WORLD | a count, then the pair | none this round |
+| 4. a rule at the IR holdings page's own class source, if `DB-b-184` finds a separate copy | a later cell, under its own pair | the same | WORLD | `DB-b-184` | next round |
+| 5. ledger leg L7 (held until the 2026-10-14T11:41Z fire) | the issuer's own act, no cell | FWD-8 | the fire | none |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the apply is a WORLD order to `0.7.0_AE_CloudOps~IB2`, modeled on `DB-b-165`, because the pair's condition 6 names an AE seat and not a worker; (b) the read is a separate LOCAL cell on its own chain, so the apply does not wait on it and the page's answer does not wait on the apply; (c) the read proposes a rule but writes none, since a rule at a second copy moves served classes and needs its own count and pair; (d) CASH_USD is not cut: the CTO ruled it a later counted pair, and cutting it uncounted would be the unbounded act; (e) the pair's condition 7 (the first D_04 run after the upload READ before the ledger closes) is the issuer's open leg L3, not a cell.
+
+**fanout:** 2 of 2 chains, cap 8. Applier `0.7.0_AE_CloudOps~IB2` (`DB-b-183`) and worker `0.9.0_WK_IRPT_DASHBD~149` (`DB-b-184`).

@@ -84,3 +84,4 @@ Flip `<status>` to `complete` only if every criterion PASSES.
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+<proof_genre>DEPLOY</proof_genre>

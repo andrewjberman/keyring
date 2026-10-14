@@ -8459,3 +8459,55 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "surfaced_at": "2026-10-14T00:21:54Z"
 }
 ```
+
+## IRPT_DASHBD-D2-W146-S4 -- The export document prints to more physical PDF pages than its sheets
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W146-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~146",
+  "surfaced_at": "2026-10-14T00:44:50Z",
+  "one_line": "The export document prints to more physical PDF pages than its sheets: 12 sheets are footed Page n of 12, but the printed PDF holds 18 pages, so six pages of sheet content sit beyond the sheet count.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "portal render/print.css: each performance sheet is one landscape letter page (size 11in by 8.5in, min-height 8.5in, overflow hidden); the document footer reads Page n of 12 on each of 12 sheets.",
+  "world_is": "Printing the export HTML of the real rebuilt sample with headless Edge gave a PDF of 18 page objects against 12 sheet elements (footers Page 1 of 12 to Page 12 of 12). Six physical pages are extra. Whether any spilled text is clipped could not be read: no PDF rasteriser is installed on this device, so the PDF pages were not viewed; the export HTML was viewed in a headless screenshot instead.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~146/render_sample.ts@bb0b6530bd (the harness; run on the rebuilt private sample; counts only)",
+      "portal render/print.css@091ae64e95: @page performance-landscape-letter, .ir-page-performance-landscape-letter, .ir-page overflow hidden",
+      "private export output (counts only): 18 page objects in the PDF; export HTML 12 sheet elements and 12 distinct footer page numbers"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W146-S5 -- On the real rebuilt sample no chart draws a series
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W146-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~146",
+  "surfaced_at": "2026-10-14T00:44:50Z",
+  "one_line": "On the real rebuilt sample no chart draws a series: all four chart slots print their absent words in one paragraph, in the tab and in the export, so the display carries no drawn chart at all.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The round-96 order (DB-b-180 step 3): a chart that draws nothing is a finding for the report and a row. The components draw a chart's series where it holds measured points and print the absent words where it holds none.",
+  "world_is": "In both rendered outputs the four chart elements each carry data-absent and one paragraph of words, with no svg, no bar or line element. The sample holds no series for these four charts, so this is the sample's absence rendered as words, not a drawing fault. Recorded so the issuer decides whether a chart should draw where a measured point exists; no component was edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal dashboard/report/ReportChart.tsx@091ae64e95 and render/performance/report/PerformanceReportDocument.tsx@091ae64e95 (read only)",
+      "private tab and export HTML (counts only): 4 figure elements per output, each data-absent with one paragraph; 0 svg elements in either output"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
