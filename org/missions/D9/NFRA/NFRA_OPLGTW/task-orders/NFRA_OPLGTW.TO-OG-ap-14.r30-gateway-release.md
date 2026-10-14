@@ -177,6 +177,14 @@ commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing
   - Before step 5, confirm ONE gateway release in flight across all worktrees, with the per-tree denominator printed.
   - Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
+- A4 (issuer, 2026-10-14 ~02:0xZ): **PHASE B2 GO re-issued at `92698aea8c`, effective at or after 11:00Z 2026-10-14.**
+  - A3's GO lapsed under C3 when NFRA_MCPORTAL MP-n-4 went live at `b0c75d24f1` (01:31Z). The re-cut `92698aea8c` (on
+    `rel-nfra-oplgtw-r30b`) carries the identical change: patch-id `eac7550c45` for v1 and v2, issuer-measured.
+  - Both halves are RE-SIGNED there: COO ADDENDUM 1 @f58d3d1652, CTO ADDENDUM 1 @1003665c3d (msg 33902).
+  - C1 is discharged. C2 binds. C3 binds on live still `b0c75d24f1` at the act, else the GO lapses again.
+  - The rollback target is `b0c75d24f1`.
+  - Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>37</round>
 <slot>~AE</slot>
