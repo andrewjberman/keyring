@@ -11722,3 +11722,57 @@
   "notes": "Recorded so the CVO reads the census against the pinned sha, not the moving ref."
 }
 ```
+
+## IRPT_ANLREQ-D2-W115-S1 -- a trunk worktree does not check out on this Windows checkout without core.longpaths
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W115-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~115",
+  "surfaced_at": "2026-10-14T00:48:07Z",
+  "one_line": "a throwaway worktree of the trunk HEAD fails to check out on this Windows checkout unless core.longpaths is set",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The AR-y-297 face, steps 3 and 4: check out the trunk HEAD in a throwaway worktree outside the repository and build the release there. The face names no checkout flags.",
+  "world_is": "git worktree add --detach C:/dev/irpt-release-r28/wt-release-4279513f 4279513f95f67fae07d12889df70dc63954a2d5a fails with 'error: unable to create file org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~RA1/AMGT_RESAPP.TO-AMGT-bj-2.redeploy-the-scoped-api-carrying-the-key-scoped-feed-read-from-a-merged-pin-and-drive-its-first-cold-request.proof_of_spec.json: Filename too long' followed by 'fatal: Could not reset index file to revision HEAD' (default core.longpaths off). The same add with git -c core.longpaths=true returns rc 0 and a clean status (0 lines). The base 97d2d4bede (the control worktree) checked out without the flag. The build itself needs no long path: the ticket_center folder is short.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git worktree add --detach C:/dev/irpt-release-r28/wt-release-4279513f 4279513f95f67fae07d12889df70dc63954a2d5a (first attempt: 'Filename too long', rc 128; retry with -c core.longpaths=true: rc 0)",
+      "git -C C:/dev/irpt-release-r28/wt-release-4279513f status --porcelain (0 lines after the longpaths add)",
+      "infra/aws/lambda/ci/build-and-upload.sh@4279513f95 (guard count 8; the build ran BUILD_ONLY and wrote the zip)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded because the order's checkout step does not carry the flag. The release record names the flag and the worktree path. No repository config was changed; the flag is per command."
+}
+```
+
+## IRPT_ANLREQ-D2-W115-S2 -- the opal-ticket-api map note names a deployed artifact that is not the live bytes
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W115-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~115",
+  "surfaced_at": "2026-10-14T00:48:07Z",
+  "one_line": "the opal-ticket-api entry _note in the source map says the deployed bytes are 59874 B with sha256 96bd2df5...f6a7; the live package is 31405 B",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "infra/aws/lambda/ci/lambda-source-map.json at origin/CLOUD 4279513f95, functions.opal-ticket-api._note: 'Deployed bytes VERIFIED byte-identical to HEAD (59874 B, sha256 96bd2df5...f6a7) by downloading the package and hashing the member'.",
+  "world_is": "The live package (get-function Code, read 2026-10-14T00:15:44Z) is 31405 B with CodeSha256 4sDK8P5mtgodi1IkSfaFQZi1YgmJq6URLeypEcaULu8= and one member lambda_function.py at sha256 4136587a...ef7cf9. The same map entry's artifact_sha256 field is 4sDK8P5mtgodi1IkSfaFQZi1YgmJq6URLeypEcaULu8= and last_deployed_commit is 97d2d4bede, both equal to live. So the _note's byte count and digest describe an earlier artifact from an earlier apply; the note is stale, the structured fields are current.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show origin/CLOUD:infra/aws/lambda/ci/lambda-source-map.json (functions.opal-ticket-api: _note, artifact_sha256, last_deployed_commit)",
+      "aws lambda get-function-configuration --function-name opal-ticket-api (CodeSha256, CodeSize 31405)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~115/r30/OPAL_TICKET_API_BUILD.json (live_read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not acted on. The note names the apply ledger org/critical_paths/change_management/d7-ticketing-wa-we-toe-ticket-center-apply-20260821.md, which this worker did not read. The applier of the next release is not named by this row."
+}
+```
