@@ -5,7 +5,7 @@
  "project": "COMM_ASSIST",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.9",
+ "prd_version": "v0.10",
  "step": 4,
  "brief_ref": "docs/briefs/nfra-ctlpln-seat-roles-and-inbound-work-pipeline-brief-20261007.md@779f5428bc",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13"],
@@ -149,12 +149,17 @@ move is recorded in NFRA_CTLPLN's addendum v0.21. FWD-3 and FWD-4 are new, on An
          SOURCE     Andrew ~14:4xZ, "we'd need to assess how fallbacks work in practice and that would be dependent
                     on muse efficacy, because fallback may no longer be necessary if muse is highly effective" (v0.6)
 
-  FWD-13 muse tells Andrew of each new item for him -- a Teams message or @mention, or a mail that names him -- soon after it lands
-         DONE WHEN  EXERCISED -- one real Teams item and one real mail naming him each reach Andrew as a muse alert, read by him,
-                    each alert carrying the item's age and where it came from, and one item NOT for him producing no alert
-         ACCEPT     the alert source is the dell2 reader folder FWD-6 already serves (no new cloud access for muse); an item
-                    alerts once; an item the assistant cannot read alerts as unreadable, never silently; the text-message path
-                    stays the fallback (FWD-9) until FWD-12 retires it; nothing is sent in his name by an alert
+  FWD-13 muse tells Andrew of each new item for him -- a Teams item in FWD-3's watched set or a mail inside C-MAIL's scope --
+         within 30 minutes of the assistant receiving it
+         DONE WHEN  EXERCISED -- one real Teams item and one real C-MAIL mail each reach Andrew as a muse alert within 30 minutes
+                    of receipt, read by him, each alert carrying the item's age and where it came from; and one item NOT for
+                    him (a Teams message outside FWD-3's watched channels and mentions, or a mail outside C-MAIL: not from the
+                    five firms' domains or not naming him in the body) producing no alert
+         ACCEPT     the alert source is the dell2 reader folder FWD-6 already serves (refreshed every 15 minutes; no new cloud
+                    access for muse); "for him" is exactly FWD-3's watched set plus C-MAIL's mail scope (Andrew 2026-10-08
+                    ~22:5xZ: "it always has to say andrew in the body text somewhere, otherwise i dont care"); an item alerts
+                    once; an item the assistant cannot read alerts as unreadable, never silently; the text-message path stays
+                    the fallback (FWD-9) until FWD-12 retires it; nothing is sent in his name by an alert
          SOURCE     Andrew ~11:4xZ 2026-10-14; FWD-6 (the folder), FWD-9 (fallback), FWD-12 (efficacy)
 ```
 
@@ -295,3 +300,10 @@ FWD-13 is defined in the ENDPOINT section above (text carried there verbatim).
 Where the alert is raised is muse's side (Andrew's operator agent, `ms`), so FWD-13's first cell is a read: what muse watches today
 (the folder's `INDEX.json` / `drafts.json` timestamps over SSH) and what it needs to notice a new item. The design of muse's watch is
 delivered to Muse through Andrew (or `/tdrop` to `muse`), never assumed. The ratified-text half re-signs (an ENDPOINT addition).
+
+## ADDENDUM v0.10 (1.0.0_SA_CTO, 2026-10-14 ~11:5xZ) -- FWD-13 tightened on 3.0.0_SA_CVO~L's refusal of v0.9 (@d2d11f9821)
+
+The three fixes are taken. (1) The mail scope is C-MAIL's, by Andrew's own standing word ("it always has to say andrew in the body
+text somewhere, otherwise i dont care"). His "new emails" is read inside it, not wider. (2) "Soon" is bounded at 30 minutes from
+the assistant's receipt: the dell2 folder refreshes every 15 minutes, which leaves margin for muse's watch. (3) "Not for him" is
+defined as outside FWD-3's watched set or outside C-MAIL. The ratified-text half re-signs.
