@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": "per-box-portal-dev-approval",
   "status": "active",
-  "dep_stage": "EXECUTING",
+  "dep_stage": "ROUND_CLOSE",
   "created": "2026-10-13",
   "registered_under_tree": "2026-10-13",
   "placement": "LAPTOP",
@@ -41,8 +41,8 @@
     "cto": "1.0.0_SA_CTO",
     "coo": "2.0.0_SA_COO~DV (laptop, seated 2026-10-13 ~16:3xZ by 0.0.0_AB_MSTR; laptop COOs 3 of 3: ~C, ~CA, ~DV)"
   },
-  "blocking": "Round 8 issued 2026-10-14: DP-j-1 (the DEV push gate drops its lease and plain test-only exemptions; closer-drive step 5 lands through the merge-forward) with 0.9.0_WK_NFRA_DEVPLN~1, and DP-y-1 (the DT promotes the five Andrew-approved dell2 features, client-facing, SERVED) which waits on act A14a: the integrator pushes the merge-forward of 3635 and 7773 to DEV.",
+  "blocking": "Round 8 drained (2/2 orders complete, proofs VALID; round-close-check MAY-CLOSE): the five Andrew-approved dell2 features are on PROD (DP-y-1) and the DEV push gate dropped its lease and plain test-only exemptions (DP-j-1). Drain-end read to 1.0.0_SA_CTO at org/tier1_exec/2.0.0_SA_COO~DV/deliverables/NFRA_DEVPLN_ROUND8_DRAIN_END_20261014.md; L8 packet with 3.0.0_SA_CVO~L. Waits on the CTO's round-8 analysis; the carried repair list is W1-S19 (never-rules-gate carve-outs) and two DP-j-1 defects.",
   "endpoint_approval_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_160xZ_NFRA_DEVPLN_ENDPOINT_CONFIRMED_ALL_AGREED_PROCEED.md",
-  "last_updated": "2026-10-14T12:05:57Z",
+  "last_updated": "2026-10-14T13:18:07Z",
   "coo_lane": "2.0.0_SA_COO~DV"
 }

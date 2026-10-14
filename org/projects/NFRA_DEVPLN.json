@@ -4,10 +4,10 @@
  "directive": "D0",
  "macro_code": "NFRA",
  "fabric": "laptop",
- "dep_stage": "EXECUTING",
+ "dep_stage": "ROUND_CLOSE",
  "status": "active",
  "name": "Per-box portal DEV work, approved before it reaches DEV, so PROD carries only approved features: each box builds in its own worktree and branch, Andrew approves a feature in one act, the promote ships a chosen set",
  "generated_from": "org/missions/D0/NFRA/NFRA_DEVPLN/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-14T12:05:59Z"
+ "generated_at": "2026-10-14T13:18:09Z"
 }

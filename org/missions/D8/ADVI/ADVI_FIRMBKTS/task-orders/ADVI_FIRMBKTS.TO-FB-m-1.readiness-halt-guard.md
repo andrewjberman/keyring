@@ -11,8 +11,8 @@
 <placeholders>NONE</placeholders>
 <preflight>
 comp-schedule: DECLARED-NOT-APPLICABLE -- the cell edits publisher code and tests only; no rule, schedule or cadence is added or changed (the floor schedule is a separate order).
-comp-iam: DECLARED-NOT-APPLICABLE -- no IAM file is edited; whether the function's role can read the chosen signal key is read at deploy time by the deploying seat (`FB-m-2`), which stops if it cannot.
-comp-adversary: RUN by the issuer -- at base the test file does not exist (AC1 FAIL) and the file is unchanged (AC2 FAIL, zero inserts); the graders reject a changed or removed existing line, more than 120 inserted lines, a test file with fewer than three passing tests, and (for the signal record, read by the issuer) a signal that is the Door 6 marker. Blindness: the tests use faked clients, so they prove the guard's logic and zero-write discipline, not that the signal reads right against the live bucket; `FB-m-2` reads the arms live.
+comp-iam: DECLARED-NOT-APPLICABLE -- no IAM file is edited; the guard reads only objects the function already reads (its dated inputs and its own served snapshots), so no grant changes.
+comp-adversary: RUN by the issuer -- at base the test file does not exist (AC1 FAIL) and the file is unchanged (AC2 FAIL, zero inserts); the graders reject a changed or removed existing line, more than 120 inserted lines and a test file with fewer than five passing tests; the issuer reads the signal record against the CTO's three conditions. Blindness: the tests use faked clients and loaders, so they prove the guard's logic and zero-write discipline, not that the frontier reads right against the live bucket; `FB-m-2` reads the arms live.
 EGRESS CLASS, declared: NONE.
 </preflight>
 
@@ -22,38 +22,31 @@ The Inflection portal publisher is the Lambda `inf-portal-publisher` (source `in
 
 ### 1a. Your slice
 
-1. **Find the readiness signal (read-only).** Read `data/inf/scripts/gold/orion-gold-dispatch.sh` (it writes the marker at about line 1889; it derives `RUN_DATE`; `check_freshness` at about line 500 reads
-   `gold/artifacts/header_metrics.json` field `data_as_of`; the pull-stage sentinel `gold/meta/pull-complete.json` is written at about line 1860; `gold/meta/pipeline-failed.json` on failure; the eclipse status is
-   `gold/eclipse/_meta/dispatch_eclipse_status.json`) and the step scripts it runs. Choose ONE object in `opal-data-inf` that the FULL gold chain writes, that carries the date of the gold it describes, that is
-   written by ONE script only (the "single writer"), that survives the marker's retirement, and that is NOT `gold/meta/pipeline-complete.json` and NOT `gold/meta/pull-complete.json` (written before compute). Read ONE live copy
-   of it (`aws s3 cp s3://opal-data-inf/<key> -` for a small JSON; never a parquet body) to see its real fields. Write `READINESS_SIGNAL.json` and `READINESS_SIGNAL.md` (below). If no object qualifies, file a
-   BLOCKING row saying which candidates you read and why each fails, write the two files with `chosen` null, and STOP: you do NOT edit the dispatch script (it is not in your paths).
-2. **The date the guard checks.** The gold chain's `RUN_DATE` derivation is the truth for "that day's gold". Read how `orion-gold-dispatch.sh` derives `RUN_DATE` and mirror it in the guard (cite the line). Do not import
-   `lib/trading_calendar.py` (the Lambda does not carry `lib/`). An optional event field `readiness_date` (YYYY-MM-DD) replaces the derived date, ONLY to choose which date is checked (it is how the live arm test supplies a date
-   whose gold is incomplete); with no event field the derived date is used.
-3. **Implement the guard in `lambda_function.py`, purely additive.** Add a helper `_gold_ready(expected_date)` and ONE call at the very top of `lambda_handler`, BEFORE the advisor fan-out (the fan-out writes too). When the signal's date
-   is not the expected date, or the signal object is absent or unreadable, the handler: prints exactly one line `READINESS HALT: date=<expected_date> signal=<key> reason=<short reason>`, returns
-   `{"statusCode": 200, "halted": True, "date": "<expected_date>"}`, and does NOTHING else: no advisor invoke, no S3 put, no CloudFront call. When the signal is ready the handler proceeds exactly as today. No existing line of
-   the file changes or is removed (a grader compares against the pinned base blob), and the file gains at most 120 lines. A read error of the signal is a halt, never a pass (fail closed).
-4. **Tests.** Write `infra/aws/lambda/inf-portal-publisher/tests/test_readiness_halt.py`, exactly three tests, using `unittest.mock` to fake the module's boto3 clients (no network, no moto): `test_complete_publishes`
-   (signal ready: the existing path runs; assert the advisor invoke and the snapshot put are attempted), `test_incomplete_halts_zero_writes` (signal one day old: assert NO s3 put, NO lambda invoke, NO CloudFront call and the
-   return value has `halted` true), `test_halt_log_names_date_and_signal` (the one log line contains the expected date and the signal key). If importing the module needs `pandas` or `boto3` that the sandbox lacks, stub them in
-   `sys.modules` before the import inside the test file.
+The CTO RULED the readiness signal (msg 5552): it is the DATA FRONTIER, read from CONTENT, not any marker or sidecar. A first attempt of this cell found that no object the gold chain writes can serve (the marker and pull sentinel are excluded; `gold/artifacts/header_metrics.json` is absent live; `gold/eclipse/_meta/dispatch_eclipse_status.json` is classed TRASH-as-gate in `docs/architecture/MDPF_REMEDIATION_REGISTER.md:198,226`; a new chain object would be a successor marker, which Andrew ruled out). Its records are inherited state: `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~84/READINESS_SIGNAL.md` (read it).
+
+1. **The frontier.** Read, in `lambda_function.py`, how the publisher loads its inputs (`load_all`, line 173; `_load_parquet`, line 82; `_load_parquet_prefix_latest`, line 92; `_load_canonical_nna_all`, line 106) and which keys they read. The DATED inputs are exactly three: client performance (`CLIENT_PERF_KEY`, its `date` column), the latest holdings file under `GOLD_HOLDINGS_PREFIX` (its `date` column), and canonical NNA (the latest `canonical_nna_{date}.parquet` partition; its `date` column). Their frontier date is the MAXIMUM of the date column, read from CONTENT (read only the `date` column with the existing `_load_parquet(key, columns=['date'])`; never the whole table; for NNA read the newest partition only). The undated dimensions (`accounts_dim`, `account_team`, `household_dim`) are EXCLUDED and named as excluded in your record.
+2. **The rule (the CTO's conditions).** Publish only when every dated input reads the SAME date D AND D is greater than the served snapshots' `data_as_of` (read it from the existing `platinum/firm/snapshots/aua_by_*.json` objects: read how `build_snapshots` writes `data_as_of`, cite the line, and read one live copy of one snapshot to see it). Otherwise HALT.
+3. **Four arms, as unit tests:** (i) all three inputs at D and D greater than the served date: publish; (ii) ONE input at D minus one day: halt (the part-written-gold case); (iii) all at D but D equal to the served date (a same-day re-fire): halt; (iv) the served `data_as_of` absent (no snapshot object yet): publish once (the publish itself stamps the date). A read error of any input or of the served object is a halt, never a pass, EXCEPT arm (iv)'s absent served object (a missing snapshot object is the only absence that does not halt).
+4. **Implement the guard in `lambda_function.py`, purely additive.** Add helper code (for example `_dated_frontier()` and `_gold_ready()`) and ONE call at the very top of `lambda_handler`, BEFORE the advisor fan-out (the fan-out writes too). On a halt the handler prints exactly one line `READINESS HALT: <input>=<date> <input>=<date> <input>=<date> served=<date or absent> reason=<short reason>` NAMING EACH INPUT'S DATE, returns `{"statusCode": 200, "halted": True}`, and does NOTHING else: no advisor invoke, no S3 put, no CloudFront call. When ready, the handler proceeds exactly as today. No existing line of the file changes or is removed (a grader compares against the pinned base blob), and the file gains at most 120 lines. There is NO event override and no calendar.
+5. **Tests.** Write `infra/aws/lambda/inf-portal-publisher/tests/test_readiness_halt.py`, exactly FIVE tests, using `unittest.mock` to fake the module's boto3 clients and loaders (no network, no moto): `test_all_at_d_publishes` (arm i: assert the advisor invoke and the snapshot put are attempted), `test_one_input_behind_halts_zero_writes` (arm ii: NO s3 put, NO lambda invoke, NO CloudFront call, `halted` true), `test_same_day_refire_halts` (arm iii, same zero-write assertions), `test_served_absent_publishes` (arm iv), `test_halt_log_names_each_input_date` (the one log line contains the three input names and their dates). If importing the module needs `pandas` or `boto3` that the sandbox lacks, stub them in `sys.modules` before the import inside the test file.
 
 ### 1b. The signal record: `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~84/READINESS_SIGNAL.json`
 
 ```json
-{"order": "FB-m-1", "read_at": "<ISO UTC>", "chosen": {"key": "<object key in opal-data-inf>", "date_field": "<the field that carries the gold date>", "writer": "<script>:<line>", "single_writer": true,
-  "means": "<why this object existing for date D means gold is complete for D>", "part_written_reads": "<what it reads while the chain is part-written>", "claim": "measured|inferred|held|absent"},
- "candidates_read": [{"key": "<key>", "verdict": "chosen|rejected", "reason": "<one line>"}],
- "run_date_derivation": "<script>:<line>: <how RUN_DATE is derived>", "not_read": ["<each thing you could not read, and why>"], "claim": "measured"}
+{"order": "FB-m-1", "read_at": "<ISO UTC>", "ruling": "CTO msg 5552: the data frontier from content",
+ "dated_inputs": [{"name": "client_perf", "key_or_prefix": "<key>", "date_column": "date", "loader": "lambda_function.py:<line>", "claim": "measured|inferred|held|absent"},
+                  {"name": "holdings", "key_or_prefix": "<prefix>", "date_column": "date", "loader": "lambda_function.py:<line>", "claim": "measured|inferred|held|absent"},
+                  {"name": "canonical_nna", "key_or_prefix": "<prefix>", "date_column": "date", "loader": "lambda_function.py:<line>", "claim": "measured|inferred|held|absent"}],
+ "excluded_undated": ["accounts_dim", "account_team", "household_dim"],
+ "served_date": {"object": "platinum/firm/snapshots/aua_by_*.json", "field": "data_as_of", "written_at": "lambda_function.py:<line>", "claim": "measured|inferred|held|absent"},
+ "not_read": ["<each thing you could not read, and why>"], "claim": "measured"}
 ```
 
-Also write `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~84/READINESS_SIGNAL.md` (one page: the chosen object and why, the candidates rejected, the date derivation, what the guard does on each arm).
+Also write `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~84/READINESS_SIGNAL.md` (one page: the three dated inputs and the excluded dimensions, how the served date is read, what the guard does on each of the four arms). Overwrite the earlier `READINESS_SIGNAL.json` and `.md` of this folder.
 
 ## 2. BOUNDS
 
-1. READ verbs only on AWS (`.tools/aws`, `aws s3 cp <key> -` for one small JSON, `head-object`, `list`). No write to AWS, no deploy, no `terraform`, no invoke of any Lambda, no edit of the dispatch script or any file outside
+1. READ verbs only on AWS (`.tools/aws`, `aws s3 cp <key> -` for one small snapshot JSON, `head-object`, `list`; never a parquet body). No write to AWS, no deploy, no `terraform`, no invoke of any Lambda, no edit of the dispatch script or any file outside
    section 3. Print no client name, secret or relationship id (write `<id>`).
 2. The guard changes `lambda_handler` only by an added call at its top and adds helper code; the `build_*`, `load_*` and `_save_json` functions and every existing line stay byte-identical.
 3. Tests fake every AWS client; no test touches the network. Each command is bounded (`timeout 120`).
@@ -71,19 +64,21 @@ org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION
 
 <proof_of_spec>
 Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~84/ADVI_FIRMBKTS.TO-FB-m-1.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="FB-m-1"><invocation>cd C:/dev/wk-firmbkts-84 &amp;&amp; timeout 120 python -m pytest infra/aws/lambda/inf-portal-publisher/tests/test_readiness_halt.py -q</invocation><expect>^3 passed</expect></criterion>
+  <criterion id="AC1" cell_refs="FB-m-1"><invocation>cd C:/dev/wk-firmbkts-84 &amp;&amp; timeout 120 python -m pytest infra/aws/lambda/inf-portal-publisher/tests/test_readiness_halt.py -q</invocation><expect>^5 passed</expect></criterion>
   <criterion id="AC2" cell_refs="FB-m-1"><invocation>cd C:/dev/wk-firmbkts-84 &amp;&amp; timeout 60 python C:/dev/ajb_workspace/org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round8/checks/r8_checks.py guarddiff --root C:/dev/wk-firmbkts-84 --file C:/dev/wk-firmbkts-84/infra/aws/lambda/inf-portal-publisher/lambda_function.py --base-blob 371eb01b42e5c1e4f6ce1c8ddac20071c0636762</invocation><expect>^GUARDDIFF: OK inserted=[0-9]+ changed=0$</expect></criterion>
   <criterion id="AC3" cell_refs="FB-m-1"><invocation>cd C:/dev/wk-firmbkts-84 &amp;&amp; timeout 60 python C:/dev/ajb_workspace/org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_scope.py --root C:/dev/wk-firmbkts-84 --allow org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~84/ --allow infra/aws/lambda/inf-portal-publisher/lambda_function.py --allow infra/aws/lambda/inf-portal-publisher/tests/ --allow org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md</invocation><expect>^ROUND 4 SCOPE: OK [0-9]+ changed, 0 outside, 0 required missing$</expect></criterion>
 </proof_of_spec>
 
-AC1 runs the three arms against faked clients; AC2 proves the guard is purely additive against the pinned base blob of the file; AC3 is the write-surface bound. Whether the signal reads right on the live bucket is read at deploy by `FB-m-2`.
+AC1 runs the four arms and the log line against faked clients; AC2 proves the guard is purely additive against the pinned base blob of the file; AC3 is the write-surface bound. Whether the frontier reads right on the live bucket is read at deploy by `FB-m-2`.
 
 ## 5. WHEN YOU ARE DONE
 
 Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~84/ADVI_FIRMBKTS.TO-FB-m-1.proof_of_spec.json`. Commit the code, the tests and the two signal files FIRST, your rows and the instance second. **Do not flip this order's `<status>`**. Row ids: `ADVI_FIRMBKTS-D1-W84-S<k>`, `k` from 1,
-`surfaced_at` from `date -u +%FT%TZ`. Report once: the chosen signal key and its single writer, the date derivation, the number of inserted lines, AC1 to AC3 and the FULL commit hash.
+`surfaced_at` from `date -u +%FT%TZ`. Report once: the three dated inputs and the served-date field, the number of inserted lines, AC1 to AC3 and the FULL commit hash.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-14 ~13:3xZ):** worker ~84's first attempt applied the STOP branch (merged 53e2f3bae5; no chain-written object qualifies; BLOCKING row D1-W84-S1). The CTO RULED the signal (msg 5552): (b) the data frontier read from content of the three dated inputs, publish only when all read the same D and D exceeds the served `data_as_of`, four arms; (a) a new chain object is refused under Door 6, (c) the eclipse status under the register. The face is rewritten to that ruling; AC1 is now five tests. D1-W84-S1 is disarmed on this cut (its premise, no signal, is resolved by the ruling). Gate limb: none graded (no criterion changed except AC1's expected count, the issuer's own amendment).
 
 **ISSUER NOTES:** workstream READYHALT, a separate scope from round 8's frozen decomposition (CLAUDE.md rule 27), cut on the CTO half's condition C4 (`ledger/NEVER_WIDEN_ROUND8_FIRST_MOVED_TRIGGER_CTO_HALF.md` @1709a6e779, msg 5536): before act 3 of `FB-l-5` the floor gains the 49 Financial shape's readiness halt, a signal that is NOT the Door 6 marker, arms complete / incomplete / logged reason. The form chosen here is the CTO's first option, a guard in the publisher, which needs its own pair at deploy (`FB-m-2`). Class WORLD by the path floor (`infra/aws/**`); the cell deploys nothing.
 
