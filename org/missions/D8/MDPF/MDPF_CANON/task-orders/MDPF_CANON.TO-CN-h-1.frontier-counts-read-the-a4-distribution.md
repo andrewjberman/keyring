@@ -171,7 +171,7 @@ state both branches, and record prior VersionIds. Cut it after the fold's first 
   `worker-light`: about 40 product lines and one behaviour (CN-d-1 and CN-d-2 were light at the same size).
 - **Fanout:** one cell, one chain, slot ~17. Base box/dell1.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <to_id>MDPF_CANON.TO-CN-h-1</to_id>
 <slot>~17</slot>
