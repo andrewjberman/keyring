@@ -38,6 +38,42 @@ ruled. First issuance when the v0.6 half signs: `2 of 2 chains`, cap 8. The firs
 tf-2) edit one file, `lambda_function.py`: they take ONE worker chain or two disjoint functions under one merge order, never two
 parallel workers on the file; the issuance states which.
 
+## WIRE CONTRACT (fixed by the issuer at the cut; every order cites it; a change is an AMENDMENT to each order it touches)
+
+PRD v0.6 C-MEETING-REQUEST, C-TRADE-REQUEST, C-ATTACH, C-FIRM-CHOICE, C-FENCE. Three new routes, all on the existing API, authorizer and
+CloudFront behavior `/api/scoped/tickets/*`:
+
+1. `POST /api/scoped/tickets/{ticketId}/meeting` (route name `meeting`). Body: `{"action":"confirm","time":"<one of the ticket's
+   answers.proposed_time_1..3>"}` or `{"action":"propose","times":["<text>", ...]}` (1 to 3 non-empty strings, each at most 200 characters).
+   Caller: an INTERNAL human whose email is in the ticket's `routing.primary` (the coordinator); anyone else 403. Ticket: type
+   `meeting_request`, status not `completed`, else 409. Effect: sets `meeting = {"status": "confirmed"|"rescheduled", "time": <string or
+   null>, "proposed_times": [<strings>], "by": <email>, "at": <iso>}` with a condition that the status is not `completed`, appends ONE
+   event row (`meeting_confirmed` or `meeting_proposed`), changes nothing else (the ticket stays open; `complete` is the existing route).
+   200 returns `{"ticket_id": ..., "meeting": {...}}`. A confirm whose `time` is not one of the three answers: 400. `get_one` and `list`
+   return the `meeting` member whole.
+2. `POST /api/scoped/tickets/attachment-upload` (route name `attachment_upload`). Body: `{"firm":"<firm id>","filename":"<name>",
+   "content_type":"<mime>","size":<int bytes>}`. Caller: an INTERNAL human; `firm` must pass `_create_firm_allowed(pc, actor, firm)`
+   exactly as CREATE does (the allowed list AND the caller's own PROFILE scope; C-FIRM-CHOICE: the same server check, the choice never
+   the body's say-so). `content_type` one of `application/pdf`, `text/csv`,
+   `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`; `size` an integer from 1 to 10485760; the filename's extension
+   (`.pdf`, `.csv`, `.xlsx`) must agree with the type. 200 returns `{"upload_url":"<presigned PUT, 300 s>","attachment":{"key":
+   "<prefix><32 hex>/<safe filename>","filename":..., "content_type":..., "size":...}}`, where `<prefix>` is `KEY_TEMPLATE.format(firm=<firm>)`.
+   The presign is for exactly that key and content type. The bucket is env `TICKET_ATTACH_BUCKET` and the key template is env
+   `TICKET_ATTACH_KEY_TEMPLATE` (it contains `{firm}` exactly once and ends with `/`; its value is the builder output of
+   `TO-R18-TR1`, for example `portal/{firm}/bronze/ticket-attachments/trade-form/`); either unset or malformed: 503 and nothing
+   presigned. Bytes never pass through the Lambda.
+3. `GET /api/scoped/tickets/{ticketId}/attachment` (route name `attachment_open`). Caller and fence exactly as `get_ticket` (C-FENCE);
+   the ticket must carry an `attachment` whose `key` starts with `KEY_TEMPLATE.format(firm=<the ticket's answers.firm>)`, else 404. 200 returns
+   `{"url":"<presigned GET, 300 s, Content-Disposition attachment with the filename>","filename":..., "expires_in":300}`.
+
+`trade_request` CREATE (existing `POST /api/scoped/tickets`, internal human): `answers.firm` (required, in `allowedFirmIds`) and
+`attachment` = `{"key","filename","content_type","size"}` exactly the member set the upload route returned; the key must start with
+`KEY_TEMPLATE.format(firm=<answers.firm>)` and every other member is re-checked (type list, size cap, extension). The old trade questions (`fund`,
+`weights_as_of`, `trade_comments`, `attestations_confirmed`) stay in the definition as NOT required, so a held engine-path ticket
+still reads. No call to the trade engine. `meeting_request` CREATE: `answers` = firm (required, `allowedFirmIds`), `who` (text,
+required), `purpose` (text, required), `proposed_time_1` (text, required), `proposed_time_2` and `proposed_time_3` (text, optional).
+`ROUTING_MATRIX.meeting_request.primary` = `["jeanette@opalinvest.com"]`.
+
 ## Rule 24 record
 
 - **MECE over FWD-11's DONE WHEN.** Domain: the sentence (files, lands in the coordinator's queue, confirms or proposes, the filer sees
