@@ -18,6 +18,7 @@ TESTS = [
     "test_a_held_name_never_breaks_the_unresolved_fold_and_only_a_rejected_relock_opens_a_row",
     "test_a_window_only_trade_mismatch_holds_the_name_even_when_the_combined_relock_passes",
     "test_a_name_whose_trades_all_predate_the_stored_window_is_not_held_by_the_combined_check_and_is_listed_without_relock",
+    "test_a_name_with_some_trades_before_the_stored_window_is_not_held_by_the_combined_check_and_is_listed_without_relock",
 ]
 
 if __name__ == "__main__":
