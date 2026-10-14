@@ -13693,3 +13693,63 @@
   "notes": "Resolves IRPT_ANLREQ-D2-S100. The lesson stands: a pair that grants a read on an encrypted table reads the table's encryption as well as the role's policy."
 }
 ```
+
+## IRPT_ANLREQ-D2-W133-S1 -- BLOCKING: the grant excludes two existing test files that pin the staff behaviour AR-y-325 reverses; the TicketCenter folder reads 3 fail after the cell's change
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W133-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~133",
+  "surfaced_at": "2026-10-14T16:40:17Z",
+  "one_line": "BLOCKING: AR-y-325's change (an Opal staff filer chooses the firm; the staff-not-filing sentence leaves the render path) turns three existing TicketCenter tests red, and the two files that hold them are outside the order's grant; AC1 (folder 0 failed) cannot print PORTAL-TESTS-OK.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "TO AR-y-325 step 3: the files you must touch are among AnalysisRequestParts.tsx, analysisRequest.ts and TicketCenter.tsx plus the NEW test file; any other file is a BLOCKING row. Step 4(b): partner filingFirm is unchanged on every case the existing tests pin. ACCEPTANCE AR325-y-AC1: the folder run must show 0 failed.",
+  "world_is": "With the change applied (portal worktree, uncommitted, base origin/PROD 6a5926fc1194e1ce37e35ff267e5cf4914d9c172): bun test src/pages/TicketCenter gives 118 pass, 3 fail, 121 tests across 23 files (.scratch/folder_after.txt). The three failures are pre-existing assertions of the staff behaviour the cell removes: (1) src/pages/TicketCenter/__tests__/analysis-firm-c-firm.test.tsx, test '(d) an Opal-internal caller sees the filing-not-for-staff sentence...' (line 71 expects the staff sentence); (2) the same file, test 'the page derives the filing firm...' (line 93 expects the staff sentence in AnalysisRequestParts.tsx); (3) src/pages/TicketCenter/__tests__/analysis-firm-choice.test.tsx, test 'an internal caller is offered the READY firms of the Global context...' (line 131 expects one select for an internal caller; the Firm control is a second select). The worker edited neither file: they are not in <paths>.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/__tests__/analysis-firm-c-firm.test.tsx:69-94 (pre-change text at 6a5926fc1194e1ce37e35ff267e5cf4914d9c172)",
+      "portal/src/pages/TicketCenter/__tests__/analysis-firm-choice.test.tsx:129-135 (pre-change text at 6a5926fc1194e1ce37e35ff267e5cf4914d9c172)",
+      ".scratch/folder_after.txt (bun test src/pages/TicketCenter output after the change, 118 pass 3 fail)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not fixed by the worker. The remedy belongs to the issuer: amend the grant to name the two test files (their pinned staff assertions retire with the cell), or re-cut the cell so the staff sentence is kept as a non-render constant. The worker stopped per the order's STOP rule before the commit, the candidate branch and the proof instance."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W133-S2 -- OBSERVATION: the premise that an internal caller reads 'Choose the firm this request is filed under.' is not PROD's behaviour; PROD never loads the firm list for staff, so the hold reads 'Your firms are still loading.'
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W133-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~133",
+  "surfaced_at": "2026-10-14T16:40:17Z",
+  "one_line": "At origin/PROD an Opal staff caller's firm list is null for good: the directory-context load is skipped for internal callers, so the create form's hold reads 'Your firms are still loading', not 'Choose the firm this request is filed under.'",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-325 THE CELL: 'submitHeldReason ... reads Choose the firm this request is filed under. with nothing to choose'. Step 2 (a): say what firms holds for an INTERNAL user (null, empty, or a list) and which call loads it.",
+  "world_is": "firms is null for an internal caller at origin/PROD: TicketCenter.tsx:305-306 returns before loadAllowedFirms when internal, so no call loads it. submitHeldReason (analysisRequest.ts:221-224) therefore reads 'Your firms are still loading. Wait for them, then choose one.'; its 'Choose the firm this request is filed under.' line (analysisRequest.ts:227) is reached only with a non-empty list. The served list for staff already exists: loadAllowedFirms(client, true) (TicketCenter.tsx:97-114) reads the Global context's READY firms (selectedTenant global), the same resolveDirectoryContext call InvestorReporting/index.tsx:111-112 makes. For a partner, loadAllowedFirms(client, false) reads permittedFirms. No new endpoint is needed for the chooser.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx:304-316 at 6a5926fc1194e1ce37e35ff267e5cf4914d9c172 (the early return for internal)",
+      "portal/src/pages/TicketCenter/analysisRequest.ts:217-230 at 6a5926fc1194e1ce37e35ff267e5cf4914d9c172 (submitHeldReason)",
+      "portal/src/pages/TicketCenter/TicketCenter.tsx:97-114 at 6a5926fc1194e1ce37e35ff267e5cf4914d9c172 (loadAllowedFirms, Global READY firms)",
+      "portal/src/pages/InvestorReporting/index.tsx:111-112 at 6a5926fc1194e1ce37e35ff267e5cf4914d9c172 (the composer's Global directory read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded because the order's premise differs from PROD's behaviour. The AR-y-325 change removes the early return, so the premise becomes true in the form the cell asks for."
+}
+]
+```
