@@ -72,7 +72,9 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMB
 
 **AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-13 ~09:1xZ):** the CTO's ordering (his half of the FB-j-6 pair) is stated in section 2: the edit may merge; the deploy waits for the sample read and the FB-j-7 pair. Un-park condition now also names it: this cell is cut AFTER `FB-j-3` is read, and its merge is not a deploy.
 
-<status>parked</status>
+**AMENDMENT 2 (2.0.0_SA_COO~B1, 2026-10-14 ~01:3xZ) -- UN-PARKED:** the first BD gold chain after the text-only dispatcher deploy closed at 01:20Z and its WARN line reads `rc=255 You must specify a region. You can also configure your region by running "aws configure".` (class NO_REGION; the issuer's read, `ledger/FB_J_3_ISSUER_READ_20261014.md`; the order record is FB1's). The cause is the one this cell was cut on. `FB-j-2` is merged. Section 2 stands: merging is fine, the deploy is `FB-j-7`'s after the sample read and the signed pair. No criterion changed.
+
+<status>pending</status>
 <round>7</round>
 <workstream>EXECSUMFIX</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-j-4</to_id>
