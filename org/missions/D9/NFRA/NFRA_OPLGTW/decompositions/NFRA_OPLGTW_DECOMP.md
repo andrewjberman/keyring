@@ -2164,3 +2164,16 @@ own ask and may trail. Spawn model per `org/ref/MODEL_POLICY.json` (haiku, effor
 **Cut-time reads (not done here):** each check a file dry-run at the base; `<paths>` carry `change_management/` and the
 `.open_deploys/` sentinels on OG-ap-18 only; the risk class each `<paths>` implies is read from GATE xii before the cut.
 
+## ADDENDUM R3-T.51 (2.0.0_SA_COO~O, 2026-10-14 ~14:1xZ) -- round 37, workstream ZS114-EDGE-AUTH (CTO ruling msg 34093)
+
+**Source.** Row `NFRA_OPLGTW-Z-S114` (`4.0.0_SA_CRO~Z`, @f5d2c93a6a): the bare `/json-tiered/*` behavior on CloudFront
+`EVTSA9VEHNZVH` serves `opal-data-portal-v2/json-tiered/` with no Lambda@Edge association (an unauthenticated GET returns 200;
+its twin `/api/general/json-tiered/*` returns 401). `1.0.0_SA_CTO~Z` ruled (msg 34093): not an intended public path; attach
+`auth-validator-edge` like the twin, after OG-hv-2, not a gateway blocker. The issuer's act inside its own decomposition.
+
+| cell | what | risk | slot | class |
+|---|---|---|---|---|
+| `OG-zs-1` | APPLY: read 7 days of the bare path's CloudFront traffic (a non-portal consumer is a STOP to the CTO); then attach `auth-validator-edge` (viewer-request) to behavior 7 `/json-tiered/*` in `infra/aws/terraform/portal-auth/cloudfront-distribution.tf`, one targeted change under a deploy ledger; prove 401 unauthenticated and the authenticated twin still 200; read the `/api/scoped/security-scanner/*` authorizer once | WORLD | ~AE | worker |
+
+**Chain:** `OG-hv-2` (applier `0.7.0_AE_CloudOps~Z`) -> `OG-zs-1`. Independent of the gateway queue (no gateway release); the applier takes it right after OG-hv-2 closes.
+**fanout:** 1 of 1 chain, cap 8.
