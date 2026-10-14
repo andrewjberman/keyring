@@ -15464,3 +15464,26 @@ name the one known failure instead of silently inheriting it.
     "notes": "BLOCKING for the final flip only. The code, the tests and the proof instance are complete and valid. The issuer flips the tag, or the CTO grants the path."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W88-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~88",
+    "surfaced_at": "2026-10-14T21:38:34Z",
+    "one_line": "The no-window call measured 48.4 s in this pass, outside the 38-42.5 s range the A1 amendment gives for the pruned call; it still answers under the amended 50 s bound, on a 1.6 s margin.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-OG-gt-9 A1 amendment, commit 43f3b5309f (issuer record face): 'the no-window bound is 50 s -- the silver join is the cost and the pruned call measures 38-42.5 s on this box's link'. Worker face section 4, AC2: the no-window call answers under 50 s.",
+    "world_is": "AC2 re-run at HEAD 8bff3d7c9f, whose code bytes equal 661838f224: 'search ASML: no window 5 article(s) in 48.4 s (want < 50); 7d ending at the newest (2026-10-05) 2 article(s), 1 with a sentiment label, in 16.5 s (want < 40); denominator names partitions read True; envelope whole True'. Earlier after-runs of the same code measured 38.1 s, 39.5 s and 39.4 s (see S3). The spread across runs on this box's link is about 10 s.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: gt9.AC2.sh invoked from the worktree root C:/tmp/wk-oplgtw-88 at HEAD 8bff3d7c9f, read only, box credentials; the output line is quoted in world_is"
+      ]
+    },
+    "notes": "AC2 passes under the amended 50 s bound, so no code change was made. The 38-42.5 s premise in the amendment does not hold for every run on this link; keeping or revisiting the bound is the issuer's call. Relates to S3 (INERT)."
+  }
+  ```
