@@ -260,3 +260,27 @@ fanout:
 **Uncovered, with owners (not holes).** (1) The re-run of the narrated and mangled names through the producer (the 10 narrated names, NESN SW, and any name the re-validate then refuses): the issuer, under the round-104 store half (75 USD ceiling, 42.24 USD spent), after fc-1..fc-3 merge, with the driver's retry rule extended
 to the two new reasons; each key written once by its own run. (2) The full re-validate of all 95 with `--with-inputs`, 0 refused and 0 missing: the issuer, the gate for the landing. (3) The page landing (`AIFILLLAND` `ar-5`, `ar-6`): held until (2) reads 0 refused; `ar-5` (a branch cut, no push) runs meanwhile.
 (4) The CVO's five-name read, including NESN SW and one previously narrated name. (5) Round-106 candidates, not cut: a retry on a reply truncated at max tokens (4 blocks), file-name safety for `*` in `run --out`, source quality (one blog among filings), the spend-ceiling bookkeeping.
+
+## 13. ADDENDUM 4 -- THE HOLD SCOPE `AIFILLHOLD` (round 105), 2026-10-14 ~05:0xZ
+
+The CVO's five-name read on PROD `7db035e4` found 4 of 5 names carrying a stated claim that its cited source does not support (msg 5423); the CTO ruled FWD-41 NOT REALIZED and that the AI-fill blocks come off the PROD page now, until a re-read passes
+(`ledger/CTO_RULING_FWD41_FIVE_NAME_READ_NOT_MET_20261014.md`, ruling 2). The gate refuses a new order into an issued key, so the hold is its own scope of round 105: `<workstream>AIFILLHOLD</workstream>`.
+
+| id | cell | slot | class | risk | write surface | serves |
+|---|---|---|---|---|---|---|
+| `AMGT-ar-7` | the hold: one environment variable on `opal-amgt-scoped-api` makes `ai_fill` read ABSENT for every name; verified on three names; the restore is the same act reversed (a later order) | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | `infra/aws/terraform/harvest/scoped-amgt-api.tf` (one map entry), the change-management entry, the deliverable folder | FWD-41 correctness |
+
+Pair: `ledger/NEVER_WIDEN_ROUND105_AIFILL_HOLD_{COO,CTO}_HALF.md`. One chain, one seat: N = 1 of M = 1, cap 8.
+
+```
+ar-7   (independent; the restore is a later order, released by the CTO when the five-new-name re-read is MET)
+fanout:
+  cap: 8
+  orders_total: 1 (ar-7)
+  chains_total: 1
+  wave_pending: [ar-7 -> 0.7.0_AE_CloudOps~RA1]
+  no_s3_deletes: true
+  egress: none
+```
+
+**Uncovered, with owners (not holes):** the round-106 grounding pass (items 4(a) to 4(f) of the ruling): one issuance by `~R2` after the hold lands; the fc-4 proof instance re-seat (ruling 3): `~R2`, now; the restore of the blocks: the CTO's word after a MET re-read.
