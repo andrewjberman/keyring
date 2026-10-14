@@ -9306,3 +9306,105 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W157-S1 -- the producer reads no gold parquet, so the gold path of the cell has no input
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W157-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~157",
+  "surfaced_at": "2026-10-14T04:03:27Z",
+  "one_line": "The producer reads no gold parquet; its only dated inputs are pickle snapshots in the portal bucket, so the gold path the cell names has no input.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-192 steps 1 and 3: find the gold parquet that the producer reads or writes, and LIST each gold input for a dated daily model series with date= partitions.",
+  "world_is": "At HEAD the producer reads benchmarks/LATEST.json and one data_*_v1.pkl pickle snapshot and writes three served JSON keys; it has no parquet read or write. The yang source has no gold home in the canon (address() refuses it). The LIST of the benchmarks/ prefix returned 229 keys, 218 dated pickles, no date= partition.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-model-portfolio-benchmarks/lambda_function.py@f0ad572779 get_latest_data_pkl_key and load_pkl read the pointer and the pickle; upload_json writes the three keys",
+      "named-prefix LIST s3 opal-data-portal-v2 benchmarks/ (read only, this order): 229 keys, 218 .pkl, 0 date= partitions"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W157-S2 -- a dated daily model series is served beside the period-window object the tool reads
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W157-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~157",
+  "surfaced_at": "2026-10-14T04:03:27Z",
+  "one_line": "A dated daily model series is served as json/benchmarks/model_portfolio_timeseries.json next to the period-window object, outside gold and outside the tool the cell names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-192 Why: the Opal model returns are served as period windows 1D to since-inception, current vintage only, no dated series.",
+  "world_is": "The object mdpf_get_model_benchmarks reads carries no dated series, as stated. The same producer writes a sibling object, json/benchmarks/model_portfolio_timeseries.json, with one row per date and model, and it is present in the bucket (LIST of json/benchmarks/: 6 objects). The tool does not read it. The catalog names it as mp.04.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-model-portfolio-benchmarks/lambda_function.py@f0ad572779 lines 430-431 write the timeseries key; build_timeseries emits a date field per row",
+      "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@f0ad572779 names portal_mdpf_model_benchmarks and the mp.04 timeseries row",
+      "named-prefix LIST s3 opal-data-portal-v2 json/benchmarks/ (read only, this order): 6 objects"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W157-S3 -- address() has no gold home for the yang source, so no Yang gold bucket comes from the canon
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W157-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~157",
+  "surfaced_at": "2026-10-14T04:03:27Z",
+  "one_line": "lib/opal_naming.py address() resolves yang platinum to the served bucket but refuses yang gold, so a builder cannot take a Yang gold bucket from the canon.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-192 bounds: every bucket comes from lib/opal_naming.py address() or the catalog, never from a registry bucket field.",
+  "world_is": "address() for source yang at tier gold of scope global raises no home bucket for tier gold of scope global: yang. The served bucket opal-data-portal-v2 is what address() gives for yang at tier platinum. scopes.json lists 14 scopes and none is a yang product row, so the source-homed composite gold has no bucket for yang.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py@f0ad572779 address() and _home_bucket: source-homed tier resolves through lookup(source) and finds no yang bucket",
+      "infra/logic/registry/scopes.json@f0ad572779 14 scopes, no yang product row",
+      "address('yang','global','platinum',...) returned the served bucket (read only, this order)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W157-S4 -- the lineage map describes SmartX sidecar reads the producer no longer makes
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W157-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~157",
+  "surfaced_at": "2026-10-14T04:03:27Z",
+  "one_line": "The yang lineage map says the producer reads the SmartX daily and monthly sidecars and writes a SmartX realized series; the producer at HEAD has no SmartX read and says the override is removed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "docs/reference/yang-pipeline-lineage-map.md (sections 1a, 1c, 5b, 6.14a and 6.14c) states the producer's reads and writes, including the SmartX sidecars.",
+  "world_is": "SmartX appears in the producer only in comments that say the SmartX override is removed. The served folder still holds _smartx_model_daily.json and _smartx_model_monthly.json with no reader in the producer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-model-portfolio-benchmarks/lambda_function.py@f0ad572779 lines 52-54, 292-296 and 403-406 state the SmartX override is removed",
+      "docs/reference/yang-pipeline-lineage-map.md@f0ad572779 lines 54, 82, 548 and 590 name the SmartX reads"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
