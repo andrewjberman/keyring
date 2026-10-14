@@ -687,6 +687,48 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
       ]
     },
     "notes": "Recorded for the round's test authors. The flag is the package's own mechanism, so no change is made to conftest.py (outside this order's paths)."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W39-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~39",
+    "surfaced_at": "2026-10-14T13:43:51Z",
+    "one_line": "RIV-xc-2 rule 3, read as written, drops the colon of a stop-listed clause terminator; the cell's own example needs it kept",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-xc-2 rule 3: the tokens of FRAME_STOP are removed from the clause; the example 'Gamma Co stands out most: it was sold.' gives '<name> stands out:' (the colon survives).",
+    "world_is": "Removing the token 'most:' by the rule as written also removes its colon, which gives '<name> stands out', not the example's '<name> stands out:'. The cell does not say where the colon goes. Implemented in ai_accounts.py frame_of step 3: a clause that ended in a colon keeps it on the last token that remains. With that, every example in the cell and check AC1 hold (1 passed, rc 0). The literal reading was reasoned from the token rule, not run.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round30/checks/xc2_frame_family_check.py@ca6eedbb6d:78-80",
+        "org/missions/D5/ETFS/ETFS_RIVALS/task-orders/ETFS_RIVALS.TO-RIV-xc-2.frame-families-and-stored-reason.md@ca6eedbb6d (section 1, rule 3 and the examples)"
+      ]
+    },
+    "notes": "Judgement call by the worker. The CVO or the issuer should confirm the colon carry when the cell is re-read; the frame's shape depends on it."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W39-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~39",
+    "surfaced_at": "2026-10-14T13:43:51Z",
+    "one_line": "RIV-xc-2 does not say whether frame_still_shared is set when the one correction raises and the first reply stands",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-xc-2 step 5: a reply that STILL shares the family after the one correction is marked (frame_still_shared), not re-sent; shared_frame_with is stored whether or not the correction succeeded.",
+    "world_is": "When the correction raises, the first reply stands and it still shares the family. The cell names the mark for 'after the one correction' and is silent on a correction that errored. Implemented: frame_still_shared is set, because the standing reply does share the frame; correction_error already records the failure (ai_accounts.py run_chain, still_shared). No test in this order exercises that path.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/ai_accounts.py (run_chain, the except branch and still_shared) at worktree wk-ETFS_RIVALS-39 HEAD ca6eedbb6d plus the uncommitted edit of this order",
+        "org/missions/D5/ETFS/ETFS_RIVALS/task-orders/ETFS_RIVALS.TO-RIV-xc-2.frame-families-and-stored-reason.md@ca6eedbb6d (section 1, step 5)"
+      ]
+    },
+    "notes": "Judgement call by the worker. A test for the errored-correction path would be an added assertion outside the cell's checks, so none was written."
   }
 ]
 ```
