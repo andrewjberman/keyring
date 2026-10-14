@@ -37,8 +37,8 @@ at b0c75d24f1. L8 is at `adjudications/ADJUDICATION_v4.Z.md`.
     "remedy": "Three states, three displays: rc != 0 shows {at, note} (refused); rc == 0 shows 'no' with the pass's at (measured); no pointer shows 'not recorded'. The basis text names which one applies. Closes when the served page reads 'no' for laptop and 'not recorded' for a box with no pointer.",
     "owner": "2.0.0_SA_COO~MP",
     "round": "v4",
-    "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~MP", "round": "v4"},
-    "closed": false
+    "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~MP", "round": "v4"},
+    "closed": true
   },
   {
     "id": "NFRA_MCPORTAL-Z-W2-S8",
@@ -85,8 +85,8 @@ at b0c75d24f1. L8 is at `adjudications/ADJUDICATION_v4.Z.md`.
     "remedy": "A PRD addendum at the GW round's analysis adds the outcome: account (email, plan, organization, never a token) and 5-hour and weekly usage with reset times and claim words, per box. It is then cut.",
     "owner": "1.0.0_SA_CTO~Z",
     "round": "v4",
-    "remediation": {"state": "OPEN", "owner": "1.0.0_SA_CTO~Z", "round": "v4"},
-    "closed": false
+    "remediation": {"state": "REMEDIATED", "owner": "1.0.0_SA_CTO~Z", "round": "v4"},
+    "closed": true
   }
 ]
 ```

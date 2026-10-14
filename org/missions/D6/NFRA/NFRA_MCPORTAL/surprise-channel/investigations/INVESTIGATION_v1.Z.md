@@ -1435,6 +1435,66 @@
       "spec_asserts": "MP-n-1 step 2: the release's admin_fabric_gitstate._compute(), sampled cold on the host before the cutover, reads at or under 10 s; over 10 s STOPS the cell with a BLOCKING row naming the time and the count. BOUNDS 2 adds that a step-2 load failure after the C17 change stops the cell rather than tuning further.",
       "world_is": "16.661 s with 1,346 body fetches: over the bar by 6.661 s, so the cell stops here. C17's own claim is nevertheless met -- the read no longer grows with history length, which AC1 proves at 98 fetches against a tenfold history -- and what remains is a different constraint the order's bar did not separate from it: the 48 h window holds 2,134 records, and reading even 63 percent of them costs more than 10 s.",
       "notes": "For 2.0.0_SA_COO~MP as disarm owner, four options with their measured cost, none of them an alarm (which is under moratorium), and this seat recommends none without the issuer's ruling because BOUNDS 2 reserves the re-cut. (a) NARROW THE WINDOW: WINDOW_HOURS 48 -> 12 would cut the population roughly fourfold on the observed write rate and is a one-constant change, but it narrows what integration_refused and first_seen can see, which the basis fields would then have to state. (b) RAISE THE BAR to a figure the window population supports, which is a PRD question and not a code change -- the served read is 16.7 s against an ALB idle timeout of 60 s, so 10 s was a margin choice rather than a hard limit. (c) STOP _refused EARLIER by a cheaper oracle than a body read: the producer could write a per-box pointer object naming its newest integrate pass, turning that scan from O(window) into one get_object -- the largest win and the only option that touches .tools/fabric-gitstate.py, which this order's BOUNDS 1 forbids this cell from touching. (d) WIDEN FETCH_THREADS, which the order explicitly freezes and which trades latency for connections rather than removing work. Independently of the choice: the 12.4 ms per fetch rate and the 2,134-record window are the two numbers any re-cut should be graded against, and both are in this row so the next cell does not have to re-measure them."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W24-S1",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~24",
+    "surfaced_at": "2026-10-14T17:04:53Z",
+    "one_line": "schwab_entitlement_admin.py has no read or show subcommand: its subparsers are activate, revoke and deny-backfill only, so the pc6 'read/show subcommand' for a principal's ACTIVE grant does not exist; the grant was read by a raw store get instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py at a9ff37d082: _build_arg_parser (lines 440-465) registers sub.add_parser for 'activate', 'revoke' and 'deny-backfill' only; main() dispatches those three and no read path.",
+        "SSM command 9f354b62-a3d5-40b9-9d2d-07003983a79d on i-07dccb1615503ac99 read the profile and grant records with app.access_state AccessState.get (probe deliverables/0.9.0_WK_NFRA_MCPORTAL~24/pc6_probe.py; output pc6_served_probe_stdout.txt)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The operator entitlement command ops/schwab_entitlement_admin.py exposes a read/show subcommand that reads a principal's ACTIVE grant from the store, for the MP-pc-6 independent store read.",
+    "world_is": "The command exposes no read-only subcommand; every subcommand is a write through access_state.operator_transact. A grant can be inspected only through app.data_entitlement and app.access_state reads, which the probe used directly."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W24-S2",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~24",
+    "surfaced_at": "2026-10-14T17:04:53Z",
+    "one_line": "The worker holds no operator identity: the pc6 store read ran under the host's gateway instance role (the role the served page reads with), not the operator role opal-gateway-access-admin that the entitlement command's header requires.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py check_operator_identity (OPERATOR_ROLE_NAME = opal-gateway-access-admin) refuses any other caller identity, including opal-gateway-role.",
+        "SSM command 9f354b62-a3d5-40b9-9d2d-07003983a79d ran as ec2-user under the instance role (the pc5 probe pattern); the store side is read by AccessState.get, not by the page's current_access path, but through the same identity."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The independent read of the principal's ACTIVE grant runs under the operator role opal-gateway-access-admin through the existing operator read path, so the store side is read by an identity other than the served page's.",
+    "world_is": "The only identity the worker can reach is the host instance role. The store side is independent of admin_people._compute's logic and its current_access call, but it shares the served page's identity and store client."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W24-S3",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~24",
+    "surfaced_at": "2026-10-14T17:21:27Z",
+    "one_line": "The close run's proof flip (<status> to complete on NFRA_MCPORTAL.TO-MP-pc-6) names the task-order file, which is outside this worker's <paths>, so the flip is not made on this branch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pc-6.fwd21-read-close-run.md at a9ff37d082 names <paths> = deliverables/0.9.0_WK_NFRA_MCPORTAL~24/** and surprise-channel/investigations/** only; the order file itself carries <status>pending</status>.",
+        "AC1 PASS (pc6.AC1.sh exit=0) and the instance validates rc=0, so the only open step is the status flip."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "On PASS the proof-of-spec instance is committed together with the task order's <status> flipped to complete.",
+    "world_is": "The task-order file is not in this worker's write grant (the deliverables folder and the investigations folder only), so the worker does not edit it. The order stays pending on wk-NFRA_MCPORTAL-pc-24 and the issuer owns the flip."
   }
 ]
 ```

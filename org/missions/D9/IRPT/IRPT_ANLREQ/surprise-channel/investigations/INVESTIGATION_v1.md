@@ -13693,3 +13693,538 @@
   "notes": "Resolves IRPT_ANLREQ-D2-S100. The lesson stands: a pair that grants a read on an encrypted table reads the table's encryption as well as the role's policy."
 }
 ```
+
+---
+
+## IRPT_ANLREQ-D2-W135-S1 -- The order's Q3 premise, that the resident already holds a ticket-service port or secret, does not hold in the code: the packager attach refuses PACKAGER_PRINCIPAL_UNSET and no tracked packager binding exists
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W135-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~135",
+  "surfaced_at": "2026-10-14T16:52:49Z",
+  "one_line": "The order's Q3 premise, that the resident already holds a ticket-service port or secret, does not hold in the code: the packager attach refuses PACKAGER_PRINCIPAL_UNSET and no tracked packager binding exists (OBSERVATION, INERT)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-326 Q3: name the smallest existing port or secret the resident already holds toward the ticket service (live_ticket_ports config keys api_base and secret_name, the packager's svc-irpt-packager token), and say whether that identity could read a ticket by id.",
+  "world_is": "No such held identity exists in the code. live_attach raises PACKAGER_PRINCIPAL_UNSET until AR-v-12's later pair (ycharts/research/opal_packager.py:227-231). live_ticket_ports returns an unset refusal unless a packager member with exactly api_base and secret_name is supplied (opal_packager.py:274-278). The bindings validator (reports/resident_installed.py:98-106) checks a member that no tracked file under infra/aws/lambda/investor-reporting sets: a search for secret_name and api_base returns code lines only, and the one tracked resident_bindings file is a test under org/tier1_exec.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py@d77f69a1bb:227-231 and 274-278",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py@d77f69a1bb:51 and 98-106",
+      "git ls-files -- '*resident_bindings*' at d77f69a1bb: 1 tracked match, org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/test_build_resident_bindings.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+---
+
+## IRPT_ANLREQ-D2-W135-S2 -- The report read's ticket binding compares the asker's ticket_id with a value the client sent on the accepted record, so it binds to a client-chosen id, not to a ticket read
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W135-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~135",
+  "surfaced_at": "2026-10-14T16:52:49Z",
+  "one_line": "The report read's ticket binding (ops/owned_report.py _require_ticket) compares the asker's ticket_id with a value the client sent on the accepted record, so it binds to a client-chosen id, not to a ticket read (OBSERVATION, INERT)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "ops/owned_report.py _require_ticket docstring (lines 67-75): the report read refuses a request filed under a different ticket than the one asking, so the report stays bound to its ticket.",
+  "world_is": "The comparison at owned_report.py:76-77 is equality between the asker's ticket_id and record['ticket_id']. acceptance.py:136-137 copies that field from the client body. submission.py:78-79 checks its shape only, and no ticket read exists (AR-y-326 Q3). A client that files with any well-formed TCK id has that id bound to its own request, so the report binding is only as honest as the client-sent id.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py@d77f69a1bb:67-77",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py@d77f69a1bb:136-137",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py@d77f69a1bb:78-79"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W133-S1 -- BLOCKING: the grant excludes two existing test files that pin the staff behaviour AR-y-325 reverses; the TicketCenter folder reads 3 fail after the cell's change
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W133-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~133",
+  "surfaced_at": "2026-10-14T16:40:17Z",
+  "one_line": "BLOCKING: AR-y-325's change (an Opal staff filer chooses the firm; the staff-not-filing sentence leaves the render path) turns three existing TicketCenter tests red, and the two files that hold them are outside the order's grant; AC1 (folder 0 failed) cannot print PORTAL-TESTS-OK.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "TO AR-y-325 step 3: the files you must touch are among AnalysisRequestParts.tsx, analysisRequest.ts and TicketCenter.tsx plus the NEW test file; any other file is a BLOCKING row. Step 4(b): partner filingFirm is unchanged on every case the existing tests pin. ACCEPTANCE AR325-y-AC1: the folder run must show 0 failed.",
+  "world_is": "With the change applied (portal worktree, uncommitted, base origin/PROD 6a5926fc1194e1ce37e35ff267e5cf4914d9c172): bun test src/pages/TicketCenter gives 118 pass, 3 fail, 121 tests across 23 files (.scratch/folder_after.txt). The three failures are pre-existing assertions of the staff behaviour the cell removes: (1) src/pages/TicketCenter/__tests__/analysis-firm-c-firm.test.tsx, test '(d) an Opal-internal caller sees the filing-not-for-staff sentence...' (line 71 expects the staff sentence); (2) the same file, test 'the page derives the filing firm...' (line 93 expects the staff sentence in AnalysisRequestParts.tsx); (3) src/pages/TicketCenter/__tests__/analysis-firm-choice.test.tsx, test 'an internal caller is offered the READY firms of the Global context...' (line 131 expects one select for an internal caller; the Firm control is a second select). The worker edited neither file: they are not in <paths>.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/__tests__/analysis-firm-c-firm.test.tsx:69-94 (pre-change text at 6a5926fc1194e1ce37e35ff267e5cf4914d9c172)",
+      "portal/src/pages/TicketCenter/__tests__/analysis-firm-choice.test.tsx:129-135 (pre-change text at 6a5926fc1194e1ce37e35ff267e5cf4914d9c172)",
+      ".scratch/folder_after.txt (bun test src/pages/TicketCenter output after the change, 118 pass 3 fail)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not fixed by the worker. The remedy belongs to the issuer: amend the grant to name the two test files (their pinned staff assertions retire with the cell), or re-cut the cell so the staff sentence is kept as a non-render constant. The worker stopped per the order's STOP rule before the commit, the candidate branch and the proof instance."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W133-S2 -- OBSERVATION: the premise that an internal caller reads 'Choose the firm this request is filed under.' is not PROD's behaviour; PROD never loads the firm list for staff, so the hold reads 'Your firms are still loading.'
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W133-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~133",
+  "surfaced_at": "2026-10-14T16:40:17Z",
+  "one_line": "At origin/PROD an Opal staff caller's firm list is null for good: the directory-context load is skipped for internal callers, so the create form's hold reads 'Your firms are still loading', not 'Choose the firm this request is filed under.'",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-325 THE CELL: 'submitHeldReason ... reads Choose the firm this request is filed under. with nothing to choose'. Step 2 (a): say what firms holds for an INTERNAL user (null, empty, or a list) and which call loads it.",
+  "world_is": "firms is null for an internal caller at origin/PROD: TicketCenter.tsx:305-306 returns before loadAllowedFirms when internal, so no call loads it. submitHeldReason (analysisRequest.ts:221-224) therefore reads 'Your firms are still loading. Wait for them, then choose one.'; its 'Choose the firm this request is filed under.' line (analysisRequest.ts:227) is reached only with a non-empty list. The served list for staff already exists: loadAllowedFirms(client, true) (TicketCenter.tsx:97-114) reads the Global context's READY firms (selectedTenant global), the same resolveDirectoryContext call InvestorReporting/index.tsx:111-112 makes. For a partner, loadAllowedFirms(client, false) reads permittedFirms. No new endpoint is needed for the chooser.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx:304-316 at 6a5926fc1194e1ce37e35ff267e5cf4914d9c172 (the early return for internal)",
+      "portal/src/pages/TicketCenter/analysisRequest.ts:217-230 at 6a5926fc1194e1ce37e35ff267e5cf4914d9c172 (submitHeldReason)",
+      "portal/src/pages/TicketCenter/TicketCenter.tsx:97-114 at 6a5926fc1194e1ce37e35ff267e5cf4914d9c172 (loadAllowedFirms, Global READY firms)",
+      "portal/src/pages/InvestorReporting/index.tsx:111-112 at 6a5926fc1194e1ce37e35ff267e5cf4914d9c172 (the composer's Global directory read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded because the order's premise differs from PROD's behaviour. The AR-y-325 change removes the early return, so the premise becomes true in the form the cell asks for."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W133-S3 -- OBSERVATION: the order names the staff-submit check as 'lambda_function.py line 1182' with no path; the file is infra/aws/lambda/ticket_center/lambda_function.py in the workspace repo, and the portal worktree does not carry it
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W133-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~133",
+  "surfaced_at": "2026-10-14T16:55:29Z",
+  "one_line": "OBSERVATION: the order cites the ticket service as 'lambda_function.py line 1182' with no path; the file is infra/aws/lambda/ticket_center/lambda_function.py in the workspace repo (located with comp-find on _create_firm_allowed), not in the portal worktree the order names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-325 step 3: 'the route a staff filer takes ... CREATE ... lambda_function.py line 1182 ... So J7 is PORTAL-ONLY: no Lambda change. Confirm this with the file and lines in your record.' No path for the file is given.",
+  "world_is": "The ticket service source is infra/aws/lambda/ticket_center/lambda_function.py (workspace repo, HEAD 9fb71d9529). Read only: lines 1181-1182 (the SUBMIT answers.firm check), 1217-1262 (create_ticket, the CREATE path the staff form takes), 359-372 and 413-426 (the firm checks). No Lambda change was made; the file is outside the grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:1181-1182 (submit path: answers.firm must be the caller's own firm), read at workspace HEAD 9fb71d9529",
+      "infra/aws/lambda/ticket_center/lambda_function.py:1217-1262 (create_ticket: req_firm = answers firm at 1257; _create_firm_allowed refusal 400 at 1261-1262)",
+      "comp-find '_create_firm_allowed' --files: DEF hit infra/aws/lambda/ticket_center/lambda_function.py (DENOMINATOR 42 hits across 80421 files)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded because the order named a line without its file: the worker had to locate the file. The finding that J7 needs no Lambda change stands on the CREATE path read in S4, not on the path."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W133-S4 -- OBSERVATION, ARMED: the chooser offers every Global READY firm, but the ticket CREATE accepts a staff filing only for a firm inside the principal's allowedFirmIds and profile scope, and the upload door runs before CREATE
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W133-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~133",
+  "surfaced_at": "2026-10-14T16:55:29Z",
+  "one_line": "OBSERVATION: the staff chooser offers the Global READY firms; the ticket CREATE refuses a staff filing for a firm outside the principal's allowedFirmIds or profile scope with a 400, and the upload door has already been called for that firm by then.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "TO AR-y-325 step 2 (b): the chooser's list is the served list an Opal staff user may choose from. Step 3: 'if CREATE refuses a staff filing for a partner firm in a way the source shows, file a BLOCKING row naming the check'; and 'the synthetic staff user of the FWD-1 run needs the chosen firm in its allowedFirmIds (a property of that user, not of this cell)'.",
+  "world_is": "create_ticket refuses with 400 (requester_firm outside the principal's allowed firms) unless _firm_allowed (the principal's allowedFirmIds is ALL or a csv that covers the firm) AND _in_profile_scope (the INTERNAL profile scope is None or contains the firm) both hold. The staff form calls the upload door (analysisRequest.ts:245 and :251, selectedTenant = the chosen firm) before the CREATE (:279), so a refused firm has reached the door first; whether the door checks the firm was NOT read. The page then shows TICKET_FAILED_SENTENCE. An ALL principal passes both checks, so the FWD-1 user is unaffected only if its allowedFirmIds holds the chosen firm. Not BLOCKING: the refusal is conditional on the principal, not on the internal class, and the order itself assigns it to the user.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:359-372 (_firm_allowed: allowedFirmIds ALL or csv; _create_firm_allowed = _firm_allowed AND _in_profile_scope), read at workspace HEAD 9fb71d9529",
+      "infra/aws/lambda/ticket_center/lambda_function.py:413-426 (_resolve_scope and _in_profile_scope: scope None means unrestricted; a firm outside the scope is refused)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:1261-1262 (CREATE refusal 400 'requester_firm ... is outside the principal's allowed firms')",
+      "portal/src/pages/TicketCenter/analysisRequest.ts:245 and :251 (upload door before CREATE) and :279 (createTicket), at 6f4e5f67"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED because the control still offers a served firm the principal may not file under, so a staff filer who picks one sends an upload to the door and is then refused. The disarm is the issuer's: narrow the chooser to the principal's own list, or read the upload door's firm check and record it. The worker did not change either."
+}
+]
+```
+
+---
+
+## IRPT_ANLREQ-D2-W134-S1 -- the layout at 2362755bd3 carries no DRAFT mark and no disclaimer, so the standalone commentary's DRAFT mark is new code here
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W134-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~134",
+  "surfaced_at": "2026-10-14T16:48:00Z",
+  "one_line": "AR-y-327 step 1 says _commentary_section (layout_overview.py about line 1079) is the branded page with the DRAFT mark and disclaimer, which build_commentary_only must reuse. At 2362755bd3 neither the DRAFT mark nor any disclaimer exists in the research tree: _commentary_section emits a Commentary title, the paragraphs and the footer credit only. The DRAFT mark is therefore added by this order as a draft keyword on _commentary_section, default off, so build(..., commentary=...) output is unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "ORDER AR-y-327 step 1 and PRD v0.11 FWD-1 item 4: _commentary_section is 'the branded page with the DRAFT mark and disclaimer', and build_commentary_only carries 'the same brand, logo, DRAFT mark, Opal disclaimer and page chrome that _commentary_section gives today'.",
+  "world_is": "MEASURED at base 2362755bd3: git show of layout_overview.py, case-insensitive grep for draft or disclaim returns two docstring lines only (1080 and 1099) and no DRAFT mark and no disclaimer text. brand/brand.json and the research tree carry no disclaimer text either. The hazard is not live: opal_packager.py live_attach raises PACKAGER_PRINCIPAL_UNSET (line 231 at 2362755bd3), so no commentary PDF reaches a ticket from this code today.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py@2362755bd3 lines 1079-1092 (_commentary_section) and 1131-1132",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py@2362755bd3 line 231 (live_attach raises PACKAGER_PRINCIPAL_UNSET)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+---
+
+## IRPT_ANLREQ-D2-W134-S2 -- no Opal disclaimer wording exists in the repo; the disclaimer rendered by this order is a placeholder for ratification
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W134-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~134",
+  "surfaced_at": "2026-10-14T16:48:30Z",
+  "one_line": "PRD v0.11 C-PACKAGER and ADDENDUM v0.10 item 2 say the DRAFT mark and Opal's disclaimer stay on the commentary PDF, and criterion AR327-y-AC1 asks for the disclaimer text in the HTML. No Opal disclaimer wording exists in the repo, so this order's DISCLAIMER_TEXT in layout_overview.py is a worker placeholder that a seat with the wording must replace before any release.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD v0.11 C-PACKAGER and ADDENDUM v0.10 item 2: the commentary PDF is marked DRAFT and carries Opal's disclaimer; the disclaimer is a stated, existing element that stays.",
+  "world_is": "MEASURED 2026-10-14: a case-insensitive grep for disclaimer over infra/aws/lambda returns map_pdf.py (a performance-disclaimer section of the YCharts map), licence texts and exec-summary prompts; none is an Opal disclaimer for a commentary page. The placeholder wording is DISCLAIMER_TEXT in layout_overview.py, written by 0.9.0_WK_IRPT_ANLREQ~134 and not ratified by any seat.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/prd/IRPT_ANLREQ_PRD.md@98eacceda3 (ADDENDUM v0.10 item 2, the DRAFT mark and Opal's disclaimer stay)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/map_pdf.py@2362755bd3 (the performance disclaimer, not an Opal page disclaimer)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The placeholder is labelled in the page text as pending ratification. Disarm owner: the CRO, who holds the brief half and the Opal wording."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S102 -- DISARMS W133-S1: the grant of TO-AR-y-325 now names the two existing test files
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S102",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T17:14:45Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W133-S1 (the first worker of slot 133 stopped on three existing portal test cases outside its grant).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-325 BOUNDS: a test outside the grant that fails because of the change is a STOP and the issuer amends the grant.",
+  "world_is": "MEASURED by this seat 2026-10-14: the issuer amended the grant (commit 7e8315063f) to name analysis-firm-c-firm.test.tsx and analysis-firm-choice.test.tsx and to re-pin the three cases; the re-seated worker re-ran the whole src/pages/TicketCenter folder: 121 of 121 cases, 0 failed (portal_check.py, re-run by this seat), candidate 6f4e5f671f on origin (ls-remote read).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~133/r40/PORTAL_INTERNAL_FILER_CANDIDATE.json",
+      "amendment commit 7e8315063f"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The grant was amended and the folder runs with 0 failed.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W133-S1."
+}
+```
+
+## IRPT_ANLREQ-D2-S103 -- DISARMS W133-S4: a refused staff firm reaches the upload door first; the FWD-1 filer is minted with the chosen firm in its allowedFirmIds
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S103",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T17:14:45Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W133-S4 (CREATE refuses a staff filing for a firm outside the principal's allowedFirmIds or profile scope, after the upload door was called for that firm).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-325 step 3: the synthetic staff user of the FWD-1 run needs the chosen firm in its allowedFirmIds; a property of that user, not of the cell.",
+  "world_is": "The refusal is conditional on the principal, not on the staff class (W133-S4 reading of create_ticket, _firm_allowed and _in_profile_scope). The only staff filing in FWD-1 is the synthetic user, which the run order mints with the chosen firm in allowedFirmIds and a profile scope that holds it. Whether the upload door itself checks the firm was not read by the worker; the run order reads it before the run (CARRIED, below). The Ticket Center is not shown to client users (Andrew, PRD ADDENDUM v0.6), so no client or partner login reaches this path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_ANLREQ-D2-W133-S4",
+      "PRD ADDENDUM v0.6 items 1 to 3"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The refusal does not arise for the user FWD-1 mints; the one unread fact (the door's firm check) is carried into the FWD-1 run order as a read before the run.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W133-S4. Carried: the FWD-1 run order mints the synthetic staff user with the chosen firm in allowedFirmIds and reads the upload door's firm check first."
+}
+```
+
+## IRPT_ANLREQ-D2-W138-S1 -- the TO asks to replace a comment above COMMENTARY_DISCLAIMER; the only comment is the trailing one on the constant's line
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W138-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~138",
+  "surfaced_at": "2026-10-14T17:34:16Z",
+  "one_line": "AR-y-330 step 2 says to replace the comment above COMMENTARY_DISCLAIMER; at base 6abbfec7cf there is no comment line above it, only a trailing comment on the constant's second line naming surprise row IRPT_ANLREQ-D2-W134-S2. The new two-line comment was written directly above the new constant and the trailing comment went with the prose; the diff is one hunk.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-330 step 2 (TO IRPT_ANLREQ.TO-AR-y-330): 'Replace the comment above it so it says: the approved wording is held for Andrew (call 095e), this label stands in for it, and the approved wording is a release gate for any client delivery.'",
+  "world_is": "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:71 is the DRAFT-mark comment; lines 72-73 carry the constant, and its only comment is the trailing '# placeholder: surprise row IRPT_ANLREQ-D2-W134-S2' on line 73. No line sits above the constant to replace.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:71-73 @6abbfec7cf49384fd99ba5b734567f184f9a997a",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:72-73 @a825824b31f366f0183e8b288c653bd86932b91a (the two comment lines and the label constant)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W138-S2 -- a lone copy of layout_overview.py cannot run the AC2 mutant: load_brand reads HERE/brand, so the mutant copies the research modules and brand/
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W138-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~138",
+  "surfaced_at": "2026-10-14T17:34:16Z",
+  "one_line": "AR330-y-AC2 copies layout_overview.py alone to a scratch folder; that copy cannot load the brand asset, so mutant_check.py copies the research modules and brand/ into .scratch/ar330_mutant (gitignored, outside infra/) and pre-loads the copy as the layout_overview module, printing the loaded path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR330-y-AC2 (TO IRPT_ANLREQ.TO-AR-y-330): 'it copies layout_overview.py to a scratch folder OUTSIDE the product tree with COMMENTARY_DISCLAIMER set back to the old text, runs the new test file against the copy (with the copy first on the import path)'.",
+  "world_is": "layout_overview.py:77 sets PACKAGED_DIR = HERE / 'brand', and load_brand (layout_overview.py:119-127) reads brand.json and the logo from that folder; a lone copy with no brand/ beside it refuses at load_brand. The new test file inserts the research folder at sys.path[0] itself (test file lines 14-17), so a copy placed first on sys.path is shadowed; the copy is therefore pre-loaded in sys.modules as layout_overview. With that, the mutant run FAILS on cases (a), (b) and (d); MUTANT-FIRES requires case (a) among the failures.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:53-55 and 77 @6abbfec7cf49384fd99ba5b734567f184f9a997a",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:119-127 @6abbfec7cf49384fd99ba5b734567f184f9a997a",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_commentary_disclaimer_pending.py:14-17 @a825824b31f366f0183e8b288c653bd86932b91a"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W136-S1 -- a commentary_ready send that raises after the DRAFT is stored is recorded as failed and never re-sent; the redelivery finds the draft and stops
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W136-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~136",
+  "surfaced_at": "2026-10-14T17:38:01Z",
+  "one_line": "A commentary_ready send that raises after the DRAFT is stored is recorded as failed and never re-sent: the redelivery finds the draft and stops, so the I4 handoff to the packager is lost.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~T2",
+  "spec_asserts": "infra/aws/terraform/transcripts/commentary.tf lines 37-40 (I4): after a DRAFT is persisted the handler sends ONE closed commentary_ready message to the commentary_ready queue. lambda_handler.py lines 37-38: a failure after admission is recorded in failed and is not redelivered (one READY, one run). Neither states that an I4 send which raises is left unsent for good.",
+  "world_is": "lambda_handler.py persists the DRAFT (line 341) and then sends (line 344). A raise from the send is caught per record at line 364 and appended to failed (line 366). Only lines 310, 313 and 374 add a batchItemFailures entry, so the SQS message is not returned. A redelivery reaches existing_draft at lines 334-337 and returns draft_exists before any send. Read at HEAD 8d9997b5ab. The Lambda is marked NOT APPLIED (commentary.tf line 2), so this is a source read, not a live one.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/commentary/lambda_handler.py:334-344 @8d9997b5ab",
+      "data/transcripts/scripts/commentary/lambda_handler.py:364-366 @8d9997b5ab",
+      "data/transcripts/scripts/commentary/lambda_handler.py:310, 313, 374 @8d9997b5ab",
+      "infra/aws/terraform/transcripts/commentary.tf:37-40 @8d9997b5ab"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found while reading the bindings for AR-y-328 (record r41/RESIDENT_BINDINGS_READ.json, wiring commentary_ready_send). Not changed here: the commentary Lambda is outside this cell's paths."
+}
+```
+
+## IRPT_ANLREQ-D2-W136-S2 -- the tracked bindings builder writes no opal_map member, while the r19 recipe had an --opal-map step; a listed principal's job would be refused OPAL_MAP_BINDING_REQUIRED
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W136-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~136",
+  "surfaced_at": "2026-10-14T17:38:01Z",
+  "one_line": "The tracked bindings builder writes no opal_map member, while the r19 recipe had an --opal-map step, so a principal on the producer list would be refused OPAL_MAP_BINDING_REQUIRED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "infra/aws/lambda/investor-reporting/reports/resident_installed.py lines 291-293: a listed principal's Opal job needs the bindings opal_map member (path and sha256); a missing one raises OPAL_MAP_BINDING_REQUIRED. Line 64 names the optional binding.",
+  "world_is": "build_resident_package.py bindings dict (lines 81-98) emits no opal_map key. The r19 recipe at org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/r19/recipe_evidence/bin/write_record.py line 143 has an --opal-map step, and RESIDENT_RECIPE_AND_DELTA.json line 79 records a bindings opal_map_source and sha256. Whether the release-29 tarball carries opal_map was not read: the tarball is not in the tree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:81-98 @8d9997b5ab",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py:291-293 @8d9997b5ab",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/r19/recipe_evidence/bin/write_record.py:143 @8d9997b5ab"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found while answering Q4 of AR-y-328. The r30 builder must carry opal_map before the producer list gains an address."
+}
+```
+
+## IRPT_ANLREQ-D2-W136-S3 -- commentary.tf reverses the I3 and I4 queue labels: resource commentary_ready is the analysis_ready queue and commentary_done is the commentary_ready queue
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W136-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~136",
+  "surfaced_at": "2026-10-14T17:38:01Z",
+  "one_line": "commentary.tf names the I3 queue commentary_ready and the I4 queue commentary_done, the reverse of the interface names; its local commentary_ready_queue_name holds the I3 name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "commentary.tf lines 17-20 name the I3 queue analysis_ready (the event source trigger); lines 37-40 name the I4 queue commentary_ready (COMMENTARY_READY_QUEUE_URL).",
+  "world_is": "commentary.tf line 122 declares resource aws_sqs_queue commentary_ready, whose name is the local at line 49 (NAMES ready_queue, analysis-ready); its event source at lines 316-317 is the I3 trigger. Line 159 declares resource commentary_done, whose name is the local at line 54 (NAMES commentary_ready_queue), and the Lambda env at line 303 points COMMENTARY_READY_QUEUE_URL at commentary_done.id. The wiring is correct; the labels are inverted, so a builder that reads commentary_ready in Terraform binds the I3 queue.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/transcripts/commentary.tf:49, 54, 122, 159, 303, 316-317 @8d9997b5ab",
+      "data/transcripts/scripts/commentary/NAMES.json:41, 57 @8d9997b5ab"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found while reading the Terraform for the queue names for AR-y-328 Q3. The wiring is right today; the record names each queue by its NAMES.json entry."
+}
+```
+
+## IRPT_ANLREQ-D2-W136-S4 -- AR-y-328 says the round adds ONE address to OPAL_PRODUCER_PRINCIPALS but names no address, and no tracked file names a new one
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W136-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~136",
+  "surfaced_at": "2026-10-14T17:38:01Z",
+  "one_line": "AR-y-328 asks for the edit that adds ONE address to OPAL_PRODUCER_PRINCIPALS, but the order names no address and no tracked file names a new one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-328 cell text, Q4: the exact edit site for adding ONE address to OPAL_PRODUCER_PRINCIPALS.",
+  "world_is": "The order, the decomposition R40A_Y and the tracked tree name no new address. The only entry is resident_worker.py line 165 (andrew@opalinvest.com), and test_resident_worker.py line 770 pins that single entry. The record gives the edit site and the must-agree list and leaves the address to the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:165 @8d9997b5ab",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py:770 @8d9997b5ab",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-328.resident-release-bindings-read.md (Q4 text, line 37)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The issuer names the address in the r30 cell before any edit."
+}
+```
+
+## IRPT_ANLREQ-D2-W137-S1 -- The page's own doc says the client has no PDF call TODAY; the source has both methods on LiveClient, and neither is on the interface or the fixture plane
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W137-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~137",
+  "surfaced_at": "2026-10-14T17:35:04Z",
+  "one_line": "The doc at portal/src/pages/TicketCenter/AnalysisRequestParts.tsx:302 says the client has no getAnalysisRequestPdf call TODAY; LiveClient defines getAnalysisRequestPdf (investor-reporting.ts:1164) and getAnalysisRequestOriginal (investor-reporting.ts:1176), and neither is declared on InvestorReportingApi (:864) or FixtureAdapter (:1630).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AnalysisRequestParts.tsx:302 at base 9fb149ec07: 'the client has no such call TODAY (the route is not in its operation table)'. AR-y-329's premise repeats it.",
+  "world_is": "At base 9fb149ec07, LiveClient defines both methods (investor-reporting.ts:1164, :1176) and the operation table row for analysis-request-pdf exists (:231, status DECLARED). The interface (:864) and FixtureAdapter (:1630) do not declare them, so the fixture plane cannot open a PDF. The comment is stale against the source.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx:302 @9fb149ec07",
+      "portal/src/api/endpoints/investor-reporting.ts:1164 @9fb149ec07",
+      "portal/src/api/endpoints/investor-reporting.ts:231 @9fb149ec07"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the AR-y-329 read of org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~137/r41/COMMENTARY_PDF_ROUTE_READ.json (q3). No source edited; the correction belongs to the reader cell that touches the page."
+}
+```
+
+## IRPT_ANLREQ-D2-W137-S2 -- The premise that analysis-request-pdf serves the commentary PDF does not hold: the route returns the ANALYSIS report's own protected PDF, keyed by request id
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W137-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~137",
+  "surfaced_at": "2026-10-14T17:35:04Z",
+  "one_line": "analysis-request-pdf is keyed by request id alone and returns only the ANALYSIS report's release.protected_pdf_ref (ops/owned_report.py:303-304); no investor-reporting route reads the AR-y-327 commentary PDF by its pdf_ref or its logical id, so a portal-only change cannot open the Commentary item.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-329 Context: the ticket's pdf_ref is an I7 ref to the standalone commentary PDF, and the Commentary item should open it through the viewer's session via the analysis-request-pdf reader.",
+  "world_is": "OwnedAnalysisReader.pdf (ops/owned_report.py:292-320) reads the READY report and then release.protected_pdf_ref. Its writers are job.py:559 and resident_worker.py:485, both on the vendor path. The commentary PDF is retained under YCHARTS_OPAL_REPORT at commentary_logical_id (ycharts/research/opal_producer.py:237, :321) and is not referenced by the report. Source read only; the live route not called.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:303-304 @9fb149ec07",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py:321 @9fb149ec07",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:485 @9fb149ec07"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Record r41/COMMENTARY_PDF_ROUTE_READ.json q2: can_serve_commentary_pdf no, rides resident (ops/ is a member of the resident package and of the irpt-status Lambda), q4 recommend BACKEND_AND_PORTAL. The disposition is the CVO's."
+}
+```
+
+## IRPT_ANLREQ-D2-W137-S3 -- An OPAL_ENGINE report stores no protected_pdf_ref, so analysis-request-pdf refuses it by name; the contract fixture shows one
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W137-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~137",
+  "surfaced_at": "2026-10-14T17:35:04Z",
+  "one_line": "On the OPAL_ENGINE path the stored ANALYSIS document has release.released_revision None and no protected_pdf_ref (ycharts/research/opal_producer.py:396), so analysis-request-pdf refuses an OPAL report with ANALYSIS_PDF_NOT_RETAINED (ops/owned_report.py:309); the contract fixture _contracts/fixtures/AnalysisReport.v2.opal.valid.json:81 carries a protected_pdf_ref.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "_contracts/fixtures/AnalysisReport.v2.opal.valid.json:81 shows an OPAL document with release.protected_pdf_ref, and ops/owned_report.py:303-309 reads that member for every provider.",
+  "world_is": "From source only: the OPAL producer writes release None (opal_producer.py:396). The non-test grep of ycharts/, ops/ and reports/ finds the protected_pdf_ref writers only at job.py:559 and resident_worker.py:485, both vendor-path. No portal page item calls the route today (the pdf kind is not listed, AR-y-273), so no user path reaches the refusal now. Not read live: whether any stored OPAL report exists.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py:396 @9fb149ec07",
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:309 @9fb149ec07",
+      "infra/aws/lambda/investor-reporting/_contracts/fixtures/AnalysisReport.v2.opal.valid.json:81 @9fb149ec07"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the AR-y-329 read; the live check (does a stored OPAL report exist, and what does the route answer for it) is for the CVO or a later read-only cell."
+}
+```

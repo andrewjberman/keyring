@@ -14446,6 +14446,473 @@ name the one known failure instead of silently inheriting it.
 
 ```json
 {
+  "id": "NFRA_OPLGTW-Z-W78-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~78",
+  "surfaced_at": "2026-10-14T16:50:14Z",
+  "one_line": "hookup_g1.py has no --check mode: its docstring advertises [--check], but the script reads only argv[1] and applies all five file edits on every run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/hookup_g1.py@a05cbc4c55 line 2: docstring 'Usage: python hookup_g1.py <gateway-root> [--check]'",
+      "same file line 5: GW = sys.argv[1].rstrip('/'); a grep for argv returns that line only, so no code path reads a second argument or skips the edit() calls",
+      "0.9.0_WK_NFRA_OPLGTW~78 ran it from the worktree with the gateway root only: printed 'hookup applied: 10 tools', rc 0; committed as 0cda8e2505"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The hookup script's docstring documents an optional [--check] argument for a dry run, and the issuer's note says the edit was dry-run before the cut. TO-OG-gt-7 section 1 describes the script as the single apply step and names no dry-run.",
+  "world_is": "The script has no --check path; every invocation writes all five files. Re-running it on the already-applied tree is not a no-op by inspection: the import and registration anchors and the two list anchors still match, so edit() would insert a second copy of each before the pinned-count asserts fail.",
+  "notes": "The re-run effect is INFERRED from reading edit() and the anchor strings; it was not run. The hookup is committed on wk-NFRA_OPLGTW-78 as 0cda8e2505. Disarm: the merge at OG-ap-18 should take the committed content of 0cda8e2505 and must not apply hookup_g1.py a second time."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W78-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~78",
+  "surfaced_at": "2026-10-14T17:00:10Z",
+  "one_line": "TO-OG-gt-7 bounds say the five hookup files are not this cell's and the issuer lands the registrations at the merge; step 1 and step 4 direct this cell to apply the same hookup and commit it now.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-gt-7.g1-hookup.md@a05cbc4c55 section 2 BOUNDS: 'app/tools.py, app/data_entitlement.py, app/destructive_ops.py and the pinned-count tests are NOT yours: the issuer registers every tool and re-pins the counts at the merge, in one commit. Do not edit them'",
+      "same file @a05cbc4c55 section 1 step 1: 'Apply the prepared hookup ... Run it from your worktree root', and step 4: 'Commit the five files only'",
+      "0cda8e2505 on wk-NFRA_OPLGTW-78 carries the ten registrations, the two name lists and the two count pins that the bounds reserve for the merge"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 2 of the order reserves the registrations and the count re-pins for the issuer's merge commit and says not to edit those files. Section 1 and section 4 direct this cell to apply the same edits and commit them.",
+  "world_is": "This cell applied the prepared hookup on its own branch and followed the procedure. The same ten registrations and pins now exist on the worker branch. If the merge also applies them, each registration and name would appear twice. The duplicate was not measured.",
+  "notes": "The conflict is between two parts of one order. The cell followed section 1 and section 4, since they are the procedure, and named the registrations it applied in its report. The merge owner should reconcile by taking the committed content of 0cda8e2505 and not applying the hookup a second time."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W83-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~83",
+  "surfaced_at": "2026-10-14T15:20:00Z",
+  "one_line": "The order's node-type token IamRole matches no graph node type: the same enumeration with IAM_ROLE scans 297 role nodes, while IamRole scans 0 and exits 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find --corpus aws 'gateway' IamRole (worktree C:/tmp/wk-oplgtw-83, read 2026-10-14): 'DENOMINATOR: 0 hit(s) across 0 aws node(s) scanned [corpus=aws types=IAMROLE]', rc=0",
+      "comp-find --corpus aws -i '<role-reader token pattern>' IAM_ROLE (read 2026-10-14): 'DENOMINATOR: 67 hit(s) across 297 aws node(s) scanned [corpus=aws types=IAM_ROLE]'",
+      "comp-find --help, --corpus aws usage: 'pathspecs = node_type filters (LAMBDA, IAM_ROLE, S3_BUCKET, ...)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-cl-0 section 1 step 1 names the role enumeration as comp-find --corpus aws '<pattern>' IamRole.",
+  "world_is": "The served graph's node-type token is IAM_ROLE. The token IamRole scans 0 nodes and prints a zero denominator with rc 0, which reads as an empty role set. The same pattern with IAM_ROLE scans 297 nodes.",
+  "notes": "Not disarmed by this cell: the order's invocation text is the issuer's, and any cell that cites it is the issuer's to correct. This cell's inventory used IAM_ROLE and the live IAM read described in the next row."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W83-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~83",
+  "surfaced_at": "2026-10-14T15:20:00Z",
+  "one_line": "The served graph's IAM role nodes do not carry S3 grant statements, so a search over the client-data bucket names returns zero of 297 roles; the role inventory had to come from live IAM.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find --corpus aws 'opal-data-assets|opal-data-bd|opal-data-49financial|opal-data-cottonwood|opal-data-portal|opal-data-mdpf|opal-data-etfs' IAM_ROLE (read 2026-10-14): 'DENOMINATOR: 0 hit(s) across 297 aws node(s) scanned' and 'NO HITS'",
+      "aws iam get-account-authorization-details --filter Role (read only, 2026-10-14): RoleDetailList 304, IsTruncated false; inline and attached default-version policy documents read from this call",
+      "build_roles.py and finalize_roles.py in the worker scratch (not committed); output G2_ROLES.json in the W folder"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-cl-0 step 1 enumerates the IAM roles that can read the client-data buckets from the served graph, then probes each candidate live with get-role, list-role-policies and get-role-policy.",
+  "world_is": "The graph models role names, trust principals and managed-policy names, not the inline statements where the S3 grants sit. A bucket-name pattern over the 297 role nodes matches nothing, so the graph cannot be the candidate list for a grant question.",
+  "notes": "One read-only call covered all 304 roles; per-candidate probes over the graph's name matches would have covered only the candidates the name pattern produced. The surface the output states is the one the order names plus the two surfaces in the next row."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W83-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~83",
+  "surfaced_at": "2026-10-14T15:20:00Z",
+  "one_line": "The served graph holds 297 IAM role nodes and live IAM lists 304 roles; the two sets are not reconciled, so a graph-only role inventory is incomplete.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find --corpus aws IAM_ROLE (read 2026-10-14): 'DENOMINATOR: 67 hit(s) across 297 aws node(s) scanned'; 'DRIFT (scanned): DECLARED=283 LIVE-no-DECLARED=11 MULTI_STATE_MANAGED=3'; vintage 'Built from the estate as of 2026-10-14 14:45:38 UTC'",
+      "aws iam list-roles (read only, 2026-10-14): 304 roles"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The served cloud graph is the role enumeration OG-cl-0 uses as its denominator source.",
+  "world_is": "The graph's role count is 297 against 304 live roles at the same hour. Its drift line accounts for all 297 nodes (DECLARED 283, LIVE-no-DECLARED 11, MULTI_STATE_MANAGED 3). Since 297 nodes cover at most 297 of the 304 live roles, at least seven live roles are outside the graph's denominator.",
+  "notes": "This cell reports the live count (304) as roles_scanned and does not attempt to reconcile the sets. The reconciliation is the graph owner's."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W83-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~83",
+  "surfaced_at": "2026-10-14T15:20:00Z",
+  "one_line": "The client-data surface the order names omits the Tax SMA served table and the bucket-wide Black Diamond grants that the live roles hold, so the cell counted both surfaces and the ask input carries them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "G2 census part G2e (org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G2_assets_silver.md, section G2e, added msg 34115): the Tax SMA served table is at opal-data-49financial/mdpf/49financial/gold/taxsma_assets/ and opal-data-cottonwood/mdpf/cottonwood/gold/taxsma_assets/",
+      "live role policies (get-account-authorization-details, read 2026-10-14): object grants on those gold prefixes held by mdpf-49f-taxsma-role and mdpf-cot-taxsma-role; bucket-wide GetObject on opal-data-bd/* held by 11 roles"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-cl-0 section 1 step 1 names the client-data buckets as opal-data-assets silver prefixes (blackdiamond/, orion/, eclipse/, smartx/, schwab/, commonwealth/) and opal-data-bd/silver/.",
+  "world_is": "The Tax SMA served table is a per-firm gold table in two buckets outside the named surface, and eleven live roles hold bucket-wide object grants on opal-data-bd that cover silver/ and every other prefix. Both are client data under G2e and the v3.2 fence.",
+  "notes": "The cell's client_surface (G2_ROLES.json) states the surface it counted. The roles the surface adds are mdpf-49f-taxsma-role and mdpf-cot-taxsma-role, which are not gateway-trusted. The bucket-wide readers are pipeline roles; none is gateway-trusted."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W83-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~83",
+  "surfaced_at": "2026-10-14T15:20:00Z",
+  "one_line": "The 08403355 registry addition cannot be written exactly: the contract label for that master is unruled (O-3), and the sibling registry rows name a bucket the census does not measure for Schwab silver.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/NFRA_OPLGTW_CONTRACT.json lines 6-9: masters map 08242234 to 'SmartX' and 08335338 to 'BlackDiamond'; no 08403355 entry",
+      "G2 census section 3.2 (the CTO ruling calls 08242234 and 08403355 the Tax SMA masters) and section 5 open item O-3 (platform labels conflict)",
+      "infra/logic/registry/scopes.json MASTER rows for 08242234 and 08335338 carry bucket 'opal-data-49financial'; census section 2.2 measures Schwab silver under opal-data-assets/schwab/<master>/",
+      "lib/opal_naming.py validate() on a scratch copy with both proposed edits returns ([], []), the same as the unmodified registry"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The registry proposal lists the exact additions that put master 08403355 into NFRA_OPLGTW_CONTRACT.json and infra/logic/registry/scopes.json.",
+  "world_is": "The additions are exact except two fields: the contract label for 08403355 has no ruling, and the bucket value copied from the sibling rows is not the one the census measures. The gateway IAM already grants the 08403355 dim tables, so the gap is registry-only.",
+  "notes": "The proposal carries the label as a placeholder and the bucket as the sibling value, and names both as open. Neither is decided by this cell; both are the CTO's and the registry owner's."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W83-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~83",
+  "surfaced_at": "2026-10-14T16:55:07Z",
+  "one_line": "Under A2 the Black Diamond 49F client tools have no opal-data-assets silver source for holdings, transactions or fees: the 49F silver there is stale and holds no such table.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "G2 census part G2a (org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G2_assets_silver.md, section G2a (b) prefix census): opal-data-assets blackdiamond/49f/silver/ holds dim_account_xref (11 td), dim_advisor_fee_role (11 td), fact_bd_allocation (39 td) and fact_taxsma_report (61 td) only",
+      "the same census (G2a (b)): the live 49F fees, transactions, allocations, realized, unrealized and prices are written to s3://opal-data-bd/silver/, which A2 (CTO msg 34134) excludes",
+      "calendar re-run in this worktree (lib/trading_calendar.py trading_days_behind): 2026-09-28 gives 11, 2026-08-18 gives 39, 2026-07-17 gives 61"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A2 (CTO msg 34134) names blackdiamond/<firm>/silver/ as the Black Diamond adapter's read surface, so each BD client tool (holdings, transactions, fees) needs a silver table there.",
+  "world_is": "No holdings, transactions or fee-row table exists under blackdiamond/49f/silver/. The 49F tables that carry them are in opal-data-bd, which A2 excludes. The contract therefore refuses 49F holdings, transactions and fees as no_source_49f_a2 and does not source them elsewhere.",
+  "notes": "Not re-routed by this cell. The census (G2a, Repoint after F11) says the 49F sources repoint to opal-data-assets/blackdiamond/49financial/silver/ when the F11 writer move lands; that move is pending. Whether the gap waits for F11 or needs a new silver table is the issuer's and the CTO's call."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W83-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~83",
+  "surfaced_at": "2026-10-14T16:55:07Z",
+  "one_line": "The census names Orion, Eclipse, SmartX, Schwab and Commonwealth tables by logical ids (opal-data-assets/silver/<vendor>/...); the served prefixes are <vendor>/<firm>/silver/<table>/. The first-pass contract used the logical ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "G2 census part G2b (b) prefix census: orion/inflection/silver/ (4,997 objects) and eclipse/inflection/silver/ (544 objects) are the served prefixes; the contract headings use opal-data-assets/silver/orion/inflection/fact_positions",
+      "G2 census part G2c (b) prefix census: smartx/platform/silver/ holds the fact_* tables; the contract heading uses opal-data-assets/silver/smartx_fact_allocation_account_map",
+      "G2 census part G2d (2.2): schwab/<master>/silver/ holds the dim_* and fact_* tables; the contract headings use opal-data-assets/silver/schwab_08242234_dim_asset"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The contract ids the census gives are the table names the adapters read, under opal-data-assets/<vendor>/<firm>/silver/ (A2).",
+  "world_is": "The served keys are <vendor>/<firm>/silver/<table>/ (for example orion/inflection/silver/fact_positions/ and schwab/08242234/silver/dim_position/), the form the IAM grants use. The revised contract names served prefixes and keeps the census id in parentheses where the form differs.",
+  "notes": "A naming difference, not a data difference: no table is missing and no grant changes. The census may wish to name its headings by served key; that is the census owner's call."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W79-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~79",
+  "surfaced_at": "2026-10-14T17:05:00Z",
+  "one_line": "The naming gate's --enforce probe over the twelve S3 bucket, key and prefix literals of portal_models.py graded ONE literal (the bucket, CONFORMANT) and left the eleven key and prefix literals with no verdict, so its PASS does not certify them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PROBE @835f9452c3: python .tools/naming-gate.py --diff org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~79/naming_probe.diff --enforce -> 'NAMING CONFORMANT infra/aws/ec2/opal-gateway/app/portal_models.py:1 opal-data-portal-v2' then 'NAMING-GATE: PASS 1 graded', rc=0 (output in the same deliverables folder as naming_probe_run.txt)",
+      "CONTROL @835f9452c3: the same gate on a diff whose only added line is SCOPE_NAME_PROBE = 'portal' -> 'NAMING-GATE: PASS 0 graded', rc=0 (naming_probe2_run.txt); the gate grades only the names it resolves, not the key or prefix shapes",
+      "PRIOR MEASURE: NFRA_OPLGTW-Z-W77-S4 records a REFUSE on a registered scope token ('harvest'), so the gate does grade registry-held tokens; the key and prefix literals of the order's FIRST ACT are not among them"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's FIRST ACT (NFRA_OPLGTW.TO-OG-pt-1 section 1): the commit-time naming gate REFUSES a NEW out-of-pattern S3 key literal, so writing every key or prefix literal into a staged .py diff and running it with --enforce grades them, and any refusal is a BLOCKING row.",
+  "world_is": "At 835f9452c3 the gate's --enforce run over the twelve literals returned PASS with one graded line: only the bucket name was graded. The eleven key and prefix literals (json/positioning/..., json/market/..., json-tiered/market-overview/...) produced no verdict line. A PASS therefore certifies the bucket only; the gate's own refusal arm for keys was not exercised by this probe.",
+  "notes": "ARMED because a future out-of-pattern key literal in any module would pass the same gate silently. Not fixed by this seat: whether key or prefix literals should be graded, and against which registry, is the naming owner's and the issuer's call. The worker did not split, obfuscate or override any literal; all eleven are typed whole in portal_models.py as the order states. Disarm owner is the issuer per the surprise-channel rule."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W79-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~79",
+  "surfaced_at": "2026-10-14T17:05:00Z",
+  "one_line": "Two objects the order's portal_get_model_positioning and portal_get_market_regime read, opal_aggregate.json and market-regime.json, carry no catalog row; the CRO contract states each needs a catalog row before any tool, and the order does not say whether the catalog gap is to be cleared first.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G3_portal_v2.md @835f9452c3 line 338: opal_aggregate catalog_entry {data_catalog_key: empty, present: false}",
+      "same file line 340: opal_aggregate open_items 'Not certified, not catalogued: needs a catalog row before any tool'",
+      "same file line 677: market_regime catalog_entry {data_catalog_key: channels.market_regime_trending.paths.regime (no artifact row), present: false}; line 678: open_items 'Needs a catalog artifact row'",
+      "order section 1 (NFRA_OPLGTW.TO-OG-pt-1 @835f9452c3): the four tools read both objects; section 2 says the catalog file app/refs/DATA_CATALOG.yaml is NFRA_MCPINDEX's alone"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G3 contract, opal_aggregate (line 340) and market_regime (line 678): each object needs a catalog row before any tool serves it.",
+  "world_is": "The order builds the two tools over those objects with no catalog row present (present: false at lines 338 and 677). The worker reads them as the order says and does not write the catalog, which is NFRA_MCPINDEX's file.",
+  "notes": "ARMED because each live call of the two tools serves an object the contract says is not yet catalogued. Not fixed by this seat: whether the catalog row is a precondition of this cell or a follow-on is the issuer's call. Surfaced, not chased."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W79-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~79",
+  "surfaced_at": "2026-10-14T17:18:18Z",
+  "one_line": "typed_scope.read_json decides gzip by the key suffix only, so a gzip-encoded body under a plain .json key (the portal's served form) raises UnicodeDecodeError; the order says read_json handles the gzip objects, and it does not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SEAM @835f9452c3: infra/aws/ec2/opal-gateway/app/typed_scope.py read_json (lines 159-172): 'low.endswith(\".gz\")' is the only gzip test; a .json key is read as raw bytes and passed to json.loads",
+      "TEST RUN @835f9452c3 (first build): tests/test_og_pt1.py test_ogpt1_ac01 and ac04 failed with UnicodeDecodeError: 'utf-8' codec can't decode byte 0x8b in position 1 (a gzip body under a .json fixture key)",
+      "LIVE @835f9452c3: json/positioning/positioning_data.json, json/positioning/opal_aggregate.json and json/positioning/allocation_summary.json are gzip bodies under .json keys (read-only size probe: decompressed bytes 65204, 13941 and 6570; the contract G3_portal_v2.md lines 269, 326 and 288 name them gzip)",
+      "WORKAROUND, LOCAL: infra/aws/ec2/opal-gateway/app/portal_models.py _read_object sniffs the gzip magic bytes of the body that typed_scope._load_capped returns, under the same cap; no seam file is edited"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order (NFRA_OPLGTW.TO-OG-pt-1 section 1): each served object is one JSON document, some gzip-encoded, which read_json handles; and typed_scope read_json reads .json and .json.gz, capped.",
+  "world_is": "read_json reads .json.gz as gzip and every other .json key as plain JSON. The portal's gzip-encoded positioning and allocation objects sit under .json keys, so read_json cannot read them; a tool built on read_json fails loudly on every call. The OG-pt-1 tools read them through a local reader that sniffs the magic bytes, and the seam is unchanged.",
+  "notes": "ARMED because any future typed tool that calls read_json on those keys fails on each call. Not fixed by this seat: whether read_json should sniff the magic bytes, or the portal should publish these objects as .json.gz, is the issuer's and the seam owner's call; the seam file is outside this worker's write surface."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W79-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~79",
+  "surfaced_at": "2026-10-14T17:18:18Z",
+  "one_line": "The seam's envelope types its denominator as an int, while the order requires the answer to carry trading_days_behind_t1 in its denominator, so the OG-pt-1 denominator is a dict; the envelope does not validate the type, so nothing is refused.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SEAM @835f9452c3: infra/aws/ec2/opal-gateway/app/harvest_typed.py envelope(body, *, as_of, source_keys, denominator: int, absent_reason=None) (lines 94-108): the denominator is stored as given, with no type check",
+      "ORDER @835f9452c3: NFRA_OPLGTW.TO-OG-pt-1 section 1 (answers with a denominator) and section 1 binding correction 1 ('the answer says so in its denominator (trading_days_behind_t1)') and test ac04 ('reports trading_days_behind_t1 of 3 in its denominator')",
+      "LIVE @835f9452c3: the four tools answer denominator as a dict, for example {objects, models, trading_days_behind_t1} (read-only metadata run, .scratch/answer_meta.py)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "harvest_typed.envelope types denominator as int (the count of items), and the order's correction 1 places trading_days_behind_t1 inside the denominator.",
+  "world_is": "The two readings cannot both hold on an int. The worker carries the denominator as a dict of named counts with trading_days_behind_t1 inside it; no consumer in this round reads it as an int.",
+  "notes": "INERT: the annotation is not enforced and the denominator's consumers are the issuer's tests and the portal. Whether the envelope's denominator becomes a named object for the whole seam is the seam owner's call; surfaced, not chased."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W79-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~79",
+  "surfaced_at": "2026-10-14T17:18:18Z",
+  "one_line": "Under the 50 KB projection, portal_get_model_positioning() answers holdings for only 3 of the 5 models (truncated=True) and portal_get_market_regime(include_history=True) answers 731 of 1,065 history points; the order's no-argument shape cannot carry every model's holdings within the cap.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LIVE @835f9452c3, read-only run of .scratch/answer_meta.py: positioning answer truncated=True, projected_to_bytes=49091, body holdings list length 3 while denominator holdings_by_model=5; positioning_data.json current_holdings is 33616 decompressed bytes (size probe)",
+      "LIVE @835f9452c3: regime_history answer truncated=True, projected_to_bytes=51155, history_file length 731 while denominator history_file_points=1065; market-regime-history.json regimeHistory is 48418 bytes",
+      "SEAM @835f9452c3: harvest_typed.project (lines 54-91) pops items off the END of the largest list field until the answer fits PROJECT_LIMIT=51200; the answer is flagged truncated"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order (section 1, the four tools and the 50 KB projection): portal_get_model_positioning answers allocation, holdings and deltas for the five models and the aggregate book in one call with no argument; the seam projects an over-size answer to 50 KB with truncated set.",
+  "world_is": "The five models' holdings alone are 33.6 KB decompressed, and the whole positioning answer exceeds 50 KB, so the projection drops the trailing model holdings (3 of 5 kept). The flag is set, so the answer is not silent, but every call returns partial holdings. The same cap trims the regime history for include_history.",
+  "notes": "ARMED because every positioning call serves partial holdings through normal operation. Not fixed by this seat: a per-model argument (the CRO contract proposes model: UST|ST|INT|LT|ULT) or a larger cap is the issuer's and the CRO's call; the order's no-argument signature is kept as written."
+}
+```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S121",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T17:41:13Z",
+    "one_line": "A1 condition (iii) wanted exactly ONE UpdateWebACL; the measured count is ZERO, because terraform logged 'Modifications complete after 19s' for the WebACL and never sent the write. Four instruments agree it was not written. Zero is strictly SAFER than one -- there was no interval without the managed rules -- but zs1.AC2's n==0 branch also requires the before/after snapshots to be ABSENT, so the honest 0 beside the snapshots the same ruling told me to take reads FAIL. The deploy itself is landed, proven and CLOSED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "apply window 2026-10-14T17:21:40Z..17:24:39Z: 'Apply complete! Resources: 0 added, 2 changed, 0 destroyed', with 'aws_wafv2_web_acl.opal_cloudfront_protection: Modifications complete after 19s'",
+        "CloudTrail lookup-events 17:10Z..17:33Z, EventSource wafv2.amazonaws.com: 21 events, names GetWebACL 5, ListTagsForResource 7, GetIPSet 8, GetLoggingConfiguration 1 -- NO UpdateWebACL",
+        "the window is SETTLED, not lagging: five of those GetWebACL events are my own calls on this ACL at 17:14:34, 17:19:22, 17:19:34, 17:23:51 and 17:25:54, two of them bracketing the apply",
+        "the event CLASS is recorded: UpdateIPSet returns 2 events in 30 days with eventSource wafv2.amazonaws.com, so this trail does record wafv2 WRITES and a zero for UpdateWebACL is a real absence",
+        "the ACL's LockToken is byte-identical before and after (848a6d0b-d69f-40e0-876a-cfc0ce40b6b2, read 17:14:33Z and 17:25:54Z); wafv2 re-issues it on every successful update",
+        "capacity unchanged at 947; rules_sha256 identical over the whole ordered rule list (e18311e9c8315107da5f8719748bb9aea1ae7cf0bb5eb5e19cd829e420c0bbf4); 6 rules either side; 0 statement digests outside the before set",
+        "zs1.AC2's ACL limb: the n==0 branch fires only when `not os.path.exists(BEFORE) and not os.path.exists(AFTER)`; with both files present and n==0 the check falls to its else branch and prints 'WebACL conditions not met (updatewebacl_calls 0)'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A1 condition (iii): read CloudTrail for the apply window and record updatewebacl_calls; 'it must be exactly 1, because one atomic update leaves no interval in which the ACL evaluates without its managed rules'. The 0 case is reserved for 'if the plan reads 1 change, none of (i)-(iii) applies and updatewebacl_calls is 0'.",
+    "world_is": "There is a third case the ruling did not anticipate: the plan reads 2 changes, the snapshots are duly taken, AND the count is 0 -- because the provider renders an identical-block diff at PLAN time and then sends nothing at apply time. The condition's purpose is satisfied more completely than by one atomic update: the ACL was never written at all, so no interval of any length existed. But the check cannot express that, and the honest record therefore grades FAIL. Neither the value nor the snapshot files were adjusted to make the branch fire -- deleting the evidence the ruling asked for, to satisfy the clause that asked for it, would be the worst available move.",
+    "notes": "A correction I owe on my own instrument work: BEFORE the apply I controlled CloudTrail's readability by looking for wafv2 events and found 40 (GetIPSet, GetWebACL), and I recorded that as establishing the instrument. It did not -- those are all READS, and reads being recorded does not establish that WRITES are. The control that actually settles it is UpdateIPSet, which I only ran afterwards. Had the trail genuinely not recorded writes, my pre-apply check would have passed anyway and the post-apply 0 would have been uninterpretable. Same service, different event class, and the pre-apply gate the ruling asked for would have been vacuous. The remedy for the criterion is the issuer's: either let the n==0 branch accept a 0 WITH identical snapshots (the strongest state), or have the condition read 'at most one, and the rule set identical'. Nothing in the world is wrong: bare path 401 unauthenticated, both paths 200 authenticated, ACL untouched, ledger nfra-oplgtw-edge-auth-json-tiered CLOSED with four legs proven."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W80-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~80",
+    "surfaced_at": "2026-10-14T17:21:16Z",
+    "one_line": "The commit-time naming gate grades the bucket literal of an S3 key but no bare S3 key literal, so a new out-of-pattern key with no s3:// prefix produces no verdict line.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/naming-gate.py@835f9452c3 usage header: 'Inputs: S3 key and bucket literals' (the gate's stated grading set)",
+        "PROBE deliverables/0.9.0_WK_NFRA_OPLGTW~80/naming_probe_as_module.diff: 15 bare key literals (json/macro/..., json/latest/manifest.json) staged as infra/aws/ec2/opal-gateway/app/portal_macro.py -> 'NAMING-GATE: PASS 1 graded' (only opal-data-portal-v2 graded, CONFORMANT)",
+        "CONTROL deliverables/0.9.0_WK_NFRA_OPLGTW~80/naming_probe_control.diff: the same keys as s3:// URIs -> 'NAMING-GATE: WARN 2 graded', RAISE-EXISTING (K1: segment json is neither a source nor a tier), exit 0; nothing REFUSED",
+        "REAL DIFF deliverables/0.9.0_WK_NFRA_OPLGTW~80/portal_macro_gate.diff (app/portal_macro.py, 369 lines): 'NAMING-GATE: PASS 1 graded', exit 0"
+      ]
+    },
+    "spec_asserts": "TO-OG-pt-2 FIRST ACT (face section 1): the commit-time naming gate REFUSES a NEW out-of-pattern S3 key literal and has no override, so a probe of every key literal reads the gate's verdict on each one.",
+    "world_is": "The gate's verdict covers the bucket literal only. Bare key literals receive no verdict at all: the 15-key probe returned PASS and certifies none of them. Keys written as s3:// URIs are graded, and the json/ segment draws RAISE-EXISTING (WARN), not REFUSE, because the same literal is carried at HEAD elsewhere. The worker built with the bare keys the served objects carry (none split, none built from pieces); the commit-time gate stays the verdict of record.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ARMED because a bare out-of-pattern S3 key can be committed and read PASS. Not changed here: the naming gate is outside this cell's <paths>. The issuer rules whether the gate's key grammar must grade bare literals."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W80-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~80",
+    "surfaced_at": "2026-10-14T17:21:16Z",
+    "one_line": "The typed seam picks the gzip decoder by key suffix, but the served macro timeseries objects are gzip under a plain .json key, so read_json raises UnicodeDecodeError on json/macro/timeseries/<slug>.json.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "HEAD-OBJECT with the box credentials, read only: json/macro/timeseries/10y.json ContentEncoding gzip, 2622 bytes, application/json; the eight other served objects this cell reads report ContentEncoding None",
+        "infra/aws/ec2/opal-gateway/app/typed_scope.py@835f9452c3 read_json: a key ending .json goes straight to json.loads; only .json.gz is decompressed",
+        "pt2.AC2.sh first live run: 'probe error: UnicodeDecodeError: utf-8 codec can't decode byte 0x8b in position 1' on the series read; after app/portal_macro.py _read sniffed the gzip magic over typed_scope._load_capped the same probe read PASS 5 of 5"
+      ]
+    },
+    "spec_asserts": "The OG-gt-6 seam (TO-OG-pt-2 face section 1): read_json reads .json and .json.gz objects under the scope cap, and the served JSON family is read through it.",
+    "world_is": "A served key ending .json can carry gzip bytes (ContentEncoding gzip, not visible in the key name), and read_json hands those bytes to json.loads. portal_macro works around it locally over the seam's own capped loader; the seam is not edited (it is not this cell's to fix). Any other reader of json/macro/timeseries/ through read_json fails the same way.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ARMED: a future typed tool that reads the timeseries family through read_json fails on every slug. The seam's issuer rules whether read_json must sniff the gzip magic."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W80-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~80",
+    "surfaced_at": "2026-10-14T17:21:16Z",
+    "one_line": "On this box lib/trading_calendar.py answers from its hardcoded NYSE fallback because pandas_market_calendars is absent, and it prints a WARN on each call.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pt2.AC2.sh run 2026-10-14 on site Z, stderr: 'WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027; regenerate with lib/tests/gen_nyse_closures.py --write before 2028)'",
+        "lib/trading_calendar.py@835f9452c3 prev_trading_day and trading_days_behind: the T-1 frontier every trading_days_behind_t1 in OG-pt-2 is measured against"
+      ]
+    },
+    "spec_asserts": "TO-OG-pt-2 binding correction 1: a tool measures staleness against T-1 through lib/trading_calendar.py.",
+    "world_is": "The calendar answers from its fallback table on this box, not from the exchange library. The table covers 2010-2027, so every trading-day lag in this cell's probe is measured against that fallback.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT inside its coverage window; the regeneration deadline is before 2028."
+  }
+  ```
+
+```json
+{
   "id": "NFRA_OPLGTW-Z-W81-S1",
   "project": "NFRA_OPLGTW",
   "fabric": "site-z",
