@@ -61,6 +61,11 @@ Module `infra/aws/ec2/opal-gateway/app/harvest_published.py`.
    resolves the call). `admit_typed` runs FIRST; a refusal makes ZERO invokes. The function name comes from the naming
    builder output, never typed from memory (`python -c "import sys; sys.path.insert(0,'lib'); import opal_naming"`; name the
    call you used in a comment).
+   **Ruling A1 (issuer, on your rows S2 and S5):** the live function is `opal-amgt-scoped-api`, which the builder does not produce, and the naming gate refuses it as a NEW
+   literal in code (no override). So the module NEVER holds the function name: it reads it from the environment key `AMGT_SCOPED_API_FUNCTION` at call time (`os.environ.get`); unset
+   returns the error dict `harvest_published_unavailable` with zero invokes. The value is written by the gateway deploy script: add the line for that key (value `opal-amgt-scoped-api`) to the `printf`
+   that writes `.env` in `infra/aws/ec2/opal-gateway/deploy-to-ec2.sh` (a shell file the gate does not grade). The ask names the new `.env` key as one of its triggers and as part of the diff; the tests set
+   the env key. Your row S1 (a security key refused as not served): the ref you pass to `admit_typed` must start with a served prefix; pass `amgt/security/<key>` with a `<key>` that has no `..`.
 2. **The grant file**, `infra/aws/terraform/opal-gateway/harvest_published_invoke_iam.tf`: ONE `aws_iam_role_policy`
    named by the builder, `lambda:InvokeFunction` on the ONE function ARN of `opal-amgt-scoped-api` (no wildcard, no
    `lambda:*`, no other action), attached to the role whose credentials `_invoke` uses: the gateway instance role
@@ -98,6 +103,7 @@ Module `infra/aws/ec2/opal-gateway/app/harvest_published.py`.
 
 <paths>
 infra/aws/ec2/opal-gateway/app/harvest_published.py
+infra/aws/ec2/opal-gateway/deploy-to-ec2.sh
 infra/aws/ec2/opal-gateway/app/harvest_typed.py
 infra/aws/ec2/opal-gateway/app/harvest_read.py
 infra/aws/ec2/opal-gateway/tests/test_og_gt5.py
@@ -138,6 +144,9 @@ the issuer to make at the merge.
 - Pre-cut: AC1 and AC2 base FAIL as expected (module, tests and probe absent).
 - Queue: staged until OG-gt-0 merges; the spawn is the GO.
 - Phase A only: the ask rides to the three halves; the apply and the deploy are a later order.
+
+- A1 (issuer, 2026-10-14 ~15:4xZ, workers' rows S2 and S5): the function name comes from the env key `AMGT_SCOPED_API_FUNCTION` written by `deploy-to-ec2.sh`; `deploy-to-ec2.sh` added to `<paths>`; no literal in code.
+  The worker is re-seated on its uncommitted module with this amendment. No criterion moves. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>

@@ -1,0 +1,13 @@
+{
+  "prd": "IRPT_ANLREQ_PRD.md",
+  "prd_version": "v0.6",
+  "prd_pin": "664ef68df1d3e073ddc6b5606344c0106420d1f5",
+  "half": "ratified-text",
+  "half_hash": "aff0ce61fa14dbdad1464828434fa7252f09657bd046d597a312b56cfa6268f6",
+  "endpoint_hash": "0ec796132eb6013d3562a663e728db293739032143d04b57136ce6feddc8cbb9",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_PRD_v0.6_RATIFIED_TEXT_REVIEW_20261014.md@57cea3c90c",
+  "signed_by": "3.0.0_SA_CVO~DELL2",
+  "signed_at": "2026-10-14T15:32:02Z",
+  "reason": "CONTRACTS C-FIRM still binds the synthetic partner-firm advisor (FWD-1's filer) by its PROFILE row; the ENDPOINT's Opal staff filer choosing the firm is bound only in ADDENDUM v0.6"
+}

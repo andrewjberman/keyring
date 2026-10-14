@@ -13451,3 +13451,36 @@
 ```
 
 ---
+
+## IRPT_ANLREQ-D2-S100 -- release 29b is live with an incomplete grant: the ticket role has no KMS permission on the irpt-requests key, so client filings answer 503
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S100",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-14T15:33:18Z",
+  "one_line": "Release 29b is live with an INCOMPLETE grant: opal-ticket-api-role may GetItem irpt-requests but has no KMS permission on the customer key that encrypts that table, so the owner read fails and every CLIENT-class analysis_request SUBMIT answers 503 (K1 of TO-EXERCISE-R30).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (orders the CODE rollback to S3 VersionId 7vn6xyMOZjpSaKwiT73UaNfXj6mNSljr per pair section 3, or a new never-widen pair that adds the KMS statement)",
+  "spec_asserts": "Pair 29b section 4a/4c and CTO half (a): G is ONE statement (dynamodb:GetItem on irpt-requests for the three firms, four attributes) and, with G applied, C's owner check answers 400 for a non-owner and never 503; 'if G fails or reads wrong, C does not open'. T5 simulated GetItem allowed.",
+  "world_is": "Measured 2026-10-14 15:28Z, live: R0i read the owner row of advisor A's input: present, owned by A not B. K1 (a minted client of 49financial naming it) answered HTTP 503 'input ownership could not be verified; the ticket was not filed' (body sha256 674201477e8c..); the function's record reads INPUT-OWNER-READ-FAILED firm=49financial error=ClientError. The identical GetItem call shape made with this seat's own principal succeeds, so the request is valid and the role's access is what fails. Reads on the cause: irpt-requests has SSEType KMS with the CUSTOMER-managed key alias/investor-reporting (enabled); its key policy has only 'Enable IAM User Permissions' (account root, kms:*), so use of the key is granted by IAM identity policies; opal-ticket-api-role holds NO kms statement (its inline policies are the tickets-table policy with 4 statements and the SES policy); the simulator reads kms:Decrypt, kms:GenerateDataKey and kms:DescribeKey on that key as implicitDeny for the role; irpt-ycharts-generate-role, which reads this table, carries kms statements (UseSystemKeyForTheEvidenceBucketAndTables, DecryptCanonicalUsersTableViaDynamoOnly). The T5 simulator read of GetItem on the table was allowed because the simulator does not evaluate the table's encryption; the pair's own limit list did not name KMS. Effect now: CLIENT-class filings fail closed (503) and nothing is written (tickets COUNT 31 before and after); INTERNAL callers are unchanged; the partner-firm page's PROD promote is held. The stated cause is INFERRED from these reads and not proven by an AccessDenied message (the function logs only the exception class); K2 and K3 did not run (the order stops at a 503).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r30/TICKET_TRACE_R30.txt (R0i, COUNT before and after, K1 status 503 and body sha256)",
+      "CloudWatch /aws/lambda/opal-ticket-api 2026-10-14T15:28:40Z (INPUT-OWNER-READ-FAILED firm=49financial error=ClientError)",
+      "aws dynamodb describe-table irpt-requests (SSEDescription, KMS, customer key alias investor-reporting); aws kms get-key-policy and list-aliases; aws iam simulate-principal-policy for opal-ticket-api-role on the key (implicitDeny x3); get-role-policy of irpt-ycharts-generate-role (kms statements)",
+      "infra/aws/lambda/ticket_center/lambda_function.py lines 770-798 (_input_owner_reader, _check_input_owner fail closed with 503)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "owner: 2.0.0_SA_COO~Y2 for the rollback order (the CODE first, then the GRANT, pair section 3) and 1.0.0_SA_CTO~DELL2 for whether a KMS statement joins the grant (a further widening, a new CTO half). This seat changed nothing after the finding; the sitting's two synthetic users are removed after exp."
+}
+]
+```
+
+---

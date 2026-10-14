@@ -11269,3 +11269,84 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+## IRPT_DASHBD-D2-W170-S1 -- the three per-account omission sentences hold no contract member, so they print as plain sentences with no data-note key
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W170-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~170",
+  "surfaced_at": "2026-10-14T15:20:00Z",
+  "one_line": "the per-account omission sentences (account allocation chart, account performance chart, asset-class rows within the account) name no contract member, so they carry no data-note key, while the convention asks every sentence that says a figure is unavailable to carry one",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-209 step 5(a): every note element, every sentence that says a figure is unavailable or points to a page, carries data-note and data-note-keys listing every member and entity it names; step 5(c): a note naming figures no contract member holds uses the virtual members hold.class_rows.* at class:*.",
+  "world_is": "The three per-account sentences of the baseline (OMISSION_WORDS accountAllocationChart, accountPerformanceChart and accountClassRows, printed once per account) name a chart and per-account class rows, not contract members. The checker grammar (p106 figure_key, p107 is_chart) keys no chart member, and the virtual members are defined for the Holdings class rows only, so no key the grammar maps exists for them. They print as data-omission paragraphs with no data-note attribute. The note-level rule passes both renders (its phrase list does not match these sentences), so the checker verdict is unchanged; the sentence-level reading of step 5(a) is not met for these three sentences. Recorded, not repaired: the choice of key (a chart key, or a virtual member at an account entity) is a checker-grammar decision for the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts at commit 16a0bf7ca9ad27a41396a39f57442c7520f7ae0f (OMISSION_WORDS; buildReportModel passes no keys to the three per-account omission blocks)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r107/p107_round107.py (note_rule, NOTE_PHRASES, is_chart: a chart member is not keyed by the grammar)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r106/p106_round106.py (figure_key: the grammar maps no chart member and no account class-row member)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+---
+
+## IRPT_DASHBD-D2-W170-S2 -- the portal worktree has no committer identity, so the worker commits pass the serial as committer through the environment for that one command
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W170-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~170",
+  "surfaced_at": "2026-10-14T15:21:00Z",
+  "one_line": "a plain git commit in the portal worktree exits 128 with 'Committer identity unknown'; the worker set GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL for the command and wrote no git config",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "the task order's portal commits are plain git in the portal repo with the worker's author line, and the commit reports the worker's own identity.",
+  "world_is": "git commit in C:/dev/wk-irpt-dashbd-170/portal reports 'Committer identity unknown' (exit 128) with no user.name or user.email configured for that repo. The two portal commits (16a0bf7ca9ad27a41396a39f57442c7520f7ae0f components, 140c67ee001327ae79639f6ddfa454886e52c9e0 tests) carry the serial as author through --author and as committer through the environment for that one command; no config was written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-irpt-dashbd-170/portal log -2 --format=%H on branch wk-IRPT_DASHBD-170-portal (commits 16a0bf7ca9ad27a41396a39f57442c7520f7ae0f and 140c67ee001327ae79639f6ddfa454886e52c9e0)",
+      "the first commit attempt in the portal worktree: exit 128, 'Committer identity unknown' (session record of this worker)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+---
+
+
+## IRPT_DASHBD-D2-S33 -- the issuer's finding on its own note-level rule (a short-form note that names no member escapes the phrase list) and the ruling on W170-S1 (round 107)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S33",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T15:33:57Z",
+  "one_line": "Issuer's finding on its own note-level rule, and the ruling on W170-S1: the three per-account omission sentences (a chart or a row not drawn for one account) name no contract member, so they carry no data-note key, and the rule's phrase list does not catch their shorter form; accepted for this round, named so the next render round closes it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The round-107 analysis: every note carries the member keys it names, and the note-level rule fails a note phrase that sits outside every keyed element (checks/r107 note_rule: NOTE_PHRASES).",
+  "world_is": "note_rule's NOTE_PHRASES hold 'is not available yet' and four other phrases; the per-account omission sentences read 'Account allocation chart: not available yet.' and 'Account performance chart, last 12 months: not available yet.' (no 'is'), and no contract member exists for an account-level chart, so they cannot be keyed with a real member. They pass the criterion for that reason, and so the rule has a blind spot over a sentence shape: a note that says a figure is unavailable in the shorter form and names no member. Nothing prints that contradicts a table: the CVO read these sentences in round 106 ('claim no reason and contradict nothing, accepted'), and no account-level chart value prints anywhere in the report. Ruling on W170-S1: accepted for this round. To close the gap in the next render round (or any round that touches p107): add the lowercase phrase 'not available yet' to NOTE_PHRASES (table cells print a capital N and are unaffected) and add two virtual members for the account-level charts (as the three hold.class_rows members already serve the foot note), so that a note of this shape is keyed or the check fails. W170-S2 (no committer identity in the portal worktree; commits set it per command): inert, an environment note.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r107/p107_round107.py (NOTE_PHRASES, VIRTUAL, note_rule) at the merge 19370b057a",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~170/RENDER_R107.json and the row W170-S1 (the three omission sentences)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_DASHBD_ROUND_106_L9_GRADE_20261014.md (the Readings section: the account chart notes are accepted)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
