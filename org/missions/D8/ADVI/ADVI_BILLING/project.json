@@ -65,9 +65,10 @@
   ],
   "leads": {
     "cto": "1.0.0_SA_CTO",
-    "coo": "2.0.0_SA_COO~B2 (seated 2026-10-09 by 0.0.0_AB_MSTR~DELL2, msg 2400)"
+    "coo": "2.0.0_SA_COO~BL1 (named by 1.0.0_SA_CTO~DELL1 2026-10-14 ~18:5xZ on the move to DELL1, seated by 0.0.0_AB_MSTR~DELL1; previously 2.0.0_SA_COO~B2 on dell2, round 3 closed; resume packet RESUME_PACKET_ADVI_BILLING_20261014.md @fa3a204a80)"
   },
   "placement_ruling": "1.0.0_SA_CTO L3, 2026-10-14 ~18:5xZ: DELL2 -> DELL1 on Andrew-direct \"Moving all advisor intelligence ops to DELL1. Basically devote DELL1 wholly to ADVI/MDPF work as well as any overflow AMGT work.\" (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_185xZ_DELL1_WHOLLY_ADVI_MDPF_AMGT.md). EXECUTING: the move takes effect at its next round boundary. The round in flight drains on dell2 (FWD-13: never mid-round). || superseded: Four-box layout approved by Andrew 2026-10-07 ~01:0xZ ('i like this layout lets persist it'); record org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md. Was LAPTOP. A live project moves between rounds, never mid-round (NFRA_CTLPLN FWD-13).",
   "round": 3,
-  "last_updated": "2026-10-09"
+  "last_updated": "2026-10-14",
+  "coo_lane": "2.0.0_SA_COO~BL1"
 }
