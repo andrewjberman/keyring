@@ -108,7 +108,8 @@ _PROBE_P, _PROBE_O = "zzprobep", "zzprobeo"
 # rewritten by key, so it names none.
 VIEWS = (
     ("data/firm_registry.json", "json", ()),
-    ("infra/aws/lambda-edge/_shared/firm-config.mjs", "mjs", ("FIRM_CONFIG", "OWNERSHIP_KEYS", "CANONICAL_PLATINUM_BUCKETS")),
+    ("infra/aws/lambda-edge/_shared/firm-config.mjs", "mjs", ("FIRM_CONFIG", "OWNERSHIP_KEYS", "CANONICAL_PLATINUM_BUCKETS",
+                                                     "MDPF_GLOBAL_VIEW_FIRMS")),
     ("data/assets/scripts/gold/investor_reporting/directory_runner.py", "py", ("firm_bucket_map",)),
     ("data/assets/scripts/gold/investor_reporting/holdings_snapshot.py", "py", ("firm_bucket_map",)),
     ("infra/aws/lambda/investor-reporting/_authz/loaders.py", "py", ("bucket_for", "OWNERSHIP_READ",
@@ -129,7 +130,8 @@ VIEWS = (
 # A block that a hand-kept carrier does not hold yet lands right after its anchor block (the first generate only;
 # every later generate finds the block by its own marks). OWNERSHIP_KEYS follows FIRM_CONFIG (FB-g-12).
 AFTER_BLOCK = {"OWNERSHIP_KEYS": ("FIRM_CONFIG",), "OWNERSHIP_READ": ("bucket_for",),
-               "CANONICAL_PLATINUM_BUCKETS": ("OWNERSHIP_READ", "OWNERSHIP_KEYS")}
+               "CANONICAL_PLATINUM_BUCKETS": ("OWNERSHIP_READ", "OWNERSHIP_KEYS"),
+               "MDPF_GLOBAL_VIEW_FIRMS": ("CANONICAL_PLATINUM_BUCKETS",)}
 
 # Targets the generator owns WHOLE: the file is nothing but its generated block(s), so _render_view builds it
 # from the blocks alone and never reads a base (the first generate creates it). Every other VIEWS carrier is a
@@ -1293,6 +1295,19 @@ def _blk_canonical_platinum_buckets(reg, h16, path):
     return _block("CANONICAL_PLATINUM_BUCKETS", h16, "#", path, "CANONICAL_PLATINUM_BUCKETS = " + _py_lit(buckets))
 
 
+def _blk_mdpf_global_view_firms(reg, h16, path):
+    """The tenants whose MDPF view is the all-firms Global folder (MDPF_CANON CN-q-1, the edge firm gate; asked by
+    2.0.0_SA_COO~D1 msg 5925): every served tenant of scopes.json tenant kind "demo". A demo tenant serves prospective
+    users and owns no MDPF folder of its own (its tenant.surfaces.mdpf is false), so the gate sends it to `global`.
+    Derived from the registry, never typed: the kind is read from the demo tenant's own row through lookup() (the naming
+    gate's permitted context), and a second tenant of that kind joins the list at the next generate. Not
+    surfaces.mdpf alone: the test alias `mockadv` is also mdpf-less and must read nothing (CN-q-1 arm, unknown firm)."""
+    demo_kind = lookup("demo", reg)["tenant"]["kind"]
+    firms = sorted(tid for tid, s, t, own in _tenants(reg) if t.get("kind") == demo_kind and t.get("enabled", True))
+    lines = ["export const MDPF_GLOBAL_VIEW_FIRMS = Object.freeze(["] + ["  %s," % _js_str(f) for f in firms] + ["]);"]
+    return _block("MDPF_GLOBAL_VIEW_FIRMS", h16, "//", path, "\n".join(lines))
+
+
 def _blk_ownership_read(reg, h16, path):
     """Registered owner -> {bucket, legacy, canonical} for the investor-reporting loader's ownership read (ADVI_FIRMBKTS
     FB-g-16; CTO ADDENDUM 7). The owners are _ownership_owners()'s, the set _blk_ownership_keys() lists, in FIRM_CONFIG
@@ -1529,6 +1544,7 @@ BLOCKS = {
     "bucket_for": _blk_bucket_for,
     "OWNERSHIP_READ": _blk_ownership_read,
     "CANONICAL_PLATINUM_BUCKETS": _blk_canonical_platinum_buckets,
+    "MDPF_GLOBAL_VIEW_FIRMS": _blk_mdpf_global_view_firms,
     "FIRM_TREES": _blk_firm_trees,
     "_CROSS_FIRM_FOREIGN_BUCKETS": _blk_foreign_buckets,
     "_CROSS_FIRM_FOREIGN_KEY_PREFIXES": _blk_foreign_prefixes,
