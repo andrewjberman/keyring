@@ -34540,3 +34540,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The surprise rows of this order are filed in the channel, which the order requires, so a reading of rows_written that counted channel rows would make AC3 and the surprise rule contradict each other. The record's rows_written 0 is the reading of data rows; the COO should confirm the counter's meaning when it reads the packet."
 }
 ```
+
+## IRPT_BCKEND-D2-S173 -- Dispositions on worker 383's rows; the signed counts measure the cash rule alone, the live producer matches no commit, the differential comes before any signature
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S173",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T14:25:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on worker 383's rows (D2-W383-S1 to S4) after IB-pr-538 merged (@55d4929a90): packet v2 characterizes 73 moved members but the live holdings_snapshot.py matches no commit and differs between firms, so the signed counts measure the cash rule alone and not the full pin's effect on the served output; I will measure that differential before I sign.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB194-1 AC1 to AC3 on the landed tree and the proof instance: PASS, VALID; round-close-check --workstream ~P MAY-CLOSE (orders=1); merge 55d4929a90",
+      "I read the record IB194-1_packet_v2_record.json (73 rows: 24/25/24; classes; calendar holiday sets identical over 2026-10-01 to 2027-12-31 and T-1 identical for the next three fires; seven write shapes per firm equal; the matcher imported by rebalancer_schemas.py; the re-measure equal to the signed counts) and the worker's notes and rows",
+      "drain-end packet deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUND_194_P_DRAIN_END_20261014.md"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27); a sign-off covers what the release moves, measured, not what its two named changes move.",
+  "world_is": "DISPOSITIONS. D2-W383-S1 (BLOCKING, the IB194-1-AC1 check cannot read the stop evidence): my check's defect, the second this session; it read the flat path lists as count-and-path pairs and my control encoded the same wrong shape; repaired @90a0952879, the worker's AC1 row re-graded PASS on the landed tree @7b46d4a24d; INERT. D2-W383-S2 (the live copies predate several producer commits on the pin, so a full pin mint changes holdings_snapshot.py by more than the two signed changes; cottonwood and inflection by the account_id, keyed-gate, CUSIP-fallback and multi_asset commits as well): LOAD-BEARING. The signed counts compare the pin with the cash rule against the pin without it; they say nothing about the delta between the code that serves now and the pin. Not a hazard by itself (nothing minted), but v2 cannot be signed on static effect lines: the differential on the same pinned inputs (live code against pin code, node by node) is the measurement, taken by the issuer as a direct read and recommended to the CTO as a cell. D2-W383-S3 (the live holdings_snapshot.py matches no commit and each firm's bundle holds its own variant): INERT as a hazard, LOAD-BEARING as provenance: the live producer for each firm is code no commit holds (a bundle minted from a working tree), which is the fact that makes the differential necessary; whoever minted those bundles from an unrecorded tree is not read here. D2-W383-S4 (the meaning of rows_written): INERT; confirmed as data rows written to a store, not surprise-channel rows."
+}
+```
