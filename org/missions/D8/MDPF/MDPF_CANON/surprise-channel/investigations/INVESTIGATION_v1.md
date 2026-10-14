@@ -1939,3 +1939,29 @@
   "notes": "Filed by the re-seated worker as an observation of the premise, not a repair. The issuer owns the plant. Related: MDPF_CANON-D1-W21-S2 (same mechanism, first run) and MDPF_CANON-D1-W21-S4 (the AC1 consequence)."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W21-S6",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~21",
+  "surfaced_at": "2026-10-14T15:16:03Z",
+  "one_line": "The third (last) QA drive was not refused by the min-firms guard: manifest errors.global carries the spine composition gate text, the guard prefix GLOBAL MIN-FIRMS FOLD REFUSED is absent from the log, and AC1 grades FAIL at 4 of 6 arms.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-n-1 Step 2 and Step 3 (AMENDMENT 2): the drive is expected to end status=non-green with errors=['global'] and the Global refusal to be the min-firms guard, prefix GLOBAL MIN-FIRMS FOLD REFUSED, naming the as-of and '1 firm(s)'; AC1 expects 6 of 6 arms.",
+  "world_is": "The drive ran once (qa_run.json status non-green, errors ['global'], writes 0, blocked-calls 0, plant planted true, kept cottonwood, blanked inflection, 2 lines, 9 fold lines, as-of 2026-10-13). The recorded manifest_errors.global text is: 'SystemExit: GLOBAL COMPOSITION GATE FAILED: 0 partial-row, 0 headline-identity, 0 49F-leg, 0 inflection-leg, 1 band/total violation(s) across 496 dates -- refusing to emit (the P0 2026-07-22 class).' The log carries FATAL 2026-10-13 (sum of by_model cohort=model differs from model_aua beyond rounding-order tolerance) before that SCOPE FAILED line, and no GLOBAL MIN-FIRMS line. Order of execution in build_all: the Global build call is inside _fold (consolidator line 2833, invoked at 2836), and guard_global_min_firms_fold runs later at line 2943. The plant is applied inside the builder call (r7_cn_n_1.py lines 293-300), so the composition gate refused before the min-firms guard was reached. The composition mismatch is consistent with the plant editing model_value without the model_aua headline moving, which is not established here. AC3 (the guard control on unplanted and planted 2026-10-09 objects) passes 5 of 5, so the guard itself folds and refuses on a planted pool when called on it. AC1 grades 4 of 6 (N2 and N5 FAIL). AC2 serves 4 of 4 (identical snapshot before and after, 2 distinct call kinds, none a write).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~21/run/qa_run.json (manifest_errors.global text; status non-green; writes []; plant record)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~21/run/qa_run.log (FATAL line and SCOPE FAILED global line near 15:14:25Z; QA PLANT line)",
+      "data/mdpf/scripts/gold/mdpf_gold_consolidator.py@8e6711f9f3 (build_all _fold at lines 2825-2836; guard_global_min_firms_fold call at line 2943; _GLOBAL_FOLD_REFUSE prefix at line 2064)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_n_1.py (planted_build_global lines 293-301; plant_single_firm_pool fill=0.0 at lines 94-126)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the third seat on the last drive of this order (AMENDMENT 2). No re-drive was made, per the order. The record is QA and not production evidence. Resolution owner: 2.0.0_SA_COO~D1 (decides whether the plant must sit ahead of the composition gate, or the guard arm must be driven by a different route). The order status stays pending. Related: MDPF_CANON-D1-W21-S2, -S4, -S5."
+}
+```
