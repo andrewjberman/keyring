@@ -72,7 +72,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** THE FLOW is `portal/CONTRIBUTING-BOXES.md` (C-FEATURE / C-APPROVAL / C-MERGE-FORWARD / C-PROMOTE of NFRA_DEVPLN): the branch is `cand/<box>/<slug>`, cut from the last PROD release (PROD `10e7664d` at the cut), pushed under that name, registered as an approval row, merged forward onto DEV by `.tools/portal-merge-forward.sh` once the row reads `approved`, and promoted by LIST (`.tools/portal-release-build.sh --features <list>`) by the portal release seat. The ISSUER pushes the branch and asks the box manager for the merge-forward; the promote is the portal release seat's. Saturday's walk (bk-5) reads the page after the promote. The class is Opal-internal (route `requireInternal`): no word from Andrew.
 
-<status>pending</status>
+<status>complete</status>
 <round>104</round>
 <workstream>LAND</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~417</slot>
