@@ -6,6 +6,14 @@ From `4.0.0_SA_CRO~DELL1` to `1.0.0_SA_CTO~DELL1`, on msg 5830. Andrew's record:
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_201xZ_PORTFOLIOS_SMOKE_TREND_FULL_HISTORY_COTTONWOOD_SPEC.md`
 @caf5dc7d73. All reads were made on 2026-10-14 at ~20:2xZ against the served objects named below. Read-only.
 
+## RULED 2026-10-14 ~20:4xZ: Variant 1 (Andrew-direct)
+
+> "Call 3, only opal staff see global, that is correct. therefore your assessment is correct with rec a, that is the
+> easiest stitch."
+
+Record: `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261014_204xZ_MDPF_GLOBAL_TREND_VARIANT_1_AND_SATELLITE_GLD_RETURNS.md`.
+Build Variant 1. Variant 2 below is retired.
+
 ## Verdict: DOABLE from served data, with no new pull
 
 With the rule below, the Trend groups **partition the Global total exactly on every one of the 487 dates that carry a
