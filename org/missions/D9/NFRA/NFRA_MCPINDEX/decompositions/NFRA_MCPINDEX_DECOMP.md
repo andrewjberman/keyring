@@ -1417,3 +1417,35 @@ already committed (A4), and the six rows ride the next gateway release. The gate
 the commit and test result go to `2.0.0_SA_COO~C` through `0.0.0_AB_MSTR~Z` (laptop CTO condition 3). Battery: g1.AC1 and g1.AC2 (now
 limbs of c9.AC2) FAIL at base, and g1.AC2's negative arm (another project's home) is REFUSED at base, as it must stay.
 
+## ROUND 12 (2.0.0_SA_COO~MI, 2026-10-14 ~05:0xZ) -- the round-11 analysis's D2: FWD-20 depth on EVERY (a) tool, plus research-table routing; then the project parks
+
+Source: `ledger/ROUND_ANALYSIS.round11.md` @05caf1144b (`1.0.0_SA_CTO~Z`, msg 33989). PRD v0.10 is unchanged and ADMITTED.
+Graded: FWD-21 on v4 REALIZED; FWD-20 partition REALIZED; FWD-20 depth NOT_REALIZED for a second round (10 of 11 (a)
+tools read absent where v0.10's cases make them readable).
+
+| Cell | Serves | What | Base | Risk |
+|---|---|---|---|---|
+| `MX-c-10` | FWD-20 depth, FWD-14 routing | The one catalog writer. v0.10's depth cases applied to EVERY (a) tool: measured from a first-date field or a series' first element; measured as a snapshot's as-of; inferred as a live-queried row's served window, with its basis; absent only where the served artifact carries no date. A multi-index query tool takes `per-link` depth from the rows it links. Discover answers each measured row's depth at answer time. Each of the 7 research tables gets example questions that route to it | at issuance | WORLD |
+| `MX-r-13` | FWD-20, FWD-14 live | One catalog release on the LIVE ref, behind NFRA_OPLGTW r30, its tier fix and OG-mg-1 (analysis section 3). The cone carries `infra/logic/registry` | after MX-c-10 drains and the OPLGTW releases close | WORLD |
+
+**Chains (fan-out 1 of 1, cap 8):** [MX-c-10 -> MX-r-13]. Worker `0.9.0_WK_NFRA_MCPINDEX~35` builds; `0.7.0_AE_CloudOps~MI`
+releases.
+
+**STANDING BATTERY CLAUSE 3** (analysis ruling 1, binding on every later round of this project): a check that grades a
+claim about a SET grades EVERY member, with the denominator printed, and never a sample. c9.AC3 graded AUA alone and
+passed while 10 of 11 claims were wrong.
+
+### R12.1 BATTERY (base 66eda2801a; `deliverables/2.0.0_SA_COO~MI/round12/checks/`)
+
+| check | base | planted arms |
+|---|---|---|
+| c10.AC1 | FAIL: valid 1 of 11 (absents on dated or unresolvable artifacts) | AUA measured; aum-metrics `total.series_start` and etfs `data_as_of` measured; the rest inferred: PASS 11 of 11 (aws CLI AGREE). etfs absent: FAIL 10 of 11; aum value off by a day: FAIL 10 of 11 |
+| c10.AC2 | FAIL: anchor "security analysis research dossier" reaches harvest_packs (anchors 1 of 2) | stub routing to the dossier table: PASS 7 of 7, anchors 2 of 2 |
+| c10.AC3 | FAIL: anchors measured 0 of 2 | stub answering three rows: PASS 3 of 3; one value off: FAIL 2 of 3 |
+| r13.AC1 | FAIL: no entry (18 of 18 sentinels) | the MX-r-12 check, re-pointed |
+| r13.AC2 | a live regression guard (partition and discover); it passes on the host now | the round-11 instruments |
+| r13.AC3 | FAIL (c10.AC1 and c10.AC3 on the deployed bytes) | as c10 |
+
+Drain hygiene: the Z-S107 suite re-baseline. After the round, the project parks at ROUND_CLOSE on the round-9 un-park
+conditions.
+
