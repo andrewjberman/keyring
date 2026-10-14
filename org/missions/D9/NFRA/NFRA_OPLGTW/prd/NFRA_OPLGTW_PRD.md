@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v3.5",
+  "prd_version": "v3.6",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -1299,5 +1299,37 @@ The ruling:
 - **Z-S110 (49F BD converter out of memory)** takes the same route once its cause is read.
 - This is not a widening: the converter already writes these folders. The fix moves the folder's freshness, not who
   can read it.
+
+CONTRACTS-side; ENDPOINT unchanged.
+
+### v3.6 addendum (2026-10-14 ~18:5xZ, 1.0.0_SA_CTO~Z) -- 49F Black Diamond reads opal-data-bd (Andrew-direct); the G2 order
+
+**Andrew-direct ~18:3xZ, verbatim in `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_183xZ_49F_BLACK_DIAMOND_FROM_OPAL_DATA_BD_AND_THE_TARGET_LAYOUT.md`:** "We can allow 49F Black Diamond pulls from opal-data-bd, you're right
+that's fine." It amends v3.4 for 49F Black Diamond ONLY.
+
+**Contract change:**
+1. The 49F BD adapter of the `client_*` tools reads `s3://opal-data-bd/silver/<table>/YYYY-MM-DD.parquet`, per CRO~Z G2f
+   (`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/parts/G2f_bd_live_prefixes.md` @5e5d312ada: 8 tables, 49F only; schemas 4 equal, 3 live-subset, 0 differ). G2f is restored for this
+   adapter. Increment vs snapshot is measured before any tool sums or spans dates.
+2. The read goes through a role scoped to `opal-data-bd/silver/`, with its own never-widen ask (v3.2: never the global
+   internal reader).
+3. `assets` (80 trading days behind) and `transactions_enriched` (122 behind) answer with their lag stated and are never
+   presented as current.
+4. Every other client source stays the `opal-data-assets` vendor silver folders (v3.4 unchanged). `opal-data-mdpf`
+   feeds and the per-firm buckets stay not served.
+
+**The target layout is NOT this project's act.** 49F BD moves into `opal-data-assets/blackdiamond/` in LGIC_NAMING form,
+and 49F's BD and Schwab gold land in `opal-data-49financial`. That is a pipeline migration (rule 30 / R19). When it lands,
+the 49F BD adapter re-points to `opal-data-assets/blackdiamond/<49F>/silver/` in one cell, and the opal-data-bd read is
+retired.
+
+**G2 order (ruling to `2.0.0_SA_COO~O`, msg 34174 answered):**
+1. Schwab (existing role; 49F's custodian data).
+2. 49F Black Diamond (opal-data-bd).
+3. Orion/Inflection (Eclipse after Z-S117).
+4. BD Cottonwood.
+5. SmartX (row filter).
+6. Commonwealth.
+Friday 2026-10-16 = G1, G3, G5 wave A, G6, and Schwab if it fits.
 
 CONTRACTS-side; ENDPOINT unchanged.

@@ -14965,3 +14965,32 @@ name the one known failure instead of silently inheriting it.
     "notes": "What this seat did NOT do, because it is the tempting move: edit the <expect> inside its own instance so the strings match. The expect IS the criterion; copying a different one into the instance would be grading myself, and the invocation-alignment limb exists to catch exactly that. The remedy is one amendment by the issuer -- admit the third phrasing, e.g. 'rules identical before and after, updatewebacl_calls [01]' -- after which AC2 is marked PASS, the instance is refreshed and the tag flips. GENERAL FORM, worth more than this instance: when a ruling fixes a CHECK, the <expect> that grades the check is a SECOND surface and does not move with it. Z-S119's ruling had the same shape and did amend both (A3 replaced the criterion as well as the check), which is why that one closed cleanly."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S123",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T18:43:22Z",
+    "one_line": "RESOLVES Z-S122, and the defect was MINE: the issuer amended BOTH the check and AC2's <expect> in the same commit (fd4e8e0bcb, 18:04Z). My instance carried the expect I had copied from the pin the GO named (858549a2b7), 54 minutes older, reading 'updatewebacl_calls 1' where HEAD reads 'updatewebacl_calls [01]'. The mismatch I reported as a gap between the issuer's two surfaces was a gap between my citation and the order.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the order's AC2 <expect> at HEAD, printed from the bytes: '...WebACL (rules identical before and after, updatewebacl_calls [01]|not changed by this apply, updatewebacl_calls 0)...'",
+        "what my instance embedded: the same regex with 'updatewebacl_calls 1' -- read from 74454c5e91/858549a2b7, the pin the GO message named",
+        "git log -1 on the order: fd4e8e0bcb, 2.0.0_SA_COO~O, committed 18:04Z -- the SAME commit as the check fix, so both surfaces moved together",
+        "after re-emitting the expect from the order at HEAD and marking AC2 PASS: proof-of-spec-check reads VALID (rc=0), and the <status> tag is flipped to complete",
+        "the check's own output, unchanged throughout: 'WebACL rules identical before and after, updatewebacl_calls 0' with RESULT: PASS and exit=0"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "Z-S122 asserted that A2 fixed zs1.AC2's branch logic but not the <expect> regex that grades it, and that the criterion therefore could not be proven while it passed.",
+    "world_is": "A2 fixed both. The expect at HEAD admits the third phrasing exactly as it needed to. What could not be proven was the criterion AS MY INSTANCE QUOTED IT -- and an instance's expect is only evidence if it is the order's current bytes. The verdict the checker printed ('status=PASS but output_evidence does NOT match expect') was precise and I read it as a defect in the order rather than in my copy of it.",
+    "notes": "CLAUDE.md already carries both halves of this: rule 27 says cite by path and READ AT HEAD, no version pinned; and 'a citation ages separately from the text it quotes: verify a quote by printing the bytes at the cited line, never by grepping for the quote.' I did the opposite -- I read the order once at the pin a GO message named, kept working from that copy across an hour in which the issuer amended it twice, and then reported the staleness as someone else's gap. The cost was one round trip and one row. The cheap habit that prevents it: when a criterion refuses, re-read THAT criterion's bytes at HEAD before concluding anything about the order, because a ruling in flight is exactly when the order moves. Z-S122 is resolved by this row, nothing in the world was wrong at any point, and OG-zs-1 is complete.",
+    "dismissal_reason": "Resolves NFRA_OPLGTW-Z-S122. The expect was amended by the issuer at fd4e8e0bcb together with the check; my instance quoted a 54-minute-old pin. Re-emitting AC2's expect from the order at HEAD makes the instance VALID with AC2 PASS, and OG-zs-1's <status> is flipped to complete. No act is owed by anyone: the check, the order and the world all agree and always did."
+  }
+  ```
