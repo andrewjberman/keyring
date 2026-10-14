@@ -34032,3 +34032,127 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The cutoff is the current day by design, so a pre-session read of select_business_date() answers the current day at any hour of a trading day (the CVO's observation, W379-S3, is the function working as written, not a clock error). The PUBLISHED date is the newest source partition dated at or before the cutoff: T-1 only because silver partitions are dated by business day and land after the close, so at the 10:15 ET fire the newest partition is yesterday's. A source partition dated TODAY existing at fire time (an intraday or partial landing) would be selected and stamped as the current day: that is the failure mode condition 8 guards, and nothing in the producer refuses it. The check for the release is therefore on the CANDIDATE's clocks.business_date at the release (the newest landed partition per firm), compared with the calendar's previous trading day of the fire date, and again at the after-read. Today's candidates are dated 2026-10-12 (the 2026-10-13 partitions had not landed at ~05:00Z), so the check reads NOT-YET-EQUAL until they land. A fix (a refusal of a current-day source partition, or a T-1 cutoff) is a later cell under its own pair; not built here."
 }
 ```
+
+## IRPT_BCKEND-D2-W381-S1 -- the 2026-10-09 49financial fire was not a long fire: it was killed about 310 seconds into a 3600-second window (IB-pr-534)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W381-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~381",
+  "surfaced_at": "2026-10-14T11:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The 2026-10-09 49financial fire did not run long: it was killed after 309.9 seconds of plugin run against a 3600-second SSM window, so the premise that a long fire exceeds the timeout (D2-S164) is not what the measurements show.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ssm list-commands (2967 commands listed, no NextToken) filtered client side on the Comment prefix 'irpt holdings refresh 49financial': 11 scheduled fires; list-command-invocations --details under a --query projecting status and plugin timestamps only: the 2026-10-09 invocation TimedOut, StatusDetails ExecutionTimedOut, response code 137, plugin start-to-finish 309.9 s, request-to-finish 310.1 s. Command TimeoutSeconds reads 3600 on all 11.",
+      "The window is set at infra/aws/lambda/investor-reporting/holdings_refresh/refresh_dispatch.py@201e7e9c27 line 25 (EXECUTION_TIMEOUT = \"3600\", sent at line 123). All 11 fires: successful plugin runs 258.5 to 342.7 s; no fire reached 3600 s; the largest request-to-finish was 510.6 s on 2026-09-30, of which about 252 s was queue time before plugin start. The cause of the 137 kill was not read (no output read)."
+    ]
+  },
+  "spec_asserts": "A scheduled 49financial fire runs to completion inside the SSM execution window (3600 seconds, set by the dispatcher); a fire killed on the window is a long fire (D2-S164).",
+  "world_is": "The 2026-10-09 fire was killed about 310 seconds into its run, about 3290 seconds before the window closes, and no fire in the 11-fire series reached the window. Exit 137 is a SIGKILL whose sender is unread here; a memory kill of the 49F build is one candidate this cell did not test. The round-191 packet's wording that the fire was killed on the SSM execution timeout should read as an invocation marked TimedOut at about 310 seconds. A release timing rule that uses the 3600-second window as the cause would rest on the wrong mechanism."
+}
+```
+
+## IRPT_BCKEND-D2-W381-S2 -- the one-date replay of 2026-10-08 is refused by source_frontier_older as the code stands; no operator path for an older date exists
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W381-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~381",
+  "surfaced_at": "2026-10-14T11:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A replay of 2026-10-08 for 49financial is refused by the publish gate as the code stands (source_frontier_older, two trading days behind the served 2026-10-12), and the producer has no operator path for an older date, so the replay needs a code change or a named bypass before it can land.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@201e7e9c27 lines 3076-3085: evaluate_publish_gate adds source_frontier_older when trading_days_behind(candidate, served) is above 0. run_firm (lines 3191-3206) runs the gate before land(); a REFUSED outcome writes only the refusal record (publish_refusal.json) and returns refused=True with no index write.",
+      "lib/trading_calendar.py@201e7e9c27: trading_days_behind(2026-10-08, 2026-10-12) = 2, computed by a local run on the NYSE fallback calendar (the run printed the pandas_market_calendars-absent WARN)."
+    ]
+  },
+  "spec_asserts": "The CTO's one-date replay ruling (IB-pr-534) expects 2026-10-08 for 49financial to land through the producer's own publish path, as its own cell with its own pair.",
+  "world_is": "A replay with --as-of 2026-10-08 is refused before anything lands, and the refusal record is its only write. Options, none chosen here: a gap-fill exemption in evaluate_publish_gate (moves the gate for every firm and every later fire); an operator bypass for one firm and one date (moves the gate for one run); no code change is possible by ruling alone, because the gate runs on every upload. Each option needs a signed pair naming both branches. The choice is the CTO's to rule, per the replay.route_needed field of IB192-2_timeout_and_replay.json."
+}
+```
+
+## IRPT_BCKEND-D2-W381-S3 -- publish() lands the builder's source date, not the requested as_of, and nothing asserts the two are equal
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W381-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~381",
+  "surfaced_at": "2026-10-14T11:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The producer keys the index row by the builder's source date, the latest custody partition at or before as_of; HoldingsPublication.publish replaces dates[that date] and no check ties it to as_of, so a replay whose as_of partition were missing would overwrite an existing older row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings/publication.py@201e7e9c27 lines 266 (partition = date= + business_date), 295-298 (dates = dict(prior dates); dates[business_date] = ...), 302-305 (conditional index write).",
+      "data/assets/scripts/gold/investor_reporting/holdings_49f.py@201e7e9c27 lines 212-213 and 567 (custody_date = latest partition at or before as_of; source_completion_date = custody_date); holdings_snapshot.py@201e7e9c27 lines 3146 and 3205 (publication_date from the snapshot clocks; land() called with it)."
+    ]
+  },
+  "spec_asserts": "A dated replay with --as-of D lands exactly date D, so its blast radius is one date and every other date is untouched (the replay ruling's blast-radius term).",
+  "world_is": "Measured: the 2026-10-08 custody and overlay partitions exist, so a 2026-10-08 replay would land 2026-10-08 today. The code does not enforce it. With the 2026-10-08 partitions absent the builder would select 2026-10-07, which already has a row; the gate refuses that today, but a route that bypasses the gate for a date would replace the 2026-10-07 row. Any replay route must carry a landed-date-equals-as_of assertion before it claims other dates untouched."
+}
+```
+
+## IRPT_BCKEND-D2-W381-S4 -- the 2026-10-08 gap is a failed run over an intact source: the 2026-10-08 partitions landed before the 2026-10-09 fire, so D2-S165's premise that a fire publishes only its own date does not hold
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W381-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~381",
+  "surfaced_at": "2026-10-14T11:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The 2026-10-08 gap is a failed run over an intact source: the 2026-10-08 partitions were written before the 2026-10-09 fire ran, so the premise that a fire publishes only its own date (D2-S165) does not describe the producer, which publishes the newest source partition at or before its cutoff.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api list-objects-v2 LastModified, read-only, under the 49F custody dim_balance and overlay fact_allocation_account_map prefixes (bucket opal-data-assets): custody date=2026-10-08 written 2026-10-09T09:46:44Z; overlay date=2026-10-08 written 2026-10-08T13:24:52Z; the 2026-10-09 fire ran from 2026-10-09T14:15Z (ssm list-command-invocations, plugin start).",
+      "The index's publish sequence: the 2026-10-12 index write carries the 2026-10-09 source date and the 2026-10-13 write the 2026-10-12 date (D2-S165 read, and the version list of current/manifest.json). The partition rule is recorded in D2-W379-S3."
+    ]
+  },
+  "spec_asserts": "A scheduled holdings fire publishes its own date, and a failed fire's date is not replayed by the next fire (D2-S165).",
+  "world_is": "The 2026-10-08 partitions existed at the failed fire's time, so that fire, had it completed, would have published 2026-10-08 under the newest-partition-at-or-before rule. The gap is one date the failed run did not publish; the source for it is intact, which is why the replay in IB192-2 can name it. The S165 premise is corrected here, not re-filed as a new gap."
+}
+```
+
+## IRPT_BCKEND-D2-W381-S5 -- the 2026-09-30 index version is the same size as the 2026-09-29 version, so no row was visibly added on that fire; the index body was not read
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W381-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~381",
+  "surfaced_at": "2026-10-14T11:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The publication index's version sizes show no growth on the 2026-09-30 fire (948 bytes, the same as 2026-09-29), while each fire from 2026-10-01 adds about 422 bytes; whether that write replaced a row or left the index unchanged is not read here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api list-object-versions (read-only) of the one key irpt/49financial/platinum/holdings/current/manifest.json: 2026-09-29 948 bytes; 2026-09-30 948; 2026-10-01 1370; 2026-10-02 1792; 2026-10-05 2214; 2026-10-06 2636; 2026-10-07 3058; 2026-10-08 3480; 2026-10-12 3902; 2026-10-13 4324 (IsLatest)."
+    ]
+  },
+  "spec_asserts": "Each successful publish adds one date row to the index; the served index holds the ten dates named in D2-S165.",
+  "world_is": "The sizes are consistent with one row per publish except the 2026-09-30 version. The index body was not read in this cell, so the cause is not stated. The row is an observation for the release's after-read; it does not change the replay's blast radius, which was derived from the code and the current index version."
+}
+```
