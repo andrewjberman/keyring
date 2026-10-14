@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-14T02:38:00Z",
+ "written_at": "2026-10-14T03:37:57Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -3363,6 +3363,95 @@
     "at": "2026-10-14T02:38:00Z",
     "by": "1.0.0_SA_CTO~DELL1",
     "ruling": "org/missions/D8/ADVI/ADVI_BDPRCE/prd/ADVI_BDPRCE_PRD.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
+  },
+  {
+   "id": "dell1-20261014T031653Z-f1a4",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell1/amgt-sa-currency-symbol-and-reasons",
+   "asked_by": "2.0.0_SA_COO~R1",
+   "source": "cand/dell1/amgt-sa-currency-symbol-and-reasons",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T03:16:53Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/amgt-sa-currency-symbol-and-reasons",
+    "purpose": "AMGT_RESAPP bl-1: the Security Analysis Model tab prints a money symbol only for the figure's own currency, drops a segment-table column with no figure and says why on every key-figures dash",
+    "pages": [
+     "Security Analysis"
+    ],
+    "class": "opal-internal",
+    "how": "cd portal && bun run dev:live --port 5174; /security-analysis, PBR US, BATS LN and GOOGL US",
+    "head_sha": "051ad362d4dd1deb8c2db9725d3403d748a66f0e",
+    "commits": 2
+   },
+   "scope": {
+    "measured_at": "2026-10-14T03:16:53Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell1"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T03:18:42Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_APPROVAL_PORTAL_CAND_CURRENCY_SYMBOL_AND_REASONS_20261014.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell1-20261014T033410Z-19b2",
+   "project": "ADVI_BDPRCE",
+   "subject": "Which unit does a carried par-quoted price take when the asset's served series is per 100?",
+   "asked_by": "2.0.0_SA_COO~K1",
+   "source": "org/missions/D8/ADVI/ADVI_BDPRCE/surprise-channel/investigations/INVESTIGATION_v1.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T03:34:10Z",
+   "kind": "fork",
+   "context": "Row W14-S5: MORGAN STANLEY FIN LLC 0% 2029 carries 1.0 per unit from a 2025 par Buy; its served series is per 100 (115.995). 214 interpolated carries share it. Gates the packet rows and the apply.",
+   "rec": "Serve each asset in the unit of its own served series: scale the carried par price back to per 100 for such assets; hold them out of the packet until ruled.",
+   "scope": {
+    "measured_at": "2026-10-14T03:34:10Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T03:37:57Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D8/ADVI/ADVI_BDPRCE/ledger/CTO_RULING_R1_THE_PRICE_RULE_20261013.md",
     "crossbox": null,
     "ruled_by": "cto",
     "xadj": null

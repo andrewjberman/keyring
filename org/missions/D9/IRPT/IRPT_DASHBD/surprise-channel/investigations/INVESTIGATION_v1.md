@@ -9174,6 +9174,7 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
 ## IRPT_DASHBD-D2-S26 -- the firm registry's bucket field is not where a firm's irpt gold lives (address() is): a read of the registry field reported Cottonwood and Inflection as having no gold
 
 ```json
@@ -9332,3 +9333,486 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W156-S1 -- the portal worktree is on branch wk-IRPT_DASHBD-156-portal, not the branch the order names; the fixed commit is its HEAD
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W156-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~156",
+  "surfaced_at": "2026-10-14T03:56:25Z",
+  "one_line": "The order names the portal branch wk-IRPT_DASHBD-152-portal; the worktree is on wk-IRPT_DASHBD-156-portal. Its HEAD is the DB-b-187 fix commit the record names, so the fixed components are present.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face, portal: the portal worktree is cut from the branch that carries the fixed components, named wk-IRPT_DASHBD-152-portal.",
+  "world_is": "The portal worktree at C:/dev/wk-irpt-dashbd-156/portal is on branch wk-IRPT_DASHBD-156-portal; its HEAD is 9304556192550be29f70bbd05000d099f0d71a90, the DB-b-187 fix commit that RENDER_FIX.json names. The render ran against that HEAD. No portal file was edited and no bun install was run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal rev-parse HEAD returned 9304556192550be29f70bbd05000d099f0d71a90 and git -C portal rev-parse --abbrev-ref HEAD returned wk-IRPT_DASHBD-156-portal",
+      "RENDER_FIX.json portal.commit records 9304556192550be29f70bbd05000d099f0d71a90 on branch wk-IRPT_DASHBD-152-portal"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W156-S2 -- the render prints return and allocation percentages at one hundred times their stored scale (account overview pages and the holdings allocation table)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W156-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~156",
+  "surfaced_at": "2026-10-14T03:56:25Z",
+  "one_line": "Cumulative return and allocation percentages print about one hundred times the size their stored values and the dollar rows beside them support; the printed allocation rows total one hundred times one hundred percent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Section 6 Account Overview and section 3 Holdings Overview print the sample's return (Cumulative) and allocation values at their stored scale (contract members avs.<window>.return_cumulative and hold.allocation).",
+  "world_is": "The sample stores percentages in percent units: the four stored allocation values total one hundred percent, and each account's stored YTD and QTD return equals its net gain over beginning value in percent units (booleans read in the seat's scale check). The export PDF prints the same values one hundred times larger: the page 6 allocation rows total one hundred times one hundred percent as printed, and the pages 8 to 10 return rows read one hundred times the size of the net gain ratio beside them. The HTML carries the same printed values. The cause is not located in this seat, which reads the components and does not edit them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scale check (booleans only): allocation values total 100 in stored units; avs ytd and qtd return_cumulative equal net gain over beginning value in percent units for all compared accounts",
+      "export pages read as images: C:/dev/_irpt_private_evidence_20261009/fwd21_sample_r101_final/pages/r101/page_06.png, page_08.png, page_09.png, page_10.png (private folder, not repo)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W156-S3 -- the client-facing render prints build and contract language as the absent reasons and as lead-in notes on most sections
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W156-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~156",
+  "surfaced_at": "2026-10-14T03:56:25Z",
+  "one_line": "The absent reasons name contracts, sibling sources, table names, an issuer ruling and the word baseline; 20 lead-in Covers paragraphs print above the sections. The baseline prints no build notes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Contract read rule: an ABSENT member prints its reason in words. The baseline export (the target) prints the report's own words and no build notes.",
+  "world_is": "The export HTML carries 20 Covers lead-in paragraphs, the word sibling 16 times, contract 11 times, gold 7 times, baseline 6 times, issuer 2 times and build 2 times; the reasons name table and field names (for example gold account_activity_daily and dim_return_method). The tab HTML carries the same words. A reader of the client report sees these build notes on most of the 14 pages.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "word counts in the private export HTML and tab HTML (counts only, read by grep -o -i into a count)",
+      "page images C:/dev/_irpt_private_evidence_20261009/fwd21_sample_r101_final/pages/r101/page_01.png to page_14.png show the Covers paragraphs and the absent reasons"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W156-S4 -- two baseline elements with no contract member print nothing and carry no absent note (account-grain charts; class rows under each account in the gain or loss review)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W156-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~156",
+  "surfaced_at": "2026-10-14T03:56:25Z",
+  "one_line": "The baseline's account-grain allocation and performance charts, and the class-hierarchy rows under each account, are silently absent from the render because the contract has no member for them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The baseline schema (section 5 Account Overview, section 6 Gain/Loss Review by Account, by class) is the target shape; an element the contract does not carry should print an absent note, not nothing.",
+  "world_is": "The contract has 117 members and none for an account-grain chart or a class row. The render prints three account value tables under Account Overview with no chart headings and no absent note, and one gain or loss table per account with a single account row and no class rows. Nothing says these elements are missing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "contract members listed by section: account_overview 36 members, all avs.* value or benchmark rows; gain_loss_review_by_account 4 members, all glr.* columns",
+      "page images C:/dev/_irpt_private_evidence_20261009/fwd21_sample_r101_final/pages/r101/page_08.png to page_13.png show no chart heading and no class row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W156-S5 -- the holdings overview is a transposed field list with asset-class rows; the class and sub-class table of the baseline is not drawn
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W156-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~156",
+  "surfaced_at": "2026-10-14T03:56:25Z",
+  "one_line": "The holdings section prints the window columns as rows and seven asset-class rows; the baseline's class and sub-class table (US, international, taxable bonds and so on) is not drawn, and the one note says sub-class rows are not carried.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Baseline section 3: a Holdings Overview table with class and sub-class rows, and columns Ending Value, Allocation, then Net Gain and Return for each window.",
+  "world_is": "Page 5 prints a field list (ending value, then net gain and return per window, one row each); page 6 prints an allocation table of seven asset classes with three absent rows. The class hierarchy is not drawn; the contract member holdings.rows.class_hierarchy is a note string, not a row set. The footnote says a class with no holding prints a dash, and the three absent rows do not show that.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "contract member holdings.rows.class_hierarchy holds a text note in the sample (a string, not a row set)",
+      "page images C:/dev/_irpt_private_evidence_20261009/fwd21_sample_r101_final/pages/r101/page_05.png and page_06.png"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W156-S6 -- labels and conventions differ from the baseline: no report title, footer labels, date forms, benchmark wording, and a fee-basis member absent beside printed fee words
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W156-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~156",
+  "surfaced_at": "2026-10-14T03:56:25Z",
+  "one_line": "No page prints the report title; footers read Household or Account Performance Report; the cover's as-of is in year-month-day form; benchmark rows lack return wording; the fee-basis member is absent while its words print.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Baseline page footer: the household or account name, the report title '49 Financial Performance Report', As of, and Page n of N; benchmark rows 'Benchmark: <tier> Return (Cumulative)'; the fee-basis words print beside every Opal return figure (contract read rule).",
+  "world_is": "The title is not printed on any page and the cover heading reads Cover. Footers read Household Performance Report or Account ending ... Performance Report, with the as-of date in long form, while the cover shows it year-month-day. Benchmark rows read Opal Model Benchmark, <tier>. The member convention.fee_basis_label is absent in the sample, and page 2 says the fee-basis label is absent in words, yet page 3 prints the fee-basis words as fixed text beside the value table, with the absent form on the same rows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the export HTML contains no 49 Financial title (count zero) and the footer label Household Performance Report (8 occurrences)",
+      "sample member convention.fee_basis_label is in the absent form; contract read_rule requires the fee-basis words beside every Opal return"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W156-S7 -- DB101-5-AC1 refuses its own required record: the baseline_schema_read path carries an eight-digit date stamp and the record-shape check does not exempt that key
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W156-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~156",
+  "surfaced_at": "2026-10-14T03:56:25Z",
+  "one_line": "The checker's digit-run rule refuses baseline_schema_read, the one key the order requires to hold the baseline file's real path; the criterion FAILS as written and is not repaired by this seat.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB101-5-AC1: the record holds no run of eight or more digits; the record field baseline_schema_read is the repo-relative path of the baseline schema file the seat read (TO worker face, step 4).",
+  "world_is": "The baseline schema file name carries an eight-digit date stamp, so its path holds such a run. The checker exempts only keys ending sha256 and the keys path, commit, portal_commit, file, key and checked_by; baseline_schema_read is not exempt. The run printed FAIL: the record holds a run of 8 or more digits at /baseline_schema_read, and DB101-5-AC1 FAIL. Every other check in the criterion passed before that line. The order stays open at pending.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 python p101_round101.py . DB101-5-AC1 printed: FAIL: the record holds a run of 8 or more digits at ['/baseline_schema_read'] and DB101-5-AC1 FAIL (rc 1)",
+      "checks/r101/p101_round101.py long_digit_runs exemption list (line 64) and check_section zero_effects call (line 325)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W156-S8 -- the order's proof section asks for a judgment row the validator's expected set refuses
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W156-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~156",
+  "surfaced_at": "2026-10-14T03:58:40Z",
+  "one_line": "The order asks the proof instance to carry a DB101-5-J1 row, but the proof-of-spec checker refuses any row outside the expected set (DB101-5-AC1 only); J1 is stated in declared_exclusions instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO proof_of_spec section: criterion ids DB101-5-AC1 (mechanical) and DB101-5-J1 (judgment, recorded UNVERIFIABLE-BY-INSTRUMENT with a status_reason naming the CVO); validate with the expected id DB101-5-AC1 only.",
+  "world_is": "With a DB101-5-J1 acceptance row present, proof-of-spec-check reports coverage: expected 1, carried 2, and an unexpected addition for DB101-5-J1, and returns INVALID (rc 1). The checker does not admit a judgment row outside the expected set. The seat moved the J1 record to declared_exclusions, which states its status and names the CVO, and left the acceptance rows to DB101-5-AC1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 python .tools/proof-of-spec-check.py <instance> DB101-5-AC1 printed VIOLATION: coverage: instance row 'DB101-5-J1' is NOT in the TO's expected set and INVALID (rc=1)",
+      "the TO's expected_criteria element names DB101-5-AC1 only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W157-S1 -- the producer reads no gold parquet, so the gold path of the cell has no input
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W157-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~157",
+  "surfaced_at": "2026-10-14T04:03:27Z",
+  "one_line": "The producer reads no gold parquet; its only dated inputs are pickle snapshots in the portal bucket, so the gold path the cell names has no input.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-192 steps 1 and 3: find the gold parquet that the producer reads or writes, and LIST each gold input for a dated daily model series with date= partitions.",
+  "world_is": "At HEAD the producer reads benchmarks/LATEST.json and one data_*_v1.pkl pickle snapshot and writes three served JSON keys; it has no parquet read or write. The yang source has no gold home in the canon (address() refuses it). The LIST of the benchmarks/ prefix returned 229 keys, 218 dated pickles, no date= partition.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-model-portfolio-benchmarks/lambda_function.py@f0ad572779 get_latest_data_pkl_key and load_pkl read the pointer and the pickle; upload_json writes the three keys",
+      "named-prefix LIST s3 opal-data-portal-v2 benchmarks/ (read only, this order): 229 keys, 218 .pkl, 0 date= partitions"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W157-S2 -- a dated daily model series is served beside the period-window object the tool reads
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W157-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~157",
+  "surfaced_at": "2026-10-14T04:03:27Z",
+  "one_line": "A dated daily model series is served as json/benchmarks/model_portfolio_timeseries.json next to the period-window object, outside gold and outside the tool the cell names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-192 Why: the Opal model returns are served as period windows 1D to since-inception, current vintage only, no dated series.",
+  "world_is": "The object mdpf_get_model_benchmarks reads carries no dated series, as stated. The same producer writes a sibling object, json/benchmarks/model_portfolio_timeseries.json, with one row per date and model, and it is present in the bucket (LIST of json/benchmarks/: 6 objects). The tool does not read it. The catalog names it as mp.04.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-model-portfolio-benchmarks/lambda_function.py@f0ad572779 lines 430-431 write the timeseries key; build_timeseries emits a date field per row",
+      "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@f0ad572779 names portal_mdpf_model_benchmarks and the mp.04 timeseries row",
+      "named-prefix LIST s3 opal-data-portal-v2 json/benchmarks/ (read only, this order): 6 objects"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W157-S3 -- address() has no gold home for the yang source, so no Yang gold bucket comes from the canon
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W157-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~157",
+  "surfaced_at": "2026-10-14T04:03:27Z",
+  "one_line": "lib/opal_naming.py address() resolves yang platinum to the served bucket but refuses yang gold, so a builder cannot take a Yang gold bucket from the canon.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-192 bounds: every bucket comes from lib/opal_naming.py address() or the catalog, never from a registry bucket field.",
+  "world_is": "address() for source yang at tier gold of scope global raises no home bucket for tier gold of scope global: yang. The served bucket opal-data-portal-v2 is what address() gives for yang at tier platinum. scopes.json lists 14 scopes and none is a yang product row, so the source-homed composite gold has no bucket for yang.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py@f0ad572779 address() and _home_bucket: source-homed tier resolves through lookup(source) and finds no yang bucket",
+      "infra/logic/registry/scopes.json@f0ad572779 14 scopes, no yang product row",
+      "address('yang','global','platinum',...) returned the served bucket (read only, this order)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W157-S4 -- the lineage map describes SmartX sidecar reads the producer no longer makes
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W157-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~157",
+  "surfaced_at": "2026-10-14T04:03:27Z",
+  "one_line": "The yang lineage map says the producer reads the SmartX daily and monthly sidecars and writes a SmartX realized series; the producer at HEAD has no SmartX read and says the override is removed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "docs/reference/yang-pipeline-lineage-map.md (sections 1a, 1c, 5b, 6.14a and 6.14c) states the producer's reads and writes, including the SmartX sidecars.",
+  "world_is": "SmartX appears in the producer only in comments that say the SmartX override is removed. The served folder still holds _smartx_model_daily.json and _smartx_model_monthly.json with no reader in the producer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-model-portfolio-benchmarks/lambda_function.py@f0ad572779 lines 52-54, 292-296 and 403-406 state the SmartX override is removed",
+      "docs/reference/yang-pipeline-lineage-map.md@f0ad572779 lines 54, 82, 548 and 590 name the SmartX reads"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-S27 -- the Opal model benchmark returns have no gold (a pickle becomes served JSON); the report's builder lands them as an input, and the gold home is MDPF's own migration
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S27",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T04:11:51Z",
+  "one_line": "The Opal model benchmark returns have no gold: MDPF's yang-model-portfolio-benchmarks reads a pickle snapshot and writes served JSON (a period object and a dated daily series), and no gold table holds them; the performance report's builder lands them in the report's gold as an input with its source and data_as_of claimed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The report serves only from Opal's own gold (C-SHAPE); the contract's 32 benchmark members were sourced ABSENT because Opal holds no benchmark return series.",
+  "world_is": "Worker ~157's read (DB-b-192): the producer reads one pickle snapshot (no parquet) and writes three JSON keys under json/benchmarks/ in the portal-v2 bucket; address() has no gold home for it; the served period object has a trailing 365-day 1Y and an annualized since-inception, and a dated daily series is served beside it. The CTO ruled (msg 7511): the builder reads the dated series as an INPUT, computes every window cumulatively by compounding it, drops the period object, and the report still serves only from gold. The gold home for the model series is MDPF's own migration (R19), not a rider on this project.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~157/BENCHMARK_SOURCE_READ.json; rows W157-S1 to S3",
+      "1.0.0_SA_CTO~DELL2 msg 7511"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S8 -- The silver that would feed seven of the eight tables is code-named at shared or legacy buckets outside the grant, so no source could be listed under the own-bucket bound
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T04:04:39Z",
+  "one_line": "The silver that would feed seven of the eight tables is code-named at shared or legacy buckets outside the grant, so no source could be listed under the own-bucket bound",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-190 steps 2 and 3 (amended): find each firm's existing gold or silver inputs and record whether a source exists, reading each firm's own bucket, with the bucket taken from lib/opal_naming.py address() and never from the registry. The bound reads: each firm's own bucket only.",
+  "world_is": "address() resolves the silver and bronze of both firms to the shared bucket opal-data-assets (blackdiamond/cottonwood/silver, eclipse/inflection/silver, orion/inflection/silver). holdings_snapshot.py reads the Cottonwood Black Diamond silver from opal-data-assets blackdiamond/cottonwood/silver/ and the Inflection Eclipse and accounts_v2 silver from the legacy bucket opal-data-inf. None of these was listed, because each sits outside the firm's own bucket under the bound. source_exists is false for the seven tables with no gold, and the gap text gives the reason. One decision is needed before the first adapter order: whether a read of the firm's own prefix in the shared bucket is granted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py address() probe run per firm, source silver or bronze: s3://opal-data-assets/blackdiamond/cottonwood/silver/ and s3://opal-data-assets/eclipse/inflection/silver/ and orion/inflection/silver",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py: bucket set to opal-data-assets for the Cottonwood silver reads, and INF_SOURCE_BUCKET set to opal-data-inf for the Inflection silver reads",
+      "FIRM_READINESS.json at 0.9.0_WK_IRPT_DASHBD~155: source_exists false with the reason in gap_in_words for the seven tables"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S9 -- The registry bucket field and the generated firm_bucket_map name opal-data-cot and opal-data-inf for the two firms, while address() resolves their gold to opal-data-cottonwood and opal-data-inflection
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S9",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T04:04:39Z",
+  "one_line": "The registry bucket field and the generated firm_bucket_map name opal-data-cot and opal-data-inf for the two firms, while address() resolves their gold to opal-data-cottonwood and opal-data-inflection",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "TO DB-b-190 amendment 1: the registry bucket field is not where gold lives; get each bucket from lib/opal_naming.py address(), never from the registry.",
+  "world_is": "data/firm_registry.json gives bucket opal-data-inf for inflection and opal-data-cot for cottonwood. holdings_snapshot.py firm_bucket_map, generated from the identity registry, names the same two legacy buckets. address() resolves the gold tier to opal-data-cottonwood and opal-data-inflection, and the gold exists there. A reader that takes the registry field or the generated map finds a legacy bucket and reports no gold, which is how the first seat's void record arose. The harm stays live while readers keep the registry field.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/firm_registry.json: the inflection row bucket opal-data-inf and the cottonwood row bucket opal-data-cot",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py lines 183-187: firm_bucket_map generated from the identity registry",
+      "lib/opal_naming.py address() probe: s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/ and s3://opal-data-inflection/irpt/inflection/gold/ resolve, and the Cottonwood prefix lists its date partitions"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D2"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S10 -- Cottonwood account_return_daily gold is stale: its newest partition is 2026-06-22, 114 days before the read, and the Cottonwood performance tables end on 2026-09-25
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S10",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T04:04:39Z",
+  "one_line": "Cottonwood account_return_daily gold is stale: its newest partition is 2026-06-22, 114 days before the read, and the Cottonwood performance tables end on 2026-09-25",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "TO DB-b-190 step 3: for each table, record whether it exists in gold and how many date partitions were listed; account_return_daily is the existing Cottonwood gold the report would read.",
+  "world_is": "Cottonwood account_return_daily holds 3325 date partitions from 2013-04-03 to 2026-06-22, all date-named, with no other prefix. The Cottonwood holdings_performance_daily and holdings_performance_manifest end on 2026-09-25, and the Cottonwood holdings end on 2026-10-08, while the Inflection equivalents end on 2026-10-12. This read does not say why the Cottonwood producer's newest partition stopped. A report built on it would show Cottonwood figures months old.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3 ls of s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/: 3325 PRE lines, all date=YYYY-MM-DD, first and last recorded",
+      "newest partition listing: data.parquet and manifest.json present; data.parquet footer read by one range GET (19 columns, schema equal to the contract)",
+      "aws s3 ls of the Cottonwood and Inflection holdings_performance_daily and holdings prefixes: last partitions recorded in FIRM_READINESS.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S11 -- The gold holdings parquet carries 6 columns in each firm, so the IR holdings counts of 19 and 17 are page columns, not this file's columns
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S11",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T04:04:39Z",
+  "one_line": "The gold holdings parquet carries 6 columns in each firm, so the IR holdings counts of 19 and 17 are page columns, not this file's columns",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-190 step 2: columns_served for the holdings input uses the IR holdings column counts (Cottonwood 19 of 19, Inflection 17 of 19) carried from the CTO message.",
+  "world_is": "The newest holdings partition's parquet footer carries 6 columns (double and string types) in each firm. The holdings_qa footer also carries 6 columns in each firm with a schema identical to holdings. The 19 and 17 counts therefore describe the served IR page's columns, which this read did not reconstruct. The record carries them as the CTO's counts and says so.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "parquet footers of the newest holdings partition in each firm, read by one range GET each (6 columns)",
+      "parquet footers of the newest holdings_qa partition in each firm (6 columns, identical schema)",
+      "FIRM_READINESS.json columns_served entries marked as CTO counts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S12 -- The only household crosswalk recorded is 49 Financial's; the Cottonwood crosswalk input sits at the shared bucket and its coverage could not be read under the bound
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S12",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T04:04:39Z",
+  "one_line": "The only household crosswalk recorded is 49 Financial's; the Cottonwood crosswalk input sits at the shared bucket and its coverage could not be read under the bound",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-190 step 4: household_dimension for each firm is the ADVI household crosswalk's coverage of the firm, or none.",
+  "world_is": "The ADVI_BILLING household crosswalk record gives its S3 key in opal-data-49financial, so it covers 49 Financial only. The ADVI_FIRMBKTS FB-k-4 read names a Cottonwood crosswalk input at opal-data-assets commonwealth/cottonwood/silver/crosswalk, whose coverage was not read (outside the bound). No Inflection crosswalk is named in the repo's crosswalk records across two pages of comp-find results.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BILLING/deliverables/0.9.0_WK_ADVI_BILLING~3/AB_E5_RECORD.json: s3_key under opal-data-49financial",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~79/PLANINV_COTTONWOOD_SERVING_CROSSWALK.json: the commonwealth cottonwood silver crosswalk named in its read calls",
+      "comp-find household_crosswalk, pages 1 and 2 (69 hits across 77062 files scanned)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S13 -- The DB-b-190 order already reads complete, set on the first seat's void record; this round's passing record re-grounds the status
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S13",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T04:04:39Z",
+  "one_line": "The DB-b-190 order already reads complete, set on the first seat's void record; this round's passing record re-grounds the status",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-190 REPORT and step 6: the order's status is flipped to complete only when DB101-4-AC1 passes on the record.",
+  "world_is": "The order file at HEAD already reads complete, set by commit 441a46fe71 on the first seat's record, which amendment 1 declares void. The flip was not derived from a passing criterion on the amended premise. This round's record is the first passing one, and its proof instance carries the status.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log of the order file and of the deliverables folder: commit 441a46fe71 (proof, flip to complete) and commit 6f8f52e7f2 (first seat's read)",
+      "the amendment text in the order's WORKER FACE, AMENDMENT 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

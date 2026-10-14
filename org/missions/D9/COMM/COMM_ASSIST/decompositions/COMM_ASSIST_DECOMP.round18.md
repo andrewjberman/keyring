@@ -46,3 +46,13 @@ CA-j-2 depends only on the `NAMES.json` row, now merged, so it is cut under work
 `fanout (amendment 1): 1 of 1 chain, cap 8, reason: one file (chat_assist.tf); CA-j-3 and CA-j-5 wait on this merge and on their never-widen halves.`
 
 For CA-j-5 (the flip to enforce): the mark's freshness bound is 15 minutes (`ingress_mark.verify`) and the handler refuses a replayed mark, so the record-mode read must show `unmarked_seen` 0 across a real text AND must look for `stale-mark` refusals from queue delay or redelivery before the flip is asked for.
+
+## AMENDMENT 2 (2.0.0_SA_COO~CA, 2026-10-14 ~04:4xZ): CA-j-2 merged, CA-j-3 staged
+
+CA-j-2 merged @38ce5a7981 (worker ~21; `check_j2_tf` 7 of 7, `check_i4a_tf` green; the first proof instance read INVALID at the worker's final head because its artifact row predated the instance commit, and a fresh worker pinned the row to 6cfb79f314; row W21-S1, the client-data list absent on this box, was measured by hand: no client id in the 130 added lines). The CloudOps seat `0.7.0_AE_CloudOps~CA` is given CA-j-3 as a STAGED order (`<status>staged</status>`, GO written when all three halves are SIGNED on the pin 38ce5a7981).
+
+| cell | what | serves | risk | chain, slot | depends_on |
+|---|---|---|---|---|---|
+| `CA-j-3` | DEPLOY in three steps: (1) the secret shell by a targeted apply, (2) its value out of band, (3) one targeted apply of `module.ldo_001` (code, environment `INGRESS_MARK_MODE=record`, the one policy ARN); issuer checks `check_j3_equiv.py` (before; pre-flight read 17 of 17, files=3, foreign=1), `check_j3_live.py` (after), `check_j3_ledger.sh` (NEVER-2) | FWD-7 | WORLD | workstream DEPLOY18, the CloudOps seat | CA-j-1, CA-j-2 merged; halves |
+
+`fanout (amendment 2): 1 of 1 chain, cap 8, reason: one deploy act; CA-j-5 (the flip to enforce) waits on its close and on an observation window.`
