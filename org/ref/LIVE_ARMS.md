@@ -117,6 +117,9 @@ Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO. `/govern` fires on each 
       and FWD-11 (Meeting Request), due 2026-10-24. Class: CHOSEN by this seat on Andrew-direct ~18:3xZ (call 2 DECLINED: "DELL2 has the
       capacity to manage it"; record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_183xZ_FIVE_CALLS_ANSWERED_AND_BD_ASOF_CITATION.md`),
       cadence per his 2026-10-10 pacing word. Stop: FWD-10 and FWD-11 read REALIZED, HELD-AT-STOP, or his stand-down.
+      STRUCK 2026-10-14 ~18:5xZ for `2.0.0_SA_COO~C2` (ADVI_COTBKF) by 1.0.0_SA_CTO~DELL2: the project moves to dell1 now
+      (Andrew-direct ~18:5xZ, "devote DELL1 wholly to ADVI/MDPF work", record
+      `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_185xZ_DELL1_WHOLLY_ADVI_MDPF_AMGT.md`); its loop is dell1's to seat.
     - `2.0.0_SA_COO~Y2` `/canonical-drive` 60m over IRPT_BCKEND workstream Y, and IRPT_ANLREQ as its interim driver (CVO verdict msg 1889),
       CHOSEN. Seating asked of `0.0.0_AB_MSTR~DELL2` by 1.0.0_SA_CTO~DELL2 at ~02:27Z on `2.0.0_SA_COO~G2` msg 3899 (IRPT_YCDGEN FWD-1 waits on
       a workstream-Y re-cut). Same stop.
