@@ -200,6 +200,7 @@ PHASE A ends at the ANNOUNCE: report, and stop. After PHASE B, the applier write
   AGREE (PASS), and depth one day early: DISAGREE (FAIL).
 
 <status>issued</status>
+<status>complete</status>
 <round>10</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
