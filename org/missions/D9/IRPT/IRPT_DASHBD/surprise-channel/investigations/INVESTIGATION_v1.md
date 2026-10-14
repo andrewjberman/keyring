@@ -11691,3 +11691,27 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S35",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T17:59:49Z",
+  "one_line": "Issuer's dispositions on worker 174's five rows (round 109, DB-b-216): none changes the round's spec; S2 and S3 are one repair (link through missing valuation days) for the round-110 enrichment list, S1, S4 and S5 are definition facts carried to the CTO's round analysis.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Mid-round the decomposition is frozen; the only off-spec act is a surprise row. DB-b-216 asks for a method-stated derivation and a tie-out that says what it can and cannot compare, with no figure filled where a window is not comparable.",
+  "world_is": "W174-S2 (BLOCKING, partial): Orion fact_positions lacks 2026-07-01 and 2026-09-28, so the YTD, last-12-month and since-inception windows read not comparable and only QTD ties out; the record says so in words and fills no figure, which is what the order asked. The repair is the engine's link through intervening valuations (the Schwab engine's carried-day rule) applied to the Inflection adapter, one cell for round 110. W174-S3 (calendar-daily partitions give carried_days 3 on Mondays) is the same repair. W174-S1 (account_id is not zero-padded in Orion): the derived table keeps the dim form; the contract wording is for the CTO to correct, no consumer reads the pad. W174-S4 (no day_quality or guard_state value for computed-but-unguarded): an enum change is a schema decision under the taxonomy law and is not taken here; the table reads MEASURED with GUARD_NOT_REACHED and the report prints neither word. W174-S5 (isActive false rows with non-zero currentValue: 19,390 of 2,057,322 account-day rows): the module includes them and states the basis; whether they are market value is a data-definition fact for the CTO. S1, S4 and S5 go to the round-110 analysis request in the L10 slug. No hazard is armed on any of the five.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~174/TWR_TIEOUT_R109.json (tie_out windows, basis_words)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r109/p109_round109.py check_twr: DB109-3-AC1 PASS on the landed tree",
+      "this seat's own read of rows W174-S1 to W174-S5 in this file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
