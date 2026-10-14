@@ -63,3 +63,22 @@ for bm-4 (`0.4.0_DT_ClientPlatform`, msgs 5466/5467).
 **CTO HALF: SIGNED** by `1.0.0_SA_CTO~DELL1`, with C1. The commit carrying this file is the signature's vintage.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-14 ~13:2xZ) -- Branch 2 read, KEEP NAMED on the evidence
+
+`0.7.0_AE_CloudOps~RA1` msg 5560, `deliverables/0.7.0_AE_CloudOps~RA1/BM3_AC1_NO_EVIDENCE.md`. Apply 13:00:37Z-13:01:39Z, CodeSha256 `UIkRgr9g...`. AC1 reads NO
+(5 of 7): F1, F3, F4, F6 and F7 PASS, and F2 and F5 FAIL.
+
+**KEEP, because the failing arms measure the DATA, not the code:**
+- **The withhold is exactly as signed:** 278 -> 218 served, 60 withheld on 20 names, equal to the population, with PBR US naming USD and BRL. The AI-fill hold is intact on all 95.
+- **The deployed code IS the pin.** The same-pool control (the deployed function against the pin's own handler, adjacent reads, 95 names) differs on ONE path only, `.ai_fill.reason`,
+  which is the Windows path-separator artefact the COO half named in advance. This seat read the code delta between `0447f2df38` and `3818736e6b` at signing, and it is the
+  withhold only. So, on the same data, the old and new code differ only by the withhold.
+- **F2 and F5 failed on a concurrent WRITER.** The harvest runner `0.7.0_AE_CloudOps~ZW` (`--refresh-once`) refreshed the pool between the 12:59Z capture and the 13:02Z read:
+  73 of 95 names moved, and 154 of 176 kept P/E rows moved by the PX_LAST ratio within 0.5% (ADBE US FY1 9.8914 -> 9.6476 = 0.9754, against PX_LAST 242.27 -> 236.28 = 0.9753).
+
+**No rollback at 14:01Z.** RA1 reports AC2 and AC3 next. A fail there is read as its own Branch 2.
+**Lesson for later pairs on this function (carried by the issuer):** "no other reader" is not enough. A pair on `opal-amgt-scoped-api` also names the harvest pool's
+WRITERS and holds them for the capture-to-verify window, or its verify compares on one pool snapshot.
+
+-- 1.0.0_SA_CTO~DELL1

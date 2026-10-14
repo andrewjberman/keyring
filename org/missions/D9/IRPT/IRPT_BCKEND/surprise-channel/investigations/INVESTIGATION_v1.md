@@ -34410,3 +34410,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-S170 (the digest gate of IB-pr-535 fails: the pin mint moves about 20 members per bundle): the stop is the signed rule working; INERT as a hazard, LOAD-BEARING as a finding: the packet is re-cut by the CTO's round-194 ruling (characterize the moved members and sign the full pin mint, which is the code the signed counts were measured on, or prove a one-file overlay), and the live fires run on a trading calendar about 3.5 months old. D2-S169 (the kill cause is UNREADABLE: the runner host is stopped and no memory metric is retained): INERT, unresolved by evidence. D2-W382-S1 (BLOCKING, the AC2 mutant check cannot import the producer from its temp copy): my check's defect, repaired @751632840a, the worker's AC2 row re-graded PASS on the merged tree; INERT. D2-W382-S2 (the literal step-3 scratch layout fails at import for the same cause): INERT, the record discloses the repo-depth layout; the re-run in place measures the mutant. D2-W382-S3 (the naming-gate WARN on the 49financial literal in main): INERT, the order names the literal; whether it should read through lookup() is a later owner's. DISARM D2-W374-S1 and D2-W376-S1: the absent client-data hash list on dell2 is the RULED state, not a hazard: Andrew-direct 2026-10-09 ~19:2xZ (the record named above) and the CTO's msg 7618 name it, and MSTR~DELL2 msg 7617 confirms the check runs WARN-only on dell2 on purpose; both rows are disarmed here by their disarm_owner (D2-W374-S1: me; D2-W376-S1: the dell2 box manager, relayed by the CTO's instruction to me to file the evidence). Workers may treat that WARN as expected (the CTO's msg 7618)."
 }
 ```
+
+
+## IRPT_BCKEND-D2-S172 -- IB193-2-AC3's check diffs base..HEAD, so it fails on any trunk after the merge although the worker's delta is exact
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S172",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO~DELL2",
+  "surfaced_at": "2026-10-14T13:40:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB193-2-AC3 reads FAIL when re-run on the trunk: p193_cells.py diffs base_commit..HEAD, so once the worker's branch is merged and the trunk moves, the record's two changed_paths no longer equal the diff (84 product paths at 13:3xZ). At the worker's tip db28643558 the diff is exactly the two paths, so the product is right and the check decays.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's run 2026-10-14T13:3xZ on box/dell2 HEAD: python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r193/p193_cells.py . IB193-2-AC3 -> 'FAIL: changed_paths (the product paths) differs from the git diff since base' and 'IB193-2-AC3 FAIL'",
+      "git diff --name-only 411bde7479..db28643558 (b80e382520^2, the worker tip), deliverables and channel aside: exactly holdings_snapshot.py and tests/test_holdings_bypass_one_date.py, equal to IB193-2_record.json changed_paths",
+      "git diff --name-only 411bde7479..HEAD, same filter: 84 paths, the 82 extra from other seats' commits"
+    ]
+  },
+  "spec_asserts": "A criterion re-run on the landed tree (the packet's words, and row D2-S171's) reads the same as on the worker's tree.",
+  "world_is": "The AC3 check is HEAD-relative: it passes only on the worker's own branch and fails on any later trunk. D2-S171's 'all PASS on the landed trees' holds for the worker tree, not for the merged trunk. A re-read at L8, or a successor's, will read FAIL with nothing wrong in the product. Remedy for the issuer: diff base_commit against the record's tip (or the merge's second parent), not HEAD."
+}
+```
