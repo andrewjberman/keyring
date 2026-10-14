@@ -1978,6 +1978,66 @@ def _live_limb(nm, lit, typ, note):
     return False
 
 
+# --------------------------------------------------------------------------- the REGISTERED LEGACY ADDRESS branch
+# MX-c-9 A4 (rows Z-W34-S7; 1.0.0_SA_CTO~Z ruling msg 33936; laptop CTO conditions msg 33943). A literal that EQUALS
+# lib/opal_naming.py legacy_address(key) for an infra/logic/registry/legacy_addresses.json row whose `reader` is the
+# COMMITTING PROJECT grades CONFORMANT. The committing project is DERIVED from the staged paths (the diff's own file
+# headers) and never from a free field or the commit message; the registry is read from COMMITTED HEAD, so a commit
+# cannot grant itself the pass. The same literal under a row whose reader is another project is graded as before.
+LEGACY_REGISTRY = "infra/logic/registry/legacy_addresses.json"
+PROJECT_HOME_RE = re.compile(r"^org/missions/D[^/]+/[^/]+/([^/]+)/")
+_LEGACY = {"project": None, "rows": None}
+
+
+def committing_project(files):
+    """The project CODE all staged paths under a project home (org/missions/D*/<MACRO>/<CODE>/...) name, or None when no
+    staged path is under a project home or the staged paths name more than one project (then no branch applies)."""
+    codes = set()
+    for f in files:
+        for key in ("new", "old"):
+            m = PROJECT_HOME_RE.match(f.get(key) or "")
+            if m:
+                codes.add(m.group(1))
+    return next(iter(codes)) if len(codes) == 1 else None
+
+
+def _legacy_head_rows():
+    """{key: row} of the legacy_addresses.json rows COMMITTED at HEAD ({} when HEAD carries none or the read fails)."""
+    if _LEGACY["rows"] is None:
+        rows = {}
+        try:
+            raw = _head_bytes(REPO, LEGACY_REGISTRY)
+            for row in (json.loads(raw).get("legacy_addresses", []) if raw else []):
+                if isinstance(row, dict) and isinstance(row.get("key"), str):
+                    rows[row["key"]] = row
+        except (ValueError, AttributeError, TypeError):
+            rows = {}
+        _LEGACY["rows"] = rows
+    return _LEGACY["rows"]
+
+
+def _legacy_own(nm, value):
+    """The key of the HEAD-committed legacy_addresses.json row, with no params and reader == the committing project, whose
+    legacy_address(key) the literal equals (the full s3 URI, or its key part: the `prefix:` / key form a catalog carries),
+    or None. No committing project means None."""
+    project = _LEGACY["project"]
+    if not project:
+        return None
+    for key, row in _legacy_head_rows().items():
+        if row.get("reader") != project or row.get("params"):
+            continue
+        try:
+            addr = nm.mod.legacy_address(key)
+        except Exception:  # a key the working registry does not carry, or a registry defect: the branch does not apply
+            continue
+        bucket, _sep, key_part = addr.split("://", 1)[-1].partition("/")  # the URI's bucket and key, no format literal typed
+        if bucket != row.get("bucket") or key_part != row.get("template"):
+            continue  # HEAD and the working registry disagree on this row: only a committed row grants
+        if value == addr or value == key_part:
+            return key
+    return None
+
+
 def judge(nm, path, lit, pre_text, waivers=None):
     """(line verdict, canonical, why, counts-as) for one literal, or None when it is not graded. The live limb's one line
     joins the why text: RUNNING-LIVE on any row of a name the plane holds; LIVE-READ-FAILED on a REFUSE row only."""
@@ -2008,9 +2068,10 @@ def _judge(nm, path, lit, pre_text, waivers, note):
         # ungraded; the gate then read PASS 0 graded. The registry's per-firm key rulings are the other way to know it is a key.
         return None if lit.built or lit.hint else _pattern_row(lit, path=path)
     new = pre_text is None or not _in_pre(lit, pre_text)
+    legacy_key = _legacy_own(nm, lit.value) if typ is not None else None  # MX-c-9 A4: a registered legacy address of the committing project
     # Limb (b), LAZY: read the live plane only for a NEW literal that the branches below would REFUSE (a hand-kept carrier, or
     # an OUT-OF-PATTERN / ALIAS name). A CONFORMANT or NOT-GRADED name is never refused, so it never pays for the read.
-    if new and _LIVE["read"] is not None and (carr or (typ is not None and nm.grade(typ, graded_as)[0] in ("OUT-OF-PATTERN", "ALIAS"))):
+    if new and not legacy_key and _LIVE["read"] is not None and (carr or (typ is not None and nm.grade(typ, graded_as)[0] in ("OUT-OF-PATTERN", "ALIAS"))):
         new = _live_limb(nm, lit, typ, note)
     carr_txt = ""
     if carr:
@@ -2063,6 +2124,10 @@ def _judge(nm, path, lit, pre_text, waivers, note):
         if carr:
             return verdict, canon, "NO-SYSTEM-ASKED as %s; EXISTING%s: WARN" % (typ, carr_txt[1:]), "WARN"
         return verdict, canon, "NO-SYSTEM-ASKED as %s: no system is asked of this kind of name" % typ, "PASS"
+    if legacy_key and verdict in ("OUT-OF-PATTERN", "ALIAS") and not carr:
+        return ("CONFORMANT", canon, "CONFORMANT as the registered legacy address %r (legacy_addresses.json at HEAD, reader %s ="
+                " the committing project, derived from the staged paths): graded as %s it is %s, and the registry row carries"
+                " the departure (R19)" % (legacy_key, _LEGACY["project"], typ, verdict), "PASS")
     rem = nm.remediation_of(typ, graded_as) if verdict == "OUT-OF-PATTERN" and not new else None
     if new and verdict in ("OUT-OF-PATTERN", "ALIAS"):
         return "REFUSE", canon, "NEW and %s as %s: REFUSE%s%s" % (verdict, typ, carr_txt, new_deny_txt), "REFUSE"
@@ -2548,6 +2613,7 @@ def run(args):
     _place_reset()
     _RENAMES.clear()  # the renames of THIS index, read once for this run
     _live_reset(_live_read_plane)  # the live limb is on for a graded commit; self-test arms keep it off unless they inject a plane
+    _LEGACY.update(project=committing_project(files), rows=None)  # MX-c-9 A4: derived from the staged paths, once per run
     for f in files:
         rows += grade_file(nm, f, args.post_from_index)
     meta = domain_meta(files)
@@ -2900,6 +2966,56 @@ def test_folder_self_test(nm):
     return ok_exempt and ok_graded
 
 
+def legacy_address_self_test(nm):
+    """The REGISTERED LEGACY ADDRESS arms (MX-c-9 A4) on a row committed at HEAD before this change: the first committed prefix row that
+    grades NEW OUT-OF-PATTERN REFUSE with no owner is the planted literal (an ADVI_COTBKF row today). Own reader ->
+    CONFORMANT; another project's reader, and no committing project at all -> REFUSE as before. The project is injected here,
+    as the diff run derives it from the staged paths."""
+    saved = dict(_LEGACY)
+    got = {}
+    try:
+        _LEGACY.update(project=None, rows=None)
+        # the planted literal is read from a committed row, never typed: the first prefix row with no params whose template the
+        # matrix REFUSES as NEW when no project owns it (so the difference the branch makes is what the arms measure)
+        lit_value, own = None, None
+        for _key, row in sorted(_legacy_head_rows().items()):
+            if row.get("shape") != "prefix" or row.get("params") or row.get("reader") == "NFRA_OPLGTW":
+                continue
+            base = judge(nm, "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml", Lit(row["template"], row["template"], 1, None), None)
+            if base is not None and base[0] == "REFUSE":
+                lit_value, own = row["template"], row["reader"]
+                break
+        if lit_value is None:
+            print("SELF-TEST arm legacy_address: no committed prefix row grades REFUSE with no owner: FAIL")
+            return False
+        for label, project in (("own", own), ("other", "NFRA_OPLGTW"), ("none", None)):
+            _LEGACY.update(project=project, rows=None)
+            got[label] = judge(nm, "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml", Lit(lit_value, lit_value, 1, None), None)
+        derived = (committing_project([{"new": "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/x.md", "old": None}]),
+                   committing_project([{"new": "infra/x.tf", "old": None}]),
+                   committing_project([{"new": "org/missions/D9/NFRA/NFRA_MCPINDEX/a.md", "old": None},
+                                       {"new": "org/missions/D9/NFRA/NFRA_OPLGTW/b.md", "old": None}]))
+    finally:
+        _LEGACY.clear()
+        _LEGACY.update(saved)
+
+    def shown(g):
+        return "%s %s" % (g[0], g[3]) if g else "None"
+    ok_own = got["own"] is not None and got["own"][0] == "CONFORMANT" and got["own"][3] == "PASS"
+    ok_other = got["other"] is not None and got["other"][0] == "REFUSE" and got["other"][3] == "REFUSE"
+    ok_none = got["none"] is not None and got["none"][0] == "REFUSE" and got["none"][3] == "REFUSE"
+    ok_derive = derived == ("NFRA_MCPINDEX", None, None)
+    print("ARM legacy_address_own_reader CONFORMANT: %s of project %s -> %s: %s"
+          % (lit_value, own, shown(got["own"]), "ok" if ok_own else "FAIL"))
+    print("ARM legacy_address_other_reader REFUSE: %s of project NFRA_OPLGTW -> %s: %s"
+          % (lit_value, shown(got["other"]), "ok" if ok_other else "FAIL"))
+    print("SELF-TEST arm legacy_address no committing project: %s -> %s: %s"
+          % (lit_value, shown(got["none"]), "ok" if ok_none else "FAIL"))
+    print("SELF-TEST arm legacy_address derivation: one project home -> %s; no project home -> %s; two project homes -> %s: %s"
+          % (derived[0], derived[1], derived[2], "ok" if ok_derive else "FAIL"))
+    return ok_own and ok_other and ok_none and ok_derive
+
+
 def self_test():
     """--self-test: judge() on a NEW group-A name takes the fourth verdict and passes, and (the difference control) a NEW
     group-B name is still refused. Reads no diff, writes no log. Returns 0 when both arms hold."""
@@ -2912,6 +3028,7 @@ def self_test():
         ok = ok and arm
         print("SELF-TEST arm %s %s -> %s %s: %s" % (name, typ, got[0] if got else None, got[3] if got else None,
                                                     "ok" if arm else "FAIL"))
+    ok = legacy_address_self_test(nm) and ok
     ok = built_self_test(nm) and ok
     ok = pattern_self_test() and ok
     ok = place_self_test() and ok

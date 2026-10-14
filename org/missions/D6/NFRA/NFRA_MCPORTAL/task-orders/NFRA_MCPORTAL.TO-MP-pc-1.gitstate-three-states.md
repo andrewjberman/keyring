@@ -19,7 +19,7 @@ EGRESS CLASS, declared: none. Every store read in a test is a fake client.
 
 ## 1. THE CELL -- `MP-pc-1` (workstream PC round 1, decomposition sections PC.1 and PC.2)
 
-Your worktree is `C:/tmp/mp-pc-20` (branch `wk-NFRA_MCPORTAL-pc-20`). Work and commit only there.
+Your worktree is `C:/tmp/mp-pc-20b` (branch `wk-NFRA_MCPORTAL-pc-20`). Work and commit only there.
 
 The Control Plane's Git state panel shows, per box, whether the box's newest integrate pass was refused. The handler
 `infra/aws/ec2/opal-gateway/app/admin_fabric_gitstate.py` reads ONE pointer object per box,
@@ -100,6 +100,8 @@ Report once, with:
 Z-C-S31) and PRD v0.8 @7da54894cf. Check dry-run at base 9be88c9134: AC1 FAIL (named tests PASSED 1 of 5; the one
 existing bound test passes, which is the control that the file runs). One criterion: the cell is the built behaviour; the
 seam to the page is the fixed PC.2 shape, graded at the release. Lives through MP-pc-5.
+
+**AMENDMENT 1 (issuer, 2026-10-14 ~03:3xZ, before the spawn):** the worktree path moved from `C:/tmp/mp-pc-20` to `C:/tmp/mp-pc-20b`. The first provisioning was killed by the issuer's own 300 s timeout and left an orphan directory, which is not deleted (a recursive delete needs a human word). The branch and the `<paths>` grant are unchanged.
 
 <status>pending</status>
 <round>1</round>
