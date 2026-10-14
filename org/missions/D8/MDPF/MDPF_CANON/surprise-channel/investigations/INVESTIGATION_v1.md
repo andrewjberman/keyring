@@ -1384,3 +1384,97 @@
   "notes": "Not repaired here: the instrument is read-only for this order. The served prefixes were byte-identical before and after the run, so the placeholder is a record-keeping defect, not a write."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W23-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~23",
+  "surfaced_at": "2026-10-14T14:40:10Z",
+  "one_line": "The worker face names this order's row ids MDPF_CANON-D1-W17-S<k>, but this worker's serial is 0.9.0_WK_MDPF_CANON~23; the row gate requires W{n} to equal the committing worker's suffix, so the rows are minted MDPF_CANON-D1-W23-S<k>.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face section 5 (proof and rows): a row id on this project carries the dell1 infix MDPF_CANON-D1-W17-S<k>; the spawn rule: the allocator coordinate W{n} is the ~<n> of the serial, and the gate requires W{n} to equal the committing worker's suffix.",
+  "world_is": "This worker's serial is 0.9.0_WK_MDPF_CANON~23 (worktree C:/dev/wk-canon-r7-23). The W17 in the face is a template value that does not match the serial. A W17 row would be refused by the gate from this worktree, so the rows minted by this worker are W23. Nothing else in the cell is affected.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "slot23_CN-j-1.md section 5: 'A row id on this project carries the dell1 infix: MDPF_CANON-D1-W17-S<k>'",
+      "org/surprise_channel/schemas/investigation_item.schema.json id description: W{n} must equal the committing worker's suffix"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker. The issuer (2.0.0_SA_COO~D1) owns the face template; no cell content depends on the id number."
+}
+```
+```json
+{
+  "id": "MDPF_CANON-D1-W23-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~23",
+  "surfaced_at": "2026-10-14T14:40:10Z",
+  "one_line": "The AC3 real-data arm reads 95 dated category-views gold objects (49financial 27, inflection 26, cottonwood 20, global 22), not the 91 the order measured on 2026-10-13 (26, 25, 19, 21); four dated objects were added between the cut and this run. The arm reads all of them and passes 6 of 6.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face section 1 and the preflight: the four scopes hold 26, 25, 19 and 21 dated category-views objects (91) as measured 2026-10-13; AC3 reads 91 dated gold objects.",
+  "world_is": "Read-only paginated listing of portal/gold/mdpf/{scope}/category-views/ in opal-data-assets on 2026-10-14 returns 27, 26, 20 and 22 dated objects (95 in total). The publisher and the issuer's arm both follow the live listing; no expectation in the code or the arm depends on the count.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_j_1.py real (R0 CONTROL: {'49financial': 27, 'inflection': 26, 'cottonwood': 20, 'global': 22}; R3 190 cells, 0 unequal)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker. Counts are read at the run date; the grown tree is expected for a daily fire, and the figures in the order are a 2026-10-13 measurement."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W23-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~23",
+  "surfaced_at": "2026-10-14T14:44:05Z",
+  "one_line": "The order's AC1-AC3 expect strings (ending '-- and exit=0') and the face's timeout 120 prefix cannot both be recorded verbatim: the check prints the summary line and the echoed exit line on separate lines, and the proof checker requires the recorded invocation to equal the criterion's text exactly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face section 4: each criterion's expectation reads 'ROUND 7 CN-J-1 <ARM>: n of n arms -- and exit=0', and each invocation runs under timeout 120. proof-of-spec-check.py: a PASS row's output_evidence must match expect, and the recorded invocation must equal the criterion's invocation modulo placeholders.",
+  "world_is": "r7_cn_j_1.py prints 'ROUND 7 CN-J-1 UNIT: 6 of 6 arms' as one line and the shell echo 'exit=0' as the next line; no output line contains '-- and exit=0'. The first instance draft failed the checker on this and on the timeout prefix. The record now carries the criterion's invocation text exactly, and expect as the summary line then exit=0 with a whitespace span. The timeout 120 bound was applied at run time and is stated in session_log.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3,AC4 at the first draft: 'does NOT match expect' x3 and 'invocation-alignment ... NOT the criterion's invocation' x3",
+      "r7_cn_j_1.py unit/seam/real stdout (worktree 8ae1cfdafb + wk-MDPF_CANON-23 commit): final lines 'ROUND 7 CN-J-1 <ARM>: n of n arms' then exit=0 from the shell echo"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker. The issuer owns the face's expect wording; the record keeps the criterion text and the checker's matching rule decides the verdict."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W23-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~23",
+  "surfaced_at": "2026-10-14T14:46:19Z",
+  "one_line": "The commit-time naming gate WARNs on the new provenance URI f\"s3://{GOLD_BUCKET}/{dated[0][1]}\" at lambda_function.py:558 ('segment 1 {x} is neither a source nor a tier'). The same f-string shape exists unchanged at line 414 (_publish_one) and is not graded there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face section 1 Step 1/2 and bounds: add no bucket, prefix or name; the publisher's serve keys are existing-pipeline f-strings, and the naming gate's non-application for an existing pipeline applies. CLAUDE.md section 4: every S3 address is lib/opal_naming.py output, R19 migration is per project.",
+  "world_is": "The provenance source_keys entries reuse GOLD_BUCKET and the listed gold key, the same way _publish_one does (line 414). Commit 4e954e2d8b passed with the naming gate WARN (NAMING-GATE: WARN 1 graded). The WARN grades only added lines, so the existing pattern is graded only where it is newly typed. No new bucket, prefix or name is typed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit 4e954e2d8b: '[naming-gate] NAMING RAISE infra/aws/lambda/opal-assets/opal-assets-mdpf-portal-publisher/lambda_function.py:558 s3://{x}/{x} -> (rule or registry defect)'",
+      "git show 8ae1cfdafb:infra/aws/lambda/opal-assets/opal-assets-mdpf-portal-publisher/lambda_function.py line 414: source_keys [f\"s3://{GOLD_BUCKET}/{src['key']}\"]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker. A naming-gate rule question for the LGIC owner; the existing publisher line is outside this cell and was not changed."
+}
+```
