@@ -28,7 +28,7 @@ what an incomplete export means for the zero (the proof says the key does not fo
 
 ### 1a. What to do
 
-1. **Find the export's own lot identifier first.** Read the column names of the recorded export (the bronze unrealized workbook of 2026-10-09 in `opal-data-bd`; round 2 recorded its key in `LOT_PROOF.json` field `export_key`; download to `C:/dev/wk-bdprce-r3-17-data/`). If the export carries a column that uniquely identifies a tax lot (a lot id, a tax-lot id, a position-lot id),
+1. **Find the export's own lot identifier first.** Read the column names of the recorded export (the bronze unrealized workbook of 2026-10-09 in `opal-data-bd`; round 2 recorded its key in `LOT_PROOF.json` field `export_key`; download to `C:/dev/wk-bdprce-r3-17b-data/`). If the export carries a column that uniquely identifies a tax lot (a lot id, a tax-lot id, a position-lot id),
    test it: unique on the whole export? If yes, `key_basis` is `export_lot_id` and the lot key is that column. If none exists or it is not unique, `key_basis` is `relationship_id` and the key is (`relationship_id`, `account_id`, `asset_id`, `open_date`, `unit_cost`). State the columns you considered and what you found.
 2. **Patch copies, not the repo.** Copy round 2's patched script into your folder as `merge_daily_incremental.patched2.py` and change ONLY the lot key (`LOT_KEY_COLS`) and whatever the change forces (the column must survive the legacy construction's renames; check how `relationship_id` is named after the silver rename step). Write `unrealized_lots2.diff` (a unified diff against the repo file at your HEAD).
    The legacy output stays BYTE-UNCHANGED: the two new columns are dropped from it, and nothing else about it moves.
@@ -53,7 +53,7 @@ Also write `LOT_PROOF2.md` (one page: the key and why, the counts against round 
 
 ## 2. BOUNDS
 
-1. READ verbs only on AWS. No write, no producer run, no upload, and NO edit of any file under `data/`, `infra/` or `lib/`. Downloaded files go to `C:/dev/wk-bdprce-r3-17-data/` (outside the checkout).
+1. READ verbs only on AWS. No write, no producer run, no upload, and NO edit of any file under `data/`, `infra/` or `lib/`. Downloaded files go to `C:/dev/wk-bdprce-r3-17b-data/` (outside the checkout).
 2. No client name, account number or advisor name is printed or committed; the recorded export is not committed (hash and key only).
 3. A raw S3 listing the rail denies is re-run with a trailing `# rail-checked: BP-c-5 fixture needs the key listing`. A step that cannot finish reports `claim: absent` for what was not read.
 
@@ -68,9 +68,9 @@ org/missions/D8/ADVI/ADVI_BDPRCE/surprise-channel/investigations/INVESTIGATION_v
 
 <proof_of_spec>
 Instance at `org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~17/ADVI_BDPRCE.TO-BP-c-5.lot-key-proof.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="BP-c-5"><invocation>cd /c/dev/wk-bdprce-r3-17 &amp;&amp; timeout 110 python org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~17/test_lot_split2.py</invocation><expect>^LOT SPLIT2 TEST: OK [0-9]+ arms$</expect></criterion>
-  <criterion id="AC2" cell_refs="BP-c-5"><invocation>cd /c/dev/wk-bdprce-r3-17 &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/2.0.0_SA_COO~K1/round3/checks/r3_checks.py lotproof2 --file org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~17/LOT_PROOF2.json</invocation><expect>^LOTPROOF2 record ok legacy_equal=true lots=[0-9]+ folded=0 differing=0 key=(relationship_id|export_lot_id)$</expect></criterion>
-  <criterion id="AC3" cell_refs="BP-c-5"><invocation>cd /c/dev/wk-bdprce-r3-17 &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_scope.py --root /c/dev/wk-bdprce-r3-17 --allow org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~17/ --allow org/missions/D8/ADVI/ADVI_BDPRCE/surprise-channel/investigations/INVESTIGATION_v1.md</invocation><expect>^ROUND 4 SCOPE: OK [0-9]+ changed, 0 outside, 0 required missing$</expect></criterion>
+  <criterion id="AC1" cell_refs="BP-c-5"><invocation>cd /c/dev/wk-bdprce-r3-17b &amp;&amp; timeout 110 python org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~17/test_lot_split2.py</invocation><expect>^LOT SPLIT2 TEST: OK [0-9]+ arms$</expect></criterion>
+  <criterion id="AC2" cell_refs="BP-c-5"><invocation>cd /c/dev/wk-bdprce-r3-17b &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/2.0.0_SA_COO~K1/round3/checks/r3_checks.py lotproof2 --file org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~17/LOT_PROOF2.json</invocation><expect>^LOTPROOF2 record ok legacy_equal=true lots=[0-9]+ folded=0 differing=0 key=(relationship_id|export_lot_id)$</expect></criterion>
+  <criterion id="AC3" cell_refs="BP-c-5"><invocation>cd /c/dev/wk-bdprce-r3-17b &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_scope.py --root /c/dev/wk-bdprce-r3-17b --allow org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~17/ --allow org/missions/D8/ADVI/ADVI_BDPRCE/surprise-channel/investigations/INVESTIGATION_v1.md</invocation><expect>^ROUND 4 SCOPE: OK [0-9]+ changed, 0 outside, 0 required missing$</expect></criterion>
 </proof_of_spec>
 
 AC1 is the built behaviour (the split, the byte-unchanged legacy, folded and differing at zero); AC2 grades the proof record's invariants; AC3 is the write-surface bound (its printed label says ROUND 4 because the checker is reused unchanged).
