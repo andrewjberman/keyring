@@ -15137,3 +15137,63 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W145-S7 -- a first git worktree add for the release-31 build was interrupted and left a stub directory C:/dev/irpt-release-r31s/wt-status-e008b6216a that git does not register
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W145-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~145",
+  "surfaced_at": "2026-10-14T20:17:09Z",
+  "one_line": "The first `git -c core.longpaths=true worktree add --detach C:/dev/irpt-release-r31s/wt-status-e008b6216a e008b6216a` returned after its 120 s bound with the checkout still in progress; the directory holds a partial checkout and a .git file pointing at C:/dev/ajb_workspace/.git/worktrees/wt-status-e008b6216a, which does not exist, so git rejects it ('not a git repository') and it is absent from git worktree list. The build moved to a fresh worktree C:/dev/irpt-release-r31s/wt-e008-r2 at the same commit. The stub is left in place: a recursive delete needs a human.",
+  "spec_asserts": "TO-AR-y-339 step 2: create a clean release worktree OUTSIDE the repository at the pin (git -c core.longpaths=true worktree add --detach <path> <sha>); git status clean; remove it when done.",
+  "world_is": "At 2026-10-14T20:16Z: C:/dev/irpt-release-r31s/wt-status-e008b6216a exists with 18 top-level entries and a 65-byte .git file (gitdir C:/dev/ajb_workspace/.git/worktrees/wt-status-e008b6216a); the admin directory is absent; git worktree list in C:/dev/wk-irpt-anlreq-145 does not show the path; the foreground call returned rc 124 and its backgrounded continuation exited 0 with the checkout unfinished. Measured in the same run: the map at HEAD e008b6216a has 41 staged_from rows for irpt-status and the worktree's lambda-source-map.json is 401717 bytes. No build ran in the stub; nothing was written outside C:/dev/irpt-release-r31s/.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/irpt-release-r31s/wt-status-e008b6216a/.git (65 bytes, gitdir line) @ worktree stub",
+      "git worktree list in C:/dev/wk-irpt-anlreq-145 (no wt-status-e008b6216a entry) @e008b6216a",
+      "C:/dev/irpt-release-r31s/wt-e008-r2 (fresh worktree at e008b6216a, the build input)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a build input. The stub is outside the repository and outside the grant's write surface for deletion; the human who owns C:/dev/irpt-release-r31s clears it. The fresh worktree's status and HEAD are printed in the record."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W145-S8 -- AMENDMENT 1 map edit removes the only staged_from row that gives irpt-status its ops/status_installed.py, so the BUILD_ONLY build stops at 0 built, 1 failed (ERROR: File not found ops/status_installed.py)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W145-S8",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~145",
+  "surfaced_at": "2026-10-14T20:21:49Z",
+  "one_line": "The three-row removal of AMENDMENT 1 (commit e008b6216a) leaves files[] of irpt-status naming status_installed.py as a member of source_dir ops/, but the only file is reports/status_installed.py; the removed row was the sole staging of ops/status_installed.py. The BUILD_ONLY build from the release worktree at e008b6216a stopped PARTIAL, 0 built, 1 failed: ERROR: File not found: infra/aws/lambda/investor-reporting/ops/status_installed.py. No zip, no second build.",
+  "spec_asserts": "TO-AR-y-339 AMENDMENT 1: remove exactly the three staged_from rows of functions.irpt-status (ops/entry.py, ops/owned_report.py, reports/status_installed.py) so the package ships the pending hunks; step 2: build from a release worktree at the map-edit commit; if the build STILL fails, STOP with a row naming the first error.",
+  "world_is": "At e008b6216a (release worktree C:/dev/irpt-release-r31s/wt-e008-r2, status 0 lines, HEAD e008b6216a, BUILD_ONLY count 8 equal to the live base 15a387dd36): build-and-upload.sh investor-reporting irpt-status with TMPDIR=C:/dev/irpt-release-r31s/tmp-status, BUILD_ONLY=1, MSYS_NO_PATHCONV UNSET printed 41 'OK: staged ... sha256 verified' lines (all 41 remaining staged_from rows), then 'ERROR: File not found: infra/aws/lambda/investor-reporting/ops/status_installed.py' and 'PARTIAL -- 0 built, 1 failed: irpt-status' (log C:/dev/irpt-release-r31s/logs/build1.log). Measured: ops/status_installed.py does not exist at e008b6216a (git show rc 128); reports/status_installed.py does (rc 0); lambda-source-map.json lists \"status_installed.py\" in functions.irpt-status files[] (line 5366), and the builder checks every files[] member exists under source_dir before packaging (build-and-upload.sh around line 436). The S1 staging defect did not recur: the 41 staged writes landed in the release tree and the worktree was back to 0 status lines after the run. Only the status_installed row is the defect: entry.py and owned_report.py exist under ops/ and built from their HEAD bytes.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (issuer: decide how reports/status_installed.py reaches the irpt-status package. Either a further map edit that repoints the files[] member (outside this order's one-edit grant) or a source placement under ops/ (outside the grant); until one of them lands no BUILD_ONLY of irpt-status runs from e008b6216a, and the map commit on wk-IRPT_ANLREQ-145 must not be drained into CLOUD as the release map)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/irpt-release-r31s/logs/build1.log (the 41 OK lines, the ERROR line, the PARTIAL line)",
+      "git show e008b6216a:infra/aws/lambda/investor-reporting/ops/status_installed.py (rc 128, absent) and reports/status_installed.py (rc 0, present)",
+      "infra/aws/lambda/ci/lambda-source-map.json @e008b6216a functions.irpt-status files[] line 5366 and staged_from (41 rows)",
+      "infra/aws/lambda/ci/build-and-upload.sh @e008b6216a (files existence check before packaging)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A measured build failure after the one authorised map edit. The order's STOP rule applies: no second map edit, no source move, no zip. The map commit e008b6216a stays on the worker branch unmerged; it is not reverted here because the revert is an act the issuer orders."
+}
+]
+```
