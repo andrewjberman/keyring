@@ -7454,3 +7454,75 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Not touched. A configuration cleanup is a move-plan item for the round 8 author, not for this inventory. Disarm: none (INERT)."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-j-3, the measurement)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S55",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-14T01:27:47Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The chain-complete emit failure is measured, not inferred: rc=255 'You must specify a region'. The dispatcher's own chain log never holds the emit WARN; only the runner's cumulative log does.",
+  "spec_asserts": "TO-FB-j-3 step 4: read the WARN in gold/logs/ and the runner's cumulative logs/gold-layer/gold_incremental_*.log. Row D1-S40 had inferred REGION_UNSET.",
+  "world_is": "Measured. chain:full (log chain_full_20261013_230043.log) started 2026-10-13T23:00:43Z after the nightly fallback start (runner launch 23:00:11Z by bd-daily-trigger-lambda-role) and closed 2026-10-14T01:20:24Z COMPLETE exit 0. The cumulative log gold_incremental_2026-10-14_20261014_012024.log (664863477 bytes) carries, between the perf_report archive (011437Z) and the CDNCOHT invalidation (01:14:38Z), the line 'WARN: EventBridge chain-complete put-events failed (non-fatal to chain close): rc=255 You must specify a region. You can also configure your region by running \"aws configure\".' (96 characters of CLI text, fits the 300 limit; it holds no secret). The 7 earlier WARN lines in the same read window carry no text (pre-deploy code). The chain_full_ log object (4020668 bytes, same chain) holds 0 lines matching 'WARN: EventBridge', 'put-events' or 'EventBridge chain-complete': by the code order upload_log (gold_dispatch.sh line 1431) runs before emit_chain_complete (line 1459), so a reader looking for the emit result in gold/logs/ or logs/gold-layer/chain_full_* will read nothing. The COO's own read agrees (msg 5335). Not established by this measurement: that supplying a region fixes the emit (the next step, FB-j-4, does that; credentials and the rule's permissions are not exercised until the region error is out of the way).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/EMIT_ERROR_TEXT.json",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/j3_chain/warn_context.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A verifier of FB-j-4 / FB-j-7 should read the runner's cumulative log (tail window), not gold/logs/ or chain_full_*, for the emit line; the cumulative log is cumulative back to January, so count only the chain's own lines."
+}
+```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W71-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~71",
+  "surfaced_at": "2026-10-14T01:30:28Z",
+  "one_line": "The AC2 awsdiff check reads AWSDIFF: FAIL on the uncommitted script edit and passes only after the commit, because it compares committed HEAD with the merge-base.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round7/checks/r7_checks.py:47-65 at 90be6506d6: the hunks come from git diff -U0 base HEAD (committed content) and ok = same and not outside and bool(hunks)",
+      "pre-commit run on the working tree of wk-ADVI_FIRMBKTS-71: changed hunks 0, AWSDIFF: FAIL; post-commit run on f0055f3942: changed hunks 2, changed lines outside the function and the variable [], AWSDIFF: OK"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-FB-j-4 section 5: commit the script edit FIRST, then the instance; section 4 AC2 grades the awsdiff bound on the change.",
+  "world_is": "The awsdiff check grades committed HEAD against the merge-base, so it reads FAIL on a working-tree edit and OK only once the edit is committed.",
+  "notes": "Not a defect in the edit: the order's commit-first sequence was followed and AC2 reads OK on HEAD f0055f3942. Disarm: none (INERT)."
+}
+```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W71-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~71",
+  "surfaced_at": "2026-10-14T01:30:28Z",
+  "one_line": "The commit-time risk reflex printed HOLD for data/black_diamond/scripts/gold/gold_dispatch.sh by file basename against a COT freshness claim in data/cot/scripts/gold/gold_dispatch.sh.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/references/FRESHNESS_GATE_MANIFEST_20260717.md:74 (R2) at 90be6506d6: the claim names check_freshness keyed on silver/allocations at data/cot/scripts/gold/gold_dispatch.sh:174-177",
+      "safe-commit output for f0055f3942: [risk-reflex] HOLD on data/black_diamond/scripts/gold/gold_dispatch.sh and on data/cot/scripts/gold/gold_dispatch.sh, both matched to the same R2 claim; the commit proceeded"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The commit-time risk reflex grades the touched node: here the FB-j-4 edit to emit_chain_complete in the BD gold_dispatch.sh.",
+  "world_is": "The cited claim R2 describes check_freshness in the COT copy, not emit_chain_complete in the BD file; the match was by basename, and the reflex's own HOLD line named both paths.",
+  "notes": "The FB-j-4 edit does not touch check_freshness. Disarm: none (INERT)."
+}
+```

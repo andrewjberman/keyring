@@ -12266,3 +12266,53 @@
   "notes": "Observed, not judged. The regeneration horizon is 2028 as the module states."
 }
 ```
+
+## IRPT_ANLREQ-D2-S91 -- (disarm row; this seat's own) the release-21 pair's two stale premises are superseded by the release-28 pair
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S91",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T01:27:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARMS rows IRPT_ANLREQ-D2-W113-S2 (the release-21 R0b start state is stale: the live irpt-ycharts-generate moved at 22:48:27Z) and IRPT_ANLREQ-D2-W113-S3 (the release-21 premise that uploads.py is unchanged fails on the trunk).",
+  "spec_asserts": "W113-S2: release 21's R0b would ABORT because the live CodeSha256 is xP47..., not hpNfk.... W113-S3: the AR-y-226 matrix covers the reader only, and uploads.py, portfolio.py and security_resolution.py also move.",
+  "world_is": "RECORD and MEASURED: the release-28 pair (org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/release28/NEVER_WIDEN_PAIR_ANLREQ_RELEASE28_FWD1_CONSOLIDATED_FOUR_LEG.md, COO half committed, CTO half owed) replaces the release-21 start state with the one this seat read (irpt-ycharts-generate CodeSha256 xP47NQDnZNZ8Lui1XQKUxUtTMTasR8Cj/A1sQnRDZYY=, VersionId VXbWnMBm..., get-function-configuration 2026-10-14 ~00:2xZ and AR-y-299's live read), names the IB2 release that moved it (ledger 20261013T2236Z_irpt-ycg-catalogue-ultrashort-20261013), and states in its sections 4b and 6 that the reader-only matrix does not cover the uploads.py / portfolio.py / security_resolution.py mixed state (INFERRED, resident first then the Lambda, one window). The release-21 pair is folded into it (the CTO signs the delta). What this row does NOT do: apply anything; the hazard (an applier following the r21 pair) is removed only because no apply order exists for r21 and none will be cut on it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/release28/NEVER_WIDEN_PAIR_ANLREQ_RELEASE28_FWD1_CONSOLIDATED_FOUR_LEG.md",
+      "ar21_checks.py y296-armed"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-S92 -- (disarm row; this seat's own) the ARMED-rows checker undercount is fixed and the worker checkout that showed an empty index is removed
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S92",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-14T01:27:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARMS rows IRPT_ANLREQ-D2-W114-S1 (the y296-armed checker parsed object blocks only and undercounted) and IRPT_ANLREQ-D2-W114-S2 (the worktree index was empty against HEAD in the worker's checkout).",
+  "spec_asserts": "W114-S1: the L10 count would have been taken from a parse that missed 117 rows in 86 array blocks. W114-S2: 80,527 staged deletions against HEAD in worktree 114 with the files on disk.",
+  "world_is": "MEASURED by this seat: ar21_checks.py y296-armed now parses object and array blocks (commit 9e4b33cebc); run at the worker's read it printed rows parsed 439, ARMED-OWNED 45, left 33, equal to the worker's own count of every fenced block; at this seat's trunk it reads 446 / 47 / 35 (the later rows are the census AR-y-295's). W114-S2: the worktree wk-irpt-anlreq-114 and its branch were removed under the CTO's standing ruling for merged, clean worktrees (git branch --merged box/dell2 listed it, git status --porcelain read clean at removal); no bytes were at stake (the branch was drained, @7ed9a4c407). NOT done: the cause of the empty index was not established (the worktree was created while three others were being created at once; INFERRED, not measured).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/release28/NEVER_WIDEN_PAIR_ANLREQ_RELEASE28_FWD1_CONSOLIDATED_FOUR_LEG.md",
+      "ar21_checks.py y296-armed"
+    ]
+  }
+}
+```
