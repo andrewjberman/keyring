@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~90</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run: UNBLOCK-OWED-FOREIGN cases=6/6 ok=True and UNBLOCK-SELFTEST cases=32/32 ok=True; proof instance VALID on the committed state. Row W90-S1 accepted: the open-calls/1 row states are OPEN and CLOSED only, so case (b) is the held-for-Andrew OPEN form (escalation to andrew); a literal HELD row does not exist. The git source label is mapped but no test case reads it (declared).</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
