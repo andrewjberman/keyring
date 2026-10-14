@@ -33981,3 +33981,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "At this run (Wednesday 2026-10-14, before the 10:15 ET fire) the cutoff read 2026-10-14, the candidates carry the source completion date 2026-10-12, and 2026-10-13 (a Tuesday) has no candidate. The calendar used its hardcoded fallback because pandas_market_calendars is absent on this device. Not resolved here: whether 2026-10-13 sources are missing or the cutoff reads one day ahead. The first-fire after-read in the release ledger must name the business date it expects, once that is settled."
 }
 ```
+
+## IRPT_BCKEND-D2-S166 -- Dispositions on worker 379's rows (D2-W379-S1 to S3) after IB-pr-532 merged (@a33cb9b030); the release's mover
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S166",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T05:45:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on worker 379's rows (D2-W379-S1 to S3) after IB-pr-532 merged (@a33cb9b030); the release's movers, measured per firm by the producer's own rules: Cottonwood publishes with its one lost account LISTED; my COO half is signed at the packet's sha256.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker commits eb3d289c9f and 2e05384915 (merged @a33cb9b030); I re-ran IB191-1 AC1 to AC3 on the merged tree: PASS; round-close-check MAY-CLOSE (orders=1)",
+      "I read the packet in full (8,708 bytes, sha256 4129abf31f3d...), the counts record and the worker's notes; the COO half is deliverables/2.0.0_SA_COO~P2/NEVER_WIDEN_IB_pr_532_HOLDINGS_PRODUCER_RELEASE_COO_HALF.md"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27).",
+  "world_is": "DISPOSITIONS. W379-S1 (the node carries no per-node layer; the worker split the movers by re-running classify_security): INERT, a method fact recorded in the packet and the COO half (the release re-measures by the same method). W379-S2 (Cottonwood's fallback reads 211 on the 2026-10-12 candidate against 215 on the 2026-10-08 snapshot): INERT, a different candidate, canonical equal at 38; the release compares with the packet, not with 215. W379-S3 (the date cutoff read 2026-10-14 before the 10:15 ET fire while the candidates carry the source date 2026-10-12; the calendar used its hardcoded NYSE fallback): INERT, the producer publishes the source's completion date; whether the 2026-10-13 source partitions have landed was not read and does not change the counts. MEASURED: movers 32+0 (49financial), 38+211 (Cottonwood), 774+67 (Inflection); the repaired exemption turns Cottonwood's REFUSED candidate (account_lost alone) into PUBLISHED with one lost account listed and changes no other firm's outcome. THE HARNESS WAS SCRATCH AND IS DELETED: the release must re-run the method (COO half, condition 2); the round-192 order carries it as a step. D2-S158 (Cottonwood stale) stays ARMED with the CTO until the release's after-read."
+}
+```
