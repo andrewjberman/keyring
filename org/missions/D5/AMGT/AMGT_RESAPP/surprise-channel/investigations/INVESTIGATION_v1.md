@@ -26800,3 +26800,51 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The file belongs to cell fc-2 and is outside this cell's paths, so it is not edited here. The revalidate command prints the problem as the contract returns it."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W432-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~432",
+  "surfaced_at": "2026-10-14T02:25:24Z",
+  "one_line": "The order says the contract refuses a dropped-letter reply and the block reports that reason, but each of the five block modules folds the reply with contract.fold_text before make_block, so make_block never sees a foreign letter and its dropped-letter raise cannot fire from these modules.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face section 1, item 2 and Tests: the reason depends on the ContractError message, and a dropped-letter reply gives the new reason because the stub model returns the text and the real contract refuses it.",
+  "world_is": "At 49219a610b each block folds the raw reply before make_block: block_mgmt_bio.py _reply_text (line 134) and the fold step in block_mgmt_recent.py, block_mgmt_team_view.py, block_thesis_pillars.py and block_identity_description.py. contract.fold_report (contract.py:101-122) moves every non-ASCII letter into a dropped list and returns ASCII, so the letter raise in make_block (contract.py:201-204) is unreachable from these modules. Measured: check_fc3_prompts.py arm 'a reply in another script' read WEB_SEARCH at the base. The cell change: each module tests the RAW reply with contract.fold_report before the cut and returns the letters reason; the message mapping is kept for every make_block refusal. DEPARTURE: a foreign letter beyond the sentence cut also refuses, because the raw reply is tested before the cut; the order says the cut comes first.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/contract.py@49219a610b:101-122 (fold_report moves non-ASCII letters to the dropped list) and :201-204 (make_block raises only on a letter it is given)",
+      "lib/research/aifill/block_mgmt_bio.py@49219a610b:129-134 (_reply_text folds the reply before any make_block call)",
+      "check_fc3_prompts.py run at 49219a610b with no edit: arm 'a reply in another script' reads ('WEB_SEARCH', '')"
+    ]
+  },
+  "notes": "Form and premise only. The cell's tests pass the real contract the raw letters through the module check, and the message mapping is unchanged for every other refusal. Whether the cut-first order should govern foreign letters beyond the cap is the issuer's call."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W432-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~432",
+  "surfaced_at": "2026-10-14T02:25:24Z",
+  "one_line": "The order says the FC-3 check reads 2 of 17 at the base; at 49219a610b, before any edit, it reads 4 of 17.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face section 1 preflight: at the base the check reads AIFILL FC-3 ARMS: NO (2 of 17), the build check failing as expected.",
+  "world_is": "check_fc3_prompts.py at 49219a610b with no edit reads AIFILL FC-3 ARMS: NO (4 of 17). The four arms that pass at the base are the accented name (Nestle), the narrated OPAL fall-through to the web path, the overlong 'too long' label, and the ASCII and no-I/O arm; the other 13 fail.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "check_fc3_prompts.py run at C:/dev/wk-resapp-432 (HEAD 49219a610b, before any edit): output tail 'AIFILL FC-3 ARMS: NO (4 of 17)', exit 1"
+    ]
+  },
+  "notes": "Count only. The gap is most likely the fc-2 merge, which changed the contract under the four passing arms (inference, not measured). After this cell the check reads 17 of 17."
+}
+```
