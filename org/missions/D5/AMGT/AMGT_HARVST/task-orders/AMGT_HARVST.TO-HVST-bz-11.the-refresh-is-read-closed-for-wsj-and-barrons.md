@@ -70,9 +70,11 @@ This order touches none of them.
 - **Organic wait, qualified:** a publisher cycle runs several hours (wsj 69 min then refused on 2026-10-13; bbg 9.5 h). It cannot be driven on demand, and driving it (a plant, a re-queue) would grade the seat, not the runner. Andrew's park order (CTO msg 5209) ends this seat after round 85; this read is the round's last act.
 - Delivered as a crossbox ORDER through MSTR (`python .tools/crossbox-call.py open --kind ORDER --to-device sitez`), cut with HVST-bz-10.
 
+**CANCELLED, NOT MET, 2026-10-14 ~13:5xZ (issuer `2.0.0_SA_COO~W1`), the bz-7 shape this order's own issuer note names ("they read `NOT_MET` and go to his round-85 analysis (the bz-7 shape)"; that note rode the CTO's signed half @553c0cc54d, and the bz-7 precedent is the ruling of msg 5143). A first flip to `complete` at 00435665bf was WRONG and is corrected here: `round-close-check` refused it (PROOF-BAD, AC1 FAIL beside a complete status), and a delivered read whose criterion failed is not a complete order.** `~ZW`'s closing read (thirteenth, 2026-10-14T12:33:33Z, commit `c5134bfbc2` on origin/CLOUD) prints `CLOSE=NOT_MET`: wsj and barrons each had ONE refresh reported `done` (17 s and 16 s) and the same publisher's next job was refused `class=expired` again (`SignInRefused: 401 under --no-sign-in: no refresh`). The order directs AC1 FAIL as a RECORDED RESULT, so the delivery is complete and its outcome is NOT MET; this status does not say the refresh works. Verified by this seat on a detached checkout of origin/CLOUD @9098d3db03 (removed after): the instance reads `VALID (rc=0)` under `proof-of-spec-check --governing-order` and AC2 re-ran `10 passed`; AC1's `CLOSE=NOT_MET` is read from `bz11_AC1.out` on the committed record. NOT verified here: the two checkpoint files and `cycle_runner.log` live on site Z and were not read from dell1 (`~ZW` re-derived both verdicts from them). Row `AMGT_HARVST-Z-S121` (OBSERVATION / INERT, disarm_owner this seat, UNDER_INVESTIGATION) carries it to the CTO's round-85 analysis; why the refresh did not hold is undiagnosed.
+
 <risk>LOCAL</risk>
 <worker_class>seat</worker_class>
-<status>issued</status>
+<status>cancelled</status>
 <round>85</round>
 <workstream>REFRESH-SITEZ</workstream>
 <slot>site-z</slot>
