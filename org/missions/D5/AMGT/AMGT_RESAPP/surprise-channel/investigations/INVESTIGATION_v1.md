@@ -26325,3 +26325,79 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. AC2's expect is met on the script's rule; the reconciliation is the issuer's. No harness and no script was edited to make the two counts agree."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W426-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~426",
+  "surfaced_at": "2026-10-14T00:11:13Z",
+  "one_line": "Amendment 2 counts a sentence end only before a space or the end of the text, but the one-sentence-per-line pillars reply separates its sentences with newlines, so the cut rule must also accept a newline.",
+  "spec_asserts": "AMENDMENT 2 rule 1 (face section 1b): the cut is at the last sentence end that fits, a '.', '!' or '?' followed by a space or by the end of the text; for thesis_pillars the pillars are one sentence per line, so a cut keeps whole lines. The prepared check arm pillars: a reply over the 1000-character cap is cut at the last sentence end builds its reply as 20 lines joined by a newline and requires the cut to end on a whole line.",
+  "world_is": "A stop followed by a newline is not a space, so a space-only rule finds no cut point in that reply and the block is withheld. The cell accepts a space, a newline or the end of the text after the stop, in the three builder modules, so a pillars cut keeps whole lines and the arm passes (AIFILL FA-5 ARMS: YES (25 of 25) on the committed bytes).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa5_text_blocks.py@31be9c28ac: arms pillars_long_cut and team_long_cut, the 20-line newline-joined reply in pillars_long_cut",
+      "lib/research/aifill/block_thesis_pillars.py in worktree wk-AMGT_RESAPP-426 (uncommitted at filing): _SENTENCE_END accepts a space, a newline or the end of the text after the stop",
+      "AC1 run in worktree C:/dev/wk-resapp-426 after the edits: AIFILL FA-5 ARMS: YES (25 of 25), exit=0"
+    ]
+  },
+  "notes": "Form only. The rule's literal wording and the arm disagree on the newline; the worker followed the arm and the one-sentence-per-line purpose. The issuer rules whether a newline is a sentence end for the spec text."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W426-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~426",
+  "surfaced_at": "2026-10-14T00:11:13Z",
+  "one_line": "Amendment 2 gives one reason string for a reply with no sentence end inside the cap, and identity_description's first-pass reason said 'description'; the cell emits the amendment's literal string for all three blocks.",
+  "spec_asserts": "Face section 1 identity bullet: a reply longer than 400 characters gives none_block('identity_description', \"The model's description was too long to keep, so it was withheld.\"). AMENDMENT 2 rule 1: if no sentence end fits within the cap the block is NONE with the reason \"The model's text was too long to keep, so it was withheld.\" (unchanged).",
+  "world_is": "The two texts conflict for identity_description only. The cell now returns the amendment's literal string for identity_description too, so a cut failure there reads 'text', not 'description'. The acceptance arm desc_long checks only that 'long' appears in the reason, so it passes either way. The reason stays a plain sentence with no underscore.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa5_text_blocks.py@31be9c28ac: arm desc_long asserts only 'long' in the reason",
+      "lib/research/aifill/block_identity_description.py in worktree wk-AMGT_RESAPP-426 (uncommitted at filing): TOO_LONG_REASON reads \"The model's text was too long to keep, so it was withheld.\""
+    ]
+  },
+  "notes": "Form only. Which wording the identity block keeps is the issuer's ruling; the cell did not keep both."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W426-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~426",
+  "surfaced_at": "2026-10-14T00:11:13Z",
+  "one_line": "The channel header says the file must stay one fenced JSON block, but the file holds 149 separate json fences, one per row, so the new row was appended as its own fence at the end to match every existing row.",
+  "spec_asserts": "Face section 1 (proof of record): the surprise row goes inside the fenced json array of INVESTIGATION_v1.md. The channel header at the top of the file says: THIS FILE MUST STAY ONE FENCED JSON BLOCK, and an appender targets the FIRST block only and appends inside the array.",
+  "world_is": "At 31be9c28ac the file holds 149 json fences and 149 closing fences, each block holding one row object, including the earlier W426-S1 and W422-S1 rows. There is no single array to append inside. The new row was appended as a new fence at the end of the file, the same form as every existing row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md@31be9c28ac: grep of the json fence lines returns 149, and the closing fence lines return 149",
+      "the same file at 31be9c28ac: header line THIS FILE MUST STAY ONE FENCED JSON BLOCK, and the rows AMGT_RESAPP-D1-W426-S1 and AMGT_RESAPP-D1-W422-S1 each in their own fence"
+    ]
+  },
+  "notes": "Form only. The header and the file disagree; the channel's owner decides which is the rule. The row was placed as the existing rows are placed."
+}
+```
