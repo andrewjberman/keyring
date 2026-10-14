@@ -18,3 +18,8 @@ Record: `org/critical_paths/cross_adjudication/20261014T1532Z_XA-20261014T152700
 - Conditions carried before any exec-summary slot is switched on: `D1-W75-S2`, `D1-S50`/`D1-S53`, `D1-W70-S1`. All six slots stay OFF.
 - `FB-l-5` act 3's first-day reads (2026-10-16) and `M04` steps (3) to (6) (`mdpf-feeder-accelerator`, the marker object with Andrew's confirmation at the S3 delete, the fence Deny) are the next Inflection trigger changes.
 - Plan hygiene rows to carry: `D1-W81-S2` (339 leading-slash keys on `opal-data-inf` named by no inventory row), `D1-W84-S5`/`S9` (observations), the stale derived records FB1 named (comp-find graph node and `trigger-map.json` for the retired rule).
+
+## P3 Cottonwood census (CRO note @1b7cad0123; CTO msg 5683; rows `D1-S59`, `D1-S60` @55ba60c860)
+
+- **Q-A, a Cottonwood repair cell (the M1-M5 class):** `silver/account_attributes` stopped on 2026-08-20 (38 trading days behind): the SSM document `opal-cot-silver-run` (cot-pipeline `ssm.tf:236-251`, live document the same) never runs `--table account_attributes` while the bronze pull lands daily. Fix: one non-gating `--table` line plus its manifest, under its own never-widen pair, proven by the next silver partition carrying 2026-10-13's 1,119 rows. A deploy: executor a CloudOps seat; the cut is mine.
+- **Q-C, a retire candidate for the Cottonwood plan's list:** the secret `opal/bd/cottonwood/credentials` is live, undeclared, readable by 0 of 304 roles, unaccessed since 2026-05-26. Its delete is destructive and needs Andrew's confirmation at the moment it runs (after a copy is saved).
