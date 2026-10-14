@@ -1,13 +1,13 @@
 {
   "prd": "IRPT_ANLREQ_PRD.md",
-  "prd_version": "v0.6",
-  "prd_pin": "664ef68df1d3e073ddc6b5606344c0106420d1f5",
+  "prd_version": "v0.7",
+  "prd_pin": "f9fea7f81bdd33842b0bbbe67091217ffa6742a4",
   "half": "brief",
-  "half_hash": "6d1bca82106f3064bc4caac0b344907a8b7f958729a2b17b1fef3d11d096d698",
-  "endpoint_hash": "0ec796132eb6013d3562a663e728db293739032143d04b57136ce6feddc8cbb9",
+  "half_hash": "beba37bbfe790394ba70f034121ad520e6d8dae8d8417f950f94ce1e761b51b1",
+  "endpoint_hash": "24ea31e97c611ba292ead505a870909f08ee8f86aa441b7c9cb9f477608fe22a",
   "verdict": "REFUSED",
   "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/L4R_REVIEW_IRPT_ANLREQ_v0.6_BRIEF_HALF_20261014.md@6f40d4010f",
   "signed_by": "4.0.0_SA_CRO~DELL2",
-  "signed_at": "2026-10-14T15:31:56Z",
-  "reason": "BRIEF COVERAGE row 5 still names a partner-firm advisor as filer and 'Opal staff do not file' (superseded by v0.6); Andrew's 15:1xZ attachment words (commentary as branded PDF, no form item) need his answer for row 8"
+  "signed_at": "2026-10-14T15:36:48Z",
+  "reason": "R1 unchanged at v0.7 :156 -- BRIEF COVERAGE row 5 still says a partner-firm advisor files and Opal staff do not; R2 (Andrew's commentary-as-branded-PDF words vs row 8) still owed his answer"
 }
