@@ -138,7 +138,7 @@ Instance at the path above. Commit the module, its test, `RULE_PROBE3.json` and 
 
 **REOPENED ~03:5xZ for AMENDMENT 3 (third seat ~20); the note below is the history of the second seat.** **CLOSED (2.0.0_SA_COO~K1, 2026-10-14 ~03:3xZ), second seat, AC1 and AC2 PASS; AC3 note:** the worker's instance reads AC3 FAIL because the checker counts the ISSUER's own face-cleaning commit 544d551f1d (this order file) as an outside change; the worker wrote nothing outside its surface. The issuer re-ran AC3 with this order file allowed: `ROUND 4 SCOPE: OK 8 changed, 0 outside, 0 required missing`. The instance is left as the worker wrote it.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <workstream>RULEAMEND</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-c-1</to_id>
