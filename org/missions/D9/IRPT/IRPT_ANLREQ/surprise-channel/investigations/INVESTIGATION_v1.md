@@ -14228,3 +14228,34 @@
   "notes": "Filed by the AR-y-329 read; the live check (does a stored OPAL report exist, and what does the route answer for it) is for the CVO or a later read-only cell."
 }
 ```
+
+## IRPT_ANLREQ-D2-S104 -- the commentary drafter is live with its model word set while its source says plan-only (TO-READ-R31)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S104",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-14T18:07:03Z",
+  "one_line": "The commentary drafter Lambda, its five queues and its analysis_ready mapping are LIVE with KIMI_STANDING_WORD_REF set, while infra/aws/terraform/transcripts/commentary.tf still says 'NOT APPLIED -- plan only' and 'empty = no model'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "commentary.tf header (lines 1-7): DESIRED, NOT APPLIED, plan only; with KIMI_STANDING_WORD_REF empty the handler builds no model and stops each record at no_vendor_word (no model call, no ticket). TO-READ-R31 asks for the live state the resident release builds on.",
+  "world_is": "Measured 2026-10-14 ~18:10Z (TO-READ-R31, read only): lambda get-function-configuration for outlook-global-commentary-draft-lambda: Active, Successful, LastModified 2026-10-12T01:04:58Z, environment variable KIMI_STANDING_WORD_REF present and non-empty (value not read) and COMMENTARY_READY_QUEUE_URL present; list-event-source-mappings: one mapping from outlook-global-commentary-draft-analysis-ready-queue, Enabled, batch 1, LastProcessingResult None. The five queues exist (created 2026-10-11). So a first analysis_ready message would reach a model call and a ticket write. The hazard is INERT today because nothing sends to analysis_ready: its depth is 0 and its oldest-message age 0 on every day read, and the shipped resident bindings carry no analysis_ready_queue_url key. The source header is therefore stale or the resources were applied outside it; this seat did not find which.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r31/LIVE_STATE_R31.txt (NOTES DRAFTER LAMBDA, NOTES QUEUES)",
+      "infra/aws/terraform/transcripts/commentary.tf lines 1-7 and 290-321",
+      "aws lambda get-function-configuration and list-event-source-mappings for outlook-global-commentary-draft-lambda, 2026-10-14 ~18:10Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "owner: 2.0.0_SA_COO~Y2 (whether the single resident release wires analysis_ready while the drafter is live is the CTO's round-41 condition; a doc-vs-world drift for the source header). Nothing was changed by this seat."
+}
+]
+```
+
+---
