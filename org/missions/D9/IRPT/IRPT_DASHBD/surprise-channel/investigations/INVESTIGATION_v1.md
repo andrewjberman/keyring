@@ -12348,3 +12348,27 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S41",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T20:08:24Z",
+  "one_line": "Issuer's rulings on worker 175's three BLOCKING rows on DB-b-222 (W175-S5 two accounts share a last four, S6 punctuation in the custodian number's last four characters, S7 the client's factor series does not reach the household's first-data date): all three are real-data facts the order did not allow for; the label, the label check and the household return check are amended and the worker resumes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-222 step 2 (g) as first cut: each account's last4 is the last four characters of its custodian number, distinct within the household, letters or digits only; step 2 (f): every sourced household return window is filled with a number.",
+  "world_is": "W175-S5: of the five household accounts four distinct last-four values appear, so one pair shares a last four; a real client statement would show the same four characters twice. Ruled: the sample keeps the real last four; the render tells the pair apart with ' (k of n)' after the label, only where a last four is shared (order 223 and the render check amended); the sample record carries last4_collisions, which the checker recounts. W175-S6: two of the five custodian numbers carry one punctuation character inside their last four characters; ruled: the label is the last four ALPHANUMERIC characters after any other character is dropped (the CTO's rule allows letters and digits, nothing else). W175-S7: the household's since-inception window opens on its first-data date and the client's factor series has no row on that day (the series starts later; the other three opening days and as_of each have a row); under the amended rule that window is absent, and the check required a number. Ruled: a sourced window without a factor row on its opening day reads INSUFFICIENT_HISTORY in words ('Orion's client performance series does not reach back to the start of this period.'), at least one window must be filled, and the record names the filled and the history-less windows; the checker recomputes the states. This is true to the source and is not a repair: the household return for since inception stays unavailable for this household. Orders DB-b-222 and DB-b-223 and the check p110_inflection.py are amended (selftest 10 arms).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 175's report and rows W175-S5 to W175-S7 at wk-IRPT_DASHBD-175 @aead5baeed (counts only)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r110/p110_inflection.py (check_sample, render_extras)",
+      "orders DB-b-222 and DB-b-223 in org/missions/D9/IRPT/IRPT_DASHBD/task-orders/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

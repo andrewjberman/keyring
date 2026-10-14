@@ -15266,3 +15266,32 @@ name the one known failure instead of silently inheriting it.
     "notes": "INERT: the type sets the arrow type of a column that is null in every landed row; nothing deploys in this cell (the release is NFRA_OPLGTW.TO-OG-ap-18). OBSERVATION: no criterion is blocked. The row closes when a non-null value is measured or the issuer rules the type."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S126",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T20:03:45Z",
+    "one_line": "MY PHASE A IMPORT CHECK COULD NOT HAVE CAUGHT THE DEFECT THE ISSUER HELD THE DEPLOY FOR. harvest_identity.py:86 reads Path(__file__).resolve().parents[5]; my release tree is 8 parents deep so it resolves, the host's /opt/opal-gateway/app/ is 4 so it raises IndexError at import and the service would not start. An import test run in a repo checkout is blind to a path-DEPTH assumption that only fails at the install root. Census: exactly ONE such line in the shipped app code, and it exists to put the repo root on sys.path for `from lib import trading_calendar` -- the same mechanism Z-S125 measured as unavailable. One line, two symptoms.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "app/harvest_identity.py:86 in the cut release 4275edccad: `_REPO_ROOT = Path(__file__).resolve().parents[5]` with the comment `# app -> opal-gateway -> ec2 -> aws -> infra -> the repo root`, used at :110-111 to append _REPO_ROOT to sys.path before `from lib import trading_calendar`",
+        "computed both depths: /opt/opal-gateway/app/harvest_identity.py has 4 parents, so parents[5] raises IndexError; C:/tmp/og-rel-gt/infra/aws/ec2/opal-gateway/app/harvest_identity.py has 8, so parents[5] resolves to C:/tmp/og-rel-gt -- exactly what the comment intends",
+        "my Phase A evidence, recorded in gt_release.json and cited in the ask: 'all five modules import cleanly in the release tree'. True as scoped, and not transferable to the host: the test and the target differ in the one property the assumption depends on",
+        "census over the ten shipped files for parents[N] / __file__ / dirname / *_ROOT: ONE hit in app code (harvest_identity.py:86) and five in the tests (parents[1], the gateway dir, which is depth-correct relative to the tests and never runs on the host); 0 in the five hookup files",
+        "for contrast, the already-live app/harvest_read.py (OG-hv-1, deployed without incident) uses no __file__-relative root at all, which is why hv-2's deploy did not meet this class",
+        "the deploy was HELD by the issuer (msg 34207) before any command ran: ledger nfra-oplgtw-gateway-release-gt was never opened -- 0 entry, 0 sentinel at HEAD, 0 on disk -- so there is nothing to close or supersede"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-ap-18 Phase A asked for the re-cut and the tests, and A2 asked me to confirm the typed modules import. I reported that all five import cleanly, which the ask carries as closing the risk that a HEAD copy had grown an import of an excluded module.",
+    "world_is": "The claim I made is the one I measured -- no shipped file references typed_scope or harvest_published, and the modules import in the release tree -- and it is narrower than it reads. Importability is not a property of the module alone when the module computes a path from its own location: it is a property of the module AT A DEPTH. The release tree is deeper than the install root, so the test environment satisfied the assumption the host violates. Three halves signed with my sentence in front of them; a signer could reasonably have read it as host-importability, and it was not.",
+    "notes": "The remedy is the issuer's and already in motion (OG-gt-8: a safe root plus lib/ staged into the artifact), and this row does not ask for anything. What it adds for the re-cut: the census says there is exactly ONE line of this class in the shipped app code, so a single fix closes it, and the fix should be checked AT THE INSTALL DEPTH rather than in a checkout. The cheap general control, which I did not run and will from now on: import the shipped modules with the app root at the depth the host uses -- or simply assert that no shipped module derives a path from __file__ beyond its own package -- because `parents[N]` is silently correct in every repo tree and silently fatal in the install tree. Related: Z-S125 (the calendar never reaches the host), which is the other half of this same line's purpose."
+  }
+  ```
