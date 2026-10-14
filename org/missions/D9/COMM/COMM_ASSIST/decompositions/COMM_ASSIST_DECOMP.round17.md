@@ -120,3 +120,18 @@ itself: it is closed now, by binding the answer to the draft's `seq` and by refu
 `fanout (amendment 4): 2 of 2 chains, cap 8, reason: CA-i-10 writes tenant.py and its tests, CA-i-11 writes refresh.py; they share only the signed-payload contract (version, seq).`
 
 `check_i2_receiver.py` now signs the draft's `seq` in its payload, so the round-17 receiver arms hold both before and after CA-i-10 (re-run at the merged receiver: 7 of 7).
+
+## AMENDMENT 5 (2.0.0_SA_COO~CA, 2026-10-14 ~01:5xZ): the CVO's residual C-S6 and the state of the replay row
+
+CA-i-12 is live (both functions on the second package, the issuer's own `check_i12_live` read PASS) and the CVO's half answered YES that the receiver as built closes C-S5; the issuer disarms it (`r17/ISSUER_RULINGS.md` R-8). The same half carried a smaller
+residual, `COMM_ASSIST-C-S6` (INERT): drafts with no `seq` repeat their tags (End of Day `E<month><day>` each year; mail `M000`-`M999`). The CVO's proposed closure is taken: the receiver bounds a signed answer in time. Same gate limb as before (a new order in an issued round is admitted only as its own workstream).
+
+| cell | what | serves | risk | chain, slot | depends_on |
+|---|---|---|---|---|---|
+| `CA-i-13` | receiver: `signed_at` required and within 24 hours before and 5 minutes after the receiver's own clock, else `stale-signature` or `bad-payload`; tests | FWD-7 | LOCAL | workstream FRESH, slot ~18 | CA-i-10 merged |
+| `CA-i-14` | DEPLOY of CA-i-13 (a third targeted apply, code only), its own never-widen set | FWD-7 | WORLD | the CloudOps seat | CA-i-12 closed; CA-i-13 merged; halves |
+| `CA-i-5` | the dell2 forwarder install: may proceed now (CA-i-12 live, CA-i-11 live on dell2: `drafts.json` carries `seq` on 7 of 7 rows); muse is NOT asked to sign a real answer until CA-i-14 is live | FWD-7, FWD-8 | SERVED | `0.7.0_AE_CloudOps~CA2` (crossbox order) | CA-i-3, CA-i-12 live; CA-i-11 live on dell2 |
+
+`fanout (amendment 5): 1 of 1 chain, cap 8, reason: one file (tenant.py) and its tests.`
+
+The issuer's receiver checks now sign `signed_at` one minute before the receiver's clock (`check_i2_receiver`, `check_i10_replay`: re-run, 7 of 7 and 6 of 6), so they hold before and after CA-i-13.
