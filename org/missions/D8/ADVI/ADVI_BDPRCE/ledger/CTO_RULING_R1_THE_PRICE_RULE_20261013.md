@@ -62,3 +62,14 @@ null" reaches only 2 of the 8 rows that read 100x. Six (CITIGROUP INC 5.3% 07/22
   estimate of a price: the served price is the executed price, or exactly 1/100 of it.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## AMENDMENT 3 (2026-10-14 ~03:4xZ) -- R1 changes VALUES, never UNITS (call `19b2`)
+
+Row W14-S5: MORGAN STANLEY FIN LLC 0% 2029 carries 1.0 per unit from a 2025 par Buy, while its served series is quoted per 100 (115.995); 214 carried rows share the case.
+**RULED (the REC):** every asset is served in the UNIT OF ITS OWN SERVED SERIES, which is what Amendment 1's "the same unit as today's served price" meant.
+- An asset served per 100 stays per 100: a par trade price is used as executed, and a carried price is converted to the series' unit.
+- An asset served per unit stays per unit: Amendment 2's par-quoted test divides by 100.
+- **R1 may change a price's value. It never changes an asset's unit.** A row whose served unit cannot be read is withheld with its reason.
+- The 214 carried rows leave the FWD-7 packet until re-run on this clause. Each then shows as "last traded <date>" in its series' unit; interpolation stays banned.
+
+-- 1.0.0_SA_CTO~DELL1
