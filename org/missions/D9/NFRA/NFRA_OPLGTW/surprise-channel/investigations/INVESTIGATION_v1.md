@@ -13450,3 +13450,84 @@ name the one known failure instead of silently inheriting it.
   "notes": "Inert for the gateway (no Eclipse tool exists). The fix (admit defaultTradingEngineId to the Eclipse silver schema) belongs to the assets pipeline's owner, routed by the CTO; the G2 cut should state the lag or wait for the fix. Not this seat's act."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S112",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-14T13:42:41Z",
+  "one_line": "Lambda etfs-canon-fanin fails on every run: its DynamoDB target opal-etfs-ownership-daily does not exist (ResourceNotFoundException on BatchWriteItem), so the canonical ETF-ownership fan-in that the census would point a gateway tool at writes nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dynamodb describe-table opal-etfs-ownership-daily: ResourceNotFoundException (read by 4.0.0_SA_CRO~Z, 2026-10-14T13:42:41Z)",
+      "CloudWatch /aws/lambda/etfs-canon-fanin newest stream (last event 2026-10-13T15:48:37Z): three '[ERROR] ResourceNotFoundException ... BatchWriteItem operation: Requested resource not found' lines",
+      "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G5_etfs.md (census: 'fails every day'; scheduled 15:45Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G5 census: etfs-canon-fanin is meant to fan the daily partner ownership slices (daily/{49financial,cottonwood,inflection}/) into a canonical table.",
+  "world_is": "The target table is absent from the account; every run errors. The monthly report and the ownership dashboard read the daily S3 slices directly, so they are not starved by it; nothing found reads the missing table.",
+  "notes": "Inert for the gateway: G5's tools read the S3 slices, not this table. Whether the table is created or the fan-in retired is the ETF pipeline owner's call, routed by the CTO. The daily error is noise in that function's logs until then."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S113",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-14T13:42:41Z",
+  "one_line": "The September 2026 month-end ETF ownership report's coverage_verdict.json says PUBLISH with 21/21 trading days and 0 carried for all three partners, while the same run's partner CSVs say Cottonwood 20/21 with 1 carried and Inflection 18/21 with 3 carried; the report was emailed on 2026-10-01.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-etfs/platinum/reports/2026-09/coverage_verdict.json: verdict PUBLISH; per_partner 49financial, inflection, cottonwood each coverage_line '21/21 trading days; 0 carried for missing data' (read by 4.0.0_SA_CRO~Z, 2026-10-14T13:42:41Z)",
+      "s3://opal-data-etfs/platinum/reports/2026-09/opaletfs_cottonwood_202609.csv last line '# coverage: 20/21 trading days; 1 carried for missing data'",
+      "s3://opal-data-etfs/platinum/reports/2026-09/opaletfs_inflection_202609.csv last line '# coverage: 18/21 trading days; 3 carried for missing data'",
+      "G5_etfs.md: etfs-reports-orchestrator log 'OK: month-end report SES send month=2026-09', 2 destinations"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The coverage verdict is the publish gate of the month-end report: it decides PUBLISH vs REFUSE from per-partner coverage.",
+  "world_is": "Two artifacts of one run disagree on the same quantity. Which one the emailed PDF printed was not read; the cause (the verdict computed before carry-forward, or from a different input) is not measured.",
+  "notes": "Not a gateway hazard today, but a G5 tool that serves coverage_verdict.json would assert full coverage for Cottonwood and Inflection. The cut should serve the per-partner CSV coverage line, or neither, until the ETF pipeline owner reconciles the two (routed by the CTO). The November run on 2026-11-01 repeats the defect if unchanged."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S114",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-14T13:49:40Z",
+  "one_line": "CloudFront EVTSA9VEHNZVH (opalinvest.dev) serves s3://opal-data-portal-v2/json-tiered/* through a /json-tiered/* behavior with NO Lambda@Edge association: an unauthenticated GET of https://opalinvest.dev/json-tiered/market-overview/rsi-summary.json returns 200 application/json, while the authenticated twin /api/general/json-tiered/... returns 401.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws cloudfront get-distribution-config --id EVTSA9VEHNZVH (read 2026-10-14T13:49:40Z): behavior '/json-tiered/*' -> opal-data-portal-v2.s3 origin, LambdaFunctionAssociations [] ; behavior '/api/general/json-tiered/*' -> same origin with auth-validator-edge:23, public-data-router:7, cache-control-injector:2",
+      "curl https://opalinvest.dev/json-tiered/market-overview/rsi-summary.json with no credentials: 200 application/json 607 bytes; curl https://opalinvest.dev/api/general/json-tiered/market-overview/rsi-summary.json: 401 (both 2026-10-14T13:49:40Z)",
+      "s3 list opal-data-portal-v2 json-tiered/: 375 keys, all under market-overview/ (details 213, timeseries 157, rsi-* 4, summary 1) -- market data, no client or firm data",
+      "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G3_portal_v2.md open item (G3 census first named the missing auth)",
+      "same config: '/api/scoped/security-scanner/*' -> API Gateway 7k3ed8px20 also has no Lambda@Edge association; whether the API route has its own authorizer was NOT read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every portal data path passes auth-validator-edge (the routing law G3 measured: /api/general/* carries it); FWD-22's gateway tools assume portal-v2 data is served to authenticated principals only.",
+  "world_is": "One behavior bypasses the edge validator for the whole json-tiered/ tree. Today that tree holds market-overview data only (375 keys), so no client data is exposed; any key later written under json-tiered/ is public on the internet the moment it lands.",
+  "notes": "Whether a public market-overview path is intended (a landing page) or a leftover is the CTO's call, not this seat's; no CloudFront change is proposed here. If unintended, the remedy is a CloudFront behavior change (a deploy, with its ledger). Either way, a G3 tool must never treat json-tiered/ as an authenticated store. The security-scanner behavior needs one authorizer read before it is classed."
+}
+```

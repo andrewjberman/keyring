@@ -10861,3 +10861,260 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W167-S1 -- The reported absent-inside-filled count is structurally zero: leaves() descends into an absent form, so the counter never sees one
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W167-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~167",
+  "surfaced_at": "2026-10-14T12:41:27Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The reported absent_forms_inside_filled_members count is structurally zero: leaves() descends into an absent form, so the counter never sees one.",
+  "spec_asserts": "The builder header and BUILD_COUNTS.json present absent_forms_inside_filled_members as a count of absent forms inside filled members; count_inner_absent is the rule that produces it, carried unchanged from the round-103 builder into the round-105 copy.",
+  "world_is": "count_inner_absent tests is_absent_form on each item of leaves(v); leaves() yields the reason and kind strings of an absent form and never the form. Measured by a direct call in this worktree: an absent form inside a by_row map gives 0. The round-105 shape check does not read the counter (shape_problems walks the absent forms itself), so no gate reads this number; the defect is in the reported count only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~159/build_sample.py@c1c903539c (count_inner_absent and leaves)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~167/build_sample.py (uncommitted at filing; count_inner_absent unchanged)",
+      "BUILD_COUNTS.json of ~167 in the private folder: absent_forms_inside_filled_members 0 beside 55 absent forms"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W167-S2 -- The round-105 build read the served model object (one more S3 GET than ~159) and its reference date moved, so the sample is not row-comparable with the ~159 sample
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W167-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~167",
+  "surfaced_at": "2026-10-14T12:41:27Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The round-105 build read the served model object (one more S3 GET than ~159) and its reference date moved to 2026-10-13, so the sample is not row-comparable with the ~159 sample.",
+  "spec_asserts": "DB-b-202 step 4 and the reads bound: the builder 'LISTs and GETs S3 as ~159 did, nothing more'; the invocation names no --model-series flag.",
+  "world_is": "~159's build records model_series_route 'private series file' (MODEL_SERIES_DAILY.json in its private folder). The invocation without the flag records model_series_route 'served object s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json', with 589 GETs and 7 LISTs. reference_R moved from 2026-10-12 to 2026-10-13, and members_filled moved from 79 to 83. The order's premise of 8 cross-table conflicts on the ~159 sample holds (measured 8).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~167/build_sample.py (the model_series route and the --model-series flag, lines 1-12 and model_series())",
+      "BUILD_COUNTS.json of ~159 and of ~167 in the private folder (model_series_route, reference_R, s3_gets)",
+      "the cross-table count on the ~159 sample: 8 conflicts (measured by the issuer's cross_table_conflicts, counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W167-S3 -- Three kind sites have no rule in the round-105 table; the builder assigned them by the nearest rule, and none fires on this sample
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W167-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~167",
+  "surfaced_at": "2026-10-14T12:41:27Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "one_line": "Three kind sites have no rule in the round-105 table (a null opening prior value, a zero household ending value, and a window the account did not span for its ending or flow terms); the builder assigned SOURCE_BREAK, SOURCE_BREAK and the window's own kind, and none fires on this sample.",
+  "spec_asserts": "DB-b-202 step 3(b) names the kind of each Absent site by a table: INSUFFICIENT_HISTORY for a window the account did not span (NOT_SPANNED), SOURCE_BREAK for a missing row or a SOURCE_LAG flow on a window day, NO_SOURCE_YET for any figure no table yet carries; no entry covers a null prior value on an opening day or a zero household ending value.",
+  "world_is": "window_terms (the opening day carries NO_PRIOR_VALUE) and allocation_at (the household ending value is zero on as_of) each create an Absent form whose cause is none of a missing row, a lag, a null return, a guard or a history gap; both are SOURCE_BREAK in the copy and listed as uncertain in KIND_CARRIER_R105.json. The ending value and the flow terms of a window the account did not span take the window's kind, INSUFFICIENT_HISTORY, not SOURCE_BREAK. On this sample the NO_PRIOR reason and the zero-ending reason each appear 0 times, and no NOT_SPANNED absent form appears, so the three rules are unexercised here. DB-b-203 reads the kind and prints it, so a wrong kind becomes client-visible when a later build fires one of them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~167/KIND_CARRIER_R105.json (kind_sites: the uncertain rows)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-202.absent-kind-carrier-a-contract-042-builder-and-the-cross-table-rule.md (step 3(b) table)",
+      "the private sample's reason counts: 0 hits for the NO_PRIOR reason, 0 for the zero-ending reason, 0 NOT_SPANNED absent forms (counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W167-S4 -- The portal branch for this order is cut from the round-104 render branch, which is on no remote and not from t
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W167-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~167",
+  "surfaced_at": "2026-10-14T13:34:22Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The portal branch for this order is cut from the round-104 render branch, which is on no remote and not from the last PROD release, and the portal contributing rule that names the branch and its base is not at this branch's head.",
+  "spec_asserts": "The order names the portal branch wk-IRPT_DASHBD-167-portal, cut from the round-104 render branch; the workspace CLAUDE.md portal rule says a portal change is made on cand/<box>/<slug> cut from the last PROD release, and portal/CONTRIBUTING-BOXES.md (the rule file) says the same.",
+  "world_is": "The round-104 render branch wk-IRPT_DASHBD-162-portal (99418063) is contained in no remote branch; origin/PROD resolves at 7db035e4 and the base is not an ancestor of it. The rule file is not at this branch's HEAD; its latest version is in portal history at b5222d78 (creation at 07f065e6). This worker committed on the named branch only (763f4998, c58bb20b, df295727) and pushed nothing; the registration for approval is the issuer's act and was not run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal git history: CONTRIBUTING-BOXES.md at b5222d78 (latest) and 07f065e6 (creation), read with git show",
+      "portal refs: origin/PROD 7db035e4; branch wk-IRPT_DASHBD-162-portal 99418063 contained in no remote branch (branch -r --contains)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~167/RENDER_R105.json (portal.branch and portal.commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W167-S5 -- The export paginator leaves two tables split with a single row on a sheet: the portfolio value summary on page
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W167-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~167",
+  "surfaced_at": "2026-10-14T13:34:22Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The export paginator leaves two tables split with a single row on a sheet: the portfolio value summary on pages 3 and 4, and the activity summary's last account on page 6; no page clips.",
+  "spec_asserts": "Order step 7: each sheet must fit one PDF page, and every page is read for clipped text, a dash where a figure belongs, a contradicting note, a template slot name, an asterisk with no footnote, or a stray build phrase.",
+  "world_is": "The 15-page render of the round-105 sample fits its sheets and clips nothing, and it shows no defect in the listed categories. The page estimate (documentSheets.ts budget and the chart cost) leaves room unused on page 3 and moves one table row alone onto the next sheet; the head repeats. Layout is not a listed category, so it is recorded and not changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~167/RENDER_R105.json (export_pdf_pages 15; pdf_clipping none clipped)",
+      "private render pages r105_3 page_03, page_04 and page_06 (read as images; no figure copied here)",
+      "portal documentSheets.ts@df295727b1 (SHEET_BUDGET_PX and the chart cost)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W167-S6 -- When the not-held footnote member is absent, a window the account did not span still prints the baseline dash
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W167-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~167",
+  "surfaced_at": "2026-10-14T13:34:22Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "When the not-held footnote member is absent, a window the account did not span still prints the baseline dash in its cell, with no footnote to explain it; the order names only the asterisk and the footnote as withheld.",
+  "spec_asserts": "Order item 4: an asterisk prints only together with its footnote, and while the footnote member (convention.not_held_for_entire_period) is absent neither the asterisk nor the footnote prints. The order says nothing about the dash cell of a window not spanned.",
+  "world_is": "The view keeps the dash of a window not spanned (window status, not footnote presence), and drops only the footnote line and the asterisks. On the round-105 sample no account has a window that prints a dash, so the case does not occur there; the synthetic fixture with the footnote member removed shows the dash without its footnote (test arm in report-render-r105.test.tsx).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal reportModel.ts@df295727b1 (figureCell notHeld, hasNotHeld gated by footnoteOn)",
+      "portal __tests__/irpt-dashbd/report-render-r105.test.tsx@df295727b1 (the footnote-absent arm)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W167-S7 -- The order's 'drop the line while its member is absent' cannot hold literally: the issuer's checker requires ev
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W167-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~167",
+  "surfaced_at": "2026-10-14T13:34:22Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's 'drop the line while its member is absent' cannot hold literally: the issuer's checker requires every contract member id in each render, so a dropped line keeps its id as a hidden, empty element.",
+  "spec_asserts": "Order item 4: a template slot line is printed as a client word if its member is present, or dropped while its member is absent. The checker DB105-2-AC1 requires all 117 member ids in each HTML output.",
+  "world_is": "A dropped line (the account-list line, and the not-held footnote row while its member is absent) renders as a hidden element with data-member, data-absent false and data-dropped true, with no label and no words. The checker's id clause passes; a visible reader sees no line. The two rules are reconciled by this rendering and nothing in the checker was changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r105/p105_round105.py (check_render, the data-member set clause)",
+      "portal PerformanceReport.tsx@df295727b1 (FieldsView dropped rows)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W167-S8 -- The SOURCE_BREAK example that the record must quote verbatim names an account by its last four digits, as the
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W167-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~167",
+  "surfaced_at": "2026-10-14T13:34:22Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The SOURCE_BREAK example that the record must quote verbatim names an account by its last four digits, as the report prints every account header, so the committed record carries those four digits.",
+  "spec_asserts": "Order step 8: counts, paths, hashes and words only, with no client name, account number or figure; and kind_notes carries the exact sentence as printed in the export, one per kind the sample carries.",
+  "world_is": "Every SOURCE_BREAK note of the round-105 sample is an account note (the account-level return members are the only source-break absences), and each names its account by the report's own header. The committed RENDER_R105.json kind_notes entry for that kind therefore holds an account's last four digits; no full account number, name or figure is in the record. The issuer decides whether a masked four-digit label is acceptable there.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~167/RENDER_R105.json (kind_notes, SOURCE_BREAK entry)",
+      "private render export page for the account overview (read as an image; the figure is not copied here)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W167-S9 -- The whole-scope portal suite already carries five failing tests outside this grant (wire generation, consumed-
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W167-S9",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~167",
+  "surfaced_at": "2026-10-14T13:34:22Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The whole-scope portal suite already carries five failing tests outside this grant (wire generation, consumed-content fixtures and a firm-access diff), at the base before any edit of this order; they are unchanged by it.",
+  "spec_asserts": "Order item 6: the whole-scope suite before and after any edit, with new_failing_ids empty.",
+  "world_is": "The base run of bun test src/pages/InvestorReporting: 1255 pass, 27 skip, 5 fail (IVE26-AC3, IVE48-AC1, IVE98, the producer fixtures row, F14-AC3). After this order's edits: 1271 pass, 27 skip, 5 fail, the same five; new_failing_ids is empty.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~167/RENDER_R105.json (tests.suite_base and tests.suite_after)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-S31 -- disarm owner's ruling on W167-S3 and the issuer's ruling on W167-S8 (round 105 chain A)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S31",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T13:52:21Z",
+  "one_line": "Disarm owner's ruling on W167-S3 (three Absent sites with no rule in the kind table): the builder's assignments stand and no fourth kind is added; and the issuer's ruling on W167-S8 (an account's last four digits in a committed record): masked before the merge, the checker amended.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CLAUDE.md section 2: an ARMED hazard disarms same-turn through the row's disarm_owner; this seat is disarm_owner of W167-S3. DB-b-202 step 3(b) names a kind table; the CTO closed the set at three (round-105 analysis, section 1 row The absent kind).",
+  "world_is": "W167-S3: the three sites are a null opening prior value (SOURCE_BREAK), a zero household ending value (SOURCE_BREAK) and the ending and flow terms of a window the account did not span (the window's own kind, INSUFFICIENT_HISTORY). None fires on the round-105 sample (0 hits for each reason, 0 NOT_SPANNED forms; the checker counts 55 absent forms: 15 NO_SOURCE_YET, 37 INSUFFICIENT_HISTORY, 3 SOURCE_BREAK). Ruling: the assignments stand, because each names a source repair or a missing opening day and the remedy of each is not time alone; a zero household ending value fits the three kinds only loosely and is left as SOURCE_BREAK rather than invent a fourth kind, which is the CTO's to add by addendum with its first instance. The hazard is disarmed. W167-S8: the order asked for the exact printed sentence, and one kind-note example named an account by its last four digits, so a committed record would have carried a client identifier; the worker filed the row and the issuer masked the digits as #### in the record before the merge (the worker's own commit stays on its local branch and is never pushed), and amended the render checker to match #### as any four digits and to refuse an example that carries the digits (commit 07f8c57528).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~167/KIND_CARRIER_R105.json (kind_sites, absent_by_kind) and the issuer's checker p105_round105.py check_kind at the merge 6754faca95",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r105/p105_round105.py@07f8c57528 (example_printed and the digits refusal); the landed record holds 0 unmasked account digits (this seat's count at the merge)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_ROUND_105_20261014.md (the closed set of three kinds)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

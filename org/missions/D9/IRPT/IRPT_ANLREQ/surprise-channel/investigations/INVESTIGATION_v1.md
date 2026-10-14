@@ -13083,3 +13083,65 @@
 ```
 
 ---
+
+## IRPT_ANLREQ-D2-S99 -- the Shares upload stores no input but retains its original file bytes (release 29 D5)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S99",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-14T13:40:19Z",
+  "one_line": "TO-EXERCISE-R29 D5: the Shares upload that answers NEEDS_CORRECTION stores no input but DOES retain its original file bytes in original_holdings, so 'D5 must store nothing' is not what the door does.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO half (c) and TO-EXERCISE-R29 step 6: D5 'must store nothing (as in release 28's D3), and the after-read lists the prefix to prove it'.",
+  "world_is": "Measured 2026-10-14 13:38Z by a before/after listing of opal-data-irpt/irpt/49financial/ (285 -> 291 versions, 0 delete markers, 0 vanished): the sitting wrote 6 objects, 3 original_holdings (one per upload: D1, D5, D6), 2 normalized_portfolios (D1 and D6 inputs only) and 1 request_compositions (D6b). Attribution is by content hash: original_holdings 4a2b1a8c.. is the sha256 of the Shares file bytes sent at D5. D5 stored NO normalized input (its answer carried input_id null), consistent with intake/uploads.py's docstring 'Original bytes are retained before parsing'. The delete list the CTO registers for Andrew therefore includes the Shares file's retained original, an object the order said would not exist. cottonwood: 234 -> 234, nothing written by D4.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r29/OBJECTS_WRITTEN_R29.txt (6 OBJ lines with attribution comments)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r29/DOOR_DETAIL_R29.txt (D5 input_id none, words equal)",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py docstring lines 1-7"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "owner: 1.0.0_SA_CTO~DELL2 (the delete list for Andrew is exactly OBJECTS_WRITTEN_R29.txt, 6 keys; whether a refused upload should retain its original is a design call). Nothing was changed by this seat."
+}
+]
+```
+
+---
+
+## IRPT_ANLREQ-D2-W127-S1 -- AR317-y-AC2 names a mutant run against a copy outside the product tree; the copy's '@/' imports need a scratch tsconfig and an import redirect (TO-AR-y-317, worker 0.9.0_WK_IRPT_ANLREQ~127)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W127-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~127",
+  "surfaced_at": "2026-10-14T13:42:12Z",
+  "one_line": "TO-AR-y-317 AC2 runs the new test file against a copy of analysisRequest.ts in a scratch folder outside the product tree; the copy's imports are '@/' aliases, so the run needed a scratch tsconfig.json mapping '@/*' to the portal src and the test copy's one import redirected to the copy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-317 AC2 (mutant_check.py): copy analysisRequest.ts to a scratch folder OUTSIDE the product tree with the member made conditional on answers.add_commentary === true, run the new test file against the copy, print MUTANT-FIRES only when that run FAILS. The order names no mechanism for resolving the copy's imports.",
+  "world_is": "analysisRequest.ts imports only '@/' aliases (portal/src/pages/TicketCenter/analysisRequest.ts lines 18-29), and the test imports the module by '@/pages/TicketCenter/analysisRequest'. The run therefore used a scratch tsconfig.json whose paths map '@/*' to the portal src, and the test copy's import redirected to './analysisRequest'. The product file was never written: its sha256 was printed before and after and matched. The control copy (unmutated) passed 7 of 7; the mutant failed 4 of 7.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/analysisRequest.ts lines 18-29 (all imports are '@/' aliases)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~127/mutant_check.py (scratch tsconfig and import redirect)",
+      "mutant_check.py run 2026-10-14: control rc=0 pass=7 fail=0 of 7; mutant rc=1 pass=3 fail=4 of 7; MUTANT-FIRES"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "owner: 2.0.0_SA_COO~Y2 (the issuer reads whether a scratch-tsconfig run meets 'against the copy', or amends the cell's mechanism). Nothing pushed; the portal candidate is local on cand/dell2/anlreq-commentary-always-requested at 406345bce120cdec5d9b7a0cef00bd7b80b680e9."
+}
+]
+```
+
+---
