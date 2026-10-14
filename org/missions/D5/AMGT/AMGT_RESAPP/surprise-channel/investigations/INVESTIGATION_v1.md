@@ -26848,3 +26848,81 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Count only. The gap is most likely the fc-2 merge, which changed the contract under the four passing arms (inference, not measured). After this cell the check reads 17 of 17."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W429-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~429",
+  "surfaced_at": "2026-10-14T01:53:05Z",
+  "one_line": "The pre-commit risk reflex could not clear the portal feature commit 53de2b9d: it answered PARTIAL_OR_BLIND (danger map 195.3h old, STALE) and the commit-gate checked 0 of 11 frontend files, so the commit landed with no gate having read its bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "A commit through .tools/safe-commit.sh runs the pre-commit risk reflex and commit-gate over the staged paths before it lands (CLAUDE.md section 6, rule 14; the AMGT-ar-5 face names safe-commit as the commit path).",
+  "world_is": "On the nested portal worktree, committing the eleven SecurityAnalysis paths (.tsx, .ts, .cjs, .json) printed 'ANSWER STATE: PARTIAL_OR_BLIND', 'NOT-DECIDABLE: danger map STALE', 'WITHIN BUDGET: scanned 0 of 11 file(s)', and 'commit-gate checked 0 of 11 file(s) -- NOTHING WAS CHECKED'; the commit still landed (msg-verify MATCH). The commit-gate's own note says it reads only .py, .sh, .tf and org/projects/*.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@53de2b9d safe-commit output (run before 01:49:44Z, the register time of the approval row): comp-pulse diff, danger map 195.3h STALE, ANSWER STATE PARTIAL_OR_BLIND, scanned 0 of 11",
+      "portal@53de2b9d safe-commit output: commit-gate WARN 'checked 0 of 11 file(s) -- NOTHING WAS CHECKED'",
+      "C:/dev/wk-resapp-429/portal commit 53de2b9d844b427b90f1553b0c7e0b408c688662 (11 files, 926 insertions, 27 deletions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The worker did not treat the reflex as a clearance and cites no gate as validation for the frontend bytes; the frontend checks are the AC1 blob comparison, the AC2 typecheck, lint and harness run, and the AC3 surface check."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W429-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~429",
+  "surfaced_at": "2026-10-14T01:53:05Z",
+  "one_line": "portal/CONTRIBUTING-BOXES.md step 3 asks for the feature branch to be pushed to origin under its name before registration; this order says never push, so cand/dell1/aifill-blocks-prod exists only in the nested worktree and its approval row was registered from the local ref.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "portal/CONTRIBUTING-BOXES.md at 7d5cb34d, Build step 3: 'Push the branch to origin under that name. Nothing of it is on DEV until approved.' The AMGT-ar-5 face names that file the authority for this order, and its bounds state: never push.",
+  "world_is": "The branch exists only locally, head 53de2b9d, base 7d5cb34d. open-calls APPROVAL-REGISTER read the local head (head_sha=53de2b9d844b427b90f1553b0c7e0b408c688662, commits=1, waived=0) and wrote row dell1-20261014T014944Z-63d4. No origin copy was created by this worker. Whether portal-merge-forward.sh reads origin for an approved candidate is not checked here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/CONTRIBUTING-BOXES.md@7d5cb34d Build step 3 (printed at the worker's first read)",
+      "open-calls add output, 2026-10-14T01:49:44Z: APPROVAL-REGISTER result=OK row=dell1-20261014T014944Z-63d4 head_sha=53de2b9d844b427b90f1553b0c7e0b408c688662",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~429/FEATURE_RECEIPT.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The worker followed the order (no push) and did not resolve the conflict between the doc and the order; the issuer or the box CTO decides whether the branch must reach origin before merge-forward."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W429-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~429",
+  "surfaced_at": "2026-10-14T02:01:58Z",
+  "one_line": "The one-writer gate WARNs that the channel file the order names, INVESTIGATION_v1.md, is the laptop's unsuffixed file, so a dell1 append should go to the per-box file; the rows of 3a349aef67 were appended to the unsuffixed file anyway, and the commit landed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "The AMGT-ar-5 face names org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md as the carrier for this worker's rows, and the row gate grades the appended rows.",
+  "world_is": "safe-commit at 3a349aef67 printed '[one-writer] WARN: org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md is the laptop's (unsuffixed) file, written from dell1; per-box file <stem>.dell1.<ext> (WARN until C-QUEUE)'. The row gate passed 2 new rows of 1144; the commit landed with the unsuffixed path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for 3a349aef67: '[one-writer] WARN: ... is the laptop's (unsuffixed) file, written from dell1; per-box file <stem>.dell1.<ext> (WARN until C-QUEUE)'",
+      "safe-commit output for 3a349aef67: '[surprise-row-gate] ... 2 new row(s) of 1144 total checked ... OK'",
+      "C:/dev/wk-resapp-429 commit 3a349aef67, subject deliverable(AMGT_RESAPP AMGT-ar-5, 0.9.0_WK_AMGT_RESAPP~429)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The worker followed the order's named path and did not rewrite it. Whether this worker's rows belong in a per-box file is for the issuer and the L8 monitor to decide; the C-QUEUE item the gate names is outside this order."
+}
+```
