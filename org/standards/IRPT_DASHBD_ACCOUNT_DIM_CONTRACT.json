@@ -1,0 +1,140 @@
+{
+  "contract_version": "0.1.0",
+  "project": "IRPT_DASHBD",
+  "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
+  "authored_by": "0.9.0_WK_IRPT_DASHBD~161",
+  "authored_under": "IRPT_DASHBD round 103, cell DB-b-196 (TO IRPT_DASHBD.TO-DB-b-196): the first account_dim contract, the Cottonwood adapter's table. Column set from the backend brief Part V.1 (docs/briefs/reporting-dashboard-backend-brief-20260930.md, the account_dim row) and PRD C-SHAPE, C-COVERAGE, C-ADAPTERS. Authored in the worktree and landed by the round's commit; the schema is NOT yet served and no account_dim is written anywhere (round 103 writes nothing).",
+  "table": "account_dim",
+  "grain": "account (one row per account_id in the firm's custody holdings axis UNION roster axis)",
+  "partition": "date=YYYY-MM-DD (the silver partition date the dimension was built from)",
+  "producer": "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_account_dim.py",
+  "columns": [
+    {
+      "name": "firm",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the firm scope this row belongs to (the adapter's registry scope; a constant inside the one firm adapter, never typed in a consumer)"
+    },
+    {
+      "name": "account_id",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the firm's own account key (the Black Diamond AccountID, the spine key); the custodian account number is a display family and is never a join key, so it is not carried"
+    },
+    {
+      "name": "household_id",
+      "type": "string",
+      "nullable": true,
+      "meaning": "the HOUSEHOLD KEY: the relationship id the account belongs to. An account under several relationships takes the smallest id (deterministic) and carries the count in household_relationship_count. Null only with household_id_reason."
+    },
+    {
+      "name": "household_id_reason",
+      "type": "string",
+      "nullable": true,
+      "meaning": "why household_id is null; null when household_id is present"
+    },
+    {
+      "name": "household_relationship_count",
+      "type": "int64",
+      "nullable": false,
+      "meaning": "how many distinct non-sentinel relationships the account is a member of across the holdings and roster surfaces (0 when only the no-relationship sentinel is present)"
+    },
+    {
+      "name": "custodian",
+      "type": "string",
+      "nullable": true,
+      "meaning": "the custodian of record from the roster surface; null with absent_fields where the account has no roster row"
+    },
+    {
+      "name": "account_type",
+      "type": "string",
+      "nullable": true,
+      "meaning": "the firm's account type from the roster surface; null with absent_fields where the account has no roster row"
+    },
+    {
+      "name": "registration",
+      "type": "string",
+      "nullable": true,
+      "meaning": "the account registration type from the roster surface; null with absent_fields where the account has no roster row"
+    },
+    {
+      "name": "client_id",
+      "type": "string",
+      "nullable": true,
+      "meaning": "the client key (PRD brief Part V.1). NOT CARRIED by the Cottonwood silver in round 103: always null, listed in absent_fields. The owner name is not used as a key."
+    },
+    {
+      "name": "tax_status",
+      "type": "string",
+      "nullable": true,
+      "meaning": "tax status (brief Part V.1). NOT CARRIED by the Cottonwood silver in round 103: always null, listed in absent_fields."
+    },
+    {
+      "name": "opened_date",
+      "type": "string",
+      "nullable": true,
+      "meaning": "ISO date the account opened (brief Part V.1). NOT CARRIED by the Cottonwood silver in round 103: always null, listed in absent_fields."
+    },
+    {
+      "name": "first_data_date",
+      "type": "string",
+      "nullable": true,
+      "meaning": "ISO date of the account's first custody data (brief Part V.1). NOT COMPUTED in round 103 (needs the full custody history, not one silver partition): always null, listed in absent_fields."
+    },
+    {
+      "name": "absent_fields",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the account-dimension fields this row carries null because the silver holds no value for the row, ';'-joined in contract order; never blank for a row whose any field is null"
+    },
+    {
+      "name": "coverage",
+      "type": "string",
+      "nullable": false,
+      "meaning": "what this account's identity stands on (C-COVERAGE): FULL where the roster and the custody holdings both carry the account; UNCLASSIFIED_HOLDINGS where only the holdings carry it (no identity row); PARTIAL_HISTORY where only the roster does (no custody holdings yet)"
+    },
+    {
+      "name": "method_version",
+      "type": "int64",
+      "nullable": false,
+      "meaning": "the dim_return_method row this dimension was built under (C-SHAPE: every table carries it). The dimension holds no return figure; the value is the adapter's method version"
+    },
+    {
+      "name": "schema_version",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the shape of this emission"
+    }
+  ],
+  "enums": {
+    "coverage": [
+      "FULL",
+      "PARTIAL_HISTORY",
+      "NO_LOTS",
+      "FLOW_UNRECONCILED",
+      "UNCLASSIFIED_HOLDINGS",
+      "SOURCE_LAG",
+      "FEE_RAIL_UNUSED"
+    ],
+    "household_id_reason": [
+      "NO_RELATIONSHIP_SENTINEL"
+    ]
+  },
+  "rule24_record": {
+    "i_mece_over_a_declared_domain": {
+      "coverage": "the PRD C-COVERAGE closed vocabulary restricted to the account grain (MISSING_HISTORY is topics only). This table emits three of its members; the other members are present for the same contract across firms. Covered by subtraction over the account universe: every account is in the roster AND the holdings (FULL), in the holdings only (UNCLASSIFIED_HOLDINGS) or in the roster only (PARTIAL_HISTORY); no account is in neither.",
+      "household_id_reason": "domain: why the household key is null. Covered by subtraction: an account with at least one non-sentinel relationship has a household_id; an account whose memberships are all the no-relationship sentinel (or carry none) has NO_RELATIONSHIP_SENTINEL. One member."
+    },
+    "ii_same_grain": "one row per account_id, in both tables of the universe; relationship grain stays in the relationship dimension (C-SHAPE grain) and is summarised here only as household_relationship_count.",
+    "iii_intent_coherence": "one axis per field: coverage is the identity state of the account; absent_fields lists the null fields; the reason column explains the household key only. No field carries two intents.",
+    "iv_state_coherence": "a null household_id is never a guess: it always carries household_id_reason. Moving the household key rule (smallest id) changes household_id only and no count; moving the count rule changes household_relationship_count only.",
+    "token_census": "NO_RELATIONSHIP_SENTINEL: the one new enum member of this contract (household_id_reason). The other enum members are PRD C-COVERAGE members already ratified in the PRD.",
+    "token_census_method": "comp-find --files --all 'NO_RELATIONSHIP_SENTINEL' (corpus scope all, the default; token matched as content)",
+    "token_census_finding": "DENOMINATOR 79241 files scanned; 6 hits, all of them this round's own files (the adapter, its test, this contract) and one gitignored scratch backup; 0 hits anywhere else in the repo. The member is new and unused elsewhere. The CTO adjudicates whether it is admitted.",
+    "member_evidence": "household_id from the Relationship ID of the holdings and roster surfaces; coverage from the presence of the account on each surface; absent_fields from the fields the silver does not carry (client_id, tax_status, opened_date, first_data_date, and the roster fields for an account with no roster row). Counts of each member are in the dry-run record, not in this file."
+  },
+  "schema_hash": "addef605e8ff9c2f00c36ae907798a0b90b21ecb2ae219a6a7fefaaae62b428a",
+  "schema_hash_basis": "sha256 over the sorted 'name:type' lines joined by newline (no trailing newline), types as the pyarrow type name the adapter's ARROW_SCHEMA carries (string, int64). The check recomputes it from the adapter's ARROW_SCHEMA, so contract and adapter cannot drift. Method is the same as IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json.",
+  "firm_specific_columns": "NONE. The Black Diamond column names (AccountID, Relationship ID, Custodian, Account Type, Account Registration Type) appear only inside the adapter; no firm-specific column is carried into this table.",
+  "served_day_rules": "none: account_dim is a dimension, not a daily series; no served-day rule applies."
+}
