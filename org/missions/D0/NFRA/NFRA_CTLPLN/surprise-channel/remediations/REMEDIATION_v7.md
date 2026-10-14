@@ -44,16 +44,16 @@ Three rows: W89-S3 INERT; D2-S3 and Z-S8 ARMED (filed from dell2 and site Z). Ev
   "owner": "2.0.0_SA_COO~C",
   "round": "v18",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C",
    "round": "v18"
   },
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "2.0.0_SA_COO~C",
-   "at": null
+   "at": "2026-10-14T22:45Z"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "NFRA_CTLPLN-Z-S8",
