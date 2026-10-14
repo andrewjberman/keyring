@@ -7175,6 +7175,95 @@ carries none.
     },
     "spec_asserts": "Row 12b's seven research tables each get a harvest_datasets row.",
     "world_is": "39 rows committed; the gate honours registered legacy addresses for their reader only."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~35",
+    "surfaced_at": "2026-10-14T05:40:00Z",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W35-S1",
+    "one_line": "Eight linked rows cannot carry a MEASURED depth that the gateway answers at answer time, so they are graded INFERRED (the worker read the one date field; discover does not re-read it): att.01 and att.04 (stored gzip-encoded; neither the aws CLI the AC1 instrument uses nor discover's get decodes them), ft.03 (4,052,840 B) and val.01 (2,198,970 B) (over discover's 2,000,000-byte read bound), mkt.01 (BLOCKED-BY-ALLOWLIST for every principal), news.03 (the row's key names two objects), cma.01 (data_as_of is the year string 2026, not a date), mac.02 (a 79-object family, graded by its listing window).",
+    "spec_asserts": "MX-c-10 Part 1: a served object that carries a date is `measured`, and AC3 requires every measured row to answer measured and equal through discover(row, exact=True); AC1 requires no `absent` on a dated artifact and a fetch by the aws CLI.",
+    "world_is": "For these rows one of the two instruments cannot see the date (gzip body, over-bound body, blocked row, compound key, non-date field), so a `measured` claim fails AC1 or AC3 and an `absent` claim fails AC1 ('artifact carries a date' or 'no resolvable artifact'). Each is graded `inferred` with `source` stating which limit applies; the worker's own read of the date field is the value. Counts: 18 measured and 8 inferred of 26 links on each of gateway_query_catalog and opal_asker_query.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "head-object on the 26 link keys on 2026-10-14 (about 05:00Z): ContentEncoding gzip on json/positioning/allocation_summary.json and json/positioning/positioning_data.json; ContentLength 4052840 (factor-tilts tier3-timeseries) and 2198970 (valuation_data) against GET_MAX_BYTES = 2_000_000 at infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py:325.",
+        "discover('mkt.01.tiered-all-returns-PRIMARY', OPAL_INTERNAL, exact=True) -> servable False, gate BLOCKED-BY-ALLOWLIST, no history_depth key (first AC3 run: 'claim=None value=None BAD').",
+        "workflows/atom_decomposition/tool_index/measured.yaml (history_depth, per-link elements with claim inferred) and the c12_depth.py source (fetch() returns None on a non-JSON body, a key with a brace, or a failed cp)."
+      ]
+    },
+    "notes": "No instrument was edited. Raising GET_MAX_BYTES or decoding gzip in discover would let these rows grade measured; both are gateway behaviour changes outside this order's grade, left to the issuer."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~35",
+    "surfaced_at": "2026-10-14T05:40:00Z",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W35-S2",
+    "one_line": "Most measured depths are SNAPSHOT AS-OF dates (method snapshot-asof, the row's vintage_field), not how far back the data goes: only mp.03 (as_of_first) and mp.01 (total.series_start) carry a first-date field, and the catalog names no first-date field for the other series objects (mp.04, ft.03, mac.03, mkt.01 and the like), so a reader of history_depth.value on those rows gets the as-of date of the snapshot, as v0.10's case 2 defines it.",
+    "spec_asserts": "MX-c-10 Part 1 case 1: a dated series whose first element is a date is `measured` with method series-first; case 2: a snapshot with an as-of date is `measured` with method snapshot-asof.",
+    "world_is": "Reading ONE named date field per object means the field must be named before the read; the catalog names a first-date field on one row only (`as_of_first`, mp.03) and the issuer named total.series_start for mp.01. For every other series-shaped object the named field is its vintage_field, so the claim is graded snapshot-asof; `method` carries which case applies. No series-first claim exists in the catalog.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "A scan of every channel artifact row of the catalog for a backticked token naming start/first/begin/inception/earliest/dates in the row text found `as_of_first` on mp.03 only.",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml tool_index: 18 measured links per multi-index tool, methods body-field 2 (mp.01, mp.03), snapshot-asof 16."
+      ]
+    },
+    "notes": "A later round that names a first-date field per series object (a one-field read each) would move those rows to series-first; the mechanism (members.yaml depth spec, method series-first) already carries it."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~35",
+    "surfaced_at": "2026-10-14T05:40:00Z",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W35-S3",
+    "one_line": "The own-text rule separates the two dossier tables only through words that differ between their example questions ('hyphenated' vs 'underscore'): a bare 'research dossier' ask ties both rows and returns them in catalog order, so the ask reaches a dossier table first but not a chosen one.",
+    "spec_asserts": "MX-c-10 Part 2: 'If the own-text rule cannot separate two tables (the two dossier tables), say so in a row. Never add a word-specific mapping in discover.'",
+    "world_is": "Each dossier row's example_questions carry a spelling word (hyphenated / underscore) and the issuer's anchor phrase 'security analysis research dossier' sits on the hyphenated row only, so every one of the 5 dossier-row questions reaches its own row first (AC2: 15 of 15 questions, 7 of 7 rows, anchors 2 of 2). The two rows' business_meaning and slugs share every other content word, so an ask that names neither spelling is NOT separable by the rule; the anchor reaches harvest_research-dossier because its row carries all four ask words, not because the tables differ in meaning. No mapping was added to discover.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "c10.AC2.sh run: ANCHOR 'security analysis research dossier' first=harvest_research-dossier HIT; ROUTE harvest_research_dossier questions first=harvest_research_dossier HIT.",
+        "workflows/atom_decomposition/catalog_entries/harvest_research-dossier.yaml and harvest_research_dossier.yaml (example_questions and business_meaning)."
+      ]
+    },
+    "notes": "Whether the two dossier tables are one table under two spellings is AMGT_HARVST's to say; this cell does not decide it."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~35",
+    "surfaced_at": "2026-10-14T05:40:00Z",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W35-S4",
+    "one_line": "The commit-time naming gate refused an inferred listing claim three ways before it passed: an s3://<bucket>/<prefix> basis (an out-of-pattern NEW key, 27 lines), the s3:// URI of the Black Diamond bucket (a graded ALIAS, 'read it through lookup'), and the bare silver fees prefix plus the firm token typed in members.yaml (hand-kept carriers, 4 lines); the claim now carries a bucket-only basis, or a reference, and the Black Diamond bucket and prefix are read from the catalog row's own producer text.",
+    "spec_asserts": "MX-c-10 Part 1: an inferred claim carries `basis` (the bucket/prefix the listing read) and `source`; bound 4: a commit through the naming gate needs a staged .json under the project home.",
+    "world_is": "Typing the listed prefix or the alias bucket into members.yaml, measured.yaml or the catalog is refused (Z-W33-S5's class, now also the alias and carrier rules), so the claim's `basis` cannot name the full prefix for the Schwab rows (bucket only; the contract and `source` carry the rest) or the bucket for the Black Diamond row (a reference). The catalog therefore does not state the Black Diamond bucket in the claim; a reader finds it in the row's `producer` text.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh attempts on branch wk-NFRA_MCPINDEX-35: attempt 1 'NAMING-GATE: REFUSE 100 graded' (27 NAMING REFUSE: s3://opal-data-assets/schwab/ x24, s3://opal-data-bd/silver/fees/ x2, one s3://%s/ format string); attempt 2 'REFUSE 98 graded' (s3://opal-data-bd/ x2, ALIAS); attempt 3 'REFUSE 101 graded' (members.yaml bare silver/fees/ and 49financial, measured.yaml 49financial); attempt 4 passed, commit 75585f9027.",
+        "lib/opal_naming.py lookup('49financial'): aliases include {spelling: opal-data-bd, planes: [bucket], lookup: False}; tier_live bronze bucket opal-data-bd transitional (ADVI_FIRMBKTS F11)."
+      ]
+    },
+    "notes": "A later cell that wants the full listed prefix in a claim needs a registry row for it (infra/logic/registry), not a typed literal."
   }
 ]
 ```
