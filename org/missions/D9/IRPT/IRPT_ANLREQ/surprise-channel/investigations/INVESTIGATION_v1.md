@@ -15197,3 +15197,33 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W145-S9 -- the committed map at the live package's deploy commit does not build the live bytes: it pins ops/status.py to a blob the live package does not carry, and only one pin edit reproduces the live zip
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W145-S9",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~145",
+  "surfaced_at": "2026-10-14T20:54:17Z",
+  "one_line": "At the deploy commit d39886e4aa (the release-29 input; the map's last_deployed_commit 15a387dd36 gives the same result) the committed source map pins ops/status.py to blob a4b7c48fad (03fa9c78c9dd), while the live package carries d39886e4aa's own ops/status.py (87048c7f4d00); a BUILD_ONLY at that commit with its map as committed gives CodeSha256 MIVrDbv+, not the live yNpw441T. With that one row re-pinned to d39886e4aa, the same build is byte-identical to the live zip.",
+  "spec_asserts": "TO-AR-y-339 step 3 (the AR-y-320 no-move control): build the live package's own source commit, read from the live package's last record, and show it reproduces the live CodeSha256; if it cannot be found, say so and print what could not be reproduced.",
+  "world_is": "Live, read-only, this pass: get-function CodeSha256 yNpw441TP5aMGYuZqkHQAPjAiQJDEPk7q8kFeDiIRIg=, CodeSize 363818; the downloaded zip sha256 c8da70e38d533f968c198b99aa41d000f8c089024310f93babc9057838884488, 49 members. BUILD_ONLY at 15a387dd36 (the map's last_deployed_commit), map as committed: CodeSha256 MIVrDbv+/w8ioVB24xS97gnETVbNRCroDiY+Ne5osbA=, one differing member status.py (its row pins a4b7c48fad, blob 03fa9c78c9dd). BUILD_ONLY at d39886e4aa (the release-29 worktree commit), map as committed: the same MIVr value and the same one differing member. BUILD_ONLY at d39886e4aa in a control worktree (C:/dev/irpt-release-r31s/wt-control-d39886e4aa) with only the status.py row of its map re-pinned to d39886e4aa and sha256 87048c7f4d00ba33c87de1a223a36b53e3487ed7414d613ee744984bcaef6030 (uncommitted, control only): zip sha256 c8da70e38d533f968c198b99aa41d000f8c089024310f93babc9057838884488, byte-identical to the live zip, 49 of 49 members unchanged. Logs: C:/dev/irpt-release-r31s/logs/control-15a387-build.log, control-d39886-build.log, control-d39886-pinned-build.log.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show d39886e4aa:infra/aws/lambda/investor-reporting/ops/status.py | sha256sum = 87048c7f4d00ba33 (equal to the live member)",
+      "infra/aws/lambda/ci/lambda-source-map.json @d39886e4aa and @15a387dd36 functions.irpt-status staged_from row for ops/status.py (pin a4b7c48fad, sha256 03fa9c78c9dd...)",
+      "C:/dev/irpt-release-r31s/tmp-control-d398b/lambda-artifact-irpt-status.zip (control zip, byte-identical to the live download)",
+      "org/critical_paths/change_management/20261014T1211Z_irpt-status-r29-20261014_deploy_completion.md (the live deploy record; the release leg built status.py with the CORRECTION_WORDS change)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This supersedes the NOT REPRODUCED reading of S3 for the zip level: the live package is reproduced at d39886e4aa once its map pins status.py to that commit. The release map af51e37a29 already pins status.py to d39886e4aa with the live sha256, so the release delta is measured on the four members only. The deploy's map on the trunk is not the map at the deploy commit; the issuer decides whether a later record should say so. No deploy, upload or write call was made; the control worktree's map edit is not committed."
+}
+]
+```
