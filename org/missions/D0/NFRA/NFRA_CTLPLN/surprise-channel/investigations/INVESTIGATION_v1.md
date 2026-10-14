@@ -9227,3 +9227,58 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Observed by the check's tail arm and not judged for significance by this worker. The check reports it and does not fail on it, since no ruling asked for that arm."
 }
 ```
+
+## NFRA_CTLPLN-D2-S3 -- crossbox-deploy-check STOPs a whole project's roots on an Andrew-only ACT row, not a decision
+
+```json
+{
+  "id": "NFRA_CTLPLN-D2-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-14T02:14:00Z",
+  "one_line": "The OPEN-CALL limb of crossbox-deploy-check matches an open_calls row of kind act (an act only Andrew can do: send an execution ID) through the row's project write set, so under ENFORCE every investor-reporting apply on any box STOPs until Andrew acts; today it prints only (WARN).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "the NFRA_CTLPLN issuer (2.0.0_SA_COO~C): before ENFORCE is armed, rule whether kind act rows feed the OPEN-CALL limb, or limit them to the roots the row names in its own roots field",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/crossbox-deploy-check.py --root infra/aws/terraform/investor-reporting --serial 1.0.0_SA_CTO~DELL2 at 2026-10-14 ~02:13Z: OPEN-CALL calls_scanned=346 matched=1, HIT row dell2-20261013T214715Z-f61b names project IRPT_BCKEND in its project field, whose write set covers the root; verdict=STOP",
+      "python .tools/open-calls.py list: dell2-20261013T214715Z-f61b [OPEN] act IRPT_BCKEND 'Send the execution ID of your own PROD analysis-request submission (IB-pr-456 BEFORE record)'",
+      "0.7.0_AE_CloudOps~AQ2 report msg 7429 (relayed by 0.0.0_AB_MSTR~DELL2 msg 7431): the seat-gates in WARN mode printed this STOP during TO-APPLY-R28a; the irpt-status and opal-ticket-api applies were admitted"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "open-calls skill: kind act rows are acts only Andrew can do, printed under ACTS ONLY ANDREW CAN DO, never decisions; crossbox-deploy-check exists so another box learns of an open call that could upset its deploy.",
+  "world_is": "An act row with no roots field draws a hit on every root its project's write set covers, so one pending Andrew act would stop unrelated applies (here irpt-status and opal-ticket-api, which do not depend on the execution ID) once ENFORCE is on.",
+  "notes": "Not halting anything: the gate is WARN today. The row f61b stays OPEN for Andrew; the dell2 CTO does not close an act he owes to quiet a gate."
+}
+```
+
+## NFRA_CTLPLN-S9123 -- routed from NFRA_DEVPLN: unblock.py tick --owed-call must read a call on another box's list through the freshest source
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9123",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~DV",
+  "surfaced_at": "2026-10-14T02:30Z",
+  "one_line": "ROUTED by 1.0.0_SA_CTO (NFRA_DEVPLN round-7 analysis, section 2): .tools/unblock.py tick --owed-call must read a call on ANOTHER box's list through the freshest source, so a project waiting on a dell2 approval row records a WAIT and not an empty tick; unblock.py is the keep-driving mechanism NFRA_CTLPLN owns, so the one worker-light cell is yours to cut.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_DEVPLN/ledger/ROUND_ANALYSIS.round7.md section 2 (CTO ruling on row NFRA_DEVPLN-S5): 'RULED: widen the tool. No laptop pointer call ... unblock.py tick --owed-call resolves the id's box and reads that row through the same reader ... Done when tick --owed-call dell2-20261013T221411Z-3635 reads WAITING CALL ... OPEN from the laptop, and a CLOSED or absent remote row counts as before. If .tools/unblock.py is not in this project's paths, the issuer routes the cell to 2.0.0_SA_COO~C (NFRA_CTLPLN owns the keep-driving mechanism) through a row'",
+      ".tools/unblock.py line 333 open_call_row(call_id): the box is the id prefix and the row is read from org/devices/state/<box>/open_calls.json in the WORKING TREE only; for a foreign box that file is a possibly stale copy (the laptop's copy of dell2's list predates dell2's rows), so the row reads absent and the tick counts EMPTY (lines 407-409)",
+      "measured 2026-10-14 ~02:00Z by 2.0.0_SA_COO~DV: five ticks with --owed-call dell2-20261013T221411Z-3635 (and four more dell2 ids) read empty=1..5, verdict THIRD-EMPTY-TICK at 3; no case opened; reset by a real work tick. The five rows are OPEN on dell2's cluster copy (python .tools/open-calls.py list --all --cloud)",
+      "the reader that already exists for exactly this: .tools/open-calls.py approval_read (merged by NFRA_DEVPLN DP-e-2, 965f9eff8a) takes a foreign box's list from the freshest of the cluster copy, origin/box/<box> and the working tree by written_at, and fails closed (no readable source is UNREADABLE, never absent); its test seam OPAL_CLOUD_READ_LOCAL is honoured only under OPAL_STATE_ROOT (DP-h-1, a3af4ce06d)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "unblock.py tick --owed-call: 'open-call id the project waits on (WAITING while OPEN or HELD)'; /next-calls --drive: a dependency with a live owner is a WAIT, recorded and not counted.",
+  "world_is": "Suggested cell (yours to cut; the issuer of NFRA_DEVPLN does not own .tools/unblock.py): open_call_row reads a FOREIGN box's row through the freshest-source reader (import or reuse approval_read's three-source rule for any row id, not only approval rows); this box's own id keeps the working tree; no readable source for a foreign box returns None as today (EMPTY, with the reason named); tests use OPAL_STATE_ROOT with OPAL_CLOUD_READ_LOCAL. Criteria worth cutting: the CTO's 'tick --owed-call dell2-20261013T221411Z-3635 reads WAITING CALL ... OPEN from the laptop' while that row is OPEN; the same id reads EMPTY once the row is CLOSED. NFRA_DEVPLN records its own wait meanwhile with --wait-until and --owner."
+}
+```

@@ -24,6 +24,9 @@ You re-run the replay on the AMENDED module so the list Andrew sees carries it. 
 
 ### 1a. What to do
 
+0. **AMENDMENT 2 binds (CTO call d799, `ledger/CTO_RULING_R1_THE_PRICE_RULE_20261013.md` AMENDMENT 2):** par-quoted is decided PER ROW by the module: Fixed Income class AND price over (market value / units) within 1 percent of 100 -> scaled; within 1 percent of 1 -> per unit, left alone; any other ratio -> withheld with its printed ratio. The caller passes the set of Fixed Income asset names (`asset_super_class_bd == 'Fixed Income'` from `silver/bd_assets_dim.parquet`), not a coupon-based set. All EIGHT round-2 `scale_100x` rows must read UNCHANGED and no Fixed Income fund may scale; a withheld row prints its ratio in the flags. `BP-c-1` is reopened and its second seat's merge is what you receive.
+0b. **What the merged second seat found (read `org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/RULE_PROBE2.md`):** on the four probe dates all eight `scale_100x` rows read UNCHANGED, 24 Fixed Income rows scaled (none a fund), and 9 rows of two Fixed Income FUNDS were WITHHELD because their ratio sits outside both 1 percent bands (VANGUARD SHORT-TERM INVESTMENT-GRADE INV 1.0844; POLEN OPPORTUNISTIC HIGH YIELD INS 1.0433).
+   Over the whole window, QUANTIFY it: put into `REPLAY2.json` the field `withheld_rows` (a count), and in `REPLAY2.md` the list of withheld assets with their printed ratios and how many served prices each touches, so the CTO can see what the 1 percent band costs before any widening is asked. Withheld rows count as `NOT_RECOMPUTABLE` with the reason `ratio_unrecognised` in the flags; never guess a price for them.
 1. **Copy, do not edit, round 2's scripts** into your folder and adapt them to import the amended module and call it with the par-quoted candidate set (build it from `silver/bd_assets_dim.parquet` exactly as `BP-c-1`'s probe did; read its `RULE_PROBE2.md`).
    Same served set (the 1,657 rows; re-read `canonical_prices.parquet` for the window 2026-09-16..2026-10-13 and print the denominator; if it differs, say so), same four classes: `UNCHANGED`, `CHANGED`, `NOW_CARRY_FORWARD`, `NOT_RECOMPUTABLE`, same tolerance `1e-6 * max(1, |served|)`.
 2. **Expected movements from the amendment** (check each and report the measured counts, do not force them): the reinvestment-sourced carry-forwards of round 2 (77) price from the reinvestment buys; the Transfer-In-sourced carry-forwards (153) stay carry-forwards, EACH with its last observation date; the eight `scale_100x` rows
@@ -40,7 +43,7 @@ You re-run the replay on the AMENDED module so the list Andrew sees carries it. 
 ### 1b. The record: `org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~14/REPLAY2.json`, plus `BEFORE_AFTER2.csv`, `ESTIMATED_ROWS2.csv`
 
 ```json
-{"order": "BP-c-2", "read_at": "<ISO UTC>", "claim": "measured", "calls": ["aws s3api get-object ...", "..."], "amendment": "R1.1",
+{"order": "BP-c-2", "read_at": "<ISO UTC>", "claim": "measured", "calls": ["aws s3api get-object ...", "..."], "amendment": "R1.2",
  "window": "YYYY-MM-DD..YYYY-MM-DD (n weekday dates)", "served_rows": 0,
  "classes": {"UNCHANGED": 0, "CHANGED": 0, "NOW_CARRY_FORWARD": 0, "NOT_RECOMPUTABLE": 0},
  "par_quoted_rows": 0, "par_rows_unchanged": 0, "par_withheld": 0,
@@ -87,7 +90,7 @@ the interpolated fates, the keying mode and its limits, the three largest movers
 **ISSUER NOTES:** round-2 analysis item 1 (second half); FWD-7 DEC-7. STAGED at the cut: un-parks when `BP-c-1` is merged and PASS at the merged HEAD; its worktree is cut from that HEAD so the amended module is in it. The packet (dollar effect, readers) is `BP-c-3`'s, which consumes this list.
 Round 2's replay took about four hours, mostly the lookback download; this order reuses that cache, so it should take far less. Class LOCAL.
 
-<status>staged</status>
+<status>pending</status>
 <round>3</round>
 <workstream>REPLAY2</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-c-2</to_id>

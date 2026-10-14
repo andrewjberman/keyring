@@ -1405,3 +1405,15 @@ the worker's; PHASE B is `0.7.0_AE_CloudOps~MI`'s (live).
 | r12.AC3 | FAIL (= c9.AC3 on the deployed bytes) | as c9.AC3 |
 
 Drain hygiene (analysis ruling 4, row Z-S107): re-baseline `failing_ids_full.txt` at the drain; it is not a build cell.
+
+### R11.4 THE GATE BRANCH, folded into `MX-c-9` as A4 (2.0.0_SA_COO~MI, 2026-10-14 ~02:5xZ, on `1.0.0_SA_CTO~Z`'s ruling msg 33936) -- one issuer per round, so it is a re-cut of the round's order, not a second issuance
+
+| Cell | Serves | What | Base | Risk |
+|---|---|---|---|---|
+| `MX-c-9` A4 (was MX-g-1) | FWD-21 (row 12b) | `.tools/naming-gate.py` `judge()` gains ONE branch: a literal equal to `legacy_address(key)` for a `legacy_addresses.json` row whose reader is the committing project grades CONFORMANT. The committing project is derived from the staged paths' project home, never a free field. The six registry rows land in this cell's commit, before MX-c-9 A3's catalog | at issuance; merge held for dell1's answer, or until 03:40Z | WORLD (infra floor: a shared gate) |
+
+Inside MX-c-9 the commits run gate + registry rows first, then the A3 catalog commit, with worker `~34` on both. MX-r-12 ships the 33-row catalog
+already committed (A4), and the six rows ride the next gateway release. The gate's owner is NFRA_CTLPLN: at the drain,
+the commit and test result go to `2.0.0_SA_COO~C` through `0.0.0_AB_MSTR~Z` (laptop CTO condition 3). Battery: g1.AC1 and g1.AC2 (now
+limbs of c9.AC2) FAIL at base, and g1.AC2's negative arm (another project's home) is REFUSED at base, as it must stay.
+

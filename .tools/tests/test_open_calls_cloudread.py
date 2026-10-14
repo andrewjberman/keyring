@@ -88,17 +88,20 @@ class Env:
             shutil.rmtree(self.base, onerror=_force)
 
 
-def run(env, args, box_env=THIS, cluster=True, state=True):
+def run(env, args, box_env=THIS, cluster=True, state=True, git_dir=None):
     """(rc, stdout, stderr) of one approval-status call. cluster=False leaves OPAL_CLOUD_READ_LOCAL unset;
-    state=False leaves OPAL_STATE_ROOT unset (the test switch off)."""
+    state=False leaves OPAL_STATE_ROOT unset (the test switch off); git_dir, when given, points GIT_DIR at an
+    empty repository so the production git source reads no real ref."""
     e = dict(os.environ)
-    for k in ("OPAL_CLOUD_READ_LOCAL", "OPAL_OPENCALLS_CLOUD", "OPAL_STATE_ROOT"):
+    for k in ("OPAL_CLOUD_READ_LOCAL", "OPAL_OPENCALLS_CLOUD", "OPAL_STATE_ROOT", "GIT_DIR"):
         e.pop(k, None)
     e.update({"OPAL_OPENCALLS_CLOUD": "0", "AGENTBUS_DEVICE": box_env, "OPAL_AGENT_SERIAL": SERIAL})
     if state:
         e["OPAL_STATE_ROOT"] = env.state
     if cluster:
         e["OPAL_CLOUD_READ_LOCAL"] = env.cloud
+    if git_dir:
+        e["GIT_DIR"] = git_dir
     p = subprocess.run([sys.executable, TOOL] + args, cwd=ROOT, env=e, capture_output=True, text=True,
                        encoding="utf-8", errors="replace", timeout=120)
     return p.returncode, p.stdout, p.stderr
@@ -199,7 +202,14 @@ def main():
         #    the NOTE line says why. OPAL_OPENCALLS_CLOUD=0 keeps this case off S3.
         env = Env()
         env.cluster("zz9", doc("zz9", T2, [row("zz9-fixture", "cand/zz9/t-slug")]))
-        rc, out, err = status(env, "cand/zz9/t-slug", state=False)
+        # GIT_DIR points at an EMPTY temporary repository: the production `git show origin/box/zz9` finds no real ref
+        empty_repo = os.path.join(env.base, "empty-repo")
+        os.makedirs(empty_repo)
+        init_env = dict(os.environ)
+        init_env.pop("GIT_DIR", None)
+        init_env.pop("GIT_WORK_TREE", None)
+        subprocess.run(["git", "init", "-q", empty_repo], check=True, capture_output=True, timeout=120, env=init_env)
+        rc, out, err = status(env, "cand/zz9/t-slug", state=False, git_dir=os.path.join(empty_repo, ".git"))
         check("stand-in set, OPAL_STATE_ROOT unset: the seam is ignored (UNREADABLE rc 2, fixture row not used), NOTE on stderr",
               rc == 2 and "state=UNREADABLE" in out and "row=zz9-fixture" not in out and "state=OPEN" not in out
               and "OPAL_CLOUD_READ_LOCAL ignored: it is a test seam and OPAL_STATE_ROOT is not set" in err)

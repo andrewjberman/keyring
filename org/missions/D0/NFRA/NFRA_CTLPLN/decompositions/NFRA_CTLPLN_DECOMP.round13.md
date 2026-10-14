@@ -43,3 +43,11 @@ Authority: a recut covers its affected cells; the carried line "FWD-11, then FWD
 - **S9119 (the broker heartbeat writer):** the read did not name a writer (dell2 `liveness.json` has 14 entries, each pid a seat's `server.py`; 14 orphaned `agent-poller.py` run with no liveness line; the original writer's entries for `~CB2`, `~TR2`, `~DELL2` are gone). Owner `0.0.0_AB_MSTR~DELL2`. Condition: a read taken while one of those three seats is live names the writer; until then no cell.
 
 **Amendment (2026-10-13 ~23:0xZ, issuer):** `CT-ac-5`'s window moved to Wed 2026-10-14 14:30-14:45Z (dell1 CTO tick 4 on call 5263, MSTR msg 108977): dell1 has no auto-logon, Andrew's console sign-in after a restart is his act and no auto-logon will be set, so the manager restarts only when he is at the box and otherwise slips to the next hour he is. The 05:15Z and 05:45Z windows are cancelled. FWD-9 is back to PARKED (CTO ruling @79e9c3535b): no order exists for its window.
+
+## Recut 2 (2026-10-14 ~02:5xZ, issuer 2.0.0_SA_COO~C): the foreign-box open-call read for `unblock.py tick --owed-call` (row S9123, CTO-routed from NFRA_DEVPLN round 7)
+
+Authority: a recut covers its affected cells; `unblock.py` is the keep-driving mechanism this project owns, and the CTO routed the one worker-light cell here. No existing cell changes.
+
+| cell | what | serves | risk | workstream / round | issued to |
+|---|---|---|---|---|---|
+| `CT-ac-6` | `.tools/unblock.py tick --owed-call` reads a call on another box's list through `open-calls.py approval_read` (freshest of the cluster copy, `origin/box/<box>`, the working tree; UNREADABLE never absent), prints the source, keeps this box's own read unchanged; a test with the seams. | FWD-2 | LOCAL | KEEPDRIVE / 1 | `0.9.0_WK_NFRA_CTLPLN~90` |

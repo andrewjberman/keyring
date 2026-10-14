@@ -1037,3 +1037,78 @@
   "world_is": "Case (a) cannot run without the production git source, because the seam is ignored when OPAL_STATE_ROOT is unset. The production source then issues git show against the real origin/box/zz9 ref. The ref does not exist, so nothing is read and the case passes, but the test does touch the real repo's ref namespace. A box that did have a real origin/box ref would be read. The tests-read-no-real-ref rule holds only because zz9 is absent. Reported for the lane owner's ruling; the production path is unchanged and no test switch was added to the git source for this case."
 }
 ```
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S17",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-14T02:05:30Z",
+  "one_line": "The order says every existing selftest case stays, yet cases 1 and 9 of portal-release-build.sh --selftest match the RELEASE-CHECK line with grep -qx, an exact-line match that the appended ref= sha= suffix breaks",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/portal-release-build.sh@bd5ddc194744 (uncommitted edit in wk-NFRA_DEVPLN-1): selftest case 1 and case 9 grep -qx lines before this edit; the RELEASE-CHECK line now ends with ref=<ref> sha=<12-char sha>",
+      "bash .tools/portal-release-build.sh --selftest after the edit: CASE 1 ok=True, CASE 9 ok=True, RELEASE-SELFTEST cases=12/12 ok=True, rc=0",
+      "the two greps were changed to prefix matches (^RELEASE-CHECK ... unapproved=0 ref=refs/heads/<rel1> sha=, and ^RELEASE-CHECK ... unapproved=1 ref=) with the counts unchanged; the case meanings are kept"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every existing selftest case stays (DP-i-1 step 3), and the RELEASE-CHECK prefix is unchanged for every consumer (step 2).",
+  "world_is": "The prefix is unchanged, but an exact-line assertion on the whole RELEASE-CHECK line cannot hold once the suffix is appended. The two greps were made prefix matches with the counts kept, so both cases still test what they tested. Reported so the lane owner can rule on the grep edit, which the order did not name."
+}
+```
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S18",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-14T02:05:30Z",
+  "one_line": "Case 9 is the only case the order names for GIT_DIR isolation, but the test helper run() now pops an inherited GIT_DIR for all ten cases, a wider change than the order states",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/tests/test_open_calls_cloudread.py@bd5ddc194744 (uncommitted edit in wk-NFRA_DEVPLN-1): run() pops GIT_DIR from the inherited environment on every call and sets it only when git_dir is passed (case 9)",
+      "python .tools/tests/test_open_calls_cloudread.py after the edit: OPEN-CALLS-CLOUDREAD-TEST cases=10/10 ok=True, rc=0; GIT_DIR occurs 5 times in the file",
+      "the empty repository is created by git init with GIT_DIR and GIT_WORK_TREE removed from the init environment, so the init cannot land in an inherited repository"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Case 9 runs its subprocess with GIT_DIR pointing at an empty temporary repository; the other cases and the test's assertions are unchanged (DP-i-1 step 4).",
+  "world_is": "The pop is the isolation a git hook needs: a hook exports GIT_DIR to its children, which would reach the real repository from any case. In a normal shell the pop is a no-op. It widens the edit beyond case 9, so the lane owner can rule on keeping it."
+}
+```
+
+## NFRA_DEVPLN-S5 -- the unblock tick cannot record a wait on a call that lives on another box's list
+
+```json
+{
+  "id": "NFRA_DEVPLN-S5",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~DV",
+  "surfaced_at": "2026-10-14T02:10Z",
+  "one_line": "unblock.py tick --owed-call reads only THIS box's open-call list, so a project waiting on Andrew's approval rows that live on ANOTHER box's list (dell2) cannot record the wait: each tick counts empty and the count reached 5 (THIRD-EMPTY-TICK) on a genuine wait.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO round-6 analysis section 3: 'a dated wait recorded with unblock.py tick --owed-call on the five rows, not an empty tick'. The issuer ran unblock.py tick --serial 2.0.0_SA_COO~DV --project NFRA_DEVPLN --result nothing --owed-call <id> --owed-owner andrew for dell2-20261013T221411Z-3635, -222707Z-8500, -222709Z-7b45, -222710Z-fde0, -231910Z-7773; output: UNBLOCK-TICK ... empty=1, empty=2, empty=3 verdict=THIRD-EMPTY-TICK, empty=4, empty=5",
+      "the five rows are OPEN on dell2's list (cluster copy, read ~02:00Z); this box's list holds one NFRA_DEVPLN call only (laptop-20261013T223003Z-3d7e, the law-edit card)",
+      "python .tools/unblock.py tick --help: '--owed-call: open-call id the project waits on (WAITING while OPEN or HELD)'; '--owed-owner: serial of the seat that owes the act' (Andrew is not a serial)",
+      "python .tools/unblock.py list: 41 cases, 0 for NFRA_DEVPLN, so no case was opened; the issuer then recorded a real work tick (round 7 cut, worker spawned) which resets the count"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A dependency with a live owner and a time is a WAIT and is recorded, not counted (/next-calls --drive); the CTO's round-6 analysis says to record the wait on the five dell2 rows with --owed-call.",
+  "world_is": "The instrument cannot see a call that lives on another box's list, and it cannot take 'andrew' as an owner. Until it can, a project whose only open item is a cross-box approval at Andrew counts every drive tick as empty. The issuer did not add a laptop pointer card for Andrew (it would duplicate five cards he already holds). Options for the CTO: widen --owed-call to read the cluster copy of every box's list (the same cluster-first read that approval-status now uses), or accept a laptop pointer call."
+}
+```

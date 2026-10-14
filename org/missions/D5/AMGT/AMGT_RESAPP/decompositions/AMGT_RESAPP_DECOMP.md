@@ -10871,3 +10871,29 @@ PROD push. This is the issuer's own decomposition; no endpoint changes.
 
 Keyed `<workstream>PROMOTE</workstream>` (LAND already holds its issuance, bk-6; the gate refuses a second order into it). **Edge:** bk-6 -> the merge-forward -> bk-7 -> bk-5. **One project per Tier-2 seat:** this DT holds an older pending face of another project
 (`OPAL_ADVIPOINTERS.P4-PROMOTE-49F`) that reads shipped; the order bars it, and its issuer on the laptop closes it. fanout: 1 of 1 chains, cap 8.
+
+---
+
+## 114. ROUND 105 -- THE CTO'S ROUND-104 ENRICHMENT LIST (`ledger/ROUND_ANALYSIS.round104.md`, msg 5350), 2026-10-14 ~02:3xZ
+
+**Frozen at the issuance commit.** Round 104 (this seat's keys bk-1..bk-7) closed at `2301235aef` on MAY-CLOSE: the CVO's slug (msg 5348) graded FWD-40 (b) MET at 2,910.88 ms, (d) EXERCISED, (a) NOT MET on two confirmed
+values (PBR US prints `$` on BRL team-model figures; BATS LN shows an empty `Period 4` column) and the Key Figures dashes that carry no reason. The CTO's list, in his order:
+
+| # | item | cell | what the cell is |
+|---|---|---|---|
+| 1 | the currency symbol follows the figure's own currency (`$` only for USD; PBR US is the arm) | `AMGT-bl-1` | ONE Opal-internal portal feature cut from PROD `7d5cb34d` |
+| 2 | BATS LN's empty `Period 4` column: serve its values or drop it with a stated reason | `AMGT-bl-1` | the same branch, page side (a drop with one visible sentence); a served-block cause is a surprise row, not a page patch |
+| 3 | Key Figures dashes carry their reasons (the header tiles' idiom, extended) | `AMGT-bl-1` | the same branch |
+| 4 | the 93 census and the ten-name walk re-run on PROD; FWD-40 (a) reads MET with 0 confirmed broken values | `AMGT-bl-3` | placed, NOT CUT until bl-2 is on PROD |
+
+Cells and their classes:
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-bl-1` | the feature branch `cand/dell1/amgt-sa-currency-symbol-and-reasons` cut from PROD `7d5cb34d` (items 1, 2, 3), its harness, its receipt; the approval row is the issuer's | `~419` | worker (portal) | LOCAL | the branch in the nested portal repository (`src/pages/SecurityAnalysis/` only), the receipt | FWD-40 (a) |
+| `AMGT-bl-2` | the promote of that one approved feature to PROD (`.tools/portal-release-build.sh --features <list>`, then `/prod-deploy`; a DT seat act) | a DT named by the CTO | seat (DT) | SERVED | the portal repository's release branch and PROD, one receipt | FWD-40 (a) |
+| `AMGT-bl-3` | the 93-name census (issuer's run) and the ten-name walk on a local build of the PROD release, fresh draw; AC on the walk's evidence; the screenshot read is JUDGMENT, the CVO's | `~420` | worker | LOCAL | the deliverables folder and `C:/dev/ui-walk-evidence/bl-3/` | FWD-40 (a), (d) |
+
+**Edges:** bl-1 -> approval row (CTO) -> merge-forward onto DEV (box manager) -> bl-2 -> bl-3. No edge into bl-1. **Cut now:** bl-1 only (the others wait on a landed predecessor, as in round 104). fanout: 1 of 1 chains, cap 8, reason: three items on one branch because items 1 and 3 are one feature by the CTO's word and item 2 shares its files.
+Item 2 moves a served value only if the column were filled by the function; the page-side drop does not, so no never-widen pair is owed; if the cause is in the served block the cell files a row and the issuer returns to the CTO.
+**Not this round's:** the AIFILL workstream (`~R2`, FWD-41), the Terminal sign-in (Andrew), the weekend read of bh-2.
