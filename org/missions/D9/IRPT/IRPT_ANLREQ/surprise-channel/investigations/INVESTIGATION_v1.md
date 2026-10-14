@@ -14228,3 +14228,31 @@
   "notes": "Filed by the AR-y-329 read; the live check (does a stored OPAL report exist, and what does the route answer for it) is for the CVO or a later read-only cell."
 }
 ```
+
+## IRPT_ANLREQ-D2-W139-S1 -- the irpt-status source map does not stage the commentary naming rule, and the map is outside the TO-AR-y-331 grant, so commentary_pdf cannot import commentary_logical_id without a source-map edit
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W139-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~139",
+  "surfaced_at": "2026-10-14T18:00:16Z",
+  "one_line": "TO-AR-y-331 step 2(a) imports opal_producer.commentary_logical_id into ops/owned_report.py and says: if the irpt-status source map does not stage ycharts/research/opal_producer.py, add the source-map row or STOP with a BLOCKING row if the map is outside the grant. The map (infra/aws/lambda/ci/lambda-source-map.json, the irpt-status entry) stages none of opal_producer.py, held_data.py, layout_overview.py, runner.py or keeper.py, and that file is not in the TO's <paths>. The worker stopped before any source edit.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-331 step 2(a): commentary_pdf imports commentary_logical_id from ycharts/research/opal_producer.py (the naming rule is not re-typed); if the irpt-status source map does not stage that file, add the source-map row the way the neighbouring members are listed and say which file was edited, or STOP with a BLOCKING row if the map is outside the grant.",
+  "world_is": "The irpt-status entry's files list (infra/aws/lambda/ci/lambda-source-map.json, entry at line 5336, source_dir infra/aws/lambda/investor-reporting/ops) names ops/ members and lib/opal_naming.py only. A whole-map search for opal_producer, layout_overview, held_data and opal_packager returns zero matches. opal_producer.py:46-49 imports held_data, keeper, layout_overview and runner at module top, so a commentary_pdf that imports it would fail in the deployed irpt-status zip (at call time if lazy, at cold start if top-level). The map is not in the TO <paths> (investor-reporting/ and org/missions/D9/IRPT/IRPT_ANLREQ/ only), so the edit is outside the grant. Also seen while reading: the ops/entry.py route and handler list, reports/status_installed.py HISTORY_ROUTES and the operation pins in reports/tests/test_status_installed.py:95,105 and _authz/tests/test_svc_custody_statement.py:138 would all need the one new operation; no source edit was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json:5336 @9fb149ec07",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py:46 @9fb149ec07",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py:237 @9fb149ec07",
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:292 @9fb149ec07"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Decision for the issuer (2.0.0_SA_COO~Y2): widen the grant to the source map (and the import chain the map must then stage), or name a stage-safe source of the commentary logical-id rule. The worker did not re-type the rule and did not edit the map. The order's own tests cannot prove the deployed zip, only the repo tree, which holds the import chain."
+}
+```
