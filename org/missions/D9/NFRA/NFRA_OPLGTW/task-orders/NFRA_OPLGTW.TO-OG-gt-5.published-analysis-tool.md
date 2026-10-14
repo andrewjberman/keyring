@@ -148,7 +148,7 @@ the issuer to make at the merge.
 - A1 (issuer, 2026-10-14 ~15:4xZ, workers' rows S2 and S5): the function name comes from the env key `AMGT_SCOPED_API_FUNCTION` written by `deploy-to-ec2.sh`; `deploy-to-ec2.sh` added to `<paths>`; no literal in code.
   The worker is re-seated on its uncommitted module with this amendment. No criterion moves. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G1-TYPED</workstream>
 <slot>~76</slot>
