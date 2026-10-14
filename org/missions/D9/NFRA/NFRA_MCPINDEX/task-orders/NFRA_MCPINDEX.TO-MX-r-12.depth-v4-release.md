@@ -122,6 +122,23 @@ ANNOUNCE.**
 - Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
   GATE (viii) does not grade it.
 
+**AMENDED A6 (2.0.0_SA_COO~MI, 2026-10-14 ~03:3xZ) -- v1 CLOSED; RE-OPENED for a catalog-only v2 carrying the six
+legacy-addressed research rows.**
+- **v1 is complete.** deployed_commit `027fedfda4` (previous `b0c75d24f1`), ledger `nfra-mcpindex-r11-catalog-release`
+  CLOSED on 5 legs (msg 33964, @0dc0ddac4c). MC Portal link counts held equal (11 tools, 14 links). The issuer's
+  re-run: r12.AC1, AC2 and AC3 PASS.
+- **v2** ships MX-c-9 A3+A4's regenerated `app/refs/DATA_CATALOG.yaml` ALONE, at its drained blob (named in the GO).
+  It carries 39 harvest rows: the six research tables through `legacy_addresses.json`, with research rowed 7 of 7.
+  - It is cut on the LIVE `027fedfda4`, with `infra/logic/registry` in the cone.
+  - The slot is `2.0.0_SA_COO~O` msg 33967: v2 goes BEFORE r30's re-cut. The close is due by 10:00Z; otherwise v2
+    follows r30, OG-ap-17 and OG-hv-2.
+- **A new NEVER-2 ledger** `nfra-mcpindex-r11-catalog-release-v2`. AC1's invocation is re-pointed to
+  `round11/checks/r12v2.AC1.sh` (the same check on the v2 slug); AC2 and AC3 are unchanged and re-run on v2.
+- **The rollback for v2 is v1's artifact** `opal-gateway-027fedfda4.tar.gz`, never further.
+- PHASE A and PHASE B both belong to `0.7.0_AE_CloudOps~MI`, with a fresh never-widen pair on the v2 pins.
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
+  GATE (viii) does not grade it.
+
 ## 2. BOUNDS
 
 1. No change to any source file. This order ships what MX-c-9 committed, and nothing else.
@@ -149,7 +166,7 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
 
 <proof_of_spec>
   <expected_criteria>AC1,AC2,AC3</expected_criteria>
-  <criterion id="AC1" cell_refs="MX-r-12" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round11/checks/r12.AC1.sh; echo "exit=$?"</invocation><expect>entry files at HEAD>=1; sentinel at HEAD=no; listed OPEN/HELD=0; SCAN DENOMINATOR printed -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="MX-r-12" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round11/checks/r12v2.AC1.sh; echo "exit=$?"</invocation><expect>entry files at HEAD>=1; sentinel at HEAD=no; listed OPEN/HELD=0; SCAN DENOMINATOR printed -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="MX-r-12" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round11/checks/r12.AC2.sh; echo "exit=$?"</invocation><expect>/health=200; on the host the PARTITION sums N of N with every member valid through MC Portal's reader and no row identity in tool_index (index rc=0), and discover reads good 3 of 3 (discover rc=0) -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="MX-r-12" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round11/checks/r12.AC3.sh; echo "exit=$?"</invocation><expect>PART1 measured depths verified m of m by the aws CLI, mdpf_get_aggregate_aua measured; PART2 the AUA answer's answer-time depth is measured and equal -- RESULT: PASS -- exit=0</expect></criterion>
   <instance_path>org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MI/NFRA_MCPINDEX.TO-MX-r-12.depth-v4-release.proof_of_spec.json</instance_path>
@@ -169,6 +186,8 @@ PHASE A ends at the ANNOUNCE: report, and stop. After PHASE B, the applier write
 
 <status>issued</status>
 <status>pending</status>
+<status>complete</status>
+<status>issued</status>
 <round>11</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
