@@ -1,0 +1,47 @@
+{
+  "slug": "nfra-mcportal-pc-release",
+  "title": "NFRA_MCPORTAL MP-pc-5: the People view gateway release (opal-gateway 7c558b4e21 -> rel-nfra-mcportal-pc, mcportal 17dcbb2)",
+  "author": "0.7.0_AE_CloudOps~MQ",
+  "status": "OPEN",
+  "opened_at": "2026-10-14T15:37:30.875419+00:00",
+  "window_hours": 3.0,
+  "entry_path": "org/critical_paths/change_management/20261014T1537Z_nfra-mcportal-pc-release_deploy_completion.md",
+  "legs": [
+    {
+      "id": "L1",
+      "kind": "activation",
+      "target": "dashboard bundle build from mcportal 17dcbb28624eab147318052f58bcc39b8eb8029c",
+      "proof_required": "dist/index.html and dist/routes.json present, bun cache 77 of 77",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L2",
+      "kind": "s3-prefix",
+      "target": "opal-313476888478-lambda-artifacts ec2/opal-gateway/ release tarball + latest",
+      "proof_required": "git-ref metadata equals the release commit on both keys",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L3",
+      "kind": "activation",
+      "target": "SSM pull and restart of opal-gateway on i-07dccb1615503ac99",
+      "proof_required": "/health 200 within 90 s, new MainPID, host md5 of the PC modules equals the release tree",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L4",
+      "kind": "git",
+      "target": "EC2_MANIFEST.json services.opal-gateway record",
+      "proof_required": "deployed_commit, previous_deployed_commit, mcportal_commit, release_note committed on the release branch",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "20261014T153730Z OPENED by 0.7.0_AE_CloudOps~MQ with 4 leg(s)"
+  ],
+  "last_red_at": null
+}
