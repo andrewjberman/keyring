@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "laptop",
- "written_at": "2026-10-14T10:42:15Z",
+ "written_at": "2026-10-14T11:45:56Z",
  "written_by": "1.0.0_SA_CTO",
  "rows": [
   {
@@ -545,7 +545,7 @@
    "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/PIVOT_DIRECTION_20261013/DIRECTION_COO_CA_COMM_ASSIST_MUSE_20261013.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-13T20:28:23Z",
    "kind": "fork",
    "context": "Your ~18:0xZ 'muse as a replacement for the COMM_ASSIST kimi agent' vs your ~14:4xZ decision 2 (a) 'Kimi keeps drafting'. Round 16 (muse thread) is issued and does not wait; only a cell that re-homes the drafter waits.",
@@ -566,7 +566,14 @@
      "shared": []
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-14T11:45:53Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_114xZ_EIGHT_OPEN_CALLS_ANSWERED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
    "escalation": {
     "to": "andrew",
     "ref": null,
@@ -752,7 +759,7 @@
    "source": "org/missions/D0/NFRA/NFRA_DEVPLN/ledger/ROUND_ANALYSIS.round3.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-13T22:30:03Z",
    "kind": "fork",
    "context": "NFRA_DEVPLN C-MERGE-FORWARD fates (iii) and (iv). Both direct routes are CLAUDE.md law (Portal section), so only your word changes them; until then they coexist with the script. Nothing is blocked.",
@@ -781,7 +788,14 @@
      ]
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-14T11:45:55Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_114xZ_EIGHT_OPEN_CALLS_ANSWERED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
    "escalation": {
     "to": "andrew",
     "ref": null,
@@ -957,7 +971,7 @@
    "source": "org/missions/D0/NFRA/NFRA_CTLPLN/decompositions/NFRA_CTLPLN_DECOMP.round13.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-14T06:11:02Z",
    "kind": "act",
    "context": "FWD-11 needs one deliberate dell1 restart (you said 'Yes sure', at most 15 minutes). Dell1 has no auto-logon and none will be set, so after the restart only your console sign-in brings its manager and seats back. The manager (0.0.0_AB_MSTR~DELL1) restarts ONLY when you are at the box; booked 14:30-14:45Z, otherwise the next hour you are. Order: CT-ac-5.",
@@ -978,7 +992,14 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-14T11:45:56Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_114xZ_EIGHT_OPEN_CALLS_ANSWERED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   },
   {
    "id": "laptop-20261014T093827Z-16cc",
