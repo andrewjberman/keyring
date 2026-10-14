@@ -53,3 +53,11 @@ Authority: a recut covers its affected cells; `unblock.py` is the keep-driving m
 | `CT-ac-6` | `.tools/unblock.py tick --owed-call` reads a call on another box's list through `open-calls.py approval_read` (freshest of the cluster copy, `origin/box/<box>`, the working tree; UNREADABLE never absent), prints the source, keeps this box's own read unchanged; a test with the seams. | FWD-2 | LOCAL | KEEPDRIVE / 1 | `0.9.0_WK_NFRA_CTLPLN~90` |
 
 **Amendment 2 (2026-10-14 ~11:5xZ, issuer):** `CT-ac-5`'s window is REBOOKED by Andrew's answer 4 (`ANDREW_DIRECT_20261014_114xZ_EIGHT_OPEN_CALLS_ANSWERED.md`, via CTO msg 109109): the dell1 restart is approved for 17:00 ET = Wed 2026-10-14 21:00Z, with Andrew at the console, for this one restart, after dell1's hardening read-back (Windows Update AUOptions=3, Tailscale unattended; `0.0.0_AB_MSTR~DELL1`'s). The 14:30Z window is cancelled; open call `laptop-20261014T061102Z-b509` is CLOSED on that answer.
+
+## Recut 3 (2026-10-14 ~16:2xZ, issuer 2.0.0_SA_COO~C): the two judgment-criterion checkers agree (row D2-S5, from dell2)
+
+Authority: a recut covers its affected cells; the checkers belong to this project's SEATS workstream (the row names it) and the cell is small. No existing cell changes.
+
+| cell | what | serves | risk | workstream / round | issued to |
+|---|---|---|---|---|---|
+| `CT-ac-7` | `proof-of-spec-check.py` adds the bound order's `judgment="true"` criterion ids to its expected set, so a judgment row the order does not list in `<expected_criteria>` is no longer an unexpected addition while its absence is a silent omission; self-test arms and an end-to-end test; `round-close-check.py` is untouched. | FWD-2 | LOCAL | SEATS / 4 | `0.9.0_WK_NFRA_CTLPLN~91` |
