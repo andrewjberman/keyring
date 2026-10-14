@@ -88,6 +88,7 @@ box/sitez also carries other gateway work that is NOT live and is NOT in this re
    | `list_shared_folder_safe` | `destructive_ops.classify` returns SAFE |
    | `opal_users_gate_refuses_non_opal` | the gate function tg-1 added, given a non-Opal tenant, refuses |
    | `objects_written` | `0` |
+   | `bbg_identity_admitted_8` | (A2) how many of the 8 tools the installed identity-scope check admits for the principal `opalbloomberg@opalinvest.com` (by its oid from the grant store, never typed): `opal_discover`, `mdpf_get_aum_metrics`, `mdpf_get_aggregate_aua`, `mdpf_get_account_distribution`, `mdpf_get_model_benchmarks`, `etfs_get_positioning`, `gateway_query_catalog`, `ycharts_freshness`. Want 8. |
 8. **Standing release clauses.**
    - Runbook 7.2 (`infra/aws/ec2/opal-gateway/runbooks/SCHWAB_PILOT_RUNBOOK.md`) names the new live release; `rb.AC2`
      reads FAIL at the cut because 7.2 does not name today's live ref, so this release brings it current.
@@ -122,10 +123,15 @@ Rows: id `NFRA_OPLGTW-Z-S<k>` (the next free), fabric `site-z`, disarm_owner `2.
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OG-ap-14"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ap14.AC1.sh; echo "exit=$?"</invocation><expect>(?s)is the live ref: yes.*outside the four cells' files 0 \(want 0\).*diff lines outside the four cells' hunks 0 \(want 0\); cell markers present 4 of 4.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-ap-14"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ap14.AC2.sh; echo "exit=$?"</invocation><expect>(?s)entries at HEAD [1-9]\d*; status CLOSED=yes; sentinel at HEAD=no.*equal=yes; rb\.AC2 PASS; served r30 fields: yes.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="OG-ap-14" judgment="true"/>
 </proof_of_spec>
 
 - `AC1`: the re-cut carries exactly the four cells' hunks on the live ref. `AC2`: landed, closed, recorded, and each
   cell is served.
+- `AC3` (judgment, `3.0.0_SA_CVO~Z`; A2, CTO ruling msg 33850): after this release AND the Bloomberg mirror grant write
+  (NFRA_OPLGTW.TO-OG-mg-1), `0.0.3_BG_BBGTerminal` re-runs its own exercise of the 8 tools, read the same way it read
+  them on 10-13. 8 of 8 ALLOWED is the arm; any tool still denied after both is a BLOCKING row, not a pass. The exercise
+  is that seat's act, owed; record it UNVERIFIABLE-BY-INSTRUMENT naming the CVO and the owed act.
 
 ## 5. WHEN YOU ARE DONE
 
@@ -151,6 +157,14 @@ commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing
   33805; reply 20261013T214631Z): two files, no tool, already drained, ready now, while this release has not yet built.
   Phase B1's precondition now names MX-r-11's ledger as well; the live ref is read at the act, so the base moves with it.
   Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
+- A2 (issuer, 2026-10-14 ~00:4xZ, CTO ruling msg 33850): r30 gains a POSITIVE arm. The Bloomberg principal is denied
+  8 of 8 gateway data tools today (`identity_scope_denied`, log
+  `org/tier0_utility/0.0.3_BG_BBGTerminal/logs/2026-10-13/capability_exercise_8of8_gateway_denied_serving_path_live_and_a_vintage_hazard.md`).
+  OG-tg-1 unscopes that identity (PRD v2.3 item 2; Andrew "exact copy of opal-gateway for now").
+  - The served read gains `bbg_identity_admitted_8` (ap14.AC2 extended: want 8).
+  - New AC3 (judgment) is the seat's own re-exercise after r30 plus the mirror grant write (OG-mg-1, cut separately).
+  - Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>
