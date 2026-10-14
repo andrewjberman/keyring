@@ -1903,3 +1903,51 @@
   }
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W29-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~29",
+  "surfaced_at": "2026-10-14T18:53:18Z",
+  "one_line": "The MP-pd-5 order defines the printed line for a measured payload and for an absent one, but not for an absent payload that leaves a measured snapshot in place; the script prints usage n/a there, from the payload result, while the snapshot keeps its measured figures.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Section 1 step 5: an absent result never replaces a measured snapshot. Step 6: print the 5h/wk line when measured, else usage n/a.",
+  "world_is": "Steps 5 and 6 do not define the output on the kept-snapshot path. Measured: a measured run printed '5h 42% wk 11%'; then an absent run printed 'usage n/a' and usage_snapshot.json still held claim measured with five_hour used 42.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/claude-usage-statusline.py@967a02ec89 run(): the claim absent and existing measured branch skips the write; main prints format_line(claim) from the payload result",
+      "ad hoc run, temp CLAUDE_CONFIG_DIR under .scratch/pd5 (uncommitted): measured payload printed '5h 42% wk 11%'; absent payload printed 'usage n/a'; snapshot after the absent run read claim measured, five_hour used_percentage 42"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired: the order is frozen for this cell. The worker chose the payload result. The other reading (print the kept snapshot figures) is the issuer's to rule. The snapshot file is correct under either reading."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W29-S2",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~29",
+  "surfaced_at": "2026-10-14T18:53:18Z",
+  "one_line": "The order does not say what happens when stdin parses as JSON but is not an object (null, a list, a number); the script treats it as a payload with no rate_limits member.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Section 1 step 1: unparseable stdin prints nothing and changes nothing. Step 4: a payload with no usable rate_limits member is absent.",
+  "world_is": "A non-object JSON value parses, so step 1 does not fire, and the order names no branch for it. Measured: stdin 'null' with no snapshot printed 'usage n/a' and wrote claim absent; stdin '[1,2]' over a measured snapshot printed 'usage n/a' and left the measured snapshot (five_hour used 42) intact.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/claude-usage-statusline.py@967a02ec89 build_rate_limits(): a non-dict payload yields no rate_limits, so the absent branch runs",
+      "ad hoc runs under .scratch/pd5 (uncommitted): stdin 'null' with an empty config dir -> usage n/a, claim absent; stdin '[1,2]' over a measured snapshot -> usage n/a, claim measured kept"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired. The worker reads a non-object as absent, which keeps the never-replace rule intact. The issuer may prefer treating it as unparseable (print nothing, change nothing)."
+}
+```
