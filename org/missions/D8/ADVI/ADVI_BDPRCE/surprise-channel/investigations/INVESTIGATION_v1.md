@@ -1384,3 +1384,134 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "The missing weekday partitions in 2026 are 2026-02-18, 04-03, 04-21, 05-01, 05-25, 06-19, 06-22 and 06-23. 2026-06-22 and 06-23 are not market holidays. None of the window's 20 weekday partitions is missing. In 2020-03 to 2025-12 there are 436 dates without a partition, 101 of them weekdays."
 }
 ```
+
+## ADVI_BDPRCE-D1-W18-S1 -- The round-2 record dates the runner's oldest readable log event to 2026-09-30; the live group's first event from 2026-09-14 is 2026-10-01T00:00:19Z
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W18-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~18",
+  "surfaced_at": "2026-10-14T01:53:18Z",
+  "one_line": "CAUSE.json (BP-b-5) gives the runner's oldest readable event as 2026-09-30T00:00Z; the live group returns 2026-10-01T00:00:19Z as its first event from 2026-09-14, so no runner log line for 2026-09-29 or 2026-09-30 can be read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws logs filter-log-events --region us-east-1 --log-group-name /aws/lambda/bd-49f-runner --start-time 2026-09-14T00:00Z --limit 1 returned timestamp 1790812819121 ms, which is 2026-10-01T00:00:19Z (read 2026-10-14T01:3xZ, SENTINEL.json oldest_readable_runner_event)",
+      "aws logs describe-log-groups --log-group-name-prefix /aws/lambda/bd-49f-runner: retentionInDays 14",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~9/CAUSE.json@33b647a50f states the runner group's oldest readable event as 2026-09-30T00:00Z in its evidence for 2026-09-29"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-b-5 record CAUSE.json (round 2): log retention ended on 2026-09-30, and the oldest readable event in the runner group is 2026-09-30T00:00Z.",
+  "world_is": "The oldest readable runner event on this read is 2026-10-01T00:00:19Z. The 2026-09-30 events are past the 14-day retention, so that date is not classifiable from logs. No count in BP-c-6 changes, because the readable log dates are 10-01 to 10-14 in either reading."
+}
+```
+
+## ADVI_BDPRCE-D1-W18-S2 -- Commit 3709ae40d6 says the runner role has no s3:GetObject on bronze/*; the live role grants GetObject on bronze/*/_BRONZE_COMPLETE.json only, and the read-back on that key works
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W18-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~18",
+  "surfaced_at": "2026-10-14T01:53:18Z",
+  "one_line": "The role bd-49f-runner-role grants s3:GetObject on bronze/*/_BRONZE_COMPLETE.json (statement ReadBackBdBronzeSentinel), not on bronze/* as commit 3709ae40d6 describes; the narrower grant covers the read-back, and the post-deploy runs print sentinel emitted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws iam get-role-policy --role-name bd-49f-runner-role --policy-name bd-49f-runner-policy (read 2026-10-14T01:3xZ): statement ReadBackBdBronzeSentinel, Allow s3:GetObject on arn:aws:s3:::opal-data-bd/bronze/*/_BRONZE_COMPLETE.json; no GetObject on bronze/* as a whole",
+      "aws logs filter-log-events RESULT on /aws/lambda/bd-49f-runner, 2026-10-08 to 2026-10-14: each RESULT line carries sentinel emitted, which needs the head_object read-back (lambda_function.py@33b647a50f :192-198) to succeed",
+      "git show 3709ae40d6 commit message: the live runner role has no s3:GetObject on bronze/*, so the required head_object read-back is refused"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Commit 3709ae40d6 message: the runner role needs s3:GetObject on bronze/* for the head_object read-back of the sentinel.",
+  "world_is": "The live role grants GetObject on the sentinel key only, which is the key the read-back reads, and the read-back succeeds in production. The date the narrow grant was added was not read in this cell, so the commit's bronze/* wording is no longer the live state."
+}
+```
+
+## ADVI_BDPRCE-D1-W18-S3 -- Eight Monday and Tuesday run dates have no bronze sentinel, not the six the round-2 record lists; 2026-09-14 and 2026-09-15 hold no bronze objects at all
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W18-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~18",
+  "surfaced_at": "2026-10-14T01:53:18Z",
+  "one_line": "S3 has no bronze/<date>/_BRONZE_COMPLETE.json for 2026-09-14 and 2026-09-15 either; the round-2 list of six sentinel-less Monday and Tuesday dates is short by those two, and neither date has any bronze object.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api head-object on bronze/<date>/_BRONZE_COMPLETE.json (2026-09-14 to 2026-10-14): 404 for 09-14, 09-15, 09-21, 09-22, 09-28, 09-29, 10-05 and 10-06; present for 10-12 (363 bytes) and 10-13 (277 bytes)",
+      "aws s3api list-object-versions --prefix bronze/2026-09-14/ and bronze/2026-09-15/: zero versions, zero delete markers (SENTINEL.json calls)",
+      "CAUSE.json@33b647a50f lists six sentinel-less dates: 2026-09-21, 09-22, 09-28, 09-29, 10-05 and 10-06"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-b-5 record CAUSE.json (round 2): the Monday and Tuesday run dates with no bronze sentinel are six: 2026-09-21, 09-22, 09-28, 09-29, 10-05 and 10-06.",
+  "world_is": "Eight Monday and Tuesday run dates have no sentinel: the six, plus 2026-09-14 and 2026-09-15. Neither of the two has any bronze object. Whether the sentinel path existed on those two dates is not read here. Their runner logs are past retention."
+}
+```
+
+## ADVI_BDPRCE-D1-W18-S4 -- The post-deploy runner completes a day on a header-only transactions export, so the 2026-10-12 and 2026-10-13 sentinels exist over zero transaction rows
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W18-S4",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~18",
+  "surfaced_at": "2026-10-14T01:53:18Z",
+  "one_line": "EMPTY_WINDOW_OK_TABLES accepts a measured-empty transactions export as complete, so the 2026-10-12 and 2026-10-13 sentinels were emitted over header-only transactions (4358 and 4354 bytes); every Monday and Tuesday will complete the same way until the window is fixed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda_function.py@33b647a50f :118 EMPTY_WINDOW_OK_TABLES = frozenset(('transactions',)); :137 has_data_rows == 0 accepted; :163 complete-empty state; :197 note measured-empty window accepted",
+      "aws logs: 2026-10-12 RESULT and OK bronze sentinel emitted (event prefix 399576695212, 00:11:10Z) and 2026-10-13 OK bronze sentinel emitted with the measured-empty note (event prefix 399595967749, 00:11:31Z); sentinel objects 363 and 277 bytes",
+      "aws s3api get-object forwardfill_v2/transactions/TRANSACTIONS_DAILY_<date>.xlsx for 2026-10-12 (VersionId 2FPO.Dwpi81bBbPhVMwVUk31qW6U1rPf, 4358 bytes) and 2026-10-13 (VersionId 13q3LKubG7cq5_7vZqAhPuhQ4hcPdTFN, 4354 bytes): zero data rows"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "bd-49f-runner docstring at 33b647a50f, lines 30-33: the bronze sentinel fires the silver merge ONLY on a COMPLETE bronze, and a partial pull must NOT advance silver. Lines 35-41: a Monday or Tuesday window can be genuinely empty.",
+  "world_is": "The Monday and Tuesday windows are not genuinely empty: SENTINEL.json gives EXPORT_WINDOW_RULE, and the last published trade day lies outside the span. The runner still accepts the empty transactions table, so the sentinels for 10-12 and 10-13 exist over zero transaction rows, and the sentinel is what triggers bd-silver-merge (BP-b-5 record). Whether silver for those two dates was built on the header-only content is not read in this cell."
+}
+```
+
+## ADVI_BDPRCE-D1-W18-S5 -- The runner file sets no transactions window: it calls mod._window_for, the window and its 3-day chunking live in the shared module, and the chunk size is a deployed environment value
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W18-S5",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~18",
+  "surfaced_at": "2026-10-14T01:53:18Z",
+  "one_line": "The BP-c-6 order points to asOfDate in the runner; the runner has no asOfDate, git log -S asOfDate on the runner file returns no commit, and the transactions window is set in data/cot/scripts/bronze/cot_bronze_ingest.py with BD_TXN_CHUNK_DAYS=3 in the deployed environment.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log -S asOfDate -- infra/aws/lambda/bd-pipeline/bd-49f-runner/lambda_function.py at 33b647a50f returns no commit; the positive control git log -S _window_for on the same file returns 9d44d6af5b and f6ca77914b",
+      "lambda_function.py@33b647a50f :236 start, end = mod._window_for(table, run_date) and :244 mod.ingest_table(...); the window is cot_bronze_ingest.py :131, :320-321, :327-335, :338-362, :797-798",
+      "aws lambda get-function-configuration --function-name bd-49f-runner: Environment BD_TXN_CHUNK_DAYS=3 and BD_SNAPSHOT_ASOF_LAG_BDAYS=1 (values printed; secret-named keys redacted)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order BP-c-6 1a.4: find where the runner or the template sets the transactions window (look for asOfDate, startDate, endDate, today, utcnow); the P1 history in git log -S asOfDate on the runner file is a hint.",
+  "world_is": "The runner file sets no window and delegates to the shared module. The deployed environment sets the chunk size. The hint's history search on the runner file is empty, so the window is measured from cot_bronze_ingest.py and the environment, not from the runner."
+}
+```
