@@ -167,7 +167,7 @@ Checks dry-run at base 9be88c9134:
 
 Gate G-REL5, holder the issuer.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <workstream>PC</workstream>
 <fabric>site-z</fabric>
