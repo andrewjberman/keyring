@@ -11738,3 +11738,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "A renderer that shows account_id to a reader would show Orion's internal id, not the custodian number. The render (DB-b-215) prints last4 only. A ruling on the account key for display is the CTO's."
 }
 ```
+
+## IRPT_DASHBD-D2-W173-S7 -- the account universe is built from the newest positions partition while the values are read at the as-of partition, which is one day earlier
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T17:44:31Z",
+  "one_line": "After the as-of moved to the last positions date on or before the served series' end (amendment W173-S4), the household's account membership still comes from the newest positions and fact_assets partitions, so the order does not say which partition defines the membership.",
+  "spec_asserts": "TO DB-b-214 step 3 (amended): the household is chosen from the adapter's account_dim among households of 2 or more accounts, the sample's accounts are that household's accounts, and as_of is the newest fact_positions date on or before the served series' last date.",
+  "world_is": "The adapter's account_dim is built from the newest fact_positions and fact_assets partitions (2026-10-14), which is the basis of the round-108 dry run the checker recomputes the household from. The values are read at as_of (2026-10-13). The build used the newest partitions for membership and the as-of partition for values, and recorded that in method_words. Measured: all five household accounts carry position rows on 2026-10-13, and the account set equals the dry-run set. Nothing in the order says which partition defines membership when the two dates differ; a membership that held on the newest date but not on as_of would be carried into the sample with an absent or zero value.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_dim.py@4ee0fead99 (build_account_dim takes the holdings and roster frames it is given)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~173/build_sample_inflection.py@4ee0fead99 (step 1 and step 2: membership from the newest partitions, values from the as-of partition)",
+      "measured in the private build: BUILD_COUNTS.json account_positions_rows_as_of (counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded for the issuer's disposition; no value was changed. The checker's household rule is fixed to the dry-run membership, so the build kept that membership and read values at as_of."
+}
+```
