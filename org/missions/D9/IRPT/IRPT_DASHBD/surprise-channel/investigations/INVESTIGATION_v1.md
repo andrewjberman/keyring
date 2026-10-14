@@ -12116,3 +12116,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W177-S4 -- the 2026-06-12 to 2026-06-22 partitions do not follow one date basis, and a partition exists for the 2026-06-19 holiday
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W177-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~177",
+  "surfaced_at": "2026-10-14T19:42:41Z",
+  "one_line": "Black Diamond's holdings partitions for the 2026-06-12 to 2026-06-22 week do not follow one date basis: a partition exists for the 2026-06-19 market holiday, and the weekend and holiday partitions change in a mixed pattern.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-220 step 3 (calendar signature): the share of the nine named securities whose price is unchanged between consecutive partitions of 2026-06-12 to 2026-06-15 and 2026-06-18 to 2026-06-22 is printed as a count, not checked.",
+  "world_is": "Consecutive partitions, unchanged prices of the seven named securities present in both: 06-12 to 06-13 0 of 7; 06-13 to 06-14 7 of 7; 06-14 to 06-15 0 of 7; 06-18 to 06-19 0 of 7; 06-19 to 06-20 7 of 7; 06-20 to 06-21 7 of 7; 06-21 to 06-22 0 of 7. The 2026-06-19 partition exists, although the market was closed that day and the step names no such partition. Its prices equal 06-20's and differ from 06-18's. A Saturday partition (06-13) differs from the Friday partition, while another Saturday (06-20) equals the Friday holiday partition. The pattern fits no single basis of the four in the declaration. Counts only; the cause was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-objects-v2 --bucket opal-data-assets --prefix blackdiamond/cottonwood/silver/fact_holdings/ at 2026-10-14T19:40Z (partitions 2026-06-12 to 2026-06-22 present in the listing)",
+      "worker worktree .scratch/offset.py calendar signature block (Ticker, Units and Market Value columns, read-only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Relevant to any date-basis ruling for weekend and holiday partitions; the file's own labels do not settle it."
+}
+```
