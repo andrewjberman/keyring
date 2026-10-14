@@ -14443,3 +14443,134 @@ name the one known failure instead of silently inheriting it.
     "notes": "ARMED because a rollback is exactly the moment nobody has time to notice stale prose. NOT fixed by this seat: naming bacec95ccd as live would mean asserting ITS R-56 conditions (that it carries the per-principal guard and was proven on the host), and that evidence belongs to its applier, not here -- writing it from their ledger would be a second-hand claim in a rollback document. Surfacing it instead. The act is one paragraph by whoever owns that release, or a standing clause added to the release form so 7.2 cannot be skipped. Found while confirming the live ref after that release closed."
   }
   ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W79-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~79",
+  "surfaced_at": "2026-10-14T17:05:00Z",
+  "one_line": "The naming gate's --enforce probe over the twelve S3 bucket, key and prefix literals of portal_models.py graded ONE literal (the bucket, CONFORMANT) and left the eleven key and prefix literals with no verdict, so its PASS does not certify them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PROBE @835f9452c3: python .tools/naming-gate.py --diff org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~79/naming_probe.diff --enforce -> 'NAMING CONFORMANT infra/aws/ec2/opal-gateway/app/portal_models.py:1 opal-data-portal-v2' then 'NAMING-GATE: PASS 1 graded', rc=0 (output in the same deliverables folder as naming_probe_run.txt)",
+      "CONTROL @835f9452c3: the same gate on a diff whose only added line is SCOPE_NAME_PROBE = 'portal' -> 'NAMING-GATE: PASS 0 graded', rc=0 (naming_probe2_run.txt); the gate grades only the names it resolves, not the key or prefix shapes",
+      "PRIOR MEASURE: NFRA_OPLGTW-Z-W77-S4 records a REFUSE on a registered scope token ('harvest'), so the gate does grade registry-held tokens; the key and prefix literals of the order's FIRST ACT are not among them"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's FIRST ACT (NFRA_OPLGTW.TO-OG-pt-1 section 1): the commit-time naming gate REFUSES a NEW out-of-pattern S3 key literal, so writing every key or prefix literal into a staged .py diff and running it with --enforce grades them, and any refusal is a BLOCKING row.",
+  "world_is": "At 835f9452c3 the gate's --enforce run over the twelve literals returned PASS with one graded line: only the bucket name was graded. The eleven key and prefix literals (json/positioning/..., json/market/..., json-tiered/market-overview/...) produced no verdict line. A PASS therefore certifies the bucket only; the gate's own refusal arm for keys was not exercised by this probe.",
+  "notes": "ARMED because a future out-of-pattern key literal in any module would pass the same gate silently. Not fixed by this seat: whether key or prefix literals should be graded, and against which registry, is the naming owner's and the issuer's call. The worker did not split, obfuscate or override any literal; all eleven are typed whole in portal_models.py as the order states. Disarm owner is the issuer per the surprise-channel rule."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W79-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~79",
+  "surfaced_at": "2026-10-14T17:05:00Z",
+  "one_line": "Two objects the order's portal_get_model_positioning and portal_get_market_regime read, opal_aggregate.json and market-regime.json, carry no catalog row; the CRO contract states each needs a catalog row before any tool, and the order does not say whether the catalog gap is to be cleared first.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G3_portal_v2.md @835f9452c3 line 338: opal_aggregate catalog_entry {data_catalog_key: empty, present: false}",
+      "same file line 340: opal_aggregate open_items 'Not certified, not catalogued: needs a catalog row before any tool'",
+      "same file line 677: market_regime catalog_entry {data_catalog_key: channels.market_regime_trending.paths.regime (no artifact row), present: false}; line 678: open_items 'Needs a catalog artifact row'",
+      "order section 1 (NFRA_OPLGTW.TO-OG-pt-1 @835f9452c3): the four tools read both objects; section 2 says the catalog file app/refs/DATA_CATALOG.yaml is NFRA_MCPINDEX's alone"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G3 contract, opal_aggregate (line 340) and market_regime (line 678): each object needs a catalog row before any tool serves it.",
+  "world_is": "The order builds the two tools over those objects with no catalog row present (present: false at lines 338 and 677). The worker reads them as the order says and does not write the catalog, which is NFRA_MCPINDEX's file.",
+  "notes": "ARMED because each live call of the two tools serves an object the contract says is not yet catalogued. Not fixed by this seat: whether the catalog row is a precondition of this cell or a follow-on is the issuer's call. Surfaced, not chased."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W79-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~79",
+  "surfaced_at": "2026-10-14T17:18:18Z",
+  "one_line": "typed_scope.read_json decides gzip by the key suffix only, so a gzip-encoded body under a plain .json key (the portal's served form) raises UnicodeDecodeError; the order says read_json handles the gzip objects, and it does not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SEAM @835f9452c3: infra/aws/ec2/opal-gateway/app/typed_scope.py read_json (lines 159-172): 'low.endswith(\".gz\")' is the only gzip test; a .json key is read as raw bytes and passed to json.loads",
+      "TEST RUN @835f9452c3 (first build): tests/test_og_pt1.py test_ogpt1_ac01 and ac04 failed with UnicodeDecodeError: 'utf-8' codec can't decode byte 0x8b in position 1 (a gzip body under a .json fixture key)",
+      "LIVE @835f9452c3: json/positioning/positioning_data.json, json/positioning/opal_aggregate.json and json/positioning/allocation_summary.json are gzip bodies under .json keys (read-only size probe: decompressed bytes 65204, 13941 and 6570; the contract G3_portal_v2.md lines 269, 326 and 288 name them gzip)",
+      "WORKAROUND, LOCAL: infra/aws/ec2/opal-gateway/app/portal_models.py _read_object sniffs the gzip magic bytes of the body that typed_scope._load_capped returns, under the same cap; no seam file is edited"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order (NFRA_OPLGTW.TO-OG-pt-1 section 1): each served object is one JSON document, some gzip-encoded, which read_json handles; and typed_scope read_json reads .json and .json.gz, capped.",
+  "world_is": "read_json reads .json.gz as gzip and every other .json key as plain JSON. The portal's gzip-encoded positioning and allocation objects sit under .json keys, so read_json cannot read them; a tool built on read_json fails loudly on every call. The OG-pt-1 tools read them through a local reader that sniffs the magic bytes, and the seam is unchanged.",
+  "notes": "ARMED because any future typed tool that calls read_json on those keys fails on each call. Not fixed by this seat: whether read_json should sniff the magic bytes, or the portal should publish these objects as .json.gz, is the issuer's and the seam owner's call; the seam file is outside this worker's write surface."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W79-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~79",
+  "surfaced_at": "2026-10-14T17:18:18Z",
+  "one_line": "The seam's envelope types its denominator as an int, while the order requires the answer to carry trading_days_behind_t1 in its denominator, so the OG-pt-1 denominator is a dict; the envelope does not validate the type, so nothing is refused.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SEAM @835f9452c3: infra/aws/ec2/opal-gateway/app/harvest_typed.py envelope(body, *, as_of, source_keys, denominator: int, absent_reason=None) (lines 94-108): the denominator is stored as given, with no type check",
+      "ORDER @835f9452c3: NFRA_OPLGTW.TO-OG-pt-1 section 1 (answers with a denominator) and section 1 binding correction 1 ('the answer says so in its denominator (trading_days_behind_t1)') and test ac04 ('reports trading_days_behind_t1 of 3 in its denominator')",
+      "LIVE @835f9452c3: the four tools answer denominator as a dict, for example {objects, models, trading_days_behind_t1} (read-only metadata run, .scratch/answer_meta.py)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "harvest_typed.envelope types denominator as int (the count of items), and the order's correction 1 places trading_days_behind_t1 inside the denominator.",
+  "world_is": "The two readings cannot both hold on an int. The worker carries the denominator as a dict of named counts with trading_days_behind_t1 inside it; no consumer in this round reads it as an int.",
+  "notes": "INERT: the annotation is not enforced and the denominator's consumers are the issuer's tests and the portal. Whether the envelope's denominator becomes a named object for the whole seam is the seam owner's call; surfaced, not chased."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W79-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~79",
+  "surfaced_at": "2026-10-14T17:18:18Z",
+  "one_line": "Under the 50 KB projection, portal_get_model_positioning() answers holdings for only 3 of the 5 models (truncated=True) and portal_get_market_regime(include_history=True) answers 731 of 1,065 history points; the order's no-argument shape cannot carry every model's holdings within the cap.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LIVE @835f9452c3, read-only run of .scratch/answer_meta.py: positioning answer truncated=True, projected_to_bytes=49091, body holdings list length 3 while denominator holdings_by_model=5; positioning_data.json current_holdings is 33616 decompressed bytes (size probe)",
+      "LIVE @835f9452c3: regime_history answer truncated=True, projected_to_bytes=51155, history_file length 731 while denominator history_file_points=1065; market-regime-history.json regimeHistory is 48418 bytes",
+      "SEAM @835f9452c3: harvest_typed.project (lines 54-91) pops items off the END of the largest list field until the answer fits PROJECT_LIMIT=51200; the answer is flagged truncated"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order (section 1, the four tools and the 50 KB projection): portal_get_model_positioning answers allocation, holdings and deltas for the five models and the aggregate book in one call with no argument; the seam projects an over-size answer to 50 KB with truncated set.",
+  "world_is": "The five models' holdings alone are 33.6 KB decompressed, and the whole positioning answer exceeds 50 KB, so the projection drops the trailing model holdings (3 of 5 kept). The flag is set, so the answer is not silent, but every call returns partial holdings. The same cap trims the regime history for include_history.",
+  "notes": "ARMED because every positioning call serves partial holdings through normal operation. Not fixed by this seat: a per-model argument (the CRO contract proposes model: UST|ST|INT|LT|ULT) or a larger cap is the issuer's and the CRO's call; the order's no-argument signature is kept as written."
+}
+```
