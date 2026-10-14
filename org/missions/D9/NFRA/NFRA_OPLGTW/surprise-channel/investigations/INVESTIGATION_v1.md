@@ -14443,3 +14443,55 @@ name the one known failure instead of silently inheriting it.
     "notes": "ARMED because a rollback is exactly the moment nobody has time to notice stale prose. NOT fixed by this seat: naming bacec95ccd as live would mean asserting ITS R-56 conditions (that it carries the per-principal guard and was proven on the host), and that evidence belongs to its applier, not here -- writing it from their ledger would be a second-hand claim in a rollback document. Surfacing it instead. The act is one paragraph by whoever owns that release, or a standing clause added to the release form so 7.2 cannot be skipped. Found while confirming the live ref after that release closed."
   }
   ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W78-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~78",
+  "surfaced_at": "2026-10-14T16:50:14Z",
+  "one_line": "hookup_g1.py has no --check mode: its docstring advertises [--check], but the script reads only argv[1] and applies all five file edits on every run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/hookup_g1.py@a05cbc4c55 line 2: docstring 'Usage: python hookup_g1.py <gateway-root> [--check]'",
+      "same file line 5: GW = sys.argv[1].rstrip('/'); a grep for argv returns that line only, so no code path reads a second argument or skips the edit() calls",
+      "0.9.0_WK_NFRA_OPLGTW~78 ran it from the worktree with the gateway root only: printed 'hookup applied: 10 tools', rc 0; committed as 0cda8e2505"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The hookup script's docstring documents an optional [--check] argument for a dry run, and the issuer's note says the edit was dry-run before the cut. TO-OG-gt-7 section 1 describes the script as the single apply step and names no dry-run.",
+  "world_is": "The script has no --check path; every invocation writes all five files. Re-running it on the already-applied tree is not a no-op by inspection: the import and registration anchors and the two list anchors still match, so edit() would insert a second copy of each before the pinned-count asserts fail.",
+  "notes": "The re-run effect is INFERRED from reading edit() and the anchor strings; it was not run. The hookup is committed on wk-NFRA_OPLGTW-78 as 0cda8e2505. Disarm: the merge at OG-ap-18 should take the committed content of 0cda8e2505 and must not apply hookup_g1.py a second time."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W78-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~78",
+  "surfaced_at": "2026-10-14T17:00:10Z",
+  "one_line": "TO-OG-gt-7 bounds say the five hookup files are not this cell's and the issuer lands the registrations at the merge; step 1 and step 4 direct this cell to apply the same hookup and commit it now.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-gt-7.g1-hookup.md@a05cbc4c55 section 2 BOUNDS: 'app/tools.py, app/data_entitlement.py, app/destructive_ops.py and the pinned-count tests are NOT yours: the issuer registers every tool and re-pins the counts at the merge, in one commit. Do not edit them'",
+      "same file @a05cbc4c55 section 1 step 1: 'Apply the prepared hookup ... Run it from your worktree root', and step 4: 'Commit the five files only'",
+      "0cda8e2505 on wk-NFRA_OPLGTW-78 carries the ten registrations, the two name lists and the two count pins that the bounds reserve for the merge"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 2 of the order reserves the registrations and the count re-pins for the issuer's merge commit and says not to edit those files. Section 1 and section 4 direct this cell to apply the same edits and commit them.",
+  "world_is": "This cell applied the prepared hookup on its own branch and followed the procedure. The same ten registrations and pins now exist on the worker branch. If the merge also applies them, each registration and name would appear twice. The duplicate was not measured.",
+  "notes": "The conflict is between two parts of one order. The cell followed section 1 and section 4, since they are the procedure, and named the registrations it applied in its report. The merge owner should reconcile by taking the committed content of 0cda8e2505 and not applying the hookup a second time."
+}
+```
