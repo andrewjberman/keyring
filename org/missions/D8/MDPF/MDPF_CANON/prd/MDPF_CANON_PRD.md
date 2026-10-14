@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v2.16",
+ "prd_version": "v2.17",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -292,7 +292,7 @@ CONTRACTS changed, so both halves are owed again.
 |---|---|---|---|
 | the canonical key string, MDPF's instances | **consumed** (ruled) | `{source}/{scope}/{tier}/{table}/{partition}`, verbatim, with `{source}` = `mdpf` and `{scope}` one of `49financial`, `inflection`, `cottonwood`, `global`, `demo` in the LONG form. The instances, each the builder's output and none typed: gold at the address `address("mdpf", {scope}, "gold", {artifact}, "date={YYYY-MM-DD}")` returns under R7 -- the firm bucket for the firm scopes, `s3://opal-data-mdpf/` for `global` only (X2's composite branch) -- on Andrew-direct 2026-09-16 ~18:2xZ, call 3, record @50d1b9403e; state at the address `address()` returns for the `state` tier under R21 and Rule 30 (the firm bucket for the firm scopes, `s3://opal-data-mdpf/` for `global`); bronze at `address()`'s output for the bronze tier (R4; today `s3://opal-data-assets/mdpf/{scope}/bronze/{feed}/...`); a firm's served slice at `address()`'s output for the platinum tier (R7; today `s3://opal-data-{firm}/mdpf/{firm}/platinum/{table}/{leaf}.json`), where `{table}` is the snake_case artifact and the partition slot holds the schema's "named leaf" form: the kebab-case served file itself. The vector: `key("mdpf", "49financial", "platinum", "aum_metrics", "aum-metrics.json")` returns `mdpf/49financial/platinum/aum_metrics/aum-metrics.json`, and `address()` over the same arguments returns it under `s3://opal-data-49financial/`. **Every NEW address comes from `LGIC_ENFORCE`'s `key()` and `address()`, never typed.** The one exception is the combined slice `s3://opal-data-portal-v2/platinum/mdpf/global/...`: it is historical, tier-first, and stays exactly where it is (X2), so no builder produces it and nothing moves it to satisfy this row | ruled by Andrew ~03:2xZ and ratified as `LGIC_NAMING` S1; the builders are `LGIC_ENFORCE`'s |
 | the gold artifact | **produced** | parquet only; one partition per day, carrying its date in the key; the full history backfilled from the current JSON to the extent it exists; history is never rewritten. The artifacts are `account_distribution`, `account_units`, `aggregate_aua_timeseries` and `aum_metrics` (snake_case) | the publisher; any reader that needs a figure's vintage |
-| the served platinum JSON | **produced**, by the publisher alone | the leaves `aggregate-aua-timeseries`, `account-distribution`, `aum-metrics` and `account-units` (kebab-case), their data-bearing leaves byte-unchanged across every cutover, with `_provenance.written_at` excluded because it advances daily. The publisher is the one place parquet becomes JSON, and it reads only `opal-data-mdpf` | the portal's Model Portfolios page |
+| the served platinum JSON | **produced**, by the publisher alone | the leaves `aggregate-aua-timeseries`, `account-distribution`, `aum-metrics`, `account-units`, `category-views` and the derived read-only `category-views-history` (FWD-9; v2.17) (kebab-case), their data-bearing leaves byte-unchanged across every cutover, with `_provenance.written_at` excluded because it advances daily. The publisher is the one place parquet becomes JSON, and it reads only `opal-data-mdpf` | the portal's Model Portfolios page |
 | each firm's bucket and its serving grants | **consumed** | the bucket exists, serves, and carries its serving grants, per firm | produced by `ADVI_FIRMBKTS`, per firm; FWD-2 and FWD-6 wait on it for that firm |
 | the scoped route for a firm's slice | **produced** | the portal's existing requests keep their URLs (`/api/general/mdpf/{firm}/...`); the portal is frozen, so no caller changes. The edge maps them: `global` keeps its current general handling unchanged, and a firm segment resolves through the registry, aliases included, to one firm and is served, from that firm's bucket at the key above, to two kinds of session only: a session whose validated tenant resolves to that same firm, and an internal Opal staff session (tenant `opal-capital`), for which the path segment IS the selection because the frozen portal's selector sends no `?firm=` on these requests (`ModelPortfolios.tsx:357-358`, Andrew's MDPF_SCOPED.S5). Any other firm's session is refused. This is the boundary the scoped router already enforces by comparing resolved buckets (`shared-advisor-router/index.mjs:367-373` @`40697fe79d`), never a bare segment-equals-tenant test. **Keeping the old URL never keeps general authorization for firm data** | the portal's Model Portfolios page and its wrappers (`aum.ts`, `portal-proxy.ts`); the edge routers and CloudFront behaviours; the router's firm map is `LGIC_ENFORCE`'s generated view |
 | the dedicated runner | **produced** | one principal per firm, named by `name()` (`mdpf-49f-runner-role` and its siblings), whose only write grant is `opal-data-{firm}/mdpf/{firm}/platinum/*` in its own firm's bucket; its host is built by this project | the per-firm slice writes |
@@ -559,7 +559,7 @@ Surfaces this project writes, reads or executes.
 | `docs/architecture/MDPF_CANON_PRD.md` | the moved notice | DEC-1 | 1.0.0_SA_CTO |
 | `org/missions/D8/MDPF/MDPF_CANON/deliverables/<author serial>/` | documents | M1, M7, M11 | MDPF_CANON |
 | the two retiring trees, the old bronze prefix, and the stale served key | REMOVALS: each its own act, with a human's confirmation, and for the trees the FWD-8 proof | M8, M11, M12 | MDPF_CANON |
-| the conformant compute chain; platinum's shape; `platinum/mdpf/global/`; the frozen rollback objects; B2's JWT read; `opal-data-demo`'s slice beyond the demo-tenant ruling | excluded | -- | untouched |
+| the conformant compute chain; platinum's shape; `platinum/mdpf/global/` EXCEPT the FWD-3 fold objects and the FWD-9 history leaf (`category-views-history`), each under its own never-widen pair (v2.17); the frozen rollback objects; B2's JWT read; `opal-data-demo`'s slice beyond the demo-tenant ruling | excluded | -- | untouched |
 
 ## L10 ADDENDUM, v2.11, 2026-10-11 -- sequencing against ADVI_FIRMBKTS (`1.0.0_SA_CTO~DELL1`, carrying cluster-lead rulings R1-R5)
 
@@ -652,5 +652,12 @@ reaching dell1 at the next integrator pass. It was read here from `origin/box/de
   exactly |remainder| there.
 - (iii) Date E (2026-09-30) is a named arm.
 - **Noted for a later cell, not FWD-9:** why the category-views snapshot and the time series disagree by up to about 300K on the same day. Cause not established.
+
+-- 1.0.0_SA_CTO~DELL1
+
+**v2.17 (2026-10-14 ~16:2xZ), on the CN-j-1 publisher pair's item 3 (`2.0.0_SA_COO~D1` msg 5640; CTO half `ledger/NEVER_WIDEN_R7_J1_PUBLISHER_CTO_HALF.md` @9a492909b7):**
+- (i) The scope row that excluded `platinum/mdpf/global/` wholesale predated FWD-3's fold and FWD-9's route. It now excludes it EXCEPT the FWD-3 fold objects and the FWD-9 history leaf, each under its own pair. The ENDPOINT governs; this aligns the row to it.
+- (ii) The CONTRACTS row for the served platinum JSON now names `category-views` and the derived read-only `category-views-history` leaf, both produced by the publisher alone.
+- No ENDPOINT text moves. The CONTRACTS change re-opens the ratified-text half for `3.0.0_SA_CVO`; the brief half is untouched.
 
 -- 1.0.0_SA_CTO~DELL1
