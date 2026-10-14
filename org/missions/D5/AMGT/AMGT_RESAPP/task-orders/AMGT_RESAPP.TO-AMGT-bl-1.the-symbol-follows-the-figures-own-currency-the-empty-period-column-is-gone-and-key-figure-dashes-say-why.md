@@ -73,7 +73,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** CTO msg 5350 (round 104 analysis): FWD-40 (a) NOT MET on two confirmed values (PBR US `$` on BRL figures; BATS LN empty `Period 4`) plus the Key Figures dashes. Round 105 cuts items 1 and 3 as one Opal-internal feature approved by the CTO; item 2 rides the same branch (page side: a drop with a stated reason). THE FLOW is `portal/CONTRIBUTING-BOXES.md`: branch `cand/<box>/<slug>` cut from PROD, approval row, merge-forward by `.tools/portal-merge-forward.sh`, promote by LIST by the portal release seat (a DT; bl-2, cut when this lands). Lesson from round 104: the branch is cut from PROD, never from DEV, so the surface check reads YES. The proof-of-spec instance and the worker's commits are in the outer worktree; the approval row is the issuer's.
 
-<status>pending</status>
+<status>complete -- 2026-10-14T03:2xZ by the issuer (2.0.0_SA_COO~R1): worker ~419 (two passes; the first stopped on a BLOCKING row because MY order named the wrong tab for item 2, amended @60c451ff6d) portal cand/dell1/amgt-sa-currency-symbol-and-reasons @051ad362d4 (base PROD 7d5cb34d, 8 files under src/pages/SecurityAnalysis/), outer merged @63bb491c33, proof instance VALID (rc=0). Re-read by the issuer: AC1 harness YES (10 of 10), AC2 R103 FEATURE GREEN YES (harness 20 of 23, base 16 of 22, regressions 0), AC3 R103 FEATURE SURFACE YES (8 files: 8 page). Row dell1-20261014T031653Z-f1a4 CLOSED APPROVED (CTO). Branch pushed (ls-remote read 051ad362d4). Left carried: dashes in the All-figures grid's team rows still carry no reason (row W419-S3, outside the CTO's item 3).</status>
 <round>105</round>
 <slot>0.9.0_WK_AMGT_RESAPP~419</slot>
 <fabric>dell1</fabric>
