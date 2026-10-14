@@ -7526,3 +7526,26 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "The FB-j-4 edit does not touch check_freshness. Disarm: none (INERT)."
 }
 ```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S56",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-14T11:35:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "FB-j-7's AC1 cannot pass as written: CloudTrail lookup-events never returns PutEvents, so chain.cloudtrail_putevents reads 0 although the put demonstrably happened.",
+  "spec_asserts": "TO-FB-j-7 step 6 and r7_checks.py firstchain: CloudTrail PutEvents from the runner's session >= 1 (cloudtrail_putevents < 1 is a FAIL).",
+  "world_is": "Measured 2026-10-14 ~11:2xZ. lookup-events EventName=PutEvents us-east-1, 01:48:58Z-12:30:00Z: 0 events; the control EventSource=events.amazonaws.com in the 05:30Z-07:00Z window returns 271 events, none PutEvents (D1-S-row of FB-i-2 read the same 0 across 17 regions and 90 days). The put is evidenced elsewhere: runner cumulative log, this chain's 55237 lines hold 1 'EventBridge chain-complete emitted' and 0 'put-events failed'; AWS/Events TriggeredRules for exec-summary-trigger Sum 1 in the 06:00Z hour; exec-summary-generator Invocations Sum 1 (START 06:12:41Z, 74.6 s, 0 SLOT_DROPPED, 0 errors); 194 of 194 named keys written 06:12:44Z-06:13:57Z, 0 non-empty bullets, 0 outside the set, 0 double writes, 158 prior VersionIds still present. FIRST_CHAIN_READ.json records cloudtrail_putevents 0 with this note; AC1 reads FAIL on that one clause only. This agrees with the CTO's MEASURED_20261014_103xZ read on every count.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/FIRST_CHAIN_READ.json",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/RUNNER_EMIT_READ.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Issuer's call: amend the criterion to the instruments that can see the put (emitted line + AWS/Events TriggeredRules >= 1), or accept the record as is. This seat did not edit the record to 1 and did not flip <status>. D1-W65-S1 disarm read: the chain emitted, the rule fired and the generator ran, so the disarm condition is met on that evidence."
+}
+```
