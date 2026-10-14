@@ -86,7 +86,7 @@ also drop `lib/` on the host (the md5 read-back in the script names only `app/`,
 - Pre-cut (base): gt8.AC1 FAIL (IndexError on both modules, reproduced), gt8.AC2 FAIL (no stage line), gt8.AC3 FAIL (no test file).
 - The gateway app files are in lane CLOUD_OPS_OR_ETL, which the COO cannot commit: a worker order grants them.
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G1-FIX</workstream>
 <slot>~87</slot>
