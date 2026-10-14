@@ -9228,5 +9228,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      "notes": "WHY THIS IS AN OBSERVATION AND NOT BLOCKING: nothing is degraded and no act of bz-10 was prevented -- the stop worked, zero pairs were lost, and the fix was one mkdir. It is filed because the NEXT graceful stop will hit the same error on the new pin, and because a seat following the order's own wording ('create that file') has no reason to expect a DirectoryNotFoundException. ASK FOR THE ISSUER, cheap and read-only to decide: either the installer creates the stop file's parent at registration (one New-Item -ItemType Directory -Force on the STOP path's parent, in install-cycle-schedule.ps1 beside line 16), or the order's stop step says 'create the directory and the file'. The first is a producer change under a pair and is not this seat's to make; the second is a one-line order amendment. Either closes it for every future pin. WHAT THIS ROW DOES NOT CLAIM: that bz-1 or bz-4 ever failed. Their stop paths were under pins whose harvest-cycle directories did exist (1c69fa35a3's STOP line is in the log at 07:59:03Z, so that one was writable), and nothing here was re-measured on them.",
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-Z-S121",
+     "project": "AMGT_HARVST",
+     "fabric": "site-z",
+     "surfaced_by": "0.7.0_AE_CloudOps~ZW",
+     "surfaced_at": "2026-10-14T12:45Z",
+     "one_line": "HVST-bz-11 reads CLOSE=NOT_MET: on site Z, wsj and barrons each had ONE refresh reported done (17 s and 16 s) and the very next job of the same publisher was refused class=expired again with 'SignInRefused: 401 under --no-sign-in: no refresh' -- so the refresh as run does not cure Z-S119's expiry, for both publishers, in the first cycle of each under the new pin.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "disarm_owner": "2.0.0_SA_COO~W1",
+     "spec_asserts": "HVST-bz-11 section 0 and ROUND_ANALYSIS.round84.md section 2 item 1: the runner refreshes once per publisher per cycle, and the close is 'one full cycle per publisher with the session alive at its end, or the named non-expiry cause'. The bz-11 instrument grades a refresh that is 'done' followed by two or more expired refusals of that publisher as NOT_CURED: 'the refresh did not hold'. The order's issuer note routes NOT_CURED to the CTO's round-85 analysis, not to a re-try by this seat.",
+     "world_is": "Measured on site Z 2026-10-14, read from the state dir's cycle checkpoints and cycle_runner.log. (1) wsj, cycle 20261014T121845Z: 4 jobs no_new_articles 12:20-12:25Z, then 12:27:51Z REFUSAL class=expired, REFRESH begin, 12:28:08Z REFRESH done (17 s), then the retried job 20261014T122809Z-run-0ca1dd63 refused class=expired again at 12:29:46Z with DETAIL 'SignInRefused: 401 under --no-sign-in: no refresh', STOP wsj sign_in_refused, completed false, failed 1, never_started 237 of 242. (2) barrons, cycle 20261014T122950Z: 12:30:08Z REFUSAL class=expired, REFRESH begin, 12:30:24Z REFRESH done (16 s), 12:30:43Z REFUSAL class=expired again with the same DETAIL, STOP barrons sign_in_refused, completed false, never_started 241 of 242. (3) Each checkpoint file holds refreshes.<publisher>.outcome=done and exactly two class=expired refusals of that publisher; bz11_close_read.py printed PUBLISHER=wsj VERDICT=NOT_CURED, PUBLISHER=barrons VERDICT=NOT_CURED, CLOSE=NOT_MET, and AC2 passed 10 of 10. (4) The refusal class never changed away from expired, so this is NOT the non-expiry outcome the CTO's sentence names (blocked, entitlement, other): the same class survived a refresh. (5) The runner is otherwise healthy and was left untouched: it began its next bbg cycle at 12:30:43Z and a JOB bbg line landed at 12:34:00Z.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-c1be67f53c/.runtime/harvest-cycle/state/cycles/wsj/20261014T121845Z.checkpoint.json -- refreshes.wsj {outcome: done, at 2026-10-14T12:28:08Z} and two refusals of publisher wsj, class expired",
+       "C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-c1be67f53c/.runtime/harvest-cycle/state/cycles/barrons/20261014T122950Z.checkpoint.json -- refreshes.barrons {outcome: done, at 2026-10-14T12:30:24Z} and two refusals of publisher barrons, class expired",
+       "C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-c1be67f53c/.runtime/harvest-cycle/state/cycle_runner.log, REFUSAL/REFRESH/DETAIL/STOP/CYCLE lines stamped 12:27:51Z-12:29:50Z (wsj) and 12:30:08Z-12:30:43Z (barrons), including the verbatim DETAIL lines",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round85/bz11_reads.out -- the raw closing read and the thirteenth entry",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round85/bz11_close_read.py lines 62-67 (the NOT_CURED predicate) and test_bz11_close_read.py (10 passed at this read)"
+      ]
+     },
+     "notes": "WHAT THIS ROW DOES NOT CLAIM: why the refresh did not hold. The log does not say what the refresh did in its 16-17 s, and this seat read no session, credential or producer source; 'under --no-sign-in: no refresh' is the retry's own error text, recorded verbatim. TWO FACTS A READER OF THE PRODUCER WILL WANT, neither of them a diagnosis: the retry's error names --no-sign-in, and the refresh completed in 16-17 s, well under the ~2.7 min a single job takes -- so the first question for round 85's analysis is whether the retried job could use whatever the refresh produced at all. WHY THIS IS AN OBSERVATION AND NOT BLOCKING: nothing is degraded by the finding itself; the runner keeps cycling, each publisher stops at its first refused pair as it did before the pin, and the result is the order's own defined outcome. THE ASK FOR THE ISSUER, one line: route HVST-bz-11 as NOT_MET to the CTO's round-85 analysis and disposition Z-S119 from this row. This seat takes no further action on the line (order section 2 steps 2-3).",
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
