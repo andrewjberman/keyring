@@ -107,3 +107,18 @@ Consequence: FWD-13's DONE WHEN (one real Teams item and one real mail each reac
 | `CA-j-13` | FWD-13's exercise: one real Teams item and one real mail alert him, one not-for-him item none | FWD-13 | SERVED | not cut | CA-j-11, CA-j-12 |
 
 `fanout (amendment 7): none cut now; CA-j-11 is the issuer's own read. CA-j-12 and CA-j-13 are named, not cut, and wait on muse's answer and on the CVO's re-sign of the ratified-text half.`
+
+## AMENDMENT 8 (2.0.0_SA_COO~CA, 2026-10-14 ~13:3xZ): muse answered; the FWD-13 cells cut (CA-j-12, CA-j-13), the rest named and renumbered
+
+The CTO ruled call 608c YES (msg 109140, `RULING_20261014_124xZ_COMM_ASSIST_608C_FWD13_TWO_SCRUBBED_RECORDS.md`): the two scrubbed records, metadata only (never a body, link or actionable token), written where the item is texted today with a 7-day expiry enforced on write, the negative arm unchanged. Muse answered the shape question in the Gmail thread Andrew authorized as the coordination channel: it has no standing watch today; on its side it needs a scheduled read, an alert ledger and a wake mechanism (its own build); and it asked for `mentions.json` and `mail_log.json` beside `drafts.json`, flat rows with stable ids, timestamps and ages. The issuer replied with the field list below; muse has not objected. The record fields and the two checks are the contract: `r18/checks/check_k1_records.py` (assistant half) and `check_k2_reader.py` (reader half).
+The cell numbers of AMENDMENT 7 are SUPERSEDED: CA-j-12 is now the assistant half, CA-j-13 the reader half, and the deploys and the exercise follow.
+
+| cell | what | serves | risk | chain, slot | depends_on |
+|---|---|---|---|---|---|
+| `CA-j-12` | assistant half: `channel_mentions.on_channel_mention` writes `state["mentions"]` and `mail_requests.on_mail_messages` writes `state["mail_log"]` (fields in `check_k1_records.py`; a shared scrub; 7-day expiry and a cap on write; written only where the item is texted/considered); tests; issuer check `check_k1_records.py` (base 1 of 8, scratch reference 8 of 8, a kept link reads 6 of 8) | FWD-13 | LOCAL | workstream MENTREC, slot ~24 | none |
+| `CA-j-13` | reader half: `muse_reader/refresh.py` gains the sources `mentions` and `mail_log` (read from the state rows, 7-day expiry on read, absent not empty, scrubbed, README); tests; issuer check `check_k2_reader.py` (base 0 of 7, scratch reference 7 of 7, no-expiry reads 4 of 7); the existing reader controls still pass against it (`check_i1_ages` 5 of 5, `check_h1_failure_shape` ok) | FWD-13 | LOCAL | workstream RDRSRC, slot ~25 | none (disjoint files from CA-j-12) |
+| `CA-j-14` | DEPLOY of CA-j-12 (a targeted apply of `module.ldo_001`, code only), its own never-widen set | FWD-13 | WORLD | the CloudOps seat | CA-j-12 merged; halves |
+| `CA-j-15` | dell2 picks up CA-j-13 through the box pass and the job writes the two files; a real read of the folder | FWD-13 | SERVED | `0.7.0_AE_CloudOps~CA2` (crossbox order) | CA-j-13 merged; CA-j-14 live |
+| `CA-j-16` | FWD-13's exercise: one real Teams item and one real C-MAIL mail each reach Andrew as a muse alert within 30 minutes, one not-for-him item none | FWD-13 | SERVED | needs muse's side (scheduled read, ledger, wake): Andrew's | CA-j-15; muse's build |
+
+`fanout (amendment 8): 2 of 2 chains, cap 8, reason: CA-j-12 writes channel_mentions.py, mail_requests.py, a new folder_records.py and their tests; CA-j-13 writes refresh.py and its test; they share only the record fields fixed in the two checks.`

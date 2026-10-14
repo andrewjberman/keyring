@@ -1,0 +1,12 @@
+# drive log 2.0.0_SA_COO~W1 -- 2026-10-14 13Z (desktop-hk1uu7n)
+
+- 2026-10-14T13:4xZ | AMGT_HARVST | L7 -> L8 | 85 | `bz-11` read `CLOSE=NOT_MET` by `~ZW` at 12:33Z (c5134bfbc2, origin/CLOUD): wsj and barrons each had one refresh `done` (17 s, 16 s) and the same publisher's next job was refused `expired` again (`SignInRefused: 401 under --no-sign-in: no refresh`); row Z-S121 (OBSERVATION / INERT, my disarm_owner) | verified on a detached checkout of origin/CLOUD @9098d3db03 (worktree removed): proof-of-spec-check instance VALID rc 0, AC2 10 passed; AC1 read from the committed `bz11_AC1.out`. NOT read: the site Z checkpoint files (they are on site Z).
+- 2026-10-14T13:5xZ | AMGT_HARVST | status | 85 | MY ERROR, corrected: I first flipped bz-11 to `complete` (00435665bf, the commit message said no gate limb expected; GATE (viii) on a modify graded it and passed). `round-close-check` then read PROOF-BAD (AC1 FAIL beside a complete status) and verdict REFUSED. Corrected to `cancelled`, NOT MET, the bz-7 shape the order's own issuer note names (2dac32ff2c): 3 complete, 0 outside the verdict, MAY-CLOSE.
+- LESSON: an order whose criterion FAILED is not `complete`; run round-close-check BEFORE the flip commit, not after. The order's "record AC1 as FAIL" is a rule for the seat's instance, not for the issuer's status word.
+- 2026-10-14T13:5xZ | AMGT_HARVST | L8 | 85 | packet committed b7a0107d55 (LOCAL on box/dell1; origin/box/dell1 read 636c6976cb97), sent to 3.0.0_SA_CVO (delivered, filesystem + broker + channel push; READ ack not yet read). Park: NOT taken. Andrew's park word (CTO msg 5209) ends the seat after round 85, but NOT_MET puts park-or-round-86 in the CTO's analysis; I act on his analysis.
+- NEXT: CVO READ ack at the next tick (none past one tick -> nudge with path + hash; two -> [STUCK] to MSTR); the CVO's slug and the CTO's round-85 analysis; then cut round 86 in ONE issuance or park as he rules. OWED: Z-S120 rides the park record.
+
+## Compiler Tools
+- `.tools/proof-of-spec-check.py <instance> --governing-order <order>`: VALID rc 0 on the delivered bz-11 instance (detached origin/CLOUD checkout).
+- `.tools/round-close-check.py --project AMGT_HARVST --round 85`: REFUSED (PROOF-BAD AC1) on `complete`, MAY-CLOSE on `cancelled`.
+- `.tools/safe-commit.sh`: GATE (viii) graded the modified order both times, passed. The comp-rail refused two Bash greps (F1) over named order files; the native Grep tool answered.

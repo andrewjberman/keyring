@@ -1506,3 +1506,60 @@ and queue-state reader), RIV-xe-2 (Z3 dividends and the field-matched owed reque
   reason and the marking; base FAIL 2) and the AI tests including `tests/test_riv_xc1_verdict_frame.py`, which the worker REWRITES to the v2 rule (AC3: must
   be green). J1 (the CVO's): on the next sweep page 13 of 13 openings fall in distinct families by the normalized `frame_of`, or each shared one carries a stored
   correction reason.
+
+## ROUND 30, workstream `sz` (the site-Z producer and its reader) -- APPENDED 2026-10-14, revision 1.31 of this file
+
+Input: the same analysis `ledger/ROUND_ANALYSIS.round29.md` @cb3614782c section 3 item 3 ("carried, unchanged") and the CTO's msgs 4568, 4932, 4969, 5166, 5197 and 5577; this seat's consumer read
+`deliverables/2.0.0_SA_COO~V1/round30_prep/XE2_CONSUMER_READ_G3_PARTITIONS_20261014.md` @8c6eab1456 (it found that `gold_trade_schedule.load_actions` keeps only a security's latest pull, so Z3's incremental pull needs a union reader first;
+the CTO accepted, msg 5577, and named the rule). Workstream `sz` is the second workstream of round 30: its write surface is disjoint from workstream 4's (`render.py`, `ai_accounts.py`), so it is its own issuance by the same seat.
+
+Cut in this issuance: RIV-xe-3, RIV-xe-1, RIV-xf-1. Chains (M = 3): A = RIV-xe-1 (`enrichment_bloomberg.py`; RIV-xe-2 follows it on the same file), B = RIV-xe-3 (`gold_trade_schedule.py`), C = RIV-xf-1 (`peer_groups.json`, `bbg_budget.json`
+and three tests). Write sets are disjoint; no edge among the three. Checks: `deliverables/2.0.0_SA_COO~V1/round30/checks/`, dry-run at the base before the cut (xe3 FAIL 3 with its empty-store control PASS; xe1 FAIL 10 with one control PASS; xf1 FAIL 5 with
+its all-gates-off control PASS).
+
+NOT cut in this issuance, with the reason: RIV-xe-2 (Z3: dividends incremental and the field-matched owed request, C1) waits on RIV-xe-3 DEPLOYED and read once (CTO msg 5577) and follows RIV-xe-1 on the same file; it is cut when both are in. The deploys of xe-1, xe-2 and xf-1
+are site Z's under `1.0.0_SA_CTO~Z`'s half and of xe-3 a Lambda deploy under its own pair, each by a CloudOps seat; none is a worker's act.
+
+### `RIV-xe-3` -- `gold_trade_schedule.load_actions` reads the UNION of every pull's actions per security, so a short incremental pull keeps every older action (CTO msg 5577; the precondition of RIV-xe-2) -- APPENDED 2026-10-14, revision 1.31
+- Placement: this seat's consumer read `round30_prep/XE2_CONSUMER_READ_G3_PARTITIONS_20261014.md` @8c6eab1456; CTO ruling msg 5577 (REC accepted): "the UNION of every pull's
+  actions per security, de-duplicated on the action's own key, with the latest pull winning on a key collision"; `xe-2` waits on this cell deployed and read once.
+- Measured (code at box/dell1 HEAD): `gold_trade_schedule.load_actions` (`gold_trade_schedule.py:983-994`) concatenates every `corporate_actions` object and keeps, per
+  `security_id`, only the rows of its LATEST pull (`as_of|revision` greatest). Today that is a full snapshot (every pull asks 730 days); a short incremental pull (RIV-xe-2) would
+  become a security's latest pull and drop its older actions from G5 (moved served output). `price_series._actions` and `dramatic_move` already read the union.
+- Interface (`data/etfs/scripts/rivalfunds/gold_trade_schedule.py`, `load_actions` only; its signature and return triple are unchanged): an EVENT row (`row_kind == "event"`) is kept
+  from EVERY pull; its key is (`security_id`, `event_type`, `raw_event_type`, `ex_date`), a column the frame lacks reading as the empty string; of several rows with one key the row of the
+  greatest (`as_of`, `revision`) pull is kept. A STATUS row (`row_kind == "status"`) follows the rule as it was: kept only when it belongs to the security's LATEST pull. The label is the
+  `+`-joined sorted revisions of the rows returned; an empty store returns `(None, None, [])`.
+- Out of bounds: every other function of the file, `sweep.py`, `price_series.py`, `dramatic_move.py`, the G5 schema and every stage output; no S3 read (a local sink only).
+- Checks: `round30/checks/xe3_union_reader_check.py` (AC1 the short pull keeps the older actions; AC2 one action in two pulls appears once with the latest pull's values; AC3 status rows follow the
+  old rule, a full-snapshot store reads as before, an empty store returns the old triple; base FAIL 3, the empty-store control PASS). The live-store arm (the new reader's G5 output equals today's,
+  DELTA = 0, read-only, BEFORE any deploy) is the issuer's drain act, not a worker criterion. J1: none (a LOCAL cell; the Lambda deploy goes under its own pair).
+
+### `RIV-xe-1` -- the enrichment leg runs on TRADING days only, and reads the standing request's queue state before a history-owed draw (analysis section 2.3; CTO msg 4568; row D1-S2; round-22 ADDENDUM 7 condition 1) -- APPENDED 2026-10-14, revision 1.31
+- Placement: this seat's staged cell `round30_prep/STAGED_CELL_enrichment_trading_gate_and_queue_reader.md` (items 1 and 2); CTO msg 4568 ("one cell with the gate, at the site-Z window -- accepted").
+- Measured: 2026-10-10 (a Saturday) exited 97 (the MON-FRI daily Lambda had not built the previous trading day's G1 before the leg looked) and 2026-10-11 (a Sunday) exited 95 on a signed-out Terminal; the
+  leg has no trading-day gate. The standing request `ETFS_RIVALS-HISTORY-OWED-DAILY` has a queue state at
+  `s3://opal-data-assets/bloomberg/global/silver/request_state/request=ETFS_RIVALS-HISTORY-OWED-DAILY/state.json` (`{"state": active|paused|stopped, ...}`, writer DQ-t-16, reader
+  `data.mdpf.scripts.demque.standing.read_state`, which returns "unreadable" for a missing object or a failed read, never "active"); the leg does not read it.
+- Interface (`data/etfs/scripts/rivalfunds/enrichment_bloomberg.py` only):
+  1. GATE. In `main(argv)`: with NO `--date` and `--mode` in (`daily`, `market`), when `_run_date_et()` is not a trading day by `lib.trading_calendar.is_trading_day` (imported lazily, as `main` already does), print
+     ONE line beginning `SKIP:` (naming the date) and return 0 WITHOUT calling `handler_entry`. An explicit `--date` run, any other mode and a trading day are not gated. The calendar is the only source: no typed date list.
+  2. READER. A new function `_queue_state() -> str`: `data.mdpf.scripts.demque.standing.read_state("ETFS_RIVALS-HISTORY-OWED-DAILY")`, imported lazily; any exception (an ImportError included) returns `"unreadable"`.
+     In `_history_owed`, for `mode == "ask"` only, after the owed set is computed and BEFORE the stored-currency read or any Bloomberg request: state `active` proceeds exactly as today; any other value asks ZERO
+     (no `_blp_call`, a currency lookup included), prints ONE `HISTORY OWED:` line naming the state (through `_owed_line` with `refusal="queue state <state>"`), and returns `asked` 0, `carried` = `owed`, and
+     `refused` naming the state. `print` mode does not read the state. `RIVALFUNDS_HISTORY_OWED` is NOT set by this cell.
+- Out of bounds: every other function of the file, `history_owed.py`, the switch-on, any window or cap constant, the vehicle's scripts and `integrations/bloomberg/pipeline/` (Andrew's no-modify order), any Bloomberg or S3 call in a check.
+- Checks: `round30/checks/xe1_gate_and_queue_reader_check.py` (AC1 the gate: a Saturday, a Sunday and Labor Day print one `SKIP:` line and exit 0 without the leg, a trading day, an explicit `--date` and another mode are not gated, the calendar
+  is the source; AC2 the reader: `active` draws, `paused`/`stopped`/`unreadable`/anything else draw zero and name the state, the reader fails closed, `print` does not read it; base FAIL 10, one control PASS) and the existing
+  enrichment tests (AC3: must be green after your edits to the test files named in your paths). J1: none (a LOCAL cell; the deploy is site Z's under the CTO~Z half).
+
+### `RIV-xf-1` -- ACWI and IWM are removed from the universe and from the holdings pull (Andrew's DEMQUE form A3, row Z4; CTO msgs 4932 and 4969) -- APPENDED 2026-10-14, revision 1.31
+- Placement: this seat's staged cell (`round30_prep/STAGED_CELL_enrichment_trading_gate_and_queue_reader.md`, xf-1); CTO msgs 4932 and 4969; form `org/tier1_exec/1.0.0_SA_CTO/deliverables/DEMQUE_QUEUE_FORM_ANDREW_20261013.md` A3 and row Z4.
+- Measured (box/dell1): `peer_groups.json` (map_version 2, 15 entries) carries ACWI (group IDVZ) and IWM (group PFOE) as `role: index_control`, `"leg": "pending"`; with `leg_gates.json` reading ENABLE 0, D12 1, D13 0 they are dropped from
+  `universe.funds()` (13 funds) and never pulled, so served output does not move. `bbg_budget.json` still sizes them (`est_rows_per_fund_date`: ACWI 2198, IWM 1979). The 2026-10-13 owed read: units whose only holders are ACWI or IWM: 0.
+- Interface: delete the two entries from `data/etfs/scripts/rivalfunds/peer_groups.json` (every other entry and `map_version` unchanged); delete the `ACWI` and `IWM` keys of `est_rows_per_fund_date` in `data/etfs/scripts/rivalfunds/bbg_budget.json`
+  (every other key and value unchanged). The generic machinery stays: the `index_control` role value, the `"leg": "pending"` mechanism, the gates, `collector_bloomberg.CONTROL_ROW_CAP` and `split_units`, because no served output depends on them and a
+  benchmark may return as a map entry. Rewrite the tests that name the two funds to the new facts (a map entry for a benchmark is exercised through a synthetic map or a monkeypatched `_is_control`, never the shipped map).
+- Out of bounds: `universe.py`, `collector_bloomberg.py` (code), every other map entry, any gate value in `leg_gates.json`, any S3 or vendor call.
+- Checks: `round30/checks/xf1_acwi_iwm_removed_check.py` (AC1 in four gate states no ACWI or IWM and the same 13 funds; AC2 the holdings plan with every gate on is the 13 funds in one unit; AC3 the budget config no longer sizes the two funds;
+  base FAIL 5, the all-gates-off control PASS = DELTA 0) and the tests you rewrite (AC4: the three test files below, green). J1: none (a LOCAL cell; the deploy is site Z's under the CTO~Z half).
