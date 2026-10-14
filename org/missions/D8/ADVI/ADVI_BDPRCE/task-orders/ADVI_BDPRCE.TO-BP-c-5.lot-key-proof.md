@@ -23,7 +23,7 @@ Its lot key (`account_id`, `asset_id`, `open_date`, `unit_cost`) folded 15,553 e
 `org/missions/D8/ADVI/ADVI_BDPRCE/prd/ADVI_BDPRCE_PRD.md` CONTRACTS row "the lot-level unrealized table" and its ADDENDUM v1.1): the lot is (`relationship_id`, `account_id`, `asset_id`, `open_date`, `unit_cost`), or the export's own lot identifier where one exists.
 The target of the re-run: **zero rows folded and zero colliding groups still differing on any column.** The template apply stays under its own pair and waits on a clean read of this proof. You re-run the proof. You apply nothing.
 
-The cap check `BP-c-4` is merged into your worktree (`org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~16/CAP.json`, `CAP.md`; read the verdict first). If the verdict is `CAP`, the 2026-10-09 export held only the first 500,000 rows: run the proof on that export anyway and ALSO state in `LOT_PROOF2.md`
+The cap check `BP-c-4` is merged into your worktree (`org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~16/CAP.json`, `CAP.md`; read the verdict first). The verdict is read: `CAP` (15 exports at exactly 500,000, from 2026-07-08 on; paging plan: slice on the Relationship ID filter, `unrealized.json:79-83`, since date tiling cannot split a snapshot, `cot_bronze_ingest.py:147`). The 2026-10-09 export therefore held only the first 500,000 rows: run the proof on that export anyway and ALSO state in `LOT_PROOF2.md`
 what an incomplete export means for the zero (the proof says the key does not fold the rows it SAW, not that no lot was missed); if the CAP record names a paging plan, say whether the fixture can be paged from S3 data you can read, and use it only if the data exists.
 
 ### 1a. What to do
@@ -85,7 +85,7 @@ Instance at the path above. Commit the patch files, the test, `LOT_PROOF2.json` 
 **ISSUER NOTES:** round-2 analysis item 3 (second read); CTO call 239a and PRD v1.1. STAGED at the cut: un-parks when `BP-c-4` is merged and PASS and its verdict is read. Disarms `W10-S2` when it reads clean. The APPLY (WORLD, under its pair) is not cut here: it waits on this proof, on `BP-c-4`, on a dell1 CloudOps lane the CTO names, and on the pair signed at the current bytes.
 No `data/`, `infra/` or `lib/` edit, so the L6 floor reads LOCAL.
 
-<status>staged</status>
+<status>pending</status>
 <round>3</round>
 <workstream>LOTKEY2</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-c-5</to_id>
