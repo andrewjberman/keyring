@@ -68,6 +68,58 @@ lane: CloudOps applies under both signed halves (COO @77af4ef06f, CTO NEVER_WIDE
 </proof_of_spec>
 
   <report>
-    (the applier writes its report here)
+    Applier `0.7.0_AE_CloudOps~DELL1`, dell1, `box/dell1`. LIVE AND VERIFIED 14:53:15Z-14:53:40Z on 2026-10-14. Start: msg 5613 (14:45Z, acked READ 14:45:17Z); the order and both
+    halves read in full first (COO @77af4ef06f, CTO half @35d1f02bc3 with C1, which binds the issuer). The first run on the pin is the 2026-10-15 11:00Z chain, read by the
+    issuer (L2) and the CVO (the two J1 reads), not by this order.
+
+    STOP 1 (pin), as read in `C:/tmp/rv-r30-dell1`:
+      git rev-parse HEAD = ea0e5025ac6422697c4c43003d0a384dee267980; porcelain lines = 0
+      ai_accounts.py 724b9ca5b1880bf47c45c9f9f5f0da967d862341; render.py fda4ab160bb72d1f6e5b20ddf3a9df37997354fa;
+      gold_trade_schedule.py 63c7f134d17a89a5e84806b104f3debd41a59941; dramatic_move.py 37397a1057439b90aa2a9b759beb159375e91673  (all four equal the order's ids)
+      No later commit deployed: the pin tree is the scratch commit itself, so no staged-path diff was owed.
+      rollback tree `C:/tmp/rv-r30-rollback` HEAD = de3c6bf211f806345d6e6930348795cbe7f755ce, 0 porcelain lines (KEPT until L2 closes; NOT initialised or packaged)
+    Step 2 control (raw bytes vs `git cat-file blob ea0e5025ac:<path>`, negative control = one flipped byte, caught): packaged output (5 lambdas, wrapper + 8 staged
+      sources) 480 of 480 identical, 0 different or missing. 480 equals the round-29 act's count (no staged path added).
+
+    STOP 3 (graded per attribute from `terraform show -json C:/tmp/rv_apply_r30.tfplan`):
+      resource_changes 45 = 40 no-op + 5 update; 0 create, 0 delete, 0 replace -> `Plan: 0 to add, 5 to change, 0 to destroy`
+      each of the five `aws_lambda_function.stage[...]`: attributes different = [last_modified, source_code_hash] ONLY
+      environment before==after on all five; memory_size and timeout equal; role, layers, handler, runtime equal
+      STOP 3 RESULT: BRANCH A, 0 failures (control: a doctored memory_size is caught).
+      My first grader run FAILED on a defect of its own, not of the plan: it counted an all-false `after_unknown` container (`architectures: [false]`) as unknown. I fixed it to
+      count a value unknown only if it contains a true, kept the doctored control, and re-ran: the plan text itself showed only last_modified and source_code_hash all along.
+
+    Environment KEY sets (names only), BEFORE and AFTER identical on all five:
+      etfs-rivalfunds-daily-lambda: BD_SERP_ZONE, RIVALFUNDS_AI_ENABLE, RIVALFUNDS_OPENAI_SECRET, RIVALFUNDS_SERP_SECRET
+      the other four: none
+
+    BEFORE -> AFTER (CodeSha256 first 12 chars; LastModified), every function Active / Successful / 3008 MB. The five BEFORE hashes equal the round-29 AFTER hashes, so no third
+    writer moved a function between the two applies:
+      etfs-rivalfunds-daily-lambda            GUBCtyI9YHiQ 2026-10-13T13:59:36Z -> HpIx/ubb7B8E 2026-10-14T14:53:21Z
+      etfs-rivalfunds-fetch-holdings-lambda   ra7H9s3ZuRQ5 2026-10-13T13:59:42Z -> CEueU5Imxn+7 2026-10-14T14:53:15Z
+      rivalfunds-build-silver-lambda          ixXBp+Ru7zir 2026-10-13T13:59:48Z -> z0rNQLPGgJjn 2026-10-14T14:53:40Z
+      rivalfunds-build-canonical-shape-lambda UcHilFR4q0hN 2026-10-13T13:59:29Z -> VGlInUCe62NA 2026-10-14T14:53:34Z
+      rivalfunds-publish-page-lambda          LfekOrASXAyV 2026-10-13T13:59:23Z -> lBCs6sHKOTht 2026-10-14T14:53:28Z
+
+    Act: `.tools/safe-apply.sh -chdir=infra/aws/terraform/etfs-rivalfunds apply C:/tmp/rv_apply_r30.tfplan` from `C:/tmp/rv-r30-dell1`, invoked 14:52:47Z, returned 14:53:44Z
+    (outside 10:55Z-11:15Z and 12:55Z-13:15Z; about 1192 min to the 2026-10-15 10:45Z deadline): comp-tagauthz gate PASSED, tombstone-gate CLEAN (0 creates vs 7),
+    `Apply complete! Resources: 0 added, 5 changed, 0 destroyed.` rc=0. HALTGT is not cited; the pre-apply inbox read was the broker's `get_delivery_state` on the full lane
+    serial (1 row, msg 5613, READ, 0 unread).
+
+    AC1: `python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round30/r30_deploy_check.py C:/tmp/rv-r30-dell1`
+      5 built zips; five CodeSha256 each = a built zip; daily env = the four keys; daily role secretsmanager statements 2, one on exactly `...find-insure/bright-data/api-key-7ojPkd`;
+      dramatic_move.py / ai_accounts.py / render.py / gold_trade_schedule.py each held by 5 of 5 zips, 0 not the pin's bytes
+      R30 DEPLOY RESULT: PASS 0 failures
+    Second oracle: live CodeSha256 == the plan's declared `source_code_hash`, APPLIED==GRADED 5 of 5.
+    Re-plan at the same pin (`-detailed-exitcode`): rc=0, `No changes. Your infrastructure matches the configuration.`
+    Ledger: slug `etfs-rivalfunds-r30-dell1-20261014` (`org/critical_paths/change_management/20261014T1452Z_etfs-rivalfunds-r30-dell1-20261014_deploy_completion.md`), opened
+      14:52Z before the apply; L1 CLOSED with the proof above; L2 (the 2026-10-15 11:00Z chain and 13:00Z sweep) is the issuer's and OPEN; entry HELD external on that read,
+      re-read date 2026-10-16.
+
+    Not done, by the order's rules: no function invoked, no test event, no search, no S3 write, no secret value read. C1 and row ETFS_RIVALS-D1-S16 untouched (the issuer's).
+    Trees kept until L2 closes: `C:/tmp/rv-r30-dell1` (pin, built zips, initialised; AC1 reads those zips) and `C:/tmp/rv-r30-rollback` (de3c6bf211; a rollback needs
+    `terraform init` and the packager run in it first, then plan, then safe-apply; plan 0/5/0). Tonight's 21:00Z dell1 restart does not touch either tree.
+
+    Push state: filled in the broker message to the issuer from an `ls-remote` read at send time. This box does not push `box/dell1`; `box-sync` carries it.
   </report>
 </task_order>
