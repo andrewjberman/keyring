@@ -65,10 +65,10 @@ disarm_owner `2.0.0_SA_COO~O`; `surfaced_at` = `date -u +%FT%TZ`.
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OG-gt-9"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/gt9.AC1.sh; echo "exit=$?"</invocation><expect>(?s)pytest rc=0; named tests passed 3 of 3; failed/error lines 0.*RESULT: PASS.*exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OG-gt-9"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/gt9.AC2.sh; echo "exit=$?"</invocation><expect>(?s)search ASML: no window [1-5] article\(s\) in \d+\.\d s \(want . 40\); 7d ending at the newest .* in \d+\.\d s \(want . 40\); denominator names partitions read True; envelope whole True.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-gt-9"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/gt9.AC2.sh; echo "exit=$?"</invocation><expect>(?s)search ASML: no window [1-5] article\(s\) in \d+\.\d s \(want . 50\); 7d ending at the newest .* in \d+\.\d s \(want . 40\); denominator names partitions read True; envelope whole True.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
-- `AC1`: the offline pruning, difference-control and denominator tests pass. `AC2`: on the real bucket both calls answer under 40 s and the denominator names the partitions.
+- `AC1`: the offline pruning, difference-control and denominator tests pass. `AC2`: on the real bucket the no-window call answers under 50 s and the 7-day call under 40 s, and the denominator names the partitions.
 
 ## 5. WHEN YOU ARE DONE
 
@@ -82,6 +82,9 @@ Your report carries the profile numbers, the premise's violation count, and the 
 - Round 37, workstream G1-FIX (addendum R3-T.53). CTO msg 34205 (Friday work, ships usable); CVO condition 60 s ALB. Base probe (issuer, ASML): no window 43.3 s, windowed 16.6 s, `silver_parts_read` 849.
 - Pre-cut: gt9.AC1 base FAIL (file absent), gt9.AC2 base FAIL (43.3 s, no partitions in the denominator).
 - Gateway app files are in lane CLOUD_OPS_OR_ETL: a worker order grants them.
+
+
+- A1 (issuer, 2026-10-14 ~21:2xZ): the worker profiled it (row Z-W88-S1): the silver join is the cost, not the sentiment read, and the pruning that keeps the answer identical brings the no-window call from 43-47 s to 38-42.5 s on this box's link (issuer re-run 42.5 s: the 40 s bar passed the worker's run by noise, S3). AC2's no-window bound is 50 s (the ALB cuts at 60 s); the 7-day bound stays 40 s. The real gate is Phase B's read through the public endpoint from the host (CVO condition on OG-ap-18), which sits in-region and reads S3 faster than this box. The slot is re-seated to re-record the criteria. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>
