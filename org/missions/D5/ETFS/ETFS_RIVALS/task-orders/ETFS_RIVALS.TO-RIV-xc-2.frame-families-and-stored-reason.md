@@ -107,7 +107,7 @@ Chain B (`ai_accounts.py` and its test file); no edge to xa-2. Deploy and the CV
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>30</round>
 <workstream>4</workstream>
 <slot>~39</slot>

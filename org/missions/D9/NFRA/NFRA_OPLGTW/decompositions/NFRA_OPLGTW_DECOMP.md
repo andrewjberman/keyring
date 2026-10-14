@@ -2141,15 +2141,15 @@ the `data_entitlement.py` family rows for the new names) belong to no cell: the 
 
 | cell | what | writes (new files only) | risk | slot | class |
 |---|---|---|---|---|---|
-| `OG-gt-0` | the typed-tool base: the envelope (`as_of`, `source_keys`, denominator, `absent_reason`), the 50 KB projection, the newest-part read over `harvest_read`'s capped client, one admit-and-audit wrapper; offline tests with a fake client | `app/harvest_typed.py`, `tests/test_og_gt0.py` | LOCAL | ~71 | worker |
-| `OG-gt-1` | `harvest_resolve_security`, `harvest_security_coverage` (crosswalk/universe/identity; one ListObjectsV2 per keyed prefix) | `app/harvest_identity.py`, `tests/test_og_gt1.py` | LOCAL | ~72 | worker |
-| `OG-gt-2` | `harvest_get_chatter`, `harvest_search_articles`, `harvest_get_article` (gold chatter and mentions joined to publisher silver) | `app/harvest_press.py`, `tests/test_og_gt2.py` | LOCAL | ~73 | worker |
-| `OG-gt-3` | `harvest_get_fundamentals`, `harvest_query_columns` (model_block, bestdata, refdata, histdata, segments, price; the tabular allow-list) | `app/harvest_figures.py`, `tests/test_og_gt3.py` | LOCAL | ~74 | worker |
-| `OG-gt-4` | `harvest_get_research`, `harvest_get_filing_analysis`, `harvest_get_peers_and_scores` | `app/harvest_research.py`, `tests/test_og_gt4.py` | LOCAL | ~75 | worker |
+| `OG-gt-0` | the typed-tool base: the envelope (`as_of`, `source_keys`, denominator, `absent_reason`), the 50 KB projection, the newest-part read over `harvest_read`'s capped client, one admit-and-audit wrapper; offline tests with a fake client | `app/harvest_typed.py`, `tests/test_og_gt0.py` | WORLD | ~71 | worker |
+| `OG-gt-1` | `harvest_resolve_security`, `harvest_security_coverage` (crosswalk/universe/identity; one ListObjectsV2 per keyed prefix) | `app/harvest_identity.py`, `tests/test_og_gt1.py` | WORLD | ~72 | worker |
+| `OG-gt-2` | `harvest_get_chatter`, `harvest_search_articles`, `harvest_get_article` (gold chatter and mentions joined to publisher silver) | `app/harvest_press.py`, `tests/test_og_gt2.py` | WORLD | ~73 | worker |
+| `OG-gt-3` | `harvest_get_fundamentals`, `harvest_query_columns` (model_block, bestdata, refdata, histdata, segments, price; the tabular allow-list) | `app/harvest_figures.py`, `tests/test_og_gt3.py` | WORLD | ~74 | worker |
+| `OG-gt-4` | `harvest_get_research`, `harvest_get_filing_analysis`, `harvest_get_peers_and_scores` | `app/harvest_research.py`, `tests/test_og_gt4.py` | WORLD | ~75 | worker |
 | `OG-gt-5` | `harvest_get_published_analysis` (invokes `opal-amgt-scoped-api`) with its read-grant file and its own never-widen ask; ships only when that ask is signed | `app/harvest_published.py`, `tests/test_og_gt5.py` | WORLD | ~76 | worker |
 | `OG-ap-18` | APPLY: gt-0..gt-4's gateway release on hv-2's live ref, served read of each tool under an Opal and a non-Opal principal; gt-5 follows on its own ask | (applier's paths) | WORLD | ~AE | worker |
 
-`app/` is `infra/aws/ec2/opal-gateway/app/`; each tool cell reads its contract section in G1 by line range (inlined on its face).
+`app/` is `infra/aws/ec2/opal-gateway/app/` (an infrastructure path, so the gate's floor makes every gateway cell WORLD, as OG-hv-1 was); each tool cell reads its contract section in G1 by line range (inlined on its face).
 A cell over about 300 product lines (gt-2, gt-3, gt-4 may be) takes the full limbs and `worker`; none is `worker-light`.
 
 **Chains.**
@@ -2164,3 +2164,16 @@ own ask and may trail. Spawn model per `org/ref/MODEL_POLICY.json` (haiku, effor
 **Cut-time reads (not done here):** each check a file dry-run at the base; `<paths>` carry `change_management/` and the
 `.open_deploys/` sentinels on OG-ap-18 only; the risk class each `<paths>` implies is read from GATE xii before the cut.
 
+## ADDENDUM R3-T.51 (2.0.0_SA_COO~O, 2026-10-14 ~14:1xZ) -- round 37, workstream ZS114-EDGE-AUTH (CTO ruling msg 34093)
+
+**Source.** Row `NFRA_OPLGTW-Z-S114` (`4.0.0_SA_CRO~Z`, @f5d2c93a6a): the bare `/json-tiered/*` behavior on CloudFront
+`EVTSA9VEHNZVH` serves `opal-data-portal-v2/json-tiered/` with no Lambda@Edge association (an unauthenticated GET returns 200;
+its twin `/api/general/json-tiered/*` returns 401). `1.0.0_SA_CTO~Z` ruled (msg 34093): not an intended public path; attach
+`auth-validator-edge` like the twin, after OG-hv-2, not a gateway blocker. The issuer's act inside its own decomposition.
+
+| cell | what | risk | slot | class |
+|---|---|---|---|---|
+| `OG-zs-1` | APPLY: read 7 days of the bare path's CloudFront traffic (a non-portal consumer is a STOP to the CTO); then attach `auth-validator-edge` (viewer-request) to behavior 7 `/json-tiered/*` in `infra/aws/terraform/portal-auth/cloudfront-distribution.tf`, one targeted change under a deploy ledger; prove 401 unauthenticated and the authenticated twin still 200; read the `/api/scoped/security-scanner/*` authorizer once | WORLD | ~AE | worker |
+
+**Chain:** `OG-hv-2` (applier `0.7.0_AE_CloudOps~Z`) -> `OG-zs-1`. Independent of the gateway queue (no gateway release); the applier takes it right after OG-hv-2 closes.
+**fanout:** 1 of 1 chain, cap 8.

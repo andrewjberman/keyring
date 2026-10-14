@@ -3,7 +3,7 @@
   "project": "NFRA_MCPINDEX",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v0.11",
+  "prd_version": "v0.13",
   "step": 4,
   "brief_ref": "docs/briefs/opal-mcp-tool-index-brief-20260917.md@826ac6925a",
   "endpoint_outcomes": [
@@ -669,3 +669,35 @@ This replaces the harvest tool-set addendum planned on XB-dc98: round 13 cuts fr
 
 **Sign-off.** ENDPOINT changes (FWD-22 added), so the ratified-text half re-opens for `3.0.0_SA_CVO~Z`. The brief half
 is the CRO's G1 census (proportionate sign-off). Later groups land as CONTRACTS-only enrichment lists.
+
+### v0.12 addendum (2026-10-14 ~14:1xZ, 1.0.0_SA_CTO~Z) -- FWD-22 enrichment: catalog rows for G2, G3, G5, G6
+
+**Input.** `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/INDEX.md` (G2 131, G3 42, G5 36, G6 12 contracts). Tool shapes follow NFRA_OPLGTW v3.1 (client data is
+one set of `client_*` tools with vendor adapters).
+
+**Enrichment list (fold into round 13 if it is not yet issued; else round 14, `2.0.0_SA_COO~MI`):**
+1. **G2:** one `silver_datasets` row per contracted table (BD 30, Orion/Eclipse 9, SmartX 13, Schwab 57, Commonwealth 12,
+   Tax SMA 1, own ETFs 8, Yahoo 1), each with `fork_keys` (firm key segment or row column, account column, last-4
+   derivation and its measured collisions, platform label and source), `read_tool` = the `client_*` tool once deployed.
+   Live 49F BD rows name `opal-data-bd/silver/`.
+2. **G3:** rows for the 9 live uncatalogued datasets; re-rule `ft.04.portfolios-aum-metrics` to deny (no page reads it,
+   frozen 58 trading days); drop rows naming `json/mdpf/**` (0 keys); retire `portal_lookup.py` channel `mdpf` and correct
+   `mdpf-platinum` (daily snapshots now in `archive/`). `json-tiered/` rows state it is authenticated-only once Z-S114
+   closes.
+3. **G5:** rows for the 36 ETF contracts (no `opal-data-etfs` row exists today), with the newest-part-per-date rule
+   and each rival row's `claim` column named.
+4. **G6:** correct the `news` row's sizes (381,261 items, about 1,000 a weekday); rows for `opal-keyword-intelligence`
+   and the trending archive; mark the semantic chain, `seeking-alpha-article-urls` and `opal-harvest-articles` as
+   frozen or empty, never as current.
+5. **nl_tags and common_queries** from each group on every row; `read_tool` never names an undeployed tool.
+
+**Sign-off.** CONTRACTS-only enrichment (FWD-22 text unchanged): no half re-opens.
+
+### v0.13 addendum (2026-10-14 ~14:3xZ, 1.0.0_SA_CTO~Z) -- FWD-22 enrichment: G4 catalog rows
+
+From `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G4_mdpf_delta.md` @7ec87a87e5:
+- add rows for the delta tables (`model_aua_positions`, `model_composition`, `ai_classified_securities`), with fork keys
+  on the account-grain row;
+- mark `partner_held_etf/49financial` and `non_model_aua/49financial` as do-not-serve, with G4's reasons;
+- record that `opal-data-mdpf` gold is a mirror of the served platinum (OVERLAP 100%, measured), so no tool targets it.
+Fold into the open catalog round. CONTRACTS-only.

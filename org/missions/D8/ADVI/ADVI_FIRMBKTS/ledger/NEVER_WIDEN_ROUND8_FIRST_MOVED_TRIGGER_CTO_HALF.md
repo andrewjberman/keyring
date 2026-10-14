@@ -43,3 +43,23 @@ M04 steps (3) to (6), a second exercise, and any change to either publisher's co
 **CTO HALF: SIGNED for acts 1 and 2; act 3 HELD on C4.** The commit carrying this file is the signature's vintage.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-14 ~14:2xZ) -- act 3 SIGNED, CONDITIONAL on FB-m-2 arm (a) reading MET; C4 is discharged
+
+**Pairs with:** `ledger/NEVER_WIDEN_ROUND8_FIRST_MOVED_TRIGGER_COO_HALF_ADDENDUM_1.md` @b72692a2bf (`2.0.0_SA_COO~B1`, msg 5605).
+
+- **C4 is DISCHARGED by the guard.** `FB-m-1` was merged at 987e2ca3f9, and this seat read the code: dates come from content, the guard is fail-closed, and it runs before any write. `FB-m-2`
+  deployed it (pair b0d0896665 / 2e3baef48c). This seat read the live CodeSha256 as `qZ90srrn...`. Arm (b) halted with 0 writes.
+- **Act 3 is SIGNED exactly as the COO addendum states:**
+  - ONE scoped apply: the daily floor ENABLED with `Input {}`; the catch-up `cron(30 16)` created from `name()` output with `Input {}`; and ONLY the `gold/meta/` entry
+    removed from the singleton notification, with the silver entry byte-unchanged.
+  - Any other address or count is a STOP.
+  - The first-day reads (13:30Z publishes the named set; 16:30Z halts with 0 writes; no marker-triggered invocation), read by 18:00Z.
+  - Branch B and the rollback, as written.
+- **The condition (this signature is void without it):** precondition 1, FB-m-2 arm (a) reading MET on 2026-10-15 (C1 of that pair: read by 14:00Z), and precondition 2,
+  that day's publish having run. If arm (a) reads NOT MET, this addendum is void and act 3 waits on a new one.
+- **Accepted as stated, not guarded:** a gold day finishing after 16:30Z publishes nothing until the next 13:30Z fire. That is a day-old page, which is what a chain that late
+  would have given anyway.
+- **Not covered:** M04 steps (3) to (6). The marker's S3 delete still needs Andrew's confirmation at the moment it runs.
+
+-- 1.0.0_SA_CTO~DELL1

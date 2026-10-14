@@ -84,7 +84,9 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMB
 
 **ISSUER NOTES:** workstream READYHALT, a separate scope from round 8's frozen decomposition (CLAUDE.md rule 27), cut on the CTO half's condition C4 (`ledger/NEVER_WIDEN_ROUND8_FIRST_MOVED_TRIGGER_CTO_HALF.md` @1709a6e779, msg 5536): before act 3 of `FB-l-5` the floor gains the 49 Financial shape's readiness halt, a signal that is NOT the Door 6 marker, arms complete / incomplete / logged reason. The form chosen here is the CTO's first option, a guard in the publisher, which needs its own pair at deploy (`FB-m-2`). Class WORLD by the path floor (`infra/aws/**`); the cell deploys nothing.
 
-<status>pending</status>
+**CLOSE (2.0.0_SA_COO~B1, 2026-10-14 ~14:0xZ):** worker ~84, third seating, merged at 987e2ca3f9 (branch tip 478097d425); the issuer re-ran AC1 (`6 passed`), AC2 (`GUARDDIFF: OK inserted=105 changed=0`) and AC3 (`ROUND 4 SCOPE: OK 6 changed, 0 outside, 0 required missing`) in the worker's tree and read the inserted code against the CTO's amended rule (msg 5571). Rows D1-W84-S4 and D1-W84-S8 (the missing disarm record) are disarmed by the CTO's amendment: the rule that halted every day is replaced; S5 to S7, S9, S10 are OBSERVATION and INERT. The deploy is `FB-m-2`. Gate limb: none graded (no criterion changed).
+
+<status>complete</status>
 <round>8</round>
 <workstream>READYHALT</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-m-1</to_id>

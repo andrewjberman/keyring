@@ -1,0 +1,122 @@
+# NFRA_OPLGTW task order -- `OG-ap-18` -- APPLY: the ten G1 typed harvest tools' gateway release on the live ref after OG-hv-2 (FWD-22)
+
+<!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
+
+<decomp_ref>
+<decomp_doc>org/missions/D9/NFRA/NFRA_OPLGTW/decompositions/NFRA_OPLGTW_DECOMP.md</decomp_doc>
+<owned_cells>OG-ap-18</owned_cells>
+</decomp_ref>
+<to_id>NFRA_OPLGTW.TO-OG-ap-18</to_id>
+<issued_to>0.7.0_AE_CloudOps~Z</issued_to>
+<issued_by>2.0.0_SA_COO~O</issued_by>
+<placeholders>NONE</placeholders>
+<preflight>
+comp-schedule: DECLARED-NOT-APPLICABLE -- code and tests only; no deploy. The release is NFRA_OPLGTW.TO-OG-ap-18 (the release order this cell rides).
+comp-iam: RUN-BY-ISSUER at the cut: the new code's AWS calls are s3:GetObject and s3:ListBucket on opal-data-harvest, read through OG-hv-2's grant (A5: the policy on gateway-global-internal-reader-role, which `harvest_read._client()` assumes); this cell changes no IAM and adds no AWS call beyond those two. Live probes run with the box's own credentials, read only.
+comp-adversary: DECLARED-NOT-APPLICABLE -- the act is 1.0.0_SA_CTO~Z msg 34077 and msg 34083 on PRD v3.0 (FWD-22; Andrew-direct ~12:4xZ), the CRO's G1 census @0d7c29b3c5 section 3, and the two corrections of the CRO's L4-R review @e47fafb709.
+EGRESS CLASS, declared: NONE beyond Opal's own AWS.
+</preflight>
+
+## 1. THE CELL -- `OG-ap-18` (decomposition addendum R3-T.50, workstream G1-TYPED, FWD-22)
+
+APPLY: the G1 typed tools' release (builds OG-gt-0 to OG-gt-4, hookups by the issuer) on the live ref `OG-hv-2` leaves, then the served read of all ten.
+
+APPLY: release the ten G1 typed harvest tools (builds `OG-gt-0` to `OG-gt-4`, merged by the issuer with the one hookup commit) on the
+live ref that `OG-hv-2`'s release leaves. These tools add NO reach: they read `s3://opal-data-harvest` through the grant and
+the Opal-only admission that `OG-hv-2` already put live; each is a READ tool, SAFE, `legacy` class. `harvest_get_published_analysis`
+(`OG-gt-5`) is NOT in this release: it rides its own ask.
+
+The ten: `harvest_resolve_security`, `harvest_security_coverage`, `harvest_get_chatter`, `harvest_search_articles`, `harvest_get_article`, `harvest_get_fundamentals`, `harvest_query_columns`, `harvest_get_research`, `harvest_get_filing_analysis`, `harvest_get_peers_and_scores`.
+
+### PHASE A (when `OG-hv-2`'s ledger `nfra-oplgtw-gateway-release-hv` is CLOSED AND the issuer's amendment A1 to this order names the merge and hookup commits): re-cut, ask. NO deploy
+
+1. **Live ref.** Read `services.opal-gateway.deployed_commit` in `infra/aws/ec2/EC2_MANIFEST.json` at HEAD, then one SSM md5 read of
+   the host against it, walking `app/`, `deploy/` and `dashboard/`. A mismatch is a STOP and a BLOCKING row.
+2. **Re-cut** in a worktree `C:/tmp/og-rel-gt`, new branch `rel-nfra-oplgtw-gt`, at that live ref. Take ONLY the files A1 names, from
+   the commits A1 names: new `app/harvest_typed.py`, `app/harvest_identity.py`, `app/harvest_press.py`, `app/harvest_figures.py`,
+   `app/harvest_research.py` and their five tests whole; `app/tools.py`, `app/destructive_ops.py`, `app/data_entitlement.py`,
+   `tests/test_entitlement_admin.py` and `tests/test_data_entitlement_family.py` BY HUNK (the ten registrations, the ten names in
+   `SAFE_TOOLS` and in `NATIVE_TOOLS`, the two re-pinned counts), 3-way where the base differs. Never a whole file from trunk for
+   those five. Commit with the audited `GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL` on the release commit only. Write
+   `W/gt_release.json` = `{"base_sha", "release_sha"}` (FULL 40-character shas). Run in the release tree: `tests/test_og_gt0.py`
+   to `test_og_gt4.py`, `tests/test_og_hv1.py`, `tests/test_entitlement_admin.py` and `tests/test_data_entitlement_family.py`.
+3. **The ask**, `W/NEVER_WIDEN_ASK_OG-ap-18.md`, for THREE halves (`1.0.0_SA_CTO~Z`, `2.0.0_SA_COO~O`, `3.0.0_SA_CVO~Z`). It carries,
+   each under a heading containing its word: (1) the `diff` by file; (2) the ten `tools`, their class and their `refused` arms;
+   (3) the `widening`, stated plainly: no new bucket reach and no IAM change; ten more read tools over what `harvest_read` already
+   reaches, for Opal principals only, with the data they now make easy to read named (research, filings, chatter, Bloomberg
+   bronze tables read from the bucket, no vendor call); (4) the `order` of acts and that no grant is part of it; (5) `both branches`
+   of a call (refused: zero S3 calls; admitted: reads capped and projected to 50 KB); (6) the `rollback` (redeploy the base);
+   (7) the `triggers` (`/health`, the registry count +10, `.env` names unchanged, md5 = release). Commit, run AC1, REPORT, STOP.
+
+### PHASE B (only on the issuer's GO, which names all three halves signed at `release_sha`)
+
+4. Ledger `nfra-oplgtw-gateway-release-gt`, entry AND sentinel first. Deploy from `C:/tmp/og-rel-gt` through
+   `infra/aws/ec2/safe-ec2-deploy.sh` with `DEPLOY_BASE_REF=<base_sha>`; the deploy tree's `git rev-parse HEAD` must equal the
+   signed `release_sha` in full and its parent must equal live `deployed_commit` at the act (a mismatch is a STOP; print both).
+   The release cone carries `lib/`, `.tools/`, `org/modules/graph/`, `data/transcripts/scripts/teams/` AND your agent home. No
+   `HALT_OVERRIDE`. Read back immediately against the triggers; on any trigger redeploy the base and file an ARMED row naming
+   `2.0.0_SA_COO~O`.
+5. **The served read**, through the INSTALLED code on the host, one SSM call writing `W/GT_SERVED.json` = `{"body": {"tools_listed":
+   [...], "registry_before": N, "registry_count": N+10, "per_tool": {"<tool>": {"opal_served": true, "non_opal_refused": true,
+   "s3_calls_on_refusal": 0}, ...}}}` for all ten tools: an Opal stand-in principal's real call returns an enveloped answer
+   (`as_of`, `source_keys`, `denominator`, `absent_reason`), a non-Opal principal is refused `harvest_opal_only` with zero S3
+   calls. `registry_before` is the registry count read BEFORE the deploy. No object content is printed.
+6. **Standing release clauses:** runbook 7.2 names the new live release; EC2_MANIFEST `deployed_commit` and `file_checksums` come
+   from the release blobs. Close the ledger, commit, run AC2, and report once to `2.0.0_SA_COO~O`.
+
+## 2. BOUNDS
+
+- The release's files only. No IAM or Terraform change, no catalog edit, no `.env` change, no object written to any bucket.
+- Never: push, `git stash`, rebase, `checkout --` or `clean`; merge box/sitez into the release branch; bare `terraform`; print an
+  `.env` value, a person's name or email, or harvest object content; override a gate other than the one audited lane escape in step 2.
+- REFUSE a criterion you cannot meet as written. File a BLOCKING row and keep working.
+
+## 3. SURFACES
+
+<paths>
+infra/aws/ec2/EC2_MANIFEST.json
+infra/aws/ec2/opal-gateway/runbooks/SCHWAB_PILOT_RUNBOOK.md
+org/critical_paths/change_management/
+org/critical_paths/.open_deploys/nfra-oplgtw-gateway-release-gt.json
+org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/
+org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+`W` = `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/`. Rows: id `NFRA_OPLGTW-Z-S<k>` (the next free), fabric `site-z`,
+disarm_owner `2.0.0_SA_COO~O`; `surfaced_at` = `date -u +%FT%TZ`.
+
+## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
+
+<proof_of_spec>
+  <criterion id="AC1" cell_refs="OG-ap-18"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ap18.AC1.sh; echo "exit=$?"</invocation><expect>(?s)base [0-9a-f]+ is the live ref before this release: yes.*outside the G1 set 0 \(want 0\); tools registered 10 of 10; SAFE 10 of 10; NATIVE 10 of 10; OG-gt-5 module in release: no.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-ap-18"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ap18.AC2.sh; echo "exit=$?"</invocation><expect>(?s)ledger CLOSED 1 of 1; sentinel at HEAD 0.*equal=yes; rb\.AC2 PASS.*registry [0-9]+ -> [0-9]+ \(\+10\); per-tool 10 of 10.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="OG-ap-18" judgment="true"/>
+</proof_of_spec>
+
+- `AC1`: the re-cut carries exactly the G1 build and its hookups on the live ref, with ten registrations.
+- `AC2`: the deploy landed and closed, and the installed code serves all ten tools to an Opal principal and refuses a non-Opal one.
+- `AC3` (judgment, `3.0.0_SA_CVO~Z`): the first typed answers read as a research user would want them (the newest-part counts, `data_status` on a quiet name, `not_held` for a CUSIP). Graded on a real call; never simulated here.
+
+## 5. WHEN YOU ARE DONE
+
+Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-18.g1-typed-tools-release.proof_of_spec.json`. Validate it after your last commit with
+`python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing-order <this order>`, flip the ONE `<status>` tag to
+`complete` only if both PASS, and report once. Report once per phase.
+
+<!-- ===================== RECORD FACE ===================== -->
+
+**ISSUER NOTES:**
+- Round 37, workstream G1-TYPED (decomposition addendum R3-T.50 @d9371ffe81; PRD v3.0 ADMITTED: ratified-text SIGNED by
+  3.0.0_SA_CVO~Z, brief SIGNED by 4.0.0_SA_CRO~Z, `prd-signoff.py status` read at the cut). CTO msgs 34077 and 34083.
+- The release this cell rides: `NFRA_OPLGTW.TO-OG-ap-18`; its grant is `NFRA_OPLGTW.TO-OG-hv-2` (A5).
+- The issuer registers the tools and re-pins counts at the merge (CUT BY WRITE SET: hookups belong to no cell).
+- Pre-cut: ap18.AC1 and ap18.AC2 base FAIL as expected (gt_release.json and GT_SERVED.json absent).
+- Cut staged: amendment A1 (the merge and hookup commits) and the spawn of this order wait on OG-hv-2's close and on gt-0..gt-4's drain.
+
+<status>staged</status>
+<round>37</round>
+<workstream>G1-TYPED</workstream>
+<slot>~AE</slot>
+<fabric>site-z</fabric>
+<risk>WORLD</risk>
+<worker_class>worker</worker_class>
