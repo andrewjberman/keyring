@@ -253,7 +253,7 @@ def cmd_get(args) -> None:
             sys.exit(1)
     body, head = fetch_object(key)
     print(f"OBJECT: s3://{BUCKET}/{key}  ({len(body)} bytes, read COMPLETE)")
-    print(f"LAST-MODIFIED: {head['LastModified']}")
+    print(f"WRITE TIME (LastModified): {head['LastModified']}")
     try:
         doc = json.loads(body)
     except json.JSONDecodeError:
@@ -261,11 +261,27 @@ def cmd_get(args) -> None:
         print(body[:4000].decode("utf-8", errors="replace"))
         return
     df = c.get("date_field")
+    # VINTAGE ORDER (CTO msg 33851): the channel's date_field, then _provenance.source_vintages,
+    # then nothing -- LastModified is the WRITE TIME and is never reported as a vintage.
+    sv = {}
+    if isinstance(doc, dict):
+        prov = doc.get("_provenance")
+        if isinstance(prov, dict) and isinstance(prov.get("source_vintages"), dict):
+            sv = prov["source_vintages"]
+    dates = sorted({str(v) for v in sv.values() if v})
     if df and isinstance(doc, dict) and df in doc:
         print(f"VINTAGE ({df}): {doc[df]}  <- quote this with every figure")
+    elif len(dates) == 1:
+        print(f"VINTAGE (_provenance.source_vintages): {dates[0]}  "
+              f"<- quote this with every figure")
+    elif dates:
+        for src, val in sorted(sv.items()):
+            print(f"  {src}={val}")
+        print(f"VINTAGE (_provenance.source_vintages, oldest of {len(dates)}): {dates[0]}  "
+              f"<- quote this with every figure")
     else:
-        print(f"VINTAGE: field '{df}' not present -- quote LastModified and say it is "
-              f"file-time, not data-time")
+        print(f"VINTAGE: none in the object -- LastModified {head['LastModified']} is the "
+              f"WRITE TIME (claim: inferred), never the data vintage; say so when quoting")
     extracted = False
     for path in (args.project or []):
         sub, err = project(doc, path)
