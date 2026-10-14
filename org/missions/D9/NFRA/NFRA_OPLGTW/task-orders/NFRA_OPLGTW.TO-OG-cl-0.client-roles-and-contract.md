@@ -126,7 +126,7 @@ the issuer to make at the merge.
   (no opal-data-bd, no mdpf feeds, no per-firm Tax SMA gold); the role inventory keeps its seven vendor rows (Tax SMA may read MISSING). The worker is
   continued with A1+A2 when it reports. No criterion moves. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>FWD22-W3</workstream>
 <slot>~83</slot>
