@@ -45,32 +45,42 @@ python workflows/atom_decomposition/gen_silver_rows.py --g2 <file> --g4 <file> -
 - Write one file per in-scope contract: `<out>/<entity>.yaml`, where `entity` = the lower-cased `contract_id` with every run of characters outside `a-z0-9` replaced by one `_`, stripped of leading and trailing `_`. Entities must be unique; exit 2 if not.
 - If `<out>/<entity>.yaml` already exists and holds no `contract` key, exit 3 (never overwrite a row this generator did not write). Write nothing outside `<out>`.
 - `--deployed-tools`: a JSON file holding a list of tool names, or the word `census`, which runs `python workflows/atom_decomposition/tool_census.py` and takes the `tool` names of its JSON `tools`.
-- `--registry-file <path>` (optional): add to that `legacy_addresses.json` the `catalog-*` rows described under "The registry rows" (replace a row of the same key; touch no other row), keeping the file's `_about` and its JSON layout (indent 1).
+- `--registry-file <path>` (optional): add to that `legacy_addresses.json` the `catalog-*` rows described under "The registry files" (replace every row whose key starts `catalog-`; touch no other row), keeping the file's `_about` and its JSON layout (indent 1).
+- `--fork-registry-file <path>` (optional): write the fork registry file described there.
 - Print `wrote 174 rows to <out>`. Write YAML with `yaml.safe_dump(row, f, sort_keys=False, allow_unicode=True)`, UTF-8, LF.
 
-### The row (exactly these keys; `retired_reason` only on a retired row)
+### The CLEAN row (CTO msg 34160: no firm or product token in a row; the tokens live in a registry file)
 
-| key | value |
+The commit-time naming gate reads any whitespace-free string (a value, a list item or a mapping key) as a hand-kept carrier when one of its segments (split at `-` `_` `/` `.` `:` `=` `@`) is a firm token, or the whole string is a firm or product token.
+A string with whitespace is prose and is never graded. The token sets come from the registry, not from your code: build `carrier(s)` in a small module `workflows/atom_decomposition/catalog_tokens.py` that reads them the way `.tools/naming-gate.py` class `Naming.__init__` does
+(`lib/opal_naming.py` `_registry()["scopes"]` rows whose `class` is `FIRM` or `PRODUCT`, their `_spellings(row)`; a FIRM spelling that is a reserved system key in `_registry()["systems"]` is skipped; a FIRM spelling matching `^[A-Za-z0-9]+$` is a segment token; every FIRM and PRODUCT spelling is a whole-string token).
+The generator and its tests type NO firm name, product name or contract id as a literal.
+
+**Build the FULL row first, then split it.** The full row has these keys, in this order:
+`bucket prefix business_meaning example_questions grain freshness_field firm_scope_rule never_sum_rules producer tools read_tool gap_owner table layer format contract fork_keys nl_tags retired` (then `retired_reason` if any) `open_items`.
+
+| key | FULL value |
 |---|---|
-| `bucket`, `prefix`, `table`, `layer`, `format` | the contract's `bucket`, `s3_prefix`, `table`, `layer`, `format`, verbatim |
-| `business_meaning` | one sentence you compose: layer, format, table, bucket, prefix and the contract's `grain`, then for a `firm-scoped` row `Client data forked by firm, account last-4 and platform; Opal-internal principals only until a data grant names the firm.` else `Opal-internal data.` (at least 40 characters, never starting `NONE`). Then FROZEN OR EMPTY IS NEVER CURRENT (PRD v0.12 item 4): let `n` be the first number found under the contract's `freshness` keys `trading_days_behind_t1`, `trading_days_behind`, `trading_days_behind_T-1`; when `n` exists and is above 5, append ` NOT CURRENT: <n> trading days behind T-1.` (`<n>` as an integer); when the contract's `size.objects` is 0, append ` EMPTY: no objects.`. Append neither otherwise. |
+| `bucket`, `layer`, `format`, `grain` | the contract's own, verbatim |
+| `prefix` | the LEADING LITERAL of the contract's `s3_prefix`: when it holds a `{`, the text before the first `{` cut back to the last `/` (`daily/{partner}/{date}.json` becomes `daily/`); otherwise the prefix unchanged. `null` when the prefix starts `none` or has a path segment `silver_legacy` |
+| `table` | the contract's `table`, verbatim |
+| `business_meaning` | one sentence you compose: layer, format, table, bucket, the contract's `s3_prefix` and its `grain`, then for a `firm-scoped` row `Client data forked by firm, account last-4 and platform; Opal-internal principals only until a data grant names the firm.` else `Opal-internal data.` (at least 40 characters, never starting `NONE`). Then FROZEN OR EMPTY IS NEVER CURRENT (PRD v0.12 item 4): let `n` be the first number found under the contract's `freshness` keys `trading_days_behind_t1`, `trading_days_behind`, `trading_days_behind_T-1`; when `n` exists and is above 5, append ` NOT CURRENT: <n> trading days behind T-1.` (`<n>` as an integer); when the contract's `size.objects` is 0, append ` EMPTY: no objects.`. Append neither otherwise |
 | `example_questions` | the contract's `common_queries` verbatim; if empty, one question `Where is the <table> <layer> table?` |
-| `grain` | the contract's `grain`, verbatim |
 | `freshness_field` | `FIELD:<k>` where `k` is the first entry of the contract's `partition.keys`; if that list is empty, `NONE -- ` followed by the contract's `freshness.basis` |
 | `firm_scope_rule` | `firm-scoped` when the contract's `fork_keys.firm.values` holds any value other than `global` and `opal-internal`; otherwise `opal-internal-only` |
 | `never_sum_rules` | a one-item list holding the contract's `size.row_count_rule` when it has one; otherwise the string `NONE -- the contract states no row-count rule for this table` |
 | `producer` | the contract's `producer.name`, prefixed `inferred: ` when the word `inferred` is in `producer.claim`; when the name is null, `NOT TRACED -- the contract names no producer (absent)` |
-| `tools` | `[read_tool]` when `read_tool` is not null, else `[]` |
-| `read_tool` | see "read_tool policy" |
-| `gap_owner` | `NFRA_OPLGTW` when `read_tool` is null, else null |
-| `contract` | a mapping: `id` = `contract_id` with every `/` replaced by `:` (an IDENTIFIER, not an S3 address: the commit-time naming gate grades any slash-bearing string as an S3 key and refuses it); `size`, `freshness`, `partition`, `producer` = the contract's own objects verbatim |
+| `tools`, `read_tool`, `gap_owner` | `read_tool` per the policy below; `tools` is `[read_tool]` or `[]`; `gap_owner` is `NFRA_OPLGTW` when `read_tool` is null, else null |
+| `contract` | a mapping: `id` = `c-` followed by the first 12 hex characters of the SHA-1 of the UTF-8 `contract_id`; `label` = the contract's `layer`, a space, then its `table` with any parenthetical `(...)` removed and any whitespace-separated word that is a carrier dropped; `size`, `freshness`, `partition`, `producer` = the contract's own objects verbatim |
 | `fork_keys` | the contract's `fork_keys` object, verbatim |
-| `nl_tags` | the contract's `nl_tags` list, verbatim |
-| `retired` | `true` for exactly four contracts, else `false`, decided by these two rules and NEVER by a typed contract id or firm name (the naming gate refuses them in code): (1) DO-NOT-SERVE (PRD v0.13): the contract has a `routing` string that contains `do NOT build a tool` or `must not be served` (2 contracts); (2) NOT-SERVED (PRD v0.14: Andrew-direct restricts client data to the `opal-data-assets` vendor silver folders, so the account-grain MDPF feed is not served): the contract's `table` starts `model_aua_positions` (2 contracts) |
-| `retired_reason` | on those four only. For rule (1): `do-not-serve: ` followed by the contract's `routing` string, verbatim. For rule (2), exactly: `not_served: ANDREW_DIRECT_20261014_150xZ_CLIENT_DATA_ONLY_OPAL_DATA_ASSETS_VENDOR_SILVER.md @9a314c1e98 -- client data only from the opal-data-assets vendor silver folders` |
-| `open_items` | the contract's `open_items` list, verbatim |
+| `nl_tags`, `open_items` | the contract's lists, verbatim |
+| `retired` | `true` for exactly four contracts, else `false`, by these rules and NEVER by a typed contract id: (1) DO-NOT-SERVE: the contract has a `routing` string that contains `do NOT build a tool` or `must not be served` (2 contracts); (2) NOT-SERVED: its `table` starts `model_aua_positions` (2 contracts, PRD v0.14); and ALSO (3) every contract whose `s3_prefix` has a path segment `silver_legacy` (9 contracts: frozen copies; client data only from the vendor silver folders). So `true` for 13 contracts |
+| `retired_reason` | on the retired rows only. Rule (1): `do-not-serve: ` followed by the contract's `routing` string, verbatim. Rules (2) and (3), exactly: `not_served: ANDREW_DIRECT_20261014_150xZ_CLIENT_DATA_ONLY_OPAL_DATA_ASSETS_VENDOR_SILVER.md @9a314c1e98 -- client data only from the opal-data-assets vendor silver folders`; for rule (3) append ` (a frozen silver_legacy copy)` |
 
-Write the keys in this order: `bucket prefix business_meaning example_questions grain freshness_field firm_scope_rule never_sum_rules producer tools read_tool gap_owner table layer format contract fork_keys nl_tags retired` (then `retired_reason` if any) `open_items`.
+**Then split it into the CLEAN row and a registry entry.** `sanitize(x)`: a mapping drops every key that is a carrier and sanitises its values; a list drops every item that is a carrier string and sanitises the rest; a string that is a carrier becomes `null`; anything else is unchanged.
+The CLEAN row is the full row with every top-level field replaced by `sanitize(value)`, EXCEPT `prefix`, which is its leading literal when that literal is not a carrier, else `null`. For every top-level field whose clean value differs from the full value, the registry entry's `restore` holds the FULL value under that field name
+(for `prefix`, the leading literal). The registry entry is `{"key_template": <the contract's full s3_prefix>, "restore": {...}}`, keyed by the hashed `contract.id`. The clean row is what you write to `<out>/<entity>.yaml`.
+A clean row therefore holds no carrier in any string, key or value, which `c14.AC2` scans for.
 
 **read_tool policy (PRD v0.12 item 5; a tool that is not deployed is NEVER named).** Let D be the deployed-tools set. For a contract, its CANDIDATES are, in the order of its `proposed_tools`: take each tool's `name`, cut it at the first space (so `blackdiamond_list_fees (extend)` becomes
 `blackdiamond_list_fees`), skip a name that starts `none`, then map it through `client_tool_map.json` (a name that is not a key stays as it is). The `read_tool` is the first candidate in D, else null.
@@ -89,15 +99,18 @@ blackdiamond_list_insurance                                                     
 ```
 (`blackdiamond_get_account_profile` is deliberately NOT mapped: the commit-time naming gate reads that exact string in a JSON key as a resource name and refuses it. Its table stays `read_tool: null`; this is reported to the CTO.) A G2 tool not listed here (balances, find_holders, flows, documents, delivery, the Eclipse tools, prices, workbook rows, platform lists) is NOT mapped: its tables are catalogued with `read_tool` null (OPLGTW: "a table no question reaches is catalogued but gets no adapter this round").
 
-### The registry rows (CTO msg 34143: the existing legacy-address branch of the naming gate, no gate edit)
+### The registry files (CTO msgs 34143 and 34160: rule 30's own remedy, no gate edit)
 
-The commit-time naming gate grades a literal CONFORMANT when it equals a `legacy_addresses.json` row of the COMMITTING PROJECT (`reader` = `NFRA_MCPINDEX`, no `params`) that is COMMITTED AT HEAD. So the registry rows land in a commit BEFORE the rows that name them.
-For every in-scope contract whose `s3_prefix` is a plain S3 key (it does not start `none`, holds no `{`, and its `bucket` starts `opal-data-` but is neither `opal-data-news-v2` nor `opal-data-news-av`): 130 contracts. Add one row with exactly these fields:
-- `key`: `catalog-` + the row's entity with every `_` replaced by `-` (lowercase kebab-case);
-- `bucket`: the contract's `bucket`; `template`: its `s3_prefix`; `shape`: `prefix` when `template` ends in `/`, else `object`; `params`: `[]`; `reader`: `NFRA_MCPINDEX`;
+**legacy_addresses.json.** The commit-time naming gate grades a prefix literal CONFORMANT when it equals a `legacy_addresses.json` row of the COMMITTING PROJECT (`reader` = `NFRA_MCPINDEX`, no `params`) that is COMMITTED AT HEAD. So the registry rows land in a commit BEFORE the rows that name them.
+For every in-scope contract whose clean row has a non-null `prefix` and whose `bucket` starts `opal-data-` but is neither `opal-data-news-v2` nor `opal-data-news-av`, add one row per DISTINCT (`bucket`, `prefix`) pair (the registry is unique on that pair; when the pair is already a row of another project, add nothing and list it in your report). Fields:
+- `key`: `catalog-` + the entity with every `_` replaced by `-`, taken from the first contract that names the pair;
+- `bucket`: the bucket; `template`: the clean row's `prefix`; `shape`: `prefix` when it ends in `/`, else `object`; `params`: `[]`; `reader`: `NFRA_MCPINDEX`;
 - `evidence`: `measured by 4.0.0_SA_CRO~Z in the census <file name of G2|G4|G5|G6, e.g. G2_assets_silver.md> @<its pin>: <size.objects> objects (the contract's size.objects, a count; no object content read)`;
 - `note`: `Catalog source-row address; the owner of the data renames it (R19).`
-The other 44 in-scope contracts (the `none` DynamoDB ones, the `{param}` templates, the two news buckets) get no registry row; their prefix stays a literal and may be refused (the residual below).
+(Your first commit already wrote 130 such rows for the full prefixes. Replace them: keep only the rows the rule above yields; a row whose prefix now carries a token or a template is removed.)
+
+**catalog_fork_keys.json** (new, in `infra/logic/registry/`; registry files may carry firm tokens): `{"_about": "<one sentence: the full values of the catalog silver table rows, keyed by the hashed contract id; the loader joins them (MX-c-15)>", "rows": {"<hashed id>": <the registry entry above>, ...}}` with one entry per in-scope contract (174).
+The generator writes it with `--fork-registry-file <path>` (replace the whole `rows` object; keep `_about`). Validate with `opal_naming.validate(None, None)` (it must return no refusals).
 
 ### The steps
 
@@ -121,6 +134,8 @@ The other 44 in-scope contracts (the `none` DynamoDB ones, the `{param}` templat
 
 <paths>
 infra/logic/registry/legacy_addresses.json
+infra/logic/registry/catalog_fork_keys.json
+workflows/atom_decomposition/catalog_tokens.py
 workflows/atom_decomposition/gen_silver_rows.py
 workflows/atom_decomposition/client_tool_map.json
 workflows/atom_decomposition/catalog_entries/
@@ -165,6 +180,8 @@ The issuer then regenerates the catalog from the merged rows and the loader cell
 corrections are not in this order: they edit CVO-certified channel specs (decomposition R14.6). Battery and planted arms: decomposition R14.3.
 
 **AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-14 ~15:3xZ).** Two rulings arrived while you were building. (1) Andrew-direct ~15:0xZ (CTO msg 34135, PRD v0.14 @26a247b289): client data comes ONLY from the `opal-data-assets` vendor silver folders, so the two `model_aua_positions` MDPF feeds are `not_served` (retired, with the record cited), and no row names `opal-data-bd`. The 49F Black Diamond rows keep the contract's `opal-data-assets` location and state their lag through the NOT CURRENT mark. (2) The commit-time naming gate refuses a slash-bearing `contract.id` as an S3 key, so `contract.id` is written with `:` for `/` (the first worker's rows showed it). (4) The gate refused 3 strings in your first code files: the `blackdiamond_get_account_profile` key of the map (dropped), and the contract ids typed in the generator (replaced by the two rules in the `retired` row). (3) CTO ruling msg 34143: the gate's legacy-address branch makes a prefix literal CONFORMANT when a committed `legacy_addresses.json` row of this project names it, so the generator also writes those registry rows (130), they land in their OWN commit first, and the rows the gate still refuses (firm tokens in `fork_keys` and ids, `{param}` and `none` prefixes, news buckets) are HELD, not forced: commit what passes and report the residual by kind. The checks were amended to the same rules. Gate limb that graded this modification: none (LIMB 6 does not fire on a modification; `<placeholders>NONE`).
+
+**AMENDED A4 (2.0.0_SA_COO~MI, 2026-10-14 ~18:0xZ), on your report and CTO ruling msg 34160 (no gate edit).** Your 70 committed rows and the registry commit stand as history; this amendment changes the row. (1) `contract.id` is a hash and `contract.label` is added; (2) the clean row holds no firm or product token anywhere: the tokens move to the new registry file `catalog_fork_keys.json`, keyed by the hashed id, and the loader (MX-c-15) joins them back; (3) a prefix with `{params}` registers and writes its leading literal, a `none` prefix and a `silver_legacy` prefix are null; (4) nine `silver_legacy` contracts are retired `not_served`; (5) the generator reads the token sets from the registry (`catalog_tokens.py`) and types none. Regenerate all 174 rows; the rows already committed are rewritten (their ids change). Re-run the criteria. Gate limb that graded this modification: none (LIMB 6 does not fire on a modification; `<placeholders>NONE`).
 
 <status>issued</status>
 <round>14</round>
