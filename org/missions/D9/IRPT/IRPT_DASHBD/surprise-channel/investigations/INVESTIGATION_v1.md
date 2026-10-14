@@ -10404,3 +10404,53 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W165-S1 -- the account_dim partition date is not computed by the adapter; the dry run's 2026-10-12 is passed in
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W165-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~165",
+  "surfaced_at": "2026-10-14T11:22:29Z",
+  "one_line": "the account_dim partition date is not computed by the adapter; the dry run's 2026-10-12 is passed in as an argument",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-200 section 1: one apply of 'one date= partition of account_dim (the newest silver date the dry run used, as the adapter computes it)'.",
+  "world_is": "The adapter computes no partition date. emit_account_dim(table, as_of) and gold_address(as_of) take as_of as an argument (adapter lines 165-175). The date 2026-10-12 is the round-103 dry run's target_address, not an adapter output. The packet names 2026-10-12 and states that the adapter does not compute it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_account_dim.py@a1d871ec33 (lines 165-175: gold_address and emit_account_dim take as_of)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~161/COTTONWOOD_ACCOUNT_DIM.json@a1d871ec33 (dry_run.target_address)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W165-S2 -- the adapter has no upload path, so the order's upload-path invocation shape names nothing that exists
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W165-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~165",
+  "surfaced_at": "2026-10-14T11:22:29Z",
+  "one_line": "the adapter has no upload path, so the order's exact invocation shape of the adapter's upload path names nothing that exists",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-200 section 1: 'by an AE applier with the exact invocation shape of the adapter's upload path, no live run; if the adapter has no upload path yet, say what the applier's order must add'.",
+  "world_is": "The adapter has no upload path: emit_account_dim(upload=True) raises NotImplementedError (adapter lines 173-174), pinned by test_emit_defaults_to_no_write_and_upload_is_refused (7 passed). No CLI, applier or manifest writer exists at HEAD. The packet records the run shape as NOT EXISTING and names what the applier's order must add (packet section 1).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_account_dim.py@a1d871ec33 (lines 170-175: emit_account_dim refuses upload)",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_cottonwood_account_dim.py@a1d871ec33 (test_emit_defaults_to_no_write_and_upload_is_refused)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
