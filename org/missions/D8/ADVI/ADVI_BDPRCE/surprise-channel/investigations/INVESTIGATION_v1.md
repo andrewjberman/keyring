@@ -2227,3 +2227,354 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "The band costs 442 Fixed Income trade rows on 25 assets. A cluster of nine unrelated funds at one ratio on one date suggests the corroborating ratio, not the trades, carries the offset. Not investigated; the list's classes are the rule's output as written."
 }
 ```
+
+## ADVI_BDPRCE-D1-W20-S1 -- The round-2 lot extract holds no rows for MORGAN STANLEY FIN LLC 0% 05/03/2029, for the eight round-2 scale_100x bond names, or for any other bond named in the order, so their served unit reads unreadable and their rows are withheld
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T03:56:37Z",
+  "one_line": "served_unit_map over lot_extract.csv (sha256 verified) has no lot for MORGAN STANLEY FIN LLC 0%, MIAMI-DADE 5.25% 2031, CITIGROUP 5.3% 2032 or any of the eight round-2 scale_100x names, so the order's expected values (MORGAN 100.0, MIAMI-DADE 1.0419, 8 of 8 unchanged) cannot be produced from the extract as specified.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lot_extract.csv sha256 e7e618d76516c8b7977179aefb3f77ce4fc13c17fbcf1dbeb92001a6e0a2b50b at C:/dev/wk-bdprce-r2-7-data/lot_extract.csv: 198,295 lots, 2,909 asset names (read at the worktree base 218e74901d)",
+      "grep -c -F on lot_extract.csv: MORGAN STANLEY FIN LLC 0; MIAMI-DADE CNTY FLA EDL FACS A 5.25% 0; CITIGROUP INC 5.3% 07/22/2032 0; MISSOURI ST HEALTH & EDL FACS 5% 0; BANK MIDWEST SPIRIT LAKE IOWA 3.85% 0; PNC BANK NATIONAL ASSOCIATION 4.1% 0; STATE BK INDIA NEW YORK NY 3.95% 0; TRUIST BK 3.9% 0; WELLS FARGO BANK NATL ASSN 3.8% 0",
+      "RULE_PROBE3.json served_units {assets 2909, per100 0, per_unit 2500, unreadable 409}; the probe's MORGAN, MIAMI-DADE and CITIGROUP rows read kind withheld with reason unit_unreadable (MORGAN 1 row, MIAMI-DADE 7 rows, CITIGROUP 5 rows)",
+      "BEFORE_AFTER.csv at org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~6/ (base 218e74901d): MORGAN served 115.995 on 2026-10-05 as NOW_CARRY_FORWARD, so the served series is not in the lot extract"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1.00 items 1 and 2 and the probe clause: served_unit_map reads each asset's unit from lot_extract.csv; MORGAN STANLEY FIN LLC 0% 05/03/2029 is expected to read per 100 (100.0 under per100, not 1.0); MIAMI-DADE CNTY FLA EDL FACS A 5.25% 04/01/2031 is expected at 1.0419; the eight round-2 scale_100x rows are expected UNCHANGED 8 of 8.",
+  "world_is": "The extract carries none of those names: 0 lots for MORGAN, MIAMI-DADE, CITIGROUP and the five other round-2 bond names, and 0 of 2,909 asset names read per100. The probe therefore withholds every such trade row as unit_unreadable (84 rows over the five dates); unit_scale_rows_unchanged is 0 of 8 and MORGAN and MIAMI-DADE are not priced. The per100 series the ruling describes is not served through this extract. BLACKROCK INC COM (1,074.9259, per unit) and ALLSPRING CORE BOND CIT CLASS E2 (10.3525, per unit) are in the extract and read as the order expects. Not resolved here: the unit source is the order's, and widening it is the issuer's and CTO's call."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S2 -- R1.3 withholds 54 per-unit-shaped Fixed Income rows that R1.2 left alone, because the unit-unreadable test runs before the ratio is read
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T03:56:37Z",
+  "one_line": "Of the 84 Fixed Income rows withheld unit_unreadable on the five probe dates, 54 carry a ratio within 1 percent of 1, the shape R1.2 left alone as per unit; they belong to 13 assets the extract does not carry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RULE_PROBE3.json census per date: R1.3 per_unit_left 34, 504, 1365, 943, 1144 (total 3,990); withheld unit_unreadable 9, 13, 21, 12, 29 (total 84)",
+      "effect measurement (.scratch/effect.py, not committed): the same five dates with every Fixed Income name read as per_unit (the R1.2 reading) give per_unit_left 4,044 in total, scaled 25 rows, withheld 5 rows; the 84 R1.3 withheld rows split 25 near 100, 54 near 1, 5 at about 1.084",
+      "served_unit_map over lot_extract.csv: 342 of 2,521 Fixed Income candidate names are in the map (266 per_unit, 76 unreadable); the other 2,179 are absent"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1.00 item 2: a Fixed Income row whose ratio is within 1 percent of 1 is left alone (per_unit_left) under per_unit; a Fixed Income row whose unit is unreadable, or whose asset is missing from the map, is withheld with reason unit_unreadable.",
+  "world_is": "Both clauses are built as written, and the consequence is larger than the order's named assets: a per-unit-shaped bond or fund row is withheld as unit_unreadable whenever its asset is absent from the extract, which is the case for 2,179 of 2,521 Fixed Income names. Over the five dates the rule withholds 54 rows that R1.2 left alone, 25 rows that R1.2 would have scaled, and 5 rows R1.2 withheld too. The count is a measured consequence; it is not a defect against the clauses as ruled."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S3 -- The task order's four probe dates omit 2026-09-16, the date of five of the eight round-2 scale_100x rows; the probe reads five dates and the next day of each
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T03:56:37Z",
+  "one_line": "Section 1.00 names four probe dates, but five of the eight round-2 scale_100x rows sit on 2026-09-16, so unit_scale_rows_unchanged cannot be read from the four dates alone; the probe adds 2026-09-16 and reads 2026-09-17 with it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BEFORE_AFTER.csv at org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~6/ (base 218e74901d): scale_100x rows dated 2026-09-16 (BANK MIDWEST SPIRIT LAKE IOWA 3.85% 2026, PNC BANK NATIONAL ASSOCIATION 4.1% 2027, STATE BK INDIA NEW YORK NY 3.95% 2027, TRUIST BK 3.9% 2026, WELLS FARGO BANK NATL ASSN 3.8% 2026), 2026-09-22 (CITIGROUP INC 5.3% 07/22/2032), 2026-10-09 (MIAMI-DADE, MISSOURI ST HEALTH)",
+      "ADVI_BDPRCE-D1-W13-S4 (the first seat's row) recorded the same omission for round 2 and was not carried into section 1.00",
+      "RULE_PROBE3.json census keys 2025-05-28, 2026-09-16, 2026-09-22, 2026-10-02, 2026-10-09"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1.00 probe clause: the probe runs over 2025-05-28, 2026-10-09, 2026-09-22 and 2026-10-02, reading each date and the next; unit_scale_rows_unchanged is the eight round-2 rows.",
+  "world_is": "Those four dates hold three of the eight round-2 rows. The other five sit on 2026-09-16. The probe reads 2026-09-16 and 2026-09-17 in addition, five dates in all (ten partitions plus the dimension), so all eight rows are read on their own dates."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S4 -- served_unit_map also skips a lot whose current price is missing or not positive; the order names only a zero or missing quantity or market value
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S4",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T03:56:37Z",
+  "one_line": "The order's served_unit_map skip rule covers a zero or missing quantity or market value; the module also skips a lot with a missing or non-positive current price, since no lot ratio exists for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lot_extract.csv at C:/dev/wk-bdprce-r2-7-data/lot_extract.csv (sha256 verified): 35 lots with a missing or non-positive current_price (34 missing, 1 zero), of 198,295; 16,339 lots with a zero or missing quantity or market value",
+      "RULE_PROBE3.json lot_skips {lots 198295, zero_or_missing_qty_or_mv 16339, missing_or_non_positive_price 35}",
+      "bd_price_rule.py served_unit_map at the worker branch: the price test sits beside the quantity and market-value test; module docstring records the extra skip"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1.00 item 1: per asset, the median over its lots of current_price / (|market_value| / |quantity|), skipping a lot with a zero or missing quantity or market value.",
+  "world_is": "A lot with no current price yields no ratio at all, and a zero price yields a ratio of zero that would drag the median. The module skips both, which the order does not state. The effect is confined to an asset that also has usable lots; the probe's served-unit counts are computed with the skip in place. Left as built and reported here for the issuer to confirm or reverse."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S5 -- MORGAN STANLEY FIN LLC 0% 05/03/2029 does not read per 100 under R1.3: it has no usable served pair, so its 2025-05-28 par Buy is withheld unit_unreadable and the 100.0 expectation is not produced
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S5",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T04:17:03Z",
+  "one_line": "MORGAN STANLEY FIN LLC 0% 05/03/2029 has no usable served pair, so R1.3 reads its served unit as unreadable and withholds its 2025-05-28 par Buy (executed 100.0) instead of reading 100.0 per 100.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RULE_PROBE3.json (this commit) assets entry MORGAN STANLEY FIN LLC 0% 05/03/2029 2025-05-28: kind withheld, served_unit unreadable, served_ratio_median null, withheld reasons unit_unreadable 1, row ratio 100.0",
+      "silver/prices/canonical_prices.parquet (md5 a88a7030f4506ac7e0cdb844382f9d16, read this run): MORGAN transaction_observed rows are 2025-05-28 at 1.0 and 2026-10-05 at 115.995; no other observed row in the window",
+      "C:/dev/wk-bdprce-r2-6-data/tx/2026-10-05.parquet (manifest md5 per PARTITIONS2.csv): one MORGAN row, transaction_type Transfer Out, price 116.0, units 250000.0, market_value -28998750.0; a Transfer Out is excluded by R1 clause 1",
+      "C:/dev/wk-bdprce-r2-7-data/lot_extract.csv (sha256 e7e618d7...a2b50b): no lot carries the name MORGAN STANLEY FIN LLC 0% 05/03/2029 (round-2 surprise W20-S1 measured the same)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1.000 item 3: MORGAN STANLEY FIN LLC 0% 05/03/2029 on 2025-05-28 reads 100.0 (per 100), not 1.0, once served_unit_map reads its unit from the served pairs.",
+  "world_is": "The asset has no usable pair: its one served observed row in the window is 2026-10-05 at 115.995, and the only row of the asset on 2026-10-05 is a Transfer Out, which clause 1 excludes (had it been admitted, its market_value/units of 115.995 would have read per unit, not per 100). Its 2025-05-28 served row reads 1.0, which is per unit, while its 2025-05-28 Buy executes at 100.0 with market_value/units 1.0. So the served series itself reads 1.0 on the expected date, and the unit that the 2026 served row carries (115.995) differs from it. The 2025-05-28 row is withheld unit_unreadable (ratio 100.0 printed). The probe reports the withheld row; nothing is adjusted, and the unit change inside one asset is for the issuer and CTO to rule."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S6 -- No served asset reads per 100 under the ruled 10 percent bands: 807 read per unit, 81 are unreadable, and a per-100 bond served outside 90 to 110 cannot read per 100
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S6",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T04:17:03Z",
+  "one_line": "Of the 888 served assets, served_unit_map reads 0 per100, 807 per_unit and 81 unreadable, so the served-unit count the order's record expects for per100 cannot be produced under the ruled bands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RULE_PROBE3.json served_units {assets 888, per100 0, per_unit 807, unreadable 81}; served_pairs {trade_pairs 12726, lot_pairs 151035, assets_with_no_pair 73}",
+      "measured census of the served_unit_map output this run (scratch, not committed): 815 assets with a median ratio; 807 in 0.9 to 1.1; 1 in 0.5 to 0.9 (ratio not printed here); 3 in 1.1 to 5; 3 in 5 to 50; 1 in 110 to 500 (BECTON DICKINSON & CO COM, ratio 181.4453); 0 in 90 to 110; 73 with no pair",
+      "canonical_prices.parquet (md5 a88a7030f4506ac7e0cdb844382f9d16): MORGAN STANLEY FIN LLC 0% 05/03/2029 transaction_observed 115.995 on 2026-10-05, outside the 90 to 110 per-100 band"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1.000 item 1: within 10 percent of 100 -> per100; within 10 percent of 1 -> per_unit; anything else, or no usable pair -> unreadable, with the median ratio printed beside it. Section 1.00 item 3 expects MORGAN STANLEY FIN LLC 0% 05/03/2029 to read per 100.",
+  "world_is": "No served asset's median ratio falls in the per-100 band, so the per-100 class is empty. The coarse band is the ruled width and is applied unchanged; it cannot read a per-100 series served outside 90 to 110. MORGAN at 115.995 is one such series, and the probe's per100 count of zero follows from the band, not from a data fault. The band and any widening are the issuer's and CTO's call; no number is adjusted in the probe."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S7 -- The 2026 same-date partitions sit under C:/dev/wk-bdprce-r2-6-data/tx/ and r3-14-data/tx/, not under tx_back/, which holds 2020 to 2025 only
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S7",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T04:17:03Z",
+  "one_line": "Section 1.000 item 2 names the cached partitions under C:/dev/wk-bdprce-r2-6-data/tx_back/, but the 2026 partitions for 2026-09-16 to 2026-10-14 are in tx/ (and four in r3-14-data/tx/); the probe read the manifest paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-bdprce-r2-6-data/tx_back/: 1,691 files, last 2025-12-31.parquet; zero names beginning 2026",
+      "C:/dev/wk-bdprce-r2-6-data/tx/: 237 files, 2026-10-12 and 2026-10-13 among them; PARTITIONS2.csv source_path for the other 2026-09-16..2026-10-14 dates (all but 2026-10-02, 10-08, 10-11, 10-14) names this folder",
+      "PARTITIONS2.csv (0.9.0_WK_ADVI_BDPRCE~14) source_path for 2026-10-02, 2026-10-08, 2026-10-11, 2026-10-14 names C:/dev/wk-bdprce-r3-14-data/tx/; the probe checked each local_md5 against the manifest before reading"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1.000 item 2: the same-date trade rows come from the cached partitions under C:/dev/wk-bdprce-r2-6-data/tx_back/.",
+  "world_is": "The cache is split by year: tx_back holds the pre-2026 partitions and the 2026 partitions sit in tx/. Same bytes, other folder. Round-2 row ADVI_BDPRCE-D1-W14-S7 recorded the cache split for the count; this row records the path the order names."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S8 -- The served canonical object was rewritten again after the replay read it: ETag a88a7030 at 04:03:36Z, not the 8eaa29e3 at 00:13:47Z that BP-c-2 cites
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S8",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T04:17:03Z",
+  "one_line": "silver/prices/canonical_prices.parquet now reads ETag a88a7030f4506ac7e0cdb844382f9d16 (LastModified 2026-10-14T04:03:36Z), a third version after the replay's 8eaa29e37c4e651381413b02ca2b43b2 (00:13:47Z); the probe read the current object.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api head-object --bucket opal-data-bd --key silver/prices/canonical_prices.parquet (this run): ETag a88a7030f4506ac7e0cdb844382f9d16, LastModified 2026-10-14T04:03:36+00:00, ContentLength 110077599",
+      "aws s3api get-object of the same key to C:/dev/wk-bdprce-r3-20-data/canonical_prices.parquet: md5 a88a7030f4506ac7e0cdb844382f9d16 (equal to the ETag, single part)",
+      "deliverables/0.9.0_WK_ADVI_BDPRCE~14/REPLAY2.json line 5: the replay read ETag 8eaa29e37c4e651381413b02ca2b43b2, LastModified 2026-10-14T00:13:47Z; the local copies C:/dev/wk-bdprce-r2-6-data/canonical_prices.parquet and r2-7-data copy have md5 0ba9bd51fa175917b8d2813b41d78f5d and match neither"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1.000 item 2 reads the served canonical series; BP-c-2's REPLAY2 record cites the 00:13 object as the served basis.",
+  "world_is": "The served series moved again between the replay's read and this probe. The probe's per-unit and per-100 readings, and every row it draws from the canonical series, rest on the 04:03 object. Whether REPLAY2's figures still hold on that object is not measured here; the probe does not compare the two objects."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S9 -- R1.3 still withholds per-unit-shaped Fixed Income rows as unit_unreadable, now 197 of 203 withheld rows, against 54 of 84 in the first pass (re-read of W20-S2 on the served-pair source)
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S9",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T04:17:03Z",
+  "one_line": "On the served-pair unit source the five probe dates withhold 203 Fixed Income rows as unit_unreadable, 197 of them with a ratio within 1 percent of 1, the shape R1.2 leaves alone as per unit; the cause is the served-unit read, not the clause.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RULE_PROBE3.json census: unit_unreadable_rows per date 2025-05-28 20, 2026-09-16 5, 2026-09-22 12, 2026-10-02 23, 2026-10-09 143 (total 203); per_unit_left 3847; scaled_rows 24",
+      "measured withheld ratios of the 203 rows (scratch, this run): 197 within 1 percent of 1, 1 within 1 percent of 100 (MORGAN 2025-05-28), 5 other",
+      "W20-S2 (first pass, lot-extract source): 84 withheld, 54 near 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1.00 item 2: a Fixed Income row whose unit is unreadable, or whose asset is missing from the map, is withheld unit_unreadable; a row whose ratio is near 1 under per_unit is left alone.",
+  "world_is": "Both clauses are built as written. The withheld rows belong to assets the served map reads unreadable (81 served assets) or does not carry; the record does not split the two. The count is a measured consequence of the unit source and the bands, not a defect against the clauses."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S10 -- Re-read of W20-S1 on the second correction: the lot extract still holds no lot for the nine named and scale names
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S10",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T04:43:17Z",
+  "one_line": "Re-read of W20-S1 on the second correction: the lot extract still carries no lot for any of the nine names (MORGAN STANLEY FIN LLC 0% 05/03/2029 and the eight round-2 scale_100x names), so their served units come from trade and served pairs only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-bdprce-r2-7-data/lot_extract.csv (sha256 e7e618d76516c8b7977179aefb3f77ce4fc13c17fbcf1dbeb92001a6e0a2b50b): 198,295 lots; 0 lots for each of the nine names, counted this run",
+      "RULE_PROBE3.json (commit 33195e2009): MORGAN reads per100 from its nearest earlier Buy of 2025-05-28; the eight scale names read per_unit from same-date and nearest earlier trade pairs, 8 of 8 equal to the served price"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1.000 item 1 (served units read from served pairs) and section 1.0000 item (b): the lot extract is a further source; a name it does not carry is a gap in that one source only.",
+  "world_is": "Still true: the lot extract holds no lot for these nine names. The units are read without it, so the gap moves no unit. Nothing reads the lot extract as the sole unit source."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S11 -- Re-read of W20-S9: 202 Fixed Income rows are withheld unit_unreadable, 190 on assets the served map does not carry and 12 on an asset whose median sits between the bands
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S11",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T04:43:17Z",
+  "one_line": "Re-read of W20-S9 on the second correction: 202 Fixed Income rows are withheld unit_unreadable on the five probe dates; 190 belong to 17 assets the served map does not carry, and 12 belong to ISHARES CORE U.S. AGGREGATE BOND ETF, whose served median ratio (3.549831616098765) lies between the bands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RULE_PROBE3.json (commit 33195e2009) census unit_unreadable_rows per date: 2025-05-28 19, 2026-09-16 5, 2026-09-22 12, 2026-10-02 23, 2026-10-09 143 (total 202)",
+      "RULE_PROBE3.json par_quoted.withheld_unit_unreadable_by_asset: 18 assets; 17 with served_unit unreadable by default (absent from the served map), 190 rows; VANGUARD INTERMEDIATE-TERM CORPORATE BOND ETF 137 rows on 2026-10-09; ISHARES CORE U.S. AGGREGATE BOND ETF 12 rows on 2026-09-22",
+      "canonical_prices.parquet (md5 a88a7030f4506ac7e0cdb844382f9d16): the 17 unserved assets have no transaction_observed row in 2026-09-16..2026-10-13; VANGUARD INTERMEDIATE-TERM CORPORATE BOND ETF has yahoo_finance and linear_interpolation rows only in that window",
+      "C:/dev/wk-bdprce-r2-6-data/tx/2026-09-23.parquet: 12 ISHARES CORE U.S. AGGREGATE BOND ETF Sale rows with trade_date 2026-09-22, prices 40.0 to 110.0, each market_value/units equal to its price (row ratio 1.0)",
+      "RULE_PROBE3.json par_quoted.withheld_ratios: 202 printed ratios, 197 within 1 percent of 1, 5 at 1.0844, none within 1 percent of 100"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1.00 AMENDMENT 3 item 2 and section 1.0000: a Fixed Income row whose asset is missing from served_units, or whose unit is unreadable, is withheld unit_unreadable with its reason; the row's own ratio is not used to read the unit.",
+  "world_is": "The clause is built as written and the count is its measured consequence of served-map coverage and the bands. The 190 rows of the 17 unserved assets carry no served unit, so R1 prices none of them on those dates. The 12 ISHARES rows read per-unit-shaped on their own ratio (1.0) and are withheld only because the served median is outside both bands (see W20-S12 and W20-S13). Nothing is adjusted; the counts are as measured."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S12 -- Four served assets have a median served-pair ratio between the bands and read unreadable
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S12",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T04:43:17Z",
+  "one_line": "Four served assets have a median served-pair ratio between the bands, so R1.3 reads their served units as unreadable: CALL NVIDIA CORP $250 EXP 10/02/26 at 0.4972, ISHARES CORE U.S. AGGREGATE BOND ETF at 3.5498, VANGUARD FTSE ALL-WORLD EX-US SMALL-CAP ETF at 3.8175 and VISTANCE NETWORKS INC COM at 3.7725.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RULE_PROBE3.json (commit 33195e2009) unit_census.unreadable_assets: the four entries with a median_ratio and reason ratio_outside_bands, exact values 0.4972393179404657, 3.549831616098765, 3.817494809041611, 3.7725",
+      "RULE_PROBE3.json served_units: 888 served assets = 824 per_unit + 1 per100 + 63 unreadable (59 with no usable pair, these four with a pair)",
+      "RULE_PROBE3.json par_quoted.withheld_unit_unreadable_by_asset: of the four, only ISHARES CORE U.S. AGGREGATE BOND ETF has withheld rows on the probe dates (12); the other three have none",
+      "lot_extract.csv (sha256 e7e618d76516c8b7977179aefb3f77ce4fc13c17fbcf1dbeb92001a6e0a2b50b): CALL NVIDIA CORP and VISTANCE NETWORKS INC COM carry 0 lots; VANGUARD FTSE ALL-WORLD EX-US SMALL-CAP ETF carries 479 lots"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT R1.3 second correction (order section 1.0000 item (a)): a median served-pair ratio in [50, 200] is per100, in [0.5, 2] is per_unit, and anything else is unreadable with the median printed beside it.",
+  "world_is": "The bands are applied as ruled. The four ratios fall outside both bands: three in the gap between 2 and 50 and one just below 0.5. They are the only served assets whose median sits in those gaps. The rule reads them unreadable and prints each ratio. Only ISHARES has withheld rows on the probe dates (W20-S11); the other three have none, and kept non-Fixed-Income rows keep their price whatever the unit."
+}
+```
+
+## ADVI_BDPRCE-D1-W20-S13 -- The lot pairs set the served-unit median of ISHARES CORE U.S. AGGREGATE BOND ETF against its own trade pairs
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W20-S13",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~20",
+  "surfaced_at": "2026-10-14T04:43:17Z",
+  "one_line": "The lot pairs dominate the served-unit median of ISHARES CORE U.S. AGGREGATE BOND ETF: its 12 same-date trade pairs have a median of 1.0 and its 61 usable lots a median of 5.397952, so the all-pairs median reads 3.549831616098765 and the unit unreadable, where the asset's own trades read per unit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "probe trade_pairs (commit 33195e2009 code path, re-run this session): ISHARES same-date pairs on 2026-09-22 against served price 97.5, 12 pairs with ratios 1.0263, 1.0, 1.1471, 0.907, 0.8864, 2.4375, 0.8864, 1.0118, 0.963, 1.0, 1.625, 0.8864; median 1.0",
+      "lot_extract.csv: ISHARES 361 lots; 61 with nonzero quantity and market value, median ratio 5.397952, 23 percent of them within 0.9 to 1.1; the other 300 are skipped (zero market value or quantity)",
+      "lot_extract.csv: VANGUARD FTSE ALL-WORLD EX-US SMALL-CAP ETF 479 lots, 83 usable, lot-only median ratio 4.964683, 26.5 percent within 0.9 to 1.1",
+      "RULE_PROBE3.json served_pairs: lot_pairs 151,035 across 503 assets; served_unit_map takes one median over all pairs of an asset"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1.0000 item (a) and section 1.000 item 1: the unit is the median over all of an asset's pairs, the lot extract's (current_price, |market_value| / |quantity|) pairs being one source among the served pairs.",
+  "world_is": "The median is taken over all pairs as ruled. For this asset the usable lot pairs sit far from its trade pairs (the lot ratios spread widely), so the lot source sets the median against the asset's own same-date trades, which read 1.0 (per unit) on the served date. The extract's market_value/quantity does not track the trade-implied unit for this asset. Nothing is adjusted: the record prints the unreadable unit and this row carries the measured disagreement. Whether lot pairs belong in the median is the CTO's call."
+}
+```
