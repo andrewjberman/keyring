@@ -15240,3 +15240,29 @@ name the one known failure instead of silently inheriting it.
     "notes": "BLOCKING for the order's final step only; the proof instance and the code are complete and valid. The issuer flips the tag, or the CTO grants the path."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W86-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~86",
+    "surfaced_at": "2026-10-14T19:29:33Z",
+    "one_line": "The order's type rule for defaultTradingEngineId (int64 if every non-null value is an integer, string if mixed) has no non-null value to apply: every row of every bronze date 2026-10-10..14 carries the column null, so the type was chosen as string, with the reason in the source comment.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: read-only boto3 get_object of eclipse/inflection/bronze/<date>/portfolios_simple.json in opal-data-assets, this session, from C:/tmp/wk-oplgtw-86: 846 rows and 23 columns per date for 2026-10-10..14; the column is present on 846 of 846 rows and null on 846 of 846 rows on each date (0 non-null values); 2026-10-08 and 10-09 carry 22 columns.",
+        "SOURCE: data/assets/scripts/silver/mirror_schemas.py:317 @d835fcdabf -- the type rule of OG-ec-1 step 1 reads the non-null values; 'every non-null value is an integer' over zero values is vacuously true and is not evidence for int64.",
+        "CONVERTER: pyarrow 24.0.0 on this device, pa.Table.from_pandas with an int64 schema raises ArrowInvalid on the strings '12' and 'ABC' and accepts None; a string schema accepts all four inputs, so the string type cannot fail a whole folder on a later non-null value."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-ec-1 step 1: choose the declared type from the REAL non-null values of defaultTradingEngineId in the 2026-10-14 bronze object -- int64 if every non-null value is an integer, string if mixed -- and say which in a comment.",
+    "world_is": "The 2026-10-14 bronze object carries the column on every row and every value is null; 2026-10-10..13 are the same. The type rule therefore has no evidence. The worker chose string, the type that cannot raise on a later non-null value. AC1 and AC2 do not grade the type. The type is the one input the data did not decide: confirm it or change it at the applier order, when the first non-null value is measured.",
+    "notes": "INERT: the type sets the arrow type of a column that is null in every landed row; nothing deploys in this cell (the release is NFRA_OPLGTW.TO-OG-ap-18). OBSERVATION: no criterion is blocked. The row closes when a non-null value is measured or the issuer rules the type."
+  }
+  ```
