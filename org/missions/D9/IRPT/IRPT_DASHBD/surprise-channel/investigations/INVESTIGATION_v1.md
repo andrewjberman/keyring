@@ -12281,3 +12281,57 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not decided here. Either the 0.5.0 contract sources hold.return_<window> for Inflection from the same figure (a contract change the issuer or CTO rules), or the whole-document rule is amended to treat a household return printed once as one cell. The record reports conflicts 3, not 0."
 }
 ```
+
+## IRPT_DASHBD-D2-W175-S10 -- the round-109 render clause on account labels demands four digits and distinct labels, which round 110's alphanumeric labels and shared last four refuse (BLOCKING)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S10",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T20:54:30Z",
+  "one_line": "DB110-3-AC1 fails on the copied round-109 clause 'each account's last4 label must be four digits and the labels distinct within the household', while the round-110 clauses and the order's label rule accept alphanumeric last fours and a shared last four told apart by (k of n).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB110-3-AC1 (the round-110 render clauses): every 'ending XXXX' label is an account's real last four as the sample holds it, and two accounts that share a last four are told apart by (k of n). DB-b-223 step 1: the label rule is the CTO's: alphanumeric allowed. Round-109 clause (check_render in p109_round109.py, copied by build_check_render): each last4 label is four digits and the labels are distinct.",
+  "world_is": "Read on 2026-10-14 ~20:55Z: the final render (RENDER_R110.json) prints each account label as its last four as stored, alphanumeric; the five accounts carry 4 distinct last fours, 2 of them all-digit; two accounts share one value and carry (1 of 2) and (2 of 2). DB110-3-AC1 FAIL: 'each account's last4 label must be four digits and the labels distinct within the household (5 accounts, 4 distinct, 2 all-digit)'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I .../checks/r110/p110_inflection.py . DB110-3-AC1, rc 1, 2026-10-14T20:52Z: the clause above is the first failing line",
+      "p109_round109.py check_render, the last4 clause (read at HEAD of wk-IRPT_DASHBD-175)",
+      "C:/dev/_irpt_private_evidence_20261009/fwd21_sample_r110/FWD21_EXPORT_49F_SAMPLE.html (the label text, counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. The issuer must amend the copied clause for round 110 (alphanumeric labels; distinct only where the (k of n) suffix tells them apart), as round 105 and round 106 were amended. Diagnostic only, in scratch: with this one clause removed in memory, every later round-109 clause passes on the final render; the issuer's file is not edited."
+}
+```
+
+## IRPT_DASHBD-D2-W175-S11 -- the round-110 entry point never sets the firm title the round-109 render clause reads, so the title clause raises a TypeError (BLOCKING)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S11",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T20:54:30Z",
+  "one_line": "The round-110 check entry (p110_inflection.py main) runs the copied round-109 check_render without setting FIRM_TITLE9, which the round-109 main() sets; the title clause 'FIRM_TITLE9 in vt' then raises TypeError on None, so DB110-3-AC1 cannot read the title clause.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB110-3-AC1 re-binds every round-109 render clause, including the registry firm title on both HTMLs (p109 check_render: need('Sample Firm' not in vt and FIRM_TITLE9 in vt)).",
+  "world_is": "p109_round109.py sets FIRM_TITLE9 inside main() (global FIRM_TITLE9; FIRM_TITLE9 = firm_title()). p110_inflection.py main() calls CHECKS[cid](root) directly, so FIRM_TITLE9 stays None. Diagnostic in scratch with FIRM_TITLE9 set: the title clause passes on both HTMLs. As run, the criterion's title clause would fail with TypeError: 'in <string>' requires string as left operand, not NoneType.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p109_round109.py lines 68, 270 and 464-473 (FIRM_TITLE9 global, its use, its setting in main), read at HEAD of wk-IRPT_DASHBD-175",
+      "p110_inflection.py main(), read at HEAD: no FIRM_TITLE9 setting",
+      "scratch diagnostic: the check_render clauses after the label clause, with FIRM_TITLE9 set and the label clause removed in memory, all pass (the issuer's files are not edited)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. The issuer must set the title in the round-110 entry point (or the copied clause must read firm_title() directly). It is latent behind S10: the label clause fails first."
+}
+```
