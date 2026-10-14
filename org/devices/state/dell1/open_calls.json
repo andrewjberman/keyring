@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-14T00:58:01Z",
+ "written_at": "2026-10-14T02:38:00Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -3121,6 +3121,248 @@
     "at": "2026-10-14T00:58:01Z",
     "by": "1.0.0_SA_CTO~DELL1",
     "ruling": "org/missions/D8/ADVI/ADVI_BDPRCE/ledger/CTO_RULING_R1_THE_PRICE_RULE_20261013.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
+  },
+  {
+   "id": "dell1-20261014T012354Z-0a2e",
+   "project": "ADVI_BDPRCE",
+   "subject": "ADVI_BDPRCE: which dell1 CloudOps lane executes the exact-lot export apply (template + silver patch + first export) once the key proof and the cap check read clean?",
+   "asked_by": "2.0.0_SA_COO~K1",
+   "source": "org/missions/D8/ADVI/ADVI_BDPRCE/decompositions/ADVI_BDPRCE_DECOMP_R3.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T01:23:54Z",
+   "kind": "fork",
+   "context": "Round 3 (issuance 94d1161b08) proves the 500,000-row question (BP-c-4) and the lot-key fixture (BP-c-5); the WORLD apply that follows is a seat order under a never-widen pair, and no CloudOps lane is seated to ADVI_BDPRCE (one lane holds one project; the laptop CloudOps lanes stand down for dell1 projects per the 2026-10-13 ruling). The apply cannot be cut without an assignee.",
+   "rec": "Name 0.7.0_AE_CloudOps~FB1 (it holds ADVI_FIRMBKTS, the sibling D8/ADVI project on the same bucket and runner family) for the apply, or the lane the CTO prefers; the COO half of the pair is authored from BP-c-5's proof at the un-park.",
+   "scope": {
+    "measured_at": "2026-10-14T01:23:54Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T01:27:36Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D8/ADVI/ADVI_BDPRCE/ledger/ROUND_ANALYSIS.round2.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
+  },
+  {
+   "id": "dell1-20261014T014445Z-1108",
+   "project": "MDPF_SECCLASS",
+   "subject": "e97 acceptance: the bars and advisors clauses fail on Oct-12 baselines that a pre-fire AUA restatement moved -- grade D1-W83-S5's disarm on the total-level reconciliation, or require a class-level re-base first?",
+   "asked_by": "2.0.0_SA_COO~M1",
+   "source": "org/missions/D8/MDPF/MDPF_SECCLASS/surprise-channel/investigations/INVESTIGATION_v1.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T01:44:45Z",
+   "kind": "fork",
+   "context": "First post-ship fire (23:00Z 10-13): 5 of 7 e97 clauses met; bars (Q3 gap 258.49, Q4 29,052.65) and advisors (14 of 840 beyond 250) fail against the 10-12 baselines. client_performance AUA moved between its 10-12 05:18Z and 10-13 00:18Z versions (+249..+263, -30,914.72 on 10-09); this fire moved it 0.00; served totals = AUA 15/15 at 0.00 (row D1-S36). Gates D1-W83-S5's disarm and round-24 close.",
+   "rec": "Disarm on the total-level evidence (served totals = current AUA 15/15 at 0.00; every advisor-day gap equals the firm AUA movement to the cent; no advisor key dropped), after the second fire reads 0 keys rewritten; I fold a class-level re-base of the bars into the round-25 recut. Why: the baselines are the stale side, and a re-base now would add a cell mid-round for a number the second fire's idempotence read already bounds.",
+   "scope": {
+    "measured_at": "2026-10-14T01:44:45Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/shared-infra"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/terraform/shared-infra/main.tf overlaps the write set of IRPT_BCKEND placed on dell2 (infra/aws/terraform/shared-infra)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      "data/assets/scripts/gold/investor_reporting/tests/test_holdings_cusip_fallback.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      "data/black_diamond/scripts/gold/tests/test_e18_canonical_caller.py overlaps the write set of IRPT_DASHBD placed on dell2 (data/black_diamond/scripts/gold/tests)",
+      ".tools/safe_deploy_core.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/safe_deploy_core.py)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/shared-infra declares cross-firm-secret-deny, also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/shared-infra declares BDPipelinePermissions, DriftProducerCompPutAndSourceZip, DriftProducerWritesAndDataDeny (+110), also declared by root infra/aws/terraform/shared-infra named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/shared-infra declares cloudwatch-metrics, also declared by root infra/aws/terraform/bd-pipeline named by NFRA_MCPINDEX on sitez"
+     ],
+     "shared": [
+      ".tools/safe_deploy_core.py is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T02:08:05Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/critical_paths/cross_adjudication/20261014T0152Z_XA-20261014T014758Z-01a0.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261014T014758Z-01a0"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261014T014758Z-01a0",
+    "at": "2026-10-14T01:47:58Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell1-20261014T015920Z-d799",
+   "project": "ADVI_BDPRCE",
+   "subject": "ADVI_BDPRCE: how does R1.1 identify the six par-quoted bonds and CDs whose dimension coupon is null? Class plus coupon reaches only 2 of the 8 100x rows",
+   "asked_by": "2.0.0_SA_COO~K1",
+   "source": "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/RULE_PROBE2.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T01:59:20Z",
+   "kind": "fork",
+   "context": "BP-c-1 (merged @2341c317b8) takes the par-quoted set as a parameter. Fixed Income plus coupon not null reaches 2 of the 8 round-2 100x rows. Six more (CITIGROUP INC 5.3% 07/22/2032, PNC, TRUIST, WELLS FARGO BANK, STATE BK INDIA, BANK MIDWEST) have a null dimension coupon and read 100x in Andrew's list. Fixed-income funds are per unit and must not scale.",
+   "rec": "Identify by class Fixed Income plus a price over (market value over units) ratio within 1 percent of 100: scale (exact arithmetic on the row); ratio near 1: per unit, leave it; any other ratio: withhold with the reason. Dimension coupon then only corroborates.",
+   "scope": {
+    "measured_at": "2026-10-14T01:59:20Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T02:08:24Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D8/ADVI/ADVI_BDPRCE/ledger/CTO_RULING_R1_THE_PRICE_RULE_20261013.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
+  },
+  {
+   "id": "dell1-20261014T022349Z-a565",
+   "project": "AMGT_RESAPP",
+   "subject": "AMGT_RESAPP FWD-41: the AI-fill page blocks, re-cut from PROD 7d5cb34d (approved at call cf85); landing held on the round-105 re-validate reading 0 refused",
+   "asked_by": "2.0.0_SA_COO~R2",
+   "source": "cand/dell1/aifill-blocks-prod",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T02:23:49Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/aifill-blocks-prod",
+    "purpose": "Five machine-written text blocks on the Security Analysis page (management bio summary, recent management developments, and gap fills for the research team's management passage, the thesis pillars and the header description), each with its source class, citations as links and a Machine-written chip; the server side is deployed and serves ai_fill for 95 names",
+    "pages": [
+     "Security Analysis"
+    ],
+    "class": "opal-internal",
+    "how": "cd portal && bun run dev:live --port 5174; /security-analysis, AMD US and COST US",
+    "head_sha": "53de2b9d844b427b90f1553b0c7e0b408c688662",
+    "commits": 1
+   },
+   "scope": {
+    "measured_at": "2026-10-14T02:23:49Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/harvest",
+     "infra/aws/terraform/yang-pipeline",
+     "infra/aws/terraform/nfra-agentbus-alyssa01",
+     "infra/aws/terraform/seeking-alpha"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of COMM_ASSIST placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/research/filings/analyze.py is on the shared branch (lib)",
+      "lib/research/filings/tests/test_reverify_stated_value.py is on the shared branch (lib)",
+      "lib/research/api/scoped_amgt.py is on the shared branch (lib)",
+      "lib/research/api/monthly_chatter.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_classification_withheld.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_names_read_agreement.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T02:25:04Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_APPROVAL_PORTAL_CAND_AIFILL_BLOCKS_20261014.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell1-20261014T023335Z-67ac",
+   "project": "ADVI_BDPRCE",
+   "subject": "ADVI_BDPRCE: the ruled lot key folds 192 export rows (191 groups differ on Market Value). Add units to the key and prove it on the first real export?",
+   "asked_by": "2.0.0_SA_COO~K1",
+   "source": "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~17/LOT_PROOF2.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T02:33:35Z",
+   "kind": "fork",
+   "context": "BP-c-5 (merged @f3eaea3038), recomputed by the issuer: key (relationship_id, account_id, asset_id, open_date, unit_cost) folds 192 of 500,000 rows; all 191 colliding groups differ on Market Value (one also on Inherited Date), so they are distinct lots of different size. The fixture's Units are synthetic and cannot prove a key containing them.",
+   "rec": "Add units to the key (a lot's own attribute, not a value). Prove it on the first REAL export with Units on: rows folded 0 and no colliding group differing, read back under the apply's pair, with the template VersionId as rollback. Do not add Market Value.",
+   "scope": {
+    "measured_at": "2026-10-14T02:33:35Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T02:38:00Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D8/ADVI/ADVI_BDPRCE/prd/ADVI_BDPRCE_PRD.md",
     "crossbox": null,
     "ruled_by": "cto",
     "xadj": null

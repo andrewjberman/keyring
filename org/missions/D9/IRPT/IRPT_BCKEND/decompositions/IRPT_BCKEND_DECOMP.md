@@ -3784,3 +3784,19 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r188/p188_cells.py`, dry-run at the b
 | `IB-pr-526` | the IR holdings class rule's count: per firm, the served holdings that carry a cash-type sub_asset_class but a class other than cash (the ones the shared rule would move), with their public tickers; reads only | FWD-3 | SERVED (reads served snapshots into memory, counts only out) | none | P188-b |
 
 fanout: 2 of 2 chains, cap 8, reason: two independent chains. Two worker spawns (slots ~372 and ~373).
+
+
+## 181. ROUND 189, WORKSTREAM ~P (2026-10-14 ~03:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round-189 analysis (@318056547a, msg 7467): Cottonwood's lost account read; the IR holdings class rule built and packaged)
+
+Round 188 closed (IB-pr-525 @368dd470e4, IB-pr-526 @05d5a8d786; packet @0c5677447a; the CVO's adjudication v89 dismissed 10 rows, nothing applied). The CTO's round-189 list has two items and three carried. (1) The read of Cottonwood's one lost account (ruling call 3, step 1): **DONE by the issuer THIS tick as a DIRECT-ACT** (LOCAL, under the size floor; reads of the refusal record, three landed directories and six silver tables in memory, counts and a hash prefix out): `deliverables/2.0.0_SA_COO~P2/COTTONWOOD_LOST_ACCOUNT_READ_20261014.md`, row D2-S160. Its finding is branch 3 as the CTO ruled (not closed, not re-keyed, missing from the allocations feed since 2026-10-09), plus two questions only the CTO can rule; **no dependent cell is cut** (a branch-2 pair needs the CTO's word that a zero-value account dropped from the feed counts as left). (2) The IR holdings class rule, built and packaged, no apply: **CUT now as two cells**: `IB-pr-527` the BUILD (one shared rule at the canonical-row return of `classify_security`, canonical-only because FDRXX resolves on the canonical branch: row D2-S161, a scan of the canonical table) and `IB-pr-528` the COUNT BY LAYER, the FDRXX-on-Inflection node check and the never-widen packet. Carried and **NOT cut, each with its owner and condition**: IB-pr-456 (waits on Andrew's execution ID, open act `f61b`; owner me); the Design-B CTO half and its runs (the CTO's call 1: the backfill waits for FWD-21's builder to read `account_activity_daily`; also behind D2's held thresholds-swap ledger, read at 11:41Z); the Cottonwood and Inflection activity producers (under IRPT_DASHBD round 101's read cell).
+
+Two cuts, independent chains: the build is offline code and tests; the count reads served snapshots, the canonical table and S3 listings. Neither writes or invokes anything.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r189/p189_cells.py`, dry-run at the base: IB189-1 AC1, AC2, AC3 and IB189-2 AC1, AC2, AC3 all FAIL (no rule, no test file, no record); positive controls (a throwaway `git worktree add --detach` and a temp root, both created and removed by the run) pass all three of each cell, and negatives each fail their own arm (eight for the build, twelve for the count). One control slip: the first synthetic packet was below the check's 3,000-character floor (repaired in the control).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-527` | the shared cash rule built: `apply_cash_rule` called once at the canonical-row return of `classify_security`; a Cash sub serves the cash class on the canonical branch only; tests; builds only | FWD-3 | LOCAL (offline code and tests; no served byte; not an infrastructure path) | IB-pr-526 (merged) | P189-a |
+| `IB-pr-528` | the movers split by layer (canonical branch / fallback branch) per firm against IB-pr-526's upper bounds; the FDRXX-on-Inflection node check; the never-widen packet for the rule's later release; reads only | FWD-3 | SERVED (reads served snapshots, the canonical table and S3 listings; writes only the worker's records) | IB-pr-526 (merged) | P189-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two independent chains. Two worker spawns (slots ~374 and ~375).
