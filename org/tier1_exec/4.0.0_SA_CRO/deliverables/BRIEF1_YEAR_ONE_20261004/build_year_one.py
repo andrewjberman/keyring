@@ -41,7 +41,7 @@ from commit_census import classify  # noqa: E402  (reuse the estate's kind-of-wo
 # a RECORD (a ledger, a surprise-channel investigation row, the tier-0 ledger); project deliverables, task orders,
 # decompositions, PRDs, registers and rules files under the same family are product work and stay product.
 GROUPS = [
-    ("product", "Product build", "Code, data, design, testing, deliverables, and the task orders and decompositions that coordinate them",
+    ("product", "Product", "Code, data, design, testing, deliverables, and the task orders and decompositions that coordinate them",
      {"FRONTEND", "BACKEND", "DATA", "PLANNING", "VERIFICATION", "DELIVERABLES", "COORDINATION", "TOOLING", "GOVERNANCE"}),
     ("audit", "Audit", "Session logs, deploy and project ledgers, investigation records",
      {"AUDIT"}),
@@ -204,7 +204,8 @@ def main():
     data = census(dt.date.fromisoformat(a.until))
     with open(os.path.join(HERE, "events.json"), encoding="utf-8") as f:
         ev = json.load(f)
-    data["events"] = ev["events"]
+    # An event past --until would sit beyond the chart's last week: the page stops at one date everywhere.
+    data["events"] = [e for e in ev["events"] if e["date"] <= data["until"]]
     # Every number the page's prose states is computed HERE from the same census the chart draws,
     # never typed into events.json: a re-run on a later day moves the chart and the words together.
     data["page"] = fill_tokens(ev["page"], page_numbers(data))

@@ -333,7 +333,7 @@ document.getElementById("phases").innerHTML=DATA.page.phases.map(p=>`<div class=
  <div class="st">${p.stats.map(([b,s])=>`<div><b>${esc(b)}</b><span>${esc(s)}</span></div>`).join("")}</div></div>`).join("");
 document.getElementById("live").innerHTML=CAT.map(([k,lab])=>{const items=EV.filter(e=>e.cat===k);
  return `<div class="col"><h3>${esc(lab)}<span>${items.length}</span></h3>${items.map(e=>`<div class="li"><span class="d">${esc(short(e.date))}</span><span><span class="t">${esc(e.title)}</span>${e.claim==="inferred"?'<span class="q">INFERRED DATE</span>':""}${e.detail?`<div class="x">${esc(e.detail)}</div>`:""}</span></div>`).join("")}</div>`;}).join("");
-{const M=DATA.months;const cols=[["month","Month"],["total","All"],["workspace","Workspace"],["portal","Portal"],["product","Product build"],["audit","Audit"],["other","Unclassified"],["human","By Andrew"],["agent","By agents"],["seats","Agent seats"]];
+{const M=DATA.months;const cols=[["month","Month"],["total","All"],["workspace","Workspace"],["portal","Portal"],["product","Product"],["audit","Audit"],["other","Unclassified"],["human","By Andrew"],["agent","By agents"],["seats","Agent seats"]];
  document.getElementById("tbl").innerHTML=`<thead><tr>${cols.map(c=>`<th scope="col">${c[1]}</th>`).join("")}</tr></thead><tbody>`+
   M.map(r=>`<tr>${cols.map(([k])=>`<td>${k==="month"?esc(MON[+r.month.slice(5)-1]+" "+r.month.slice(0,4)):fmt(r[k])}</td>`).join("")}</tr>`).join("")+`</tbody>`;}
 document.getElementById("notes").innerHTML="<ul>"+DATA.page.notes.map(n=>`<li>${esc(n)}</li>`).join("")+"</ul>";

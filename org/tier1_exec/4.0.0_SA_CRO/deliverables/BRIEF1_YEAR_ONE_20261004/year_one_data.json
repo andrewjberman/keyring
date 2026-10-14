@@ -47,8 +47,7 @@
   "2026-09-14",
   "2026-09-21",
   "2026-09-28",
-  "2026-10-05",
-  "2026-10-12"
+  "2026-10-05"
  ],
  "series": [
   [
@@ -101,8 +100,7 @@
     2793,
     4759,
     5821,
-    11249,
-    4167
+    11249
    ]
   ],
   [
@@ -155,8 +153,7 @@
     1296,
     1408,
     2096,
-    3788,
-    1189
+    3788
    ]
   ],
   [
@@ -209,8 +206,7 @@
     62,
     96,
     94,
-    589,
-    322
+    589
    ]
   ]
  ],
@@ -360,27 +356,27 @@
   },
   {
    "month": "2026-10",
-   "total": 25523,
-   "workspace": 24890,
-   "portal": 633,
-   "human": 46,
-   "agent": 25477,
-   "product": 18546,
-   "audit": 6010,
-   "other": 967,
-   "seats": 12,
-   "identities": 1865
+   "total": 19845,
+   "workspace": 19283,
+   "portal": 562,
+   "human": 44,
+   "agent": 19801,
+   "product": 14379,
+   "audit": 4821,
+   "other": 645,
+   "seats": 10,
+   "identities": 1379
   }
  ],
- "total": 80769,
+ "total": 75091,
  "by_repo": {
-  "workspace": 77282,
-  "portal": 3487
+  "workspace": 71675,
+  "portal": 3416
  },
  "by_group": {
-  "product": 56615,
-  "audit": 19743,
-  "other": 4411
+  "product": 52448,
+  "audit": 18554,
+  "other": 4089
  },
  "peak_week": {
   "week": "2026-10-05",
@@ -395,7 +391,7 @@
   "author": "1.0.0_SA_CTO",
   "commit": "e36a3901b5"
  },
- "until": "2026-10-14",
+ "until": "2026-10-11",
  "method": "both repos, all refs, merges excluded; kind of work from the files each commit touched (daily_reports/scripts/commit_census.py rules), grouped into product and audit plus a named residual",
  "claim": {
   "counts": "measured",
@@ -969,29 +965,11 @@
    "detail": "An internal Tools page that shows, for every covered name, when each research input last landed and which are stale. Live from portal v2.1.201.",
    "claim": "measured",
    "evidence": "portal fb939c4a (App.tsx nav entry), tag portal-v2.1.201 2026-10-06"
-  },
-  {
-   "date": "2026-10-13",
-   "cat": "system",
-   "title": "Research harvest opened to Opal staff through the gateway",
-   "detail": "All 24 areas of the research data store (news, filings, models, peers, scores) made available to Opal users in Claude through the Opal gateway, managed by gateway entitlements; outside users stay refused.",
-   "key": true,
-   "claim": "measured",
-   "evidence": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_200xZ_NINE_OPEN_CALLS_ANSWERED_FIRMBKTS_DEMQUE_BRIEF_HARVEST.md (call 8)"
-  },
-  {
-   "date": "2026-10-14",
-   "cat": "system",
-   "title": "Data contracts for the gateway: 308 tables across six data stores",
-   "detail": "Every research, client-asset, portal, model-portfolio, ETF and news table catalogued with its columns, keys and freshness, so Claude can reach each one through a typed gateway tool.",
-   "key": true,
-   "claim": "measured",
-   "evidence": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/INDEX.md"
   }
  ],
  "page": {
   "headline": "Year one: 3 partner firms live, 18 portal pages, and 115 times the monthly build rate",
-  "sub": "Since the portal (Nov 12, 2025) and workspace (Nov 18, 2025) repositories began: 80,769 commits across both. Andrew built alone through February; an AI agent organization joined on Mar 2, 2026 and now writes almost every commit.",
+  "sub": "Since the portal (Nov 12, 2025) and workspace (Nov 18, 2025) repositories began: 75,091 commits across both. Andrew built alone through February; an AI agent organization joined on Mar 2, 2026 and now writes almost every commit.",
   "span": "November 2025 to October 2026",
   "chart_read": "Weekly commits rose from a few dozen to 15,626 at the peak. Agents took over in March, and monthly volume has more than doubled every two months on average since.",
   "source": "Sources: git history of ajb_workspace and portal (all branches); portal deploy tags; deploy ledger org/critical_paths/change_management; research files in this folder",
@@ -1015,7 +993,7 @@
   ],
   "kpis": [
    [
-    "80,769",
+    "75,091",
     "commits in the year, both repositories"
    ],
    [
@@ -1091,7 +1069,7 @@
     "text": "A ten-step workflow hands build steps to disposable worker agents. The daily operating report goes live, the Investor Reporting backend is deployed, and September closes at 18,816 commits.",
     "stats": [
      [
-      "54,891",
+      "49,213",
       "commits"
      ],
      [
@@ -1104,7 +1082,7 @@
   "notes": [
    "A commit is one saved change. Counts cover both repositories, all branches, with merges excluded, and are measured from git.",
    "The kind of work (the two colored bands) is inferred from the files each commit touched, using the Daily Operating Report's rules regrouped into two bands: product (everything aimed at the product, including the task orders and plans that coordinate it) and audit (logs and records).",
-   "Commit volume measures activity, not output. Product commits rose about 97 times (136 in December to 13,205 in September); audit (session logs, deploy and project ledgers, investigation records) is 24% of the year, the paper trail that lets many agents work in parallel safely.",
+   "Commit volume measures activity, not output. Product commits rose about 97 times (136 in December to 13,205 in September); audit (session logs, deploy and project ledgers, investigation records) is 25% of the year, the paper trail that lets many agents work in parallel safely.",
    "Portal page dates are the day each page was first built (measured). Production dates before Feb 26, 2026 are bounds, because the portal's deploy tags start that day.",
    "Pipeline dates are the day a schedule first appeared in the infrastructure code unless a first run is cited, so they are marked inferred.",
    "Partner context and the $2.1B figure come from Andrew's Outlook (read-only pass, Oct 4, 2026); they are cited as email, date and organization, and carry no personal details.",
@@ -1115,7 +1093,7 @@
  "groups": [
   [
    "product",
-   "Product build",
+   "Product",
    "Code, data, design, testing, deliverables, and the task orders and decompositions that coordinate them"
   ],
   [
