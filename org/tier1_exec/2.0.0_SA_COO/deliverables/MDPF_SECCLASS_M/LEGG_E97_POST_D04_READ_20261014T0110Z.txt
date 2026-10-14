@@ -1,0 +1,17 @@
+# e97 read AFTER D_04 (mix_summary.json rewritten 2026-10-14T00:48:31Z, restated_through 2026-09-25 on both objects), chain still running (E scripts), 2026-10-14 ~01:10Z.
+# Not the final read: the chain-end read is the record for the STOP rule. bars=False and advisors=False are explained in row MDPF_SECCLASS-D1-S36.
+E97-READ mix_daily_summary bucket=opal-data-49financial key=advi/49financial/platinum/views/mix_daily_summary.json VersionId=a928eUqEYDKRtLsWV2tgslF1N9uCBGvO LastModified=2026-10-14T00:25:03+00:00
+E97-READ mix_summary bucket=opal-data-49financial key=advi/49financial/platinum/firm/mix_summary.json
+E97-READ firm_mix_views bucket=opal-data-49financial key=advi/49financial/platinum/artifacts/firm_mix_views.json
+E97-READ client_performance bucket=opal-data-bd key=gold/timeseries/client_performance.parquet rows=3829961 dates=2473 read_s=10.29 column=total_aua groupby(date).sum (D_03.composition_artifacts.py:497-503)
+E97-READ bound_source=max of per_date[].rebuilt_unclassified over 7 window dates of 15 records bound_max=53010.45
+E97-READ relationship JSONs: 64 objects, key template gold/entities/clients/{relationship_id}.json, source() bucket counts {'opal-data-49financial': 64}
+E97-C unclassified_window ok=True bound_max=53010.45 hi=53260.45 rem=2026-09-30=52957.34 2026-10-01=43053.78 2026-10-02=1818.14 2026-10-03=2089.39 2026-10-04=1925.93 2026-10-05=166.72 2026-10-06=-42.15
+E97-C w86_s5 ok=True 2026-10-03=162.29 2026-10-04=3.94 2026-10-05=166.72
+E97-C totals_aua ok=True max_abs=0.00 n=15
+E97-C bars ok=False 2026-Q3 total_ok=False worst_gap=258.49 2026-Q4 total_ok=False worst_gap=29052.65 2026-09 total_ok=False worst_gap=258.49 2026-10 total_ok=False worst_gap=29052.65 2026 total_ok=False worst_gap=29052.65
+E97-C restated ok=True mds=2026-09-25 mix_summary=2026-09-25
+E97-C advisors ok=False keys=56 set_equal=True rows_beyond_250=14 of 840
+E97-C added_dropped ok=True rows_read=257 disagree=0
+E97-TIME added_dropped_read_s=18.60 json_reads=64 rows=257 total_run_s=34.27
+E97-ACCEPT shipped=True ok=False unclassified_window=True w86_s5=True totals_aua=True bars=False restated=True advisors=False added_dropped=True
