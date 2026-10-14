@@ -15617,3 +15617,32 @@ name the one known failure instead of silently inheriting it.
     "notes": "FOR THE ISSUER: the order is complete on branch 'refused' (AC1 and AC2 PASS). The open act is the sign-in in the runner's sa profile; once someone has done it, step 1 is re-read (profile half only, no vendor request needed: cookie names suffice) and, if it then reads HOLDS, steps 3-5 follow under the same order or a re-cut. Not done by this seat: no sign-in, no seeding, no copy between profiles, no change to the task."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S130",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T22:12:20Z",
+    "one_line": "A4 tells me to take tests/test_og_gt8.py but NOT app/news_typed.py, and two of that suite's three tests assert on BOTH modules -- so test_oggt8_ac01 and ac02 cannot pass in this release by construction. The harvest_identity half of each PASSES; only the news_typed half fails, with ModuleNotFoundError. Nothing that ships is defective: gt-8's test suite spans two modules the order split across two releases (news_typed rides OG-ap-19).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "tests/test_og_gt8.py in the v2 cut 7521aee725: 2 failed, 1 passed",
+        "test_oggt8_ac01 asserts res['harvest_identity'] == {'import': 'ok', 'calendar': True} AND res['news_typed'] == {'import': 'ok', 'calendar': True}; the first holds, the second reads {'import': 'ModuleNotFoundError', 'calendar': None}",
+        "test_oggt8_ac02 is the no-lib arm and behaves identically: harvest_identity {'import': 'ok', 'calendar': False} holds, news_typed is the ModuleNotFoundError",
+        "A4 verbatim: 'app/news_typed.py is NOT in this release (it rides OG-ap-19); take the harvest_identity.py hunk only' -- and, separately, 'tests/test_og_gt8.py'",
+        "gt-8's own commit 43e5e0383e touches app/harvest_identity.py (+11-5) AND app/news_typed.py (+11-5) with the same fix, plus deploy-to-ec2.sh and tests/test_og_gt8.py",
+        "the rest of the suite set is clean: 49 passed, 2 failed, 0 errors over ten suites, and ap18.AC1 reads RESULT: PASS with 18 files and 0 outside the G1 set"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A4's take-list includes tests/test_og_gt8.py and excludes app/news_typed.py, which implies the test can be satisfied without the module it half-covers.",
+    "world_is": "It cannot. One cell fixed the same defect in two modules and wrote one suite over both; the release boundary runs between them. The useful half of that suite still earns its place here -- its harvest_identity assertions are an INDEPENDENT corroboration of the host-shaped import check, written by the cell's own author rather than by me, and they pass in both the lib-present and lib-absent arms. What it cannot do is go green.",
+    "notes": "Three routes and this seat picked none, because the choice changes what the halves are signing: (a) take app/news_typed.py as well -- it widens this release beyond A4 and pulls OG-ap-19's cell forward; (b) accept test_oggt8_ac01/ac02 as unmeetable in this release and say so in the criterion, which is what the ask does today; (c) let tests/test_og_gt8.py ride OG-ap-19 with the module it covers, which costs this release the corroboration but leaves no red. The general shape is worth more than the instance: a cell that fixes one defect across TWO modules writes ONE suite over both, and any release boundary drawn between those modules inherits a test that cannot pass. The tell is cheap -- read the test's assertions for module names outside the take-list BEFORE cutting, not after the suite runs red."
+  }
+  ```
