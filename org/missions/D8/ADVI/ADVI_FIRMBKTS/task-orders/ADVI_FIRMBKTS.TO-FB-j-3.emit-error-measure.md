@@ -83,7 +83,7 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~F
 
 **AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-13 ~09:0xZ) -- UN-PARKED:** `FB-j-2` is merged at e33708f50b (worker commit f313505d5c; its three criteria PASS at the merged HEAD: `r7_emit_test.sh` 3 of 3, `awsdiff` OK, scope OK; instance VALID). Precondition 1 of section 1a is met: `git show HEAD:data/black_diamond/scripts/gold/gold_dispatch.sh` carries the new WARN (the diff is two hunks inside `emit_chain_complete`: the output captured in a variable, the WARN printing `rc=<rc>` and the first 300 printable characters). Work from the main checkout's `box/dell1` at or after e33708f50b. No criterion changed.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <workstream>EXECSUMFIX</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-j-3</to_id>
