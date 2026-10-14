@@ -113,8 +113,8 @@
   ],
   "notes": [
    "A commit is one saved change. Counts cover both repositories, all branches, with merges excluded, and are measured from git.",
-   "The kind of work (the three colored bands) is inferred from the files each commit touched, using the same rules as the Daily Operating Report.",
-   "Commit volume measures activity, not output. Product-build commits rose about {{product_multiple}} times ({{dec_product}} in December to {{sep_product}} in September); most of the added volume is coordination and controls ({{controls_share}}% of the year), the records that let many agents work in parallel safely.",
+   "The kind of work (the two colored bands) is inferred from the files each commit touched, using the Daily Operating Report's rules regrouped into two bands: product (everything aimed at the product, including the task orders and plans that coordinate it) and audit (logs and records).",
+   "Commit volume measures activity, not output. Product commits rose about {{product_multiple}} times ({{dec_product}} in December to {{sep_product}} in September); audit (session logs, deploy and project ledgers, investigation records) is {{audit_share}}% of the year, the paper trail that lets many agents work in parallel safely.",
    "Portal page dates are the day each page was first built (measured). Production dates before Feb 26, 2026 are bounds, because the portal's deploy tags start that day.",
    "Pipeline dates are the day a schedule first appeared in the infrastructure code unless a first run is cited, so they are marked inferred.",
    "Partner context and the $2.1B figure come from Andrew's Outlook (read-only pass, Oct 4, 2026); they are cited as email, date and organization, and carry no personal details.",

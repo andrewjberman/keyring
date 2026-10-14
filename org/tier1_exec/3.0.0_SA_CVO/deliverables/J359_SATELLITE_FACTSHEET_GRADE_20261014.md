@@ -145,3 +145,22 @@ figures no longer follow**, until Andrew approves row `dell1-20261014T202134Z-fb
 lock so `complete` is not called over the stale attempt-1 PASS. It re-grades to PASS on reading the landed PROD.
 
 **Open for Andrew, from the addendum, unchanged:** Satellites 90 and 98 carry no GLD row in the served holdings, so they read as pure ULT.
+
+---
+
+## Attempt 2 FINAL, 2026-10-14 ~21:1xZ (msgs 5917, 5918): PASS
+
+Read by this seat:
+- portal `origin/PROD` = `5d6464189120` (tag portal-v2.1.222). It contains the factsheet `6e69a05e43` and the label deletion `714f8e48c8`
+  (`merge-base --is-ancestor`, both true). CI run 38637040693: `conclusion success`, `headBranch PROD`,
+  `headSha 5d64641891207b68998973e7c82c0dd0260b4dab`.
+- The retired-method sentences ("Hypothetical: today's holdings ...", "left out for lack of one") occur 0 times in
+  `origin/PROD:src/components/SatelliteFactsheetSections.tsx`. J359's four files on PROD are byte-identical to the approved branch
+  714f8e48c8 (0 changed lines each), so the TRSB fix released alongside did not touch them.
+- Andrew approved the deletion: row `dell1-20261014T202134Z-fbdf` closed 20:51:33Z, `ruled_by andrew`.
+- Served `characteristics.json` is still VersionId `Qh56dS_IliDOh0owKxjToBgEjgJ0pb8v` (20:15:50Z), read 72 of 72 against the Addendum 2
+  oracle in the attempt-2 section above.
+
+**PASS for J359 attempt 2.** The page and the served data now state and follow the same method. The FAIL recorded earlier is superseded.
+Open for Andrew, from Addendum 2, unchanged: Satellites 90 and 98 carry no GLD row in the served holdings. Not read by this seat: the
+rendered popup on PROD (the requester's check).
