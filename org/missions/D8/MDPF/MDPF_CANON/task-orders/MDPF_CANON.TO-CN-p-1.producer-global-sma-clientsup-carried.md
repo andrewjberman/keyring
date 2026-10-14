@@ -227,7 +227,7 @@ Report once: the diff (one line per file), the output line of every criterion, t
 - **Fanout:** one cell, one chain, slot ~26. Base box/dell1.
 - **Not in this cell:** the portal (CN-p-2); Custom Models; any pre-2026-05-15 per-model value in any Global leaf (PRD v2.20: the portal stitches it read-side); `point_class`; a `R2_RULED_EXTRAS` entry; the deploy; the pair.
 
-<status>pending</status>
+<status>complete</status>
 <round>9</round>
 <to_id>MDPF_CANON.TO-CN-p-1</to_id>
 <slot>~26</slot>

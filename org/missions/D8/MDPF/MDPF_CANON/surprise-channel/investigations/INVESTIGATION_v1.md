@@ -2161,3 +2161,77 @@
   "disarm_owner": "1.0.0_SA_CTO~DELL1"
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W26-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~26",
+  "surfaced_at": "2026-10-14T21:43:21Z",
+  "one_line": "CN-p-1 step 4 names a seven-line comment above the Muni tuple in SMA_MEMBERS; the comment at HEAD is eight lines. All eight were removed with the tuple and the one specified comment line was put in their place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-p-1 step 4: delete the muni tuple and its seven-line comment above it; put ONE comment line in their place.",
+  "world_is": "data/mdpf/scripts/gold/mdpf_category_registry.py@a9ebbe661e carries the muni comment on lines 349-356 (eight lines) above the tuple on line 357. The edit removed lines 349-357 and inserted the single specified line: 1446 to 1438 lines, CRLF kept, no other line touched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/mdpf/scripts/gold/mdpf_category_registry.py@a9ebbe661e lines 349-357 read before the edit",
+      "post-edit read: 1438 of 1438 lines CRLF; grep shows the single new muni comment line at 349"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A count mismatch only; the action matches the order's stated intent."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W26-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~26",
+  "surfaced_at": "2026-10-14T21:43:21Z",
+  "one_line": "A failed SMArtX read does not stop at the loader: build_all wraps the loader in _isolated, which turns the C2-SIBLING raise into None, and the or-fallback then builds Global with empty legs. The run goes non-green, but the order's never-an-absence rule is not enforced at the call site.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1",
+  "spec_asserts": "TO CN-p-1 step 2: load_smartx_sma_legs: a denied or failed read is never an absence -- RuntimeError whose message STARTS C2-SIBLING FAIL-LOUD:. TO step 3: the loader is called through _isolated('global', ...) or ({}, None).",
+  "world_is": "data/mdpf/scripts/gold/mdpf_gold_consolidator.py@a9ebbe661e (worktree edit, uncommitted): _isolated (about lines 2897-2909) catches the RuntimeError, records manifest errors['global'], logs SCOPE FAILED and returns None. The or-fallback then applies empty legs, so every pre-2026-05-18 trend group is None for that run. The manifest is non-green (ok = not manifest errors, about line 3366). NOT READ: whether the Global object is still published on a non-green run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/mdpf/scripts/gold/mdpf_gold_consolidator.py _isolated definition, read in the worktree (about lines 2897-2909)",
+      "data/mdpf/scripts/gold/mdpf_gold_consolidator.py build_all wiring, read in the worktree (lines 3059-3061)",
+      "data/mdpf/scripts/gold/mdpf_gold_consolidator.py manifest ok line, read in the worktree (about line 3366)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Armed on the code's own scheduled path once deployed (CloudOps's deploy, not this order). Routed to the issuer, which owns the cell and the wiring decision."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W26-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~26",
+  "surfaced_at": "2026-10-14T21:43:21Z",
+  "one_line": "Two comment lines in mdpf_category_registry.py still name muni after the Muni tuple is removed, including a denominator comment (3 of 6 determined). The order says not to touch any other line, so both are left as they are.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-p-1 step 4: do not touch SMA_BASIS_VERIFIED, the crosswalk or any other line of the registry.",
+  "world_is": "data/mdpf/scripts/gold/mdpf_category_registry.py@a9ebbe661e after the edit: line 356 ('ground as muni ...') and line 364 ('# 3 of 6 determined, 3 UNVERIFIED (muni/idvz/pfde) ...') still name muni; the SMA_MEMBERS count is now 5.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "grep of the registry for muni in the worktree, after the edit: lines 349, 356, 364",
+      "SMA_MEMBERS members after the edit read by the issuer's P5 arm: divz, idvz, pfde, pfoe, tax"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Stale comments only; no code path reads them. Left for the owner of the registry comments."
+}
+```
