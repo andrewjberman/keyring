@@ -26325,3 +26325,277 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. AC2's expect is met on the script's rule; the reconciliation is the issuer's. No harness and no script was edited to make the two counts agree."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W417-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~417",
+  "surfaced_at": "2026-10-14T00:00:01Z",
+  "one_line": "The order names two not-carried items by name only (AdvisorBookFeePanel and the /portfolios change), with no repo path; the worker resolved them to src/pages/AdvisorIntelligence/_shared/AdvisorBookFeePanel.tsx and to the route in src/App.tsx with page src/pages/ModelPortfolios.tsx.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree -r --name-only 10e7664d returns src/pages/AdvisorIntelligence/_shared/AdvisorBookFeePanel.tsx; git show 10e7664d:src/App.tsx line 453 reads path=\"/portfolios\", the page file is src/pages/ModelPortfolios.tsx.",
+      "git diff 10e7664d HEAD -- for each of those three paths, and for package.json, bun.lock and src/lib/firmAccess.ts, prints 0 lines on portal branch cand/dell1/amgt-sa-header-money-and-dash-reasons at 624e2533f665bf786e41594adba17b82c447aa7d.",
+      "The candidate 3dcbb6ef changes 14 files (git diff --name-only 10e7664d 3dcbb6ef) and none of the 14 is one of the resolved not-carried paths."
+    ]
+  },
+  "spec_asserts": "The order's Not carried section lists AdvisorBookFeePanel and the /portfolios change, each to be stated absent with a git diff count of 0, without giving a repo path for either.",
+  "world_is": "Both items resolve to repo paths at PROD 10e7664d; the counts are 0 on the feature branch, so the statement holds. The paths used are the worker's resolution, recorded in the receipt's Not carried section, not the order's.",
+  "notes": "Form only. The receipt states the resolved paths. No path was widened and no file outside the four feature paths was taken."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W417-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~417",
+  "surfaced_at": "2026-10-14T00:00:01Z",
+  "one_line": "The portal commit of the feature branch, made by the outer .tools/safe-commit.sh from the nested portal worktree, printed a risk reflex on a STALE danger map that scanned 0 of 4 files, and a commit gate that checked 0 of 4 files, and fell back to the base checkout's comp-pulse because the nested portal toplevel carries no .tools.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Portal commit 624e2533f665bf786e41594adba17b82c447aa7d (cand/dell1/amgt-sa-header-money-and-dash-reasons, LOCAL) printed '[risk-reflex] danger map: 193.5h old !! STALE', 'ANSWER STATE: PARTIAL_OR_BLIND', 'WITHIN BUDGET: scanned 0 of 4 file(s)'.",
+      "The same output printed '[commit-gate] WARN: commit-gate checked 0 of 4 file(s) -- NOTHING WAS CHECKED' and states that the gate reads only .py / .sh / .tf / org/projects/*.json.",
+      "The output printed 'the caller toplevel C:/dev/wk-resapp-417/portal carries no .tools/comp-pulse -- EXECUTING THE BAKED PATH C:/dev/ajb_workspace/.tools/comp-pulse instead'."
+    ]
+  },
+  "spec_asserts": "The order's step 5: commit the portal change in the nested worktree with the outer .tools/safe-commit.sh, and validate frontend bytes by the language-appropriate instrument (the harness suite, AC2, and AC1 on the committed bytes).",
+  "world_is": "Every portal commit from a nested worktree runs the risk reflex and the commit gate against zero of its files and reads the base checkout's tooling; the gate-level validation of the four TSX and cjs paths rests on AC1, AC2 and AC3, not on the commit gate.",
+  "notes": "Form only. Recorded so the CVO can see the pre-commit state for nested portal commits. No gate was changed, no reflex was re-run to clear it, and the W423 row AMGT_RESAPP-D1-W423-S7 records the same state at its commit."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W417-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~417",
+  "surfaced_at": "2026-10-14T00:00:01Z",
+  "one_line": "The approval row for cand/dell1/amgt-sa-header-money-and-dash-reasons registered on dell1 with the order's project NFRA_DEVPLN, and the tool's own CALL-SCOPE verdict reads CROSS-BOX with the placement hit 'NFRA_DEVPLN is placed on laptop, this box is dell1'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/open-calls.py add --kind approval --project NFRA_DEVPLN --box dell1 --branch cand/dell1/amgt-sa-header-money-and-dash-reasons ... --check-only printed APPROVAL-REGISTER result=OK row=- head_sha=624e2533f665bf786e41594adba17b82c447aa7d commits=1 check-only=yes waived=0.",
+      "The write printed ADDED id=dell1-20261013T235940Z-68dc kind=approval file=C:\\dev\\wk-resapp-417\\org\\devices\\state\\dell1\\open_calls.json open=2, and 'CALL-SCOPE project=NFRA_DEVPLN device=dell1 paths=clear placement=hit resources=clear shared=clear risk=LOCAL verdict=CROSS-BOX'.",
+      "The write also printed 'CLOUD s3://opal-313476888478-globgrph/fabric/open-calls/v1/box=dell1/open_calls.json'."
+    ]
+  },
+  "spec_asserts": "The order's step 6: register the approval row with the order's exact invocation on dell1; the approved feature is closed by the CTO, and the row is the box's approval call.",
+  "world_is": "The row is in dell1's open_calls.json with open=2; the tool's own placement reads the project as laptop-placed and the verdict as CROSS-BOX. The row was written as the order named it; whether the call routes to the CTO of dell1 or of laptop is not decided by this worker.",
+  "notes": "Form only. The tool's output is reported verbatim in the worker report. The row is not closed and was not edited after the add."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W424-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~424",
+  "surfaced_at": "2026-10-14T00:09:26Z",
+  "one_line": "Amendment 2 does not order the numeric guard against the sentence cut, nor the cut against the citation check on the web path; the builder chose guard-then-cut on the Opal path and cut-then-citations on the web path, without a ruling.",
+  "spec_asserts": "AMGT-fa-3 face, 1b AMENDMENT 2, rule 1: a reply over the cap is CUT at the last sentence end within the cap and the cut text is stored; if no sentence end fits, the block is NONE with the too-long reason. The first-pass Opal rule: every digit run in the folded text must appear in the supplied facts. Rule 2 lists 'the numeric guard voided the text' and 'the text was too long to cut' as Opal NONE reasons. The face gives no order between the guard and the cut, and none between the cut and the citation check on the web path.",
+  "world_is": "lib/research/aifill/block_mgmt_bio.py at this order's commit: _opal_attempt runs the digit guard on the folded reply BEFORE _cut, so a figure present only in the cut-away tail voids the block; _web_block runs _cut BEFORE _web_citations, so a reply both too long and without a citable source reports the too-long reason. Neither order publishes a figure the facts do not hold, because the stored text is a prefix of the guarded reply. The check arms opal_guard_falls_to_web_then_none and long_text_cut read neither order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/block_mgmt_bio.py _opal_attempt (digit guard, then _cut) and _web_block (_reply_text, then _cut, then _web_citations) in worktree C:/dev/wk-resapp-424 @31be9c28ac base, edited in this order's commit.",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa3_mgmt_bio.py arms opal_guard_falls_to_web_then_none and long_text_cut, read at the same worktree: neither asserts the order of guard, cut and citation check."
+    ]
+  },
+  "notes": "Form only. Filed by the worker; the issuer owns the disposition. The builder keeps both choices; a different order is a one-line move in each function if the issuer rules otherwise."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W425-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~425",
+  "surfaced_at": "2026-10-14T00:09:29Z",
+  "one_line": "The fa-4 face preflight says the check exits 1 at base on ModuleNotFoundError for lib.research.aifill; at the reopened base the package and the first-pass builder exist and the check runs to 13 of 17 arms.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/block_mgmt_recent.py@31be9c28ac carries the first-pass builder; the check run at that head printed 13 of 17 with four FAIL arms and exit 1 (a worker-side run, output not committed).",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa4_mgmt_recent.py@31be9c28ac"
+    ]
+  },
+  "spec_asserts": "Face preflight, comp-adversary line: at the base the check exits 1 on ModuleNotFoundError: No module named 'lib.research.aifill', the build check failing as expected.",
+  "world_is": "At the reopened base the module imports; the four amendment arms fail on behaviour (opal fall-through, cut, figure fall-through, prompt limit), not on import.",
+  "notes": "Form only. The baseline matches section 1b of the order. The preflight line is stale; no check and no module was edited to fit it."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W425-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~425",
+  "surfaced_at": "2026-10-14T00:09:29Z",
+  "one_line": "The face says earlier rows exist under this slot (W425-S*) in this channel; at the reopened base this file holds no W425 row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md@31be9c28ac: a grep for the token W425-S returns no line.",
+      "The next unused k for this coordinate in this file is therefore 1, and this row is S1 of the coordinate's first filing in this file."
+    ]
+  },
+  "spec_asserts": "Face INHERITED STATE: earlier rows exist under this slot (W425-S*); file new rows with the next unused k.",
+  "world_is": "No W425-S row exists in this file on the reopened base; the first-pass proof instance was not checked for surprise rows.",
+  "notes": "Form only. Recorded so the issuer can see where the first pass filed its rows, if anywhere. No row was edited."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W425-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~425",
+  "surfaced_at": "2026-10-14T00:09:29Z",
+  "one_line": "The channel header says this file must stay one fenced JSON block, but the file holds 149 separate fenced blocks, one object each; the new row was appended as a further block in that layout.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md@31be9c28ac lines 1 to 25: the header rule reads THIS FILE MUST STAY ONE FENCED JSON BLOCK.",
+      "The same file@31be9c28ac: a grep for fence lines returns 298 (149 open and close pairs), each block holding one row object, e.g. lines 25 to 54 and 56 to 86."
+    ]
+  },
+  "spec_asserts": "Channel header: THIS FILE MUST STAY ONE FENCED JSON BLOCK; the order: append the row inside the fenced json array.",
+  "world_is": "The file is an array of individually fenced row objects, not one fenced block; the appender followed the layout the existing rows use.",
+  "notes": "Form only. The header rule and the file layout disagree; the disposition belongs to the channel owner. The file's content was not restructured."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W425-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~425",
+  "surfaced_at": "2026-10-14T00:09:29Z",
+  "one_line": "Amendment 2 does not state whether the numeric guard runs before or after the sentence cut; the builder runs the guard on the whole folded Opal reply, so a figure that sits only in the cut-off tail withholds the block.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa4_mgmt_recent.py@31be9c28ac does not arm this ordering; the order section 1b rule 1 and rule 2 name the two reasons without a sequence.",
+      "lib/research/aifill/block_mgmt_recent.py _opal in the commit carrying this row runs the guard on the folded reply, then the cut; _web has no guard."
+    ]
+  },
+  "spec_asserts": "Order section 1b rule 1: a reply longer than the cap is cut at the last sentence end that fits; rule 2: the numeric guard voiding the text and the text too long to cut are separate Opal reasons. No sequence of the guard and the cut is stated.",
+  "world_is": "The builder applies the guard before the cut, so a figure present only after the cut point withholds the block to NONE rather than storing the cut text.",
+  "notes": "Form only. The builder keeps the stricter order (guard first). Filed so the issuer can confirm the sequence; no spec text was changed."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W426-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~426",
+  "surfaced_at": "2026-10-14T00:11:13Z",
+  "one_line": "Amendment 2 counts a sentence end only before a space or the end of the text, but the one-sentence-per-line pillars reply separates its sentences with newlines, so the cut rule must also accept a newline.",
+  "spec_asserts": "AMENDMENT 2 rule 1 (face section 1b): the cut is at the last sentence end that fits, a '.', '!' or '?' followed by a space or by the end of the text; for thesis_pillars the pillars are one sentence per line, so a cut keeps whole lines. The prepared check arm pillars: a reply over the 1000-character cap is cut at the last sentence end builds its reply as 20 lines joined by a newline and requires the cut to end on a whole line.",
+  "world_is": "A stop followed by a newline is not a space, so a space-only rule finds no cut point in that reply and the block is withheld. The cell accepts a space, a newline or the end of the text after the stop, in the three builder modules, so a pillars cut keeps whole lines and the arm passes (AIFILL FA-5 ARMS: YES (25 of 25) on the committed bytes).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa5_text_blocks.py@31be9c28ac: arms pillars_long_cut and team_long_cut, the 20-line newline-joined reply in pillars_long_cut",
+      "lib/research/aifill/block_thesis_pillars.py in worktree wk-AMGT_RESAPP-426 (uncommitted at filing): _SENTENCE_END accepts a space, a newline or the end of the text after the stop",
+      "AC1 run in worktree C:/dev/wk-resapp-426 after the edits: AIFILL FA-5 ARMS: YES (25 of 25), exit=0"
+    ]
+  },
+  "notes": "Form only. The rule's literal wording and the arm disagree on the newline; the worker followed the arm and the one-sentence-per-line purpose. The issuer rules whether a newline is a sentence end for the spec text."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W426-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~426",
+  "surfaced_at": "2026-10-14T00:11:13Z",
+  "one_line": "Amendment 2 gives one reason string for a reply with no sentence end inside the cap, and identity_description's first-pass reason said 'description'; the cell emits the amendment's literal string for all three blocks.",
+  "spec_asserts": "Face section 1 identity bullet: a reply longer than 400 characters gives none_block('identity_description', \"The model's description was too long to keep, so it was withheld.\"). AMENDMENT 2 rule 1: if no sentence end fits within the cap the block is NONE with the reason \"The model's text was too long to keep, so it was withheld.\" (unchanged).",
+  "world_is": "The two texts conflict for identity_description only. The cell now returns the amendment's literal string for identity_description too, so a cut failure there reads 'text', not 'description'. The acceptance arm desc_long checks only that 'long' appears in the reason, so it passes either way. The reason stays a plain sentence with no underscore.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa5_text_blocks.py@31be9c28ac: arm desc_long asserts only 'long' in the reason",
+      "lib/research/aifill/block_identity_description.py in worktree wk-AMGT_RESAPP-426 (uncommitted at filing): TOO_LONG_REASON reads \"The model's text was too long to keep, so it was withheld.\""
+    ]
+  },
+  "notes": "Form only. Which wording the identity block keeps is the issuer's ruling; the cell did not keep both."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W426-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~426",
+  "surfaced_at": "2026-10-14T00:11:13Z",
+  "one_line": "The channel header says the file must stay one fenced JSON block, but the file holds 149 separate json fences, one per row, so the new row was appended as its own fence at the end to match every existing row.",
+  "spec_asserts": "Face section 1 (proof of record): the surprise row goes inside the fenced json array of INVESTIGATION_v1.md. The channel header at the top of the file says: THIS FILE MUST STAY ONE FENCED JSON BLOCK, and an appender targets the FIRST block only and appends inside the array.",
+  "world_is": "At 31be9c28ac the file holds 149 json fences and 149 closing fences, each block holding one row object, including the earlier W426-S1 and W422-S1 rows. There is no single array to append inside. The new row was appended as a new fence at the end of the file, the same form as every existing row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md@31be9c28ac: grep of the json fence lines returns 149, and the closing fence lines return 149",
+      "the same file at 31be9c28ac: header line THIS FILE MUST STAY ONE FENCED JSON BLOCK, and the rows AMGT_RESAPP-D1-W426-S1 and AMGT_RESAPP-D1-W422-S1 each in their own fence"
+    ]
+  },
+  "notes": "Form only. The header and the file disagree; the channel's owner decides which is the rule. The row was placed as the existing rows are placed."
+}
+```

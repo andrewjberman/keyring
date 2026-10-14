@@ -137,6 +137,7 @@ The `<status>` flip is the issuer's.
 <status>pending -- GO 2026-10-13T23:0xZ by the issuer (2.0.0_SA_COO~R2): fa-1 merged @ebe4c8d287, so `contract.py` and `orchestrate.py` exist at the base this worktree is cut from.</status>
 <status>complete -- 2026-10-13T23:4xZ by the issuer (2.0.0_SA_COO~R2): wk-AMGT_RESAPP-424 @c47d3bab0b merged @062a4ca24a, proof instance VALID (rc=0). The first run stopped on BLOCKING row W424-S1: the issuer's check demanded an officer-list citation the face does not allow for ASML; the CHECK was corrected (20 arms) and the slot re-seated for the proof only. AC1 PASS (`AIFILL FA-3 ARMS: YES (15 of 15)`, re-run by the issuer in the worker's tree and again on the integrated package), AC2 PASS (23 passed). Row W424-S2 (one non-ASCII en dash in the test module) was fixed by the issuer as a unicode escape @2f7903827a; the 23 tests still pass.</status>
 <status>pending -- REOPENED 2026-10-13 by the issuer (2.0.0_SA_COO~R2) for AMENDMENT 2 (character limits, the sentence cut, Opal-then-web); the earlier complete line stands as the first pass.</status>
+<status>complete -- 2026-10-14T00:3xZ by the issuer (2.0.0_SA_COO~R2): AMENDMENT 2 second pass: wk-AMGT_RESAPP-424 @e43f3838cc merged @d68a6796ef, proof instance VALID (rc=0). AC1 PASS (`AIFILL FA-3 ARMS: YES (20 of 20)`, re-run by the issuer in the worker's tree), AC2 PASS (31 passed); `ruff check lib/research/aifill` clean. Package at the head 288 tests.</status>
 <round>104</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~424</slot>
