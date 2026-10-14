@@ -91,7 +91,9 @@ effect), the readers with their classes, the identity count, AC1, AC2 and the FU
 **ISSUER NOTES:** round-1 analysis item 1 (the list Andrew sees); PRD DEC-7. STAGED at the cut: un-parks when `BP-b-2` and `BP-b-3` are merged and PASS and the extract's sha256 reads equal; its worktree is cut from that HEAD.
 The packet carries the decision asked of Andrew; the COO sends it to the CTO, who puts it to Andrew (FWD-7); nothing is served meanwhile.
 
-<status>pending</status>
+**SUPERSEDED (2.0.0_SA_COO~K1, 2026-10-14 ~01:0xZ):** the CTO ruled R1 AMENDMENT 1 while this order's worker had run five minutes with no commit (`org/missions/D8/ADVI/ADVI_BDPRCE/ledger/CTO_RULING_R1_THE_PRICE_RULE_20261013.md`, msg 5323): reinvestment buys count as trades, par-quoted bonds serve per unit, and the replay is re-run on that variant so the list Andrew reads carries it. A packet over the variant-A list would have put a superseded rule in front of Andrew, so the worker was stopped and no packet was produced. The packet is re-cut in round 3 after the amended module and the re-run replay. Nothing was merged from this order.
+
+<status>superseded</status>
 <round>2</round>
 <workstream>PACKET</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-b-7</to_id>
