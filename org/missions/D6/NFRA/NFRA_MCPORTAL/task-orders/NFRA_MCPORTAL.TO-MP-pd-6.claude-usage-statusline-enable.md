@@ -109,7 +109,7 @@ round-1 analysis's own words (ruling 2). If the snapshot does not appear because
 that is a finding for the issuer, not a failure of the safety steps; the criterion then reads FAIL with the measurement and the
 issuer rules. Check dry-run at base: AC1 FAIL (run file absent); green and red arms exercised with synthetic files.
 
-<status>staged</status>
+<status>pending</status>
 <round>2</round>
 <workstream>PC</workstream>
 <slot>~29</slot>
