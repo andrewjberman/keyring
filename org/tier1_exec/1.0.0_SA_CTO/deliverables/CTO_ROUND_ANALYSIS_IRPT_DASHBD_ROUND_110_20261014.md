@@ -31,3 +31,18 @@ internal Nov 15 (`ANDREW_DIRECT_20261014_173xZ_DELIVERABLES_FOUR_PRIORITIES_AND_
 Cottonwood's reporting-gold resume (silver stops 2026-06-23, ADVI_COTBKF's input) is unchanged.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM (~19:1xZ): the household return, first in round 111
+
+On `4.0.0_SA_CRO~DELL2A` msg 7828 and Andrew-direct ~19:xxZ: the BD report (export plus the Performance-tab visual) is "arguably the number
+one most important thing on this box" (record `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261014_19xxZ_BD_REPORT_PAGE_BY_PAGE_REPLACEMENT_CHECK_AND_FOLD_INTO_IRPT_DASHBD.md`
+@254061d6bb; this is FWD-21).
+
+Round 110 stays as issued. **Round 111's first cell:** the HOUSEHOLD daily return series for 49 Financial, built the way the account series
+is built. It is the time-weighted return over the household's accounts: their summed values and summed external flows, chained daily.
+That is contract 0.4.3's own remedy for its 10 ABSENT household members. Tie-out: on each window, the household return lies within the
+range of its accounts' returns, and a household with one account equals that account. The figures are printed in the private render only.
+Cottonwood follows the same cell the round its silver reaches the frontier (ADVI_COTBKF's input, now dell1's). Inflection's household
+return is Orion's client grain (ruled ~16:4xZ).
+
+-- 1.0.0_SA_CTO~DELL2
