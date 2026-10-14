@@ -8089,3 +8089,103 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Corrects the legacy_touch flag for this function in the plan. Disarm: none (INERT)."
 }
 ```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S57",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-14T13:08:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-l-5 act 1 (M01) rests on a false premise: the live exec-summary-trigger rule is ALREADY in Terraform state, and HEAD's exec-summary main.tf would destroy it; restoring the declaration is refused by the LGIC naming gate.",
+  "spec_asserts": "COO half a6e2df30dc act 1 and PLAN_INFLECTION M01: Terraform declares only the DISABLED placeholder; replace it with the rule exec-summary-trigger and IMPORT it; the plan after the import shows zero changes.",
+  "world_is": "Measured 2026-10-14 ~13:0xZ. terraform state list (exec-summary) holds aws_cloudwatch_event_rule.exec_summary_trigger, the target and the lambda permission: applied 2026-04-27 from ecc9b2a508. The stray commit 64b6b9d65a (a COMP_LEARNS log commit) reverted main.tf, outputs.tf, iam.tf, the lock file and CHANGELOG.json the same day, so HEAD declares exec_summary_trigger_placeholder. Baseline plan at HEAD (read-only, -lock=false): 'Plan: 3 to add, 1 to change, 3 to destroy' (create the placeholder rule; replace the target and permission; destroy the live rule) -- an un-targeted apply at HEAD would destroy the live trigger. The 1 change is aws_iam_role_policy.exec_summary_generator: iam.tf says cloudwatch:namespace ExecSummary, live holds Opal/ExecSummary (hotfix e27aa49afa, reverted by the same stray commit), so an un-targeted apply would also drop the PutMetricData grant for the live namespace. Restoring main.tf/outputs.tf from ecc9b2a508 (no import needed) gives: scoped plan on rule+target+permission 'No changes', describe-rule ENABLED with the same pattern. safe-commit then REFUSED that commit: naming gate hole-count-ratchet on infra/aws/terraform/exec-summary (1 HOLE now, 0 at HEAD: EVENT_RULE exec-summary-trigger, on-{event} token not ruled), so the edit is not committed; it is saved as deliverables/0.7.0_AE_CloudOps~FB1/M01_RESTORE_EXEC_SUMMARY_TRIGGER.patch and the shared tree is clean.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/M01_BASELINE_PLAN_AT_HEAD.txt",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/M01_RESTORE_EXEC_SUMMARY_TRIGGER.patch"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT while every apply in this directory is -target scoped (the FB-j-7 and FB-j-13 applies were). Needs the issuer's and CTO's call: a registry ruling for the rule name (or an R20 departure the CTO signs) so the restore can commit; iam.tf's namespace line is outside the pair and needs its own half."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W84-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~84",
+  "surfaced_at": "2026-10-14T13:07:13Z",
+  "one_line": "FB-m-1 is blocked: no object in opal-data-inf is a chain-written, run-dated, single-writer readiness signal that the MDPF register does not class as a gate-read sidecar.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/gold/orion-gold-dispatch.sh:2024 and :2027 (dispatch_eclipse_status.json: run_date, chain, chain_exit; single writer)",
+      "docs/architecture/MDPF_REMEDIATION_REGISTER.md:198 and :226 (the key classed TRASH: sidecar state object read as a gate; :219-221 names the data's own frontier as the remedy)",
+      "aws s3api head-object gold/artifacts/header_metrics.json (read, 2026-10-14): 404 Not Found",
+      "aws s3 cp s3://opal-data-inf/gold/eclipse/_meta/dispatch_eclipse_status.json - (read): run_date 2026-10-14, chain full, chain_exit 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO FB-m-1 section 1a: choose ONE object in opal-data-inf that the FULL gold chain writes, carries the gold date, has one writer, survives the Door 6 retirement, and is not pipeline-complete or pull-complete; otherwise file BLOCKING and stop.",
+  "world_is": "Every candidate fails at least one criterion or a governing rule: the sentinels are excluded, the header_metrics key is absent, perf_report and the per-step markers are not per-run completion records, and the one run-dated chain object is the eclipse status, which the register names as TRASH read as a gate. The publisher has no readiness halt, so a clock-driven start (FB-m-2) would publish unchecked gold.",
+  "notes": "Signal files written with chosen null: deliverables/0.9.0_WK_ADVI_FIRMBKTS~84/READINESS_SIGNAL.json and .md. CTO decision needed: a new chain-written run-dated object (dispatch edit), a data-frontier read (calendar decision), or a ruling on the eclipse status. Disarm: the issuer decides whether the FB-m-2 clock schedule may start the publisher before a guard exists; until then it is unguarded."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W84-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~84",
+  "surfaced_at": "2026-10-14T13:07:13Z",
+  "one_line": "The gold chain freshness gate reads gold/artifacts/header_metrics.json, which is absent in opal-data-inf, and treats the absence as a first run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/gold/orion-gold-dispatch.sh:502-516 (check_freshness reads gold/artifacts/header_metrics.json; empty value prints 'No prior gold data_as_of found -- proceeding (first run)')",
+      "aws s3api head-object --bucket opal-data-inf --key gold/artifacts/header_metrics.json (read, 2026-10-14): 404 Not Found",
+      "data/inf/scripts/gold/INF_D_00.portal_aggregates.py:1087-1089 (INF_D_00 no longer emits header_metrics.json)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "dispatch :502-530: the silver-versus-gold freshness gate skips a chain when no new silver data exists, using gold header_metrics data_as_of as the gold frontier.",
+  "world_is": "The gold frontier key does not exist, so the gate cannot skip and always proceeds. The writer that the comment at INF_D_00:1087 points away from has no successor at that key.",
+  "notes": "Found while reading the candidates for FB-m-1. Not a readiness signal, and not in this order's paths. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W84-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~84",
+  "surfaced_at": "2026-10-14T13:07:13Z",
+  "one_line": "The eclipse status object is written after the best-effort eclipse steps, so its arrival time depends on them (up to three bounded steps).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/gold/orion-gold-dispatch.sh:756 (ECLIPSE_STEP_TIMEOUT default 600) and :2009-2012 (the eclipse loop runs after the sentinel at :1905)",
+      "aws s3 cp s3://opal-data-inf/gold/meta/pipeline-complete.json - (read): completed_at 2026-10-14T12:53:39Z; aws s3 cp s3://opal-data-inf/gold/eclipse/_meta/dispatch_eclipse_status.json - (read): completed_at 2026-10-14T12:53:48Z",
+      "data/inf/scripts/gold/orion-gold-dispatch.sh:1988-1990 (the 2026-05-15 directive that eclipse must not pause portal updates)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "dispatch :1988-1990: the portal publish is gated only on the A/B/C/D chain, and eclipse outcome must not pause portal updates.",
+  "world_is": "The one run-dated chain-tail object is written after the eclipse loop. The measured gap on 2026-10-14 was 9 s; the worst case is three 600 s steps, so any signal taken from it inherits eclipse timing.",
+  "notes": "Recorded as the coupling the CTO weighs with ADVI_FIRMBKTS-D1-W84-S1. Disarm: none (INERT) while nothing reads the object as a gate."
+}
+```
