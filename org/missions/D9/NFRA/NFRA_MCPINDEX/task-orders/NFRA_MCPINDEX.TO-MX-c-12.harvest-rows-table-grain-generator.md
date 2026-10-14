@@ -52,7 +52,7 @@ python workflows/atom_decomposition/gen_harvest_rows.py --g1 <file> --out <dir> 
 
 | key | value |
 |---|---|
-| `prefix` | the contract's `s3_prefix`. EXCEPTION: for the six hyphenated gold tables (`research-backlog`, `research-continuation`, `research-dossier`, `research-fund-form`, `research-model-typecast`, `research-sector-template`, under `amgt/harvest/gold/`) write `prefix_key: harvest-gold-<table>` INSTEAD of `prefix` (they are legacy read addresses; the loader resolves the key through `legacy_addresses.json`; a typed literal is refused). Exactly one of the two keys, never both |
+| `prefix` | the contract's `s3_prefix`. EXCEPTION: NINE prefixes are legacy read addresses (their names predate the canon, which spells them with `_`): the six hyphenated gold tables `research-backlog`, `research-continuation`, `research-dossier`, `research-fund-form`, `research-model-typecast`, `research-sector-template` under `amgt/harvest/gold/` (key `harvest-gold-<table>`), and `amgt/harvest/bronze/research-report/` (key `harvest-bronze-research-report`), `amgt/harvest/bronze/research-report-extract/` (key `harvest-bronze-research-report-extract`), `amgt/harvest/silver/research-report/` (key `harvest-silver-research-report`). For these nine write `prefix_key: <key>` INSTEAD of `prefix` (the loader resolves the key through `legacy_addresses.json`; a typed literal is refused by the commit-time naming gate). Exactly one of the two keys, never both. The first six keys already exist in the registry; you ADD the last three (step 0) |
 | `bucket` | the contract's `bucket` |
 | `business_meaning` | if a `--existing` row has the same resolved prefix, its `business_meaning` VERBATIM. Otherwise one sentence you compose from the contract: layer, format, table, prefix and the contract's `grain` (at least 40 characters, never starting `NONE`) |
 | `example_questions` | the `--existing` row's list (same resolved prefix) in its order, then every G1 `common_queries` entry not already in it. If both are empty: one question `Where is the <table> <layer> table of the harvest bucket?` |
@@ -64,7 +64,7 @@ python workflows/atom_decomposition/gen_harvest_rows.py --g1 <file> --out <dir> 
 | `read_tool` | see "read_tool policy" |
 | `gap_owner` | `NFRA_OPLGTW` when `read_tool` is null, else null |
 | `table`, `layer`, `format` | the contract's own, verbatim |
-| `contract` | a mapping: `id` = `contract_id`; `size`, `freshness`, `partition`, `producer` = the contract's own objects verbatim; `keys` = the contract's `securities` object verbatim |
+| `contract` | a mapping: `id` = `contract_id` with every `/` replaced by `:` (an IDENTIFIER, not an S3 address: the commit-time naming gate grades any slash-bearing string as an S3 key and refuses it, so `opal-data-harvest/gold/amgt.harvest.gold.ai_fill` is written `opal-data-harvest:gold:amgt.harvest.gold.ai_fill`); `size`, `freshness`, `partition`, `producer` = the contract's own objects verbatim; `keys` = the contract's `securities` object verbatim |
 | `nl_tags` | the contract's `nl_tags` list, verbatim (may be empty) |
 | `retired` | `true` for `publication-links/v1/` and `publications/v1/`, else `false` (see item 6 for research-dossier) |
 | `retired_reason` | present ONLY when `retired` is true: one sentence naming what supersedes it and G1 section 2 item 4 |
@@ -76,10 +76,15 @@ contract proposing it gives `harvest_get_research`.
 
 ### The steps
 
+0. **Registry rows (first).** In `infra/logic/registry/legacy_addresses.json`, add THREE rows to `legacy_addresses`, each in the exact shape of the six `harvest-gold-*` rows beside them (`key`, `bucket` = `opal-data-harvest`, `template` = the prefix, `shape` = `prefix`, `params` = `[]`, `reader` = `NFRA_MCPINDEX`, `evidence`, `note` = `AMGT_HARVST owns any rename (R19).`):
+   `harvest-bronze-research-report` -> `amgt/harvest/bronze/research-report/`, `harvest-bronze-research-report-extract` -> `amgt/harvest/bronze/research-report-extract/`, `harvest-silver-research-report` -> `amgt/harvest/silver/research-report/`.
+   `evidence` is `measured 2026-10-14 by 0.9.0_WK_NFRA_MCPINDEX~37: <n> objects (the contract's size.objects in G1, a count; no object content read)`, with `<n>` read from that contract in G1.
+   Then confirm that `opal_naming.legacy_address('harvest-silver-research-report')` (import `opal_naming` from `lib/`) returns the address.
 1. Write the generator and `workflows/atom_decomposition/tests/test_gen_harvest_rows.py` (your own tests: slug uniqueness over the 78, the count refusal, the read_tool policy under three sets, the six legacy keys).
 2. Run it with `--out workflows/atom_decomposition/catalog_entries --deployed-tools census`. That writes the 78 rows and deletes the 13 stale source-level files.
 3. Read the diff summary: files added, removed, kept. Print it.
 4. Run the three criteria below.
+5. The commit-time naming gate must accept the rows when you commit through `safe-commit.sh`; if it still refuses a line, report the line, do not override.
 5. **Item 6, optional and bounded.** Measure whether gold `research_dossier` (underscore) supersedes `research-dossier` (hyphen): list the object keys of both prefixes in
    `s3://opal-data-harvest/amgt/harvest/gold/` (read-only `list-objects-v2`, via `bash .tools/aws s3api ...`; no object body). Write
    `org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~37/research_dossier_supersession.json` with: the two key counts, the security_key
@@ -99,6 +104,7 @@ contract proposing it gives `harvest_get_research`.
 ## 3. SURFACES
 
 <paths>
+infra/logic/registry/legacy_addresses.json
 workflows/atom_decomposition/gen_harvest_rows.py
 workflows/atom_decomposition/catalog_entries/
 workflows/atom_decomposition/tests/test_gen_harvest_rows.py
@@ -136,6 +142,8 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
 The issuer then regenerates the catalog from the merged rows and the loader cell's code.
 
 <!-- ===================== RECORD FACE ===================== -->
+
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-14 ~15:3xZ), on your first report (rows Z-W37-S4, Z-W37-S5).** Your generator, tests and G1 pin stand. Three changes: (1) `contract.id` is written with `:` for `/` (the naming gate refused all 78 ids as S3 keys); (2) three more legacy prefixes name a registry key, and you add the three registry rows (step 0; `infra/logic/registry/legacy_addresses.json` is now in `<paths>`); (3) the order's own status flip is the ISSUER's act (it landed outside the grant): leave `<status>` alone, write the proof instance and commit. Re-run the generator, then the criteria; the checks were amended to the same rules. Gate limb that graded this modification: none (LIMB 6 does not fire on a modification; `<placeholders>NONE`).
 
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Round 13, chain head, worker ~37, parallel to `MX-c-11` (no shared file). Source: PRD v0.11
 @7878037d98 (1.0.0_SA_CTO~Z msg 34078), items 1, 2, 4 and 5; G1 @0d7c29b3c5. The base for the preserved text is @8c74d1d902 (the 39 round-12
