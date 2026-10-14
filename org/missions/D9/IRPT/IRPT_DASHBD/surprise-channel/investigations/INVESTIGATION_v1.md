@@ -8303,3 +8303,82 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W148-S1 -- DB94-1-AC1 and DB94-6-AC1 FAIL after the 0.3.0 contract: the round-94 gap table is bound to the exact 0.2.0 bytes
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W148-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~148",
+  "one_line": "DB94-1-AC1 and DB94-6-AC1 FAIL after the 0.3.0 contract, at the gap-table binding: the round-94 gap table (~145, outside this grant) is bound to the exact 0.2.0 contract bytes, and the checker accepts only the exact current bytes for it, never a lineage version.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO DB-b-182 (step 3): DB94-1, 3, 4 and 6 must still pass with the 0.3.0 contract; the checker accepts a record bound to a lineage version.",
+  "world_is": "DB94-2, DB94-3 and DB94-4 PASS. DB94-1 and DB94-6 FAIL at the gap-table binding: check_contract and check_resource compare the gap table's contract_sha256 to the exact current contract bytes, and lineage is accepted only for the build record and the render records. The gap table's totals still equal the 0.3.0 contract's (members, absent, sourced), so only the binding differs.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "checks/r94/p94_round94.py@7100c9b919: check_contract and check_resource need(g.get('contract_sha256') == sha) against the exact current contract bytes; check_sample and check_render accept CONTRACT_ACCEPTED (lineage)",
+      "deliverables/0.9.0_WK_IRPT_DASHBD~145/GAP_TABLE.json@990da1982b: contract_sha256 equals the 0.2.0 bytes (1c5cf7ba...); totals equal the 0.3.0 contract's",
+      "measured read-only at the worktree (.scratch/measure_gap.py, not tracked): DB94-1-AC1 FAIL rc 1, DB94-6-AC1 FAIL rc 1; DB94-2/3/4 PASS rc 0; DB97-1-AC1 PASS rc 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "surfaced_at": "2026-10-14T00:21:54Z"
+}
+```
+
+## IRPT_DASHBD-D2-W148-S2 -- the filled-report shape the order names leaves chart series unspecified; the builder's series were reshaped to name and points
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W148-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~148",
+  "one_line": "The order's filled-report shape named no chart series; the components and the checker take a series as a list of {name, points}, so the builder's {date, shares} series were reshaped. No chart member is measured on this household, so the reshaped path has no real-data run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-182 (step 2): the builder conforms to the components' reading of a filled report (top-level keys, account entries, by_row per-row values); the order names no series form.",
+  "world_is": "reportModel.ts types a chart member as a list of SeriesLine {name, points: [{date, value: number}]}, and DB97 requires each series entry to hold exactly name and points. The builder's three chart builders wrote {date, shares} rows. All three chart members are absent on this household (series members 0 in the sample). SeriesPoint has no absent form, so a day with no measured figure is left out of its series, and a chart with no measured point holds its absent form.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal branch wk-IRPT_DASHBD-142-portal, src/pages/InvestorReporting/dashboard/report/reportModel.ts: SeriesLine and SeriesPoint types (git show, read only)",
+      "deliverables/0.9.0_WK_IRPT_DASHBD~141/build_sample.py@7100c9b919: class_series, account_series, ending_netadd_series now return name and points lists; series_or_absent",
+      "private sample verification (counts only, .scratch/verify_sample.py): series members 0; chart members absent"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "surfaced_at": "2026-10-14T00:21:54Z"
+}
+```
+
+## IRPT_DASHBD-D2-W148-S3 -- the window_status sentence of the order did not cover a SOURCE_LAG opening anchor; the contract's rule now states the causes the builder implements
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W148-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~148",
+  "one_line": "The order's window_status sentence said BREAK means a day inside the window has no return; a SOURCE_LAG opening anchor has a row but no measured start, so the contract's window_status_rule names it under BREAK with the other unmeasured-return causes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-182 (step 1): window_status_rule states NOT_SPANNED when the account has no value on the opening anchor day, BREAK when a day inside the window has no return, else MEASURED.",
+  "world_is": "Under the sentence as worded, an account whose opening anchor row is SOURCE_LAG would read MEASURED while its window return is absent. The rule now names that case, and the null total_return_daily, GRADED_DISAGREED and SOURCE_LAG day causes the fold already treats as unmeasured, under BREAK. On this household the 12 window statuses are 3 BREAK and 9 MEASURED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@7100c9b919: document.filled_report.window_status_rule",
+      "deliverables/0.9.0_WK_IRPT_DASHBD~141/build_sample.py@7100c9b919: window_status(), the same causes as ret_window_terms",
+      "private sample verification (counts only): window_status counts 3 BREAK and 9 MEASURED of 12"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "surfaced_at": "2026-10-14T00:21:54Z"
+}
+```
