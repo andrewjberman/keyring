@@ -1685,3 +1685,15 @@ Rounds 94 and 95 are terminal (MAY-CLOSE; packets with the CVO). Round 94 built 
 **Decisions inside this decomposition (the issuer's, stated):** (a) the render is CLIENT DATA: it lives only in the private folder, the record carries paths, hashes and counts, and the checker verifies the files by their absolute paths and refuses any output inside the repo; (b) the render harness is tracked (it holds no data), the outputs are not; (c) cell A's cash class value must be one the canonical table already uses: if none exists the worker stops with a row and the issuer rules the vocabulary; (d) cell B is a separate order because it is a WORLD act that needs the count, the pair and the AE applier, like `DB-b-164` and `DB-b-165`.
 
 **fanout:** 2 of 2 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~146` (`DB-b-180`) and `~147` (`DB-b-181`).
+
+## 99. ROUND 97, WORKSTREAM B (2026-10-14 ~00:1xZ, issuer 2.0.0_SA_COO~D2, on worker ~146's row W146-S1; round 96 is still executing, the gate admits one issuance per round)
+
+`DB-b-180` (the local render of the real sample) stopped before any output: the real sample and the components do not agree on the shape of a filled report. The report contract's `document` layout (0.2.0) never said how a filled report names its accounts or keys its per-account values; the builder (`~141`) wrote top-level `household`, `rows`, `values`, `windows`, account entries `{account_key, last_four}` and bare per-account maps; the components (`~142`, tested) read top-level `household` and `values`, account entries `{account_id, last4, first_data_date, window_status}` and `{"by_row": {...}}`. The components' own note asked for exactly this clarification. The issuer rules inside its own decomposition: the contract adopts the tested reading, the builder conforms.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. contract 0.3.0 states `document.filled_report` (the shape the components read), the builder emits it, the real sample rebuilt (same household), the regenerated build record still passing round 94's DB94-2-AC1 | `DB-b-182` | FWD-21 | LOCAL | `DB-b-175`, `DB-b-176`, `DB-b-179` (drained) | R97-1 |
+
+Then `DB-b-180` (round 96, worker `~146`) is re-seated to render the rebuilt sample; its order needs no change (the checker's digit rule was fixed in `5d0a8c2f95`, row W146-S3). **Decisions inside this decomposition (the issuer's, stated):** (a) the components are the reference because they are built, tested and in a branch the CTO's review will read; changing them would re-open three drained cells, while the builder is one file; (b) the household stays the same (the order asserts the household reference hash), so Andrew's sample does not change under him; (c) the records bound to the contract's bytes stay valid through the lineage (0.1.0, 0.2.0, 0.3.0).
+
+**fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~148` (`DB-b-182`).
