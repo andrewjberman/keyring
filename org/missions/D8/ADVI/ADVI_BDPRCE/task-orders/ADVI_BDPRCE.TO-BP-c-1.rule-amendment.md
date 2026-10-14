@@ -21,6 +21,19 @@ EGRESS CLASS, declared: NONE.
 Round 2 built R1 as one module, `data/black_diamond/scripts/silver/bd_price_rule.py` (read it and `tests/test_bd_price_rule.py` first; the probe `org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~5/RULE_PROBE.md` shows it run). The CTO ruled AMENDMENT 1
 (`org/missions/D8/ADVI/ADVI_BDPRCE/ledger/CTO_RULING_R1_THE_PRICE_RULE_20261013.md`; read the whole record). You put the amendment into the module. Nothing imports the module and nothing served changes.
 
+### 1.0 AMENDMENT 2 -- THIS ORDER IS REOPENED (issuer, 2026-10-14 ~02:2xZ); it REPLACES item 2's identifier below
+
+You are a second seat of this slot. Your branch inherits the first seat's merged work (commits cd073f6a13 and 26132279f9 are in your tree: the module at `data/black_diamond/scripts/silver/bd_price_rule.py`, its test, `RULE_PROBE2.json` and `.md`, rows W13-S1..S7). The CTO ruled AMENDMENT 2
+(`org/missions/D8/ADVI/ADVI_BDPRCE/ledger/CTO_RULING_R1_THE_PRICE_RULE_20261013.md`, section AMENDMENT 2; read it). Item 2 below ("a par-quoted CANDIDATE is `asset_super_class_bd == 'Fixed Income'` AND `coupon_rate` is not null") is SUPERSEDED: the dimension carries no pricing-convention field and that test reaches only 2 of the 8 rows that read 100x.
+The rule now, per ROW:
+- The asset class is Fixed Income (`asset_super_class_bd == 'Fixed Income'`; the caller still passes the set of Fixed Income asset names as the parameter, no AWS in the module), AND the row's ratio `price / (|market_value| / |units|)` is within 1 percent of 100: the row is par-quoted and SCALED (executed price divided by 100, exact arithmetic on the row).
+- A ratio within 1 percent of 1 is a PER-UNIT quote and is LEFT ALONE (this covers fixed-income FUNDS, which never scale, for example ALLSPRING CORE BOND CIT CLASS E2 at 10.3525). It is NOT withheld (round 3's first seat withheld it as `ratio_near_1`: that changes).
+- Any other ratio (or no computable ratio) is WITHHELD with its reason and PRINTED RATIO (`ratio_unrecognised`, ratio value in the row's result and in the probe).
+- The dimension `coupon_rate` is a CORROBORATING read only: record, per scaled row, whether the coupon is present; it never decides.
+- `AMENDMENT = "R1.2"` (was "R1.1"); `RULE_ID` stays "R1". The 4 dimension names with conflicting rows stay excluded and listed.
+Update the test: arm (f) of the first seat (ratio near 1 withheld) now expects the row LEFT ALONE and counted as `per_unit_left`; add arms for: a Fixed Income row with ratio near 100 and a null coupon is scaled (CITIGROUP INC 5.3% 07/22/2032 at 97.021 with market_value/units 0.97021 reads 0.97021); a Fixed Income fund (ratio near 1) is not scaled and not withheld; a ratio of 10 is withheld and its ratio is returned; a non-Fixed-Income asset with ratio near 100 is NOT scaled (it is withheld with its ratio); coupon corroboration is recorded and decides nothing. The test must now print at least 30 arms.
+The probe `RULE_PROBE2.json` is re-run and overwritten: it must show all EIGHT round-2 `scale_100x` rows now reading equal to the served price (`unit_scale_rows_unchanged` 8 of 8), `par_quoted.per_unit_left` (a count of Fixed Income rows left alone as per unit) and `par_quoted.withheld_ratios` (a list of the printed ratios of withheld rows, empty if none).
+
 ### 1a. The amendment, verbatim in substance
 
 1. **Which rows are trades.** Dividend Reinvestment and Income Reinvestment BUYS count as trades: each is a purchase of units at an executed price per unit. Transfer In, Journal, every cash leg, and every row without an executed market price stay OUT (a transfer moves units at a book value, not a market price).
@@ -34,7 +47,7 @@ Round 2 built R1 as one module, `data/black_diamond/scripts/silver/bd_price_rule
    - Corroboration: scale when `price / (|market_value|/|units|)` is within 1 percent of 100; ratio within 1 percent of 1 means the two disagree and the row is withheld (`withheld_disagreement`, with the reason `ratio_near_1`); any other ratio is withheld with `ratio_unrecognised`.
    - The module stays free of AWS: `price_for_date` takes the candidate set as a parameter (`par_quoted_assets`, a frozenset of asset names); the PROBE builds the set from the dimension.
 3. **Carry-forward** (unchanged, restated): an asset with no qualifying trade on the date is absent; `carry_forward((price, date))` returns the price WITH its observation date. Interpolation stays banned (`resolve_source` refuses `linear_interpolation`).
-4. `RULE_ID` stays `"R1"`; add `AMENDMENT = "R1.1"` and print both on `__main__` (`R1.1 module ok`).
+4. `RULE_ID` stays `"R1"`; add `AMENDMENT = "R1.2"` and print both on `__main__` (`R1.2 module ok`).
 
 ### 1b. The test: `data/black_diamond/scripts/silver/tests/test_bd_price_rule.py` (edited; no AWS)
 
@@ -49,7 +62,7 @@ BLACKROCK INC COM 2026-09-22 (round 2: absent under buys and sells, 1,074.9259 w
 MIAMI-DADE CNTY FLA EDL FACS A 5.25% 04/01/2031 2026-10-09 (expect 1.0419), the other two par-quoted rows of the round-2 list (find them in `org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~6/BEFORE_AFTER.csv`, flag `scale_100x`), and ALLSPRING CORE BOND CIT CLASS E2 2026-10-02 (expect 10.3525, not scaled).
 ```json
 {"order": "BP-c-1", "read_at": "<ISO UTC>", "claim": "measured", "calls": ["aws s3api get-object ...", "..."],
- "amendment": "R1.1", "deterministic": true, "reinvestment_in": true, "transfer_in_out": true,
+ "amendment": "R1.2", "deterministic": true, "reinvestment_in": true, "transfer_in_out": true,
  "par_quoted": {"class_field": "asset_super_class_bd == 'Fixed Income' and coupon_rate not null", "assets_scaled": 0, "withheld_disagreement": 0,
                 "unit_scale_rows_unchanged": 0, "candidates_in_dimension": 0, "fixed_income_unscaled_with_ratio_near_100": []},
  "types_seen": {"<transaction_type>": 0},
@@ -77,23 +90,23 @@ org/missions/D8/ADVI/ADVI_BDPRCE/surprise-channel/investigations/INVESTIGATION_v
 
 <proof_of_spec>
 Instance at `org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/ADVI_BDPRCE.TO-BP-c-1.rule-amendment.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="BP-c-1"><invocation>cd /c/dev/wk-bdprce-r3-13 &amp;&amp; timeout 100 python data/black_diamond/scripts/silver/tests/test_bd_price_rule.py</invocation><expect>^BD PRICE RULE TEST: OK (2[0-9]|[3-9][0-9]) arms$</expect></criterion>
-  <criterion id="AC2" cell_refs="BP-c-1"><invocation>cd /c/dev/wk-bdprce-r3-13 &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/2.0.0_SA_COO~K1/round3/checks/r3_checks.py ruleprobe2 --file org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/RULE_PROBE2.json</invocation><expect>^RULEPROBE2 record ok amendment=R1.1 assets=[0-9]+ par_scaled=[0-9]+ withheld=[0-9]+$</expect></criterion>
+  <criterion id="AC1" cell_refs="BP-c-1"><invocation>cd /c/dev/wk-bdprce-r3-13 &amp;&amp; timeout 100 python data/black_diamond/scripts/silver/tests/test_bd_price_rule.py</invocation><expect>^BD PRICE RULE TEST: OK (3[0-9]|[4-9][0-9]) arms$</expect></criterion>
+  <criterion id="AC2" cell_refs="BP-c-1"><invocation>cd /c/dev/wk-bdprce-r3-13 &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/2.0.0_SA_COO~K1/round3/checks/r3_checks.py ruleprobe2 --file org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/RULE_PROBE2.json</invocation><expect>^RULEPROBE2 record ok amendment=R1.2 assets=[0-9]+ par_scaled=[0-9]+ withheld=[0-9]+$</expect></criterion>
   <criterion id="AC3" cell_refs="BP-c-1"><invocation>cd /c/dev/wk-bdprce-r3-13 &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_scope.py --root /c/dev/wk-bdprce-r3-13 --allow data/black_diamond/scripts/silver/bd_price_rule.py --allow data/black_diamond/scripts/silver/tests/test_bd_price_rule.py --allow org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/ --allow org/missions/D8/ADVI/ADVI_BDPRCE/surprise-channel/investigations/INVESTIGATION_v1.md</invocation><expect>^ROUND 4 SCOPE: OK [0-9]+ changed, 0 outside, 0 required missing$</expect></criterion>
 </proof_of_spec>
 
-AC1 is the built behaviour (each clause on planted frames, at least 20 arms); AC2 is the seam probe against the real partitions and dimension; AC3 is the write-surface bound (its printed label says ROUND 4 because the checker is reused unchanged).
+AC1 is the built behaviour (each clause on planted frames, at least 30 arms); AC2 is the seam probe against the real partitions and dimension; AC3 is the write-surface bound (its printed label says ROUND 4 because the checker is reused unchanged).
 
 ## 5. WHEN YOU ARE DONE
 
 Instance at the path above. Commit the module, its test, `RULE_PROBE2.json` and `RULE_PROBE2.md` FIRST, your rows and the instance second. **Do not flip this order's `<status>`**. Row ids:
-`ADVI_BDPRCE-D1-W13-S<k>` (the dell1 gate requires the D1 coordinate), `k` from 1, `surfaced_at` from `date -u +%FT%TZ`. Report once: the five named assets' R1.1 prices and kinds, the par-quoted candidate and scaled counts, how many of the eight 100x rows now read UNCHANGED, the types seen, AC1 to AC3 and the FULL commit hash.
+`ADVI_BDPRCE-D1-W13-S<k>` (the dell1 gate requires the D1 coordinate), `k` from 1, `surfaced_at` from `date -u +%FT%TZ`. Report once: the five named assets' R1.2 prices and kinds, the par-quoted candidate and scaled counts, how many of the eight 100x rows now read UNCHANGED, the types seen, AC1 to AC3 and the FULL commit hash.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-2 analysis item 1 (first half); R1 Amendment 1 (msgs 5323). Module-only; the replay re-run is `BP-c-2` on this module. Disarm map: brings `W6-S2`, `W3-S3`, `W3-S4` and the writers' rows within reach. Class LOCAL: the module sits under `data/black_diamond/scripts/silver/`, a path the silver script does not sync to the runner, and nothing imports it.
 
-<status>complete</status>
+<status>pending</status>
 <round>3</round>
 <workstream>RULEAMEND</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-c-1</to_id>

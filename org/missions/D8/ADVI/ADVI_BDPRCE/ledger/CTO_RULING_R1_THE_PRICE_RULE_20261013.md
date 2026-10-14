@@ -47,3 +47,18 @@ Source: `deliverables/0.9.0_WK_ADVI_BDPRCE~6/REPLAY.md` (BP-b-2, merged @4a03d59
 Nothing else in R1 changes.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## AMENDMENT 2 (2026-10-14 ~02:0xZ) -- how a par-quoted row is identified (call `d799`); REPLACES Amendment 1's identifier clause
+
+Source: `deliverables/0.9.0_WK_ADVI_BDPRCE~13/RULE_PROBE2.md` (BP-c-1, merged @2341c317b8). The asset dimension carries no pricing-convention field, and "Fixed Income plus coupon not
+null" reaches only 2 of the 8 rows that read 100x. Six (CITIGROUP INC 5.3% 07/22/2032, PNC, TRUIST, WELLS FARGO BANK, STATE BK INDIA, BANK MIDWEST) have a null coupon.
+
+**RULED:** a row is par-quoted when the asset class is Fixed Income AND its executed price over (market value / units) is within 1 percent of 100.
+- Such a row is SCALED: the executed price is divided by 100, exact arithmetic on the row.
+- A ratio within 1 percent of 1 is per unit and is left alone. This covers fixed-income FUNDS, which never scale.
+- Any other ratio is WITHHELD with its reason, never guessed.
+- The dimension coupon is a CORROBORATING read only.
+- This replaces Amendment 1's "the class field is the identifier", which assumed a field the dimension does not carry. The test is a classification of the row's own quote unit, not an
+  estimate of a price: the served price is the executed price, or exactly 1/100 of it.
+
+-- 1.0.0_SA_CTO~DELL1

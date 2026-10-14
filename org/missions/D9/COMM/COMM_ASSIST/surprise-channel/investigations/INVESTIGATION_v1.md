@@ -1092,6 +1092,33 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
 }
 ```
 
+## COMM_ASSIST-D2-S1 -- CA-i-5 step 3 assumes the forwarder creates answers/; it does not
+
+```json
+{
+  "id": "COMM_ASSIST-D2-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~CA2",
+  "surfaced_at": "2026-10-14T02:05:31Z",
+  "one_line": "CA-i-5 step 3 says the by-hand forwarder run creates answers/, answers/done/ and answers/rejected/; forwarder.py returns at once when answers/ is absent, so it created none and answers/ had to be made by hand.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/muse_reader/forwarder.py lines 115-121: `if not answers.is_dir(): return counts`, and only after that `done_dir.mkdir(exist_ok=True)` / `rej_dir.mkdir(exist_ok=True)`",
+      "dell2 run before any folder existed: `MUSE-FORWARD sent=0 rejected=0 failed=0` and Test-Path false for answers, answers/done and answers/rejected",
+      "after creating an empty answers/ and rerunning: done/ and rejected/ exist, 0 files"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-i-5 step 3: the by-hand run must print MUSE-FORWARD sent=0 rejected=0 failed=0 and leave answers/, answers/done/ and answers/rejected/ in place.",
+  "world_is": "The line printed but no folder was left: the forwarder only makes done/ and rejected/ under an answers/ that already exists. The empty answers/ was created by hand (a named dell2 write in the order), then the run created the other two. A reader folder built fresh by refresh.py has no answers/ either, so a rebuilt box would repeat this.",
+  "notes": "Also: the AC3 test file e2e-20261014T020311Z.json stays in answers/ (the forwarder never moves a file's bytes); only its sha256 marker is in answers/done/. The order text says the file stays in done/. The id is COMM_ASSIST-D2-S1, not the COMM_ASSIST-CA2-S<k> the order names: the row grammar (investigation_item.schema.json id pattern) allows one capital letter and optional digits before S<n>, so CA2 would be refused, and the gate then requires the coordinate to be a registered device (D2 = dell2) matching the row's fabric. A2 (tried first) was refused for that reason."
+}
+```
+
 ## COMM_ASSIST-W18-S1 -- CA-i-13 step 4 names test_muse_verify.py for a signed_at update, but that file holds no receiver test
 
 ```json

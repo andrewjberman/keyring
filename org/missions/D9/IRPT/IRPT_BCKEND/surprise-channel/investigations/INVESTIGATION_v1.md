@@ -33140,3 +33140,133 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS: W370-S1 (the docstring hunk): MY DEFECT in the order and its control (step 4 asked for a module-docstring paragraph the check's hunk-label rule rejects, and my control never changed a docstring); the worker documented the key in run_backfill's docstring; the module doc is unchanged; INERT. W371-S1 (Inflection has two landed transaction places with different spans: canonical silver from 2026-05-12, 145 partitions; legacy flat history from 2020-05-26, 1,656 files; Cottonwood's two agree at 123 days from 2026-03-09): carried as a design input: the history a 2012-floor activity backfill can read for those two firms starts where each firm's landed data starts, not in 2012. W371-S2 (the three firms' account key spaces differ: 49F zero-padded to 10, Black Diamond prefixed, Orion int64, none compared): a condition of any producer build (the shape's account_id must be one key space). W371-S3 (the premise of the same shape for Inflection's realized and in-kind columns fails: the Orion landed feeds carry no lot table): INERT, the reading itself. W371-S4 (two Orion writers with two column sets): INERT, named for the build. READINGS FOR THE CTO: Cottonwood (Black Diamond) can_produce_shape YES (0 of 19 columns ABSENT; transactions, realized, unrealized and holdings tables landed, silver partitions 2026-03-09 to 2026-10-13); Inflection (Orion) PARTIAL (2 of 19 ABSENT: realized and inkind_departure_gain, because no lot-level table is landed); the producer reads ONE declared source today, so the first build is the multi-source read with a custody declaration per firm. NOT measured: value signs, vocabularies as data, any row value, any key-space comparison. DECISION for the CTO: whether an Inflection activity table with two ABSENT columns serves the default report (contributions, withdrawals and income are mapped or derived; the two absent columns are gains), or waits for a lot feed."
 }
 ```
+
+## IRPT_BCKEND-D2-W373-S1 -- the served TABLE basis does not identify the canonical branch, so would_move is an upper bound
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W373-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~373",
+  "surfaced_at": "2026-10-14T01:54:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The served asset_class_basis TABLE does not identify the canonical branch: the bd-securities fallback writes TABLE too, so the would-move counts for IB-pr-526 are an upper bound of what the canonical-only rule would move, not its reach.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@9f41eeeec9 lines 927-932 (_classifier_basis returns TABLE for a fallback ticker in clf._ticker_map)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@9f41eeeec9 lines 977-984 (the canonical branch also writes TABLE, line 983)",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~373/IB188-2_holdings_class_count.json (notes: the upper-bound statement; TABLE movers per firm: 49financial 32, cottonwood 38, inflection 774)"
+    ]
+  },
+  "spec_asserts": "IB-pr-526 (round 188, CTO item 2 first half) and D2's read take a served node's class as the canonical branch's output, so a count of cash-subclass nodes whose served class is not cash counts what the canonical-only rule would move.",
+  "world_is": "The served snapshot carries no field that separates the canonical branch from the bd-securities fallback for a TABLE-basis node: the fallback writes TABLE for a ticker the bd-securities table holds. The would-move counts therefore include fallback nodes the rule does not change (basis NAME_ALIAS movers are certainly fallback: cottonwood 215, inflection 67). Read-only count; nothing was changed."
+}
+```
+
+## IRPT_BCKEND-D2-W373-S2 -- the dell2 agent identity can scan the canonical etf-classifications table
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W373-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~373",
+  "surfaced_at": "2026-10-14T01:54:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The dell2 worker identity could scan the canonical etf-classifications table, which the IB-pr-526 bounds expected to be outside its grant; the scan was a count-only read (11,361 rows, 365 cash sub-class rows).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-526.ir-holdings-class-count.md (bounds: a dynamodb scan only if the identity already may; the D2 read notes its grant excluded the table)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~149/IR_HOLDINGS_CLASS_SOURCE.json (reads.other_readers; canonical_table not read)",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~373/IB188-2_holdings_class_count.json (canonical_table counts; the projection used)"
+    ]
+  },
+  "spec_asserts": "The order's bounds state that the canonical table is scanned only if the worker identity already may, and that D2's grant excluded it, so a denial is the expected answer.",
+  "world_is": "A paginated dynamodb scan of etf-classifications with a projection of asset_class and sub_asset_class returned for the dell2 agent identity (3 pages, 11,361 rows, 365 with a cash sub_asset_class). Either the grant is wider than D2's read, or the table is readable to this identity in general; not checked further. No item value was kept."
+}
+```
+
+## IRPT_BCKEND-D2-W373-S3 -- cottonwood's newest accepted holdings date is two business days behind the other two firms
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W373-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~373",
+  "surfaced_at": "2026-10-14T01:54:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "cottonwood's newest accepted holdings publication is business date 2026-10-08 (index last modified 2026-10-09), while 49financial and inflection are at 2026-10-12 (index last modified 2026-10-13); Friday 2026-10-09 and Monday 2026-10-12 have no accepted cottonwood publication.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/manifest.json (index read by s3api get-object; latest_date 2026-10-08; LastModified 2026-10-09T14:18:11Z)",
+      "s3://opal-data-49financial/irpt/49financial/platinum/holdings/current/manifest.json and s3://opal-data-inflection/irpt/inflection/platinum/holdings/current/manifest.json (latest_date 2026-10-12)",
+      "infra/aws/lambda/investor-reporting/holdings/publication.py@9f41eeeec9 lines 176 and 341 (latest_date is the served date)"
+    ]
+  },
+  "spec_asserts": "The publication gate keeps a firm's last good publication when a fire is refused, and each firm's served holdings date is expected to advance with the trading calendar (Friday is Monday's answer, per the trading-day rule).",
+  "world_is": "cottonwood's served date is 2026-10-08 against 2026-10-12 for two firms; the counts in IB188-2 are as served on those dates. The reason (a refused fire, no fire, or a source frontier) is not read by this order."
+}
+```
+
+## IRPT_BCKEND-D2-W373-S4 -- cottonwood carries a publish_refusal record beside its current manifest, written after its last accepted publication
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W373-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~373",
+  "surfaced_at": "2026-10-14T02:01:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "cottonwood's current/ prefix holds a publish_refusal.json object written 2026-10-13T14:17:45Z, after its last accepted publication (business date 2026-10-08, manifest written 2026-10-09); its reason is not read by this order, which holds a head-object read only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/publish_refusal.json (s3api list-objects-v2 keys and head-object metadata: LastModified 2026-10-13T14:17:45Z, ContentLength 649; body not read)",
+      "s3://opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/manifest.json (LastModified 2026-10-09T14:18:11Z; latest_date 2026-10-08)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@9f41eeeec9 lines 2895-2897 (PUBLISH_REFUSAL_OBJECT beside current/manifest.json, one record per firm) and the refusal writer near line 3068"
+    ]
+  },
+  "spec_asserts": "A refused publish leaves the firm's last good publication served, with one refusal record per firm beside current/manifest.json (holdings_snapshot.py 2895-2897 and 3068); the S3 row's question of why cottonwood has no 2026-10-09 or 2026-10-12 partition has that record as a candidate answer.",
+  "world_is": "cottonwood's key listing shows partition dates 2026-10-05 to 2026-10-08 (29 objects each) and no 2026-10-09 or 2026-10-12 partition, plus current/publish_refusal.json written 2026-10-13T14:17:45Z. 49financial and inflection carry no refusal object beside their current manifests. The refusal's content (its condition and business date) is not read: outside this order's read grant. Consistent with a refused fire; not established as the cause."
+}
+```
+
+## IRPT_BCKEND-D2-W373-S5 -- the row gate counted zero new rows for S4, which was in the committed diff
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W373-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~373",
+  "surfaced_at": "2026-10-14T02:04:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Row IRPT_BCKEND-D2-W373-S4 was committed at baba4b0 without its closing json fence (the worker's defect); the surprise-row gate passed that commit with 0 new rows of 1276 and an OK line, and blocked the next commit only on the malformed block. The earlier commit 2563846c8a had reported 3 new rows of 1276 for S1 to S3.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md at baba4b084b (S4 present; git show HEAD:<path> count 2)",
+      "the commit gate output of baba4b084b: '[surprise-row-gate] ... 0 new row(s) of 1276 total checked (1276 pre-existing, NOT re-graded)' and the OK line",
+      "the commit gate output of 2563846c8a: '3 new row(s) of 1276 total checked (1273 pre-existing, NOT re-graded)'"
+    ]
+  },
+  "spec_asserts": "The surprise-row gate grades each new row of an appended investigation file at commit and reports the new count, so a row in the staged diff is counted as new.",
+  "world_is": "At baba4b0 the S4 block had no closing fence, so it did not parse as a row; the gate reported 0 new rows (total stayed 1276, not 1277) and printed OK, so the gate's OK line was not evidence that S4 was graded. The fence is repaired in the next commit; the row text is otherwise unchanged. The gate's silence on an unparsed new block at baba4b0 is the observation."
+}
+```
