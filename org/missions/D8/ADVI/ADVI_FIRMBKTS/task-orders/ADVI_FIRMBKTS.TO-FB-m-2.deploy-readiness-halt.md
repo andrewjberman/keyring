@@ -77,7 +77,9 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~F
 
 **ISSUER NOTES:** STAGED at the cut (workstream READYHALT, CTO condition C4 on `FB-l-5` act 3, msg 5536). Un-park conditions (all): `FB-m-1` merged and PASS; the CTO reads the guard and its signal; the never-widen pair for this deploy is signed on both halves (COO half authored by the issuer at the un-park). `FB-l-5` act 3 is then signed on an addendum that cites this order's record. Executor: `0.7.0_AE_CloudOps~FB1`.
 
-<status>staged</status>
+**AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-14 ~14:0xZ) -- UN-PARKED, GO once the CTO half is signed:** (1) `FB-m-1` is merged (987e2ca3f9) and complete: six tests, `GUARDDIFF: OK inserted=105 changed=0`, re-run by the issuer. (2) THE PAIR: COO half `ledger/NEVER_WIDEN_ROUND8_READINESS_GUARD_DEPLOY_COO_HALF.md` (committed with this amendment); the CTO half is his file, named at his signing. Read both halves at HEAD before step 1; if the CTO half is not at HEAD and signed, do nothing and say so. (3) THE LIVE ARMS, as the COO half names them (they replace steps 5 and 6 above where they differ): arm (b), the halt, runs TODAY after the apply (a same-day re-fire; today's publish has run, so D equals the served date; zero keys written, listing counts equal before and after); arm (a), the publish, is the FIRST organic marker-triggered run after the deploy (tomorrow's chain, about 13:00Z): do NOT invoke the publisher to hasten it (D must exceed the served date); read it. The record `READYHALT_RECORD.json` is completed when that run is read; until then report the apply and arm (b) to `2.0.0_SA_COO~B1` in one message and wait. Branch B is in the COO half (a wrong halt on a complete day). (4) The signal in the record: `signal.key` = `data frontier: client_perf, holdings, canonical_nna (content date)`, `signal.writer` = the gold chain outputs read by the guard (cite `lambda_function.py` lines from `READINESS_SIGNAL.json`). No criterion changed. Status pending.
+
+<status>pending</status>
 <round>8</round>
 <workstream>READYHALT</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-m-2</to_id>
