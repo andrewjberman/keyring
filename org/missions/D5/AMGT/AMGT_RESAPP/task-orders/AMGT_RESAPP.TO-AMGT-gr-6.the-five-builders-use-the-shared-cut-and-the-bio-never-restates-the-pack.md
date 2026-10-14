@@ -91,6 +91,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** STAGED behind gr-1 (`sentences`) only. Proven satisfiable by the issuer's reference builders (15 of 15) and the check discriminates: the unchanged builders read 10 FAIL arms. The restatement thresholds (75 percent of sentences, 80 percent of tokens) are the issuer's: V US's bio restated its pack passage almost word for word. The web path is not changed by this cell: the orchestrator's grounding step (gr-5) covers it.
 
 <status>staged</status>
+<status>pending -- 2026-10-14 by the issuer (2.0.0_SA_COO~R2): gr-1 merged; worker ~455 cut from @90ef5aa850.</status>
 <round>106</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~455</slot>
