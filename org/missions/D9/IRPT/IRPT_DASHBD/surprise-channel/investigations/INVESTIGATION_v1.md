@@ -10608,3 +10608,104 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W166-S1 -- the Cottonwood manifests were not rewritten on 2026-10-11: the TO-CB-al-2 mint created them (07:01:01Z to 07:17:06Z), so the writer is established as 0.7.0_AE_CloudOps~CB2
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W166-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~166",
+  "surfaced_at": "2026-10-14T11:29:36Z",
+  "one_line": "The Cottonwood manifests of 2026-06-22 and 2013-04-03 were not rewritten on 2026-10-11: the TO-CB-al-2 mint created them in its apply window, so the writer is established as 0.7.0_AE_CloudOps~CB2 and not NOT_ESTABLISHED",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-201 face item 1 and the premise of IRPT_DASHBD-D2-W160-S5: the newest (2026-06-22) and the 2013-04-03 manifest.json objects were REWRITTEN on 2026-10-11 over existing history, their writer is NOT_ESTABLISHED, and the producer's last mint was earlier.",
+  "world_is": "Each of the two keys holds exactly one object version and no delete marker; the bucket's versioning is Enabled and it has no lifecycle configuration. The deploy-completion ledger 20261011T065618Z, authored by 0.7.0_AE_CloudOps~CB2, records before the write zero versions and zero delete markers under the gold prefix (leg L1) and the mint's --apply at 07:01:01Z to 07:17:06Z (leg L5, landed=3325). The 2026-06-22 manifest's LastModified 07:17:06Z UTC equals that apply's last-line time; the 2013-04-03 manifest's LastModified 07:03:46Z UTC falls inside the window. So the 2026-10-11 objects were first creations by the mint, not rewrites, and the producer's last mint was that same run. The writer rests on the ledger and the S3 instants together; CloudTrail records no data events for this bucket, so the PutObject caller is not read independently.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/change_management/20261011T0656Z_advi-cotbkf-r38-al2-ard-cottonwood-mint-20261011_deploy_completion.md@a1d871ec33 (legs L1 and L5; Log lines 20261011T065806Z and 20261011T071921Z)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~CB2/logs/2026-10-11/cb2_r38_al2_ard_cottonwood_mint.md@a1d871ec33 (step 6, --apply, 07:01:01Z-07:17:06Z)",
+      "aws s3api list-object-versions on the two manifest.json keys, read 2026-10-14: one version each, no delete marker; get-bucket-versioning Enabled; get-bucket-lifecycle-configuration NoSuchLifecycleConfiguration"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Supersedes the premise of IRPT_DASHBD-D2-W160-S5 for the writer question; that row is not edited and its disposition is the CVO's."
+}
+```
+
+## IRPT_DASHBD-D2-W166-S2 -- the face's rollback (deletion of the new partitions) conflicts with the CB-al-2 ledger, which says rollback is not a delete and a delete is Andrew's act
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W166-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~166",
+  "surfaced_at": "2026-10-14T11:29:36Z",
+  "one_line": "The face asks the rollback to name deletion of the new partitions; the CB-al-2 ledger says rollback is not a delete and a delete is Andrew's act, so the packet names the deletion as Andrew's and performs none",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-201 WORKER FACE section 6: the packet's rollback, per key, is the previous version of each rewritten manifest and the deletion of the new partitions.",
+  "world_is": "The mint's ledger (CLOSE DISPOSITION) states that rollback is NOT a delete (AMENDMENT 4, kept by AMENDMENT 5): the minted keys stay UNREAD, a partial mint is RESUMED under an amendment, and a delete is Andrew's and not the order's act. The keys have no prior version (leg L1 read zero versions before the write), so there is no previous version to restore for any key this resume would create. The only rollback of a created key is its deletion, which the ledger reserves to Andrew. The packet names the deletion, marks it as Andrew's act, and does not perform it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/change_management/20261011T0656Z_advi-cotbkf-r38-al2-ard-cottonwood-mint-20261011_deploy_completion.md@a1d871ec33 (CLOSE DISPOSITION section: Rollback is NOT a delete; leg L1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W166-S3 -- the face gives the 2026-10-11 manifest times as local; the S3 LastModified values are UTC
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W166-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~166",
+  "surfaced_at": "2026-10-14T11:29:36Z",
+  "one_line": "The face labels the 2026-10-11 manifest times 07:03 to 07:17 local; the S3 LastModified values are 07:03:46 and 07:17:06 UTC",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-201 WORKER FACE item 1: the newest and the 2013 manifest.json objects carry a LastModified of 2026-10-11 (07:03 to 07:17 local).",
+  "world_is": "S3 returns LastModified with a +00:00 offset: 07:03:46 for the 2013-04-03 manifest and 07:17:06 for the 2026-06-22 manifest, both UTC. The ledger's apply window (07:01:01Z to 07:17:06Z) uses the same UTC instants. The label was carried from the round-103 read, which named the times without a zone.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-object-versions on the two manifest.json keys, read 2026-10-14: LastModified 2026-10-11T07:03:46+00:00 and 2026-10-11T07:17:06+00:00",
+      "org/critical_paths/change_management/20261011T0656Z_advi-cotbkf-r38-al2-ard-cottonwood-mint-20261011_deploy_completion.md@a1d871ec33 (leg L5, 07:01:01Z-07:17:06Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W166-S4 -- the adapter's apply path also writes the blank-reasons sidecar and the method row, which the resume packet's keys_written does not name
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W166-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~166",
+  "surfaced_at": "2026-10-14T11:29:36Z",
+  "one_line": "The mint's apply path landed a blank-reasons sidecar and a method row beside the 3,325 day partitions; a resume through the same path would reach those keys unless excluded",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-201 WORKER FACE sections 3 and 6: keys_written is the account_return_daily prefix alone at 2 objects per partition, and no other key moves.",
+  "world_is": "The mint's apply (ledger leg L5) landed 3,328 objects: 3,325 day partitions, the sidecar under irpt/cottonwood/gold/account_return_daily_blank_reasons/source_date=2026-06-23/, and the method row under dim_return_method/method_version=3/ (two objects). The packet keeps no_other_key_moves true for the act as packeted, and makes the resume's exclusion of those two prefixes, or a byte-identity proof for them, a condition of the resume in section 7.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/change_management/20261011T0656Z_advi-cotbkf-r38-al2-ard-cottonwood-mint-20261011_deploy_completion.md@a1d871ec33 (leg L5: sidecar=landed method_row=landed; 3328 LANDED lines reconciled to 3325+1+2)",
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py@a1d871ec33 (module docstring: --apply is a guarded mint of local days and, for a stamped manifest, the sidecar and method row)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
