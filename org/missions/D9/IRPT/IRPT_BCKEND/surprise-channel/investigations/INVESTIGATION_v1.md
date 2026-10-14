@@ -32711,3 +32711,233 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS: W368-S1 (the STOP): MY DEFECT, ruled by amendment 1 (@07380ba777): the order demanded 0 signature mismatches on both zips without my reading the live zip, which already carries one; the rule is now the attribute rule. W368-S2 (served.py passes profile_reader= to InteractiveAccess, which takes none; TypeError if reached): the call is in served.py _handle_prospect on the CREATE_INPUT branch; irpt-export-render's operations never route there (my read, entry.py:447-455), so it is LATENT here; NOT exercised by anyone; STAYS ARMED, owner me: the repair is a re-pin of the staged served.py or interactive_access.py row and ships with its own release, and the same stale pin pair sits in every function that stages both (not censused here). W368-S3 (the source map's deploy_ledger names a ledger whose text never names the function) and S5 (a listed worktree with no directory, so the marker read covers 54 of 55): the same class as W367's rows, INERT, not mine to fix. W368-S4 (the premise that pre-IB-pr-343 receipts exist is not borne out): ONE receipt, it carries the field, so the branch is none_needed for THIS read only (the apply re-reads the store and runs the backfill first if a lacking receipt appeared). The CTO's rule (never refuse a receipt that exists today) holds: the one receipt is refused TODAY and the release makes it readable. NOT shown: that a NEW export reads through the v1.2 schema (a person's read on DEV after the apply). Consumers: the packet leaves the portal read-through to the apply seat; I read the export status path in D2's chain (getExportReceipt then pollExportReceipt) and it makes one GET per poll; no change to it ships."
 }
 ```
+## IRPT_BCKEND-D2-W369-S1 -- The order names the writer irpt-reporting-gold; the live function and log group carry the builder name irpt-49f-reporting-gold-lambda
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W369-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~369",
+  "surfaced_at": "2026-10-14T00:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "No function or log group named irpt-reporting-gold exists; the writer is irpt-49f-reporting-gold-lambda, the name lambda.tf builds from the firm scope.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-gold/lambda.tf@f9138c4f06 lines 21-32 (the name is opal_name(irpt, firm, reporting-gold, lambda))",
+      "aws lambda get-function-configuration irpt-reporting-gold: ResourceNotFound; aws logs describe-log-streams /aws/lambda/irpt-reporting-gold: log group does not exist (read, 2026-10-13)",
+      "aws lambda get-function-configuration irpt-49f-reporting-gold-lambda: Timeout 900, MemorySize 3008, LastModified 2026-10-13 (read)"
+    ]
+  },
+  "spec_asserts": "IB-pr-522 names the writer as the Lambda irpt-reporting-gold and its log group /aws/lambda/irpt-reporting-gold.",
+  "world_is": "The named function and log group do not exist in the account. The live writer, and the log group that carries its BACKFILL and REPORT lines, is irpt-49f-reporting-gold-lambda. The census used the live name for every read."
+}
+```
+
+## IRPT_BCKEND-D2-W369-S2 -- One reporting-gold writer cannot serve three firms; cottonwood and inflection have no declared custody source and no function
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W369-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~369",
+  "surfaced_at": "2026-10-14T00:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's per-firm demand for cottonwood and inflection cannot be produced by the one-source reporting-gold function; their demand fields are recorded null.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/sources.json@f9138c4f06 (one custody entry, the 49financial master)",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py@f9138c4f06 lines 222-224 (refusal when the source count is not 1)",
+      "infra/aws/terraform/investor-reporting/reporting-gold/locals.tf@f9138c4f06 lines 48-52 (one() over firm, bucket and source)",
+      "aws lambda list-functions (read): no reporting-gold function for cottonwood or inflection"
+    ]
+  },
+  "spec_asserts": "The writer serves the three firms 49financial, cottonwood and inflection, and each firm has an activity demand from the 2012 floor.",
+  "world_is": "The producer declares one source and the handler refuses any other count. cottonwood holds 3325 returns partitions and 0 activity partitions; inflection holds 0 of each. No activity source is declared for either, so their earliest activity record is not sourced. The demand fields are null, not estimated."
+}
+```
+
+## IRPT_BCKEND-D2-W369-S3 -- Twenty-three returns-only backfill passes over 2024-07-08..2026-10-01 ran on 2026-10-03 and wrote no activity partition
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W369-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~369",
+  "surfaced_at": "2026-10-14T00:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "On 2026-10-03, 23 backfill invocations with upload True covered 562 trading days of returns and logged no activity line; the activity table's only history starts 2026-10-07.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws logs filter-log-events on the live log group, BACKFILL lines since 2026-09-01: 22 invocations of 25 days and 1 of 12 days, all upload True, all logged 2026-10-03 16:59 to 17:32",
+      "the same log group: account_activity_daily lines first appear 2026-10-09 07:11 (read)",
+      "aws s3api list-objects-v2 on the 49financial activity prefix: 4 partitions 2026-10-07..2026-10-12 (read)"
+    ]
+  },
+  "spec_asserts": "The activity table's history is the order's 4 partitions and no earlier pass has rewritten its days.",
+  "world_is": "The 2024-07-08..2026-10-01 range (562 trading days) was rewritten on returns by a pass that ran before the activity stage was logged. The activity table has no partition before 2026-10-07, so the activity days of that range have never been written."
+}
+```
+
+## IRPT_BCKEND-D2-W369-S4 -- An explicit backfill rewrites the returns days of its range, so the order's Branch A cannot keep the returns tables untouched
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W369-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~369",
+  "surfaced_at": "2026-10-14T00:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "run_backfill emits the returns day of every day in its range before the class and lots stages, so a backfill over the 565-day range overwrites 565 landed returns partitions.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py@f9138c4f06 lines 579-587 (the returns emit loop, then emit_classes and emit_lots)",
+      "aws s3api list-objects-v2 (read): 569 returns partitions 2024-07-08..2026-10-12, equal to the trading-day count of that range"
+    ]
+  },
+  "spec_asserts": "IB-pr-522 Branch A verifies after each chunk that the returns tables are untouched.",
+  "world_is": "The handler writes the returns keys of the chunk on every explicit backfill. The keys stay the same but the bytes are rewritten, so the check must read key count and dates, not untouched bytes."
+}
+```
+
+## IRPT_BCKEND-D2-W369-S5 -- The lots stage refuses days on the realized-lot key check and a backfill logs the refusal without raising
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W369-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~369",
+  "surfaced_at": "2026-10-14T00:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The lots stage logged LOTS_SKIPPED for 2026-10-07 and 2026-10-08 on the realized-lot key check; a later run landed both, so the refusal is not stable.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws logs filter-log-events on the live log group: LOTS_SKIPPED 2026-10-07 (run logged 2026-10-09 04:16) and 2026-10-08 (run logged 2026-10-09 11:43), each a REFUSED on the realized-lot key (read)",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py@f9138c4f06 lines 317-328 (check_realized_unique refuses)",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py@f9138c4f06 lines 585-587 (a lots failure is logged and not raised)"
+    ]
+  },
+  "spec_asserts": "A backfill day lands its activity partition once its lots stage computes.",
+  "world_is": "A refused lots day writes its returns and class days without its activity partition, and the refusal is named only in the log. The lot identifiers in the refusal text embed account numbers, so they are not copied into any tracked file."
+}
+```
+
+## IRPT_BCKEND-D2-W369-S6 -- The 25-day chunk bound has never run with the lots stage, and at the measured per-day rate it would pass the 900-second timeout
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W369-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~369",
+  "surfaced_at": "2026-10-14T00:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Current-stage one-day runs took 96 to 389 seconds each; a 25-day chunk at that rate would exceed the 900-second function timeout, and no 25-day chunk with the lots stage has run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function-configuration irpt-49f-reporting-gold-lambda: Timeout 900 (read)",
+      "aws logs filter-log-events REPORT lines, upload True, one-day runs 2026-10-09..2026-10-13: 96.4, 318.1, 343.5, 389.1, 216.7 seconds (read)",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py@f9138c4f06 line 119 (MAX_BACKFILL_DAYS = 25)"
+    ]
+  },
+  "spec_asserts": "A chunk of MAX_BACKFILL_DAYS trading days completes inside one invocation.",
+  "world_is": "The chunk bound is not verified against the timeout. The 25-day chunks logged on 2026-10-03 ran 21 to 63 seconds each, but they predate the lots stage, so they do not measure the current cost."
+}
+```
+
+## IRPT_BCKEND-D2-W369-S7 -- A re-run of an activity day does not reproduce its content, so the order's idempotence premise does not hold
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W369-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~369",
+  "surfaced_at": "2026-10-14T00:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The 2026-10-08 activity day landed 6901 rows on 2026-10-09 and was computed at 6904 rows on 2026-10-12 and again on 2026-10-13.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws logs filter-log-events on the live log group: account_activity_daily 2026-10-08 rows=6901 LANDED (2026-10-09 13:05), rows=6904 DRY (2026-10-12 14:06), rows=6904 DRY (2026-10-13 12:47) (read)",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py@f9138c4f06 lines 1318-1353 (emit_day writes the same keys again)"
+    ]
+  },
+  "spec_asserts": "Re-running a day rewrites the same content, so a backfill can be repeated safely.",
+  "world_is": "The source changed between runs and the same day's row count moved. A repeated backfill changes content, so the plan records idempotent false."
+}
+```
+
+## IRPT_BCKEND-D2-W369-S8 -- The trading-day count of the plan rests on the hardcoded calendar fallback
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W369-S8",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~369",
+  "surfaced_at": "2026-10-14T00:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "lib/trading_calendar.py answered from its hardcoded NYSE fallback because pandas_market_calendars is absent; the 565-day count in the plan rests on it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py@f9138c4f06 (the WARN text and calendar_source NYSE/hardcoded-fallback-2010-2027, printed by the census's trading-day call)"
+    ]
+  },
+  "spec_asserts": "Trading-day counts come from the repository's calendar frontier.",
+  "world_is": "The frontier used the fallback table, which covers 2010 to 2027 and asks for regeneration before 2028. The count is correct for the fallback and was not checked against an exchange calendar."
+}
+```
+
+## IRPT_BCKEND-D2-W369-S9 -- The reporting-gold schedule is not an events rule, so the order's named read of it returns nothing
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W369-S9",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~369",
+  "surfaced_at": "2026-10-14T00:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "events list-rules with prefix irpt returns one rule and none naming reporting-gold; the schedule is an EventBridge Scheduler schedule, which the order's read does not cover.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws events list-rules --name-prefix irpt (read): 1 rule, none naming reporting-gold",
+      "infra/aws/terraform/investor-reporting/reporting-gold/schedule.tf@f9138c4f06 lines 82-89 (aws_scheduler_schedule irpt_reporting_gold)"
+    ]
+  },
+  "spec_asserts": "The function's schedule is read through events list-rules.",
+  "world_is": "The schedule is an EventBridge Scheduler schedule. Its live state was not read, because a Scheduler read is outside the order's bounded allowance; the declared cron is recorded from the Terraform comment only."
+}
+```
+
