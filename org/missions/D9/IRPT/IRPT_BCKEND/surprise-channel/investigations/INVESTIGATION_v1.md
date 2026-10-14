@@ -33646,3 +33646,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## Round 190, IB-pr-529 -- worker 0.9.0_WK_IRPT_BCKEND~376's second row
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W376-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~376",
+  "surfaced_at": "2026-10-14T04:20:00Z",
+  "one_line": "The one-writer gate warns that the order's investigation path is the laptop's unsuffixed file; a dell2 worker appended a row to it at commit 770a469992.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 770a469992 in worktree C:/dev/wk-IRPT_BCKEND-376: '[one-writer] WARN: org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md is the laptop's (unsuffixed) file, written from dell2; per-box file <stem>.dell2.<ext> (WARN until C-QUEUE)'",
+      "the order IRPT_BCKEND.TO-IB-pr-529 names this unsuffixed path as the row file (its paths block and step 6), so the worker wrote where the order pointed"
+    ]
+  },
+  "spec_asserts": "Rows go to the investigation file the task order names (INVESTIGATION_v1.md), and a worker's row is appended there.",
+  "world_is": "The one-writer gate reads that file as the laptop's and says a dell2 writer should use the per-box file INVESTIGATION_v1.dell2.md until the C-QUEUE repair lands. The gate passed the commit (WARN only), and this row is the only write to the file from this worktree.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
