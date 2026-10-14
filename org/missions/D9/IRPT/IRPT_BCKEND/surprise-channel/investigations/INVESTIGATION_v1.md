@@ -34566,3 +34566,113 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W383-S1 (BLOCKING, the IB194-1-AC1 check cannot read the stop evidence): my check's defect, the second this session; it read the flat path lists as count-and-path pairs and my control encoded the same wrong shape; repaired @90a0952879, the worker's AC1 row re-graded PASS on the landed tree @7b46d4a24d; INERT. D2-W383-S2 (the live copies predate several producer commits on the pin, so a full pin mint changes holdings_snapshot.py by more than the two signed changes; cottonwood and inflection by the account_id, keyed-gate, CUSIP-fallback and multi_asset commits as well): LOAD-BEARING. The signed counts compare the pin with the cash rule against the pin without it; they say nothing about the delta between the code that serves now and the pin. Not a hazard by itself (nothing minted), but v2 cannot be signed on static effect lines: the differential on the same pinned inputs (live code against pin code, node by node) is the measurement, taken by the issuer as a direct read and recommended to the CTO as a cell. D2-W383-S3 (the live holdings_snapshot.py matches no commit and each firm's bundle holds its own variant): INERT as a hazard, LOAD-BEARING as provenance: the live producer for each firm is code no commit holds (a bundle minted from a working tree), which is the fact that makes the differential necessary; whoever minted those bundles from an unrecorded tree is not read here. D2-W383-S4 (the meaning of rows_written): INERT; confirmed as data rows written to a store, not surprise-channel rows."
 }
 ```
+
+## IRPT_BCKEND-D2-W384-S1 -- the packet v2 cottonwood table omits a pin module the pin's cottonwood import path needs; no live bundle holds it, so a Branch A mint of the table cannot import cottonwood
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W384-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~384",
+  "surfaced_at": "2026-10-14T16:44:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2: amend the packet's section 2 cottonwood table with data/assets/scripts/silver/opal_unidentified.py (pin bytes) before any Branch A mint; packet v3 section 13.3 names it and does not add it to section 2",
+  "one_line": "The pin's cottonwood builder build_cottonwood_mdpf_slice.py imports data/assets/scripts/silver/opal_unidentified.py at module level (pin line 136). That module is tracked at the pin, absent from all three live bundles (45 entries each, none named opal_unidentified) and absent from packet v2's cottonwood table, so the 46-member closure Branch A expects is one module short for cottonwood.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/build_cottonwood_mdpf_slice.py@49467335d288 line 136 (import opal_unidentified); the hybrid of this member on the live cottonwood tree failed with ModuleNotFoundError on that import (run log, scratch)",
+      "data/assets/scripts/silver/opal_unidentified.py@49467335d288 (tracked at the pin; comp-find --name, one hit at HEAD of the pin tree)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~383/IB194-1_packet_v2_record.json@0a863771db (cottonwood members: no opal_unidentified row; the only added member listed is data/assets/scripts/silver/opal_strategy_matcher.py)",
+      "bundle listings of the three live tarballs (tar -tzf, 45 entries each): zero entries named opal_unidentified",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~384/IB195-1_differential_record.json@this commit (firms.cottonwood: 485 changed nodes, UNATTRIBUTED 0; the copied-in module of the two hybrids is named in the run result, scratch)"
+    ]
+  },
+  "spec_asserts": "Packet v2 section 7 requires a built cottonwood bundle to hold the 46 closure members of the pin, and section 2 lists the cottonwood moved members; the closure is the set the pin's cottonwood run imports.",
+  "world_is": "The pin's cottonwood run imports silver/opal_unidentified.py through build_cottonwood_mdpf_slice.py, which is reached through the cottonwood COT taxonomy helper. The module is not in the table and not in any live bundle. A hybrid built on the live tree with only build_cottonwood_mdpf_slice.py swapped to the pin bytes cannot import; the measurement copied that one pin file into that hybrid alone and recorded it. Packet v3 names the module in section 13.3 and does not add it to section 2 (the issuer's table).",
+  "notes": "Found while building the one-member hybrids of the differential (IB-pr-539). Not mint-affecting while nothing is minted; ARMED because a Branch A mint of the v2 table would ship a cottonwood bundle that cannot import its taxonomy path. The 49financial and inflection closures have no such module."
+}
+```
+
+## IRPT_BCKEND-D2-W384-S2 -- packet v2 section 6 reads inflection PUBLISHED before and after the release; the measured gate is REFUSED on both codes at pin 2026-10-13
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W384-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~384",
+  "surfaced_at": "2026-10-14T16:44:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "At the custody pin 2026-10-13 the inflection publish gate reads REFUSED on source_frontier_older on the live code and on the pin code alike, where packet v2 section 6 reads PUBLISHED before and after.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~383/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-532_V2.md@0a863771db section 6 table (inflection row: gate before PUBLISHED, gate after PUBLISHED)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~380/IB192-1_replay_record.json@cfd20f6bcd (inflection run_a and run_b: gate_before and gate_after REFUSED on source_frontier_older at the pin)",
+      "measured in this order: the publish gate of each code evaluated by the tree's own evaluate_publish_gate against the served publication (IB195-1_differential_record.json firms.inflection.gate: live REFUSED, pin REFUSED, both source_frontier_older)"
+    ]
+  },
+  "spec_asserts": "Packet v2 section 6 records the inflection gate PUBLISHED before and after the release at the pin 2026-10-13, and the stop rule of section 10 depends on the gate outcome.",
+  "world_is": "The gate reads REFUSED on source_frontier_older on both codes at the pin. The candidate's business date is 2026-10-12. The served frontier itself was not read in this order; the 380 replay recorded the same refusal for the same pin. Nothing was published by this order, so the difference is a measured premise, not a release effect.",
+  "notes": "Recorded as measured in packet v3 section 13.3 item 3. Section 6 is not re-cut by this order."
+}
+```
+
+## IRPT_BCKEND-D2-W384-S3 -- the signed 249 cottonwood nodes are not the whole cottonwood classification move: 4 nodes reach cash on the pin without the rule, and 236 basis and sub-class changes sit beside them
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W384-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~384",
+  "surfaced_at": "2026-10-14T16:44:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "On cottonwood the live-against-pin differential is 485 changed nodes: the signed cash rule explains 249, and the holdings_snapshot.py member swap alone reproduces the other 236 (asset_class 4 fixed_income to cash, asset_class_basis 236, sub_asset_class 51). Four of the cash moves are not the rule: the identity-patch build already gives cash for them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~384/IB195-1_differential_record.json@this commit (firms.cottonwood: total 485, signed_cash_rule 249, UNATTRIBUTED 0; the 236 group entries attributed to W383-S2:holdings_snapshot)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@49467335d288 (the pin copy: the cash rule, the exemption repair, the keyed gate, the CUSIP fallback and the multi_asset line; the cottonwood live copy matches no commit)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md@69f5437523 row IRPT_BCKEND-D2-S173 (the issuer's direct read: the same 4, 236 and 51 counts, which this measurement reproduces)"
+    ]
+  },
+  "spec_asserts": "The signed counts (32 / 249 / 841) measure the cash rule alone, the pin with the rule against the pin without it, and say nothing about the delta between the live code and the pin.",
+  "world_is": "Measured per firm: 49financial 32 and inflection 841 changed nodes are all the signed rule; cottonwood's 249 are the rule, and its 236 further nodes are a non-rule holdings_snapshot.py change. For the 4 asset_class nodes the identity-patch build yields cash as well, so the rule did not produce that move. The sub-cause inside holdings_snapshot.py is not separated; the member is the unit of attribution. Packet v3 names the groups per firm with their counts as the signed scope.",
+  "notes": "Not a disagreement with the issuer's direct read (the counts match: 253 asset_class, 236 basis, 51 sub-class). Recorded because the signed count alone would read as the whole cottonwood movement."
+}
+```
+
+## IRPT_BCKEND-D2-W384-S4 -- python -I ignores PYTHONDONTWRITEBYTECODE, so the subprocess builds wrote __pycache__ into the pin worktree and the scratch bundles
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W384-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~384",
+  "surfaced_at": "2026-10-14T16:44:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A read-only build run with python -I (the isolation the downloaded-bundle rule asks for) ignores PYTHONDONTWRITEBYTECODE, so the imports wrote __pycache__ folders into the pin worktree and the extracted live bundles; the pin worktree also gained ignored comp-find state from a comp-find call inside it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I documentation: -I implies -E, which ignores every PYTHON* environment variable, PYTHONDONTWRITEBYTECODE included",
+      "git -C C:/dev/wk-ib539-pin status --porcelain --ignored lists __pycache__ folders and a .comp-graph folder (ignored) at the pin 49467335d288"
+    ]
+  },
+  "spec_asserts": "A harness run in its own subprocess leaves the trees it imports from as it found them, apart from the outputs it names.",
+  "world_is": "The subprocess builds wrote bytecode caches into the pin worktree and into the scratch copies of the live bundles. Nothing tracked changed and no bundle or repository content was written; the caches are removed with the pin tree and the scratch at the end of the order.",
+  "notes": "The -I isolation is kept deliberately. The caches are not evidence and carry no measurement."
+}
+```
