@@ -12063,3 +12063,132 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S39",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T19:35:49Z",
+  "one_line": "Issuer's rulings on worker 176's BLOCKING row W176-S1 (the as-of fix changes one byte-for-byte golden) and worker 177's BLOCKING row W177-S1 (no independent close series inside the grant): the golden is re-pinned inside the grant; the independent series is named in the order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-219 AC3: the whole-scope suite after has no new failing test; DB-b-220 step 3: the offset is measured against an independent close series, never one derived from the holdings file.",
+  "world_is": "W176-S1: the date-only fix prints 'September 29th, 2026' where the ModelPortfolios footer printed 'September 29th, 2026, 5:00p ET', and iv-e-120's golden compares that mount byte for byte, so one test (b) newly fails. The golden pins the very clock the order removes: ruled re-pinned, that one sentence only, with the golden file added to the order's paths; the test file stays untouched. W177-S1: the worker's grant was one S3 prefix and no independent close series was reachable. An issuer error: my order said 'for example the model benchmark's served series' and granted no read of it. The YCharts gateway returns 403 (an access refusal, not worked around), so the independent series is the served dated model series (four daily index_benchmark_return series) already read through model_series_windows; the offset is estimated by correlating the bond ETFs' day-to-day price change in the holdings files with that series at three offsets, one estimate per security-and-series pair at a correlation of 0.5 or more, at least 4 pairs else UNDETERMINED; the checker counts offset estimates; the worker also records the share of securities unchanged across the weekend and holiday partition pairs. The issuer's own count-only probe of the Cottonwood files around 12 to 15 June and 18 to 22 June found: Friday to Saturday differ, Saturday to Sunday identical, Sunday to Monday differ; for the 19 June market holiday, Thursday to Friday differ and Friday, Saturday and Sunday are identical: the pattern fits neither 'the file holds its own date's close' nor 'the file holds the prior trading day's close' cleanly, which is why the read needs the independent series. Orders DB-b-219 and DB-b-220 and the BD check are amended; both workers are resumed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 176's report and portal commit 3db44fe0e9 on wk-IRPT_DASHBD-176-portal (suite after: one new failing id)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~177/RD_BD_DATE_R110.json on wk-IRPT_DASHBD-177 @e3fb825188 (date carriers; 0 files compared)",
+      "this seat's count-only probe of silver fact_holdings partitions 2026-06-11 to 2026-06-23 (price equality shares between consecutive partitions; no value recorded)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W178-S1 -- the holdings-refresh root says its schedule slot STAYS DISABLED, but the slot reads ENABLED in code and live
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W178-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~178",
+  "surfaced_at": "2026-10-14T19:26:44Z",
+  "one_line": "The holdings-refresh Terraform header says the irpt-holdings-snapshot slot STAYS DISABLED pending a separate never-widen half, while schedule.tf declares its state ENABLED under signed halves and the live schedule reads ENABLED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf lines 14-15 at 6c67ce88b6: 'It STAYS DISABLED: the enable is a separate act under its own never-widen half (R4 step 4).'",
+      "infra/aws/terraform/investor-reporting/directory/schedule.tf lines 69-73 at 6c67ce88b6: state ENABLED, note 'R4: ENABLED under signed halves'",
+      "aws scheduler get-schedule --name irpt-holdings-snapshot --group-name default (live describe, 2026-10-14 ~19:26Z): State ENABLED, cron(15 10 ? * MON-FRI *), last modified 2026-09-28"
+    ]
+  },
+  "spec_asserts": "holdings_refresh.tf header: the slot irpt-holdings-snapshot STAYS DISABLED; the enable is a separate act under its own never-widen half (R4 step 4).",
+  "world_is": "schedule.tf declares the slot ENABLED and cites three signed halves; the live schedule reads ENABLED; the header comment was not updated. Whether a never-widen half covers the enable was not read here. The fire reaches per-firm holdings publication through the refresh dispatch."
+}
+```
+
+## IRPT_DASHBD-D2-W178-S2 -- Cottonwood's irpt holdings end 2026-10-08 under an ENABLED weekday schedule, three trading days short
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W178-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~178",
+  "surfaced_at": "2026-10-14T19:26:44Z",
+  "one_line": "Cottonwood's gold holdings table ends at date=2026-10-08, three trading days behind T-1 (2026-10-13), although its ENABLED Monday-to-Friday 10:15 America/New_York trigger should have written 2026-10-09, 2026-10-12 and 2026-10-13; the cause is not established by this read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-objects-v2 --prefix irpt/cottonwood/gold/holdings/ --delimiter / (grant read, 2026-10-14 ~19:1xZ): 10 date partitions, 2026-09-22 then 2026-09-28 to 2026-10-08; no partition for 2026-09-23, 2026-09-24, 2026-09-25, 2026-10-09, 2026-10-12, 2026-10-13",
+      "lib/trading_calendar.py trading_days_behind(2026-10-08, 2026-10-13) = 3 (run read-only at the worktree)",
+      "aws scheduler get-schedule --name irpt-holdings-snapshot (live, State ENABLED); infra/aws/terraform/investor-reporting/directory/schedule.tf line 71 'one validated Holdings publication per firm per weekday'"
+    ]
+  },
+  "spec_asserts": "directory/schedule.tf: the irpt-holdings-snapshot trigger, cron(15 10 ? * MON-FRI *) America/New_York, produces one validated Holdings publication per firm per weekday through the refresh dispatch.",
+  "world_is": "The Cottonwood holdings partitions after the schedule's last modification on 2026-09-28 run through 2026-10-08 and then stop; 2026-10-09, 2026-10-12 and 2026-10-13 are absent while the schedule reads ENABLED. The run log and SSM command history were not read (outside the grant), so the cause is NOT_ESTABLISHED."
+}
+```
+
+## IRPT_DASHBD-D2-W178-S3 -- the scheduled holdings-performance function has no identity that can read the Black Diamond channel it declares
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W178-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~178",
+  "surfaced_at": "2026-10-14T19:26:44Z",
+  "one_line": "data/assets/scripts/gold/irpt_holdings_performance/sources.json declares the blackdiamond_z09 channel for the holdings-performance producer, but the only scheduled function's role reads just the 49 Financial Schwab silver and writes just the 49 Financial gold, so a Cottonwood fire of the declared channel would be refused at the read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/iam.tf line 52 at 6c67ce88b6: the 49F role 'Reads exactly the declared silver ... and writes ONLY the two gold prefixes'; line 172 gives the Inflection role the same firm-isolation wording and names no 49F or Cottonwood grant",
+      "comp-find --corpus aws over IAM_ROLE and IAM_POLICY with 'holdings-performance' (2026-10-14 ~19:1xZ): the holdings-performance roles are the 49F and Inflection roles and their scheduler roles; none is Cottonwood",
+      "infra/aws/lambda/investor-reporting/holdings-performance/handler.py lambda_handler passes the event source to main --source, so the channel is chosen by the trigger input"
+    ]
+  },
+  "spec_asserts": "sources.json blackdiamond_z09 is a declared custody channel that holdings_performance.py reads; a new firm channel is an entry in the declaration and never a code branch (PRD v0.19 ruling 1, as the file's own comment states).",
+  "world_is": "The declared Cottonwood channel has a silver grant in the declaration but no scheduled identity with a read grant on its Black Diamond silver prefix or a write grant on its Cottonwood gold prefixes. Nothing was invoked to test the refusal (the grant is read-only); the finding is from the Terraform text and the served IAM list."
+}
+```
+
+## IRPT_DASHBD-D2-W178-S4 -- this worker's trading-calendar answer came from the hardcoded NYSE fallback, while the newest gold manifest was written with pandas_market_calendars
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W178-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~178",
+  "surfaced_at": "2026-10-14T19:26:44Z",
+  "one_line": "On dell2 at 2026-10-14, lib/trading_calendar.py answered from its hardcoded NYSE fallback (pandas_market_calendars absent, WARN printed), while the newest Cottonwood gold manifest records calendar_source NYSE/pandas_market_calendars; the frontier count in this read rests on the fallback.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py imported read-only with python -I at the worktree (2026-10-14): stderr WARN 'pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027'; calendar_source() returned the same label",
+      "hpm manifest.json of irpt/cottonwood/gold/holdings_performance_manifest/date=2026-09-25 (GET, grant read): calendar_source NYSE/pandas_market_calendars",
+      "The fallback holiday list has no entry between 2026-09-25 and 2026-10-13; the pandas count was not run because the package is absent on this box"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md section 5: a pipeline is never called stale until the trading calendar is resolved through lib/trading_calendar.py.",
+  "world_is": "The same calendar module answers from two sources on two boxes: the fallback on dell2 and pandas_market_calendars where the writer ran. The count of 12 trading days behind for the Cottonwood performance table holds on the fallback and was not re-run on pandas."
+}
+```
