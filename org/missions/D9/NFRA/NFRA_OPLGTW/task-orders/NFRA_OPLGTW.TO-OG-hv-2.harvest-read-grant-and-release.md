@@ -191,7 +191,7 @@ the ONE `<status>` tag to `complete` only if AC1 and AC2 PASS. Report once per p
   subcommands, so a targeted plan runs through `terraform` directly. The step now says so; the apply stays `safe-apply`.
   No criterion moves. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <slot>~AE</slot>
 <fabric>site-z</fabric>

@@ -9447,3 +9447,34 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## NFRA_CTLPLN-Z-S10 -- cause of Z-S9: spawned seats inherit CLAUDE_CODE_CHILD_SESSION and save no transcript
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "0.0.0_AB_MSTR~Z",
+  "surfaced_at": "2026-10-14T16:24Z",
+  "one_line": "Cause of the missing transcripts in NFRA_CTLPLN-Z-S9: spawn-agent.ps1 passes the spawner's CLAUDE_CODE_CHILD_SESSION=1 into every seat it launches, and a claude.exe that inherits it turns transcript saving off.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.0.0_AB_MSTR~Z",
+  "adjudicates": [
+    "NFRA_CTLPLN-Z-S9"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "unstick.ps1 -Peek of 0.7.0_AE_CloudOps~ZQ and ~MI, 2026-10-14 16:1xZ: both status bars read 'Transcript saving is off - inherited CLAUDE_CODE_CHILD_SESSION marker'",
+      "this seat's own Bash and PowerShell children read CLAUDE_CODE_CHILD_SESSION=1 (env, 16:1xZ); this seat is the spawner of every site Z relaunch today",
+      ".tools/spawn-agent.ps1 and .tools/ajb.ps1 at HEAD before this row: no line clears CLAUDE_CODE_CHILD_SESSION (Grep, 0 hits in each named file)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A spawned seat is a top-level session whose transcript persists, so a dead seat's last lines can be read (NFRA_CTLPLN-Z-S9 spec_asserts).",
+  "world_is": "Every seat spawned from inside a Claude Code session inherits the child marker and persists no main .jsonl. Fix in the same commit: spawn-agent.ps1 runs 'Remove-Item Env:CLAUDE_CODE_CHILD_SESSION' first in both inner payloads (Start-Process and wt). Verify on the next spawn: no 'Transcript saving is off' banner and a new <uuid>.jsonl under the projects dir. Seats already running keep the marker until relaunched.",
+  "notes": "Z-S9 stands as written (append-only). The fix touches spawn only; it does not restore transcripts for sessions already running."
+}
+```
