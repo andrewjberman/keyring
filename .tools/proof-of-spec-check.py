@@ -17,6 +17,9 @@ Usage: proof-of-spec-check <instance.json> [expected_criterion_ids] [--governing
   an instance valid on every row it carries can still silently OMIT a criterion
   (the row-quality/row-coverage split -- CVO's step-zero, mechanized). Missing or
   extra criteria are violations, with both denominators printed.
+  WITH --governing-order (CT-ac-7, NFRA_CTLPLN-D2-S5) the bound order's judgment="true" criteria join that expected
+  set: a row for each is admitted, and a missing one is a silent omission, as round-close-check requires. UNBOUND
+  nothing is added and an unlisted judgment row is still an unexpected addition.
 Exit 0 = VALID. Exit 1 = INVALID (every violation printed). Exit 2 = usage/read error.
   --self-test               exercise the SURPRISES LIMB, the v3 expect/judgment carrier, the
                             INVOCATION ALIGNMENT limb, the COUNT-BAR limb and the DRIVES limb
@@ -547,11 +550,34 @@ def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], li
     return v, frames
 
 
-def coverage_check(inst: dict, expected_arg: str) -> list[str]:
-    """CVO step-zero mechanized: instance criterion set vs the TO's expected set."""
+def _expected_ids(expected_arg: str) -> set:
+    """The TO's expected criterion set, as stated: a comma list or a one-id-per-line file."""
     p = Path(expected_arg)
     raw = p.read_text(encoding="utf-8").splitlines() if p.is_file() else expected_arg.split(",")
-    expected = {s.strip() for s in raw if s.strip()}
+    return {s.strip() for s in raw if s.strip()}
+
+
+def bound_judgment_ids(text: str | None = None) -> list[str]:
+    """(CT-ac-7, NFRA_CTLPLN-D2-S5) The ids of every judgment="true" criterion of the BOUND governing order -- the same
+    reading round-close-check.py applies (attrs judgment, lower-cased, == "true"). `text` is injectable for the self-test;
+    left None it is read from _BOUND_ORDER. UNBOUND (no --governing-order) -> [], so nothing is admitted."""
+    if text is None:
+        if _BOUND_ORDER is None:
+            return []
+        try:
+            text = _BOUND_ORDER.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            return []
+    return sorted(cid for cid, attrs in _criteria_attrs(text).items()
+                  if attrs.get("judgment", "").strip().lower() == "true")
+
+
+def coverage_check(inst: dict, expected_arg: str, judgment_ids=()) -> list[str]:
+    """CVO step-zero mechanized: instance criterion set vs the TO's expected set. `judgment_ids` (CT-ac-7) are the
+    judgment="true" criteria of the BOUND governing order: they join the expected set, so a row for one is admitted
+    and its ABSENCE is a silent omission, exactly as for any expected id (round-close-check needs that row). Empty
+    (UNBOUND) = the expected set exactly as the caller stated it."""
+    expected = _expected_ids(expected_arg) | set(judgment_ids)
     carried = {r.get("criterion_id", "") for r in inst.get("acceptance", [])}
     v = [f"coverage: criterion '{c}' in the TO's expected set has NO instance row (silent omission)"
          for c in sorted(expected - carried)]
@@ -2450,6 +2476,34 @@ def _self_test() -> int:
         ".tools", 1, "is a directory; name its files")
     _ar("AR2 control: the same row naming a FILE -> 0 violations", ".tools/proof-of-spec-check.py", 0)
 
+    # ---- CT-ac-7 (NFRA_CTLPLN-D2-S5): the BOUND order's judgment="true" criteria join the expected set. Pure: the bound
+    # order's text is injected to bound_judgment_ids(text); UNBOUND is bound_judgment_ids(None) with _BOUND_ORDER None.
+    # The end-to-end arms through the command line live in .tools/tests/test_proof_judgment_expected.py. Coverage frame
+    # lines are not violations, so they are filtered before counting.
+    _jt = ('<criterion id="AC1" cell_refs="FIX-a-1"><invocation>echo ok</invocation><expect>ok</expect></criterion>\n'
+           '<criterion id="J1" cell_refs="FIX-a-1" judgment="true"/>\n')
+    _JROWS = {"AC1": {"criterion_id": "AC1", "status": "PASS"},
+              "J1": {"criterion_id": "J1", "status": "UNVERIFIABLE-BY-INSTRUMENT",
+                     "status_reason": "judgment criterion; graded by 3.0.0_SA_CVO at L9"},
+              "X9": {"criterion_id": "X9", "status": "PASS"}}
+
+    def _jc(name, carried, bound_text, expect_v, needle=None, absent=None):
+        jids = bound_judgment_ids(bound_text) if bound_text is not None else bound_judgment_ids(None)
+        got = [x for x in coverage_check({"acceptance": [_JROWS[c] for c in carried]}, "AC1", jids)
+               if not x.startswith("coverage-frame")]
+        ok = (len(got) == expect_v and (needle is None or any(needle in x for x in got))
+              and (absent is None or not any(absent in x for x in got)))
+        arms.append((name, ok, len(got), expect_v, (got[0] if got else "")[:110]))
+
+    _jc("CT-ac-7 a: BOUND, the order's judgment criterion J1 carried beside AC1 -> 0 violations",
+        ["AC1", "J1"], _jt, 0)
+    _jc("CT-ac-7 b: BOUND, J1 ABSENT from the instance -> 1 silent-omission violation naming J1",
+        ["AC1"], _jt, 1, "silent omission", "unexpected")
+    _jc("CT-ac-7 c: UNBOUND, the same instance carrying J1 -> the old unexpected addition for J1 (unchanged)",
+        ["AC1", "J1"], None, 1, "unexpected addition")
+    _jc("CT-ac-7 d: BOUND, a row X9 that is neither expected nor a judgment criterion -> still an unexpected addition",
+        ["AC1", "J1", "X9"], _jt, 1, "unexpected addition", "J1")
+
     passed = sum(1 for a in arms if a[1])
     print("proof-of-spec-check --self-test (surprises limb + v3 carrier 4 + invocation alignment + count-bar + drives "
           "+ governing-order binding + deploy genre)")
@@ -2561,7 +2615,13 @@ def main() -> int:
     bind_violations, bind_frames = governing_binding_check(inst, bound_rel)
     violations.extend(bind_violations)
     if len(args) == 2:
-        violations.extend(coverage_check(inst, args[1]))
+        # CT-ac-7: a BOUND order's judgment="true" criteria are expected too (UNBOUND: none, the behaviour is unchanged).
+        jids = bound_judgment_ids()
+        violations.extend(coverage_check(inst, args[1], jids))
+        added = sorted(set(jids) - _expected_ids(args[1]))
+        if added:
+            print("NOTE: bound governing order's judgment criteria admitted as expected (CT-ac-7; the proof must carry "
+                  "a row for each, as round-close-check requires): " + ", ".join(added))
     else:
         print("NOTE: no expected_criterion_ids given -- COVERAGE UNCHECKED (row quality only; "
               "an omitted criterion is invisible to this run). The cert consumer runs step-zero.")

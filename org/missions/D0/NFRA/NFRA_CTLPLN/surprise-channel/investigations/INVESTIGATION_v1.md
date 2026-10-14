@@ -9447,3 +9447,54 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## NFRA_CTLPLN-W91-S1 -- the order's premise names a crits map that carries each criterion's judgment attribute; it carries cell refs only
+
+```json
+{
+  "id": "NFRA_CTLPLN-W91-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~91",
+  "surfaced_at": "2026-10-14T16:19:25Z",
+  "one_line": "TO CT-ac-7 says the crits map (about :930-940) carries each criterion's judgment attribute; it carries only cell refs, so the bound order's judgment set is read with _criteria_attrs (the drives limb's reader) instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CT-ac-7 BUILD 1: when a governing order is bound, the judgment='true' criteria of that order are read from the crits map built about :930-940, with each criterion's judgment attribute.",
+  "world_is": "_parse_to builds crits[cid] = cell refs only (.tools/proof-of-spec-check.py@732412e179 lines 924-938). The judgment attribute is read by _criteria_attrs (line 1802 at that pin), with the round-close-check rule (attrs judgment, lower-cased, == true; .tools/round-close-check.py@HEAD line 335). The behaviour the order states is delivered; only the reader differs from the order's wording.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/proof-of-spec-check.py@732412e179 lines 924-938: crits[cid] = refs (cell_refs only, no judgment key)",
+      ".tools/proof-of-spec-check.py@732412e179 line 1802: _criteria_attrs returns the full attribute dict per criterion id",
+      ".tools/round-close-check.py@HEAD line 335: judgment read as attrs.get('judgment', '').lower() == 'true'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## NFRA_CTLPLN-W91-S2 -- coverage_check's frame line is inserted into the violations list, so it prints as a VIOLATION and is counted
+
+```json
+{
+  "id": "NFRA_CTLPLN-W91-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~91",
+  "surfaced_at": "2026-10-14T16:19:25Z",
+  "one_line": "When an instance has any coverage violation, proof-of-spec-check prints 'VIOLATION: coverage-frame: expected=N carried=M matched=K' and counts it in violations=; the frame is not a violation.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The coverage frame line is informational: the frame is printed beside the coverage rows and is not a refusal.",
+  "world_is": "coverage_check ends with 'v.insert(0, coverage-frame ...) if v else None' (.tools/proof-of-spec-check.py@732412e179 lines 556-560), so the frame enters the violations list only when a real coverage violation exists. Probe on one unexpected addition (X9): 'VIOLATION: coverage-frame: expected=1 carried=2 matched=1' printed beside the real violation and violations=24 counted it. The verdict (INVALID, rc 1) is unchanged; the count is inflated by one and a reader counting VIOLATION lines sees a frame as a refusal. Not fixed here: the line sits outside CT-ac-7's build.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/proof-of-spec-check.py@732412e179 lines 556-560 (coverage_check, the v.insert line)",
+      "probe run in the worktree, 2026-10-14 ~16:1xZ: python .tools/proof-of-spec-check.py <instance: AC1 PASS, X9 PASS> AC1 -> 'VIOLATION: coverage-frame: expected=1 carried=2 matched=1' and 'violations=24'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
