@@ -96,7 +96,7 @@ your last commit with `python .tools/proof-of-spec-check.py <instance> AC1 --gov
   its bd2 limb now grades the re-pinned suite.
   Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>R37-TIER</workstream>
 <slot>~67</slot>
