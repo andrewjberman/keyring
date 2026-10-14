@@ -229,6 +229,20 @@ pmf_run() {
   pmf_finish MERGED -
 }
 
+# fx <command...>: runs one self-test fixture step (a fixture write, mkdir, git init/add/commit/checkout/branch/push/clone/
+# merge/fetch). Stdin and stdout are inherited, so a heredoc or a redirect after fx reaches the step. A non-zero exit
+# prints the step and exits the self-test before any case is graded. A step EXPECTED to fail is a plain command, not fx.
+fx() {
+  if ! "$@"; then
+    echo "SELFTEST ERROR: fixture step failed: $*" 1>&2
+    exit 1
+  fi
+}
+# pmf_put <path> <text>: a fixture file holding <text> and a newline (runs inside fx, so a failed write is seen).
+pmf_put() { printf '%s\n' "$2" > "$1"; }
+# pmf_cat <path>: a fixture file from stdin, a heredoc (runs inside fx, so a failed write is seen).
+pmf_cat() { cat > "$1"; }
+
 pmf_selftest_cleanup() {
   if [ -n "$PMF_TMP" ] && [ -d "$PMF_TMP" ]; then
     chmod -R u+w "$PMF_TMP"
@@ -250,7 +264,7 @@ pmf_selftest() {
   FIX="$PMF_TMP/fixture-status.sh"
 
   # Fixture: the approval reader stand-in. FIX_LINE is printed, FIX_RC is the exit code.
-  cat > "$FIX" <<'FIXEOF'
+  fx pmf_cat "$FIX" <<'FIXEOF'
 #!/usr/bin/env bash
 # selftest fixture for the approval reader
 if [ "${FIX_RC:-0}" != 0 ]; then exit "$FIX_RC"; fi
@@ -259,27 +273,27 @@ exit 0
 FIXEOF
 
   # Repositories: a bare origin with PROD and DEV (DEV one commit ahead), and feature branches cut from PROD.
-  git init -q --bare "$ORIG"
-  git -C "$ORIG" symbolic-ref HEAD refs/heads/PROD
-  git init -q "$SEED"
-  git -C "$SEED" symbolic-ref HEAD refs/heads/PROD
-  printf 'base\n' > "$SEED/base.txt"
-  printf 'prod line\n' > "$SEED/shared.txt"
-  git -C "$SEED" add -A
-  git -C "$SEED" commit -q -m "prod seed"
-  git -C "$SEED" branch DEV
-  git -C "$SEED" checkout -q DEV
-  printf 'dev line\n' > "$SEED/shared.txt"
-  git -C "$SEED" commit -q -am "dev change"
-  git -C "$SEED" checkout -q PROD
+  fx git init -q --bare "$ORIG"
+  fx git -C "$ORIG" symbolic-ref HEAD refs/heads/PROD
+  fx git init -q "$SEED"
+  fx git -C "$SEED" symbolic-ref HEAD refs/heads/PROD
+  fx pmf_put "$SEED/base.txt" base
+  fx pmf_put "$SEED/shared.txt" 'prod line'
+  fx git -C "$SEED" add -A
+  fx git -C "$SEED" commit -q -m "prod seed"
+  fx git -C "$SEED" branch DEV
+  fx git -C "$SEED" checkout -q DEV
+  fx pmf_put "$SEED/shared.txt" 'dev line'
+  fx git -C "$SEED" commit -q -am "dev change"
+  fx git -C "$SEED" checkout -q PROD
 
   pmf_mkfeat() { # pmf_mkfeat <branch> <file> <content>
-    git -C "$SEED" checkout -q -b "$1" PROD
-    mkdir -p "$(dirname "$SEED/$2")"
-    printf '%s\n' "$3" > "$SEED/$2"
-    git -C "$SEED" add -A
-    git -C "$SEED" commit -q -m "feature $1"
-    git -C "$SEED" checkout -q PROD
+    fx git -C "$SEED" checkout -q -b "$1" PROD
+    fx mkdir -p "$(dirname "$SEED/$2")"
+    fx pmf_put "$SEED/$2" "$3"
+    fx git -C "$SEED" add -A
+    fx git -C "$SEED" commit -q -m "feature $1"
+    fx git -C "$SEED" checkout -q PROD
   }
   pmf_mkfeat feat-ok product/ok.txt ok
   pmf_mkfeat feat-open product/open.txt open
@@ -290,22 +304,22 @@ FIXEOF
   pmf_mkfeat feat-conf shared.txt "feature line"
   pmf_mkfeat feat-ff2 product/ff2.txt ff2
   pmf_mkfeat feat-stale product/stale-a.txt stale-a
-  git -C "$SEED" rev-parse --verify feat-stale >/dev/null
+  fx git -C "$SEED" rev-parse --verify feat-stale >/dev/null
   SHA_OLD="$(git -C "$SEED" rev-parse --verify feat-stale)"
-  git -C "$SEED" checkout -q feat-stale
-  printf 'stale-b\n' > "$SEED/product/stale-b.txt"
-  git -C "$SEED" add -A
-  git -C "$SEED" commit -q -m "feature feat-stale second commit"
-  git -C "$SEED" checkout -q PROD
-  git -C "$SEED" checkout -q -b feat-abs-test PROD
-  mkdir -p "$SEED/src/__tests__" "$SEED/e2e"
-  printf 'test\n' > "$SEED/src/__tests__/ok.test.ts"
-  printf 'flow\n' > "$SEED/e2e/flow.spec.ts"
-  git -C "$SEED" add -A
-  git -C "$SEED" commit -q -m "feature feat-abs-test (tests only)"
-  git -C "$SEED" checkout -q PROD
-  git -C "$SEED" push -q "$ORIG" --all
-  git clone -q "$ORIG" "$CLONE"
+  fx git -C "$SEED" checkout -q feat-stale
+  fx pmf_put "$SEED/product/stale-b.txt" stale-b
+  fx git -C "$SEED" add -A
+  fx git -C "$SEED" commit -q -m "feature feat-stale second commit"
+  fx git -C "$SEED" checkout -q PROD
+  fx git -C "$SEED" checkout -q -b feat-abs-test PROD
+  fx mkdir -p "$SEED/src/__tests__" "$SEED/e2e"
+  fx pmf_put "$SEED/src/__tests__/ok.test.ts" test
+  fx pmf_put "$SEED/e2e/flow.spec.ts" flow
+  fx git -C "$SEED" add -A
+  fx git -C "$SEED" commit -q -m "feature feat-abs-test (tests only)"
+  fx git -C "$SEED" checkout -q PROD
+  fx git -C "$SEED" push -q "$ORIG" --all
+  fx git clone -q "$ORIG" "$CLONE"
 
   T_OK="$(git -C "$CLONE" rev-parse --verify refs/remotes/origin/feat-ok)"
   T_INV="$(git -C "$CLONE" rev-parse --verify refs/remotes/origin/feat-invalid)"
@@ -325,7 +339,7 @@ FIXEOF
   pmf_runmf() { # pmf_runmf <branch> [extra args]: sets RC and LAST; the fixed state is read with --no-fetch
     local br="$1" ob="$PMF_TMP/out-$N.txt"
     shift
-    mkdir -p "$PMF_TMP/runtmp"
+    fx mkdir -p "$PMF_TMP/runtmp"
     PMF_RUNTMP="$PMF_TMP/runtmp" OPAL_APPROVAL_STATUS_CMD="bash $FIX" \
       bash "$PMF_SELF" "$br" --repo "$CLONE" --no-fetch "$@" >"$ob"
     RC=$?
@@ -456,12 +470,13 @@ FIXEOF
   dev1="$(pmf_dev_now)"
 
   # 11. a second branch whose push would not fast-forward: origin's DEV moved under the local tracking ref.
-  git clone -q "$ORIG" "$OTHER"
-  git -C "$OTHER" checkout -q DEV
-  printf 'later\n' > "$OTHER/later.txt"
-  git -C "$OTHER" add -A
-  git -C "$OTHER" commit -q -m "dev later change"
-  git -C "$OTHER" push -q origin DEV
+  # The rejected push is the call under test (pmf_runmf --push below): a plain command, expected to fail, not an fx step.
+  fx git clone -q "$ORIG" "$OTHER"
+  fx git -C "$OTHER" checkout -q DEV
+  fx pmf_put "$OTHER/later.txt" later
+  fx git -C "$OTHER" add -A
+  fx git -C "$OTHER" commit -q -m "dev later change"
+  fx git -C "$OTHER" push -q origin DEV
   devnew2="$(git -C "$ORIG" rev-parse --verify refs/heads/DEV)"
   pmf_setfix "$(pmf_apv feat-ff2 APPROVED yes ROW-FF2-1 fixture-approver "$T_FF2" 1 opal-internal)"
   pmf_runmf feat-ff2 --push
@@ -469,12 +484,12 @@ FIXEOF
   pmf_check "11b origin DEV untouched by the rejected push" pmf_origin_11b "$devnew2"
 
   # 12. the DEFAULT fetch (no --no-fetch) picks up a branch pushed to origin after the clone, and DEV as origin now has it.
-  git -C "$OTHER" checkout -q -b feat-late origin/PROD
-  mkdir -p "$OTHER/product"
-  printf 'late\n' > "$OTHER/product/late.txt"
-  git -C "$OTHER" add -A
-  git -C "$OTHER" commit -q -m "feature feat-late"
-  git -C "$OTHER" push -q origin feat-late
+  fx git -C "$OTHER" checkout -q -b feat-late origin/PROD
+  fx mkdir -p "$OTHER/product"
+  fx pmf_put "$OTHER/product/late.txt" late
+  fx git -C "$OTHER" add -A
+  fx git -C "$OTHER" commit -q -m "feature feat-late"
+  fx git -C "$OTHER" push -q origin feat-late
   T_LATE="$(git -C "$OTHER" rev-parse --verify feat-late)"
   pmf_check "12a precondition: the clone does not know feat-late before the run" test -z "$(git -C "$CLONE" rev-parse --verify -q refs/remotes/origin/feat-late)"
   pmf_setfix "$(pmf_apv feat-late APPROVED yes ROW-LATE-1 fixture-approver "$T_LATE" 1 opal-internal)"
@@ -489,7 +504,7 @@ FIXEOF
   # 13. a local-only branch (never pushed) with an approved row: the default fetch finds it absent on origin,
   # reads the local branch with a NOTE on stderr, and merges it.
   pmf_mkfeat feat-local product/local.txt local
-  git -C "$CLONE" fetch -q "$SEED" refs/heads/feat-local:refs/heads/feat-local
+  fx git -C "$CLONE" fetch -q "$SEED" refs/heads/feat-local:refs/heads/feat-local
   T_LOC="$(git -C "$SEED" rev-parse --verify feat-local)"
   pmf_setfix "$(pmf_apv feat-local APPROVED yes ROW-LOC-1 fixture-approver "$T_LOC" 1 opal-internal)"
   PMF_RUNTMP="$PMF_TMP/runtmp" OPAL_APPROVAL_STATUS_CMD="bash $FIX" \
@@ -524,8 +539,8 @@ FIXEOF
 
   # 15. a deliberately broken remote: the DEV fetch refuses fetch-failed.
   BROKEN="$PMF_TMP/broken"
-  git clone -q "$ORIG" "$BROKEN"
-  git -C "$BROKEN" remote set-url origin "$PMF_TMP/no-such-origin.git"
+  fx git clone -q "$ORIG" "$BROKEN"
+  fx git -C "$BROKEN" remote set-url origin "$PMF_TMP/no-such-origin.git"
   PMF_RUNTMP="$PMF_TMP/runtmp" OPAL_APPROVAL_STATUS_CMD="bash $FIX" \
     bash "$PMF_SELF" feat-ok --repo "$BROKEN" >"$PMF_TMP/out-15.txt" 2>"$PMF_TMP/err-15.txt"
   RC=$?
@@ -543,34 +558,34 @@ FIXEOF
   # branch off one of the merges). The changed-file read unions the diff over both bases: no multiple-merge-bases
   # warning, and a product file changed after the bases is seen, so the ABSENT row is refused no-approval-row.
   CRISS="$PMF_TMP/criss"
-  git init -q "$CRISS"
-  git -C "$CRISS" symbolic-ref HEAD refs/heads/cc-root
-  printf 'root\n' > "$CRISS/root.txt"
-  git -C "$CRISS" add -A
-  git -C "$CRISS" commit -q -m "criss root"
-  git -C "$CRISS" checkout -q -b cc-x
-  mkdir -p "$CRISS/src/__tests__"
-  printf 'x\n' > "$CRISS/src/__tests__/x.test.ts"
-  git -C "$CRISS" add -A
-  git -C "$CRISS" commit -q -m "criss x side"
-  git -C "$CRISS" checkout -q cc-root
-  git -C "$CRISS" checkout -q -b cc-y
-  mkdir -p "$CRISS/src/__tests__"
-  printf 'y\n' > "$CRISS/src/__tests__/y.test.ts"
-  git -C "$CRISS" add -A
-  git -C "$CRISS" commit -q -m "criss y side"
+  fx git init -q "$CRISS"
+  fx git -C "$CRISS" symbolic-ref HEAD refs/heads/cc-root
+  fx pmf_put "$CRISS/root.txt" root
+  fx git -C "$CRISS" add -A
+  fx git -C "$CRISS" commit -q -m "criss root"
+  fx git -C "$CRISS" checkout -q -b cc-x
+  fx mkdir -p "$CRISS/src/__tests__"
+  fx pmf_put "$CRISS/src/__tests__/x.test.ts" x
+  fx git -C "$CRISS" add -A
+  fx git -C "$CRISS" commit -q -m "criss x side"
+  fx git -C "$CRISS" checkout -q cc-root
+  fx git -C "$CRISS" checkout -q -b cc-y
+  fx mkdir -p "$CRISS/src/__tests__"
+  fx pmf_put "$CRISS/src/__tests__/y.test.ts" y
+  fx git -C "$CRISS" add -A
+  fx git -C "$CRISS" commit -q -m "criss y side"
   CX="$(git -C "$CRISS" rev-parse --verify cc-x)"
-  git -C "$CRISS" checkout -q cc-x
-  git -C "$CRISS" merge -q --no-edit cc-y
-  git -C "$CRISS" checkout -q cc-y
-  git -C "$CRISS" merge -q --no-edit "$CX"
-  git -C "$CRISS" checkout -q cc-x
-  git -C "$CRISS" checkout -q -b cc-branch
-  mkdir -p "$CRISS/product"
-  printf 'product\n' > "$CRISS/product/p.txt"
-  git -C "$CRISS" add -A
-  git -C "$CRISS" commit -q -m "criss branch product change"
-  git -C "$CRISS" update-ref refs/remotes/origin/DEV "$(git -C "$CRISS" rev-parse --verify cc-y)"
+  fx git -C "$CRISS" checkout -q cc-x
+  fx git -C "$CRISS" merge -q --no-edit cc-y
+  fx git -C "$CRISS" checkout -q cc-y
+  fx git -C "$CRISS" merge -q --no-edit "$CX"
+  fx git -C "$CRISS" checkout -q cc-x
+  fx git -C "$CRISS" checkout -q -b cc-branch
+  fx mkdir -p "$CRISS/product"
+  fx pmf_put "$CRISS/product/p.txt" product
+  fx git -C "$CRISS" add -A
+  fx git -C "$CRISS" commit -q -m "criss branch product change"
+  fx git -C "$CRISS" update-ref refs/remotes/origin/DEV "$(git -C "$CRISS" rev-parse --verify cc-y)"
   devcriss="$(git -C "$CRISS" rev-parse --verify refs/remotes/origin/DEV)"
   pmf_criss_16a() { # precondition: DEV and the branch have exactly two merge bases
     [ "$(git -C "$CRISS" merge-base --all refs/remotes/origin/DEV refs/heads/cc-branch | grep -c '^[0-9a-f]')" -eq 2 ]
