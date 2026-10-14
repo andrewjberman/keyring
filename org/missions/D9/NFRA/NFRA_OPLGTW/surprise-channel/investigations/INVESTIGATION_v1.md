@@ -15646,3 +15646,31 @@ name the one known failure instead of silently inheriting it.
     "notes": "Three routes and this seat picked none, because the choice changes what the halves are signing: (a) take app/news_typed.py as well -- it widens this release beyond A4 and pulls OG-ap-19's cell forward; (b) accept test_oggt8_ac01/ac02 as unmeetable in this release and say so in the criterion, which is what the ask does today; (c) let tests/test_og_gt8.py ride OG-ap-19 with the module it covers, which costs this release the corroboration but leaves no red. The general shape is worth more than the instance: a cell that fixes one defect across TWO modules writes ONE suite over both, and any release boundary drawn between those modules inherits a test that cannot pass. The tell is cheap -- read the test's assertions for module names outside the take-list BEFORE cutting, not after the suite runs red."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S131",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZS",
+    "surfaced_at": "2026-10-14T23:00:30Z",
+    "one_line": "OG-ec-2 Phase B cannot satisfy its own AC2 as written: it applies one Terraform resource but has no step that puts the new package into S3, and the module reads the code hash from the S3 object, so the apply changes the OPAL_BUILD_COMMIT pin alone and the deployed code stays at the old digest.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/modules/yang-lambda/main.tf:19,37-39 -- the function takes s3_object_version and source_code_hash from data.aws_s3_object.artifact (key opal-assets/opal-assets-silver-eclipse.zip), not from the repo",
+        "Targeted plan in worktree C:/tmp/og-rel-ec2 (branch rel-nfra-oplgtw-ec2 @4fd05be0d3) at 2026-10-14T22:41Z: 0 to add, 1 to change, 0 to destroy, the change being environment OPAL_BUILD_COMMIT b915719f25 -> 8929c5f16d ONLY; source_code_hash and s3_object_version unchanged",
+        "S3 artifact latest version 9KbX3Ee84D5n9e2hNtWsRkg6pk40yYcW, 37461 bytes, content-sha256 clrUz/ikqSMgd5Edtx7gJFceLH2LSjow7c6Vfqtw64g= equals the live CodeSha256; the repo package builds to GxWRZhTMvkSWAXuBQHuzjZcAwQ3mJg3C0da8/ZoD6zU= (control: the deployed tree rebuilds to the live digest)",
+        "Prior eclipse release uploaded first: ledger nfra-oplgtw-fd2-eclipse-drain L2 and commit 83b77e13d3 ('artifact uploaded and stamped'), then applied",
+        "TO-OG-ec-2 section 2: 'No object is written by you'; Phase B steps 3-5 list ledger, apply, sweep, proof and no upload"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-ec-2 Phase B step 3 and AC2: applying the ONE converter resource through safe-apply deploys the repo's converter, with the deployed hash read back equal to the repo's.",
+    "world_is": "The apply carries the pin and nothing of the code until the artifact object in S3 is replaced. The replacement is one object write to opal-313476888478-lambda-artifacts (the bound 'no object is written by you' was written about silver, and this seat reads it that way, but the issuer's word decides). Phase A is complete and unaffected: the plan, the counts and the ask are all measured. Phase B is blocked on this ruling, not on any defect in the converter or the fix.",
+    "notes": "Two routes: (a) amend the order so Phase B step 3 reads 'build-and-upload.sh opal-assets opal-assets-silver-eclipse (BUILD, verified by head-object), then the targeted apply' and the bound reads 'no silver object is written by you' -- recommended, it is how the previous eclipse release landed; (b) re-cut the order. The ask (section 3, item 3) carries the same question so the two halves sign knowing it. Rollback for the upload is the artifact's current latest version above."
+  }
+  ```
