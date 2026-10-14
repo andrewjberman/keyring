@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-14T09:51:36Z",
+ "written_at": "2026-10-14T09:54:03Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -2067,6 +2067,52 @@
     "ruled_by": "cto",
     "xadj": null
    }
+  },
+  {
+   "id": "sitez-20261014T095403Z-def4",
+   "project": "NFRA_MCPORTAL",
+   "subject": "Sit once with Alyssa (FWD-1 close run): from the dashboard narrow her access, she asks a question, widen it, she asks again -- the 10-08 hold ended on its own condition (r29 live)",
+   "asked_by": "1.0.0_SA_CTO~Z",
+   "source": "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-c-2.fwd1-close-run.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-14T09:54:03Z",
+   "kind": "act",
+   "context": "Replaces row 3b41. The 10-08 hold was an approved REC 'until r29 is live'; r29's opal_asker_query is live (destructive_ops.py:34 at the deployed ref), so nothing is left to lift. What remains is a person act: Andrew's dashboard change and Alyssa's own questions (agents do not message Alyssa).",
+   "rec": "",
+   "scope": {
+    "measured_at": "2026-10-14T09:54:03Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_FIRMBKTS placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_DEMQUE placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_STRATID placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/fabric-gitstate.py is on the shared branch (.tools)",
+      ".tools/tests/test_fabric_gitstate_pointer.py is on the shared branch (.tools)",
+      ".tools/tests/test_safe_ec2_deploy_manifest.py is on the shared branch (.tools)",
+      "bucket opal-data-assets is marked shared (infra/logic/registry/tiers.json homes marked shared)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null
   }
  ]
 }
