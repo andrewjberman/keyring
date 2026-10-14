@@ -1,5 +1,5 @@
 {
-  "contract_version": "0.5.0",
+  "contract_version": "0.5.1",
   "lineage": [
     {
       "contract_version": "0.1.0",
@@ -35,6 +35,11 @@
       "contract_version": "0.4.3",
       "sha256": "90a5c8ef6d53244195bea78f32b3cfb5baa23c85cea667490cb887037ab84953",
       "reason": "the 0.4.3 bytes, before the 0.5.0 bump: no equivalences list (a member and its equivalent could read differently under the whole-document rule), and the household return of every firm ABSENT; 0.5.0 adds the equivalence map and rule, and sources the household return for Inflection only, from Orion's client-grain fact_performance factor"
+    },
+    {
+      "contract_version": "0.5.0",
+      "sha256": "72ab629a45af32f07cc5948bd4240fe80e2690ed7926dce4e61c24c3ec647363",
+      "reason": "the 0.5.0 bytes, before the 0.5.1 bump: the hold.return_<window> members (the holdings overview's household return) kept source ABSENT with no firm_sources, while the pvs.<window>.return_cumulative members carried Orion's client-grain figure, so the same household return printed as a number in one cell and as an absent form in another; 0.5.1 mirrors each pvs return's firm_sources or firm_absent onto its hold twin and adds one equivalence class per window"
     }
   ],
   "project": "IRPT_DASHBD",
@@ -921,7 +926,17 @@
       "unit": "percent",
       "unit_scale": "percent_points",
       "source": "ABSENT",
-      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
+      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return.",
+      "firm_sources": {
+        "inflection": {
+          "input": "orion_fact_performance",
+          "grain": "client",
+          "table": "s3://opal-data-assets/orion/inflection/silver/fact_performance (newest dated partition only)",
+          "field": "factor",
+          "fold": "per Inflection client row of the household's client id (one client row per date): the opening day is the last trading day before the calendar day one year before as_of (document.windows.last_12_months). Return = 100 * (factor on as_of / factor on the opening day - 1), in PERCENT POINTS (a stored 1.5 means 1.5 percent; the unit_scale is percent_points). The factor is the client's cumulative performance index level, one row per client per date. Absent, never zero, when either day has no client row or either factor is not positive.",
+          "claim": "derived from the platform's reported client performance factor, as the ratio of two dated factor values; the factor itself is reported by the platform at client grain and is not computed by Opal"
+        }
+      }
     },
     {
       "id": "hold.net_gain_ytd",
@@ -947,7 +962,17 @@
       "unit": "percent",
       "unit_scale": "percent_points",
       "source": "ABSENT",
-      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
+      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return.",
+      "firm_sources": {
+        "inflection": {
+          "input": "orion_fact_performance",
+          "grain": "client",
+          "table": "s3://opal-data-assets/orion/inflection/silver/fact_performance (newest dated partition only)",
+          "field": "factor",
+          "fold": "per Inflection client row of the household's client id (one client row per date): the opening day is the last trading day before 1 January of as_of's year (document.windows.year_to_date). Return = 100 * (factor on as_of / factor on the opening day - 1), in PERCENT POINTS (a stored 1.5 means 1.5 percent; the unit_scale is percent_points). The factor is the client's cumulative performance index level, one row per client per date. Absent, never zero, when either day has no client row or either factor is not positive.",
+          "claim": "derived from the platform's reported client performance factor, as the ratio of two dated factor values; the factor itself is reported by the platform at client grain and is not computed by Opal"
+        }
+      }
     },
     {
       "id": "hold.net_gain_qtd",
@@ -973,7 +998,17 @@
       "unit": "percent",
       "unit_scale": "percent_points",
       "source": "ABSENT",
-      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
+      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return.",
+      "firm_sources": {
+        "inflection": {
+          "input": "orion_fact_performance",
+          "grain": "client",
+          "table": "s3://opal-data-assets/orion/inflection/silver/fact_performance (newest dated partition only)",
+          "field": "factor",
+          "fold": "per Inflection client row of the household's client id (one client row per date): the opening day is the last trading day before the first calendar day of the calendar quarter containing as_of (document.windows.quarter_to_date). Return = 100 * (factor on as_of / factor on the opening day - 1), in PERCENT POINTS (a stored 1.5 means 1.5 percent; the unit_scale is percent_points). The factor is the client's cumulative performance index level, one row per client per date. Absent, never zero, when either day has no client row or either factor is not positive.",
+          "claim": "derived from the platform's reported client performance factor, as the ratio of two dated factor values; the factor itself is reported by the platform at client grain and is not computed by Opal"
+        }
+      }
     },
     {
       "id": "hold.net_gain_mtd",
@@ -1018,7 +1053,17 @@
       "unit": "percent",
       "unit_scale": "percent_points",
       "source": "ABSENT",
-      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return."
+      "reason": "A household-grain return is not carried by any sibling contract. Returns do not add across accounts, so the household figure cannot be folded from the account returns, and no sibling defines a household daily return series. It would come from a household daily return series built the way the account series is built, as a new contract. The account rows carry each account's own return.",
+      "firm_sources": {
+        "inflection": {
+          "input": "orion_fact_performance",
+          "grain": "client",
+          "table": "s3://opal-data-assets/orion/inflection/silver/fact_performance (newest dated partition only)",
+          "field": "factor",
+          "fold": "per Inflection client row of the household's client id (one client row per date): the opening day is the household's first_data_date, the day the window opens (document.windows.since_inception). Return = 100 * (factor on as_of / factor on the opening day - 1), in PERCENT POINTS (a stored 1.5 means 1.5 percent; the unit_scale is percent_points). The factor is the client's cumulative performance index level, one row per client per date. Absent, never zero, when either day has no client row or either factor is not positive.",
+          "claim": "derived from the platform's reported client performance factor, as the ratio of two dated factor values; the factor itself is reported by the platform at client grain and is not computed by Opal"
+        }
+      }
     },
     {
       "id": "trgl.cost_basis",
@@ -1790,6 +1835,42 @@
         "avs.since_inception.ending_value",
         "glr.ending_value",
         "act.ending_value.account"
+      ]
+    },
+    {
+      "id": "RETURN_HOUSEHOLD_QTD",
+      "meaning": "the household's cumulative return for the window, printed in the portfolio value summary and in the holdings overview",
+      "entity": "household",
+      "members": [
+        "pvs.qtd.return_cumulative",
+        "hold.return_qtd"
+      ]
+    },
+    {
+      "id": "RETURN_HOUSEHOLD_YTD",
+      "meaning": "the household's cumulative return for the window, printed in the portfolio value summary and in the holdings overview",
+      "entity": "household",
+      "members": [
+        "pvs.ytd.return_cumulative",
+        "hold.return_ytd"
+      ]
+    },
+    {
+      "id": "RETURN_HOUSEHOLD_LAST_12_MONTHS",
+      "meaning": "the household's cumulative return for the window, printed in the portfolio value summary and in the holdings overview",
+      "entity": "household",
+      "members": [
+        "pvs.last_12_months.return_cumulative",
+        "hold.return_last_12_months"
+      ]
+    },
+    {
+      "id": "RETURN_HOUSEHOLD_SINCE_INCEPTION",
+      "meaning": "the household's cumulative return for the window, printed in the portfolio value summary and in the holdings overview",
+      "entity": "household",
+      "members": [
+        "pvs.since_inception.return_cumulative",
+        "hold.return_since_inception"
       ]
     }
   ],
