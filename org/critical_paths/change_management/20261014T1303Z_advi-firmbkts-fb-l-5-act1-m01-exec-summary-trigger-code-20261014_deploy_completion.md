@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-14T13:03:44.596357+00:00
-**Status:** OPEN
+**Status:** HELD-PRE-APPLY -- gate: external / LGIC naming gate refuses the exec-summary-trigger declaration (hole-count-ratchet); needs a registry ruling or R20 departure from CTO/COO; row ADVI_FIRMBKTS-D1-S57 (held since 2026-10-14T13:08:16.438527+00:00)
 **Deploy:** ADVI_FIRMBKTS TO-FB-l-5 act 1 (M01): bring the live exec-summary-trigger rule, its target and invoke permission under code in infra/aws/terraform/exec-summary/. NO AWS WRITE AND NO STATE CHANGE: state already holds the rule at address aws_cloudwatch_event_rule.exec_summary_trigger (applied 2026-04-27 from ecc9b2a508, then main.tf/outputs.tf/iam.tf were reverted to the placeholder by the stray commit 64b6b9d65a), so the signed 'replace placeholder and import' reduces to restoring the declarations to the applied form; no import is run (it would be a no-op or an error). Pair: COO half a6e2df30dc, CTO half 1709a6e779. Proof: scoped plan on rule+target+permission reads No changes; describe-rule ENABLED with the same pattern before and after. Rollback: git revert of the commit (code only).
 **Authored by:** 0.7.0_AE_CloudOps~FB1
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -18,3 +18,4 @@
 ## Log
 
 - 20261014T130344Z OPENED by 0.7.0_AE_CloudOps~FB1 with 2 leg(s)
+- 20261014T130816Z HELD-PRE-APPLY gate=external/LGIC naming gate refuses the exec-summary-trigger declaration (hole-count-ratche

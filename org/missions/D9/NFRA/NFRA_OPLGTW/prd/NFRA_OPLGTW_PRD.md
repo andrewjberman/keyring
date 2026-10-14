@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v2.9",
+  "prd_version": "v3.0",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -26,7 +26,8 @@
     "FWD-18",
     "FWD-19",
     "FWD-20",
-    "FWD-21"
+    "FWD-21",
+    "FWD-22"
   ],
   "status": "RATIFIED"
 }
@@ -271,6 +272,27 @@ identity store that admission actually reads (the grant store holds no harvest r
 
 SOURCE: Andrew's AMGT voice memo 2026-10-13, "figure out the, open gateway mechanics for how to connect the ... open
 dash data dash harvest folders ... so that the asset managers can use that with their cloud"; widened by his call 8.
+
+FWD-22  — An Opal employee reaches every contracted bucket table through a typed gateway tool (v3.0)
+
+DONE WHEN: EXERCISED — for each census group that lands (G1 harvest, G2 assets silver, G3 portal-v2, G4 mdpf gold delta,
+G5 ETFs, G6 news), one real Opal principal's driven call to one of that group's typed tools returns rows carrying
+`as_of`, `source_keys[]`, a denominator and `absent_reason`. A client-data tool takes `firm`, `account_last4` and
+`platform`, and a call that names no firm, or two firms, is refused before any read.
+
+ACCEPT: The tools are the ones the census contracts propose (`4.0.0_SA_CRO~Z` deliverables
+`GATEWAY_DATA_CONTRACTS_20261014/G<n>_*.md`), each marked keep / extend / retire against the deployed `tool_index`.
+Admission is unchanged: the Opal-users-only gate (v2.3 item 4), C2, tier admission and C-PERSON run first. Every new
+S3, Lambda or DynamoDB read by a gateway role is a widening with its never-widen sign-off (CLAUDE.md NEVER-1). No
+resource name is typed (rule 30). Answers project to 50 KB by default. A last-4 that is ambiguous within a firm returns
+the candidates, never a guess. Freshness is stated in trading days.
+
+PROOF: Per landed group, one driven call. Negative arms: a non-Opal principal refused; for a client-data group, a
+no-firm call and a two-firm call refused; an ambiguous last-4 returns candidates.
+
+SOURCE: Andrew-direct 2026-10-14 ~12:4xZ, verbatim in `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_124xZ_GATEWAY_DATA_CONTRACTS_CENSUS_CRO_FANOUT.md` ("we need these tables to be accessible with fluid
+tooling"; "forking by firm and by last 4 digits account absolutely needs to be included in any kind of client data
+bucket").
 
 ## CONTRACTS
 
@@ -1065,3 +1087,36 @@ release. NFRA_MCPORTAL's first FWD-21 write cell (F2) waits on it. MC Portal's r
 
 ENDPOINT unchanged; CONTRACTS change, so the ratified-text half re-reads under proportionate sign-off (no delivery
 withheld).
+
+### v3.0 addendum (2026-10-14 ~13:1xZ, 1.0.0_SA_CTO~Z) -- FWD-22: typed tools over every contracted bucket table; G1 harvest is the first enrichment
+
+**Input.** Andrew-direct 2026-10-14 ~12:4xZ (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_124xZ_GATEWAY_DATA_CONTRACTS_CENSUS_CRO_FANOUT.md`): the gateway is live with these tables by Friday 2026-10-16,
+harvest first. Directive to `4.0.0_SA_CRO~Z`: `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTOZ_DIRECTIVE_20261014_GATEWAY_DATA_CONTRACTS_CENSUS.md` @06ae2a3485. G1 delivered: `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G1_harvest.md` @0d7c29b3c5 (58,639 of
+58,639 keys, 78 datasets, 78 contracts, 12 typed tools).
+
+**One new outcome, FWD-22, enriched per group.** Each later group (G2-G6) lands as an enrichment list in an addendum.
+The outcome text does not change per group, so the ratified-text half is signed once for FWD-22.
+
+**G1 enrichment list (harvest; Opal principals only, admitted as FWD-21 admits; no firm fork -- Opal's own research):**
+1. Build the typed tools of G1 section 3 in the gateway app beside `harvest_read.py`, reusing `harvest_read.admit()`
+   and its audit row: `harvest_resolve_security`, `harvest_security_coverage`, `harvest_get_chatter`,
+   `harvest_search_articles`, `harvest_get_article`, `harvest_get_fundamentals`, `harvest_get_research`,
+   `harvest_get_filing_analysis`, `harvest_get_peers_and_scores`, `harvest_query_columns`.
+2. **`harvest_describe_dataset` is NOT built.** `opal_describe` / `opal_discover` already serve the one catalog; they
+   reach table grain through NFRA_MCPINDEX FWD-22, and the contracts live in the catalog rows (one carrier, no second
+   registry).
+3. **`harvest_get_published_analysis` invokes `opal-amgt-scoped-api`.** That invoke is a NEW widening for the gateway
+   role. It ships only with its own never-widen ask (both halves name the invoke and its rollback). If the ask is not
+   signed by the cut, the cell ships the other tools and this one follows.
+4. Bloomberg bronze tables (bestdata, refdata, histdata, segments, price history, identity, exec_officers) are read
+   from the bucket only, under call 8's "all 24 prefixes SERVE to Opal principals". No tool calls Bloomberg.
+5. Retired as tool targets (they stay in the bucket): `publication-links/v1/`, `publications/v1/`. The hyphen
+   `amgt/harvest/gold/research-dossier/` is retired only after the cell reads that `research_dossier` supersedes it
+   (G1 marks it inferred).
+
+**Order.** OG-hv-2 (the grant) lands first, since every typed tool reads through it. The G1 tools cell is cut next,
+ahead of OG-ap-17 and MX-r-13, on Andrew's priority ("I would prioritize that as number one"). `2.0.0_SA_COO~O` sets
+the fan-out.
+
+**Sign-off.** ENDPOINT changes (FWD-22 added), so the ratified-text half re-opens for `3.0.0_SA_CVO~Z`. The brief half
+is the CRO's G1 census, written by the CRO (proportionate sign-off). Later group enrichments are CONTRACTS-only.
