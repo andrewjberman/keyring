@@ -1,8 +1,8 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-13T23:59:40Z",
- "written_by": "0.9.0_WK_AMGT_RESAPP~417",
+ "written_at": "2026-10-13T12:27:10Z",
+ "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
    "id": "dell1-20261008T175521Z-abbb",
@@ -2175,49 +2175,6 @@
     "by": "1.0.0_SA_CTO~DELL1",
     "reason": "Valuation basis of an Andrew-approved design is his word"
    }
-  },
-  {
-   "id": "dell1-20261013T235940Z-68dc",
-   "project": "NFRA_DEVPLN",
-   "subject": "approval: cand/dell1/amgt-sa-header-money-and-dash-reasons",
-   "asked_by": "0.9.0_WK_AMGT_RESAPP~417",
-   "source": "cand/dell1/amgt-sa-header-money-and-dash-reasons",
-   "orders": [],
-   "roots": [],
-   "state": "OPEN",
-   "opened_at": "2026-10-13T23:59:40Z",
-   "kind": "approval",
-   "approval": {
-    "box": "dell1",
-    "branch": "cand/dell1/amgt-sa-header-money-and-dash-reasons",
-    "purpose": "AMGT_RESAPP bk-3: the Security Analysis header prints USD as $ and every dash tile shows its reason",
-    "pages": [
-     "Security Analysis"
-    ],
-    "class": "opal-internal",
-    "how": "cd portal && bun run dev:live --port 5174; /security-analysis, TSM US and HSBA LN",
-    "head_sha": "624e2533f665bf786e41594adba17b82c447aa7d",
-    "commits": 1
-   },
-   "scope": {
-    "measured_at": "2026-10-13T23:59:40Z",
-    "paths": "clear",
-    "placement": "hit",
-    "resources": "clear",
-    "shared": "clear",
-    "risk": "LOCAL",
-    "verdict": "CROSS-BOX",
-    "roots": [],
-    "evidence": {
-     "paths": [],
-     "placement": [
-      "project NFRA_DEVPLN is placed on laptop, this box is dell1"
-     ],
-     "resources": [],
-     "shared": []
-    }
-   },
-   "closed": null
   }
  ]
 }
