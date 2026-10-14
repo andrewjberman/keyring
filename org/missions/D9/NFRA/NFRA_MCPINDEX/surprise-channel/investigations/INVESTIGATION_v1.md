@@ -7639,6 +7639,332 @@ carries none.
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "The issuer decides whether the status flip belongs to the grant. The outcome of the flip attempt is recorded in the worker report, not here."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T15:22:00Z",
+    "one_line": "Six in-scope contracts carry a non-integer trading-day value (three strings, one dict, two nulls); the two nulls yield no number, and one of them is stale by its own latest_partition, so the NOT CURRENT rule cannot mark it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Worker face section 1, row business_meaning: let n be the first number found under the contract's freshness keys trading_days_behind_t1, trading_days_behind, trading_days_behind_T-1; when n is above 5 append NOT CURRENT. Frozen-or-empty is never current (PRD v0.12 item 4).",
+    "world_is": "Three in-scope contracts carry a string under those keys ('0 (page day ...)'): opal-data-etfs/gold/buying_trend, holding_contribution, input_census. One carries a per-firm dict (opal-data-etfs/gold/daily_partner_ownership, values 0, 1, 0). Two carry null (opal-data-assets/silver/49financial/_single_file and commonwealth_cottonwood_price_evidence). The generator reads the first integer in a string, the first numeric value in a dict, and skips null; the six rows get n of 0 or none. opal-data-assets/silver/49financial/_single_file has latest_partition 2026-01-28 against t1_frontier 2026-10-13 and no trading-day figure, so it carries no NOT CURRENT flag: the rule has no derivation from latest_partition. The contract's own note on commonwealth_cottonwood_price_evidence says lag is not staleness; no such note is on _single_file.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "G2 pinned at org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G2_assets_silver.md@339a2804d7: opal-data-assets/silver/49financial/_single_file (silver_legacy) freshness {latest_partition 2026-01-28, trading_days_behind_t1 null, t1_frontier 2026-10-13}; opal-data-assets/silver/commonwealth_cottonwood_price_evidence freshness {trading_days_behind null, note: closed historical delivery}.",
+        "G5 pinned at org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G5_etfs.md@35f45893a7: opal-data-etfs/gold/buying_trend, opal-data-etfs/gold/holding_contribution, opal-data-etfs/gold/input_census carry freshness.trading_days_behind_T-1 as a string beginning '0 (page day'; opal-data-etfs/gold/daily_partner_ownership carries trading_days_behind_T-1 as a dict {49financial: 0, cottonwood: 1, inflection: 0}.",
+        "Generator output at workflows/atom_decomposition/catalog_entries/ (174 rows written this cell): business_meaning of the six rows has no NOT CURRENT clause; the first-number reading is in workflows/atom_decomposition/gen_silver_rows.py first_number() and trading_days_behind()."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T15:22:00Z",
+    "one_line": "Three of 36 ETF contracts carry client-firm fork keys, so the firm-scoped rule gives them the client-data sentence; the other 33 ETF contracts are opal-internal-only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Worker face section 1, rows business_meaning and firm_scope_rule: firm-scoped when fork_keys.firm.values holds any value other than global and opal-internal; the test list reads 'opal-internal-only for an ETF table'.",
+    "world_is": "opal-data-etfs/gold/daily_partner_ownership, opal-data-etfs/platinum/etf_ownership_dashboard and opal-data-etfs/platinum/monthly_ownership_report name the firms 49financial and cottonwood in fork_keys.firm.values. The rule as written marks them firm-scoped; their rows carry the client-data sentence. The rule was applied, not overridden. The denominator is 36 ETF contracts in G5; 3 firm-scoped, 33 opal-internal-only.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "G5 pinned at org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G5_etfs.md@35f45893a7: fork_keys.firm.values for opal-data-etfs/gold/daily_partner_ownership is [49financial, cottonwood, inflection]; for opal-data-etfs/platinum/etf_ownership_dashboard and opal-data-etfs/platinum/monthly_ownership_report it is [49financial, cottonwood].",
+        "Generator output: workflows/atom_decomposition/catalog_entries/opal_data_etfs_gold_daily_partner_ownership.yaml, opal_data_etfs_platinum_etf_ownership_dashboard.yaml, opal_data_etfs_platinum_monthly_ownership_report.yaml carry firm_scope_rule firm-scoped."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T15:22:00Z",
+    "one_line": "A deployed vendor tool (blackdiamond_list_fees) named by one in-scope contract's proposed_tools reads as read_tool null, because the policy maps it to client_get_fees before the deployed check and client_get_fees is not deployed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Worker face section 1, read_tool policy: each candidate is cut at the first space, mapped through client_tool_map.json, and the read_tool is the first candidate in the deployed set; a tool that is not deployed is never named.",
+    "world_is": "The deployed census (tool_census.py, 70 tools) holds blackdiamond_list_fees; client_get_fees is not deployed. opal-data-assets/silver/cottonwood/fact_transactions proposes blackdiamond_list_fees (extend) and reads read_tool null with gap_owner NFRA_OPLGTW. Measured denominator: 1 of the 131 contracts that carry proposed_tools has a deployed raw candidate with an undeployed mapped name. The policy was applied as written.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "G2 pinned at org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G2_assets_silver.md@339a2804d7: opal-data-assets/silver/cottonwood/fact_transactions proposed_tools[].name includes 'blackdiamond_list_fees (extend)'.",
+        "tool_census.py run at the worktree (091f812b7b base): 70 tools; blackdiamond_list_fees present (app/integrations/blackdiamond/integration.py:387); client_get_fees absent.",
+        "workflows/atom_decomposition/client_tool_map.json: blackdiamond_list_fees -> client_get_fees (OPLGTW PRD v3.1 ruling 1 pairs)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T16:07:37Z",
+    "one_line": "The commit-time naming gate refuses 162 of the 174 generated rows (377 REFUSE lines of 648 graded) and two code files, because the verbatim contract strings are hand-kept carriers outside the permitted lookup context; the MX-c-14 commit did not land.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Worker face section 1: the row copies the contract's own strings (bucket, prefix, contract, fork_keys, nl_tags) verbatim, never paraphrased; section 2 bound 3: the row shape is exactly the table. Task order bound 4: a commit through the naming gate needs a staged .json under the project home.",
+    "world_is": "The naming gate (safe-commit.sh, LGIC_ENFORCE) grades 648 items and refuses 377, across 162 distinct new catalog rows: the verbatim s3 prefixes, contract ids and firm aliases (49f, 49financial, cottonwood, inflection) are NEW and OUT-OF-PATTERN or hand-kept carriers outside lookup(). It also refuses workflows/atom_decomposition/client_tool_map.json (a tool name read as an S3 key, blackdiamond_get_account_profile -> blackdiamond-get-account-profile) and workflows/atom_decomposition/gen_silver_rows.py (the retired-feed constant holding the 49financial alias). The rows were not altered, because the copy rule forbids it; CLAUDE.md section 4 routes a builder refusal to a registry row or an R20 entry Andrew acknowledges, never a hand-typed workaround. Remaining: the 174 rows, the generator, the map and the tests are uncommitted in the worktree on wk-NFRA_MCPINDEX-38.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh naming-gate output, worktree wk-NFRA_MCPINDEX-38 on base 091f812b7b (log .scratch/commit2.log, not committed): 'NAMING-GATE: REFUSE 648 graded'; 'NAMING REFUSE' lines 377, 'NAMING CONFORMANT' lines 217; distinct refused files 162.",
+        "Example refusal: workflows/atom_decomposition/catalog_entries/opal_data_assets_silver_49f_dim_account_xref.yaml:2 blackdiamond/49f/silver/dim_account_xref/ -> blackdiamond/49financial/silver/dim_account_xref/ (ALIAS, REFUSE: read it through lookup('49financial')).",
+        "CLAUDE.md section 4 at 091f812b7b: 'Every S3 address is lib/opal_naming.py address() output ... a builder REFUSAL is a missing registry row to add (infra/logic/registry/), never a hand-typed workaround; a deliberate departure is an R20 register entry Andrew acknowledges.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T17:33:00Z",
+    "one_line": "The naming gate run over the whole 175-file staged row diff did not finish inside a 600 s bound (rc 124, empty output); four 44-file shards run in parallel finished, in about 12 minutes, at about 11 s per row file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Task order section 1 step 2 and the cell's step 2 procedure: the naming gate is run once over the staged diff (NAMING_GATE_ENFORCE=1 python .tools/naming-gate.py --diff <file> --enforce --post-from-index) and its verdict is read from that run.",
+    "world_is": "One run over the full staged diff (606003 bytes, 175 files) returned rc 124 at the 600 s bound with no output: python stdout is block-buffered into the file, and the DENOMINATOR and NAMING-GATE lines print only at exit. Measured on four files alone: 44.6 s, rc 1. The gate takes about 11 s per row file, so the procedure as written cannot finish inside one bounded call for 175 files. Sharding the diff by file (four processes) gave the same verdict shape per shard; the commit of 70 rows through safe-commit ran about 14 minutes (commit 5c90be3931).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "worktree wk-NFRA_MCPINDEX-38 at d750564fb5: a full-diff gate run wrote rc 124 to .scratch/rows_gate.rc (started 12:47 EDT, killed 12:57 EDT by the 600 s bound).",
+        "the four shard runs wrote .scratch/rows_shard0.gate.txt to rows_shard3.gate.txt, each ending NAMING-GATE: REFUSE (158, 165, 161, 161 graded), rc=1 each.",
+        "the four-file timing run: .scratch/rows4_gate.txt, 44.6 s elapsed, rc=1, on four row files of the staged diff."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T17:33:00Z",
+    "one_line": "The naming gate refused the news-bucket prefix written as a literal in the generator, although the order states the exclusion in words; the exclusion is now a bucket-segment test that selects the same 130 rows.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Worker face section 1, registry rows: a plain S3 key is one whose bucket starts opal-data- but is neither opal-data-news-v2 nor opal-data-news-av. Section 2 bound 3: no firm or contract-id literal in gen_silver_rows.py, and the gate refuses a new carrier.",
+    "world_is": "The step-0 dry run of the naming gate on the generator refused the literal opal-data-news- (NAMING REFUSE workflows/atom_decomposition/gen_silver_rows.py:50, opal-data-news- -> opal-data-news). The generator now tests the bucket's dash-separated segments for news. Measured: the generator re-run reproduced the committed registry byte for byte (REGISTRY-UNCHANGED), 130 catalog-* rows, validate() 0 errors. The 44 rows outside the registry are 8 none, 33 templated and 3 news; among the 186 contracts only the two news buckets carry a news segment. The segment test is not the order's literal test; it is equal on this data and is reported as a deviation in form.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "step-0 dry run: .scratch/step0_gate.txt at worktree wk-NFRA_MCPINDEX-38 (before the segment change) carried NAMING REFUSE workflows/atom_decomposition/gen_silver_rows.py:50 opal-data-news- -> opal-data-news.",
+        "commit d750564fb5 (step 0, LOCAL on wk-NFRA_MCPINDEX-38): the generator with the segment test, the registry rows and the map; the naming gate on that diff printed NAMING-GATE: PASS.",
+        "registry check: infra/logic/registry/legacy_addresses.json at d750564fb5 holds 148 rows, 130 with a catalog- key."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T17:33:00Z",
+    "one_line": "The deployed tool census holds no client_ tool, so 173 of 174 generated rows read read_tool null with gap_owner NFRA_OPLGTW; the one named read_tool is etfs_get_positioning, an ETF tool outside the client map.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Worker face section 1, read_tool policy (PRD v0.12 item 5): the read_tool is the first candidate that is deployed after client mapping through client_tool_map.json; the map targets the client_ tool set (OPLGTW PRD v3.1 ruling 1).",
+    "world_is": "tool_census.py returns 70 tools and none begins client_. The nine distinct map targets (client_resolve_account, client_get_holdings, client_get_transactions, client_get_allocation, client_get_lots, client_get_performance, client_get_fees, client_get_profile, client_get_insurance) are all undeployed. Measured: 173 rows read_tool null, 1 row etfs_get_positioning. The policy was applied as written; the rows carry gap_owner NFRA_OPLGTW, and no tool is named that is not deployed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "tool_census.py run at worktree wk-NFRA_MCPINDEX-38 (commit d750564fb5): 70 tools, zero with a client_ prefix.",
+        "generated rows at workflows/atom_decomposition/catalog_entries/ (commit 5c90be3931 and the 104 held files on disk): read_tool counted by key, 173 null and 1 etfs_get_positioning.",
+        "workflows/atom_decomposition/client_tool_map.json at d750564fb5: 28 pairs, every value a client_ name."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T17:33:00Z",
+    "one_line": "Criteria AC1 to AC3 read the working-tree catalog folder, so all three print PASS with 104 of the 174 rows uncommitted; the order's premise that held rows make them fail does not hold for this instrument.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Task order section 1 step 4: with rows held, AC1 to AC3 cannot all PASS, and each output is reported. Section 4: the criteria grade the generated rows.",
+    "world_is": "c14_check.py reads ROWS_DIR_DEFAULT (workflows/atom_decomposition/catalog_entries) on disk, and the 104 held files are untracked but present, so every check counts 174. Measured: AC1 ROWS files=174 RESULT PASS; AC2 ROWS graded 174 of 174 RESULT PASS; AC3 ARMS pass 5 of 5, rows graded right 870 of 870 RESULT PASS. None of the three reads git state, so none separates the committed 70 from the held 104. The checks are not wrong on their own terms; a proof built on them would pass with the held rows uncommitted.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round14/checks/c14_check.py at the issuer's amended commit 97eedf1379: ROWS_DIR_DEFAULT and the ac1 registry branch read the working tree.",
+        "the three check runs from worktree wk-NFRA_MCPINDEX-38 after commit 5c90be3931: exit=0 each, outputs as in the world_is field.",
+        "git status at worktree wk-NFRA_MCPINDEX-38: 104 files under workflows/atom_decomposition/catalog_entries/ untracked, 70 committed at 5c90be3931."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T18:39:00Z",
+    "one_line": "The order's retired_reason text for the nine silver_legacy contracts is not the wording the round-14 AC2 check grades, so AC2 fails on those nine fields and only on them.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Task order worker face section 1, retired_reason rule (3): 'not_served: <record> -- client data only from the opal-data-assets vendor silver folders', with ' (a frozen silver_legacy copy)' appended ('Rules (2) and (3), exactly'). Section 4 AC2: each row equals the expected clean row.",
+    "world_is": "checks/glib.py retired_reason (at 65dc653f1f) grades 'not_served: <record> -- a frozen silver_legacy copy; client data only from the opal-data-assets vendor silver folders'. The generator writes the order's text. Measured: c14.AC2 'ROWS graded 174 of 174; failing fields: retired_reason x9', RESULT FAIL, rc=1; the 9 rows are the silver_legacy contracts. Every other field of every row matches the check. The generator was not changed to the check's wording; the wording choice is the issuer's to settle.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round14/checks/glib.py@65dc653f1f lines 34-43 (retired_reason)",
+        "workflows/atom_decomposition/gen_silver_rows.py@76520ead71 retired_reason() and NOT_SERVED_REASON + FROZEN_SUFFIX",
+        "c14_check.py ac2 run from worktree wk-NFRA_MCPINDEX-38 against workflows/atom_decomposition/catalog_entries, exit 1, output as in world_is"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T18:39:00Z",
+    "one_line": "The order says the retired flag is true for exactly four contracts and then enumerates rules that retire thirteen; the rows follow the enumerated rules.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Task order worker face section 1, the retired row: 'true for exactly four contracts, else false, by these rules' followed by 'So true for 13 contracts'.",
+    "world_is": "The three enumerated rules match 2 (do-not-serve routing text), 2 (model_aua_positions table prefix) and 9 (silver_legacy path segment) contracts with no contract in two rules. Measured on the 174 generated rows: retired true 13 (11 not_served, 2 do-not-serve). The check glib grades 13 as well. The rows follow the enumerated rules.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "task order TO-MX-c-14 worker face section 1 at 65dc653f1f (the retired row)",
+        "workflows/atom_decomposition/gen_silver_rows.py@76520ead71 retired_rule()",
+        "generated rows in workflows/atom_decomposition/catalog_entries (count of retired: true)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T19:05:00Z",
+    "one_line": "Nine generated rows carry a double-quoted firm token inside a prose value; the naming gate grades each quoted literal of a YAML line and refuses the nine, although the order's carrier test never grades a string with whitespace.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Task order worker face section 1, the CLEAN row: 'A string with whitespace is prose and is never graded'; the clean row holds no firm or product token in any string, key or value (c14.AC2 scans whitespace-free strings only). Section 1 step 2: rows the gate refuses are held, not forced.",
+    "world_is": "naming-gate.py yaml_literals() (line 718) reads every quoted span of an added YAML line as its own literal. The prose value fork_keys.firm.column_or_key_segment of nine eclipse and orion rows quotes the firm token in double quotes, so each file yields a NEW hand-kept carrier: 14 REFUSE lines in 9 files, kind (b), 'inflection -> lookup(inflection)'. Measured on the staged 175-path diff: REFUSE 193 graded, rc=1. The nine files are held uncommitted (residual_refusals.json); no override. Changing the prose is not the generator's rule to make; the issuer decides.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/naming-gate.py@76520ead71 lines 718-731 (yaml_literals, _strip_yaml_comment)",
+        "the staged-diff gate run from worktree wk-NFRA_MCPINDEX-38 (NAMING_GATE_ENFORCE=1 --enforce --post-from-index), verdict line 'NAMING-GATE: REFUSE 193 graded'",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~38/residual_refusals.json (refuse_lines_exact)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S12",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T20:25:58Z",
+    "one_line": "The 8 mapped 49F rows carry a null clean bucket (the live bucket name is a firm token), so the registry rule read on the clean bucket yields no row for their pairs; the checker keys the rule on the full bucket, and the generator follows the checker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "A6 registry rule (order section 1, registry files): one catalog-* legacy_addresses row per distinct (bucket, prefix) pair of each in-scope contract whose clean row has a non-null prefix and whose bucket starts opal-data-. The rule names the clean row bucket.",
+    "world_is": "The clean bucket is null for the 8 MAPPED contracts, so read on the clean bucket the rule yields 135 pairs. Read on the full bucket it yields 143: the 8 pairs on opal-data-bd with silver/<table>/ prefixes are added. The checker (c14_check.py ac1: needs_registry, glib.row_bucket) grades the 143. The generator writes 143 catalog-* rows, one pair (opal-data-etfs rivalfunds/etfs/gold/security_market/) held by another project and not added. Measured: 143 of 143 resolve (AC1 PASS).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round14/checks/glib.py@c082eef397 (needs_registry, row_bucket)",
+        "workflows/atom_decomposition/gen_silver_rows.py@adecc879df (registry_rows reads the full bucket)",
+        "infra/logic/registry/legacy_addresses.json@adecc879df (8 catalog rows on opal-data-bd)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S13",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T20:25:58Z",
+    "one_line": "The A6 tranche plan presumes each tranche commit lands new rows; 157 of the 216 regenerated rows were already byte-identical at HEAD, so tranche 2 commits its manifest alone and tranches 1 and 3 commit only their changed rows.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "A6 landing order: one commit per tranche, each through the naming gate; tranche 1 = 90 rows (G5, G6, G3), tranche 2 = 45 Schwab rows of G2, tranche 3 = 81 rows (every other row, including G4).",
+    "world_is": "Identical at HEAD before the tranche commits: tranche 1 48 of 90 (42 changed, commit 70d05eed34); tranche 2 45 of 45 (0 changed, commit 9f13800ab0 carries tranche2.json only); tranche 3 64 of 81 (17 changed, commit fdfbc4be43). Naming-gate verdict per staged set: 0 REFUSE lines. The tranche membership counts are 90, 45 and 81.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git ls-tree HEAD workflows/atom_decomposition/catalog_entries (45 of 45 Schwab rows tracked, git diff HEAD on them empty)",
+        "commits 70d05eed34, 9f13800ab0, fdfbc4be43 (msg-verify MATCH)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S14",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T20:25:58Z",
+    "one_line": "The task order status flip (worker face section 5, step 2) is an edit to the order file, which is not one of the nine entries of <paths>. The flip is made on the launcher direction, which names the order file as the grant; the commit gate verdict is recorded with it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Worker face section 5 step 2: APPEND <status>complete</status> to the task order only if all three criteria PASS on the committed state, and commit the instance, the deliverables and the flip together. Section 3 names the write surfaces.",
+    "world_is": "The task order file NFRA_MCPINDEX.TO-MX-c-14.silver-table-rows-generator-g2-g4-g5-g6.md is not among the nine <paths> entries. The only edit to it is the appended status line.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-14.silver-table-rows-generator-g2-g4-g5-g6.md@c082eef397 (section 3 paths)",
+        "worker face section 5 step 2 of the same file"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S15",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T20:25:58Z",
+    "one_line": "The naming gate verdict on the step-1 commit reads PASS 0 graded over 4 in-domain paths: the generator, its test and two registry files were seen and none was graded, so that PASS is not evidence that the code types no firm token.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Section 2 bound 3: no firm, product or contract token is typed as a literal in gen_silver_rows.py; the commit-time naming gate refuses a new hand-kept token in code.",
+    "world_is": "Commit adecc879df gate output: COVERAGE 4 seen, NAMING-GATE PASS 0 graded. The tranche verdicts read PASS 46 graded and PASS 18 graded over row files and manifests, not code. The check I hold for the code: a scan of the committed generator single-line string literals against the catalog_tokens whole (19) and segment (10) sets: 0 hits.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".scratch/commit1.out of adecc879df (naming-gate DENOMINATOR and COVERAGE lines)",
+        "workflows/atom_decomposition/gen_silver_rows.py@adecc879df (scan, 0 hits)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```

@@ -2322,3 +2322,358 @@ used as fixtures is a different read with a different denominator.
  "notes": "Disarms D2-S46 on its owner's read of Andrew's word; nothing measured live by this row."
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W41-S1",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~41",
+  "surfaced_at": "2026-10-14T19:35:44Z",
+  "one_line": "TO-R18-L1 asked that no existing assertion about another type or action change, but three existing assertions treat meeting_request as an untyped type, so each was edited to match the new definition (old and new text in R18_L1_RECORD.json).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/tests/test_analysis_request.py@023b5ce5b0 (test_four_existing_types_unchanged loop and test_requester_claims_and_completes_own_ticket types list both include meeting_request, creating it with no answers)",
+      "infra/aws/lambda/ticket_center/tests/test_trade_request_type.py@023b5ce5b0 (test_other_untyped_types_unchanged asserts meeting_request questions == [])",
+      "infra/aws/lambda/ticket_center/tests/test_authz_matrix.py@023b5ce5b0 (test_layer_coverage asserts 11 actions and a ROUTES list with no meeting route)"
+    ]
+  },
+  "spec_asserts": "TO-R18-L1 step 1: the four existing types keep their exact rows. Step 5: edit an existing test only where a fixture needs the new action or definition; no existing assertion about another type or another action may change.",
+  "world_is": "Three existing assertions encode meeting_request as an untyped type with no questions and no answers. The new definition makes them false. Edited: the untyped loop in test_four_existing_types_unchanged and the untyped loop in test_other_untyped_types_unchanged drop meeting_request; the self-claim types loop keeps meeting_request and supplies its required answers; test_layer_coverage goes from 11 to 12 actions with one ROUTES entry. Every edited assertion is about meeting_request, the type this order changes; no assertion about another type or action changed.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W41-S2",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~41",
+  "surfaced_at": "2026-10-14T19:35:44Z",
+  "one_line": "The order's refusal order (non-coordinator 403 before not-found 404) conflicts with its own AC3J requirement that a refusal reveal nothing about tickets outside the caller's scope; the handler applies scope and existence first, then the coordinator test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py@023b5ce5b0 (_new_item copies ROUTING_MATRIX into the item's routing.primary, so the coordinator is readable only after the ticket is read)",
+      "infra/aws/lambda/ticket_center/lambda_function.py@023b5ce5b0 (get_ticket answers 404 for a ticket outside the caller's profile scope, the refusal this order names as the one to match)"
+    ]
+  },
+  "spec_asserts": "TO-R18-L1 step 2 lists the rules in order: not INTERNAL 403; caller not in routing.primary 403 naming no one; ticket not found or outside scope 404. AC3J: a refusal reveals nothing about tickets outside the caller's scope.",
+  "world_is": "routing.primary sits on the ticket, so the coordinator test cannot run before the ticket is read. A literal 403-first order would answer 403 for an existing out-of-scope ticket and 404 for a missing one, which reveals existence across scope. Implemented: read; missing or out of firm scope gives the get_ticket 404; then the coordinator test gives 403; then type 409, completed 409, body 400, time 400, one conditional write.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W41-S3",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~41",
+  "surfaced_at": "2026-10-14T19:35:44Z",
+  "one_line": "The order asks that no notify_* run on any path, but CREATE of every ticket type already calls notify_dl_isolated (the W-E first-line DL send), so a meeting filing sends it; the outcome route sends nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py@023b5ce5b0 (create_ticket calls notify_dl_isolated(item) unconditionally before the 201)",
+      "infra/aws/lambda/ticket_center/tests/test_meeting_request.py (test_create_keeps_the_existing_dl_first_line_and_sends_no_client_notice pins the create-time call; the outcome tests assert the spy list is empty)"
+    ]
+  },
+  "spec_asserts": "TO-R18-L1 step 4: no notify_* function is called on any path (a spy). AC3J: no mail or notice is sent.",
+  "world_is": "The 'any path' reading would forbid the existing CREATE-time DL line that W-E attaches to every ticket create. Implemented: confirm, propose and every refusal of the outcome route call no notifier; the filing keeps the existing DL line, which the spy test pins. Whether a filing keeps that line is the issuer's call.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W41-S4",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~41",
+  "surfaced_at": "2026-10-14T19:35:44Z",
+  "one_line": "The before-arm expected every case of the new file to fail on the base handler; 31 of 33 failed and two controls passed: test_other_untyped_types_keep_their_shape (unchanged service_request behaviour) and test_create_keeps_the_existing_dl_first_line_and_sends_no_client_notice (the existing CREATE-time DL line).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run of the new test file against the base lambda_function.py at 023b5ce5b0 (git archive HEAD into .scratch/base_arm): 31 failed, 2 passed (the passing cases are test_other_untyped_types_keep_their_shape and test_create_keeps_the_existing_dl_first_line_and_sends_no_client_notice)"
+    ]
+  },
+  "spec_asserts": "TO-R18-L1 step 6: the before-arm, the new tests run on the base, every case FAILS.",
+  "world_is": "Two controls pass on the base by construction: one on an unchanged type and one on the existing CREATE-time DL line. They cannot fail there. They were kept as regression guards, not rewritten to fail. Recorded as the before-arm result.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W41-S5",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~41",
+  "surfaced_at": "2026-10-14T19:35:44Z",
+  "one_line": "Decomposition row R18-mt-1 says the outcome route refuses a non-assignee, but the wire contract and the order gate it on routing.primary (the coordinator); the handler follows the order and the wire contract.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/decompositions/TCKT_VNEXT_DECOMP_R18.md@023b5ce5b0 (row R18-mt-1 reads 'refused for a non-assignee')",
+      "org/missions/D7/TCKT/TCKT_VNEXT/decompositions/TCKT_VNEXT_DECOMP_R18.md@023b5ce5b0 (WIRE CONTRACT item 1: caller is an INTERNAL human whose email is in routing.primary)"
+    ]
+  },
+  "spec_asserts": "TO-R18-L1 step 2 and the WIRE CONTRACT item 1: the caller must be an INTERNAL human whose email is in the ticket's routing.primary (the coordinator); anyone else 403.",
+  "world_is": "The decomposition row's 'non-assignee' wording differs from the contract. claim_ticket sets the assignee to whoever claims, so the assignee is not the coordinator unless that person claims. Implemented the routing.primary rule as the order and the wire contract state.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W41-S6",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~41",
+  "surfaced_at": "2026-10-14T19:37:23Z",
+  "one_line": "Running tests/test_authz_matrix.py by path reaches the real SES notifier: my by-path run printed one WE_CLIENT_SENT kind=pickup line with a real SES message_id from tickets@opalinvest.dev, a live send the worker bound forbids.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~V2 (issuer of TCKT_VNEXT round 18; owns test_authz_matrix.py). Until disarmed, no run of that file by path (python <file>) -- pytest only, where conftest.py's guard applies.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py@023b5ce5b0 line 1121 (notify_client calls _ses_client().send_raw_email(Source=EMAIL_FROM, ...) with no guard of its own)",
+      "infra/aws/lambda/ticket_center/tests/test_authz_matrix.py@023b5ce5b0 lines 342-343 (__main__ runs unittest.main with no notifier stub; MatrixTests claim tickets, which reaches notify_client_isolated)",
+      "infra/aws/lambda/ticket_center/tests/conftest.py@023b5ce5b0 (the SES guard is an autouse pytest fixture; it does not apply to a by-path run)",
+      "worker run at 2026-10-14T19:3xZ: python infra/aws/lambda/ticket_center/tests/test_authz_matrix.py printed WE_CLIENT_SENT kind=pickup ticket=TCK-20261014-8279bd23 with a real SES message_id; the pytest runs of the same folder printed no such line"
+    ]
+  },
+  "spec_asserts": "Worker face, TO-R18-L1: no live call of any kind -- no AWS, no network, no mail, no deploy, no apply; tests/conftest.py refuses a real call.",
+  "world_is": "The file's own __main__ run is not guarded, because the conftest guard exists only under pytest. Its claim tests reach the unstubbed notifier, which sends through SES from the pinned sender. The hazard is in the base file too; the R18-L1 edit changed only an action count and one ROUTES entry. Not re-run after the send was seen; the ticket and recipient owner must check whether the message was delivered.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W41-S7",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~41",
+  "surfaced_at": "2026-10-14T19:57:22Z",
+  "one_line": "A firm id with a dot is a valid trade_request firm answer but is refused as a plain id for the trade form attachment, so such a ticket can exist with no attachment route.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py@ef5871585d (_FIRM_ID_RE admits dots and the firm kind is validated with it; _validate_answers accepts the firm answer)",
+      "infra/aws/lambda/ticket_center/lambda_function.py, worktree wk-TCKT_VNEXT-41 at filing (uncommitted L2 edit): _PLAIN_FIRM_RE = letters, digits, dash, underscore, applied before a firm is formatted into a bucket or key; _validate_trade_form refuses a dotted firm 400)",
+      "org/missions/D7/TCKT/TCKT_VNEXT/task-orders/TCKT_VNEXT.TO-R18-L2.trade-request-form-upload-and-open-routes.md@7a663e8c28 (step 2: the firm value is checked to be a plain id of letters, digits, dash and underscore before it is formatted in)"
+    ]
+  },
+  "spec_asserts": "TO-R18-L2 step 2 requires the firm to be a plain id (letters, digits, dash, underscore) before it is formatted into the key template, and step 2 requires CREATE to store the reference for a valid trade_request.",
+  "world_is": "The firm kind admits a dotted id as a valid answer, so a trade_request with a dotted firm passes the answers check but its attachment is refused 400 (the firm is not a plain id). The contract does not say which of the two wins for a dotted id; the implementation refuses the attachment. No firm id in the present estate has a dot (the ids seen are plain).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+### TCKT_VNEXT-D2-W42-S1 -- the candidate is cut from DEV, while CONTRIBUTING-BOXES says cut from PROD and re-cut before registration
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W42-S1",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~42",
+  "surfaced_at": "2026-10-14T19:45:44Z",
+  "one_line": "The order cuts the candidate from origin/DEV 9e637fe51e, but portal/CONTRIBUTING-BOXES.md says to cut from the last PROD release and to re-cut a DEV-cut branch onto PROD before it is registered.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~V2 (registers cand/dell2/tckt-meeting-request with open-calls.py; re-cuts it onto origin/PROD first, per CONTRIBUTING-BOXES step 2)",
+  "spec_asserts": "WORKER FACE step 1: base_tip is the portal worktree HEAD at origin/DEV 9e637fe51ebfa6322910cc032945a1e755e9ea13, and the candidate branch is cut from it.",
+  "world_is": "CONTRIBUTING-BOXES.md at 9e637fe51e says a feature branch is cut from the last PROD release, never from DEV. Live reads at 2026-10-14T19:45Z: origin/PROD = 5ab67a651a626e7224de0a2cf03a2223f99dc15e and origin/DEV = 9de7c7e3227c321d45c2b6d3d3ccf72590b20710. An earlier read in this session gave origin/PROD = fa10e75861, so PROD moved in between. The base 9e637fe51e is an ancestor of origin/DEV (5 commits behind) and not of origin/PROD. The candidate 9e07fa320c is committed on the order's base and was NOT re-cut. The branch is LOCAL and unpushed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/CONTRIBUTING-BOXES.md@9e637fe51ebfa6322910cc032945a1e755e9ea13 lines 15-21 (Build steps 1 and 2)",
+      "git -C portal ls-remote origin refs/heads/PROD -> 5ab67a651a626e7224de0a2cf03a2223f99dc15e (measured 2026-10-14T19:45Z)",
+      "git -C portal ls-remote origin refs/heads/DEV -> 9de7c7e3227c321d45c2b6d3d3ccf72590b20710 (measured 2026-10-14T19:45Z)",
+      "portal commit 9e07fa320cf55945e3ab1d391ce7716e7daac9d4 on wk-TCKT_VNEXT-42-portal, parent 9e637fe51ebfa6322910cc032945a1e755e9ea13"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The order fixes the base, so this row does not re-cut it. Registration is the issuer's act."
+}
+```
+
+### TCKT_VNEXT-D2-W42-S2 -- the order's line numbers for TicketCenter.tsx point at other code
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W42-S2",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~42",
+  "surfaced_at": "2026-10-14T19:45:44Z",
+  "one_line": "The order's line ranges for src/pages/TicketCenter/TicketCenter.tsx do not hold the code it names: the showCreate panel is at 668-735, not 458-521; handleCreate at 484-506, not 383; the board rows at 803-853, not 589-637.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "WORKER FACE step 2 (read first): the showCreate panel about lines 458-521, handleCreate about 383 and the board rows about 589-637 of TicketCenter.tsx.",
+  "world_is": "At base 9e637fe51e the file has 891 lines. The create panel is at 668-735, handleCreate at 484-506, and the board rows at 803-853. The cited ranges hold other code. The cell's content was found by reading the file, not by the numbers, and no edit depended on them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx@9e637fe51ebfa6322910cc032945a1e755e9ea13 (891 lines; showCreate panel at 668-735; handleCreate at 484-506; board rows at 803-853)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Stale citation only. Nothing measured live by this row."
+}
+```
+
+### TCKT_VNEXT-D2-W42-S3 -- the trade branch of the create panel cannot be reached through the page's type list
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W42-S3",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~42",
+  "surfaced_at": "2026-10-14T19:45:44Z",
+  "one_line": "The create panel's type list filters trade_request out (Andrew-direct 2026-10-13), so the order's per-branch test of the trade branch cannot be run through the mounted page.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "WORKER FACE step 3: the trade, analysis, service and other branches of the create panel render as before, a test per branch.",
+  "world_is": "TicketCenter.tsx at 9e637fe51e lines 681-685 build the type select from TICKET_TYPE_LABELS with the trade_request entry filtered out, so no UI path selects trade. The candidate's test covers the trade branch only at the decision level (drawsOwnForm('trade_request') is true). The analysis, service and other branches are mounted and tested.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx@9e637fe51ebfa6322910cc032945a1e755e9ea13 lines 681-685 (the filter and the Andrew-direct comment)",
+      "portal/src/pages/TicketCenter/__tests__/meeting-request.test.tsx (candidate 9e07fa320c): test 'the trade branch is decided the same way, and trade is still not offered in the type list'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The trade branch's render is unchanged in code. It is not mounted by any test."
+}
+```
+
+### TCKT_VNEXT-D2-W42-S4 -- the scope rule and the cell's hiding rule force the trade-named gating lines to change
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W42-S4",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~42",
+  "surfaced_at": "2026-10-14T19:45:44Z",
+  "one_line": "The cell hides the generic title, details and Create controls for meeting_request, and AC3 bans added TicketCenter.tsx lines that name trade_request. The three trade-named gating conditions at base lines 687, 725 and 726 were therefore replaced through drawsOwnForm() in MeetingRequestParts.tsx.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~V2 (orders TO-R18-P2 after P1 and decides the merge of TicketCenter.tsx lines 687, 725, 726 and the import line)",
+  "spec_asserts": "WORKER FACE step 2: touch no other branch of TicketCenter.tsx, and TradeRequestParts.tsx and the trade branch are TO-R18-P2's. AC3: no added TicketCenter.tsx line mentions trade_request, TradeRequestForm or analysis_request.",
+  "world_is": "The three conditions read newType !== 'trade_request' at base. The candidate writes !drawsOwnForm(newType), which is true for trade_request and meeting_request, so the trade gating behaviour is unchanged. The trade branch of the ternary is not edited. The meeting branch is inserted before the analysis branch line. TO-R18-P2 edits the same file and may conflict on these three lines and on the import line.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx@9e637fe51ebfa6322910cc032945a1e755e9ea13 lines 687, 725, 726 (the three trade-named gating conditions)",
+      "portal commit 9e07fa320cf55945e3ab1d391ce7716e7daac9d4, file TicketCenter.tsx: 20 added lines, none naming trade_request, TradeRequestForm or analysis_request (scope_check_mt3.py: SCOPE-OK)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Behaviour preserved, text changed. The P2 merge is the place it can bite."
+}
+```
+
+### TCKT_VNEXT-D2-W42-S5 -- the trade members went on a sibling type, not on TicketAttachment
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W42-S5",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~42",
+  "surfaced_at": "2026-10-14T20:04:07Z",
+  "one_line": "The order says TicketAttachment gains the trade form's member set, but the analysis code reads its upload_id and input_id as required strings, so the trade members went on a sibling type joined by a union.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "WORKER FACE step 2: src/api/endpoints/tickets.ts, TicketAttachment gains the trade form's member set (key, filename, content_type, size).",
+  "world_is": "TicketAttachment at portal commit 9e07fa320c has upload_id: string and input_id: string as required members, and analysisRequest.ts reads ticket.attachment?.input_id as a string (lines 305, 431, 479, 527). Adding the trade members to that interface makes the analysis shape claim members it never has. The candidate (b032bcf793) adds TradeFormAttachment, with key, filename, content_type and size, and declares upload_id and input_id as absent (undefined) on it. Ticket.attachment and CreateTicketInput.attachment take the union, and the analysis reads still type-check.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/api/endpoints/tickets.ts@9e07fa320cf55945e3ab1d391ce7716e7daac9d4 (TicketAttachment: upload_id and input_id required)",
+      "portal/src/pages/TicketCenter/analysisRequest.ts@9e07fa320cf55945e3ab1d391ce7716e7daac9d4 lines 305, 431, 479, 527 (ticket.attachment?.input_id read as a string)",
+      "portal commit b032bcf79311528ecf7999d5d55f4b84e9059c00 (TradeFormAttachment sibling; typecheck rc=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The order's sentence is read as the member set, not as a widening of the analysis interface. The CVO may rule the shape differently."
+}
+```
+
+```json
+{
+ "id": "TCKT_VNEXT-D2-W43-S1",
+ "project": "TCKT_VNEXT",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_TCKT_VNEXT~43",
+ "surfaced_at": "2026-10-14T19:27:46Z",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~V2",
+ "one_line": "TO-R18-TR1 cannot name one bucket: doctrine tier state (R21) homes the ticket attachment per firm, so the three served firms resolve to three buckets and the ticket Lambda's single TICKET_ATTACH_BUCKET cannot serve the address. The order's BLOCKING branch applies; no address, key template or checker is written.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D7/TCKT/TCKT_VNEXT/task-orders/TCKT_VNEXT.TO-R18-TR1.ticket-attachment-address-from-the-naming-builder.md:33-44 (cell R18-tf-1: per-firm bucket is a BLOCKING stop; the Lambda uses ONE bucket)",
+   "infra/logic/02_DOCTRINE.md:588-597 (R21: per-request intake, keyed by request, is state, never inside a tier plane; state lives in the bucket whose tenancy it belongs to)",
+   "infra/logic/02_DOCTRINE.md:360-365 (R4: opal-data-assets is for client/partner custodial information) and :439-441 (R9: bronze is raw, untouched vendor bytes) -- bronze is not the class of a per-request ticket upload",
+   "infra/logic/registry/tiers.json homes.FIRM.state = {home: scope, rule: R21} -- scope bucket per firm",
+   "lib/opal_naming.py address() in worktree HEAD ba9347065b, run by this worker on 2026-10-14 after 19:27Z: state 49financial -> s3://opal-data-49financial/portal/49financial/state/ticket-attachments/trade-form ; state inflection -> s3://opal-data-inflection/portal/inflection/state/ticket-attachments/trade-form ; state cottonwood -> s3://opal-data-cottonwood/portal/cottonwood/state/ticket-attachments/trade-form",
+   "same probe at tier bronze -> s3://opal-data-assets/portal/<firm>/bronze/ticket-attachments/trade-form for all three firms (one bucket, reached by choosing bronze; rejected as the convenience choice the cell forbids)"
+  ]
+ },
+ "spec_asserts": "TO-R18-TR1 step 1: decide the tier by the doctrine, not by convenience; the ticket Lambda uses ONE bucket for every firm, so the tier must resolve to the same bucket for all three served firms; if the doctrine tier resolves to a bucket per firm, STOP, file a BLOCKING row naming the tier, the three buckets and the rule, and do nothing else.",
+ "world_is": "The doctrine tier for a non-holdings ticket attachment is state (R21, per-request intake keyed by request; the attachment is keyed by the ticket). state homes per firm (tiers.json FIRM.state, scope). The three buckets are opal-data-49financial, opal-data-inflection and opal-data-cottonwood. Under the order's own branch no address, key_template, ATTACH_ADDRESS.json, address_check.py or mutant_check.py is written, and TO-R18-TR2 and TO-R18-TR3 cannot take a single TICKET_ATTACH_BUCKET from this order as written.",
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "ARMED because TO-R18-TR3 writes the Lambda environment from the file this order would produce; left alone, TR3 either carries a hand-typed bucket or a wrong single bucket. Disarm owner is the issuer, who must re-cut the attachment design (one bucket by a new registry decision, or a per-firm env) or confirm the tier. Nothing created in AWS; no registry row added (the builder did not refuse; the blocker is the tier, not a missing row). Not a decision on which tier is right; the rule text is quoted at the cited lines for the CTO or CVO to read."
+}
+```
+
+```json
+{
+ "id": "TCKT_VNEXT-D2-W43-S2",
+ "project": "TCKT_VNEXT",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_TCKT_VNEXT~43",
+ "surfaced_at": "2026-10-14T19:57:06Z",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~V2",
+ "one_line": "TO-R18-TR3 cannot be committed as written: the naming gate refuses the attachment key template because the table segment ticket-attachments is not snake_case (NAMING_SCHEMA key.table_case), though address() printed it without refusal; the issuer must decide the table name in TO-R18-TR1.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python .tools/naming-gate.py (safe-commit of the TR3 source staged on top of a8a40f308b, ENFORCE): NAMING REFUSE infra/aws/terraform/ticket-center/main.tf:321 portal/{firm}/state/ticket-attachments/trade-form/ -> portal/{firm}/state/ticket_attachments/trade-form/ (NEW and OUT-OF-PATTERN as S3Key); commit aborted, log at .scratch/tr3_commit.log in the worktree",
+   "org/standards/NAMING_SCHEMA.json key.table_case (line 49 of the file, @worktree HEAD 2e0b4b59f8 and later): snake_case; kebab-case binds only NEW served platinum leaves (.json)",
+   "lib/opal_naming.py address(portal, 49financial, state, ticket-attachments, trade-form) returned s3://opal-data-49financial/portal/49financial/state/ticket-attachments/trade-form with no refusal (TO-R18-TR1 ATTACH_ADDRESS.json, commit 2e0b4b59f8)",
+   "same gate run also REFUSES: line 223 IAM policy name opal-ticket-attachments-trade-form (owed suffix -policy), lines 232-234 the three firm ARN literals (hand-kept carriers outside the lookup() context)"
+  ]
+ },
+ "spec_asserts": "TO-R18-TR1 step 4 and TO-R18-TR3 steps 2 and 3: the key template is builder output copied as a literal (rule 30, every S3 address is lib/opal_naming.py address() output), and the permission names one ARN per firm from that record.",
+ "world_is": "The builder printed a table segment (ticket-attachments) that NAMING_SCHEMA key.table_case does not admit (snake_case), and it did not refuse it. The commit-time naming gate grades the key canonically and refuses the template and the three ARNs built on it. TR3 source cannot land as the cell is written. Its fix is a table-name decision (re-run address() with a snake_case table, which changes ATTACH_ADDRESS.json and every template), owned by the issuer, not a hand-typed workaround.",
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "Filed by the worker on TO-R18-TR3 (AMENDMENT 1 record). The order is left pending and its source is NOT committed: the working-tree edits to infra/aws/terraform/ticket-center/main.tf, the TR3 checkers, R18_TR3_RECORD.json and the instance are uncommitted in the worktree. No bypass of the naming gate was attempted. The TR2 meeting change and the TR1 record are unaffected."
+}
+```

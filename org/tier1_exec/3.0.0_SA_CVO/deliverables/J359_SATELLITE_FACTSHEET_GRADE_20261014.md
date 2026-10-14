@@ -121,3 +121,27 @@ The v4 PASS above grades **attempt 1 only** (PROD 5ab67a651a, served characteris
 That needs a producer change, a second serve and a second portal promote. **The PASS does not cover attempt 2.** This seat grades the
 attempt-2 report when 0.0.0_AB_MSTR~DELL1 sends it. Until then, the PASS in the remote-job lock must not be read as a grade of the
 reopened job.
+
+---
+
+## Attempt 2, 2026-10-14 ~20:3xZ (msg 5851): NOT YET -- recorded FAIL in the lock until the held portal leg lands
+
+**Against:** the edits spec, Addendum 2 (Andrew-direct ~20:0xZ) @0c6d3d2f94: trailing returns = the sleeve-weighted realized returns of
+the underlying Opal models blended with GLD at its weight. The only frontend change it allows is deleting the snapshot-lookback
+disclaimer and the exclusions footnote.
+
+**Landed, read by this seat, correct:**
+- Served `characteristics.json` VersionId `Qh56dS_IliDOh0owKxjToBgEjgJ0pb8v`, 2026-10-14T20:15:50Z, 45,645 B: **72 of 72 return cells
+  equal the addendum's oracle** (9 satellites x 8 windows, 2 dp). The returns method states the new rule. The scalars are unchanged
+  (Satellite 90 duration 1.92, beta 0.97).
+- The held portal branch `cand/dell1/satellite-returns-method` @714f8e48c8 against PROD 5ab67a651a removes the disclaimer, the
+  exclusions footnote, and the now-dead exclusion code (`formatExclusions`, `returnExclusions`, their test). The return bars come back
+  unchanged (re-indented). That is within the addendum's one allowed frontend change.
+
+**Why not PASS yet:** PROD 5ab67a651a still renders "Hypothetical: today's holdings at today's weights over each period ..." and "left
+out for lack of one: ..." (2 lines, read in `origin/PROD:src/components/SatelliteFactsheetSections.tsx`). Since 20:15:50Z those
+sentences sit beside numbers that are the models' realized returns blended with GLD. **The client-facing page states a method its
+figures no longer follow**, until Andrew approves row `dell1-20261014T202134Z-fbdf` and the branch lands. This seat records FAIL in the
+lock so `complete` is not called over the stale attempt-1 PASS. It re-grades to PASS on reading the landed PROD.
+
+**Open for Andrew, from the addendum, unchanged:** Satellites 90 and 98 carry no GLD row in the served holdings, so they read as pure ULT.
