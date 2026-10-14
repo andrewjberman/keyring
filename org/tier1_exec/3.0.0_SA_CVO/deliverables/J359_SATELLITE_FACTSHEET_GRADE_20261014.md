@@ -42,3 +42,36 @@ requester. Landing is client-facing, so it waits on Andrew's approval under the 
 The worktree used for reads 2-4 was removed. Its node_modules junction was unlinked first, and portal/node_modules was checked intact.
 
 -- 3.0.0_SA_CVO
+
+---
+
+## v2, 2026-10-14 ~18:5xZ: the NEW heads (asked by 0.0.0_AB_MSTR~DELL1 msg 5676). This section supersedes the verdict above.
+
+**Graded:** portal `cand/dell1/satellite-factsheet` @18fdf2297b; producer branch `wk-remote-J359` @efb3f6550f
+(`data/assets/scripts/gold/build_satellites_characteristics.py`, not deployed). Against: the CRO's edits spec, written on Andrew's
+instruction, `org/tier1_exec/4.0.0_SA_CRO/deliverables/J359_SATELLITE_FACTSHEET_EDITS_SPEC_20261014.md` @fcf39274d6. It supersedes
+the coverage-caption design graded in v1.
+
+### Verdict: PASS, on one ordering condition
+
+**The portal head must not land before the producer is live.** The portal now drops every coverage caption, which the spec asks for
+because the new producer stops pro-rating with nulls. Landed against today's served `characteristics.json`, it would show the OLD
+pro-rated figures with no caveat: for example Satellite 90 duration 0.14 where the rule gives 1.92, and Satellite 15 beta 0.14 where it
+gives 0.80. Order: never-widen sign-off, then the producer deploy and its first run, then the spec's acceptance 1 and 3 read, then the
+portal landing on Andrew's approval.
+
+### Reads by this seat
+
+| # | Read | Result |
+|---|---|---|
+| 1 | Producer at efb3f6550f, `--dry-run --out <local>` from a detached worktree; the code returns before `publish()` on a dry run | **9 of 9 satellites equal the spec table** on fee, yield, duration and beta at the spec's rounding. 90 and 98 = ULT 1.92 / 0.97 (the positive control); 70 duration 3.49 (the class-share case). `method.formula` states the sleeve rule. `coverage` now carries returns only. Same key set as the served object, values replaced: no shadow field. Inputs: positioning as_of 2026-10-13, registry and holdings 2026-10-14. |
+| 2 | Portal at 18fdf2297b, detached worktree with portal's node_modules | `bun test` 7 pass / 0 fail; `tsc --noEmit` rc 0; eslint rc 0 on the four files. |
+| 3 | Portal source against spec section 2 | "covers" / "Partial": 0 occurrences. The method line matches the spec's wording. Asset-mix bar at full width with an inline legend. "Allocation Detail" and "Trailing Returns" columns, with one bar per window on a shared zero axis. `grid-cols-1 md:grid-cols-2` (stack below 768 px). Hypothetical footnote kept, plus "left out for lack of one: <exclusions>". |
+
+### Not read by this seat
+
+- The rendered sheet at 1280, 768 and 375 px. The COO reports it; no screenshots are on disk.
+- The spec's acceptance 1 and 3 on the SERVED artifact and the Satellites-mode page. Both need the producer deployed.
+- Andrew's open default (returns keep gold) is kept as the spec defaults it.
+
+Cleanup: both worktrees removed; the node_modules junction was unlinked first; portal/node_modules was checked intact.
