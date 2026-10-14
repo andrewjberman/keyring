@@ -1,13 +1,12 @@
 {
   "prd": "TCKT_VNEXT_PRD.md",
-  "prd_version": "v0.5",
-  "prd_pin": "1bf1db1b0f1ac71320cdf7c780b6fbafeabda97d",
+  "prd_version": "v0.6",
+  "prd_pin": "c578883de823e821b9a76e2638611fd65090a153",
   "half": "ratified-text",
-  "half_hash": "0f168dc10b13da8bfaf8b48fbe8911a2ee244cd0e6febd8a30305b036e43ac58",
-  "endpoint_hash": "0694a6f480207654aa70296201bdd8a410e0d2c5ea19dfa9e3f68d03c6f66c5a",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_PRD_v0.5_RATIFIED_TEXT_REVIEW_20261014.md@6d7a6309e8",
+  "half_hash": "a7391e3f4aed2b7b43ca14210bda67160736b4691e9d1d896892383924e98641",
+  "endpoint_hash": "2c925e7fda25a8d3de08ebd778044c36af9a8738227d49cad6512c063888f652",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_PRD_v0.6_RATIFIED_TEXT_REVIEW_20261014.md@a75b63ea56",
   "signed_by": "3.0.0_SA_CVO~DELL2",
-  "signed_at": "2026-10-14T18:49:07Z",
-  "reason": "CONTRACTS has no row for the Trade Request type, the Meeting Request type, or the staff filer's firm choice (C-FENCE exempts internal callers); ADDENDUM 5 is history, not a contract"
+  "signed_at": "2026-10-14T18:54:29Z"
 }
