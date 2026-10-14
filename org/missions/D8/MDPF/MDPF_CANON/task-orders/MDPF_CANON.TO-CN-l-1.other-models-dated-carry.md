@@ -140,7 +140,7 @@ disarm owner 2.0.0_SA_COO~D1; both disarm on this cell's read-back after deploy.
 - **Risk and class:** WORLD (a script shipped by a gold-package deploy, served bytes move). `worker-light`: about 35 product lines and one behaviour.
 - **Fanout:** one cell, one chain of its own (beside `CN-h-1`, `CN-j-1`, the `CN-i-1` -> `CN-l-2` chain), slot ~19. Base box/dell1.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <to_id>MDPF_CANON.TO-CN-l-1</to_id>
 <slot>~19</slot>

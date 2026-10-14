@@ -8,8 +8,11 @@ shared repo homes), and the config tree (repo home data/mdpf/config; its S3 pref
 config sync line, never typed here). Four script trees and one config tree: five trees.
 
 HOW EQUALITY IS DECIDED. A local file is EQUAL when the S3 object of the same relative name has an ETag equal to the
-md5 of the local bytes. A multipart ETag (it contains a dash) is UNDETERMINED and is never EQUAL. A local file with no
-S3 object is MISSING_ON_S3; an S3 object with no local file is EXTRA_ON_S3; any other pair is DIFFER.
+md5 of the bytes git holds for that file: its index blob (git show :PATH), which is the byte content the deploy uploads.
+The working tree is read only for a path with no index entry. A multipart ETag (it contains a dash) is UNDETERMINED and
+is never EQUAL. A local file with no S3 object is MISSING_ON_S3; an S3 object with no local file is EXTRA_ON_S3; any
+other pair is DIFFER. The basis of each EQUAL decision (blob or worktree) is printed, and an EQUAL blob-basis file whose
+working copy holds CR bytes is printed with its CR count (worktree_cr).
 
 WHAT IT NEVER DOES. It never repairs, copies, uploads, deletes or moves anything. Its only AWS calls are list reads
 (boto3, default credential chain, region us-east-1). A DIFFER, MISSING_ON_S3 or EXTRA_ON_S3 name is a fact about the
@@ -122,6 +125,31 @@ def _md5_file(path):
     return h.hexdigest()
 
 
+def _blob_md5(full):
+    """md5 of the bytes git holds in its index for the local file `full`, or None.
+
+    ROOT is read at call time. None when git exits non-zero (no index entry) or when the path lies outside ROOT.
+    No fallback to the working tree happens here; the caller decides that."""
+    try:
+        rel = os.path.relpath(full, ROOT).replace(os.sep, "/")
+    except ValueError:  # a path on another drive lies outside ROOT
+        return None
+    if rel.startswith("../"):
+        return None
+    got = subprocess.run(["git", "-C", ROOT, "show", ":" + rel], capture_output=True)
+    if got.returncode != 0:
+        return None
+    return hashlib.md5(got.stdout).hexdigest()
+
+
+def _cr_count(path):
+    n = 0
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            n += chunk.count(b"\r")
+    return n
+
+
 def _local_files(local_dir):
     out = {}
     for dirpath, dirnames, filenames in os.walk(local_dir):
@@ -141,16 +169,27 @@ def compare_tree(local_dir, bucket, prefix, s3):
     for page in s3.get_paginator("list_objects_v2").paginate(Bucket=bucket, Prefix=prefix):
         for obj in page.get("Contents", []):
             remote[obj["Key"][len(prefix):]] = obj["ETag"].strip('"')
-    res = {"local": len(local), "equal": [], "differ": [], "missing_on_s3": [], "extra_on_s3": [], "undetermined": []}
+    res = {"local": len(local), "equal": [], "differ": [], "missing_on_s3": [], "extra_on_s3": [], "undetermined": [],
+           "basis": {}, "worktree_cr": {}}
     for name in sorted(local):
         if name not in remote:
             res["missing_on_s3"].append(name)
         elif "-" in remote[name]:
             res["undetermined"].append(name)
-        elif remote[name] == _md5_file(local[name]):
-            res["equal"].append(name)
         else:
-            res["differ"].append(name)
+            digest = _blob_md5(local[name])
+            basis = "blob" if digest is not None else "worktree"
+            if digest is None:
+                digest = _md5_file(local[name])
+            res["basis"][name] = basis
+            if remote[name] == digest:
+                res["equal"].append(name)
+                if basis == "blob":
+                    n = _cr_count(local[name])
+                    if n > 0:
+                        res["worktree_cr"][name] = n
+            else:
+                res["differ"].append(name)
     for name in sorted(remote):
         if name not in local:
             res["extra_on_s3"].append(name)
@@ -243,7 +282,10 @@ def named(trees, paths):
             if inner in res[key]:
                 label = cls
         if inner in res["equal"]:
-            print("NAMED EQUAL %s" % _ascii(rel))
+            line = "NAMED EQUAL (%s) %s" % (res["basis"][inner], _ascii(rel))
+            if inner in res["worktree_cr"]:
+                line += " worktree_cr=%d" % res["worktree_cr"][inner]
+            print(line)
         else:
             not_equal_named += 1
             print("NAMED NOT_EQUAL %s %s" % (label, _ascii(rel)))
