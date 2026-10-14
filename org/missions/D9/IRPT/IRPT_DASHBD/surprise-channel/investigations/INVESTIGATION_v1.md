@@ -8896,3 +8896,105 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W154-S1 -- the no-gold premise for Cottonwood and Inflection does not hold at the irpt gold address
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W154-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~154",
+  "surfaced_at": "2026-10-14T03:20:24Z",
+  "one_line": "The no-gold premise for Cottonwood and Inflection does not hold at the irpt gold address: both firms list gold table prefixes, their household crosswalks list empty, so the builder stops at the crosswalk and firm_adapter does not raise.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-189 asks firm_adapter(firm) to raise NotImplementedError('<firm>: no gold exists') for a firm with no irpt/ gold prefix. The round enrichment states that no gold exists for Cottonwood or Inflection (s3 irpt/ prefix empty), the premise of DB-b-190.",
+  "world_is": "At the bucket lib/opal_naming.address() derives for each firm, the irpt gold prefix of Cottonwood lists 7 table prefixes and that of Inflection lists 4, so the adapter's emptiness test passes for both. Both household crosswalk prefixes list 0 objects, so build_sample.py stops with the 'no partition under the granted prefix for household crosswalk' refusal. The NotImplementedError path was exercised on demo, whose irpt gold prefix is empty.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py address() at HEAD 74d214d138 derives the irpt gold tier bucket opal-data-cottonwood for scope cottonwood and opal-data-inflection for scope inflection",
+      "S3 LIST by this box identity of irpt/<firm>/gold/ and advi/<firm>/gold/household_crosswalk/ for cottonwood and inflection, counts only (the probe stdout is kept in the private evidence folder)",
+      "build_sample.py run with --firm cottonwood, --firm inflection and --firm demo at HEAD 74d214d138 into the private folder: demo raised NotImplementedError, the other two stopped at the crosswalk refusal"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W154-S2 -- the registry bucket field and the address() bucket disagree for every firm
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W154-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~154",
+  "surfaced_at": "2026-10-14T03:20:24Z",
+  "one_line": "The registry bucket field and the bucket lib/opal_naming.address() derives for the irpt gold tier disagree for every firm; firm_adapter takes the bucket from address() and uses the registry only to enumerate the firm.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-189 says every firm-specific bucket is DERIVED from lib/opal_naming.py address() and the firm registry data/firm_registry.json.",
+  "world_is": "data/firm_registry.json gives the bucket opal-data-bd for 49financial, opal-data-cot for cottonwood and opal-data-inf for inflection. address() gives opal-data-49financial, opal-data-cottonwood and opal-data-inflection for the irpt gold tier. The 49 Financial sample was built from the address() bucket, so the registry field is not the gold bucket. The two sources cannot both be the bucket; the adapter follows address().",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/firm_registry.json firms[].bucket at HEAD 74d214d138 (49financial, cottonwood, inflection rows)",
+      "lib/opal_naming.py address() probe for scopes 49financial, cottonwood and inflection at HEAD 74d214d138, bucket part only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W154-S3 -- the two-grain since-inception member has no single filled form
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W154-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~154",
+  "surfaced_at": "2026-10-14T03:20:24Z",
+  "one_line": "convention.inception_per_household_and_account names two grains, but a filled value is one text or one by_row map; the builder holds the household's earliest first_data_date as the text, and the per-account dates stay in the household block.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The member's fold reads, per account, the account's first_data_date and, per household, the earliest of those. The filled report holds an account-grain member as by_row and a household-grain member as its text directly; the member declares no grain.",
+  "world_is": "A by_row map is keyed by account or asset class and cannot carry the household date, and a text carries one value. The builder fills the member with the household text (the earliest first_data_date, which the household block also carries) and writes no per-account map. Section 5's per-account inception heading therefore has no member value of its own. A shape ruling would settle it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json member convention.inception_per_household_and_account (unit text, fold per account and per household) and document.filled_report.per_row_member_form, at HEAD 74d214d138",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~154/build_sample.py, the convention.inception branch of build_values (the household text)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W154-S4 -- the filled count has two definitions on the same sample
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W154-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~154",
+  "surfaced_at": "2026-10-14T03:20:24Z",
+  "one_line": "The filled count has two definitions on one sample: the checker counts a member filled when its top level is not an absent form, while the builder counts it only when a measured leaf exists, so 11 by_row members with every account absent read as filled on one measure and absent on the other.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-189 and the classification state the sample holds 55 filled and 62 absent members, and that filled_before equals 55.",
+  "world_is": "The 55 is the top-level count, under which a by_row member counts as filled even when every account in it is absent. The builder's members_filled reads 44 on the same sample, because it excludes members with no measured leaf. Both figures are recorded. SAMPLE_FILL uses the top-level measure the checker grades. The 11 members are account-grain members whose every account carries an absent form.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the round-101 sample of record and the ~141 BUILD_COUNTS.json, private folder, counts only: members_filled 44 by the builder rule; 55 top-level non-absent members; 11 of the 55 are by_row members whose every account is absent",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~141/build_sample.py fully_absent and measured_leaves, at HEAD 74d214d138"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
