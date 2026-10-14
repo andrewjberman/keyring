@@ -13653,3 +13653,51 @@ name the one known failure instead of silently inheriting it.
   "notes": "The proposal carries the label as a placeholder and the bucket as the sibling value, and names both as open. Neither is decided by this cell; both are the CTO's and the registry owner's."
 }
 ```
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W83-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~83",
+  "surfaced_at": "2026-10-14T16:55:07Z",
+  "one_line": "Under A2 the Black Diamond 49F client tools have no opal-data-assets silver source for holdings, transactions or fees: the 49F silver there is stale and holds no such table.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "G2 census part G2a (org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G2_assets_silver.md, section G2a (b) prefix census): opal-data-assets blackdiamond/49f/silver/ holds dim_account_xref (11 td), dim_advisor_fee_role (11 td), fact_bd_allocation (39 td) and fact_taxsma_report (61 td) only",
+      "the same census (G2a (b)): the live 49F fees, transactions, allocations, realized, unrealized and prices are written to s3://opal-data-bd/silver/, which A2 (CTO msg 34134) excludes",
+      "calendar re-run in this worktree (lib/trading_calendar.py trading_days_behind): 2026-09-28 gives 11, 2026-08-18 gives 39, 2026-07-17 gives 61"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A2 (CTO msg 34134) names blackdiamond/<firm>/silver/ as the Black Diamond adapter's read surface, so each BD client tool (holdings, transactions, fees) needs a silver table there.",
+  "world_is": "No holdings, transactions or fee-row table exists under blackdiamond/49f/silver/. The 49F tables that carry them are in opal-data-bd, which A2 excludes. The contract therefore refuses 49F holdings, transactions and fees as no_source_49f_a2 and does not source them elsewhere.",
+  "notes": "Not re-routed by this cell. The census (G2a, Repoint after F11) says the 49F sources repoint to opal-data-assets/blackdiamond/49financial/silver/ when the F11 writer move lands; that move is pending. Whether the gap waits for F11 or needs a new silver table is the issuer's and the CTO's call."
+}
+```
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W83-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~83",
+  "surfaced_at": "2026-10-14T16:55:07Z",
+  "one_line": "The census names Orion, Eclipse, SmartX, Schwab and Commonwealth tables by logical ids (opal-data-assets/silver/<vendor>/...); the served prefixes are <vendor>/<firm>/silver/<table>/. The first-pass contract used the logical ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "G2 census part G2b (b) prefix census: orion/inflection/silver/ (4,997 objects) and eclipse/inflection/silver/ (544 objects) are the served prefixes; the contract headings use opal-data-assets/silver/orion/inflection/fact_positions",
+      "G2 census part G2c (b) prefix census: smartx/platform/silver/ holds the fact_* tables; the contract heading uses opal-data-assets/silver/smartx_fact_allocation_account_map",
+      "G2 census part G2d (2.2): schwab/<master>/silver/ holds the dim_* and fact_* tables; the contract headings use opal-data-assets/silver/schwab_08242234_dim_asset"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The contract ids the census gives are the table names the adapters read, under opal-data-assets/<vendor>/<firm>/silver/ (A2).",
+  "world_is": "The served keys are <vendor>/<firm>/silver/<table>/ (for example orion/inflection/silver/fact_positions/ and schwab/08242234/silver/dim_position/), the form the IAM grants use. The revised contract names served prefixes and keeps the census id in parentheses where the form differs.",
+  "notes": "A naming difference, not a data difference: no table is missing and no grant changes. The census may wish to name its headings by served key; that is the census owner's call."
+}
+```
