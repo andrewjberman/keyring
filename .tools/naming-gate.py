@@ -41,7 +41,7 @@ THE TERRAFORM-TYPE MAP (TF_NODE: resource type -> (node type, own-name attribute
 org/standards/NAMING_SCHEMA.json's tf_type_map (C-S11, v1.9) at import; the limb keeps no map of its own.
 
 Usage:
-    python .tools/naming-gate.py --diff FILE [--enforce] [--post-from-index]
+    python .tools/naming-gate.py --diff FILE [--enforce] [--post-from-index] [--staged-paths FILE]
 
 ENFORCE is on with --enforce, env NAMING_GATE_ENFORCE=1, or a present org/mcp/naming-gate.enforce: a REFUSE
 then exits 1. Otherwise it is WARN mode and exits 0, on an internal error too (`NAMING ERROR <reason>`).
@@ -2001,6 +2001,25 @@ def committing_project(files):
     return next(iter(codes)) if len(codes) == 1 else None
 
 
+def staged_entries(path):
+    """The DERIVATION entries of --staged-paths FILE: one {"old": None, "new": p} per non-empty line, p being a staged path of
+    the commit (every IN_SCOPE path, whatever its extension). Read for committing_project() only; never graded. [] when no
+    file was given. An unreadable or empty file yields [] with one NOTE line on stderr: it never refuses a commit."""
+    if path is None:
+        return []
+    try:
+        with open(path, "rb") as fh:
+            raw = fh.read()
+    except OSError as exc:
+        print("NOTE: --staged-paths %s is unreadable (%s); the committing project is derived from the diff alone" % (path, exc),
+              file=sys.stderr)
+        return []
+    entries = [{"old": None, "new": ln.rstrip("\r")} for ln in text_of(raw).split("\n") if ln.rstrip("\r") != ""]
+    if not entries:
+        print("NOTE: --staged-paths %s is empty; the committing project is derived from the diff alone" % path, file=sys.stderr)
+    return entries
+
+
 def _legacy_head_rows():
     """{key: row} of the legacy_addresses.json rows COMMITTED at HEAD ({} when HEAD carries none or the read fails)."""
     if _LEGACY["rows"] is None:
@@ -2613,7 +2632,9 @@ def run(args):
     _place_reset()
     _RENAMES.clear()  # the renames of THIS index, read once for this run
     _live_reset(_live_read_plane)  # the live limb is on for a graded commit; self-test arms keep it off unless they inject a plane
-    _LEGACY.update(project=committing_project(files), rows=None)  # MX-c-9 A4: derived from the staged paths, once per run
+    # MX-c-9 A4: derived from the staged paths, once per run. CT-ad-2: the staged set is the diff's own paths PLUS every path
+    # --staged-paths lists (the whole index of the commit, any extension). The derivation reads these paths and nothing else.
+    _LEGACY.update(project=committing_project(files + staged_entries(args.staged_paths)), rows=None)
     for f in files:
         rows += grade_file(nm, f, args.post_from_index)
     meta = domain_meta(files)
@@ -3046,6 +3067,8 @@ def main(argv=None):
     ap.add_argument("--diff", help="a unified diff; its ADDED lines are graded")
     ap.add_argument("--enforce", action="store_true", help="a REFUSE exits 1 (also NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce)")
     ap.add_argument("--post-from-index", action="store_true", help="read each post-image from the index (safe-commit.sh)")
+    ap.add_argument("--staged-paths", help="a file of EVERY path the commit stages, one per line (safe-commit.sh); the committing "
+                    "project is derived from these and from the diff's own paths, and nothing is graded from this file (CT-ad-2)")
     ap.add_argument("--message-file", help="the exact commit message safe-commit.sh will commit; the placement override passes only a "
                     "staged audit row whose msg_sha256 is this file's sha256 (BF-y-2)")
     args = ap.parse_args(argv)
