@@ -365,3 +365,9 @@ Correction: C-S370's grounding cites msg 7389; the packet message is 7387. The r
 | item | result | commit |
 |---|---|---|
 | IRPT_DASHBD rounds 99 and 100 | ADJUDICATION_v61 (C-S72): the CASH_USD change counted (0 of 4,315 positions, 0 of 1,314,777 lots) and reverted on the CTO's ruling; my W147-S3 closed on its owner's disarm S25; I re-ran DB100-1-AC1: PASS. 8 dismissed; round 98's rows (S24, W149-S1..S3) wait (DB-b-183 pending). Slug sent | 16319ab2e9 |
+
+## Addendum, 2026-10-14 02:25Z to 02:30Z (msg 7448)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 188 (~P) | ADJUDICATION_v89 (C-S372), no remediation file: Design B packaged, not released (live reporting-gold read unchanged). 10 dismissed. S158 ARMED held with the CTO: Cottonwood IR holdings stale; my trading-day count puts it 2 trading days behind its peers (the packet's four is the library's UTC-date frontier). Slug sent | ea8a848d93 |
