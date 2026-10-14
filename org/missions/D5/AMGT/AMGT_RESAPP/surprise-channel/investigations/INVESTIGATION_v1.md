@@ -26749,3 +26749,54 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "The seat started the capture 85 s before the UTC date change and did not guard for it; the control above is the repair, not a re-baseline (the old code is gone from the function). A GO for a capture near 00:00Z should name a start after the change."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W433-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~433",
+  "surfaced_at": "2026-10-14T02:22:18Z",
+  "one_line": "AMGT-fc-4 AC1 reads FAIL as literally invoked: two --with-inputs arms run with no served function name (no --function, AIFILL_SERVED_FUNCTION unset), so the command prints BLOCKED and exits 2 as the order specifies.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "Order section 1 (revalidate interface): --with-inputs with no function name prints 'BLOCKED: the served function name is not set (pass --function or set AIFILL_SERVED_FUNCTION)' and returns 2. AC1 expects 'AIFILL FC-4 ARMS: YES (11 of 11)' and exit 0 from the check's invocation, which supplies no function name.",
+  "world_is": "Literal AC1 run with the variable unset: arm 'mangled_with_inputs' FAIL and arm 'inputs_unreadable' FAIL, each with detail 'BLOCKED: the served function name is not set'; final line 'AIFILL FC-4 ARMS: NO (9 of 11)', rc=1. Diagnostic only, not the verdict: with AIFILL_SERVED_FUNCTION=diagnostic-fake-name set, 'AIFILL FC-4 ARMS: YES (11 of 11)', rc=0. The check's fake served-inputs reader ignores the name, so the arms pass once the name is set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round105_aifill_prep/checks/check_fc4_revalidate.py@b0564a64c4: arms mangled_with_inputs and inputs_unreadable call main with --with-inputs and no --function",
+      "run output: .scratch/ac1_full.txt (literal, worktree C:/dev/wk-resapp-433 at b0564a64c4) and .scratch/ac1_diag_env_set.txt (diagnostic)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not resolved by the worker: the check is a prepared acceptance check outside this cell's paths, and the order's BLOCKED rule is kept as written. Whether the check supplies a function name, or the issuer runs it with AIFILL_SERVED_FUNCTION set, is the issuer's decision. The order stays open on AC1 as literally invoked."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W433-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~433",
+  "surfaced_at": "2026-10-14T02:22:18Z",
+  "one_line": "A narration refusal from contract.validate_document reads 'mgmt_bio: mgmt_bio: text opens with process narration': the block id is prefixed twice.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "Round-105 cell fc-2 (contract aifill/v1): a problem line names its block once. validate_block prefixes the block id on the narration problem, and validate_document prefixes the block id again on every block problem.",
+  "world_is": "contract.validate_document on a document whose mgmt_bio text is 'I'll research this now.MUFG named a new president.' returns the problem 'mgmt_bio: mgmt_bio: text opens with process narration (i'll)'. The narrated document is still refused, counted and exited 1 correctly; only the printed form is doubled.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/contract.py@b0564a64c4 line 319: the narration problem is built with block['block_id'] as its prefix",
+      "lib/research/aifill/contract.py@b0564a64c4 line 379: validate_document extends problems with the prefix block_id on each validate_block message",
+      "run output: .scratch/ac1_full.txt, arm 'a narrated stored document is REFUSED by name' (literal run)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The file belongs to cell fc-2 and is outside this cell's paths, so it is not edited here. The revalidate command prints the problem as the contract returns it."
+}
+```
