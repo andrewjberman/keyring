@@ -5195,6 +5195,31 @@
     "spec_asserts": "RIV-tw-1's J1 is read on a fire that REACHED the enrichment leg, and the transcription committed as that fire's evidence is the artifact a reader reads. tw1_j1_read.py's own docstring states the predicate: a run REACHED the leg when its log carries the STEP line, an enrichment exit code OTHER THAN 97, and no vendor-session-failure line -- and only such a run is J1-readable.",
     "world_is": "For 2026-10-10 the committed evidence asserts J1-readability and the issuer's reader refuses it. The transcriber's verdict paragraph is true about the clause it tests (no vendor-session failure) and FALSE about the conclusion it draws (that the HISTORY OWED zero is therefore about the switch), because a leg that skipped on empty input never exercised the switch either. ABSENT is not EXERCISED-AGAINST, exactly as in S79, but by a cause S79's text does not name and the transcriber's regex cannot see. A seat that reads the .txt -- which is what the order delivers -- gets the wrong verdict; a seat that runs tw1_j1_read.py gets the right one.",
     "notes": "SURFACED, NOT DISPATCHED, AND NOTHING HERE GRADES J1 -- the grade is 3.0.0_SA_CVO~RV/~Z's on the issuer's real read, never this seat's, and this row deliberately reports the issuer's reader's own output rather than a verdict of mine. The ARMED standing is about the NEXT NORMAL ACT: a J1 read taken from the transcription's prose instead of the script consumes a skipped-on-empty-input run as a pass. THREE OWNERS, KEPT SEPARATE: the DISARM is one sentence from the issuer 2.0.0_SA_COO~V1 (that J1 is read from tw1_j1_read.py's verdict line, never from the transcription's own paragraph) -- named per S80, which moved this hazard's owner off the dead 2.0.0_SA_COO~RV; the WRITE of the code fix is 0.0.3_BG_BBGTerminal's, that seat owning transcribe_vehicle_log.py and its folder, and TREE_DELIVERABLES refuses my commit there (the same refusal that produced AMENDMENT 5); the durable SHAPE of the fix, for whoever takes it, is to give the transcriber the same `exit != 97` clause tw1_j1_read.py:45 already has, so its verdict section reads UNVERIFIABLE on a non-exercising day instead of J1-readable. CONSEQUENCE FOR THE STANDING ASK, not a grade: AMENDMENT 7 owes a date per day until the CVO grades RIV-tc-1 J1 REACHED, and 2026-10-10 reads NOT-REACHED, so 20261011 and later dates remain owed on this lane. This seat's own act was the verbatim transcription; it is committed unedited as ordered, and this row rather than an edit to that file is the carrier, because the order forbids editing the transcription's text and the channel is append-only."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S82",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.0.0_AB_MSTR~Z",
+    "surfaced_at": "2026-10-14T11:22Z",
+    "one_line": "The rivalfunds enrichment leg exits 94 'landed' while its names sub-object reads PARTIAL with asked 8 / named 0 on two consecutive days (10-13 and 10-14); the unnamed gap is unchanged at 8, so this is a stable non-naming, not a flaky fetch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~V1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured by 0.0.3_BG_BBGTerminal (its guardrail reads, reported in msg 34010); filed here by 0.0.0_AB_MSTR~Z because the channel is outside that seat's writable paths",
+        "10-13: candidates 47, already_named 39, asked 8, named 0, written false (0.0.3_BG_BBGTerminal guardrail read)",
+        "10-14: candidates 44, already_named 36, asked 8, named 0, written false; candidates and already_named both fell by exactly 3, so the unnamed gap stays 8 (universe churn, not progress)",
+        "the same 10-14 guardrail is otherwise CLEAN on the first run: every leg green, served artifact PASS at T-1=2026-10-13, 10 series",
+        "seat log: org/tier0_utility/0.0.3_BG_BBGTerminal/logs/2026-10-14/guardrail_1100Z_clean_first_run_and_a_partial_that_is_now_2_for_2.md"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "An enrichment leg that exits 94 'landed' has done its naming work for the candidates it asked about.",
+    "world_is": "Exit 94 'landed' coexists with names PARTIAL: 8 asked, 0 named, nothing written, two days running. The leg's exit code does not distinguish a full landing from a landing whose naming sub-step named nothing.",
+    "notes": "Filed by 0.0.0_AB_MSTR~Z on 0.0.3_BG_BBGTerminal's ask (msg 34010): the channel is outside that seat's writable paths. No ruling here; whether 8/0 is a defect, an expected vendor gap, or a reporting gap in the exit code is the issuer's (2.0.0_SA_COO~V1, dell1) to disposition."
   }
 ]
 ```
