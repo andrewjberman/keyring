@@ -15711,3 +15711,290 @@
 }
 ]
 ```
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W144-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~144",
+    "surfaced_at": "2026-10-14T20:03:49Z",
+    "one_line": "The release-31 member set as ordered omits ycharts/generate/acceptance.py, which the AR-y-331 commentary route reads: ops/tests/test_commentary_pdf_route.py is 2 failed, 4 passed on the package tree and 6 passed at the pin.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y2 (the issuer: a grant that adds ycharts/generate/acceptance.py to the release-31 member list, or a re-scope of the route)",
+    "spec_asserts": "TO-AR-y-338 step 3 expects the release-31 delta to be exactly the merged cells' changes on top of the live release-29 base. ycharts/generate/acceptance.py is not among them, yet cell AR-y-331 (2a535a7859) reads acceptance.get_commentary_ref, which commit 06557b6618 (IRPT_BCKEND IB-pr-478) added.",
+    "world_is": "On the built package the sibling lookup is absent, so ops/owned_report.py falls back to the base acceptance record and refuses COMMENTARY_PDF_NOT_RETAINED (the two route cases). Control: the same test on the package with ycharts/generate/acceptance.py replaced by its pin bytes passes 6 of 6 (C:/dev/irpt-release-r31/control-acc-out). Not widened by this worker: the build is the ordered member set.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ycharts/generate/acceptance.py@c4c2afe896:73 (def get_commentary_ref)",
+        "infra/aws/lambda/investor-reporting/ops/owned_report.py@c4c2afe896:350-353 (sibling lookup and the refusal)",
+        "06557b6618 build(IRPT_BCKEND IB-pr-478) added get_commentary_ref to ycharts/generate/acceptance.py",
+        "2a535a7859 route(IRPT_ANLREQ TO-AR-y-331) reads it through owned_report",
+        "C:/dev/irpt-release-r31/tests-out-r31/ops_tests_test_commentary_pdf_route.py.txt (2 failed, 4 passed)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The worker reports the failure and the control and does not widen the grant. The route is not served until a later signed release carries the member."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W144-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~144",
+    "surfaced_at": "2026-10-14T20:03:49Z",
+    "one_line": "reports/build_resident_package.py is a release-31 member that the ordered expectation does not name, though the merged cells changed it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-338 step 3 names the expected differing members; the builder file is not among them. Cells 53f683857c, 9d5d6d0228 and 26b34d0449 change it, and the package carries reports/ whole.",
+    "world_is": "The build lists it in --files-from, so the release-31 bytes differ from release 29 (14 differing: the 13 named members including SHA256SUMS and the bindings, plus this one). No package module imports it: a native search of C:/dev/irpt-release-r31/delta/x-r31 finds only the file, the bindings and SHA256SUMS. Release-31 sha256 9cfa787a457cbb3c07945d6023dc431cb5abc0e01f1fed47786292c66be93bc1.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/reports/build_resident_package.py@c4c2afe896 (the infra builder the cells change)",
+        "53f683857c source(IRPT_ANLREQ AR-y-333) changes reports/build_resident_package.py",
+        "C:/dev/irpt-release-r31/delta/delta_r31_vs_r29.json (differing list)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Shipped as the cells changed it. The issuer may strike it from the grant at the next amendment; no runtime path reads it."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W144-S3",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~144",
+    "surfaced_at": "2026-10-14T20:03:49Z",
+    "one_line": "The opal_map member and bindings key were already in release 29, so the expected gain did not occur; the delta shows no change for them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-338 step 3 expects the bindings to gain opal_map, and ycharts/research/overview_map.json to be added if the builder adds it.",
+    "world_is": "The release-29 tarball already carries ycharts/research/overview_map.json (sha256 21a8f6d690bbd28cf7eedfc979c3edcfa8d8a156336d9de779e8438c4913310f) and a bindings opal_map with the same sha256. only_in_release is empty and the release-31 opal_map equals the release-29 one. The provenance changes (package_pin, files_from count and digest, optional_bindings, generated_at) are the only other bindings movement besides the three new keys.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/dev/irpt-release-r31/delta/x-live-r29/reports/resident_bindings.json (opal_map key)",
+        "C:/dev/irpt-release-r31/delta/delta_r31_vs_r29.json (only_in_release empty)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The premise of the expected gain is wrong; the release-31 bindings are correct without it."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W144-S4",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~144",
+    "surfaced_at": "2026-10-14T20:03:49Z",
+    "one_line": "AR-y-324 built with a builder copy whose blob (e1e58c2d94) is not the pin builder (46e3bae9); the pin builder adds .svg to --research, so the svg --member line the order keeps is refused by it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-338 step 2 says run the builder with the AR-y-324 argument set plus its --member lines. The AR-y-324 record names builder blob e1e58c2d94 (sha256 afe7d574) at an outside builder root.",
+    "world_is": "The pin blob 46e3bae9 (at c4c2afe896 and 109f4671bb) differs from that copy only by RESEARCH_EXT gaining '.svg'. The release-31 build ran the pin blob from the release worktree. The svg is at base and pin with the same blob 923eaa26, so --research packs it from base and the svg --member line was dropped; the pin builder raises on a packaged path that is already a member (read from its source, not executed).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py@c4c2afe896 (blob 46e3bae9; RESEARCH_EXT line 58-60)",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~132/r40/RESIDENT_BUILD.json (builder blob e1e58c2d94)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The svg bytes are identical at base and pin. The r31 provenance members_added lists two members, not three."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W144-S5",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~144",
+    "surfaced_at": "2026-10-14T20:03:49Z",
+    "one_line": "The ordered argument set omits the queue and packager flags the org builder needs to write the three new bindings; the values were taken from NAMES.json at the pin and the infra builder constants.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-338 AC1(5) requires analysis_ready_queue_url, commentary_ready_queue_url, packager and opal_map in the extracted bindings. Step 2 lists only the AR-y-324 argument set plus --opal-map and --member.",
+    "world_is": "The IRPT_MVP_P builder at the pin takes --analysis-ready-queue-url, --commentary-ready-queue-url and --packager with no default, so they were passed. Values: the NAMES.json ready_queue and commentary_ready_queue names at the pin under the SQS prefix; api_base and secret_name as the infra builder constants. The api_base confirmation is TO-READ-R32 (complete; its record carries a package_route line); its values were not re-read here.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/commentary/NAMES.json@c4c2afe896 (ready_queue, commentary_ready_queue)",
+        "infra/aws/lambda/investor-reporting/reports/build_resident_package.py@c4c2afe896 (PACKAGER constants)",
+        "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r32/IRPT_ANLREQ.TO-READ-R32.packager-secret-claims-and-door-aq2.proof_of_spec.json (complete)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The bindings queue URLs and packager block carry the same values the infra builder writes at the pin."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W144-S6",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~144",
+    "surfaced_at": "2026-10-14T20:03:49Z",
+    "one_line": "The stage folder C:/dev/irpt-release-r31 is shared with another seat, and this worker's cleanup removed that seat's live-read/ folder.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The worker stages only its own folders under C:/dev/irpt-release-r31 and removes only its own generated folders; recursive deletion needs the owner's confirmation (CLAUDE.md Agent Autonomy).",
+    "world_is": "Folders scratch/, tmp-status/, wt-status-c4c2afe896/ and live-read/ (containing zip/) appeared under C:/dev/irpt-release-r31 between 15:36 and 15:43 during this build; this worker made none of them, and scratch/ was still being written at 15:45. At 15:45 this worker ran 'rm -rf control live-read/' in one command. Only its own control/ folder was meant; live-read/ was removed without being inspected, and this worker cannot recover it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/dev/irpt-release-r31 directory listing at 15:44-15:45 (scratch/, tmp-status/, wt-status-c4c2afe896/ present; live-read/ absent after the command)",
+        "git worktree list (wt-status-c4c2afe896 registered to c4c2afe896 by another seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The owner of live-read/ and of the other folders should re-stage or confirm. The command touched nothing outside C:/dev/irpt-release-r31."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W144-S7",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~144",
+    "surfaced_at": "2026-10-14T20:10:50Z",
+    "one_line": "The AC1(6) wording '\"token\" JSON member' matches six benign keys already in release 29, so no build from this base can pass AC1(6) as written.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-338 AR338-y-AC1 condition (6): no JWT-shaped string and no \"token\" JSON member appears in any extracted text member.",
+    "world_is": "build_check.py (literal) reports BUILD-BAD on two members: infra/logic/registry/systems.json (2 matches: naming keys \"token\": \"astn\" and \"token\": \"trade\") and ycharts/extract/extract.py (4 matches: word-token dict keys in Python source). Both members are byte-identical in the release-29 base, which carries the same 2 + 4 matches. No JWT-shaped string exists in any of the 299 text members. The criterion therefore fails on base content, not on this release's change; the worker did not narrow the pattern.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/logic/registry/systems.json@c4c2afe896 (2 \"token\" keys; the same bytes in release 29)",
+        "ycharts/extract/extract.py@c4c2afe896 (word-token dict keys; 4 matches in release 29 base)",
+        "C:/dev/irpt-release-r31/delta/x-r31 and x-live-r29 (member bytes compared; the 299-member scan)",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~144/build_check.py (condition 6 output)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The issuer decides the wording (for example credential-shaped values under a token key). AC1 stays FAIL until the criterion or the grant changes; nothing was edited to pass it."
+  }
+]
+```
+
+```json
+[
+  {
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~144",
+    "surfaced_at": "2026-10-14T22:50:12Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_ANLREQ-D2-W144-S8",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The AR-y-331 route test runs on the extracted release-31 tree only with the pin's test folders beside it: the tarball carries no test folder, and the route file imports test_owned_report, test_owned_requests and test_retained_uploads from intake/tests and ops/tests.",
+    "spec_asserts": "TO-AR-y-338 AR338-y-AC1 condition (7), amended: the AR-y-331 route tests pass 6 of 6 against the EXTRACTED package tree.",
+    "world_is": "Extracted release-31 tree alone: the route file errors at collection (No module named test_retained_uploads). The same tree with the eight test folders of the pin copied in beside the tarball bytes (C:/dev/irpt-release-r31/route-p2, and the checker's route-check-p2): 6 passed in 2.36 s, rc 0. The release-29 base is not the subject of this row.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ops/tests/test_commentary_pdf_route.py@c4c2afe896:7-37 (the imports and _OPS/_REPORTS paths)",
+        "infra/aws/lambda/investor-reporting/intake/tests/test_retained_uploads.py@c4c2afe896 (the module the route file's support imports)",
+        "C:/dev/irpt-release-r31/route-p2/infra/aws/lambda/investor-reporting (copy of the extracted tarball plus the pin's test folders)"
+      ]
+    },
+    "notes": "The route is verified on the release bytes with the pin's tests beside them. The test folders are not shipped and are not part of the release. AMENDMENT 1 puts ycharts/generate/acceptance.py into this build at the pin bytes, which disarms the route-refusal hazard of IRPT_ANLREQ-D2-W144-S1 on these bytes; S1 is not edited."
+  },
+  {
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~144",
+    "surfaced_at": "2026-10-14T22:50:12Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_ANLREQ-D2-W144-S9",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Three named test files cannot be collected on the extracted package tree: _scope/ordinary_viewer.py and the repository-root data/transcripts NAMES.json are not members of the tarball, and the release-29 control errors identically.",
+    "spec_asserts": "TO-AR-y-338 step 5: run the named test files ONE PROCESS PER FILE from the release worktree; any failure is explained against a control run on the r29 tree.",
+    "world_is": "From the release worktree at the pin, all 14 named files pass (43 + 6 + 8 + 6 + 3 + 9 + 10 + 15 + 23 + 7 + 6 + 7 + 4 + 6 passed, every rc 0). On the extracted tree: _scope/tests/test_ordinary_viewer.py collection error (No module named ordinary_viewer); reports/tests/test_resident_r31_source.py and test_resident_r31_packager_bindings.py FileNotFoundError on data/transcripts/scripts/commentary/NAMES.json. The control on the release-29 tree (C:/dev/irpt-release-r31/control-r29-p2) gives the same three errors (rc 2). The first pass's 1-failed result for test_ordinary_viewer (with a trunk copy of the module added) is not reproduced in this pass and its cause is not re-derived here.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/dev/irpt-release-r31/control-r29-p2/_scope_tests_test_ordinary_viewer.py.txt (ModuleNotFoundError)",
+        "C:/dev/irpt-release-r31/control-r29-p2/reports_tests_test_resident_r31_source.py.txt (FileNotFoundError NAMES.json)",
+        "tar -tzf of the release-29 tarball: no _scope/ordinary_viewer.py member"
+      ]
+    },
+    "notes": "A package-layout effect of running these files on an extracted tree, not a release-31 change. The release worktree run is the order's run."
+  },
+  {
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~144",
+    "surfaced_at": "2026-10-14T22:50:12Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_ANLREQ-D2-W144-S10",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The record and the proof instance on this branch were written before the 16:40 rebuild and pinned the superseded tarball sha256 cc6581ed...; the acceptance.py member had been added to the files-from list at 16:36 only.",
+    "spec_asserts": "TO-AR-y-338 step 6 and AC1(1): the record's artifact sha256 is the sha256 of the tarball on disk; the record and the proof instance describe the bytes that were built.",
+    "world_is": "Tarball C:/dev/irpt-release-r31/irpt-resident-0485393f3a-r31.tar.gz is 1040729 bytes, sha256 22193944345ce2dd52d2b732ce0ac8d569aa2359958601686239b7e1da8e6021 (16:40), with 299 members and acceptance.py at the pin blob 0c4acec625. The record at 16:07 pinned cc6581ed... (1040412 bytes, 14 differing); files_from_r31.txt (sha fbe1fb2b..., 17 entries) is dated 16:36. The record and the scripts of pass 1 were regenerated in this pass; the stale values are replaced, not kept.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sha256sum C:/dev/irpt-release-r31/irpt-resident-0485393f3a-r31.tar.gz (22193944...)",
+        "C:/dev/irpt-release-r31/build_a_stdout.json (files_from_count 17, package manifest 4710d4ea...)",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~144/r41/RESIDENT_R31_BUILD.json at 5713985e2e (cc6581ed...)"
+      ]
+    },
+    "notes": "Inherited state, verified and reused where it verified: the two builds (299 of 299 identical), the tarball packing and the pin blob of acceptance.py. The record is rewritten to the verified bytes."
+  },
+  {
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~144",
+    "surfaced_at": "2026-10-14T22:50:12Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_ANLREQ-D2-W144-S11",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The previous instance of this slot went silent after a package test run with no timeout (last scratch write tests_pkg29_control at 16:44 local); its extracted package copies remain under this worktree's gitignored .scratch.",
+    "spec_asserts": "TO-AR-y-338 preamble: every test or control process runs under timeout 300, one process per file; release artifacts are staged only under C:/dev/irpt-release-r31/; delete only paths the pass created.",
+    "world_is": "The cause of the silence is not measured. The worktree .scratch (gitignored, .gitignore:450) holds extracted package copies from the first pass (pkg31, pkg29, tests folders) and a gate folder; this pass leaves them in place, uses its own folders (route-p2, route-check-p2, control-r29-p2, x31-p2, x29-p2, gate_r31_p2, tests_p2_*) and deletes nothing it did not create. The release worktree wt-release-c4c2afe896 was created by the previous instance at the pin and is left registered.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/dev/wk-irpt-anlreq-144/.scratch/tests_pkg29_control (last entries 16:43-16:44 local)",
+        "git check-ignore: .gitignore:450 .scratch/",
+        "git worktree list (C:/dev/irpt-release-r31/wt-release-c4c2afe896 detached at c4c2afe896)"
+      ]
+    },
+    "notes": "A cleanup question for the issuer: the release worktree is one the order says to remove when done; this pass did not remove it, since it was created by the previous instance."
+  }
+]
+```
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W144-S12",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~144",
+  "surfaced_at": "2026-10-14T22:53:04Z",
+  "one_line": "Two live writers under serial 0.9.0_WK_IRPT_ANLREQ~144 are working this worktree at once: the older instance (this one) and a newer instance that appended S8-S11 and rewrote the record, scripts and channel between 18:45 and 18:51 EDT.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (name the one worker of record for slot 144 and stop the other instance before any further write, record or commit)",
+  "spec_asserts": "One worker per slot: TO-AR-y-338 is executed by one worker in its own worktree, and the record, scripts, checkers and proof are that worker's single set of writes (CLAUDE.md section 6, rule 14b; the order's BOUNDS).",
+  "world_is": "HEAD of wk-IRPT_ANLREQ-144 is still 2895ae4be5 (no commit by either instance). Files written 18:45-18:51 EDT by the other instance: deliverables make_scripts_r31.py, install_r31.sh, pre_read_r31.sh, rollback_r31.sh, resident_host_install_0485393f3a-r31.sh, build_check.py, gate_dryrun_r31.sh, r41/RESIDENT_R31_BUILD.json (schema pass-2) and surprise-channel INVESTIGATION_v1.md (rows S8-S11 at 22:50:12Z); .scratch copies make_scripts_r31_pass1.py, acc_pin_p2.py, gate_r31_p2/. This instance wrote none of them after 16:44 EDT. Both instances report the same tarball sha256 22193944345ce2dd52d2b732ce0ac8d569aa2359958601686239b7e1da8e6021 (1040729 bytes, 299 members). This instance did NOT overwrite the other writer's files and does NOT append its own rows S8+ (S8 is taken).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse --abbrev-ref HEAD = wk-IRPT_ANLREQ-144; git log -1 = 2895ae4be5 (no new commit)",
+      "ls -la --time-style=full-iso .../0.9.0_WK_IRPT_ANLREQ~144/r41/ (RESIDENT_R31_BUILD.json 18:51:36 -0400)",
+      "INVESTIGATION_v1.md git diff HEAD: +93 lines, rows IRPT_ANLREQ-D2-W144-S8..S11 surfaced_at 2026-10-14T22:50:12Z",
+      "C:/dev/wk-irpt-anlreq-144/.scratch listing: make_scripts_r31_pass1.py 18:45:29, gate_r31_p2/ 18:46:26, acc_pin_p2.py 18:40:31"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This instance has stopped writing to the shared worktree and channel and has not flipped the order status, committed or validated a proof. Its own measured results sit in .scratch (tests_pkg, tests_wt, tests_pkg29_control) and in the stage folder C:/dev/irpt-release-r31 (build_a, build_b, delta/, the tarball and its sums). The release worktree C:/dev/irpt-release-r31/wt-release-c4c2afe896 is registered and clean; it is to be removed by the worker of record."
+}
+]
+```
