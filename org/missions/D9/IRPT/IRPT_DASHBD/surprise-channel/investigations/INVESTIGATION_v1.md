@@ -12039,3 +12039,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disarm_owner": "2.0.0_SA_COO~D2"
 }
 ```
+
+## IRPT_DASHBD-D2-W175-S1 -- Orion fact_performance names no period: DB-b-217's name rule sources no household window, so the 0.5.0 edit stops (BLOCKING)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T19:15:41Z",
+  "one_line": "Orion fact_performance carries no column whose name gives a period: its only measure is factor, an index level, so the order's name-based window rule sources none of the four household windows and the contract 0.5.0 edit stops (BLOCKING, DB110-1-AC1 FAIL).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-217 step 3: the newest partition's columns decide each contract window; an Orion column whose period is evident from its name and matches document.windows is SOURCED; a window whose period is not evident is ABSENT; at least one window must be sourced, else file a BLOCKING row with the column list and stop. Step 4 presumes a column that holds a windowed household return.",
+  "world_is": "Newest partition date=2026-10-14 of s3://opal-data-assets/orion/inflection/silver/fact_performance/ (adapter GET-only reader: 2 LIST, 1 GET): 482,971 rows, 315 distinct client ids, no account key. Columns: client_id, date, factor, and six pipeline metadata columns (pull_date, _source_file, _source_as_of, _source, _feed, _schema_version). The only measure column is factor, an index level (the round-108 read takes the ratio of the last window day to the first). No column names a period, so under step 3 none of qtd, ytd, last_12_months or since_inception is SOURCED, and at least one is required. Record: PERF_SHAPE_R110.json in the worker folder.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/orion/inflection/silver/fact_performance/date=2026-10-14/ column names read via data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_dim.py InflectionSilverReader, 2026-10-14T19:15Z",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~172/READ_COVERAGE_RUN_R108.json@a54a1d5d12 (orion.performance_form: an index level, the ratio of the last window day to the first)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~175/PERF_SHAPE_R110.json@a54a1d5d12 (this worker's column and decision record)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. Two readings are open for the issuer and the CTO: (a) the household return is a ratio over the dated rows of factor, a fold the order does not name; (b) the order's name rule is amended to take a period from the dates of the rows. Under the order as written the four windows are ABSENT and DB110-1-AC1 stays FAIL; DB-b-222 and DB-b-223 are staged behind this row. The round-110 CTO ruling (household return from Orion fact_performance at client grain) is not in question; its window period is."
+}
+```
