@@ -9306,3 +9306,161 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+## IRPT_DASHBD-D2-W155-S8 -- The silver that would feed seven of the eight tables is code-named at shared or legacy buckets outside the grant, so no source could be listed under the own-bucket bound
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T04:04:39Z",
+  "one_line": "The silver that would feed seven of the eight tables is code-named at shared or legacy buckets outside the grant, so no source could be listed under the own-bucket bound",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-190 steps 2 and 3 (amended): find each firm's existing gold or silver inputs and record whether a source exists, reading each firm's own bucket, with the bucket taken from lib/opal_naming.py address() and never from the registry. The bound reads: each firm's own bucket only.",
+  "world_is": "address() resolves the silver and bronze of both firms to the shared bucket opal-data-assets (blackdiamond/cottonwood/silver, eclipse/inflection/silver, orion/inflection/silver). holdings_snapshot.py reads the Cottonwood Black Diamond silver from opal-data-assets blackdiamond/cottonwood/silver/ and the Inflection Eclipse and accounts_v2 silver from the legacy bucket opal-data-inf. None of these was listed, because each sits outside the firm's own bucket under the bound. source_exists is false for the seven tables with no gold, and the gap text gives the reason. One decision is needed before the first adapter order: whether a read of the firm's own prefix in the shared bucket is granted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py address() probe run per firm, source silver or bronze: s3://opal-data-assets/blackdiamond/cottonwood/silver/ and s3://opal-data-assets/eclipse/inflection/silver/ and orion/inflection/silver",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py: bucket set to opal-data-assets for the Cottonwood silver reads, and INF_SOURCE_BUCKET set to opal-data-inf for the Inflection silver reads",
+      "FIRM_READINESS.json at 0.9.0_WK_IRPT_DASHBD~155: source_exists false with the reason in gap_in_words for the seven tables"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S9 -- The registry bucket field and the generated firm_bucket_map name opal-data-cot and opal-data-inf for the two firms, while address() resolves their gold to opal-data-cottonwood and opal-data-inflection
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S9",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T04:04:39Z",
+  "one_line": "The registry bucket field and the generated firm_bucket_map name opal-data-cot and opal-data-inf for the two firms, while address() resolves their gold to opal-data-cottonwood and opal-data-inflection",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "TO DB-b-190 amendment 1: the registry bucket field is not where gold lives; get each bucket from lib/opal_naming.py address(), never from the registry.",
+  "world_is": "data/firm_registry.json gives bucket opal-data-inf for inflection and opal-data-cot for cottonwood. holdings_snapshot.py firm_bucket_map, generated from the identity registry, names the same two legacy buckets. address() resolves the gold tier to opal-data-cottonwood and opal-data-inflection, and the gold exists there. A reader that takes the registry field or the generated map finds a legacy bucket and reports no gold, which is how the first seat's void record arose. The harm stays live while readers keep the registry field.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/firm_registry.json: the inflection row bucket opal-data-inf and the cottonwood row bucket opal-data-cot",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py lines 183-187: firm_bucket_map generated from the identity registry",
+      "lib/opal_naming.py address() probe: s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/ and s3://opal-data-inflection/irpt/inflection/gold/ resolve, and the Cottonwood prefix lists its date partitions"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D2"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S10 -- Cottonwood account_return_daily gold is stale: its newest partition is 2026-06-22, 114 days before the read, and the Cottonwood performance tables end on 2026-09-25
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S10",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T04:04:39Z",
+  "one_line": "Cottonwood account_return_daily gold is stale: its newest partition is 2026-06-22, 114 days before the read, and the Cottonwood performance tables end on 2026-09-25",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "TO DB-b-190 step 3: for each table, record whether it exists in gold and how many date partitions were listed; account_return_daily is the existing Cottonwood gold the report would read.",
+  "world_is": "Cottonwood account_return_daily holds 3325 date partitions from 2013-04-03 to 2026-06-22, all date-named, with no other prefix. The Cottonwood holdings_performance_daily and holdings_performance_manifest end on 2026-09-25, and the Cottonwood holdings end on 2026-10-08, while the Inflection equivalents end on 2026-10-12. This read does not say why the Cottonwood producer's newest partition stopped. A report built on it would show Cottonwood figures months old.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3 ls of s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/: 3325 PRE lines, all date=YYYY-MM-DD, first and last recorded",
+      "newest partition listing: data.parquet and manifest.json present; data.parquet footer read by one range GET (19 columns, schema equal to the contract)",
+      "aws s3 ls of the Cottonwood and Inflection holdings_performance_daily and holdings prefixes: last partitions recorded in FIRM_READINESS.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S11 -- The gold holdings parquet carries 6 columns in each firm, so the IR holdings counts of 19 and 17 are page columns, not this file's columns
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S11",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T04:04:39Z",
+  "one_line": "The gold holdings parquet carries 6 columns in each firm, so the IR holdings counts of 19 and 17 are page columns, not this file's columns",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-190 step 2: columns_served for the holdings input uses the IR holdings column counts (Cottonwood 19 of 19, Inflection 17 of 19) carried from the CTO message.",
+  "world_is": "The newest holdings partition's parquet footer carries 6 columns (double and string types) in each firm. The holdings_qa footer also carries 6 columns in each firm with a schema identical to holdings. The 19 and 17 counts therefore describe the served IR page's columns, which this read did not reconstruct. The record carries them as the CTO's counts and says so.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "parquet footers of the newest holdings partition in each firm, read by one range GET each (6 columns)",
+      "parquet footers of the newest holdings_qa partition in each firm (6 columns, identical schema)",
+      "FIRM_READINESS.json columns_served entries marked as CTO counts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S12 -- The only household crosswalk recorded is 49 Financial's; the Cottonwood crosswalk input sits at the shared bucket and its coverage could not be read under the bound
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S12",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T04:04:39Z",
+  "one_line": "The only household crosswalk recorded is 49 Financial's; the Cottonwood crosswalk input sits at the shared bucket and its coverage could not be read under the bound",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-190 step 4: household_dimension for each firm is the ADVI household crosswalk's coverage of the firm, or none.",
+  "world_is": "The ADVI_BILLING household crosswalk record gives its S3 key in opal-data-49financial, so it covers 49 Financial only. The ADVI_FIRMBKTS FB-k-4 read names a Cottonwood crosswalk input at opal-data-assets commonwealth/cottonwood/silver/crosswalk, whose coverage was not read (outside the bound). No Inflection crosswalk is named in the repo's crosswalk records across two pages of comp-find results.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BILLING/deliverables/0.9.0_WK_ADVI_BILLING~3/AB_E5_RECORD.json: s3_key under opal-data-49financial",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~79/PLANINV_COTTONWOOD_SERVING_CROSSWALK.json: the commonwealth cottonwood silver crosswalk named in its read calls",
+      "comp-find household_crosswalk, pages 1 and 2 (69 hits across 77062 files scanned)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W155-S13 -- The DB-b-190 order already reads complete, set on the first seat's void record; this round's passing record re-grounds the status
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W155-S13",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~155",
+  "surfaced_at": "2026-10-14T04:04:39Z",
+  "one_line": "The DB-b-190 order already reads complete, set on the first seat's void record; this round's passing record re-grounds the status",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-190 REPORT and step 6: the order's status is flipped to complete only when DB101-4-AC1 passes on the record.",
+  "world_is": "The order file at HEAD already reads complete, set by commit 441a46fe71 on the first seat's record, which amendment 1 declares void. The flip was not derived from a passing criterion on the amended premise. This round's record is the first passing one, and its proof instance carries the status.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log of the order file and of the deliverables folder: commit 441a46fe71 (proof, flip to complete) and commit 6f8f52e7f2 (first seat's read)",
+      "the amendment text in the order's WORKER FACE, AMENDMENT 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
