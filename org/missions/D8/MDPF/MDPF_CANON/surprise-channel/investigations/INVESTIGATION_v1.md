@@ -2086,3 +2086,52 @@
   "notes": "Form only. The judgment grader (AC4, round close) reads the rendered ground. Filed by 0.9.0_WK_MDPF_CANON~24."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S25",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-14T20:00:00Z",
+  "one_line": "On the Model Portfolios page (Global, as-of 2026-10-13) the Client card reads $292.26M while the Client drill-down it opens reads $341.10M ($2.20M Supervised + $338.89M Unsupervised); the card is the one that adds to the $2.18B Total.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "3.0.0_SA_CVO read tmp/ui-walk/20261014T193640Z/shots/006--portfolios-select-0-Global-All-.png: Total $2.18B; Models $1.83B; SMAs $50.75M; Client $292.26M",
+      "3.0.0_SA_CVO read tmp/ui-walk/20261014T193640Z/shots/014--portfolios-open-Client-Client-directed-.png: header $341.10M; Supervised $2.20M; Unsupervised $338.89M",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/CN_I_2_REPAIR_RENDER_20261014.md 'Observed, not caused by this repair' (the issuer saw it and filed no row)"
+    ]
+  },
+  "spec_asserts": "One figure per category on one page and one as-of: a drill-down's header equals the card that opens it (the Total Assets breakdown; the drill-down's own footnote says the categories equal total AUA).",
+  "world_is": "The two numbers differ by $48.84M on the same page and as-of. $1.83B + $50.75M + $292.26M is about the $2.18B Total, so the drill-down's $341.10M is the one that does not tie. The drill-down is client-facing on PROD today, independent of the CN-i-2 candidate (the repair touches only its colour). The cause is not read: the two figures may come from different category-views fields, or one may carry SMA assets the other subtracts.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S26",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-14T20:05:00Z",
+  "one_line": "round-close-check cannot see a re-grade: it sorts ADJUDICATION_v*.md as strings (v1, v10, v11, v12, v2 ...) and returns the FIRST CVO-kind verdict it finds, so a later MET for CN-i-1 AC4 can never replace D1-C-S73's NOT MET in v10.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/round-close-check.py:118-119 glob returns sorted(glob.glob(pattern)) (string order); grade_criterion returns on the first CVO-kind non-doer row with a verdict word",
+      "3.0.0_SA_CVO round-close-check --project MDPF_CANON --round 7 after ADJUDICATION_v12 (HELD) was written: 'TO-CN-i-1 AC4 -> GRADED (adjudication row MDPF_CANON-D1-C-S73 ... (verdict NOT MET))'"
+    ]
+  },
+  "spec_asserts": "Spine L9: the CVO's grade of a judgment criterion is the one round-close-check reads; a re-grade after a repair replaces the earlier verdict.",
+  "world_is": "The first verdict in string-sorted file order wins, so a repaired criterion stays NOT MET in the gate forever, and a round that needs it MET cannot read MAY-CLOSE. String order also misplaces v10+ against v2..v9 for any project past nine adjudications.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL1"
+}
+```

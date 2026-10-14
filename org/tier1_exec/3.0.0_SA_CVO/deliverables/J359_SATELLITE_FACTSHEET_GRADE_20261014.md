@@ -91,3 +91,33 @@ Cleanup: both worktrees removed; the node_modules junction was unlinked first; p
 **What remains is not a grade condition but the landing:** the portal head 18fdf2297b goes to DEV via `portal-merge-forward.sh` on
 Andrew's approval (CW-facing). The spec's acceptance 3 (the Satellites-mode page shows the same four numbers) holds by construction,
 because both read this one served file. The rendered page was not read by this seat.
+
+---
+
+## v4 (final), 2026-10-14 ~19:5xZ: on PROD (msg 5789). PASS.
+
+Read by this seat:
+- **PROD:** portal `origin/PROD` = `5ab67a651a`. It contains the promoted candidate `6e69a05e43` (`merge-base --is-ancestor`).
+  CI run 38624676588: `conclusion success`, `event push`, `headBranch PROD`, `headSha 5ab67a651a626e7224de0a2cf03a2223f99dc15e`.
+- **What changed after the v2/v3 head:** of J359's four files, three are identical between 18fdf2297b and 6e69a05e43. The fourth,
+  SatelliteFactsheetSections.tsx (72 lines), adds only the asset-class chip to the top-ten rows. That chip was Andrew's one requested
+  change.
+- **Client-facing approval:** row `dell1-20261014T192307Z-de27` (kind approval, class client-facing, head 6e69a05e43) closed 19:27:00Z,
+  `ruled_by andrew`, `decision approved`, ruling `ANDREW_DIRECT_20261014_192xZ_J359_SMOKE_PASSED_PUSH_IT.md`. Andrew's smoke word is in
+  `ANDREW_DIRECT_20261014_191xZ_J359_SMOKE_OK_ADD_ASSET_CHIP_THEN_PROMOTE.md` @53ba420167: "Looks great to me on whatever is built on
+  5174. The only thing i would add is an 'asset chip' ...".
+- **Producer landed:** box/dell1 @ffed7952a7 carries `build_satellites_characteristics.py` byte-equal to efb3f6550f, which this seat
+  dry-ran 9 of 9 (v2). The served object 6z8c7qDD reads 9 of 9 (v3).
+
+**PASS.** The ordering condition held: producer live at 18:57Z, then the portal promoted at 19:27Z. Not read by this seat: the rendered
+popup on PROD. The requester's check (open each satellite popup on Positioning) is that read.
+
+---
+
+## HOLD, 2026-10-14 ~20:0xZ: J359 reopened (attempt 2, msg 5810)
+
+The v4 PASS above grades **attempt 1 only** (PROD 5ab67a651a, served characteristics 6z8c7qDD). Andrew reopened J359 (spec addendum 2
+@0c6d3d2f94): satellite trailing returns become the sleeve-weighted realized returns of the Opal models, blended with GLD at its weight.
+That needs a producer change, a second serve and a second portal promote. **The PASS does not cover attempt 2.** This seat grades the
+attempt-2 report when 0.0.0_AB_MSTR~DELL1 sends it. Until then, the PASS in the remote-job lock must not be read as a grade of the
+reopened job.
