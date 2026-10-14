@@ -52,6 +52,12 @@ Build:
 1. **`src/api/admin.ts`**: `getPersonAccess(tid, oid)`, `setPersonAccess(tid, oid, change, expectRevision)` (a thin POST; it returns
    the verdict object whether WRITTEN or REFUSED and throws only on a transport failure, the way `narrowGrant` handles a refusal), and
    `getPersonChanges(tid, oid)` (the `changes` list filtered to `set_person_access`). Types as above.
+   **AMENDMENT 1 (issuer, after your first report; rules your row Z-W28-S1): the HTTP mapping of a verdict.** The gateway answers a
+   WRITTEN verdict with 200 and a REFUSED verdict with **409**, the verdict object as the body (the mapping narrow and widen use);
+   a bad request is 400 with `{"error", "reason"?}`; a non-owner is 403. So `setPersonAccess` returns the parsed verdict for a 200 AND
+   for a 409 whose JSON body has `verdict` equal to `'WRITTEN'` or `'REFUSED'`; every other non-2xx stays an `AdminStatusError`
+   (403 still reads "not allowed"). The test named `a refused write shows the reason and changes nothing on the page` must drive a
+   409 stub whose body is a REFUSED verdict, and assert the page shows the reason and detail from that body.
 2. **On the People page**, for the selected person:
    - if the row's `principal` is null: no control, and the text "no principal id: cannot be changed from here yet";
    - otherwise load `getPersonAccess`. If `record_kind` is "not live": no control, and the text "per-person control is not live yet";

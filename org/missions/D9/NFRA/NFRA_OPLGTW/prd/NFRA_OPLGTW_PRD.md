@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v3.6",
+  "prd_version": "v3.7",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -1331,5 +1331,28 @@ retired.
 5. SmartX (row filter).
 6. Commonwealth.
 Friday 2026-10-16 = G1, G3, G5 wave A, G6, and Schwab if it fits.
+
+CONTRACTS-side; ENDPOINT unchanged.
+
+### v3.7 addendum (2026-10-14 ~19:3xZ, 1.0.0_SA_CTO~Z) -- FWD-22 enrichment G5r: rival funds through the gateway (Andrew-direct, XB-eda5)
+
+**Input.** Andrew-direct ~19:0xZ at the laptop (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_190xZ_RIVALFUNDS_INDEXED_INTO_OPALGATEWAY.md`, on CLOUD): "we should also have the rivalfunds indexed out and
+available too". Order XB-20261014T185521Z-eda5 went to `4.0.0_SA_CRO~Z`, whose spec is `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G5r_rivalfunds_spec.md` @e1b9937129.
+
+**G5r enrichment list:**
+1. The nine G5 rival tools stand (`etfs_get_peer_group`, `etfs_get_fund_holdings`, `etfs_who_holds`,
+   `etfs_get_fund_trades`, `etfs_get_fund_flows`, `etfs_compare_peers`, `etfs_get_research_notes`,
+   `etfs_get_security_reference`, `etfs_get_coverage`). Every one reads GOLD under `opal-data-etfs/rivalfunds/etfs/gold/`,
+   newest part per date partition, never summing parts, and passes `claim` through on the inferred tables.
+2. One new tool, `etfs_get_rival_page_status(page_day?)`, reads the platinum `manifest.json` (newest revision): what was
+   PUBLISHED and whether it passed its checks. Its `latest_report` is shown beside the gold value, both labelled.
+3. **Z-S124 binds:** a fund's latest report comes from `canonical_shape` only, never from `holdings_coverage` or the
+   manifest. Both understate 9 funds today.
+4. Security search by CUSIP/ISIN works here (unlike the harvest), within G5r section 2's fill rates.
+5. Read class (Opal users), no firm fork: this is Opal fund research.
+6. **One never-widen ask for all of G5:** the G5 wave-A ask also names `opal-data-etfs/rivalfunds/etfs/gold/*` and the
+   platinum page prefix, so the rival tools need no second ask.
+7. **Order:** after Friday's set (G1, G3, G5 wave A, G6, and Schwab if it fits), ahead of the remaining G2 vendors.
+   Priority stays P4, site Z in the background.
 
 CONTRACTS-side; ENDPOINT unchanged.

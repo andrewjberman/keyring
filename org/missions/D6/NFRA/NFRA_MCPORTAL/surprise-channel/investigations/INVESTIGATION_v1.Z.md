@@ -1903,3 +1903,211 @@
   }
 }
 ```
+
+```json
+[
+  {
+    "id": "NFRA_MCPORTAL-Z-W25-S1",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~25",
+    "surfaced_at": "2026-10-14T18:57:59Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "The face's query-first read of the grant store is refused: the operator role opal-gateway-access-admin is AccessDenied dynamodb:Query on gateway-access-state-table for partition POLICY#6810043e-d171-4adc-9975-068b35e179da#ad037ea5-fee8-412e-9da9-15c6cf2a4fbc. GetItem on that partition's two known keys (principal_profile, data_entitlement#0000000004) succeeded under the same assumed role and is the read the run file uses.",
+    "spec_asserts": "The operator role reads each principal's partition by Query (trust and LeadingKeys design say yes); a denial is a BLOCKING row with the principal key and the error.",
+    "world_is": "sts assume-role on arn:aws:iam::313476888478:role/opal-gateway-access-admin returned rc 0 and get-caller-identity returned the assumed-role ARN. dynamodb query --consistent-read on gateway-access-state-table returned AccessDeniedException: no identity-based policy allows the dynamodb:Query action (rc 254). The same role's dynamodb get-item of principal_profile (rc 0, status active, grant_revision 4) and of data_entitlement#0000000004 (rc 0, status active) succeeded. Nothing was written; the host role was not used for the store read.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~25/pd1_query_denied.txt (the measured AccessDeniedException text)",
+        "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~25/pd1_session_log.txt (steps 2 to 4)"
+      ]
+    }
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W25-S2",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~25",
+    "surfaced_at": "2026-10-14T18:57:59Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "app.admin_gateway_breakdown._scan_principals takes a required client argument; the face's zero-argument call form does not run, so the scan was called with the served module's own host-role client from _ddb_client().",
+    "spec_asserts": "Call app.admin_gateway_breakdown._scan_principals() with no arguments, after reading its signature.",
+    "world_is": "admin_gateway_breakdown.py:174 defines _scan_principals(client) -> list. The page probe pd1_page_probe.py passes BD._ddb_client(), a host-role boto3 DynamoDB client, so the principal list is the served scan's own result (1 principal) and not an operator-role Scan (which the issuer measured denied).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/admin_gateway_breakdown.py:174 (def _scan_principals(client))",
+        "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~25/pd1_page_probe.py (the call site)"
+      ]
+    }
+  }
+]
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W26-S1",
+  "one_line": "MP-pd-2 says the stored person_access revision is an int; the real store returns it as decimal.Decimal, so an int check refused every real update until the writer normalizes it.",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~26",
+  "surfaced_at": "2026-10-14T18:52:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/access_state.py:27 docstring and :325 TypeDeserializer: numbers come back as decimal.Decimal",
+      "infra/aws/ec2/opal-gateway/app/data_entitlement.py _revision accepts int or integral Decimal",
+      "probe .scratch/probe_person_access_update.py before the _plain_record fix: OK expect 1 read STALE-REVISION with zero writes; after the _plain_record fix it reads WRITTEN with one conditional put"
+    ]
+  },
+  "spec_asserts": "TO MP-pd-2 section 1 sets the stored body field revision to an int >= 1 and says the writer checks the current revision against expect_revision.",
+  "world_is": "acs.AccessState.get returns whole numbers as decimal.Decimal. The writer normalizes the stored record with _plain_record in lambda_function.py before its revision check, so the optimistic condition and the next revision are int. The staged Decimal form is not a fault of the store; the order did not say it."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W26-S2",
+  "one_line": "The worker rules flip the task order status to complete with the proof instance, but the order's granted paths do not include the task-order file, so I did not flip it.",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~26",
+  "surfaced_at": "2026-10-14T19:01:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pd-2.grant-writer-person-access.md section 3 <paths> (lines 106-111) lists the lambda_function.py, tests/test_person_access.py, deliverables and investigations paths only",
+      "base ef2a5b14e176b428600920cbd9ada74817ced168; the code commit is f40bf7dded"
+    ]
+  },
+  "spec_asserts": "The worker rules say a worker flips the task order <status> to complete in the same commit as the proof instance.",
+  "world_is": "The order's <paths> grant no write to its own task-order file. The criteria pass and the instance validates, but this worker does not flip the order status; the issuer or COO owns the flip."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W29-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~29",
+  "surfaced_at": "2026-10-14T18:53:18Z",
+  "one_line": "The MP-pd-5 order defines the printed line for a measured payload and for an absent one, but not for an absent payload that leaves a measured snapshot in place; the script prints usage n/a there, from the payload result, while the snapshot keeps its measured figures.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Section 1 step 5: an absent result never replaces a measured snapshot. Step 6: print the 5h/wk line when measured, else usage n/a.",
+  "world_is": "Steps 5 and 6 do not define the output on the kept-snapshot path. Measured: a measured run printed '5h 42% wk 11%'; then an absent run printed 'usage n/a' and usage_snapshot.json still held claim measured with five_hour used 42.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/claude-usage-statusline.py@967a02ec89 run(): the claim absent and existing measured branch skips the write; main prints format_line(claim) from the payload result",
+      "ad hoc run, temp CLAUDE_CONFIG_DIR under .scratch/pd5 (uncommitted): measured payload printed '5h 42% wk 11%'; absent payload printed 'usage n/a'; snapshot after the absent run read claim measured, five_hour used_percentage 42"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired: the order is frozen for this cell. The worker chose the payload result. The other reading (print the kept snapshot figures) is the issuer's to rule. The snapshot file is correct under either reading."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W29-S2",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~29",
+  "surfaced_at": "2026-10-14T18:53:18Z",
+  "one_line": "The order does not say what happens when stdin parses as JSON but is not an object (null, a list, a number); the script treats it as a payload with no rate_limits member.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Section 1 step 1: unparseable stdin prints nothing and changes nothing. Step 4: a payload with no usable rate_limits member is absent.",
+  "world_is": "A non-object JSON value parses, so step 1 does not fire, and the order names no branch for it. Measured: stdin 'null' with no snapshot printed 'usage n/a' and wrote claim absent; stdin '[1,2]' over a measured snapshot printed 'usage n/a' and left the measured snapshot (five_hour used 42) intact.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/claude-usage-statusline.py@967a02ec89 build_rate_limits(): a non-dict payload yields no rate_limits, so the absent branch runs",
+      "ad hoc runs under .scratch/pd5 (uncommitted): stdin 'null' with an empty config dir -> usage n/a, claim absent; stdin '[1,2]' over a measured snapshot -> usage n/a, claim measured kept"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired. The worker reads a non-object as absent, which keeps the never-replace rule intact. The issuer may prefer treating it as unparseable (print nothing, change nothing)."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W27-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~27",
+  "surfaced_at": "2026-10-14T18:51:05Z",
+  "one_line": "AC2 cannot pass as written: the mandated principal key on every People row breaks the unchanged assertion at tests/test_admin_people.py:202 that pins each row's key set, so test_people_lists_every_candidate_even_holding_nothing FAILS (1 failed, 9 passed).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PD.3 step 2 adds a principal key to every People row; AC2 names test_people_lists_every_candidate_even_holding_nothing as PASSED, and the order says the rest of tests/test_admin_people.py stays unchanged.",
+  "world_is": "tests/test_admin_people.py:202 asserts set(p) == {\"who\",\"kind\",\"how\",\"tier\",\"channels\"} for every row; with principal present that assertion fails. Left unedited per the order. AC2 invocation: RESULT: FAIL, named tests PASSED 3 of 4, rc=1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/test_admin_people.py@ef2a5b14e1:202 (the unchanged assertion)",
+      "pd3.AC2.sh run in worktree C:/tmp/mp-pd-27: 'people rows tests: 1 failed, 9 passed; named tests PASSED 3 of 4', RESULT: FAIL, exit=1"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W27-S2",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~27",
+  "surfaced_at": "2026-10-14T18:51:05Z",
+  "one_line": "The round-1 People body that test_people_principal_never_leaks_into_other_fields names as its reference is not an artifact in the tree; the reference was dumped from the pre-PD.3 admin_people before the edit and pinned as the literal ROUND1_PEOPLE in tests/test_admin_people.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "With the principal key removed from every row, the People body equals the round-1 body for the same planted world.",
+  "world_is": "No stored round-1 body exists. The pre-edit body for _world_with_people(names=[whoami, list_calendar]) was captured by a scratch run (gitignored .scratch/) before the admin_people.py edit and is pinned as ROUND1_PEOPLE (7 rows, population last).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/admin_people.py@ef2a5b14e1 (pre-edit _compute, the source of the dump)",
+      "infra/aws/ec2/opal-gateway/tests/test_admin_people.py (ROUND1_PEOPLE, appended in this commit)"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W27-S3",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~27",
+  "surfaced_at": "2026-10-14T18:51:05Z",
+  "one_line": "The grant-writer Lambda in this base does not name the set_person_access action or a person_access record, so the access POST relays whatever the writer answers until the parallel writer cell lands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A parallel cell extends the grant-writer Lambda with the action set_person_access (PD.2 record and event).",
+  "world_is": "A Grep of infra/aws/lambda/mcportal for set_person_access|person_access returned no files at ef2a5b14e1; the writer half is not in this base. Nothing in this cell depends on it for the handler tests, which use a fake client.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/lambda_function.py@ef2a5b14e1 (no match for set_person_access)"
+    ]
+  }
+}
+```
