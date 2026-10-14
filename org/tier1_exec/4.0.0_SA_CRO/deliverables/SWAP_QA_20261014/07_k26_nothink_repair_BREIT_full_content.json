@@ -1,0 +1,32 @@
+{
+ "cases": {
+  "BREIT": {
+   "known": null,
+   "swap": {
+    "content_full": "```json\n{\n  \"identified_asset\": \"Blackstone Real Estate Income Trust (BREIT)\",\n  \"security_type\": \"Non-listed REIT\",\n  \"asset_class\": \"Real Estate\",\n  \"sub_asset_class\": \"Diversified Commercial Real Estate\",\n  \"region\": \"United States\",\n  \"capitalization\": null,\n  \"credit\": null,\n  \"duration\": null,\n  \"sources\": [\n    \"https://www.breit.com/\",\n    \"https://www.investwithroots.com/learn/the-ultimate-reit-comparison-for-2026-vnq-breit-and-roots\",\n    \"https://www.morningstar.com/alternative-investments/real-estate-funds-private-reits-breit-what-you-need-know\",\n    \"https://alternativesinvestor.com/resources/how-to-invest-in-breit\"\n  ],\n  \"candidates\": [\n    {\n      \"symbol\": \"VNQ\",\n      \"reason\": \"Vanguard Real Estate ETF - Broad U.S. REIT exposure across commercial real estate sectors including office, warehouse, telecom infrastructure, and multifamily housing. Provides diversified public REIT exposure as the closest liquid alternative to private commercial real estate. Significant differences: VNQ is publicly traded with daily liquidity, lower fees (0.13%), and no minimum investment, but lacks BREIT's private market access and specific sector concentrations (data centers, student housing, Sunbelt focus).\",\n      \"sources\": [\n        \"https://www.investwithroots.com/learn/the-ultimate-reit-comparison-for-2026-vnq-breit-and-roots\"\n      ]\n    },\n    {\n      \"symbol\": \"SCHH\",\n      \"reason\": \"Schwab U.S. REIT ETF - Broad exposure to U.S. equity REITs with low expense ratio. Tracks Dow Jones Equity All REIT Capped Index. Provides liquid, diversified access to commercial real estate sectors similar to VNQ but with different index methodology. Like VNQ, it is publicly traded and lacks BREIT's private real estate characteristics, leverage profile, and specific sector tilts toward data centers and logistics.\",\n      \"sources\": []\n    },\n    {\n      \"symbol\": \"USRT\",\n      \"reason\": \"iShares Core U.S. REIT ETF - Broad U.S. REIT exposure tracking FTSE Nareit Equity REITs Index. Offers diversified exposure to U.S. real estate investment trusts across property sectors. Low-cost liquid alternative to private REITs but with the same structural differences: daily pricing, no redemption restrictions, and exposure to public market volatility rather than private NAV-based valuation.\",\n      \"sources\": []\n    }\n  ],\n  \"reason\": \"BREIT (Blackstone Real Estate Income Trust) is a non-listed/private REIT, not an ETF, and therefore unavailable on standard brokerage platforms. It is a perpetually offered, non-traded REIT managed by Blackstone that invests in institutional-grade commercial real estate with concentrations in data centers, warehouses, student housing, and Sunbelt markets. As a private REIT, it features limited liquidity (monthly repurchase program at sponsor discretion), high minimum investments ($2,500 for most share classes, $1,000,000 for Class I), income/net worth eligibility requirements, and higher fees (1.25% management fee plus other fees) compared to public REIT ETFs. The proposed alternatives are coarse approximations providing liquid, publicly traded exposure to U.S. commercial real estate through REIT equities, but they differ fundamentally in structure, liquidity, fee profile, and access to private real estate markets. Each candidate requires user approval before use.\"\n}\n```",
+    "failure": "KIMI_SCHEMA_INVALID",
+    "searches": 1,
+    "seconds": 43.2
+   },
+   "yahoo": {
+    "last": null,
+    "rows": 0
+   }
+  }
+ },
+ "model": "kimi-k2.6",
+ "probed_at_utc": "2026-10-14T18:39:21Z",
+ "qa_receipt_sha256": "e3b5c784d519cc596c2c37eeefa7c79a2782c7133a098e789ac6fa86fee5b19f",
+ "request_fields": {
+  "tools": [
+   {
+    "function": {
+     "name": "$web_search"
+    },
+    "type": "builtin_function"
+   }
+  ]
+ },
+ "temperature": 0.6,
+ "thinking": "disabled"
+}
