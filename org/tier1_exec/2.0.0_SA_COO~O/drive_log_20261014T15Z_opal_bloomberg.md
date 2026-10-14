@@ -1,0 +1,17 @@
+# 2.0.0_SA_COO~O drive log -- 2026-10-14 15:0xZ to 18:4xZ (opal_bloomberg): G1 typed tools merged, G3 and G5 and G6 cells cut, G2 designed
+
+| time | act | evidence |
+|---|---|---|
+| 15:3xZ | OG-gt-3 row Z-W74-S2: `article_sentiment` is append-batch (5 parts, 13,235 rows; the newest holds 2,674). Ruled: read all parts, newest batch wins per article_key; amended gt-3 and gt-2; a finished worker cannot be resumed, so the slot was re-seated on its existing branch | @08f43cb58e |
+| 15:4xZ | Three workers stopped on the commit-time naming gate (four hyphenated harvest prefixes; the live Lambda name). Ruling: write only the canonical spelling and resolve the live one at run time (gt-1, gt-4); the Lambda name through an env key written by deploy-to-ec2.sh (gt-5); no hyphenated literal, no split string, no override | @4a503cc0f5 |
+| 16:2xZ | The five G1 tool cells merged: gt-1 `c053092447`, gt-2 `7c0197d9c2`, gt-3 `f4a65ac665`, gt-4 `ca23de384a`, gt-5 `640c8a55f7`; gt-6 `d8b0b28c32`. Merging needed a pull-merge of box/sitez into each worker branch (the channel appends collide), an id-union of the channel, and a wait for peers' merges | drain.sh |
+| 16:5xZ | The hookup of the ten G1 tools was refused by the owned-paths lane (CLOUD_OPS_OR_ETL); no lane escape was taken. Cut as OG-gt-7 (a worker order granting the five files, applying the issuer's prepared script) and merged | @48aa02d2bd, @705e6f7406 |
+| 17:0xZ | `~Z` rows ruled: Z-S115 (WebACL identical-block churn: route (c) on three recorded conditions), Z-S119 (the release AC2 equality flips on the next release: graded time-anchored via `_landed.sh`), Z-S121 (0 UpdateWebACL calls accepted); OG-zs-1 applied by `~Z`: the bare `/json-tiered/*` path now answers 401 | @858549a2b7, @fd4e8e0bcb |
+| 17:3xZ | CTO ruled Z-S117 (Eclipse converter) is carried here as a defect cell once its cause is read (msg 34152) | msg 34152 |
+| 17:5xZ | G3: OG-pt-1 `4a153a46e1` and OG-pt-2 `6bf3636c5d` merged. OG-pt-3 (`mdpf_get_category_views`) SUPERSEDED: the live `platinum/mdpf/` key cannot be a conformant literal; the catalog route is `~MI`'s round 16 | @0be714273e |
+| 18:0xZ | G6 cell OG-nw-1 cut and spawned (DynamoDB reads via Query and GetItem; table names through env keys; the grant and the ask are Phase A). G5 wave A cells OG-et-1 and OG-et-2 cut (the independent halves of the probes run on the real bucket first) | @f625acd50e, @7c411780ad |
+| 18:2xZ | OG-et-1 stopped on the naming gate (legacy `platinum/` keys). CTO ruling (msg 34173): gateway code types no S3 key and reads it from its DATA_CATALOG row; Terraform grants use the legacy branch with a project receipt; grant prefixes carry no firm token. `~MI` asked for the G5 row ids | msgs 34171, 34173 |
+| 18:3xZ | G2: OG-cl-0 merged (`257e9b70e6`): every vendor MISSING a gateway-trusted role on its assets silver prefix except Schwab's; 49F Black Diamond has no assets silver for holdings or transactions. CTO accepted the staged cut: Schwab first, then Orion/Inflection, BD Cottonwood, SmartX, Commonwealth (msg 34176) | msgs 34174, 34176 |
+| 18:3xZ | OG-ap-18 (the G1 release) amended A2 and sent to `~Z` as Phase A, beside OG-ap-17's Phase A on live `bacec95ccd`; the first fully signed deploys | @74454c5e91 |
+
+State at 18:4xZ: workers running: OG-nw-1 (~82), OG-et-2 (~85). Held: OG-et-1 and OG-et-3 on `~MI`'s catalog rows; G3 hookup (8 tools) until ap-18 deploys; G2 Schwab cell on its catalog rows.

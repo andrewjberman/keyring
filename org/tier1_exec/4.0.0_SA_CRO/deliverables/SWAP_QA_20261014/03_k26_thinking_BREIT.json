@@ -1,0 +1,83 @@
+{
+ "cases": {
+  "BREIT": {
+   "candidates": [
+    {
+     "known": {
+      "asset_class": "alternatives",
+      "sub_asset_class": "Real Estate"
+     },
+     "sources": {
+      "https://www.investwithroots.com/learn/the-ultimate-reit-comparison-for-2026-vnq-breit-and-roots": 200
+     },
+     "symbol": "VNQ",
+     "yahoo": {
+      "last": "2026-10-14",
+      "rows": 252
+     }
+    }
+   ],
+   "known": null,
+   "sources": {
+    "https://www.breit.com/": 403,
+    "https://www.investwithroots.com/learn/the-ultimate-reit-comparison-for-2026-vnq-breit-and-roots": 200,
+    "https://www.morningstar.com/alternative-investments/real-estate-funds-private-reits-breit-what-you-need-know": 403
+   },
+   "swap": {
+    "parsed": {
+     "asset_class": "Real Estate",
+     "candidates": [
+      {
+       "reason": "Vanguard Real Estate ETF providing broad, liquid exposure to publicly traded U.S. equity REITs across industrial, residential, retail, and specialized real estate sectors. It is a low-cost, exchange-traded alternative to private non-traded REITs like BREIT, though public REITs exhibit higher market volatility and different liquidity characteristics.",
+       "sources": [
+        "https://www.investwithroots.com/learn/the-ultimate-reit-comparison-for-2026-vnq-breit-and-roots"
+       ],
+       "symbol": "VNQ"
+      }
+     ],
+     "capitalization": null,
+     "credit": null,
+     "duration": null,
+     "identified_asset": "Blackstone Real Estate Income Trust (BREIT)",
+     "reason": "BREIT is Blackstone's non-listed Real Estate Income Trust, offering individual investors access to institutional-grade private commercial real estate concentrated in data centers, industrial/logistics, student housing, multifamily/residential, and Sunbelt markets. It is not publicly traded on standard exchanges and provides only limited, discretionary monthly liquidity through repurchase plans. The closest coarse ETF alternative is a broad U.S. REIT ETF such as VNQ, which was explicitly referenced in available sources as a publicly traded comparative proxy; however, public REITs involve structurally different risks, fees, volatility, and correlation to equity markets.",
+     "region": "United States",
+     "security_type": "Non-listed REIT",
+     "sources": [
+      "https://www.breit.com/",
+      "https://www.investwithroots.com/learn/the-ultimate-reit-comparison-for-2026-vnq-breit-and-roots",
+      "https://www.morningstar.com/alternative-investments/real-estate-funds-private-reits-breit-what-you-need-know"
+     ],
+     "sub_asset_class": "Diversified Commercial Real Estate"
+    },
+    "rounds": 2,
+    "searches": 1,
+    "seconds": 82.6,
+    "usage": {
+     "completion_tokens": 4009,
+     "completion_tokens_details": {
+      "reasoning_tokens": 3581
+     },
+     "prompt_tokens": 8751,
+     "total_tokens": 12760
+    }
+   },
+   "yahoo": {
+    "last": null,
+    "rows": 0
+   }
+  }
+ },
+ "model": "kimi-k2.6",
+ "probed_at_utc": "2026-10-14T18:24:12Z",
+ "qa_receipt_sha256": "b89b56d2e49c7c632f3a731964fe0832df3c839c5a6ba361e96f268671eede15",
+ "request_fields": {
+  "tools": [
+   {
+    "function": {
+     "name": "$web_search"
+    },
+    "type": "builtin_function"
+   }
+  ]
+ }
+}

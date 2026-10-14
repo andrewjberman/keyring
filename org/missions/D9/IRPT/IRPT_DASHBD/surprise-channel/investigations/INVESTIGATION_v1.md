@@ -12012,3 +12012,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "The constant is calibrated on one table; a firm whose grid cells carry long figures would see the same estimate used. The change applies to every firm's grids, not only Inflection's."
 }
 ```
+
+## IRPT_DASHBD-D2-S37 -- Cottonwood's served performance gold ends 2026-09-25 (12 trading days behind T-1) and its channel has no scheduler
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S37",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-14T18:40:00Z",
+  "one_line": "s3://opal-data-cottonwood/irpt/cottonwood/gold/holdings_performance_daily/ newest partition is date=2026-09-25, 12 trading days behind T-1 2026-10-13; the feeding channel blackdiamond_z09 has no scheduler (relayed from dell1); Cottonwood's irpt holdings end 2026-10-08, 3 trading days behind, writer unresolved. P1 (all clients at all firms, due Nov 15) cannot be met for Cottonwood until a scheduled producer exists.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Andrew-direct 2026-10-14 ~17:3xZ (P1): the performance reporting tab functional for all clients at all firms by Nov 15 internal; CLAUDE.md: production pipelines MUST be scheduled.",
+  "world_is": "This seat's reads 2026-10-14 ~18:4xZ: list-objects-v2 of the prefix shows newest date=2026-09-25 (then 09-24); lib/trading_calendar.trading_days_behind(2026-09-25, 2026-10-13) = 12 (the hardcoded NYSE fallback, 2010-2027). Relayed, not read here: blackdiamond_z09 (sources.json:159) has no scheduler; irpt holdings ends 10-08 with its writer unresolved (4.0.0_SA_CRO P3_COTTONWOOD_BACKEND_CENSUS_AND_PORTFOLIO_GROUP_20261014.md @1b7cad0123, Q-B, on origin/box/dell1; relay msg 7800). Distinct from DB-b-201 (Cottonwood silver for the reporting gold stops 2026-06-23).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-objects-v2 --bucket opal-data-cottonwood --prefix irpt/cottonwood/gold/holdings_performance_daily/ (rail-checked: no comp-freshness entry), 2026-10-14 ~18:4xZ",
+      "lib/trading_calendar.py trading_days_behind -> 12",
+      "relay 0.0.0_AB_MSTR~DELL2 msg 7800 from 1.0.0_SA_CTO~DELL1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D2"
+}
+```
