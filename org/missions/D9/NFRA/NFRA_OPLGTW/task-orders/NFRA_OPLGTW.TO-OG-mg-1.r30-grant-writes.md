@@ -151,6 +151,19 @@ commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing
   - mg1.AC2 base FAIL as expected: ledger absent; the live read works (policy items 17) and reads andrew no, bbg no.
 - Open for the halves, not this seat: R1's `operations` (Alyssa's no-download carried, or `download_filtered` added).
 
+- A1 (issuer, 2026-10-14 ~01:4xZ, row Z-S103): the comp-iam preflight named `dynamodb:TransactWriteItems`, which is
+  not an IAM action (accessanalyzer INVALID_ACTION). Simulating it denies any non-admin principal, so it would have
+  manufactured a STOP; this was the issuer's defect at the cut. Ruled:
+  - **Writes:** Phase A simulates `dynamodb:PutItem` and `dynamodb:UpdateItem` on `opal-gateway-access-admin`, WITH the
+    `dynamodb:LeadingKeys` context `POLICY#*`. `GetItem` is unconditioned. These, read allowed, settle the write path:
+    `activate()` builds only Put ops and never deletes.
+  - **Before-record reads** (strong `Scan`/`Query` of the store) run under the CALLING principal
+    (`0.7.0_AE_CloudOps~Z`'s own read access), because the role holds no Query or Scan. Reads only; no write ever runs
+    outside the role.
+  - Carried to the cut template: an IAM preflight names only actions that exist (check with
+    `accessanalyzer validate-policy`), and supplies the condition context the policy keys on.
+  - Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>37</round>
 <workstream>R37-GRANTS</workstream>
