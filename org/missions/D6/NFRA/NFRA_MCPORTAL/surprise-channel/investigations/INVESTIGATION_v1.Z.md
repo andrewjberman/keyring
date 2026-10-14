@@ -2111,3 +2111,97 @@
   }
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W28-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~28",
+  "surfaced_at": "2026-10-14T18:51:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "one_line": "MP-pd-4 does not say which HTTP status carries a REFUSED verdict; the client throws on every non-2xx, so a REFUSED sent with a non-2xx status shows its status and body, not its reason and detail.",
+  "spec_asserts": "setPersonAccess returns the verdict object whether WRITTEN or REFUSED and throws only on a transport failure, the way narrowGrant handles a refusal (worker face lines 52-53); a REFUSED verdict shows its reason and detail on the page and a 403 shows 'not allowed' (lines 66-67).",
+  "world_is": "narrowGrant's readJson throws on every non-2xx, so both halves of that sentence hold only if the writer answers REFUSED with a 2xx, and the contract (lines 46-47) does not state the status. Built: a non-2xx throws AdminStatusError carrying its status and body, a 2xx returns the verdict object, a 403 reads 'not allowed' and is never retried. Not checked against the live writer (no network call in this cell). If the writer answers REFUSED with a non-2xx, the page shows 'admin API <status>: <body>' and not the reason.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "mcportal@c24bcd0 src/api/admin.ts statusOrJson(): throws AdminStatusError when !response.ok, before any verdict is read",
+      "mcportal@17dcbb2 src/api/admin.ts readJson() and narrowGrant(): throws on !response.ok, the refusal path the contract cites",
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pd-4.people-page-controls.md@ef2a5b14e1 lines 46-47, 52-53, 66-67"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W28-S2",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~28",
+  "surfaced_at": "2026-10-14T18:51:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The route header at mcportal 17dcbb2 lists ten /api/admin routes, but the client also calls GET /api/admin/people (MP-pc-3) and that route is absent from the header.",
+  "spec_asserts": "The header of src/api/admin.ts is the fixed set of /api/admin routes the client calls, as its first line says.",
+  "world_is": "At 17dcbb2 getPeople() calls /api/admin/people and the header omits it, so the header is one route short of the calls. This cell adds the two person-access route lines and reworded the header so it no longer claims the People read is listed; it does not add the missing line, which is a neighbouring defect outside the order. Nothing reads the header at runtime.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "mcportal@17dcbb2 src/api/admin.ts lines 2-12: the header's route list, with no GET /api/admin/people line",
+      "mcportal@17dcbb2 src/api/admin.ts getPeople(): fetch('/api/admin/people', { credentials: 'include' })"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W28-S3",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~28",
+  "surfaced_at": "2026-10-14T19:51:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The MP-pd-4 AC1 check prints 'bun test rc=$rc' but $rc is the exit status of the trailing tr/sed stage of its pipeline, not bun's.",
+  "spec_asserts": "pd4.AC1.sh reports 'bun test rc=<n>' as the exit status of `bun test src`, and its RESULT line requires rc=0.",
+  "world_is": "In org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pd/checks/pd4.AC1.sh the line out=$(cd mcportal && ... bun test src 2>&1 | tr | sed ...); rc=$? takes the status of the last pipeline stage (sed). Positive control: sh -c 'exit 3' | cat leaves $? = 0. The verdict still fails closed on the parsed pass and fail counts (fail must read 0, pass must be at least 8), so a failing run still reads FAIL; the printed rc just cannot show bun's own exit code. Not repaired here: the script is outside this cell's write paths.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pd/checks/pd4.AC1.sh (the out=$(... | tr | sed) line and the rc=$? line)",
+      "positive control in the worker shell: sh -c 'exit 3' | cat, then echo $? printed 0"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W28-S4",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~28",
+  "surfaced_at": "2026-10-14T19:55:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The worker procedure asks for the task order's <status> to be flipped to complete with the instance; the order's <paths> does not grant the task-order file, so this worker did not flip it.",
+  "spec_asserts": "Worker procedure: flip the task order's <status> to complete and commit the instance, deliverables and flip together; the order's <paths> is the write grant (mcportal src/pages/people, src/api/admin.ts, src/api/admin.test.ts, the deliverables folder, the surprise-channel investigations folder).",
+  "world_is": "The <status> line is in the record face of org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pd-4.people-page-controls.md (line 138, pending), a path outside <paths>. The instance validates rc=0 (proof-of-spec-check, AC1). The launcher message did not ask for the flip. Left for the COO to flip.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pd-4.people-page-controls.md@31df432618 line 138 (<status>pending</status>, after the RECORD FACE marker) and section 3 <paths>",
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~28/NFRA_MCPORTAL.TO-MP-pd-4.people-page-controls.proof_of_spec.json (rc=0 from .tools/proof-of-spec-check.py)"
+    ]
+  }
+}
+```

@@ -61,7 +61,7 @@ CloudFront behavior `/api/scoped/tickets/*`:
    The presign is for exactly that key and content type. The bucket is `BUCKET_TEMPLATE.format(firm=<firm>)` and the key prefix is `KEY_TEMPLATE.format(firm=<firm>)`, read from env
    `TICKET_ATTACH_BUCKET_TEMPLATE` and env `TICKET_ATTACH_KEY_TEMPLATE` (each contains `{firm}` exactly once, the key template ends with `/`;
    their values are the builder output of `TO-R18-TR1`. The `state` tier homes a bucket PER FIRM (doctrine R21, msg of worker 43, row
-   `TCKT_VNEXT-D2-W43-S1`), for example `opal-data-{firm}` and `portal/{firm}/state/ticket-attachments/trade-form/`); either unset or
+   `TCKT_VNEXT-D2-W43-S1`), for example `opal-data-{firm}` and `portal/{firm}/state/ticket_attachments/trade-form/`); either unset or
    malformed: 503 and nothing presigned. Bytes never pass through the Lambda.
 3. `GET /api/scoped/tickets/{ticketId}/attachment` (route name `attachment_open`). Caller and fence exactly as `get_ticket` (C-FENCE);
    the ticket must carry an `attachment` whose `key` starts with `KEY_TEMPLATE.format(firm=<the ticket's answers.firm>)`, else 404. 200 returns
