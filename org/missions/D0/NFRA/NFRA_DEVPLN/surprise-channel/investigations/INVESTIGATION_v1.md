@@ -1037,3 +1037,30 @@
   "world_is": "Case (a) cannot run without the production git source, because the seam is ignored when OPAL_STATE_ROOT is unset. The production source then issues git show against the real origin/box/zz9 ref. The ref does not exist, so nothing is read and the case passes, but the test does touch the real repo's ref namespace. A box that did have a real origin/box ref would be read. The tests-read-no-real-ref rule holds only because zz9 is absent. Reported for the lane owner's ruling; the production path is unchanged and no test switch was added to the git source for this case."
 }
 ```
+
+## NFRA_DEVPLN-S5 -- the unblock tick cannot record a wait on a call that lives on another box's list
+
+```json
+{
+  "id": "NFRA_DEVPLN-S5",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~DV",
+  "surfaced_at": "2026-10-14T02:10Z",
+  "one_line": "unblock.py tick --owed-call reads only THIS box's open-call list, so a project waiting on Andrew's approval rows that live on ANOTHER box's list (dell2) cannot record the wait: each tick counts empty and the count reached 5 (THIRD-EMPTY-TICK) on a genuine wait.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO round-6 analysis section 3: 'a dated wait recorded with unblock.py tick --owed-call on the five rows, not an empty tick'. The issuer ran unblock.py tick --serial 2.0.0_SA_COO~DV --project NFRA_DEVPLN --result nothing --owed-call <id> --owed-owner andrew for dell2-20261013T221411Z-3635, -222707Z-8500, -222709Z-7b45, -222710Z-fde0, -231910Z-7773; output: UNBLOCK-TICK ... empty=1, empty=2, empty=3 verdict=THIRD-EMPTY-TICK, empty=4, empty=5",
+      "the five rows are OPEN on dell2's list (cluster copy, read ~02:00Z); this box's list holds one NFRA_DEVPLN call only (laptop-20261013T223003Z-3d7e, the law-edit card)",
+      "python .tools/unblock.py tick --help: '--owed-call: open-call id the project waits on (WAITING while OPEN or HELD)'; '--owed-owner: serial of the seat that owes the act' (Andrew is not a serial)",
+      "python .tools/unblock.py list: 41 cases, 0 for NFRA_DEVPLN, so no case was opened; the issuer then recorded a real work tick (round 7 cut, worker spawned) which resets the count"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A dependency with a live owner and a time is a WAIT and is recorded, not counted (/next-calls --drive); the CTO's round-6 analysis says to record the wait on the five dell2 rows with --owed-call.",
+  "world_is": "The instrument cannot see a call that lives on another box's list, and it cannot take 'andrew' as an owner. Until it can, a project whose only open item is a cross-box approval at Andrew counts every drive tick as empty. The issuer did not add a laptop pointer card for Andrew (it would duplicate five cards he already holds). Options for the CTO: widen --owed-call to read the cluster copy of every box's list (the same cluster-first read that approval-status now uses), or accept a laptop pointer call."
+}
+```
