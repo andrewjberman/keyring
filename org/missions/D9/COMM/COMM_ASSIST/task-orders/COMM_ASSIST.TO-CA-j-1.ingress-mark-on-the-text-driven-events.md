@@ -48,6 +48,7 @@ one. To roll out safely, the handler checks in one of three MODES from an enviro
 ### RULES
 
 - Edit nothing but the files in `<paths>`. This is a code change with tests; it is NOT deployed here (later cells add the secret, set the mode and deploy it).
+- AMENDMENT 1 (issuer ruling on row COMM_ASSIST-W19-S2): `data/transcripts/scripts/tests/test_teams_chat_natural.py` joins `<paths>`. Its tests assert the exact payload of the handler's own `sms.reply` re-sends (about lines 49-50 and 58), which now carry `mark_at` and `mark`; update them as you updated the tenant tests (the original fields, and that the mark verifies). Edit nothing else in it. Then re-run CAj1-AC2 and the whole flow-test set under `data/transcripts/scripts/tests/`, and flip `<status>` to `complete` only when all three criteria pass and the instance is VALID.
 - If a commit gate refuses the `NAMES.json` row, file a BLOCKING row with the refusal text and stop on that criterion; do not widen.
 - Refuse a criterion you cannot satisfy as written and report the refusal with its measurement; do not repair or widen it.
 
@@ -81,6 +82,7 @@ data/transcripts/scripts/teams_chat/ingress_mark.py
 data/transcripts/scripts/teams_chat/tenant.py
 data/transcripts/scripts/teams_chat/NAMES.json
 data/transcripts/scripts/tests/test_teams_chat_tenant.py
+data/transcripts/scripts/tests/test_teams_chat_natural.py
 data/transcripts/scripts/tests/test_ingress_mark.py
 org/missions/D9/COMM/COMM_ASSIST/task-orders/COMM_ASSIST.TO-CA-j-1.ingress-mark-on-the-text-driven-events.md
 org/missions/D9/COMM/COMM_ASSIST/deliverables/0.9.0_WK_COMM_ASSIST~19/
