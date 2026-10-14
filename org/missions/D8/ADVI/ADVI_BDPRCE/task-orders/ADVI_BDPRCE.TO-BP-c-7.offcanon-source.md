@@ -80,7 +80,7 @@ Instance at the path above. Commit your scripts, `OFFCANON.json`, `OFFCANON.md` 
 
 **ISSUER NOTES:** round-2 analysis item 5 (second half); closes the census condition of `W4-S2`; brings `W7-S4` and `W4-S8` into view (the identity counts). The fix of a lot's price source is a later cell under FWD-7. Read-only; class LOCAL.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <workstream>OFFCANON</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-c-7</to_id>

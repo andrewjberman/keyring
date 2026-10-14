@@ -1945,3 +1945,78 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "The checker measures from the merge-base with the primary checkout, which is e82f01c4ff, so the issuer's task order edit on this branch counts as a change of this cell. Every path this seat wrote is inside its grant. The seat did not write the task order and did not rewrite history to clear the row. The base or the issuer's cut point has to change for AC3 to read OK."
 }
 ```
+
+## ADVI_BDPRCE-D1-W19-S1 -- 34 of the 1,859 PRICED_OFF_NO_CANONICAL lots carry the literal string nan as current_price, so no served price exists for them to match
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W19-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~19",
+  "surfaced_at": "2026-10-14T02:07:01Z",
+  "one_line": "34 of the 1,859 PRICED_OFF_NO_CANONICAL lots carry the literal string nan as current_price and market_value, so no served price exists for them to match.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lot_extract.csv at C:/dev/wk-bdprce-r2-7-data (sha256 e7e618d76516c8b7977179aefb3f77ce4fc13c17fbcf1dbeb92001a6e0a2b50b, matched): 34 rows with current_price == 'nan', all 34 with price_class PRICED_OFF_NO_CANONICAL (31 z0, 3 catch_all, 27 distinct objects)",
+      "CENSUS.json@0.9.0_WK_ADVI_BDPRCE~7 off_canonical_detail reports no_price 0, so the round-2 census does not count a nan price as a missing price"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-7 section 1: the 1,859 lots are served at a current_price that equals no canonical price row for the asset on data_as_of, so each lot has a served price to trace.",
+  "world_is": "34 of the 1,859 have no served price (literal nan). OFFCANON.json counts them UNEXPLAINED under the closed class set, not as priced off canonical. The round-2 bucket holds them while its no_price count is 0."
+}
+```
+
+## ADVI_BDPRCE-D1-W19-S2 -- The newest Schwab RPS partition is date=20260723, so no RPS partition covers the 2026-10-09 snapshot that the lots are dated to
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W19-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~19",
+  "surfaced_at": "2026-10-14T02:07:01Z",
+  "one_line": "The newest Schwab RPS partition under schwab/silver/rps/ is date=20260723 of 636 objects, so no RPS partition covers the 2026-10-09 snapshot; the RPS repricing source named in B_01 cannot price a 2026-10-09 lot from a same-day row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-objects-v2 --bucket opal-data-bd --prefix schwab/silver/rps/ (2026-10-14T01:4xZ): 636 objects; last key schwab/silver/rps/date=20260723/data.parquet",
+      "B_01.holdings_lots.py@33b647a50f:529-557 _load_latest_rps_partition: candidate keys for the snapshot date, then the latest listing under S3_RPS_PREFIX"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-7 section 1a item 3: the Schwab RPS price is a named other source the cell may trace a served price to.",
+  "world_is": "The RPS source has no partition after 2026-07-23, so a lot dated 2026-10-09 cannot take its price from a same-day RPS row. This is a fact about the partition listing; it is not a finding about any served price."
+}
+```
+
+## ADVI_BDPRCE-D1-W19-S3 -- silver/historical_prices.parquet cannot be bound to the off-canonical lots by name: the table has no asset_name and the lots carry no ticker
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W19-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~19",
+  "surfaced_at": "2026-10-14T03:19:54Z",
+  "one_line": "The BP-c-7 named-source list includes silver/historical_prices.parquet, but that table has no asset_name column and all 1,859 lots carry a blank ticker_served, so a historical close cannot be bound to a lot by name; a value-only check gives 3 coincidences of 158 with a zero shift control, none bindable.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver/historical_prices.parquet columns (local copy C:/dev/wk-bdprce-r2-7-data/historical_prices.parquet, pyarrow schema): date, ticker, close, fetch_date, source; no asset_name",
+      "lot_extract.csv (sha256 matched): ticker_served blank for 1,859 of 1,859 PRICED_OFF_NO_CANONICAL rows; ticker_lookup maps the 340 off-canonical names to UNKNOWN only; YF_OVERRIDES (lib/ticker_overrides.py:28) has 0 of the 340 names"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-7 section 1a item 3: silver/historical_prices.parquet is a named other source a lot's served price may be traced to, by name.",
+  "world_is": "No name-to-ticker join exists for these lots, so the historical source can be read only by value. The value-only check on 2026-10-09 (scripts/bp_c7_named_historical.py) matches 3 of 158 unexplained priced triples, against 0 of 158 under a +0.37 shift; the 3 are non-discriminating prices (0.0001, 1.0, 9.69) and are not classed."
+}
+```
