@@ -10709,3 +10709,78 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W162-S1 -- an absent chart has no series, so the order gives its title no source; it takes the benchmark title
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W162-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~162",
+  "surfaced_at": "2026-10-14T11:36:58Z",
+  "one_line": "a chart title is derived from the series drawn; an absent chart draws none, so its title has no source in the order",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-197 rule 4: each chart's title is derived from the series it draws; the 12-month chart may say household only when a household series exists in the data.",
+  "world_is": "An absent chart draws no series, so the rule has no input for it. The model titles the absent 12-month chart with the benchmark title (the figure it would draw) and its absent note names that title; chartTitleOf in reportModel.ts decides it. The sample draws the four benchmark series, so the printed title is unaffected in the sample.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts: chartTitleOf and BENCHMARK_CHART_TITLE (portal commit 55af216c, branch wk-IRPT_DASHBD-162-portal)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~162/RENDER_FIX_R104.json: chart_titles (the printed title of the drawn chart)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W162-S2 -- the round-103 kind table keyed the unheld phrase to the not-applicable kind, so a bare note named the unheld classes
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W162-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~162",
+  "surfaced_at": "2026-10-14T11:36:58Z",
+  "one_line": "the round-103 kind rules read the unheld reason as not-applicable; the unheld class now prints the dash and adds no note",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-197 rules 2 and 3: an unheld class prints the baseline dash, and no bare round-103 kind sentence prints.",
+  "world_is": "The round-103 KIND_RULES matched the unheld phrase 'no holding in this asset class' to the not_applicable kind, so the holdings section carried the bare sentence for the unheld classes. This cell removes that phrase from the not-applicable rule (it keeps 'does not apply') and an unheld entry adds no section note, because the dash carries it. The order names no note for a class the household does not hold; this reading is the worker's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts: KIND_RULES before the cell (portal commit 7c9a94d0, branch wk-IRPT_DASHBD-158-portal)",
+      "portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts: isUnheldEntry and absentNotesOf after the cell (portal commit 55af216c, branch wk-IRPT_DASHBD-162-portal)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W162-S3 -- the criterion's percent want-set formats a stored negative zero as -0.0%, which no correct render prints; DB104-1-AC1 fails on its own formatting
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W162-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~162",
+  "surfaced_at": "2026-10-14T11:38:26Z",
+  "one_line": "DB104-1-AC1 fails on tab_html: the checker's stored-percent set holds -0.0%, a Python formatting of a stored negative zero; the render prints 0.0%",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB104-1-AC1: every stored percent of the sample prints at its stored scale in both HTMLs (the checker formats each stored percent with Python %.1f and requires it in the visible text).",
+  "world_is": "The round-103 sample stores a negative zero in two benchmark cells (avs.ytd.benchmark_short_term and pvs.ytd.benchmark_short_term). Python formats it as -0.0% and the checker requires that string; the render prints 0.0% in both HTMLs, the correct zero at the stored scale (the JavaScript toFixed form). The criterion fails on the checker's formatting, not on the render: 25 of 26 stored percent strings print in the tab and in the export. The checker is outside this worker's grant and is not edited; the decision belongs to its owner.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r104/p104_round104.py: check_render, the want-set formatted with %.1f (the first failing clause prints 'a stored percent prints off its stored scale')",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~162/RENDER_FIX_R104.json: outputs.tab_html and outputs.export_html (the render record, sha256 recorded)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
