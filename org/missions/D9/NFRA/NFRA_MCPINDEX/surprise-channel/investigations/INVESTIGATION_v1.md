@@ -7505,6 +7505,91 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S12",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T20:25:58Z",
+    "one_line": "The 8 mapped 49F rows carry a null clean bucket (the live bucket name is a firm token), so the registry rule read on the clean bucket yields no row for their pairs; the checker keys the rule on the full bucket, and the generator follows the checker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "A6 registry rule (order section 1, registry files): one catalog-* legacy_addresses row per distinct (bucket, prefix) pair of each in-scope contract whose clean row has a non-null prefix and whose bucket starts opal-data-. The rule names the clean row bucket.",
+    "world_is": "The clean bucket is null for the 8 MAPPED contracts, so read on the clean bucket the rule yields 135 pairs. Read on the full bucket it yields 143: the 8 pairs on opal-data-bd with silver/<table>/ prefixes are added. The checker (c14_check.py ac1: needs_registry, glib.row_bucket) grades the 143. The generator writes 143 catalog-* rows, one pair (opal-data-etfs rivalfunds/etfs/gold/security_market/) held by another project and not added. Measured: 143 of 143 resolve (AC1 PASS).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round14/checks/glib.py@c082eef397 (needs_registry, row_bucket)",
+        "workflows/atom_decomposition/gen_silver_rows.py@adecc879df (registry_rows reads the full bucket)",
+        "infra/logic/registry/legacy_addresses.json@adecc879df (8 catalog rows on opal-data-bd)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S13",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T20:25:58Z",
+    "one_line": "The A6 tranche plan presumes each tranche commit lands new rows; 157 of the 216 regenerated rows were already byte-identical at HEAD, so tranche 2 commits its manifest alone and tranches 1 and 3 commit only their changed rows.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "A6 landing order: one commit per tranche, each through the naming gate; tranche 1 = 90 rows (G5, G6, G3), tranche 2 = 45 Schwab rows of G2, tranche 3 = 81 rows (every other row, including G4).",
+    "world_is": "Identical at HEAD before the tranche commits: tranche 1 48 of 90 (42 changed, commit 70d05eed34); tranche 2 45 of 45 (0 changed, commit 9f13800ab0 carries tranche2.json only); tranche 3 64 of 81 (17 changed, commit fdfbc4be43). Naming-gate verdict per staged set: 0 REFUSE lines. The tranche membership counts are 90, 45 and 81.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git ls-tree HEAD workflows/atom_decomposition/catalog_entries (45 of 45 Schwab rows tracked, git diff HEAD on them empty)",
+        "commits 70d05eed34, 9f13800ab0, fdfbc4be43 (msg-verify MATCH)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S14",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T20:25:58Z",
+    "one_line": "The task order status flip (worker face section 5, step 2) is an edit to the order file, which is not one of the nine entries of <paths>. The flip is made on the launcher direction, which names the order file as the grant; the commit gate verdict is recorded with it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Worker face section 5 step 2: APPEND <status>complete</status> to the task order only if all three criteria PASS on the committed state, and commit the instance, the deliverables and the flip together. Section 3 names the write surfaces.",
+    "world_is": "The task order file NFRA_MCPINDEX.TO-MX-c-14.silver-table-rows-generator-g2-g4-g5-g6.md is not among the nine <paths> entries. The only edit to it is the appended status line.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-14.silver-table-rows-generator-g2-g4-g5-g6.md@c082eef397 (section 3 paths)",
+        "worker face section 5 step 2 of the same file"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S15",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T20:25:58Z",
+    "one_line": "The naming gate verdict on the step-1 commit reads PASS 0 graded over 4 in-domain paths: the generator, its test and two registry files were seen and none was graded, so that PASS is not evidence that the code types no firm token.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Section 2 bound 3: no firm, product or contract token is typed as a literal in gen_silver_rows.py; the commit-time naming gate refuses a new hand-kept token in code.",
+    "world_is": "Commit adecc879df gate output: COVERAGE 4 seen, NAMING-GATE PASS 0 graded. The tranche verdicts read PASS 46 graded and PASS 18 graded over row files and manifests, not code. The check I hold for the code: a scan of the committed generator single-line string literals against the catalog_tokens whole (19) and segment (10) sets: 0 hits.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".scratch/commit1.out of adecc879df (naming-gate DENOMINATOR and COVERAGE lines)",
+        "workflows/atom_decomposition/gen_silver_rows.py@adecc879df (scan, 0 hits)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
