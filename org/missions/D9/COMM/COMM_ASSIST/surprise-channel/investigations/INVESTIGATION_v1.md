@@ -1434,6 +1434,30 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
 }
 ```
 
+```json
+{
+  "id": "COMM_ASSIST-W26-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~26",
+  "surfaced_at": "2026-10-14T14:10:43Z",
+  "one_line": "The safe-commit.sh call for the one-line Terraform edit ran past the 120-second tool bound and was moved to a background task; its exit code (0) and its commit (da4014f5b2) were read afterwards from git log.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/transcripts/chat_assist.tf@da4014f5b2: the one-line default edit landed (git log -n1 shows da4014f5b2 for this path)",
+      "background task b3x97w0wx: the commit-gate printed OK for 1 of 1 file(s); the wrapper reported completed with exit code 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order says to commit the edit first with bash .tools/safe-commit.sh and to read the commit's short hash afterwards; it states no duration for the commit call.",
+  "world_is": "For a one-file, one-line commit the safe-commit call took longer than the 120-second bound of this worker's Bash tool; the call was moved to a background task and completed with rc 0 and the commit landed.",
+  "notes": "Recorded as observed, with no verdict on its cause. The commit-gate output in the background file showed the pre-commit reflex and naming gate running on the one file, and the client account-id list WARN named in the order was not printed."
+}
+```
+
 ## COMM_ASSIST-W25-S1 -- the H1 control pins SOURCES to the four original names; the cell's contract makes it six, so the two checks cannot both pass
 
 ```json
