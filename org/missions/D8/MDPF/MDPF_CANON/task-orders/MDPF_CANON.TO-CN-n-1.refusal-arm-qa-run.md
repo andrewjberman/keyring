@@ -36,6 +36,12 @@ re-sets every frontier `account_count` from its own count source AFTER the plant
 keeps count and value both present and leaves the line not held. This is the issuer's INFERENCE from that log line, not yet a measured result; your run measures it. Run `selftest`, `plan`, the clock check (outside 13:00Z-14:10Z), then `drive` ONCE into the same `run/`
 directory, then section 4. Whatever the run does, Step 3 applies unchanged, and this is the last drive of this order: if it is refused for any other reason, keep the record, file the row and stop.
 
+**AMENDMENT 3 (the issuer's, ~15:3xZ; you are the FOURTH seat on this slot, and the plant has MOVED).** The third seat's run (row `MDPF_CANON-D1-W21-S6`, inherited, do not edit) was refused by `GLOBAL COMPOSITION GATE FAILED ... 1 band/total violation`:
+the composition gate runs inside the Global build, before `guard_global_min_firms_fold` is called, so ANY plant placed inside the build trips an earlier gate. The instrument now plants AT THE GUARD'S OWN CALL SITE: it wraps
+`guard_global_min_firms_fold`, runs the REAL guard on a deep copy whose firm scopes carry the one-firm pool, and when the guard refuses Global it hands the run on with the ORIGINAL scopes and Global dropped (the guard's own swallowed-refusal
+shape). Every earlier gate therefore sees the unplanted build. Expected: `errors=['global']` with the `GLOBAL MIN-FIRMS FOLD REFUSED:` prefix, `writes=0`, `blocked-calls=0`. The `drive` command line is unchanged. Run `selftest`, `plan`, the clock
+check (outside 13:00Z-14:10Z), then `drive` ONCE into the same `run/` directory, then section 4. This is the FINAL drive of this order: a refusal for any other reason is kept as a record and a row, and the cell then stands on its guard arm (AC3).
+
 **The instrument** (`org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_n_1.py`; read its header and the functions `plant_single_firm_pool` and `cmd_drive`; never edit it):
 - `drive --run-dir DIR` calls the consolidator's `build_all(trigger, dry_run=True, out_dir=<temp>)` ONCE. `dry_run=True` writes nothing to S3 (the handler documents QA-local mode as "ZERO S3
   writes anywhere"). The instrument also installs a guard on every botocore call: any operation not named Get, Head, List, Describe, Lookup or Simulate RAISES and is recorded. It wraps
@@ -131,7 +137,7 @@ VersionId is unchanged (the served prefix is listed before and after: 0 writes);
 - **Risk and class:** LOCAL. `worker` (not light): one run that may need diagnosis before a finding row.
 - **Fanout:** one cell, one chain, slot ~21. Base box/dell1.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <to_id>MDPF_CANON.TO-CN-n-1</to_id>
 <slot>~21</slot>

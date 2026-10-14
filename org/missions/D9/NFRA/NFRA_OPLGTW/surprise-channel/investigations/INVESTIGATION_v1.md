@@ -13531,3 +13531,61 @@ name the one known failure instead of silently inheriting it.
   "notes": "Whether a public market-overview path is intended (a landing page) or a leftover is the CTO's call, not this seat's; no CloudFront change is proposed here. If unintended, the remedy is a CloudFront behavior change (a deploy, with its ledger). Either way, a G3 tool must never treat json-tiered/ as an authenticated store. The security-scanner behavior needs one authorizer read before it is classed."
 }
 ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S115",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T15:23:40Z",
+    "one_line": "OG-zs-1 step 3 cannot read 0/1/0 and step 4 targeting cannot fix it: the portal-auth root plan reads 0 to add, 2 to CHANGE, 0 to destroy, and the second change is aws_wafv2_web_acl.opal_cloudfront_protection -- which the distribution's own web_acl_id reference makes a DEPENDENCY, so -target on the distribution still plans 2 of 2. The ACL limb is a pure minus/plus churn of three IDENTICAL managed-rule-group blocks (0 attributes differing either way), so it moves nothing, but it is still a live UpdateWebACL on a security control outside this cell's surface, and the criterion as written is unmeetable. NO APPLY RAN.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform plan -input=false on the portal-auth root (terraform 1.15.8, hashicorp/aws 5.100.0) -> Plan: 0 to add, 2 to change, 0 to destroy; saved whole at W/ZS1_PLAN.txt, 312 lines",
+        "change 1 is this cell's own: aws_cloudfront_distribution.portal gains lambda_function_association viewer-request auth-validator-edge:23 include_body=false on the /json-tiered/* behavior",
+        "change 2 is aws_wafv2_web_acl.opal_cloudfront_protection: rule blocks common-rule-set (AWSManagedRulesCommonRuleSet, priority 4), ip-reputation (AWSManagedRulesAmazonIpReputationList, priority 3) and known-bad-inputs (AWSManagedRulesKnownBadInputsRuleSet, priority 5), each REMOVED and RE-ADDED",
+        "the two halves of change 2 compared line by line after normalising the markers and the trailing -> null: 39 minus lines, 39 plus lines, sets IDENTICAL, ordered sequences IDENTICAL, 0 attributes on only one side -- the resulting rule set equals the current one",
+        "live ACL read on the same plane: 6 rules -- BlockedIPs 0, RateLimitRule 1, AuthLoginRateLimit 2, ip-reputation 3, common-rule-set 4, known-bad-inputs 5",
+        "the churn is NOT this cell's: terraform plan -target=aws_wafv2_web_acl.opal_cloudfront_protection, which excludes the edited distribution, reads Plan: 0 to add, 1 to change, 0 to destroy on its own",
+        "and targeting cannot exclude it: terraform plan -target=aws_cloudfront_distribution.portal reads Plan: 0 to add, 2 to change, 0 to destroy over 2 resources, because web_acl_id references the ACL and -target pulls dependencies in; saved at W/ZS1_PLAN_TARGETED_DISTRIBUTION.txt",
+        "terraform fmt -check on the edited file: rc=0, conformant"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-zs-1 step 3: the plan must read 0 to add, 1 to change, 0 to destroy, and the one change is the distribution's behavior-7 association list; any other change in the plan (drift from another applier) is a STOP and a BLOCKING row, never apply a plan wider than this cell. Step 4 then applies safe-apply targeted at the distribution resource, which the order treats as confining the act.",
+    "world_is": "The root plan carries a SECOND change that is neither drift from another applier nor avoidable by targeting. It is the aws provider re-hashing three identical wafv2 rule blocks, so its net effect on the ACL is nil -- measured, not assumed. But -target on the distribution does not exclude it, so ANY apply of this cell issues an UpdateWebACL that drops and re-adds the three AWS managed rule groups on the live WebACL. Whether that update leaves no window in which the ACL evaluates without them is NOT something this seat measured, and that is the only reason the no-op reading does not settle it.",
+    "notes": "Three routes, none of them this seat's to choose: (a) amend step 3 to grade the distribution's own change and name the ACL churn as accepted, saying plainly that the act still issues the ACL update; (b) resolve the churn at its cause in its own cell (the provider's rule-block representation between code and live), then re-plan and expect 0/1/0; (c) rule the ACL update acceptable because the resulting rule set is provably identical. What this seat did NOT do is substitute a narrower plan to make the criterion pass: both plan files are saved whole and ZS1_PLAN.txt is the ROOT plan the step names, reading 2 to change. The Terraform edit is committed and inert; nothing is applied and the bare path still returns 200."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S116",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T15:23:40Z",
+    "one_line": "OG-zs-1 step 2: the twin's other two edge functions are deliberately NOT attached to /json-tiered/*. Both were read at their deployed versions and both are no-ops on that path, so the order PERMITS attaching them -- this records why attaching a no-op was still declined.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "public-data-router:7 deployed code (index.mjs, 873 bytes, downloaded from the live function Code.Location): five branches, each guarded by uri.startsWith of /api/general/json-tiered/, /api/general/json/, /api/general/mdpf/, /api/general/etfs/ or the catch-all /api/general/; a URI beginning /json-tiered/ matches none and is returned unchanged",
+        "cache-control-injector:2 deployed code (index.mjs, 382 bytes): acts only when request.uri startsWith /json/ -- /json-tiered/ does not satisfy that prefix because its sixth character is a hyphen, not a slash -- so it returns the response untouched",
+        "the twin /api/general/json-tiered/* keeps all three associations; AC1 grades 3 of 3 and the edited file measures 3"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "OG-zs-1 step 2: read the code of public-data-router and cache-control-injector and add their associations ONLY if they are no-ops or harmless on the bare path; otherwise leave them off and say why in a row. The validator alone closes the hole.",
+    "world_is": "They ARE no-ops on the bare path, so the permission to attach them is satisfied -- and they are still left off. Attaching a no-op buys nothing today, costs two further Lambda@Edge invocations on every request to the path, and silently adopts whatever those functions do NEXT: a branch added later to public-data-router for /json-tiered/ would begin rewriting this behavior's URIs with no change to this behavior's own code. The order's own sentence -- the validator alone closes the hole -- is the whole requirement.",
+    "notes": "The reasoning also sits in the Terraform as a comment on behavior 7, so the next reader finds it where the decision lives rather than only in this channel. If the issuer wants the twin's three mirrored exactly, that is one amendment and a re-plan; it does not change the hole this cell closes.",
+    "dismissal_reason": "No act is owed: the code of both functions was read at the versions the twin runs, both are no-ops on the bare path, and the decision to attach neither is recorded with its reasoning here and in the Terraform. The order required a row only to say why, and this is it."
+  }
+  ```

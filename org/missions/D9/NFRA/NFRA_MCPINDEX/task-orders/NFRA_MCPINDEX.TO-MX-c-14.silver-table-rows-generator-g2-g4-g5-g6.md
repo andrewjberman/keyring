@@ -52,7 +52,7 @@ python workflows/atom_decomposition/gen_silver_rows.py --g2 <file> --g4 <file> -
 | key | value |
 |---|---|
 | `bucket`, `prefix`, `table`, `layer`, `format` | the contract's `bucket`, `s3_prefix`, `table`, `layer`, `format`, verbatim |
-| `business_meaning` | one sentence you compose: layer, format, table, bucket, prefix and the contract's `grain`, then for a `firm-scoped` row `Client data forked by firm, account last-4 and platform; Opal-internal principals only until a data grant names the firm.` else `Opal-internal data.` (at least 40 characters, never starting `NONE`). Then FROZEN OR EMPTY IS NEVER CURRENT (PRD v0.12 item 4): let `n` be the first number found under the contract's `freshness` keys `trading_days_behind_t1`, `trading_days_behind`, `trading_days_behind_T-1`; when `n` exists and is above 5, append ` NOT CURRENT: <n> trading days behind T-1.` (`<n>` as an integer); when the contract's `size.objects` is 0, append ` EMPTY: no objects.`. Append neither otherwise. Last, for a contract whose `s3_prefix` starts `blackdiamond/49f/` or `blackdiamond/49financial/` (the 49F Black Diamond tables), append ` Live store: opal-data-bd/silver/ (inferred).` (CTO msg 34127: the row keeps the measured location and says where the live store is; no other row carries this sentence) |
+| `business_meaning` | one sentence you compose: layer, format, table, bucket, prefix and the contract's `grain`, then for a `firm-scoped` row `Client data forked by firm, account last-4 and platform; Opal-internal principals only until a data grant names the firm.` else `Opal-internal data.` (at least 40 characters, never starting `NONE`). Then FROZEN OR EMPTY IS NEVER CURRENT (PRD v0.12 item 4): let `n` be the first number found under the contract's `freshness` keys `trading_days_behind_t1`, `trading_days_behind`, `trading_days_behind_T-1`; when `n` exists and is above 5, append ` NOT CURRENT: <n> trading days behind T-1.` (`<n>` as an integer); when the contract's `size.objects` is 0, append ` EMPTY: no objects.`. Append neither otherwise. |
 | `example_questions` | the contract's `common_queries` verbatim; if empty, one question `Where is the <table> <layer> table?` |
 | `grain` | the contract's `grain`, verbatim |
 | `freshness_field` | `FIELD:<k>` where `k` is the first entry of the contract's `partition.keys`; if that list is empty, `NONE -- ` followed by the contract's `freshness.basis` |
@@ -62,11 +62,11 @@ python workflows/atom_decomposition/gen_silver_rows.py --g2 <file> --g4 <file> -
 | `tools` | `[read_tool]` when `read_tool` is not null, else `[]` |
 | `read_tool` | see "read_tool policy" |
 | `gap_owner` | `NFRA_OPLGTW` when `read_tool` is null, else null |
-| `contract` | a mapping: `id` = `contract_id`; `size`, `freshness`, `partition`, `producer` = the contract's own objects verbatim |
+| `contract` | a mapping: `id` = `contract_id` with every `/` replaced by `:` (an IDENTIFIER, not an S3 address: the commit-time naming gate grades any slash-bearing string as an S3 key and refuses it); `size`, `freshness`, `partition`, `producer` = the contract's own objects verbatim |
 | `fork_keys` | the contract's `fork_keys` object, verbatim |
 | `nl_tags` | the contract's `nl_tags` list, verbatim |
-| `retired` | `true` for exactly `opal-data-mdpf/feeds/partner_held_etf_49financial` and `opal-data-mdpf/feeds/non_model_aua` (PRD v0.13 marks them do-not-serve), else `false` |
-| `retired_reason` | on those two only: `do-not-serve: ` followed by the contract's `routing` string, verbatim |
+| `retired` | `true` for exactly four contracts, else `false`: `opal-data-mdpf/feeds/partner_held_etf_49financial` and `opal-data-mdpf/feeds/non_model_aua` (PRD v0.13: do-not-serve), and `opal-data-mdpf/feeds/model_aua_positions_49financial` and `opal-data-mdpf/feeds/model_aua_positions_inflection` (PRD v0.14: Andrew-direct restricts client data to the `opal-data-assets` vendor silver folders, so the account-grain MDPF feed is not served) |
+| `retired_reason` | on those four only. For the first two: `do-not-serve: ` followed by the contract's `routing` string, verbatim. For the last two, exactly: `not_served: ANDREW_DIRECT_20261014_150xZ_CLIENT_DATA_ONLY_OPAL_DATA_ASSETS_VENDOR_SILVER.md @9a314c1e98 -- client data only from the opal-data-assets vendor silver folders` |
 | `open_items` | the contract's `open_items` list, verbatim |
 
 Write the keys in this order: `bucket prefix business_meaning example_questions grain freshness_field firm_scope_rule never_sum_rules producer tools read_tool gap_owner table layer format contract fork_keys nl_tags retired` (then `retired_reason` if any) `open_items`.
@@ -90,7 +90,7 @@ A G2 tool not listed here (balances, find_holders, flows, documents, delivery, t
 
 ### The steps
 
-1. Write the generator, the map and `workflows/atom_decomposition/tests/test_gen_silver_rows.py` (your own tests: entity uniqueness over the 174, the count refusal, the exit-3 refusal, the read_tool policy under three sets, the two retired rows, `firm-scoped` for a client table and `opal-internal-only` for an ETF table).
+1. Write the generator, the map and `workflows/atom_decomposition/tests/test_gen_silver_rows.py` (your own tests: entity uniqueness over the 174, the count refusal, the exit-3 refusal, the read_tool policy under three sets, the four retired rows, `firm-scoped` for a client table and `opal-internal-only` for an ETF table).
 2. Run it with `--out workflows/atom_decomposition/catalog_entries --deployed-tools census`. That writes the 174 rows.
 3. Print the diff summary (files added) and the counts by `layer` and by `firm_scope_rule`.
 4. Run the three criteria below.
@@ -150,8 +150,7 @@ The issuer then regenerates the catalog from the merged rows and the loader cell
 (1.0.0_SA_CTO~Z msg 34100) items 1, 3, 4 (the not-yet-catalogued tables) and 5, and PRD v0.13 @bb9d1ece12 (msg 34117). G3 and the `news` / `ft.04` / `mdpf` channel
 corrections are not in this order: they edit CVO-certified channel specs (decomposition R14.6). Battery and planted arms: decomposition R14.3.
 
-**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-14 ~15:0xZ).** `business_meaning` of a 49F Black Diamond row (16 of the 174) ends with ` Live store: opal-data-bd/silver/ (inferred).`, on `1.0.0_SA_CTO~Z` msg 34127 (the CRO is asked for the per-table live prefixes; until they land the rows keep the measured location). The check
-`c14.AC2` carries the rule (a planted arm: a 49F row without the sentence FAILS). Gate limb that graded this modification: none (LIMB 6 does not fire on a modification; `<placeholders>NONE`).
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-14 ~15:3xZ).** Two rulings arrived while you were building. (1) Andrew-direct ~15:0xZ (CTO msg 34135, PRD v0.14 @26a247b289): client data comes ONLY from the `opal-data-assets` vendor silver folders, so the two `model_aua_positions` MDPF feeds are `not_served` (retired, with the record cited), and no row names `opal-data-bd`. The 49F Black Diamond rows keep the contract's `opal-data-assets` location and state their lag through the NOT CURRENT mark. (2) The commit-time naming gate refuses a slash-bearing `contract.id` as an S3 key, so `contract.id` is written with `:` for `/` (the first worker's rows showed it). Re-run the generator and the criteria; the checks were amended to the same rules. Gate limb that graded this modification: none (LIMB 6 does not fire on a modification; `<placeholders>NONE`).
 
 <status>issued</status>
 <round>14</round>

@@ -65,6 +65,10 @@ Add exactly three tests to `infra/aws/ec2/opal-gateway/tests/test_opal_discover.
 `test_silver_table_row_answer_carries_fork_keys_and_contract`, `test_silver_table_row_nl_tags_reach_the_row`, `test_silver_firm_scoped_table_row_is_fail_closed_for_firms`.
 Also write your own tests for Parts 1 and 2 in `workflows/atom_decomposition/tests/test_silver_table_grain.py`.
 
+### Part 5 -- the five tests your MX-c-11 left red (your row Z-W36-S2)
+
+`workflows/atom_decomposition/tests/test_tool_index_and_harvest.py` now fails 5 tests, because they build harvest rows in the old 11-field shape. It is in `<paths>` for this order. Update each of the 5 to build the table-grain row (the six new fields; `contract.id` is written with `:` for `/`), or to the loader's new tool-index behaviour, so that the file passes. Print its result (passed / failed) before and after.
+
 ## 2. BOUNDS
 
 1. You change only the files in `<paths>`. No `catalog_entries/` row, no `DATA_CATALOG.yaml`, no tool, grant, route, role, `.env` or AWS change. No deploy. No push.
@@ -79,6 +83,7 @@ Also write your own tests for Parts 1 and 2 in `workflows/atom_decomposition/tes
 workflows/atom_decomposition/emit_catalog_v02.py
 workflows/atom_decomposition/validate_catalog_v02.py
 workflows/atom_decomposition/tests/test_silver_table_grain.py
+workflows/atom_decomposition/tests/test_tool_index_and_harvest.py
 infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py
 infra/aws/ec2/opal-gateway/tests/test_opal_discover.py
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~36/**

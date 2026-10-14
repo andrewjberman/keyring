@@ -76,6 +76,7 @@ Module `infra/aws/ec2/opal-gateway/app/harvest_figures.py`.
   only) plus the denominator scanned (`{"rows_in_object": N, "rows_after_filter": M}`) and the part or object read in
   `source_keys`. The newest-part rule (correction 1) applies to chatter_daily, chatter_window and article_security_mention;
   every other dataset reads "the newest part or object of the dataset" per its contract.
+  **Ruling A1 (issuer, from your row Z-W74-S2):** `article_sentiment` is an APPEND-BATCH table (grain: one row per scored article, `parts are append batches`: 5 parts, 13,235 rows over all parts, the newest part holds 2,674). It is NOT one of the three snapshot tables, so the newest-part rule does NOT apply to it: read ALL its parts and keep the NEWEST batch's row per `article_key`; `source_keys` names every part read and the denominator states parts read and rows after the dedupe. A newest-part read would cover about 20% of scored articles and answer with no error. The newest-part rule stays for exactly `chatter_daily`, `chatter_window` and `article_security_mention`. Cover it in `test_oggt3_ac04` (a fake with two batches holding different articles: the result carries both; a repeated article keeps the newer batch's row).
 
 ### Where the contracts are (read each section you need; they are the truth of columns and layout)
 
@@ -152,6 +153,9 @@ the issuer to make at the merge.
 - The issuer registers the tools and re-pins counts at the merge (CUT BY WRITE SET: hookups belong to no cell).
 - Pre-cut: AC1 and AC2 base FAIL as expected (module, tests and probe absent).
 - Queue: staged until OG-gt-0 merges; the spawn is the GO.
+
+- A1 (issuer, 2026-10-14 ~15:3xZ, row NFRA_OPLGTW-Z-W74-S2 ARMED, disarm_owner this seat): `article_sentiment` is append-batch; read all parts, newest batch
+  wins per article_key. The worker is continued with this amendment. No criterion moves. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>

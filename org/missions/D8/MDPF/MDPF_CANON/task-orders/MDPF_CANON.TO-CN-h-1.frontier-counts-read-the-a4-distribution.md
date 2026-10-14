@@ -30,6 +30,17 @@ already returns for an absent staged object; it NEVER falls back to the staged o
 :2520), the two override sites (`acct[-1] = ad_frontier[mkey]` about :1233 and :2623) and `frontier_stamp_staleness` (about :876-912).
 Cottonwood never calls the loader: its series is the staged cottonwood slice (`load_cottonwood_slice`); leave it alone.
 
+**AMENDMENT 1 (the issuer's, ~15:3xZ; the first seat's work is inherited: its rows `MDPF_CANON-D1-W17-S1` to `-S3` are on trunk and its loader change is in your worktree, uncommitted).** The commit-time naming gate refused the loader's new typed
+`portal/gold/mdpf/{firm_id}/account-distribution/` f-string (row `-S3`). The CTO ruled the route and the CRO landed it: the registry row `mdpf-portal-gold-account-distribution` in `infra/logic/registry/legacy_addresses.json`
+(trunk `81453d51cf`). Two changes follow, and only these two:
+1. **The loader takes its prefix from the row.** Replace the typed prefix line (`prefix = f"portal/gold/mdpf/{firm_id}/account-distribution/"`) with
+   `prefix = legacy_address("mdpf-portal-gold-account-distribution", firm=firm_id).split("/", 3)[3]` (the builder returns `s3://opal-data-assets/portal/gold/mdpf/<firm>/account-distribution/`; the `split` leaves the key prefix, which is what
+   `list_objects_v2` takes with `ASSETS_BUCKET`). Import `legacy_address` the way the sibling gold modules import `lib.opal_naming` (`mdpf_gold_parquet.py` at its top: the path set up, then `from lib.opal_naming import ...  # noqa: E402`). The loader types NO
+   `portal/gold/mdpf` literal after this, including in its error messages built from `prefix`.
+2. **The gold package must ship the row's file.** `legacy_address` raises `RegistryError` when `legacy_addresses.json` is absent from the package, and `infra/aws/lambda/mdpf-pipeline/mdpf-gold-lambda/build_package.py` does not list it. Add ONE line to that
+   file's package list, beside the other `infra/logic/registry/` entries: `("infra/logic/registry/legacy_addresses.json", "infra/logic/registry/legacy_addresses.json"),`. Nothing else in that file changes. That file is now in your paths.
+Your branch has been merged forward to carry the registry row. Re-run the three criteria (AC2 now reads 6 of 6: two new arms grade these two changes), then commit everything. The naming gate must pass; if it refuses anything else, file a row and stop.
+
 ### Step 1 -- the loader
 
 ```
@@ -87,7 +98,7 @@ fake client's shape.
    `dim_mdpf_aggregate_aua_timeseries.py` is read-only; so are the staged object, the dispatch script, `build_mdpf_spine.py`,
    `dim_mdpf_account_distribution.py`, `mdpf_gold_consolidator.py`, the stage-6 scripts and every existing test not named in Step 3.
 3. **Never** write, repair or refresh the staged `gold/mdpf_revamp/*/account_distribution.json`; never add a fallback to it; never add a
-   `PYTHONPATH`, a `lib/` file or a registry file (Stage 6 is a separate question, ruled out by the CTO).
+   `PYTHONPATH`, a `lib/` file or a registry file of your own (AMENDMENT 1 adds ONE package-list line for the existing registry row; Stage 6 is a separate question, ruled out by the CTO).
 4. **No new key** in any served object or in `meta.frontier_count`; no change to `count_coverage_end`, the carry rules or the SMA preserve keys.
 5. **CLIENT DATA:** never print an account id. No non-ASCII. Keep each file's line endings as you find them (read them first). Use the Edit tool.
 6. If an item cannot be met within your paths, file a row and stop on that criterion.
@@ -99,6 +110,7 @@ data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py
 data/mdpf/scripts/gold/tests/test_canplat_p1_1.py
 data/mdpf/scripts/gold/tests/test_global_fold_flag2.py
 data/mdpf/tests/canon/test_frontier_counts_a4.py
+infra/aws/lambda/mdpf-pipeline/mdpf-gold-lambda/build_package.py
 org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-h-1.frontier-counts-read-the-a4-distribution.md
 org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~17/
 org/missions/D8/MDPF/MDPF_CANON/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -112,7 +124,7 @@ Read-only: the whole repository, in particular `data/mdpf/scripts/gold/mdpf_gold
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="CN-h-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r6_cn_h_1.py" reader; echo "exit=$?"</invocation><expect>CN-H-1 READER: 8 of 8 arms -- and exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="CN-h-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r6_cn_h_1.py" seams; echo "exit=$?"</invocation><expect>CN-H-1 SEAMS: 4 of 4 arms -- and exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="CN-h-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r6_cn_h_1.py" seams; echo "exit=$?"</invocation><expect>CN-H-1 SEAMS: 6 of 6 arms -- and exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="CN-h-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r6_cn_h_1.py" comparator; echo "exit=$?"</invocation><expect>CN-H-1 COMPARATOR: 5 of 5 arms -- and exit=0</expect></criterion>
   <criterion id="AC4" cell_refs="CN-h-1" judgment="true"/>
 </proof_of_spec>
@@ -159,7 +171,7 @@ state both branches, and record prior VersionIds. Cut it after the fold's first 
   `worker-light`: about 40 product lines and one behaviour (CN-d-1 and CN-d-2 were light at the same size).
 - **Fanout:** one cell, one chain, slot ~17. Base box/dell1.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <to_id>MDPF_CANON.TO-CN-h-1</to_id>
 <slot>~17</slot>

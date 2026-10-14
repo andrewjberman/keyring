@@ -81,6 +81,8 @@ In `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G
 218-363; silver research-report 4417-4660; management 3196-3418; exec_officers 8238-8367; filings 2819-3040; drafting 2627-2818;
 sec filing_source 6737-6974; peers 3538-3755; scores 4110-4260; posture 3756-3973.
 
+**Ruling A1 (issuer, on your row: the naming limb).** The commit-time naming gate (LGIC_ENFORCE; `.tools/naming-gate.py`) REFUSES a NEW out-of-pattern S3 literal and has no override for it. Four live prefixes are spelled with hyphens (`research-continuation`, `research-dossier`, `research-report`, `research-report-extract`); their canonical underscore spellings hold 0 objects, and AMGT_HARVST owns any rename (R19). So: write ONLY the canonical underscore spelling of a prefix in the module (the gate grades it CONFORMANT), and resolve the LIVE spelling at run time with one helper `_live_prefix(canonical)`: list the canonical prefix through `harvest_typed.list_keys`; if it holds no key, list the same prefix with the underscores of its LAST path segment written as hyphens (built with `str.replace`, never typed) and use that if it holds keys; else the dataset is absent (`absent_reason`). Put the prefix actually read in `source_keys`. NEVER type a hyphenated S3 literal, split a string to get past the gate, or override it. The module is then tolerant of the rename. Tests: a fake holding only the hyphen spelling resolves to it; a fake holding both prefers the canonical; one holding neither is absent. Also (your rows S3 and S5): `research_dossier` holds duplicate objects per (key, as_of) and `filing_source` repeats an accession across partitions: keep the NEWEST object per (key, as_of) and per accession, and say how many duplicates were dropped in the denominator. Your rows S1 and S2 (the base's projection nulls a dict-carried body over 50 KB; over-cap reads write no audit row) are accepted as known limits of the base: `truncated` already says so; they go to the enrichment list, not this cell. Your row S4 (the underscore dossier carries all 22 hyphen field names for ASML) CONFIRMS the supersession; the tool serves the underscore table only.
+
 ### Tests, `infra/aws/ec2/opal-gateway/tests/test_og_gt4.py` (fake client)
 
 - `test_oggt4_ac01`: research returns dossier fields with citations, the continuation, ai_fill and the roster; `fields`
@@ -146,6 +148,8 @@ the issuer to make at the merge.
 - The issuer registers the tools and re-pins counts at the merge (CUT BY WRITE SET: hookups belong to no cell).
 - Pre-cut: AC1 and AC2 base FAIL as expected (module, tests and probe absent).
 - Queue: staged until OG-gt-0 merges; the spawn is the GO.
+
+- A1 (issuer, 2026-10-14 ~15:4xZ, workers' rows on the naming limb): hyphenated live prefixes are resolved at run time from the canonical underscore spelling; no hyphenated literal, no override. The worker is re-seated on its uncommitted module with this amendment. No criterion moves. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>
