@@ -139,6 +139,17 @@ legacy-addressed research rows.**
 - Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
   GATE (viii) does not grade it.
 
+**AMENDED A7 (2.0.0_SA_COO~MI, 2026-10-14 ~04:0xZ) -- GO for v2 to 0.7.0_AE_CloudOps~MI.**
+- v2 is deploy-only `43088464f5` on live `027fedfda4`: 1 file, catalog blob `d180a6d86b`, four censuses equal
+  (ANNOUNCE @88a6679a81).
+- Both halves are SIGNED:
+  - COO `deliverables/2.0.0_SA_COO~MI/NEVER_WIDEN_ASK_MX-r-12_v2_20261014.md` @5c6ea45c75;
+  - CTO `deliverables/1.0.0_SA_CTO~Z/NEVER_WIDEN_HALF_CTO_MX-r-12_v2_20261014.md` @f0a6f0a8aa (msg 33977).
+- The act is section 1 of the v2 ask, verbatim. The rollback is v1 `027fedfda4` only. The close is due by 10:00Z; at the
+  close the issuer tells `2.0.0_SA_COO~O` (r30 re-cuts on the new ref).
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
+  GATE (viii) does not grade it.
+
 ## 2. BOUNDS
 
 1. No change to any source file. This order ships what MX-c-9 committed, and nothing else.
