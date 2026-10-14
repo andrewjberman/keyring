@@ -14405,3 +14405,59 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W141-S7 -- the tracked builder has no packager binding to leave as it is
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W141-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~141",
+  "surfaced_at": "2026-10-14T18:26:18Z",
+  "one_line": "TO-AR-y-333 step 2(b) says to leave the packager binding exactly as it is. The tracked builder never wrote a packager binding, so there was nothing to leave; this cell adds none, as the amendment requires.",
+  "spec_asserts": "TO-AR-y-333 step 2(b): the packager binding is not in this cell; leave the packager binding exactly as it is and say so in the record.",
+  "world_is": "build_resident_package.py at 6d348e26a9 and at 9d5d6d0228 has no packager key in its bindings dict (lines 91-111 at 9d5d6d0228); the word packager appears in that file nowhere. The packager block is therefore absent from the builder's output at both commits, which is the state the order's later cell AR-y-336 starts from. Nothing was changed for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:91-111 @9d5d6d0228",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py (no packager match) @6d348e26a9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Premise difference only. The packager binding's api_base and secret_name have no declared source (the issuer asks the CTO); the record states the absence rather than inventing a block."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W141-S8 -- the bindings test builds from the committed HEAD, so an uncommitted builder edit is not what it tests
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W141-S8",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~141",
+  "surfaced_at": "2026-10-14T18:26:18Z",
+  "one_line": "The module-scoped bindings fixture in reports/tests/test_resident_r31_source.py runs the on-disk builder with PIN set to git rev-parse HEAD, and the builder reads every member and NAMES.json from git show at PIN. A test run before the commit therefore checks the committed members, not the working tree's source. The order's before-arm was run by swapping the two source files to base bytes in place, then restoring them (cmp-verified, git status clean).",
+  "spec_asserts": "TO-AR-y-333 step 3: the new tests run on the base so (a), (c), (d), (f) FAIL; the bindings the builder writes are tested as the tracked builder writes them.",
+  "world_is": "Measured at 9d5d6d0228: the base run gave 6 failed, 1 passed (the failing cases are (a), (b), (c), (d), (e), (f)); the in-place swap was restored byte for byte. Consequence for future cells: a builder edit is only exercised by this fixture after it is committed, and the in-place swap is the only way to run a before-arm on this box without a second checkout.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/tests/test_resident_r31_source.py:39-54 @9d5d6d0228",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:53-54 @9d5d6d0228"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Test-harness shape, not a product defect. The release-build cell should run the builder against a pin it names, not HEAD by default."
+}
+]
+```
