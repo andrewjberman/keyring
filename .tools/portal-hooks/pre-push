@@ -27,6 +27,20 @@ done
 
 D1_BLOCKED=0
 
+# Resolve the DEV payload gate the same way (NFRA_DEVPLN DP-f-1).
+DEVPUSH_GATE=""
+for cand in \
+  "$HOOK_DIR/dev_push_payload_gate.py" \
+  "$HOOK_DIR/../../../.tools/portal-hooks/dev_push_payload_gate.py" \
+; do
+  if [ -f "$cand" ]; then
+    DEVPUSH_GATE="$cand"
+    break
+  fi
+done
+
+DEVPUSH_BLOCKED=0
+
 # --- 3F-BF2 provenance-read guard (every push, every branch) ---
 # The direct-read-failing test (CTO ruling 20260723T042253Z: wire at BOTH layers --
 # this hook beside VALGATE + the deploy CI backstop). A value array read without its
@@ -61,6 +75,23 @@ while read -r local_ref local_sha remote_ref remote_sha; do
     echo "WARN: VALGATE D-1 gate script not found -- adapter-threading gate skipped"
   fi
 
+  # --- DEV payload limb: portal DEV is written only through portal-merge-forward.sh (every push) ---
+  if [ "$remote_ref" = "refs/heads/DEV" ]; then
+    if [ -n "$DEVPUSH_GATE" ]; then
+      python "$DEVPUSH_GATE" \
+        --local-sha "$local_sha" \
+        --remote-sha "$remote_sha" \
+        --remote-ref "$remote_ref" \
+        --portal "." < /dev/null
+      if [ $? -ne 0 ]; then
+        echo "ERROR: portal DEV is written only through .tools/portal-merge-forward.sh (an approved feature row)"
+        DEVPUSH_BLOCKED=1
+      fi
+    else
+      echo "WARN: DEV payload gate script not found -- portal DEV payload limb skipped"
+    fi
+  fi
+
   # --- typecheck: PROD pushes only ---
   if echo "$remote_ref" | grep -q "refs/heads/PROD"; then
     echo "INFO: PROD push detected -- running typecheck (tsc -b --noEmit)"
@@ -82,6 +113,10 @@ done
 if [ "$D1_BLOCKED" -ne 0 ]; then
   echo "ERROR: VALGATE D-1 adapter-threading gate BLOCKED this push"
   echo "ERROR: a partner-facing adapter has an un-threaded output path -- see above"
+  exit 1
+fi
+
+if [ "$DEVPUSH_BLOCKED" -ne 0 ]; then
   exit 1
 fi
 
