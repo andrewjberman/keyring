@@ -166,6 +166,17 @@ commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing
   - New AC3 (judgment) is the seat's own re-exercise after r30 plus the mirror grant write (OG-mg-1, cut separately).
   - Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
+- A3 (issuer, 2026-10-14 ~01:3xZ): **PHASE B2 GO, effective at or after 11:00Z 2026-10-14** (the window).
+  - Both halves are SIGNED at `release_sha` `db3d1972bc`: COO `deliverables/2.0.0_SA_COO~O/NEVER_WIDEN_HALF_COO_OG-ap-14_20261014.md`
+    @d8119a4d7a, CTO `deliverables/1.0.0_SA_CTO~Z/NEVER_WIDEN_HALF_CTO_OG-ap-14_20261014.md` @2dacbf0fce (msg 33889).
+  - Their conditions bind:
+    - C1: correct the ask's section 2 to name OG-tg-1's unscoping of the Bloomberg principal as a widening, before B2;
+    - C2: `bbg_identity_admitted_8` reads 8 through the installed code, or STOP and redeploy the base;
+    - C3: the GO holds ONLY while live is still `7eff14b2e6` at the act. If NFRA_MCPORTAL MP-n-4 has moved it, the GO
+      lapses: re-cut B1, re-run AC1, and both halves re-sign.
+  - Before step 5, confirm ONE gateway release in flight across all worktrees, with the per-tree denominator printed.
+  - Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>37</round>
 <slot>~AE</slot>
