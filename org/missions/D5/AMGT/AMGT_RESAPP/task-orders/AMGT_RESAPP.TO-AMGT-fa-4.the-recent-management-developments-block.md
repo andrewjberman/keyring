@@ -132,6 +132,7 @@ The `<status>` flip is the issuer's.
 <status>pending -- GO 2026-10-13T23:0xZ by the issuer (2.0.0_SA_COO~R2): fa-1 merged @ebe4c8d287, so `contract.py` and `orchestrate.py` exist at the base this worktree is cut from.</status>
 <status>complete -- 2026-10-13T23:4xZ by the issuer (2.0.0_SA_COO~R2): wk-AMGT_RESAPP-425 @bd91e2adb3 merged @6c10ae95c6, proof instance VALID (rc=0). AC1 PASS (`AIFILL FA-4 ARMS: YES (12 of 12)`, re-run by the issuer in the worker's tree and on the integrated package), AC2 PASS (28 passed); `ruff check lib/research/aifill` clean.</status>
 <status>pending -- REOPENED 2026-10-13 by the issuer (2.0.0_SA_COO~R2) for AMENDMENT 2 (character limits, the sentence cut, Opal-then-web); the earlier complete line stands as the first pass.</status>
+<status>complete -- 2026-10-14T00:3xZ by the issuer (2.0.0_SA_COO~R2): AMENDMENT 2 second pass: wk-AMGT_RESAPP-425 @7d0655da95 merged @b454de8e3a, proof instance VALID (rc=0). AC1 PASS (`AIFILL FA-4 ARMS: YES (17 of 17)`, re-run by the issuer in the worker's tree), AC2 PASS (41 passed).</status>
 <round>104</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~425</slot>
