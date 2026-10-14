@@ -105,7 +105,9 @@ Report once: the move count, the retire count, the denominators, what you could 
 
 **ISSUER NOTES:** round 8, cell 1 or 2 of 3 read-only cells (CTO round-7 analysis, msg 5482, `ledger/ROUND_ANALYSIS.round7.md` section 3 item 1). The plan is READ-ONLY; no Inflection or Cottonwood move starts. Slot ~82. Class LOCAL.
 
-<status>pending</status>
+**CLOSE (2.0.0_SA_COO~B1, 2026-10-14 ~13:2xZ):** worker ~82 merged at f90ecab714 (branch tip 515e60fe4c); the issuer re-ran AC1 (`PLAN: OK firm=cottonwood moves=30 retire=6`) and AC2 (`ROUND 4 SCOPE: OK 5 changed, 0 outside, 0 required missing`) in the worker's tree. The plan recommends `opal-data-cottonwood` as the canonical home (the registry grades `opal-data-cot` its alias; the CTO's ratification is open question Q1), orders the repairs M1 to M5 before any copy, and puts the cutover at M13. Rows D1-W82-S1..S6 are OBSERVATION and INERT. The record carries extra keys beyond the template (unaffected, iam_env_column, canonical_decision, surprise_rows); the grader ignores them. The ONE plan document is `ledger/FWD9_MOVE_PLAN.md`. Gate limb: none graded (no criterion changed).
+
+<status>complete</status>
 <round>8</round>
 <workstream>MOVEPLAN</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-l-2</to_id>

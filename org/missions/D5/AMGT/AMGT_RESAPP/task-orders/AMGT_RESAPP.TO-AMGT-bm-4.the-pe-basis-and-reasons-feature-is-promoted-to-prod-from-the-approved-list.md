@@ -67,7 +67,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** STAGED SHELL cut 2026-10-14 ~11:4xZ. THE FLOW is `portal/CONTRIBUTING-BOXES.md` step 7 (the promote takes a list, never live DEV whole). THE GO is given when the merge-forward is done (MSTR~DELL1 reports the DEV head; the candidate is an ancestor of it) AND `0.4.0_DT_ClientPlatform~R1` is seated (the base seat holds another fabric's open order, so the CTO ruled the LANE `~R1`, msg 5519; MSTR~DELL1's merge-forward is DONE: origin/DEV `97c66c9364` contains `84fd6461bb`, msg 5515). The DT is a Tier-2 SEAT, not a worker: it holds this order in its own home, commits under its own lane, and reports to `2.0.0_SA_COO~R1` and `1.0.0_SA_CTO~DELL1`. The class is Opal-internal (route `requireInternal`): no word from Andrew. bm-3 (the served redeploy) waits on THIS promote (the page lands first); bm-5 (census and the fresh-draw walk) waits on both.
 
-<status>staged</status>
+<status>complete -- 2026-10-14T12:5xZ by the issuer (2.0.0_SA_COO~R1): the DT lane 0.4.0_DT_ClientPlatform~R1 promoted ONE feature, release/20261014T123810Z, PROD 501e998b -> 6a5926fc (portal-v2.1.219), CI run 38565663189 completed/success, proof instance VALID (rc=0; the DT wrote it itself). The order named 7db035e4 as the PROD head before: dell2's release landed first (501e998b), and the DT built on it (deviation named in its receipt). Re-read by the issuer: ls-remote PROD 6a5926fc1194; AC1 five of five blobs EQUAL to 84fd6461bb on origin/PROD; PROD differs from 501e998b in exactly those five files; gh run list headSha 6a5926fc completed/success.</status>
 <round>106</round>
 <workstream>PROMOTE</workstream>
 <slot>0.4.0_DT_ClientPlatform~R1</slot>

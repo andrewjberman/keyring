@@ -77,7 +77,7 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~F
 
 **AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-14 ~12:5xZ) -- UN-PARKED, GO once the CTO half is signed:** (1) `FB-l-3` is merged (9977d91265) and closed (7440f2ec7e); AC1 and AC2 re-run by the issuer. (2) THE TARGET, named by the CTO in msg 5509: candidate C3, the DISABLED EventBridge rule `inf-gold-full-on-bronze-complete` (rule plus its one target plus its invoke permission plus the one line in the DLQ policy; `inf-gold-trigger` itself and `inf-canonical-prices-daily` are NOT in the act; the Door 6 items C4 to C6 are NOT in the act). (3) THE PAIR: COO half `ledger/NEVER_WIDEN_ROUND8_FIRST_RETIREMENT_C3_COO_HALF.md` (committed with this amendment); the CTO half is his file, named at his signing. Read both halves at HEAD before step 1; if the CTO half is not at HEAD and signed, do nothing and say so. The decision record is the COO half's first section (target, why, what replaced it: nothing that fires on this key). (4) The act is ONE Terraform change in `infra/aws/terraform/inf-pipeline/`, scoped by `-target` to the four addresses the COO half names; the plan must read `0 to add, 1 to change, 3 to destroy` or you STOP. Step 2's re-census reuses `FB-l-3`'s calls for candidate C3. The record `RETIRE_RECORD.json` takes `target` = `inf-gold-full-on-bronze-complete`. No criterion changed. Status pending.
 
-<status>pending</status>
+<status>complete</status>
 <round>8</round>
 <workstream>RETIREMENT</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-l-4</to_id>
