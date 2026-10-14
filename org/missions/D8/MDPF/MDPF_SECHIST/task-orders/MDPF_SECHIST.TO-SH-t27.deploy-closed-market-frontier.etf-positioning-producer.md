@@ -19,11 +19,12 @@
 </decomp_ref>
 
   <objective>
-    Re-deploy the `etf-positioning-producer` Lambda from git pin `87a0dcf14d` (the same 14 members; two member bytes change) through `safe-apply`, under a
+    Re-deploy the `etf-positioning-producer` Lambda from git pin `11dc6a2161` on the scratch branch `pin/sechist-frontier-20261014` (the live pin `09b6a7d580` plus exactly the two SH-t-24 members; the same 14 members; two member bytes change) through `safe-apply`, under a
     change-management ledger entry you open first and close last. NO IAM change, NO schedule, env, layer or handler change: any of those in the plan is a STOP.
   </objective>
 
   <context>
+    AMENDED 2026-10-14 ~19:1xZ by the issuer after your STOP (msg 5734): the build at `87a0dcf14d` moved 8 members, the signed pair names 2. The pin is now `11dc6a2161` = the live pin `09b6a7d580` with `etf_positioning_gold.py` and `etf_positioning_publisher.py` taken byte-equal from `87a0dcf14d` (`git diff 09b6a7d580 11dc6a2161` = those two files, 76 insertions, 5 deletions). Expected at step 3: exactly those two members differ (plus the in-zip BUILD_MANIFEST); anything else is a STOP again.
     Pair, both halves SIGNED:
     - COO half: `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/NEVER_WIDEN_HALF_REQUEST_SECHIST_CLOSED_MARKET_FRONTIER_DEPLOY_20261014.md` @9c0ab8819a, read whole.
     - CTO half: `org/tier1_exec/1.0.0_SA_CTO/deliverables/NEVER_WIDEN_CTO_HALF_SECHIST_CLOSED_MARKET_FRONTIER_DEPLOY_20261014.md` @2b58d0caf5. Its condition C1 is a SEQUENCE STOP, step 1 below.
@@ -38,7 +39,7 @@
        If either does not read as stated, STOP and report; do not open a ledger entry. (The issuer sends this order when the DT lane's promote has read; the check is yours regardless.)
     2. Open the ledger entry (`.tools/deploy_ledger.py open`) with legs L1 package + apply and L2 first scheduled run (L2 is the issuer's read). Write into the entry the live `CodeSha256`, the
        artifact `VersionId` and the role's current inline policy sha256: they are the rollback.
-    3. L1, the package: NO edit to `PACKAGE`. Build with `build_package.py --pin 87a0dcf14d` from `infra/aws/lambda/etfs-pipeline/etf-positioning-producer/`; the in-zip BUILD_MANIFEST must list the
+    3. L1, the package: NO edit to `PACKAGE`. Build with `build_package.py --pin 11dc6a2161` from `infra/aws/lambda/etfs-pipeline/etf-positioning-producer/`; the in-zip BUILD_MANIFEST must list the
        same 14 members as the live one, with exactly `etf_positioning_gold.py` and `etf_positioning_publisher.py` different in sha256 (write the member comparison to the evidence folder).
     4. The gate before apply: unzip into an empty directory, put only that directory and the calendar layer on the path, and run
        `import etf_positioning_gold, etf_history_gap_record; print(etf_positioning_gold.frontier_returns.__name__, etf_history_gap_record.record_address('2026-10-12'))`.
