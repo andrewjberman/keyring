@@ -7,10 +7,12 @@ one route passes:
 
   ROUTE A  an approved feature: two parents; the body carries Feature: <branch> and Approved-By: <who> @<row>;
            the approval reader says APPROVED valid=yes for <branch>, the same row, and head_sha = the second parent.
-  ROUTE B  test-only: every path the commit changes against its first parent is a test path (CLAUDE.md law).
+  ROUTE B  test-only merge: two parents; the body carries Feature: <branch> and Approved-By: test-only @- (written
+           by portal-merge-forward.sh); every path the merge changes against its first parent is a test path.
   ROUTE C  PROD-into-DEV back-merge (settlement rule): two parents; the second parent is an ancestor of --prod-ref.
 
-A live FAST lease held by $OPAL_AGENT_SERIAL admits the whole push (CLAUDE.md law). Any other ref is skipped.
+A live FAST lease admits nothing: its seat's approval is an approval row, and the merge lands by route A. Any other
+ref is skipped.
 
 Usage: dev_push_payload_gate.py --local-sha <sha> --remote-sha <sha> --remote-ref <ref>
                                 [--portal <repo path, default .>] [--prod-ref origin/PROD]
@@ -19,18 +21,15 @@ Exit 0 for ADMITTED and SKIPPED, 1 for REFUSED. Python standard library only.
 """
 
 import argparse
-import json
 import os
 import re
 import shlex
 import subprocess
 import sys
-import time
 
 ZERO = "0" * 40
 DEV_REF = "refs/heads/DEV"
 HERE = os.path.dirname(os.path.abspath(__file__))
-WORKSPACE = os.path.dirname(os.path.dirname(HERE))
 
 TEST_ONLY_RE = re.compile(
     r"(^|/)(__tests__|__harness__|__fixtures__|__mocks__)/"
@@ -39,6 +38,7 @@ TEST_ONLY_RE = re.compile(
 )
 FEATURE_RE = re.compile(r"^Feature:[ \t]*(\S+)[ \t]*$", re.M)
 APPROVED_BY_RE = re.compile(r"^Approved-By:[ \t]*(.+?)[ \t]+@(\S+)[ \t]*$", re.M)
+TEST_ONLY_TRAILER_RE = re.compile(r"^Approved-By:[ \t]*test-only[ \t]+@-[ \t]*$", re.M)
 FIELD_RE = {
     "state": re.compile(r"(?:^|\s)state=(\S+)"),
     "valid": re.compile(r"(?:^|\s)valid=(\S+)"),
@@ -121,15 +121,19 @@ def route_for(portal, commit, parents, prod_ref, reader):
             notes.append("route A: no Feature and Approved-By trailers")
     else:
         notes.append("route A: not a two-parent merge")
-    paths = changed_paths(portal, parents, commit)
-    if paths is None:
-        notes.append("route B: changed paths unreadable")
-    elif not paths:
-        notes.append("route B: no changed paths")
-    elif all(TEST_ONLY_RE.search(p) for p in paths):
-        return "B", notes
+    if len(parents) == 2 and FEATURE_RE.search(body) and TEST_ONLY_TRAILER_RE.search(body):
+        paths = changed_paths(portal, parents, commit)
+        if paths is None:
+            notes.append("route B: changed paths unreadable")
+        elif not paths:
+            notes.append("route B: no changed paths")
+        else:
+            bad = [p for p in paths if not TEST_ONLY_RE.search(p)]
+            if not bad:
+                return "B", notes
+            notes.append("route B: changes non-test path(s) %s" % ", ".join(bad))
     else:
-        notes.append("route B: changes non-test paths")
+        notes.append("route B: not a two-parent merge with Feature and Approved-By: test-only @- trailers")
     if len(parents) == 2:
         if is_ancestor(portal, parents[1], prod_ref) == 0:
             return "C", notes
@@ -137,30 +141,6 @@ def route_for(portal, commit, parents, prod_ref, reader):
     else:
         notes.append("route C: not a two-parent merge")
     return None, notes
-
-
-def fast_lease(serial, lease_dir, now):
-    """Path of a live FAST lease held by `serial`, else None. Absent, expired or unreadable admits nothing."""
-    if not serial or not os.path.isdir(lease_dir):
-        return None
-    try:
-        names = sorted(os.listdir(lease_dir))
-    except OSError:
-        return None
-    for name in names:
-        if not name.endswith(".json"):
-            continue
-        path = os.path.join(lease_dir, name)
-        try:
-            with open(path, encoding="utf-8") as fh:
-                doc = json.load(fh)
-            if not isinstance(doc, dict) or doc.get("seat") != serial or doc.get("mode") != "FAST":
-                continue
-            if int(doc.get("expires_epoch")) > now:
-                return path
-        except (OSError, ValueError, TypeError):
-            continue
-    return None
 
 
 def decide(args):
@@ -179,11 +159,7 @@ def decide(args):
     if anc != 0:
         return "REFUSED", "unreadable-history", "-", [
             "REFUSED: could not read history between %s and %s" % (remote[:10], local[:10])]
-    lease_dir = os.environ.get("DRIVE_MODE_DIR", "").strip() or os.path.join(WORKSPACE, "org", "mcp", "drive_mode")
-    lease = fast_lease(os.environ.get("OPAL_AGENT_SERIAL", "").strip(), lease_dir, int(time.time()))
-    if lease:
-        return "ADMITTED", "fast-lease", "-", ["LEASE: live FAST lease %s" % lease]
-    walk = git(portal, "rev-list", "--first-parent", "--reverse", "%s..%s" % (remote, local))
+    walk =git(portal, "rev-list", "--first-parent", "--reverse", "%s..%s" % (remote, local))
     if walk.returncode != 0:
         return "REFUSED", "unreadable-history", "-", ["REFUSED: rev-list failed: %s" % walk.stderr.strip()[:200]]
     commits = walk.stdout.split()

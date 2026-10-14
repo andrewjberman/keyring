@@ -1112,3 +1112,30 @@
   "world_is": "The instrument cannot see a call that lives on another box's list, and it cannot take 'andrew' as an owner. Until it can, a project whose only open item is a cross-box approval at Andrew counts every drive tick as empty. The issuer did not add a laptop pointer card for Andrew (it would duplicate five cards he already holds). Options for the CTO: widen --owed-call to read the cluster copy of every box's list (the same cluster-first read that approval-status now uses), or accept a laptop pointer call."
 }
 ```
+
+## NFRA_DEVPLN-W1-S19 -- the never-rules gate still admits a DEV push from a live FAST lease and a test-only fast-forward, two carve-outs that the portal DEV law no longer grants
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S19",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-14T12:26:34Z",
+  "one_line": "The never-rules gate keeps the FAST-lease DEV carve-out (_FAST_DEV=1 skips its DEV deny) and the TEST-ONLY DEV carve-out, both outside this cell's grant; the pre-push checker now refuses what they admit, so the two gates disagree until the carve-outs are cut.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~DV",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/hooks/never-rules-gate.sh@7969c4a598 lines 715-735: the FAST-LEASE PORTAL-DEV CARVE-OUT sets _FAST_DEV=1 for a live FAST lease seat pushing DEV on origin Opal-Capital/portal; the deny at line ~793 is skipped when _FAST_DEV=1",
+      ".tools/hooks/never-rules-gate.sh@7969c4a598 from line ~738: the TEST-ONLY PORTAL-DEV CARVE-OUT admits a fast-forward of DEV for test-only changes; it reads no merge and no approval row",
+      "python .tools/tests/test_dev_push_payload_gate.py after the DP-j-1 edit (worktree wk-NFRA_DEVPLN-1): cases=21/21 ok=True; 'live FAST lease for the serial admits nothing' and 'plain test-only commit refused (route B needs a two-parent merge)' both REFUSED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md Portal law (commit fcdfc34843): portal DEV is written only by .tools/portal-merge-forward.sh on an approved row; a live FAST lease is its seat's approval row (open-calls.py approval-lease), not a direct push.",
+  "world_is": "The Bash-layer gate still admits a direct DEV push by a lease seat and a test-only fast-forward, and the git pre-push checker refuses both. The checker is the containing limb only where .tools/portal-hooks/pre-push is installed on the box; that installation is not measured in this cell. Cutting the two carve-outs is an edit to .tools/hooks/never-rules-gate.sh, which is not in this cell's <paths> and CLAUDE.md forbids it to this cell."
+}
+```

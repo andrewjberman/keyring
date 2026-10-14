@@ -31,11 +31,15 @@ project's ONE loop. `/canonical-drive` is the FULL body, and the lease picks bet
      screenshot), or the real entry point for a backend item.
 5. **Land it.**
    - Commit through `safe-commit.sh`.
-   - Portal: pull-merge DEV, then push DEV yourself, with CI (VALGATE) running (call 2). DEV only; PROD stays gated.
+   - Portal: merge-forward route, with CI (VALGATE) running (call 2). DEV only; PROD stays gated. Write the approval
+     row first: `python .tools/open-calls.py approval-lease --project NFRA_DEVPLN --branch cand/<box>/<slug> --box <box>
+     --purpose <text> --pages <p1,p2> --class <client-facing|opal-internal|test-only> --how <text> --portal portal
+     --lease-file org/mcp/drive_mode/<CODE>.json` (your live FAST lease is the approval; `--help` lists the flags). Then
+     `bash .tools/portal-merge-forward.sh cand/<box>/<slug> --push`. The pre-push hook admits the push only as that
+     approved merge (or a test-only merge).
      Before the push, `git -C portal log --format='%h %an' origin/DEV..HEAD` must list only your own commits and
      their merges. A push publishes whatever is local, so another seat's commit in that list stops the push.
-     `.tools/hooks/never-rules-gate.sh` admits a DEV push only from a live FAST lease's seat. When two seats land in
-     one window, the second merges forward, never by force.
+     When two seats land in one window, the second merges forward, never by force.
    - A deploy goes to QA/DEV under the normal rules: a ledger entry and `safe-apply`.
 6. **Overwrite STATUS.md** with pins, claims, next and limits. A finding off the item is ONE parked line with its
    owner and the condition that un-parks it. It is not a row and not a message.
