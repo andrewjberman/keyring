@@ -9530,6 +9530,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
 }
 ```
 
+```json
+{
+  "id": "NFRA_CTLPLN-W93-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~93",
+  "surfaced_at": "2026-10-14T22:04:44Z",
+  "one_line": "On an ENFORCE refusal the naming stage of safe-commit.sh unstages only the eight graded extensions, so the non-graded paths of the same commit (a .md deliverable) stay in the shared index.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CT-ad-2 BUILD rule: keep the stage fail-closed in ENFORCE mode, the commit aborted and the files unstaged. The order does not say which staged paths the refusal unstages.",
+  "world_is": "The refusal branch of the naming stage runs 'git reset -q HEAD -- \"${NGATE_FILES[@]}\"' (the eight graded extensions only), so a refused commit leaves its non-graded staged paths in the index. Measured in the derivation test arm (S), ENFORCE with a stub REFUSE: rc 1, STAGE-REACHED absent, index after the stage = the two .md paths, the .json paths unstaged. The base copy behaves the same (pre-existing, not changed by CT-ad-2).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-commit.sh@868b773335 lines 1185-1190 (ENFORCE refusal: git reset over NGATE_FILES only)",
+      ".tools/tests/test_safe_commit_derivation.py arm (S) ENFORCE, run in worktree wk-NFRA_CTLPLN-93, 2026-10-14 ~22:0xZ: 'CHECK PASS (S) ENFORCE ... rc=1 still=[...a.md, ...my notes.md]'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found while testing CT-ad-2; the change does not alter it. Whether the leftover staged deliverables matter is for the CTO or the MSTR lane; no hazard was measured."
+}
+```
+
 ## NFRA_CTLPLN-W95-S1 -- the --check-fresh checkpoint file is covered by no ignore rule
 
 ```json

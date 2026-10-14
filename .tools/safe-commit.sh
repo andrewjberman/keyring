@@ -1096,10 +1096,14 @@ if [ -n "$IN_SCOPE" ] && [ -f "$SCRIPT_DIR/naming-gate.py" ]; then
       NGATE_ENFORCE=1
     fi
     NGATE_DIFF="$(mktemp "${TMPDIR:-/tmp}/naming-gate.XXXXXX" 2>/dev/null || echo "${TMPDIR:-/tmp}/naming-gate.$$.diff")"
+    # CT-ad-2: EVERY in-scope staged path (any extension) goes to the gate as --staged-paths, for committing-project DERIVATION
+    # only. The gate grades the diff above (NGATE_FILES, the eight extensions) and nothing else. Removed with NGATE_DIFF below.
+    NGATE_STAGED="$(mktemp "${TMPDIR:-/tmp}/naming-staged.XXXXXX" 2>/dev/null || echo "${TMPDIR:-/tmp}/naming-staged.$$")"
+    printf '%s\n' "$IN_SCOPE" > "$NGATE_STAGED" || true
     NGATE_OUT=""; NGATE_RC=0
     unset NAMING_PLACE_OVERRIDE  # an inherited value is never honoured: the override block below is the only setter
     if git diff --cached --no-color --no-ext-diff -- "${NGATE_FILES[@]}" > "$NGATE_DIFF" 2> "$NGATE_DIFF.err"; then
-      NGATE_OUT="$(python "$SCRIPT_DIR/naming-gate.py" --diff "$NGATE_DIFF" --post-from-index 2>&1)" || NGATE_RC=$?
+      NGATE_OUT="$(python "$SCRIPT_DIR/naming-gate.py" --diff "$NGATE_DIFF" --post-from-index --staged-paths "$NGATE_STAGED" 2>&1)" || NGATE_RC=$?
     else
       NGATE_OUT="NAMING ERROR git diff --cached failed: $(head -c 300 "$NGATE_DIFF.err" 2>/dev/null || true)"; NGATE_RC=2
     fi
@@ -1161,7 +1165,7 @@ if [ -n "$IN_SCOPE" ] && [ -f "$SCRIPT_DIR/naming-gate.py" ]; then
         fi
         NGATE_OUT=""; NGATE_RC=0
         if git diff --cached --no-color --no-ext-diff -- "${NGATE_FILES[@]}" > "$NGATE_DIFF" 2> "$NGATE_DIFF.err"; then
-          NGATE_OUT="$(python "$SCRIPT_DIR/naming-gate.py" --diff "$NGATE_DIFF" --post-from-index --message-file "$NP_MSGFILE" 2>&1)" || NGATE_RC=$?
+          NGATE_OUT="$(python "$SCRIPT_DIR/naming-gate.py" --diff "$NGATE_DIFF" --post-from-index --staged-paths "$NGATE_STAGED" --message-file "$NP_MSGFILE" 2>&1)" || NGATE_RC=$?
         else
           NGATE_OUT="NAMING ERROR git diff --cached failed: $(head -c 300 "$NGATE_DIFF.err" 2>/dev/null || true)"; NGATE_RC=2
         fi
@@ -1175,7 +1179,7 @@ if [ -n "$IN_SCOPE" ] && [ -f "$SCRIPT_DIR/naming-gate.py" ]; then
       fi
       rm -f -- "${NP_MSGFILE:-}" 2>/dev/null || true
     fi
-    rm -f "$NGATE_DIFF" "$NGATE_DIFF.err" 2>/dev/null || true
+    rm -f "$NGATE_DIFF" "$NGATE_DIFF.err" "$NGATE_STAGED" 2>/dev/null || true
     if [ "$NGATE_PLACE_HIT" -eq 1 ] && [ "$NGATE_ENFORCE" -ne 1 ]; then
       for _nf in "${NGATE_FILES[@]}"; do git reset -q HEAD -- "$_nf" 2>/dev/null || true; done
       echo "ERROR: BLOCKED -- the naming limb's placement step refused (LGIC_BLANKFIX FWD-6, org/mcp/naming-place.enforce present). Commit aborted; files unstaged." >&2

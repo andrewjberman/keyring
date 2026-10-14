@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~93</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run: SAFE-COMMIT-DERIVATION cases=17/17 ok=True, NAMING-GATE-SELF-TEST: PASS, safe-commit.sh --help rc=0 (output byte-identical to the base per the worker); proof instance VALID on the committed state. The issuer read the diff: naming-gate.py gains --staged-paths (derivation only, [] with one NOTE when missing, empty or unreadable); safe-commit.sh writes IN_SCOPE to a temp file, passes it on both gate calls and removes it with NGATE_DIFF; the diff handed to the gate stays the eight extensions. Row W93-S1 accepted (an ENFORCE refusal unstages only the eight graded extensions, so a non-graded staged file stays in the index; pre-existing, not changed). Process facts for the round-14 inputs: the worker made one bounded read-only AWS read when the gate's live limb ran in a scratch experiment (the order said no AWS call); one mis-chained command set then unset git user.email/name in the shared worktree config (the effective identity is the global file's, unchanged); both are disclosed by the worker.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
