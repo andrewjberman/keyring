@@ -13544,3 +13544,124 @@
 ```
 
 ---
+
+## IRPT_ANLREQ-D2-W132-S1 -- The trunk pin the order names (origin/CLOUD must contain 1176eb009a) did not hold at the first read: origin/CLOUD was 3ad5946011 without the AR-y-319 merge; the ref fast-forwarded to 109f4671bb during this run and contains it, so both builds pin 109f4671bb
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W132-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~132",
+  "surfaced_at": "2026-10-14T15:34:28Z",
+  "one_line": "The trunk pin the order names (origin/CLOUD must contain 1176eb009a) did not hold at the first read: origin/CLOUD was 3ad5946011 without the AR-y-319 merge; the ref fast-forwarded to 109f4671bb during this run and contains it, so both builds pin 109f4671bb",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-324 step 2: --pin the full sha of the trunk HEAD (state it; it must contain 1176eb009a); use git fetch origin for remote-tracking refs only",
+  "world_is": "At the first read origin/CLOUD was 3ad5946011 and git merge-base --is-ancestor 1176eb009a origin/CLOUD returned rc 1 (1176eb009a is an ancestor of origin/box/dell2 726bcea864). A later read showed origin/CLOUD = 109f4671bb9b24a2b19e3c81a69decdcb83acddf (the reflog of refs/remotes/origin/CLOUD records a fetch fast-forward; 70 commits after 3ad5946011) and rc 0 for 1176eb009a. The pin used is 109f4671bb9b24a2b19e3c81a69decdcb83acddf for both builds and for the test extraction.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor 1176eb009a 3ad5946011 (first read, origin/CLOUD @3ad5946011): rc 1",
+      "git reflog refs/remotes/origin/CLOUD: 109f4671bb fetch origin fast-forward, previous 3ad5946011",
+      "git merge-base --is-ancestor 1176eb009a 109f4671bb9b24a2b19e3c81a69decdcb83acddf: rc 0",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~132/r40/RESIDENT_BUILD.json release_input.pin"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+---
+
+## IRPT_ANLREQ-D2-W132-S2 -- The release bindings differ from the release-29 bindings in three provenance keys, not one: package_pin and, because the two new members are listed in --files-from, files_from_count (7 to 9) and files_from_sha256
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W132-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~132",
+  "surfaced_at": "2026-10-14T15:34:28Z",
+  "one_line": "The release bindings differ from the release-29 bindings in three provenance keys, not one: package_pin and, because the two new members are listed in --files-from, files_from_count (7 to 9) and files_from_sha256",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-324 steps 2 and 4: the bindings file differs only in provenance.package_pin (a diff of the two extracted bindings files); the two new members are listed in --files-from only IF the recipe needs them listed",
+  "world_is": "The recipe needs them listed: a member not in --files-from ships from the base pin, so composition_admission.py and interactive_access.py were listed to come from the trunk pin. The extracted bindings diff (compare_r30.json bindings_changed_keys) is provenance.files_from_count, provenance.files_from_sha256 and provenance.package_pin. The delta against the r29 tarball is still exactly the five expected names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~132/r40/compare_r30.json (bindings_changed_keys)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~132/r40/RESIDENT_BUILD.json bindings_diff and release_input.files_from",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py@e1e58c2d94 (the files-from rule, lines 203-223)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+---
+
+## IRPT_ANLREQ-D2-W132-S3 -- test_ordinary_viewer.py gives 42 passed and 1 failed of 43, not 43 passed: test_the_composed_ports_carry_the_producer_over_the_existing_readers needs _ordinary_authorizer_over in reports/generate_installed.py, which the release does not move; the same failure appears on the release-29 tree
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W132-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~132",
+  "surfaced_at": "2026-10-14T15:34:28Z",
+  "one_line": "test_ordinary_viewer.py gives 42 passed and 1 failed of 43, not 43 passed: test_the_composed_ports_carry_the_producer_over_the_existing_readers needs _ordinary_authorizer_over in reports/generate_installed.py, which the release does not move; the same failure appears on the release-29 tree",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-324 step 6 and the order's test list: _scope/tests/test_ordinary_viewer.py (43 expected)",
+  "world_is": "The base pin 0485393f has no _scope/ordinary_viewer.py and no _ordinary_authorizer_over in reports/generate_installed.py; both were added at the trunk after the base (the first ordinary_viewer.py add is c861f0b78b). The release carries the base copies, so the composed-ports test raises AttributeError. Control: the release-29 tarball tree with the same harness gives 1 failed, 42 passed, the same test. Recorded as a baseline failure; no test was edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git cat-file -e 0485393f3ad0a7e564f4867f5e70003e2e62195b:infra/aws/lambda/investor-reporting/_scope/ordinary_viewer.py: rc 1 (absent at base)",
+      "git log --diff-filter=A 109f4671bb9b24a2b19e3c81a69decdcb83acddf -- _scope/ordinary_viewer.py: c861f0b78b",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~132/r40/tests/control_r29_test_ordinary_viewer.txt (release-29 control: 1 failed, 42 passed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+---
+
+## IRPT_ANLREQ-D2-W132-S4 -- The release-29 test recipe does not run the nine named files as written: the modules import the resident source directories and read schemas at the repository root; the harness added those paths from the pin, outside the package
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W132-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~132",
+  "surfaced_at": "2026-10-14T15:34:28Z",
+  "one_line": "The release-29 test recipe does not run the nine named files as written: the modules import the resident source directories and read schemas at the repository root; the harness added those paths from the pin, outside the package",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-324 step 6: extract the tarball and run as in release 29 (PYTHONPATH on the package root, ycharts/generate and the trunk test folders)",
+  "world_is": "With the release-29 PYTHONPATH recipe, 7 of the 9 named files errored at collection: ModuleNotFoundError ordinary_viewer, and FileNotFoundError for docs/contracts/investor-reporting/v1 at the repository root. The harness added the resident runtime path set (reports/resident_installed.py lines 37-38), the repository-root schema directory from the pin, and _scope/ordinary_viewer.py from the pin; none of these is a package member or a release change.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~132/r40/run_tests_r30.sh (the PYTHONPATH list)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~132/r40/tests/ (the nine named-file outputs)",
+      "reports/resident_installed.py@109f4671bb9b24a2b19e3c81a69decdcb83acddf lines 37-38 (the resident runtime path set)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+---
