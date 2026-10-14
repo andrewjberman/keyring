@@ -13235,3 +13235,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "Nothing is at risk and no write was attempted: prepare() writes nothing and activate() was never called. What is blocked is step 4, which must 'put the two branches in the ask and let the halves name one'. Three routes for the issuer, none of them this seat's to pick: (i) rule that there is no choice, R1 and R2 simply mirror the template at contract-maximal width, and strike the branch from step 4; (ii) name the real surface of Alyssa's no-download rule, so a genuine branch can be constructed against it; (iii) rule that Andrew's grant should be NARROWER than the template on operations, which would be a different candidate than 'that scope with identity replaced'. The candidates, their prepare diffs and the identities are staged under X and need no rebuild once a route is chosen."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W67-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~67",
+  "surfaced_at": "2026-10-14T02:50:00Z",
+  "one_line": "BLOCKING on AC1: OG-bd-3's ruled change makes OG-bd-2's test_ogbd2_ac03 fail (its line 70 asserts a PROFILED master_admin is DENIED blackdiamond_list_fees); the order forbids editing tests/test_og_bd2.py.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "OG-bd-3 section 1.4: 'OG-bd-2's tests (tests/test_og_bd2.py) must still pass unchanged'; AC1 requires pytest rc=0 for test_ogbd2_ac01..03.",
+  "world_is": "tests/test_og_bd2.py:67-70 (test_ogbd2_ac03) makes a master_admin principal with an active restricted profile (grant list/describe, no BD tool) and asserts tool_denial(BD)['code']=='entitlement_denied'. The CTO ruling (msg 33941 route (a)) requires exactly that principal to be ALLOWED. With decide() changed as ruled, tool_denial returns None and the test raises TypeError (NoneType not subscriptable). bd3.AC1.sh output: 'pytest rc=1; named tests passed 2 of 3' on the bd2 limb. The 3 bd3 tests pass 3 of 3; family+guard suites 0 new failing ids.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/test_og_bd2.py:66-70",
+      "infra/aws/ec2/opal-gateway/app/data_entitlement.py decide() restricted branch",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/bd3.AC1.sh"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Fix needs either test_og_bd2.py in <paths> (flip line 70 to None for the profiled master_admin) or AC1's bd2 limb dropped. This worker did neither. disarm_owner (if ever armed): 2.0.0_SA_COO~O."
+}
+```
