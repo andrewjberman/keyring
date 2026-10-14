@@ -85,6 +85,7 @@ while read -r local_ref local_sha remote_ref remote_sha; do
       --remote-ref "$remote_ref"
     if [ $? -ne 0 ]; then
       D1_BLOCKED=1
+      D1_GATE_FAILED=1
     fi
   elif [ "$remote_ref" = "refs/heads/DEV" ] || [ "$remote_ref" = "refs/heads/PROD" ]; then
     # CTO ruling 20261014 (CTO_RULING_20261014_013xZ_PORTAL_PREPUSH_MISSING_GATE_FAILS_CLOSED_ON_TRUNKS.md):
@@ -134,7 +135,10 @@ done
 
 if [ "$D1_BLOCKED" -ne 0 ]; then
   echo "ERROR: VALGATE D-1 adapter-threading gate BLOCKED this push"
-  echo "ERROR: a partner-facing adapter has an un-threaded output path -- see above"
+  # Say the adapter sentence only when the gate RAN and failed; a missing script was named above.
+  if [ "${D1_GATE_FAILED:-0}" -ne 0 ]; then
+    echo "ERROR: a partner-facing adapter has an un-threaded output path -- see above"
+  fi
   exit 1
 fi
 
