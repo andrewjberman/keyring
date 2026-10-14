@@ -33595,3 +33595,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The read-side Lambda is deployed by its terraform root with no schedule. The runner's schedule and deploy target were not located in the read grant and were not censused live, so the packet states the scheduled fire without a time."
 }
 ```
+
+## IRPT_BCKEND-D2-S162 -- Dispositions on workers 374 and 375's rows (D2-W374-S1, D2-W375-S1 to S4) after IB-pr-527 and IB-pr-528 merged
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S162",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T03:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on workers 374 and 375's rows (D2-W374-S1, D2-W375-S1 to S4) after IB-pr-527 and IB-pr-528 merged (@dff35d95da, @e09575dde1); FDRXX on Inflection resolves canonically (757 nodes); the rule's blast radius is 844 nodes, not the 1,126 upper bound.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 374's commits ec20f73ff8, 732330aed9, b66d279fa4 (merged @dff35d95da) and worker 375's 9813d0ad4f, b19722c500 (merged @e09575dde1); I re-ran IB189-1 and IB189-2 AC1 to AC3 on the merged tree: PASS (107 tests); round-close-check verdict MAY-CLOSE",
+      "I read the packet in full (6,495 bytes) and the record's per-firm counts; the diff of holdings_snapshot.py against its base blob is one new function and one wrapped return"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27).",
+  "world_is": "DISPOSITIONS. W374-S1 (the safe-commit client-data check is ABSENT on dell2, a WARN): STAYS ARMED, owner me for the record, the repair is the box manager's (placing the hashed account-id list); until it is placed no commit on this box is scanned for account ids, and my own files carry counts, dates, public symbols and hash prefixes only. W375-S1 (the producer carries no apply_cash_rule at base): resolved by the merge, the function exists at dff35d95da; the packet's Branch A is still the release of a rule-bearing build whose mechanics are NOT read. W375-S2 (the ticker shape admits Black Diamond-prefixed and CUSIP-shaped identifiers): ruled inside my decomposition, they are counted and never listed, fallback_tickers stays empty. W375-S3 (101 nodes of 49financial carry no display symbol; none a mover): INERT, the reason is unread. W375-S4 (the runner's schedule and deploy target not located): the next round's CENSUS cell must read them before any pair is signed. MEASURED: FDRXX on Inflection resolves on the canonical branch (row found fixed_income with sub Cash; 757 FDRXX nodes in the 2026-10-12 snapshot), so the rule is canonical-only as ruled; the blast radius is 844 nodes (49financial 32, cottonwood 38, inflection 774); the 215 and 67 fallback-branch cash-sub holdings on cottonwood and inflection stay fixed_income as served (a cross-page consistency fact for the CTO). The Cottonwood count is at the 2026-10-08 snapshot, since the page cannot publish until the directory exemption is repaired (CTO 7489)."
+}
+```

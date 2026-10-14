@@ -1,4 +1,4 @@
-# ADVI_BDPRCE task order -- `BP-c-1` -- R1 AMENDMENT 1 INTO THE MODULE (NO WRITER IMPORTS IT; NOTHING SERVED MOVES)
+# ADVI_BDPRCE task order -- `BP-c-1` -- R1 AMENDMENTS 1 TO 3 INTO THE MODULE (NO WRITER IMPORTS IT; NOTHING SERVED MOVES)
 
 <!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
 
@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D8/ADVI/ADVI_BDPRCE/decompositions/ADVI_BDPRCE_DECOMP_R3.md</decomp_doc>
 <owned_cells>BP-c-1</owned_cells>
 </decomp_ref>
-<issued_to>0.9.0_WK_ADVI_BDPRCE~13</issued_to>
+<issued_to>0.9.0_WK_ADVI_BDPRCE~20</issued_to>
 <issued_by>2.0.0_SA_COO~K1</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -21,7 +21,29 @@ EGRESS CLASS, declared: NONE.
 Round 2 built R1 as one module, `data/black_diamond/scripts/silver/bd_price_rule.py` (read it and `tests/test_bd_price_rule.py` first; the probe `org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~5/RULE_PROBE.md` shows it run). The CTO ruled AMENDMENT 1
 (`org/missions/D8/ADVI/ADVI_BDPRCE/ledger/CTO_RULING_R1_THE_PRICE_RULE_20261013.md`; read the whole record). You put the amendment into the module. Nothing imports the module and nothing served changes.
 
-### 1.0 AMENDMENT 2 -- THIS ORDER IS REOPENED (issuer, 2026-10-14 ~02:2xZ); it REPLACES item 2's identifier below
+### 1.00 AMENDMENT 3 -- THIS ORDER IS REOPENED A SECOND TIME (issuer, 2026-10-14 ~03:5xZ); it REPLACES sections 1c, 4 and the paths below where they differ
+
+You are a THIRD seat of this slot. Your branch inherits both earlier seats' merged work (the module with Amendments 1 and 2, its 36-arm test, `RULE_PROBE2.*`). The CTO ruled AMENDMENT 3 (call 19b2; `org/missions/D8/ADVI/ADVI_BDPRCE/ledger/CTO_RULING_R1_THE_PRICE_RULE_20261013.md`, section AMENDMENT 3; read it): **R1 changes a price's VALUE, never an asset's UNIT. Every asset is served in the unit of its own served series.** An asset served per 100 (MORGAN STANLEY FIN LLC 0% 05/03/2029 at 115.995) stays per 100; an asset served per unit stays per unit. The unit of a served series is READ from the served lots; a unit that cannot be read withholds the row with its reason. Build exactly this:
+1. `served_unit_map(lots)`, a PURE function (no AWS, no file read) over a frame with the lot extract's price, quantity and market value and asset name columns (read the header of `C:/dev/wk-bdprce-r2-7-data/lot_extract.csv` for the names; its sha256 must read `e7e618d76516c8b7977179aefb3f77ce4fc13c17fbcf1dbeb92001a6e0a2b50b`, else a BLOCKING row and you stop). Per asset: the MEDIAN over its lots of `current_price / (|market_value| / |quantity|)`, skipping a lot with a zero or missing quantity or market value. Within 1 percent of 100 -> `per100`; within 1 percent of 1 -> `per_unit`; anything else, or no usable lot -> `unreadable` (the ratio is returned beside it). Returns `{asset_name: (unit, median_ratio)}`.
+2. `price_for_date`, `withheld_for_date` and `exclusion_census` take a REQUIRED keyword `served_units` (asset -> `per100` | `per_unit` | `unreadable`), NO default (no writer imports the module, so the only callers are your test and probe). For a Fixed Income asset (the existing `par_quoted_assets` test): `per_unit` -> Amendment 2 exactly as built (ratio near 100 divided by 100; near 1 left alone). `per100` -> a trade row with ratio near 100 is used AS EXECUTED (counted `par_as_executed`); a trade row with ratio near 1 (a per-unit quote) is MULTIPLIED by 100 into the series' unit (counted `converted_to_per100`); any other ratio is withheld `ratio_unrecognised` with its ratio. `unreadable`, or the asset missing from the map, -> every trade row withheld with reason `unit_unreadable` (new constant `WITHHELD_UNIT_UNREADABLE`). A non-Fixed-Income asset keeps the Amendment 2 behaviour whatever its unit.
+3. The carry-forward is unchanged: `carry_forward((price, date))` carries the series-unit price computed at the trade row, so the 1.0-against-per-100 case cannot arise.
+4. `AMENDMENT = "R1.3"` (was "R1.2"); `RULE_ID` stays "R1". `__main__` prints `R1.3 module ok`.
+Test (`test_bd_price_rule.py`): every existing call now passes `served_units`; arms keep their expectations by passing `per_unit`. ADD arms: a MORGAN-shaped asset (price 100.0, units 250000, market_value 250000) reads 100.0 under `per100` and 1.0 under `per_unit`; a per100 asset with a ratio-near-1 trade (price 1.1599, market_value/units 1.1599) reads 115.99; a per100 ratio-10 row is withheld with its ratio; `unreadable` withholds with `unit_unreadable`; an asset absent from the map withholds with `unit_unreadable`; a per100 carry returns 100.0 with its date; `served_unit_map`: a per100 asset, a per_unit asset, ratio 5 -> `unreadable`, a zero-quantity lot skipped, the median beats one outlier lot; two runs byte-equal. The test prints `BD PRICE RULE TEST: OK <n> arms` with n at least 40.
+Probe `org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~20/RULE_PROBE3.json` (and `RULE_PROBE3.md`; download partitions to `C:/dev/wk-bdprce-r3-20-data/`): the module run over real partitions of `opal-data-bd` (`silver/transactions/<date>.parquet`) for 2025-05-28 (the date of the MORGAN STANLEY FIN LLC 0% 05/03/2029 par Buy; expect 100.0, not 1.0), 2026-10-09, 2026-09-22 and 2026-10-02, reading each date and the next, with `served_units` built by `served_unit_map` over the extract. Assets (field `kind`: `trade`, `carry`, `absent`, `withheld`): MORGAN STANLEY FIN LLC 0% 05/03/2029; BLACKROCK INC COM 2026-09-22; MIAMI-DADE CNTY FLA EDL FACS A 5.25% 04/01/2031 2026-10-09 (still 1.0419); the other two rows of the round-2 `scale_100x` list; ALLSPRING CORE BOND CIT CLASS E2 2026-10-02 (still 10.3525). Record shape (the grader is `r3_checks.py ruleprobe3`):
+```json
+{"order": "BP-c-1", "read_at": "<ISO UTC>", "claim": "measured", "calls": ["aws s3api get-object ...", "..."], "amendment": "R1.3", "deterministic": true,
+ "reinvestment_in": true, "transfer_in_out": true, "extract_sha256": "<64 hex>",
+ "served_units": {"assets": 0, "per100": 0, "per_unit": 0, "unreadable": 0},
+ "unit_changed_assets": 0,
+ "par_quoted": {"class_field": "asset_super_class_bd == 'Fixed Income', then the per-row ratio test and the served unit", "assets_scaled": 0, "withheld_disagreement": 0,
+                "unit_scale_rows_unchanged": 0, "per_unit_left": 0, "withheld_ratios": [], "par_as_executed": 0, "converted_to_per100": 0, "unit_unreadable_rows": 0},
+ "types_seen": {"<transaction_type>": 0},
+ "assets": [{"asset_name": "<name>", "date": "YYYY-MM-DD", "price": 0.0, "kind": "trade", "distinct_trade_ids": ["..."]}]}
+```
+`unit_changed_assets` is how many of the probe's `trade`/`carry` assets that appear in the extract read a price that is 100x or 1/100 of the extract's served `current_price` (within 1 percent): it must be 0. `unit_scale_rows_unchanged` is still the eight round-2 rows reading equal to the served price (8 of 8).
+Proof (replaces section 4): AC1 runs the test (at least 40 arms); AC2 runs `r3_checks.py ruleprobe3` on `RULE_PROBE3.json`; AC3 is the write-surface bound with the same four allows plus this order file. Row ids `ADVI_BDPRCE-D1-W20-S<k>`. The first-seat and second-seat text below stays as history: where it names `~13`, `RULE_PROBE2` or `R1.2`, THIS section wins.
+
+### 1.0 AMENDMENT 2 -- THIS ORDER WAS REOPENED (issuer, 2026-10-14 ~02:2xZ); it REPLACES item 2's identifier below
 
 You are a second seat of this slot. Your branch inherits the first seat's merged work (commits cd073f6a13 and 26132279f9 are in your tree: the module at `data/black_diamond/scripts/silver/bd_price_rule.py`, its test, `RULE_PROBE2.json` and `.md`, rows W13-S1..S7). The CTO ruled AMENDMENT 2
 (`org/missions/D8/ADVI/ADVI_BDPRCE/ledger/CTO_RULING_R1_THE_PRICE_RULE_20261013.md`, section AMENDMENT 2; read it). Item 2 below ("a par-quoted CANDIDATE is `asset_super_class_bd == 'Fixed Income'` AND `coupon_rate` is not null") is SUPERSEDED: the dimension carries no pricing-convention field and that test reaches only 2 of the 8 rows that read 100x.
@@ -75,37 +97,37 @@ Also write `RULE_PROBE2.md` (one page: the amendment as built, the dimension rul
 <paths>
 data/black_diamond/scripts/silver/bd_price_rule.py
 data/black_diamond/scripts/silver/tests/test_bd_price_rule.py
-org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/
+org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~20/
 org/missions/D8/ADVI/ADVI_BDPRCE/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
 ## 4. PROOF OF SPEC (literal)
 
 <proof_of_spec>
-Instance at `org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/ADVI_BDPRCE.TO-BP-c-1.rule-amendment.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="BP-c-1"><invocation>cd /c/dev/wk-bdprce-r3-13 &amp;&amp; timeout 100 python data/black_diamond/scripts/silver/tests/test_bd_price_rule.py</invocation><expect>^BD PRICE RULE TEST: OK (3[0-9]|[4-9][0-9]) arms$</expect></criterion>
-  <criterion id="AC2" cell_refs="BP-c-1"><invocation>cd /c/dev/wk-bdprce-r3-13 &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/2.0.0_SA_COO~K1/round3/checks/r3_checks.py ruleprobe2 --file org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/RULE_PROBE2.json</invocation><expect>^RULEPROBE2 record ok amendment=R1.2 assets=[0-9]+ par_scaled=[0-9]+ withheld=[0-9]+$</expect></criterion>
-  <criterion id="AC3" cell_refs="BP-c-1"><invocation>cd /c/dev/wk-bdprce-r3-13 &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_scope.py --root /c/dev/wk-bdprce-r3-13 --allow data/black_diamond/scripts/silver/bd_price_rule.py --allow data/black_diamond/scripts/silver/tests/test_bd_price_rule.py --allow org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/ --allow org/missions/D8/ADVI/ADVI_BDPRCE/surprise-channel/investigations/INVESTIGATION_v1.md</invocation><expect>^ROUND 4 SCOPE: OK [0-9]+ changed, 0 outside, 0 required missing$</expect></criterion>
+Instance at `org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~20/ADVI_BDPRCE.TO-BP-c-1.rule-amendment.proof_of_spec.json`.
+  <criterion id="AC1" cell_refs="BP-c-1"><invocation>cd /c/dev/wk-bdprce-r3-20 &amp;&amp; timeout 100 python data/black_diamond/scripts/silver/tests/test_bd_price_rule.py</invocation><expect>^BD PRICE RULE TEST: OK ([4-9][0-9]) arms$</expect></criterion>
+  <criterion id="AC2" cell_refs="BP-c-1"><invocation>cd /c/dev/wk-bdprce-r3-20 &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/2.0.0_SA_COO~K1/round3/checks/r3_checks.py ruleprobe3 --file org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~20/RULE_PROBE3.json</invocation><expect>^RULEPROBE3 record ok amendment=R1.3 assets=[0-9]+ per100=[0-9]+ per_unit=[0-9]+ unreadable=[0-9]+ unit_changed=0$</expect></criterion>
+  <criterion id="AC3" cell_refs="BP-c-1"><invocation>cd /c/dev/wk-bdprce-r3-20 &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_scope.py --root /c/dev/wk-bdprce-r3-20 --allow data/black_diamond/scripts/silver/bd_price_rule.py --allow data/black_diamond/scripts/silver/tests/test_bd_price_rule.py --allow org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~20/ --allow org/missions/D8/ADVI/ADVI_BDPRCE/surprise-channel/investigations/INVESTIGATION_v1.md --allow org/missions/D8/ADVI/ADVI_BDPRCE/task-orders/ADVI_BDPRCE.TO-BP-c-1.rule-amendment.md</invocation><expect>^ROUND 4 SCOPE: OK [0-9]+ changed, 0 outside, 0 required missing$</expect></criterion>
 </proof_of_spec>
 
 AC1 is the built behaviour (each clause on planted frames, at least 30 arms); AC2 is the seam probe against the real partitions and dimension; AC3 is the write-surface bound (its printed label says ROUND 4 because the checker is reused unchanged).
 
 ## 5. WHEN YOU ARE DONE
 
-Instance at the path above. Commit the module, its test, `RULE_PROBE2.json` and `RULE_PROBE2.md` FIRST, your rows and the instance second. **Do not flip this order's `<status>`**. Row ids:
-`ADVI_BDPRCE-D1-W13-S<k>` (the dell1 gate requires the D1 coordinate), `k` from 1, `surfaced_at` from `date -u +%FT%TZ`. Report once: the five named assets' R1.2 prices and kinds, the par-quoted candidate and scaled counts, how many of the eight 100x rows now read UNCHANGED, the types seen, AC1 to AC3 and the FULL commit hash.
+Instance at the path above. Commit the module, its test, `RULE_PROBE3.json` and `RULE_PROBE3.md` FIRST, your rows and the instance second. **Do not flip this order's `<status>`**. Row ids:
+`ADVI_BDPRCE-D1-W20-S<k>` (the dell1 gate requires the D1 coordinate), `k` from 1, `surfaced_at` from `date -u +%FT%TZ`. Report once: the five named assets' R1.2 prices and kinds, the par-quoted candidate and scaled counts, how many of the eight 100x rows now read UNCHANGED, the types seen, AC1 to AC3 and the FULL commit hash.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-2 analysis item 1 (first half); R1 Amendment 1 (msgs 5323). Module-only; the replay re-run is `BP-c-2` on this module. Disarm map: brings `W6-S2`, `W3-S3`, `W3-S4` and the writers' rows within reach. Class LOCAL: the module sits under `data/black_diamond/scripts/silver/`, a path the silver script does not sync to the runner, and nothing imports it.
 
-**CLOSED (2.0.0_SA_COO~K1, 2026-10-14 ~03:3xZ), second seat, AC1 and AC2 PASS; AC3 note:** the worker's instance reads AC3 FAIL because the checker counts the ISSUER's own face-cleaning commit 544d551f1d (this order file) as an outside change; the worker wrote nothing outside its surface. The issuer re-ran AC3 with this order file allowed: `ROUND 4 SCOPE: OK 8 changed, 0 outside, 0 required missing`. The instance is left as the worker wrote it.
+**REOPENED ~03:5xZ for AMENDMENT 3 (third seat ~20); the note below is the history of the second seat.** **CLOSED (2.0.0_SA_COO~K1, 2026-10-14 ~03:3xZ), second seat, AC1 and AC2 PASS; AC3 note:** the worker's instance reads AC3 FAIL because the checker counts the ISSUER's own face-cleaning commit 544d551f1d (this order file) as an outside change; the worker wrote nothing outside its surface. The issuer re-ran AC3 with this order file allowed: `ROUND 4 SCOPE: OK 8 changed, 0 outside, 0 required missing`. The instance is left as the worker wrote it.
 
-<status>complete</status>
+<status>pending</status>
 <round>3</round>
 <workstream>RULEAMEND</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-c-1</to_id>
-<slot>~13</slot>
+<slot>~20</slot>
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
