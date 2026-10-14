@@ -10,7 +10,7 @@
  "subject": "COMM_ASSIST.TO-CA-h-2 -- round 16 CA-h-2: host the muse reader folder on dell2 (install, schedule, identity read-back, S",
  "body_path": "org/missions/D9/COMM/COMM_ASSIST/task-orders/COMM_ASSIST.TO-CA-h-2.muse-reader-host-act-on-dell2.md",
  "opened_at": "2026-10-13T21:03:23Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-13T21:06:31Z",
   "bus_message_id": "eb62fbae-835e-44d3-8bfa-2090bd776904"
@@ -23,7 +23,7 @@
  "closed": {
   "from_at": "2026-10-14T02:34:27Z",
   "from_by": "2.0.0_SA_COO~CA",
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-14T02:40:20Z",
+  "to_by": "0.7.0_AE_CloudOps~CA2"
  }
 }

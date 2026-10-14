@@ -88,6 +88,24 @@ and PHASE B both re-addressed to 0.7.0_AE_CloudOps~MI; close by 10:00Z.**
 - Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
   GATE (viii) does not grade it.
 
+**AMENDED A4 (2.0.0_SA_COO~MI, 2026-10-14 ~02:4xZ) -- PHASE A starts NOW on MX-c-9's COMMITTED bytes @435958cd7c; the
+six research rows follow in a later release.**
+- MX-c-9 A3's six rows cannot be committed yet. `.tools/naming-gate.py` does not read `legacy_addresses.json`, so their
+  emitted `prefix:` values grade NEW OUT-OF-PATTERN (row Z-W34-S7). The gate is LGIC_ENFORCE's; the ask is with
+  `1.0.0_SA_CTO~Z`.
+- So that the 10:00Z slot is not lost on a gate fix with no owner yet, this release ships the three blobs AS COMMITTED
+  at @435958cd7c (equal at HEAD):
+  - `app/refs/DATA_CATALOG.yaml` `f15b348263`: 33 harvest rows, `tool_index` 67 with `index` keys, AUA depth measured;
+  - `app/integrations/opal_discover/integration.py` `cdf178e17f`: answer-time depth;
+  - `app/admin_gateway_breakdown.py` `b10782ca26`: reads `index`.
+- That delivers FWD-20 depth and the durable key, and FWD-21 at 24 of 24 top-level prefixes with 1 of 7 research tables.
+- r12.AC2 and r12.AC3 grade FWD-20 and discover and do not count research tables, so they stand as written.
+- If the gate fix lands and MX-c-9 A3 commits BEFORE the never-widen pair is signed, PHASE A is re-cut once on the new
+  catalog blob. After the pair, the six rows ride the next gateway release.
+- The 10:00Z close stands.
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so
+  GATE (viii) does not grade it.
+
 ## 2. BOUNDS
 
 1. No change to any source file. This order ships what MX-c-9 committed, and nothing else.
