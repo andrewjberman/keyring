@@ -1,0 +1,238 @@
+{
+  "as_of": "2026-10-12",
+  "authority": "Andrew-direct ~18:5xZ 2026-10-14, verbatim: 'ETFS_RIVALS is done now, all it needs is its backfill sorted out in DEMQUE' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_185xZ_ETFS_RIVALS_DONE_BACKFILL_TO_DEMQUE.md; relayed by 1.0.0_SA_CTO~DELL1 msg 5712-5713); the 30, 90, 365 day order: Andrew 'C1 yes, approved in that order' (org/tier1_exec/1.0.0_SA_CTO/deliverables/DEMQUE_QUEUE_FORM_ANDREW_20261013.md).",
+  "cells_claim_note": "Cell count is bbg_quote's reference rule (securities x fields = one cell per security). DVD_HIST_ALL returns several dividend event rows per security (the live store holds 9,354 event rows for 724 securities, about 13 each), so the rows Bloomberg returns exceed this count: the cell count is an UNDERCOUNT of the rows drawn.",
+  "channel": "reference",
+  "end": null,
+  "excluded_keys": [
+    "nan"
+  ],
+  "fields": [
+    "DVD_HIST_ALL"
+  ],
+  "filed_by": "2.0.0_SA_COO~Q1",
+  "filed_for": "ETFS_RIVALS",
+  "need_class": "non_client",
+  "need_date": "2026-10-13",
+  "page": "rival funds (ETFS_RIVALS)",
+  "reason": "Andrew-direct ~18:5xZ 2026-10-14 (CTO msg 5713): the ETFS_RIVALS backfill gap Row 3 of BACKFILL_GAPS_FOR_DEMQUE.md (org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round30/BACKFILL_GAPS_FOR_DEMQUE.md @c9e98081a6): corporate actions (DVD_HIST_ALL) for the securities with no corporate_actions row of any kind; one reference cell per security of the pinned names file (ETFS_RIVALS_DVD70_NAMES.json); the 70 excluded key(s) are null keys, not securities.",
+  "request_id": "ETFS_RIVALS-C1-DIVIDENDS",
+  "securities": [
+    {
+      "bloomberg": "2269 HK Equity"
+    },
+    {
+      "bloomberg": "3491 TT Equity"
+    },
+    {
+      "bloomberg": "6857 JP Equity"
+    },
+    {
+      "bloomberg": "AAF LN Equity"
+    },
+    {
+      "bloomberg": "AAPL US Equity"
+    },
+    {
+      "bloomberg": "ABT US Equity"
+    },
+    {
+      "bloomberg": "ACGL US Equity"
+    },
+    {
+      "bloomberg": "ACN US Equity"
+    },
+    {
+      "bloomberg": "ADBE US Equity"
+    },
+    {
+      "bloomberg": "AJG US Equity"
+    },
+    {
+      "bloomberg": "AMD US Equity"
+    },
+    {
+      "bloomberg": "AXON US Equity"
+    },
+    {
+      "bloomberg": "BAB LN Equity"
+    },
+    {
+      "bloomberg": "BG US Equity"
+    },
+    {
+      "bloomberg": "BKD US Equity"
+    },
+    {
+      "bloomberg": "BSX US Equity"
+    },
+    {
+      "bloomberg": "CACI US Equity"
+    },
+    {
+      "bloomberg": "CB US Equity"
+    },
+    {
+      "bloomberg": "CMG US Equity"
+    },
+    {
+      "bloomberg": "CRS US Equity"
+    },
+    {
+      "bloomberg": "CVNA US Equity"
+    },
+    {
+      "bloomberg": "DASH US Equity"
+    },
+    {
+      "bloomberg": "DGVXX US Equity"
+    },
+    {
+      "bloomberg": "DT US Equity"
+    },
+    {
+      "bloomberg": "DXCM US Equity"
+    },
+    {
+      "bloomberg": "EBAY US Equity"
+    },
+    {
+      "bloomberg": "EFX US Equity"
+    },
+    {
+      "bloomberg": "GDDY US Equity"
+    },
+    {
+      "bloomberg": "GENI US Equity"
+    },
+    {
+      "bloomberg": "GRAB US Equity"
+    },
+    {
+      "bloomberg": "HAL US Equity"
+    },
+    {
+      "bloomberg": "HLN US Equity"
+    },
+    {
+      "bloomberg": "IBKR US Equity"
+    },
+    {
+      "bloomberg": "ICE US Equity"
+    },
+    {
+      "bloomberg": "INTU US Equity"
+    },
+    {
+      "bloomberg": "JAN US Equity"
+    },
+    {
+      "bloomberg": "KB US Equity"
+    },
+    {
+      "bloomberg": "LTMC IM Equity"
+    },
+    {
+      "bloomberg": "MCK US Equity"
+    },
+    {
+      "bloomberg": "MICC LN Equity"
+    },
+    {
+      "bloomberg": "MSCI US Equity"
+    },
+    {
+      "bloomberg": "MTD US Equity"
+    },
+    {
+      "bloomberg": "MU US Equity"
+    },
+    {
+      "bloomberg": "NBIS US Equity"
+    },
+    {
+      "bloomberg": "NET US Equity"
+    },
+    {
+      "bloomberg": "NKE US Equity"
+    },
+    {
+      "bloomberg": "NTES US Equity"
+    },
+    {
+      "bloomberg": "OTP HB Equity"
+    },
+    {
+      "bloomberg": "PAYC US Equity"
+    },
+    {
+      "bloomberg": "RARE US Equity"
+    },
+    {
+      "bloomberg": "RBLX US Equity"
+    },
+    {
+      "bloomberg": "RGA US Equity"
+    },
+    {
+      "bloomberg": "ROL US Equity"
+    },
+    {
+      "bloomberg": "SNDK US Equity"
+    },
+    {
+      "bloomberg": "SNPS US Equity"
+    },
+    {
+      "bloomberg": "SONY US Equity"
+    },
+    {
+      "bloomberg": "SPHR US Equity"
+    },
+    {
+      "bloomberg": "TEAM US Equity"
+    },
+    {
+      "bloomberg": "TEVA IT Equity"
+    },
+    {
+      "bloomberg": "THC US Equity"
+    },
+    {
+      "bloomberg": "TPR US Equity"
+    },
+    {
+      "bloomberg": "TTD US Equity"
+    },
+    {
+      "bloomberg": "UMG NA Equity"
+    },
+    {
+      "bloomberg": "VG US Equity"
+    },
+    {
+      "bloomberg": "VLO US Equity"
+    },
+    {
+      "bloomberg": "VLTO US Equity"
+    },
+    {
+      "bloomberg": "VRSK US Equity"
+    },
+    {
+      "bloomberg": "WDC US Equity"
+    },
+    {
+      "bloomberg": "XYZ US Equity"
+    },
+    {
+      "bloomberg": "ZTS US Equity"
+    }
+  ],
+  "source": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round30/BACKFILL_GAPS_FOR_DEMQUE.md @c9e98081a6",
+  "standing": false,
+  "start": null,
+  "tier": 3,
+  "vendor": "bloomberg",
+  "window_start": "2025-10-13"
+}
