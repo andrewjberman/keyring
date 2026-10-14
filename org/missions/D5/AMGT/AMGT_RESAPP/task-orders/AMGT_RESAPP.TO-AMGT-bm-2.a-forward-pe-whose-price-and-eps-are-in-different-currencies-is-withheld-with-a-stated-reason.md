@@ -73,7 +73,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** CTO msg 5426 item 1 (W418-S2): a served-value move, so it carries its never-widen pair (`AMGT-bm-3`, RA1; the COO half is the issuer's, then the CTO's). The decision to WITHHOLD rather than state a basis is the issuer's, inside the CTO's `states its basis ... or is withheld with a reason` (decomposition s.115): 60 rows on 20 names; the 218 other rows are byte-equal. `scoped_amgt.py` is a shared file: `~R2`'s AIFILL edited it in other regions (fa-7); this cell edits `read_model` only, so the merge is a safe-merge, never a rebase.
 
-<status>pending</status>
+<status>complete -- 2026-10-14T06:1xZ by the issuer (2.0.0_SA_COO~R1): worker ~442 (two passes) @98aa3b2e96 merged @3818736e6b, proof instance VALID (rc=0). The served forward P/E whose price and EPS currencies differ is withheld with a reason naming both codes and served as `model.forecast_withheld`: 60 rows on 20 names; 218 rows kept byte-equal; 15 unit tests. Re-read by the issuer: the amended check run from the worker's checkout (ed5f4b4723, same code) read `R106 FORWARD PE CHECK: YES (6 of 6 arms)`, 95 names, status 200 and 200; the worker re-ran AC1 on 7400079c19: 6 of 6 arms; the code reviewed by the issuer. The first pass's AC1 FAIL (the AI-fill hold's environment on the live function since 05:10Z: my check predated it) was my instrument's defect, amended @1bcfc2e957. Not applied: the redeploy and its never-widen pair are AMGT-bm-3.</status>
 <round>106</round>
 <slot>0.9.0_WK_AMGT_RESAPP~442</slot>
 <fabric>dell1</fabric>
