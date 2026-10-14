@@ -1803,3 +1803,43 @@
   "notes": "Disarm owner per Z-S47: 2.0.0_SA_COO~MP (issuer)."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W23-S1",
+  "one_line": "The repo-wide comp-find sweep named by MP-pc-4 did not finish in 120 s; whole-repo absence of Claude usage readers is unread, not zero.",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~23",
+  "surfaced_at": "2026-10-14T03:39:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {"status": "GROUNDED", "evidence": ["comp-find -i 'ratelimit|rate_limit|usage|oauthAccount' --files --limit 30 run from C:/tmp/mp-pc-23 was moved to background after 120 s and its output file stayed 0 bytes"]},
+  "spec_asserts": "The task order names comp-find for the repo-wide sweep of Claude usage or account readers.",
+  "world_is": "The sweep did not finish in 120 s on this worktree; native Grep over .tools and org/mcp found 0 files; the whole-repo sweep is unread."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W22-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~22",
+  "surfaced_at": "2026-10-14T03:44:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO MP-pc-3 types GitBox.integration_refused_basis as a string; I typed it optional (basis?: string) because panels.test.tsx, outside my paths, builds GitBox fixtures without it.",
+  "spec_asserts": "Each box carries integration_refused_basis (a string); GitBox type updated in src/api/admin.ts.",
+  "world_is": "Existing fixtures in mcportal/src/pages/control-plane/panels.test.tsx (read-only for this cell) construct GitBox without integration_refused_basis, so a required field would fail the typecheck the drain runs, and the file is not in the order's paths. The type is optional; the view sets title={box.integration_refused_basis}, so a payload that carries it shows it and one that omits it shows no title. Once panels.test.tsx fixtures carry the field the type can be made required.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "mcportal 17dcbb2: src/api/admin.ts GitBox",
+      "mcportal/src/pages/control-plane/panels.test.tsx:52-83 (two GitBox fixtures without the field)"
+    ]
+  }
+}
+```
