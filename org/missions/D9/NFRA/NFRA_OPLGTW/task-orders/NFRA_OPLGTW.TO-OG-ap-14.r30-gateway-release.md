@@ -195,6 +195,19 @@ commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing
   - The rollback target is `43088464f5`.
   - Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
+- A6 (issuer, 2026-10-14 ~05:0xZ, row Z-S105, ARMED): **step 5's deploy source is RE-PINNED.**
+  - Step 5 named `C:/tmp/og-rel-r30`, the v1 worktree (HEAD db3d1972bc on base 7eff14b2e6). It was never re-pinned when
+    C3 fired twice. Deploying it would ship the release AND MP-n-4's and MX-r-12's files at their PRE-release blobs
+    (8 files differ v1 vs v3), a silent regression of two live releases that every patch-id check passes. This is an
+    issuer defect.
+  - Deploy from **`C:/tmp/og-rel-r30c`** (branch `rel-nfra-oplgtw-r30c`), with
+    **`DEPLOY_BASE_REF=43088464f51c81e9fe3528b080c6ca8ce5fa90fe`**. Measured by the issuer at A6: that worktree's HEAD
+    is `90967e39ba4bdca17c6f84d9806c29cc67f8482e`, and its parent is `43088464f5...`.
+  - **New guard, before step 5's first deploy command:** the deploy tree's `git rev-parse HEAD` must equal the signed
+    `release_sha` in full, and its parent must equal live `deployed_commit`. Any mismatch is a STOP. Print both.
+  - Carried to the cut template: a release order names its deploy source by `release_sha`, never by a worktree path.
+  - Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>37</round>
 <slot>~AE</slot>

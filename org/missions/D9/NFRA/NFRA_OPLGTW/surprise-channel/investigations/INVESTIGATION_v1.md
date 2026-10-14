@@ -13260,3 +13260,31 @@ name the one known failure instead of silently inheriting it.
   "notes": "Fix needs either test_og_bd2.py in <paths> (flip line 70 to None for the profiled master_admin) or AC1's bd2 limb dropped. This worker did neither. disarm_owner (if ever armed): 2.0.0_SA_COO~O."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-14T04:48:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-S105",
+  "one_line": "OG-ap-14 step 5 names the deploy source as C:/tmp/og-rel-r30, which is the V1 worktree on base 7eff14b2e6; following it literally at B2 would ship 8 files at their OLD blobs and REGRESS two closed releases (MP-n-4 and MX-r-12) while the four cells' 18 files looked correct.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ the order's PHASE B2 step 5 at HEAD: 'Deploy from C:/tmp/og-rel-r30 through infra/aws/ec2/safe-ec2-deploy.sh, with DEPLOY_BASE_REF=<base_sha>'. That path is the v1 worktree: git -C C:/tmp/og-rel-r30 rev-parse HEAD = db3d1972bc, base 7eff14b2e6. The SIGNED release is v3, 90967e39ba on base 43088464f5, in C:/tmp/og-rel-r30c.",
+      "MEASURED git diff --name-only db3d1972bc 90967e39ba: 8 files differ between the v1 and v3 releases, five of them under the gateway -- app/admin_fabric_gitstate.py, app/admin_gateway_breakdown.py, app/integrations/opal_discover/integration.py, app/refs/DATA_CATALOG.yaml, tests/test_admin_fabric_gitstate.py.",
+      "MEASURED per blob: app/admin_fabric_gitstate.py is a134916e01 at v1 against 081f838afe at v3, and app/refs/DATA_CATALOG.yaml is 54afa75ea1 against d180a6d86b. Those are MP-n-4's module and MX-r-12 v2's regenerated catalog, both at their PRE-release blobs in the v1 tree.",
+      "The deploy ships the whole cone, not the 18 cell files: step 5 itself lists lib/, .tools/, org/modules/graph/, data/transcripts/scripts/teams/ and the agent home alongside the gateway. So the regression would not be limited to the five gateway files above.",
+      "git patch-id --stable reads eac7550c4539953640bb110f5522dcb48ce5aa81 for v1, v2 AND v3, so the HUNKS are identical across all three -- which is exactly why this is invisible to a hunk-level check and to AC1, whose limbs are all relative to each release's own base."
+    ]
+  },
+  "spec_asserts": "TO NFRA_OPLGTW.TO-OG-ap-14 PHASE B2 step 5: deploy from C:/tmp/og-rel-r30 with DEPLOY_BASE_REF=<base_sha>; and A5 (@855c68f26a): B2 GO at release_sha 90967e39ba with C3 requiring live to still be 43088464f5 at the act.",
+  "world_is": "The step-5 path was written for v1 and was never re-pinned when C3 fired twice and the release was re-cut to v2 and then v3. The order now simultaneously says to deploy 90967e39ba (A5) and to deploy from the tree that holds db3d1972bc (step 5). Following the path ships v1's whole tree: the four cells' hunks land correctly, AC1-style checks pass, and MP-n-4's and MX-r-12's closed releases silently revert on the host. ARMED because the B2 window opens at 11:00Z and the wrong source is the one written down.",
+  "notes": "The correction is one path and one ref: deploy from C:/tmp/og-rel-r30c with DEPLOY_BASE_REF=43088464f51c81e9fe3528b080c6ca8ce5fa90fe. I will not deploy from the written path, and I am not amending the order myself -- the issuer owns step 5. Disarm is a one-line amendment. This is the shape CLAUDE.md 22a's CODE layer warns about from the other direction: here the BUILD INPUT is correct and identical by patch-id, while the TREE around it is two releases stale, so every hunk-level rung passes."
+}
+```
