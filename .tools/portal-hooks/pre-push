@@ -80,6 +80,11 @@ while read -r local_ref local_sha remote_ref remote_sha; do
     if [ $? -ne 0 ]; then
       D1_BLOCKED=1
     fi
+  elif [ "$remote_ref" = "refs/heads/DEV" ] || [ "$remote_ref" = "refs/heads/PROD" ]; then
+    # CTO ruling 20261014 (CTO_RULING_20261014_013xZ_PORTAL_PREPUSH_MISSING_GATE_FAILS_CLOSED_ON_TRUNKS.md):
+    # a missing gate script on a TRUNK is a silent absence, so the push fails closed.
+    echo "ERROR: VALGATE D-1 gate script d1_adapter_threading_gate.py not found -- push to $remote_ref refused; run: bash .tools/portal-hooks/install.sh"
+    D1_BLOCKED=1
   else
     echo "WARN: VALGATE D-1 gate script not found -- adapter-threading gate skipped"
   fi
@@ -97,7 +102,9 @@ while read -r local_ref local_sha remote_ref remote_sha; do
         DEVPUSH_BLOCKED=1
       fi
     else
-      echo "WARN: DEV payload gate script not found -- portal DEV payload limb skipped"
+      # DEV is a trunk: fail closed (same ruling as the D-1 limb above).
+      echo "ERROR: DEV payload gate script dev_push_payload_gate.py not found -- push to refs/heads/DEV refused; run: bash .tools/portal-hooks/install.sh"
+      DEVPUSH_BLOCKED=1
     fi
   fi
 
