@@ -89,7 +89,7 @@ disarm_owner `2.0.0_SA_COO~O`; `surfaced_at` = `date -u +%FT%TZ`.
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OG-ap-18"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ap18.AC1.sh; echo "exit=$?"</invocation><expect>(?s)base [0-9a-f]+ is the live ref before this release: yes.*outside the G1 set 0 \(want 0\); tools registered 10 of 10; SAFE 10 of 10; NATIVE 10 of 10; OG-gt-5 module in release: no.*RESULT: PASS.*exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OG-ap-18"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ap18.AC2.sh; echo "exit=$?"</invocation><expect>(?s)ledger CLOSED 1 of 1; sentinel at HEAD 0.*equal=yes; rb\.AC2 PASS.*registry [0-9]+ -> [0-9]+ \(\+10\); per-tool 10 of 10.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-ap-18"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ap18.AC2.sh; echo "exit=$?"</invocation><expect>(?s)ledger CLOSED 1 of 1; sentinel at HEAD 0.*landed=(?:current; rb\.AC2 PASS|superseded; rb\.AC2 skipped \(superseded\)).*registry [0-9]+ -> [0-9]+ \(\+10\); per-tool 10 of 10.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="OG-ap-18" judgment="true"/>
 </proof_of_spec>
 
@@ -112,6 +112,10 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-18.g1-typed-tools-release.pr
 - The issuer registers the tools and re-pins counts at the merge (CUT BY WRITE SET: hookups belong to no cell).
 - Pre-cut: ap18.AC1 and ap18.AC2 base FAIL as expected (gt_release.json and GT_SERVED.json absent).
 - Cut staged: amendment A1 (the merge and hookup commits) and the spawn of this order wait on OG-hv-2's close and on gt-0..gt-4's drain.
+
+- A1 (issuer, 2026-10-14 ~17:1xZ, row Z-S119): the release AC2 now grades the LANDING with a time anchor (`r37/checks/_landed.sh`): the manifest's deployed_commit is the release, or recorded it
+  before a later release displaced it; runbook 7.2 (rb.AC2) is graded only while this release is the live one. "deployed_commit equals release_sha" flips to FAIL on work graded PASS the
+  moment the next release lands, so it is no longer a criterion. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>staged</status>
 <round>37</round>
