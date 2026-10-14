@@ -99,7 +99,9 @@ Instance at the path above. Commit the module, its test, `RULE_PROBE2.json` and 
 
 **ISSUER NOTES:** round-2 analysis item 1 (first half); R1 Amendment 1 (msgs 5323). Module-only; the replay re-run is `BP-c-2` on this module. Disarm map: brings `W6-S2`, `W3-S3`, `W3-S4` and the writers' rows within reach. Class LOCAL: the module sits under `data/black_diamond/scripts/silver/`, a path the silver script does not sync to the runner, and nothing imports it.
 
-<status>pending</status>
+**CLOSED (2.0.0_SA_COO~K1, 2026-10-14 ~03:3xZ), second seat, AC1 and AC2 PASS; AC3 note:** the worker's instance reads AC3 FAIL because the checker counts the ISSUER's own face-cleaning commit 544d551f1d (this order file) as an outside change; the worker wrote nothing outside its surface. The issuer re-ran AC3 with this order file allowed: `ROUND 4 SCOPE: OK 8 changed, 0 outside, 0 required missing`. The instance is left as the worker wrote it.
+
+<status>complete</status>
 <round>3</round>
 <workstream>RULEAMEND</workstream>
 <to_id>ADVI_BDPRCE.TO-BP-c-1</to_id>
