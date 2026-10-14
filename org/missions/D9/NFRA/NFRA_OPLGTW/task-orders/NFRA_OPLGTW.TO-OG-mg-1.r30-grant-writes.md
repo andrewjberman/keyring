@@ -164,6 +164,16 @@ commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing
     `accessanalyzer validate-policy`), and supplies the condition context the policy keys on.
   - Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
+- A2 (issuer, 2026-10-14 ~02:2xZ, msg 33919): both records are CREATES, so `prepare()` has no stored email to fall back
+  on, and each candidate must carry its own. Ruled sources, never typed by hand into the repo:
+  - **R1 (Andrew):** the single alias in the live host `.env` `MASTER_ADMIN_EMAILS` (exactly 1, on `opalinvest.com`, as
+    measured). That alias is Andrew's master-admin principal.
+  - **R2 (Bloomberg):** `opalbloomberg@opalinvest.com`, the identity pinned in code and named by `identity_scope`'s
+    `OPAL_USERS_ONLY`.
+  - Each value is held off-repo. W records only the source, `sha256(lower(email))[:10]`, and the domain. If either
+    source does not resolve to exactly one value at the act, STOP with a BLOCKING row.
+  - Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>37</round>
 <workstream>R37-GRANTS</workstream>

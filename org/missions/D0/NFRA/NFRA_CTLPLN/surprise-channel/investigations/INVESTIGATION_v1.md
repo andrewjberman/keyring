@@ -9228,6 +9228,34 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
 }
 ```
 
+## NFRA_CTLPLN-D2-S3 -- crossbox-deploy-check STOPs a whole project's roots on an Andrew-only ACT row, not a decision
+
+```json
+{
+  "id": "NFRA_CTLPLN-D2-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-14T02:14:00Z",
+  "one_line": "The OPEN-CALL limb of crossbox-deploy-check matches an open_calls row of kind act (an act only Andrew can do: send an execution ID) through the row's project write set, so under ENFORCE every investor-reporting apply on any box STOPs until Andrew acts; today it prints only (WARN).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "the NFRA_CTLPLN issuer (2.0.0_SA_COO~C): before ENFORCE is armed, rule whether kind act rows feed the OPEN-CALL limb, or limit them to the roots the row names in its own roots field",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/crossbox-deploy-check.py --root infra/aws/terraform/investor-reporting --serial 1.0.0_SA_CTO~DELL2 at 2026-10-14 ~02:13Z: OPEN-CALL calls_scanned=346 matched=1, HIT row dell2-20261013T214715Z-f61b names project IRPT_BCKEND in its project field, whose write set covers the root; verdict=STOP",
+      "python .tools/open-calls.py list: dell2-20261013T214715Z-f61b [OPEN] act IRPT_BCKEND 'Send the execution ID of your own PROD analysis-request submission (IB-pr-456 BEFORE record)'",
+      "0.7.0_AE_CloudOps~AQ2 report msg 7429 (relayed by 0.0.0_AB_MSTR~DELL2 msg 7431): the seat-gates in WARN mode printed this STOP during TO-APPLY-R28a; the irpt-status and opal-ticket-api applies were admitted"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "open-calls skill: kind act rows are acts only Andrew can do, printed under ACTS ONLY ANDREW CAN DO, never decisions; crossbox-deploy-check exists so another box learns of an open call that could upset its deploy.",
+  "world_is": "An act row with no roots field draws a hit on every root its project's write set covers, so one pending Andrew act would stop unrelated applies (here irpt-status and opal-ticket-api, which do not depend on the execution ID) once ENFORCE is on.",
+  "notes": "Not halting anything: the gate is WARN today. The row f61b stays OPEN for Andrew; the dell2 CTO does not close an act he owes to quiet a gate."
+}
+```
+
 ## NFRA_CTLPLN-S9123 -- routed from NFRA_DEVPLN: unblock.py tick --owed-call must read a call on another box's list through the freshest source
 
 ```json
