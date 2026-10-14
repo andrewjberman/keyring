@@ -12434,3 +12434,35 @@
 - **owner:** `2.0.0_SA_COO~Y2`
 - **disarm_owner:** n/a -- INERT; the gap is a missing feature, nothing degrades while it waits
 - **state:** BLOCKING / INERT
+
+
+### IRPT_ANLREQ-D2-S94 -- the live door answers a Shares upload NEEDS_CORRECTION because the resident composes no Shares price source, so the D3 price-date default is never reached
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S94",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-14T04:29:24Z",
+  "one_line": "TO-EXERCISE-R28b: as a synthetic Opal-internal viewer the door ADMITTED and answered D1 NEEDS_CORRECTION, D2 NORMALIZED and D4 re-open, but D3 (a Shares file with no price date) answered NEEDS_CORRECTION, not NORMALIZED, because the resident composes no Shares price source (resolve_prices is _not_composed SHARES_PRICE_SOURCE_NOT_COMPOSED), so the previous-trading-day price default (AR-y-245) is never reached live.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r28/DOOR_TRACE.txt: D3 status 200, answer state NEEDS_CORRECTION (two posts: RESOLVING, then NEEDS_CORRECTION); the finding code was NOT recorded by the script (INFERRED below)",
+      "infra/aws/lambda/investor-reporting/intake/upload_resolution.py:112 and :133 (resolve_prices=_not_composed SHARES_PRICE_SOURCE_NOT_COMPOSED) and the docstring :125-126 (Prices are not composed: a SHARES template answers NEEDS_CORRECTION by name); intake/tests/test_deferred_resolution.py:172-173 pins reason SHARES_PRICE_SOURCE_NOT_COMPOSED",
+      "intake/uploads.py:606-608 (_freeze_template calls self.resolve_prices for a SHARES basis, after default_price_date) and :562-564 (the not-composed refusal becomes NEEDS_CORRECTION with the code as reason)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Release-28 pair section 5 step D3 and Addendum 1 section 4: a Shares file with no price date answers NORMALIZED and carries the previous trading day's price date.",
+  "world_is": "The live door answers D3 NEEDS_CORRECTION. The reason code is INFERRED from the code and its test (SHARES_PRICE_SOURCE_NOT_COMPOSED), not measured: the sitting kept status and state only. The default price date function itself returns the prior trading day (2026-10-13 for 2026-10-14, offline and printed in the trace); what is unreached live is the price source the Shares freeze needs. D3 stored no input.",
+  "notes": "owner of the follow-up: 2.0.0_SA_COO~Y2 with 1.0.0_SA_CTO~DELL2 (compose a Shares price source in the resident, or rule the D3 expectation out of release 28). The lane did not retry D3 (the order forbids a second token and a reassignment of an arm)."
+}
+```
+
+- **owner:** `2.0.0_SA_COO~Y2`
+- **disarm_owner:** n/a -- INERT; a missing feature, nothing degrades while it waits
+- **state:** BLOCKING / INERT

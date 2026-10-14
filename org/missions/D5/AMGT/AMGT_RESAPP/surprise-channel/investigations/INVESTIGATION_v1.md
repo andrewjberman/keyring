@@ -27024,3 +27024,101 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The verdict on the TSX change rests on the AC1 to AC3 instruments; the pre-commit reads did not examine it. Recorded for the issuer to rule whether a frontend commit owes a read by a gate that covers it."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W440-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~440",
+  "surfaced_at": "2026-10-14T04:05:48Z",
+  "one_line": "AMGT-bl-3 walk B (PBR US, QXO US, COST US, 8035 JP) did not arm: the walker account reads armed by a holder this seat did not take, so AC3 and AC4 are not run and the walk-B stamp is void.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "AMGT-bl-3 AC3 and AC4 each run one walk under the walker's own lease (ui_walker_account.py arm, the walk, then disarm of this seat's own holder); a HELD lease means STOP and file a BLOCKING row, and the order names no other way past a lease held by another holder.",
+  "world_is": "walk_B.txt@f254d2eb8f line 1: `ERROR Command failed: python C:\\dev\\wk-resapp-440\\.claude\\skills\\ui-walk\\ui_walker_account.py arm`, rc 0, no screenshots. `ui_walker_account.py status`, read at 04:03Z: `row PRESENT opal-ui-walker@opal.test status=active role=admin userType=Dev armed=yes (0.6 min ago) armedBy=DESKTOP-HK1UU7N:26120:fd61fb6c`. This seat's walk A holder was DESKTOP-HK1UU7N:20060:da2df0f5, disarmed OK at 04:02:17. This seat did not disarm the 26120 holder; the lease is not this seat's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~440/walk_B.txt@f254d2eb8f: the arm ERROR line and the SUMMARY line with 0 screenshots",
+      "C:/dev/wk-resapp-440/.claude/skills/ui-walk/ui_walker_account.py status, read at 2026-10-14T04:03Z (command output, not committed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The order's rule for a held lease is STOP, so no retry was made. The disarm of holder 26120 belongs to the issuer. AC3 (PBR US is in that walk) and AC4 are open."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W440-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~440",
+  "surfaced_at": "2026-10-14T04:05:48Z",
+  "one_line": "The walker's failed arm printed `ERROR Command failed: ... arm` and not the `HELD by` line the order names as the lease-taken signal, so the holder cannot be read from the walk file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bl-3 step 2: a walk that prints `HELD by` instead of `ARMED` means the walker's account lease is taken; the walk's own output is the reading that tells the seat which case it is in.",
+  "world_is": "walk_B.txt@f254d2eb8f holds three lines and no arm stderr. The walker reports the arm failure as `ERROR Command failed` with no holder text; the stamp folder tmp/ui-walk/20261014T040259Z carries the same string in findings.json. The holder was readable only by a separate status call.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~440/walk_B.txt@f254d2eb8f: lines 1 to 3",
+      "tmp/ui-walk/20261014T040259Z/findings.json in C:/dev/wk-resapp-440 (gitignored stamp folder, copied to C:/dev/ui-walk-evidence/bl-3/B/)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. Recorded so the issuer can decide whether the walker should surface the arm command's stderr."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W440-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~440",
+  "surfaced_at": "2026-10-14T04:05:48Z",
+  "one_line": "INVESTIGATION_v1.md's header says the file must stay ONE fenced json block, but every row sits in its own fence, so the order's 'inside the fenced json array' had no single array to append into; this row follows the per-row form.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The channel header of INVESTIGATION_v1.md: THIS FILE MUST STAY ONE FENCED JSON BLOCK; an appender targets the FIRST block and appends inside the array.",
+  "world_is": "INVESTIGATION_v1.md@f254d2eb8f holds 354 fence lines (177 fenced blocks), one row per block, from AMGT_RESAPP-D1-S4 through AMGT_RESAPP-D1-W419-S4. The appended rows follow that per-row form.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md@f254d2eb8f: the header paragraph naming one fenced block",
+      "the same file at @f254d2eb8f: grep count of lines beginning with three backticks = 354"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. Recorded for the issuer to rule which form the channel carries."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W440-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~440",
+  "surfaced_at": "2026-10-14T04:08:15Z",
+  "one_line": "The task-order file for AMGT-bl-3 carries the walk invocations WITHOUT the MSYS_NO_PATHCONV=1 prefix that the amendment binds; the amendment reached the spawn prompt only, so the file's invocation, which would run a void walk, and the invocation actually run now differ.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "AMGT-bl-3 (the TO file, the order's whole context): each AC2 to AC4 invocation is `timeout 590 node \".claude/skills/ui-walk/walk.mjs\" ...`; the spawn prompt's amendment binds `MSYS_NO_PATHCONV=1 ` before every walk call because Git Bash turns `--route /security-analysis` into a Windows path and voids the walk.",
+  "world_is": "AMGT_RESAPP.TO-AMGT-bl-3.md@f254d2eb8f carries no MSYS_NO_PATHCONV prefix in its four criteria. The run used the prefix (walk_A.txt@f254d2eb8f: the route lines name /security-analysis-load and the walk is void: no). The proof-of-spec checker grades the recorded invocation against the file's and reads the mismatch as an ungoverned correction: the instance is INVALID until the file carries the amendment.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-bl-3.the-ten-name-browser-walk-on-a-local-build-of-the-prod-release-with-the-currency-and-reasons-feature.md@f254d2eb8f: section 4 criteria AC2 to AC4 invocations, no prefix",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~440/AMGT_RESAPP.TO-AMGT-bl-3.the-ten-name-browser-walk-on-a-local-build-of-the-prod-release-with-the-currency-and-reasons-feature.proof_of_spec.json: the checker's invocation-alignment violations (INVALID, rc=1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only, but it gates the complete flip. A future worker that runs the file's invocation verbatim gets a void walk. The fix is the issuer's: the file carries the prefix. Not edited here: the order file is outside this worker's write grant."
+}
+```
