@@ -151,6 +151,17 @@ the ONE `<status>` tag to `complete` only if AC1 and AC2 PASS. Report once per p
   and both halves re-sign. Never deploy from a worktree named for an earlier cut.
   Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
+- A3 (issuer, 2026-10-14 ~11:5xZ, relay msg 34020): **call `sitez-20261013T215753Z-232a` is ANSWERED.**
+  - Andrew named the asset manager for FWD-21's driven call. The name is in
+    `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_114xZ_EIGHT_OPEN_CALLS_ANSWERED.md`; no address is
+    copied here.
+  - The call runs later this week, as Andrew's own act.
+  - AC3: the stand-in read (A1) comes first. The named asset manager's own driven call is the arm that can lift AC3
+    from PARTIAL, including the research-only refusal arm (that person is not master_admin).
+  - Still never simulated here. If the census (OG-hv-1) did not see that principal in the identity store, their first
+    sign-in creates it; that is not a blocker.
+  - Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>37</round>
 <slot>~AE</slot>
