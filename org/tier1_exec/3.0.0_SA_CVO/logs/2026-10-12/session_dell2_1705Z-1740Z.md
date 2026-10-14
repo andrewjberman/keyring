@@ -389,3 +389,9 @@ Correction: C-S370's grounding cites msg 7389; the packet message is 7387. The r
 | item | result | commit |
 |---|---|---|
 | IRPT_BCKEND round 190 (~P) | ADJUDICATION_v91 (C-S374), no remediation file: fallback cash rule and publish-gate fix built, producer censused; I read the live schedule (ENABLED, as censused). 9 dismissed (W378-S1 disarmed by S163; W376-S1 folded into W374-S1). S158 and W374-S1 held. For round 191: open the NEVER-2 ledger (mint-bundle opens none) and read 49F's failed 10-09 fire. Slug sent | c23a4ad50e |
+
+## Addendum, 2026-10-14 05:27Z to 05:32Z (msg 7548)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 191 (~P) | ADJUDICATION_v92 (C-S375), no remediation file: the one release's movers counted per firm; COO half signed, CTO half unsigned, apply in round 192. 5 dismissed; S165 (49F gap at 10-08) stays open; S158 and W374-S1 held. Release condition named: each firm's published business date (select_business_date returned 10-14 pre-session; I saw the same forward date from trading_calendar at 02:27Z). Slug sent | 70b7a00254 |
