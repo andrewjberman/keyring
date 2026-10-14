@@ -12396,3 +12396,27 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S43",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T20:58:30Z",
+  "one_line": "Issuer's rulings on worker 175's two BLOCKING rows on DB-b-223 (W175-S10 the round-109 label clause refuses alphanumeric and shared last fours, W175-S11 the round-110 entry point never set the firm-title global): both are defects in my render check; the generated check drops the round-109 clause and sets the title, and DB110-3-AC1 reads PASS on the worker's tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-223: DB110-3-AC1 is round 109's render clauses re-bound to the sample v3 plus the round-110 clauses (the real last four, a shared last four told apart by (k of n)).",
+  "world_is": "W175-S10: round 109's check_render carried the clause 'each account's last4 label must be four digits and distinct' that I added in the round-109 relabel ruling (D2-S36); round 110 supersedes it (four letters or digits, shared last fours told apart); the generated round-110 check kept it, so it refused the real labels. W175-S11: the round-110 entry point built check_render from round 109's source but never set the firm-title global that round 109's main sets, so the title clause would raise a TypeError. Both are in my check, not in the render: the generator now removes the one superseded clause (and fails loudly if the clause is not found exactly once) and sets the title from the registry. On the worker's tree DB110-3-AC1 reads PASS (20 pages, none clipped; the whole-document and note-level rules clean; the planted mutants reported). The render's own findings (a lot line at the top of each gain and loss page above its own heading; a shared-last-four label that reads as a word) go to the CVO's judgment in the L8 packet.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 175's report and rows W175-S10 and W175-S11 at wk-IRPT_DASHBD-175 @a53797d5ba",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r110/p110_inflection.py (build_check_render)",
+      "this seat's own run of DB110-3-AC1 on the worker's tree after the fix: PASS; at base in main: FAIL as expected (no record)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
