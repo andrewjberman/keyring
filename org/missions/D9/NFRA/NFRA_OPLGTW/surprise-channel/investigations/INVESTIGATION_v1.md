@@ -15674,3 +15674,33 @@ name the one known failure instead of silently inheriting it.
     "notes": "Two routes: (a) amend the order so Phase B step 3 reads 'build-and-upload.sh opal-assets opal-assets-silver-eclipse (BUILD, verified by head-object), then the targeted apply' and the bound reads 'no silver object is written by you' -- recommended, it is how the previous eclipse release landed; (b) re-cut the order. The ask (section 3, item 3) carries the same question so the two halves sign knowing it. Rollback for the upload is the artifact's current latest version above."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S132",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T23:42:40Z",
+    "one_line": "A SPARSE release worktree cannot run deploy-to-ec2.sh. The script resolves two .env S3 roots through lib/opal_naming.py address(), which loads every file in infra/logic/registry/; those 7 files were IN the release commit but not in the worktree's sparse cone, so address() raised FileNotFoundError and the deploy refused in Step 2/3 -- before any artifact was built or uploaded. Same class as cloud-ops trap (4) for safe-apply, but on the DEPLOY path, which that trap does not name.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "First deploy attempt 2026-10-14T22:58:39Z-22:58:47Z, rc=1: FileNotFoundError [Errno 2] No such file or directory: 'C:\\\\tmp\\\\og-rel-yr2\\\\infra\\\\logic\\\\registry\\\\systems.json' in lib/opal_naming.py _read_text, reached from address() <- key() <- _registry() <- load_registry()",
+        "infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:94 and :103 -- ADVI_FEE_STATEMENT_S3_ROOT and ADVI_MARKET_UPDATE_S3_ROOT are each `cd $WORKSPACE_ROOT && python -c 'from lib.opal_naming import address; ...'` (LGIC R30: every S3 address is builder output, never hand-typed)",
+        "git ls-tree -r --name-only HEAD -- infra/logic/registry read 7 files AT the release commit, while `ls -A infra/logic/registry` in the same worktree read 'No such file or directory' -- in the commit, absent from the checkout",
+        "git sparse-checkout list before the fix: .tools, data/transcripts/scripts/teams, infra/aws/ec2/opal-gateway, lib, org/modules/graph, org/standards, org/tier2_senior/0.7.0_AE_CloudOps~Z -- `lib` IS in the cone, which is why the import itself succeeded and the failure landed one layer deeper, at the registry the module reads at call time",
+        "Step 3/3 never ran: 'ERROR: Deployment script failed. Manifest not updated.' and no object appeared under s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/ for this release until the second run",
+        "Fix: git sparse-checkout add infra/logic (7 files materialised). HEAD did not move -- rev-parse read bf7ffb62f4ae5af8298d3c24960c63d2965542d9 before and after -- and the A1 guard plus the page's checked-out md5 (0d828b51d433a24f7e2ef2e6ea7967ee) were both re-read AFTER the widening, not carried over",
+        "Second attempt 23:03:38Z-23:05:14Z rc=0, SSM 768a6366-ab1a-4220-aea9-b8e7b2cfcda3 Success"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's Phase B step 4 says to deploy from the release worktree through safe-ec2-deploy.sh, which presupposes that a worktree cut narrowly enough to hold the gateway source can run the deploy script.",
+    "world_is": "It cannot, and the dependency is invisible from the order: the deploy script's need for infra/logic/registry/ is not in its source_path, not in EC2_MANIFEST, and not in the artifact's member list (app deploy requirements.txt identity_tool_allowlist.txt). It is reached only at RUN time through a builder call that exists precisely because LGIC R30 forbids typing the address. The cone was sized for what the ARTIFACT contains; the script reads more than it ships.",
+    "notes": "The general shape, which outlives this instance: a sparse cone sized from the FILES AN ACT SHIPS is too narrow for the act's TOOLING, and the gap shows up only at run time, because the tooling reaches its inputs through a resolver rather than a path you can see in the order. cloud-ops trap (4) banks exactly this for safe-apply (it names lib and the agent home folder) and the deploy path needs the same sentence with infra/logic/registry/ added -- these two roots are not interchangeable: `lib` was already in the cone here and the deploy still refused. The cheap tell, worth more than the list: the failure is LOUD and lands before any upload, so the cost is one round trip and never a half-landed deploy -- which is why the right fix is to widen the cone, never to hand-type the resolved root to get past it (that would put a typed S3 address into a release and breach LGIC R30 silently). UNDER_INVESTIGATION is the disposition because the INSTANCE is resolved but the DECISION is not mine: the recommendation is that the issuer add one line to the release orders' Phase B -- cut the release worktree with `infra/logic` in the cone, or cut it full -- and until the issuer rules, nothing stops the next release worktree being cut the same way. There is no enum value for 'the instance is fixed and the standing question is open', so this says it in words rather than inventing one (the gate refused RESOLVED_IN_FLIGHT, correctly). Nothing about this release is affected: the guard was re-read after the widening and the deploy that landed is the signed release_sha."
+  }
+  ```
