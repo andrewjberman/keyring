@@ -169,6 +169,34 @@ divs or inline SVG, as the allocation bar already uses.
 4. Landing: portal DEV only via `.tools/portal-merge-forward.sh cand/dell1/satellite-factsheet` on an approved row.
    It is CW-facing, so DEV and PROD wait for Andrew. The producer change waits for the never-widen sign-off above.
 
+## Addendum, 2026-10-14 ~18:5xZ: rerun the producer once the canonical logic is deployed (Andrew-direct)
+
+Andrew, verbatim, in session at the 4.0.0_SA_CRO~DELL1 terminal:
+
+> "also on the SATELLITES issue, please make sure that whatever lambda was involved in that factsheet which should be
+> updated with the logic i described prior, once that logic is updated to the canonical logic it should be rerun to
+> refresh those numbers."
+
+**The Lambda:** `cot-satellites-characteristics-producer` (entry point
+`infra/aws/lambda/cot-pipeline/cot-satellites-characteristics-producer/lambda_function.py`; derivation
+`data/assets/scripts/gold/build_satellites_characteristics.py`). It writes `s3://opal-data-cot/platinum/satellites/characteristics.json`.
+
+**State measured at ~18:5xZ:**
+- The function code was updated at **2026-10-14 18:51:20Z** (CodeSha256 `mpFb3up8...`, State Active). The deploy
+  ledger `org/critical_paths/.open_deploys/j359-satellite-characteristics-deploy-dell1-20261014.json` is OPEN.
+- The served `characteristics.json` is still the **13:26:02Z** object: old `method.formula` "sum(weight_pct * value over
+  holdings WITH a value) / 100", Satellite 90 duration 0.139, beta 0.883.
+- The next scheduled fire is cron(25 13 * * ? *) UTC tomorrow, so without a rerun the old numbers serve until then.
+
+**The act, part of this deploy (not a separate approval):**
+1. After the deploy lands, invoke `cot-satellites-characteristics-producer` once, with the same event its schedule sends.
+2. Read the new `characteristics.json` from S3. `method.formula` states the sleeve rule, and the four fields match the
+   table in section 1: Satellites 90 and 98 duration 1.92, beta 0.97; Satellite 70 duration 3.49.
+3. Read it again **through the served route** (`/api/scoped/satellites/characteristics.json` as a CW login, or the
+   factsheet on 5174). A cached copy that still serves the old numbers is not done.
+4. Close the deploy ledger with the invoke's request id, the object's new LastModified, and the three read values. Only
+   then report done.
+
 ## Not read
 
 - The live CW render after the change.
