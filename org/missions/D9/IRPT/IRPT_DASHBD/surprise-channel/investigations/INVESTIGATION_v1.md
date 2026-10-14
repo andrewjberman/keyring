@@ -10836,3 +10836,82 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   }
 }
 ```
+
+## IRPT_DASHBD-D2-W167-S1 -- The reported absent-inside-filled count is structurally zero: leaves() descends into an absent form, so the counter never sees one
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W167-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~167",
+  "surfaced_at": "2026-10-14T12:41:27Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The reported absent_forms_inside_filled_members count is structurally zero: leaves() descends into an absent form, so the counter never sees one.",
+  "spec_asserts": "The builder header and BUILD_COUNTS.json present absent_forms_inside_filled_members as a count of absent forms inside filled members; count_inner_absent is the rule that produces it, carried unchanged from the round-103 builder into the round-105 copy.",
+  "world_is": "count_inner_absent tests is_absent_form on each item of leaves(v); leaves() yields the reason and kind strings of an absent form and never the form. Measured by a direct call in this worktree: an absent form inside a by_row map gives 0. The round-105 shape check does not read the counter (shape_problems walks the absent forms itself), so no gate reads this number; the defect is in the reported count only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~159/build_sample.py@c1c903539c (count_inner_absent and leaves)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~167/build_sample.py (uncommitted at filing; count_inner_absent unchanged)",
+      "BUILD_COUNTS.json of ~167 in the private folder: absent_forms_inside_filled_members 0 beside 55 absent forms"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W167-S2 -- The round-105 build read the served model object (one more S3 GET than ~159) and its reference date moved, so the sample is not row-comparable with the ~159 sample
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W167-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~167",
+  "surfaced_at": "2026-10-14T12:41:27Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The round-105 build read the served model object (one more S3 GET than ~159) and its reference date moved to 2026-10-13, so the sample is not row-comparable with the ~159 sample.",
+  "spec_asserts": "DB-b-202 step 4 and the reads bound: the builder 'LISTs and GETs S3 as ~159 did, nothing more'; the invocation names no --model-series flag.",
+  "world_is": "~159's build records model_series_route 'private series file' (MODEL_SERIES_DAILY.json in its private folder). The invocation without the flag records model_series_route 'served object s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json', with 589 GETs and 7 LISTs. reference_R moved from 2026-10-12 to 2026-10-13, and members_filled moved from 79 to 83. The order's premise of 8 cross-table conflicts on the ~159 sample holds (measured 8).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~167/build_sample.py (the model_series route and the --model-series flag, lines 1-12 and model_series())",
+      "BUILD_COUNTS.json of ~159 and of ~167 in the private folder (model_series_route, reference_R, s3_gets)",
+      "the cross-table count on the ~159 sample: 8 conflicts (measured by the issuer's cross_table_conflicts, counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W167-S3 -- Three kind sites have no rule in the round-105 table; the builder assigned them by the nearest rule, and none fires on this sample
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W167-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~167",
+  "surfaced_at": "2026-10-14T12:41:27Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "one_line": "Three kind sites have no rule in the round-105 table (a null opening prior value, a zero household ending value, and a window the account did not span for its ending or flow terms); the builder assigned SOURCE_BREAK, SOURCE_BREAK and the window's own kind, and none fires on this sample.",
+  "spec_asserts": "DB-b-202 step 3(b) names the kind of each Absent site by a table: INSUFFICIENT_HISTORY for a window the account did not span (NOT_SPANNED), SOURCE_BREAK for a missing row or a SOURCE_LAG flow on a window day, NO_SOURCE_YET for any figure no table yet carries; no entry covers a null prior value on an opening day or a zero household ending value.",
+  "world_is": "window_terms (the opening day carries NO_PRIOR_VALUE) and allocation_at (the household ending value is zero on as_of) each create an Absent form whose cause is none of a missing row, a lag, a null return, a guard or a history gap; both are SOURCE_BREAK in the copy and listed as uncertain in KIND_CARRIER_R105.json. The ending value and the flow terms of a window the account did not span take the window's kind, INSUFFICIENT_HISTORY, not SOURCE_BREAK. On this sample the NO_PRIOR reason and the zero-ending reason each appear 0 times, and no NOT_SPANNED absent form appears, so the three rules are unexercised here. DB-b-203 reads the kind and prints it, so a wrong kind becomes client-visible when a later build fires one of them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~167/KIND_CARRIER_R105.json (kind_sites: the uncertain rows)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-202.absent-kind-carrier-a-contract-042-builder-and-the-cross-table-rule.md (step 3(b) table)",
+      "the private sample's reason counts: 0 hits for the NO_PRIOR reason, 0 for the zero-ending reason, 0 NOT_SPANNED absent forms (counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
