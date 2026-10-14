@@ -26325,3 +26325,80 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. AC2's expect is met on the script's rule; the reconciliation is the issuer's. No harness and no script was edited to make the two counts agree."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W417-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~417",
+  "surfaced_at": "2026-10-14T00:00:01Z",
+  "one_line": "The order names two not-carried items by name only (AdvisorBookFeePanel and the /portfolios change), with no repo path; the worker resolved them to src/pages/AdvisorIntelligence/_shared/AdvisorBookFeePanel.tsx and to the route in src/App.tsx with page src/pages/ModelPortfolios.tsx.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree -r --name-only 10e7664d returns src/pages/AdvisorIntelligence/_shared/AdvisorBookFeePanel.tsx; git show 10e7664d:src/App.tsx line 453 reads path=\"/portfolios\", the page file is src/pages/ModelPortfolios.tsx.",
+      "git diff 10e7664d HEAD -- for each of those three paths, and for package.json, bun.lock and src/lib/firmAccess.ts, prints 0 lines on portal branch cand/dell1/amgt-sa-header-money-and-dash-reasons at 624e2533f665bf786e41594adba17b82c447aa7d.",
+      "The candidate 3dcbb6ef changes 14 files (git diff --name-only 10e7664d 3dcbb6ef) and none of the 14 is one of the resolved not-carried paths."
+    ]
+  },
+  "spec_asserts": "The order's Not carried section lists AdvisorBookFeePanel and the /portfolios change, each to be stated absent with a git diff count of 0, without giving a repo path for either.",
+  "world_is": "Both items resolve to repo paths at PROD 10e7664d; the counts are 0 on the feature branch, so the statement holds. The paths used are the worker's resolution, recorded in the receipt's Not carried section, not the order's.",
+  "notes": "Form only. The receipt states the resolved paths. No path was widened and no file outside the four feature paths was taken."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W417-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~417",
+  "surfaced_at": "2026-10-14T00:00:01Z",
+  "one_line": "The portal commit of the feature branch, made by the outer .tools/safe-commit.sh from the nested portal worktree, printed a risk reflex on a STALE danger map that scanned 0 of 4 files, and a commit gate that checked 0 of 4 files, and fell back to the base checkout's comp-pulse because the nested portal toplevel carries no .tools.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Portal commit 624e2533f665bf786e41594adba17b82c447aa7d (cand/dell1/amgt-sa-header-money-and-dash-reasons, LOCAL) printed '[risk-reflex] danger map: 193.5h old !! STALE', 'ANSWER STATE: PARTIAL_OR_BLIND', 'WITHIN BUDGET: scanned 0 of 4 file(s)'.",
+      "The same output printed '[commit-gate] WARN: commit-gate checked 0 of 4 file(s) -- NOTHING WAS CHECKED' and states that the gate reads only .py / .sh / .tf / org/projects/*.json.",
+      "The output printed 'the caller toplevel C:/dev/wk-resapp-417/portal carries no .tools/comp-pulse -- EXECUTING THE BAKED PATH C:/dev/ajb_workspace/.tools/comp-pulse instead'."
+    ]
+  },
+  "spec_asserts": "The order's step 5: commit the portal change in the nested worktree with the outer .tools/safe-commit.sh, and validate frontend bytes by the language-appropriate instrument (the harness suite, AC2, and AC1 on the committed bytes).",
+  "world_is": "Every portal commit from a nested worktree runs the risk reflex and the commit gate against zero of its files and reads the base checkout's tooling; the gate-level validation of the four TSX and cjs paths rests on AC1, AC2 and AC3, not on the commit gate.",
+  "notes": "Form only. Recorded so the CVO can see the pre-commit state for nested portal commits. No gate was changed, no reflex was re-run to clear it, and the W423 row AMGT_RESAPP-D1-W423-S7 records the same state at its commit."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W417-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~417",
+  "surfaced_at": "2026-10-14T00:00:01Z",
+  "one_line": "The approval row for cand/dell1/amgt-sa-header-money-and-dash-reasons registered on dell1 with the order's project NFRA_DEVPLN, and the tool's own CALL-SCOPE verdict reads CROSS-BOX with the placement hit 'NFRA_DEVPLN is placed on laptop, this box is dell1'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/open-calls.py add --kind approval --project NFRA_DEVPLN --box dell1 --branch cand/dell1/amgt-sa-header-money-and-dash-reasons ... --check-only printed APPROVAL-REGISTER result=OK row=- head_sha=624e2533f665bf786e41594adba17b82c447aa7d commits=1 check-only=yes waived=0.",
+      "The write printed ADDED id=dell1-20261013T235940Z-68dc kind=approval file=C:\\dev\\wk-resapp-417\\org\\devices\\state\\dell1\\open_calls.json open=2, and 'CALL-SCOPE project=NFRA_DEVPLN device=dell1 paths=clear placement=hit resources=clear shared=clear risk=LOCAL verdict=CROSS-BOX'.",
+      "The write also printed 'CLOUD s3://opal-313476888478-globgrph/fabric/open-calls/v1/box=dell1/open_calls.json'."
+    ]
+  },
+  "spec_asserts": "The order's step 6: register the approval row with the order's exact invocation on dell1; the approved feature is closed by the CTO, and the row is the box's approval call.",
+  "world_is": "The row is in dell1's open_calls.json with open=2; the tool's own placement reads the project as laptop-placed and the verdict as CROSS-BOX. The row was written as the order named it; whether the call routes to the CTO of dell1 or of laptop is not decided by this worker.",
+  "notes": "Form only. The tool's output is reported verbatim in the worker report. The row is not closed and was not edited after the add."
+}
+```
