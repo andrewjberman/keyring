@@ -2205,3 +2205,30 @@
   }
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-14T20:03:12Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-S52",
+  "one_line": "Z-W28-S1 is DISARMED: the HTTP status of a REFUSED verdict is now stated (409, the verdict as the body) and the page reads it, so a refused write shows its reason and detail instead of 'admin API 409: <body>'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Disarms NFRA_MCPORTAL-Z-W28-S1. The gap was the issuer's: MP-pd-4's contract said the POST 'answers the writer's verdict' without the status mapping. Amendment 1 @87b2ded2cf states it, and mcportal f7760a6 reads a REFUSED verdict from a 409 body. The world matches the spec the row asserted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/admin_grants.py _narrow_or_widen: 'status = 200 if verdict[\"verdict\"] == WRITTEN else 409' -- the mapping narrow and widen use; app/admin_people_access.py (merged @75248b6d2e) applies the same mapping to the POST",
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pd-4.people-page-controls.md section 1 item 1, AMENDMENT 1 (commit 87b2ded2cf)",
+      "mcportal f7760a6 src/api/admin.ts setPersonAccess: returns the parsed verdict for a 200 and for a 409 whose body has verdict WRITTEN or REFUSED; other non-2xx stay AdminStatusError; pd4.AC1.sh re-run 8 of 8, 51 pass 0 fail (worker report, drained @1b60a93715)"
+    ]
+  },
+  "spec_asserts": "Z-W28-S1 asserted that the contract left the status of a REFUSED verdict unstated, so a refusal sent with a non-2xx status would show its status and body, not its reason and detail.",
+  "world_is": "The contract now states it (WRITTEN 200, REFUSED 409, verdict as the body) and the page reads it. Not exercised against the live writer: the F2 release (MP-pd-7) is the first time the route is live.",
+  "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pd-4."
+}
+```
