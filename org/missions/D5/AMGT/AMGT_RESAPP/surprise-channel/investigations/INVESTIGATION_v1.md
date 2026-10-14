@@ -27299,3 +27299,129 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not changed in the module: the order's rule was followed literally and the status vocabulary is closed. The issuer decides whether a non-text rung (UNSUPPORTED, note 'content type <t>') is added to the cell or to a later round. Frequency of image or binary citations was not measured here; the CVO's 78-citation census names only PDFs."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W455-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~455",
+  "surfaced_at": "2026-10-14T06:13:50Z",
+  "one_line": "The cell's required import 'from lib.research.aifill import sentences' is refused by the existing import whitelist in test_text_blocks.py, so three of the five builders (team view, thesis pillars, identity description) fail test_block_source_is_ascii_and_imports_only_re_and_contract.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/tests/test_text_blocks.py@90ef5aa850:28 defines ALLOWED_IMPORTS as the three lines from __future__, import re and from lib.research.aifill import contract; the test at lines 708-718 asserts every import line of the three block files is a member",
+      "wk-AMGT_RESAPP-455 worktree, uncommitted at filing: block_mgmt_team_view.py, block_thesis_pillars.py and block_identity_description.py each import 'from lib.research.aifill import contract, sentences' (the cell's step 1)",
+      "pytest on the worktree: 6 failed, 173 passed across test_block_mgmt_bio.py, test_block_mgmt_recent.py and test_text_blocks.py; the three failures are the parametrised cases of test_block_source_is_ascii_and_imports_only_re_and_contract, each printing 'Extra items in the left set: from lib.research.aifill import contract, sentences'",
+      "Not edited at filing: the cell's bounds permit no change to an existing test except one that asserted the old cut at an abbreviation, and this test asserts no cut"
+    ]
+  },
+  "spec_asserts": "Cell section 1, step 1: each of the five builders takes 'from lib.research.aifill import sentences' and calls sentences.cut_at_sentence_end. Cell section 2, bound 1: touch no existing test except one that asserted the old cut at an abbreviation.",
+  "world_is": "The import the cell mandates is outside the import set the existing hygiene test admits for the three modules it covers. The two instructions cannot both hold without editing that test's whitelist, which the bounds forbid. No behaviour is affected; the failure is the whitelist alone.",
+  "notes": "Decision for the issuer: admit the sentences import in ALLOWED_IMPORTS (a whitelist line, no assertion changed), or re-issue the cell without the sentences import in the three modules. The worker did not choose between them."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W455-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~455",
+  "surfaced_at": "2026-10-14T06:13:50Z",
+  "one_line": "test_cut_keeps_a_sentence_end_at_exactly_the_cap (test_block_mgmt_recent.py) asserts that a full stop followed by a lowercase word is a sentence end; the shared sentences module treats that full stop as no end, so the test now gets NONE where it asserts WEB_SEARCH.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/tests/test_block_mgmt_recent.py@90ef5aa850:341-345: text = 'a' * 799 + '. ' + 'b' * 50, asserting result text 'a' * 799 + '.'",
+      "lib/research/aifill/sentences.py@59236eba00, _dot_is_end rule (d): 'if nxt.islower(): return False' -- a full stop before a lowercase word is not a sentence end",
+      "pytest on the worktree: test_cut_keeps_a_sentence_end_at_exactly_the_cap fails with 'assert NONE == WEB_SEARCH' at test_block_mgmt_recent.py:344"
+    ]
+  },
+  "spec_asserts": "Cell section 2, bound 1: touch no existing test except one that asserted the old cut at an abbreviation. Cell section 1: the cut is the shared module's cut_at_sentence_end, returning the same shapes as before.",
+  "world_is": "The failing test's full stop is not an abbreviation; it is followed by a lowercase word, which rule (d) of the shared module rejects by design. So the test asserts an old cut the shared module does not make, and it is not the one test the bounds exempt. Left unedited.",
+  "notes": "Decision for the issuer: re-state the fixture with a capitalised second sentence (a test edit the bounds would need ruled), or accept the rule (d) behaviour as the spec of the shared module."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W455-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~455",
+  "surfaced_at": "2026-10-14T06:13:50Z",
+  "one_line": "Two existing bio tests assert OPAL_SOURCE for replies that the restatement rule now withholds: test_opal_path_cites_the_pack_with_no_web_search (9 of 9 tokens of its one sentence sit in the pack passage) and test_opal_officer_row_and_resolved_profile_are_cited_with_their_inputs (10 of 11 tokens in the passage).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/tests/test_block_mgmt_bio.py@90ef5aa850:83-103 and 105-131: the Opal replies BIO ('Christophe Fouquet joined ASML in 2008 and is President and CEO.') and 'Christophe Fouquet joined ASML in 2008 and has been CEO since 2024.' with the fixture pack passage present",
+      "Measured on the worktree with block_mgmt_bio._tokens and _restates against the folded fixture passage: BIO 9 of 9 tokens in passage, restates True; officer reply 10 of 11 tokens in passage (only 'been' outside), restates True",
+      "pytest on the worktree: test_opal_path_cites_the_pack_with_no_web_search and test_opal_officer_row_and_resolved_profile_are_cited_with_their_inputs fail with 'assert NONE == OPAL_SOURCE'"
+    ]
+  },
+  "spec_asserts": "Cell section 1 step 2: when the supplied facts include the pack passage and at least 75 percent of the reply's sentences each have at least 80 percent of their tokens in the passage, the Opal attempt is a NONE block with the stated reason. Cell section 2, bound 1: touch no existing test except one that asserted the old cut at an abbreviation.",
+  "world_is": "Both tests were written when the Opal reply could restate the pack passage without consequence. Under the spec's rule their replies are restatements, so the rule and the two expected outcomes cannot both hold. Their replies were not edited because the bounds forbid it and the new expectation is a product decision.",
+  "notes": "Decision for the issuer: re-word the two fixture replies so they add a fact the passage lacks, or rule that restatement withholds these replies. A passage this long also carries common words ('has', 'since', 'and'), so the 80 percent token share is easy to meet on short replies; that sensitivity is recorded here, not changed."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W455-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~455",
+  "surfaced_at": "2026-10-14T06:13:50Z",
+  "one_line": "The cell's restatement rule does not say two things the implementation had to settle: the pack passage is folded (contract.fold_text) before its tokens are taken, and a sentence with no token counts as not restating while still counting in the 75 percent denominator.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/block_mgmt_bio.py in wk-AMGT_RESAPP-455 (uncommitted at filing): _pack_passage returns contract.fold_text(text); _restates skips a sentence whose token list is empty and counts it in the denominator",
+      "The reply is folded before the check, so an unfolded passage would carry 'EUR34bn' and 'they’ve'-style tokens that a folded reply never matches; the folding is the consistent reading of 'the passage'",
+      "Not a failure: no arm of check_gr6_builders.py and no existing test exercises a tokenless sentence or an accented passage"
+    ]
+  },
+  "spec_asserts": "Cell section 1 step 2: 'a token is a run of 3 or more lowercase letters or digits (re.findall over text.lower(), keeping length >= 3) and a sentence comes from sentences.split_sentences'. The cell does not state how the passage is normalised or how a tokenless sentence counts.",
+  "world_is": "The implementation folds the passage and counts a tokenless sentence as not restating. Both are the reading that keeps the token comparison like-for-like with the folded reply, and the rule is otherwise as stated.",
+  "notes": "Recorded so the issuer can confirm both readings. The worker did not add an arm or a test for either."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W455-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~455",
+  "surfaced_at": "2026-10-14T06:15:58Z",
+  "one_line": "The round-104 control check_fa3_mgmt_bio.py, which the cell's AC3 requires to stay YES, now reads NO (18 of 20): its two arms that feed the pack-restating reply BIO_TEXT expect OPAL_SOURCE and a pack citation, and the restatement rule withholds that reply.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa3_mgmt_bio.py@90ef5aa850:20 BIO_TEXT = 'Christophe Fouquet joined ASML in 2008 and is President and CEO.'; arm 'pack states management -> OPAL_SOURCE, one call, no web search' and arm 'OPAL citation is a plain-words source label' both build the bio on the served fixture with that reply",
+      "Run on the worktree: AIFILL FA-3 ARMS: NO (18 of 20); the two FAIL arms are the pack-states-management OPAL arm (block NONE, reason the restatement sentence joined with the web no-citation reason) and the citation arm (cites empty)",
+      "The other three control runs read YES: FC-3 17 of 17, FA-4 17 of 17, FA-5 25 of 25"
+    ]
+  },
+  "spec_asserts": "The cell's AC3: the earlier builder checks keep passing (controls): AIFILL FA-3 ARMS: YES (20 of 20). Cell section 1 step 2: a reply that restates the pack passage is withheld as a NONE block with the stated reason.",
+  "world_is": "The two spec statements conflict on this one reply: the round-104 control expects the restating BIO_TEXT to be kept as the pack's OPAL_SOURCE block; the round-106 rule withholds it. The check file is not in this worker's write grant and was not edited.",
+  "notes": "Same root as AMGT_RESAPP-D1-W455-S3 (the two bio tests). The issuer decides whether the control's reply changes or the rule's threshold does; the worker did not choose."
+}
+```
