@@ -14910,3 +14910,29 @@ name the one known failure instead of silently inheriting it.
     "notes": "INERT inside its coverage window; the regeneration deadline is before 2028."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W84-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~84",
+    "surfaced_at": "2026-10-14T18:17:21Z",
+    "one_line": "The naming gate refuses two served-prefix literals of the OG-et-1 module (platinum/etf_ownership_dashboard.json and platinum/reports/) as out-of-pattern S3 keys, so the cell stops at its FIRST ACT before any module, test or probe is built.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/naming-gate.py --diff .scratch/naming_probe.diff --enforce, run in worktree C:/tmp/wk-oplgtw-84 at HEAD 7c411780ad: rc=1, last line 'NAMING-GATE: REFUSE 4 graded'. The staged diff adds BUCKET = opal-data-etfs and SERVED_PREFIXES = (daily/, platinum/etf_ownership_dashboard.json, platinum/reports/) to infra/aws/ec2/opal-gateway/app/etfs_ownership.py.",
+        "gate output: 'NAMING REFUSE infra/aws/ec2/opal-gateway/app/etfs_ownership.py:2 platinum/reports/ -> {source}/{scope}/platinum/reports/ why: NEW and OUT-OF-PATTERN as S3Key: REFUSE'; the same why for platinum/etf_ownership_dashboard.json at lines 2 and 3 with suggestion {source}/{scope}/platinum/etf-ownership-dashboard.json.",
+        "gate output: 'NAMING CONFORMANT ...etfs_ownership.py:1 opal-data-etfs -> opal-data-etfs why: CONFORMANT as S3_BUCKET'. The gate printed no line for daily/."
+      ]
+    },
+    "spec_asserts": "TO-OG-et-1 FIRST ACT: every S3 key or prefix literal the module holds passes .tools/naming-gate.py --diff --enforce before the module is built, and SERVED_PREFIXES is exactly daily/, platinum/etf_ownership_dashboard.json and platinum/reports/.",
+    "world_is": "The gate refuses platinum/etf_ownership_dashboard.json and platinum/reports/ as NEW and OUT-OF-PATTERN S3Key literals (suggested {source}/{scope}/platinum/etf-ownership-dashboard.json and {source}/{scope}/platinum/reports/). The bucket literal opal-data-etfs is CONFORMANT. The literals were not split and not overridden; the cell stopped at the refusal.",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "BLOCKING for OG-et-1: AC1 and AC2 cannot be met as the order is written, since the module cannot pass its own FIRST ACT. The same two literals are the SERVED_PREFIXES that the order says generate the OG-et-3 IAM grant by AST, so the issuer's reconciliation of the gate's suggested keys with the served key names decides both cells. The row states what the gate printed; it does not rule which side is right."
+  }
+  ```
