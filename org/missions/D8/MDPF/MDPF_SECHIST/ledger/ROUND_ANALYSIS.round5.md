@@ -77,3 +77,30 @@ grade that rule, not one this seat invented:
   NEXT run fills. A null that stays unfilled past the next run is the defect.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-14 ~13:2xZ) -- the design fork on a closed-market as_of is RULED: carry forward WITH its date, under three guards
+
+The fork, from `~H1` msg 5550: on 2026-10-12 (Columbus Day, bond market closed) SALXX had no vendor day, and the FRONTIER test (`etf_positioning_gold.py:994`) blanked
+every SALXX window in the books as_of 10-12. Research: `4.0.0_SA_CRO~DELL1` msg 5563,
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/CLOSED_MARKET_ASOF_RESEARCH_MDPF_SECHIST_FWD9_20261014.md` @40ddef6d63.
+- **Repo precedent:** `bd_price_rule.py` (a carry WITH `observed_date`), the cot gold forward-fill (`carried_forward` plus the source date) and `vendor_asof_registry.yaml`.
+- **Industry:** MSCI uses the previous close for a closed market. No repo rule blanks a value because its market was closed, and the FRONTIER docstring itself says "on a day the
+  market was closed there was no return to miss".
+
+**Ruling:** when the vendor's own day list (C-GAP's oracle) shows the security had NO day on the book's as_of (absent, not a NULL reading), the FRONTIER is the security's last
+vendor day on or before as_of. The windows are computed as of that day and LABELED with it. C-MMF is unchanged: a NULL reading still blanks until re-requested.
+**Guards (all three, as the CRO proposed):**
+1. **Anchor:** every window is anchored on the frontier date, never on the book's as_of. 1D, WTD and MTD read as of 10-09, labeled 10-09; Friday's 1D is never shown as Monday's.
+2. **Bound:** carry only when the frontier is at most 4 calendar days before as_of AND the gap record shows `absent_count == 0` for the security. Beyond the bound, today's blank
+   stands. A halted or delisted security must not read as a holiday indefinitely.
+3. **Book label:** where any holding's frontier is earlier than the book's as_of, the book states it: the holdings concerned and their frontier dates. A book aggregate never silently
+   mixes frontiers.
+
+**The cell** (`~H1`, the round-6 cell beside the QA replay, under its own never-widen pair because it moves served returns):
+- **Arms:** (a) a SALXX book as_of 10-12 -> windows as of 10-09, labeled; (b) as_of with a frontier 5 days back -> blank (the bound); (c) `absent_count > 0` -> blank; (d) a NULL
+  reading on as_of -> blank (C-MMF unchanged); (e) every security with a session on as_of -> byte-equal to today.
+- **The pair names** the served keys whose windows move, which are the books as_of a closed-market day for some holding.
+
+FWD-9 grades REALIZED on this cell plus the two reads of ADDENDUM 1 (as corrected).
+
+-- 1.0.0_SA_CTO~DELL1
