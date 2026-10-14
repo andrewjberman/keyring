@@ -8718,3 +8718,80 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W151-S1 -- the Investor Reporting published holdings cannot be read in full under the box identity, so its served class for the CASH lots is NOT_ESTABLISHED
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W151-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~151",
+  "surfaced_at": "2026-10-14T01:59:10Z",
+  "one_line": "DB-b-186 could not read the Investor Reporting served class: the accepted holdings publication's unscoped load is refused by the reader's own request-count bound before any node is read, so the page entry is NOT_ESTABLISHED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-186 step 4: for the investor_reporting page, trace the store and, if a published object is readable under this identity, read it (counts and class string only); else NOT_ESTABLISHED with a reason.",
+  "world_is": "The accepted index and the accepted manifest are readable under the box identity (GET only). HoldingsPublication.load() then refuses the unscoped read with 'selected publication request count exceeds bound' (infra/aws/lambda/investor-reporting/holdings/publication.py line 445, MAX_SELECTED_PART_READS), so no node and no served asset_class is read. A scoped read needs an account scope the order does not name; none was run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings/publication.py@fdc37a0f92 lines 316-346 (load and capture) and 417-445 (_load_parts, refusal at line 445)",
+      "the load probe run during this read under python -I: traceback ends in PublicationRefused at publication.py line 445 (no node read)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~151/CASH_LOTS_CLASS_READ.json served_per_page investor_reporting"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W151-S2 -- the canonical table holds a CASH_USD row typed Cash, which the gold classifier's CASH_USD override never reads
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W151-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~151",
+  "surfaced_at": "2026-10-14T01:59:10Z",
+  "one_line": "The etf-classifications table carries a CASH_USD row (asset_class fixed_income, sub_asset_class Cash); the gold classifier answers CASH_USD with fixed_income by an override before the table is read, so the row's Cash typing never reaches classify('CASH_USD').",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-186 premise: the synthetic ticker CASH_USD sits on no lot, and the gold classifier serves cash for a canonical row typed Cash by sub_asset_class (etf_classifier.py _row_class, round 96).",
+  "world_is": "The lot premise holds (0 of 1,314,777 rows). But a get_item on the canonical table for key CASH_USD returns a row (asset_class fixed_income, sub_asset_class Cash), and classify('CASH_USD') returns fixed_income from the override at etf_classifier.py lines 150-151 without reading the table, so a Cash-typed CASH_USD row serves fixed_income in the gold classifier while the table types it Cash.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/lib/etf_classifier.py@fdc37a0f92 lines 104-116 (_row_class) and 148-151 (CASH_USD override)",
+      "DynamoDB get_item on etf-classifications, key CASH_USD, read-only, this box identity: exists true, asset_class fixed_income, sub_asset_class Cash (recorded in CASH_LOTS_CLASS_READ.json canonical_row)",
+      "gold classify('CASH_USD') run under python -I with a stub client: returned fixed_income"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W151-S3 -- none of the 11 CASH lots appears as a position in the Advisor Intelligence served files
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W151-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~151",
+  "surfaced_at": "2026-10-14T01:59:10Z",
+  "one_line": "The Advisor Intelligence per-advisor positions files carry no CASH position at all (0 of 4,315 positions), although the 2026-10-09 lot snapshot holds 11 CASH lots in 4 accounts; the page shows no line for these lots.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-186 step 4: positions_seen counts the positions whose ticker is CASH in the served per-advisor positions files, and served_class is the class string they carry.",
+  "world_is": "189 of 194 advisor folders carry positions.json; 4,315 positions read; 0 with ticker CASH, 0 with CASH_USD, 0 with any ticker containing the stem CASH. 5 folders carry no positions.json. The probed file carries top_n_limit 25 and 25 positions, so the files are a top-25 per advisor cut, and the cash lots do not reach them under this read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S3 LIST of opal-data-49financial advi/49financial/platinum/advisors/ (194 folders) and one GET per folder by this box identity; counts only (CASH_LOTS_CLASS_READ.json served_per_page advisor_intelligence)",
+      "data/black_diamond/scripts/gold/lib/platinum_dest_view.py@fdc37a0f92 line 13 (platinum/advisors/ mapping to advi/49financial/platinum/advisors/)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
