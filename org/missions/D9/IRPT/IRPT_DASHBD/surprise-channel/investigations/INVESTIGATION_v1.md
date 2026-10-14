@@ -8303,3 +8303,80 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W147-S1 -- the order places the served holdings in a gold or silver store; the position-level served asset_class is in the platinum advisor positions files, one 49financial scope, top 25 per advisor, no date partition
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W147-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~147",
+  "surfaced_at": "2026-10-13T23:50:02Z",
+  "one_line": "The task order names a gold or silver store, newest partition per firm, as the served holdings for the count; the served position-level asset_class sits in platinum advisor positions files, one scope, top 25 positions per advisor, no date partition.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-181 step 5(b) of IRPT_DASHBD.TO-DB-b-181: the served holdings are the positions in the gold or silver store the consumers read, newest partition per firm; the order names gold/timeseries/holdings_lots/ as the candidate store.",
+  "world_is": "The position-level served asset_class is written by D_04 build_advisor_positions to platinum/advisors/{id}/positions.json (opal-data-49financial, advi/49financial/platinum/advisors/). The registry holds one scope, 49financial. The read found 189 such files and 4315 positions, 20 of them moving, each file limited to the top 25 positions. gold/timeseries/holdings_lots/ is the gold INPUT the served file is built from, not the served store, and it is not partitioned per firm.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/D_04.client_portal_summary.py@295d98d389 build_advisor_positions: writes platinum/advisors/{aid}/positions.json, _TOP_N_POSITIONS = 25",
+      "infra/logic/registry/platinum_destinations.json@295d98d389: one scope 49financial, legacy prefix platinum/advisors/",
+      "private folder served_scan.out.txt: 189 objects listed, 4315 positions scanned, 20 positions that move (counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W147-S2 -- the served positions file carries no account identifier, so the count of accounts with a moving position was taken from the newest gold holdings_lots snapshot, not from the served store
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W147-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~147",
+  "surfaced_at": "2026-10-13T23:50:02Z",
+  "one_line": "accounts_with_a_moving_position cannot be counted from the served positions files: each position object carries ticker, security name and class but no account key, so the 178 accounts figure is read from the newest holdings_lots snapshot.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-181 step 5(b): accounts_with_a_moving_position counts the accounts of the positions in the served store whose class moves.",
+  "world_is": "The position object written at D_04 lines 2931-2941 carries ticker, security_name, asset_class, asset_class_canonical, sub_asset_class_canonical, class_source, market_value, cost_basis, unrealized_gain and unrealized_gain_pct, with no account key. The newest holdings_lots snapshot (2026-10-09) has 2047 open lots on a would-move ticker across 178 accounts; that is the source, not the served store, and the record states it so.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/D_04.client_portal_summary.py@295d98d389 lines 2931-2941: the positions item keys",
+      "private folder served_scan.out.txt: holdings_lots newest snapshot 2026-10-09, 2047 open lots on a would-move ticker, 178 accounts (counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W147-S3 -- the CASH_USD special case returns fixed_income before any row is read, so a synthetic cash position stays fixed_income while a canonical row typed Cash now serves cash
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W147-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~147",
+  "surfaced_at": "2026-10-13T23:50:02Z",
+  "one_line": "The classifier's CASH_USD special case returns fixed_income in classify and in classify_with_identity, while the cash rule added for DB-b-181 makes a canonical Cash-typed row serve cash; the two cash paths now disagree on what a cash position serves.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "Money-market funds and cash are shown as CASH tagged assets (round 96, order DB-b-181); the classifier keeps the CASH_USD case as a cash rule, and the order leaves that case unchanged unless it contradicts the new rule on the same input.",
+  "world_is": "classify('CASH_USD') and classify_with_identity('CASH_USD') return the class fixed_income before the table is read (base lines 135-136 and 216-217). The special case takes a synthetic ticker, not a canonical row, so it is not the same input as the rule; it was left unchanged. A synthetic cash position therefore still serves fixed_income. The disarm is the issuer's decision in cell B.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/lib/etf_classifier.py@295d98d389 lines 135-136 (classify) and 216-217 (classify_with_identity): CASH_USD returns fixed_income",
+      "data/black_diamond/scripts/gold/lib/etf_classifier.py (working tree, round 96 commit): _row_class applies the cash rule to canonical rows only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
