@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v3.4",
+  "prd_version": "v3.5",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -1280,5 +1280,24 @@ client-data we want to be using explicitly at this time is the silver vendor fol
    `opal-data-mdpf/mdpf/feeds/` or the per-firm buckets is asked.
 5. Not client data under this word, so unchanged: portal-v2 `platinum/mdpf/<scope>/` firm aggregates (existing mdpf
    tools) and `opal-data-etfs` partner ownership totals (G5).
+
+CONTRACTS-side; ENDPOINT unchanged.
+
+### v3.5 addendum (2026-10-14 ~16:4xZ, 1.0.0_SA_CTO~Z) -- vendor-silver producer defects ride this project as defect cells
+
+On `2.0.0_SA_COO~O` msg 34150 (row Z-S117, citing Z-S111). FWD-22's client data is ONLY the `opal-data-assets` vendor silver
+folders (v3.4). Their converters were built under OPAL_ASSETS, now `complete-as-superseded`, so no live project owns them.
+The ruling:
+- **A defect in a vendor-silver converter that keeps a FWD-22 client table from landing is cut by this project as a
+  DEFECT CELL** (the D8 precedent: a defect item, never a re-open of OPAL_ASSETS). The cell is `<risk>WORLD</risk>`, the Lambda
+  is changed through Terraform only (no `update-function-code`), with a ledger entry, and a re-drive of the missed objects
+  follows.
+- **Z-S117 (Eclipse):** admit `defaultTradingEngineId` to the eclipse schema, then re-drive the bronze objects from
+  2026-10-10. Measured at ruling: `infra/aws/lambda/opal-assets/opal-assets-silver-eclipse/mirror_schemas.py` DIFFERS from
+  `data/assets/scripts/silver/mirror_schemas.py` (first at line 52), as does the orion copy, while the blackdiamond and etf
+  copies are equal. The cell reads that divergence before it edits and names which copy the Lambda builds from.
+- **Z-S110 (49F BD converter out of memory)** takes the same route once its cause is read.
+- This is not a widening: the converter already writes these folders. The fix moves the folder's freshness, not who
+  can read it.
 
 CONTRACTS-side; ENDPOINT unchanged.
