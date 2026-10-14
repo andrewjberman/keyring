@@ -2653,6 +2653,26 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t57_real.py run at this commit's parent: arm3 no_account_key, WIN-REAL-BAD arm3 no_account_key"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W52-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~52",
+    "surfaced_at": "2026-10-14T00:31:45Z",
+    "one_line": "The order's message-file instruction ends each commit with a Co-Authored-By line naming Claude Sonnet 5.5, but the agent executing this order is Claude Haiku 5.5; the commits of this order carry the Haiku 5.5 trailer.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t60 REPORT section: the message file for each commit ends with 'Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>'.",
+    "world_is": "The executing model is Claude Haiku 5.5 (claude-haiku-5-5). The session attribution instruction for commits this agent creates names Claude Haiku 5.5. The commits of this order end with 'Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>'; the --author identity is the one ordered (0.9.0_WK_MDPF_DEMQUE~52). No check or verdict depends on the trailer's model name.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t60.active-set-v2.md (Bounds and REPORT wording) @85b4503efb",
+        "session attribution instruction for commits created by this agent (Claude Haiku 5.5) @85b4503efb"
+      ]
+    }
   }
 ]
 ```
