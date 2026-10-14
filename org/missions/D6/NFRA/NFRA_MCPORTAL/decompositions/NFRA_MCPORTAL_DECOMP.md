@@ -1093,3 +1093,192 @@ STAGED to the applier seat.
 2. The 5 s bar is measured once, on the served release (MP-n-4). `first_seen` still walks the window and is not bounded
    further here.
 3. Condition (5), the GitOps fold, is not cut; it rides `4.0.0_SA_CRO~A`'s home if that lands.
+
+# WORKSTREAM PC, ROUND 1 -- FWD-21 READ (F1), THE THREE-STATE REFUSAL (G1), FWD-22'S READ (U1) (L5, v9)
+
+```json
+{
+ "project": "NFRA_MCPORTAL",
+ "decomp_version": "v9",
+ "step": 5,
+ "workstream": "PC",
+ "round": 1,
+ "input": "ledger/ROUND_ANALYSIS.c17-round2.md @d0dd3f0964 (1.0.0_SA_CTO~Z), NEXT ROUND G1 + F1 + F2 + U1; PRD v0.8 ADMITTED (ratified-text half signed by 3.0.0_SA_CVO~Z, msg 33949); C18 gateway side ruled to NFRA_OPLGTW C-PERSON (msgs 33955, 33959)",
+ "prd_ref": "org/missions/D6/NFRA/NFRA_MCPORTAL/prd/NFRA_MCPORTAL_PRD.md@7da54894cf (v0.8: FWD-21, FWD-22, C18; C2, C4, C15 apply unchanged)",
+ "author": "2.0.0_SA_COO~MP",
+ "cells": 6,
+ "chains": 4,
+ "join_cells": 2,
+ "frozen": true
+}
+```
+
+**The recut, from the analysis's NEXT ROUND table, by write set.**
+- **G1** has two writers in two repositories: the gateway's `_refused` and the mcportal Git state panel. The gateway half
+  is `MP-pc-1`. The panel half joins `MP-pc-3`, because both mcportal halves write `src/api/admin.ts`, and two cells may
+  not own one file.
+- **F1** is the gateway handler (`MP-pc-2`) and the page (`MP-pc-3`), built in parallel against PC.3.
+- **U1** is a read (`MP-pc-4`).
+- **The release (`MP-pc-5`) and the close run (`MP-pc-6`) are issued STAGED.** F1 and G1 are not served until a release
+  ships them, and the release carries Z-W2-S8's rollback-time measurement (analysis ruling 2).
+- **F2 is NOT cut this round.** `1.0.0_SA_CTO~Z` msg 33955: "F1 (read only) proceeds; F2 (write) waits on that reader"
+  (NFRA_OPLGTW C-PERSON, cut by `2.0.0_SA_COO~O` after r30 and the tier fix). PC.7 fixes the record's shape now, so that
+  OPLGTW's reader and F2's writer are cut against one object.
+- Every order carries `<workstream>PC</workstream>` beside `<round>1</round>`.
+
+## PC.0 WHAT IS MEASURED BEFORE THE CUT (issuer, 2026-10-14 ~03:1xZ)
+
+1. **Live:** gateway `b0c75d24f1` (MP-n-4), mcportal `0e02a1f` (origin DEV; ls-remote read). The gitstate handler serves
+   `integration_refused` as the string "not recorded", or as `{at, note}` for rc != 0. rc == 0 reads "not recorded".
+   That is Z-C-S31's defect: laptop's pointer reads rc 0 at 02:37:22Z.
+2. **The page** (`src/pages/control-plane/GitStatePanelView.tsx`) prints the string, or `refused <clock>: <note>` for any
+   object. So a new object shape without a page change would print "refused" for a clean pass.
+3. **The per-call chain** (research read): the `/mcp` middleware runs `blocklist.enforce(email)` (`app/server.py:171-172`).
+   `_PolicyGuardedMCP.call_tool` runs `data_entitlement.tool_denial` (`app/tools.py:73-75`). Then `tools._run` (`:133-169`)
+   and `integrations/base.py` (`:144-163`) run tier, `tool_denial`, `identity_scope.check` and `guard`.
+   `admin_gateway_breakdown._admits` (`:136-170`) mirrors that chain. Holders are built inline in `_compute`'s
+   `evaluate()` (`:265-336`). There is no exported per-person function.
+4. **Depth and cadence:** `app/refs/DATA_CATALOG.yaml` `tool_index` (`:1359`) rows carry `history_depth` and `freshness`,
+   each with a `claim`. No row carries a poll cadence. NFRA_OPLGTW FWD-20 (cadence read live from the AWS schedule) is
+   not served yet.
+5. **There is no per-person stop on the tool-call path today.** `email_deny` is read only at `/login`, `/sprint*` and
+   the consent redeem. A grant-writer `revoke` stops a profiled principal's tools through `decide`. FWD-21's stop is F2's,
+   via PC.7.
+
+## PC.1 THE CELLS -- 6
+
+| Cell | Serves | Builds / runs | Assignee | Write surface | Risk |
+|---|---|---|---|---|---|
+| `MP-pc-1` | G1, gateway half (Z-C-S31, FWD-16) | `_refused` returns three states per PC.2; a per-box `integration_refused_basis` naming the state that applies; tests | worker `~20` | `app/admin_fabric_gitstate.py`, `tests/test_admin_fabric_gitstate.py` | WORLD (live only through MP-pc-5) |
+| `MP-pc-2` | FWD-21 read (F1), handler | `GET /api/admin/people` per PC.3, built from the breakdown's own `_admits` chain and the same candidate sources; depth and freshness from `tool_index`; cadence "absent" with its reason; tests | worker `~21` | `app/admin_people.py` (new), `tests/test_admin_people.py` (new) | WORLD (via MP-pc-5) |
+| `MP-pc-3` | FWD-21 read on the page (F1) + G1 panel half | mcportal: the People page `/people` (sidebar after Gateway), its client function, `routes.json` entry; the Git state panel prints the three PC.2 states; tests | worker `~22` | mcportal `src/pages/people/**` (new), `src/pages/control-plane/GitStatePanelView.tsx`, `src/pages/control-plane/control-plane.test.tsx`, `src/api/admin.ts`, `src/api/admin.test.ts`, `src/App.tsx`, `src/shell/pages.ts`, `src/shell/sidebar.test.ts`, `public/routes.json` | WORLD (via MP-pc-5) |
+| `MP-pc-4` | FWD-22's first cell (U1) | a READ: where Claude Code or the account exposes the signed-in account and the 5-hour and weekly limits, per source, with claims; no build; never a credential value | worker `~23` | its deliverables only | LOCAL |
+| `MP-pc-5` | F1 + G1 live | the gateway release on the LIVE ref: MP-pc-1, MP-pc-2, the route line (step 0), the MP-pc-3 bundle; never-widen pair; NEVER-2; manifest; Z-W2-S8 rollback time measured; `infra/logic/registry` in the sparse list (the five recipe rows) | `0.7.0_AE_CloudOps~MQ` | `infra/aws/ec2/opal-gateway/app/admin_api.py`, `infra/aws/ec2/EC2_MANIFEST.json`, ledger paths | WORLD |
+| `MP-pc-6` | FWD-21 DONE WHEN, read half + G1 close | the close run: one real person's served view checked against the stores; one channel's per-person tools against the breakdown; the served gitstate reads `no` for a box whose pointer rc is 0 and "not recorded" for a box with no pointer | worker `~24` | its deliverables only | WORLD |
+
+**The hookup belongs to no cell** (report 2 C10). `Route("/people", admin_people.people, methods=["GET"])` plus its
+import in `app/admin_api.py` is MP-pc-5's step 0, as CP2.10 ruled.
+
+## PC.2 THE THREE STATES -- `integration_refused` (fixed here so MP-pc-1 and MP-pc-3 run in parallel)
+
+Per box, from the ONE pointer object `box=<B>/last_integrate.json` (C17R2.2, unchanged):
+
+| pointer | `integration_refused` | `integration_refused_basis` |
+|---|---|---|
+| present, rc != 0 | `{"refused": true, "at": "<at>", "note": "<note>"}` | "refused: the box's newest integrate pass, read from its last_integrate.json pointer, failed with rc <rc>." |
+| present, rc == 0 | `{"refused": false, "at": "<at>"}` | "no: the box's newest integrate pass, read from its last_integrate.json pointer, succeeded." |
+| absent (404) | `"not recorded"` | "not recorded: no integrate pass has been recorded for this box since the pointer began on 2026-10-13." |
+
+The page prints, in the Git state panel's "Integration refused" cell:
+- `refused <clock(at)>: <note>` for `refused: true`;
+- `no (<clock(at)>)` for `refused: false`;
+- `not recorded` for the string.
+
+A read failure other than absent stays the module's 503 arm. One get per box, unchanged (C17).
+
+## PC.3 THE CONTRACT -- `GET /api/admin/people` (fixed here so MP-pc-2 and MP-pc-3 run in parallel)
+
+Behind `owner_gate.owner_only`. The body, exactly:
+
+```
+{ "read_at": "<ISO Z>",
+  "kill_switch": true | false,
+  "people": [
+    { "who": "<email or display>",
+      "kind": "person" | "population",
+      "how": "<basis, as the breakdown's holder rows phrase it; '; '-joined when several>",
+      "tier": "<tier.resolve_tier value>" | "unresolved",
+      "channels": [
+        { "id": "<channel id>", "name": "<channel name>",
+          "tools": [ { "name": "<tool>",
+                       "history_depth": {"claim": "measured" | "inferred" | "absent", "value": <as catalogued> | null, "reason": "<text>" | null},
+                       "freshness":     {"claim": "measured" | "inferred" | "absent", "value": <as catalogued> | null, "reason": "<text>" | null},
+                       "cadence":       {"claim": "absent", "value": null, "reason": "no poll-cadence source is served yet (NFRA_OPLGTW FWD-20)"} } ] } ] } ],
+  "people_basis": "<one line: the candidate sources, and any gap>",
+  "grant_store": {"status": "read" | "unreadable", "principals": <int> | null, "reason": "<text>" | null} }
+```
+
+- **People** = every candidate the breakdown evaluates (GW.3 holders: `MASTER_ADMIN_EMAILS`, `WRITE_CAPABLE_EMAILS`, every
+  scoped identity `identity_scope` knows, every principal with a `principal_profile`, and the population row). A person
+  appears whether or not it holds a tool. A person holding nothing has `channels: []`, and the page prints "holds
+  nothing". `opalbloomberg@opalinvest.com` is listed like any other person whenever a source names it. Order: Andrew
+  (`MASTER_ADMIN_EMAILS`) first, then by `who`; the population row last.
+- **What a person holds** = exactly the tools the breakdown's holders say it holds. It is computed by the SAME
+  `_admits` chain, imported from `app/admin_gateway_breakdown.py` and never re-typed. A channel appears under a person
+  only when the person holds at least one of its tools, and only those tools are listed.
+- **Depth and freshness:** the `tool_index` row whose tool is this tool supplies `history_depth` and `freshness` as
+  catalogued, with each `claim` carried through. A tool with no `tool_index` row reads `{"claim": "absent", "value":
+  null, "reason": "no tool_index row"}`. Never blank and never a default.
+- **Cadence:** `{"claim": "absent", ...}` for every tool, with the reason above, until NFRA_OPLGTW FWD-20 is served.
+- **Kill switch on:** every person's `channels` is `[]`, and `people_basis` says so.
+- **`grant_store`:** as GW.3. A failed Scan omits the profiled principals and `people_basis` names the gap; it never
+  reads as "no grants".
+- **Writes:** none. F1 is read only.
+
+## PC.4 DEPENDENCY EDGES AND CHAINS
+
+```
+chain G   MP-pc-1 --\
+chain H   MP-pc-2 ---+--> MP-pc-5 --> MP-pc-6     the release ships G1, the handler, the route and the bundle
+chain P   MP-pc-3 --/
+chain U   MP-pc-4                                  closes at its own drain
+joins     MP-pc-5 (pc-1, pc-2, pc-3 drained + G-REL5)    MP-pc-6 (pc-5 drained)
+```
+
+**Fan-out:** `N = 4 of M = 4 chains, cap 8`: workers `~20` (MP-pc-1), `~21` (MP-pc-2), `~22` (MP-pc-3), `~23` (MP-pc-4).
+MP-pc-5 goes to the applier seat `0.7.0_AE_CloudOps~MQ` (same project, so the seating rule admits it). MP-pc-6's slot
+is `~24`. Both are issued STAGED.
+
+## PC.5 GATES
+
+- **MP-pc-1 to MP-pc-4:** none. They start at the issuance.
+- **G-REL5 (MP-pc-5):** MP-pc-1, MP-pc-2 and MP-pc-3 drained; the gateway queue free, which today means after NFRA_OPLGTW
+  r30, the tier-admission fix and OG-mg-1 (analysis section 3); the never-widen pair signed against the release ASK.
+  Holder: the issuer.
+- **MP-pc-6:** MP-pc-5 drained. There is no Andrew gate: FWD-21's read half is graded on the host, and Andrew's own look
+  rides the MC Portal sitting (call 21d9) when it happens.
+
+## PC.6 RULE 24 RECORD (the new value sets)
+
+- **`integration_refused`** {refused, no, not recorded} over "a box's pointer read": the pointer is absent, or present
+  with rc == 0, or present with rc != 0. That is MECE, on one axis (the newest integrate pass's outcome), and "not
+  recorded" is the existing token.
+- **`kind`** {person, population}: the population row is the breakdown's one non-addressable candidate; every other
+  candidate is a person.
+- **`claim`** {measured, inferred, absent}: the estate's own reserved words (CLAUDE.md A VALUE MUST CARRY ITS CLAIM).
+  "held" is not used: no figure here is held.
+- **Token census:** "holds nothing", "no", "not recorded", "absent" and "unresolved" are the code's or the PRD's own words,
+  plus the one new page phrase "holds nothing".
+
+## PC.7 THE PER-PERSON RECORD -- F2's object, fixed now for NFRA_OPLGTW C-PERSON's reader (NOT cut this round)
+
+C18 makes MC Portal the writer and NFRA_OPLGTW C-PERSON the reader, so both are cut against this one object:
+- **Key:** `pk` `POLICY#<tid>#<oid>` (the principal's existing partition, `access_state.policy_key`), `sk` and record type
+  `person_access`. The record type is added to `access_state.POLICY_RECORD_TYPES` by the reader's cell, the module's
+  owner.
+- **Body:**
+  - `revision`: an int, conditional on the prior value (the grant writer's existing optimistic check);
+  - `stopped`: a bool;
+  - `channels_off`: a list of channel ids;
+  - `tools_off`: a list of tool names;
+  - `tools_on`: a list of tool names, each one the floor lists for some principal (C-PERSON);
+  - `updated_at` and `updated_by`.
+- **Reader rule (C-PERSON):** no record means the floor governs exactly as today. With a record, in order:
+  1. `stopped` denies every tool.
+  2. A tool in `tools_off`, or whose channel is in `channels_off`, is denied.
+  3. A tool in `tools_on` is admitted past the identity-scope and tier floor, but only if the deployed gateway serves it
+     and the floor lists it for some principal.
+  4. The Opal-users-only gate, C2 and tier admission are evaluated first. A record never admits a non-Opal principal.
+- **Writer (F2, a later round):** the grant writer gains the action `set_person_access` with before/after in the change
+  history (FWD-4).
+- **Rollback per change:** re-write the before.
+- **Rollback of the mechanism:** delete the record kind.
+
+## PC.8 WHAT THIS CUT DOES NOT CLAIM
+
+1. No cell has run. The people count, holder sets and depth claims are read by MP-pc-2's tests against the real
+   registry, and by MP-pc-5's on-host read.
+2. **FWD-21 is not REALIZED by this round.** Its DONE WHEN needs the test-principal writes (F2), which wait on
+   NFRA_OPLGTW C-PERSON. This round serves the read half.
+3. **FWD-22 is not built.** U1 is a read that names where the limits are exposed; the build is cut from its findings.
+4. Cadence reads "absent" everywhere until NFRA_OPLGTW FWD-20 is served.

@@ -26848,3 +26848,179 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Count only. The gap is most likely the fc-2 merge, which changed the contract under the four passing arms (inference, not measured). After this cell the check reads 17 of 17."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W429-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~429",
+  "surfaced_at": "2026-10-14T01:53:05Z",
+  "one_line": "The pre-commit risk reflex could not clear the portal feature commit 53de2b9d: it answered PARTIAL_OR_BLIND (danger map 195.3h old, STALE) and the commit-gate checked 0 of 11 frontend files, so the commit landed with no gate having read its bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "A commit through .tools/safe-commit.sh runs the pre-commit risk reflex and commit-gate over the staged paths before it lands (CLAUDE.md section 6, rule 14; the AMGT-ar-5 face names safe-commit as the commit path).",
+  "world_is": "On the nested portal worktree, committing the eleven SecurityAnalysis paths (.tsx, .ts, .cjs, .json) printed 'ANSWER STATE: PARTIAL_OR_BLIND', 'NOT-DECIDABLE: danger map STALE', 'WITHIN BUDGET: scanned 0 of 11 file(s)', and 'commit-gate checked 0 of 11 file(s) -- NOTHING WAS CHECKED'; the commit still landed (msg-verify MATCH). The commit-gate's own note says it reads only .py, .sh, .tf and org/projects/*.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@53de2b9d safe-commit output (run before 01:49:44Z, the register time of the approval row): comp-pulse diff, danger map 195.3h STALE, ANSWER STATE PARTIAL_OR_BLIND, scanned 0 of 11",
+      "portal@53de2b9d safe-commit output: commit-gate WARN 'checked 0 of 11 file(s) -- NOTHING WAS CHECKED'",
+      "C:/dev/wk-resapp-429/portal commit 53de2b9d844b427b90f1553b0c7e0b408c688662 (11 files, 926 insertions, 27 deletions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The worker did not treat the reflex as a clearance and cites no gate as validation for the frontend bytes; the frontend checks are the AC1 blob comparison, the AC2 typecheck, lint and harness run, and the AC3 surface check."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W429-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~429",
+  "surfaced_at": "2026-10-14T01:53:05Z",
+  "one_line": "portal/CONTRIBUTING-BOXES.md step 3 asks for the feature branch to be pushed to origin under its name before registration; this order says never push, so cand/dell1/aifill-blocks-prod exists only in the nested worktree and its approval row was registered from the local ref.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "portal/CONTRIBUTING-BOXES.md at 7d5cb34d, Build step 3: 'Push the branch to origin under that name. Nothing of it is on DEV until approved.' The AMGT-ar-5 face names that file the authority for this order, and its bounds state: never push.",
+  "world_is": "The branch exists only locally, head 53de2b9d, base 7d5cb34d. open-calls APPROVAL-REGISTER read the local head (head_sha=53de2b9d844b427b90f1553b0c7e0b408c688662, commits=1, waived=0) and wrote row dell1-20261014T014944Z-63d4. No origin copy was created by this worker. Whether portal-merge-forward.sh reads origin for an approved candidate is not checked here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/CONTRIBUTING-BOXES.md@7d5cb34d Build step 3 (printed at the worker's first read)",
+      "open-calls add output, 2026-10-14T01:49:44Z: APPROVAL-REGISTER result=OK row=dell1-20261014T014944Z-63d4 head_sha=53de2b9d844b427b90f1553b0c7e0b408c688662",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~429/FEATURE_RECEIPT.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The worker followed the order (no push) and did not resolve the conflict between the doc and the order; the issuer or the box CTO decides whether the branch must reach origin before merge-forward."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W429-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~429",
+  "surfaced_at": "2026-10-14T02:01:58Z",
+  "one_line": "The one-writer gate WARNs that the channel file the order names, INVESTIGATION_v1.md, is the laptop's unsuffixed file, so a dell1 append should go to the per-box file; the rows of 3a349aef67 were appended to the unsuffixed file anyway, and the commit landed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "The AMGT-ar-5 face names org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md as the carrier for this worker's rows, and the row gate grades the appended rows.",
+  "world_is": "safe-commit at 3a349aef67 printed '[one-writer] WARN: org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md is the laptop's (unsuffixed) file, written from dell1; per-box file <stem>.dell1.<ext> (WARN until C-QUEUE)'. The row gate passed 2 new rows of 1144; the commit landed with the unsuffixed path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for 3a349aef67: '[one-writer] WARN: ... is the laptop's (unsuffixed) file, written from dell1; per-box file <stem>.dell1.<ext> (WARN until C-QUEUE)'",
+      "safe-commit output for 3a349aef67: '[surprise-row-gate] ... 2 new row(s) of 1144 total checked ... OK'",
+      "C:/dev/wk-resapp-429 commit 3a349aef67, subject deliverable(AMGT_RESAPP AMGT-ar-5, 0.9.0_WK_AMGT_RESAPP~429)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The worker followed the order's named path and did not rewrite it. Whether this worker's rows belong in a per-box file is for the issuer and the L8 monitor to decide; the C-QUEUE item the gate names is outside this order."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W419-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~419",
+  "surfaced_at": "2026-10-14T02:34:54Z",
+  "one_line": "AMGT-bl-1 item 2 does not reproduce on the BATS LN slice it names: no page file writes Period text, the BATS team sheet is class master (its period and case blocks render as list rows, not tables), and no column with an empty header exists to drop.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Item 2: BATS LN shows a column headed Period 4 with nothing under it on the Model tab (team_sheet.periods is []; the case blocks years row carries 2026..2030 over columns whose cells are empty). Find where the page builds that header; show the values or drop the empty column and say so in one sentence. AC1 C4: BATS LN renders no column with an empty header and the sentence appears once.",
+  "world_is": "A native search of portal/src/pages/SecurityAnalysis for Period finds no header text (SegmentTable types only). The BATS slice (currencyFixture.BATS_LN_Equity.json, live /thesis 2026-10-14 ~02Z) carries no Period string; team_sheet.class is master, so the page renders its four sheet blocks as list rows (Row N: the template line), with zero block tables. The rendered BATS Model tab has no empty header (C4a PASS) and every visible full-grid column carries values under 2026E-2028E. The sentence cannot appear on this slice (C4b reads 0 times). The drop rule is implemented and proven on a synthetic empty 2031 column in the PBR period block (C4c PASS). The one served path that writes a header from served text is the sheet years list, built from top-level fiscal_years, which this slice does not carry; a live payload serving a non-year label there would print it as a header.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round105_prep/fixtures/bats_model_slice.json@34bc28182d: model.team_sheet.class master, team_sheet.periods [], no Period string in the file",
+      "portal/src/pages/SecurityAnalysis/__harness__/currencyAndReasons.harness.cjs@901f27fb: run output CHECK C4b_bats_sentence_once FAIL (sentence appears 0 time(s)); C4a PASS; C4c PASS",
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx@901f27fb: SheetBlockTable renders only the columns blockShownColumns (modelSheet.ts) keeps"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The order names a premise the served slice does not show. The strict C4b is kept as the order words it and reads NO; the issuer rules whether BATS is meant to render a table, or whether the Period 4 header came from a payload field this slice does not carry."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W419-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~419",
+  "surfaced_at": "2026-10-14T02:34:54Z",
+  "one_line": "AMGT-bl-1 item 1 names fiscal_year_figures as a currency source; the PBR slice carries no fiscal_year_figures, so the research team's historic money lines take their currency from the payload's top-level fiscal_currency_by_mnemonic, which the page did not read before this cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Item 1: take the figure's currency from the served model block the same way the page does for the rows beside it (figureCurrency, rowCurrency, FORECAST_MNEMONICS; the model's money figures in fiscal_year_figures and forecast_figures carry currency). The trading currency is never the figure's currency.",
+  "world_is": "The PBR US slice (live /thesis, 2026-10-14 ~02Z) has no model.fiscal_year_figures key. Its money currencies sit on model.forecast_figures (BEST_EPS, BEST_DPS, BEST_EBITDA: BRL) and on the payload top level in fiscal_currency_by_mnemonic (SALES_REV_TURN, IS_OPER_INC, CAPITAL_EXPEND and others: BRL). The fix reads the forecast figures first, then the fiscal figures, then the top-level list as the last fallback (teamRowCurrency in modelSheet.ts; an optional ThesisBundle.fiscal_currency_by_mnemonic in types.ts). A team row whose label names no served line (Cap Ex, FCF, BVPS and the price rows on PBR) prints its number with no symbol. Whether the top-level list is the right source for team figures is the issuer's ruling.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round105_prep/fixtures/pbr_model_slice.json@34bc28182d: top-level keys include fiscal_currency_by_mnemonic; model keys have no fiscal_year_figures; model.forecast_figures carry currency BRL",
+      "portal/src/pages/SecurityAnalysis/modelSheet.ts@901f27fb: teamRowCurrency, the fallback order and the Never the trading currency rule"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The page reads one more served field than the order names; the reading is recorded so the issuer can rule on it."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W419-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~419",
+  "surfaced_at": "2026-10-14T02:34:54Z",
+  "one_line": "On the Model tab full grid, a dash in a research-team row still prints with no reason: a team row carries cellReasons null for every year, so only the Key Figures dashes (item 3) gained a reason.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Item 3: a -- cell on the Model tab Key Figures table shows no reason; print the reason the payload served, else the fixed words. The order names the Key Figures table as the scope.",
+  "world_is": "The All figures grid draws the same team-row cells. buildModelSheet gives a team row cellReasons of null in every year (teamRowCurrency and the row literal beside it), and ModelBody prints a null cell of a team row as a bare dash. Not changed: the full grid is outside the table item 3 names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/modelSheet.ts@7d5cb34d: the classed team-row literal sets cellReasons to years.map(() => null)",
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx@901f27fb: the All figures gap cell prints -- with data-model-gap-reason only when cellReasons[index] is set"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. Recorded so the issuer can decide whether the full grid is in scope for the reason rule."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W419-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~419",
+  "surfaced_at": "2026-10-14T03:07:58Z",
+  "one_line": "The portal commit of the segment-table fix (051ad362) went through safe-commit with both pre-commit reads blind to its TSX files: the risk reflex answered PARTIAL_OR_BLIND on a stale danger map and commit-gate checked 0 of 3 files; the instruments that read the change were the AC2 typecheck and lint.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A commit made through .tools/safe-commit.sh carries a pre-commit read of its staged files (the risk reflex and commit-gate) before it lands; the order names no other gate for a portal TSX change.",
+  "world_is": "safe-commit on the portal repository printed: comp-pulse diff ANSWER STATE PARTIAL_OR_BLIND, danger map 196.6h STALE, scanned 0 of 3 file(s); commit-gate WARN checked 0 of 3 file(s) and states it reads only .py, .sh, .tf and org/projects/*.json; the commit landed as 051ad362 with msg-verify MATCH. The portal toplevel carries no .tools/comp-pulse, so the baked path under C:/dev/ajb_workspace executed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@051ad362 (branch cand/dell1/amgt-sa-currency-symbol-and-reasons): commit of SegmentTable.tsx, the harness and the BATS_SEGMENT fixture, through .tools/safe-commit.sh",
+      "C:/dev/wk-resapp-419/.tools/safe-commit.sh@310b962fa3: the printed [risk-reflex] and [commit-gate] lines of the 051ad362 commit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The verdict on the TSX change rests on the AC1 to AC3 instruments; the pre-commit reads did not examine it. Recorded for the issuer to rule whether a frontend commit owes a read by a gate that covers it."
+}
+```
