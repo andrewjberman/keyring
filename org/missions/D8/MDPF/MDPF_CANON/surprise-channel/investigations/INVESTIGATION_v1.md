@@ -1965,3 +1965,27 @@
   "notes": "Filed by the third seat on the last drive of this order (AMENDMENT 2). No re-drive was made, per the order. The record is QA and not production evidence. Resolution owner: 2.0.0_SA_COO~D1 (decides whether the plant must sit ahead of the composition gate, or the guard arm must be driven by a different route). The order status stays pending. Related: MDPF_CANON-D1-W21-S2, -S4, -S5."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W21-S7",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~21",
+  "surfaced_at": "2026-10-14T15:26:32Z",
+  "one_line": "The QA drive of the refusal arm exited 0 with the expected record, but the interpreter printed two 'Exception ignored while finalizing file <__main__._Tee>' tracebacks (ValueError: I/O operation on closed file, in _Tee.flush) after the 'QA run done' line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-n-1 Step 2: the drive prints one 'QA run done' line and the run is expected to end with status=non-green, errors=['global'], writes=0, blocked-calls=0. The order does not name the process teardown output.",
+  "world_is": "The drive printed the QA run done line (status=non-green errors=['global'] a4_objects_built=12 writes=0 blocked-calls=0), then two tracebacks from the instrument's stdout tee at teardown (ValueError: I/O operation on closed file, raised from _Tee.flush at r7_cn_n_1.py line 270). The process exit code was 0. qa_run.json and qa_run.log carry the expected record; the refusal text is the min-firms guard prefix; the three grade, served and guard criteria read from that record unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_n_1.py@82308151da (class _Tee, flush at line 270)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~21/run/qa_run.json (status non-green, errors global, writes 0; the record the teardown did not change)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the fourth seat (0.9.0_WK_MDPF_CANON~21, AMENDMENT 3 drive). Observation of the instrument's teardown only; the record is complete and the run's exit is 0. The instrument is read-only for this order; resolution owner: 2.0.0_SA_COO~D1. The refusal itself matched the expected min-firms prefix (see the proof instance, AC1 6 of 6)."
+}
+```

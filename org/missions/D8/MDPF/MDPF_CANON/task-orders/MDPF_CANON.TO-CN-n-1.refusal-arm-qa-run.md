@@ -137,7 +137,7 @@ VersionId is unchanged (the served prefix is listed before and after: 0 writes);
 - **Risk and class:** LOCAL. `worker` (not light): one run that may need diagnosis before a finding row.
 - **Fanout:** one cell, one chain, slot ~21. Base box/dell1.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <to_id>MDPF_CANON.TO-CN-n-1</to_id>
 <slot>~21</slot>
