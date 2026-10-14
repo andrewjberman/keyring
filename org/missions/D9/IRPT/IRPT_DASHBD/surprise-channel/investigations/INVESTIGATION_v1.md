@@ -11577,3 +11577,164 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W173-S1 -- the household return is ABSENT in contract 0.4.3, so the criterion's household-return clause cannot be met as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T17:27:13Z",
+  "one_line": "Contract 0.4.3 sources every household-grain return ABSENT, so the Orion household return that TO cell (b) and criterion DB109-1-AC1 require is not filled in the sample; the household-return clause fails as written.",
+  "spec_asserts": "TO DB-b-214 cell 4(b) and criterion DB109-1-AC1 (the round-109 CTO analysis cell 2): pvs.<window>.return_cumulative for the household take Orion's client-keyed fact_performance, and at least one household return window fills and is listed in household_return_windows.",
+  "world_is": "Contract 0.4.3 (org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@df0d2ad2f3) sources pvs.<window>.return_cumulative and hold.return_<window> as source ABSENT, reason 'A household-grain return is not carried by any sibling contract'. Its READ_RULE says a figure is never derived from a source the contract does not name, and its OPEN list says the household return members are ABSENT until a new contract exists. The shape checker (p105 check_sample_shape_k) requires an ABSENT member to hold the absent form, so a filled household return would fail the shape clause. The builder therefore writes the nine household-return members (four pvs and five hold) absent with the contract's reason (kind NO_SOURCE_YET) and household_return_windows is an empty list. Measured, not filled: the newest fact_performance partition (2026-10-14) holds the client's dates, the client series holds the anchor day of qtd, ytd and last_12_months and the as_of day, so all four windows would open if a contract sourced them.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@df0d2ad2f3 (members pvs.*.return_cumulative and hold.return_*: source ABSENT; document read_rule; open_changes item 1)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r105/p105_round105.py@df0d2ad2f3 (check_sample_shape_k: an ABSENT member must hold the absent form)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~173/build_sample_inflection.py@df0d2ad2f3 (build_values: the ABSENT branch writes the contract reason)",
+      "measured in the private build: BUILD_COUNTS.json client_performance_opens_on_anchor and household_return_windows (counts and booleans only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Stop on this point, not on the build: the rest of the sample is built and checked. The CTO's round-109 analysis says the household return comes from Orion's client grain, but the ratified contract at 0.4.3 says it is not carried, and changing that needs a contract version bump or a PRD addendum, which a worker does not write. No value was plugged. Ruling needed from the CTO: (a) a contract version that sources the household return from fact_performance, with the index-level rule, or (b) the render prints the household return as absent. The criterion clause stays FAIL until one of them lands."
+}
+```
+
+## IRPT_DASHBD-D2-W173-S2 -- account first data dates and window statuses have no account-return source for this firm, so the build derives them from span and the render would print BREAK
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T17:27:13Z",
+  "one_line": "The contract derives account first_data_date and window_status from the account return table, which this firm does not have until DB-b-216, so the build takes first data dates from Orion transactions and sets window statuses from span alone, and every spanned window reads BREAK.",
+  "spec_asserts": "TO DB-b-214 step 3 and step 4 require each account's first data date (with the method stated in words) and window_status for the four windows, as the filled-report shape requires.",
+  "world_is": "Contract 0.4.3 first_data_date_rule: the business_date of the account's first row in the account return table. window_status_rule: NOT_SPANNED when the account has no return row on the opening anchor, BREAK when a day in the window has no row, else MEASURED, read from the account return table. Neither table exists for this firm yet. The build took first data dates from the earliest transDate of the account in the newest fact_transactions partition (4 of 5 accounts), and from the earliest createdDate of its fact_positions rows for the one account with no transaction there (1 of 5). Window status: NOT_SPANNED where the first data date is after the window's opening anchor (trading-day anchor from lib/trading_calendar.py), otherwise BREAK, because no account return row exists for the window's days; since_inception opens on the first data date and reads BREAK. The sample carries 4 windows x 5 accounts = 20 statuses: 8 NOT_SPANNED and 12 BREAK.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@df0d2ad2f3 (document.filled_report.window_status_rule and first_data_date_rule)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~173/build_sample_inflection.py@df0d2ad2f3 (first-date and window-status derivation, named in its header)",
+      "measured in the private build: BUILD_COUNTS.json first_date_source_counts and HOUSEHOLD_SAMPLE.json (counts and words only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: left alone, the render prints BREAK for every spanned window, and BREAK in the contract's words means a day has no return row, which reads to a client as a broken source. The render (DB-b-215) and the issuer decide the words; the disarm owner is the issuer. The build did not invent returns, and no status is MEASURED, because no return is read for this firm yet."
+}
+```
+
+## IRPT_DASHBD-D2-W173-S3 -- the seven-class placement of Orion holdings needs a classification table outside this grant, so hold.allocation is absent
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T17:27:13Z",
+  "one_line": "Orion's assetClass carries 125 distinct fund-category labels and Opal's seven classes come from a classification table this build is not granted, so the allocation members are absent rather than placed by a mapping the build would invent.",
+  "spec_asserts": "TO DB-b-214 cell 4(c): hold.allocation takes each asset class's share when fact_positions carries an asset class Opal's seven classes can place, and otherwise every entry is absent NO_SOURCE_YET.",
+  "world_is": "fact_positions (newest partition) carries assetClass with 125 distinct Orion fund-category labels and productCategory with three values (Bond, Equity, Money Market). The class contract (IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json) takes class values from the etf-classifications table, read by the shared ETFClassifier through DynamoDB GetItem, which is outside this build's grant. The only class signal inside the grant is isCustodialCash, and the class rule counts money-market funds as cash, so a cash share from custodial lines alone would understate cash. The build writes hold.allocation (seven classes) and holdings.rows.class_hierarchy absent with NO_SOURCE_YET and the reason in words.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json@df0d2ad2f3 (class_source: etf-classifications, GetItem through ETFClassifier)",
+      "measured in the newest fact_positions partition: distinct assetClass and productCategory counts (counts only; no holding recorded)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The TO's fallback applies (every entry absent NO_SOURCE_YET). A ruling is needed only if the render must show an allocation for this firm: the classification read would need its own grant."
+}
+```
+
+## IRPT_DASHBD-D2-W173-S4 -- the served model series ends one trading day before the household's as_of, so all 33 benchmark and chart members are absent
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T17:27:13Z",
+  "one_line": "The served model series holds returns to 2026-10-13 and the household's as_of is 2026-10-14, so every window of the 32 benchmark members and the 12-month chart lacks its last trading day and reads SOURCE_BREAK in words.",
+  "spec_asserts": "TO DB-b-214 cell 4(d): the 32 model benchmark members and the 12-month chart fill from the served model series exactly as the sibling builder does.",
+  "world_is": "The served object (model_portfolio_timeseries, read through model_series_windows.read_served_series) carries a data_as_of of 2026-10-13 (its last trading day). The sample's as_of is the newest fact_positions partition, 2026-10-14. Under the window rule a window is filled only when every trading day from its first day to the as_of holds a return, so each window misses 2026-10-14 and the member reads 'the model series holds no return on 1 trading day(s) of the window' with kind SOURCE_BREAK. The chart reads the same way. Four stems x four windows = 16 pvs members and 16 avs members, plus the chart: 33 absent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured in the private build: BUILD_COUNTS.json model_source and model_series_trading_days (counts and dates; no value)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~173/build_sample_inflection.py@df0d2ad2f3 (bench_value and chart_value, the sibling window rule)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A timing condition of the served series, not a build defect: the builder reports it and does not repair it. A later series refresh that reaches 2026-10-14 would fill these members on the next build with no code change."
+}
+```
+
+## IRPT_DASHBD-D2-W173-S5 -- the household ending value is sourced to fact_positions, not to the account return table the contract names
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T17:27:13Z",
+  "one_line": "TO cell 4(a) fills the ending values from fact_positions, while contract 0.4.3 names the account return table as their source; the build followed the TO, and it also filled the account-grain avs ending values so the whole-document rule finds one figure.",
+  "spec_asserts": "TO DB-b-214 cell 4(a): pvs.<window>.ending_value, hold.ending_value, act.ending_value.household and act.ending_value.account take the same figure, the market value of the household's positions at as_of from fact_positions.",
+  "world_is": "Contract 0.4.3 sources pvs.<window>.ending_value, avs.<window>.ending_value and act.ending_value.* to the account return table's market_value_eod on as_of, and its READ_RULE says a figure is never derived from a source the contract does not name. The account return table is not built for this firm, so the figure comes from fact_positions currentValue summed per account at as_of (2026-10-14). The household figure is that sum; every account and window carries the same account figure. avs.<window>.ending_value is not named in the TO, but the whole-document rule groups it with act.ending_value.account, so an absent avs cell beside a filled act cell would be a conflict. The rule found 0 conflicts and 0 disagreements over the sample, and the household figure is recorded only in the private folder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@df0d2ad2f3 (READ_RULE; members pvs.*.ending_value and avs.*.ending_value)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r106/p106_round106.py@df0d2ad2f3 (figure_key and whole_document_scan: ending_value groups by entity and as_of)",
+      "measured: the issuer's whole-document scan of the private sample (0 conflicts, 0 disagreements, 0 unmapped)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The CTO rules whether fact_positions may stand in for the account return table's market value for these members, or whether they stay absent until the return table exists."
+}
+```
+
+## IRPT_DASHBD-D2-W173-S6 -- the account_id is the adapter's account key, not the custodian form the TO names; last4 comes from the custodian number
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T17:27:13Z",
+  "one_line": "The TO asks for account_id in the custodian form, but the checker and the adapter key the household's accounts by Orion's account id; the build uses that key for account_id and takes last4 from the custodian account number.",
+  "spec_asserts": "TO DB-b-214 cell 3: each account's account_id in the custodian form the shape requires, and last4. The checker requires the sample's accounts to equal the adapter's account_dim accounts of the household.",
+  "world_is": "The adapter's account_dim keys each account on Orion's account id (the accountId column). The custodian account number is a separate column (accountNumber) on fact_positions. The checker compares the sample's account_id set with the dry run's account_id set, which is the Orion id. Using the custodian number as account_id would fail the account-set clause. The build therefore sets account_id to the adapter key, and last4 to the last four characters of accountNumber on the account's positions (recorded as a count only; no value is written to the repo).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_dim.py@df0d2ad2f3 (ACCOUNT_COL and the account key of build_account_dim)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r109/p109_round109.py@df0d2ad2f3 (check_sample: sorted(acc) == sorted(accts))"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A renderer that shows account_id to a reader would show Orion's internal id, not the custodian number. The render (DB-b-215) prints last4 only. A ruling on the account key for display is the CTO's."
+}
+```
