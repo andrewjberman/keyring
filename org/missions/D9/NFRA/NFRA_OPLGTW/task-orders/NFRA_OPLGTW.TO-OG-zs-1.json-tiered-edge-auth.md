@@ -110,7 +110,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-zs-1.json-tiered-edge-auth.proo
   window, LockToken byte-identical, capacity unchanged, rules_sha256 identical): zero is safer than one, and condition (iii) was written for the case of one. zs1.AC2 now reads 0 or 1 with the snapshots present.
   Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>staged</status>
+<status>complete</status>
 <round>37</round>
 <workstream>ZS114-EDGE-AUTH</workstream>
 <slot>~AE</slot>
