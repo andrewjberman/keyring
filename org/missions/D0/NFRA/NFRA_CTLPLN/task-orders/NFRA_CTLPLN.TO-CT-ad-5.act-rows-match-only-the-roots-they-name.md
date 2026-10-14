@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~96</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run: OPEN-CALL-ACT-ROOTS arms=8/8 ok=True (the worker's control: 2/8 at the base) and APPLY-GATES-TEST cases=100/100 ok=True; proof instance VALID on the committed state. Accepted: files mode treats a roots-named act row through roots_field_hit while a fork row skips it there (the cell's wording, literal). The real f61b read against irpt-status is the issuer's, after the merge.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
