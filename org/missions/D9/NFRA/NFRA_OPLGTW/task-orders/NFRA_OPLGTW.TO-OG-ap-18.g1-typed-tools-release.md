@@ -144,6 +144,9 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-18.g1-typed-tools-release.pr
   Know before you cut: the pruned no-window `harvest_search_articles` call measures 38-48 s from this box's link (the silver join dominates and cannot shrink without changing the answer; worker rows Z-W88-S1/S3/S6). The host is in-region; Phase B's read through the public endpoint is the measurement that counts, against the ALB's 60 s.
   The `/yearinreview` refresh (CRO pin `947fc522a8`) is NOT in this release: the CTO ruled it ships as its own one-file release right after this one (`NFRA_OPLGTW.TO-OG-yr-1`). Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
+- A6 (issuer, 2026-10-14 ~22:2xZ, row Z-S130 and msg 34248): Phase A v2 (release `7521aee725`, host-shaped check 6 of 6) is read. Rulings: (1) `tests/test_og_gt8.py` is NOT in this release: two of its three tests assert on `news_typed.py`, which rides `OG-ap-19`; the harvest_identity coverage is the host-shaped import check (6 of 6) and the served read. Drop that file from the cut; `ap18.AC1`'s allow-list stays as it is (a superset).
+  (2) The Phase B md5 oracle for `lib/trading_calendar.py` is the DEPLOY TREE's copy (the deploy stages the tree's `lib/`; `3de6a337` today), not the trunk's `6596e52f`: `host_calendar_md5_equal` compares the host's file with the deploy tree's. (3) **This ask is not signed at `7521aee725`:** `NFRA_OPLGTW.TO-OG-yr-1` deploys first (Andrew-direct, "live now"), which moves the live ref, so Phase A v3 re-cuts on yr-1's release and the three halves sign THAT `release_sha`. Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>37</round>
 <workstream>G1-TYPED</workstream>
