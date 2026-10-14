@@ -2057,6 +2057,86 @@ def _legacy_own(nm, value):
     return None
 
 
+# --------------------------------------------------------------------------- the HEAD-HELD CATALOG LITERAL branch
+# NFRA_MCPINDEX (1.0.0_SA_CTO~Z ruling msg 34254, on the MX-c-9 A4 precedent; DRAFT, not landed until the laptop CTO states
+# conditions). The emitted runtime catalog must carry the JOINED values of its table rows (the gateway reads each S3 key
+# from it), and every one of those values is already held in the two registry files. ONE target file; a literal there
+# that EQUALS a string (a value or a key, any depth) of catalog_fork_keys.json or legacy_addresses.json AS COMMITTED AT HEAD
+# grades WARN, never PASS-silent. The working-tree registry never counts, so a commit cannot grant itself the pass.
+CATALOG_PATH = "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml"
+CATALOG_REGISTRIES = ("infra/logic/registry/catalog_fork_keys.json", "infra/logic/registry/legacy_addresses.json")
+LEGACY_ADDRESS_FIELDS = ("key", "bucket", "template")   # a legacy row's address parts; its evidence and note prose are not literals
+_CATREG = {"held": None, "head": ""}
+_CATALOG_NEW = []   # the admitted literals that are NEW to the catalog file (compared with HEAD:<file>), for the printed line
+# CONDITIONS (laptop 1.0.0_SA_CTO msg 109277, RULING_20261014_222xZ_NAMING_GATE_CATALOG_EXEMPTION_CONDITIONS.md @cd6155741b):
+# (1) one exact path; (2) the registry read with `git show HEAD:<path>`, never the index or working tree; (3) whole-string match
+# only; (4) every commit touching the file prints CATALOG-EXEMPT admitted/refused/literals/registry_head; (5) an admitted literal
+# new to the file is named with its value; (6) SINGLE WRITER: the file is emitter output (workflows/atom_decomposition/
+# emit_catalog_v02.py) and a hand edit is not the route -- this binds by reading; (7) shared tool, landed once through CLOUD.
+# OWNER: 2.0.0_SA_COO~MI. RETIREMENT: delete this branch when the catalog's addresses are emitted as lib/opal_naming.py
+# address() output (LGIC).
+
+
+def _strings_of(node):
+    if isinstance(node, str):
+        yield node
+    elif isinstance(node, dict):
+        for k, v in node.items():
+            yield from _strings_of(k)
+            yield from _strings_of(v)
+    elif isinstance(node, list):
+        for v in node:
+            yield from _strings_of(v)
+
+
+def _catalog_registry_held(repo=None):
+    """{string: registry file} of the strings of the two registry files COMMITTED AT HEAD of `repo` (default this repo): every
+    string of catalog_fork_keys.json, the key / bucket / template of each legacy_addresses.json row. {} when HEAD holds none or
+    a read fails. Only a read of HEAD feeds it (condition 2)."""
+    cache = repo is None
+    if cache and _CATREG["held"] is not None:
+        return _CATREG["held"]
+    repo = repo or REPO
+    held = {}
+    for rel in CATALOG_REGISTRIES:
+        try:
+            raw = _head_bytes(repo, rel)
+            doc = json.loads(raw) if raw else {}
+        except (ValueError, AttributeError, TypeError):
+            continue
+        if rel.endswith("legacy_addresses.json"):
+            strings = [row[f] for row in (doc.get("legacy_addresses") or []) if isinstance(row, dict)
+                       for f in LEGACY_ADDRESS_FIELDS if isinstance(row.get(f), str)]
+        else:
+            strings = list(_strings_of(doc))
+        for s in strings:
+            held.setdefault(s, rel)
+    if cache:
+        _CATREG["held"] = held
+        rc, out, _err = git("rev-parse", "--short=12", "HEAD")
+        _CATREG["head"] = text_of(out).strip() if rc == 0 else "UNREAD"
+    return held
+
+
+def catalog_held_in(path, value):
+    """The HEAD-committed registry file that holds `value` as a WHOLE string, for a literal of CATALOG_PATH only; '' otherwise."""
+    return _catalog_registry_held().get(value, "") if path == CATALOG_PATH else ""
+
+
+def catalog_exempt_line(rows):
+    """The CATALOG-EXEMPT line (conditions 4 and 5) for the rows of this run, or '' when none is a CATALOG_PATH row. `literals` is
+    the file's graded-literal count in this diff, the denominator of admitted and refused."""
+    mine = [r for r in rows if r[1] == CATALOG_PATH]
+    if not mine:
+        return ""
+    admitted = sum(1 for r in mine if r[0] == "REGISTRY-HELD")
+    refused = sum(1 for r in mine if r[6] == "REFUSE")
+    _catalog_registry_held()
+    return ("CATALOG-EXEMPT admitted=%d refused=%d literals=%d registry_head=%s new_via_registry=%d%s"
+            % (admitted, refused, len(mine), _CATREG["head"], len(_CATALOG_NEW),
+               (" " + " ".join(repr(v) for v in _CATALOG_NEW[:200]) + (" ..." if len(_CATALOG_NEW) > 200 else "")) if _CATALOG_NEW else ""))
+
+
 def judge(nm, path, lit, pre_text, waivers=None):
     """(line verdict, canonical, why, counts-as) for one literal, or None when it is not graded. The live limb's one line
     joins the why text: RUNNING-LIVE on any row of a name the plane holds; LIVE-READ-FAILED on a REFUSE row only."""
@@ -2064,6 +2144,13 @@ def judge(nm, path, lit, pre_text, waivers=None):
     j = _judge(nm, path, lit, pre_text, waivers, note)
     if j is None:
         return None
+    if j[3] == "REFUSE":
+        held_in = catalog_held_in(path, lit.value)
+        if held_in:
+            if pre_text is None or not _in_pre(lit, pre_text):
+                _CATALOG_NEW.append(lit.value)
+            j = ("REGISTRY-HELD", j[1], "%s; the same literal is held at HEAD in %s, so this catalog copy mints nothing: WARN"
+                 % (j[2], held_in), "WARN")
     extra = []
     if "held" in note:
         extra.append(note["held"])
@@ -2635,9 +2722,13 @@ def run(args):
     # MX-c-9 A4: derived from the staged paths, once per run. CT-ad-2: the staged set is the diff's own paths PLUS every path
     # --staged-paths lists (the whole index of the commit, any extension). The derivation reads these paths and nothing else.
     _LEGACY.update(project=committing_project(files + staged_entries(args.staged_paths)), rows=None)
+    _CATALOG_NEW.clear()
     for f in files:
         rows += grade_file(nm, f, args.post_from_index)
     meta = domain_meta(files)
+    exempt_line = catalog_exempt_line(rows)
+    if exempt_line:
+        meta.append(exempt_line)
     rows = place_step(rows, meta)
     return rows, meta
 
@@ -3002,7 +3093,7 @@ def legacy_address_self_test(nm):
         for _key, row in sorted(_legacy_head_rows().items()):
             if row.get("shape") != "prefix" or row.get("params") or row.get("reader") == "NFRA_OPLGTW":
                 continue
-            base = judge(nm, "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml", Lit(row["template"], row["template"], 1, None), None)
+            base = judge(nm, "infra/aws/ec2/opal-gateway/app/refs/legacy_arm.yaml", Lit(row["template"], row["template"], 1, None), None)
             if base is not None and base[0] == "REFUSE":
                 lit_value, own = row["template"], row["reader"]
                 break
@@ -3011,7 +3102,7 @@ def legacy_address_self_test(nm):
             return False
         for label, project in (("own", own), ("other", "NFRA_OPLGTW"), ("none", None)):
             _LEGACY.update(project=project, rows=None)
-            got[label] = judge(nm, "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml", Lit(lit_value, lit_value, 1, None), None)
+            got[label] = judge(nm, "infra/aws/ec2/opal-gateway/app/refs/legacy_arm.yaml", Lit(lit_value, lit_value, 1, None), None)
         derived = (committing_project([{"new": "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/x.md", "old": None}]),
                    committing_project([{"new": "infra/x.tf", "old": None}]),
                    committing_project([{"new": "org/missions/D9/NFRA/NFRA_MCPINDEX/a.md", "old": None},
@@ -3037,6 +3128,88 @@ def legacy_address_self_test(nm):
     return ok_own and ok_other and ok_none and ok_derive
 
 
+def catalog_held_self_test(nm):
+    """The HEAD-HELD CATALOG LITERAL arms. The planted literal is read from the committed registry (never typed): the first
+    string that grades REFUSE at an ordinary path. At the catalog path -> REGISTRY-HELD WARN (never PASS); at another path ->
+    REFUSE (the branch is one file); the same literal with an absent suffix at the catalog path -> still REFUSE; a registry
+    string present only in a planted working-tree registry never counts (the held map is the HEAD map)."""
+    other = "infra/aws/ec2/opal-gateway/app/refs/other.yaml"
+    planted = None
+    for s, _rel in sorted(_catalog_registry_held().items()):
+        if len(s) >= 4 and " " not in s:
+            base = judge(nm, other, Lit(s, s, 1, None), None)
+            if base is not None and base[3] == "REFUSE":
+                planted = s
+                break
+    if planted is None:
+        print("SELF-TEST arm catalog_held: no committed registry string grades REFUSE at an ordinary path: FAIL")
+        return False
+    at_catalog = judge(nm, CATALOG_PATH, Lit(planted, planted, 1, None), None)
+    elsewhere = judge(nm, other, Lit(planted, planted, 1, None), None)
+    absent = planted + "-selftest-absent"
+    absent_at_catalog = judge(nm, CATALOG_PATH, Lit(absent, absent, 1, None), None)
+
+    def shown(g):
+        return "%s %s" % (g[0], g[3]) if g else "None"
+    ok_held = at_catalog is not None and at_catalog[0] == "REGISTRY-HELD" and at_catalog[3] == "WARN"
+    ok_scope = elsewhere is not None and elsewhere[3] == "REFUSE"
+    ok_absent = absent_at_catalog is not None and absent_at_catalog[3] == "REFUSE" and absent not in _catalog_registry_held()
+    print("ARM catalog_held in the catalog file: a committed registry string -> %s: %s" % (shown(at_catalog), "ok" if ok_held else "FAIL"))
+    print("SELF-TEST arm catalog_held one file only: the same string in another file -> %s: %s" % (shown(elsewhere), "ok" if ok_scope else "FAIL"))
+    print("SELF-TEST arm catalog_held absent: the string with an absent suffix in the catalog file -> %s: %s"
+          % (shown(absent_at_catalog), "ok" if ok_absent else "FAIL"))
+    # condition 3, near-miss: the registered string plus one path segment, and minus its last segment, are refused (an arm counts only
+    # when the near-miss itself grades REFUSE at an ordinary path, so a harmless near-miss cannot pass for a refusal)
+    stem = planted.rstrip("/")
+    near = [stem + "/selftest-seg"] + ([stem.rsplit("/", 1)[0]] if "/" in stem else [])
+    near_ok, near_n = True, 0
+    for n in near:
+        if n in _catalog_registry_held() or (judge(nm, other, Lit(n, n, 1, None), None) or ("", "", "", ""))[3] != "REFUSE":
+            continue
+        near_n += 1
+        g = judge(nm, CATALOG_PATH, Lit(n, n, 1, None), None)
+        near_ok = near_ok and g is not None and g[3] == "REFUSE"
+    ok_near = near_ok and near_n >= 1
+    print("SELF-TEST arm catalog_held near-miss: %d plus/minus-one-segment variant(s) of the string are refused in the catalog file: %s"
+          % (near_n, "ok" if ok_near else "FAIL"))
+    # condition 2, HEAD only: a literal admitted only by a STAGED registry row is refused. A throwaway repo commits one registry
+    # string and then STAGES a second; the held map built from that repo holds the first and not the second.
+    import shutil
+    import subprocess
+    import tempfile
+    tmp = tempfile.mkdtemp(prefix="catheld_")
+    try:
+        def tg(*a):
+            return subprocess.run(["git", "-C", tmp, "-c", "user.name=t", "-c", "user.email=t@t"] + list(a), capture_output=True)
+        tg("init", "-q")
+        os.makedirs(os.path.join(tmp, "infra", "logic", "registry"))
+        reg = os.path.join(tmp, CATALOG_REGISTRIES[0])
+        with open(reg, "w", encoding="utf-8") as fh:
+            json.dump({"rows": {"h": {"key_template": "selftest/head-row/"}}}, fh)
+        tg("add", "-A")
+        tg("commit", "-q", "-m", "head")
+        with open(reg, "w", encoding="utf-8") as fh:
+            json.dump({"rows": {"h": {"key_template": "selftest/head-row/"}, "s": {"key_template": "selftest/staged-row/"}}}, fh)
+        tg("add", "-A")
+        held_map = _catalog_registry_held(tmp)
+        ok_staged = "selftest/head-row/" in held_map and "selftest/staged-row/" not in held_map
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    print("SELF-TEST arm catalog_held staged-only: a string only in a STAGED registry row is not admitted, the committed one is: %s"
+          % ("ok" if ok_staged else "FAIL"))
+    # conditions 4 and 5, counted and named: the printed line carries admitted, refused, the literal count and the new value
+    saved_new = list(_CATALOG_NEW)
+    _CATALOG_NEW[:] = ["selftest-new-value"]
+    line = catalog_exempt_line([("REGISTRY-HELD", CATALOG_PATH, 1, "a", "-", "-", "WARN"), ("REFUSE", CATALOG_PATH, 2, "b", "-", "-", "REFUSE"),
+                                ("PASS", other, 3, "c", "-", "-", "PASS")])
+    _CATALOG_NEW[:] = saved_new
+    ok_line = ("admitted=1 refused=1 literals=2" in line and "registry_head=" in line and "new_via_registry=1" in line
+               and "selftest-new-value" in line and catalog_exempt_line([("PASS", other, 3, "c", "-", "-", "PASS")]) == "")
+    print("SELF-TEST arm catalog_held counted: the line names admitted, refused, the file's literal count, the head and the new value: %s"
+          % ("ok" if ok_line else "FAIL"))
+    return ok_held and ok_scope and ok_absent and ok_near and ok_staged and ok_line
+
+
 def self_test():
     """--self-test: judge() on a NEW group-A name takes the fourth verdict and passes, and (the difference control) a NEW
     group-B name is still refused. Reads no diff, writes no log. Returns 0 when both arms hold."""
@@ -3050,6 +3223,7 @@ def self_test():
         print("SELF-TEST arm %s %s -> %s %s: %s" % (name, typ, got[0] if got else None, got[3] if got else None,
                                                     "ok" if arm else "FAIL"))
     ok = legacy_address_self_test(nm) and ok
+    ok = catalog_held_self_test(nm) and ok
     ok = built_self_test(nm) and ok
     ok = pattern_self_test() and ok
     ok = place_self_test() and ok
