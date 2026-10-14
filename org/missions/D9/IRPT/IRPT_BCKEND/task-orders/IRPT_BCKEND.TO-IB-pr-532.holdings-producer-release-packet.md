@@ -1,0 +1,86 @@
+# TO IRPT_BCKEND.TO-IB-pr-532 -- COUNT, by running the producer's own rules on each firm's newest candidate, what ONE release of the holdings producer would move, and write its never-widen packet, READ ONLY (CTO round-191 analysis item 2 @10401d0134; the cash rule on both layers IB-pr-527/529, the exemption repair IB-pr-530, the census IB-pr-531; rows D2-S158, D2-S162, D2-S163, D2-S164, D2-S165)
+
+<to_id>IRPT_BCKEND.TO-IB-pr-532</to_id>
+<project>IRPT_BCKEND</project>
+<issued_to>0.9.0_WK_IRPT_BCKEND~379</issued_to>
+<issued_by>2.0.0_SA_COO~P2</issued_by>
+<issued_date>2026-10-14</issued_date>
+<status>pending</status>
+<direct_act>false</direct_act>
+<risk>SERVED</risk>
+<worker_class>worker</worker_class>
+<placeholders>NONE</placeholders>
+<round>191</round>
+<workstream>~P</workstream>
+
+**Directive:** D9 | **Fabric:** dell2 | **Ordered by:** the CTO's round-191 analysis (item 2: "the never-widen packet and the COO half for ONE release of the holdings producer, carrying both changes; movers are counted per firm and per change, read from the producer's own rules on each firm's newest candidate, never predicted") | **Decomp cell:** `IB-pr-532` (decomposition section 183) | **outcome_ref:** FWD-3
+
+---
+
+## WORKER FACE
+
+**Your worktree (the only place you write):** `C:/dev/wk-IRPT_BCKEND-379` on a branch cut from the current branch (it carries both builds: `apply_cash_rule` called at the canonical and fallback returns of `classify_security`, and `directory_marks_no_closures` ignoring carried-forward entries, both in `data/assets/scripts/gold/investor_reporting/holdings_snapshot.py`). Commit there with `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_BCKEND~379 <0.9.0_WK_IRPT_BCKEND~379@opal.agent>" -F <msgfile> -- <explicit paths>` (message file by the Write tool, ending with `Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>`; no backtick or dollar-parenthesis in the command line). The `portal` gitlink shows modified in a fresh worktree: NEVER commit it. Never push. Do not run a recursive grep over the repository (use Grep, Glob, Read; print what a search covered before you read a zero as an absence). Commit gates take minutes: wait. **Paths you post are `file:///` absolute URIs or markdown links to them.**
+
+**Client data rule:** counts, dates, version ids, hashes, object names and PUBLIC security symbols only in any tracked file; **no account id, client id, position value, quantity or holding name**; candidates, served snapshots and scratch scripts live in scratch OUTSIDE the worktree (`C:/dev/_scratch379/`) and are deleted at the end with a short bounded script.
+
+**Cell `IB-pr-532` (inlined).** One release of the holdings producer (a `safe-deploy.sh --mint-bundle` of each firm's standalone bundle; read `deliverables/0.9.0_WK_IRPT_BCKEND~378/IB190-3_producer_census.json`, which is merged, before you start) would carry two changes: the IR cash rule on both layers, and the publish-gate exemption repair. **You count what each would move for each firm by RUNNING the producer's own rules over each firm's newest candidate, offline and read-only, and you write the packet that the CTO and the COO sign.**
+
+**Facts already measured (inline them in the packet; re-read each in one call and state if it moved):**
+- 49financial's served index (`s3://opal-data-49financial/irpt/49financial/platinum/holdings/current/manifest.json`) holds 10 dates, latest 2026-10-12, and **2026-10-08 (a trading day) is ABSENT**: its 2026-10-09 scheduled fire was killed on the SSM execution timeout (exit 137) and no later fire replays a date (rows D2-S164, D2-S165). The packet names this gap as **a key the release must not widen or hide**.
+- Round-189/190 expected order: canonical-branch movers 32 / 38 / 774 (49financial / Cottonwood at its 2026-10-08 snapshot / Inflection), fallback-branch cash-sub holdings 0 / 215 / 67.
+- Cottonwood's candidates have been refused since 2026-10-13T14:17Z on one `account_lost`; with the repaired exemption its lost account should be LISTED and the candidate should publish (the CTO's expectation: measure it).
+- `--mint-bundle` opens no change-management ledger; the releasing seat must open its own NEVER-2 ledger.
+
+**Do, in this order (every number is a MEASUREMENT with its source named in `notes`):**
+1. **Base.** `git rev-parse HEAD` before your first commit is `base_commit` (state it). Read `holdings_snapshot.py` `run_firm` (about line 3133), `build_snapshot` (about 2690), `evaluate_publish_gate` (about 3020), `served_publication` and `directory_marks_no_closures`; `tests/test_holdings_publish_gate.py`; and `source_inputs.py` (`VersionedInputs`).
+2. **A read-only harness in scratch** (a short Python script OUTSIDE the worktree that puts `data/assets/scripts/gold/investor_reporting` of your worktree on `sys.path` and imports `holdings_snapshot`; run it from the repository root; it uses the producer's own functions and makes ONLY read calls): for each firm, with an `s3` boto3 client of your own identity and `VersionedInputs(s3)` as the build input, call `candidate = holdings_snapshot.build_snapshot(firm, inputs, holdings_snapshot.select_business_date())` (the producer's own date rule; if `--as-of` is needed state why). **Never call `run_firm` with upload, `HoldingsPublication` writes, `land`, `publish_client` or any put/copy/delete.** If a build needs a write or cannot finish (memory, time), record `built` false with the reason for that firm and do not widen; 49financial is the largest book (about 124,000 SECURITY nodes) and its scheduled fire has timed out once: if its build does not finish inside 25 minutes, stop it and record the reason.
+3. **The cash rule's movers, per firm, by the producer's own rule.** Build the candidate TWICE over the same inputs in one process: once as the code stands (the rule active) and once with `holdings_snapshot.apply_cash_rule` replaced by an identity function (`lambda r: r`, by monkeypatch in your scratch script only; this reproduces the pre-release classification). A **mover** is a SECURITY node whose `asset_class` differs between the two builds (match nodes by `node_id`). Split movers by layer using the node's own classification basis or source (the candidate carries `asset_class_basis`/`class_source` per classification; find where in the node or the build's census it sits; if the node does not carry it, split by whether the display symbol is a key of the canonical `etf-classifications` table, as IB-pr-528 did, and say so in `notes`). Record `movers_canonical`, `movers_fallback`, `movers_total` (the two sum), `canonical_tickers` (DISTINCT public ticker-shaped symbols `A-Z`, digits, dot, dash, up to 12 characters, never more tickers than movers) and `vs_round189` = `{"canonical": <this minus 32|38|774>, "fallback": <this minus 0|215|67>}` as integers.
+4. **The exemption repair, per firm, by the producer's own gate.** Read the firm's served publication as `run_firm` does (`HoldingsPublication(s3, firm).begin()` and `served_publication`; confirm from the code that `begin()` only READS the index and that you use your plain read client, not `publish_client`; if `begin()` would write, STOP and file a row). Evaluate `holdings_snapshot.evaluate_publish_gate(candidate, served, closed_account_ids-lambda, marks-lambda)` TWICE on the same candidate: **before** = with `marks_no_closures` set to the pre-repair rule (all landed-directory entries' `termination.indicator`, a missing one counting UNKNOWN, ALL UNKNOWN and the directory non-empty; write that rule in your scratch script from the docstring of IB-pr-530's diff, `git diff 5bc47c4693 HEAD -- data/assets/scripts/gold/investor_reporting/holdings_snapshot.py` shows it) and **after** = `holdings_snapshot.directory_marks_no_closures(s3, bucket, firm)` as merged (use `firm_bucket_map()` for the bucket and the producer's own `closed_account_ids(s3, bucket, firm)` for the closed set). Record `gate_before` and `gate_after` (`PUBLISHED` or `REFUSED`), `conditions_before` and `conditions_after` (the condition names of the gate result; `[]` when PUBLISHED), and `lost_accounts_listed_after` (the COUNT of ids under `listed.account_lost_not_refused` in the after result; never an id). The repair can only remove `account_lost`: if any other condition differs, STOP and file a row.
+5. **The packet** `deliverables/0.9.0_WK_IRPT_BCKEND~379/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-532.md` (4,000 characters or more), the shape of `deliverables/0.9.0_WK_IRPT_BCKEND~372/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-525.md` and `~375/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-528.md` (read both as models). It states: the **change set** (both changes, with the merge commits `1464de48be`, `4db49e0a27` and the earlier `dff35d95da`, and the producer file's blob at the release pin, to be re-read at the release); **Branch A** (the act: `safe-deploy.sh --mint-bundle` of `irpt_holdings_49f`, `irpt_holdings_cot` and `irpt_holdings_inf`, naming the census's bundle key shape, current version id and sha256 per firm, the schedule it rides (`cron(15 10 ? * MON-FRI *)` New York time, from the census; re-read), and that the FIRST scheduled fire after the mint is the first fire to carry the change); **Branch B** (rollback: copy the prior bundle object version back, and per firm the manifest version served NOW by `list-object-versions` of the one named `current/manifest.json` key; what cannot be undone: a fire that already published a date); the **blast radius** per firm and per change (your counts; nothing else changes: not the sub-class, basis, weights or totals; for the exemption, which refused candidates would publish and which lost account is listed); the **49financial 2026-10-08 gap** as above, stated as a key the release **must not widen or hide**; the **releasing seat's own NEVER-2 ledger**, opened at the start of the release, naming every leg, **including the first scheduled fire's after-read per firm** (the after-read states what to read: each firm's `current/manifest.json` latest_date and, for Cottonwood, a business date past 2026-10-08 with its lost account listed; and for the rule, FDRXX and the other Cash-sub holdings reading Cash); the **stop rule on both branches** (the counts at the release match this packet, or they differ and **the release stops**: a differing count means a different candidate, and the packet is re-cut); the **COO half and the CTO half, both UNSIGNED**, with the packet's own sha256 left for the signers.
+6. **Write** `deliverables/0.9.0_WK_IRPT_BCKEND~379/IB191-1_release_counts.json`: `{"base_commit":"<40hex>","candidate_method":"<one sentence>","firms":{"49financial":{"candidate":{"built":true,"business_date":"YYYY-MM-DD","nodes":n} | {"built":false,"reason":".."},"cash_rule":{...}|null,"exemption":{...}|null,"note":".."},"cottonwood":{...},"inflection":{...}},"both_branches":{"counts_match_expectation":bool,"stop_rule":".."},"notes":["what each fact rests on and what was not read"],"uploaded":false,"functions_invoked":0,"sign_ins_made":0,"aws_writes_made":0,"rows_written":0,"figures_written":0,"vendor_requests_sent":0}`. `counts_match_expectation` is true when every built firm's canonical movers equal 32 / 38 / 774 and its fallback movers 0 / 215 / 67 (a difference is a MEASUREMENT, not a failure: record it, set false, and explain in `notes`).
+7. **Run the three criteria below from your worktree root**, record each output and exit code verbatim in `IB191-1_criteria_output.txt`, write the proof instance named under `<proof_of_spec>` and validate it with `python .tools/proof-of-spec-check.py <instance>` (every `artifacts_produced` row pinned to the commit that carried the artifact: commit the deliverables FIRST, then the instance last), and commit with explicit paths. Do NOT edit this order file or the check; do not flip `<status>`. If a criterion fails, fix YOUR record or packet (never the check). Report once, under 150 words.
+
+**Criteria (run each under `timeout 120` from your worktree root, record the output and exit code verbatim):**
+
+<criterion id="IB191-1-AC1" cell_refs="IB-pr-532"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r191/p191_cells.py" . IB191-1-AC1</invocation><expect>IB191-1-AC1 PASS</expect></criterion>
+<criterion id="IB191-1-AC2" cell_refs="IB-pr-532"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r191/p191_cells.py" . IB191-1-AC2</invocation><expect>IB191-1-AC2 PASS</expect></criterion>
+<criterion id="IB191-1-AC3" cell_refs="IB-pr-532"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r191/p191_cells.py" . IB191-1-AC3</invocation><expect>IB191-1-AC3 PASS</expect></criterion>
+
+<expected_criteria>IB191-1-AC1, IB191-1-AC2, IB191-1-AC3</expected_criteria>
+
+What the checks grade: AC1 per firm the candidate built (date and node count) or its stated reason with nulls; the cash movers split canonical / fallback summing to the total, public ticker-shaped symbols only, integer deltas against round 189; the gate outcome and condition names before and after, PUBLISHED exactly when the conditions are empty, the repair only removing `account_lost`, and an integer count of lost accounts listed; AC2 the packet (4,000 characters or more) naming Branch A, Branch B, blast radius, rollback, version, mint-bundle, both halves unsigned, NEVER-2, ledger, the first scheduled fire's after-read, 2026-10-08, "must not widen", "the release stops", listed and cash; AC3 both_branches stated, a note per firm, no long digit run in the record or packet, `uploaded` false and the six bound counters 0. Do not edit the checks.
+
+## BOUNDS
+
+- **Grant:** the `paths` block and the scratch directory. READ ONLY. **Nothing is invoked, written, uploaded, applied, deployed or sent:** no Lambda invoke, no SSM `send-command`, no S3 put/copy/delete, no terraform, no sign-in, no vendor call; the harness makes only get/list/head/scan calls with your own identity. A denial is recorded, never worked around or widened.
+- **Refusal clause:** STOP, file a row, change nothing more, on any of: a call that writes, invokes or sends; a value, name or identifier of a client or account in a tracked file; a figure you cannot source (say so; do not estimate); a differing non-`account_lost` condition between the two gate runs. Never weaken a check.
+- **Row ids** are `IRPT_BCKEND-D2-W379-S<k>` (start at 1); file a row for anything odd (a fenced json block in `INVESTIGATION_v1.md` with the usual fields, including `grounding`) and keep working.
+
+<paths>
+org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
+org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~379/
+</paths>
+
+<decomp_ref>
+<decomp_doc>org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md</decomp_doc> section 183 (round 191, workstream ~P), cell `IB-pr-532`.
+<owned_cells>IB-pr-532</owned_cells>
+</decomp_ref>
+
+<proof_of_spec>
+Criterion ids: IB191-1-AC1, IB191-1-AC2, IB191-1-AC3. The instance goes at `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~379/IRPT_BCKEND.TO-IB-pr-532.holdings-producer-release-packet.proof_of_spec.json`.
+Record in it the order's own relative invocation for each criterion. Validate it with `python .tools/proof-of-spec-check.py <instance>` BEFORE you report.
+</proof_of_spec>
+
+---
+
+## RECORD FACE
+
+<preflight>
+comp-blast: RUN -- the order builds each firm's newest candidate in memory from versioned source reads and reads each firm's served publication and directory; it writes and invokes nothing (the harness is read-only by construction and the worker is told to stop on any write); the release itself (a mint-bundle of three standalone bundles, which the next scheduled fire then runs) and its pair are a later round.
+comp-iam: DECLARED-NOT-APPLICABLE -- reason: no permission is changed; the reads use the worker's own identity (IB-pr-526/528 read the same sources), and a denial is recorded, never widened.
+comp-routes: DECLARED-NOT-APPLICABLE -- no route is touched.
+comp-schedule: DECLARED-NOT-APPLICABLE -- reason: the schedule is only named in the packet, never created or changed.
+comp-cache: DECLARED-NOT-APPLICABLE -- no CloudFront or cache surface is touched.
+comp-adversary: RUN -- p191_cells.py IB191-1 dry-run at base on dell2 2026-10-14 ~05:0xZ: AC1, AC2, AC3 FAIL (no record, no packet). Positive control in a temp root the run created itself (a synthetic record and packet; removed): all three PASS; negatives, each failing its own arm: a split not summing, a non-symbol ticker, the repair removing another condition, the repair adding a condition, an outcome contradicting its conditions, counts given for an unbuilt candidate, a write counter above 0, uploaded true, a long digit run, a missing note, no stop rule, a packet without the NEVER-2 ledger, without the 2026-10-08 gap, too short, or absent. Two control slips repaired in the control (the packet floor).
+lane: the paths block IS the grant; worker `0.9.0_WK_IRPT_BCKEND~379` (worktree `C:/dev/wk-IRPT_BCKEND-379`). Class SERVED (builds candidates from served sources and reads served publications; writes only the worker's records). The premises are the merged builds and census; the 49financial gap is my own read (row D2-S165).
+</preflight>

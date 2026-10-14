@@ -33878,3 +33878,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "One of five listed 49financial fires ran past the command's execution window and was killed; the next two fires finished. 49financial is the largest book (124,441 SECURITY nodes at 2026-10-12). Whether the fire was slow that day (a larger or slower source) or the window is marginal was NOT read (no run durations, no window setting read). A rule-bearing build adds one dict wrap per node: no measured cost, not expected to matter. The round-191 packet should state the window and the observed durations for 49financial before any release timing is signed."
 }
 ```
+
+## IRPT_BCKEND-D2-S165 -- 49financial's served holdings series has a GAP at 2026-10-08, the business date of the failed 2026-10-09 fire 
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S165",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T05:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "49financial's served holdings series has a GAP at 2026-10-08, the business date of the failed 2026-10-09 fire (D2-S164): no later fire recovered it, because a fire publishes only its own date.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3 get of 49financial's current/manifest.json (the index), read in memory 2026-10-14 ~04:5xZ: latest_date 2026-10-12, 10 dates: 2026-09-22, 09-28, 09-30, 10-01, 10-02, 10-05, 10-06, 10-07, 10-09, 10-12 (each with a manifest pointer carrying sha256, byte_length and version_id); 2026-10-08, a Thursday and a trading day, is absent",
+      "ssm list-commands and list-command-invocations (D2-S164): the 49financial command of 2026-10-09 10:15 ET TimedOut and was killed; the fires of 2026-10-12 and 2026-10-13 read Success and their dates (10-09 and 10-12) are in the index"
+    ]
+  },
+  "spec_asserts": "A scheduled holdings fire publishes the previous trading day's holdings; a failed fire's date is not replayed by the next fire.",
+  "world_is": "The CTO's round-191 question 'whether the next fire recovered it' reads NO: the next fire published its own date, so 2026-10-08 is missing from 49financial's served series. 'Whether any served key of that date is partial': there is no served key of that date (the index holds no 10-08 row); the dates that ARE in the index each carry a manifest pointer with a hash, not re-read object by object here. The earlier dates of the series are sparse (09-22, 09-28, 09-30), so the series is not complete before October either; that is not read further. The release must not widen or hide this gap: a page that asks for 2026-10-08 on 49financial has no row, before and after the release. A one-date backfill is a separate act, not in this round."
+}
+```

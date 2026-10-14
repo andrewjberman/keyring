@@ -3817,3 +3817,18 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r190/p190_cells.py`, dry-run at the b
 | `IB-pr-531` | the holdings producer's deployment censused: runner, dispatch, schedule, the three served standalone bundles (version, sha256, whether they carry the rule), release path and ledger rule, rollback by manifest version per firm, the S71 reconciliation; reads only | FWD-3 | SERVED (reads the live schedule, served bundles and manifest versions; writes only the worker's records) | none | P190-c |
 
 fanout: 3 of 3 chains, cap 8, reason: three independent chains. Three worker spawns (slots ~376, ~377 and ~378).
+
+
+## 183. ROUND 191, WORKSTREAM ~P (2026-10-14 ~05:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round-191 analysis (@10401d0134, msg 7531): the packet and the pair for one holdings-producer release)
+
+Round 190 closed (IB-pr-529 @1464de48be, IB-pr-530 @4db49e0a27, IB-pr-531 @ace53f9692; packet @07aa5b57d2; the CVO's adjudication v91 dismissed 9 rows). The CTO's round-191 list has two items. (1) Read 49financial's failed 2026-10-09 fire before any blast radius is signed: **DONE by the issuer as a DIRECT-ACT this round** (LOCAL reads of SSM command history and one index, counts and dates out): rows D2-S164 (the command TIMED OUT and its process was killed, exit 137) and D2-S165 (the next fire did not recover it: 49financial's served series has NO 2026-10-08 row; the dates present each carry a manifest pointer with a hash); the gap is inlined into the next cell as a key the release must not widen or hide. (2) The never-widen packet and the COO half for ONE release carrying both changes, counted per firm and per change by running the producer's own rules on each firm's newest candidate: **CUT now** as `IB-pr-532` (the census's `--mint-bundle` release, the NEVER-2 ledger the releasing seat opens, the stop rule on both branches). **My COO half is not a cell: I write and sign it at the packet's sha256 after the cell merges.** The CTO signs on receipt; the apply is round 192. Carried and NOT cut, each with its owner and condition: IB-pr-456 (Andrew's execution ID, open act `f61b`; owner me) and the Design-B CTO half (the CTO's round-188 call 1).
+
+One cut, one chain: the cell depends on the merged builds (IB-pr-527, -529, -530) and the merged census (IB-pr-531), all in the tree; the 49financial gap it needs is already measured.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r191/p191_cells.py`, dry-run at the base: IB191-1 AC1, AC2, AC3 FAIL (no record, no packet); the positive control (a temp root the run created and removed) passes all three and the negatives each fail their own arm (fifteen). Two control slips caught and repaired in the control, not the check: the synthetic packet was below the check's 4,000-character floor twice.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-532` | the release's movers counted per firm and per change by running the producer's own rules over each firm's newest candidate (the cash rule built twice over the same inputs, the gate evaluated before and after the exemption repair), and the never-widen packet for ONE `--mint-bundle` release with Branch A, Branch B, the 49financial 2026-10-08 gap, the releasing seat's NEVER-2 ledger and the stop rule; reads only | FWD-3 | SERVED (builds candidates from served sources, reads served publications and directories; writes only the worker's records) | IB-pr-527, IB-pr-529, IB-pr-530, IB-pr-531 (all merged) | P191-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell; the two items of the CTO's list are one direct read (done) and one order. One worker spawn (slot ~379).
