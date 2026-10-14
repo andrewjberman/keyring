@@ -34701,3 +34701,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The -I isolation is kept deliberately. The caches are not evidence and carry no measurement."
 }
 ```
+
+## IRPT_BCKEND-D2-S175 -- Dispositions on worker 384's rows; the differential is measured and attributed to the member only; a Cottonwood bundle minted from the pin cannot import its builder (the closure lacks opal_unidentified.py)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S175",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T17:15:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on worker 384's rows (D2-W384-S1 to S4) after IB-pr-539 merged (@0bf58c4ab0): the differential is measured (32 / 485 / 841) and attributed to the member, not the commit; and the pin's bundle closure lacks opal_unidentified.py, so a Cottonwood bundle minted from the pin crashes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB195-1 AC1 to AC3 on the worker's tree and the proof instance: PASS, VALID; round-close-check --workstream ~P MAY-CLOSE (orders=1); merge 0bf58c4ab0",
+      "I reproduced the closure defect myself: the pin's three bundle payloads built with safe_deploy_core.build_bundle_payload (no upload, scratch), extracted, each run from its extracted tree with the same receipts: Cottonwood raises ModuleNotFoundError opal_unidentified at build_cottonwood_mdpf_slice.py line 136 via holdings_snapshot.py _cot_taxonomy_rules; Inflection builds 36,702 nodes; 49financial's payload was not run. _IRPT_HOLDINGS_CLOSURE at the pin (git show 49467335d2:.tools/safe_deploy_core.py) lists opal_strategy_matcher.py and not opal_unidentified.py",
+      "I read the three served manifests' latest_date at ~17:0xZ: Inflection 2026-10-13, 49financial 2026-10-12, Cottonwood 2026-10-08; drain-end packet deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUND_195_P_DRAIN_END_20261014.md"
+    ]
+  },
+  "spec_asserts": "A mint of the full pin is the code the signed counts measured, and every difference from the live code is attributed to a signed change or a named commit (CTO round-195 ruling).",
+  "world_is": "DISPOSITIONS. D2-W384-S1 (BLOCKING, ARMED, owner me: the Cottonwood table of the packet omits silver/opal_unidentified.py): CONFIRMED AND WIDER than the row. The packet table lists the members of the BUILT bundle; the built bundle lacks the file because the closure declaration lacks it, so adding it to the packet table cannot make a mint carry it. A Cottonwood bundle minted from the pin cannot import the cottonwood builder. STAYS ARMED; its disarm is the closure fix as a new pin and the bundle-tree differential, not an edit to the table. D2-W384-S2 (Inflection REFUSED on source_frontier_older on both codes): INERT; the served Inflection frontier is now 2026-10-13 so a candidate dated 2026-10-12 is older; the clock moved, the code did not; the release's gate comparison must be live against pin at the same served state. D2-W384-S3 (Cottonwood: 236 changes beyond the signed rule reproduce with holdings_snapshot.py swapped alone): INERT as a hazard; attribution is proven to the member and NOT to a commit: the five keyword-matched commits are not shown to cause the basis and sub-class relabels, and the check that accepted them (mine) is too weak; at the commit level they are UNATTRIBUTED, measured in counts and fields. D2-W384-S4 (python -I writes __pycache__ into trees despite PYTHONDONTWRITEBYTECODE): INERT; the files are in scratch trees outside the repository."
+}
+```
