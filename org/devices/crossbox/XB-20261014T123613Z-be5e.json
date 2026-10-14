@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261014T123613Z-be5e",
+ "kind": "ORDER",
+ "call_id": "dell2-20261014T044915Z-c449",
+ "from_device": "dell2",
+ "to_device": "laptop",
+ "from_serial": "2.0.0_SA_COO~Y2",
+ "to_serial": "0.7.0_AE_CloudOps~U7",
+ "subject": "GO: ledger irpt-c449-delete-20261014 is CLOSED (050eca6b81); run steps 1-6 of the c449 delete order, simulator first",
+ "body_path": "org/tier2_senior/0.7.0_AE_CloudOps~U7/task_orders/IRPT_ANLREQ.TO-DELETE-C449-U7.synthetic-door-input-d2-laptop.md",
+ "opened_at": "2026-10-14T12:36:13Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-14T12:38:04Z",
+  "bus_message_id": "c9d2f326-5ea9-4ea1-98cb-71476d2bd861"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

@@ -51,3 +51,5 @@ Authority: a recut covers its affected cells; `unblock.py` is the keep-driving m
 | cell | what | serves | risk | workstream / round | issued to |
 |---|---|---|---|---|---|
 | `CT-ac-6` | `.tools/unblock.py tick --owed-call` reads a call on another box's list through `open-calls.py approval_read` (freshest of the cluster copy, `origin/box/<box>`, the working tree; UNREADABLE never absent), prints the source, keeps this box's own read unchanged; a test with the seams. | FWD-2 | LOCAL | KEEPDRIVE / 1 | `0.9.0_WK_NFRA_CTLPLN~90` |
+
+**Amendment 2 (2026-10-14 ~11:5xZ, issuer):** `CT-ac-5`'s window is REBOOKED by Andrew's answer 4 (`ANDREW_DIRECT_20261014_114xZ_EIGHT_OPEN_CALLS_ANSWERED.md`, via CTO msg 109109): the dell1 restart is approved for 17:00 ET = Wed 2026-10-14 21:00Z, with Andrew at the console, for this one restart, after dell1's hardening read-back (Windows Update AUOptions=3, Tailscale unattended; `0.0.0_AB_MSTR~DELL1`'s). The 14:30Z window is cancelled; open call `laptop-20261014T061102Z-b509` is CLOSED on that answer.

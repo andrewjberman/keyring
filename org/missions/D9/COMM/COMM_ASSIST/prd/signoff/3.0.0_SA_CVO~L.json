@@ -1,12 +1,12 @@
 {
   "prd": "COMM_ASSIST_PRD.md",
-  "prd_version": "v0.6",
-  "prd_pin": "e7bde907ba2868368ff4333afa8a8f77bc57d201",
+  "prd_version": "v0.10",
+  "prd_pin": "78de9ee50f2ca3fd3856d0a4e5857e6988feba40",
   "half": "ratified-text",
-  "half_hash": "ad2003c6513df39d01aae360d1d0cc60810f84823ef2d8f8405860b903c2f2d5",
-  "endpoint_hash": "c31d59115e34055d8efe9efe93bc3bf35c174234ca9648a6e50ff85a3b7f130b",
+  "half_hash": "78956ee742f5799ed6acf61571dfd65842cf1af94898f7df85079959be12b17f",
+  "endpoint_hash": "abb37007eb8088ad1666d7f96d0c74b8e8d78c208bf8ffac9ddba26673c97e31",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/COMM_ASSIST_PRD_V06_RATIFIED_TEXT_REVIEW_20261013.md@88aa6e2037",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/COMM_ASSIST_PRD_V010_RATIFIED_TEXT_REVIEW_20261014.md@c7e7072cf0",
   "signed_by": "3.0.0_SA_CVO~L",
-  "signed_at": "2026-10-13T16:46:18Z"
+  "signed_at": "2026-10-14T11:57:27Z"
 }

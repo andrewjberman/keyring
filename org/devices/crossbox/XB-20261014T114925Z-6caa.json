@@ -12,13 +12,13 @@
  "opened_at": "2026-10-14T11:49:25Z",
  "state": "ACKED",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-14T11:52:19Z",
+  "bus_message_id": "c66ca919-3e8e-47c3-8892-167087eef7a5"
  },
  "ack": {
   "at": "2026-10-14T12:00:04Z",
   "by": "4.0.0_SA_CRO~Z",
-  "bus_message_id": null
+  "bus_message_id": "d399c8dd-81b7-403b-96f3-fcd28d31d718"
  },
  "closed": {
   "from_at": null,
