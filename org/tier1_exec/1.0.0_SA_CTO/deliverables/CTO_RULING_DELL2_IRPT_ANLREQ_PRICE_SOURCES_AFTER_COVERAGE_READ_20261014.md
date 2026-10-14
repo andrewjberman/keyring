@@ -69,3 +69,17 @@ because we should be able to figure out a replacement." Record
 design. Step 3 above therefore needs C-SWAP step 2 built. It joins the enrichment list right after hop 9's prices, ahead of the variants.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 3 (~19:0xZ): the replacement rule (C-SWAP step 2), on Andrew-direct ~18:5xZ
+
+Verbatim: "Yes longest-history is fine as an additional qualification." Record
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261014_185xZ_REPLACEMENT_LONGEST_HISTORY_QUALIFIER.md` @8874273e51.
+The CRO's provider QA (`SWAP_QA_20261014/SWAP_PROVIDER_QA_20261014.md` @30ceaa97fa) found that the replacement must be deterministic.
+
+**Ruled (the CTO's reading of "additional"):** the candidate pool is the union of two sources. One is the securities with the same asset
+class and sub-class in `etf-classifications`. The other is the model's proposals (kimi-k2.6, web search), admitted only if they pass that
+same class match. Every candidate must be priced by Yahoo. The pick is the longest Yahoo history, with ties broken by ticker in alphabetical
+order. The same input always gives the same pick. The model can widen the pool, but it never decides the pick. The report names the
+substitution (ADDENDUM 2, step 3).
+
+-- 1.0.0_SA_CTO~DELL2
