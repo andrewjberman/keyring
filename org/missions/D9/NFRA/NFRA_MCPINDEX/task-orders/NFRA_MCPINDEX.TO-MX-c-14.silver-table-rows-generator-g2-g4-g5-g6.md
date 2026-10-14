@@ -52,7 +52,7 @@ python workflows/atom_decomposition/gen_silver_rows.py --g2 <file> --g4 <file> -
 | key | value |
 |---|---|
 | `bucket`, `prefix`, `table`, `layer`, `format` | the contract's `bucket`, `s3_prefix`, `table`, `layer`, `format`, verbatim |
-| `business_meaning` | one sentence you compose: layer, format, table, bucket, prefix and the contract's `grain`, then for a `firm-scoped` row `Client data forked by firm, account last-4 and platform; Opal-internal principals only until a data grant names the firm.` else `Opal-internal data.` (at least 40 characters, never starting `NONE`). Then FROZEN OR EMPTY IS NEVER CURRENT (PRD v0.12 item 4): let `n` be the first number found under the contract's `freshness` keys `trading_days_behind_t1`, `trading_days_behind`, `trading_days_behind_T-1`; when `n` exists and is above 5, append ` NOT CURRENT: <n> trading days behind T-1.` (`<n>` as an integer); when the contract's `size.objects` is 0, append ` EMPTY: no objects.`. Append neither otherwise |
+| `business_meaning` | one sentence you compose: layer, format, table, bucket, prefix and the contract's `grain`, then for a `firm-scoped` row `Client data forked by firm, account last-4 and platform; Opal-internal principals only until a data grant names the firm.` else `Opal-internal data.` (at least 40 characters, never starting `NONE`). Then FROZEN OR EMPTY IS NEVER CURRENT (PRD v0.12 item 4): let `n` be the first number found under the contract's `freshness` keys `trading_days_behind_t1`, `trading_days_behind`, `trading_days_behind_T-1`; when `n` exists and is above 5, append ` NOT CURRENT: <n> trading days behind T-1.` (`<n>` as an integer); when the contract's `size.objects` is 0, append ` EMPTY: no objects.`. Append neither otherwise. Last, for a contract whose `s3_prefix` starts `blackdiamond/49f/` or `blackdiamond/49financial/` (the 49F Black Diamond tables), append ` Live store: opal-data-bd/silver/ (inferred).` (CTO msg 34127: the row keeps the measured location and says where the live store is; no other row carries this sentence) |
 | `example_questions` | the contract's `common_queries` verbatim; if empty, one question `Where is the <table> <layer> table?` |
 | `grain` | the contract's `grain`, verbatim |
 | `freshness_field` | `FIELD:<k>` where `k` is the first entry of the contract's `partition.keys`; if that list is empty, `NONE -- ` followed by the contract's `freshness.basis` |
@@ -149,6 +149,9 @@ The issuer then regenerates the catalog from the merged rows and the loader cell
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Round 14, chain head, worker ~38, parallel to the chain `MX-c-11 -> MX-c-13` (no shared file). Source: PRD v0.12 @95d985d1a5
 (1.0.0_SA_CTO~Z msg 34100) items 1, 3, 4 (the not-yet-catalogued tables) and 5, and PRD v0.13 @bb9d1ece12 (msg 34117). G3 and the `news` / `ft.04` / `mdpf` channel
 corrections are not in this order: they edit CVO-certified channel specs (decomposition R14.6). Battery and planted arms: decomposition R14.3.
+
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-14 ~15:0xZ).** `business_meaning` of a 49F Black Diamond row (16 of the 174) ends with ` Live store: opal-data-bd/silver/ (inferred).`, on `1.0.0_SA_CTO~Z` msg 34127 (the CRO is asked for the per-table live prefixes; until they land the rows keep the measured location). The check
+`c14.AC2` carries the rule (a planted arm: a 49F row without the sentence FAILS). Gate limb that graded this modification: none (LIMB 6 does not fire on a modification; `<placeholders>NONE`).
 
 <status>issued</status>
 <round>14</round>
