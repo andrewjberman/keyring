@@ -18,3 +18,21 @@
 ## Log
 
 - 20261014T190159Z OPENED by 0.7.0_AE_CloudOps~SH1 with 2 leg(s)
+
+## ROLLBACK -- read LIVE 2026-10-14 before any change (TO-SH-t27 step 2); this is the rollback
+
+Rollback is CODE only. NO IAM change in this act, so no policy leg.
+
+| what | value | instrument |
+|---|---|---|
+| Lambda `CodeSha256` (prior) | `YEYdzIZd2KQp3NngjJ5anv8RfTcsB8MqG21yRvCKVhM=` | `lambda get-function-configuration` |
+| Lambda `LastModified` (prior) | 2026-10-09T20:08:21.000+0000 | same |
+| handler / runtime / layers | `etf_positioning_gold.lambda_handler` / python3.11 / pandas-pyarrow-requests-layer:1 + opal-trading-calendar-layer:1 | same |
+| env (prior) | OPAL_ETFS_PUBLISH_GRANT=1, ETFS_BUCKET=opal-data-etfs | same |
+| artifact object (prior) | `s3://opal-313476888478-lambda-artifacts/etfs-positioning/etf-positioning-producer.zip` | `s3api head-object` |
+| artifact `VersionId` (prior) | `oqVg2A1LdkeHx5CHfzA6KfOs4HhEMq2T` (LastModified 2026-10-09T20:01:56Z) | same |
+| artifact `content-sha256` metadata (prior) | `YEYdzIZd2KQp3NngjJ5anv8RfTcsB8MqG21yRvCKVhM=` | same |
+| inline role policy (prior) | `s3-rw-etfs-gold-platinum` on `etf-positioning-producer-role`, 9 statements | `iam get-role-policy --query PolicyDocument` |
+| prior `PolicyDocument` sha256 | `96a9dedfed250542b92620a964b95e59fc4e275b3b14f9183dbc81a72919194a` | sort-keys dump of the live inner document |
+
+Procedure: copy the prior version back to the current version of the key with `content-sha256` metadata set to the prior value, then `safe-apply`; the module reads the object at plan time.
