@@ -48,3 +48,15 @@ What the one read returned: `class unauthorized_account`, `NotAuthorized`, **`ht
 ## Corrections made in this session
 
 The probe's request counter was presented to myself as the bound's proof. It measured `get()` calls, not vendor contact. The row says so in the same terms.
+
+## UPDATE 2026-10-14 ~21:58Z -- the order is COMPLETE on branch `refused` under ruling A1 (msg 34234, @13f6bb6c7f)
+
+The issuer ruled option (b) (the main tree's SA profile) and said Z-S128 needs nothing. I replaced the probe with `sa1_access_read.py`, which opens the harvester's own `TabSession` on that profile and makes ONE account request, with no bundle read, no seed and no Secrets Manager call.
+
+- **Account half HOLDS:** HTTP **200**, `data.type authorizedUser`, 1 subscription item, at 21:54:01Z. The account is active; the 402 of `Z-W37-S4` is not current.
+- **Runner-profile half FAILS:** the runner's own `sa` profile holds 0 `user_id` cookies of 3 anonymous `seekingalpha.com` cookies (cookie names read by sqlite, `mode=ro&immutable=1`, no value read).
+- **Outcome `ACCESS_REFUSED`, branch `refused`, `runner_changed` false.** The reason names the failed half: the sign-in is a person act. Runner unchanged (Running, `bbg wsj barrons`), no ledger, no sentinel, no bucket write, nothing copied between profiles.
+- **AC1 and AC2 both PASS** (21:55Z); the proof instance is **VALID rc=0**; row `NFRA_OPLGTW-Z-S129` filed.
+- The one request's cost is counted in `sa1_access_read.json`: 1 Chrome launch and 1 origin page load for the session's own construction, plus 1 account request.
+
+**Open act (not this seat's):** a Seeking Alpha sign-in inside the runner's `sa` profile. After it, step 1's profile half can be re-read from cookie names alone.

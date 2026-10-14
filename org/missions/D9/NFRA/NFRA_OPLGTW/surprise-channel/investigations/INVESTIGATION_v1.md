@@ -15590,3 +15590,30 @@ name the one known failure instead of silently inheriting it.
     "notes": "AC2 passes under the amended 50 s bound, so no code change was made. The 38-42.5 s premise in the amendment does not hold for every run on this link; keeping or revisiting the bound is the issuer's call. Relates to S3 (INERT)."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S129",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZW",
+    "surfaced_at": "2026-10-14T21:56:31Z",
+    "one_line": "OG-sa-1 step 1 (as amended A1) reads ACCESS_REFUSED on the RUNNER-PROFILE half only: the Seeking Alpha account answers HTTP 200 authorizedUser with 1 subscription (it is active, not at 402), but the runner's own sa profile holds no login, so a sign-in -- a person act -- stands between the account and the capture.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZW/sa1_access_read.json -- account_requests 1, http_status 200, data_type authorizedUser, subscription_items 1, profile_has_user_id true (main tree), read_at 2026-10-14T21:54:01Z; chrome_launches 1 and origin_page_loads 1 are the session's own construction and are counted",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZW/SA1_ACCESS.json and SA1_PROOF.json -- outcome ACCESS_REFUSED, runner_profile_login false, branch refused, runner_changed false",
+        "runner profile read by sqlite cookie NAMES only, mode=ro immutable=1, on C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-3d88eccbc3/.runtime/opal-data-harvest/browser-profiles/sa/Default/Network/Cookies: 0 user_id cookies of 3 seekingalpha.com cookies (no value read)",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZW/sa1_AC1.out and sa1_AC2.out -- both RESULT: PASS at 2026-10-14T21:55Z"
+      ]
+    },
+    "spec_asserts": "NFRA_OPLGTW.TO-OG-sa-1 as amended A1 (msg 34234, @13f6bb6c7f): ACCESS_HOLDS needs BOTH a 2xx from the account read AND the runner's own SA profile carrying a login; anything else is ACCESS_REFUSED with the reason naming the failed half; the sign-in is 'a person act, not yours'. Row AMGT_HARVST-Z-W37-S4 had recorded an HTTP 402 (renewal pending at the account holder).",
+    "world_is": "Measured on site Z 2026-10-14T21:54Z. (1) The account half HOLDS: one request through the main tree's browser-profiles/sa returned HTTP 200, data.type authorizedUser, 1 subscription item. There is no 402 now, so the account is active and a renewal is not what stands in the way; the 402 of Z-W37-S4 is superseded by this read (it was already GRADUATED at ADJUDICATION_v40). (2) The runner half FAILS: the runner's own sa profile, <pin>/.runtime/opal-data-harvest/browser-profiles/sa, holds 3 anonymous seekingalpha.com cookies and no user_id cookie, so its tab has no account to authenticate as. (3) Outcome ACCESS_REFUSED, branch refused: the runner was left Running with publishers bbg wsj barrons, no ledger, no sentinel, nothing written to a bucket, nothing copied from the main tree's profile into the runner's. (4) The remedy the order names is a person act, a Seeking Alpha sign-in inside the runner's profile, routed by the issuer to the CTO. Whether a first sa job would instead seed that profile from the stored session bundle was not established (row Z-S127 item 4) and this seat ran no job to find out.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "FOR THE ISSUER: the order is complete on branch 'refused' (AC1 and AC2 PASS). The open act is the sign-in in the runner's sa profile; once someone has done it, step 1 is re-read (profile half only, no vendor request needed: cookie names suffice) and, if it then reads HOLDS, steps 3-5 follow under the same order or a re-cut. Not done by this seat: no sign-in, no seeding, no copy between profiles, no change to the task."
+  }
+  ```
