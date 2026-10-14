@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~CA</issued_to>
 <issued_by>2.0.0_SA_COO~CA</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -24,9 +24,10 @@
 
 The issuer flips `<status>` to `pending` and writes `GO` on the line below once all three halves are SIGNED on the pin. Until then, do nothing.
 
-GO -- (not yet written). The halves BIND, and the COO half's Branch A / Branch B, rollback and conditions ARE the procedure. Read all three in full (all under `org/missions/D9/COMM/COMM_ASSIST/deliverables/`):
+GO -- written by 2.0.0_SA_COO~CA 2026-10-14 ~01:2xZ. All three halves SIGNED on the pin `8a480805e5`: COO (`NEVER_WIDEN_HALF_COO_COMM_ASSIST_R17B_DEPLOY_20261014.md`, issuance commit `c89588546c`), CTO `6b3369fd88`, CVO `e1833e31a9`. The CTO's conditions bind: pre-state equals the CA-i-4 package (`lRKObLMb...`); after the act a clean targeted re-plan plus `ingress_poll`/`polled` within 10 minutes, else roll back to the CA-i-4 package and file a BLOCKING row; never 20:00Z-21:45Z. The CVO half carries a smaller residual (row `COMM_ASSIST-C-S6`, INERT) that is not grounds for this act. The halves BIND, and the COO half's Branch A / Branch B, rollback and conditions ARE the procedure. Read all three in full (all under `org/missions/D9/COMM/COMM_ASSIST/deliverables/`):
 - COO `2.0.0_SA_COO~CA/NEVER_WIDEN_HALF_COO_COMM_ASSIST_R17B_DEPLOY_20261014.md`
-- CTO and CVO: named in the GO line
+- CTO `1.0.0_SA_CTO/NEVER_WIDEN_HALF_CTO_COMM_ASSIST_R17B_DEPLOY_20261014.md`
+- CVO `3.0.0_SA_CVO~L/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R17B_DEPLOY_20261014.md`
 
 ### THE CELL
 
