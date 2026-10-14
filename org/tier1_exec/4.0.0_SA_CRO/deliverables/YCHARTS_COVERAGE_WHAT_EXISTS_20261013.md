@@ -73,7 +73,54 @@ The question is two lookups per security: does YCharts resolve this CUSIP, and d
    `Product-Alyssa/YCharts/02_holdings-prep/hars/` per her map, never to git. Then a one-line coverage figure for each kind.
 5. **No bulk pull.** No data is downloaded beyond what the pages render. The walk takes about 30 minutes.
 
-## 5. Not checked
+## 5. The walk as run (2026-10-14 02:02-02:23Z), stopped after a WAF block
+
+The CTO ordered it in msg 5218: this seat drives it, after 22:00 ET, on the existing stored session, read only.
+
+**Before the walk:**
+- `irpt-ycharts-generate` had 0 invocations in the prior 90 minutes. The positive control was data on 6 of 7 days.
+- A probe-only pass on the stored `ycharts/credentials` cookies (headless Edge) read the dashboard at 200 and `securities_info`
+  for SPY at 200.
+
+**The walk (02:03-02:05Z):**
+- `securities_info?securities=<CUSIP>` resolved the first CUSIP: **4424366D8**, Houston water and sewer revenue, 0.000%,
+  2028-12-01, `detailed_security_type: municipal_bond`, `features_needed: ["bondData"]`.
+- Every one of the next 39 calls returned **405 "Human Verification"**, the AWS WAF captcha. Those 39 are **not measured**, not
+  "not covered".
+- **My error:** the stop rule covered only a 403 sign-out, so the walk did not halt on the 405s. The search box was never found on
+  the dashboard page.
+
+**Then the gateway's own `ycharts_search` (`/search/suggest/main`):**
+- **345370BP4** resolves: Ford Motor 08/01/2026, corporate, matured.
+- **799561JN6** resolves: San Ysidro school district 0.000%, 2027-08-01.
+- **485106DT2** resolves: Kansas City MO special obligation 2026-02-01, matured.
+- **31617H508** and **922906300**, both cash equivalents, return empty in every category, including `mf` (mutual fund).
+- The fifth search returned **202**, and I stopped.
+- The shared freshness probe read 202 at about 02:09Z and **recovered to 200 at 02:23Z with no act.** The CTO set one probe only
+  (msg 5356).
+
+**Partial result, carried as measured:**
+- **Bonds: 4 of 5 tested resolve by CUSIP** (3 municipal, 1 corporate), and 1 was not measured. Every hit names the `bondData`
+  feature. Whether this seat's YCharts subscription carries `bondData`, which a price history needs, was **not** tested.
+- **Cash equivalents: 0 of 2 resolve.** That is too small to generalize, but it is consistent with Alyssa's note that YCharts
+  cannot price cash without a proxy.
+- **Not measured:** 35 of the 40 sampled CUSIPs, and any price history.
+
+**How the gateway's session is refreshed, if it had not recovered:**
+- `ycharts/credentials` is the legacy, hand-placed secret the gateway reads (`infra/aws/ec2/opal-gateway/app/integrations/ycharts/`).
+  Its value was last changed 2026-07-01. Its refresh is task order `YALP_MDSRC.C6`
+  (`org/tier2_senior/0.7.0_AE_CloudOps/task_orders/YALP_MDSRC.C6.ae-ycharts-credential-refresh-from-har.md`), the attended model
+  (B) of the C1 Phase-0 brief:
+  - a person signed in to YCharts exports a browser HAR;
+  - an AE CloudOps seat writes the cookie bundle into the secret.
+- A WAF-token-only failure could instead be cured by any real browser re-minting `aws-waf-token` on an app page.
+- IRPT's EC2 runner uses a **separate** bundle, `ycharts/session/current`, which it refreshes itself through a browser login
+  (`infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js`). The gateway's 202 did not involve it.
+
+**Recorded:** surprise row `MDPF_DEMQUE-D1-S16`, the stop rule's gap. The HAR and JSON stay in this seat's scratchpad: they carry
+session cookies and are never copied into git.
+
+## 6. Not checked
 
 - The model-update HAR's content was not read; it is 24.6 MB and carries cookies.
 - The live state of the three dormant Lambdas and of the stored session secret.

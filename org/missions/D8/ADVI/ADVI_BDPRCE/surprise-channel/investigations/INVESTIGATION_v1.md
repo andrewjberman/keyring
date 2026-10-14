@@ -1741,3 +1741,207 @@ Merged at the round-1 drain by `2.0.0_SA_COO~K1`: each worker opened this file i
   "world_is": "The runner file sets no window and delegates to the shared module. The deployed environment sets the chunk size. The hint's history search on the runner file is empty, so the window is measured from cot_bronze_ingest.py and the environment, not from the runner."
 }
 ```
+
+## ADVI_BDPRCE-D1-W17-S1 -- The ruled lot key folds 192 rows on the recorded export, and 191 colliding groups still differ on Market Value; the zero target is not met.
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W17-S1",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~17",
+  "surfaced_at": "2026-10-14T02:21:23Z",
+  "one_line": "The ruled lot key folds 192 rows on the recorded export, and 191 colliding groups still differ on Market Value; the zero target is not met.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "UNREALIZED_DAILY_2026-10-09.xlsx (opal-data-bd forwardfill_v2/unrealized/, VersionId Wf2Pct313A.w7y1GpuSf2f7FfiKUVats, sha256 5700843f9e661364910a5bbb9d9d4b60521775922539f47b066a10d80039ef5b) read by get-object 2026-10-13; 500,000 rows, 0 exact duplicates; test_lot_split2.py --emit-proof at fa9d37edb5: lot rows 499,808 under (relationship_id, account_id, asset_id, open_date, unit_cost), rows folded 192, colliding groups 191 (383 rows)",
+      "same run, LOT_PROOF2.json differing_columns at fa9d37edb5: Market Value differs in 191 of 191 colliding groups, Inherited Date in 1; the 192 folded rows have no null Open Date"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v1.1 ADDENDUM and BP-c-5 section 1: under the ruled key (relationship_id, account_id, asset_id, open_date, unit_cost), the fixture proof reaches zero rows folded and zero colliding groups still differing on any column before the template apply may proceed.",
+  "world_is": "Under the ruled key 192 rows of the recorded export fold into 191 colliding groups, and all 191 differ on Market Value (one also on Inherited Date). The export has no lot identifier column, so no recorded column separates them. Within one snapshot one asset has one price, so the differing Market Value most likely reflects distinct quantities, which would mean distinct lots; this is INFERRED, not measured, because the export carries no Units. Applied under this key, the lot table would drop those 192 rows. Armed for the apply: the apply's author decides a key that separates them (a units-bearing key is untested on this fixture) before any template switch."
+}
+```
+
+## ADVI_BDPRCE-D1-W17-S2 -- Round 2's colliding-group counts (14,696 and 14,514) are pandas dropna=True counts; with null Open Date kept as a value they are 14,865 and 14,683.
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W17-S2",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~17",
+  "surfaced_at": "2026-10-14T02:21:23Z",
+  "one_line": "Round 2's colliding-group counts (14,696 and 14,514) are pandas dropna=True counts; with null Open Date kept as a value they are 14,865 and 14,683.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_lot_split2.py --emit-proof at fa9d37edb5 prints KEY round-2 (reference): colliding_groups=14865, rows_in_colliding_groups=30418, null_open_date_rows=7384 on the same export (sha256 5700843f...)",
+      "LOT_PROOF2.md section 'Counts against round 2' at fa9d37edb5; the 15,553 folded-row count reproduces in both rounds"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round-2 row ADVI_BDPRCE-D1-W10-S2: the mandated key folds 15,553 export rows into 14,696 colliding groups, 14,514 of them differing on Relationship ID.",
+  "world_is": "The 15,553 folded-row count reproduces. The group counts reproduce only with groupby dropna=True, which drops the 7,384 null-Open-Date rows (7,208 key groups) from the grouping. Keeping null Open Date as one value, the same key has 14,865 colliding groups (30,418 rows), of which 14,683 differ on Relationship ID. Round 2 mixed the two conventions in one row. No lot count changes."
+}
+```
+
+## ADVI_BDPRCE-D1-W17-S3 -- The CAP record's paging plan cannot be run from readable S3 data: no slice exports exist, so the capped 2026-10-09 export cannot be completed for the zero.
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W17-S3",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~17",
+  "surfaced_at": "2026-10-14T02:21:23Z",
+  "one_line": "The CAP record's paging plan cannot be run from readable S3 data: no slice exports exist, so the capped 2026-10-09 export cannot be completed for the zero.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CAP.json at 0.9.0_WK_ADVI_BDPRCE~16 (verdict CAP; paging_plan 'Not run'); aws s3api list-objects-v2 --prefix forwardfill_v2/unrealized/ read in this run on 2026-10-14 UTC (one UNREALIZED_DAILY object per date, no slice keys)",
+      "get-object of forwardfill_v2/unrealized/_complete/2026-10-09.json: {has_data_rows, landed_at, bytes, producer, basis}; no row count, no page field"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-5 section 1a: if the CAP record names a paging plan, say whether the fixture can be paged from S3 data you can read, and use it only if the data exists.",
+  "world_is": "The CAP record names a slice-on-Relationship-ID paging plan and marks it not run. The readable S3 data hold the capped 500,000-row export only. Completeness of the 2026-10-09 snapshot is not determinable from readable data, so a zero on this export holds for the rows exported, not for the snapshot. A paged export is a Black Diamond producer run, which this cell may not perform."
+}
+```
+
+## ADVI_BDPRCE-D1-W13-S8 -- ALLSPRING CORE BOND CIT CLASS E2 is To Be Classified in the asset dimension, not Fixed Income; it reads 10.3525 through the non-Fixed-Income keep path, not the per-unit path
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W13-S8",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~13",
+  "surfaced_at": "2026-10-14T02:28:42Z",
+  "one_line": "The task order names ALLSPRING CORE BOND CIT CLASS E2 as a Fixed Income fund left alone per unit; the dimension classes it To Be Classified, so the Fixed Income test never reaches it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver/bd_assets_dim.parquet read live (get_object, READ only, 2026-10-14T02:22Z): the one row for ALLSPRING CORE BOND CIT CLASS E2 carries asset_super_class_bd To Be Classified; md5 45dfaab5b5756b8458c6cfae63bf9f38",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/RULE_PROBE2.json@8ee423d274 assets entry 2026-10-02 ALLSPRING: kind trade, price 10.3525, fixed_income_candidate false, per_unit_left 0",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/task-orders/ADVI_BDPRCE.TO-BP-c-1.rule-amendment.md@544d551f1d section 1.0 item 2 names this fund as the example of a Fixed Income fund left alone at 10.3525"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-1 1.0 (Amendment 2): a row is par-quoted when the asset is Fixed Income (asset_super_class_bd == 'Fixed Income') and the ratio is within 1 percent of 100; a fixed-income fund at 10.3525 is left alone, for example ALLSPRING CORE BOND CIT CLASS E2.",
+  "world_is": "The dimension's only row for ALLSPRING CORE BOND CIT CLASS E2 is To Be Classified, so the class test is false and the name is not a candidate. The price 10.3525 is still read, because its ratio is near 1 and a non-Fixed-Income row is kept at its executed price. The result matches the expected value, but the per-unit path the order describes is not the path that produced it. No Fixed Income fund scales on the five dates."
+}
+```
+
+## ADVI_BDPRCE-D1-W13-S9 -- Two Fixed Income funds read ratios of 1.0844 and 1.0433, outside both the 1 and 100 bands, so R1.2 withholds nine rows and their assets have no price on those dates
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W13-S9",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~13",
+  "surfaced_at": "2026-10-14T02:28:42Z",
+  "one_line": "VANGUARD SHORT-TERM INVESTMENT-GRADE INV (2026-09-16, 5 rows, ratio 1.084382) and POLEN OPPORTUNISTIC HIGH YIELD - INS (2026-10-08, 4 rows, ratio 1.043334) are withheld as ratio_unrecognised; neither is within 1 percent of 1 or of 100.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/RULE_PROBE2.json@8ee423d274 par_quoted.withheld_ratios (1.0433 x4, 1.0844 x5) and census 2026-09-16 withheld_by_reason ratio_unrecognised 5, census 2026-10-08 ratio_unrecognised 4",
+      "silver/transactions/2026-09-16.parquet and silver/transactions/2026-10-08.parquet read live (get_object, READ only); the withheld rows are the two funds named above",
+      "silver/bd_assets_dim.parquet read live: both names carry asset_super_class_bd Fixed Income on every row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-1 1.0 (Amendment 2): any other ratio of a Fixed Income row (not within 1 percent of 100, not within 1 percent of 1) is WITHHELD with its reason and printed ratio, never guessed.",
+  "world_is": "Both funds are Fixed Income by the dimension and their executed price sits 4 to 8 percent away from market value per unit on those dates. The rule withholds the rows as written. Neither asset has a price on the withheld date, so a carry-forward applies there. The amendment does not say how a fund-level gap of this size is to be read."
+}
+```
+
+## ADVI_BDPRCE-D1-W13-S10 -- Three dimension names carry rows that disagree on the Fixed Income class, not four as round 3 listed on the coupon test; NEW YORK ST DORM AUTH and PREMONT no longer conflict
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W13-S10",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~13",
+  "surfaced_at": "2026-10-14T02:28:42Z",
+  "one_line": "Under the class-only test the conflicting names are JPMORGAN CHASE BK N A 5.5% 2024, NEW YORK TRANSN DEV CORP SPL F 5% 12/01/2030 and VANGUARD TOTAL BOND MARKET INDEX I; the round-3 coupon list named four.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver/bd_assets_dim.parquet read live (get_object, READ only): JPMORGAN CHASE BK N A 5.5% 2024 carries Fixed Income and Cash & Cash Equivalents; NEW YORK TRANSN DEV CORP SPL F 5% 12/01/2030 and VANGUARD TOTAL BOND MARKET INDEX I carry Fixed Income and To Be Classified",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/RULE_PROBE2.json@8ee423d274 par_quoted.dimension_names_conflicting_excluded lists the three names"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-1 1.0 (Amendment 2): the Fixed Income identifier is the dimension's class column; the four dimension names with conflicting rows stay excluded and listed.",
+  "world_is": "Three names disagree on the class column; the count is three, not four, because the candidate identifier no longer uses the coupon. The excluded names are kept at their executed prices, as before. VANGUARD TOTAL BOND MARKET INDEX I is a name that a round-3 coupon test did not list."
+}
+```
+
+## ADVI_BDPRCE-D1-W13-S11 -- Amendment 2 does not say how a non-Fixed-Income row is treated when its ratio is neither near 1 nor near 100; R1.2 keeps it at its price and withholds only a non-Fixed-Income row near 100
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W13-S11",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~13",
+  "surfaced_at": "2026-10-14T02:28:42Z",
+  "one_line": "The ruling gives the per-row rule for Fixed Income rows only; a non-Fixed-Income row near 100 is withheld by the order's arm, and any other non-Fixed-Income ratio is kept at its price by an inference the order does not state.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BDPRCE/task-orders/ADVI_BDPRCE.TO-BP-c-1.rule-amendment.md@544d551f1d section 1.0 and arm list in 1b: a non-Fixed-Income asset with ratio near 100 is NOT scaled and is withheld with its ratio; no clause covers other non-Fixed-Income ratios",
+      "org/missions/D8/ADVI/ADVI_BDPRCE/deliverables/0.9.0_WK_ADVI_BDPRCE~13/RULE_PROBE2.json@8ee423d274 census: withheld_by_reason holds only ratio_unrecognised rows of Fixed Income names on the five dates"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-1 1.0 (Amendment 2): the per-row ratio test applies to Fixed Income rows; arm (c) of section 1b requires a non-Fixed-Income row near 100 to be withheld with its ratio.",
+  "world_is": "Every rule clause is stated for Fixed Income rows except the near-100 arm. The module keeps other non-Fixed-Income rows at their executed price, as round 2 did, and records that reading in its docstring. On the five dates no non-Fixed-Income row was withheld, so the reading moves no served number in the probe; a later reader of the amendment may take a different one."
+}
+```
+
+## ADVI_BDPRCE-D1-W13-S12 -- The scope checker's base is the merge-base with the primary checkout (e82f01c4ff), so the issuer's cut-point commit 544d551f1d shows as a change of this cell and AC3 reads one outside path
+
+```json
+{
+  "id": "ADVI_BDPRCE-D1-W13-S12",
+  "project": "ADVI_BDPRCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_BDPRCE~13",
+  "surfaced_at": "2026-10-14T02:30:52Z",
+  "one_line": "AC3 (r4_scope.py) reads 7 changed, 1 outside: the outside path is the task order file, edited by the issuer's commit 544d551f1d on this branch, which is above the checker's merge-base e82f01c4ff.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base HEAD of wk-ADVI_BDPRCE-13 with the primary checkout HEAD = e82f01c4ff (measured in this session); git diff --name-only e82f01c4ff HEAD lists the task order file and the six paths of this cell",
+      "git show --stat 544d551f1d: org/missions/D8/ADVI/ADVI_BDPRCE/task-orders/ADVI_BDPRCE.TO-BP-c-1.rule-amendment.md only, 6 insertions and 13 deletions; 544d551f1d is not an ancestor of the primary checkout HEAD",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_scope.py@544d551f1d takes the base as git merge-base HEAD with the first worktree HEAD, not the commit the worktree was cut from"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BP-c-1 4 (AC3): the write-surface bound; ROUND 4 SCOPE: OK [0-9]+ changed, 0 outside, 0 required missing, over the four allowed surfaces. The worktree is cut from e82f01c4ff plus the issuer's commit 544d551f1d.",
+  "world_is": "The checker measures from the merge-base with the primary checkout, which is e82f01c4ff, so the issuer's task order edit on this branch counts as a change of this cell. Every path this seat wrote is inside its grant. The seat did not write the task order and did not rewrite history to clear the row. The base or the issuer's cut point has to change for AC3 to read OK."
+}
+```

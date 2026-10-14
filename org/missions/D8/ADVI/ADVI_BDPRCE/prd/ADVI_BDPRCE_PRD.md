@@ -5,7 +5,7 @@
  "project": "ADVI_BDPRCE",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v1.2",
+ "prd_version": "v1.3",
  "step": 4,
  "brief_ref": "docs/briefs/bd-pricing-rules-brief-20261013.md@f2171cae6c",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -105,7 +105,7 @@ Quoted from the endpoint record. The ids are permanent.
 | **account totals** | **consumed, unchanged** | an account's served total value stays BD's own account value (`silver/allocations`), never a sum of lots. That is what keeps totals exact while some lots read UNVERIFIED. A reader that SUMS lots into an account figure is named by the C3 census and changed under FWD-7 before any lot reads UNVERIFIED. | BD's export (producer); every account-level reader |
 | **the BD unrealized export (qt4)** | **consumed, configuration changed** | template `data/black_diamond/scripts/bronze/templates/unrealized.json`, measures 15 (Units) and 16 (Cost Basis) switched ON. The runner reads its S3 copy `s3://opal-data-bd/code/bronze/templates/unrealized.json`, measured 2026-10-13 equal to the repo (sha256 equal, 14,419 bytes), VersionId `VgzqQbd.3F3sAlllb6SWsjKZ2XvXgAfE`, LastModified 2026-06-30T17:15:38Z, with 15 and 16 both `isSelected: false`. | Black Diamond DataMining (producer); this project's silver step |
 | **the legacy silver unrealized table** | **consumed, BYTE-UNCHANGED** | `silver/unrealized/<date>.parquet` keeps its rows, columns and values exactly. Its `(account_id, asset_name)` keep-first de-duplication (`data/black_diamond/scripts/silver/merge-daily-incremental.py:1205-1210`) is NOT changed in place, because B_01's veto set, injections and cap classes read it today. The lot-level data goes to the NEW table below. | B_01 and its other current readers |
-| **the lot-level unrealized table** | **produced, NEW** | every lot row of the qt4 export, with Units and Cost Basis, de-duplicated on the LOT (`relationship_id`, `account_id`, `asset_id`, `open_date`, `unit_cost`), or on the export's own lot identifier where one exists (v1.1), never on the position. **Address, builder output (Rule 30):** `lib/opal_naming.py address("blackdiamond", "49financial", "silver", "unrealized_lots", "date=YYYY-MM-DD")` returns `s3://opal-data-assets/blackdiamond/49financial/silver/unrealized_lots/date=YYYY-MM-DD` (run 2026-10-13). Source `bd` is REFUSED by the builder ("not a systems.json key"), so the registry key `blackdiamond` is used; nothing is typed. | C2's measure; C4's unit authority |
+| **the lot-level unrealized table** | **produced, NEW** | every lot row of the qt4 export, with Units and Cost Basis, de-duplicated on the LOT (`relationship_id`, `account_id`, `asset_id`, `open_date`, `unit_cost`, `units`), or on the export's own lot identifier where one exists (v1.1; `units` added v1.3), never on the position. **Address, builder output (Rule 30):** `lib/opal_naming.py address("blackdiamond", "49financial", "silver", "unrealized_lots", "date=YYYY-MM-DD")` returns `s3://opal-data-assets/blackdiamond/49financial/silver/unrealized_lots/date=YYYY-MM-DD` (run 2026-10-13). Source `bd` is REFUSED by the builder ("not a systems.json key"), so the registry key `blackdiamond` is used; nothing is typed. | C2's measure; C4's unit authority |
 | **the never-widen pair per served move** | **consumed** (law) | each fix that moves a served price, lot value or gain is its own act under a CTO and COO pair. The pair names every asset, date and client-facing figure that moves, and the rollback per key. FWD-7 adds Andrew's review of the named before/after list BEFORE the deploy. | every fix cell |
 | **inherited law** | **consumed** | Rule 30 for any NEW address; R19 (the legacy pipeline's own migration is not a rider here); the push law for any client-facing PROD page; the alert moratorium (no new monitor). | the law surface |
 
@@ -243,5 +243,14 @@ The decomposition at L5 is the COO lane's, and it may split, merge or re-sequenc
 The CONTRACTS claim that the 49 Financial unrealized template is "sha256-equal" to Cottonwood's is FALSE as bytes: CRLF 14,419 bytes against LF 13,920. The two are equal only after
 line-ending normalisation. **Corrected:** "equal after LF normalisation (sha256 of the LF-normalised bytes); the committed bytes differ by line endings only". Any check that
 compares the templates normalises first and prints that it did. Not changed: every ENDPOINT outcome.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM v1.3 (2026-10-14 ~02:4xZ) -- the lot key gains `units` (call `67ac`, contract row only)
+
+BP-c-5 (merged @f3eaea3038), recomputed by `2.0.0_SA_COO~K1`: the v1.1 key folds 192 of 500,000 rows, and all 191 colliding groups differ on Market Value, so they are distinct lots of
+different size. **RULED:** `units`, a lot's own attribute, joins the key. Market Value does NOT, because it is a value that moves with price. The fixture's units are synthetic, so
+the key is proven on the FIRST REAL export with Units switched on: 0 rows folded and no colliding group differing on any column, read back under the apply's never-widen pair, with
+the template's prior VersionId as the rollback. Not changed: every ENDPOINT outcome.
 
 -- 1.0.0_SA_CTO~DELL1

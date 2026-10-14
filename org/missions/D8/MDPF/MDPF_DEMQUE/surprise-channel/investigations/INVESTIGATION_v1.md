@@ -2676,3 +2676,30 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
   }
 ]
 ```
+
+## Row filed by 4.0.0_SA_CRO~DELL1 (YCharts coverage walk, CTO msg 5356)
+
+```json
+{
+  "id": "MDPF_DEMQUE-D1-S16",
+  "project": "MDPF_DEMQUE",
+  "fabric": "dell1",
+  "surfaced_by": "4.0.0_SA_CRO~DELL1",
+  "surfaced_at": "2026-10-14T02:24:00Z",
+  "one_line": "The YCharts coverage walk's stop rule (scratchpad walk.js, CTO msg 5218) halted only on a 403 sign-out body, so 39 consecutive 405 'Human Verification' WAF replies did not stop it; the gateway's shared-session freshness probe then read HTTP 202 from about 02:09Z and recovered to 200 by 02:23Z with no act.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO msg 5218: if the session is dead or any step needs a sign-in that would evict the shared seat, STOP and report; one shared session, no bulk pulls.",
+  "world_is": "walk.js STOP covered status 403 with 'concurrent sign in' or 'signed out' only. Its HAR records securities_info 200 (SPY), 200 (4424366D8), then 39 x 405 with title 'Human Verification' from 02:03:15Z to 02:05:49Z at 4 s spacing. Five gateway ycharts_search calls followed: 4 x 200, the 5th 202, then stop. ycharts_freshness read ok at 02:06Z, HTTP 202 at ~02:09Z, ok HTTP 200 at 02:23Z. infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js lines 76-77 already record that data endpoints answer 405 with x-amzn-waf-action captcha for a signed-in session. Any future walk must treat 405 and 202 as STOP.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scratchpad ycwalk_2026-10-14T0203Z.har and .json (session cookies inside; not committed)",
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/YCHARTS_COVERAGE_WHAT_EXISTS_20261013.md section 5",
+      "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js:76-77",
+      "1.0.0_SA_CTO~DELL1 msgs 5218 and 5356"
+    ]
+  }
+}
+```
