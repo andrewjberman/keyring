@@ -1170,3 +1170,29 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Not measured against a live muse answer in this cell. A live answer's signed_at is the observation to take before the deploy cell."
 }
 ```
+
+## COMM_ASSIST-W20-S1 -- forward() now creates a missing reader folder as well as answers/ (answers.mkdir with parents=True), where the old early
+
+```json
+{
+  "id": "COMM_ASSIST-W20-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~20",
+  "surfaced_at": "2026-10-14T03:08:46Z",
+  "one_line": "forward() now creates a missing reader folder as well as answers/ (answers.mkdir with parents=True), where the old early return created nothing; the CLI cannot reach this because main() refuses a missing --root before forward() runs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/muse_reader/forwarder.py@063dff2307 forward(): the old 'if not answers.is_dir(): return counts' guard, replaced by answers, done and rejected each mkdir(parents=True, exist_ok=True)",
+      "data/transcripts/scripts/muse_reader/forwarder.py@063dff2307 main(): 'if not os.path.isdir(args.root)' refuses with rc 2 before forward() is called"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-j-4 BUILD step 1: create answers/, answers/done/ and answers/rejected/ with parents=True, exist_ok=True, and nothing else.",
+  "world_is": "parents=True on answers/ also creates a reader folder (the root) that is absent when forward() is called directly; the old early return created nothing in that case. The edit is kept exactly as the order states it.",
+  "notes": "Not changed and not widened. Whether forward() should refuse a missing root rather than create it is the issuer's call. Checks J4-DIRS 3 of 3 and I3-FORWARD 6 of 6 pass with the edit."
+}
+```
