@@ -26823,3 +26823,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Recorded so the issuer can decide whether the full grid is in scope for the reason rule."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W419-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~419",
+  "surfaced_at": "2026-10-14T03:07:58Z",
+  "one_line": "The portal commit of the segment-table fix (051ad362) went through safe-commit with both pre-commit reads blind to its TSX files: the risk reflex answered PARTIAL_OR_BLIND on a stale danger map and commit-gate checked 0 of 3 files; the instruments that read the change were the AC2 typecheck and lint.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A commit made through .tools/safe-commit.sh carries a pre-commit read of its staged files (the risk reflex and commit-gate) before it lands; the order names no other gate for a portal TSX change.",
+  "world_is": "safe-commit on the portal repository printed: comp-pulse diff ANSWER STATE PARTIAL_OR_BLIND, danger map 196.6h STALE, scanned 0 of 3 file(s); commit-gate WARN checked 0 of 3 file(s) and states it reads only .py, .sh, .tf and org/projects/*.json; the commit landed as 051ad362 with msg-verify MATCH. The portal toplevel carries no .tools/comp-pulse, so the baked path under C:/dev/ajb_workspace executed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@051ad362 (branch cand/dell1/amgt-sa-currency-symbol-and-reasons): commit of SegmentTable.tsx, the harness and the BATS_SEGMENT fixture, through .tools/safe-commit.sh",
+      "C:/dev/wk-resapp-419/.tools/safe-commit.sh@310b962fa3: the printed [risk-reflex] and [commit-gate] lines of the 051ad362 commit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The verdict on the TSX change rests on the AC1 to AC3 instruments; the pre-commit reads did not examine it. Recorded for the issuer to rule whether a frontend commit owes a read by a gate that covers it."
+}
+```
