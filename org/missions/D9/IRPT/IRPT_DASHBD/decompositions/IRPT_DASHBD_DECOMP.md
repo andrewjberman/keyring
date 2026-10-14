@@ -1727,3 +1727,15 @@ The FDRXX apply (`DB-b-183`) is KNOWN-HELD on ledger `secclass-e97-c06-d04-rolli
 **Decisions inside this decomposition (the issuer's, stated):** (a) one cell, because the change is two lines and the work is the count and the consumers; (b) the CASH_USD release is a SECOND release of the same S3 object, so `DB-b-183` is amended to upload the pin's bytes (`e340e07f4e`, sha256 `e7385264...`) from a detached worktree if the shared tree has moved on, and the CASH_USD apply will pin its own bytes; (c) round 96's checker `p96_round96.py` bound the classifier to the working file's hash, so it is amended to accept the pin's hash as well (no gate limb graded: a check file); (d) a consumer that depends on `CASH_USD` being fixed_income is a finding the pair prices, not a patch.
 
 **fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~150` (`DB-b-185`).
+
+## 102. ROUND 100, WORKSTREAM B (2026-10-14 ~01:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 msg 7422)
+
+Round 99's count found the synthetic ticker `CASH_USD` on none of 1,314,777 lots; the CTO ruled the CASH_USD change reverted (done @0f8d33c431, row S25 disarms W147-S3). What the snapshot does hold is 11 lots whose ticker is `CASH` (Black Diamond's own cash line). Nobody has read how those classify, or what each page serves for them; Andrew's smoke note reads "Cash as a ticker should be CASH". The FDRXX apply (`DB-b-183`) is unchanged and waits on SC-e-97.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. a READ of the 11 CASH lots: the canonical row for the ticker CASH, the gold classifier's answer, the class the Advisor Intelligence and Investor Reporting pages serve, and whether Andrew's note is a class, a ticker or a display label | `DB-b-186` | FWD-8 class label | LOCAL | none | R100-1 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) one read cell and no change, because the CTO ordered a read and the answer decides whether a rule, a display mapping or nothing is owed; (b) the checker anchors the count (11 lots in 1,314,777 rows of the 2026-10-09 snapshot) on this seat's own read, so a worker that reads a different object fails and says why; (c) the Investor Reporting rule for canonical rows typed Cash is `2.0.0_SA_COO~P2`'s (CTO msg 7410), so this cell proposes nothing there and reads only what that page serves for these lots.
+
+**fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~151` (`DB-b-186`).
