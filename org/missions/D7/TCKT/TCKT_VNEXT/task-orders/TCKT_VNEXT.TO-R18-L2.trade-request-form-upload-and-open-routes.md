@@ -31,9 +31,10 @@ mail, no deploy, no apply; the S3 client is a fake in every test). A `controls.m
 form (PDF, XLSX or CSV); the OPEN ticket carries the form as an attachment opened from the ticket page. The form's bytes live in an
 S3 object at a firm-tenant key; the ticket stores the REFERENCE only; the upload and the open are by short-lived presigned URLs the
 ticket API issues after the firm fence. No trade is sent anywhere. The bucket and the key prefix are CONFIG, set by environment
-variables another cell writes into Terraform: `TICKET_ATTACH_BUCKET` and `TICKET_ATTACH_KEY_TEMPLATE` (a string with `{firm}` exactly once, ending
-in `/`, for example `portal/{firm}/bronze/ticket-attachments/trade-form/`). The firm segment is in the MIDDLE of a real key, so there is no
-fixed prefix: a firm's prefix is `KEY_TEMPLATE.format(firm=<firm>)`.*
+variables another cell writes into Terraform: `TICKET_ATTACH_BUCKET_TEMPLATE` (a string with `{firm}` exactly once, for example `opal-data-{firm}`) and
+`TICKET_ATTACH_KEY_TEMPLATE` (a string with `{firm}` exactly once, ending in `/`, for example `portal/{firm}/state/ticket-attachments/trade-form/`). Each firm's
+state-tier attachments live in THAT FIRM'S OWN bucket (doctrine R21; AMENDMENT 1), so a firm's bucket is `BUCKET_TEMPLATE.format(firm=<firm>)` and its
+prefix is `KEY_TEMPLATE.format(firm=<firm>)`; the firm segment is in the MIDDLE of a real key, so there is no fixed prefix.*
 
 The wire contract is `org/missions/D7/TCKT/TCKT_VNEXT/decompositions/TCKT_VNEXT_DECOMP_R18.md`, section WIRE CONTRACT, items 2 and 3 and the
 `trade_request` paragraph. Read it first, then in `infra/aws/lambda/ticket_center/lambda_function.py`: `TYPE_DEFINITIONS` (about 88),
@@ -54,9 +55,9 @@ The wire contract is `org/missions/D7/TCKT/TCKT_VNEXT/decompositions/TCKT_VNEXT_
    permitted to INTERNAL only): body per the contract; `firm` passes `_create_firm_allowed(pc, actor, firm)`; type, size and extension
    checks as step 2; the key is `TEMPLATE.format(firm=firm) + uuid4().hex + "/" + <safe filename>` (the safe name keeps ASCII letters,
    digits, dot, dash and underscore, replaces anything else with `_`, and is at most 100 characters); the response is the contract's. Presign with
-   `boto3.client("s3").generate_presigned_url("put_object", Params={"Bucket": os.environ["TICKET_ATTACH_BUCKET"], "Key": key, "ContentType":
-   content_type}, ExpiresIn=300)` through a module-level seam (for example `_s3_client()`), so tests replace it; `TICKET_ATTACH_BUCKET`
-   unset: 503 and nothing presigned. Nothing is written to the table.
+   `boto3.client("s3").generate_presigned_url("put_object", Params={"Bucket": BUCKET_TEMPLATE.format(firm=firm), "Key": key, "ContentType":
+   content_type}, ExpiresIn=300)` through a module-level seam (for example `_s3_client()`), so tests replace it; `TICKET_ATTACH_BUCKET_TEMPLATE`
+   (`BUCKET_TEMPLATE` is `os.environ["TICKET_ATTACH_BUCKET_TEMPLATE"]`, read at call time, validated like the key template: `{firm}` exactly once) unset or malformed: 503 and nothing presigned. Nothing is written to the table.
 4. **The open route.** `GET /api/scoped/tickets/{ticketId}/attachment` (`attachment_open_ticket(event, tid)`, `MATRIX` action `ATTACH_OPEN`
    permitted exactly as the existing GET action is): the ticket lookup and scope test are `get_ticket`'s (404 for not found or out of
    scope); the ticket must carry an `attachment` whose `key` starts with `TEMPLATE.format(firm=<the ticket's answers.firm>)`, else 404; the response
@@ -68,16 +69,21 @@ The wire contract is `org/missions/D7/TCKT/TCKT_VNEXT/decompositions/TCKT_VNEXT_
    attachment is refused; an unknown member, a size of 0 and of 10485761, a `.exe` name, a type and extension that disagree are refused;
    `TICKET_ATTACH_KEY_TEMPLATE` unset, with no `{firm}`, with two, or not ending in `/` refuses 503; the upload route admits an INTERNAL human for a firm in scope and refuses a firm outside it, a
    CLIENT caller and a service subject (403), and a bad type or size (400); the presign is called with exactly the returned key and
-   content type and `ExpiresIn` 300; `TICKET_ATTACH_BUCKET` unset is 503 with no presign; the open route returns a presigned URL for a ticket
+   content type and `ExpiresIn` 300; `TICKET_ATTACH_BUCKET_TEMPLATE` unset or malformed is 503 with no presign, and the presign's Bucket is the REQUESTED firm's bucket; the open route returns a presigned URL for a ticket
    in scope and 404 for another firm's ticket, for a ticket with no attachment and for a key outside the firm's prefix; the old
    `analysis_request` cases still pass (run `test_analysis_request.py` and `test_submit_analysis_request.py` and print their counts).
-7. **Write `deliverables/0.9.0_WK_TCKT_VNEXT~41/mutant_check_tf2.py`** (AC2) and a short `R18_L2_RECORD.json`: the lines changed, the
+7. **DISARM row `TCKT_VNEXT-D2-W41-S6` (AMENDMENT 1, below).** Add `tests/_no_live.py` with `install()`, which replaces `lambda_function._ses_client` with a function that RAISES
+   (a clear message, no AWS client built); every `if __name__ == "__main__":` block in `infra/aws/lambda/ticket_center/tests/*.py` that calls `unittest.main` calls
+   `_no_live.install()` first (list the files you changed, found by listing every file there that contains `unittest.main`; `test_authz_matrix.py` is the proven one). New
+   test file `tests/test_no_live_by_path.py`: for EVERY `.py` in `tests/` whose source contains `unittest.main`, the source also contains `_no_live.install()` before it; and
+   `install()` makes `_ses_client()` raise. **From now on you run NO test file by path (`python <file>`): pytest only, `-p no:cacheprovider`.**
+8. **Write `deliverables/0.9.0_WK_TCKT_VNEXT~41/mutant_check_tf2.py`** (AC2) and a short `R18_L2_RECORD.json`: the lines changed, the
    counts, the before-arm (the new tests on the base FAIL), the exact environment variable names the Terraform cell must set, `not_read`.
 
 ### ACCEPTANCE
 
-<criterion id="R18L2-AC1" cell_refs="R18-tf-2"><invocation>python -m pytest C:/dev/wk-tckt-vnext-41/infra/aws/lambda/ticket_center/tests/test_trade_form_attachment.py C:/dev/wk-tckt-vnext-41/infra/aws/lambda/ticket_center/tests/test_trade_request_type.py -q -p no:cacheprovider --color=no</invocation><expect>^[0-9]+ passed</expect></criterion>
-`R18L2-AC1`: both files pass, every case of step 6 named in a test, no failures or errors. Also run the whole
+<criterion id="R18L2-AC1" cell_refs="R18-tf-2"><invocation>python -m pytest C:/dev/wk-tckt-vnext-41/infra/aws/lambda/ticket_center/tests/test_trade_form_attachment.py C:/dev/wk-tckt-vnext-41/infra/aws/lambda/ticket_center/tests/test_trade_request_type.py C:/dev/wk-tckt-vnext-41/infra/aws/lambda/ticket_center/tests/test_no_live_by_path.py -q -p no:cacheprovider --color=no</invocation><expect>^[0-9]+ passed</expect></criterion>
+`R18L2-AC1`: the three files pass, every case of step 6 named in a test and the by-path guard of step 7, no failures or errors. Also run the whole
 `infra/aws/lambda/ticket_center/tests/` folder once and record the counts (a drain check; the issuer re-runs it).
 
 <criterion id="R18L2-AC2" cell_refs="R18-tf-2"><invocation>python C:/dev/wk-tckt-vnext-41/org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~41/mutant_check_tf2.py</invocation><expect>MUTANT-FIRES</expect></criterion>
@@ -96,6 +102,9 @@ guessing.
 
 - **Grant:** exactly the `<paths>` below, plus `org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~41/` and this order's file
   (status flip only). If a test OUTSIDE the grant fails because of your change, STOP: file a BLOCKING row naming it; the issuer amends the grant.
+- **AMENDMENT 1 (issuer `2.0.0_SA_COO~V2`, 2026-10-14; gate limb: none stated, the issuer amends its own pending order; answers your row `TCKT_VNEXT-D2-W41-S6`).** You were right to stop and
+  to file it: the SES guard of `conftest.py` is a pytest fixture, so a by-path run of `test_authz_matrix.py` reached the real notifier. The send is on the record (recipient unknown; the file's
+  requester fixtures are `client@example.test`-class addresses). The disarm is step 7 and its test is in AC1. Do not run any test file by path again.
 - READ only: everything else, including `infra/aws/terraform/` (routes, environment and the IAM permission are `TO-R18-TR3`) and `lib/opal_naming.py`
   (the bucket and prefix values come from `TO-R18-TR1`; this cell reads them from the environment and imports no naming module).
 
