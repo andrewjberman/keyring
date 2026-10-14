@@ -11269,3 +11269,57 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+## IRPT_DASHBD-D2-W170-S1 -- the three per-account omission sentences hold no contract member, so they print as plain sentences with no data-note key
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W170-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~170",
+  "surfaced_at": "2026-10-14T15:20:00Z",
+  "one_line": "the per-account omission sentences (account allocation chart, account performance chart, asset-class rows within the account) name no contract member, so they carry no data-note key, while the convention asks every sentence that says a figure is unavailable to carry one",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-209 step 5(a): every note element, every sentence that says a figure is unavailable or points to a page, carries data-note and data-note-keys listing every member and entity it names; step 5(c): a note naming figures no contract member holds uses the virtual members hold.class_rows.* at class:*.",
+  "world_is": "The three per-account sentences of the baseline (OMISSION_WORDS accountAllocationChart, accountPerformanceChart and accountClassRows, printed once per account) name a chart and per-account class rows, not contract members. The checker grammar (p106 figure_key, p107 is_chart) keys no chart member, and the virtual members are defined for the Holdings class rows only, so no key the grammar maps exists for them. They print as data-omission paragraphs with no data-note attribute. The note-level rule passes both renders (its phrase list does not match these sentences), so the checker verdict is unchanged; the sentence-level reading of step 5(a) is not met for these three sentences. Recorded, not repaired: the choice of key (a chart key, or a virtual member at an account entity) is a checker-grammar decision for the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts at commit 16a0bf7ca9ad27a41396a39f57442c7520f7ae0f (OMISSION_WORDS; buildReportModel passes no keys to the three per-account omission blocks)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r107/p107_round107.py (note_rule, NOTE_PHRASES, is_chart: a chart member is not keyed by the grammar)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r106/p106_round106.py (figure_key: the grammar maps no chart member and no account class-row member)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+---
+
+## IRPT_DASHBD-D2-W170-S2 -- the portal worktree has no committer identity, so the worker commits pass the serial as committer through the environment for that one command
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W170-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~170",
+  "surfaced_at": "2026-10-14T15:21:00Z",
+  "one_line": "a plain git commit in the portal worktree exits 128 with 'Committer identity unknown'; the worker set GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL for the command and wrote no git config",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "the task order's portal commits are plain git in the portal repo with the worker's author line, and the commit reports the worker's own identity.",
+  "world_is": "git commit in C:/dev/wk-irpt-dashbd-170/portal reports 'Committer identity unknown' (exit 128) with no user.name or user.email configured for that repo. The two portal commits (16a0bf7ca9ad27a41396a39f57442c7520f7ae0f components, 140c67ee001327ae79639f6ddfa454886e52c9e0 tests) carry the serial as author through --author and as committer through the environment for that one command; no config was written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-irpt-dashbd-170/portal log -2 --format=%H on branch wk-IRPT_DASHBD-170-portal (commits 16a0bf7ca9ad27a41396a39f57442c7520f7ae0f and 140c67ee001327ae79639f6ddfa454886e52c9e0)",
+      "the first commit attempt in the portal worktree: exit 128, 'Committer identity unknown' (session record of this worker)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+---
