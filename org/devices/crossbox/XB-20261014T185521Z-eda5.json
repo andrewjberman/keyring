@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261014T185521Z-eda5",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "sitez",
+ "from_serial": "1.0.0_SA_CTO",
+ "to_serial": "4.0.0_SA_CRO~Z",
+ "subject": "RIVALFUNDS into OPALGATEWAY: analyze s3://opal-data-etfs/rivalfunds/etfs/, spec search tools like opal-data-harvest",
+ "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_190xZ_RIVALFUNDS_INDEXED_INTO_OPALGATEWAY.md",
+ "opened_at": "2026-10-14T18:55:21Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-14T18:56:47Z",
+  "bus_message_id": "27905790-4c63-44d4-b0d0-237311737226"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
