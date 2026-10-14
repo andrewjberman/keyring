@@ -10404,3 +10404,207 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W165-S1 -- the account_dim partition date is not computed by the adapter; the dry run's 2026-10-12 is passed in
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W165-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~165",
+  "surfaced_at": "2026-10-14T11:22:29Z",
+  "one_line": "the account_dim partition date is not computed by the adapter; the dry run's 2026-10-12 is passed in as an argument",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-200 section 1: one apply of 'one date= partition of account_dim (the newest silver date the dry run used, as the adapter computes it)'.",
+  "world_is": "The adapter computes no partition date. emit_account_dim(table, as_of) and gold_address(as_of) take as_of as an argument (adapter lines 165-175). The date 2026-10-12 is the round-103 dry run's target_address, not an adapter output. The packet names 2026-10-12 and states that the adapter does not compute it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_account_dim.py@a1d871ec33 (lines 165-175: gold_address and emit_account_dim take as_of)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~161/COTTONWOOD_ACCOUNT_DIM.json@a1d871ec33 (dry_run.target_address)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W165-S2 -- the adapter has no upload path, so the order's upload-path invocation shape names nothing that exists
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W165-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~165",
+  "surfaced_at": "2026-10-14T11:22:29Z",
+  "one_line": "the adapter has no upload path, so the order's exact invocation shape of the adapter's upload path names nothing that exists",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-200 section 1: 'by an AE applier with the exact invocation shape of the adapter's upload path, no live run; if the adapter has no upload path yet, say what the applier's order must add'.",
+  "world_is": "The adapter has no upload path: emit_account_dim(upload=True) raises NotImplementedError (adapter lines 173-174), pinned by test_emit_defaults_to_no_write_and_upload_is_refused (7 passed). No CLI, applier or manifest writer exists at HEAD. The packet records the run shape as NOT EXISTING and names what the applier's order must add (packet section 1).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_account_dim.py@a1d871ec33 (lines 170-175: emit_account_dim refuses upload)",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_cottonwood_account_dim.py@a1d871ec33 (test_emit_defaults_to_no_write_and_upload_is_refused)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W163-S1 -- the order's round-103 absent-member premise (73 of 117) measures 38; the 73 is the round-101 sample's count
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W163-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~163",
+  "surfaced_at": "2026-10-14T11:22:33Z",
+  "one_line": "TO-DB-b-198 names 73 absent members of 117 in the round-103 sample; the round-103 sample measures 38",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-198 section 2 (MECE): the domain is the sample's absent members, stated as 73 of 117 in the round-103 sample; the checker recomputes the count from the sample.",
+  "world_is": "The round-103 sample (sha256 25446cfc...) holds 38 absent members at member grain and 79 filled of 117 (its BUILD_COUNTS.json reads members_absent 38, members_filled 79). The 73 figure reproduces on the round-101 sample (sha256 76a48793...) under the same member definition. The proposal and the record carry the measured 38; no count was set to the order's figure.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-198.contract-041-percent-points-and-the-absent-kind-proposal.md@dd23753559 (the MECE clause of the cell)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r101/p101_round101.py@dd23753559 (member_absent docstring: 73 on the round-101 sample)",
+      "C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~159/BUILD_COUNTS.json (members_absent 38)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W163-S2 -- the census scope's portal path is a submodule; git grep on the superproject reads none of its 824 tracked files
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W163-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~163",
+  "surfaced_at": "2026-10-14T11:22:33Z",
+  "one_line": "git grep over the declared census scope reads 0 of the 824 tracked files under portal/src/pages/InvestorReporting, because portal is a gitlink",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-198 section 2 (Token census): git grep -w -c <TOKEN> -- portal/src/pages/InvestorReporting org/standards org/missions/D9/IRPT data/assets/scripts/gold/irpt_reporting, with files_scanned as the git ls-files count of the same scope.",
+  "world_is": "portal is a submodule (index mode 160000, commit 4d6010234e). Without --recurse-submodules git grep reads no file under it, so files_scanned (6153) leaves out its 824 tracked files. A supplementary git -C portal grep reads NOT_HELD in 3 files (9 hits) and the other three tokens in 0 files. The record carries the method as written and the portal count beside it, labelled.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -s portal at the worktree HEAD dd23753559 (mode 160000)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-198.contract-041-percent-points-and-the-absent-kind-proposal.md@dd23753559 (section 2, Token census clause)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W163-S3 -- two of the four proposed absent-kind tokens already carry other meanings in the estate
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W163-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~163",
+  "surfaced_at": "2026-10-14T11:22:33Z",
+  "one_line": "NOT_HELD is a holdings-census source status in IRPT_YCDGEN; NOT_APPLICABLE is a comp-tool answer-state token",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-198 section 2: the closed vocabulary (NOT_HELD, NOT_APPLICABLE, NO_SOURCE_YET, INSUFFICIENT_HISTORY) is proposed as a new word set; a token that already exists with another meaning is a finding to be stated.",
+  "world_is": "git grep -w finds NOT_HELD in the IRPT_YCDGEN decomposition R5 and in its deliverables overview_coverage.json, as a holdings-group source status (the firm does not hold the group), and in portal test names. NOT_APPLICABLE is the comp-tool answer state in org/standards/COMPTOOL_ANSWER_STATE.enum.json (11 hits) and an inflection in org/standards/MDPF_TAXSMA_DATA_CONTRACT.json. NO_SOURCE_YET and INSUFFICIENT_HISTORY carry no prior meaning in the scope. No code reads absent_kind, so the collision is latent. The proposal states it and leaves the spelling or the namespace to the CTO ruling.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/decompositions/IRPT_YCDGEN_DECOMP_R5.md at dd23753559 (NOT_HELD group status)",
+      "org/standards/COMPTOOL_ANSWER_STATE.enum.json at dd23753559 (state NOT_APPLICABLE)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W164-S1 -- market_topic_daily is a general topic table with no firm location; the model return series lands under a firm gold address anyway
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W164-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~164",
+  "surfaced_at": "2026-10-14T11:25:00Z",
+  "one_line": "market_topic_daily is a general topic table with no firm location; the model return series lands under a firm gold address anyway",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-199 step 1: market_topic_daily is the C-SHAPE table that fits a firm-neutral market series, and the series is written under a firm gold home derived from lib/opal_naming.address().",
+  "world_is": "The PRD C-SOURCES row and Q4 (IRPT_DASHBD_PRD.md, lines 234-248 and 455-457) and the backend brief Part V.1 row (docs/briefs/reporting-dashboard-backend-brief-20260930.md line 82) define market_topic_daily as a GENERAL, non-client topic table (day x rank: phrase, score, sentiment, source_kind) with a general platinum home and no firm location; FIRM_READINESS.json (deliverables 0.9.0_WK_IRPT_DASHBD~155) states the same. The producer therefore carries return columns and a null account_id in a table whose brief definition is topics, and it lands under the 49financial firm gold address because the task order names a firm home. The apply is NOT authorised by this row: the CTO's question 1 in the packet decides the table and the home first.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md@dd23753559 (C-SOURCES, Q4 at line 455)",
+      "docs/briefs/reporting-dashboard-backend-brief-20260930.md@dd23753559 (Part V.1 table row, line 82)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~155/FIRM_READINESS.json@dd23753559 (candidate_source for market_topic_daily)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/model_series_market_topic_daily.py@dd23753559 (this cell's producer, uncommitted at this row)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W164-S2 -- the live served model series has a later data_as_of and one more trading day than the source read the task order cites
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W164-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~164",
+  "surfaced_at": "2026-10-14T11:25:00Z",
+  "one_line": "the live served model series has a later data_as_of and one more trading day than the source read the task order cites",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-199 source claim (BENCHMARK_FILL.json, deliverables 0.9.0_WK_IRPT_DASHBD~159): the served object has data_as_of 2026-10-12 and 615 trading days per stem; since_inception window start 2024-07-08.",
+  "world_is": "A single-object GET of json/benchmarks/model_portfolio_timeseries.json on 2026-10-14 (VersionId 9wcMYjBbgI9jMxGANcPBhPIAKBRQMcZt, LastModified 2026-10-14T11:06:01Z) returns data_as_of 2026-10-13, inception_date 2024-04-30, and 616 trading days per stem from 2024-04-30 to 2026-10-13 after the 25 weekday exchange holidays are dropped. The four stems keep their form (daily decimals, below 0.1 in magnitude; max absolute 0.0482). The served object was regenerated after the round-103 read. The packet records the live vintage, and the producer reads the live object at the apply, not the cited figures.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~159/BENCHMARK_FILL.json@dd23753559 (data_as_of 2026-10-12, 615 per stem)",
+      "s3 GET opal-data-portal-v2 json/benchmarks/model_portfolio_timeseries.json on 2026-10-14 (ETag 66b8a414c00a2aab4963c1d5b443dfa3), read by this cell, not written"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W164-S3 -- the served model series object has no address() or legacy_addresses row; the producer names its read path as a constant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W164-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~164",
+  "surfaced_at": "2026-10-14T11:25:00Z",
+  "one_line": "the served model series object has no address() or legacy_addresses row; the producer names its read path as a constant",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CLAUDE.md rule 30 and the task order: every S3 address is lib/opal_naming.address() output (or a legacy_addresses row for a store that predates the canon).",
+  "world_is": "The served object s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json is written by the Yang producer (BENCHMARK_SOURCE_READ.json, deliverables 0.9.0_WK_IRPT_DASHBD~157) and read by build_sample.py as a literal (MODEL_OBJECT). infra/logic/registry/legacy_addresses.json carries no row for it (its 18 keys are cottonwood, etfs, portal-canon and harvest keys), and address() cannot name a served JSON object of the portal bucket. The producer carries SOURCE_BUCKET and SOURCE_OBJECT as named read constants for its one GET; no write path exists in it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/legacy_addresses.json@dd23753559 (no benchmark or model_portfolio key)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/model_series_market_topic_daily.py@dd23753559 (SOURCE_BUCKET and SOURCE_OBJECT, uncommitted at this row)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~157/BENCHMARK_SOURCE_READ.json@dd23753559 (served object and writer)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
