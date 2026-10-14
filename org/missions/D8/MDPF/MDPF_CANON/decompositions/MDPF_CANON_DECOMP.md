@@ -308,3 +308,195 @@ beginning 2026-05-15, identity checked on 485 dates with 0 gaps. Three planted d
 
 **Not in round 6:** M9 and M10 (FIRMBKTS flip receipt not written); the next M4 reader (measured circular, above); M3's full-history clause; M6
 (HELD on `LGIC_NAMING-S7`); M11-M17; the `code/` sync of the 8 runner members (its own WORLD window after the fold's deploy ledger closes, never beside it).
+
+
+## v7 -- ROUND 7 (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-14 ~14:2xZ)
+
+**Rectangle:** `ledger/ROUND_ANALYSIS.round6.md` @65bf603a7a section 4 (the CTO's enrichment list, msg 5589), read with section 3 (the three ARMED-row rulings). Round 6 closed MAY-CLOSE
+(`round-close-check.py`, AC4 MET, D1-C-S67). FWD-3 REALIZED. One cell per list item; the CTO's item 1 is four cells (CN-h-1, CN-i-1, CN-j-1, the repair CN-k-1), item 2 is two
+(CN-l-1 served, CN-l-2 portal), items 3 and 4 are one each (CN-m-1, CN-n-1), item 5 (D1-S24) rides the repair cell with D1-S23 (repairs batched into ONE cell).
+
+**Rulings the issuer took inside its own decomposition (recorded here, graded by `to-pipeline-gate.py`):**
+- *The refusal-arm run has no QA prefix.* The CTO's "writing to a QA prefix only" is met as "writes nowhere": the gold lambda documents qa_local as zero S3 writes (the shadow-prefix veto), and
+  `lib/opal_naming.py` has no QA, scratch or ephemeral address kind, so no builder call can name one. CN-n-1's instrument refuses any AWS call that is not a read; the before/after
+  listing of the served prefix is the evidence. If the dry run cannot complete in the worker's shell, the cell falls back to its guard arm plus a finding row.
+- *The Other Models card text is a second cell.* CN-l-1 serves the `as_of`; CN-l-2 draws it. CN-l-2 edits `portal/src/pages/ModelPortfolios.tsx`, which CN-i-1 owns, so it is the SECOND
+  order on CN-i-1's worker queue and starts from that branch's committed result; it is client-facing and lands only through `portal-merge-forward.sh` with Andrew as approver
+  (CLAUDE.md Portal, fcdfc34843).
+- *The census is a cell, with the issuer's pre-read stated.* CN-m-1's face carries the issuer's pre-read (28 of 8,831 files name the key; four readers; the accrual bridge a candidate) labelled as the issuer's, not the worker's result.
+- *One gold-package deploy for CN-h-1 and CN-l-1,* if both are VALID at the drain, under ONE never-widen pair covering both blast radii; CN-l-1's pair is drafted at the drain with the CTO's half. Not a cell.
+- *Correction to the round-6 drain-end packet (row D1-S24):* its `/portfolios` line "Total Holdings 8,607 -> 8,607" was my wrong-date read (the account-distribution is keyed by the RUN date, 2026-10-14; I passed the frontier date).
+  The CTO's -177 (8,607 -> 8,430) stands; CN-k-1 makes the tool default to the newest distribution key and print the date it read.
+
+**Fan-out:** 7 of 7 chains, cap 8. Chains: `CN-h-1`; `CN-i-1` -> `CN-l-2`; `CN-j-1`; `CN-k-1`; `CN-l-1`; `CN-m-1`; `CN-n-1`. Reason: disjoint write sets (the one shared file, `ModelPortfolios.tsx`, puts CN-l-2 on CN-i-1's queue).
+Slots: ~17 CN-h-1, ~18 CN-i-1 then CN-l-2, ~19 CN-l-1, ~20 CN-m-1, ~21 CN-n-1, ~22 CN-k-1, ~23 CN-j-1.
+
+| cell | serves (cell_refs) | candidate | owned files | depends on | actor |
+|---|---|---|---|---|---|
+| `CN-h-1` the frontier account counts read the newest A4 account-distribution at or before the axis date, never the staged runner object; no A4 -> the loader returns absent, never a fallback (S5 disarm; WORLD: a script shipped by a deploy) | FWD-5 (the lambda's inputs leave the runner-only objects); FWD-1 (the served counts are the day's roster) | M4 / S5 (MDPF_TAXSMA-S5) | `data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py`, `data/mdpf/scripts/gold/tests/test_canplat_p1_1.py` and `test_global_fold_flag2.py` (one stub lambda each), `data/mdpf/tests/canon/test_frontier_counts_a4.py` (new) | -- (a deploy-order edge: after the fold's first scheduled fire is read; one change per fire) | ~17 (worker-light) |
+| `CN-i-1` the AUA Trend groups its custom models into ONE 'Custom Models' series (the fold's `other_models` replaced, every scope), draws the strategy groups in the Total Assets colours through one exported palette (ETF Strategies = pfde + the two carve-out SMA lines carved out of `non_model_aua`; ALT Strategies = `tax_additive_aua`, vermilion500 on the Trend; Client Supervised / Unsupervised chips AS-OF ONLY from the page's existing category-views object; Other AUA the true remainder), no served-object change, no new key (LOCAL: a portal DEV candidate; client-facing at the PROD push) | FWD-9 | portal / AUA Trend | `portal/src/components/CategoryViewTree.tsx` (two exports), `portal/src/lib/trendGrouping.ts` (new, pure), `portal/src/pages/ModelPortfolios.tsx` | -- (the Client chips' dated history waits on its own route cell) | ~18 (worker) |
+| `CN-j-1` the history leaf: one read-only served series per scope (`platinum/mdpf/{scope}/category-views-history.json`: `dates[]` plus the two Client aum arrays) assembled by the publisher from the dated category-views objects it already lists; absent is null, a malformed dated object is omitted and named (WORLD: a publisher package deployed by CloudOps; four new served keys) | FWD-9 | M7 / FWD-9 Client chips (history route; CTO msgs 5086-5088) | `infra/aws/lambda/opal-assets/opal-assets-mdpf-portal-publisher/lambda_function.py`, `.../tests/test_completeness.py` (three serve-write filters only), `.../tests/test_history_leaf.py` (new) | -- (a deploy-order edge to `CN-i-1`: its Client chips draw the history from this leaf once served; `CN-i-1` ships as-of first without it) | ~23 (worker) |
+| `CN-k-1` the two read-side repairs batched in one cell: the code-equality tool compares the git blob (the bytes `safe-deploy` serves), not the working tree, and prints each EQUAL name's basis and CR count (row D1-S23); `portfolios_card.py after` defaults to the newest account-distribution key's run date and prints, as its first line, the date and the exact key read for each of the three types, with a WARN when a newer distribution key exists (row D1-S24) (LOCAL, direct-act: two operator tools, no served byte) | FWD-7 (the runner's `code/` equality read is the instrument of the round-4 close (d)); FWD-3 (the `/portfolios` before/after is the card to Andrew) | M7 / instruments (D1-S23, D1-S24) | `.tools/mdpf-code-equality.py`, `.tools/tests/test_mdpf_code_equality_blob.py` (new), `org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/portfolios_card.py` | -- (no data edge; no shared file with `CN-h-1`, `CN-i-1`, `CN-j-1`) | ~22 (worker-light) |
+| `CN-l-1` the Global aum-metrics `Other Models` row carries its date or is blank: pool present on the as-of -> current, no stamp; no pool but a pooled date within 4 calendar days -> that date's value with `as_of` = that date; none within 4 days -> the row is absent; every other model key keeps its fallback; the carried row's count is the count at its carried date (rows D1-W16-S2, D1-W16-S4; WORLD: a script shipped by a gold-package deploy; the served half only) | FWD-3 (a combined line never shows stale dollars as current); FWD-1 (the served figures are the day's) | M7 / fold (fe9b) follow-on | `data/mdpf/scripts/gold/dim_mdpf_aum_metrics.py`, `data/mdpf/tests/canon/test_aum_metrics_dated_carry.py` (new) | -- (a deploy-order edge only: one change per fire with `CN-h-1`; the portal half `CN-l-2` waits on this cell's served `as_of` and on `CN-i-1`) | ~19 (worker-light) |
+| `CN-l-2` the Model Portfolios card draws `as of <date>` under the Other Models value when the served row's `as_of` is present and differs from the page's own as-of date, and nothing extra otherwise; an absent row stays absent; the label text lives in one pure helper (LOCAL: a portal DEV candidate; client-facing at the PROD push) | FWD-3 (a combined line never shows stale dollars as current) | portal / aum-metrics card (rows D1-W16-S2, D1-W16-S4, the portal half) | `portal/src/lib/otherModelsAsOf.ts` (new, pure), `portal/src/pages/ModelPortfolios.tsx` (three lines of wiring and one guarded span), `portal/src/api/endpoints/aum.ts` (one optional field) | `CN-i-1` (the same page file: ONE queue, `CN-i-1` first; no data edge); the served stamp it reads is `CN-l-1`'s contract, tolerated absent, so no build-order edge to it | ~18 (worker, continuing `CN-i-1`) |
+| `CN-m-1` the staged-copy READER CENSUS: who reads `s3://opal-data-assets/gold/mdpf_revamp/global/aggregate_aua_timeseries.json` (the unfolded staged global aggregate, row D1-W16-S5), in five classes -- code consumers, scheduled consumers, static IAM grants, live IAM decisions, and the S3 read-evidence coverage of the bucket -- every count printed with its denominator, every reader classed by whether its output reaches a partner-facing prefix, the zero case recorded as a zero with its denominator and never as an absence (LOCAL: a record under the worker's deliverables folder; AWS get/describe/simulate reads only, no write) | FWD-3 (a combined figure held by fewer than two firms must not survive on a reachable surface); FWD-5 (the lambda's inputs leave the runner-only objects) | M7 / S5-adjacent (D1-W16-S5) | none in the product tree; the record `deliverables/0.9.0_WK_MDPF_CANON~20/CN-m-1_READER_CENSUS.json` (+ `.md`) | -- (reads the consolidator, the dim_* scripts and the accrual script at its own base; `CN-h-1` and the dated-carry cell change other files in `data/mdpf/scripts/gold/`, so a census read of those files names the base it read) | ~20 (worker) |
+| `CN-n-1` the refusal arm DRIVEN: one QA run of the gold consolidator's `build_all` in `dry_run` mode in which the run's own in-memory firm builds are edited so the Global fold's pool is held by ONE firm on the as-of; Global is refused WHOLE with the guard's refusal text, the siblings are not touched, the refusal is logged, and the served prefix is identical before and after (a botocore write guard blocks and records any non-read call). QA, never production evidence (LOCAL: no S3 write is possible in the run; AWS reads only; no product file changes) | FWD-3 (the third arm of CN-f-1's close: a one-firm as-of publishes no Global object and the prior one stays served) | M7 / fold (D1-W16-S1) | none in product paths. Record files only: `deliverables/0.9.0_WK_MDPF_CANON~21/run/{qa_run.json,qa_run.log,served_before.json,served_after.json,s3_ops.json}` | -- (no data edge; read-only beside `CN-h-1` and `CN-j-1`, whose merges change other files than the consolidator path the run exercises) | ~21 (worker) |
+
+### CN-h-1
+
+
+
+
+**Why this and not the nine-key sync / Stage 6:** the CTO's ADDENDA 4-5 ruled out a Stage 6 revival and moved the S5 disarm to the lambda's input. The
+read `round6/TAXSMA_S5_STAGE6_READ.md` @7de2c1aa99 shows Stage 6 has been dead since 2026-08-14 for three stacked reasons; this cell removes the
+lambda's dependence on its output instead.
+
+**Close (carried to the CTO):** S5 reads DISARMED when, on the first scheduled fire after the deploy that mints a new date, every overridden key's
+served frontier `account_count` equals the selected A4 map's value, the stamp's as-of is the A4's period, no staged object was requested, and the
+per-scope moves equal the pair's table within the stated A4 key date.
+
+**Not in this cell:** Stage 6 and everything that revives it; the nine `lib` keys; the IAM change on the runner role; `dim_mdpf_account_distribution.py`;
+the staged object's retirement (M12); W2 L3's runner-log half (parked at M10 by the CTO).
+
+**Checks:** `deliverables/2.0.0_SA_COO~D1/round7/checks/` (drafts at `round7/draft/checks/`). At base: `r6_cn_h_1.py reader` 1/8 (H0 a control), `seams`
+1/4 (S4 a control), `comparator` 1/5 (K0 a control). A scratch reference tree (`checks/ref/make_reference_tree_h1.py`, never committed to product
+paths) reads 8/8, 4/4, 5/5.
+
+### CN-i-1
+
+
+
+independent chains if both are issued in one round. `portal_ref:` the portal `DEV` HEAD at the cut.
+
+**What it is not (the CTO's rulings, msgs 5086-5088):** the dated category-views history route (its own cell and pair, read-only over the existing dated
+objects; FWD-9 grades with it live); any change to the ALT colour (vermilion500 stays, the pin test stands); any back-cast or interpolation; any firm-scope
+carve-out or Client arithmetic (measured at Global only; firm scopes get the Custom Models grouping and the relabelled bands).
+
+**Close (carried to the CTO):** FWD-9 reads MET for the series set and the sums when the rendered Global trend, from the folded object, shows the five canonical
+series unchanged, ONE 'Custom Models' in the Total Assets Custom colour and no 'Other Models', 'ETF Strategies' (pfde + carve-outs) in the Total Assets colour,
+'ALT Strategies' (`tax_additive_aua`) in vermilion500, on the as-of date the Client chips and a true-remainder Other AUA, on the other dates one Other AUA and no
+Client segment, no '-$0', and a stack that adds to `opal_aggregate_aua` to the cent (the fold's suppressed dates excepted, read from the fold's record); and
+PARTIAL (named) for the Client chips until the history route cell lands: the draw arms B (2026-08-27) and the dated middle of the axis wait for it.
+
+**Checks:** `deliverables/2.0.0_SA_COO~D1/round7/checks/` (drafts at `round7/draft/checks/`). At base: `r7_cn_i_1.py module` 0/1 (the module is absent), `page`
+2/8 (P6 and P8 are controls that hold), `data` 5/5 (it grades the SERVED inputs: the stack to the cent on 486 valued dates, the Client gap equal to the carve-outs
+on 21 of 21 same-date objects; a control, not a build test). A scratch reference patch reads module 9/9 and page 8/8; four mutants (null coalesced to 0; a hex
+literal beside a group label; the grouping gated on Global; ALT recoloured from Total Assets) turn M2, P5, P4 and P6 red (`r7_cn_i_1.py selftest` prints
+`ROUND 7 SELFTEST: OK`).
+
+### CN-j-1
+
+
+
+independent chains if the three are issued in one round, cap 8.
+
+**What it is not:** the portal fetch and the chips (`CN-i-1`); any consolidator, gold-lambda or edge change; a change to the artifact-type axis or `a4_expected` (the leaf is not a gold
+type); a repair of the publisher's unreadable pointer (a separate finding, its own pair).
+
+**Close (carried to the CTO):** FWD-9's Client-chip history reads exercised when the four leaves are served and equal the dated Client nodes, every existing served leaf is unchanged
+apart from `_provenance.written_at`, and the Trend (`CN-i-1`) draws the chips on the leaf's dates and absent elsewhere on `bun run dev:live` at a stated portal commit.
+
+**Checks:** `deliverables/2.0.0_SA_COO~D1/round7/checks/` (drafts at `round7/draft/checks/`). At base: `r7_cn_j_1.py unit` 0/6, `seam` 3/8 (S2 pairs unchanged, S7 no served-plane read
+beyond the pointer, S8 the publisher's own 12 tests are controls that hold), `real` 2/6 (R0, R2 controls: the 91 dated objects read; both Client nodes on every one). A scratch reference
+(`checks/ref/make_reference_publisher_j1.py`, never committed to product paths) reads 6/6, 8/8 and 6/6; `selftest` prints OK with two planted mutants RED (a missing node read as 0.0 -> U3;
+a leaf that ignores the pointer -> S3).
+
+**Not in this cell:** the portal side; the readback script `round7/checks/r7_history_readback.py` (owed before issuance); the CloudOps deploy order and the pair's CTO half.
+
+### CN-k-1
+
+small read-side repairs the CTO batched into one cell; about 110 product lines; direct-act path.
+
+**Close (carried to the CTO):** D1-S23 reads closed when the tool's NAMED line for `mdpf_model_registry.json` reads `EQUAL (blob)` with its CR count on a CRLF checkout and the true
+`bronze_homes.json` difference still reads DIFFER; D1-S24 reads closed when `portfolios_card.py after` with no date reads the newest run-date key and its first line names it.
+
+**Not in this cell:** any change to a deploy path (`safe_deploy_core.py` is correct), the `code/` sync itself, `bronze_homes.json` (FIRMBKTS-owned), any served object, the pinned
+`portfolios_card_before.snapshot.json`.
+
+**Checks:** `deliverables/2.0.0_SA_COO~D1/round7/checks/` (drafts at `round7/draft/checks/`, scratch references under `.../ref/`, never committed to product paths). At base:
+`r7_cn_k_1.py tool` 3 of 6 (T2, T3, T6 are controls), `card` 1 of 5 (C4 a control); the scratch references read 6 of 6 and 5 of 5; the existing `r4_cn_d_5.py tool` reads 5 of 5 at base
+and on the reference (the regression guard).
+
+### CN-l-1
+
+chain (portal files). No shared file with any of them. Reason: one behaviour, one file, about 35 product lines.
+
+**One cell or two:** two. The served half is `CN-l-1`. The portal half, `CN-l-2` (the card draws "as of <date>" when the row's `as_of` differs from the page's), edits
+`portal/src/pages/ModelPortfolios.tsx`, which `CN-i-1` owns, and `portal/src/api/endpoints/aum.ts`; it is sequenced AFTER `CN-i-1` on the portal chain (same file, no
+parallel write), is a client-facing portal rung (DEV by `portal-merge-forward.sh`; PROD on Andrew's word), and is NOT a one-line hookup (a type field, a mapping, card
+text). It is cut in this issuance as `CN-l-2`. `CN-l-1` does not wait on it: an unread extra row key is inert.
+
+**Close (carried to the CTO):** D1-W16-S2 and D1-W16-S4 read DISARMED when, on the first scheduled fire after the deploy, the Global `aum-metrics` `Other Models` row
+equals the rule's reading of that day's served time series (current and unstamped where the pool exists on the as-of; stamped with the last pooled date where it does not
+and that date is within 4 days; absent otherwise), no other by_model row differs from the prior day's rule, and `total`/`meta` key sets are unchanged. The refusal-arm QA run
+(the CTO's item 3) is a separate cell.
+
+**Not in this cell:** the card text and any portal file; `dim_mdpf_aggregate_aua_timeseries.py` (`CN-h-1`); the consolidator fold; per-firm aum-metrics (the fold line is Global-only);
+retro-stamping dated objects; a `meta` key.
+
+**Checks:** `deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_l_1.py` (drafts at `round7/draft/checks/`). At base: `unit` 3/8 (U1, U5, U6 controls), `seams` 3/5 (S1, S2, S5
+controls), `real` 3/6 (R1, R5, R6 controls). A scratch reference tree (`checks/ref/make_reference_tree_l1.py`, never committed to product paths) reads 8/8, 5/5, 6/6; the four
+planted defects turn `nocap` U4+R4, `noasof` U2+U3+U7+U8+R2+R3, `allkeys` U6, `frontiercount` U7 red.
+
+### CN-l-2
+
+(`CN-l-2` adds no chain). Reason: both orders edit `portal/src/pages/ModelPortfolios.tsx`; a second parallel writer on one file is a merge conflict by construction, and the
+hand-on is the same subagent continued with its context intact (`/dispatch` Step 5).
+
+**What it is not:** any change to the served object (that is `CN-l-1`); a card for an absent row; a date computed from the clock or from another series; a friendlier date
+format; a second print site; the Trend, the colours, or anything `CN-i-1` owns.
+
+**Close (carried to the CTO):** D1-W16-S2 and D1-W16-S4 read DISARMED on the portal side when the rendered Other Models card, at a stated portal commit, shows no extra line
+where the pool is present, `as of <date>` where the value is carried, and no card where the row is absent (the CVO reads it at L9; AC3 is judgment). Landing is
+`.tools/portal-merge-forward.sh cand/dell1/<slug>` on a row whose approver is Andrew (client-facing); the PROD push of the page is his word.
+
+**Checks:** `deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_l_2.py` (drafts at `round7/draft/checks/`). At base: `helper` 0/1 (the module is absent), `page` 3/8 (P6, P7, P8
+are controls). The reference helper reads 7/7 and the reference page patch 8/8, alone and on top of CN-i-1's reference patch (the two cells' anchors do not overlap);
+four page mutants and one helper mutant turn the named arms red; `selftest` prints OK. The reference lives inside the check file's `selftest` (never written to product paths).
+
+### CN-m-1
+
+
+
+surprise channel). Reason: one record, one reader, five instruments.
+
+**What it is not:** the re-point of any reader that reaches a partner-facing surface (the CTO's rule: a re-point of such a reader to the folded object is its own cell under a
+pair, cut only if the census finds one); moving the staging write behind the fold guard; retiring the staged key; any AWS write; enabling CloudTrail data events or S3 server access
+logging on `opal-data-assets` (a billed infrastructure change, Andrew's moratorium on new monitors applies); the other staged keys (`49financial`, `inflection`, `cottonwood`),
+which share the shape and are named in the record only where a reader's pattern covers them.
+
+**Close (carried to the CTO):** D1-W16-S5 reads DISARMED when the record (a) lists every reader of the key in the five classes with its denominator, (b) classes each reader's
+output as NONE / INTERNAL / PARTNER-FACING-CANDIDATE / PARTNER-FACING with the output key named for the last two, and (c) carries a verdict the evidence permits: a ZERO-READERS
+verdict is PROVEN only where runtime reads are observable. On this bucket they are NOT (the issuer's pre-read: no data-event selector and no server access logging cover
+`opal-data-assets`), so a zero static count reads ZERO-STATIC-READERS-RUNTIME-UNOBSERVED and does not disarm the row alone. Any PARTNER-FACING or PARTNER-FACING-CANDIDATE reader is
+re-pointed to the folded object under a never-widen pair (a later cell).
+
+**Checks:** `deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_m_1.py` (draft at `round7/draft/checks/`). At base (no record): `record` 0/1 (M0 record not found), `verify` 1/5
+(V1 key-exists is a control that holds), `selftest` 6/6 (a good record passes; five planted defects each turn a named arm red). A scratch reference record (built from the real
+repo scan, never committed) reads `record` 7/7 and `verify` 5/5.
+
+### CN-n-1
+
+the issuance HEAD, so the run exercises the consolidator and loader code AS ISSUED, before any round-7 merge.
+
+**Why no QA S3 prefix (a finding, not a gap).** `mdpf_gold_consolidator.lambda_handler` documents it: QA-LOCAL MODE runs the FULL build with `dry_run` semantics and local A4 bodies, "ZERO S3 writes
+anywhere ... no scratch S3 prefix -- the shadow-prefix veto" (CLAUDE.md: no shadow or build-alongside output path). `lib/opal_naming.py` has no QA, scratch or ephemeral address kind (a case-insensitive
+search for `qa`, `scratch`, `ephemeral`, `sandbox` returns nothing), so a QA prefix would be a hand-typed name that Rule 30 refuses. The CTO's "writing to a QA prefix ONLY" is therefore met as
+"writing nowhere": the instrument installs a botocore guard that raises on every operation not named Get, Head, List, Describe, Lookup or Simulate and records the call kinds.
+
+**The plant.** In the run, `spine.build_global_artifact` is wrapped; before it calls the real function the wrapper edits the three firm artifacts IN MEMORY: on the last date, every model-class line held
+by fewer than two firms keeps its value at ONE firm and is set to None at the others. The real function then builds Global from those, `guard_global_served_identity` passes (the headline arrays are
+untouched), and `guard_global_min_firms_fold` finds the pool held by one firm on the as-of and refuses (CN-f-1 AMENDMENT 1). No served object is read into the plant as a write source; no served object is edited.
+
+**Risk class, who acts, pair.** LOCAL: the cell changes no product file, deploys nothing, and cannot write to S3 (the guard blocks it). It is a worker's act (the issuer authored the instrument; the worker runs it
+once outside the 13:30Z fire window and files the record). No CloudOps seat, no ledger entry, NO never-widen pair: the blast radius is empty by construction and is MEASURED by three independent reads
+(served snapshots equal, no write-kind call, a live head of the prior Global ts by key and VersionId).
+
+**Close (carried to the CTO):** the refusal arm reads DRIVEN when `r7_cn_n_1.py grade` reads 6 of 6 and `served` reads 4 of 4 on the committed record. The ORGANIC one-firm as-of day stays the negative
+arm and is read when it occurs; this QA is never production evidence.
+
+**Not in this cell:** any change to the guard, the fold or the consolidator (read-only); any deploy; any QA key, prefix, table or bucket; reading the deployed lambda (the run is the repo code at the cut, which equals the
+deployed package `51cfc93ea8` by the 13:30Z fire's R9).
+
+**Checks:** `deliverables/2.0.0_SA_COO~D1/round7/checks/` (drafts at `round7/draft/checks/r7_cn_n_1.py`). At base: `grade` 0/6 and `served` 0/4 (no run record: FAIL as expected); `guard` 5/5 (a CONTROL: it grades
+the guard code already merged, over the served unfolded objects of 2026-10-09, GETs only). `selftest`: a synthetic good record passes and five planted defects turn it red.
