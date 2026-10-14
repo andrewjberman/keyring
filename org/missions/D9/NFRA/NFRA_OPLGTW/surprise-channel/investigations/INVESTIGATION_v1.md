@@ -14994,3 +14994,29 @@ name the one known failure instead of silently inheriting it.
     "dismissal_reason": "Resolves NFRA_OPLGTW-Z-S122. The expect was amended by the issuer at fd4e8e0bcb together with the check; my instance quoted a 54-minute-old pin. Re-emitting AC2's expect from the order at HEAD makes the instance VALID with AC2 PASS, and OG-zs-1's <status> is flipped to complete. No act is owed by anyone: the check, the order and the world all agree and always did."
   }
   ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S124",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-14T19:11:45Z",
+  "one_line": "Rival funds: gold holdings_coverage for 2026-10-13 was built at 11:03Z from the first of two canonical_shape batches (BASG, GQGU only) and marks 11 funds 'gap'; the 11:09Z batch then delivered 2026-10-13 reports for 9 of them, yet the 13:11Z published page (which reads coverage) states those funds' latest report as 2026-10-12.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-etfs/rivalfunds/etfs/gold/holdings_coverage/date=2026-10-13/holdings_coverage.parquet LastModified 2026-10-14T11:03:27Z: 11 funds status 'gap' (selection_reason 'no source delivered a report for this day'), BASG and GQGU 'new' (read 2026-10-14T19:11:45Z)",
+      "canonical_shape/date=2026-10-13/: part holdings-20261014T110033Z-aa917b1a5643 (LastModified 11:01:33Z) holds BASG, GQGU; part holdings-20261014T110753Z-151ac337dbc8 (11:09:04Z, 500 rows) holds report_date 2026-10-13 for BASG, BIDD, ETFT, GQGU, IDVZ, INEQ, PCLG, PFOE, TSEL, TXUE, WCMG",
+      "platinum/page/date=2026-10-14/revisions/20261014T131150Z/manifest.json: funds['IDVZ/INEQ'].latest_report 2026-10-12; check report_date_freshness reads INEQ 'latest report 2026-10-12 vs expected 2026-10-13'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "holdings_coverage records, per (expected date, fund), whether a holdings report arrived; the page states each fund's latest report from it.",
+  "world_is": "Coverage was computed between the two canonical batches of the same date and was not rebuilt after the second, so 9 funds that have a 2026-10-13 snapshot in gold read 'gap' in coverage and '2026-10-12' on the published page. Whether coverage is rebuilt on a later run of the same date was not observed (one partition read).",
+  "notes": "Inert for the gateway today (no rival tool exists). The G5r spec makes the rival tools state a fund's latest report from canonical_shape's newest part, never from holdings_coverage or the manifest, until the ETFS_RIVALS pipeline owner (routed by the CTO) orders coverage after every canonical batch. The published page understating freshness is that pipeline's defect, not the gateway's."
+}
+```
