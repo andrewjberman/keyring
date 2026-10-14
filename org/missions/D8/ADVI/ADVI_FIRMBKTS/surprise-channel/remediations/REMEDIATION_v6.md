@@ -48,16 +48,16 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-13T07:40:00Z. Graduated at ADJUDICATION_v6
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v6",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v6"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO~DELL1",
-      "at": null
+      "at": "2026-10-14T11:45:00Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_FIRMBKTS-D1-W65-S3",
