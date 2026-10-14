@@ -13021,3 +13021,65 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S97 -- a minted partner advisor is refused on the owned-input analysis route with CLOSED_COMPOSITION_REQUIRED (release 29 D2)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S97",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-14T13:24:02Z",
+  "one_line": "TO-EXERCISE-R29 D2: a minted FIRM_ADVISOR (49financial) that uploaded a market-value file (D1 NORMALIZED) is refused on the OWNED-INPUT analysis route with public code INVALID_INPUT, internal SubmissionRefused CLOSED_COMPOSITION_REQUIRED; the same body shape from the internal viewer is accepted, so release 29's second route does not yet work for a partner advisor.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Pair section 4a and CTO half (a): after L3 a FIRM_ADVISOR or FIRM_OPERATIONS viewer who passes the five tests is admitted on the upload route AND on analysis of an input the viewer OWNS; TO-EXERCISE-R29 D2 expects 'the analysis route answers for the owned input'.",
+  "world_is": "Measured 2026-10-14 13:20Z, live: D1 as advisor A answered 200 NORMALIZED; D2 (A, own input, POST analysis, body shape validated offline by validate_public_request: OK) answered 200 refusal code INVALID_INPUT (body sha256 f0b990f98159..). The function's own record for that request (correlation corr-7bbc0cb2fa60) reads exception_type SubmissionRefused, exception_text CLOSED_COMPOSITION_REQUIRED, classifier INVALID_INPUT. That code is raised by CompositionAdmission.validate (composition_admission.py:53-54) over a caught (ValueError, TypeError, KeyError, UnicodeError, ValidationError) with no cause logged, so WHICH of its five checks failed for a partner advisor's frozen composition is NOT KNOWN. Controls in the same sitting: D6b, the internal viewer analysing its own input with the same body shape, answered an ANSWER (admitted); D3, advisor B analysing A's input, reached the owner comparison and was refused ProspectOwnershipRefused -> NOT_AUTHORIZED. INFERRED, unverified: the frozen RequestComposition for a FIRM_ADVISOR owner of a prospect input (owner/binding shape in docs/contracts/investor-reporting/v1/RequestComposition.schema.json) fails validation; the minted partner row (email, advisorKey, advisorName, advisorRole, firmRole) and token claims were built from the readers and may differ from a real advisor's in a way the schema checks. The sitting's ONE token per identity is spent; no retry was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r29/DOOR_TRACE_R29.txt (D1, D2, D3, D6b status, code, body sha256)",
+      "CloudWatch /aws/lambda/irpt-ycharts-generate 2026-10-14T13:20:10Z-13:20:44Z, events for corr-7bbc0cb2fa60 (SubmissionRefused CLOSED_COMPOSITION_REQUIRED), corr-942d1b62ae14 (ProspectOwnershipRefused), corr-f7a4f5ab035a (PermissionError INPUT_UNAVAILABLE)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/composition_admission.py lines 37-54; prospect_submission.py lines 44-116"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "owner: 2.0.0_SA_COO~Y2 (a read-only offline cell reproducing CompositionAdmission.validate for a FIRM_ADVISOR prospect owner would name the failing check; whether L3 stays, the partner path is fixed, or L3 is rolled back is the CTO's call, CTO half condition 4 names only a C1 throw as a rollback trigger). Nothing was changed by this seat; every minted row is removed after exp."
+}
+]
+```
+
+---
+
+## IRPT_ANLREQ-D2-S98 -- a cottonwood advisor naming another firm's input id is refused UNEXPECTED, not NOT_AUTHORIZED, from a bare PermissionError (release 29 D4)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S98",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-14T13:24:02Z",
+  "one_line": "TO-EXERCISE-R29 D4: a cottonwood advisor analysing an input id that exists only in 49financial is refused with public code UNEXPECTED, not NOT_AUTHORIZED, because load_input_owner raises a bare PermissionError('INPUT_UNAVAILABLE'), the shape the neighbouring _load already fixed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-EXERCISE-R29 D4 expects 'refused NOT_AUTHORIZED'; uploads.py's own comment (row IRPT_BCKEND-W142-S1) says each owner-access refusal DECLARES its public reason so it is not clamped to UNEXPECTED.",
+  "world_is": "Measured 2026-10-14 13:20:42Z, live: D4 (advisor C of cottonwood, selected firm cottonwood, input id of A's 49financial input) answered 200 refusal code UNEXPECTED (body sha256 843cf695a05f..). The function's record (corr-f7a4f5ab035a) reads exception_type PermissionError, exception_text INPUT_UNAVAILABLE, classifier UNEXPECTED. The raise site is infra/aws/lambda/investor-reporting/intake/uploads.py line 269 inside load_input_owner (a bare PermissionError); line 312 in _load raises the declared InputUnavailable (public NOT_FOUND). It is a refusal, NOT an admission: nothing of A's input was reachable by C. Only the code a caller reads differs from the one the order and the estate's 'a refusal reveals nothing' ruling expect.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/uploads.py lines 260-269 and 312",
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r29/DOOR_TRACE_R29.txt (D4 status 200 code UNEXPECTED)",
+      "CloudWatch /aws/lambda/irpt-ycharts-generate, corr-f7a4f5ab035a"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "owner: 2.0.0_SA_COO~Y2 (the issuer decides whether D4 reads PASS on 'refused' or FAIL on the code, and whether a one-line cell declares the class). Nothing was changed by this seat."
+}
+]
+```
+
+---
