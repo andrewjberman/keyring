@@ -7439,6 +7439,72 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T18:39:00Z",
+    "one_line": "The order's retired_reason text for the nine silver_legacy contracts is not the wording the round-14 AC2 check grades, so AC2 fails on those nine fields and only on them.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Task order worker face section 1, retired_reason rule (3): 'not_served: <record> -- client data only from the opal-data-assets vendor silver folders', with ' (a frozen silver_legacy copy)' appended ('Rules (2) and (3), exactly'). Section 4 AC2: each row equals the expected clean row.",
+    "world_is": "checks/glib.py retired_reason (at 65dc653f1f) grades 'not_served: <record> -- a frozen silver_legacy copy; client data only from the opal-data-assets vendor silver folders'. The generator writes the order's text. Measured: c14.AC2 'ROWS graded 174 of 174; failing fields: retired_reason x9', RESULT FAIL, rc=1; the 9 rows are the silver_legacy contracts. Every other field of every row matches the check. The generator was not changed to the check's wording; the wording choice is the issuer's to settle.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round14/checks/glib.py@65dc653f1f lines 34-43 (retired_reason)",
+        "workflows/atom_decomposition/gen_silver_rows.py@76520ead71 retired_reason() and NOT_SERVED_REASON + FROZEN_SUFFIX",
+        "c14_check.py ac2 run from worktree wk-NFRA_MCPINDEX-38 against workflows/atom_decomposition/catalog_entries, exit 1, output as in world_is"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T18:39:00Z",
+    "one_line": "The order says the retired flag is true for exactly four contracts and then enumerates rules that retire thirteen; the rows follow the enumerated rules.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Task order worker face section 1, the retired row: 'true for exactly four contracts, else false, by these rules' followed by 'So true for 13 contracts'.",
+    "world_is": "The three enumerated rules match 2 (do-not-serve routing text), 2 (model_aua_positions table prefix) and 9 (silver_legacy path segment) contracts with no contract in two rules. Measured on the 174 generated rows: retired true 13 (11 not_served, 2 do-not-serve). The check glib grades 13 as well. The rows follow the enumerated rules.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "task order TO-MX-c-14 worker face section 1 at 65dc653f1f (the retired row)",
+        "workflows/atom_decomposition/gen_silver_rows.py@76520ead71 retired_rule()",
+        "generated rows in workflows/atom_decomposition/catalog_entries (count of retired: true)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T19:05:00Z",
+    "one_line": "Nine generated rows carry a double-quoted firm token inside a prose value; the naming gate grades each quoted literal of a YAML line and refuses the nine, although the order's carrier test never grades a string with whitespace.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Task order worker face section 1, the CLEAN row: 'A string with whitespace is prose and is never graded'; the clean row holds no firm or product token in any string, key or value (c14.AC2 scans whitespace-free strings only). Section 1 step 2: rows the gate refuses are held, not forced.",
+    "world_is": "naming-gate.py yaml_literals() (line 718) reads every quoted span of an added YAML line as its own literal. The prose value fork_keys.firm.column_or_key_segment of nine eclipse and orion rows quotes the firm token in double quotes, so each file yields a NEW hand-kept carrier: 14 REFUSE lines in 9 files, kind (b), 'inflection -> lookup(inflection)'. Measured on the staged 175-path diff: REFUSE 193 graded, rc=1. The nine files are held uncommitted (residual_refusals.json); no override. Changing the prose is not the generator's rule to make; the issuer decides.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/naming-gate.py@76520ead71 lines 718-731 (yaml_literals, _strip_yaml_comment)",
+        "the staged-diff gate run from worktree wk-NFRA_MCPINDEX-38 (NAMING_GATE_ENFORCE=1 --enforce --post-from-index), verdict line 'NAMING-GATE: REFUSE 193 graded'",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~38/residual_refusals.json (refuse_lines_exact)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
