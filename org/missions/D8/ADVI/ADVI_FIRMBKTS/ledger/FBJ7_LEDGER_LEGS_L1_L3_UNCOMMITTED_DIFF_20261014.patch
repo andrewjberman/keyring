@@ -1,0 +1,70 @@
+diff --git a/org/critical_paths/.open_deploys/advi-firmbkts-fb-j-7-first-regeneration-20261014.json b/org/critical_paths/.open_deploys/advi-firmbkts-fb-j-7-first-regeneration-20261014.json
+index d27dc8e8be..caa9add820 100644
+--- a/org/critical_paths/.open_deploys/advi-firmbkts-fb-j-7-first-regeneration-20261014.json
++++ b/org/critical_paths/.open_deploys/advi-firmbkts-fb-j-7-first-regeneration-20261014.json
+@@ -12,24 +12,24 @@
+       "kind": "verify",
+       "target": "pair halves committed and unchanged at HEAD, FB-j-3/FB-j-4 merged, repo dispatcher sha256, the radius (194/158/36, 0 prior bullets), the three objects' current state",
+       "proof_required": "the commits, the counts and the hashes",
+-      "proof": null,
+-      "closed_at": null
++      "proof": "pair halves COO d5d586baf3 + radius amendment a695f18215 (file last commit a695f18215, 0 uncommitted) and CTO half 1db4cf015f, all in HEAD; FB-j-3 complete (33b647a50f/57c6dd02e2) and FB-j-4 f0d923e9a3 in HEAD; repo dispatcher sha256 bddbcaf7a1cc755f3ff4d900507f3dc08782a01e7f4eb6258194bbb493ca8d8b, 0 CR, 0 non-ASCII, bash -n rc 0, 2 hunks vs the deployed object; radius: 194 advisors listed (summary.json under the canonical prefix), 158 served exec_summary.json (1 version each, 7-key shape, 0 bullets), 36 creates, 0 served keys outside the list, legacy home 158; generator CodeSha256 edeEcjP8..., slots top_nna_mover, cap 5000, timeout 900; rollback_versions.json committed 359878d493 before act 1",
++      "closed_at": "20261014T014944Z"
+     },
+     {
+       "id": "L2",
+       "kind": "activation",
+       "target": "ACT 1: scoped plan -var platinum_mode=canonical -var disabled_slots=<six>: 0/1/0, code hash unchanged, ONE env value changed; safe-apply; read back env",
+       "proof_required": "plan summary, attribute check, apply line, read-back",
+-      "proof": null,
+-      "closed_at": null
++      "proof": "ACT 1: scoped plan -var platinum_mode=canonical -var disabled_slots=<six>: 0 to add, 1 to change, 0 to destroy; differing attributes: ONLY environment[0].variables.EXEC_SUMMARY_DISABLED_SLOTS (top_nna_mover -> the six); code attributes unchanged; seat gates CLEAR; safe-apply 01:46:35Z-01:48:05Z Apply complete 0/1/0; read back CodeSha256 edeEcjP8... unchanged, value equals the six, the other six env keys byte-equal, State Active",
++      "closed_at": "20261014T014944Z"
+     },
+     {
+       "id": "L3",
+       "kind": "s3-prefix",
+       "target": "ACT 2: aws s3 cp repo dispatcher to s3://opal-data-bd/code/gold/gold_dispatch.sh --sse AES256; read back sha256 equals the repo; new and prior VersionIds",
+       "proof_required": "sha256 and both VersionIds",
+-      "proof": null,
+-      "closed_at": null
++      "proof": "ACT 2: aws s3 cp repo blob to s3://opal-data-bd/code/gold/gold_dispatch.sh --sse AES256 at 2026-10-14T01:48:58Z; new VersionId .bNYVetB5sGV8bZki7EgXBfChCH_uPyE, prior VersionId l53CmF0sCt.tgKYlr.JPiAl0_tqH._yB; read back sha256 bddbcaf7a1cc755f3ff4d900507f3dc08782a01e7f4eb6258194bbb493ca8d8b equals the repo blob; SSE AES256; runner stopped and rule exec-summary-trigger ENABLED (pattern chain-complete / bd-pipeline.gold-chain, sole target exec-summary-generator) at deploy",
++      "closed_at": "20261014T014944Z"
+     },
+     {
+       "id": "L4",
+@@ -49,7 +49,10 @@
+     }
+   ],
+   "log": [
+-    "20261014T014304Z OPENED by 0.7.0_AE_CloudOps~FB1 with 5 leg(s)"
++    "20261014T014304Z OPENED by 0.7.0_AE_CloudOps~FB1 with 5 leg(s)",
++    "20261014T014944Z LEG L1 closed: pair halves COO d5d586baf3 + radius amendment a695f18215 (file last commit a695f18215, 0 uncommitted) and CTO half 1db4c",
++    "20261014T014944Z LEG L2 closed: ACT 1: scoped plan -var platinum_mode=canonical -var disabled_slots=<six>: 0 to add, 1 to change, 0 to destroy; differin",
++    "20261014T014944Z LEG L3 closed: ACT 2: aws s3 cp repo blob to s3://opal-data-bd/code/gold/gold_dispatch.sh --sse AES256 at 2026-10-14T01:48:58Z; new Ver"
+   ],
+   "last_red_at": null,
+   "device": "dell1"
+diff --git a/org/critical_paths/change_management/20261014T0143Z_advi-firmbkts-fb-j-7-first-regeneration-20261014_deploy_completion.md b/org/critical_paths/change_management/20261014T0143Z_advi-firmbkts-fb-j-7-first-regeneration-20261014_deploy_completion.md
+index ed7580651b..73f4f86c6b 100644
+--- a/org/critical_paths/change_management/20261014T0143Z_advi-firmbkts-fb-j-7-first-regeneration-20261014_deploy_completion.md
++++ b/org/critical_paths/change_management/20261014T0143Z_advi-firmbkts-fb-j-7-first-regeneration-20261014_deploy_completion.md
+@@ -12,12 +12,15 @@
+ 
+ | leg | kind | target | proof required | proof | state |
+ |---|---|---|---|---|---|
+-| L1 | verify | pair halves committed and unchanged at HEAD, FB-j-3/FB-j-4 merged, repo dispatcher sha256, the radius (194/158/36, 0 prior bullets), the three objects' current state | the commits, the counts and the hashes |  | OPEN |
+-| L2 | activation | ACT 1: scoped plan -var platinum_mode=canonical -var disabled_slots=<six>: 0/1/0, code hash unchanged, ONE env value changed; safe-apply; read back env | plan summary, attribute check, apply line, read-back |  | OPEN |
+-| L3 | s3-prefix | ACT 2: aws s3 cp repo dispatcher to s3://opal-data-bd/code/gold/gold_dispatch.sh --sse AES256; read back sha256 equals the repo; new and prior VersionIds | sha256 and both VersionIds |  | OPEN |
++| L1 | verify | pair halves committed and unchanged at HEAD, FB-j-3/FB-j-4 merged, repo dispatcher sha256, the radius (194/158/36, 0 prior bullets), the three objects' current state | the commits, the counts and the hashes | pair halves COO d5d586baf3 + radius amendment a695f18215 (file last commit a695f18215, 0 uncommitted) and CTO half 1db4cf015f, all in HEAD; FB-j-3 complete (33b647a50f/57c6dd02e2) and FB-j-4 f0d923e9a3 in HEAD; repo dispatcher sha256 bddbcaf7a1cc755f3ff4d900507f3dc08782a01e7f4eb6258194bbb493ca8d8b, 0 CR, 0 non-ASCII, bash -n rc 0, 2 hunks vs the deployed object; radius: 194 advisors listed (summary.json under the canonical prefix), 158 served exec_summary.json (1 version each, 7-key shape, 0 bullets), 36 creates, 0 served keys outside the list, legacy home 158; generator CodeSha256 edeEcjP8..., slots top_nna_mover, cap 5000, timeout 900; rollback_versions.json committed 359878d493 before act 1 | CLOSED 20261014T014944Z |
++| L2 | activation | ACT 1: scoped plan -var platinum_mode=canonical -var disabled_slots=<six>: 0/1/0, code hash unchanged, ONE env value changed; safe-apply; read back env | plan summary, attribute check, apply line, read-back | ACT 1: scoped plan -var platinum_mode=canonical -var disabled_slots=<six>: 0 to add, 1 to change, 0 to destroy; differing attributes: ONLY environment[0].variables.EXEC_SUMMARY_DISABLED_SLOTS (top_nna_mover -> the six); code attributes unchanged; seat gates CLEAR; safe-apply 01:46:35Z-01:48:05Z Apply complete 0/1/0; read back CodeSha256 edeEcjP8... unchanged, value equals the six, the other six env keys byte-equal, State Active | CLOSED 20261014T014944Z |
++| L3 | s3-prefix | ACT 2: aws s3 cp repo dispatcher to s3://opal-data-bd/code/gold/gold_dispatch.sh --sse AES256; read back sha256 equals the repo; new and prior VersionIds | sha256 and both VersionIds | ACT 2: aws s3 cp repo blob to s3://opal-data-bd/code/gold/gold_dispatch.sh --sse AES256 at 2026-10-14T01:48:58Z; new VersionId .bNYVetB5sGV8bZki7EgXBfChCH_uPyE, prior VersionId l53CmF0sCt.tgKYlr.JPiAl0_tqH._yB; read back sha256 bddbcaf7a1cc755f3ff4d900507f3dc08782a01e7f4eb6258194bbb493ca8d8b equals the repo blob; SSE AES256; runner stopped and rule exec-summary-trigger ENABLED (pattern chain-complete / bd-pipeline.gold-chain, sole target exec-summary-generator) at deploy | CLOSED 20261014T014944Z |
+ | L4 | verify | the first chain after act 2, this chain's lines only: emitted line, CloudTrail PutEvents from the runner, generator invocations, no SLOT_DROPPED, keys newer than act 2 within the 194, 0 non-empty bullets, no key written twice, first key's LastModified | the counts and the lines |  | OPEN |
+ | L5 | git | FIRST_CHAIN_READ.json and rollback_versions.json committed first; rows, instance and the status flip second | commit hash |  | OPEN |
+ 
+ ## Log
+ 
+ - 20261014T014304Z OPENED by 0.7.0_AE_CloudOps~FB1 with 5 leg(s)
++- 20261014T014944Z LEG L1 closed: pair halves COO d5d586baf3 + radius amendment a695f18215 (file last commit a695f18215, 0 uncommitted) and CTO half 1db4c
++- 20261014T014944Z LEG L2 closed: ACT 1: scoped plan -var platinum_mode=canonical -var disabled_slots=<six>: 0 to add, 1 to change, 0 to destroy; differin
++- 20261014T014944Z LEG L3 closed: ACT 2: aws s3 cp repo blob to s3://opal-data-bd/code/gold/gold_dispatch.sh --sse AES256 at 2026-10-14T01:48:58Z; new Ver
