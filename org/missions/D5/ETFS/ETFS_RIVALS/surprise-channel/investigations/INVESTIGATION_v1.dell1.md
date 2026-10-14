@@ -687,6 +687,28 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
       ]
     },
     "notes": "Recorded for the round's test authors. The flag is the package's own mechanism, so no change is made to conftest.py (outside this order's paths)."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W42-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~42",
+    "surfaced_at": "2026-10-14T14:05Z",
+    "one_line": "RIV-xf-1 AC2 cannot pass as worded: request_plan(date) with no sink plans only the bloomberg_primary funds (7 of 13) with every gate on, so the check's expectation of the 13 funds in the plan fails once the two entries are gone (the base held 9: those 7 plus ACWI and IWM)",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/collector_bloomberg.py request_plan (base box/dell1, read at worktree wk-ETFS_RIVALS-42): docstring 'Without a sink s the issuer-first fallbacks cannot be checked, so the plan is the bloomberg_primary funds'; body sets wanted = universe_funds('bloomberg_primary') unless event funds is given",
+        "measured in worktree C:/tmp/wk-riv-r30-42 after this cell's edits with RIVALFUNDS_LEG_ENABLE=1: request_plan('2026-09-29') funds = IDVZ, TXUE, BIDD, CGIC, INEQ, SCHY, PFOE (names 7); universe.funds() = 13; split_units(universe.funds()) is one unit at RIVAL_ROW_CAP (True)",
+        "xf1_acwi_iwm_removed_check.py test_ac2 at this worker's post-edit tree: 1 failed, 'Right contains 6 more items, first extra item: PCLG'; the base run before the edit failed the same assertion with 'Right contains 4 more items' while the held set still had ACWI and IWM"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-xf-1 AC2 (cell section 4, check test_ac2): with every gate on, the holdings plan is the 13 funds in one unit, and no benchmark is queried on its own.",
+    "world_is": "The no-sink holdings plan returns the bloomberg_primary funds only, 7 under every gate on. The 13-fund set is reached only through funds_for_day with a sink (issuer-first fallbacks), which the check does not call. The single-unit half holds. Removing the two entries cannot make the sinkless plan carry the six issuer-first funds, because request_plan is code outside this order's paths. Whether the served plan takes the sink path was not measured by this seat.",
+    "notes": "Not worked around: the check and collector_bloomberg.py are outside this order's paths, and the expectation belongs to the issuer. The order stays open on AC2. Ruling needed from 2.0.0_SA_COO~V1 on whether AC2 reads the sink plan (funds_for_day) or the bloomberg_primary set, with 1.0.0_SA_CTO~DELL1 if the criterion changes."
   }
 ]
 ```
