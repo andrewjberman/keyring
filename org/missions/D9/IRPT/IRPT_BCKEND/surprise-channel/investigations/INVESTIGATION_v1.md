@@ -33620,3 +33620,135 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. W374-S1 (the safe-commit client-data check is ABSENT on dell2, a WARN): STAYS ARMED, owner me for the record, the repair is the box manager's (placing the hashed account-id list); until it is placed no commit on this box is scanned for account ids, and my own files carry counts, dates, public symbols and hash prefixes only. W375-S1 (the producer carries no apply_cash_rule at base): resolved by the merge, the function exists at dff35d95da; the packet's Branch A is still the release of a rule-bearing build whose mechanics are NOT read. W375-S2 (the ticker shape admits Black Diamond-prefixed and CUSIP-shaped identifiers): ruled inside my decomposition, they are counted and never listed, fallback_tickers stays empty. W375-S3 (101 nodes of 49financial carry no display symbol; none a mover): INERT, the reason is unread. W375-S4 (the runner's schedule and deploy target not located): the next round's CENSUS cell must read them before any pair is signed. MEASURED: FDRXX on Inflection resolves on the canonical branch (row found fixed_income with sub Cash; 757 FDRXX nodes in the 2026-10-12 snapshot), so the rule is canonical-only as ruled; the blast radius is 844 nodes (49financial 32, cottonwood 38, inflection 774); the 215 and 67 fallback-branch cash-sub holdings on cottonwood and inflection stay fixed_income as served (a cross-page consistency fact for the CTO). The Cottonwood count is at the 2026-10-08 snapshot, since the page cannot publish until the directory exemption is repaired (CTO 7489)."
 }
 ```
+
+## IRPT_BCKEND-D2-W378-S1 -- S71 re-arm trigger: the schedule reads ENABLED while the three served bundles lack the same four runner-opened registry files (IB-pr-531, census)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W378-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~378",
+  "surfaced_at": "2026-10-14T04:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The S71 re-arm trigger reads ARMED by its own rule: irpt-holdings-snapshot is ENABLED live while each of the three served standalone bundles lacks the same four repo files the runner's probe opens, so the rearm test verdict is FAIL.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/tests/test_holdings_rearm_trigger.py@5bc47c4693: rearm_verdict returns ok = not (state == ENABLED and missing); served_bundle_members reads each bundle's SHA256SUMS",
+      "aws scheduler get-schedule --name irpt-holdings-snapshot --group-name default (read, 2026-10-14): State ENABLED, cron(15 10 ? * MON-FRI *) America/New_York",
+      "tar SHA256SUMS of the three bundles (read to scratch, 2026-10-14) against the probe list of 24 opened repo files: missing 4 per firm, infra/logic/registry/feeds.json, firm_pages.json, legacy_addresses.json, platinum_destinations.json",
+      "lib/opal_naming.py@5bc47c4693 lines 58-59 (OPTIONAL_REGISTRY_FILES) and 303-305 (an absent optional file is read as None)",
+      "aws ssm list-commands (read, 2026-10-14): Comment irpt holdings refresh <firm> 2026-10-13, Status Success for all three firms"
+    ]
+  },
+  "spec_asserts": "S71: the rearm trigger is INERT while irpt-holdings-snapshot is DISABLED and arms when the schedule reads ENABLED while a served standalone bundle lacks a repo file the runner opens (test_holdings_rearm_trigger.py rearm_verdict).",
+  "world_is": "The schedule reads ENABLED and all three bundles lack the same four files, so by the test's own rule the trigger is ARMED and its verdict is FAIL. The scheduled fires run anyway: the four files are optional in the naming library and each firm's 2026-10-13 fire reads Success with a record written after its bundle. Nothing was changed here (no schedule, bundle or test edit); the disarm is the issuer's via disarm_owner."
+}
+```
+
+## IRPT_BCKEND-D2-W378-S2 -- the holdings_refresh.tf header names a dispatch path that does not exist (holdings/ instead of holdings_refresh/)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W378-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~378",
+  "surfaced_at": "2026-10-14T04:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The header of infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf names the dispatch source as infra/aws/lambda/investor-reporting/holdings/refresh_dispatch.py; no such file exists, and the dispatch source is at holdings_refresh/refresh_dispatch.py.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf@5bc47c4693 line 10 names infra/aws/lambda/investor-reporting/holdings/refresh_dispatch.py",
+      "infra/aws/lambda/investor-reporting/holdings/ at 5bc47c4693 lists no refresh_dispatch.py (ls and Glob read)",
+      "infra/aws/lambda/investor-reporting/holdings_refresh/refresh_dispatch.py@5bc47c4693 holds lambda_handler, the schedule target handler"
+    ]
+  },
+  "spec_asserts": "The dispatch source named in the holdings_refresh.tf header resolves to the file the schedule's Lambda is built from.",
+  "world_is": "The header path resolves to holdings/, which holds no refresh_dispatch.py; the source is at holdings_refresh/. The Lambda's build input was not read, so which path the artifact is built from is not established here."
+}
+```
+
+## IRPT_BCKEND-D2-W378-S3 -- the round-189 comparison values for the manifest version ids are not in the worker face
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W378-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~378",
+  "surfaced_at": "2026-10-14T04:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-531 step 6 asks whether the served manifest version ids moved since the round-189 packet read them, but the round-189 values are not in the worker face, so the moved or not-moved statement cannot be made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-531.holdings-producer-census.md@5bc47c4693 step 6 of the worker face names the round-189 read",
+      "aws s3api list-object-versions on each firm's current/manifest.json (read, 2026-10-14): IsLatest version ids recorded in the census rollback_by_manifest_version"
+    ]
+  },
+  "spec_asserts": "The rollback targets per firm are compared with the values the round-189 packet read on 2026-10-14 ~03:3xZ, and any move is stated.",
+  "world_is": "The round-189 values are not in the worker face, so no comparison is made; the values served at read time are recorded with their LastModified in the census."
+}
+```
+
+## IRPT_BCKEND-D2-W378-S4 -- the --mint-bundle release path writes no change-management ledger entry
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W378-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~378",
+  "surfaced_at": "2026-10-14T04:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The standalone-bundle release path (safe-deploy.sh --mint-bundle, which replaces a served S3 object) opens no change-management ledger entry, while NEVER-2 requires an entry for a confirmed deploy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe_deploy_core.py@5bc47c4693 lines 1523-1549: the --mint-bundle branch calls find_bundle, the SERVE-HELD check and mint_bundle, then returns; no ledger call is made",
+      ".tools/safe_deploy_core.py@5bc47c4693 lines 1192-1250: mint_bundle uploads with aws s3 cp and verifies the ETag and the echoed stamp; it writes no ledger entry",
+      "org/critical_paths/change_management/ holds one deploy_completion file per release, for example 20261013T1123Z_irpt-holdings-key-restore-20261013_deploy_completion.md (Glob read)"
+    ]
+  },
+  "spec_asserts": "NEVER-2: a confirmed deploy opens a ledger entry under org/critical_paths/change_management/ at start and closes it at completion.",
+  "world_is": "The mint tool opens no entry itself; the release entries are written outside the tool. The census records ledger_required true. Whether each mint has its own entry was not checked entry by entry."
+}
+```
+
+## IRPT_BCKEND-D2-W378-S5 -- the 2026-10-09 scheduled fire for 49financial reads Failed in SSM history
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W378-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~378",
+  "surfaced_at": "2026-10-14T04:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "In SSM history the 2026-10-09 scheduled holdings fire for 49financial reads Failed, while the other firms' 2026-10-09 fires and the 49financial fires of 2026-10-08, 10-12 and 10-13 read Success; the cause was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws ssm list-commands (read, 2026-10-14), client-side filter on Comment prefix irpt holdings refresh: Comment irpt holdings refresh 49financial 2026-10-09, RequestedDateTime 2026-10-09T10:15:24 -04:00, Status Failed",
+      "the same listing: Comment irpt holdings refresh 49financial 2026-10-08, 2026-10-12 and 2026-10-13, Status Success",
+      "aws s3api list-object-versions on irpt/49financial/platinum/holdings/current/manifest.json (read, 2026-10-14): IsLatest LastModified 2026-10-13T14:20:49+00:00"
+    ]
+  },
+  "spec_asserts": "Each scheduled fire of the holdings producer reads Success in SSM history for each firm, or the failure is named with its cause.",
+  "world_is": "The 2026-10-09 fire for 49financial failed; every later listed fire for that firm reads Success. The cause and any refusal written by that fire were not read (list-command-invocations was not called and no command output was read)."
+}
+```
