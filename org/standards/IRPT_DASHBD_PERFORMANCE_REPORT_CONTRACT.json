@@ -272,7 +272,7 @@
           "table": "s3://opal-data-assets/orion/inflection/silver/fact_performance (newest dated partition only)",
           "field": "factor",
           "fold": "per Inflection client row of the household's client id (one client row per date): the opening day is the last trading day before the first calendar day of the calendar quarter containing as_of (document.windows.quarter_to_date). Return = 100 * (factor on as_of / factor on the opening day - 1), in PERCENT POINTS (a stored 1.5 means 1.5 percent; the unit_scale is percent_points). The factor is the client's cumulative performance index level, one row per client per date. Absent, never zero, when either day has no client row or either factor is not positive.",
-          "claim": "reported by the platform at client grain; not computed by Opal; includes dividends (round-108 read)"
+          "claim": "derived from the platform's reported client performance factor, as the ratio of two dated factor values; the factor itself is reported by the platform at client grain and is not computed by Opal"
         }
       }
     },
@@ -400,7 +400,7 @@
           "table": "s3://opal-data-assets/orion/inflection/silver/fact_performance (newest dated partition only)",
           "field": "factor",
           "fold": "per Inflection client row of the household's client id (one client row per date): the opening day is the last trading day before 1 January of as_of's year (document.windows.year_to_date). Return = 100 * (factor on as_of / factor on the opening day - 1), in PERCENT POINTS (a stored 1.5 means 1.5 percent; the unit_scale is percent_points). The factor is the client's cumulative performance index level, one row per client per date. Absent, never zero, when either day has no client row or either factor is not positive.",
-          "claim": "reported by the platform at client grain; not computed by Opal; includes dividends (round-108 read)"
+          "claim": "derived from the platform's reported client performance factor, as the ratio of two dated factor values; the factor itself is reported by the platform at client grain and is not computed by Opal"
         }
       }
     },
@@ -528,7 +528,7 @@
           "table": "s3://opal-data-assets/orion/inflection/silver/fact_performance (newest dated partition only)",
           "field": "factor",
           "fold": "per Inflection client row of the household's client id (one client row per date): the opening day is the last trading day before the calendar day one year before as_of (document.windows.last_12_months). Return = 100 * (factor on as_of / factor on the opening day - 1), in PERCENT POINTS (a stored 1.5 means 1.5 percent; the unit_scale is percent_points). The factor is the client's cumulative performance index level, one row per client per date. Absent, never zero, when either day has no client row or either factor is not positive.",
-          "claim": "reported by the platform at client grain; not computed by Opal; includes dividends (round-108 read)"
+          "claim": "derived from the platform's reported client performance factor, as the ratio of two dated factor values; the factor itself is reported by the platform at client grain and is not computed by Opal"
         }
       }
     },
@@ -656,7 +656,7 @@
           "table": "s3://opal-data-assets/orion/inflection/silver/fact_performance (newest dated partition only)",
           "field": "factor",
           "fold": "per Inflection client row of the household's client id (one client row per date): the opening day is the household's first_data_date, the day the window opens (document.windows.since_inception). Return = 100 * (factor on as_of / factor on the opening day - 1), in PERCENT POINTS (a stored 1.5 means 1.5 percent; the unit_scale is percent_points). The factor is the client's cumulative performance index level, one row per client per date. Absent, never zero, when either day has no client row or either factor is not positive.",
-          "claim": "reported by the platform at client grain; not computed by Opal; includes dividends (round-108 read)"
+          "claim": "derived from the platform's reported client performance factor, as the ratio of two dated factor values; the factor itself is reported by the platform at client grain and is not computed by Opal"
         }
       }
     },
