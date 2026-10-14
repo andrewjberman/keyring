@@ -140,7 +140,7 @@ the issuer to make at the merge.
   raising). The face now says: a non-empty body may carry `absent_reason=None`; an empty body must carry a reason. No
   criterion moves. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G1-TYPED</workstream>
 <slot>~71</slot>
