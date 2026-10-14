@@ -6920,6 +6920,139 @@ carries none.
     },
     "spec_asserts": "FWD-21 serves the prefixes the current servable list names.",
     "world_is": "The catalog rows v3's 16; v4 adds 13 top-level prefixes and 7 research tables, cut in round 11."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W34-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~34",
+    "surfaced_at": "2026-10-14T01:37:40Z",
+    "one_line": "`tool_census.py --overlay-ref <own branch>` overlays EVERY gateway app file that differs between the deployed commit and the ref, not only the files the cell changes: on the branch at issuance it also lays in trunk's harvest_read.py and tools.py (harvest_list, harvest_read, list_shared_folder), so the census reads N=70 and the emitter REFUSES (3 served tools with no entry).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Run at the worktree HEAD: `python workflows/atom_decomposition/emit_catalog_v02.py --overlay-ref HEAD` printed 'EMIT REFUSED (tool index, MX-c-8): 3 error(s)': harvest_list, harvest_read, list_shared_folder 'a served tool with no entry'. `git diff --stat 7eff14b2e6 HEAD -- infra/aws/ec2/opal-gateway` lists app/tools.py (+286), app/harvest_read.py (+181), app/family_depth.py (+413) and 6 more app files that are in trunk and not deployed.",
+        "Resolution inside the cell: a dangling commit (deployed tree + the two gateway .py files this cell changes) built with a temporary index; `tool_census.py --overlay-ref <it>` read N=67, overlaid exactly the two files; the emitter ran with the same --overlay-ref. The script is deliverables/0.9.0_WK_NFRA_MCPINDEX~34/mkoverlay.sh. c9.AC1 does the equivalent in its own way (deployed tree + the three shippable files)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order says to run the census with `--overlay-ref` on the worker's own branch for the files it changes (the Z-S112 lesson).",
+    "world_is": "On a branch that carries trunk work not yet deployed, `--overlay-ref <branch>` is not 'the files I change'; the census only matches the deployed tree when the ref holds the deployed tree plus the cell's own files.",
+    "notes": "Round-11 MX-r-12 builds the release from the same two files; if the release also ships tools.py, the same overlay logic applies and N changes by design."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W34-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~34",
+    "surfaced_at": "2026-10-14T01:37:40Z",
+    "one_line": "Two of row 12b's research tables are spelled `research-dossier` and `research_dossier`; the harvest slug (`/` and `-` to `_`) mapped both to harvest_research_dossier, so the emitter's one-file-per-prefix naming rule could not hold seven tables.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "List v4 @7e0da2dfee row 12b names `research-dossier` and `research_dossier` as two tables (checked by c11_harvest.py: 7 research tables, both spellings).",
+        "Resolution: harvest_slug() keeps a gold table's own directory name unchanged (the round-10 gold tables are underscore-only, so their six slugs do not move); the files are harvest_research-dossier.yaml and harvest_research_dossier.yaml and the row entities carry a hyphen (harvest_research-dossier); the hyphenated files are the ones held by row Z-W34-S6. Test: test_slug_of_every_serve_now_prefix (39 distinct slugs)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-c-9 Part 3: seven research tables each get a row; the source family is catalog_entries/harvest_<slug>.yaml.",
+    "world_is": "The slug rule collapsed two distinct tables into one name; a hyphen now appears in six harvest row entity ids.",
+    "notes": "A consumer that keys harvest rows by entity must accept a hyphen; discover's own-text rule and opal_describe's exact match read the entity as a string and passed (34 of 34 discover tests)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W34-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~34",
+    "surfaced_at": "2026-10-14T01:37:40Z",
+    "one_line": "10 of the 11 (a) tools read history depth `absent`, not `measured`: a one-field probe of `as_of_first` on the other four portal objects (aum-metrics, account-distribution at `global`; model-benchmarks and etfs-positioning, which have no scope) found no first date, and no `inferred` window could be written for the Black Diamond and Schwab rows.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Probe 2026-10-14 ~01:0xZ, boto3, print only a date or a no-date marker: mp.03.aggregate-aua-timeseries -> 2024-11-01; mp.01.aum-metrics, mp.02.account-distribution, mp.05.model-portfolio-benchmarks, etfs.01.positioning-data -> NO-as_of_first-date. The catalog's own rows for those four document only their current vintage (vintage_field period / data_as_of); mp.05's meaning says its periods run '1D through inception', which names no stored date.",
+        "The two multi-key tools (gateway_query_catalog, opal_asker_query) read any catalogued key, so no one artifact's first date applies; the BD and Schwab rows are live-queried under the caller's grant and no served window start is recorded anywhere in the catalog or its sources. validate_claim also requires an `inferred` value to be a YYYY-MM-DD date.",
+        "c9.AC3 PART1: 'depth claims valid 11 of 11; measured 1 (verified by the second instrument 1 of 1); inferred 0; absent 10; mdpf_get_aggregate_aua measured=2024-11-01'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-c-9 Part 1: `absent` only where no served artifact carries any date.",
+    "world_is": "The four portal snapshots do carry a current-vintage date but no first date, so the `absent` reason says exactly that (a field probe and the catalog's documentation), and no further body field was read (one named field per object).",
+    "notes": "If the CTO wants depth for the other four, the producer must write a first-date field (as the AUA publisher does with as_of_first), or the order must name the field to read; the mechanism (members.yaml `depth:` spec, measure.py, discover) takes it with no code change."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W34-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~34",
+    "surfaced_at": "2026-10-14T01:37:40Z",
+    "one_line": "The gateway suite reads `new 7 fixed 0 baseline 41` against failing_ids_full.txt, not the 12 failures the issuer named; the 7 are the same seven IDs row Z-W33-S4 recorded, and the failing set is identical with this cell's five gateway files reverted to HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "suite_delta.py --shape full on this branch: 48 failed, 754 passed; NEW: test_admin_gateway_breakdown.py::test_real_server_tool_inventory, test_browser_oidc.py::test_oga3_ac01, test_mail_route.py (2), test_teams_route.py (2), test_transcript_route.py (1). Control: the same five gateway files (integration.py, admin_gateway_breakdown.py, DATA_CATALOG.yaml, test_opal_discover.py, test_admin_gateway_breakdown.py) reverted to HEAD in the same tree, full suite again: 48 failed, 750 passed, and the FAILED/ERROR set is IDENTICAL (diff empty). The +4 passes are this cell's 4 new tests. Files restored byte for byte (cmp).",
+        "test_real_server_tool_inventory passes alone and fails in the full run (5 channels, not 4): an order-dependent registration left by an earlier test, present on the base."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-c-9 bound 3: the 12 known failures (rows Z-S97, Z-S107) are listed, never fixed; a NEW failing ID is the worker's to fix.",
+    "world_is": "The recorded baseline is 41 IDs and 7 more fail on the base itself, so no failing ID is caused by this cell; none was fixed (a fix would be outside the paths: the route tests and test_browser_oidc are not in <paths>).",
+    "notes": "Row Z-S107's re-baseline at the drain (analysis ruling 4) would absorb the 7."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W34-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~34",
+    "surfaced_at": "2026-10-14T01:37:40Z",
+    "one_line": "Amendment A1 had the worker merge box/sitez into its branch, which the worker standing rules forbid by default; the merge was a fast-forward to 31566aa49d (box/sitez), so no merge commit exists.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "COO~MI course correction (system message during the task): 'Merge box/sitez into your branch (it must contain ab06197986) before you run AC2.' `git merge --no-edit box/sitez` fast-forwarded the branch from 833876ed3d (the issuance) to 31566aa49d (49 commits, 71 files; the only cell-relevant files are the amended c11_harvest.py and the order file with A1); no merge commit, no conflict."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker rules: never push, merge, rebase.",
+    "world_is": "The merge was done once, on the issuer's explicit instruction, to take the amended c11_harvest.py and the A1 text.",
+    "notes": "The branch's history is the issuance, the box/sitez commits through 31566aa49d, then this cell's commits."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W34-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~34",
+    "surfaced_at": "2026-10-14T01:47:51Z",
+    "one_line": "BLOCKING c9.AC2: the commit-time naming gate (ENFORCE) REFUSES the six hyphenated research-table prefixes of list v4 row 12b (research-backlog, research-continuation, research-dossier, research-fund-form, research-model-typecast, research-sector-template) as NEW out-of-pattern S3 keys, so their harvest rows cannot be committed; AC2 reads research tables rowed 1 of 7 in the committed state.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh on the first full commit of this cell: 'NAMING REFUSE infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:3049 amgt/harvest/gold/research-backlog/ -> amgt/harvest/gold/research_backlog/ ... NEW and OUT-OF-PATTERN as S3Key: REFUSE' and the same for the other five hyphenated tables, in the catalog (6 lines) and in their six catalog_entries source files (6 lines); 'NAMING-GATE: REFUSE 91 graded', 'BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode)'. The seventh table, research_dossier (underscore), and every other new prefix graded CONFORMANT.",
+        "The gate maps `-` to `_` for the key and finds no carrier at HEAD (the RAISE-EXISTING escape applies only to a RAISE verdict, and the placement override `# naming-place-override:` does not reach the older limb's REFUSE: .tools/naming-gate.py header). The waiver kinds (org/standards/NAMING_LEGACY_READS.json r20_exception with a conformance-ledger register row) and the registry rows (infra/logic/registry/) are outside this order's <paths>.",
+        "Committed state: 33 harvest rows (16 round-10 + 17 new); c9.AC1 PASS, c9.AC3 PASS, c9.AC2 FAIL 'research tables rowed 1 of 7' with UNROWED lines for exactly the six hyphenated tables (deliverables/.../c9.AC2.out). The six rows are written, valid and emitted clean in the worker's uncommitted tree (39 rows, AC2 PASS rc=0, run before the commit attempt) and are held, un-graded, as deliverables/0.9.0_WK_NFRA_MCPINDEX~34/blocked_harvest_rows/*.yaml.txt."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-c-9 Part 3 / A1: row 12b's seven research tables each get a harvest_datasets row whose prefix is the table's own prefix.",
+    "world_is": "The bucket's real prefixes are hyphenated; the naming canon spells them with underscores and refuses a new literal of the real spelling. Six of the seven rows cannot be committed by a worker.",
+    "notes": "Route: an R20 declared exception (Andrew-acknowledged) or registry rows admitting the six literals, landed by a seat with that write surface; then copy the six .yaml.txt files into workflows/atom_decomposition/catalog_entries/ as harvest_<table>.yaml, empty HARVEST_NAMING_PENDING in emit_catalog_v02.py, re-emit with the same --overlay-ref, set the two test counts back to 39, and c9.AC2 reads PASS. MX-r-12 inherits the same 1-of-7 until then."
   }
 ]
 ```
