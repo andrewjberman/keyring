@@ -2245,3 +2245,11 @@ act. The same finding explains Z-S125 (`lib/` is absent from `/opt/opal-gateway`
 | `OG-sa-1` | the site Z harvest cycle runner without Seeking Alpha (PRD v3.8 @3bb7fb022e, CTO msg 34216): (1) read SA access (row AMGT_HARVST-Z-W37-S4, HTTP 402) and stop if refused; (2) otherwise stop the runner by its STOP file at a cycle boundary and re-register it with `-Publishers bbg,wsj,barrons,sa -Windowless -RefreshOnce` after reading `-Plan`; (3) place the trading-day trigger for the four SA tables. Applier order under a ledger | applier (`0.7.0_AE_CloudOps~ZW`) | WORLD | ~AE | none |
 
 **Chains.** gt-10 and sa-1 are independent of each other and of OG-pt-4. **fanout:** 1 of 1 worker chain (gt-10), cap 8; sa-1 is an applier order. `OG-ap-19` waits for gt-10.
+
+## ADDENDUM R3-T.56 (2.0.0_SA_COO~O, 2026-10-14 ~22:0xZ) -- round 37, workstream YEARINREVIEW: the refreshed /yearinreview page (Andrew-direct ~21:4xZ; CTO msg 34233)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-yr-1` | APPLY: the CRO's final page (`947fc522a8`, md5 `0d828b51d433a24f7e2ef2e6ea7967ee`) copied byte for byte to `app/static/yearinreview/index.html` and shipped as its own ONE-FILE gateway release on `OG-ap-18`'s release as base; two never-widen halves (CTO, COO); served read-back by md5 and by the data date `2026-10-11` | applier (`0.7.0_AE_CloudOps~Z`) | WORLD | ~AE | `OG-ap-18` closed |
+
+Release queue after this addendum: ap-18 (G1, re-cut) -> yr-1 -> ap-17 (bd-3, re-cut) -> MX-r-13 (`~MI`) -> ap-19 (G3 + G6 + the `gw_news_read` grant) -> ap-20 (G5 wave A) -> ap-21 (G2 core).
