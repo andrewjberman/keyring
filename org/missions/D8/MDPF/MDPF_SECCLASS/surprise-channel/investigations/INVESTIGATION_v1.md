@@ -7748,3 +7748,30 @@ by dell1 or by this seat.
   "world_is": "relationships_rewritten=0 and the total match hold. One served byte-level move occurred: mix_daily_summary.json was rewritten by each C_06 run with a different advisors key order and the same content; for about five hours (06:24:17Z to 11:27:24Z) the served ETag was run 1's. It is restored to the BEFORE bytes. What is NOT shown: that the production nightly fire is also byte-nondeterministic (it runs the same C_06, so it is expected to be; the ETag moved at 05:23Z and 06:24Z on separate runs); whether any consumer keys on this object's ETag. This seat does not read 'DELTA=0' as content equality on its own: that is the CTO's clause. Offered reading: DELTA is judged on parsed content, because no C_06 run can pass a byte test."
 }
 ```
+
+## MDPF_SECCLASS-D1-S38 -- D1-W83-S5 disarms on leg Q: relationships_rewritten=0 on unchanged inputs, DELTA read as canonical-JSON equality (XA-20261014T113939Z-a304)
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S38",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-14T11:48Z",
+  "one_line": "D1-W83-S5 (C_06 freezes a date at its first build while B_00 moves its canonical bytes; the rolling re-derive replaced the freeze) disarms: the laptop CTO's XA-20261014T113939Z-a304 (11:42:16Z) reads DELTA=0 as canonical-JSON equality for JSON objects and byte equality for everything else, and the three disarm conditions of XA-20261014T054803Z-7d27 are met by leg Q: relationships_rewritten=0 keys_written=0 on two singles, the served objects equal in content, the second fire's totals equal AUA on 18 of 18 dates at 0.00.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~SC1/deliverables/E97_LEGQ_REPORT_20261014.md (82b87f8a94): C06-ROLLING-REDERIVE relationships_rewritten=0 keys_written=0 at 06:21:49Z and 11:19:07Z, key set 15544 of 15544, accounts dimension unmoved, one ETag moved (views/mix_daily_summary.json), restored 11:27:24Z to ETag afd57529",
+      "issuer re-read, row D1-S37 (03e19d4698): three stored versions of mix_daily_summary.json parse equal, negative control unequal",
+      "XA-20261014T113939Z-a304, ruled by 1.0.0_SA_CTO (laptop) 11:42:16Z, relayed by 1.0.0_SA_CTO~DELL1 msg 5479: operative text 'D1-W83-S5 disarms on leg Q'; the follow-up (C_06 writes JSON with sorted keys) is its own pair; until it lands every DELTA read on this writer uses canonical-JSON equality and says so",
+      "totals = AUA 18 of 18 dates (09-25..10-12) at 0.00 after the 04:00Z fire (XA-7d27 Context)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "XA-20261014T054803Z-7d27: D1-W83-S5 disarms on relationships_rewritten=0 plus DELTA=0 plus the second fire's 18-of-18 total match; XA-20261014T113939Z-a304 reads DELTA=0 as canonical-JSON equality for JSON objects.",
+  "world_is": "All three conditions read met on the a304 reading. What is NOT shown: that the production nightly fire writes the same content on unchanged inputs (leg Q is an ad-hoc QA property and never production evidence); that no consumer keys on mix_daily_summary.json's ETag; the sorted-keys change is not built. The client-facing BD Mix restated-history push still waits on Andrew."
+}
+```
