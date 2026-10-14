@@ -1,12 +1,13 @@
 {
   "prd": "MDPF_CANON_PRD.md",
-  "prd_version": "v2.18",
-  "prd_pin": "0736ed5c23638a5a3faf570b5c7cb11940329697",
+  "prd_version": "v2.19",
+  "prd_pin": "02852d9d161afb241c2a13a5f383e6d64d97c82a",
   "half": "ratified-text",
-  "half_hash": "ca963e9439b191d6a5a8e22080562f894f8ca60a9deccb09e9b5c13f7a321477",
-  "endpoint_hash": "48695bfe5d3de379a147bbc67bd82bec9bbe364388007e256592ce847b2aa6b7",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_MDPF_CANON_v2.18_RATIFIED_TEXT_20261014.md@9838caee57",
+  "half_hash": "220bbe613f7b5fc2e4b77aa4e5fbeb63bef35c53e3e9b27237d96d2acdd12ab8",
+  "endpoint_hash": "25dc604ef7aa2cb2b75b24f383a7d866723718f872df41039f68027fa4c4ea10",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_MDPF_CANON_v2.19_RATIFIED_TEXT_20261014.md@897fe1d0d1",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-14T18:57:09Z"
+  "signed_at": "2026-10-14T20:39:54Z",
+  "reason": "FWD-3 exception for the Global Trend rests on 'only opal staff see global'; PROD routes the external demo tenant to Global (ModelPortfolios.tsx:271,375-379; firmAccess.ts:115-117)"
 }
