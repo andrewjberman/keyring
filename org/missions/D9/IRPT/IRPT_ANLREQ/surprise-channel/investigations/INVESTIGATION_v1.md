@@ -15444,3 +15444,270 @@
 }
 ```
 
+## IRPT_ANLREQ-D2-W145-S1 -- the irpt-status CI build cannot stage its staged_from members on this box: node receives a Git Bash path, the staged writes land drive-relative under C:\c\dev, the build fails with 49 missing-file errors, and five tracked in-place members are left deleted in the release worktree
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W145-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~145",
+  "surfaced_at": "2026-10-14T19:46:42Z",
+  "one_line": "On this box the irpt-status BUILD_ONLY build cannot stage its staged_from members: build-and-upload.sh hands node a Git Bash path, so the staged writes land drive-relative under C:\\c\\dev, the build fails with 49 File-not-found errors, and five tracked in-place members of the release worktree are left deleted.",
+  "spec_asserts": "TO-AR-y-339 step 2: BUILD_ONLY=1 bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-status builds the zip from the pin, twice, and stages it as C:/dev/irpt-release-r31/irpt-status-r31.zip with its sha256 and CodeSha256.",
+  "world_is": "At c4c2afe89639071f41242fc9f663cadaffa0ffd8 in C:/dev/irpt-release-r31/wt-status-c4c2afe896 (clean before the run, git status 0 lines): the run printed 44 'OK: staged ... sha256 verified' lines, then 49 'ERROR: File not found' lines and 'PARTIAL -- 0 built, 1 failed: irpt-status' (log C:/dev/irpt-release-r31/scratch/build1.log). The cause is measured: ABS_SOURCE is built from WORKSPACE_ROOT in bash form (/c/dev/...) and passed in the environment to node, and node path.join('/c/dev/.../ops', 'entry.py') resolves to the drive-relative '\\c\\dev\\...\\entry.py' on C:, so every staged write went to C:\\c\\dev\\irpt-release-r31\\wt-status-c4c2afe896\\infra\\... (node -e check in this run). After the run, ops/entry.py, ops/owned_report.py, ops/owned_requests.py, ops/prospect_dates.py and ops/status.py (tracked, staged in place) showed as deleted; the worker restored exactly those five paths with git checkout HEAD in the release worktree (status back to 0 lines at c4c2afe896). The cause of the in-place deletion is not established by this run. An earlier stray tree C:\\c\\dev\\irpt-release-r29 (dated 2026-10-14 07:15) shows the same defect on this box. No zip was produced, no sha was taken, no upload or AWS write was made. The builder is not in the grant and was not edited.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (issuer of the build cell: no BUILD_ONLY run of a function with staged_from rows on this box until the CI-script owner fixes the Bash-to-node path, or the cell is built on a box where the path form is native)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/build-and-upload.sh:410 @c4c2afe89639071f41242fc9f663cadaffa0ffd8 (ABS_SOURCE=\"$WORKSPACE_ROOT/$FN_SOURCE\", bash form)",
+      "infra/aws/lambda/ci/build-and-upload.sh:211 and :237 @c4c2afe89639071f41242fc9f663cadaffa0ffd8 (node reads process.env.ABS_SOURCE and writes path.join(absSource, s.packaged_as))",
+      "C:/dev/irpt-release-r31/scratch/build1.log lines 13-92 (worker scratch, uncommitted; the 44 OK lines, the 49 ERROR lines and the PARTIAL line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A measured world row, not a judgment on significance. It blocks AR339-y-AC1 and AC2 on this box. The restore of the five paths was done in the release worktree only, by path, and that worktree is detached at the pin."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W145-S2 -- the committed source map pins entry.py, owned_report.py and status_installed.py to bytes equal to the live package, so no build from the merged tree at c4c2afe896 carries the commentary-pdf route
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W145-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~145",
+  "surfaced_at": "2026-10-14T19:46:42Z",
+  "one_line": "The committed source map holds entry.py, owned_report.py and status_installed.py at pin 361c44fa9d, whose bytes equal the live package, so no build from the merged tree at c4c2afe896 would carry the commentary-pdf route; the expected delta of TO-AR-y-339 step 3 does not hold.",
+  "spec_asserts": "TO-AR-y-339 step 3 EXPECT: the differing members are within entry.py, owned_report.py, pdf_link.py and status_installed.py, and any staged_from member the merged cells changed; the merged route is in the package.",
+  "world_is": "lambda-source-map.json functions.irpt-status.staged_from at c4c2afe896 pins entry.py and owned_report.py at 361c44fa9d (declared sha256 4a5dd2e887cb... and 542047cf584f...) and status_installed.py at 361c44fa9d (declared 326fed4f54b4...). Each declared sha equals the live zip member sha (live_manifest.json). The HEAD blobs of the same paths carry the route (ops/entry.py:246 and reports/status_installed.py:63 name the commentary-pdf key). The builder writes the pinned blob over the source file, so a build would carry the live bytes for these three members. Projected from the map and the git blobs, with no zip built (C:/dev/irpt-release-r31/scratch/projected_delta.json): 49 members, 48 unchanged, 1 differing (ops/pdf_link.py, HEAD blob, not staged). Map note _staged_from_note, rows of 2026-10-01 and 2026-10-11: the pins 'are the owning cells' to release: drop a row to ship that member's pending change'. The source map is outside the grant and was not edited.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-status.staged_from and _staged_from_note @c4c2afe89639071f41242fc9f663cadaffa0ffd8",
+      "infra/aws/lambda/investor-reporting/ops/entry.py:246 @c4c2afe89639071f41242fc9f663cadaffa0ffd8",
+      "infra/aws/lambda/investor-reporting/reports/status_installed.py:63 @c4c2afe89639071f41242fc9f663cadaffa0ffd8"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The expectation fails on the pins, not on the merged tree: the HEAD tree carries the route. Whether the pins drop is the issuer's decision at the pair (the record's own Lambda-leg note), so no drop is proposed here."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W145-S3 -- the AR-y-320 no-move control cannot be reproduced for irpt-status at zip level, and no commit's map and blobs reproduce the live package at member level
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W145-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~145",
+  "surfaced_at": "2026-10-14T19:46:42Z",
+  "one_line": "The no-move control of the irpt-status live package cannot be reproduced: no build ran (S1), and no commit's map plus blobs reproduces every live member, so the last_deployed_commit recorded in the map does not reproduce the live bytes.",
+  "spec_asserts": "TO-AR-y-339 step 3: build the live package's own source commit, read from the live package's last record, and show it reproduces the live CodeSha256; if it cannot be found, say so and print what could not be reproduced.",
+  "world_is": "Live (read-only, 2026-10-14T19:36:53Z): get-function CodeSha256 yNpw441TP5aMGYuZqkHQAPjAiQJDEPk7q8kFeDiIRIg=, CodeSize 363818, LastModified 2026-10-14T12:19:40Z. The downloaded zip is 363818 bytes, sha256 c8da70e38d533f968c198b99aa41d000f8c089024310f93babc9057838884488, 49 members. head-object of investor-reporting/irpt-status.zip (latest, not pinned): VersionId v0g15_0Qv6STKs17TyinSeSd4T3tq0QP, content-sha256 metadata equal to CodeSha256. The map at c4c2afe896 records last_deployed_commit 15a387dd36 (deployed 2026-10-14T12:23:09Z, ledger irpt-status-r29-20261014), 3 minutes 29 seconds after the LastModified above. Member-level projection (scratch, no zip): at 15a387dd36 with its own map, status.py differs (its staged pin a4b7c48fad gives blob 03fa9c78c9dd; live 87048c7f4d00). At 62880e9bfc, where the live ops/pdf_link.py blob (41d98e94d39e) is found, 15 of 49 members differ against that commit's declared pins. At c4c2afe896, 48 of 49 match and pdf_link.py differs. The control is therefore NOT reproduced.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-status.last_deployed_commit and deployed_code_sha256 @c4c2afe89639071f41242fc9f663cadaffa0ffd8",
+      "C:/dev/irpt-release-r31/scratch/projected_delta_15a387dd36.json and projected_delta_62880e9bfc.json (worker scratch, uncommitted)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The control is the instrument AR-y-320 used to show that its live bytes were built from a known tree. Here the instrument reads the map's declared shas, not built zips; a zip-level control needs a builder run that S1 blocks."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W145-S4 -- the Terraform note in lambda.tf and the module disagree: the comment says the module pins the artifact object version, the module reads the latest version at plan time
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W145-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~145",
+  "surfaced_at": "2026-10-14T19:46:42Z",
+  "one_line": "The comment in ops/lambda.tf says the yang-lambda module pins the artifact object version; the module reads the latest object version at plan time and carries no version id in HCL.",
+  "spec_asserts": "infra/aws/terraform/investor-reporting/ops/lambda.tf header @c4c2afe896: 'The module pins the object VERSION and takes source_code_hash from the object's own content-sha256 metadata, so a redeploy is driven by CONTENT'.",
+  "world_is": "infra/aws/terraform/modules/yang-lambda/main.tf:17-20 declares data 'aws_s3_object' 'artifact' with bucket and key only (no version_id), and main.tf:38 sets s3_object_version = data.aws_s3_object.artifact.version_id, so the version is the latest at each plan. The same statement is in AR-y-320's terraform_note ('NOT PINNED TO A VERSION'). No plan was run; the live object is v0g15_0Qv6STKs17TyinSeSd4T3tq0QP (head-object, read-only), so a plan today would move no code attribute unless a newer object is uploaded to the key first.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/modules/yang-lambda/main.tf:17-20 @c4c2afe89639071f41242fc9f663cadaffa0ffd8",
+      "infra/aws/terraform/modules/yang-lambda/main.tf:38-39 @c4c2afe89639071f41242fc9f663cadaffa0ffd8",
+      "infra/aws/terraform/investor-reporting/ops/lambda.tf:12-16 @c4c2afe89639071f41242fc9f663cadaffa0ffd8"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded for the release leg: a scoped plan picks up whatever is latest on the key at plan time, which is why the upload and the plan must be read together."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W145-S5 -- the release directory C:/dev/irpt-release-r31 is shared with another seat's r31 build, and this worker's first live download was gone from it when re-checked
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W145-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~145",
+  "surfaced_at": "2026-10-14T19:52:10Z",
+  "one_line": "The release directory C:/dev/irpt-release-r31 holds another seat's r31 resident build (build_a, build_b, wrapper, wt-release-c4c2afe896, a resident tarball), and this worker's live download at live-read/zip/ was no longer there when the route mutant ran.",
+  "spec_asserts": "TO-AR-y-339 Grant and step 2: stage release artifacts ONLY under C:/dev/irpt-release-r31/, one worktree per release, and the staged artifacts and reads named in the record stay where the record says.",
+  "world_is": "At 2026-10-14T19:46Z the directory C:/dev/irpt-release-r31 listed entries this worker did not create, timestamped 15:36 to 15:49Z: build_a/, build_b/, delta/, wrapper/, wt-release-c4c2afe896/, pack_r31.py, files_from_r31.txt, build_a_stdout.json, build_b_stdout.json, irpt-resident-0485393f3a-r31.tar.gz and its SHA256SUMS. This worker's own live-read/zip/live-irpt-status.zip (written 15:37Z, sha256 c8da70e3... verified then) and its live-read/ directory were absent at 19:46Z; the worker's scratch/, tmp-status/ and wt-status-c4c2afe896/ were present. This worker's processes remove only their own extraction directories (scratch/route_staged, scratch/route_live); none of them names live-read/. The live package was re-read at 19:50:43Z (get-function CodeSha256 unchanged) and re-downloaded to C:/dev/irpt-release-r31/live-read-145/irpt-status-live.zip with sha256 c8da70e3... equal to the first download, so the read stands; the first copy's loss is recorded, not explained.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (issuer: one release directory per seat or per release, so that no seat's cleanup reaches another seat's artifacts; the owner of the other r31 build decides its own paths)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/irpt-release-r31/ directory listing at 2026-10-14T19:46Z (uncommitted; worker scratch scratch/route_check run, path C:/dev/irpt-release-r31/live-read/zip/live-irpt-status.zip not found)",
+      "C:/dev/irpt-release-r31/scratch/mutant_record_live_as_staged.json (uncommitted) and the route_check ROUTE-BAD output at 19:49Z",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~145/r41/IRPT_STATUS_R31_BUILD.json live_read.reread"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A measured world row. It names no cause. The live package's bytes are unchanged (CodeSha256 yNpw441TP5aMGYuZqkHQAPjAiQJDEPk7q8kFeDiIRIg= on both reads). Nothing of the other seat's was touched by this worker."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W145-S6 -- AMENDMENT 1 step S2 STOP: entry.py and owned_report.py carry hunks that are not commentary-pdf route work (AR-y-71 ticket_id and reason, AR-y-32 retained_ref), so the source map is not edited
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W145-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~145",
+  "surfaced_at": "2026-10-14T20:03:30Z",
+  "one_line": "BLOCKING STOP under AMENDMENT 1 (S2): for entry.py and owned_report.py, the diff from the pin 361c44fa9d to the release input c4c2afe896 holds hunks that belong to AR-y-71 (420fc49e0e, 359da3005f) and AR-y-32 (94713492d8), not to AR-y-331. The order says do not edit the map. No map edit, no commit of the map, no release worktree, no build.",
+  "spec_asserts": "TO-AR-y-339 AMENDMENT 1 (S2): BEFORE editing infra/aws/lambda/ci/lambda-source-map.json, for EACH of ops/entry.py, ops/owned_report.py and reports/status_installed.py print git diff 361c44fa9d <pin> -- <repo_path> and list its hunks; every hunk must be the commentary-pdf route work (the route, operation and table entries and the AR-y-331 helper), nothing else; if ANY hunk belongs to another cell's pending change, DO NOT edit the map: STOP with a BLOCKING row naming the member, the hunk and the commit that introduced it.",
+  "world_is": "Pin 361c44fa9d40992c8cacfd625cc789536f84b920; release input c4c2afe89639071f41242fc9f663cadaffa0ffd8 (ancestor of HEAD). Positive control: git show 361c44fa9d:<member> hashes to the map's staged_from rows: ops/entry.py 4a5dd2e8..., ops/owned_report.py 542047cf...,reports/status_installed.py 326fed4f.... reports/status_installed.py: ONE hunk, the commentary-pdf route key, AR-y-331 (2a535a7859). ops/entry.py: FIVE hunks. AR-y-331 (2a535a7859): the commentary_pdf operation, the route and operation table entries, owner_read_modes and record_id_parameters. NOT AR-y-331: (a) issued(event, parameter, admit=()) and the sections() ticket_id selector (420fc49e0e, AR-y-71); (b) the reasons entry ReportTicketMismatch -> REPORT_TICKET_MISMATCH (359da3005f, AR-y-71 amendment 1). ops/owned_report.py: SEVEN hunks. AR-y-331 (2a535a7859): COMMENTARY_FAMILY and _commentary_logical_id, and the commentary_pdf method. NOT AR-y-331: class ReportTicketMismatch (359da3005f); _ticket_id and _require_ticket and the read() ticket_id parameter and check (420fc49e0e, AR-y-71); sections() ticket_id and its retained_ref projection, the _CheckedReport class and the read() return value (94713492d8, AR-y-32). The AR-y-331 COMMENTARY_FAMILY block sits in the same hunk as the AR-y-32 _CheckedReport class, so the member cannot be shipped with the route alone by a hunk-level edit. The pin bytes equal the live package, so these hunks are NOT released: they are pending changes of AR-y-71 and AR-y-32 in the merged tree.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (issuer: decide whether the pending AR-y-71 and AR-y-32 hunks ship in irpt-status release 31, and either re-pin these members or ship them knowingly under a cell that owns them; until then no worker removes the staged_from rows and no BUILD_ONLY of irpt-status runs; a later map edit that drops these rows would ship the unreviewed hunks)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff 361c44fa9d c4c2afe896 -- infra/aws/lambda/investor-reporting/ops/entry.py (worktree @9d3ee40a42)",
+      "git diff 361c44fa9d c4c2afe896 -- infra/aws/lambda/investor-reporting/ops/owned_report.py (worktree @9d3ee40a42)",
+      "git diff 361c44fa9d c4c2afe896 -- infra/aws/lambda/investor-reporting/reports/status_installed.py (worktree @9d3ee40a42)",
+      "git log -S attribution over 361c44fa9d..c4c2afe896: 420fc49e0e, 359da3005f, 94713492d8, 2a535a7859",
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-status staged_from rows for the three members, pin 361c44fa9d, UNCHANGED (no edit made)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A measured world row, not a judgment on whether the AR-y-71 and AR-y-32 changes should ship. The worker made no map edit, ran no CI builder, staged nothing and made no AWS call in this pass. The AMENDMENT 1 expected delta (four members) is not measurable until the issuer decides the pending hunks."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W145-S7 -- a first git worktree add for the release-31 build was interrupted and left a stub directory C:/dev/irpt-release-r31s/wt-status-e008b6216a that git does not register
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W145-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~145",
+  "surfaced_at": "2026-10-14T20:17:09Z",
+  "one_line": "The first `git -c core.longpaths=true worktree add --detach C:/dev/irpt-release-r31s/wt-status-e008b6216a e008b6216a` returned after its 120 s bound with the checkout still in progress; the directory holds a partial checkout and a .git file pointing at C:/dev/ajb_workspace/.git/worktrees/wt-status-e008b6216a, which does not exist, so git rejects it ('not a git repository') and it is absent from git worktree list. The build moved to a fresh worktree C:/dev/irpt-release-r31s/wt-e008-r2 at the same commit. The stub is left in place: a recursive delete needs a human.",
+  "spec_asserts": "TO-AR-y-339 step 2: create a clean release worktree OUTSIDE the repository at the pin (git -c core.longpaths=true worktree add --detach <path> <sha>); git status clean; remove it when done.",
+  "world_is": "At 2026-10-14T20:16Z: C:/dev/irpt-release-r31s/wt-status-e008b6216a exists with 18 top-level entries and a 65-byte .git file (gitdir C:/dev/ajb_workspace/.git/worktrees/wt-status-e008b6216a); the admin directory is absent; git worktree list in C:/dev/wk-irpt-anlreq-145 does not show the path; the foreground call returned rc 124 and its backgrounded continuation exited 0 with the checkout unfinished. Measured in the same run: the map at HEAD e008b6216a has 41 staged_from rows for irpt-status and the worktree's lambda-source-map.json is 401717 bytes. No build ran in the stub; nothing was written outside C:/dev/irpt-release-r31s/.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/irpt-release-r31s/wt-status-e008b6216a/.git (65 bytes, gitdir line) @ worktree stub",
+      "git worktree list in C:/dev/wk-irpt-anlreq-145 (no wt-status-e008b6216a entry) @e008b6216a",
+      "C:/dev/irpt-release-r31s/wt-e008-r2 (fresh worktree at e008b6216a, the build input)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a build input. The stub is outside the repository and outside the grant's write surface for deletion; the human who owns C:/dev/irpt-release-r31s clears it. The fresh worktree's status and HEAD are printed in the record."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W145-S8 -- AMENDMENT 1 map edit removes the only staged_from row that gives irpt-status its ops/status_installed.py, so the BUILD_ONLY build stops at 0 built, 1 failed (ERROR: File not found ops/status_installed.py)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W145-S8",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~145",
+  "surfaced_at": "2026-10-14T20:21:49Z",
+  "one_line": "The three-row removal of AMENDMENT 1 (commit e008b6216a) leaves files[] of irpt-status naming status_installed.py as a member of source_dir ops/, but the only file is reports/status_installed.py; the removed row was the sole staging of ops/status_installed.py. The BUILD_ONLY build from the release worktree at e008b6216a stopped PARTIAL, 0 built, 1 failed: ERROR: File not found: infra/aws/lambda/investor-reporting/ops/status_installed.py. No zip, no second build.",
+  "spec_asserts": "TO-AR-y-339 AMENDMENT 1: remove exactly the three staged_from rows of functions.irpt-status (ops/entry.py, ops/owned_report.py, reports/status_installed.py) so the package ships the pending hunks; step 2: build from a release worktree at the map-edit commit; if the build STILL fails, STOP with a row naming the first error.",
+  "world_is": "At e008b6216a (release worktree C:/dev/irpt-release-r31s/wt-e008-r2, status 0 lines, HEAD e008b6216a, BUILD_ONLY count 8 equal to the live base 15a387dd36): build-and-upload.sh investor-reporting irpt-status with TMPDIR=C:/dev/irpt-release-r31s/tmp-status, BUILD_ONLY=1, MSYS_NO_PATHCONV UNSET printed 41 'OK: staged ... sha256 verified' lines (all 41 remaining staged_from rows), then 'ERROR: File not found: infra/aws/lambda/investor-reporting/ops/status_installed.py' and 'PARTIAL -- 0 built, 1 failed: irpt-status' (log C:/dev/irpt-release-r31s/logs/build1.log). Measured: ops/status_installed.py does not exist at e008b6216a (git show rc 128); reports/status_installed.py does (rc 0); lambda-source-map.json lists \"status_installed.py\" in functions.irpt-status files[] (line 5366), and the builder checks every files[] member exists under source_dir before packaging (build-and-upload.sh around line 436). The S1 staging defect did not recur: the 41 staged writes landed in the release tree and the worktree was back to 0 status lines after the run. Only the status_installed row is the defect: entry.py and owned_report.py exist under ops/ and built from their HEAD bytes.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (issuer: decide how reports/status_installed.py reaches the irpt-status package. Either a further map edit that repoints the files[] member (outside this order's one-edit grant) or a source placement under ops/ (outside the grant); until one of them lands no BUILD_ONLY of irpt-status runs from e008b6216a, and the map commit on wk-IRPT_ANLREQ-145 must not be drained into CLOUD as the release map)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/irpt-release-r31s/logs/build1.log (the 41 OK lines, the ERROR line, the PARTIAL line)",
+      "git show e008b6216a:infra/aws/lambda/investor-reporting/ops/status_installed.py (rc 128, absent) and reports/status_installed.py (rc 0, present)",
+      "infra/aws/lambda/ci/lambda-source-map.json @e008b6216a functions.irpt-status files[] line 5366 and staged_from (41 rows)",
+      "infra/aws/lambda/ci/build-and-upload.sh @e008b6216a (files existence check before packaging)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A measured build failure after the one authorised map edit. The order's STOP rule applies: no second map edit, no source move, no zip. The map commit e008b6216a stays on the worker branch unmerged; it is not reverted here because the revert is an act the issuer orders."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W145-S9 -- the committed map at the live package's deploy commit does not build the live bytes: it pins ops/status.py to a blob the live package does not carry, and only one pin edit reproduces the live zip
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W145-S9",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~145",
+  "surfaced_at": "2026-10-14T20:54:17Z",
+  "one_line": "At the deploy commit d39886e4aa (the release-29 input; the map's last_deployed_commit 15a387dd36 gives the same result) the committed source map pins ops/status.py to blob a4b7c48fad (03fa9c78c9dd), while the live package carries d39886e4aa's own ops/status.py (87048c7f4d00); a BUILD_ONLY at that commit with its map as committed gives CodeSha256 MIVrDbv+, not the live yNpw441T. With that one row re-pinned to d39886e4aa, the same build is byte-identical to the live zip.",
+  "spec_asserts": "TO-AR-y-339 step 3 (the AR-y-320 no-move control): build the live package's own source commit, read from the live package's last record, and show it reproduces the live CodeSha256; if it cannot be found, say so and print what could not be reproduced.",
+  "world_is": "Live, read-only, this pass: get-function CodeSha256 yNpw441TP5aMGYuZqkHQAPjAiQJDEPk7q8kFeDiIRIg=, CodeSize 363818; the downloaded zip sha256 c8da70e38d533f968c198b99aa41d000f8c089024310f93babc9057838884488, 49 members. BUILD_ONLY at 15a387dd36 (the map's last_deployed_commit), map as committed: CodeSha256 MIVrDbv+/w8ioVB24xS97gnETVbNRCroDiY+Ne5osbA=, one differing member status.py (its row pins a4b7c48fad, blob 03fa9c78c9dd). BUILD_ONLY at d39886e4aa (the release-29 worktree commit), map as committed: the same MIVr value and the same one differing member. BUILD_ONLY at d39886e4aa in a control worktree (C:/dev/irpt-release-r31s/wt-control-d39886e4aa) with only the status.py row of its map re-pinned to d39886e4aa and sha256 87048c7f4d00ba33c87de1a223a36b53e3487ed7414d613ee744984bcaef6030 (uncommitted, control only): zip sha256 c8da70e38d533f968c198b99aa41d000f8c089024310f93babc9057838884488, byte-identical to the live zip, 49 of 49 members unchanged. Logs: C:/dev/irpt-release-r31s/logs/control-15a387-build.log, control-d39886-build.log, control-d39886-pinned-build.log.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show d39886e4aa:infra/aws/lambda/investor-reporting/ops/status.py | sha256sum = 87048c7f4d00ba33 (equal to the live member)",
+      "infra/aws/lambda/ci/lambda-source-map.json @d39886e4aa and @15a387dd36 functions.irpt-status staged_from row for ops/status.py (pin a4b7c48fad, sha256 03fa9c78c9dd...)",
+      "C:/dev/irpt-release-r31s/tmp-control-d398b/lambda-artifact-irpt-status.zip (control zip, byte-identical to the live download)",
+      "org/critical_paths/change_management/20261014T1211Z_irpt-status-r29-20261014_deploy_completion.md (the live deploy record; the release leg built status.py with the CORRECTION_WORDS change)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This supersedes the NOT REPRODUCED reading of S3 for the zip level: the live package is reproduced at d39886e4aa once its map pins status.py to that commit. The release map af51e37a29 already pins status.py to d39886e4aa with the live sha256, so the release delta is measured on the four members only. The deploy's map on the trunk is not the map at the deploy commit; the issuer decides whether a later record should say so. No deploy, upload or write call was made; the control worktree's map edit is not committed."
+}
+]
+```
