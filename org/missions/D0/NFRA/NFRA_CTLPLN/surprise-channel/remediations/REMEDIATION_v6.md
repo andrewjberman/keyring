@@ -24,9 +24,13 @@ Seven rows; three ARMED (S9122, S9119, S9120). C-S45 graduates S9119 and S9120. 
   "owner": "2.0.0_SA_COO~C",
   "round": "v15",
   "remediation": {
-   "state": "OPEN",
+   "state": "CLOSED_UNREMEDIATED",
    "owner": "2.0.0_SA_COO~C",
-   "round": "v15"
+   "round": "v15",
+   "closure": {
+    "reason": "ACCEPTED_BY_RULING",
+    "pointer": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261013_213xZ_LAPTOP_E846_7D95_BB8B.md"
+   }
   },
   "disarm": {
    "state": "ARMED",
