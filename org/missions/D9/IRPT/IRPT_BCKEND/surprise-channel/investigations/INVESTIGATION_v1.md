@@ -33418,3 +33418,53 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. W372-S1: NO reader of account_activity_daily is named anywhere in the repository (searched infra/aws/lambda non-test, lib, data/assets, the portal checkout): a backfill of 565 days would fill a table nothing reads; NOT mine to fix; put to the CTO (my COO half names it as a purpose gate for the first real run). W372-S2 and S3: the handler's chunk bound (25 days) admits a run the 900-second timeout cannot finish, and a 4-day chunk at the round-186 rate leaves about 33 seconds: the packet derives chunks of about 4 days; my COO half signs no chunk above 2 days until a one-day lots-only run is timed; the code admission of an unfinishable 25-day run is a latent defect of the handler (a lots-only 25-day event would time out mid-chunk and leave days half-written), STAYS as an armed condition of any run, not repaired here. W372-S4: the trunk ledger of D2's irpt-dashbd-thresholds-swap-20261013 reads HELD at leg L7 while the live function runs its bytes, with nine stale marker copies OPEN: the code release waits for it to close (condition 1 of my half); owner D2 (2.0.0_SA_COO~D2); named to the CTO. W373-S1 (the served basis TABLE is also written by the bd-securities fallback): the would-move counts are an UPPER BOUND, not the rule's reach: 32 (49financial: SNOXX, SNSXX, SNVXX, SWVXX), 253 (cottonwood: FDRXX, SWVXX, VUSXX, plus 206 prefixed identifiers withheld) and 841 (inflection: FDRXX, SPAXX), of which the fallback branch (basis NAME_ALIAS, untouched by the rule) accounts for 0, 215 and 67; the canonical table holds 11,361 rows, 365 with a cash sub-class. THE BUILD'S FIRST CHECK: that FDRXX on Inflection resolves on the CANONICAL branch (so the rule moves it); if it comes from the fallback, the shared rule must also cover the fallback layer, which D2's proposal leaves unchanged: this is the question the after-read (Andrew's Inflection client showing FDRXX as Cash) turns on. W373-S2 (the dell2 identity can scan the canonical table): INERT, a permission fact; the scan was count-only. W373-S3 and S4: cottonwood's newest accepted publication is 2026-10-08 and its candidates since are REFUSED (one lost account): see D2-S158, ARMED. W373-S5 (a malformed fence in the worker's own row, caught by the gate on the next commit): the worker's defect, repaired before the merge; the channel parses. NOT measured anywhere: any value or holding, the default report's arithmetic."
 }
 ```
+
+## IRPT_BCKEND-D2-S160 -- The read of Cottonwood's lost account (CTO ruling call 3, step 1): not closed, not re-keyed, missing from the 
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S160",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T03:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The read of Cottonwood's lost account (CTO ruling call 3, step 1): not closed, not re-keyed, missing from the allocations feed since 2026-10-09 with its holdings, assignment and transactions intact; and the gate's all-UNKNOWN exemption is defeated by carried-forward TERMINATED directory entries.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/COTTONWOOD_LOST_ACCOUNT_READ_20261014.md: the table of six sources by three dates, with the positive control (3 of 3 sibling accounts found by the same id mapping)",
+      "the refusal record read 2026-10-13/14 (condition account_lost count 1; candidate 2026-10-12; served 2026-10-08); landed directories 2026-10-08, 09, 12 (entries 271, TERMINATED 2, 10, 2); holdings_snapshot.py evaluate_publish_gate and directory_marks_no_closures read at HEAD"
+    ]
+  },
+  "spec_asserts": "A lost account is refused unless the source records it closed, or the firm's directory marks every entry UNKNOWN (PRD v0.33); a staleness is counted in trading days.",
+  "world_is": "The one account is in no source status field as closed or transferred; the same key still holds 2 holdings rows (value zero at 2026-10-12), its model assignment and its transactions, and it is absent only from fact_allocations from 2026-10-09; the served publication is 4 trading days behind. Cottonwood's directory carries TERMINATED entries (clients carried forward as removed from source, effective 2026-10-08), which makes the all-UNKNOWN test false, so the gate refuses where PRD v0.33 meant to list. Two questions are the CTO's: treat a zero-value account dropped from the allocations feed as left (a branch-2 pair removing that one account, rollback to the 2026-10-08 snapshot), and whether the exemption should ignore carried-forward TERMINATED entries. D2-S158 stays ARMED, owner the CTO."
+}
+```
+
+## IRPT_BCKEND-D2-S161 -- FDRXX resolves on the CANONICAL branch: the canonical table holds it as fixed_income with sub_asset_class Cash
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S161",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T03:00:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "FDRXX resolves on the CANONICAL branch: the canonical table holds it as fixed_income with sub_asset_class Cash, so the cash rule moves it; the rule is canonical-only and the build (IB-pr-527) is cut on that.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dynamodb scan of etf-classifications read in memory 2026-10-14 ~02:5xZ: 11,361 rows, paginated to the end (no LastEvaluatedKey), 365 with sub_asset_class Cash, 22 Money Market, 11 T-Bill; FDRXX, SPAXX, SWVXX, VUSXX, SNOXX, SNSXX and SNVXX each hold asset_class fixed_income with sub Cash; TIMXX has no canonical row",
+      "holdings_snapshot.py classify_security lines 972-994 at HEAD: canonical first, fallback only on a miss"
+    ]
+  },
+  "spec_asserts": "The class rule's first check is whether FDRXX on Inflection resolves on the canonical branch (CTO ruling 2026-10-14, 'Also noted').",
+  "world_is": "The canonical row exists and carries the Cash sub-class, so the rule reaches FDRXX wherever the canonical branch answers. Whether Inflection's FDRXX NODES come through that branch (rather than the fallback) is measured by IB-pr-528 (the node count and the split). Cash-subclass holdings that the fallback layer serves (215 on Cottonwood and 67 on Inflection by IB-pr-526's upper bound) stay fixed_income under a canonical-only rule: the cross-page consistency question goes in the packet and to the CTO. TIMXX, which Andrew's upload named, has no canonical row, so a proxy is the right path for it; not this round."
+}
+```
