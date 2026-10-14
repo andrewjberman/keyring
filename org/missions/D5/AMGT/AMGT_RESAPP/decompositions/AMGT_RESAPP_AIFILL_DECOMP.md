@@ -284,3 +284,46 @@ fanout:
 ```
 
 **Uncovered, with owners (not holes):** the round-106 grounding pass (items 4(a) to 4(f) of the ruling): one issuance by `~R2` after the hold lands; the fc-4 proof instance re-seat (ruling 3): `~R2`, now; the restore of the blocks: the CTO's word after a MET re-read.
+
+## 14. ADDENDUM 5 -- ROUND 106 OF WORKSTREAM `AIFILL`: THE GROUNDING PASS (CTO ruling items 4(a) to 4(f)), 2026-10-14 ~06:0xZ
+
+Source: `ledger/CTO_RULING_FWD41_FIVE_NAME_READ_NOT_MET_20261014.md` item 4 and the CVO's rows C-S143 to C-S146 (`surprise-channel/adjudications/ADJUDICATION_v129.md`). The AI-fill blocks are HELD off the served API (cell `AMGT-ar-7`, applied 05:10Z). Round 106 changes the producer so that no sentence is stored that its cited source does not carry; the CTO's grade is: re-run all 95 names, re-validate them,
+then the CVO reads five NEW names drawn by sha256 over the date; the blocks return to the page only after that read is MET (ceiling 150 USD for the grounding pass and the re-run together).
+
+| id | cell | slot | class | risk | write set | serves | item |
+|---|---|---|---|---|---|---|---|
+| `AMGT-gr-1` | real sentence ends (never `Ps.`) and answer segments joined with a space: `sentences.py`, the seam | worker `~450` | worker | LOCAL | `lib/research/aifill/{sentences,model}.py`, two test modules | FWD-41 text | 4(b), 4(c) |
+| `AMGT-gr-2` | fetch a cited page and say what happened to it: `sources.py` | worker `~451` | worker | LOCAL | `lib/research/aifill/sources.py`, one test module | FWD-41 grounding | 4(a), 4(f) |
+| `AMGT-gr-3` | the grounding step: every sentence against the text of its sources, quotes checked mechanically: `grounding.py` | worker `~452` (STAGED on gr-1, gr-2, gr-4) | worker | LOCAL | `lib/research/aifill/grounding.py`, one test module | FWD-41 grounding | 4(a) |
+| `AMGT-gr-4` | the contract carries the grounding record and can refuse a block without one (switch OFF here) | worker `~453` | worker | LOCAL | `lib/research/aifill/contract.py`, one test module | FWD-41 grounding | 4(a) |
+| `AMGT-gr-5` | the orchestrator grounds every filled block; the run command supplies the fetcher | worker `~454` (STAGED on gr-1 to gr-4) | worker | LOCAL | `orchestrate.py`, `run.py`, three test modules | FWD-41 grounding | 4(a) |
+| `AMGT-gr-6` | the five builders use the shared cut; the bio never restates the pack passage | worker `~455` (STAGED on gr-1) | worker | LOCAL | five `block_*.py`, three test modules | FWD-41 text | 4(b), 4(e) |
+| `AMGT-gr-7` | the `About this data` panel reads the AI-fill input it renders (portal branch `cand/dell1/aifill-provenance`) | worker `~456` | worker | LOCAL | `portal/src/pages/SecurityAnalysis/{components/InputProvenance,SecurityAnalysis}.tsx`, the receipt | FWD-41 page | 4(d) |
+| `AMGT-gr-8` | the contract REQUIRES the record (switch ON); drafts are drafts; the earlier tests follow | worker `~457` (STAGED on gr-5, gr-6) | worker | LOCAL | `contract.py` (one line), the builders' `make_block` calls, the test tree | FWD-41 grounding | 4(a) |
+
+Item 4(f)'s second half ("citations that support no sentence are dropped") is done by the grounding record rule (gr-4's `support` check, gr-5's pruning); its first half (paywall-titled chips) by `sources.is_paywall_title` used in gr-3.
+
+**Edges and fan-out.** gr-1, gr-2, gr-4 and gr-7 are heads with no unmet dependency (PENDING at the issuance). gr-6 imports `sentences` (gr-1). gr-3 imports `sentences` (gr-1), `sources` (gr-2) and is checked against `contract` (gr-4). gr-5 imports `grounding` (gr-3) and `contract` (gr-4). gr-8 follows gr-5 and gr-6.
+No two orders name the same file except the test files gr-5, gr-6 and gr-8 each touch for their own breakage, which are serialized by the dependency order. M = 4 head chains (gr-1; gr-2; gr-4; gr-7); live concurrency 4 at the issuance, 1 more when gr-1 merges (gr-6), 1 more when gr-1, gr-2, gr-4 have merged (gr-3), then gr-5, then gr-8: 8 orders, cap 8.
+
+```
+gr-1 -> gr-3 ; gr-1 -> gr-5 ; gr-1 -> gr-6
+gr-2 -> gr-3 ; gr-2 -> gr-5
+gr-4 -> gr-3 ; gr-4 -> gr-5
+gr-3 -> gr-5
+(gr-5, gr-6) -> gr-8
+gr-7   (independent head: a portal branch)
+fanout:
+  cap: 8
+  orders_total: 8 (gr-1 to gr-8)
+  chains_total: 4
+  wave_pending: [gr-1 ~450, gr-2 ~451, gr-4 ~453, gr-7 ~456]
+  wave_staged: [gr-6 ~455 (after gr-1), gr-3 ~452 (after gr-1, gr-2, gr-4), gr-5 ~454 (after gr-3), gr-8 ~457 (after gr-5, gr-6)]
+  portal_ref: 7db035e4 (the nested portal repository's PROD release, for gr-7)
+  no_s3_deletes: true
+  egress: none by any order (stub transports and stub models); the issuer's re-run calls the Anthropic API and fetches the cited pages (declared agent)
+```
+
+**Every check was dry-run at the base and proven satisfiable** by the issuer's reference implementation in a scratch tree (gr-1 28 of 28, gr-2 21, gr-3 18, gr-4 26, gr-5 20, gr-6 15, gr-7 11, gr-8 9 of 10 with the tenth arm being the helper file the cell creates); the unchanged builders read 10 FAIL arms in gr-6's check.
+
+**Uncovered, with owners (not holes).** (1) The release of the API hold and the return of the blocks to the page: the CTO's word after the CVO's re-read of five NEW names reads MET; the restore is one `safe-apply` by a CloudOps seat (`AMGT-ar-7`'s reverse). (2) The re-run of all 95 names under the new producer and its re-validate: the issuer, after gr-8 merges, under the CTO's 150 USD ceiling (a store-half addendum names it and the measured spend). (3) The CVO's five-name re-read, names drawn by sha256 over the date. (4) The portal release of gr-7's branch: the issuer registers the approval row after the read is MET; the DT promotes. (5) Round-107 candidates, not cut: PDF text extraction (5 of 78 sampled citations are PDFs and are UNSUPPORTED here); a fetch retry policy; the served API stripping the grounding record from the page payload.
