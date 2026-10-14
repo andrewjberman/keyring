@@ -14910,3 +14910,29 @@ name the one known failure instead of silently inheriting it.
     "notes": "INERT inside its coverage window; the regeneration deadline is before 2028."
   }
   ```
+
+```json
+{
+    "id": "NFRA_OPLGTW-Z-W85-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~85",
+    "surfaced_at": "2026-10-14T18:21:00Z",
+    "one_line": "The naming gate refuses 9 of the 10 S3 literals the etfs_funds module must hold (the bucket literal passes), so FIRST ACT stops OG-et-2 before any build.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GATE: .tools/naming-gate.py@7c411780ad run as 'python .tools/naming-gate.py --diff .scratch/first_act_literals.diff --enforce' (scratch diff staged from the order's FIRST ACT list, not committed) -> 'NAMING-GATE: REFUSE 10 graded', rc=1. Line 2 opal-data-etfs CONFORMANT as S3_BUCKET; lines 4-7 and 9-13 (silver/netassets_daily.parquet, silver/holdings/, gold/holding/, gold/book/, s3://opal-data-etfs/silver/netassets_daily.parquet) each REFUSE 'NEW and OUT-OF-PATTERN as S3Key', suggestion template {source}/{scope}/<key>.",
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-et-2.etfs-funds-tools.md@7c411780ad lines 41-42: FIRST ACT 'A refused literal: STOP, file ONE BLOCKING row ... Never split a string or override', and the premise 'The gate grades the bucket literal and s3:// URIs, not bare keys.'",
+        "CONTRACT: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G5_etfs.md@7c411780ad lines 474-475: \"bucket\": \"opal-data-etfs\" and \"s3_prefix\": \"silver/netassets_daily.parquet\" -- the contracted keys carry no {source}/{scope} segment."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's FIRST ACT premise (line 42): the naming gate grades the bucket literal and s3:// URIs, not bare keys, so staging the key and prefix literals of the etfs_funds module does not stop the build.",
+    "world_is": "On the live gate the bucket literal opal-data-etfs is CONFORMANT as S3_BUCKET, but the bare key and prefix literals and the s3:// URI are each REFUSED as NEW and OUT-OF-PATTERN as S3Key (template {source}/{scope}/...). Per the FIRST ACT the build stops at this refusal. Nothing was split, overridden or committed into app/; no module was written.",
+    "notes": "BLOCKING because the order's own rule stops the build at a refused literal; INERT because no code or deploy artifact carries the refused literals. The fix is the naming owner's (a registry row or a builder output for the keys), not the worker's."
+}
+```
