@@ -2322,3 +2322,110 @@ used as fixtures is a different read with a different denominator.
  "notes": "Disarms D2-S46 on its owner's read of Andrew's word; nothing measured live by this row."
 }
 ```
+
+### TCKT_VNEXT-D2-W42-S1 -- the candidate is cut from DEV, while CONTRIBUTING-BOXES says cut from PROD and re-cut before registration
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W42-S1",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~42",
+  "surfaced_at": "2026-10-14T19:45:44Z",
+  "one_line": "The order cuts the candidate from origin/DEV 9e637fe51e, but portal/CONTRIBUTING-BOXES.md says to cut from the last PROD release and to re-cut a DEV-cut branch onto PROD before it is registered.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~V2 (registers cand/dell2/tckt-meeting-request with open-calls.py; re-cuts it onto origin/PROD first, per CONTRIBUTING-BOXES step 2)",
+  "spec_asserts": "WORKER FACE step 1: base_tip is the portal worktree HEAD at origin/DEV 9e637fe51ebfa6322910cc032945a1e755e9ea13, and the candidate branch is cut from it.",
+  "world_is": "CONTRIBUTING-BOXES.md at 9e637fe51e says a feature branch is cut from the last PROD release, never from DEV. Live reads at 2026-10-14T19:45Z: origin/PROD = 5ab67a651a626e7224de0a2cf03a2223f99dc15e and origin/DEV = 9de7c7e3227c321d45c2b6d3d3ccf72590b20710. An earlier read in this session gave origin/PROD = fa10e75861, so PROD moved in between. The base 9e637fe51e is an ancestor of origin/DEV (5 commits behind) and not of origin/PROD. The candidate 9e07fa320c is committed on the order's base and was NOT re-cut. The branch is LOCAL and unpushed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/CONTRIBUTING-BOXES.md@9e637fe51ebfa6322910cc032945a1e755e9ea13 lines 15-21 (Build steps 1 and 2)",
+      "git -C portal ls-remote origin refs/heads/PROD -> 5ab67a651a626e7224de0a2cf03a2223f99dc15e (measured 2026-10-14T19:45Z)",
+      "git -C portal ls-remote origin refs/heads/DEV -> 9de7c7e3227c321d45c2b6d3d3ccf72590b20710 (measured 2026-10-14T19:45Z)",
+      "portal commit 9e07fa320cf55945e3ab1d391ce7716e7daac9d4 on wk-TCKT_VNEXT-42-portal, parent 9e637fe51ebfa6322910cc032945a1e755e9ea13"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The order fixes the base, so this row does not re-cut it. Registration is the issuer's act."
+}
+```
+
+### TCKT_VNEXT-D2-W42-S2 -- the order's line numbers for TicketCenter.tsx point at other code
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W42-S2",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~42",
+  "surfaced_at": "2026-10-14T19:45:44Z",
+  "one_line": "The order's line ranges for src/pages/TicketCenter/TicketCenter.tsx do not hold the code it names: the showCreate panel is at 668-735, not 458-521; handleCreate at 484-506, not 383; the board rows at 803-853, not 589-637.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "WORKER FACE step 2 (read first): the showCreate panel about lines 458-521, handleCreate about 383 and the board rows about 589-637 of TicketCenter.tsx.",
+  "world_is": "At base 9e637fe51e the file has 891 lines. The create panel is at 668-735, handleCreate at 484-506, and the board rows at 803-853. The cited ranges hold other code. The cell's content was found by reading the file, not by the numbers, and no edit depended on them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx@9e637fe51ebfa6322910cc032945a1e755e9ea13 (891 lines; showCreate panel at 668-735; handleCreate at 484-506; board rows at 803-853)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Stale citation only. Nothing measured live by this row."
+}
+```
+
+### TCKT_VNEXT-D2-W42-S3 -- the trade branch of the create panel cannot be reached through the page's type list
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W42-S3",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~42",
+  "surfaced_at": "2026-10-14T19:45:44Z",
+  "one_line": "The create panel's type list filters trade_request out (Andrew-direct 2026-10-13), so the order's per-branch test of the trade branch cannot be run through the mounted page.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "WORKER FACE step 3: the trade, analysis, service and other branches of the create panel render as before, a test per branch.",
+  "world_is": "TicketCenter.tsx at 9e637fe51e lines 681-685 build the type select from TICKET_TYPE_LABELS with the trade_request entry filtered out, so no UI path selects trade. The candidate's test covers the trade branch only at the decision level (drawsOwnForm('trade_request') is true). The analysis, service and other branches are mounted and tested.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx@9e637fe51ebfa6322910cc032945a1e755e9ea13 lines 681-685 (the filter and the Andrew-direct comment)",
+      "portal/src/pages/TicketCenter/__tests__/meeting-request.test.tsx (candidate 9e07fa320c): test 'the trade branch is decided the same way, and trade is still not offered in the type list'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The trade branch's render is unchanged in code. It is not mounted by any test."
+}
+```
+
+### TCKT_VNEXT-D2-W42-S4 -- the scope rule and the cell's hiding rule force the trade-named gating lines to change
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W42-S4",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~42",
+  "surfaced_at": "2026-10-14T19:45:44Z",
+  "one_line": "The cell hides the generic title, details and Create controls for meeting_request, and AC3 bans added TicketCenter.tsx lines that name trade_request. The three trade-named gating conditions at base lines 687, 725 and 726 were therefore replaced through drawsOwnForm() in MeetingRequestParts.tsx.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~V2 (orders TO-R18-P2 after P1 and decides the merge of TicketCenter.tsx lines 687, 725, 726 and the import line)",
+  "spec_asserts": "WORKER FACE step 2: touch no other branch of TicketCenter.tsx, and TradeRequestParts.tsx and the trade branch are TO-R18-P2's. AC3: no added TicketCenter.tsx line mentions trade_request, TradeRequestForm or analysis_request.",
+  "world_is": "The three conditions read newType !== 'trade_request' at base. The candidate writes !drawsOwnForm(newType), which is true for trade_request and meeting_request, so the trade gating behaviour is unchanged. The trade branch of the ternary is not edited. The meeting branch is inserted before the analysis branch line. TO-R18-P2 edits the same file and may conflict on these three lines and on the import line.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx@9e637fe51ebfa6322910cc032945a1e755e9ea13 lines 687, 725, 726 (the three trade-named gating conditions)",
+      "portal commit 9e07fa320cf55945e3ab1d391ce7716e7daac9d4, file TicketCenter.tsx: 20 added lines, none naming trade_request, TradeRequestForm or analysis_request (scope_check_mt3.py: SCOPE-OK)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Behaviour preserved, text changed. The P2 merge is the place it can bite."
+}
+```
