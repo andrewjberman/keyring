@@ -1,0 +1,20 @@
+# e97 advisors/bars cause check (2.0.0_SA_COO~M1, 2026-10-14 ~01:55Z), CTO call 1108 disarm condition: advisor-day gaps vs the firm AUA movement.
+# Advisor keys are shown as sha1[:8] (opaque); source script: scratchpad gap_equals_move.py (reads the served mix_daily_summary via lib/platinum_dest.source(), the committed advisor_window_table.csv and aua_vs_firm_by_date.csv).
+PER-DATE: firm_move = served firm total - committed Oct-12 AUA; sum_adv_gap = sum over the 56 advisors of (served advisor total - committed rebuilt advisor total)
+2026-09-25 firm_move=263.15 sum_adv_gap=263.12 diff=-0.03 advisors_beyond_250=[('4b62e655', 263.1492450237274)]
+2026-09-26 firm_move=262.58 sum_adv_gap=262.57 diff=-0.01 advisors_beyond_250=[('4b62e655', 262.5755990445614)]
+2026-09-27 firm_move=262.01 sum_adv_gap=262.01 diff=-0.00 advisors_beyond_250=[('4b62e655', 262.011952906847)]
+2026-09-28 firm_move=261.44 sum_adv_gap=261.42 diff=-0.02 advisors_beyond_250=[('4b62e655', 261.4391687512398)]
+2026-09-29 firm_move=261.44 sum_adv_gap=261.47 diff=0.03 advisors_beyond_250=[('4b62e655', 261.43906649947166)]
+2026-09-30 firm_move=258.97 sum_adv_gap=258.99 diff=0.02 advisors_beyond_250=[('4b62e655', 258.9693033397198)]
+2026-10-01 firm_move=259.73 sum_adv_gap=259.76 diff=0.03 advisors_beyond_250=[('4b62e655', 259.727872133255)]
+2026-10-02 firm_move=254.03 sum_adv_gap=254.05 diff=0.02 advisors_beyond_250=[('4b62e655', 254.02550813555717)]
+2026-10-03 firm_move=254.85 sum_adv_gap=254.82 diff=-0.03 advisors_beyond_250=[('4b62e655', 254.85188660025597)]
+2026-10-04 firm_move=255.68 sum_adv_gap=255.70 diff=0.02 advisors_beyond_250=[('4b62e655', 255.67826557159424)]
+2026-10-05 firm_move=256.50 sum_adv_gap=256.50 diff=0.00 advisors_beyond_250=[('4b62e655', 256.49592038989067)]
+2026-10-06 firm_move=257.64 sum_adv_gap=257.61 diff=-0.03 advisors_beyond_250=[('4b62e655', 257.6431649029255)]
+2026-10-07 firm_move=252.13 sum_adv_gap=252.10 diff=-0.03 advisors_beyond_250=[('4b62e655', 252.13204017281532)]
+2026-10-08 firm_move=249.09 sum_adv_gap=249.08 diff=-0.01 advisors_beyond_250=[]
+2026-10-09 firm_move=-30914.72 sum_adv_gap=-30914.70 diff=0.02 advisors_beyond_250=[('6fa27023', -30914.71883955598)]
+WORST |sum_adv_gap - firm_move| over 15 dates = 0.03
+every advisor beyond 250 equals the firm move of its date: True
