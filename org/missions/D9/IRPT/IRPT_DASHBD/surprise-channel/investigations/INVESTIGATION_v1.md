@@ -12768,3 +12768,27 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S45",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T21:45:36Z",
+  "one_line": "Issuer's disposition of worker 181's row W181-S1 (the Orion accountNumber holds a digit run on every account, against the ruling's premise that it holds text fragments): the field qualifies as the custodian number under the round-111 rule; this round's labels use no stored field, so the hazard is disarmed here and the finding goes to the CTO's next round analysis.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The CTO's round-111 ruling: Inflection's accountNumber field carries text fragments, not a custodian number; DB-b-226 reads which field holds the custodian number (95 percent of accounts with a digit run of at least 4, stable across sampled partitions, unique).",
+  "world_is": "W181-S1 (ARMED, mine): of 217 string columns over 8 silver tables and 20 partitions, 3 qualify: Orion fact_positions accountNumber (980 distinct values over the 980 dry-run accounts, a digit run of 4 or more on each, the same value across five sampled partitions), Orion fact_assets accountNumber and Eclipse fact_portfolios_simple accountNumber (753 keys). The round-109 and round-110 labels printed the LAST FOUR CHARACTERS of that value, which for some accounts are letters, so the label showed a text tail: the value is an identifier that holds a digit run AND other characters, not a text fragment and not digits only. Disarmed for this round: DB-b-225 prints 'Account <n> of <N>' for every account and reads no stored field, so no render prints a fragment; the finding for the next round, for the CTO to rule: the label may take the last four DIGITS of the value's longest digit run, printed as 'ending NNNN', from fact_positions.accountNumber (the field this read names), keeping the position label for an account without a run of 4 digits. Not decided here (a label rule is the CTO's ruling).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~181/RD_ACCOUNT_NUMBER_FIELD_R111.json at the merge edaefd57d3 (counts and column names)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r111/p111_acctfield.py: DB111-3-AC1 PASS on the landed tree",
+      "worker 181's row W181-S1 and report"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
