@@ -10404,3 +10404,79 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W163-S1 -- the order's round-103 absent-member premise (73 of 117) measures 38; the 73 is the round-101 sample's count
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W163-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~163",
+  "surfaced_at": "2026-10-14T11:22:33Z",
+  "one_line": "TO-DB-b-198 names 73 absent members of 117 in the round-103 sample; the round-103 sample measures 38",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-198 section 2 (MECE): the domain is the sample's absent members, stated as 73 of 117 in the round-103 sample; the checker recomputes the count from the sample.",
+  "world_is": "The round-103 sample (sha256 25446cfc...) holds 38 absent members at member grain and 79 filled of 117 (its BUILD_COUNTS.json reads members_absent 38, members_filled 79). The 73 figure reproduces on the round-101 sample (sha256 76a48793...) under the same member definition. The proposal and the record carry the measured 38; no count was set to the order's figure.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-198.contract-041-percent-points-and-the-absent-kind-proposal.md@dd23753559 (the MECE clause of the cell)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r101/p101_round101.py@dd23753559 (member_absent docstring: 73 on the round-101 sample)",
+      "C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~159/BUILD_COUNTS.json (members_absent 38)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W163-S2 -- the census scope's portal path is a submodule; git grep on the superproject reads none of its 824 tracked files
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W163-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~163",
+  "surfaced_at": "2026-10-14T11:22:33Z",
+  "one_line": "git grep over the declared census scope reads 0 of the 824 tracked files under portal/src/pages/InvestorReporting, because portal is a gitlink",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-198 section 2 (Token census): git grep -w -c <TOKEN> -- portal/src/pages/InvestorReporting org/standards org/missions/D9/IRPT data/assets/scripts/gold/irpt_reporting, with files_scanned as the git ls-files count of the same scope.",
+  "world_is": "portal is a submodule (index mode 160000, commit 4d6010234e). Without --recurse-submodules git grep reads no file under it, so files_scanned (6153) leaves out its 824 tracked files. A supplementary git -C portal grep reads NOT_HELD in 3 files (9 hits) and the other three tokens in 0 files. The record carries the method as written and the portal count beside it, labelled.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -s portal at the worktree HEAD dd23753559 (mode 160000)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-198.contract-041-percent-points-and-the-absent-kind-proposal.md@dd23753559 (section 2, Token census clause)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W163-S3 -- two of the four proposed absent-kind tokens already carry other meanings in the estate
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W163-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~163",
+  "surfaced_at": "2026-10-14T11:22:33Z",
+  "one_line": "NOT_HELD is a holdings-census source status in IRPT_YCDGEN; NOT_APPLICABLE is a comp-tool answer-state token",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-198 section 2: the closed vocabulary (NOT_HELD, NOT_APPLICABLE, NO_SOURCE_YET, INSUFFICIENT_HISTORY) is proposed as a new word set; a token that already exists with another meaning is a finding to be stated.",
+  "world_is": "git grep -w finds NOT_HELD in the IRPT_YCDGEN decomposition R5 and in its deliverables overview_coverage.json, as a holdings-group source status (the firm does not hold the group), and in portal test names. NOT_APPLICABLE is the comp-tool answer state in org/standards/COMPTOOL_ANSWER_STATE.enum.json (11 hits) and an inflection in org/standards/MDPF_TAXSMA_DATA_CONTRACT.json. NO_SOURCE_YET and INSUFFICIENT_HISTORY carry no prior meaning in the scope. No code reads absent_kind, so the collision is latent. The proposal states it and leaves the spelling or the namespace to the CTO ruling.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/decompositions/IRPT_YCDGEN_DECOMP_R5.md at dd23753559 (NOT_HELD group status)",
+      "org/standards/COMPTOOL_ANSWER_STATE.enum.json at dd23753559 (state NOT_APPLICABLE)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
