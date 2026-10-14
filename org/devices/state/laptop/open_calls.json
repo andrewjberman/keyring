@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "laptop",
- "written_at": "2026-10-13T22:31:07Z",
+ "written_at": "2026-10-14T03:08:36Z",
  "written_by": "1.0.0_SA_CTO",
  "rows": [
   {
@@ -789,6 +789,127 @@
     "by": "1.0.0_SA_CTO",
     "reason": "a CLAUDE.md law edit: Andrew's word only"
    }
+  },
+  {
+   "id": "laptop-20261013T235305Z-8fb2",
+   "project": "COMM_ASSIST",
+   "subject": "Ask muse once: \"what is waiting on me?\" (FWD-6's exercise: muse reads the dell2 folder and shows every item with its age)",
+   "asked_by": "2.0.0_SA_COO~CA",
+   "source": "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r17/MUSE_READ_CARD.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-13T23:53:05Z",
+   "kind": "act",
+   "context": "Dell2's folder now carries ages and object_id on every item (MSTR~DELL2 read 23:4xZ). FWD-6 is exercised by one real read in muse, which only Andrew's muse can make. It gates FWD-6's grade and FWD-12, muse's efficacy against the text path, which decides whether the Kimi/Quo fallback can retire.",
+   "rec": "Ask muse the one question now; if muse cannot read the folder, tell the issuer which step failed. The card names what a good answer shows.",
+   "scope": {
+    "measured_at": "2026-10-13T23:53:05Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T03:07:38Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/missions/D9/COMM/COMM_ASSIST/ledger/ROUND_ANALYSIS.round17.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
+  },
+  {
+   "id": "laptop-20261014T023151Z-cd2d",
+   "project": "COMM_ASSIST",
+   "subject": "Tell muse to answer ONE waiting draft (FWD-7's first real answer): pick a draft you would drop or send anyway and say so to muse",
+   "asked_by": "2.0.0_SA_COO~CA",
+   "source": "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r17/MUSE_ANSWER_CARD.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T02:31:51Z",
+   "kind": "act",
+   "context": "The answer path is live end to end: dell2's forwarder runs every 2 minutes and the assistant accepts only muse's signature, bound to the draft's version and seq and to a 24-hour window. A forged answer was refused in test; the one thing left is one real answer from muse, which only you can ask for. It gates FWD-7's grade and FWD-8.",
+   "rec": "Pick a draft you would DROP anyway and tell muse to drop it: it proves the signature path with nothing sent in your name. The card names what muse signs and where the file goes.",
+   "scope": {
+    "measured_at": "2026-10-14T02:31:51Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_FIRMBKTS placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T03:08:36Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261014_030xZ_COMM_ASSIST_CD2D_FOLDED_INTO_ONE_MUSE_SITTING.md",
+    "crossbox": null,
+    "ruled_by": "cluster-lead",
+    "xadj": null
+   }
+  },
+  {
+   "id": "laptop-20261014T030622Z-8f2b",
+   "project": "COMM_ASSIST",
+   "subject": "ONE sitting with muse (replaces the two muse asks 8fb2 and cd2d): muse reads 'what is waiting on me?', then you tell it to drop one waiting draft you do not need",
+   "asked_by": "2.0.0_SA_COO~CA",
+   "source": "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r18/MUSE_SITTING_CARD.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-14T03:06:22Z",
+   "kind": "act",
+   "context": "The CTO's round-17 analysis rules one sitting: FWD-6's read, then muse's first real signed answer, which the live receiver must ACCEPT (it also shows muse's own payload carries signed_at, version, seq and tag). Everything on dell2 and in the assistant is live and checked; a forged answer is refused. It gates FWD-6, FWD-7 and FWD-12.",
+   "rec": "Do the sitting once, with a draft you would drop anyway; the card lists the four steps and what the issuer reads afterwards.",
+   "scope": {
+    "measured_at": "2026-10-14T03:06:22Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "data/transcripts/scripts/teams_chat/ingress_mark.py overlaps the write set of NFRA_TRNSPT placed on dell2 (data/transcripts)",
+      "data/transcripts/scripts/teams_chat/tenant.py overlaps the write set of NFRA_TRNSPT placed on dell2 (data/transcripts)",
+      "data/transcripts/scripts/teams_chat/NAMES.json overlaps the write set of NFRA_TRNSPT placed on dell2 (data/transcripts)",
+      "data/transcripts/scripts/tests/test_teams_chat_tenant.py overlaps the write set of NFRA_TRNSPT placed on dell2 (data/transcripts)",
+      "data/transcripts/scripts/tests/test_ingress_mark.py overlaps the write set of NFRA_TRNSPT placed on dell2 (data/transcripts)",
+      "data/transcripts/scripts/muse_reader/forwarder.py overlaps the write set of NFRA_TRNSPT placed on dell2 (data/transcripts)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": null
   }
  ]
 }
