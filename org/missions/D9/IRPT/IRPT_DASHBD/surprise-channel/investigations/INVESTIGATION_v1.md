@@ -11715,3 +11715,27 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S36",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T18:26:39Z",
+  "one_line": "Issuer's rulings on worker 173's rows W173-S8 to W173-S11 (DB-b-215): S8 was my check's error and is amended; S9 is disarmed by a relabel rule in the order; S10 and S11 are generic render fixes accepted and passed to the CVO's judgment.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB109-2-AC1 as first cut required an unheld class entry in the sample and planted its note-level mutant on a household year-to-date net gain; the amended DB-b-214 sample holds neither. CLAUDE.md section 2: an ARMED hazard disarms same-turn through its disarm_owner (this seat, for W173-S9).",
+  "world_is": "W173-S8 (BLOCKING): both clauses assumed a 49 Financial-shaped sample; the Inflection sample places no asset class (allocation absent in words, 0 UNHELD entries, 0 dashes printed) and prints no household year-to-date net gain. An issuer error, not a render defect: the checker now drops the unheld precondition (the dash count must equal the unheld count, here 0 of 0) and plants the absent-note mutant on a key the sample prints. Measured: DB109-2-AC1 on the worker's tree with the amended checker reads PASS (20 pages, 0 clipped, 259 cells, 34 notes). W173-S9 (ARMED, mine): the sample's last4 label takes the last four characters of the custodian number; 1 of 5 labels is all digits and 4 of 5 are distinct. Ruled: the order now relabels the sample to four-digit ordinals (0001 to 0005 by account_id order), a relabel of the existing sample with no source read, and the checker refuses a non-digit or repeated label (dry-run on the current sample: FAIL as expected). The hazard is disarmed by that rule; the render is private and was never recorded. What last four a real Inflection account should print is a data-definition fact (the custodian number is not digits-only) carried to the CTO's round analysis. W173-S10: the round-106 not-held rule blanked the ending value of a not-spanned window while the sample carries the value at as_of; the worker's generic fix prints it; accepted (the 49 Financial sample carried no not-spanned window) and named for the CVO at DB109-2-J1. W173-S11: the export's row-height estimate ignored wrapped lines; the generic fix splits the holdings table over two sheets; accepted, calibrated on one table, named for the CVO. No firm-keyed edit in any of the three portal changes (worker's report; tests catch the firm-keyed mutant).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r109/p109_round109.py (check_render, mutate_printed_note, note_level9, the last4 clause)",
+      "worker tree wk-IRPT_DASHBD-173 @ba1b6f5031: this seat's own run of DB109-2-AC1 with the amended checker (PASS before the last4 clause; FAIL on the last4 clause as expected) and a count-only measure of the sample's labels (5 accounts, 4 distinct, 1 all-digit)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-215.inflection-render-through-the-whole-document-and-note-rules.md step 1a"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
