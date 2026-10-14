@@ -34284,3 +34284,129 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The script stderr names python3 holdings_snapshot.py --firms 49financial --upload as Killed with code 137 at about 310 s, which fits an out-of-memory kill on a 4 GiB class host and also fits any SIGKILL; nothing retained distinguishes them. The host is started for scheduled fires (launch recorded 2026-10-13 13:30Z) and will be Online again near the next fire, so a kernel-log read of the 2026-10-09 window becomes possible then only if journald persisted across the stop and start cycles; that is not known and was not tested. Because the verdict is not OOM, memory_read_for_release_fire is false per the order, yet an unreadable cause is not a cleared cause: whether the release fire's after-read should carry a memory read anyway is the issuer's and the CTO's call."
 }
 ```
+
+## IRPT_BCKEND-D2-S170 -- IB-pr-535 STOP at step 3: a mint from the release pin would change about 20 bundle members by content and add one, not only holdings_snapshot.py, because the live bundles were built from an older tree
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S170",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-14T13:10:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The digest gate of IB-pr-535 fails: building each holdings bundle from the release pin 49467335d2 differs from the live bundle version in 19 (49financial), 21 (cottonwood) and 20 (inflection) members by content after folding CRLF to LF, and adds opal_strategy_matcher.py; the packet and both halves allow only holdings_snapshot.py and SHA256SUMS. No mint was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IB193-1_digest_gate_stop.json (per-firm member lists: changed by content, changed by line endings only, added, removed)",
+      "build_bundle_payload run from the pin worktree on each declared bundle, no upload; each live bundle downloaded by the packet's Branch B version id and untarred; 45 declared members, 46 built with SHA256SUMS",
+      "two members traced to the commit whose content the live bundle carries: lib/trading_calendar.py matches a 2026-06-26 commit and data/firm_registry.json a 2026-09-30 commit, neither equal to the pin's"
+    ]
+  },
+  "spec_asserts": "COO half condition 1 and CTO half: the changed members must be exactly holdings_snapshot.py (and SHA256SUMS); any other changed member aborts the release and the packet is re-cut. Order step 3 repeats it.",
+  "world_is": "The live bundles of 2026-10-13 13:35Z carry shared-library members older than the pin (the trading calendar, the naming library, the registry files, mdpf scripts and the contract schemas), and 9 or 10 members in each live bundle carry CRLF where the pin worktree builds LF. A mint from the pin therefore moves those members too, including lib/trading_calendar.py which the CTO's condition 8 reads. Which of those changes are safe to ride is not established here and is not this seat's to decide; the options are a re-cut pin that carries only holdings_snapshot.py over the live bundles' base, or a re-cut packet that counts and signs the extra members. The re-measure harness result at the pin is separate and is reported with the release record."
+}
+```
+
+## IRPT_BCKEND-D2-W382-S1 -- The AC2 mutant check cannot import the producer from its temp copy, so the mutant run errors at collection and no test fails
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W382-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~382",
+  "surfaced_at": "2026-10-14T12:51:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The AC2 mutant check copies only the investor_reporting package into a temp directory; the producer resolves its repo root as parents[4] and imports lib, infra and docs at load, so the copy cannot import and the mutant run errors at collection with no test failing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB193-2-AC2 run from the worktree root at the code commit 15e0361375: output and exit 1 in org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~382/IB193-2_criteria_output.txt; the deciding lines are ModuleNotFoundError no module named trading_calendar and 1 error in 1.09s, with no failed test",
+      "a temp copy of the package has parents[4] equal to C:/Users/Test (measured with tempfile.mkdtemp); holdings_snapshot.py@411bde74797f46451631eab9442a2f3494d95c4e lines 84-109 and 205 derive _REPO = parents[4] and the lib, infra and docs paths from it"
+    ]
+  },
+  "spec_asserts": "AC2 (order IB193-2 and check p193_cells.py build_ac2): the new tests FAIL on a copy of the package with the BEGIN/END ONE-DATE-ASSERT block removed, and the mutant run must print a failed count.",
+  "world_is": "On the check's own layout the copy cannot import holdings_snapshot, so pytest reports one collection error and the check exits 1 at 'the mutant run did not fail on a test' for ANY implementation of the block. The check is not weakened, and it is not a finding against the assertion: at repo depth (a scratch layout with lib, infra, org and .tools as junctions) the mutant fails 3 of 17 new tests and the real producer passes 17 of 17. The order's criterion IB193-2-AC2 is therefore not met as written; the copy design needs the repo root (or the lib and infra paths) to reach the copy, which is a check-side edit this worker may not make."
+}
+```
+
+## IRPT_BCKEND-D2-W382-S2 -- Step 3 of the order cannot run as a plain copy; the mutant was run at a repo-depth scratch layout built with directory junctions
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W382-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~382",
+  "surfaced_at": "2026-10-14T12:51:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Step 3 (copy the package to C:/dev/_scratch382 and run the new tests with the block removed) fails at import for the same root cause, so the mutant was run at a repo-depth scratch layout whose lib, infra, org and .tools entries are directory junctions to the worktree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "a plain copy at C:/dev/_scratch382/investor_reporting raised IndexError on parents[4] when the producer was imported (measured in this worker's shell)",
+      "at the repo-depth layout C:/dev/_scratch382/R: the block removed from the copy gives 3 failed and 14 passed; the same layout with the real producer restored gives 17 passed; the junctions were removed with non-recursive rmdir and the worktree was verified intact (zero tracked deletions) afterwards"
+    ]
+  },
+  "spec_asserts": "Build step 3: copy the investor_reporting package to scratch OUTSIDE the worktree, delete the BEGIN/END block from the copy, and run the new tests there; at least one MUST fail.",
+  "world_is": "A plain copy outside the repo cannot import the producer (its repo root is not reachable from the copy), so the literal step produces an import error, not a test failure. The mutant evidence in the record (mutant_tests_failed 3) rests on the junction layout, which is disclosed in the record's notes; the discrimination is real and was not weakened."
+}
+```
+
+## IRPT_BCKEND-D2-W382-S3 -- The commit-time naming gate grades the firm literal in main's --firms check as a hand-kept carrier (WARN only)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W382-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~382",
+  "surfaced_at": "2026-10-14T12:51:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The commit gate's naming check reads one WARN, NAMING OUT-OF-PATTERN, on the literal 49financial in main's new --firms equality check at holdings_snapshot.py line 3269; the commit landed with the literal as written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 15e0361375: '[naming-gate] NAMING OUT-OF-PATTERN data/assets/scripts/gold/investor_reporting/holdings_snapshot.py:3269 49financial -> lookup(49financial)' and 'NAMING-GATE: WARN 1 graded'"
+    ]
+  },
+  "spec_asserts": "Build step 1: --allow-older-date is admitted only when --firms is exactly 49financial.",
+  "world_is": "The check is a WARN, not a refusal, and the literal is the order's exact firm value; replacing it with lookup() was not done because the order names the firm literal and the gate's own text says the carrier is WARN-only. A later owner decides whether the literal should read through lookup()."
+}
+```
+
+## IRPT_BCKEND-D2-S171 -- Dispositions on the round-193 rows; the release stopped at its own digest gate and its packet is re-cut; DISARM of D2-W374-S1 and D2-W376-S1
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S171",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T13:25:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on the round-193 rows (D2-S169, D2-S170, D2-W382-S1 to S3) and the DISARM of D2-W374-S1 and D2-W376-S1: the release stopped at its own digest gate and its packet is re-cut; the 2026-10-09 kill cause is unreadable; my AC2 check was the defect on IB-pr-536.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB193-3 and IB193-2 AC1 to AC3 and both proof instances on the landed trees: all PASS, VALID; round-close-check --workstream ~P MAY-CLOSE (orders=3); merge b80e382520 (IB-pr-536)",
+      "I read IB193-1_digest_gate_stop.json (19/21/20 members by content, plus opal_strategy_matcher.py added) and the order-535 record; the drain-end packet is deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUND_193_P_DRAIN_END_20261014.md",
+      "Andrew's record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_192xZ_CLIENT_DATA_IN_PRIVATE_GIT_NOT_WORTH_TIME.md and the CTO's msg 7618 (MSTR~DELL2 msg 7617: the WARN-only client-data check on dell2 is deliberate)"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27); an ARMED row with a ruled state is disarmed with its evidence.",
+  "world_is": "DISPOSITIONS. D2-S170 (the digest gate of IB-pr-535 fails: the pin mint moves about 20 members per bundle): the stop is the signed rule working; INERT as a hazard, LOAD-BEARING as a finding: the packet is re-cut by the CTO's round-194 ruling (characterize the moved members and sign the full pin mint, which is the code the signed counts were measured on, or prove a one-file overlay), and the live fires run on a trading calendar about 3.5 months old. D2-S169 (the kill cause is UNREADABLE: the runner host is stopped and no memory metric is retained): INERT, unresolved by evidence. D2-W382-S1 (BLOCKING, the AC2 mutant check cannot import the producer from its temp copy): my check's defect, repaired @751632840a, the worker's AC2 row re-graded PASS on the merged tree; INERT. D2-W382-S2 (the literal step-3 scratch layout fails at import for the same cause): INERT, the record discloses the repo-depth layout; the re-run in place measures the mutant. D2-W382-S3 (the naming-gate WARN on the 49financial literal in main): INERT, the order names the literal; whether it should read through lookup() is a later owner's. DISARM D2-W374-S1 and D2-W376-S1: the absent client-data hash list on dell2 is the RULED state, not a hazard: Andrew-direct 2026-10-09 ~19:2xZ (the record named above) and the CTO's msg 7618 name it, and MSTR~DELL2 msg 7617 confirms the check runs WARN-only on dell2 on purpose; both rows are disarmed here by their disarm_owner (D2-W374-S1: me; D2-W376-S1: the dell2 box manager, relayed by the CTO's instruction to me to file the evidence). Workers may treat that WARN as expected (the CTO's msg 7618)."
+}
+```

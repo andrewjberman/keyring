@@ -12964,3 +12964,60 @@
   "disarm_owner": "2.0.0_SA_COO~Y2"
 }
 ```
+
+## IRPT_ANLREQ-D2-W126-S1 -- AR316-y-AC1's expect ^[0-9]+ passed cannot match the literal invocation's summary line in this worker shell: FORCE_COLOR=3 makes pytest print ANSI escapes before the count
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W126-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~126",
+  "surfaced_at": "2026-10-14T12:57:18Z",
+  "one_line": "AR316-y-AC1's expect ^[0-9]+ passed cannot match the literal invocation's summary line in this worker shell: FORCE_COLOR=3 makes pytest print ANSI escapes before the count, so the anchored expect fails as written although all 18 cases pass.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR316-y-AC1 names the invocation python -m pytest .../test_submit_input_owner.py -q -p no:cacheprovider and expects ^[0-9]+ passed, the summary count at the start of the output.",
+  "world_is": "In this worker shell the environment carries FORCE_COLOR=3 (env | grep FORCE_COLOR). Pytest then wraps the summary in ANSI escape codes, so the literal output line begins with an escape sequence and the anchored expect does not match, although rc is 0 and 18 passed. With FORCE_COLOR unset, the same invocation prints '18 passed in 0.48s' at rc 0. The expect was not edited; the verdict on the literal run is recorded as FAIL in the proof.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "literal AC1 invocation run in C:/dev/wk-irpt-anlreq-126 at 2026-10-14T12:5xZ, base 9b7d6d9ae0: rc=0, output begins ESC[32m and the summary line is ESC[32mESC[32mESC[1m18 passed",
+      "control run with env -u FORCE_COLOR of the same invocation: rc=0, last line '18 passed in 0.48s'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "owner: 2.0.0_SA_COO (the issuer decides whether the expect or the invocation changes; the worker does not edit a criterion). Built only; nothing deployed."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W126-S2 -- an INTERNAL caller of SUBMIT-FORM names firm opal-capital, which the grant's LeadingKeys (three client firms) refuses: in production that submit fails closed (503) rather than checking ownership
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W126-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~126",
+  "surfaced_at": "2026-10-14T12:57:18Z",
+  "one_line": "an INTERNAL caller of SUBMIT-FORM names firm opal-capital, which the grant's LeadingKeys (three client firms) refuses: in production that submit fails closed (503) rather than checking ownership, and neither the ruling nor the grant shape says which is intended.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO ruling 7620 and grant shape 7633: the owner check reads irpt-requests keyed on the caller's verified firm, and the IAM statement lists LeadingKeys 49financial, inflection, cottonwood (the three firms of the release-29 pair). The order names client logins only.",
+  "world_is": "The SUBMIT-FORM matrix admits INTERNAL as well as CLIENT (lambda_function.py:174 at 9b7d6d9ae0), and the existing suite files an analysis_request through SUBMIT as INTERNAL firm opal-capital (test_submit_analysis_request.py test_b). The reader keys on the caller's verified firm, so an INTERNAL analysis_request submit reads tenant opal-capital, which LeadingKeys does not list. The production read would be AccessDenied, and the submit would answer 503 with no ticket written. The unit suite replaces the reader, so no test shows this; no AWS call was made in this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py@9b7d6d9ae0 line 174 (MATRIX SUBMIT-FORM = frozenset({CLIENT, INTERNAL}))",
+      "infra/aws/lambda/ticket_center/tests/test_submit_analysis_request.py@9b7d6d9ae0 test_b (INTERNAL submit, firm opal-capital, expects 201 under the stubbed reader)",
+      "infra/aws/terraform/ticket-center/main.tf@9b7d6d9ae0 IrptRequestsInputOwnerRead LeadingKeys (the three firms)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "owner: 1.0.0_SA_CTO (whether an INTERNAL submit keeps the owner check, and whether opal-capital joins LeadingKeys, is a grant edit the CTO rules). Built as the order says; nothing deployed, applied or invoked."
+}
+]
+```
