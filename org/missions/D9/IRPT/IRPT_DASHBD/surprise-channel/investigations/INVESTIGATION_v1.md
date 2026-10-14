@@ -13002,3 +13002,27 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker; the commit was not re-run and no list was placed on the device. Counts only: no household or account id and no client value is recorded. The issuer routes the hashed list to the device owner."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S47",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T22:43:05Z",
+  "one_line": "Issuer's dispositions on worker 183's rows W183-S1 (a household whose only date is the as_of day has no since-inception window day, and the rule returned a figure over zero days) and W183-S2 (the commit gate's client-data check could not run on this box): the zero-day window reads INSUFFICIENT_HISTORY in words, the order and the check are amended and worker 182 is resumed; the gate gap is infrastructure, filed by worker 182 as W182-S1 for 0.0.0_AB_MSTR, and this seat's own identifier scans stand in for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-227: a window that holds an unmeasured account day takes SOURCE_BREAK; a household that did not exist at the window's start takes INSUFFICIENT_HISTORY; never a figure beside an absent form. The commit gate's client-data check compares changed files to a hashed account-id list.",
+  "world_is": "W183-S1: the cause read found one household whose only table date is the as_of day: its since-inception window holds no day, round 111 counted it not comparable, and my DB-b-227 rule (a product over the window days) would print a figure of 0 for it, a figure over nothing: an issuer omission. Ruled: a window with no day reads INSUFFICIENT_HISTORY with the words 'This household has no measured day in this period yet.'; the since-inception count becomes 1449 figures and 1 insufficient, the four-form words_forms; order DB-b-227 and the DB112 check are amended and the worker resumed. W183-S2 (and W182-S1, owner 0.0.0_AB_MSTR): the commit-time client-data check printed WARN on dell2 because the hashed account-id list is absent at its default path, so no worker commit this round was checked against it; every changed file of every drained branch was scanned by this seat for identifier-length digit runs and the records carry counts, hashes and words only; the missing list is the integrator's infrastructure and stays his. Disarmed here for this seat's part.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 183's report and rows W183-S1 and W183-S2; worker 182's row W182-S1",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r112/p112_household.py (W_NODAY, recount): the since-inception recount reads 1449 figures and 1 INSUFFICIENT_HISTORY",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-227.household-window-source-break-rule-no-imputation.md (a2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
