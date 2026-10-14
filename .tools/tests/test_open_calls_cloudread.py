@@ -10,7 +10,8 @@ Test seams (never the live lists, never S3, never the real git refs):
   OPAL_STATE_ROOT         a temporary state root (the working-tree copies live there)
   OPAL_CLOUD_READ_LOCAL   a temporary directory holding box=<box>/open_calls.json (the cluster copy) and
                           git=<box>/open_calls.json (the origin/box/<box> copy)
-OPAL_OPENCALLS_CLOUD=0 is set on every call; the stand-in directory is read only when OPAL_CLOUD_READ_LOCAL is set.
+OPAL_OPENCALLS_CLOUD=0 is set on every call. The stand-in directory is read only when OPAL_CLOUD_READ_LOCAL is set AND
+OPAL_STATE_ROOT is set (DP-h-1): with OPAL_STATE_ROOT unset the variable is ignored and a NOTE line says so.
 
 Last line: OPEN-CALLS-CLOUDREAD-TEST cases=<k>/<n> ok=<True|False>
 """
@@ -87,13 +88,15 @@ class Env:
             shutil.rmtree(self.base, onerror=_force)
 
 
-def run(env, args, box_env=THIS, cluster=True):
-    """(rc, stdout, stderr) of one approval-status call. cluster=False leaves OPAL_CLOUD_READ_LOCAL unset."""
+def run(env, args, box_env=THIS, cluster=True, state=True):
+    """(rc, stdout, stderr) of one approval-status call. cluster=False leaves OPAL_CLOUD_READ_LOCAL unset;
+    state=False leaves OPAL_STATE_ROOT unset (the test switch off)."""
     e = dict(os.environ)
     for k in ("OPAL_CLOUD_READ_LOCAL", "OPAL_OPENCALLS_CLOUD", "OPAL_STATE_ROOT"):
         e.pop(k, None)
-    e.update({"OPAL_STATE_ROOT": env.state, "OPAL_OPENCALLS_CLOUD": "0",
-              "AGENTBUS_DEVICE": box_env, "OPAL_AGENT_SERIAL": SERIAL})
+    e.update({"OPAL_OPENCALLS_CLOUD": "0", "AGENTBUS_DEVICE": box_env, "OPAL_AGENT_SERIAL": SERIAL})
+    if state:
+        e["OPAL_STATE_ROOT"] = env.state
     if cluster:
         e["OPAL_CLOUD_READ_LOCAL"] = env.cloud
     p = subprocess.run([sys.executable, TOOL] + args, cwd=ROOT, env=e, capture_output=True, text=True,
@@ -189,6 +192,26 @@ def main():
         check("git newer than a stale cluster copy and a stale working-tree copy: reads the git row (row=git-newest), NOTE git",
               rc == 0 and "state=OPEN" in out and "row=git-newest" in out and "row=cl-stale2" not in out
               and "row=wt-stale2" not in out and ("NOTE: %s list read from git written_at=%s" % (FOREIGN, T2)) in err)
+        env.cleanup()
+
+        # 9. the stand-in set with OPAL_STATE_ROOT UNSET (DP-h-1): the seam is ignored, the production read runs and
+        #    finds nothing for a box that exists nowhere in this repo -> UNREADABLE rc 2; the fixture row is NOT used;
+        #    the NOTE line says why. OPAL_OPENCALLS_CLOUD=0 keeps this case off S3.
+        env = Env()
+        env.cluster("zz9", doc("zz9", T2, [row("zz9-fixture", "cand/zz9/t-slug")]))
+        rc, out, err = status(env, "cand/zz9/t-slug", state=False)
+        check("stand-in set, OPAL_STATE_ROOT unset: the seam is ignored (UNREADABLE rc 2, fixture row not used), NOTE on stderr",
+              rc == 2 and "state=UNREADABLE" in out and "row=zz9-fixture" not in out and "state=OPEN" not in out
+              and "OPAL_CLOUD_READ_LOCAL ignored: it is a test seam and OPAL_STATE_ROOT is not set" in err)
+        env.cleanup()
+
+        # 10. the same stand-in directory with OPAL_STATE_ROOT set to a temporary state root: the fixture row IS used
+        env = Env()
+        env.cluster("zz9", doc("zz9", T2, [row("zz9-fixture", "cand/zz9/t-slug")]))
+        rc, out, err = status(env, "cand/zz9/t-slug")
+        check("stand-in set with OPAL_STATE_ROOT set: the fixture row is used (state=OPEN row=zz9-fixture), no ignored NOTE",
+              rc == 0 and "state=OPEN" in out and "row=zz9-fixture" in out
+              and "OPAL_CLOUD_READ_LOCAL ignored" not in err)
         env.cleanup()
     finally:
         if env is not None:
