@@ -186,7 +186,7 @@ The repair becomes a NEW candidate branch cut by the issuer from the worker's po
 
 **Fanout:** 1 of 1 chains; no shared file with any other open cell (CN-j-2 owns the publisher). `portal_ref:` the candidate branch `cand/dell1/mdpf-canon-aua-trend-groups-and-as-of` (34cd12d2d0), passed as `--portal-ref` to `wk-provision.sh`, not portal DEV.
 
-<status>pending</status>
+<status>complete</status>
 <round>8</round>
 <to_id>MDPF_CANON.TO-CN-i-2</to_id>
 <slot>~24</slot>

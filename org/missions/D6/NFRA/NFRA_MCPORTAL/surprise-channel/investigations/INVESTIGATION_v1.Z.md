@@ -1903,3 +1903,95 @@
   }
 }
 ```
+
+```json
+[
+  {
+    "id": "NFRA_MCPORTAL-Z-W25-S1",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~25",
+    "surfaced_at": "2026-10-14T18:57:59Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "The face's query-first read of the grant store is refused: the operator role opal-gateway-access-admin is AccessDenied dynamodb:Query on gateway-access-state-table for partition POLICY#6810043e-d171-4adc-9975-068b35e179da#ad037ea5-fee8-412e-9da9-15c6cf2a4fbc. GetItem on that partition's two known keys (principal_profile, data_entitlement#0000000004) succeeded under the same assumed role and is the read the run file uses.",
+    "spec_asserts": "The operator role reads each principal's partition by Query (trust and LeadingKeys design say yes); a denial is a BLOCKING row with the principal key and the error.",
+    "world_is": "sts assume-role on arn:aws:iam::313476888478:role/opal-gateway-access-admin returned rc 0 and get-caller-identity returned the assumed-role ARN. dynamodb query --consistent-read on gateway-access-state-table returned AccessDeniedException: no identity-based policy allows the dynamodb:Query action (rc 254). The same role's dynamodb get-item of principal_profile (rc 0, status active, grant_revision 4) and of data_entitlement#0000000004 (rc 0, status active) succeeded. Nothing was written; the host role was not used for the store read.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~25/pd1_query_denied.txt (the measured AccessDeniedException text)",
+        "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~25/pd1_session_log.txt (steps 2 to 4)"
+      ]
+    }
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W25-S2",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~25",
+    "surfaced_at": "2026-10-14T18:57:59Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "app.admin_gateway_breakdown._scan_principals takes a required client argument; the face's zero-argument call form does not run, so the scan was called with the served module's own host-role client from _ddb_client().",
+    "spec_asserts": "Call app.admin_gateway_breakdown._scan_principals() with no arguments, after reading its signature.",
+    "world_is": "admin_gateway_breakdown.py:174 defines _scan_principals(client) -> list. The page probe pd1_page_probe.py passes BD._ddb_client(), a host-role boto3 DynamoDB client, so the principal list is the served scan's own result (1 principal) and not an operator-role Scan (which the issuer measured denied).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/admin_gateway_breakdown.py:174 (def _scan_principals(client))",
+        "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~25/pd1_page_probe.py (the call site)"
+      ]
+    }
+  }
+]
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W26-S1",
+  "one_line": "MP-pd-2 says the stored person_access revision is an int; the real store returns it as decimal.Decimal, so an int check refused every real update until the writer normalizes it.",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~26",
+  "surfaced_at": "2026-10-14T18:52:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/access_state.py:27 docstring and :325 TypeDeserializer: numbers come back as decimal.Decimal",
+      "infra/aws/ec2/opal-gateway/app/data_entitlement.py _revision accepts int or integral Decimal",
+      "probe .scratch/probe_person_access_update.py before the _plain_record fix: OK expect 1 read STALE-REVISION with zero writes; after the _plain_record fix it reads WRITTEN with one conditional put"
+    ]
+  },
+  "spec_asserts": "TO MP-pd-2 section 1 sets the stored body field revision to an int >= 1 and says the writer checks the current revision against expect_revision.",
+  "world_is": "acs.AccessState.get returns whole numbers as decimal.Decimal. The writer normalizes the stored record with _plain_record in lambda_function.py before its revision check, so the optimistic condition and the next revision are int. The staged Decimal form is not a fault of the store; the order did not say it."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W26-S2",
+  "one_line": "The worker rules flip the task order status to complete with the proof instance, but the order's granted paths do not include the task-order file, so I did not flip it.",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~26",
+  "surfaced_at": "2026-10-14T19:01:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pd-2.grant-writer-person-access.md section 3 <paths> (lines 106-111) lists the lambda_function.py, tests/test_person_access.py, deliverables and investigations paths only",
+      "base ef2a5b14e176b428600920cbd9ada74817ced168; the code commit is f40bf7dded"
+    ]
+  },
+  "spec_asserts": "The worker rules say a worker flips the task order <status> to complete in the same commit as the proof instance.",
+  "world_is": "The order's <paths> grant no write to its own task-order file. The criteria pass and the instance validates, but this worker does not flip the order status; the issuer or COO owns the flip."
+}
+```

@@ -143,6 +143,11 @@ the issuer to make at the merge.
 - The issuer registers the tools and re-pins counts at the merge (CUT BY WRITE SET: hookups belong to no cell).
 - Pre-cut: AC1 and AC2 base FAIL as expected (module, tests and probe absent).
 
+- A1 (issuer, 2026-10-14 ~19:2xZ, the worker's rows W82-S1, S2, S6, S8): S1 -- the preflight's "no IAM change" described the S3 side; the cell's own grant file carries the DynamoDB read, and the preflight is corrected by this note. S2 -- `source_date_index` is sparse
+  (9,905 of 381,261 items), so the tool's `source` filter reads the base table per day and never uses it: ACCEPTED, and the grant is NARROWED to the least it needs: the three table ARNs and the one `date-index` ARN (drop the `source_date_index` ARN from
+  `news_read_iam.tf` and from the ask's grant and widening sections). S6 -- the 14-day cap counts dates inclusively (15 refused): ACCEPTED as built. S8 -- the status flip is the issuer's, at the merge. The worker is re-seated for the S2 narrowing only.
+  No criterion moves. Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>37</round>
 <workstream>FWD22-W6</workstream>
