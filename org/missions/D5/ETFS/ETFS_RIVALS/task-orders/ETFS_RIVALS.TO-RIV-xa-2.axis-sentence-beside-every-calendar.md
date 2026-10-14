@@ -94,7 +94,7 @@ Deploy of the page code and the CVO's J1 read at the production URL follow in th
 
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>30</round>
 <workstream>4</workstream>
 <slot>~38</slot>
