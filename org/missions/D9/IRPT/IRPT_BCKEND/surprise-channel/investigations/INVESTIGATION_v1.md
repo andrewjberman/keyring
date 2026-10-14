@@ -33468,3 +33468,103 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The canonical row exists and carries the Cash sub-class, so the rule reaches FDRXX wherever the canonical branch answers. Whether Inflection's FDRXX NODES come through that branch (rather than the fallback) is measured by IB-pr-528 (the node count and the split). Cash-subclass holdings that the fallback layer serves (215 on Cottonwood and 67 on Inflection by IB-pr-526's upper bound) stay fixed_income under a canonical-only rule: the cross-page consistency question goes in the packet and to the CTO. TIMXX, which Andrew's upload named, has no canonical row, so a proxy is the right path for it; not this round."
 }
 ```
+
+## IRPT_BCKEND-D2-W375-S1 -- the producer named by apply_cash_rule is not in the tree at the base commit
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W375-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~375",
+  "surfaced_at": "2026-10-14T03:28:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's Branch A names the holdings producer carrying apply_cash_rule; no code at base 1d3605e19c carries that name, the rule being the IB-pr-527 build that has not landed in this tree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep of the worktree C:/dev/wk-IRPT_BCKEND-375 for apply_cash_rule: 3 files, all under org/missions/D9/IRPT/IRPT_BCKEND (IB-pr-527 and IB-pr-528 task orders and the decomposition); no source file",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py classify_security at lines 972-994 at HEAD 1d3605e19c carries no cash-rule call"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-528 Branch A: the holdings producer carrying apply_cash_rule is released, then each firm's next scheduled fire re-publishes its holdings.",
+  "world_is": "At base 1d3605e19c no producer carries apply_cash_rule; the cash rule exists only as the IB-pr-527 build order, and its test expects a function named like cash_rule. The packet states Branch A as the release of the rule-bearing build and does not name a function."
+}
+```
+
+## IRPT_BCKEND-D2-W375-S2 -- the ticker-shape definition admits identifiers that are not ticker symbols
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W375-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~375",
+  "surfaced_at": "2026-10-14T03:28:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's fallback_tickers shape (A-Z, digits, dot, dash, up to 12 characters, public symbols) matches Cottonwood fallback identifiers that are Black Diamond-prefixed or CUSIP-shaped; they were withheld from the record, so fallback_tickers is empty for all three firms.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Cottonwood newest accepted snapshot (2026-10-08), SECURITY nodes with cash sub-class, served class not cash, basis NAME_ALIAS: 215 nodes = 206 Black Diamond-prefixed (2 distinct) + 6 CUSIP-shaped (3 distinct) + 3 other shape; counts only, held in scratch outside the worktree",
+      "IB-pr-528 order step 4 regex [A-Z0-9.-]{1,12} and the client data rule (no client identifier in a tracked file)"
+    ]
+  },
+  "spec_asserts": "Step 4: fallback_tickers are DISTINCT public symbols that are ticker-shaped; a non-ticker-shaped identifier is counted, never listed.",
+  "world_is": "The shape admits Black Diamond-prefixed identifiers, which the prior count withheld as not public symbols, and CUSIP-shaped identifiers, which are public security identifiers but not ticker symbols. The packet withholds both and lists no fallback ticker. Whether the shape should exclude them is a definition the CTO should settle; the record carries counts only."
+}
+```
+
+## IRPT_BCKEND-D2-W375-S3 -- 101 SECURITY nodes of 49financial carry no display symbol
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W375-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~375",
+  "surfaced_at": "2026-10-14T03:28:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "49financial's newest accepted snapshot holds 101 SECURITY nodes with no display.symbol; none of them is a would-move node, so the split is unaffected.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "49financial snapshot 2026-10-12, 200 partition objects, sha256 and byte_length verified; SECURITY nodes 124,441; missing display.symbol 101 (counted in scratch, outside the worktree)",
+      "cottonwood and inflection: 0 SECURITY nodes with a missing display.symbol in the same count"
+    ]
+  },
+  "spec_asserts": "Step 4 counts each would-move node on the canonical or the fallback branch by its display symbol.",
+  "world_is": "101 SECURITY nodes carry no display symbol. They are not cash-sub movers, so they fall in no branch count. The reason the field is absent was not read."
+}
+```
+
+## IRPT_BCKEND-D2-W375-S4 -- the publication runner's schedule and deploy target were not located within this read
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W375-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~375",
+  "surfaced_at": "2026-10-14T03:28:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Branch A asks how the producer is deployed and what its bundles are named; the publication runner is a gold script and the infra read found the read-side Lambda irpt-holdings, not a deploy target for the runner.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py (publication runner, header lines 1-60): writes the firm bucket and the platinum index",
+      "infra/aws/terraform/investor-reporting/holdings/lambda.tf: module irpt_holdings, artifact investor-reporting/irpt-holdings.zip, handler entry.lambda_handler, invoke-only, no schedule"
+    ]
+  },
+  "spec_asserts": "Branch A: read from the code and infra/ how the producer is deployed and named bundles, and say what was read and what was not census live.",
+  "world_is": "The read-side Lambda is deployed by its terraform root with no schedule. The runner's schedule and deploy target were not located in the read grant and were not censused live, so the packet states the scheduled fire without a time."
+}
+```
