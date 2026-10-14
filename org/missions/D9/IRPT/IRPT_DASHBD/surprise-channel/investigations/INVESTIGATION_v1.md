@@ -13026,3 +13026,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W182-S1 -- the commit gate's client-data check did not run on dell2 (the hashed account-id list is absent), so this order's commits were not checked for client account ids
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W182-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~182",
+  "surfaced_at": "2026-10-14T22:39:38Z",
+  "one_line": "The commit gate's client-data check could not run on this device (the hashed account-id list is absent), so the commits of TO DB-b-227 were not checked for client account ids; the gate printed WARN and both commits landed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR",
+  "spec_asserts": "The order's bound: 'No account or household id in the repo, a row or your report', with the commit gates run before each commit so that a commit carrying a client id is refused.",
+  "world_is": "The commit gate printed 'WARN: client-data-check: hashed account-id list ABSENT ... this commit was NOT checked for client account ids' for commit a804efc2de and again for commit 64184e219f, and both landed. The worker read the committed files and found no account or household id and no client value.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit a804efc2de: the safe-commit output in the worktree scratch folder (commit_a_out2.log) carries the WARN line for client-data-check",
+      "commit 64184e219f: the safe-commit output in the worktree scratch folder (commit_b_out.log, line 16) carries the same WARN line",
+      "the gate's own message names the absent list at the operator profile path C:/Users/Test/.opal/account_id_hashes.txt (absent at the time of both commits)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-227. The disarm owner is the integrator (0.0.0_AB_MSTR) because the commit gate is infrastructure; the CTO may reassign it. The row states the form only; it carries no client value."
+}
+```
