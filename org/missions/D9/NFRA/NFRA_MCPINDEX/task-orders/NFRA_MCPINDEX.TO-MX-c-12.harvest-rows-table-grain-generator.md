@@ -154,3 +154,4 @@ rows), read by the check through `git show`. Battery and planted arms: decomposi
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete</status>

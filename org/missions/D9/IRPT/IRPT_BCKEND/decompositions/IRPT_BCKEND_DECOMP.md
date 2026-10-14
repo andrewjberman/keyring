@@ -3891,3 +3891,20 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r195/p195_cells.py`, dry-run at the b
 
 fanout: 1 of 1 chains, cap 8, reason: one differential with no sibling cell (the per-member hybrid builds run inside it). One worker spawn (slot ~384).
 
+## 188. ROUND 196, WORKSTREAM ~P (2026-10-14 ~18:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round-196 analysis (@51675bfa49, msg 7765) and the CVO slug for round 195 (adjudication v96))
+
+Round 195 closed (IB-pr-539 @0bf58c4ab0; packet @e1ae9ca335). The CTO's round-196 list is three cells and then packet v3: (1) the bundle closure fixed into a NEW pin, proven by `python -I` imports of every closure member from each firm's BUILT bundle and by closure == traced import set both ways: **CUT now** as `IB-pr-540`; (2) the differential re-run on the BUILT bundles (live bundle bytes against the new pin's bundle bytes), same custody pin, one served state for the gate, 32 and 841 reproducing exactly: `IB-pr-541`; (3) Cottonwood's 236 beyond-rule changes attributed by TOGGLING the four named commits one at a time on the new pin's built bundle (a change no single revert removes is UNATTRIBUTED, a STOP; member-level attribution is not enough): `IB-pr-542`; then packet v3 = the new pin, the built-bundle differential and the attribution: `IB-pr-543`. All four orders are committed in this ONE issuance; the apply is NOT cut (both halves must sign v3 first; owner me).
+
+The chain is `IB-pr-540` -> `IB-pr-541` -> `IB-pr-542` -> `IB-pr-543`: 541 builds from 540's new pin, 542 needs 541's beyond-rule count and 540's pin, 543 reads all three records. So only `IB-pr-540` is spawned now; each later order is spawned (a fresh slot with its own worktree cut after its predecessor merges) when the drain lands its predecessor. The new pin is a side branch (`pin-ib-pr-540`) from the OLD pin (the old pin plus the one closure line), merged to trunk at the drain so the hash stays addressable; the signed producer bytes (`holdings_snapshot.py` at the old pin) do not move, and the round-193 `as_of` bypass build on trunk does not ride into the bundles.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r196/p196_cells.py`, dry-run at the base: IB196-1 to IB196-4, AC1 to AC3, all twelve FAIL (no record, no packet v3); the positive control (a throwaway git repo with an old pin, a new pin adding one closure member, four named commits and an unrelated one; synthetic records in the shapes the orders ask for; `control196.py`) passes all twelve, and thirty-one negatives each fail their own arm. The control and the commit-id rule were written from the real artifacts' shapes: a packet that must name commit ids is exempted from the long-digit rule for exactly those ids.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-540` | the bundle closure gains `silver/opal_unidentified.py` on a new pin (old pin + one line); every `.py` closure member imported under `python -I` from each firm's built bundle; closure == traced files both ways; bundle delta exactly +1 member | FWD-3 | LOCAL (a declaration in `.tools/`; no served byte) | none | P196-a |
+| `IB-pr-541` | the live-against-pin differential on the BUILT bundles, one served state for the gate, 32 and 841 exact, Cottonwood's groups named for 542; reads only | FWD-3 | SERVED (downloads the live bundles, builds candidates from served sources) | IB-pr-540 | P196-a |
+| `IB-pr-542` | Cottonwood's beyond-rule nodes attributed to the four named commits by single reverts on the built bundle; unattributed 0; reads only | FWD-3 | SERVED (same) | IB-pr-540, IB-pr-541 | P196-a |
+| `IB-pr-543` | packet v3 = the new pin, the built-bundle differential and the attribution; both halves UNSIGNED | FWD-3 | LOCAL (a document from committed records) | IB-pr-540, IB-pr-541, IB-pr-542 | P196-a |
+
+fanout: 1 of 1 chains, cap 8, reason: a four-cell chain with real data dependencies (each reads its predecessor's record or pin), so one worker is spawned now (slot ~385) and each next slot (~386, ~387, ~388) when its predecessor merges.
+
