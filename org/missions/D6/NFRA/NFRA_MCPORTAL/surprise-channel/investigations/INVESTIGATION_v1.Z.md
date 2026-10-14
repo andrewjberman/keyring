@@ -1803,3 +1803,20 @@
   "notes": "Disarm owner per Z-S47: 2.0.0_SA_COO~MP (issuer)."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W23-S1",
+  "one_line": "The repo-wide comp-find sweep named by MP-pc-4 did not finish in 120 s; whole-repo absence of Claude usage readers is unread, not zero.",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~23",
+  "surfaced_at": "2026-10-14T03:39:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {"status": "GROUNDED", "evidence": ["comp-find -i 'ratelimit|rate_limit|usage|oauthAccount' --files --limit 30 run from C:/tmp/mp-pc-23 was moved to background after 120 s and its output file stayed 0 bytes"]},
+  "spec_asserts": "The task order names comp-find for the repo-wide sweep of Claude usage or account readers.",
+  "world_is": "The sweep did not finish in 120 s on this worktree; native Grep over .tools and org/mcp found 0 files; the whole-repo sweep is unread."
+}
+```
