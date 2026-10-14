@@ -2141,15 +2141,15 @@ the `data_entitlement.py` family rows for the new names) belong to no cell: the 
 
 | cell | what | writes (new files only) | risk | slot | class |
 |---|---|---|---|---|---|
-| `OG-gt-0` | the typed-tool base: the envelope (`as_of`, `source_keys`, denominator, `absent_reason`), the 50 KB projection, the newest-part read over `harvest_read`'s capped client, one admit-and-audit wrapper; offline tests with a fake client | `app/harvest_typed.py`, `tests/test_og_gt0.py` | LOCAL | ~71 | worker |
-| `OG-gt-1` | `harvest_resolve_security`, `harvest_security_coverage` (crosswalk/universe/identity; one ListObjectsV2 per keyed prefix) | `app/harvest_identity.py`, `tests/test_og_gt1.py` | LOCAL | ~72 | worker |
-| `OG-gt-2` | `harvest_get_chatter`, `harvest_search_articles`, `harvest_get_article` (gold chatter and mentions joined to publisher silver) | `app/harvest_press.py`, `tests/test_og_gt2.py` | LOCAL | ~73 | worker |
-| `OG-gt-3` | `harvest_get_fundamentals`, `harvest_query_columns` (model_block, bestdata, refdata, histdata, segments, price; the tabular allow-list) | `app/harvest_figures.py`, `tests/test_og_gt3.py` | LOCAL | ~74 | worker |
-| `OG-gt-4` | `harvest_get_research`, `harvest_get_filing_analysis`, `harvest_get_peers_and_scores` | `app/harvest_research.py`, `tests/test_og_gt4.py` | LOCAL | ~75 | worker |
+| `OG-gt-0` | the typed-tool base: the envelope (`as_of`, `source_keys`, denominator, `absent_reason`), the 50 KB projection, the newest-part read over `harvest_read`'s capped client, one admit-and-audit wrapper; offline tests with a fake client | `app/harvest_typed.py`, `tests/test_og_gt0.py` | WORLD | ~71 | worker |
+| `OG-gt-1` | `harvest_resolve_security`, `harvest_security_coverage` (crosswalk/universe/identity; one ListObjectsV2 per keyed prefix) | `app/harvest_identity.py`, `tests/test_og_gt1.py` | WORLD | ~72 | worker |
+| `OG-gt-2` | `harvest_get_chatter`, `harvest_search_articles`, `harvest_get_article` (gold chatter and mentions joined to publisher silver) | `app/harvest_press.py`, `tests/test_og_gt2.py` | WORLD | ~73 | worker |
+| `OG-gt-3` | `harvest_get_fundamentals`, `harvest_query_columns` (model_block, bestdata, refdata, histdata, segments, price; the tabular allow-list) | `app/harvest_figures.py`, `tests/test_og_gt3.py` | WORLD | ~74 | worker |
+| `OG-gt-4` | `harvest_get_research`, `harvest_get_filing_analysis`, `harvest_get_peers_and_scores` | `app/harvest_research.py`, `tests/test_og_gt4.py` | WORLD | ~75 | worker |
 | `OG-gt-5` | `harvest_get_published_analysis` (invokes `opal-amgt-scoped-api`) with its read-grant file and its own never-widen ask; ships only when that ask is signed | `app/harvest_published.py`, `tests/test_og_gt5.py` | WORLD | ~76 | worker |
 | `OG-ap-18` | APPLY: gt-0..gt-4's gateway release on hv-2's live ref, served read of each tool under an Opal and a non-Opal principal; gt-5 follows on its own ask | (applier's paths) | WORLD | ~AE | worker |
 
-`app/` is `infra/aws/ec2/opal-gateway/app/`; each tool cell reads its contract section in G1 by line range (inlined on its face).
+`app/` is `infra/aws/ec2/opal-gateway/app/` (an infrastructure path, so the gate's floor makes every gateway cell WORLD, as OG-hv-1 was); each tool cell reads its contract section in G1 by line range (inlined on its face).
 A cell over about 300 product lines (gt-2, gt-3, gt-4 may be) takes the full limbs and `worker`; none is `worker-light`.
 
 **Chains.**
