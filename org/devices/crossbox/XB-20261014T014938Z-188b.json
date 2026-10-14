@@ -10,7 +10,7 @@
  "subject": "COMM_ASSIST.TO-CA-i-5 -- round 17 CA-i-5: install the muse answer forwarder on dell2 (the answers folder, the user envir",
  "body_path": "org/missions/D9/COMM/COMM_ASSIST/task-orders/COMM_ASSIST.TO-CA-i-5.install-the-answer-forwarder-on-dell2.md",
  "opened_at": "2026-10-14T01:49:38Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-14T01:56:31Z",
   "bus_message_id": "afb0c748-1798-4c04-900b-7dac2207f794"
@@ -23,7 +23,7 @@
  "closed": {
   "from_at": "2026-10-14T02:34:27Z",
   "from_by": "2.0.0_SA_COO~CA",
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-14T02:40:22Z",
+  "to_by": "0.7.0_AE_CloudOps~CA2"
  }
 }
