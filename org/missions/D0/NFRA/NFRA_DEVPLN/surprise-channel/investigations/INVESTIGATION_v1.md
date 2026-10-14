@@ -985,3 +985,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## NFRA_DEVPLN-S4 -- the release builder's --check can read a stale local branch of the same name and does not say which ref it read
+
+```json
+{
+  "id": "NFRA_DEVPLN-S4",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~DV",
+  "surfaced_at": "2026-10-14T01:35Z",
+  "one_line": "portal-release-build.sh --check <name> resolves refs/heads/<name> before origin/<name>, so a stale local branch of the same name is read and the output does not say which ref it read: --check PROD printed head=10e7664d (the stale local PROD) while origin/PROD was 7d5cb34d.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/portal-release-build.sh --check PROD --repo portal --prod-ref 63c4f9e3 at ~01:28Z printed 'RELEASE-CHECK features=1 first_parent_commits=1 unapproved=0 ... head=10e7664d6c4824cb88f04acf47f06264345b5b8b' while git ls-remote origin refs/heads/PROD read 7d5cb34daabce225bb9a2635c541f6ff3fd64e52 and git rev-parse PROD (local) read 10e7664d",
+      ".tools/portal-release-build.sh line ~148: 'if git rev-parse --verify -q refs/heads/$CHECK_REL^{commit}' is tried first, then origin; the order suits the normal flow (a release/<stamp> branch just built locally) and fails for a name that also exists as a stale local trunk",
+      "the issuer's direct git walk of origin/PROD since the settlement 63c4f9e3 (2 first-parent commits, both two-parent merges with Feature and Approved-By) is the read cited in the evidence record; the tool's output was not cited"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The release builder's --check reads the named release branch and prints a count of PROD..release commits lacking Approved-By beside the total (PRD C-PROMOTE).",
+  "world_is": "For a branch name that exists both locally and on origin with different tips, --check reads the local one and says so nowhere. No harm yet: the DT builds with --features, which reads origin first, and the issuer's check of the real PROD was redone directly from git. Suggested minimal repair: print 'resolved=<ref> sha=<sha>' on the RELEASE and RELEASE-CHECK lines, and when both refs exist and differ, prefer origin/<name> for a name that matches a trunk (DEV, PROD). A round-7 repair candidate."
+}
+```

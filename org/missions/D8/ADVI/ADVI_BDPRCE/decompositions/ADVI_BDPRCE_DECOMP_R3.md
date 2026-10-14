@@ -29,13 +29,13 @@
 |---|---|---|---|---|---|---|---|
 | `BP-c-1` R1 Amendment 1 into the module and its tests, with a probe over real partitions | 1 | FWD-2, FWD-4, FWD-5 | `data/black_diamond/scripts/silver/bd_price_rule.py`, `.../silver/tests/test_bd_price_rule.py`, `deliverables/0.9.0_WK_ADVI_BDPRCE~13/` | -- | ~13 worker | LOCAL | pending |
 | `BP-c-2` the replay re-run on the amended rule (determinism arm, the late-landed lookback, the fate of every interpolated row) | 1 | FWD-7 | `deliverables/0.9.0_WK_ADVI_BDPRCE~14/` | `BP-c-1` | ~14 worker | LOCAL | staged |
-| `BP-c-3` the FWD-7 packet Andrew reads (the BP-b-7 re-cut) (**JOIN**) | 2 | FWD-7 | `deliverables/0.9.0_WK_ADVI_BDPRCE~15/` | `BP-c-2` | ~15 worker | LOCAL | staged |
+| `BP-c-3` the FWD-7 packet Andrew reads (round 2's packet cell, re-cut) (**JOIN**) | 2 | FWD-7 | `deliverables/0.9.0_WK_ADVI_BDPRCE~15/` | `BP-c-2` | ~15 worker | LOCAL | staged |
 | `BP-c-4` is 500,000 an export cap? (read-only) | 3 | FWD-9 | `deliverables/0.9.0_WK_ADVI_BDPRCE~16/` | -- | ~16 worker | LOCAL | pending |
 | `BP-c-5` the lot-key fixture proof re-run with `relationship_id` in the key | 3 | FWD-9 | `deliverables/0.9.0_WK_ADVI_BDPRCE~17/` | `BP-c-4` (the order is the CTO's: check, then proof, then apply) | ~17 worker | LOCAL | staged |
 | `BP-c-6` the honest sentinel line (is it deployed and exercised) and the cause of the Monday/Tuesday header-only export (read-only) | 4, 5 | FWD-5, FWD-9 | `deliverables/0.9.0_WK_ADVI_BDPRCE~18/` | -- | ~18 worker | LOCAL | pending |
 | `BP-c-7` the source of the 1,859 lots priced off no canonical row (read-only) | 5 | FWD-3, FWD-8 | `deliverables/0.9.0_WK_ADVI_BDPRCE~19/` | -- | ~19 worker | LOCAL | pending |
 
-No two cells write one file. `BP-c-1` edits the two module files (round 2's `BP-b-1` created them; no writer imports them); every other cell writes its own deliverables folder. `BP-c-5` produces a patched copy under its folder and edits nothing under `data/`.
+No two cells write one file. `BP-c-1` edits the two module files (round 2's module cell created them; no writer imports them); every other cell writes its own deliverables folder. `BP-c-5` produces a patched copy under its folder and edits nothing under `data/`.
 
 **Chains** (cells joined by a data dependency are one chain): `{BP-c-1, BP-c-2, BP-c-3}`, `{BP-c-4, BP-c-5}`, `{BP-c-6}`, `{BP-c-7}`. M = 4 chains, one of them ending in the join `BP-c-3`.
 
