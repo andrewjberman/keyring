@@ -1,0 +1,23 @@
+{
+  "allowance_gap": null,
+  "allowance_today": 0,
+  "basis": "history backfill quoted over NON-trading days (weekends and NYSE holidays, lib/trading_calendar.py is_trading_day) at the measured ceiling per day; a trading day's backfill allowance is 0 (production draws history on trading days); counted only on days a scheduled drawer fires (drawer_schedule.py)",
+  "basis_note": "Surface B, the 14 daily-tier names whose Yahoo identity lock fails (REJECTED:LOW_TRADE_AGREEMENT on the 2026-10-13 22:30 ET run; stored at 2026-06-23, 78 trading days stale). CTO ruling msg 5411: no looser identity rule; they leave Yahoo and are priced by Bloomberg, depth c (flow dates plus month-ends before 2026-04-22, daily after), PX_LAST, clipped to the V2 active Cottonwood set (commit 4d427d3bbb). Built by b1_request.py --build --names (DQ-t-61 merged @0288b4fb5c). PRICED AND QUOTED, NOT DRAWN: a draw waits on the queue's rules and the 2026-10-17 fire.",
+  "cells": {
+    "bloomberg_history": 7685
+  },
+  "cells_remaining": 7685,
+  "claims": {
+    "ceiling": "measured",
+    "reserve": "held"
+  },
+  "finish_date": "2026-10-18",
+  "finish_date_claim": "measured",
+  "frozen_by": "2.0.0_SA_COO~Q1",
+  "label": "full-request quote",
+  "page": "client performance (Cottonwood), via MDPF_SECHIST's one series per security",
+  "quoted_at": "2026-10-14T04:25:21Z",
+  "quoted_for_today": "2026-10-14",
+  "request_id": "MDPF_SECHIST-CARD-A-B1-YAHOO-FAILED-14",
+  "securities_count": 14
+}
