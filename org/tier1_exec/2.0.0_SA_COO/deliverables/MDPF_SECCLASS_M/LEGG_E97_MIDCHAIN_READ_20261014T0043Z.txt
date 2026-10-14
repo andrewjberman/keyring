@@ -1,0 +1,20 @@
+# e97 read MID-CHAIN (2.0.0_SA_COO~M1), 2026-10-14 ~00:43Z, fire launched 2026-10-13T23:00:11Z by bd-gold-trigger.
+# C_06 ran 00:20:26Z-00:26:17Z (351 s wall, peak 6.5 GB) and rewrote the canonical mix_daily_summary at 00:25:03Z (VersionId a928eUqEYDKRtLsWV2tgslF1N9uCBGvO).
+# D_03 telemetry 00:30:06Z. D_04 had NOT run (served mix_summary.json still the 10-13 05:46:47Z object), so the clauses that read D_04's output
+# (bars, restated) are PENDING here, not failed. This read is the early STOP check: totals vs AUA 0.00 on 15 of 15 and 56 advisor keys set-equal = no STOP.
+# advisors: 14 of 840 advisor-days beyond $250 is UNEXPLAINED here; re-read after the chain ends before any verdict.
+E97-READ mix_daily_summary bucket=opal-data-49financial key=advi/49financial/platinum/views/mix_daily_summary.json VersionId=a928eUqEYDKRtLsWV2tgslF1N9uCBGvO LastModified=2026-10-14T00:25:03+00:00
+E97-READ mix_summary bucket=opal-data-49financial key=advi/49financial/platinum/firm/mix_summary.json
+E97-READ firm_mix_views bucket=opal-data-49financial key=advi/49financial/platinum/artifacts/firm_mix_views.json
+E97-READ client_performance bucket=opal-data-bd key=gold/timeseries/client_performance.parquet rows=3829961 dates=2473 read_s=10.30 column=total_aua groupby(date).sum (D_03.composition_artifacts.py:497-503)
+E97-READ bound_source=max of per_date[].rebuilt_unclassified over 7 window dates of 15 records bound_max=53010.45
+E97-READ relationship JSONs: 64 objects, key template gold/entities/clients/{relationship_id}.json, source() bucket counts {'opal-data-49financial': 64}
+E97-C unclassified_window ok=True bound_max=53010.45 hi=53260.45 rem=2026-09-30=52957.34 2026-10-01=43053.78 2026-10-02=1818.14 2026-10-03=2089.39 2026-10-04=1925.93 2026-10-05=166.72 2026-10-06=-42.15
+E97-C w86_s5 ok=True 2026-10-03=162.29 2026-10-04=3.94 2026-10-05=166.72
+E97-C totals_aua ok=True max_abs=0.00 n=15
+E97-C bars ok=False 2026-Q3 total_ok=False worst_gap=258.49 2026-Q4 total_ok=False worst_gap=29052.65 2026-09 total_ok=False worst_gap=258.49 2026-10 total_ok=False worst_gap=29052.65 2026 total_ok=False worst_gap=29052.65
+E97-C restated ok=False mds=2026-09-25 mix_summary=None
+E97-C advisors ok=False keys=56 set_equal=True rows_beyond_250=14 of 840
+E97-C added_dropped ok=True rows_read=257 disagree=0
+E97-TIME added_dropped_read_s=16.54 json_reads=64 rows=257 total_run_s=32.73
+E97-ACCEPT shipped=True ok=False unclassified_window=True w86_s5=True totals_aua=True bars=False restated=False advisors=False added_dropped=True
