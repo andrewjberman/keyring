@@ -33393,3 +33393,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The live code is the held deploy's code, so the held ledger's gate and the live state disagree in their wording. The release must order after this ledger's closure; the packet names that sequencing and closes nothing."
 }
 ```
+
+## IRPT_BCKEND-D2-S159 -- dispositions on workers 372 and 373's rows; three things for the CTO's ruling
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S159",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T02:22:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on workers 372 and 373's rows (D2-W372-S1 to S4, D2-W373-S1 to S5) after IB-pr-525 and IB-pr-526 merged (@368dd470e4, @05d5a8d786), and the three things the CTO must rule: no reader of account_activity_daily, the HELD thresholds-swap ledger on the function, and cottonwood's refused publication (D2-S158).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 372's report and commits 84744ff163, db437c7f61, 72f5be4c80 (merged @368dd470e4) and worker 373's commits 2563846c8a, baba4b084b, 79309ccb6b, 7309fbe9b5 (merged @05d5a8d786); I re-ran IB188-1 and IB188-2 AC1 to AC3 on the merged tree: PASS",
+      "I read the Design-B packet in full (13,023 bytes, sha256 f6dd828322d4...) and the holdings count summary; I re-read the live CodeSha256 of irpt-49f-reporting-gold-lambda (J6M/92MhjYM/..., unchanged)"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27).",
+  "world_is": "DISPOSITIONS. W372-S1: NO reader of account_activity_daily is named anywhere in the repository (searched infra/aws/lambda non-test, lib, data/assets, the portal checkout): a backfill of 565 days would fill a table nothing reads; NOT mine to fix; put to the CTO (my COO half names it as a purpose gate for the first real run). W372-S2 and S3: the handler's chunk bound (25 days) admits a run the 900-second timeout cannot finish, and a 4-day chunk at the round-186 rate leaves about 33 seconds: the packet derives chunks of about 4 days; my COO half signs no chunk above 2 days until a one-day lots-only run is timed; the code admission of an unfinishable 25-day run is a latent defect of the handler (a lots-only 25-day event would time out mid-chunk and leave days half-written), STAYS as an armed condition of any run, not repaired here. W372-S4: the trunk ledger of D2's irpt-dashbd-thresholds-swap-20261013 reads HELD at leg L7 while the live function runs its bytes, with nine stale marker copies OPEN: the code release waits for it to close (condition 1 of my half); owner D2 (2.0.0_SA_COO~D2); named to the CTO. W373-S1 (the served basis TABLE is also written by the bd-securities fallback): the would-move counts are an UPPER BOUND, not the rule's reach: 32 (49financial: SNOXX, SNSXX, SNVXX, SWVXX), 253 (cottonwood: FDRXX, SWVXX, VUSXX, plus 206 prefixed identifiers withheld) and 841 (inflection: FDRXX, SPAXX), of which the fallback branch (basis NAME_ALIAS, untouched by the rule) accounts for 0, 215 and 67; the canonical table holds 11,361 rows, 365 with a cash sub-class. THE BUILD'S FIRST CHECK: that FDRXX on Inflection resolves on the CANONICAL branch (so the rule moves it); if it comes from the fallback, the shared rule must also cover the fallback layer, which D2's proposal leaves unchanged: this is the question the after-read (Andrew's Inflection client showing FDRXX as Cash) turns on. W373-S2 (the dell2 identity can scan the canonical table): INERT, a permission fact; the scan was count-only. W373-S3 and S4: cottonwood's newest accepted publication is 2026-10-08 and its candidates since are REFUSED (one lost account): see D2-S158, ARMED. W373-S5 (a malformed fence in the worker's own row, caught by the gate on the next commit): the worker's defect, repaired before the merge; the channel parses. NOT measured anywhere: any value or holding, the default report's arithmetic."
+}
+```
