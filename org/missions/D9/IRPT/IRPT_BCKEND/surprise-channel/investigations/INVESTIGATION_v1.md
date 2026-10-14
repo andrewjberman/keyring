@@ -33620,3 +33620,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. W374-S1 (the safe-commit client-data check is ABSENT on dell2, a WARN): STAYS ARMED, owner me for the record, the repair is the box manager's (placing the hashed account-id list); until it is placed no commit on this box is scanned for account ids, and my own files carry counts, dates, public symbols and hash prefixes only. W375-S1 (the producer carries no apply_cash_rule at base): resolved by the merge, the function exists at dff35d95da; the packet's Branch A is still the release of a rule-bearing build whose mechanics are NOT read. W375-S2 (the ticker shape admits Black Diamond-prefixed and CUSIP-shaped identifiers): ruled inside my decomposition, they are counted and never listed, fallback_tickers stays empty. W375-S3 (101 nodes of 49financial carry no display symbol; none a mover): INERT, the reason is unread. W375-S4 (the runner's schedule and deploy target not located): the next round's CENSUS cell must read them before any pair is signed. MEASURED: FDRXX on Inflection resolves on the canonical branch (row found fixed_income with sub Cash; 757 FDRXX nodes in the 2026-10-12 snapshot), so the rule is canonical-only as ruled; the blast radius is 844 nodes (49financial 32, cottonwood 38, inflection 774); the 215 and 67 fallback-branch cash-sub holdings on cottonwood and inflection stay fixed_income as served (a cross-page consistency fact for the CTO). The Cottonwood count is at the 2026-10-08 snapshot, since the page cannot publish until the directory exemption is repaired (CTO 7489)."
 }
 ```
+
+## Round 190, IB-pr-529 -- worker 0.9.0_WK_IRPT_BCKEND~376's row
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W376-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~376",
+  "surfaced_at": "2026-10-14T04:13:55Z",
+  "one_line": "The safe-commit client-data check did not run on the IB-pr-529 commit 9e41657727: the hashed account-id list is absent on dell2, so this box still commits unscanned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "dell2 box manager (placing the hashed account-id list), per IRPT_BCKEND-W374-S1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 9e41657727 in worktree C:/dev/wk-IRPT_BCKEND-376: 'WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids'",
+      "the same condition is recorded by IRPT_BCKEND-W374-S1 in this file (dell2, STAYS ARMED); the IB-pr-529 commit touches holdings_snapshot.py and test_holdings_cash_rule.py only and writes no account identifier"
+    ]
+  },
+  "spec_asserts": "A commit made through .tools/safe-commit.sh passes the commit gates, the client-data check among them, before it lands.",
+  "world_is": "On dell2 the client-data check is ABSENT (the hashed account-id list is not placed), so the gate prints a WARN and reports the commit as NOT checked for client account ids. The commit itself carries code and tests with no account identifier; no other commit on this box is scanned until the list is placed.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
