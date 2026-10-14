@@ -1,0 +1,14 @@
+# 2.0.0_SA_COO~O drive log -- 2026-10-14 18:4xZ to 21:3xZ (opal_bloomberg): OG-ap-18 held on an import-time defect; G1-FIX, the G3/G6 hookup and the Seeking Alpha runner cut
+
+| time | act | evidence |
+|---|---|---|
+| 18:5xZ-19:5xZ | OG-ap-18 (ten G1 typed tools, release `4275edccad` on live `bacec95ccd`): COO half signed, then CTO `7a485c883a` and CVO `85ddb61584` (condition: the live ALB idle timeout is 60 s, so `harvest_search_articles` is read through the public endpoint and a 502/504 pulls that tool only). A3 sent the Phase B GO | @9a6a7eed58, @26222e0ef8 |
+| 19:5xZ | Before `~Z` acted, the issuer read the deploy source: `app/harvest_identity.py:86` indexes `Path(__file__).parents[5]`; the host path `/opt/opal-gateway/app/<m>.py` has 4 parents, so the module raises IndexError at import and the service would not start. HOLD sent; `~Z` confirmed the ledger was never opened and nothing deployed (row Z-S126, msg 34210). The same line explains Z-S125 | msg 34210 |
+| 20:0xZ | Cut `OG-gt-8` (safe calendar root in both modules + `lib/trading_calendar.py` staged into the artifact by `deploy-to-ec2.sh`) and `OG-gt-9` (article search pruning), checks dry-run at base, addendum R3-T.53 | @fdf8d53ccb |
+| 20:3xZ | Cut `OG-pt-4`, the hookup of the eight G3 portal tools and five G6 news tools (script dry-run on HEAD copies; pins 75 -> 88, 66 -> 79), addendum R3-T.54. Merged after the issuer re-ran both criteria in the worker's tree | @2cd2da2448, drain @d91f1363c7 |
+| 20:5xZ | `OG-gt-8` merged (issuer re-run AC1-AC3 PASS) | drain @43e5e0383e |
+| 21:0xZ | CTO decision (PRD v3.8, msg 34216): the Seeking Alpha runner defect is cut here. `OG-sa-1` is an applier order for `~ZW`: read SA access first, stop with no change if it refuses; otherwise re-register the runner with `sa`. GO sent. Worker row Z-W87-S1 found the same `parents[5]` in the two G3 portal modules: `OG-gt-10` cut and merged | @5ded7131ea, drain @d7aec6640c |
+| 21:2xZ | `OG-gt-9`: the worker profiled the call: the silver join is the cost (not the sentiment read; the order's premise was refuted), pruning that keeps the answer identical cut silver parts 849 -> 693 and 145 -> 66. Issuer re-run: no-window 42.5 s against my 40 s bar (the worker's 39.4 s passed by noise). A1 sets the no-window bound to 50 s (ALB 60 s) and leaves the 7-day bound at 40 s; slot re-seated to re-record | @43f3b5309f |
+| 21:2xZ | CTO decision (msg 34221, Andrew-direct): the refreshed `/yearinreview` page rides the next gateway release as one static file named in its ask. `~MI` asked whether a null-tool catalog row sorts last in discover: yes, their change | msgs 34221, 34219 |
+
+State at 21:3xZ: merged this period: gt-8, pt-4, gt-10. Running: gt-9 re-record (slot ~88). `~ZW`: OG-sa-1 (GO sent). Next: OG-ap-18 re-cut on gt-8 + gt-9 (+ the yearinreview file), three halves re-sign; OG-ap-19 (G3 + G6) after it; OG-gt-5's tool and the G5/G2 cells follow.
