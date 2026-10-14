@@ -13986,3 +13986,245 @@
   "notes": "Resolves IRPT_ANLREQ-D2-W133-S4. Carried: the FWD-1 run order mints the synthetic staff user with the chosen firm in allowedFirmIds and reads the upload door's firm check first."
 }
 ```
+
+## IRPT_ANLREQ-D2-W138-S1 -- the TO asks to replace a comment above COMMENTARY_DISCLAIMER; the only comment is the trailing one on the constant's line
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W138-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~138",
+  "surfaced_at": "2026-10-14T17:34:16Z",
+  "one_line": "AR-y-330 step 2 says to replace the comment above COMMENTARY_DISCLAIMER; at base 6abbfec7cf there is no comment line above it, only a trailing comment on the constant's second line naming surprise row IRPT_ANLREQ-D2-W134-S2. The new two-line comment was written directly above the new constant and the trailing comment went with the prose; the diff is one hunk.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-330 step 2 (TO IRPT_ANLREQ.TO-AR-y-330): 'Replace the comment above it so it says: the approved wording is held for Andrew (call 095e), this label stands in for it, and the approved wording is a release gate for any client delivery.'",
+  "world_is": "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:71 is the DRAFT-mark comment; lines 72-73 carry the constant, and its only comment is the trailing '# placeholder: surprise row IRPT_ANLREQ-D2-W134-S2' on line 73. No line sits above the constant to replace.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:71-73 @6abbfec7cf49384fd99ba5b734567f184f9a997a",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:72-73 @a825824b31f366f0183e8b288c653bd86932b91a (the two comment lines and the label constant)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W138-S2 -- a lone copy of layout_overview.py cannot run the AC2 mutant: load_brand reads HERE/brand, so the mutant copies the research modules and brand/
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W138-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~138",
+  "surfaced_at": "2026-10-14T17:34:16Z",
+  "one_line": "AR330-y-AC2 copies layout_overview.py alone to a scratch folder; that copy cannot load the brand asset, so mutant_check.py copies the research modules and brand/ into .scratch/ar330_mutant (gitignored, outside infra/) and pre-loads the copy as the layout_overview module, printing the loaded path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR330-y-AC2 (TO IRPT_ANLREQ.TO-AR-y-330): 'it copies layout_overview.py to a scratch folder OUTSIDE the product tree with COMMENTARY_DISCLAIMER set back to the old text, runs the new test file against the copy (with the copy first on the import path)'.",
+  "world_is": "layout_overview.py:77 sets PACKAGED_DIR = HERE / 'brand', and load_brand (layout_overview.py:119-127) reads brand.json and the logo from that folder; a lone copy with no brand/ beside it refuses at load_brand. The new test file inserts the research folder at sys.path[0] itself (test file lines 14-17), so a copy placed first on sys.path is shadowed; the copy is therefore pre-loaded in sys.modules as layout_overview. With that, the mutant run FAILS on cases (a), (b) and (d); MUTANT-FIRES requires case (a) among the failures.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:53-55 and 77 @6abbfec7cf49384fd99ba5b734567f184f9a997a",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:119-127 @6abbfec7cf49384fd99ba5b734567f184f9a997a",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_commentary_disclaimer_pending.py:14-17 @a825824b31f366f0183e8b288c653bd86932b91a"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W136-S1 -- a commentary_ready send that raises after the DRAFT is stored is recorded as failed and never re-sent; the redelivery finds the draft and stops
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W136-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~136",
+  "surfaced_at": "2026-10-14T17:38:01Z",
+  "one_line": "A commentary_ready send that raises after the DRAFT is stored is recorded as failed and never re-sent: the redelivery finds the draft and stops, so the I4 handoff to the packager is lost.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~T2",
+  "spec_asserts": "infra/aws/terraform/transcripts/commentary.tf lines 37-40 (I4): after a DRAFT is persisted the handler sends ONE closed commentary_ready message to the commentary_ready queue. lambda_handler.py lines 37-38: a failure after admission is recorded in failed and is not redelivered (one READY, one run). Neither states that an I4 send which raises is left unsent for good.",
+  "world_is": "lambda_handler.py persists the DRAFT (line 341) and then sends (line 344). A raise from the send is caught per record at line 364 and appended to failed (line 366). Only lines 310, 313 and 374 add a batchItemFailures entry, so the SQS message is not returned. A redelivery reaches existing_draft at lines 334-337 and returns draft_exists before any send. Read at HEAD 8d9997b5ab. The Lambda is marked NOT APPLIED (commentary.tf line 2), so this is a source read, not a live one.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/commentary/lambda_handler.py:334-344 @8d9997b5ab",
+      "data/transcripts/scripts/commentary/lambda_handler.py:364-366 @8d9997b5ab",
+      "data/transcripts/scripts/commentary/lambda_handler.py:310, 313, 374 @8d9997b5ab",
+      "infra/aws/terraform/transcripts/commentary.tf:37-40 @8d9997b5ab"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found while reading the bindings for AR-y-328 (record r41/RESIDENT_BINDINGS_READ.json, wiring commentary_ready_send). Not changed here: the commentary Lambda is outside this cell's paths."
+}
+```
+
+## IRPT_ANLREQ-D2-W136-S2 -- the tracked bindings builder writes no opal_map member, while the r19 recipe had an --opal-map step; a listed principal's job would be refused OPAL_MAP_BINDING_REQUIRED
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W136-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~136",
+  "surfaced_at": "2026-10-14T17:38:01Z",
+  "one_line": "The tracked bindings builder writes no opal_map member, while the r19 recipe had an --opal-map step, so a principal on the producer list would be refused OPAL_MAP_BINDING_REQUIRED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "infra/aws/lambda/investor-reporting/reports/resident_installed.py lines 291-293: a listed principal's Opal job needs the bindings opal_map member (path and sha256); a missing one raises OPAL_MAP_BINDING_REQUIRED. Line 64 names the optional binding.",
+  "world_is": "build_resident_package.py bindings dict (lines 81-98) emits no opal_map key. The r19 recipe at org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/r19/recipe_evidence/bin/write_record.py line 143 has an --opal-map step, and RESIDENT_RECIPE_AND_DELTA.json line 79 records a bindings opal_map_source and sha256. Whether the release-29 tarball carries opal_map was not read: the tarball is not in the tree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:81-98 @8d9997b5ab",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py:291-293 @8d9997b5ab",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/r19/recipe_evidence/bin/write_record.py:143 @8d9997b5ab"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found while answering Q4 of AR-y-328. The r30 builder must carry opal_map before the producer list gains an address."
+}
+```
+
+## IRPT_ANLREQ-D2-W136-S3 -- commentary.tf reverses the I3 and I4 queue labels: resource commentary_ready is the analysis_ready queue and commentary_done is the commentary_ready queue
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W136-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~136",
+  "surfaced_at": "2026-10-14T17:38:01Z",
+  "one_line": "commentary.tf names the I3 queue commentary_ready and the I4 queue commentary_done, the reverse of the interface names; its local commentary_ready_queue_name holds the I3 name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "commentary.tf lines 17-20 name the I3 queue analysis_ready (the event source trigger); lines 37-40 name the I4 queue commentary_ready (COMMENTARY_READY_QUEUE_URL).",
+  "world_is": "commentary.tf line 122 declares resource aws_sqs_queue commentary_ready, whose name is the local at line 49 (NAMES ready_queue, analysis-ready); its event source at lines 316-317 is the I3 trigger. Line 159 declares resource commentary_done, whose name is the local at line 54 (NAMES commentary_ready_queue), and the Lambda env at line 303 points COMMENTARY_READY_QUEUE_URL at commentary_done.id. The wiring is correct; the labels are inverted, so a builder that reads commentary_ready in Terraform binds the I3 queue.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/transcripts/commentary.tf:49, 54, 122, 159, 303, 316-317 @8d9997b5ab",
+      "data/transcripts/scripts/commentary/NAMES.json:41, 57 @8d9997b5ab"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found while reading the Terraform for the queue names for AR-y-328 Q3. The wiring is right today; the record names each queue by its NAMES.json entry."
+}
+```
+
+## IRPT_ANLREQ-D2-W136-S4 -- AR-y-328 says the round adds ONE address to OPAL_PRODUCER_PRINCIPALS but names no address, and no tracked file names a new one
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W136-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~136",
+  "surfaced_at": "2026-10-14T17:38:01Z",
+  "one_line": "AR-y-328 asks for the edit that adds ONE address to OPAL_PRODUCER_PRINCIPALS, but the order names no address and no tracked file names a new one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-328 cell text, Q4: the exact edit site for adding ONE address to OPAL_PRODUCER_PRINCIPALS.",
+  "world_is": "The order, the decomposition R40A_Y and the tracked tree name no new address. The only entry is resident_worker.py line 165 (andrew@opalinvest.com), and test_resident_worker.py line 770 pins that single entry. The record gives the edit site and the must-agree list and leaves the address to the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:165 @8d9997b5ab",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py:770 @8d9997b5ab",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-328.resident-release-bindings-read.md (Q4 text, line 37)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The issuer names the address in the r30 cell before any edit."
+}
+```
+
+## IRPT_ANLREQ-D2-W137-S1 -- The page's own doc says the client has no PDF call TODAY; the source has both methods on LiveClient, and neither is on the interface or the fixture plane
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W137-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~137",
+  "surfaced_at": "2026-10-14T17:35:04Z",
+  "one_line": "The doc at portal/src/pages/TicketCenter/AnalysisRequestParts.tsx:302 says the client has no getAnalysisRequestPdf call TODAY; LiveClient defines getAnalysisRequestPdf (investor-reporting.ts:1164) and getAnalysisRequestOriginal (investor-reporting.ts:1176), and neither is declared on InvestorReportingApi (:864) or FixtureAdapter (:1630).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AnalysisRequestParts.tsx:302 at base 9fb149ec07: 'the client has no such call TODAY (the route is not in its operation table)'. AR-y-329's premise repeats it.",
+  "world_is": "At base 9fb149ec07, LiveClient defines both methods (investor-reporting.ts:1164, :1176) and the operation table row for analysis-request-pdf exists (:231, status DECLARED). The interface (:864) and FixtureAdapter (:1630) do not declare them, so the fixture plane cannot open a PDF. The comment is stale against the source.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx:302 @9fb149ec07",
+      "portal/src/api/endpoints/investor-reporting.ts:1164 @9fb149ec07",
+      "portal/src/api/endpoints/investor-reporting.ts:231 @9fb149ec07"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the AR-y-329 read of org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~137/r41/COMMENTARY_PDF_ROUTE_READ.json (q3). No source edited; the correction belongs to the reader cell that touches the page."
+}
+```
+
+## IRPT_ANLREQ-D2-W137-S2 -- The premise that analysis-request-pdf serves the commentary PDF does not hold: the route returns the ANALYSIS report's own protected PDF, keyed by request id
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W137-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~137",
+  "surfaced_at": "2026-10-14T17:35:04Z",
+  "one_line": "analysis-request-pdf is keyed by request id alone and returns only the ANALYSIS report's release.protected_pdf_ref (ops/owned_report.py:303-304); no investor-reporting route reads the AR-y-327 commentary PDF by its pdf_ref or its logical id, so a portal-only change cannot open the Commentary item.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-329 Context: the ticket's pdf_ref is an I7 ref to the standalone commentary PDF, and the Commentary item should open it through the viewer's session via the analysis-request-pdf reader.",
+  "world_is": "OwnedAnalysisReader.pdf (ops/owned_report.py:292-320) reads the READY report and then release.protected_pdf_ref. Its writers are job.py:559 and resident_worker.py:485, both on the vendor path. The commentary PDF is retained under YCHARTS_OPAL_REPORT at commentary_logical_id (ycharts/research/opal_producer.py:237, :321) and is not referenced by the report. Source read only; the live route not called.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:303-304 @9fb149ec07",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py:321 @9fb149ec07",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:485 @9fb149ec07"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Record r41/COMMENTARY_PDF_ROUTE_READ.json q2: can_serve_commentary_pdf no, rides resident (ops/ is a member of the resident package and of the irpt-status Lambda), q4 recommend BACKEND_AND_PORTAL. The disposition is the CVO's."
+}
+```
+
+## IRPT_ANLREQ-D2-W137-S3 -- An OPAL_ENGINE report stores no protected_pdf_ref, so analysis-request-pdf refuses it by name; the contract fixture shows one
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W137-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~137",
+  "surfaced_at": "2026-10-14T17:35:04Z",
+  "one_line": "On the OPAL_ENGINE path the stored ANALYSIS document has release.released_revision None and no protected_pdf_ref (ycharts/research/opal_producer.py:396), so analysis-request-pdf refuses an OPAL report with ANALYSIS_PDF_NOT_RETAINED (ops/owned_report.py:309); the contract fixture _contracts/fixtures/AnalysisReport.v2.opal.valid.json:81 carries a protected_pdf_ref.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "_contracts/fixtures/AnalysisReport.v2.opal.valid.json:81 shows an OPAL document with release.protected_pdf_ref, and ops/owned_report.py:303-309 reads that member for every provider.",
+  "world_is": "From source only: the OPAL producer writes release None (opal_producer.py:396). The non-test grep of ycharts/, ops/ and reports/ finds the protected_pdf_ref writers only at job.py:559 and resident_worker.py:485, both vendor-path. No portal page item calls the route today (the pdf kind is not listed, AR-y-273), so no user path reaches the refusal now. Not read live: whether any stored OPAL report exists.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py:396 @9fb149ec07",
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:309 @9fb149ec07",
+      "infra/aws/lambda/investor-reporting/_contracts/fixtures/AnalysisReport.v2.opal.valid.json:81 @9fb149ec07"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the AR-y-329 read; the live check (does a stored OPAL report exist, and what does the route answer for it) is for the CVO or a later read-only cell."
+}
+```
