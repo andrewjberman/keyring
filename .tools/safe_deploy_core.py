@@ -485,6 +485,7 @@ CODE_TREES: dict[str, dict] = {
 # files -- schwab_account_codes.py (new module, imported by holdings_49f.py and directory_runner.py for UIC-16 at
 # 49F) and its data file schwab_account_codes.json -- and drops none: 31 modules and 12 data files (43 total).
 # ---------------------------------------------------------------------------
+# RE-MEASURED 2026-10-14 (0.9.0_WK_IRPT_BCKEND~385, IB-pr-540, row D2-W384-S1): adds silver/opal_unidentified.py (imported by build_cottonwood_mdpf_slice.py); no other change.
 _IRPT_HOLDINGS_CLOSURE = (
     "data/assets/scripts/gold/build_cottonwood_mdpf_pair.py",
     "data/assets/scripts/gold/build_cottonwood_mdpf_slice.py",
@@ -499,6 +500,7 @@ _IRPT_HOLDINGS_CLOSURE = (
     "data/assets/scripts/gold/investor_reporting/source_inputs.py",
     "data/assets/scripts/silver/rebalancer_schemas.py",
     "data/assets/scripts/silver/opal_strategy_matcher.py",
+    "data/assets/scripts/silver/opal_unidentified.py",
     # IB-mr-291 (CTO RULING 103169): the narrowed classifier replaces the BD library with the
     # canonical client (its ONE home) plus the declared FWD-6 fallback (bd_securities_fallback.py,
     # this cell's own header). Neither imports another repo module at load.
