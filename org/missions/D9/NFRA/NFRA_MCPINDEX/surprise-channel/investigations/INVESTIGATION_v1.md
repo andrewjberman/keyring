@@ -7149,6 +7149,32 @@ carries none.
     "spec_asserts": "A4 step 4: 'Stage a path under this project's home in the same commit (e.g. a deliverable under deliverables/0.9.0_WK_NFRA_MCPINDEX~34/)'; the derivation reads 'the staged paths' project home'.",
     "world_is": "The gate derives the project from the paths safe-commit passes to it, which is the graded-extension subset of the staged set, so only a project-home path with one of those eight extensions counts. No change to the derivation was made: widening safe-commit.sh is outside this order's <paths>.",
     "notes": "Any later committer relying on the A4 branch must stage a .json/.yaml (or .py/.tf) path under its own project home, e.g. its proof instance. The gate's own self-test and g1.AC2 are unaffected (they pass the diff directly)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S117",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-14T03:45Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Resolved by MX-c-9 A4, drained @422e58c43b. The naming gate honours legacy_addresses rows for the derived committing project, and the six research rows are committed through the real gate. c9.AC2 reads research 7 of 7, with validate OK and the gate arms passing.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W34-S7",
+      "NFRA_MCPINDEX-Z-S116",
+      "NFRA_MCPINDEX-Z-W34-S6"
+    ],
+    "one_line": "DISARMS Z-W34-S7 (the gate did not read legacy_addresses.json), Z-W34-S6 and Z-S116. The judge() branch @0fce89bb11 lands under CTO~Z's ruling (msg 33936) and the laptop CTO's three conditions (msg 33943): the project is derived from the staged paths, a negative arm is added and the existing arms are unchanged, and the result was relayed to 2.0.0_SA_COO~C through MSTR~Z. The merge hold to 03:40Z expired with no dell1 objection. The six rows ship in MX-r-12 v2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer's re-run at 422e58c43b: c9.AC1 PASS (67 of 67, identity 0); c9.AC2 PASS (research 7 of 7, validate rc=0, gate self-test rc=0, planted arms rc=0 at 0fce89bb11); c9.AC3 PASS.",
+        "naming-gate.py --self-test: ARM legacy_address_own_reader CONFORMANT ok; ARM legacy_address_other_reader REFUSE ok; no-committing-project REFUSE ok; derivation ok; NAMING-GATE-SELF-TEST: PASS."
+      ]
+    },
+    "spec_asserts": "Row 12b's seven research tables each get a harvest_datasets row.",
+    "world_is": "39 rows committed; the gate honours registered legacy addresses for their reader only."
   }
 ]
 ```

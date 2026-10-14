@@ -12403,3 +12403,34 @@
 }
 ]
 ```
+
+### IRPT_ANLREQ-D2-S93 -- the upload door refuses every non-Opal viewer today, so a partner-firm advisor cannot upload and the release-28 door steps D1 to D4 cannot pass
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S93",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-14T03:54:00Z",
+  "one_line": "TO-EXERCISE-R28: all four posts to POST /api/scoped/investor-reporting/analysis/inputs as a synthetic partner-firm advisor (FA, 49financial, advisorId and partner row and active users row present) were refused NOT_AUTHORIZED (function log: InputAccessDenied, classifier_code NOT_AUTHORIZED) before the file was read, because reports/generate_installed.py sets ports[ordinary_authorizer] to None (an absent producer) so InteractiveAccess admits no non-Opal viewer; D1 to D4 therefore fail and the FWD-1 journey cannot reach the door as a partner-firm advisor.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r28/SITTING_RESULT.txt and SITTING_TRACE.txt: D1 to D4 status 200 with one identical body sha256 for four different files (a refusal envelope)",
+      "the irpt-ycharts-generate log group for 2026-10-14T03:35:25Z to 03:36:25Z: four invocations, each irpt_internal InputAccessDenied with classifier_code NOT_AUTHORIZED, then irpt_error public_reason_code NOT_AUTHORIZED; no provider call",
+      "infra/aws/lambda/investor-reporting/reports/generate_installed.py:134-136 (_ordinary_viewer_not_composed returns False), :336 (ports ordinary_authorizer None), :387-389 (the docstring: until a producer exists only a verified Opal viewer can upload); reports/tests/test_generate_installed.py:201 test_without_the_ordinary_authorizer_a_partner_upload_is_refused_and_nothing_is_written"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Release-28 pair section 5 step 5 and CTO half 8(d): D1 to D4 are driven by a synthetic client-human of 49financial through the door; D1 answers NEEDS_CORRECTION ACCOUNT_COLUMN_SEVERAL_VALUES, D2 and D3 NORMALIZED, D4 accepted.",
+  "world_is": "The leg L3 package is live (G1 to G4 true) but the door's ordinary-viewer authorizer has no producer, so no partner-firm advisor can upload. The reader r19.3 itself behaves as designed on the same three files (checked offline with the real reader: D1 ERROR ACCOUNT_COLUMN_SEVERAL_VALUES, D2 no ERROR, D3 Shares basis no ERROR); what was NOT exercised live is the door's answer to a file, the price-date default, and the re-open. My offline run covered the reader but not the door's access composition; the live run found the refusal. No row, input or upload was stored (the refusal comes before the original is retained).",
+  "notes": "owner of the follow-up: 2.0.0_SA_COO~Y2 with 1.0.0_SA_CTO~DELL2 (the ordinary_authorizer producer, AR-y-271's class of work). Not tried: an internal/Opal viewer, because the order names a client-human of 49financial and a second token is not permitted."
+}
+```
+
+- **owner:** `2.0.0_SA_COO~Y2`
+- **disarm_owner:** n/a -- INERT; the gap is a missing feature, nothing degrades while it waits
+- **state:** BLOCKING / INERT

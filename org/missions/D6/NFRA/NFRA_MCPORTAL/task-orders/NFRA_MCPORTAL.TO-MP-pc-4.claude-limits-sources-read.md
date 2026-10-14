@@ -113,7 +113,7 @@ Check dry-run at base 9be88c9134: AC1 FAIL (file absent). The checker was fed be
 reads PASS, and the same file with one planted token-shaped field reads FAIL (credential-shaped hits=1). LOCAL, with no
 build. The judgment criterion is here because the outcome is a reading: does the finding name a readable source?
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <workstream>PC</workstream>
 <slot>~23</slot>
