@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-14T02:06:41Z",
+ "written_at": "2026-10-14T09:23:04Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1899,7 +1899,7 @@
    "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_201xZ_BLOOMBERG_NO_MODIFY_IS_POSITIONING_AND_ETFS_VIEW_RESEARCH_OUTSIDE_OPEN_SEASON.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-13T21:52:25Z",
    "kind": "act",
    "context": "Lifting a hold he set by name: 10-06 'Unchanged' clause keeps the no-modify order on the vehicle and the sign-in scripts. R2 fixes the 8194 gate that blocks the 07:00 unattended sign-in; R3 fixes the focus loss that aborted it today. Row OPAL_BBGTML-Z-S17; COO~ZB and CTO~Z REC (a) lift for these change-managed repairs.",
@@ -1915,7 +1915,14 @@
     "evidence": {},
     "measured_at": "2026-10-13T21:52:25Z"
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-14T09:23:04Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_090xZ_NO_HOLD_ON_BLOOMBERG_SIGN_IN_REPAIRS.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   },
   {
    "id": "sitez-20261013T215753Z-232a",
