@@ -33645,3 +33645,54 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "On dell2 the calendar's vendor libraries are absent, so trading_calendar answers from the hardcoded NYSE closures table, which the checker says must be regenerated before 2028. The AC3 result stands for 2026; the calendar source on this box is not the vendor calendar. The reason the libraries are absent on dell2 was not read."
 }
 ```
+
+## Round 190, IB-pr-529 -- worker 0.9.0_WK_IRPT_BCKEND~376's row
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W376-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~376",
+  "surfaced_at": "2026-10-14T04:13:55Z",
+  "one_line": "The safe-commit client-data check did not run on the IB-pr-529 commit 9e41657727: the hashed account-id list is absent on dell2, so this box still commits unscanned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "dell2 box manager (placing the hashed account-id list), per IRPT_BCKEND-W374-S1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 9e41657727 in worktree C:/dev/wk-IRPT_BCKEND-376: 'WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids'",
+      "the same condition is recorded by IRPT_BCKEND-W374-S1 in this file (dell2, STAYS ARMED); the IB-pr-529 commit touches holdings_snapshot.py and test_holdings_cash_rule.py only and writes no account identifier"
+    ]
+  },
+  "spec_asserts": "A commit made through .tools/safe-commit.sh passes the commit gates, the client-data check among them, before it lands.",
+  "world_is": "On dell2 the client-data check is ABSENT (the hashed account-id list is not placed), so the gate prints a WARN and reports the commit as NOT checked for client account ids. The commit itself carries code and tests with no account identifier; no other commit on this box is scanned until the list is placed.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## Round 190, IB-pr-529 -- worker 0.9.0_WK_IRPT_BCKEND~376's second row
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W376-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~376",
+  "surfaced_at": "2026-10-14T04:20:00Z",
+  "one_line": "The one-writer gate warns that the order's investigation path is the laptop's unsuffixed file; a dell2 worker appended a row to it at commit 770a469992.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 770a469992 in worktree C:/dev/wk-IRPT_BCKEND-376: '[one-writer] WARN: org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md is the laptop's (unsuffixed) file, written from dell2; per-box file <stem>.dell2.<ext> (WARN until C-QUEUE)'",
+      "the order IRPT_BCKEND.TO-IB-pr-529 names this unsuffixed path as the row file (its paths block and step 6), so the worker wrote where the order pointed"
+    ]
+  },
+  "spec_asserts": "Rows go to the investigation file the task order names (INVESTIGATION_v1.md), and a worker's row is appended there.",
+  "world_is": "The one-writer gate reads that file as the laptop's and says a dell2 writer should use the per-box file INVESTIGATION_v1.dell2.md until the C-QUEUE repair lands. The gate passed the commit (WARN only), and this row is the only write to the file from this worktree.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
