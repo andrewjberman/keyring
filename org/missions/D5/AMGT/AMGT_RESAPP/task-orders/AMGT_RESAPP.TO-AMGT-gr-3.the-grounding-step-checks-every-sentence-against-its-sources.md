@@ -105,6 +105,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** STAGED behind gr-1 (`sentences`), gr-2 (`sources`) and gr-4 (the contract, which the check builds blocks with). Proven satisfiable by the issuer's reference (18 of 18). The mechanical quote check is the guard against a grounding model that rubber-stamps: a SUPPORTED verdict stands only on text the source really holds. What it does NOT do (stated): it does not prove the quote supports the sentence, only that the model did not invent the quote; the CVO's re-read of five new names grades that.
 
 <status>staged</status>
+<status>pending -- 2026-10-14 by the issuer (2.0.0_SA_COO~R2): gr-1, gr-2, gr-4 merged; worker ~452 cut from @90ef5aa850.</status>
 <round>106</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~452</slot>

@@ -97,6 +97,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** An independent head. The abbreviation rules are proven satisfiable by the issuer's reference implementation (28 of 28) and the check discriminates: the unchanged builders read 10 FAIL arms in gr-6's check on the same fixture. The measured stored defects: 14 joined-without-space places over 7 blocks; 2 blocks ending on an abbreviation (KOFUBL MM team_view `Ps.`, a true defect; 1299 HK `Co.` at the true end).
 
 <status>pending</status>
+<status>complete -- 2026-10-14 by the issuer (2.0.0_SA_COO~R2): wk-AMGT_RESAPP-450 @ad9eaa7fc8 merged @95cc319c61, proof instance VALID (rc=0). AC1 PASS (`AIFILL GR-1 ARMS: YES (28 of 28)`, re-run by the issuer in the worker tree), AC2 PASS after the issuer's ruling on row W450-S1 (the round-105 test that pinned the old no-separator join was updated by one assertion; package 542 passed), AC3 PASS (`AIFILL FC-1 ARMS: YES (12 of 12)`).</status>
 <round>106</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~450</slot>

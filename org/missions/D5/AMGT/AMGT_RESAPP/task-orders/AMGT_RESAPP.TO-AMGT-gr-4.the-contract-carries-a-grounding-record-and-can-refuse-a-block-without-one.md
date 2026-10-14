@@ -100,6 +100,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** An independent head; proven satisfiable by the issuer's reference (26 of 26). The switch is OFF here by design: turning it on in this cell would break every builder test that makes a filled block without a record. Cell gr-8 turns it on and brings those tests onto a shared helper. A key present with value None counts as absent (the issuer's reference treats it so; the check's 'switch decides' arm asserts it).
 
 <status>pending</status>
+<status>complete -- 2026-10-14 by the issuer (2.0.0_SA_COO~R2): wk-AMGT_RESAPP-453 @5c81a53406 merged @0516c67e6d, proof instance VALID (rc=0). AC1 PASS (`AIFILL GR-4 ARMS: YES (26 of 26)`, re-run by the issuer), AC2 PASS (534 passed), AC3 PASS (FC-2 43 of 43, FA-1 31 of 31).</status>
 <round>106</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~453</slot>
