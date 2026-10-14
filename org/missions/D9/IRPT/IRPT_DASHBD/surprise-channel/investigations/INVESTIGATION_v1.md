@@ -9816,3 +9816,158 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W161-S1 -- The closed coverage vocabulary has no member that says a dimension field is absent from the firm silver, so four PRD-named account_dim fields are null on every FULL row
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W161-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~161",
+  "surfaced_at": "2026-10-14T05:02:00Z",
+  "one_line": "The closed coverage vocabulary has no member that says a dimension field is absent from the firm silver, so four PRD-named account_dim fields are null on every FULL row",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-196 step 2 and PRD C-SHAPE: a column the PRD names that Cottonwood silver does not carry is null plus a coverage value that says why (C-COVERAGE is the closed vocabulary).",
+  "world_is": "The Cottonwood silver carries no client_id, tax_status, opened_date or first_data_date. The adapter writes them null on all 999 rows, and 869 of those rows are coverage FULL, because no member of the closed vocabulary (FULL, PARTIAL_HISTORY, NO_LOTS, FLOW_UNRECONCILED, UNCLASSIFIED_HOLDINGS, SOURCE_LAG, FEE_RAIL_UNUSED) names an absent field. The why sits in absent_fields, a free ';'-joined list, not in coverage. Form only: the CTO adjudicates whether a member or a reason column is admitted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_DIM_CONTRACT.json@e03a4991a4 (contract: columns client_id, tax_status, opened_date, first_data_date; absent_fields)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~161/COTTONWOOD_ACCOUNT_DIM.json@e03a4991a4 (dry_run.null_counts: client_id 999, tax_status 999, opened_date 999, first_data_date 999)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md@e03a4991a4 (C-COVERAGE, the closed vocabulary)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W161-S2 -- 47 accounts whose only membership is the no-relationship sentinel carry no household key, and the closed vocabulary has no member that explains it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W161-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~161",
+  "surfaced_at": "2026-10-14T05:02:00Z",
+  "one_line": "47 accounts whose only membership is the no-relationship sentinel carry no household key, and the closed vocabulary has no member that explains it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-196 step 2: null plus a coverage value that says why; step 3: the household key comes from the relationship id.",
+  "world_is": "The Relationship ID sentinel '0' (the no-relationship value a01_dim_relationship.py names NO_REL_SENTINEL) is the only membership of 47 accounts, so household_id is null for them and household_id_reason carries NO_RELATIONSHIP_SENTINEL. That enum member is new in this round: it needs its four-postulate record (in the contract, rule24_record) and a token census, which measured 6 hits, all of them this round's own files. The CTO adjudicates whether it is admitted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_DIM_CONTRACT.json@e03a4991a4 (household_id_reason enum, rule24_record)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~161/COTTONWOOD_ACCOUNT_DIM.json@e03a4991a4 (dry_run.null_counts: household_id 47)",
+      "data/cot/scripts/gold/runners_cot/a01_dim_relationship.py@e03a4991a4 (sentinel definition)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W161-S3 -- 3 accounts sit under two or more real relationships, and the PRD names no rule for which relationship key account_dim carries
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W161-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~161",
+  "surfaced_at": "2026-10-14T05:02:00Z",
+  "one_line": "3 accounts sit under two or more real relationships, and the PRD names no rule for which relationship key account_dim carries",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-196 step 3: a relationship with several accounts yields one key shared by those rows. The case of one account under several relationships is not stated.",
+  "world_is": "The adapter carries the smallest non-sentinel relationship id as household_id and the count in household_relationship_count (contract column). The count is 3 in the dry run. A01's per-membership map keeps every membership. The smallest-id rule is the adapter's declared choice, not a ratified rule.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_DIM_CONTRACT.json@e03a4991a4 (household_relationship_count meaning)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~161/COTTONWOOD_ACCOUNT_DIM.json@e03a4991a4 (dry_run multi_relationship_accounts 3, counts only)",
+      "data/cot/scripts/gold/runners_cot/a01_dim_relationship.py@e03a4991a4 (per-membership map)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W161-S4 -- The order's reuse instruction cannot be met as written: the a00 and a01 derivations are coupled to their S3 reads and gold writes, so the adapter restates two rules
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W161-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~161",
+  "surfaced_at": "2026-10-14T05:02:00Z",
+  "one_line": "The order's reuse instruction cannot be met as written: the a00 and a01 derivations are coupled to their S3 reads and gold writes, so the adapter restates two rules",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-196 step 3: an account and a relationship dimension already exist in code; reuse their derivation, do not re-derive a second way.",
+  "world_is": "a00_dim_account.py and a01_dim_relationship.py derive the universe and the membership inside build(), together with runner_common reads and write_gold_table(). No pure function exists to import. The adapter restates the two rules it needs (holdings UNION roster; '0' is the no-relationship sentinel), so there are now two derivations of the same keys. The CTO decides whether a00 and a01 are factored into a pure function.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/runners_cot/a00_dim_account.py@e03a4991a4 (build(): inline derivation and gold write)",
+      "data/cot/scripts/gold/runners_cot/a01_dim_relationship.py@e03a4991a4 (build(): inline membership derivation)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_account_dim.py@e03a4991a4 (adapter: restated rules)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W161-S5 -- The txn-only historical accounts that a00 carries are outside account_dim, because the dry run reads the holdings and roster surfaces only
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W161-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~161",
+  "surfaced_at": "2026-10-14T05:02:00Z",
+  "one_line": "The txn-only historical accounts that a00 carries are outside account_dim, because the dry run reads the holdings and roster surfaces only",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-196 step 5: read the silver prefixes the adapter needs; if the silver needed is not in the prefix, record what is missing and stop. a00's universe is the holdings axis UNION roster UNION the transaction series.",
+  "world_is": "The adapter's universe is holdings UNION roster (999 accounts). It does not read fact_transactions, the surface a00 uses for TXN-ONLY-HISTORICAL accounts. The count of such accounts is not measured in this round, so account_dim's 999 accounts can differ from a00's universe by that class. Not repaired: the order names two surfaces for this table's read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/runners_cot/a00_dim_account.py@e03a4991a4 (universe: holdings, roster and txn-series union)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~161/COTTONWOOD_ACCOUNT_DIM.json@e03a4991a4 (dry_run.prefixes_read: fact_holdings and fact_allocations only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W161-S6 -- C-SHAPE says method_version names a dim_return_method row, but a dimension has no return method row, so the adapter writes a declared constant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W161-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~161",
+  "surfaced_at": "2026-10-14T05:02:00Z",
+  "one_line": "C-SHAPE says method_version names a dim_return_method row, but a dimension has no return method row, so the adapter writes a declared constant",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD C-SHAPE: every table carries method_version; C-METHOD: method_version is the dim_return_method row a figure was produced under.",
+  "world_is": "account_dim holds no return figure and no dim_return_method row exists for it. The adapter writes method_version 1 as a declared constant (METHOD_VERSION) and the contract says so in its meaning. The value is not measured from any method row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_DIM_CONTRACT.json@e03a4991a4 (method_version meaning)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_account_dim.py@e03a4991a4 (METHOD_VERSION constant)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md@e03a4991a4 (C-SHAPE, C-METHOD)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
