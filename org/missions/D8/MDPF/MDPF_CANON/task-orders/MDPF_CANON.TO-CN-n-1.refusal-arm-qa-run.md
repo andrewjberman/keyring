@@ -31,6 +31,11 @@ so the cross-axis presence gate failed Global first. The issuer has fixed the in
 records `writes: []`). This is a NEW outcome on a corrected instrument, so the "run once" rule restarts: run `selftest`, `plan`, the clock check, then `drive` ONCE more into the SAME `run/` directory
 (it overwrites the first seat's files, which are in git history), then section 4. If this run also does not behave, Step 3 applies unchanged.
 
+**AMENDMENT 2 (the issuer's, ~15:1xZ; you are the THIRD seat on this slot).** The second seat's run (rows `MDPF_CANON-D1-W21-S4`, `-S5`, inherited, do not edit) was refused by the cross-axis presence gate again, and the log shows why: the Global builder
+re-sets every frontier `account_count` from its own count source AFTER the plant (the log's `ROW11 frontier-stamp` line), so blanking the count could not hold. The instrument now plants a ZERO `model_value` (`fill=0.0`) instead of a blank, which
+keeps count and value both present and leaves the line not held. This is the issuer's INFERENCE from that log line, not yet a measured result; your run measures it. Run `selftest`, `plan`, the clock check (outside 13:00Z-14:10Z), then `drive` ONCE into the same `run/`
+directory, then section 4. Whatever the run does, Step 3 applies unchanged, and this is the last drive of this order: if it is refused for any other reason, keep the record, file the row and stop.
+
 **The instrument** (`org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r7_cn_n_1.py`; read its header and the functions `plant_single_firm_pool` and `cmd_drive`; never edit it):
 - `drive --run-dir DIR` calls the consolidator's `build_all(trigger, dry_run=True, out_dir=<temp>)` ONCE. `dry_run=True` writes nothing to S3 (the handler documents QA-local mode as "ZERO S3
   writes anywhere"). The instrument also installs a guard on every botocore call: any operation not named Get, Head, List, Describe, Lookup or Simulate RAISES and is recorded. It wraps

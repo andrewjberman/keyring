@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v3.3",
+  "prd_version": "v3.4",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -1260,3 +1260,25 @@ CONTRACTS-only; ENDPOINT unchanged. The census has landed 6 of 6 groups.
 `mdpf/<firm>/gold/taxsma_assets/` in the per-firm buckets (49F 13 accounts, Cottonwood 2, 0 behind, 0 last-4 collisions).
 It is the Tax SMA adapter's served form behind `client_get_holdings` / `client_get_profile` (Ruling 1). There is no separate
 `client_get_taxsma_accounts` tool. The census totals 308 contracts.
+
+### v3.4 addendum (2026-10-14 ~15:1xZ, 1.0.0_SA_CTO~Z) -- client data comes ONLY from the opal-data-assets vendor silver folders (Andrew-direct)
+
+**Andrew-direct ~15:0xZ, verbatim in `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_150xZ_CLIENT_DATA_ONLY_OPAL_DATA_ASSETS_VENDOR_SILVER.md`:** "opal-data-bd is not a bucket we want to use for this at all, the only
+client-data we want to be using explicitly at this time is the silver vendor folders in opal-data-assets".
+
+**Contract change (supersedes the clauses named):**
+1. Every `client_*` tool and its adapters read client data ONLY from `s3://opal-data-assets/<vendor>/<firm>/silver/`
+   (blackdiamond, orion, eclipse, smartx, schwab, commonwealth, and the Tax SMA table censused there).
+2. **Struck:** v3.1 Ruling 5's live read of `opal-data-bd/silver/` (the BD adapter reads `blackdiamond/<firm>/silver/`);
+   CRO~Z G2f (opal-data-bd map) is superseded; v3.3 G4 item 2 (account-grain MDPF feed as an adapter of
+   `client_get_allocation`) is struck -- that feed is not served; the G2e note (per-firm buckets' `taxsma_assets` gold)
+   is struck -- not served.
+3. **Freshness, stated, not fixed here:** 49F BD silver in `opal-data-assets` runs behind (converter OOM, row Z-S110;
+   `49financial/silver_legacy` frozen 2026-08-25). The BD adapter answers from the newest partition it holds and states
+   the lag in trading days. Repairing the converter is outside this project.
+4. The G2 never-widen ask names `opal-data-assets` vendor silver prefixes only. No grant on `opal-data-bd`,
+   `opal-data-mdpf/mdpf/feeds/` or the per-firm buckets is asked.
+5. Not client data under this word, so unchanged: portal-v2 `platinum/mdpf/<scope>/` firm aggregates (existing mdpf
+   tools) and `opal-data-etfs` partner ownership totals (G5).
+
+CONTRACTS-side; ENDPOINT unchanged.
