@@ -985,3 +985,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## NFRA_DEVPLN-W1-S16 -- with OPAL_STATE_ROOT unset the production git source runs a real git show, so the zz9 no-stand-in case cannot keep the real origin/box refs unread
+
+```json
+{
+  "id": "NFRA_DEVPLN-W1-S16",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_DEVPLN~1",
+  "surfaced_at": "2026-10-14T01:27:47Z",
+  "one_line": "The order says tests read no real origin/box ref, yet its case (a) runs with OPAL_STATE_ROOT unset, which is exactly the production path that runs git show against ROOT's real origin/box refs",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree .tools/open-calls.py _source_git (wk-NFRA_DEVPLN-1, uncommitted at 596f3a96ad plus this cell's edit): with _seam_dir() returning empty (no OPAL_STATE_ROOT), the function falls through to subprocess git -C ROOT show origin/box/<box>:org/devices/state/<box>/open_calls.json",
+      "worktree .tools/tests/test_open_calls_cloudread.py case 9 (stand-in set, OPAL_STATE_ROOT unset, box zz9): status() passes state=False, so the production git source runs for box zz9; the ref is absent, so git show fails and the source is skipped",
+      "python .tools/tests/test_open_calls_cloudread.py: cases=10/10 ok=True; test_open_calls_approval 13/13, _register 10/10, _waiver 11/11, _withdraw 7/7 ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Tests make no S3 call and read no real origin/box ref. Case (a): the stand-in is set, OPAL_STATE_ROOT is unset, box zz9 exists nowhere in the repo, expect UNREADABLE rc 2 with the fixture row not used.",
+  "world_is": "Case (a) cannot run without the production git source, because the seam is ignored when OPAL_STATE_ROOT is unset. The production source then issues git show against the real origin/box/zz9 ref. The ref does not exist, so nothing is read and the case passes, but the test does touch the real repo's ref namespace. A box that did have a real origin/box ref would be read. The tests-read-no-real-ref rule holds only because zz9 is absent. Reported for the lane owner's ruling; the production path is unchanged and no test switch was added to the git source for this case."
+}
+```
