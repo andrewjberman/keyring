@@ -12792,3 +12792,27 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S46",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T21:52:57Z",
+  "one_line": "Issuer's ruling on worker 179's BLOCKING row W179-S1 (4 of 5701 one-account household window comparisons differ from their account, all since inception, on carried large-flow days): my method chained summed values and flows in the endpoint form, which does not reproduce the account series' linked return; the method becomes the prior-day-value weighted combination of the accounts' own returns, and the order, the check and the decomposition are amended.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-224: a one-account household equals its account's cumulative return in every window (hard clause, 1e-9); the household daily return chains summed values and external flows.",
+  "world_is": "W179-S1: the worker read 570 partitions of the firm's account return gold and 4013 households (1742 multi-account) and found the maximum one-account gap 4.04e-4 in 4 of 5701 window comparisons, all since inception, in 4 households; at day level 6 of 907,548 day pairs differ, all on LARGE_FLOW days with carried days: the producer's total_return_daily links through intervening custodian valuations there (its amendment 5(e)), which the endpoint form (sum V_t - sum F_t) / sum V_p - 1 does not reproduce. An issuer error in the method, not a data fault. Ruled: the household daily return is the prior-day-value weighted combination of its accounts' own total_return_daily (the same as the summed-values-and-flows form wherever each account's return is the endpoint form; for a one-account household it is the account's return, exactly); an account whose return is None makes the day ACCOUNT_MISSING; no enum change. The checker's independent function and synthetic arm carry a linked day (25 self-test arms), and a control shows the endpoint form disagrees on it. The worker's tie-out counts (windows, bins, reasons) are to be re-measured on the amended method; the first-cut counts are not accepted as the record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 179's report and row W179-S1 at wk-IRPT_DASHBD-179 @806e1b9873 (counts)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r111/p111_household.py (expected, expected_endpoint, synthetic; self-test 25 arms)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-224.firm49-household-daily-return-twr-and-range-tie-out.md step 3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
