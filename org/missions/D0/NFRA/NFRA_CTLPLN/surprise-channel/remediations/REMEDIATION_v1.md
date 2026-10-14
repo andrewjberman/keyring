@@ -250,15 +250,15 @@ W36-S2, W14-S2, W14-S32, W12-S1, Z-S3, W8-S7, W6-S17. Only S1 is closed.
     "owner": "1.0.0_SA_CTO",
     "round": "v1",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO",
       "round": "v1"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO",
-      "at": null
+      "at": "2026-10-14T03:30Z"
     }
   },
   {
@@ -380,15 +380,15 @@ W36-S2, W14-S2, W14-S32, W12-S1, Z-S3, W8-S7, W6-S17. Only S1 is closed.
     "owner": "2.0.0_SA_COO~C",
     "round": "v1",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~C",
       "round": "v1"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~C",
-      "at": null
+      "at": "2026-10-14T03:30Z"
     }
   },
   {
