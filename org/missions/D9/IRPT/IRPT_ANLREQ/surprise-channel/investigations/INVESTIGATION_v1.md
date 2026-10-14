@@ -13986,3 +13986,113 @@
   "notes": "Resolves IRPT_ANLREQ-D2-W133-S4. Carried: the FWD-1 run order mints the synthetic staff user with the chosen firm in allowedFirmIds and reads the upload door's firm check first."
 }
 ```
+
+## IRPT_ANLREQ-D2-W136-S1 -- a commentary_ready send that raises after the DRAFT is stored is recorded as failed and never re-sent; the redelivery finds the draft and stops
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W136-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~136",
+  "surfaced_at": "2026-10-14T17:38:01Z",
+  "one_line": "A commentary_ready send that raises after the DRAFT is stored is recorded as failed and never re-sent: the redelivery finds the draft and stops, so the I4 handoff to the packager is lost.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~T2",
+  "spec_asserts": "infra/aws/terraform/transcripts/commentary.tf lines 37-40 (I4): after a DRAFT is persisted the handler sends ONE closed commentary_ready message to the commentary_ready queue. lambda_handler.py lines 37-38: a failure after admission is recorded in failed and is not redelivered (one READY, one run). Neither states that an I4 send which raises is left unsent for good.",
+  "world_is": "lambda_handler.py persists the DRAFT (line 341) and then sends (line 344). A raise from the send is caught per record at line 364 and appended to failed (line 366). Only lines 310, 313 and 374 add a batchItemFailures entry, so the SQS message is not returned. A redelivery reaches existing_draft at lines 334-337 and returns draft_exists before any send. Read at HEAD 8d9997b5ab. The Lambda is marked NOT APPLIED (commentary.tf line 2), so this is a source read, not a live one.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/commentary/lambda_handler.py:334-344 @8d9997b5ab",
+      "data/transcripts/scripts/commentary/lambda_handler.py:364-366 @8d9997b5ab",
+      "data/transcripts/scripts/commentary/lambda_handler.py:310, 313, 374 @8d9997b5ab",
+      "infra/aws/terraform/transcripts/commentary.tf:37-40 @8d9997b5ab"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found while reading the bindings for AR-y-328 (record r41/RESIDENT_BINDINGS_READ.json, wiring commentary_ready_send). Not changed here: the commentary Lambda is outside this cell's paths."
+}
+```
+
+## IRPT_ANLREQ-D2-W136-S2 -- the tracked bindings builder writes no opal_map member, while the r19 recipe had an --opal-map step; a listed principal's job would be refused OPAL_MAP_BINDING_REQUIRED
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W136-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~136",
+  "surfaced_at": "2026-10-14T17:38:01Z",
+  "one_line": "The tracked bindings builder writes no opal_map member, while the r19 recipe had an --opal-map step, so a principal on the producer list would be refused OPAL_MAP_BINDING_REQUIRED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "infra/aws/lambda/investor-reporting/reports/resident_installed.py lines 291-293: a listed principal's Opal job needs the bindings opal_map member (path and sha256); a missing one raises OPAL_MAP_BINDING_REQUIRED. Line 64 names the optional binding.",
+  "world_is": "build_resident_package.py bindings dict (lines 81-98) emits no opal_map key. The r19 recipe at org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/r19/recipe_evidence/bin/write_record.py line 143 has an --opal-map step, and RESIDENT_RECIPE_AND_DELTA.json line 79 records a bindings opal_map_source and sha256. Whether the release-29 tarball carries opal_map was not read: the tarball is not in the tree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:81-98 @8d9997b5ab",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py:291-293 @8d9997b5ab",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/r19/recipe_evidence/bin/write_record.py:143 @8d9997b5ab"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found while answering Q4 of AR-y-328. The r30 builder must carry opal_map before the producer list gains an address."
+}
+```
+
+## IRPT_ANLREQ-D2-W136-S3 -- commentary.tf reverses the I3 and I4 queue labels: resource commentary_ready is the analysis_ready queue and commentary_done is the commentary_ready queue
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W136-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~136",
+  "surfaced_at": "2026-10-14T17:38:01Z",
+  "one_line": "commentary.tf names the I3 queue commentary_ready and the I4 queue commentary_done, the reverse of the interface names; its local commentary_ready_queue_name holds the I3 name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "commentary.tf lines 17-20 name the I3 queue analysis_ready (the event source trigger); lines 37-40 name the I4 queue commentary_ready (COMMENTARY_READY_QUEUE_URL).",
+  "world_is": "commentary.tf line 122 declares resource aws_sqs_queue commentary_ready, whose name is the local at line 49 (NAMES ready_queue, analysis-ready); its event source at lines 316-317 is the I3 trigger. Line 159 declares resource commentary_done, whose name is the local at line 54 (NAMES commentary_ready_queue), and the Lambda env at line 303 points COMMENTARY_READY_QUEUE_URL at commentary_done.id. The wiring is correct; the labels are inverted, so a builder that reads commentary_ready in Terraform binds the I3 queue.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/transcripts/commentary.tf:49, 54, 122, 159, 303, 316-317 @8d9997b5ab",
+      "data/transcripts/scripts/commentary/NAMES.json:41, 57 @8d9997b5ab"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found while reading the Terraform for the queue names for AR-y-328 Q3. The wiring is right today; the record names each queue by its NAMES.json entry."
+}
+```
+
+## IRPT_ANLREQ-D2-W136-S4 -- AR-y-328 says the round adds ONE address to OPAL_PRODUCER_PRINCIPALS but names no address, and no tracked file names a new one
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W136-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~136",
+  "surfaced_at": "2026-10-14T17:38:01Z",
+  "one_line": "AR-y-328 asks for the edit that adds ONE address to OPAL_PRODUCER_PRINCIPALS, but the order names no address and no tracked file names a new one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-328 cell text, Q4: the exact edit site for adding ONE address to OPAL_PRODUCER_PRINCIPALS.",
+  "world_is": "The order, the decomposition R40A_Y and the tracked tree name no new address. The only entry is resident_worker.py line 165 (andrew@opalinvest.com), and test_resident_worker.py line 770 pins that single entry. The record gives the edit site and the must-agree list and leaves the address to the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:165 @8d9997b5ab",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py:770 @8d9997b5ab",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-328.resident-release-bindings-read.md (Q4 text, line 37)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The issuer names the address in the r30 cell before any edit."
+}
+```
