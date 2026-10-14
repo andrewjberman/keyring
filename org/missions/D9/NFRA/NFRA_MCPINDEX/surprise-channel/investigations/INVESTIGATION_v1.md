@@ -7242,6 +7242,28 @@ carries none.
       ]
     },
     "notes": "Whether the two dossier tables are one table under two spellings is AMGT_HARVST's to say; this cell does not decide it."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~35",
+    "surfaced_at": "2026-10-14T05:40:00Z",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W35-S4",
+    "one_line": "The commit-time naming gate refused an inferred listing claim three ways before it passed: an s3://<bucket>/<prefix> basis (an out-of-pattern NEW key, 27 lines), the s3:// URI of the Black Diamond bucket (a graded ALIAS, 'read it through lookup'), and the bare silver fees prefix plus the firm token typed in members.yaml (hand-kept carriers, 4 lines); the claim now carries a bucket-only basis, or a reference, and the Black Diamond bucket and prefix are read from the catalog row's own producer text.",
+    "spec_asserts": "MX-c-10 Part 1: an inferred claim carries `basis` (the bucket/prefix the listing read) and `source`; bound 4: a commit through the naming gate needs a staged .json under the project home.",
+    "world_is": "Typing the listed prefix or the alias bucket into members.yaml, measured.yaml or the catalog is refused (Z-W33-S5's class, now also the alias and carrier rules), so the claim's `basis` cannot name the full prefix for the Schwab rows (bucket only; the contract and `source` carry the rest) or the bucket for the Black Diamond row (a reference). The catalog therefore does not state the Black Diamond bucket in the claim; a reader finds it in the row's `producer` text.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh attempts on branch wk-NFRA_MCPINDEX-35: attempt 1 'NAMING-GATE: REFUSE 100 graded' (27 NAMING REFUSE: s3://opal-data-assets/schwab/ x24, s3://opal-data-bd/silver/fees/ x2, one s3://%s/ format string); attempt 2 'REFUSE 98 graded' (s3://opal-data-bd/ x2, ALIAS); attempt 3 'REFUSE 101 graded' (members.yaml bare silver/fees/ and 49financial, measured.yaml 49financial); attempt 4 passed, commit 75585f9027.",
+        "lib/opal_naming.py lookup('49financial'): aliases include {spelling: opal-data-bd, planes: [bucket], lookup: False}; tier_live bronze bucket opal-data-bd transitional (ADVI_FIRMBKTS F11)."
+      ]
+    },
+    "notes": "A later cell that wants the full listed prefix in a claim needs a registry row for it (infra/logic/registry), not a typed literal."
   }
 ]
 ```
