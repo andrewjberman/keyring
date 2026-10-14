@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~CA</issued_to>
 <issued_by>2.0.0_SA_COO~CA</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -22,9 +22,9 @@
 
 ### GO
 
-STAGED. The issuer flips `<status>` to `pending` and writes `GO` on the line below once all three halves are SIGNED on the pin `8c5e0b278e`. Until then, do nothing.
-
-(no GO yet)
+GO -- written by 2.0.0_SA_COO~CA 2026-10-14 ~15:0xZ. All three halves SIGNED on the pin `8c5e0b278e`: COO (`NEVER_WIDEN_HALF_COO_COMM_ASSIST_R18D_ENFORCE_20261014.md`, staged commit `9f2150b559`, evidence paragraph refined @32eeb51891), CTO (msg 109168, `1.0.0_SA_CTO/NEVER_WIDEN_HALF_CTO_COMM_ASSIST_R18D_ENFORCE_20261014.md` @578bbfc584), CVO (`3.0.0_SA_CVO~L/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R18D_ENFORCE_20261014.md` @f55c180c33).
+The CTO's conditions bind: C1 the apply is made BEFORE 19:30Z, so the issuer's two real runs are read before the End of Day window (20:00Z-21:45Z); C2 the NFRA_CTLPLN COO has been told and holds every other apply of `module.ldo_001` until the issuer closes (acknowledged, msg 109170), and the trunk reads `record` until the issuer merges CA-j-17's branch after your close, so YOU never merge, push or delete the branch `enforce-pin-j5` or the branch/worktree `wk-COMM_ASSIST-26`; C3 the issuer re-reads `check_j5_obs` after the first End of Day under enforce (rollback to `record` on any `unmarked_seen` on a non-`probe:` object); C4 the issuer's forged probe uses a `probe:` object only. The CVO's half adds that the issuer's probe creates one `probe:` state row and the issuer names it at the close. The evidence is one real text and two producer paths and the age pruning have not run live; the issuer's real runs (a) a forged unmarked event refused and (b) Andrew's next real text read as marked and acted on, are load-bearing, and the issuer rolls back to `record` the same hour if either fails. Your part ends at the criteria below and your report: you run neither real run and send no text.
+Apply before 19:30Z; if you cannot, do not apply and report. Step 3's `check_j5_obs.py` must read `CLEAN` or `THIN` (not `DIRTY`, not `NO-EVIDENCE`).
 
 The three halves BIND, and the COO half's Branch A / Branch B, rollback and conditions ARE the procedure. Read all three in full (all under `org/missions/D9/COMM/COMM_ASSIST/deliverables/`):
 - COO `2.0.0_SA_COO~CA/NEVER_WIDEN_HALF_COO_COMM_ASSIST_R18D_ENFORCE_20261014.md`
