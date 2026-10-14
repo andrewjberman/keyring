@@ -1,0 +1,57 @@
+# LEG G, FIRST FIRE AFTER THE e97b SHIP -- final reads (2.0.0_SA_COO~M1), 2026-10-14 ~01:30Z
+# Fire: bd-gold-trigger 2026-10-13T23:00:11Z; chain Finished 2026-10-14T01:14:36Z (chain_full_20261013_230043.log, last line) = 8,065 s launch-to-stop;
+# STOP rule (baseline ~7,766.7 s + 1,800 s = ~9,567 s): NOT fired (+298 s over the 04:00:46Z fire).
+# C_06 (log line 21470): C06-ROLLING-REDERIVE window=2026-09-25..2026-10-09 dates=15 relationships_read=3793 relationships_rewritten=3274 keys_written=13096;
+#   C_06 done (rc=0) line 21502; C06-ROLLING-RULE-UNREADABLE absent; 0 lines matching ERROR/FAILED/Traceback in the chain log.
+# C_06 telemetry: 00:20:26Z-00:26:17Z, 351 s wall, PSS peak 6,498.8 MB (SC1 reports RSS peak 11.6 GB vs 6.4 GB before the ship: reported, not judged).
+# e97: 5 of 7 clauses met; bars and advisors fail against the 2026-10-12 baselines (row MDPF_SECCLASS-D1-S36). e91 --fire-start: movement CONFINED to the 15 window dates
+# of 2,293 firm dates (E91-MOVED-COUNT firm_days_changed=15); its own named/total_held grading is SC-e-91's, closed, and is not applicable to the post-ship state.
+
+=== e97 ===
+E97-READ mix_daily_summary bucket=opal-data-49financial key=advi/49financial/platinum/views/mix_daily_summary.json VersionId=a928eUqEYDKRtLsWV2tgslF1N9uCBGvO LastModified=2026-10-14T00:25:03+00:00
+E97-READ mix_summary bucket=opal-data-49financial key=advi/49financial/platinum/firm/mix_summary.json
+E97-READ firm_mix_views bucket=opal-data-49financial key=advi/49financial/platinum/artifacts/firm_mix_views.json
+E97-READ client_performance bucket=opal-data-bd key=gold/timeseries/client_performance.parquet rows=3829961 dates=2473 read_s=15.22 column=total_aua groupby(date).sum (D_03.composition_artifacts.py:497-503)
+E97-READ bound_source=max of per_date[].rebuilt_unclassified over 7 window dates of 15 records bound_max=53010.45
+E97-READ relationship JSONs: 64 objects, key template gold/entities/clients/{relationship_id}.json, source() bucket counts {'opal-data-49financial': 64}
+E97-C unclassified_window ok=True bound_max=53010.45 hi=53260.45 rem=2026-09-30=52957.34 2026-10-01=43053.78 2026-10-02=1818.14 2026-10-03=2089.39 2026-10-04=1925.93 2026-10-05=166.72 2026-10-06=-42.15
+E97-C w86_s5 ok=True 2026-10-03=162.29 2026-10-04=3.94 2026-10-05=166.72
+E97-C totals_aua ok=True max_abs=0.00 n=15
+E97-C bars ok=False 2026-Q3 total_ok=False worst_gap=258.49 2026-Q4 total_ok=False worst_gap=29052.65 2026-09 total_ok=False worst_gap=258.49 2026-10 total_ok=False worst_gap=29052.65 2026 total_ok=False worst_gap=29052.65
+E97-C restated ok=True mds=2026-09-25 mix_summary=2026-09-25
+E97-C advisors ok=False keys=56 set_equal=True rows_beyond_250=14 of 840
+E97-C added_dropped ok=True rows_read=257 disagree=0
+E97-TIME added_dropped_read_s=21.12 json_reads=64 rows=257 total_run_s=44.24
+E97-ACCEPT shipped=True ok=False unclassified_window=True w86_s5=True totals_aua=True bars=False restated=True advisors=False added_dropped=True
+
+=== e91 --fire-start 2026-10-13T22:59:00Z ===
+E91-READ gold/views/mix_daily_summary.json bucket=opal-data-49financial key=advi/49financial/platinum/views/mix_daily_summary.json VersionId=a928eUqEYDKRtLsWV2tgslF1N9uCBGvO baseline=VrrTn2RrESHBImlLOMHQbNP6Fvzi9NZD LastModified=2026-10-14T00:25:03+00:00
+E91-READ platinum/firm/mix_summary.json bucket=opal-data-49financial key=advi/49financial/platinum/firm/mix_summary.json VersionId=fqHBupFNBzlLq5wvwjh1yS2jJc3D9j8C baseline=_MTtBmpPHKvL3Hvt58tzeIsshH4c_lxb LastModified=2026-10-14T00:48:31+00:00
+E91-READ gold/meta/client_timeseries_watermark.json bucket=opal-data-bd key=gold/meta/client_timeseries_watermark.json VersionId=W3Ook6AmvrMNL2xPa17DSVycIU7ZVCBS baseline=_UBm5wvtCvVNbbE6m5ry4JOns5MuqL9a LastModified=2026-10-14T00:25:02+00:00
+E91-VERSIONS gold/views/mix_daily_summary.json bucket=opal-data-49financial key=advi/49financial/platinum/views/mix_daily_summary.json after_VersionId=a928eUqEYDKRtLsWV2tgslF1N9uCBGvO after_LastModified=2026-10-14T00:25:03+00:00 head_agrees=True before_VersionId=ZuygB9ZtOGqSqiaE.3gV_ae70lhbSZeF before_LastModified=2026-10-13T00:23:32+00:00
+E91-VERSIONS platinum/firm/mix_summary.json bucket=opal-data-49financial key=advi/49financial/platinum/firm/mix_summary.json after_VersionId=fqHBupFNBzlLq5wvwjh1yS2jJc3D9j8C after_LastModified=2026-10-14T00:48:31+00:00 head_agrees=True before_VersionId=pxTHVZmEUblW3tiMHqKmhl3oqVL4317H before_LastModified=2026-10-13T05:46:47+00:00
+E91-BEFORE-AFTER mds BEFORE=ZuygB9ZtOGqSqiaE.3gV_ae70lhbSZeF AFTER=a928eUqEYDKRtLsWV2tgslF1N9uCBGvO firm_dates BEFORE=2293 AFTER=2293
+E91-MOVED date=2026-09-25 fall=-10127.61 named=False total_held=False keys=9 (printed, graded only as the named pair)
+E91-MOVED date=2026-09-26 fall=-10082.21 named=False total_held=False keys=9 (printed, graded only as the named pair)
+E91-MOVED date=2026-09-27 fall=-10207.08 named=False total_held=False keys=9 (printed, graded only as the named pair)
+E91-MOVED date=2026-09-28 fall=-10064.47 named=False total_held=False keys=9 (printed, graded only as the named pair)
+E91-MOVED date=2026-09-29 fall=-10142.13 named=False total_held=False keys=9 (printed, graded only as the named pair)
+E91-MOVED date=2026-09-30 fall=41421692.93 named=False total_held=False keys=9 (printed, graded only as the named pair)
+E91-MOVED date=2026-10-01 fall=42084214.72 named=False total_held=False keys=9 (printed, graded only as the named pair)
+E91-MOVED date=2026-10-02 fall=53759303.13 named=False total_held=False keys=9 (printed, graded only as the named pair)
+E91-MOVED date=2026-10-03 fall=59942457.08 named=False total_held=False keys=9 (printed, graded only as the named pair)
+E91-MOVED date=2026-10-04 fall=60060331.73 named=False total_held=False keys=9 (printed, graded only as the named pair)
+E91-MOVED date=2026-10-05 fall=59432530.16 named=False total_held=False keys=9 (printed, graded only as the named pair)
+E91-MOVED date=2026-10-06 fall=50902585.71 named=False total_held=False keys=9 (printed, graded only as the named pair)
+E91-MOVED date=2026-10-07 fall=349129.86 named=False total_held=False keys=9 (printed, graded only as the named pair)
+E91-MOVED date=2026-10-08 fall=335084.55 named=True total_held=False keys=9 (printed, graded only as the named pair)
+E91-MOVED date=2026-10-09 fall=309067.15 named=True total_held=False keys=9 (printed, graded only as the named pair)
+E91-MOVED-COUNT firm_days_changed=15 of 2293 firm dates in BEFORE or AFTER; named=2 unnamed=13
+E91-BASE-VS-BEFORE date=2026-10-06 baseline_d04=140161790.57 before_d04=50902543.56 diff=-89259247.01 baseline_total=2019548567.60 before_total=2019548567.60 moved_by_fire=True
+E91-BASE-VS-BEFORE date=2026-10-07 baseline_d04=998762.85 before_d04=381648.33 diff=-617114.52 baseline_total=2013270405.35 before_total=2013270405.35 moved_by_fire=True
+E91-BASE-VS-BEFORE date=2026-10-08 baseline_d04=972621.40 before_d04=343090.56 diff=-629530.84 baseline_total=2014814865.45 before_total=2014814865.45 moved_by_fire=True
+E91-BASE-VS-BEFORE date=2026-10-09 baseline_d04=1846332.73 before_d04=1192475.25 diff=-653857.48 baseline_total=2015391646.72 before_total=2015391646.72 moved_by_fire=True
+E91-LEGG state=CHANGED ok=False d10_09_fall=309067.15 d10_08_fall=335084.55 in_range=True census_new=0 total_held=False advisors_same=True
+E91-DETAIL census_new_keys=[] reach_10_09=653857.12 reach_10_08=629530.89 advisors_now=56 advisor_count=56 in_range_tolerance=bound+250.00
+E91-PRINTED d04_page_unclassified_now=883408.10 baseline_line=1846332.73 (printed, not graded)
+E91-TIME total_run_s=13.43
