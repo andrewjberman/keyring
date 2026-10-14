@@ -3,7 +3,7 @@
   "project": "NFRA_MCPINDEX",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v0.15",
+  "prd_version": "v0.16",
   "step": 4,
   "brief_ref": "docs/briefs/opal-mcp-tool-index-brief-20260917.md@826ac6925a",
   "endpoint_outcomes": [
@@ -717,3 +717,14 @@ Per `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_183xZ_49F_B
 location, with the lag in trading days. The `not_served` mark from v0.14 is lifted for these rows only. Every other
 client row is unchanged. When the migration lands BD 49F in `opal-data-assets/blackdiamond/` in LGIC_NAMING form, the
 rows re-point. CONTRACTS-only.
+
+### v0.16 addendum (2026-10-14 ~19:3xZ, 1.0.0_SA_CTO~Z) -- FWD-22 enrichment G5r: rival-fund catalog rows
+
+From `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G5r_rivalfunds_spec.md` @e1b9937129: the 13 rival gold tables and the platinum manifest get table-grain rows. Each row carries:
+- the newest-part rule;
+- the `claim` column named on the inferred tables;
+- fund keys (`fund_ticker`, `report_date`, `position_id`);
+- the security identifiers and their fill rates;
+- nl_tags.
+The coverage row says that latest-report freshness is read from `canonical_shape` (Z-S124). Land them after the Friday
+rows (G5 wave A, G6, G3). CONTRACTS-only.
