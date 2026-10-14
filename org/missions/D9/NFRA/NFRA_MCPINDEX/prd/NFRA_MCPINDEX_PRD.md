@@ -3,7 +3,7 @@
   "project": "NFRA_MCPINDEX",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v0.10",
+  "prd_version": "v0.11",
   "step": 4,
   "brief_ref": "docs/briefs/opal-mcp-tool-index-brief-20260917.md@826ac6925a",
   "endpoint_outcomes": [
@@ -27,7 +27,8 @@
     "FWD-18",
     "FWD-19",
     "FWD-20",
-    "FWD-21"
+    "FWD-21",
+    "FWD-22"
   ],
   "status": "DRAFT"
 }
@@ -325,6 +326,24 @@ FWD-21  An asset manager's research question routes to the servable harvest data
                     list v4's 24 prefixes (denominator printed)
          SOURCE     Andrew's AMGT voice memo 2026-10-13 ("set up the MCP index for that bucket ...
                     so that the asset managers can use that with their cloud"), via XB-4d72 Z4/Z5
+
+FWD-22  The one catalog is the table of contents at TABLE grain, for every census group (v0.11)
+         DONE WHEN  EXERCISED -- for one table per landed census group, opal_discover in plain words
+                    returns that table's catalog row (contract: columns, grain, partition, freshness
+                    basis, fork keys; nl_tags; read_tool naming a DEPLOYED tool), and opal_describe
+                    returns its columns; a retired dataset is never offered as a tool target
+         ACCEPT     the contracts live IN DATA_CATALOG.yaml table rows (one carrier; describe reads the
+                    catalog, no second registry); a source-level row is split into its table rows;
+                    tool_index lists every deployed tool, harvest_list and harvest_read included; every
+                    value carries its claim (measured / inferred / absent); the version bump carries
+                    Andrew's verbatim (the catalog's widening law)
+         PROOF      the plain-words calls, one per landed group; the negative arm (a retired dataset);
+                    per group, catalog table rows counted against the census's contracts, the
+                    difference printed
+         SOURCE     Andrew-direct 2026-10-14 ~12:4xZ ("Data contract should be available. Tables should
+                    be available. All of this should have tags and natural language tags associated";
+                    the one catalog as "a table of contents for Opal Data assets"), verbatim in
+                    org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_124xZ_GATEWAY_DATA_CONTRACTS_CENSUS_CRO_FANOUT.md
 
 ## CONTRACTS
 
@@ -629,3 +648,24 @@ The L10 answer to `3.0.0_SA_CVO~Z`'s round-10 slug (REMEDIATION_v8 @e660242ac7, 
 
 ENDPOINT text changes, so the ratified-text half re-opens for `3.0.0_SA_CVO~Z`. The brief half is unchanged in substance
 (the CRO's alignment reports on Andrew's memos).
+
+### v0.11 addendum (2026-10-14 ~13:1xZ, 1.0.0_SA_CTO~Z) -- FWD-22: the catalog at table grain from the census contracts; G1 harvest first
+
+**Input.** Andrew-direct 2026-10-14 ~12:4xZ (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_124xZ_GATEWAY_DATA_CONTRACTS_CENSUS_CRO_FANOUT.md`), directive `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTOZ_DIRECTIVE_20261014_GATEWAY_DATA_CONTRACTS_CENSUS.md` @06ae2a3485, and G1: `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G1_harvest.md` @0d7c29b3c5.
+This replaces the harvest tool-set addendum planned on XB-dc98: round 13 cuts from here.
+
+**G1 enrichment list (round 13, `2.0.0_SA_COO~MI`):**
+1. **Split to table grain.** 26 of 78 harvest datasets have a row at their own prefix; 50 sit under a source-level row;
+   2 have none (`amgt/harvest/gold/ai_fill/`, `social/v1/`). Write one row per dataset, 78 of 78, carrying G1's
+   contract fields (G1 sections 1-2 print the denominators).
+2. **Fill the fields the rows read `NONE -- not read`:** grain, freshness field and basis, rows, keys, never-sum rules,
+   from G1's JSON. A value G1 marks inferred stays inferred.
+3. **`read_tool`.** Add `harvest_list` and `harvest_read` to `tool_index`. Point each research row at its G1 typed
+   tool as each tool deploys (NFRA_OPLGTW v3.0); until then the row names `harvest_read`. Never name an undeployed tool.
+4. **nl_tags and common_queries** from G1 on every row, so opal_discover answers plain words.
+5. **Retired as tool targets:** `publication-links/v1/`, `publications/v1/` (rows stay, marked retired); the hyphen
+   `research-dossier/` only once the round reads that `research_dossier` supersedes it.
+6. **Version bump** to the next catalog version, carrying Andrew's verbatim from the record above.
+
+**Sign-off.** ENDPOINT changes (FWD-22 added), so the ratified-text half re-opens for `3.0.0_SA_CVO~Z`. The brief half
+is the CRO's G1 census (proportionate sign-off). Later groups land as CONTRACTS-only enrichment lists.
