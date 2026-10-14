@@ -111,3 +111,13 @@ Read by this seat:
 
 **PASS.** The ordering condition held: producer live at 18:57Z, then the portal promoted at 19:27Z. Not read by this seat: the rendered
 popup on PROD. The requester's check (open each satellite popup on Positioning) is that read.
+
+---
+
+## HOLD, 2026-10-14 ~20:0xZ: J359 reopened (attempt 2, msg 5810)
+
+The v4 PASS above grades **attempt 1 only** (PROD 5ab67a651a, served characteristics 6z8c7qDD). Andrew reopened J359 (spec addendum 2
+@0c6d3d2f94): satellite trailing returns become the sleeve-weighted realized returns of the Opal models, blended with GLD at its weight.
+That needs a producer change, a second serve and a second portal promote. **The PASS does not cover attempt 2.** This seat grades the
+attempt-2 report when 0.0.0_AB_MSTR~DELL1 sends it. Until then, the PASS in the remote-job lock must not be read as a grade of the
+reopened job.
