@@ -1381,3 +1381,55 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Observed, not fixed: placing the list and naming its owner are outside this order's <paths>. The commit touches chat_assist.tf, the order file and this worker's deliverables. The base chat_assist.tf already carries the account number 313476888478 inside its ARNs; this worker did not compare it with the list, which it does not hold. The gate's own WARN states the not-checked outcome."
 }
 ```
+
+## COMM_ASSIST-W23-S1 -- BUILD step 2 names two shapes of legacy state entry; _held_marks met a third (a dict whose "at" cannot be read) and dated it now
+
+```json
+{
+  "id": "COMM_ASSIST-W23-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~23",
+  "surfaced_at": "2026-10-14T10:58:27Z",
+  "one_line": "The order specifies a bare mark string as the legacy entry and a {mark, at} dict as the new one, and says nothing about a dict whose at is unreadable; the code re-dates such an entry to now.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/tenant.py@b4c5218661: _held_marks, the except (AttributeError, KeyError, TypeError, ValueError) branch sets entry to {mark, at: iso(now)} and treats it as held",
+      "org/missions/D9/COMM/COMM_ASSIST/task-orders/COMM_ASSIST.TO-CA-j-9.ingress-mark-four-hour-freshness.md@349d687606 BUILD step 2: 'Tolerate a legacy entry (a bare mark string, as CA-j-1 wrote)... No crash on either shape.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-j-9 BUILD step 2: state[\"marks_seen\"] entries are {mark, at}; a legacy bare mark string is treated as held, dated now; no crash on either shape.",
+  "world_is": "The code accepts the two named shapes, and a third that the order does not name: a dict with no readable at. That entry is kept as held and rewritten with at = now, so it ages out four hours after the check that found it. No test covers the third shape. The order's text does not say what an unreadable at should do.",
+  "notes": "Chosen by the worker so that the handler never raises on state it did not write. Not ruled by the CTO or the issuer. The state is written only by _mark_refused, so the third shape is reachable only by a foreign writer; this was not measured. Left for the issuer to rule."
+}
+```
+
+## COMM_ASSIST-W23-S2 -- BUILD step 3 names five new tests; the worker added a sixth for the legacy bare-string tolerance that step 2 requires
+
+```json
+{
+  "id": "COMM_ASSIST-W23-S2",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~23",
+  "surfaced_at": "2026-10-14T10:58:27Z",
+  "one_line": "BUILD step 3 lists five new tests and no test for the legacy bare-string tolerance; the worker added a sixth test to cover that tolerance.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/tests/test_ingress_mark.py@b4c5218661: test_a_legacy_bare_mark_string_is_held_dated_now_and_ages_out_four_hours_later, added after the five named tests",
+      "org/missions/D9/COMM/COMM_ASSIST/task-orders/COMM_ASSIST.TO-CA-j-9.ingress-mark-four-hour-freshness.md@349d687606 BUILD step 3 names five new tests; step 2 names the legacy tolerance"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CA-j-9 BUILD step 3: add the five named new tests; step 2: tolerate a legacy bare mark string, no crash on either shape.",
+  "world_is": "Six new tests were added: the five named ones and one that drives a legacy bare-string entry through a replay (held, dated now, rewritten as {mark, at}) and past the four-hour window. The three existing tests were updated as step 3 names. The full flow set is 550 passed, 0 failed.",
+  "notes": "The sixth test is in the order's test file, so it stays inside <paths>. It is recorded so the count of new tests is not read as five."
+}
+```
