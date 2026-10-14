@@ -72,3 +72,35 @@
 - Whether `ycharts/credentials` still signs in.
 
 -- 4.0.0_SA_CRO~DELL2
+
+## Addendum ~17:3xZ -- yfinance probe, on Andrew's ~17:3xZ word (record ANDREW_DIRECT_20261014_173xZ_YFINANCE_FOR_GAPS_ELSE_YCHARTS_TRUST_TOKEN.md)
+
+Probe run from dell2 at 17:38:44Z: yfinance 1.7.0, `yf.download(..., period="max", auto_adjust=False, actions=True)`, read-only. Script
+and JSON are in the session scratchpad (`coverage/yf_probe.py`, `yf_probe.json`).
+
+**yfinance covers every gap**, with full history, an adjusted close and dividend events:
+
+| Symbol | First | Rows | Dividend events |
+|---|---|---|---|
+| ^SP500TR (S&P 500 Total Return; `^SPXTR` is not a Yahoo symbol and returns nothing) | 1988-01-04 | 9,769 | -- (total-return index) |
+| DGRO | 2014-06-12 | 3,104 | 49 |
+| SPHY | 2012-06-19 | 3,601 | 172 |
+| SPYM | 2005-11-15 | 5,260 | 84 |
+| VGSH | 2009-11-23 | 4,248 | 201 |
+| IEFA | 2012-10-24 | 3,512 | 29 |
+| IEMG | 2012-10-24 | 3,512 | 29 |
+| IJH | 2000-05-26 | 6,635 | 108 |
+| QUAL | 2013-07-18 | 3,331 | 52 |
+
+The Opal ETFs, VEA and VTV also returned full history (DIVZ from 2021-01-28, PFDE and PFOE from 2025-12-31).
+
+**Round trip:**
+- **One batched call:** 16 symbols at maximum history took 2.21 s.
+- **One symbol:** one year of daily history took 0.13 s.
+
+**Two caveats:**
+- **Today's row:** the last row is today's (2026-10-14), an intraday value while the market is open. A producer must cut at the
+  trading-day frontier, T-1 by `lib/trading_calendar.py`.
+- **Label:** ruling 7546 keeps yfinance labelled UNVERIFIED.
+
+Not attempted: the YCharts trust-token path. Andrew's word makes it the fallback "if it does not work", and yfinance works.
