@@ -155,7 +155,7 @@ the issuer to make at the merge.
 - Pre-cut: AC1 and AC2 base FAIL as expected (module, tests and probe absent).
 - Queue: staged until OG-gt-0 merges; the spawn is the GO.
 
-<status>staged</status>
+<status>pending</status>
 <round>37</round>
 <workstream>G1-TYPED</workstream>
 <slot>~73</slot>

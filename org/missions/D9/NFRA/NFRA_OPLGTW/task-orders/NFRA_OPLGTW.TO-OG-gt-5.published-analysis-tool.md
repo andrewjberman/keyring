@@ -139,7 +139,7 @@ the issuer to make at the merge.
 - Queue: staged until OG-gt-0 merges; the spawn is the GO.
 - Phase A only: the ask rides to the three halves; the apply and the deploy are a later order.
 
-<status>staged</status>
+<status>pending</status>
 <round>37</round>
 <workstream>G1-TYPED</workstream>
 <slot>~76</slot>
