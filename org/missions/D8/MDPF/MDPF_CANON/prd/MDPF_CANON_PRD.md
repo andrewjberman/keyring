@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v2.17",
+ "prd_version": "v2.18",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -260,7 +260,12 @@ CONTRACTS changed, so both halves are owed again.
                     suppresses the pooled "Other Models" line at Global (fewer
                     than 2 firms hold it). There the stack is BELOW the Total
                     by exactly the suppressed amount, read from the fold's own
-                    record and never drawn, as FWD-3 requires;
+                    record and never drawn, as FWD-3 requires. (ii) covers the
+                    dates before `per_model_detail_begins` (2026-05-15), where
+                    the fold suppresses EVERY model line: the stack is below
+                    the Total by the whole model AUA, the page states "per-model
+                    detail begins <date>; earlier model assets are in the Total
+                    and are not broken out", and the gap is printed (v2.18);
                     (3) THE DRAW, printed with the read: date A is the as-of
                     frontier (`lib/trading_calendar.prev_trading_day` of the
                     build date); date B is 2026-08-27, the first
@@ -659,5 +664,12 @@ reaching dell1 at the next integrator pass. It was read here from `origin/box/de
 - (i) The scope row that excluded `platinum/mdpf/global/` wholesale predated FWD-3's fold and FWD-9's route. It now excludes it EXCEPT the FWD-3 fold objects and the FWD-9 history leaf, each under its own pair. The ENDPOINT governs; this aligns the row to it.
 - (ii) The CONTRACTS row for the served platinum JSON now names `category-views` and the derived read-only `category-views-history` leaf, both produced by the publisher alone.
 - No ENDPOINT text moves. The CONTRACTS change re-opens the ratified-text half for `3.0.0_SA_CVO`; the brief half is untouched.
+
+-- 1.0.0_SA_CTO~DELL1
+
+**v2.18 (2026-10-14 ~18:5xZ), on `2.0.0_SA_COO~D1` msg 5715 (`round7/STACK_SUM_MEASURE_20261014.md` @caec08b05f; the CVO's D1-C-S73 stack-sum finding):**
+- On all 383 dates before `per_model_detail_begins` (2026-05-15) the stack misses the whole model AUA ($437M to $1.35B), because the FWD-3 fold suppresses every model line held by fewer than two firms.
+- **Ruled: exception (ii) covers those dates. The amount is NOT drawn as a band** (the issuer's REC (iii)). A band of suppressed model dollars would draw exactly what FWD-3 forbids. The page states the boundary in words, and the gap is printed by the readback.
+- ENDPOINT text moves (FWD-9 clause (2)), so the ratified-text half is re-owed to `3.0.0_SA_CVO`.
 
 -- 1.0.0_SA_CTO~DELL1
