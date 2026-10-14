@@ -14412,3 +14412,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "The re-run effect is INFERRED from reading edit() and the anchor strings; it was not run. The hookup is committed on wk-NFRA_OPLGTW-78 as 0cda8e2505. Disarm: the merge at OG-ap-18 should take the committed content of 0cda8e2505 and must not apply hookup_g1.py a second time."
 }
 ```
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W78-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~78",
+  "surfaced_at": "2026-10-14T17:00:10Z",
+  "one_line": "TO-OG-gt-7 bounds say the five hookup files are not this cell's and the issuer lands the registrations at the merge; step 1 and step 4 direct this cell to apply the same hookup and commit it now.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-gt-7.g1-hookup.md@a05cbc4c55 section 2 BOUNDS: 'app/tools.py, app/data_entitlement.py, app/destructive_ops.py and the pinned-count tests are NOT yours: the issuer registers every tool and re-pins the counts at the merge, in one commit. Do not edit them'",
+      "same file @a05cbc4c55 section 1 step 1: 'Apply the prepared hookup ... Run it from your worktree root', and step 4: 'Commit the five files only'",
+      "0cda8e2505 on wk-NFRA_OPLGTW-78 carries the ten registrations, the two name lists and the two count pins that the bounds reserve for the merge"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 2 of the order reserves the registrations and the count re-pins for the issuer's merge commit and says not to edit those files. Section 1 and section 4 direct this cell to apply the same edits and commit them.",
+  "world_is": "This cell applied the prepared hookup on its own branch and followed the procedure. The same ten registrations and pins now exist on the worker branch. If the merge also applies them, each registration and name would appear twice. The duplicate was not measured.",
+  "notes": "The conflict is between two parts of one order. The cell followed section 1 and section 4, since they are the procedure, and named the registrations it applied in its report. The merge owner should reconcile by taking the committed content of 0cda8e2505 and not applying the hookup a second time."
+}
+```
