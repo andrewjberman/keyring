@@ -12689,3 +12689,57 @@
 }
 ]
 ```
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W123-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~123",
+    "surfaced_at": "2026-10-14T11:28:04Z",
+    "one_line": "The map's last_deployed_commit for irpt-status (9441d74d) does not rebuild the live zip; the live zip rebuilds at trunk a4b7c48f plus the release-28 re-pin.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps~AQ2",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show origin/CLOUD:infra/aws/lambda/ci/lambda-source-map.json (saved as .scratch/r39/trunk_map.json): irpt-status last_deployed_commit 9441d74dbb1635016ec1d99b04003582873bca94, deployed_code_sha256 MIVrDbv (live), deploy_ledger irpt-status-r28-20261014 at trunk d39886e4aa",
+        "git show 9441d74dbb:infra/aws/lambda/ci/lambda-source-map.json: irpt-status last_deployed_commit e93258c650b369df46e22210d94add7cbb0d1749, deployed_code_sha256 vlGh380Q, status.py staged pin e93258c650 (sha256 8df461a0)",
+        "control BUILD_ONLY=1 at 9441d74dbb (C:/dev/irpt-release-r29/tmp-w123-control/build.log): zip 363594 bytes, CodeSha256 vlGh380QUKvBMOhJn0GJGgDi1/WLI9qTaSP2uETmdP4=, differs from the live zip in status.py only",
+        "control BUILD_ONLY=1 at a4b7c48fad with the release-28 one-row re-pin diff git hash-object da4e88d2124cc0b79e492c3855b608c75c40e391 (C:/dev/irpt-release-r29/tmp-w123-ctl-a4b7/build.log): CodeSha256 MIVrDbv equal to live, 49 of 49 members equal",
+        "git merge-base --is-ancestor 9441d74d a4b7c48f: true (9441d74d is older); status.py blob 03fa9c78 at both commits; cf. row IRPT_ANLREQ-D2-W116-S1 for the same field at the earlier vintage"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AR-y-309 step 2: the no-move control base is the map entry's last_deployed_commit as the applier recorded it; test that it reproduces the live zip; if it cannot, name the members that differ and STOP with a BLOCKING row.",
+    "world_is": "At last_deployed_commit 9441d74d the map pins status.py at e93258c650 and the build yields the pre-release-28 package (363594 bytes), which differs from the live zip in status.py only. The live zip reproduces exactly at a4b7c48fad with the release-28 one-row re-pin, the base the release-28 record names as built_from. The worker used that base; the control is EQUAL; no BLOCKING row, because the live package does reproduce at a named base.",
+    "notes": "The map field names a commit older than the build base. Any future no-move control that starts from last_deployed_commit reads a non-reproducing base. Left for the owner of the field to correct; this worker edited no trunk map."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W123-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~123",
+    "surfaced_at": "2026-10-14T11:28:04Z",
+    "one_line": "The release-29 staging folder C:/dev/irpt-release-r29 has other concurrent writers, and the builder's zip temp path is one fixed name per function under TMPDIR.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y2",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls -la C:/dev/irpt-release-r29 at about 07:11 -0400 showed an empty folder before this worker's first worktree add; at about 07:12-07:13 -0400 it held build_a, build_b, builder-root, out, files_from_r29.txt and irpt-resident-0485393f3a-r29.tar.gz, none made by this worker",
+        "git worktree list (this worker's repository, read in this run): C:/dev/irpt-release-r29/r39-control at 0c0ae5a8f5 and C:/c/dev/irpt-release-r29/wt-control at 0c0ae5a8f5 (locked), neither made by this worker",
+        "infra/aws/lambda/ci/build-and-upload.sh at 9441d74d line 411: ZIP_PATH=\"${TMPDIR:-/tmp}/lambda-artifact-${FN_NAME}.zip\" (one fixed path per function; the script's own header says copy the zip out at once)",
+        "this worker set TMPDIR to a private folder for every build (tmp-w123-control, tmp-w123-ctl-a4b7, tmp-w123-release) and deleted nothing; the staged zip is C:/dev/irpt-release-r29/irpt-status-r29.zip"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AR-y-309 step 4 and the record face: stage every artifact under C:/dev/irpt-release-r29/ (create it; it is outside the repository); never delete anything you did not make.",
+    "world_is": "The folder is shared with other writers during this run (a resident tarball, build folders, and two worktrees under r39-control and C:/c/dev/ that this worker did not create). The builder writes its zip to one fixed temp name per function unless TMPDIR is set, so two concurrent builds of irpt-status with the default TMPDIR would overwrite each other's zip. This worker avoided that with a private TMPDIR per build; the other writers were left untouched.",
+    "notes": "No action taken on other writers' entries. Recorded so the L9 reader can tell which folder entries are not this worker's, and so the release-29 issuer can allocate staging names and TMPDIR per writer."
+  }
+]
+```
