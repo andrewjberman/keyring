@@ -7351,6 +7351,94 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T17:33:00Z",
+    "one_line": "The naming gate run over the whole 175-file staged row diff did not finish inside a 600 s bound (rc 124, empty output); four 44-file shards run in parallel finished, in about 12 minutes, at about 11 s per row file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Task order section 1 step 2 and the cell's step 2 procedure: the naming gate is run once over the staged diff (NAMING_GATE_ENFORCE=1 python .tools/naming-gate.py --diff <file> --enforce --post-from-index) and its verdict is read from that run.",
+    "world_is": "One run over the full staged diff (606003 bytes, 175 files) returned rc 124 at the 600 s bound with no output: python stdout is block-buffered into the file, and the DENOMINATOR and NAMING-GATE lines print only at exit. Measured on four files alone: 44.6 s, rc 1. The gate takes about 11 s per row file, so the procedure as written cannot finish inside one bounded call for 175 files. Sharding the diff by file (four processes) gave the same verdict shape per shard; the commit of 70 rows through safe-commit ran about 14 minutes (commit 5c90be3931).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "worktree wk-NFRA_MCPINDEX-38 at d750564fb5: a full-diff gate run wrote rc 124 to .scratch/rows_gate.rc (started 12:47 EDT, killed 12:57 EDT by the 600 s bound).",
+        "the four shard runs wrote .scratch/rows_shard0.gate.txt to rows_shard3.gate.txt, each ending NAMING-GATE: REFUSE (158, 165, 161, 161 graded), rc=1 each.",
+        "the four-file timing run: .scratch/rows4_gate.txt, 44.6 s elapsed, rc=1, on four row files of the staged diff."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T17:33:00Z",
+    "one_line": "The naming gate refused the news-bucket prefix written as a literal in the generator, although the order states the exclusion in words; the exclusion is now a bucket-segment test that selects the same 130 rows.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Worker face section 1, registry rows: a plain S3 key is one whose bucket starts opal-data- but is neither opal-data-news-v2 nor opal-data-news-av. Section 2 bound 3: no firm or contract-id literal in gen_silver_rows.py, and the gate refuses a new carrier.",
+    "world_is": "The step-0 dry run of the naming gate on the generator refused the literal opal-data-news- (NAMING REFUSE workflows/atom_decomposition/gen_silver_rows.py:50, opal-data-news- -> opal-data-news). The generator now tests the bucket's dash-separated segments for news. Measured: the generator re-run reproduced the committed registry byte for byte (REGISTRY-UNCHANGED), 130 catalog-* rows, validate() 0 errors. The 44 rows outside the registry are 8 none, 33 templated and 3 news; among the 186 contracts only the two news buckets carry a news segment. The segment test is not the order's literal test; it is equal on this data and is reported as a deviation in form.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "step-0 dry run: .scratch/step0_gate.txt at worktree wk-NFRA_MCPINDEX-38 (before the segment change) carried NAMING REFUSE workflows/atom_decomposition/gen_silver_rows.py:50 opal-data-news- -> opal-data-news.",
+        "commit d750564fb5 (step 0, LOCAL on wk-NFRA_MCPINDEX-38): the generator with the segment test, the registry rows and the map; the naming gate on that diff printed NAMING-GATE: PASS.",
+        "registry check: infra/logic/registry/legacy_addresses.json at d750564fb5 holds 148 rows, 130 with a catalog- key."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T17:33:00Z",
+    "one_line": "The deployed tool census holds no client_ tool, so 173 of 174 generated rows read read_tool null with gap_owner NFRA_OPLGTW; the one named read_tool is etfs_get_positioning, an ETF tool outside the client map.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Worker face section 1, read_tool policy (PRD v0.12 item 5): the read_tool is the first candidate that is deployed after client mapping through client_tool_map.json; the map targets the client_ tool set (OPLGTW PRD v3.1 ruling 1).",
+    "world_is": "tool_census.py returns 70 tools and none begins client_. The nine distinct map targets (client_resolve_account, client_get_holdings, client_get_transactions, client_get_allocation, client_get_lots, client_get_performance, client_get_fees, client_get_profile, client_get_insurance) are all undeployed. Measured: 173 rows read_tool null, 1 row etfs_get_positioning. The policy was applied as written; the rows carry gap_owner NFRA_OPLGTW, and no tool is named that is not deployed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "tool_census.py run at worktree wk-NFRA_MCPINDEX-38 (commit d750564fb5): 70 tools, zero with a client_ prefix.",
+        "generated rows at workflows/atom_decomposition/catalog_entries/ (commit 5c90be3931 and the 104 held files on disk): read_tool counted by key, 173 null and 1 etfs_get_positioning.",
+        "workflows/atom_decomposition/client_tool_map.json at d750564fb5: 28 pairs, every value a client_ name."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-14T17:33:00Z",
+    "one_line": "Criteria AC1 to AC3 read the working-tree catalog folder, so all three print PASS with 104 of the 174 rows uncommitted; the order's premise that held rows make them fail does not hold for this instrument.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Task order section 1 step 4: with rows held, AC1 to AC3 cannot all PASS, and each output is reported. Section 4: the criteria grade the generated rows.",
+    "world_is": "c14_check.py reads ROWS_DIR_DEFAULT (workflows/atom_decomposition/catalog_entries) on disk, and the 104 held files are untracked but present, so every check counts 174. Measured: AC1 ROWS files=174 RESULT PASS; AC2 ROWS graded 174 of 174 RESULT PASS; AC3 ARMS pass 5 of 5, rows graded right 870 of 870 RESULT PASS. None of the three reads git state, so none separates the committed 70 from the held 104. The checks are not wrong on their own terms; a proof built on them would pass with the held rows uncommitted.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round14/checks/c14_check.py at the issuer's amended commit 97eedf1379: ROWS_DIR_DEFAULT and the ac1 registry branch read the working tree.",
+        "the three check runs from worktree wk-NFRA_MCPINDEX-38 after commit 5c90be3931: exit=0 each, outputs as in the world_is field.",
+        "git status at worktree wk-NFRA_MCPINDEX-38: 104 files under workflows/atom_decomposition/catalog_entries/ untracked, 70 committed at 5c90be3931."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
