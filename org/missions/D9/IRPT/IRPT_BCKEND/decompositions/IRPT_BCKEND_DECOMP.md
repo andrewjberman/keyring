@@ -3736,3 +3736,19 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r185/p185_cells.py`, dry-run at the b
 | `IB-pr-519` | `irpt-export-render` censused and rebuilt against its CURRENT live with ONE staged contract re-pinned, the stored-receipt count (dry run), the four arms, the open ledgers, and the never-widen packet | FWD-1 (O1 hop) | SERVED (reads the live function, the source map and the receipt store; builds only) | none | P185-b |
 
 fanout: 2 of 2 chains, cap 8, reason: two independent chains. One worker spawn (slot ~368) and one live seat (`0.7.0_AE_CloudOps~IB2`).
+
+
+## 178. ROUND 186, WORKSTREAM ~P (2026-10-13 ~23:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round-186 analysis (msg 7355) and the signed pair IB-pr-519 (COO half @b667f38d96, CTO half @a047ade972))
+
+Round 185 closed (IB-pr-520 applied; IB-pr-519 census and packet @295d98d389; packet @a47c87446b to the CVO). The CTO's round-186 list has three items. (1) The IB-pr-519 apply on its signed pair: **CUT now** as `IB-pr-521`, to `0.7.0_AE_CloudOps~IB2` (the receipt store is re-read at its start; a receipt lacking the field is a STOP). (2) IB-pr-456 on Andrew's execution ID: **NOT cut now: an unmet dependency (the ID is its BEFORE record; open call `f61b`); it re-censuses against the new live bytes `xP47NQDn` when it is cut; owner me.** (3) The `account_activity_daily` backfill, "census and pair first, under the 2012 floor": **CUT now as the census** `IB-pr-522` (read-only; the issuer read the writer first: the Lambda `irpt-reporting-gold` has an explicit backfill event bounded per invocation, `handler.py` lines 20-40, 118-119, 519-600); NOT cut and not owed here: the backfill's pair and its runs (later rounds, after the census packet).
+
+Two cuts, independent chains: the apply moves `irpt-export-render`; the census reads the gold tables and the repository and writes nothing.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r186/p186_cells.py`, dry-run at the base: IB186-1 and IB186-2 AC1, AC2, AC3 all FAIL (no records); positive controls in temp roots the runs created themselves pass all three of each cell, and fourteen negatives each fail their own arm; roots removed. The first control run of IB186-2 found my own rename slip (a sed that rewrote the word tempfile in the control script); repaired before the cut.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-521` | `irpt-export-render` moved to the signed built digest (one schema member) by its Terraform path, digest-gated, the one stored receipt validated offline against the DEPLOYED schema, a health proof with no invoke | FWD-1 (O1 hop) | WORLD (moves a client-facing receipt read) | the signed pair IB-pr-519 (both halves) | P186-a |
+| `IB-pr-522` | the `account_activity_daily` backfill censused: writers counted, tables per firm, demand under the 2012 floor, the observed rate, the plan and its packet; reads only | FWD-3 | SERVED (reads listings, logs and the repository; writes only the worker's records) | none | P186-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two independent chains. One worker spawn (slot ~369) and one live seat (`0.7.0_AE_CloudOps~IB2`).

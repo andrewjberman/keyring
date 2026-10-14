@@ -10843,3 +10843,18 @@ fanout:
   egress: none; no Bloomberg call in any order
   portal_ref: 24877b67 (portal DEV, read 22:3xZ; PROD 10e7664d; the SecurityAnalysis page files are equal on both) for bk-3
 ```
+
+### 113e. ADDENDUM 1 -- THE LANDING OF `AMGT-bk-3` (CTO msg 5281), 2026-10-13 ~23:5xZ
+
+The CTO approved the bk-3 portal candidate `3dcbb6ef` as Opal-internal and ruled how it lands: a FEATURE cut from the last PROD release (`10e7664d`) through the portal's contributing-boxes flow
+(`portal/CONTRIBUTING-BOXES.md`: C-FEATURE, C-APPROVAL, C-MERGE-FORWARD, C-PROMOTE of NFRA_DEVPLN), and the same commits onto DEV by `.tools/portal-merge-forward.sh` once the approval row reads `approved`. The
+candidate is DEV-based (the surface check reads 14 files against PROD, 10 on other pages), so it is re-cut: four files taken blob-equal from the candidate onto PROD. This is the issuer's own decomposition (it rules what
+it adds to it); no endpoint changes.
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-bk-6` | the feature branch `cand/dell1/amgt-sa-header-money-and-dash-reasons` cut from PROD `10e7664d` (four files, blob-equal to the candidate), its receipt and its approval row (a portal branch; never pushed by the worker) | `~417` | worker (portal) | LOCAL | the branch in the nested portal repository, the receipt, one registry row | FWD-40 (a), item 2 (i), (ii): the landing |
+
+Keyed `<workstream>LAND</workstream>` (the gate refuses a newly added order into round 104's workstream-less issuance). **Not this cell's:** the branch push and the merge-forward onto DEV (the issuer asks the box manager; the
+gate decides who pushes), and the promote (`.tools/portal-release-build.sh --features <list>`, the portal release seat). **bk-5** waits on this feature being on PROD as well as on bk-2. Edge: none into bk-6; bk-6 -> the
+merge-forward -> the promote -> bk-5. fanout: 1 of 1 chains, cap 8.
