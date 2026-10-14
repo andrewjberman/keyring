@@ -14936,3 +14936,28 @@ name the one known failure instead of silently inheriting it.
     "notes": "BLOCKING because the order's own rule stops the build at a refused literal; INERT because no code or deploy artifact carries the refused literals. The fix is the naming owner's (a registry row or a builder output for the keys), not the worker's."
 }
 ```
+
+```json
+{
+    "id": "NFRA_OPLGTW-Z-W85-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~85",
+    "surfaced_at": "2026-10-14T18:30:00Z",
+    "one_line": "The same naming gate at HEAD returns different verdicts on bare S3 key literals by their context: the sibling OG-pt-2 probe passes, while my key literals in a tuple and under *_KEY/*_PREFIX names are refused.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GATE: .tools/naming-gate.py@7c411780ad --diff org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~80/naming_probe_as_module.diff --enforce -> 'NAMING-GATE: PASS 1 graded', rc=0. Bucket opal-data-portal-v2 CONFORMANT as S3_BUCKET; the bare keys json/macro/... assigned to PREFIX_* and KEY_* names draw no verdict.",
+        "GATE: the same gate on the OG-et-2 FIRST ACT probe (scratch diff .scratch/first_act_literals.diff, not committed) -> 'NAMING-GATE: REFUSE 10 graded', rc=1. Bare keys inside a tuple and assigned to *_KEY and *_PREFIX names are each REFUSE as NEW and OUT-OF-PATTERN as S3Key; the s3:// URI is REFUSE.",
+        "SIBLING: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~80/NFRA_OPLGTW.TO-OG-pt-2.portal-macro-tools.proof_of_spec.json@cd8ae71c52 surprises entry NFRA_OPLGTW-Z-W80-S1 records 'a bare out-of-pattern key draws no verdict'; that is not what the gate returns at 7c411780ad for the OG-et-2 literals. The mechanism distinguishing the two contexts was not isolated here."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The sibling's surprise row NFRA_OPLGTW-Z-W80-S1 (and the order premise at TO-OG-et-2 line 42) assume a bare out-of-pattern S3 key literal draws no naming-gate verdict.",
+    "world_is": "At HEAD 7c411780ad, two probes measure different verdicts on bare key literals of the same form: the sibling's keys under PREFIX_* and KEY_* names pass, while the OG-et-2 keys in a tuple and under *_KEY and *_PREFIX names are refused. The verdict is therefore not fixed by the key's form alone.",
+    "notes": "OBSERVATION only: the FIRST ACT stop is governed by row NFRA_OPLGTW-Z-W85-S1, not by this row. The naming owner should state which literal contexts the gate grades before a key-staging probe is treated as a pass."
+}
+```
