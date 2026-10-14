@@ -12316,3 +12316,90 @@
   }
 }
 ```
+
+## IRPT_ANLREQ-D2-W119-S1 -- the task order counts eight moved code members plus the calendar; the build record lists seven replaced members and one added calendar
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W119-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~119",
+  "surfaced_at": "2026-10-14T01:48:16Z",
+  "one_line": "AR-y-301 asks for the EIGHT moved code members plus the added calendar; RESIDENT_BUILD.json release_input lists eight entries in all, seven replaced and lib/trading_calendar.py added.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-301 face, step 4: the member checks print and compare 'the EIGHT moved code members and the added calendar' against the build record's values.",
+  "world_is": "RESIDENT_BUILD.json release_input.members (org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~118/r30/RESIDENT_BUILD.json) holds eight entries: seven with old_sha256 and new_sha256 (intake/portfolio.py, intake/security_resolution.py, intake/template_reader.py, intake/uploads.py, ops/status.py, ycharts/generate/resident_worker.py, ycharts/research/opal_packager.py) and lib/trading_calendar.py with old_sha256 null (ADD). delta_vs_live lists seven code members. The record names no ninth member. install_r28.sh checks the eight record entries (V1 P2b) with the record's new_sha256 values; this worker did not invent a ninth.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~118/r30/RESIDENT_BUILD.json (release_input.members, delta_vs_live)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~119/r31/install_r28.sh (V1 P2b table)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~119/r31/RESIDENT_APPLY_SCRIPTS.json (scripts[1].constants.member_expect)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The face's count of eight moved plus the calendar would be nine entries; the record's count is eight. The scripts follow the record. The count is for the issuer and the CTO to correct, not for this worker to adjudicate."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W119-S2 -- the release-19 rollback receipt copy the task order calls existing is written only by the release-28 installer
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W119-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~119",
+  "surfaced_at": "2026-10-14T01:48:16Z",
+  "one_line": "The TO says the release-19 root's receipt copy exists; no release-19 script writes a -r19 receipt copy. The release-28 host script writes it at its line 70, so the pre-read prints it absent by design.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-301 face, step 3: 'the rollback root for THIS release is 0485393f3a-r19 itself (its directory and its receipt exist)'. Step 5: rollback_r28.sh exits before moving anything if its receipt copy is missing.",
+  "world_is": "The release-19 host script (resident_host_install_0485393f3a-r19.sh line 70) writes cutover_receipt.<OLD>.json with cp -p, and its OLD is 0485393f3a-st32, so it writes the st32 copy. No release-19 script writes a cutover_receipt.0485393f3a-r19.json copy. The release-28 host script (resident_host_install_0485393f3a-r28.sh line 70) writes cutover_receipt.0485393f3a-r19.json with cp -p from the live receipt before any library move, so the copy exists only after the release-28 installer has reached that line. The r19 root directory is the running root per the r19 output. Consequence: pre_read_r28.sh prints the r19 receipt copy as absent (an info line, not a STOP); rollback_r28.sh refuses (exit 11) if it is absent, which is safe because nothing has moved before line 70.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/release19/resident_host_install_0485393f3a-r19.sh (line 70)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~118/r30/resident_host_install_0485393f3a-r28.sh (line 70)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~119/r31/pre_read_r28.sh (the P1 info line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The release-19 pre-read printed the st32 copy as absent, which is consistent with the same mechanism one release earlier. The live host was not read, so whether the st32 copy now exists is NOT measured here."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W119-S3 -- two read-backs of the release-28 install have no build-record value to pin them to
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W119-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~119",
+  "surfaced_at": "2026-10-14T01:48:16Z",
+  "one_line": "The task order says every read-back expectation comes from the build record; the record has no value for the host-computed manifest prefix in the receipt or for a release-28 host member count, so install_r28.sh prints both with no pinned value.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-301 criterion AR301-y-AC2J (judgment): 'the expected read-backs come from the build record and not from the script's own computation'.",
+  "world_is": "RESIDENT_BUILD.json records the builder's package_manifest_sha256 (7978dae9..., equal to the staged package SHA256SUMS) and the member counts 299 and 298. It records no host-computed manifest and no host member count for release 28. The host script regenerates SHA256SUMS on the host with the pydeps (lines 59-69); the release-19 install printed a receipt manifest prefix f9b1d7aa... and a host member count 4346 that the release-28 record does not carry. install_r28.sh prints both lines with the wanted field saying the build record carries no value.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~118/r30/RESIDENT_BUILD.json (artifact, determinism_control)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_anlreq_r19/D2_V1_INSTALL_R19.txt (host member count 4346, receipt manifest f9b1d7aab0f39d19)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~119/r31/install_r28.sh (V1 P3 host member count and receipt lines)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not pinned, not invented: the lines are printed for the record. Whether the CTO wants a host-manifest value added to the record is a question for the issuer."
+}
+]
+```
