@@ -24,16 +24,20 @@ One row, ARMED. W10-S2 in REMEDIATION_v4 is advanced in place (C-S13).
   "owner": "0.0.0_AB_MSTR",
   "round": "v7",
   "remediation": {
-   "state": "OPEN",
+   "state": "CLOSED_UNREMEDIATED",
    "owner": "0.0.0_AB_MSTR",
-   "round": "v7"
+   "round": "v7",
+   "closure": {
+    "reason": "NOT_A_DEFECT",
+    "pointer": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_192xZ_CLIENT_DATA_IN_PRIVATE_GIT_NOT_WORTH_TIME.md"
+   }
   },
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "0.0.0_AB_MSTR",
-   "at": null
+   "at": "2026-10-14T22:15Z"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```
