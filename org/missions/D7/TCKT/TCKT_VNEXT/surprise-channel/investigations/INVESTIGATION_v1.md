@@ -2463,3 +2463,27 @@ used as fixtures is a different read with a different denominator.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W41-S7",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~41",
+  "surfaced_at": "2026-10-14T19:57:22Z",
+  "one_line": "A firm id with a dot is a valid trade_request firm answer but is refused as a plain id for the trade form attachment, so such a ticket can exist with no attachment route.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py@ef5871585d (_FIRM_ID_RE admits dots and the firm kind is validated with it; _validate_answers accepts the firm answer)",
+      "infra/aws/lambda/ticket_center/lambda_function.py, worktree wk-TCKT_VNEXT-41 at filing (uncommitted L2 edit): _PLAIN_FIRM_RE = letters, digits, dash, underscore, applied before a firm is formatted into a bucket or key; _validate_trade_form refuses a dotted firm 400)",
+      "org/missions/D7/TCKT/TCKT_VNEXT/task-orders/TCKT_VNEXT.TO-R18-L2.trade-request-form-upload-and-open-routes.md@7a663e8c28 (step 2: the firm value is checked to be a plain id of letters, digits, dash and underscore before it is formatted in)"
+    ]
+  },
+  "spec_asserts": "TO-R18-L2 step 2 requires the firm to be a plain id (letters, digits, dash, underscore) before it is formatted into the key template, and step 2 requires CREATE to store the reference for a valid trade_request.",
+  "world_is": "The firm kind admits a dotted id as a valid answer, so a trade_request with a dotted firm passes the answers check but its attachment is refused 400 (the firm is not a plain id). The contract does not say which of the two wins for a dotted id; the implementation refuses the attachment. No firm id in the present estate has a dot (the ids seen are plain).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
