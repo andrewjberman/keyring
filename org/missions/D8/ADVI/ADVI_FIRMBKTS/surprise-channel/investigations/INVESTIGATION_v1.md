@@ -8334,3 +8334,27 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Form only: recorded so FB-m-2 reads arm (iii) against this state and does not take the halt for a frontier fault. Disarm: none (INERT); the halt is the rule working as ruled."
 }
 ```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W84-S10",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~84",
+  "surfaced_at": "2026-10-14T13:54:31Z",
+  "one_line": "An in-place edit of this channel file wrote back the 73 CRLF lines of the rows ADVI_FIRMBKTS-D1-W79-S1 to S3 as LF; the content is unchanged, the bytes of existing rows moved, and commit b531e2e019 carried the change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python byte comparison (read 2026-10-14 13:50Z): 79ef8ebba5 has 73 CR bytes on lines 7126 to 7198, all in the W79-S1 to S3 block; b531e2e019 has 0 CR bytes",
+      "git diff --numstat 79ef8ebba5 b531e2e019 on the channel: 122 insertions, 73 deletions; the restoration commit 6e99d4450d leaves 49 insertions and 0 deletions against 79ef8ebba5",
+      "the mechanism is INFERRED, not measured: the in-place edit wrote the file back with LF line endings"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "INVESTIGATION_v1.md is append-only: an existing row is never edited (CLAUDE.md section 2 and the channel rule; the surprise-row gate grades only new rows).",
+  "world_is": "The append of this cell rows rewrote existing bytes of another cell rows (line endings only). The row gate did not flag it because it grades new rows only. Restored in 6e99d4450d; the channel is now 49 insertions and 0 deletions against 79ef8ebba5.",
+  "notes": "Form only. Recorded so that an in-place edit of a channel file is checked against its parent by numstat before commit. Disarm: none (INERT)."
+}
+```
