@@ -20,4 +20,10 @@
 - Every account id is `z08`, so the bucket is 49F only.
 - The 4 `49f` dims and 3 insurance tables have no live counterpart.
 
+**G5r (`G5r_rivalfunds_spec.md`, crossbox XB-20261014T185521Z-eda5, msg 34190):** the rival-funds search spec on top of G5.
+- Every search tool reads gold (newest part per partition). One new tool, `etfs_get_rival_page_status`, reads the platinum manifest.
+- CUSIP/ISIN searches resolve for about 23% / 18% of the 1,058 securities.
+- Worked example: INEQ.
+- Z-S124: gold coverage and the page understate 9 funds' latest report, so freshness comes from `canonical_shape`.
+
 **Census total: 308 contracts across the 6 groups (78 + 133 + 42 + 7 + 36 + 12); surprise rows NFRA_OPLGTW-Z-S109 to Z-S114.**
