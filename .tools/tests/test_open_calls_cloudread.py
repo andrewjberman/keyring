@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """test_open_calls_cloudread.py -- approval-status reads another box's list from the freshest readable source (NFRA_DEVPLN
-round 4, cell DP-e-2).
+round 4, cell DP-e-2; round 5 cell DP-f-2 repaired the seam to one variable).
 
 A foreign box's list is read from three sources -- the cluster copy, origin/box/<box> and the working-tree copy -- and the
 greatest written_at wins; a tie goes to the cluster copy, then git, then the working tree. This box reads its own working
@@ -8,9 +8,9 @@ tree only. A foreign box with no readable source is UNREADABLE rc 2, never ABSEN
 
 Test seams (never the live lists, never S3, never the real git refs):
   OPAL_STATE_ROOT         a temporary state root (the working-tree copies live there)
-  OPAL_CLOUD_READ_LOCAL   a temporary directory holding box=<box>/open_calls.json, standing in for the cluster copy
-  OPAL_GIT_READ_ROOT      a temporary git repository whose refs/remotes/origin/box/<box> stand in for the real ones
-OPAL_OPENCALLS_CLOUD=0 is set on every call; the cluster stand-in is read only when OPAL_CLOUD_READ_LOCAL is set.
+  OPAL_CLOUD_READ_LOCAL   a temporary directory holding box=<box>/open_calls.json (the cluster copy) and
+                          git=<box>/open_calls.json (the origin/box/<box> copy)
+OPAL_OPENCALLS_CLOUD=0 is set on every call; the stand-in directory is read only when OPAL_CLOUD_READ_LOCAL is set.
 
 Last line: OPEN-CALLS-CLOUDREAD-TEST cases=<k>/<n> ok=<True|False>
 """
@@ -37,7 +37,7 @@ BRANCH_T = "cand/%s/t-slug" % THIS
 
 
 def _force(func, path, _exc):
-    """A read-only git object on Windows: clear the flag, then remove. Only inside this test's own temporary directory."""
+    """A read-only file on Windows: clear the flag, then remove. Only inside this test's own temporary directory."""
     os.chmod(path, stat.S_IWRITE)
     func(path)
 
@@ -62,27 +62,15 @@ def write_json(path, obj):
         fh.write(json.dumps(obj, indent=1, ensure_ascii=True) + "\n")
 
 
-def git(repo, *args):
-    p = subprocess.run(["git", "-C", repo, "-c", "user.name=test", "-c", "user.email=test@opal.agent", "-c", "commit.gpgsign=false"]
-                       + list(args), capture_output=True, text=True, encoding="utf-8", errors="replace")
-    if p.returncode != 0:
-        raise RuntimeError("git %s rc=%d: %s" % (" ".join(args), p.returncode, p.stderr.strip()))
-    return p.stdout.strip()
-
-
 class Env:
-    """A temporary base: a state root (working-tree copies), a cluster stand-in directory and a git repository."""
+    """A temporary base: a state root (working-tree copies) and a stand-in directory (cluster and git copies)."""
 
     def __init__(self):
         self.base = tempfile.mkdtemp(prefix="opalcalls_cloudread_")
         self.state = os.path.join(self.base, "state")
         self.cloud = os.path.join(self.base, "cloud")
-        self.repo = os.path.join(self.base, "repo")
         os.makedirs(self.state)
         os.makedirs(self.cloud)
-        os.makedirs(self.repo)
-        git(self.repo, "init", "-q")
-        git(self.repo, "commit", "-q", "--allow-empty", "-m", "base")
 
     def working_tree(self, box, obj):
         write_json(os.path.join(self.state, box, "open_calls.json"), obj)
@@ -90,13 +78,9 @@ class Env:
     def cluster(self, box, obj):
         write_json(os.path.join(self.cloud, "box=%s" % box, "open_calls.json"), obj)
 
-    def origin(self, box, obj):
-        """commit the list at org/devices/state/<box>/open_calls.json and point refs/remotes/origin/box/<box> at it."""
-        path = os.path.join(self.repo, "org", "devices", "state", box, "open_calls.json")
-        write_json(path, obj)
-        git(self.repo, "add", "-f", "--", os.path.relpath(path, self.repo).replace(os.sep, "/"))
-        git(self.repo, "commit", "-q", "-m", "list of " + box)
-        git(self.repo, "update-ref", "refs/remotes/origin/box/" + box, "HEAD")
+    def git_copy(self, box, obj):
+        """the origin/box/<box> copy, standing in for the git ref: <dir>/git=<box>/open_calls.json."""
+        write_json(os.path.join(self.cloud, "git=%s" % box, "open_calls.json"), obj)
 
     def cleanup(self):
         if os.path.isdir(self.base):
@@ -106,9 +90,9 @@ class Env:
 def run(env, args, box_env=THIS, cluster=True):
     """(rc, stdout, stderr) of one approval-status call. cluster=False leaves OPAL_CLOUD_READ_LOCAL unset."""
     e = dict(os.environ)
-    for k in ("OPAL_CLOUD_READ_LOCAL", "OPAL_GIT_READ_ROOT", "OPAL_OPENCALLS_CLOUD", "OPAL_STATE_ROOT"):
+    for k in ("OPAL_CLOUD_READ_LOCAL", "OPAL_OPENCALLS_CLOUD", "OPAL_STATE_ROOT"):
         e.pop(k, None)
-    e.update({"OPAL_STATE_ROOT": env.state, "OPAL_OPENCALLS_CLOUD": "0", "OPAL_GIT_READ_ROOT": env.repo,
+    e.update({"OPAL_STATE_ROOT": env.state, "OPAL_OPENCALLS_CLOUD": "0",
               "AGENTBUS_DEVICE": box_env, "OPAL_AGENT_SERIAL": SERIAL})
     if cluster:
         e["OPAL_CLOUD_READ_LOCAL"] = env.cloud
@@ -142,7 +126,7 @@ def main():
         # 2. git copy newer than a stale cluster copy: git is read; no working-tree copy exists
         env = Env()
         env.cluster(FOREIGN, doc(FOREIGN, T1, [row("cl-stale", BRANCH_F)]))
-        env.origin(FOREIGN, doc(FOREIGN, T2, [row("git-new", BRANCH_F)]))
+        env.git_copy(FOREIGN, doc(FOREIGN, T2, [row("git-new", BRANCH_F)]))
         rc, out, err = status(env, BRANCH_F)
         check("git newer than a stale cluster copy: reads the git row (state=OPEN row=git-new), NOTE git",
               rc == 0 and "state=OPEN" in out and "row=git-new" in out and "row=cl-stale" not in out
@@ -153,13 +137,13 @@ def main():
         env = Env()
         env.working_tree(FOREIGN, doc(FOREIGN, T2, [row("wt-eq", BRANCH_F)]))
         env.cluster(FOREIGN, doc(FOREIGN, T2, [row("cl-eq", BRANCH_F)]))
-        env.origin(FOREIGN, doc(FOREIGN, T2, [row("git-eq", BRANCH_F)]))
+        env.git_copy(FOREIGN, doc(FOREIGN, T2, [row("git-eq", BRANCH_F)]))
         rc, out, err = status(env, BRANCH_F)
         check("equal written_at in cluster, git and working tree: the cluster copy is taken (row=cl-eq), NOTE cluster",
               rc == 0 and "row=cl-eq" in out and "NOTE: %s list read from cluster" % FOREIGN in err)
         env.cleanup()
 
-        # 4. no readable source and no cluster stand-in (the test switch): UNREADABLE rc 2, never ABSENT
+        # 4. no readable source and no stand-in (the test switch): UNREADABLE rc 2, never ABSENT
         env = Env()
         rc, out, err = status(env, BRANCH_F, cluster=False)
         check("no readable source, cluster read skipped under the test switch: UNREADABLE rc 2, never ABSENT",
@@ -167,10 +151,10 @@ def main():
               and "not read under the test switch" in out)
         env.cleanup()
 
-        # 5. no readable source with the cluster stand-in holding no object for the box: UNREADABLE rc 2
+        # 5. no readable source with the stand-in holding no object for the box: UNREADABLE rc 2
         env = Env()
         rc, out, err = status(env, BRANCH_F)
-        check("no readable source, the cluster stand-in holds no object for the box: UNREADABLE rc 2, never ABSENT",
+        check("no readable source, the stand-in holds no object for the box: UNREADABLE rc 2, never ABSENT",
               rc == 2 and "state=UNREADABLE" in out and "state=ABSENT" not in out and "cluster copy absent" in out)
         env.cleanup()
 
@@ -179,7 +163,7 @@ def main():
         env.working_tree(THIS, doc(THIS, T1, [row("wt-own", BRANCH_T)]))
         env.cluster(THIS, doc(THIS, T2, [row("cl-own", BRANCH_T, state="CLOSED",
                                              closed={"at": T2, "by": "andrew", "decision": "approved"})]))
-        env.origin(THIS, doc(THIS, T3, [row("git-own", BRANCH_T)]))
+        env.git_copy(THIS, doc(THIS, T3, [row("git-own", BRANCH_T)]))
         rc, out, err = status(env, BRANCH_T)
         check("this box reads only its working tree even with a newer cluster copy (row=wt-own, state=OPEN), NOTE working-tree",
               rc == 0 and "state=OPEN" in out and "row=wt-own" in out and "row=cl-own" not in out
@@ -194,6 +178,17 @@ def main():
         check("a cluster copy that fails validation is skipped: the working-tree row is read (row=wt-ok), NOTE working-tree",
               rc == 0 and "row=wt-ok" in out and "row=cl-wrong" not in out
               and ("NOTE: %s list read from working-tree" % FOREIGN) in err)
+        env.cleanup()
+
+        # 8. a git copy newer than a stale cluster copy AND a stale working-tree copy: the git rows are read
+        env = Env()
+        env.working_tree(FOREIGN, doc(FOREIGN, T1, [row("wt-stale2", BRANCH_F)]))
+        env.cluster(FOREIGN, doc(FOREIGN, T3, [row("cl-stale2", BRANCH_F)]))
+        env.git_copy(FOREIGN, doc(FOREIGN, T2, [row("git-newest", BRANCH_F)]))
+        rc, out, err = status(env, BRANCH_F)
+        check("git newer than a stale cluster copy and a stale working-tree copy: reads the git row (row=git-newest), NOTE git",
+              rc == 0 and "state=OPEN" in out and "row=git-newest" in out and "row=cl-stale2" not in out
+              and "row=wt-stale2" not in out and ("NOTE: %s list read from git written_at=%s" % (FOREIGN, T2)) in err)
         env.cleanup()
     finally:
         if env is not None:

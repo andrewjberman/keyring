@@ -1713,3 +1713,17 @@ The CTO signed the pair and ruled its four questions: (1) the C_06 history disco
 **Decisions inside this decomposition (the issuer's, stated):** (a) the apply is a WORLD order to `0.7.0_AE_CloudOps~IB2`, modeled on `DB-b-165`, because the pair's condition 6 names an AE seat and not a worker; (b) the read is a separate LOCAL cell on its own chain, so the apply does not wait on it and the page's answer does not wait on the apply; (c) the read proposes a rule but writes none, since a rule at a second copy moves served classes and needs its own count and pair; (d) CASH_USD is not cut: the CTO ruled it a later counted pair, and cutting it uncounted would be the unbounded act; (e) the pair's condition 7 (the first D_04 run after the upload READ before the ledger closes) is the issuer's open leg L3, not a cell.
 
 **fanout:** 2 of 2 chains, cap 8. Applier `0.7.0_AE_CloudOps~IB2` (`DB-b-183`) and worker `0.9.0_WK_IRPT_DASHBD~149` (`DB-b-184`).
+
+## 101. ROUND 99, WORKSTREAM B (2026-10-14 ~01:2xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 msgs 7399 and 7401; round 98 is still executing, the gate admits one issuance per round)
+
+The FDRXX apply (`DB-b-183`) is KNOWN-HELD on ledger `secclass-e97-c06-d04-rolling-rederive-sc1-20261012` (dell1's, HELD-SOVEREIGN-GATED; the CTO ruled it blocks because its held reads are on the outputs the release changes; FB-j-3 does not). The CVO's row W147-S3 (ARMED, disarm owner this seat) names the other cash path: the synthetic sweep-cash ticker `CASH_USD` still serves fixed_income before any row is read. The CTO orders it as its own counted pair, written now so both applies run in ONE window after the hold closes, FDRXX first, then CASH_USD; W147-S3 disarms on the second's after-read.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. `CASH_USD` serves the cash class in `classify` and `classify_with_identity`; tests updated and a mutant; the count of served positions that move; the consumers that treat it as fixed income on purpose | `DB-b-185` | FWD-8 class label, FWD-21 | LOCAL | none | R99-1 |
+| 2. the CASH_USD never-widen packet and COO half, from the cell's record | the issuer's own act after `DB-b-185` drains | the same | WORLD | `DB-b-185` | none |
+| 3. the CASH_USD apply by the AE applier, in the same window as `DB-b-183`, after the hold closes | a later WORLD order | the same | WORLD | both pairs SIGNED, `DB-b-183` applied | next round |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) one cell, because the change is two lines and the work is the count and the consumers; (b) the CASH_USD release is a SECOND release of the same S3 object, so `DB-b-183` is amended to upload the pin's bytes (`e340e07f4e`, sha256 `e7385264...`) from a detached worktree if the shared tree has moved on, and the CASH_USD apply will pin its own bytes; (c) round 96's checker `p96_round96.py` bound the classifier to the working file's hash, so it is amended to accept the pin's hash as well (no gate limb graded: a check file); (d) a consumer that depends on `CASH_USD` being fixed_income is a finding the pair prices, not a patch.
+
+**fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~150` (`DB-b-185`).
