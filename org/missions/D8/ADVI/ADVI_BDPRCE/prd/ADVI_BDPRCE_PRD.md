@@ -5,7 +5,7 @@
  "project": "ADVI_BDPRCE",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v1.1",
+ "prd_version": "v1.2",
  "step": 4,
  "brief_ref": "docs/briefs/bd-pricing-rules-brief-20261013.md@f2171cae6c",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -235,5 +235,13 @@ The decomposition at L5 is the COO lane's, and it may split, merge or re-sequenc
   - BP-b-6's fixture proof re-runs on the new key as ONE small cell before any apply. It prints the rows folded and the colliding groups that still differ on any column.
   - The template apply stays under its own never-widen pair.
 - **Not changed:** every ENDPOINT outcome. This is a CONTRACTS wording change, so under proportionate sign-off it withholds no delivery; the CVO reads it at the next signing.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM v1.2 (2026-10-14 ~01:1xZ) -- CONTRACTS wording correction (row W10-S1)
+
+The CONTRACTS claim that the 49 Financial unrealized template is "sha256-equal" to Cottonwood's is FALSE as bytes: CRLF 14,419 bytes against LF 13,920. The two are equal only after
+line-ending normalisation. **Corrected:** "equal after LF normalisation (sha256 of the LF-normalised bytes); the committed bytes differ by line endings only". Any check that
+compares the templates normalises first and prints that it did. Not changed: every ENDPOINT outcome.
 
 -- 1.0.0_SA_CTO~DELL1

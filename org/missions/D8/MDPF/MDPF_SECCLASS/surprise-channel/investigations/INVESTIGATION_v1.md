@@ -7695,3 +7695,30 @@ by dell1 or by this seat.
   "world_is": "The instrument compares served advisor-days to a frozen Oct-12 table while the served totals correctly follow the CURRENT client_performance AUA. 13 advisor-days exceed $250 by $2 to $13 and one (2026-10-09) by $30,914.72, all equal to the upstream AUA movement. I do not widen the tolerance or re-base the table in this seat: the clause is the CTO's, so the finding goes to the round-24 analysis with the final post-chain read. D_04-dependent clauses (bars, restated) are not graded here."
 }
 ```
+
+## MDPF_SECCLASS-D1-S36 -- correction of D1-S35 and the e97 read after D_04: bars and advisors trip on an AUA restatement that predates this fire
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S36",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-14T01:12Z",
+  "one_line": "CORRECTS D1-S35's timing and completes the e97 read after D_04: the bars and advisors clauses fail against the committed Oct-12 baseline because client_performance AUA for the window dates was restated BETWEEN the 2026-10-12 05:18Z and 2026-10-13 00:18Z versions of the file (+249..+263 on 14 dates, -30,914.72 on 2026-10-09); this fire moved it by 0.00. e97 acceptance is therefore NOT MET as written (bars=False advisors=False), every other clause is met; D1-W83-S5 stays ARMED pending the CTO's ruling.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (the acceptance wording) with this seat's re-based read",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "list-object-versions gold/timeseries/client_performance.parquet (opal-data-bd): versions 2026-10-14T00:18:47Z (current, written during this fire), 2026-10-13T05:19:53Z, 2026-10-13T00:18:48Z, 2026-10-12T05:18:33Z; per-date groupby(date).sum(total_aua) over the 15 window dates: current minus the 10-13 05:19:53Z version = 0.00 on all 15; current minus the 10-12 05:18:33Z version = +263.15, +262.58, +262.01, +261.44, +261.44, +258.97, +259.73, +254.03, +254.85, +255.68, +256.50, +257.64, +252.13, +249.09, -30,914.72 (2026-09-25..10-09 in order), identical to served firm total minus the committed aua_cp",
+      "e97 after D_04 (LEGG_E97_POST_D04_READ_20261014T0110Z.txt): unclassified_window ok, w86_s5 ok, totals_aua ok (0.00 on 15 of 15), restated ok (mix_daily_summary and mix_summary both 2026-09-25), added_dropped ok (257 rows, 0 disagree), bars False (2026-Q3 and 2026-09 total gap 258.49 vs bars.json total_before 1,992,588,179.03; 2026-Q4, 2026-10 and 2026 gap 29,052.65), advisors False (56 keys set-equal, 14 of 840 beyond 250)",
+      "bars.json total_before is the Oct-12 firm total at each period's last date (Q3 1,992,588,179.03; Q4 2,015,391,646.72), i.e. the baseline that the AUA restatement moved"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The CTO's acceptance (round-23 analysis) reads: the Q3 and September bars' totals hold and classes sit within $250 of bars.json after the ship, and advisor-days sit within $250 of the committed table.",
+  "world_is": "D1-S35 said the B_00 re-pull of this fire moved the AUA; that was wrong: this fire left client_performance's 15 window sums unchanged. The restatement landed before it, between the Oct-12 05:18Z and Oct-13 00:18Z file versions, so the committed baselines (bars.json, advisor_window_table.csv, aua_vs_firm_by_date.csv) were stale from the 10-13 00:18Z version on, and my 06:25Z leg-P 'before' files (taken after the 05:19Z version) are the right before-state for the served objects. What is NOT shown: that each class and advisor-day moved by exactly its share of the restatement; the gaps equal the firm movement at the total level, and a class-level re-base of the expected values has not been run. This seat does not widen the tolerance or edit bars.json; it offers a re-based read (expected values recomputed from the current AUA) as the next act if the CTO wants the clause graded that way."
+}
+```

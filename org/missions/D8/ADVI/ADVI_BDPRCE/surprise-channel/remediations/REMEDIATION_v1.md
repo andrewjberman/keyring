@@ -354,7 +354,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-13T15:55:00Z. Graduated at ADJUDICATION_v1
     "owner": "2.0.0_SA_COO~K1",
     "round": "v1",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~K1",
       "round": "v1"
     },
@@ -363,7 +363,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-13T15:55:00Z. Graduated at ADJUDICATION_v1
       "owner": "2.0.0_SA_COO~K1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_BDPRCE-D1-W4-S9",
