@@ -1,4 +1,4 @@
-# NFRA_OPLGTW task order -- `OG-hv-2` -- APPLY: the harvest read grant on opal-gateway-role and the gateway release of OG-hv-1's two tools (R4, FWD-21)
+# NFRA_OPLGTW task order -- `OG-hv-2` -- APPLY: the harvest read grant on gateway-global-internal-reader-role and the gateway release of OG-hv-1's two tools (R4, FWD-21)
 
 <!-- ===================== WORKER FACE -- this is the WHOLE of the assignee's context ===================== -->
 
@@ -22,7 +22,9 @@ EGRESS CLASS, declared: NONE beyond Opal's own AWS.
 
 Ship OG-hv-1's `harvest_list` and `harvest_read` (built on box/sitez, drained by the issuer) and the IAM read grant they
 need. Andrew (2026-10-13 ~20:0xZ, call 8): all 24 prefixes of `opal-data-harvest` SERVE to Opal principals, raw included;
-a non-Opal principal is refused on every prefix. Today `opal-gateway-role` is implicitDeny on the bucket.
+a non-Opal principal is refused on every prefix. Today `opal-gateway-role` AND `gateway-global-internal-reader-role` are
+implicitDeny on the bucket; `harvest_read.py` reads through the second (`internal_role.s3_client()`, the assumed
+`INTERNAL_READER_ROLE_ARN`, no fallback), so the grant goes on THAT role (A5).
 
 ### PHASE A (when OG-ap-14's ledger `nfra-oplgtw-gateway-release-r30` is CLOSED): re-cut, grant file, ask. NO apply, NO deploy
 
@@ -37,7 +39,7 @@ a non-Opal principal is refused on every prefix. Today `opal-gateway-role` is im
    "release_sha"}`. Run the release tree's `tests/test_og_hv1.py`, `tests/test_entitlement_admin.py` and
    `tests/test_data_entitlement_family.py`.
 3. **The grant file**, on box/sitez (not the release branch): `infra/aws/terraform/opal-gateway/harvest_read_iam.tf`, ONE
-   `aws_iam_role_policy` on `aws_iam_role.gw`, named by the builder (`gateway-global-harvest-read-policy`):
+   `aws_iam_role_policy` on `aws_iam_role.int_reader` (defined in `mcpmsp_internal_reader.tf`; NEVER `aws_iam_role.gw`), named by the builder (`gateway-global-harvest-read-policy`):
    - `s3:GetObject` on `arn:aws:s3:::opal-data-harvest/<prefix>*` for EXACTLY the 24 prefixes of `app/harvest_read.py`
      `SERVED_PREFIXES` (read from that file; never typed);
    - `s3:ListBucket` on `arn:aws:s3:::opal-data-harvest` with `Condition StringLike s3:prefix` = those 24 prefixes, each with
@@ -47,7 +49,7 @@ a non-Opal principal is refused on every prefix. Today `opal-gateway-role` is im
    destroy.
 4. **The ask**, `W/NEVER_WIDEN_ASK_OG-hv-2.md`, for THREE halves (`1.0.0_SA_CTO~Z`, `2.0.0_SA_COO~O`, `3.0.0_SA_CVO~Z`; it
    WIDENS the gateway's reach). It carries: the release diff by file; **two widenings, each named as one** (PRD v2.8): the
-   gateway's reach to the 24 prefixes for Opal principals, AND `opal-gateway-role`'s own S3 read on `opal-data-harvest`;
+   gateway's reach to the 24 prefixes for Opal principals, AND `gateway-global-internal-reader-role`'s own S3 read on `opal-data-harvest` (the role `harvest_read` assumes);
    the research-only boundary (an asset manager stays refused every Schwab and Black Diamond tool unless Andrew admits it
    to v2.2's connected set); the two tools and their refusals; the grant (24
    prefix ARNs, the ListBucket condition, the plan line); tools 63 -> 65 on the live census, no `.env` key change, no
@@ -59,9 +61,11 @@ a non-Opal principal is refused on every prefix. Today `opal-gateway-role` is im
 ### PHASE B (only on the issuer's GO, which names all three halves signed at `release_sha`)
 
 5. Ledger `nfra-oplgtw-harvest-read-grant`, entry AND sentinel first; `safe-apply` the targeted policy; read it back
-   (`get-role-policy`); simulate `opal-gateway-role` `s3:GetObject` on one `packs/` key -> allowed, one `wsj/harvest/` key ->
+   (`get-role-policy` on `gateway-global-internal-reader-role`); simulate THAT role (`arn:aws:iam::313476888478:role/gateway-global-internal-reader-role`,
+   never `opal-gateway-role`) `s3:GetObject` on one `packs/` key -> allowed, one `wsj/harvest/` key ->
    allowed, and the control `opal-data-harvest/zzz-not-served/x` -> implicitDeny (ONE `--resource-arns` per call). Write
-   `W/HV2_IAM_SIM.json` = `{"packs": "...", "wsj_harvest": "...", "control_unlisted": "..."}`. Close the ledger.
+   `W/HV2_IAM_SIM.json` = `{"role": "gateway-global-internal-reader-role", "packs": "...", "wsj_harvest": "...",
+   "control_unlisted": "..."}`. Close the ledger.
 6. Ledger `nfra-oplgtw-gateway-release-hv`, entry AND sentinel first. Deploy from `C:/tmp/og-rel-hv` through
    `infra/aws/ec2/safe-ec2-deploy.sh` with `DEPLOY_BASE_REF=<base_sha>`. The release cone carries `lib/`, `.tools/`,
    `org/modules/graph/`, `data/transcripts/scripts/teams/` AND your agent home `org/tier2_senior/0.7.0_AE_CloudOps~Z/`. No
@@ -171,6 +175,16 @@ the ONE `<status>` tag to `complete` only if AC1 and AC2 PASS. Report once per p
   - The three halves were told in advance, so the ask is signed as it lands.
   - Steps, criteria and bounds are unchanged.
   - Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
+- A5 (issuer, 2026-10-14 ~12:3xZ, CTO relay msg 34054 from CVO msg 34051; verified at `harvest_read.py` `_client()` ->
+  `internal_role.s3_client()` and `deploy-to-ec2.sh` `INTERNAL_READER_ROLE_ARN=...:role/gateway-global-internal-reader-role`):
+  **the grant names the wrong role.** Cut as written, Phase B would pass while every served read is AccessDenied.
+  - The policy attaches to `aws_iam_role.int_reader`; step 5 reads and simulates `gateway-global-internal-reader-role`;
+    `HV2_IAM_SIM.json` gains `role`.
+  - hv2.AC1 now also requires the grant on `int_reader` and not on `gw`; hv2.AC2 requires `role` to equal the internal
+    reader. The `<expect>` regexes are unchanged (both appended text sits after the matched fields).
+  - The widening to name is the internal reader's S3 read on `opal-data-harvest` (that role is assumed only by the gateway).
+  - Gate limb: GATE (viii) on the modified order (placeholders NONE); no other limb fires on a modification.
 
 <status>pending</status>
 <round>37</round>
