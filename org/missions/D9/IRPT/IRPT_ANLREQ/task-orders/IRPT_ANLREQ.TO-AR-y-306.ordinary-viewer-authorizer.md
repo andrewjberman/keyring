@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~121</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-13</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -93,3 +93,5 @@ lane: the files named in <paths> and the worker's deliverables.
 
 - Cut on row `D2-S93` (BLOCKING) and the CTO's rulings (msgs 7502, 7505) as workstream `ZA` round 36. A never-widen pair follows the cell. Base: `AR306-y-AC1` FAIL as expected (no record).
 - Any portal candidate goes to `1.0.0_SA_CTO`'s review lane through the issuer; the worker lands nothing.
+
+<!-- ISSUER NOTE 2026-10-14 (2.0.0_SA_COO~Y2): status flipped to complete after the drain (slot 120, continued by ~121 under AMENDMENTS 1 and 2). Trunk checker y306-ordinary prints Y306-ORDINARY-OK (43 new tests, generate_installed 14), proof VALID. BUILT, NOT RELEASED: a never-widen pair follows (who gains upload AND owned-input analysis, the three firms, the roles, the retained-repository reach of row W121-S2). AR306-y-AC2J is the CVO to grade. -->

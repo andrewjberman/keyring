@@ -12466,3 +12466,168 @@
 - **owner:** `2.0.0_SA_COO~Y2`
 - **disarm_owner:** n/a -- INERT; a missing feature, nothing degrades while it waits
 - **state:** BLOCKING / INERT
+
+## IRPT_ANLREQ-D2-W120-S1 -- the producer wired at :345 breaks two existing generate_installed assertions that sit outside my grant
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W120-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~120",
+  "surfaced_at": "2026-10-14T04:30:14Z",
+  "one_line": "The AR-y-306 wiring (generate_installed.py :345, ordinary_authorizer = the producer over the existing readers) turns two existing assertions in reports/tests/test_generate_installed.py red: :83 (absent_producers == {ordinary_authorizer}) and :212 (the prospect factory's ordinary_authorizer is _ordinary_viewer_not_composed). That test file is outside my grant, so neither assertion was edited.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest reports/tests/test_generate_installed.py in the worktree: 2 failed, 11 passed; failures test_compose_ports_composes_the_nine_and_names_the_absent_one (AssertionError: set() == {'ordinary_authorizer') and test_hop3_the_prospect_factory_composes_from_the_real_ports (factory.ordinary_authorizer is the producer, not _ordinary_viewer_not_composed)",
+      "HEAD control: the same file at f416810d9a in a git-archive copy under .scratch/before_arm: 13 passed, so the two failures come from the wiring and not from the environment",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed.py:83 and :212 (file unchanged by this worker)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The AR-y-306 face: wire the producer over the readers the Lambda holds at generate_installed.py :336, and reports/tests/test_generate_installed.py and _scope/tests pass with NO existing assertion edited (the CTO expects none); only test_without_the_ordinary_authorizer_a_partner_upload_is_refused_and_nothing_is_written must pass unedited.",
+  "world_is": "Both pins describe the absent-producer state at the ports level (absent_producers names ordinary_authorizer; the factory holds the not-composed stub). Any wiring that composes the producer in compose_ports flips both. The face's no-edit expectation cannot hold for this wiring without editing a test outside the grant, so the wiring is committed as the cell asks and AC1 is recorded FAIL; the issuer decides the grant amendment or the pins.",
+  "notes": "owner: 2.0.0_SA_COO~Y2 (grant amendment for reports/tests/test_generate_installed.py :83 and :212, or a ruling that the absent-producer pins move). Built only: no deploy, no push, no live call. The upload refusal test at :201 passes unedited."
+}
+]
+```
+
+- **owner:** `2.0.0_SA_COO~Y2`
+- **disarm_owner:** n/a -- INERT; nothing is deployed, the wiring ships only with a release pair
+- **state:** BLOCKING / INERT
+
+## IRPT_ANLREQ-D2-W120-S2 -- the same ports entry also authorises the owned-input analysis route, which the ruling did not name
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W120-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~120",
+  "surfaced_at": "2026-10-14T04:30:14Z",
+  "one_line": "ports[ordinary_authorizer] feeds two doors, not one: generate_installed.py :212 passes it to ProspectSubmissionFactory, whose InteractiveAccess consults it at ycharts/generate/prospect_submission.py:55-56 for the owned-input analysis route. The producer therefore admits a non-Opal viewer to that route too, on the same four conditions, for its own firm's inputs.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/generate_installed.py:212 (ordinary_authorizer=p[ordinary_authorizer] or _ordinary_viewer_not_composed) and :345 (the wiring)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/prospect_submission.py:55-56 (InteractiveAccess(..., ordinary_authorizer=lambda p, o: self.ordinary_authorizer(request, p, o)))",
+      "infra/aws/lambda/investor-reporting/reports/generate_installed.py prospect_modes (analysis-requests: OWNED_INPUT) in build_boundary"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The ruling (msgs 7502 and 7505) and the face: the producer governs the UPLOAD door for a non-Opal viewer, and the record must state in one paragraph who gains upload.",
+  "world_is": "The same producer also gates the owned-input analysis route for the same viewers (same four conditions, own firm only), so the released surface is upload plus that route. The authorization_change paragraph in r36/ORDINARY_AUTHORIZER.json names both; the CTO must rule on the analysis route before any release pair ships.",
+  "notes": "owner: 1.0.0_SA_CTO (ruling on the analysis route) with 2.0.0_SA_COO~Y2 (release pair). Not deployed; the producer's admission is unchanged by this row."
+}
+]
+```
+
+- **owner:** `1.0.0_SA_CTO`
+- **disarm_owner:** n/a -- INERT; no release has shipped the wiring
+- **state:** BLOCKING / INERT
+
+## IRPT_ANLREQ-D2-W120-S3 -- the _scope/tests folder does not pass at HEAD: test_resolve.py fails before any change of mine
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W120-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~120",
+  "surfaced_at": "2026-10-14T04:30:14Z",
+  "one_line": "The face says infra/aws/lambda/investor-reporting/_scope/tests passes. At HEAD f416810d9a it does not: test_resolve.py::test_every_trusted_header_is_actually_injected_at_the_line_it_claims fails (the cited index.mjs line reads a comment, not the x-user-email injection). I did not touch test_resolve.py or resolve.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git-archive copy of HEAD f416810d9a under .scratch/before_arm (with infra/aws/lambda-edge): pytest test_resolve.py 1 failed, 28 passed; the failing assertion reads 'x-user-email' in '    // Claim names match portal_authorizer JWT payload.'",
+      "worktree folder run with my change: _scope/tests 268 passed, 1 failed (the same test), 67 subtests passed",
+      "infra/aws/lambda/investor-reporting/_scope/resolve.py:104-114 (TRUSTED_HEADERS line citations) against infra/aws/lambda-edge/auth-validator-edge/index.mjs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The face's preflight: _scope/tests passes with no existing assertion edited.",
+  "world_is": "A pre-existing line-citation drift at HEAD makes one _scope test fail independent of AR-y-306. The new test file (35 tests) passes in the same folder.",
+  "notes": "owner: the owner of resolve.py's citation block (IRPT_BCKEND line). Not changed here: outside the grant."
+}
+]
+```
+
+- **owner:** `2.0.0_SA_COO~Y2`
+- **disarm_owner:** n/a -- INERT
+- **state:** OBSERVATION / INERT
+
+## IRPT_ANLREQ-D2-W121-S1 -- the served upload boundary refuses an Opal viewer before the producer is consulted, so the Opal upload test runs at compose_upload
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W121-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~121",
+  "surfaced_at": "2026-10-14T04:57:11Z",
+  "one_line": "AMENDMENT 2 asks for an Opal viewer unchanged on the upload door through the served boundary. The served analysis-input-upload route refuses an Opal viewer with UNEXPECTED before the producer is consulted (IdRefused: the firm token opal-capital is not one of the 3 enabled client firms), so the Opal upload test is written at compose_upload instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/tests/test_ordinary_viewer.py (the first run of test_upload_door_opal_viewer_is_unchanged_and_the_producer_is_not_consulted, spy and absent, both returned ok False public_reason_code UNEXPECTED with exception_text naming the opal-capital firm token; the served boundary was the seam tried first)",
+      "infra/aws/lambda/investor-reporting/reports/generate_installed.py@76e99ef2a1 :389-426 (compose_upload: the access decision is built from the scope owner firm, not the verified Opal token)",
+      "the producer is absent or a spy in both runs, so the refusal does not come from the producer (the same outcome with the producer absent)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 2 (2): an Opal viewer's behaviour is UNCHANGED on BOTH routes (the upload door and the owned-input analysis route), with a test for each.",
+  "world_is": "The served upload boundary refuses an Opal viewer by its CREATE_INPUT guard before compose_upload runs. The analysis route admits an Opal viewer through ProspectSubmissionFactory.submit (tested there). The upload-door Opal test therefore exercises the access decision that compose_upload hands the deferred upload service, with the producer as a spy and as the absent stub; it does not exercise an Opal upload through the served boundary.",
+  "notes": "owner: 2.0.0_SA_COO~Y2 (whether an Opal upload through the served boundary is an intended refusal is for the issuer and the CTO). Built only; no change to the boundary made here, and the boundary is outside the grant."
+}
+]
+```
+
+- **owner:** `2.0.0_SA_COO~Y2`
+- **disarm_owner:** n/a -- INERT; nothing is deployed and the boundary's Opal refusal is the existing behaviour
+- **state:** OBSERVATION / INERT
+
+## IRPT_ANLREQ-D2-W121-S2 -- the producer also authorises the retained repositories and the upload service inside the two routes, which the ruling did not name
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W121-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~121",
+  "surfaced_at": "2026-10-14T04:57:11Z",
+  "one_line": "The ports entry ordinary_authorizer reaches more than the upload door and the owned-input submit: the same InteractiveAccess.authorize_current is the authorizer of the retained repositories and of the upload service inside both routes, so an admitted ordinary viewer passes the producer for those reads and writes too.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/generate_installed.py@76e99ef2a1 :312-313 (compose_ports repositories(access): build_retained_repositories(clients table, clients s3, access.authorize_current, ...))",
+      "infra/aws/lambda/investor-reporting/reports/generate_installed.py@76e99ef2a1 :424-426 (compose_upload: InteractiveAccess with the wrapped ordinary producer, then stores = ports repositories(access))",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/prospect_submission.py@76e99ef2a1 :66 (stores = self.repositories(access)), :67-68 (uploads(access, stores), uploads.read_input(viewer, input_owner, ...)), :112 (authorize_current=access.authorize_current)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO rulings 7502 and 7505 name the upload door (the producer admits a non-Opal viewer for the upload); amendment 2 names the owned-input analysis route; the authorization_change must say who gains upload and owned-input analysis.",
+  "world_is": "The producer is also the only ordinary gate of the retained repositories built inside compose_upload and inside the prospect factory, and of the upload service that reads the retained input. An ordinary viewer admitted by the four conditions therefore reaches those retained paths for its own firm. Whether the repositories apply a per-artifact owner check beyond authorize_current was not read.",
+  "notes": "owner: 1.0.0_SA_CTO (the ruling on whether the retained-repository reach is in scope) with 2.0.0_SA_COO~Y2 (the authorization_change and the release pair). Not split here: amendment 2 says no split until the issuer says. Built only; nothing is released."
+}
+]
+```
+
+- **owner:** `1.0.0_SA_CTO`
+- **disarm_owner:** n/a -- INERT; no release has shipped the wiring
+- **state:** BLOCKING / INERT
