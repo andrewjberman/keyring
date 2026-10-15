@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ADVI_COTBKF~177</issued_to>
 <issued_by>2.0.0_SA_COO~C1</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -22,7 +22,7 @@
 
 ### THE CELL
 
-**STAGED. You act only after the issuer's UN-PARK AMENDMENT (in this file's record face) names the role and the read-back. Until it exists, do nothing and say so.**
+**UN-PARKED (see AMENDMENT 1 in this file's record face): the grant is live and read back. You act now. The role ARN, the deadline and the key are in `GRANT_RECORD.json` named in Read-first item 2.**
 
 **Why.** Andrew, 2026-10-15: "I agree with (a), let's see what we can do with that for now." Option (a): ONE job, with a short-lived role, reads the restricted CRM zip (`CRM_CottonwoodCapitalAdvisors.zip`, landed by Andrew in the firm bucket under the restricted prefix) and uses its identifiers to link Commonwealth accounts to current Black Diamond accounts. Nothing from the zip may leave the job except account-link rows. A person reads the result and decides what to do with it. The job's limits, each a bound below: IN MEMORY (never to disk); LINK IDS ONLY; NO PERSONAL DATA OUT; LOGGED by its own run record; and the grant is removed at the job's end by another order.
 
@@ -102,4 +102,6 @@ comp-adversary: RUN -- the allow-list is a criterion the checker grades on the l
 lane: the <paths> block IS the grant (worker RULING 1). Risk WORLD: a restricted-data read under a time-limited grant; the CTO's exercised read and the change-management entry are the grant order's.
 </preflight>
 
-**ISSUER NOTES:** STAGED at the cut. Un-park conditions (all): `CB-cj-1` is complete (its AC1 PASS); the issuer's UN-PARK AMENDMENT below names the role ARN, the deadline and the read-back; at least 90 minutes remain before `deadline_utc`. Authority: Andrew-direct 2026-10-15 ~19:0xZ, "I agree with (a), let's see what we can do with that for now."; CTO ruling amendment 5.
+**ISSUER NOTES:** STAGED at the cut, UN-PARKED by AMENDMENT 1 below. Un-park conditions (all): `CB-cj-1` is complete (its AC1 PASS); the issuer's UN-PARK AMENDMENT below names the role ARN, the deadline and the read-back; at least 90 minutes remain before `deadline_utc`. Authority: Andrew-direct 2026-10-15 ~19:0xZ, "I agree with (a), let's see what we can do with that for now."; CTO ruling amendment 5.
+
+**AMENDMENT 1 (2.0.0_SA_COO~C1, 2026-10-15 19:5xZ) -- UN-PARKED, GO:** (1) `CB-cj-1` is complete: the grant is LIVE since 19:49:31Z, role `arn:aws:iam::313476888478:role/cloudops-cot-crm-match-role` (read back live by this seat: `get-role` returns it, max session 3600), `CRM-GRANT: OK` on the record `deliverables/0.7.0_AE_CloudOps~CB1/GRANT_RECORD.json` (apply commit e128e60b43, record 94ac0d28fe), deadline `2026-10-15T23:59:00Z`, trust = the dell1 agent user. (2) Plenty of time remains (more than 90 minutes before the deadline); the withdrawal order `CB-cj-3` is un-parked by this seat the moment your record is written, so write it promptly after the run. (3) Nothing in the order changes. Status pending.
