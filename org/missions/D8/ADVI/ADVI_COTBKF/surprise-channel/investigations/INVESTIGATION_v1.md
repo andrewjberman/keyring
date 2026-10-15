@@ -8948,3 +8948,27 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W169-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~169",
+  "surfaced_at": "2026-10-15T18:53:49Z",
+  "one_line": "CAUSE ESTABLISHED: the rebuilt ACTIVE_COTTONWOOD_SET_V2.csv row order depends on the process hash seed. The committed script (blob edbddd5f, commit b65e3ecdbd) gave three window-file sha256 values across PYTHONHASHSEED 1, 2 and default. The final sort key (account, side, cusip, held_from) has no tie-break, so tied rows come out in set-iteration order. The pinned file orders its 61 tied groups by held_to (61 of 61) and by window_basis (61 of 61). A total key (account, side, cusip, held_from, held_to, window_basis) is the measured candidate; not applied, the amendment cap of six repairs is reached.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "runs of data/assets/scripts/silver/cotbkf_active_set_v2.py at commit b65e3ecdbd with PYTHONHASHSEED=1, PYTHONHASHSEED=2 and the default seed: window-file sha256 values differ (counts and hashes only; the outside files are not in the tree)",
+      "the sort in the build: out_v2.sort(key=lambda r: (r[0], r[1], r[2], r[4])) has no tie-break on held_to or window_basis",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ACTIVE_COTTONWOOD_SET_V2.csv: within 61 groups sharing account, side, cusip and held_from the rows are ordered by held_to (61 of 61) and by window_basis (61 of 61) (counts only)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ch-1 AC1: the rebuilt files, hashed now, equal the committed pins; the script run from its commit reproduces the file bytes.",
+  "world_is": "Two runs of the same committed script can write different bytes for the same inputs, so byte equality depends on the process hash seed as well as on the rules. Not established: whether the total key above reproduces the pinned bytes; that is measured on the pinned file ordering only, not by a rebuild.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
